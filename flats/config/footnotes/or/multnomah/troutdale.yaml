@@ -118,7 +118,7 @@ notes:
       size, and the pod is new construction. Printed twice in this chapter,
       once under each of the two tables that carry a maximum building size
 
-  - quote: "or/multnomah/troutdale/3/3.230.txt#L50"
+  - quote: "or/multnomah/troutdale/3/3.230.txt#L55"
     digest: "3c86e9804fc1"
     state: dismissed
     reason: >-
@@ -126,7 +126,7 @@ notes:
       size, and the pod is new construction. Printed twice in this chapter,
       once under each of the two tables that carry a maximum building size
 
-  - quote: "or/multnomah/troutdale/3/3.330.txt#L21"
+  - quote: "or/multnomah/troutdale/3/3.330.txt#L23"
     digest: "7906baeec84a"
     state: dismissed
     reason: >-
@@ -134,7 +134,7 @@ notes:
       yard where they abut a residential district; no commercial zone is
       encoded here
 
-  - quote: "or/multnomah/troutdale/3/3.330.txt#L22"
+  - quote: "or/multnomah/troutdale/3/3.330.txt#L24"
     digest: "8b3ad92c2486"
     state: dismissed
     reason: >-
@@ -145,7 +145,7 @@ notes:
   # lot fronting a street narrower than the City standard, which nothing
   # measures -- if CC or GC is ever encoded, this comes back as unmeasured
   # rather than as a dismissal, and it needs a right-of-way width layer.
-  - quote: "or/multnomah/troutdale/3/3.330.txt#L23"
+  - quote: "or/multnomah/troutdale/3/3.330.txt#L25"
     digest: "c9ca132bce83"
     state: dismissed
     reason: >-

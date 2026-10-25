@@ -1,0 +1,311 @@
+§ 19.402.15. Boundary Verification and Map Administration.
+
+The NR Map shows the locations of WQRs and HCAs.
+For WQRs, the NR Map is a general indicator of protected water features and their associated vegetated corridors; the location of actual WQRs is determined according to the parameters established in Table 19.402.15.
+With respect to HCA locations, the NR Map is assumed to be correct unless demonstrated otherwise.
+
+Table 19.402.15 Determination of WQR Location  Table 19.402.15 Determination of WQR Location  Table 19.402.15 Determination of WQR Location                 Table 19.402.15 Determination of WQR Location                              Table 19.402.15 Determination of WQR Location
+Protected Water Feature Type                   Slope Adjacent to Protected Water Feature      Starting Point for measurements from Protected Water Feature  Starting Point for measurements from Protected Water Feature               Width of Vegetated Corridor[1]
+Primary Protected Water Features[2]            < 25%                                          •                                                             Bankful stage (top of bank) or 2-year recurrence interval flood elevation  50′
+•                                                             Delineated edge of Title 3 wetland
+Primary Protected Water Features[2]            ≥ 25% for 150' or more[3]                      •                                                             Bankful stage or 2-year flood elevation                                    200′
+•                                                             Delineated edge of Title 3 wetland
+Primary Protected Water Features[2]            ≥ 25% for less than 150'[3]                    •                                                             Bankful stage or 2-year flood elevation                                    Distance from starting point of measurement to top of ravine (break in ≥ 25% slope)4 plus 50′[5]
+•                                                             Delineated edge of Title 3 wetland
+Secondary Protected Water Features[6]          < 25%                                          •                                                             Bankful stage or 2-year flood elevation                                    15′
+Secondary Protected Water Features[6]          ≥ 25%[3]                                       •                                                             Bankful stage or 2-year flood elevation                                    50′
+
+[1]  Vegetated corridor width will be applied to the outer boundaries of water features, such as the edge of a wetland and both banks of a watercourse.
+[2]  Primary protected water features include: all perennial streams, streams draining 100 or more acres, Title 3 wetlands, and natural lakes and springs.
+See Section 19.201 for the full definition.
+[3]  Vegetated corridors in excess of 50 ft for primary protected features, or in excess of 15 ft for secondary protected features, apply on steep slopes only in the uphill direction from the protected water feature.
+[4]  Where the protected water feature is confined by a ravine or gully, the top of ravine is the break in the 25% slope.
+[5]  A maximum reduction of 25 ft may be permitted in the width of the vegetated corridor beyond the slope break if a geotechnical report demonstrates that the slope is stable.
+To establish the width of the vegetated corridor, slope will be measured in 25-ft increments away from the water feature until the slope is less than 25% (top of ravine).
+[6]  Secondary protected water features include intermittent streams draining 50 to 100 acres.
+See Section 19.201 for the full definition.
+
+A.
+
+Boundary Verification
+
+To determine whether the standards of Section 19.402 apply to a proposed activity at any given location, the boundaries of any designated natural resource(s) on or near the site must be verified.
+
+Agreement with the accuracy of the NR Map does not constitute or require a land use decision.
+However, for activities proposed within 100 ft of a wetland or its associated vegetated corridor, the boundary verification process outlined in Subsection 19.402.15.A.2.a(1)(b) must be followed to identify the specific location of wetlands on the subject property.
+The Planning Manager may waive the requirement for official wetland delineation, depending on the specific circumstances of the site and the proposed activity.
+Such circumstances may include, but are not limited to, the scale and potential impacts of the proposed activity, the proximity of the proposed activity to the mapped resource, and the Manager's confidence in the accuracy of the NR Map relative to the resource in question.
+
+An applicant may challenge the accuracy of the NR Map through either of the boundary verification processes outlined in Subsections 19.402.15.A.1 and 2.
+
+1.
+
+Type I Boundary Verification
+
+The following minor corrections to mapped HCAs may be proposed according to one of the following procedures, and are subject to Type I review per Section 19.1004:
+
+a.
+
+Simple Incongruities
+
+In some cases, the vegetative cover data shown on the NR Map might not align with the location of existing legally established development or tree cover.
+An applicant who believes that the NR Map is inaccurate, based on such an obvious misalignment, must submit the following information regarding the property:
+
+(1)
+
+A detailed property description and site plan of the property that includes all existing conditions plans listed on the City's Site Plan Requirements checklist.
+
+(2)
+
+A copy of the applicable NR Map section.
+
+(3)
+
+The latest available aerial photograph of the property, with lot lines shown, at a scale of at least 1 map inch equal to 50 ft for lots of 20,000 or fewer square feet, and a scale of 1 map inch equal to 100 ft for larger lots.
+
+(4)
+
+A documented demonstration of the misalignment between the NR Map and the property's tax lot boundary lines and/or the location of existing legally established development.
+
+(5)
+
+Any other factual information that the applicant wishes to provide to support boundary verification.
+
+b.
+
+Legal Development Prior to Adoption Date
+
+If a property was legally developed between the summer of 2002 (when the aerial photograph used to determine the regional habitat inventory was taken) and September 15, 2011, the effective date of Ordinance #2036, the applicant must submit the following information regarding the property:
+
+(1)
+
+The information described in Subsection 19.402.15.A.1.a.
+
+(2)
+
+A summer 2002 aerial photograph of the property, with lot lines shown, at a scale of at least 1 map inch equal to 50 ft for lots of 20,000 or fewer square feet, and a scale of 1 map inch equal to 100 ft for larger lots.
+
+(3)
+
+Any approved building permits or other development plans and drawings related to the development of the property that took place between summer 2002 and September 15, 2011, the effective date of Ordinance #2036.
+
+(4)
+
+A clear explanation and documentation, such as supporting maps or drawings or a more recent aerial photograph, indicating the new development that has occurred and where previously identified habitat no longer exists because it is now part of a developed area.
+
+2.
+
+Type II Boundary Verification
+
+Corrections to mapped WQRs and/or detailed verification of mapped HCAs may be proposed according to the following procedures, and are subject to Type II review per Section 19.1005.
+
+a.
+
+Corrections to WQRs
+
+(1)
+
+Submittal Requirements
+
+To propose a correction to a WQR shown on the NR Map, the applicant must submit the following information, depending on the type of water feature in question:
+
+(a)
+
+Drainages
+
+In the case of drainages; including rivers, streams, springs, and natural lakes; the applicant must submit a report, prepared by a qualified scientist or professional engineer who specializes in hydrology, demonstrating whether or not the drainage meets the definition of a protected water feature.
+If the drainage is demonstrated to be a protected water feature, the applicant must provide a topographic map of the site, with contour intervals of 5 ft or less, that shows the specific location of the drainage on the subject property.
+
+(b)
+
+Wetlands
+
+In the case of wetlands, the applicant must submit a wetland delineation report, prepared by a professional wetland specialist in accordance with the 1996 Oregon Freshwater Wetland Assessment Methodology and following the wetlands delineation process established by DSL, demonstrating the location of any wetlands on the site.
+The delineation report will be accepted only after approval by DSL.
+If the wetland is demonstrated to be a primary protected water feature, the applicant must provide a topographic map of the site, with contour intervals of 5 ft or less, that shows the specific location of the wetland on the subject property.
+
+The Planning Manager will confer with DSL and Metro to confirm delineation and hydrology reports, as may be needed, prior to issuing a notice of decision on a requested map correction.
+In cases where the City initiates the boundary verification for purposes of improving the accuracy of the NR map, a formal delineation approval by DSL is not required, though a report following the delineation process established by DSL must be provided.
+
+(2)
+
+Approval Criteria
+
+The City will update the NR Map if the wetland or hydrology report submitted demonstrates any of the following:
+
+(a)
+
+That there was an error in the original mapping.
+
+(b)
+
+That the boundaries of the WQR have changed since the most recent update to the NR Map.
+
+(c)
+
+That a primary protected water feature no longer exists because the area has been legally filled, culverted, or developed prior to January 16, 2003, the effective date of Ordinance #1912.
+
+b.
+
+Detailed Verification of HCAs
+
+An applicant who believes that an HCA shown on the NR Map should be corrected for a reason other than those described in Subsections 19.402.15.A.1.a or b may propose a detailed verification.
+
+(1)
+
+Submittal Requirements
+
+The applicant must submit a report prepared and signed by either a knowledgeable and qualified natural resource professional; such as a wildlife biologist, botanist, or hydrologist; or a civil or environmental engineer registered in Oregon to design public sanitary or storm systems, stormwater facilities, or other similar facilities.
+The report must include:
+
+(a)
+
+A description of the qualifications and experience of all persons that contributed to the report and, for each person that contributed, a description of the elements of the analysis to which the person contributed.
+
+(b)
+
+The information described in Subsection 19.402.15.A.1.a.
+
+(c)
+
+The information described in Subsection 19.402.15.A.1.b, if the applicant believes such information is relevant to the verification of habitat location on the subject lot or parcel.
+
+(d)
+
+Additional aerial photographs, if the applicant believes they provide better information regarding the property, including documentation of the date and process used to take the photos and an expert's interpretation of the additional information they provide.
+
+(e)
+
+A map showing the topography of the property shown by 2-ft vertical contours in areas of slopes less than 15%, and at 5-ft vertical contours of slopes 15% or greater.
+
+(f)
+
+Any additional information necessary to address each of the detailed verification criteria provided in Subsection 19.402.15.A.2.b.(2); a description of where any HCAs are located on the property, based on the application of the detailed verification criteria; and factual documentation to support the analysis.
+
+(2)
+
+Approval Criteria
+
+A boundary verification request submitted under Subsection 19.402.15.A.2.b will be evaluated according to the following three-step process:
+
+(a)
+
+Identify Riparian Habitat
+
+Locate the water feature that is the basis for identifying riparian habitat.
+
+(i)
+
+Locate the top of bank of all streams, rivers, and open water within 200 ft of the property.
+
+(ii)
+
+Locate all flood areas within 100 ft of the property.
+
+(iii)
+
+Locate all wetlands within 150 ft of the property, based on the NR Map.
+Identified wetlands must be further defined or informally delineated consistent with methods currently accepted by DSL and the Corps.
+
+(b)
+
+Identify Vegetative Cover Status
+
+Identify the vegetative cover status of all undeveloped areas on the property that are within 200 ft of the top of bank of streams, rivers, and open water; are wetlands or are within 150 ft of wetlands; and are flood areas (i.e., 100-year floodplain) and within 100 ft of flood areas.
+For purposes of this subsection, "undeveloped areas" means those portions of the property that have not been changed from a more natural, pre-development state by buildings, accessory structures, parking and loading areas, paved or graveled areas, improved open areas (such as plazas and walkways), hardscape landscaping, above-ground utilities, and/or similar improvements.
+
+Determine whether these undeveloped areas fall into any of the following three categories:
+
+(i)
+
+Low structure vegetation or open soils = Undeveloped areas that are part of a contiguous area 1 acre or larger of grass, meadow, croplands, or areas of open soils located within 300 ft of a surface stream.
+Low structure vegetation areas may include areas of shrub vegetation less than 1 acre in size; if they are contiguous with areas of grass, meadow, croplands, orchards, Christmas tree farms, holly farms, or areas of open soils located within 300 ft of a surface stream; and if those contiguous areas together form an area of 1 acre in size or larger.
+
+(ii)
+
+Woody vegetation = Undeveloped areas that are part of a contiguous area 1 acre or larger of shrub or open or scattered forest canopy (less than 60% crown closure) located within 300 ft of a surface stream.
+
+(iii)
+
+Forest canopy = Undeveloped areas that are part of a contiguous grove of trees of 1 acre or larger in area with approximately 60% or greater crown closure, irrespective of whether the entire grove is within 200 ft of the relevant water feature.
+
+(c)
+
+Confirm HCA Boundaries
+
+Using Table 19.402.15.A.2.b.(2).(c), determine whether any portion of the identified undeveloped riparian areas on the subject property is classifiable as HCA.
+
+Table 19.402.15.A.2.b.(2).(c) Identifying Habitat Conservation Areas (HCAs)       Table 19.402.15.A.2.b.(2).(c) Identifying Habitat Conservation Areas (HCAs)       Table 19.402.15.A.2.b.(2).(c) Identifying Habitat Conservation Areas (HCAs)       Table 19.402.15.A.2.b.(2).(c) Identifying Habitat Conservation Areas (HCAs)
+Distance from Protected Water Feature                                             Vegetation Status of Undeveloped Riparian Area                                    Vegetation Status of Undeveloped Riparian Area                                    Vegetation Status of Undeveloped Riparian Area
+Distance from Protected Water Feature                                             Low Structure Vegetation or Open Soils                                            Woody Vegetation (shrub and scattered forest canopy)                              Forest Canopy (closed to open forest canopy)
+Surface Streams                                                                   Surface Streams                                                                   Surface Streams                                                                   Surface Streams
+0 ft — 100 ft                                                                     HCA                                                                               HCA                                                                               HCA
+101 ft — 200 ft                                                                   HCA if slope > 25%[1] (otherwise not HCA)                                         HCA if slope > 25%[1] (otherwise not HCA)                                         HCA[2]
+Wetlands (wetland feature itself is an HCA)                                       Wetlands (wetland feature itself is an HCA)                                       Wetlands (wetland feature itself is an HCA)                                       Wetlands (wetland feature itself is an HCA)
+0 ft — 100 ft                                                                     HCA                                                                               HCA                                                                               HCA
+101 ft — 150 ft                                                                   Not HCA                                                                           Not HCA                                                                           HCA
+Flood Areas (FEMA's 1% annual chance flood hazard area or 1996 Metro flood area)  Flood Areas (FEMA's 1% annual chance flood hazard area or 1996 Metro flood area)  Flood Areas (FEMA's 1% annual chance flood hazard area or 1996 Metro flood area)  Flood Areas (FEMA's 1% annual chance flood hazard area or 1996 Metro flood area)
+Within 300 ft of river or surface stream                                          HCA                                                                               HCA                                                                               HCA
+More than 300 ft from river or surface stream                                     HCA                                                                               HCA                                                                               HCA
+0 ft — 100 ft from edge of flood area                                             Not HCA                                                                           HCA                                                                               HCA
+
+Notes:
+Notes:
+Notes:
+Notes:
+[1]
+Measure slope adjacent to the protected water feature using the methodology outlined in Table 19.402.15.
+Measure slope adjacent to the protected water feature using the methodology outlined in Table 19.402.15.
+Measure slope adjacent to the protected water feature using the methodology outlined in Table 19.402.15.
+[2]
+Those portions of the riparian area that are 151 to 200 ft from the protected water feature and have a slope less than 25% are not HCA.
+Those portions of the riparian area that are 151 to 200 ft from the protected water feature and have a slope less than 25% are not HCA.
+Those portions of the riparian area that are 151 to 200 ft from the protected water feature and have a slope less than 25% are not HCA.
+
+(3)
+
+Notification to Metro and DLCD
+
+When an application for boundary verification proposes corrections to mapped HCAs that would result in a change in HCA designation of 1 acre or more, the City will notify Metro and the Oregon Department of Land Conservation and Development within 7 days after the application has been deemed complete, in accordance with the Type II referral procedure outlined in Subsection 19.1005.3.A.
+
+3.
+
+Type III or V Boundary Verification
+
+Corrections to mapped WQRs or HCAs that are not subject to processing according to the provisions outlined in either of Subsection 19.402.15.A.1 or A.2, such as in cases where the City initiates the change without property owner authorization and/or where the changes involve more properties than for which it is practicable to obtain all property owners' authorization, will be processed in accordance with the procedures for zoning map amendments as provided in Subsection 19.902.6.
+Such corrections will be processed with either Type III or Type V review, accordingly, but do not constitute amendments to the Zoning Map itself, only to the NR Map.
+
+B.
+
+Map Administration
+
+1.
+
+Updates to the NR Map
+
+When a boundary verification, conducted in accordance with the standards of Subsection 19.402.15.A, demonstrates an error in the location of a WQR or HCA shown on the NR Map, the City will update the NR Map to incorporate the corrected information as soon as practicable.
+Changes to the NR Map are not considered amendments to the City's Comprehensive Plan, to Comprehensive Plan Map 6 (Natural Resources Inventory), or to the Zoning Map.
+
+2.
+
+Mapping Implications of Allowed Disturbances
+
+a.
+
+WQRs
+
+Permanent disturbances within a WQR, whether they occurred prior to the adoption of the Zoning Ordinance or are allowed according to the standards of Section 19.402, do not affect the way related WQRs are shown on the NR Map.
+
+b.
+
+HCAs
+
+When disturbances are allowed within HCAs, in accordance with the applicable standards of Section 19.402, the City may update the NR Map to show that the permanently disturbed area is no longer considered an HCA.
+
+3.
+
+Designation of Annexed Areas
+
+When land annexed to the City includes WQRs and/or HCAs, as designated by Clackamas County, those same designations will be shown on the City's NR Map at the time of annexation.
+Verification of the boundaries of such WQRs and/or HCAs will be processed in accordance with the applicable provisions established in Subsection 19.402.15.A; not necessarily at the time of annexation, but at such time as a new activity is proposed on the annexed property.
+

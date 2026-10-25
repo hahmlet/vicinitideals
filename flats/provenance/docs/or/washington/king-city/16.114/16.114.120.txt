@@ -277,20 +277,20 @@ Figure 16.114.19 Biking Street C (Separated Bike Lane)
 1. Narrow Streets. Three alternative cross-sections for local residential narrow streets are illustrated in the following Figures 16.114-21, 16.114-22, and 16.114-23.
 Each Narrow Street alternative is tied to a specific set of criteria that must be met when adopting the alternative.
 a. Criteria for Narrow Street A:
-i. Traffic Flow Plan must be submitted and approved before adopting the alternative. ii.
-Not appropriate for streets serving more than five hundred vehicle trips per day. iii.
-On-street parking is permitted on one side only.
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative.
+ii. Not appropriate for streets serving more than five hundred vehicle trips per day.
+iii. On-street parking is permitted on one side only.
 iv. No on-street parking is permitted within thirty feet of an intersection.
 b. Criteria for Narrow Street B:
-i. Traffic Flow Plan must be submitted and approved before adopting the alternative. ii.
-Not appropriate for streets serving more than one thousand vehicle trips per day. iii.
-On-street parking is permitted on both sides.
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative.
+ii. Not appropriate for streets serving more than one thousand vehicle trips per day.
+iii. On-street parking is permitted on both sides.
 iv. No on-street parking is permitted within 30 feet of an intersection.
 Figure 16.114.20 Rural Character Neighborhood Street
 c. Criteria for Narrow Street C:
-i. Traffic Flow Plan must be submitted and approved before adopting the alternative. ii.
-Not appropriate for streets serving more than two hundred vehicle trips per day. iii.
-No on-street parking is permitted on either side.
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative.
+ii. Not appropriate for streets serving more than two hundred vehicle trips per day.
+iii. No on-street parking is permitted on either side.
 
 Figure 16.114.21 Narrow Street A (Parking One-Side)
 Figure 16.114.22 Narrow Street B (Parking Both Sides)

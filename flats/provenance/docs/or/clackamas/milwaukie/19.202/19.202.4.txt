@@ -1,0 +1,103 @@
+§ 19.202.4. Density Calculations.
+
+Minimum required and maximum allowed dwelling unit density will be calculated as described below, except that residential cluster development on lands containing natural resource areas are subject to the density calculations in Subsection 19.402.14.C.
+The purpose of these calculations is to ensure that properties develop at densities consistent with the densities in the Comprehensive Plan.
+The area deductions for minimum required density allow properties to utilize land that can be built upon.
+The area deductions for maximum allowed density include sensitive lands where development should be avoided.
+
+A.
+
+Gross Area
+
+The gross area of a lot is measured in sq ft and is determined by a registered professional land surveyor or with data from the Clackamas County Assessor's Office.
+
+B.
+
+Rounding
+
+The results for minimum required and maximum allowed dwelling unit density are rounded based on a fraction that is truncated to 2 numbers past the decimal point.
+For example, 3.4289 is truncated to 3.42.
+Where a minimum density calculation results in a fraction that is 0.50 or above, the fraction is rounded up to the next whole number.
+Where a minimum density calculation results in a fraction that is less than 0.50, the fraction is rounded down to the preceding whole number.
+Where a maximum density calculation results in a fraction that is less than 0.75, the fraction is rounded down to the preceding whole number.
+
+C.
+
+Discrepancy between Minimum Required and Maximum Allowed Density
+
+If the calculation results are that minimum density is equal to maximum density, then the minimum required density is reduced by one.
+If the calculation results are that minimum density is larger than maximum density, then the minimum required density is reduced to one less than the maximum.
+If the calculation results are that the maximum density calculation is equal to zero, then the minimum density is one.
+
+D.
+
+Minimum Density
+
+1.
+
+Deductions to Calculate Net Area
+
+The following areas, measured in sq ft, are subtracted from the gross area to determine the net area.
+The net area calculation is rounded to the nearest whole number.
+
+a.
+
+Floodways, as determined by Federal Emergency Management Agency flood maps.
+
+b.
+
+Right-of-way dedications for new right-of-way or expansion of existing rights-of-way, as required in Chapter 19.700.
+
+c.
+
+Open space or parkland that will be publically owned or open space owned in common by owners within the residential development.
+
+2.
+
+Density Calculation
+
+The minimum number of dwelling units required is calculated by dividing the net area by 43,560 sq ft to convert the area to acres, then by multiplying the acreage by the minimum required dwelling unit density in the applicable base zone in Chapter 19.300.
+
+3.
+
+Constrained Lands
+
+Regardless of the density calculation described above, any legal lot that meets the standards of Subsection 19.501.1 is allowed at least one dwelling unit.
+
+E.
+
+Maximum Density
+
+1.
+
+Deductions to Calculate Net Area
+
+The following areas, measured in sq ft, are subtracted from the gross area to determine the net area.
+The net area calculation is rounded to the nearest whole number.
+
+a.
+
+1% Annual Chance Flood areas (also called the 100-Year Floodplain), as determined by Federal Emergency Management Agency flood maps.
+
+b.
+
+Right-of-way dedications for new right-of-way or expansion of existing rights-of-way, as required in Chapter 19.700.
+
+c.
+
+Open space or parkland that will be publicly-owned or open space owned in common by owners within the residential development.
+
+d.
+
+Naturally occurring slopes in excess of 25%.
+
+e.
+
+Man-made slopes (grades that are the result of human activity rather than natural causes) in excess of 25% with both a horizontal measure over 40 ft and an elevation change more than 10 ft over that horizontal distance.
+
+2.
+
+Density Calculation
+
+The maximum number of dwelling units allowed is calculated by dividing the net area by 43,560 sq ft to convert the area to acres, then by multiplying the acreage by the maximum allowed dwelling unit density in the applicable base zone in Chapter 19.300.
+

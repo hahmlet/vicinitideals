@@ -6,7 +6,7 @@
 # finds one note in CR's lot size table and one in the floodplain chapter's
 # mitigation table. Neither changes a figure the layer holds.
 notes:
-  - quote: "or/washington/cornelius/cmc.18.70.cr.txt#L176"
+  - quote: "or/washington/cornelius/18.70/18.70.050.txt#L18"
     digest: "86ebf8614542"
     state: dismissed
     reason: >-
@@ -17,8 +17,8 @@ notes:
       figure. Nothing measures a flag pole, and `flag_lot` is registered and
       assumed false, which is where the gap is carried (as Portland's
       33.110 flag-lot note). R-7 says the same thing in prose (18.20.050
-      (A)(2), cmc.18.20.r-7.txt L164), recorded in the layer.
-  - quote: "or/washington/cornelius/cmc.18.90.fp.txt#L921"
+      (A)(2), 18.20.050.txt L20), recorded in the layer.
+  - quote: "or/washington/cornelius/18.90/18.90.070.txt#L212"
     digest: "481a480eba0e"
     state: dismissed
     reason: >-

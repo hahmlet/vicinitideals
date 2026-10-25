@@ -1,0 +1,347 @@
+§ 16.23.020. Village Commercial and Village Office Districts.
+
+A.
+
+Purpose.
+
+1.
+
+Village Commercial District (VC). This section provides for a mixture of retail/office, commercial and business park uses.
+These uses are located in areas where suitable services and facilities are currently provided or can be provided as development occurs.
+In addition, this district allows for pedestrian friendly development with good connections via the sidewalks, trails and street system from residential areas to parks, open spaces, commercial and office uses.
+
+2.
+
+Village Office District (VO). This section provides for a mixture of retail/office, commercial and business park uses.
+These uses are located in areas where suitable services and facilities are currently provided or can be provided as development occurs.
+In addition, this district allows for pedestrian friendly development with good connections via the sidewalks, trails and street system from residential areas to parks, open spaces, commercial and office uses.
+
+B.
+
+Permitted Uses. Table 16.23.020-1 identifies the land uses allowed in the VC and VO Districts.
+
+Table 16.23.020-1 Village Office and Village Commercial (VO and VC) Permitted Uses
+Table 16.23.020-1 Village Office and Village Commercial (VO and VC) Permitted Uses
+Table 16.23.020-1 Village Office and Village Commercial (VO and VC) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+Land Use
+VO
+VC
+Residential
+Residential
+Residential
+Pre-existing dwellings. Pre-existing dwellings may be allowed to remodel or expand and shall not be subject to the provisions of Chapter 16.72
+P
+P
+Multifamily dwellings or residential uses on upper floors of mixed use buildings
+X
+P
+Commercial—Retail Uses
+Commercial—Retail Uses
+Commercial—Retail Uses
+Antique and secondhand store
+X
+P
+Art supply stores
+X
+P
+Bakery
+X
+P
+Bank teller, but not drive-in or drive-through service
+P
+P
+Banks, credit unions, savings and loan, brokerage, and other financial institutions, including drive-thru facilities
+C
+C
+Barber shop, beauty salon
+X
+P
+Bars and cocktail lounge/tavern with OLCC IV or IV-A Minor posting where food service is included, if all activities and operations (except off-street parking and loading) are confined, contained, and conducted wholly within completely enclosed buildings and not located closer than 100 feet from a residential district or closer than 500 feet from a school
+X
+C
+Bicycle sales, supplies, repair service
+X
+P
+Book store
+X
+P
+Camera store
+X
+P
+Cafés and delicatessens which serve at least breakfast and/or lunch; catering services.
+No drive-through window service shall be allowed
+P[1]
+P
+Clothing store
+X
+P
+Coffee shop
+P[1]
+P
+Confectionery stores
+X
+P
+Drugstore
+X
+P
+Dry cleaner, laundry, tailoring and alterations shop
+X
+P
+Electrical/electronic equipment sales, service, repair
+X
+P
+Fabric and dry goods stores
+X
+P
+Florist
+X
+P
+Gallery (art and craft)
+X
+P
+General merchandise store
+X
+P
+Gift store
+X
+P
+Grocery and produce stores
+X
+P
+Hardware and garden supplies store
+X
+P
+Health club, gym
+P
+P
+Helipad
+X
+X
+Home furnishings; interior decorating sales, service
+X
+P
+Indoor commercial amusements including bowling alleys with no more than 12 lanes, billiard halls with no more than six tables, and game rooms which provide no more than 20 mechanical or electric games of science and skill, or any combination thereof
+X
+C
+Jewelry store
+X
+P
+Laundromat
+X
+P
+Locksmith
+X
+P
+Marijuana retailing
+X
+X
+Meat and fish markets
+X
+P
+Mobile food units
+X
+P[2]
+Novelty store
+X
+P
+Optometry and optical goods, sales, service
+X
+P
+Office supplies
+X
+P
+Personal services
+X
+P
+Pet store
+X
+P
+Photo finishing, photography studios
+X
+P
+Plumbing shops, retail sales, repairs, service
+X
+P
+Post office
+X
+P
+Printing and copying services, telecommuting center
+P
+P
+Psilocybin service center
+X
+X
+Graphic arts, printing, blueprinting, photo processing or reproduction labs, publishing and bookbinding services
+P
+P
+Business services such as duplicating, photocopying, mailing and stenographic services, fax and computer facilities, employment agencies, office management services, notary public, business and communications equipment and service, and real estate offices
+P
+P
+Radio, TV, music stores, sales, service
+X
+P
+Restaurant (III Minor Posting OLCC)
+X
+P
+Schools-commercial, instruction studio
+X
+P
+Service stations; banks with a drive-through window; car washes; or any other drive-through service, provided that they are located on the north end of the village commercial district adjacent to Sunnyside Road
+X
+C
+Shoe and shoe repair stores
+X
+P
+Small appliance sales, service, repair
+X
+P
+Small theaters (seating capacity up to 500)
+X
+P
+Soda fountain
+X
+P
+Specialty food
+X
+P
+Sporting goods
+X
+P
+Supermarket
+X
+P
+Stationery store
+X
+P
+Tailor
+X
+P
+Personal services: answering service, travel agent, etc.
+P
+P
+Toy store
+X
+P
+Upholstery shop
+X
+P
+Variety store
+X
+P
+Vehicle supply store
+X
+P
+Veterinarian services and pet supplies
+X
+P
+Video rental
+X
+P
+Commercial—Offices
+Commercial—Offices
+Commercial—Offices
+Business and professional offices, including legal, financial, architectural, engineering, governmental, manufacturer's representatives, property management, corporate and administrative office
+P
+P
+Professional office: doctors, dentists, chiropractors, service personnel, small clinics or community health care programs
+P
+P
+Medical and dental services, clinics or community health care programs, counseling services, and associated pharmacies
+P
+P
+Testing laboratories and facilities, provided no operation shall be conducted or equipment used which would create hazards and/or noxious or offensive conditions
+P
+X
+Light manufacturing, assembly, artisan, research and development uses which have physical and operational requirements which are similar to other office uses allowed in this district
+P
+X
+Meeting facilities, cafeterias, and recreation/exercise facilities provided for employees within the same structure with a primary use
+P[2]
+P
+Institutional
+Institutional
+Institutional
+Daycare facilities shall be permitted, provided they are integrated within office buildings and do not exceed 1,500 square feet or serve more than 13 children each
+P[1]
+P
+Institutional uses; educational institutes and trade schools; art, music, or dance studios; radio and television studios, excluding transmission towers
+C
+C
+Cultural/public use; galleries and museums; small-scale (seating capacity up to 500) assembly or convention facilities and theaters for performing arts; exhibition halls; libraries; senior centers; and fraternal organizations
+C
+C
+Skilled nursing facility and memory care facilities
+P
+P
+Congregate housing
+P
+P
+Other
+Other
+Other
+Marijuana processing, production and wholesaling
+X
+X
+Psilocybin processing, production and wholesaling
+X
+X
+Wireless telecommunication facilities: wireless telecommunication facilities are subject to the requirements of Chapter 16.44.020 (Wireless Communication Facilities).
+P/C
+P/C
+Bus shelters, bike racks, street furniture, drinking fountains, and other pedestrian and transit amenities.
+P[2]
+P[2]
+Temporary buildings for uses incidental to construction work, which shall be removed upon completion or abandonment of the construction work
+P[2]
+P[2]
+Utility carrier cabinets
+P[2]
+P
+The temporary storage within an enclosed structure of source-separated recyclable/reusable materials generated and/or used on site prior to on-site reuse or removal by the generator or licensed or franchised collector to a user or broker
+P[2]
+P[2]
+Building and landscape maintenance offices and enclosed storage areas for maintenance equipment
+P[2]
+P
+Satellite dishes
+P[2]
+P[2]
+Recyclable drop-off sites
+P[2]
+P[2]
+Any accessory use or structure, not otherwise prohibited, that the planning official or designee finds to be customarily accessory and incidental to a permitted use
+P[2]
+P[2]
+Any use that the planning official or designee finds to be similar to one or more of those specified above
+P/C
+P/C
+
+NOTE:
+[1] Permitted service commercial uses may be provided within an office development, up to a maximum of 20% of the gross floor area of the development.
+[2] Pursuant to Section 16.69.010.
+
+C.
+
+Development Standards. The development standards in Table 16.23.020-2 apply to all uses, structures, buildings, and development in the VC and VO Districts.
+
+Table 16.23.020-2 Development Standards for VC and VO Districts  Table 16.23.020-2 Development Standards for VC and VO Districts  Table 16.23.020-2 Development Standards for VC and VO Districts
+Standard                                                         VC                                                               VO
+Residential density
+(maximum)                                                        None                                                             NA
+(minimum)                                                        None                                                             NA
+Lot size (minimum)                                               None                                                             None
+Lot width (minimum)                                              None                                                             None
+Lot depth (minimum)                                              None                                                             None
+Lot coverage (maximum)                                           50%                                                              50%
+Setbacks (minimum)                                               Variable[1]                                                      Variable[1]
+Building height (maximum)                                        45 feet                                                          45 feet
+
+NOTES:
+[1] Standards are flexible and shall be determined through the master plan process or a design review.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 427 § 1, 2012; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 566 § 1, 2022; Ord. 572 § 1, 2023; Ord. 592, 6/3/2025)
+

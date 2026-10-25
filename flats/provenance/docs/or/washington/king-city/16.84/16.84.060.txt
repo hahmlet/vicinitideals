@@ -18,8 +18,8 @@ Cottages must be clustered around a common courtyard, meaning they abut the asso
 a. Each cottage within a cluster must either abut the common courtyard or must be directly connected to it by a pedestrian path.
 b. A minimum of fifty percent of cottages within a cluster must be oriented to the common courtyard and must:
 i. Have a main entrance facing the common courtyard;
-ii. Be within ten feet from the common courtyard, measured from the façade of the cottage to the nearest edge of the common courtyard; and iii.
-Be connected to the common courtyard by a pedestrian path.
+ii. Be within ten feet from the common courtyard, measured from the façade of the cottage to the nearest edge of the common courtyard; and
+iii. Be connected to the common courtyard by a pedestrian path.
 Figure 2
 c. Cottages within twenty feet of a street property line may have their entrances facing the street provided they comply with the front and front porch standards in Section 16.84.040.
 d. Cottages not facing the common courtyard or the street must have their main entrances facing a pedestrian path that is directly connected to the common courtyard.
@@ -44,8 +44,8 @@ b. A community building that meets the development code's definition of a dwelli
 a. An accessible pedestrian path must be provided that connects the main entrance of each cottage to the following:
 i. The common courtyard;
 ii. Shared parking areas;
-iii. Community buildings; and iv.
-Sidewalks in public rights-of-way abutting the site or rights-of-way if there are no sidewalks.
+iii. Community buildings; and
+iv. Sidewalks in public rights-of-way abutting the site or rights-of-way if there are no sidewalks.
 b. The pedestrian path must be hard-surfaced and a minimum of four feet wide.
 5. Windows. Cottages within twenty feet of a street property line must meet any window coverage requirement that applies to detached single-family dwellings in the same zone.
 6. Parking design, clustered.

@@ -45,8 +45,11 @@ from flats.rules.model import Layer
 pytestmark = pytest.mark.unit
 
 MILWAUKIE = "or/clackamas/milwaukie"
-BASE_ZONES = f"{MILWAUKIE}/19.300.base-zones.txt"
-DEFINITIONS = f"{MILWAUKIE}/19.200.definitions.txt"
+#: The section files Milwaukie's chapters were cut into (2026-10-24). The
+#: chapters stay as proof copies, which this ledger does not survey.
+STANDARDS = f"{MILWAUKIE}/19.301/19.301.4.txt"
+BONUSES = f"{MILWAUKIE}/19.301/19.301.5.txt"
+DEFINITIONS = f"{MILWAUKIE}/19/19.201.txt"
 
 
 @pytest.fixture(scope="module")
@@ -69,12 +72,12 @@ def _at(rows: list[Uncited], path: str, line: int) -> Uncited | None:
 def test_the_plane_is_no_longer_uncited(milwaukie: list[Uncited]) -> None:
     """The regression on the fix, not on the tool.
 
-    Lines 231 and 236 are the two cells of R-MD's side yard height plane. They
+    Lines 146 and 151 are the two cells of R-MD's side yard height plane. They
     are quoted now, and if a re-encoding ever drops that citation the side
     yards of a whole zone silently lose six feet.
     """
-    assert _at(milwaukie, BASE_ZONES, 231) is None
-    assert _at(milwaukie, BASE_ZONES, 236) is None
+    assert _at(milwaukie, STANDARDS, 146) is None
+    assert _at(milwaukie, STANDARDS, 151) is None
 
 
 def test_a_bonus_beside_a_number_we_did_read(milwaukie: list[Uncited]) -> None:
@@ -82,7 +85,7 @@ def test_a_bonus_beside_a_number_we_did_read(milwaukie: list[Uncited]) -> None:
     increased by 10 percentage points" -- a field this system screens against,
     a sentence no value quotes, printed under the table the coverage figure
     came from. This is the shape the `unread` bucket is for."""
-    row = _at(milwaukie, BASE_ZONES, 305)
+    row = _at(milwaukie, BONUSES, 22)
 
     assert row is not None
     assert row.bucket == "unread"
@@ -138,7 +141,7 @@ def test_a_standard_reprinted_per_column_is_one_standard(
     consecutive lines. The encoding quotes the first. Reporting the other
     three as unread is how a ledger becomes furniture."""
     assert not [
-        r for r in milwaukie if r.path == BASE_ZONES and 224 <= r.line <= 227
+        r for r in milwaukie if r.path == STANDARDS and 139 <= r.line <= 142
     ]
 
 
@@ -225,7 +228,7 @@ def test_the_chapter_that_prompted_the_repair_reports_its_statements(
 ) -> None:
     """The corpus half of the test above. A pattern fixed in isolation is a
     pattern that can be fixed against a string nobody holds."""
-    access = f"{MILWAUKIE}/12.16.access-management.txt"
+    access = f"{MILWAUKIE}/12.16/12.16.040.txt"
     assert [r for r in milwaukie if r.path == access]
 
 

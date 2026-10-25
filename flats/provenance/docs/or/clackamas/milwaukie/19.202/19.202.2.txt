@@ -1,0 +1,76 @@
+§ 19.202.2. Vertical Measurements.
+
+A.
+
+Interior Height
+
+Floor-to-ceiling height shall be measured from the top of the floor finish to the bottom of the ceiling joists or, where there is no ceiling, to the bottom of the roof rafters.
+
+B.
+
+Exterior Height of Primary Structures
+
+The height of a primary structure building is the vertical distance from the base point described in Subsection 19.202.2.B.1, below, to the top of a building described in Subsection 19.202.2.B.2, below.
+
+1.
+
+Base Point
+
+The base point used for building height measurement shall be the base point that yields the greater building height.
+See Figure 19.202.2.B.1.
+
+a.
+
+Base point 1 is the elevation of the highest adjoining sidewalk or ground surface within a 5-ft horizontal distance from the exterior wall of the Building, when such sidewalk or ground surface is not more than 10 ft above lowest grade.
+
+b.
+
+Base point 2 is 10 ft above lowest grade, when the sidewalk or ground surface described for base point 1 is more than 10 ft above lowest grade.
+
+Figure 19.202.2.B.1 Base Point Measurement
+Base Point #1                               Base Point #2
+
+2.
+
+Top of Building
+
+The top of building shall be determined based on the specific roof types listed below.
+See Figure 19.202.2.B.2.
+
+a.
+
+Flat roof: Measure to the top of the parapet or, if there is no parapet, to the highest point of the roof.
+If a roof includes multiple flat roofs at different elevations, measure to the top of the highest parapet or highest point of the highest roof.
+
+b.
+
+Mansard roof: Measure to the deck line.
+
+c.
+
+Pitched, hipped, or gambrel roof where roof pitch is 12/12 or less: Measure to the average height of the highest gable.
+
+d.
+
+Pitched or hipped roof with a pitch steeper than 12/12: Measure to the highest point.
+
+e.
+
+Gambrel roof where both pitches are steeper than 12/12: Measure to the highest point.
+
+f.
+
+Other roof shape, such as domed, vaulted, or pyramidal: Measure to the highest point.
+
+g.
+
+Stepped or terraced building: Measure to the highest point of any segment of the building.
+
+Figure 19.202.2.B.2 Top of Building Measurement
+
+C.
+
+Exterior Height of Accessory Structures
+
+The exterior height of an accessory structure is the vertical distance above the average of the highest and lowest points of finished grade, within a 10-ft horizontal Distance from the base of the building, and the top of a building described in SubSection 19.202.B.2.
+

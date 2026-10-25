@@ -164,7 +164,8 @@ Cottage Cluster
 None for dwelling unit under 1,000 sf in size; 1 space per dwelling unit 1,000 sf or larger in size (may be provided per individual cottage or in clustered parking)
 (e)
 Rooming House or Boarding House
-Spaces equal to 80 percent of the number of guest accommodations plus one additional space for the owner or manager Not Applicable
+Spaces equal to 80 percent of the number of guest accommodations plus one additional space for the owner or manager
+Not Applicable
 Not Applicable
 (f)
 Senior Housing Center
@@ -208,7 +209,8 @@ Not Applicable
 (2) COMMERCIAL RESIDENTIAL USES
 (a)
 Hotel or Motel
-1 space per guest room or suite plus 1 additional space for the owner or manager and 1 space per 2 employees Not Applicable
+1 space per guest room or suite plus 1 additional space for the owner or manager and 1 space per 2 employees
+Not Applicable
 Not Applicable
 (3) INSTITUTIONAL USES
 (3) INSTITUTIONAL USES
@@ -237,7 +239,9 @@ Not Applicable
 (4) PLACES OF PUBLIC ASSEMBLY
 (a)
 Church
-1 space per 6 seats or 8 feet of bench length in the main auditorium or 75 square feet of floor area of a main auditorium not containing fixed seats 0.6 space per seat or 1.33 feet of bench length in the main auditorium or 12.5 square feet of floor area of a main auditorium not containing fixed seats 0.8 space per seat or 1.33 feet of bench length in the main auditorium or 12.5 square feet of floor area of a main auditorium not containing fixed seats
+1 space per 6 seats or 8 feet of bench length in the main auditorium or 75 square feet of floor area of a main auditorium not containing fixed seats
+0.6 space per seat or 1.33 feet of bench length in the main auditorium or 12.5 square feet of floor area of a main auditorium not containing fixed seats
+0.8 space per seat or 1.33 feet of bench length in the main auditorium or 12.5 square feet of floor area of a main auditorium not containing fixed seats
 (b)
 Library, Reading Room
 1 space per 400 square feet plus 1 space per 2 employees
@@ -250,14 +254,18 @@ Not Applicable
 Not Applicable
 (d)
 Primary or Middle School
-1 space per classroom plus 1 space per administrative employee plus 1 space per 4 seats or 8 feet of bench length in the main auditorium or 75 square feet of floor area of a main auditorium not containing fixed seats Not Applicable
+1 space per classroom plus 1 space per administrative employee plus 1 space per 4 seats or 8 feet of bench length in the main auditorium or 75 square feet of floor area of a main auditorium not containing fixed seats
+Not Applicable
 Not Applicable
 (e)
 High School, College or Commercial School for Adults
-1 space per classroom plus 1 space per administrative employee plus 1 space for each 6 students or 1 space per 4 seats or 8 feet of bench length in the main auditorium, whichever is greater 1.5 spaces per classroom plus 1.5 spaces per administrative employee plus 1.5 spaces for each 6 students or 1.5 spaces per 4 seats or 8 feet of bench length in the main auditorium, whichever is greater 1.5 spaces per classroom plus 1.5 spaces per administrative employee plus 1.5 spaces for each 6 students or 1.5 spaces per 4 seats or 8 feet of bench length in the main auditorium, whichever is greater
+1 space per classroom plus 1 space per administrative employee plus 1 space for each 6 students or 1 space per 4 seats or 8 feet of bench length in the main auditorium, whichever is greater
+1.5 spaces per classroom plus 1.5 spaces per administrative employee plus 1.5 spaces for each 6 students or 1.5 spaces per 4 seats or 8 feet of bench length in the main auditorium, whichever is greater
+1.5 spaces per classroom plus 1.5 spaces per administrative employee plus 1.5 spaces for each 6 students or 1.5 spaces per 4 seats or 8 feet of bench length in the main auditorium, whichever is greater
 (f)
 Non-School Auditorium, Meeting Room, Community or Senior Center
-1 space per 6 seats or 8 feet of bench length in an assembly room or 75 square feet of floor area of an assembly room not containing fixed seats, plus 1 space for each administrative employee, plus 1 space for each classroom or lounge, plus requirements for other uses included in the building Not Applicable
+1 space per 6 seats or 8 feet of bench length in an assembly room or 75 square feet of floor area of an assembly room not containing fixed seats, plus 1 space for each administrative employee, plus 1 space for each classroom or lounge, plus requirements for other uses included in the building
+Not Applicable
 Not Applicable
 (5) COMMERCIAL AMUSEMENT
 (5) COMMERCIAL AMUSEMENT
@@ -305,7 +313,8 @@ Retail Store
 1 space per 196 square feet
 1 space per 161 square feet
 (b)
-Service or Repair Shop, Retail Store Handling Exclusively Bulky Merchandise Such as Automobiles or Furniture 1 space per 600 square feet
+Service or Repair Shop, Retail Store Handling Exclusively Bulky Merchandise Such as Automobiles or Furniture
+1 space per 600 square feet
 1 space per 294 square feet
 1 space per 161 square feet
 (c)

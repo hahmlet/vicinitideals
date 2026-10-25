@@ -14,7 +14,7 @@ notes: Ported from quadfit rules.yaml. Every value is `draft` — quadfit's veri
   downtown district. Encoded for DMU 2026-10-08 (min_building_height_ft 25; the depth clause has no
   field and is named in the DMU notes). Exempt there are additions to existing buildings,
   accessory structures, and buildings under 1,000 sq ft of floor area -- the pod is twice that.
-  (or/clackamas/milwaukie/19.300.base-zones.txt#L1870,L1878,L1882,L1926-L1938.)
+  (or/clackamas/milwaukie/19.304/19.304.5.txt#L61-L63,L71,L75-L76,L123-L135.)
 ingest:
   geoid: null
   juris_city_codes:
@@ -754,7 +754,7 @@ definitions:
   corner_lot:
     test: intersecting_frontages
     count: 2
-    quote: "or/clackamas/milwaukie/19.200.definitions.txt#L434-L435"
+    quote: "or/clackamas/milwaukie/19/19.201.txt#L365"
     cite: "MMC 19.200, Definitions, Corner lot"
 
 code:
@@ -820,11 +820,11 @@ code:
   # places, not zoning -- and it is here because Title 19 sends the reader out
   # to it three times and then stops: "Driveways must be designed and
   # constructed in accordance with Chapters 12.16 and 12.24"
-  # (19.500.supplementary.txt#L669, L731), "Driveway approaches shall comply
+  # (19.504.6.txt#L56,L118), "Driveway approaches shall comply
   # with the access spacing standards of Chapter 12.16"
-  # (19.600.parking.txt#L656), and the definition of DRIVEWAY APPROACH ends
+  # (19.606.3.txt#L24-L25), and the definition of DRIVEWAY APPROACH ends
   # "See Chapter 12.16 Access Management for definitions of these terms"
-  # (19.200.definitions.txt#L235).
+  # (19.201.txt#L191-L193).
   #
   # The crossref ledger had been calling this chapter BINDING beside "max.
   # maneuvering-area width" and nobody had opened it. It holds a driveway
@@ -896,7 +896,7 @@ defaults:
     cite: Milwaukie MMC Table 19.501.2.A, additional yard requirements, distance from centerline plus the zone's yard, by major street
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L35-L67"
+    quote: "or/clackamas/milwaukie/19.501/19.501.2.txt#L5-L38"
   # PARKING, read 2026-08-27. Milwaukie states no vehicle-parking minimum for
   # a quadplex, caps one at four spaces, dimensions the space, and dimensions
   # no aisle it is allowed to use. Every part of that is in Chapter 19.600
@@ -931,7 +931,7 @@ defaults:
     cite: MMC 19.605.1, Table 19.605.1 footnote 1 (Middle Housing)
     url: https://ecode360.com/print/MI4969?guid=43862935
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.600.parking.txt#L292"
+    quote: "or/clackamas/milwaukie/19.605/19.605.1.txt#L83"
   # And a ceiling of one space per unit, which is four for this building and
   # the tightest cap in the corpus outside Portland. Row A.3.c of Table
   # 19.605.1 is "Quadplexes -- 1 space per dwelling unit", under the heading
@@ -944,7 +944,7 @@ defaults:
     cite: MMC 19.605.1, Table 19.605.1, row A.3.c Quadplexes
     url: https://ecode360.com/print/MI4969?guid=43862935
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.600.parking.txt#L245-L246,L253"
+    quote: "or/clackamas/milwaukie/19.605/19.605.1.txt#L33-L34,L42"
   # The stall, from Section 19.607, "Off-Street Parking Standards for
   # Residential Areas". 19.607.1 names the building: "The provisions of
   # Subsection 19.607.1 apply to passenger vehicles and off-street parking
@@ -958,13 +958,13 @@ defaults:
     cite: MMC 19.607.1.A (Residential Driveways and Vehicle Parking Areas)
     url: https://ecode360.com/print/MI4969?guid=43862935
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.600.parking.txt#L919,L925"
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L3-L4,L10"
   parking_stall_depth_ft:
     value: 18
     cite: MMC 19.607.1.A (Residential Driveways and Vehicle Parking Areas)
     url: https://ecode360.com/print/MI4969?guid=43862935
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.600.parking.txt#L919,L925"
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L3-L4,L10"
   #
   # NOT ENCODED: the drive aisle, and the reason is a sentence that has to be
   # read before Table 19.606.1 is believed. Table 19.606.1 does state aisles
@@ -989,7 +989,7 @@ defaults:
   # minimum above. So this layer holds a stall and no aisle -- Wilsonville's
   # shape a second time -- and that is not an aisle of zero. Anything drawing
   # a court in Milwaukie is drawing it against a number Milwaukie has not
-  # published. (19.600.parking.txt#L1001)
+  # published. (19.607.1.txt#L94)
   #
   # WHERE THE NUMBER WENT, 2026-08-31. This refusal stands -- the code states
   # no aisle and this layer holds none. What changed is downstream: quadfit's
@@ -1027,7 +1027,7 @@ defaults:
     cite: MMC 19.607.1.D, uncovered parking spaces and maneuvering areas as a share of the front yard area
     url: https://ecode360.com/print/MI4969?guid=43862935
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.600.parking.txt#L931,L975"
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L16,L65"
   # 19.505.3.D.4.a, and it is a flat prohibition rather than a cap:
   # "On-site surface parking areas, garages, and vehicle maneuvering areas
   # shall not be located directly between the facade of a primary building(s)
@@ -1050,7 +1050,7 @@ defaults:
     cite: MMC 19.505.3.D.4.a, surface parking, garages and maneuvering areas not directly between a primary building facade and an abutting street; applicability at 19.505.3.B
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485"
+    quote: "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L161"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -1076,12 +1076,12 @@ defaults:
     cite: MMC 19.505.3.D.4.a, parking kept from directly between a facade and an abutting street, with no side-yard ban stated
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485"
+    quote: "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L161"
     variants:
       - value: true
         when: [unit_lots]
         cite: MMC 19.505.5.F.2.a, off-street parking accessed on the back facade or located in the rear yard
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2314"
+        quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L297"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1099,12 +1099,12 @@ defaults:
     cite: MMC 12.16.040(B)(2), Double Frontage, access first from the street with the lowest classification
     url: https://ecode360.com/print/MI4969?guid=43857228
     retrieved: '2026-09-03'
-    quote: "or/clackamas/milwaukie/12.16.access-management.txt#L124-L126"
+    quote: "or/clackamas/milwaukie/12.16/12.16.040.txt#L34-L37"
     variants:
       - value: side
         when: [unit_lots]
         cite: MMC 19.505.5.F.2.b, townhouse development that includes a corner lot takes access from a single driveway on the side of the corner lot
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2318"
+        quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L301-L303"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -1121,7 +1121,7 @@ defaults:
     cite: MMC 19.201.3, Front lot line, the street on which the contemplated development will face
     url: https://ecode360.com/print/MI4969?guid=43860165
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.200.definitions.txt#L470"
+    quote: "or/clackamas/milwaukie/19/19.201.txt#L395-L399"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -1138,7 +1138,7 @@ defaults:
     cite: MMC 19.201, Front lot line, on a through lot the street on which the contemplated development will face; the rear lot line is opposite and most distant
     url: https://ecode360.com/print/MI4969?guid=43860165
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.200.definitions.txt#L470,L474"
+    quote: "or/clackamas/milwaukie/19/19.201.txt#L395-L399,L402"
   # 19.505.5.F, on four unit lots, and it is tighter than anything above.
   # Front-facade garages, front-yard parking and driveways in front of a
   # townhouse are prohibited outright UNLESS all four of: "development of 4
@@ -1159,12 +1159,12 @@ defaults:
     cite: MMC 19.607.1.D, which caps a share of the front yard area and states no maneuvering-area width
     url: https://ecode360.com/print/MI4969?guid=43862935
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.600.parking.txt#L931,L975"
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L16,L65"
     variants:
       - value: 10
         when: [unit_lots]
         cite: MMC 19.505.5.F.1, outdoor on-site parking and maneuvering areas on a townhouse lot
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2288-L2330"
+        quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L270-L317"
   # Table 19.505.3.D.1, Private Open Space, objective standard: "For each
   # dwelling unit located on the ground floor, or within 5 ft of finished
   # grade, a minimum of 96 sq ft of private open space, with a minimum
@@ -1187,7 +1187,7 @@ defaults:
     cite: MMC Table 19.505.3.D.1, private open space per ground-floor dwelling unit; applicability at 19.505.3.B
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1458-L1462"
+    quote: "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L126-L131"
   # The same sentence's other number: "with a minimum dimension of 5 ft", on a
   # patio "directly accessible from the interior of the dwelling unit" (D.1.c).
   # Four patios off four walls, not one area anywhere on the lot, so it is its
@@ -1201,7 +1201,7 @@ defaults:
     cite: MMC Table 19.505.3.D.1.a and D.1.c, private open space minimum dimension; applicability at 19.505.3.B
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
-    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1462,L1464"
+    quote: "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L131,L133"
   #
   # NOT ENCODED: 19.505.3.D.4.b, "Parking located to the side of a dwelling
   # structure shall be limited to 50% of the linear frontage of that side."
@@ -1210,7 +1210,7 @@ defaults:
   # which is a different denominator and would be a different rule in the same
   # field. D.4.c, garages in the same structure as the dwellings set at least
   # 4 ft behind the front facade, needs a garage this design does not have.
-  # (or/clackamas/milwaukie/19.500.supplementary.txt#L1486-L1487)
+  # (or/clackamas/milwaukie/19.505/19.505.3.txt#L162-L164)
   #
   # 19.607.1.E.1 holds the driveway to the width of the approved approach
   # within 5 ft of the right-of-way, or a 1:1 widening to the 10-ft point
@@ -1226,7 +1226,7 @@ defaults:
   # width is not in this chapter; it is in Chapter 12.16, Access Management,
   # which is a Title 12 chapter and was not in the store. Three sentences in
   # Title 19 point at it by name, one of them in the parking chapter itself
-  # (19.600.parking.txt#L656), and the crossref ledger had been reporting it
+  # (19.606.3.txt#L24-L25), and the crossref ledger had been reporting it
   # as BINDING beside "max. maneuvering-area width" the whole time. "Nowhere
   # in this chapter" was true; "nowhere in Milwaukie" is what the note went on
   # to claim, and nobody had looked. Same shape as Portland's aisle, where
@@ -1254,12 +1254,12 @@ defaults:
     cite: MMC 12.16.040.E.3, minimum driveway apron width for plex development on collector or arterial streets
     url: https://ecode360.com/print/MI4969?guid=43857228
     retrieved: '2026-09-04'
-    quote: "or/clackamas/milwaukie/12.16.access-management.txt#L260"
+    quote: "or/clackamas/milwaukie/12.16/12.16.040.txt#L185"
     variants:
       - value: 12
         when: [local_street]
         cite: MMC 12.16.040.E.3, minimum driveway apron width for plex development on local or neighborhood streets
-        quote: "or/clackamas/milwaukie/12.16.access-management.txt#L260"
+        quote: "or/clackamas/milwaukie/12.16/12.16.040.txt#L185"
   # Twenty feet on all streets, so no variant. It is the tightest approach
   # ceiling in this corpus -- Oregon City allows 36 for the same building and
   # West Linn 36 -- and it is a ceiling on the curb cut only: 19.607.1.E.1
@@ -1270,7 +1270,7 @@ defaults:
     cite: MMC 12.16.040.E.3, maximum driveway apron width for plex development, all streets
     url: https://ecode360.com/print/MI4969?guid=43857228
     retrieved: '2026-09-04'
-    quote: "or/clackamas/milwaukie/12.16.access-management.txt#L260"
+    quote: "or/clackamas/milwaukie/12.16/12.16.040.txt#L185"
   #
   # NOT ENCODED: 12.16.040.B.4, "The nearest edge of the driveway apron must
   # be at least five (5) feet from the side property line in residential
@@ -1280,7 +1280,7 @@ defaults:
   # drive up the side of the lot loses 5 ft of it to a rule nothing in the
   # screen is measuring. Recorded here rather than encoded, and it needs a
   # field before it can bind.
-  # (or/clackamas/milwaukie/12.16.access-management.txt#L138)
+  # (or/clackamas/milwaukie/12.16/12.16.040.txt#L50-L51)
   #
   # NOT ENCODED: 12.16.040.B.5.a, 45 ft from the nearest intersecting face of
   # curb to the nearest edge of the apron, quadplexes named explicitly. It
@@ -1290,7 +1290,7 @@ defaults:
   # cases a formal modification is not required." A standard whose own text
   # excuses every existing lot from meeting it is not a standard this screen
   # can fail anybody on.
-  # (or/clackamas/milwaukie/12.16.access-management.txt#L148)
+  # (or/clackamas/milwaukie/12.16/12.16.040.txt#L64-L65)
   #
   # NOT ENCODED: 12.16.040.B.1, accessway spacing of 600 ft on arterials and
   # 300 ft on collectors, and 12.16.040.C.3, one accessway per plex property.
@@ -1298,7 +1298,7 @@ defaults:
   # does not hold -- West Linn's CDC 48.060(C) is refused on the same ground
   # -- and the one-accessway rule costs a four-unit pod nothing, since it
   # needs one.
-  # (or/clackamas/milwaukie/12.16.access-management.txt#L116,L120,L182)
+  # (or/clackamas/milwaukie/12.16/12.16.040.txt#L26,L30,L101)
   #
   # NOT ENCODED: the clear vision area, MMC 12.24.030 and 12.24.040. It bans
   # any structure over 3 ft in a triangle at every driveway and every corner,
@@ -1320,12 +1320,12 @@ defaults:
   # not reach it and the pod must turn around on its own lot. That is a
   # layout requirement, not a dimension, and it is the reason the assumed
   # aisle matters here: it is the thing the aisle is for, stated by the city.
-  # (or/clackamas/milwaukie/12.16.access-management.txt#L242)
+  # (or/clackamas/milwaukie/12.16/12.16.040.txt#L166)
   #
   # 19.607.1.B forbids any part of a space in a right-of-way, access easement
   # or over a public sidewalk; 19.607.1.C requires a durable, dust-free,
   # all-weather surface in a required front, street-side or side yard.
-  # (or/clackamas/milwaukie/19.600.parking.txt#L931-L999)
+  # (or/clackamas/milwaukie/19.607/19.607.1.txt#L16-L92)
   #
   # NOT ENCODED: the front-yard SPACE COUNT of 19.607.1.D -- "No more than 3
   # residential parking spaces are allowed within the required front yard...
@@ -1333,7 +1333,7 @@ defaults:
   # yard." The code counts them by fitting non-overlapping 9 x 18 rectangles
   # inside the required front yard, which is a measurement no field holds, and
   # it is moot anyway wherever 19.505.3.D.4.a keeps parking out of the strip
-  # in front of the building. (or/clackamas/milwaukie/19.600.parking.txt#L931-L999)
+  # in front of the building. (or/clackamas/milwaukie/19.607/19.607.1.txt#L16-L92)
 
 # Which zones across a lot line make a DMU or GMU yard 20 ft (MMC 19.504.4.A;
 # FOLLOWUPS 52, 2026-10-09). Only DMU and GMU reach the building (by unit lots),
@@ -1342,7 +1342,7 @@ neighbours:
   abuts_residential_zone:
     true_for: [R-MD, R-HD]
     false_for: [DMU, GMU, NMU, SMU, C-CS, C-G, MUTSA, NME, BI, M, OS]
-    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L599-L605"
+    quote: "or/clackamas/milwaukie/19.504/19.504.4.txt#L1-L10"
     cite: MMC 19.504.4 (Transition Area Measures) and 19.504.4.A; the zones are
       the thirteen of Chapter 19.300 that Milwaukie's map carries
     note: >-
@@ -1373,7 +1373,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L35"
+      quote: "or/clackamas/milwaukie/19.301/19.301.2.txt#L15"
       variants:
         # MMC 19.401.3: inside the Willamette Greenway Zone "all land use
         # actions ... or development permitted in the underlying zone, are
@@ -1398,10 +1398,10 @@ zones:
         # and on a flag lot that path closes.
         - value: false
           when: [unit_lots, flag_lot]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L282"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L197"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_side_ft:
       # 5 ft is what row C.1 prints. It is not the side yard this building
       # gets. Four rows below it the same table prints a side yard height
@@ -1415,7 +1415,7 @@ zones:
       # distance above the grade ... From the starting point, the side yard
       # height plane slopes up at a specified angle until it reaches the
       # maximum allowed building height" -- MMC 19.200, Definitions, "Side
-      # yard height plane", at 19.200.definitions.txt#L813-L814. The plane
+      # yard height plane", at 19.201.txt#L701-L705. The plane
       # starts at the required yard, not at the lot line, which is the
       # difference between 11 ft and 6.
       #
@@ -1426,52 +1426,52 @@ zones:
       # design sections for one-to-four-unit, multi-unit and townhouse
       # development -- state articulation and entries, not yards.
       value: 5
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L194"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L109"
       step_back:
         height_ft: 20
         slope_degrees: 45
         cite: MMC Table 19.301.4 row C.3, Side yard height plane limit
-        quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L229,L231,L232,L236,L237"
+        quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L144,L146-L147,L151-L152"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L215"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L130"
       variants:
         - value: 15
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L214"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L129"
     setback_street_side_ft:
       value: 20
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L207"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L122"
       variants:
         - value: 5
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L204"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L119"
         - value: 15
           band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L205"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L120"
         - value: 15
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L206"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L121"
     min_lot_sqft:
       value: 3000
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L120"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L35"
       variants:
         - value: 1500
           when: [unit_lots]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L119-L130"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L34-L45"
     min_lot_width_ft:
       value: 60
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L145"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L60"
       variants:
         - value: 20
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L142"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L57"
         - value: 30
           band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L143"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L58"
         - value: 50
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L144"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L59"
     min_lot_depth_ft:
       # Table 19.301.4 row B.2, banded by lot size the same way row B.1 above
       # it is: 70 feet on the smallest band and 80 on the other three. The row
@@ -1479,17 +1479,17 @@ zones:
       # screened against no depth floor at all.
       value: 80
       cite: MMC Table 19.301.4 B.2
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L150"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L61,L65"
       variants:
         - value: 70
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L147"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L61-L62"
         - value: 80
           band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L148"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L61,L63"
         - value: 80
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L149"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L61,L64"
     min_frontage_ft:
       # Table 19.301.4 row B.3.b, "Standard lot": 35 / 30 / 35 / 35 across the
       # four bands -- the one row in this table that is not monotonic, so the
@@ -1503,37 +1503,37 @@ zones:
       # and nothing here measures whether a lot is a flag.
       value: 35
       cite: MMC Table 19.301.4 B.3.b
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L158"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L66,L69,L73"
       variants:
         - value: 35
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L155"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L66,L69-L70"
         - value: 30
           band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L156"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L66,L69,L71"
         - value: 35
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L157"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L66,L69,L72"
         - value: 20
           when: [unit_lots]
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L152,L153"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L66-L68"
     max_coverage_pct:
       value: 30
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L245"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L160"
       variants:
         - value: 45
           band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L242"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L157"
         - value: 35
           band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L243"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L158"
         - value: 35
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L244"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L159"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L224"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L139"
     max_density_du_per_acre:
       # Table 19.301.4 row "b. Maximum" reads 25 / 8.7 / 8.7 / 6.2 across the
       # four lot-size bands, and note 4 does two things to it: it exempts
@@ -1542,7 +1542,7 @@ zones:
       # acre, whichever is less. Exempt at the base is the pod on one lot; the
       # variants are the same building split onto four.
       exempt: true
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L198-L199"
       # The acre this rate is per is a net one.
       # 19.202.4.D.1 and .E.1 both subtract floodways, right-of-way
       # dedications and public open space from the gross area before
@@ -1556,7 +1556,7 @@ zones:
       # space and resource land. Land carrying a density bonus or a
       # transfer right is expressly not deducted.
         cite: MMC 19.200 "Net acre"
-        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        quote: "or/clackamas/milwaukie/19/19.201.txt#L444-L445"
         less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
         may_less: [milwaukie_wetlands]
         assumed_none:
@@ -1572,7 +1572,7 @@ zones:
         # feet of lot under a four-unit building.
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L198-L199"
     notes: 'Table 19.301.4 is one zone in four columns, split by how big the lot already is: 1,500-2,999
       sq ft, 3,000-4,999, 5,000-6,999, and 7,000 and up. The base value here is the last column and the
       variants are the other three, so a lot FLATS has not measured comes back ambiguous rather than
@@ -1599,7 +1599,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L404"
+      quote: "or/clackamas/milwaukie/19.302/19.302.2.txt#L15"
       variants:
         # MMC 19.401.3: inside the Willamette Greenway Zone "all land use
         # actions ... or development permitted in the underlying zone, are
@@ -1621,7 +1621,7 @@ zones:
           quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L495"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L33"
     setback_side_ft:
       # Same plane, five feet higher: Table 19.302.4 allows 25 ft at the
       # minimum side yard and the same 45 degrees. A 26 ft wall is one foot
@@ -1643,39 +1643,39 @@ zones:
       # was cited for it did not cover the case, which is the whole reason
       # for quoting the pair.
       value: 5
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L526,L530"
+      quote: "or/clackamas/milwaukie/19.302/19.302.5.txt#L12,L16-L18"
       step_back:
         height_ft: 25
         slope_degrees: 45
         cite: MMC Table 19.302.4, Side yard height plane limit
-        quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L500-L502"
+        quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L38-L40"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L498"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L36"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L497"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L35"
       variants:
         - value: 5
           when: [unit_lots]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L512"
+          quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L51"
     min_lot_sqft:
       value: 3000
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L476"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L14"
       variants:
         - value: 1500
           when: [unit_lots]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L475"
+          quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L13"
     min_lot_width_ft:
       value: 20
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L486"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L24"
     min_lot_depth_ft:
       # Table 19.302.4, lot standards: 70 feet, stated once for the zone. The
       # row sits directly under the lot width this file already holds and was
       # not carried across with it.
       value: 70
       cite: MMC Table 19.302.4 A
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L484,L487"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L22,L25"
     min_frontage_ft:
       # Table 19.302.4, "Minimum street frontage requirements": 35 feet on a
       # standard lot, 20 on a townhouse lot. The flag-lot and double-flag-lot
@@ -1683,17 +1683,17 @@ zones:
       # a relaxation on a lot shape nothing measures.
       value: 35
       cite: MMC Table 19.302.4 A
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L488,L490"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L26,L28"
       variants:
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L488,L489"
+          quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L26-L27"
     max_height_ft:
       value: 45
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L499"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L37"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L503"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L41"
     max_density_du_per_acre:
       # Table 19.302.4 caps R-HD at 32 du per acre, and note 2 is the same
       # sentence Table 19.301.4 prints: middle housing is exempt, townhouses
@@ -1701,7 +1701,7 @@ zones:
       # less. Four times 32 is 128, so here the 25 governs -- the townhouse
       # path is capped tighter than the zone.
       exempt: true
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L510"
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L48-L49"
       # The acre this rate is per is a net one.
       # 19.202.4.D.1 and .E.1 both subtract floodways, right-of-way
       # dedications and public open space from the gross area before
@@ -1715,7 +1715,7 @@ zones:
       # space and resource land. Land carrying a density bonus or a
       # transfer right is expressly not deducted.
         cite: MMC 19.200 "Net acre"
-        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        quote: "or/clackamas/milwaukie/19/19.201.txt#L444-L445"
         less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
         may_less: [milwaukie_wetlands]
         assumed_none:
@@ -1724,7 +1724,7 @@ zones:
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L510"
+          quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L48-L49"
     notes: 'Re-read against the adopted Table 19.302.4; the ported quadfit row disagreed with it on four
       standards and is replaced. Front was 5 and is 20: the 5 ft front yard applies only to properties
       identified in Figure 19.302.4, a mapped subset this screen cannot evaluate, so the general standard
@@ -1756,7 +1756,7 @@ zones:
   #
   # One definition does most of the work. MMC 19.200 defines "Quadplex" as
   # "4 dwelling units on a lot or parcel in any configuration"
-  # (19.200.definitions.txt#L731-L732) and "Multi-unit development" as "a
+  # (19.201.txt#L616) and "Multi-unit development" as "a
   # structure that contains 5 or more dwelling units" (L723-L724); the
   # residential tables list Quadplex and Multi-unit housing as separate rows.
   # So a table whose only housing row is multifamily has no row a four-unit
@@ -1779,7 +1779,7 @@ zones:
       # uses and short-term rentals. 19.304.2.D: uses listed with an N, or
       # not listed, are prohibited as new uses. 29 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1400,L1402,L1424-L1427,L1428-L1456,L1547-L1551,L1572-L1573"
+      quote: "or/clackamas/milwaukie/19.304/19.304.2.txt#L28,L30-L31,L54-L86,L184-L189,L210-L211"
     notes: >-
       Encoded 2026-09-20 from Table 19.304.2. The whole OS column is sixteen
       Ns and four yeses, and the four are parks, community service uses,
@@ -1807,7 +1807,7 @@ zones:
       # definition and the city lists the two as separate rows wherever it
       # lists both. Not listed here, so 19.312.2.E answers. 80 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3502,L3504,L3534-L3560,L3809-L3811"
+      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370"
     notes: >-
       Encoded 2026-09-20 from Table 19.312.2. The closest call among the
       seven: the zone's purpose sentence names housing as a primary use and
@@ -1834,7 +1834,7 @@ zones:
       # Live/work units N -- and 19.312.2.E prohibits what the table lists
       # with an N. 57 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3502,L3504,L3534-L3560,L3809-L3811"
+      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370"
     notes: >-
       Encoded 2026-09-20 from Table 19.312.2. The one column of the pair that
       needs no argument about what multifamily means: the cells are N.
@@ -1989,7 +1989,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: MMC 19.304.2.D (uses not listed in Table 19.304.2 are prohibited) and Table 19.304.2 (no duplex, triplex or quadplex row in the Residential rows)
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1400-L1402,L1428-L1456"
+      quote: "or/clackamas/milwaukie/19.304/19.304.2.txt#L28-L31,L58-L86"
       variants:
         - value: true
           when: [unit_lots, inside_mapped_use_area]
@@ -2006,22 +2006,22 @@ zones:
           quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
     min_lot_sqft:
       value: 750
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1703-L1704"
+      quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L29-L30"
       variants:
         - value: 1500
           when: [unit_lots]
           cite: MMC 19.505.5.E.2, townhouse development must meet the minimum lot size of 1,500 sq ft (larger than the table 750)
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2280"
+          quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L262"
     min_frontage_ft:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1706-L1707"
+      quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L32-L33"
     max_height_ft:
       # Table 19.304.4 prints "45-55 (height bonus available)": the base is
       # on Figure 19.304-4, an image (19.304.5.B.2.c), and the bonuses add to
       # it. The low end is held.
       value: 45
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1747-L1748"
+      quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L73-L74"
     min_building_height_ft:
       # 25 ft "along all street frontages for a depth of at least 25 ft from
       # the front of the building". Exempt: additions, accessory structures
@@ -2031,17 +2031,17 @@ zones:
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1739-L1740,L1882"
     setback_front_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1956"
+      quote: "or/clackamas/milwaukie/19.304/19.304.5.txt#L153"
       qualified_by:
         fact: faces_residential_zone_across_street
         cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
+        quote: "or/clackamas/milwaukie/19.504/19.504.4.txt#L8-L10"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures -- yards abutting or across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard, 20 ft (Table 19.301.4, quoted); read for any residential zone, the tighter reading
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures -- yards abutting or across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard, 20 ft (Table 19.301.4, quoted); read for any residential zone, the tighter reading
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_front_max_ft:
       # 19.508.4.A.2.b(2): "For other block faces, there is no build-to-line
       # requirement and the maximum setback is 10 ft." On the block faces of
@@ -2050,32 +2050,32 @@ zones:
       value: 10
       cite: MMC 19.508.4.A.2.b(2), maximum setback on block faces without a build-to line
       url: https://ecode360.com/print/MI4969?guid=43861924
-      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L3083"
+      quote: "or/clackamas/milwaukie/19.508/19.508.4.txt#L73-L74"
     setback_side_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1763-L1765"
+      quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L89-L91"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_rear_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1763-L1765"
+      quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L89-L91"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_street_side_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1956"
+      quote: "or/clackamas/milwaukie/19.304/19.304.5.txt#L153"
       qualified_by:
         fact: faces_residential_zone_across_street
         cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
+        quote: "or/clackamas/milwaukie/19.504/19.504.4.txt#L8-L10"
     max_coverage_pct:
       # Table 19.304.4 has no coverage or vegetation row, and 19.304.5 states
       # none (whole-chapter grep of 19.304, L1577-L2036, and a whole-set grep
@@ -2083,19 +2083,19 @@ zones:
       # none.
       exempt: true
       cite: MMC Table 19.304.4 (no lot-coverage row)
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1687-L1810"
+      quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L13-L131"
     parking_front_prohibited:
       value: true
       cite: MMC 19.304.5.D.2.c, off-street parking must not be located between a building and the street-facing lot line (all DMU uses, so held on the unit-lots path too)
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2006"
+      quote: "or/clackamas/milwaukie/19.304/19.304.5.txt#L206"
     min_density_du_per_acre:
       value: 25
       cite: MMC 19.304.5.E.2.a, minimum density for townhouses is 25 units per acre; no maximum
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2026"
+      quote: "or/clackamas/milwaukie/19.304/19.304.5.txt#L227-L228"
       measured_on:
         fact: net_developable_area
         cite: MMC 19.200 "Net acre"
-        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        quote: "or/clackamas/milwaukie/19/19.201.txt#L444-L445"
         less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
         may_less: [milwaukie_wetlands]
         assumed_none:
@@ -2133,21 +2133,21 @@ zones:
     quadplex_allowed:
       value: false
       cite: MMC Table 19.303.2, NMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936"
+      quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L21-L22,L58-L83,L245-L283"
       variants:
         - value: true
           when: [conditional_use]
           cite: "MMC Table 19.303.2, NMU column, Duplex, Triplex, Quadplex CU (Section 19.905); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L742-L746"
+          quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L69-L73"
     min_lot_sqft:
       value: 1500
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
     min_frontage_ft:
       value: 25
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
     max_height_ft:
       value: 45
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1136"
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L66"
     setback_front_ft:
       value: 0
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L998,L1184"
@@ -2159,34 +2159,34 @@ zones:
     # 197A.400 opened the zone; the residential-edge transition as GMU's.
     setback_side_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L955-L957,L1005,L1007"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L19-L21,L69,L71"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures, yards abutting the R-MD Zone at least as wide as the R-MD front yard (20 ft); the NMU exception there is for the FRONT yard only, and 19.303.5.A's 15 ft is smaller
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures, yards abutting the R-MD Zone at least as wide as the R-MD front yard (20 ft); the NMU exception there is for the FRONT yard only, and 19.303.5.A's 15 ft is smaller
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_rear_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L955-L957,L1005,L1007"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L19-L21,L69,L71"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures, yards abutting the R-MD Zone at least as wide as the R-MD front yard (20 ft); the NMU exception there is for the FRONT yard only, and 19.303.5.A's 15 ft is smaller
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures, yards abutting the R-MD Zone at least as wide as the R-MD front yard (20 ft); the NMU exception there is for the FRONT yard only, and 19.303.5.A's 15 ft is smaller
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     max_coverage_pct:
       value: 85
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L79-L80"
     min_landscaped_pct:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L83-L84"
     min_density_du_per_acre:
       value: 11.6
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1286"
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L223"
     max_density_du_per_acre:
       value: 14.5
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1286"
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L223"
     notes: >-
       OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): every dwelling row is a conditional use (19.905) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Side and rear yards are now encoded from the same table. Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.905, are not stored; held red until they are read. The 2026-10-08 ruling read: every dwelling row of Table 19.303.2
@@ -2205,12 +2205,12 @@ zones:
     quadplex_allowed:
       value: false
       cite: MMC Table 19.303.2, GMU column -- Duplex, Triplex, Quadplex is CU (the one-lot row); 19.303.2.D
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L742-L746"
+      quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L21-L22,L69-L73"
       variants:
         - value: true
           when: [unit_lots]
           cite: MMC Table 19.303.2, Townhouses P in the GMU column, footnote 1 (the four-in-a-row limit of 19.505.5 does not apply in the GMU Zone)
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L737-L741,L921-L922"
+          quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L64-L68,L263-L265"
         - value: false
           when: [unit_lots, willamette_greenway_zone]
           cite: MMC 19.401.3 and 19.401.5.D (all development in the Willamette Greenway Zone is a conditional use; by-right only, so no hearing variant)
@@ -2219,10 +2219,10 @@ zones:
           quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
     min_lot_sqft:
       value: 1500
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
     min_frontage_ft:
       value: 25
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
     max_height_ft:
       # Base maximum; the 57-69 ft bonus heights are not taken (19.303.4.B.3).
       value: 45
@@ -2239,13 +2239,13 @@ zones:
       qualified_by:
         fact: faces_residential_zone_across_street
         cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
+        quote: "or/clackamas/milwaukie/19.504/19.504.4.txt#L8-L10"
       variants:
         - value: 20
           when: [abuts_residential_zone]
           cite: MMC 19.504.4.A, transition measures -- yards abutting or across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft), superseding the base zone yard; read for any residential zone, the tighter reading
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_front_max_ft:
       # 20 ft in the zone; 10 ft on the commercial edges of Figure
       # 19.303.4.C.2.b (an image, not traced). The 20 is held; a pod set 10-20
@@ -2255,47 +2255,47 @@ zones:
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1001,L1188"
     setback_side_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1005-L1006"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L69-L70"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4; 19.303.5.A prints 15 for the same edge
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4; 19.303.5.A prints 15 for the same edge
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_rear_ft:
       value: 0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1005-L1006"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L69-L70"
       variants:
         - value: 20
           when: [abuts_residential_zone]
-          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4; 19.303.5.A prints 15 for the same edge
+          cite: MMC 19.504.4.A (19.504.4.txt#L6-L10), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4; 19.303.5.A prints 15 for the same edge
           url: https://ecode360.com/print/MI4969?guid=43861924
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L99"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1184,L1296-L1300"
       qualified_by:
         fact: faces_residential_zone_across_street
         cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
-        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
+        quote: "or/clackamas/milwaukie/19.504/19.504.4.txt#L8-L10"
     max_coverage_pct:
       value: 85
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L79-L80"
     min_landscaped_pct:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L83-L84"
     parking_front_prohibited:
       value: true
       cite: MMC 19.303.4.C.2.f, no vehicle parking between the building and the street (all GMU uses, so held on the unit-lots path too)
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1212"
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L145-L146"
     min_density_du_per_acre:
       value: 25
       cite: MMC 19.303.4.F.2.a, minimum density for stand-alone residential development in the GMU Zone is 25 units per acre
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1282"
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L219"
       measured_on:
         fact: net_developable_area
         cite: MMC 19.200 "Net acre"
-        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        quote: "or/clackamas/milwaukie/19/19.201.txt#L444-L445"
         less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
         may_less: [milwaukie_wetlands]
         assumed_none:
@@ -2304,11 +2304,11 @@ zones:
     max_density_du_per_acre:
       value: 50
       cite: MMC 19.303.4.F.2.a, maximum density for stand-alone residential development in the GMU Zone is 50 units per acre
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1282"
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L219"
       measured_on:
         fact: net_developable_area
         cite: MMC 19.200 "Net acre"
-        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        quote: "or/clackamas/milwaukie/19/19.201.txt#L444-L445"
         less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
         may_less: [milwaukie_wetlands]
         assumed_none:
@@ -2337,36 +2337,36 @@ zones:
     quadplex_allowed:
       value: false
       cite: MMC Table 19.303.2, SMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936"
+      quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L21-L22,L58-L83,L245-L283"
       variants:
         - value: true
           when: [conditional_use]
           cite: "MMC Table 19.303.2, SMU column, Duplex, Triplex, Quadplex CU (Section 19.905); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
-          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L742-L746"
+          quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L69-L73"
     min_lot_sqft:
       value: 1500
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
     min_frontage_ft:
       value: 25
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
     max_height_ft:
       value: 35
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L987,L1140"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L999"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L60-L63"
     setback_front_max_ft:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1003"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L64-L67"
     max_coverage_pct:
       value: 85
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L79-L80"
     min_landscaped_pct:
       value: 15
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L83-L84"
     min_density_du_per_acre:
       value: 7.0
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1052-L1055"
+      quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L116-L119"
     notes: >-
       OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): every dwelling row is a conditional use (19.905) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true; the side and rear yards are still not encoded (below), so an SMU lot reads UNKNOWN, not green, until the 5/10 cell is read. Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.905, are not stored; held red until they are read. The 2026-10-08 ruling read: the same CU column as NMU in Table
@@ -2383,7 +2383,7 @@ zones:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/milwaukie/19.200.definitions.txt#L777-L778"
+  quote: "or/clackamas/milwaukie/19/19.201.txt#L666-L671"
   says: "may be dedicated or deeded to the public"
   cite: "MMC 19.201 (Right-of-way; Street; Frontage; Corner lot)"
   note: >-

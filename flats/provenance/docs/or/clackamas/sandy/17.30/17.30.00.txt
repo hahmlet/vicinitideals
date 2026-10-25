@@ -1,0 +1,30 @@
+Sec. 17.30.00. - Zoning district designations.
+
+
+For the purposes of this title, the city is divided into districts designated as follows:
+
+District                        Symbol
+Parks and Open Space            POS
+Residential
+Single Family Residential       SFR
+Low Density Residential         R-1
+Medium Density Residential      R-2
+High Density Residential        R-3
+Commercial
+Central Business District       C-1
+General Commercial              C-2
+Village Commercial              C-3
+Industrial
+Industrial Park                 I-1
+Light Industrial                I-2
+General Industrial              I-3
+Overlay Districts
+Cultural and Historic Resource  CHR
+Flood Slope Hazard              FSH
+Specific Area Plan Overlay      SAP
+
+(Ord. No. 2021-16, § 4(Exh.
+D), 8-16-2021; Ord. No. 2024-01, § 1(Exh.
+A), 2-20-2024)
+
+

@@ -337,10 +337,9 @@ RULINGS: dict[str, dict[str, str]] = {
             "the Title 4 designation 16.25.010 cites as the purpose of the "
             "Industrial Campus district (L690)."
         ),
-        "TIA": (
-            "not-a-zone: traffic impact analysis, the study 16.25.005's "
-            "master plan submittal list requires (L350, L454)."
-        ),
+        # TIA (traffic impact analysis, not a zone) left the ledger when
+        # Happy Valley was cut into sections (2026-10-24): one sentence to a
+        # line put its parenthesis three sentences from the word "district".
         # 2026-10-15 (FOLLOWUPS 89): 16.44 came into the store for its
         # driveway sentences and prints two legacy district names.
         "GC": (
@@ -846,11 +845,9 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: the riparian buffer zone, a tree-removal area inside "
             "the flood chapter (cmc.18.90.fp L778)."
         ),
-        "TDR": (
-            "not-a-zone: transfer of development rights, a conditional use "
-            "permit procedure of the natural resources overlay "
-            "(cmc.18.95.nro L171)."
-        ),
+        # TDR (transfer of development rights, not a zone) left the ledger
+        # when Cornelius was cut into sections (2026-10-24): its parenthesis
+        # and "residential zones" are now two sentences on two lines.
     },
     "or/washington/tigard": {
         # All thirteen zones Metro's map prints for Tigard are zone blocks

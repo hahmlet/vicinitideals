@@ -64,9 +64,11 @@ Single-family and Duplex
 2 total
 Dwellings
 Triplex and Fourplex
-1.5 for each dwelling unit, rounded up to the next whole number (except as provided in EMC 16.76.010, Subsection 3) Dwellings
+1.5 for each dwelling unit, rounded up to the next whole number (except as provided in EMC 16.76.010, Subsection 3)
+Dwellings
 Commonwall
-2 for each commonwall dwelling (see on-street credit option in EMC 16.76.010, Subsection 4) Dwellings
+2 for each commonwall dwelling (see on-street credit option in EMC 16.76.010, Subsection 4)
+Dwellings
 Multi-family and cottage clusters
 1 for each unit
 Dwellings
@@ -76,7 +78,8 @@ One additional parking space shall be provided for a second ADU.
 Eating and drinking establishments
 1 for every four customer seats
 Funeral home or mortuary
-1 for every six seats or one space per 50 square feet of area used for assembly, whichever is greater, if there is an assembly area; 1 per 2 employees on maximum shift or operating hours if there is no assembly area Hospital
+1 for every six seats or one space per 50 square feet of area used for assembly, whichever is greater, if there is an assembly area; 1 per 2 employees on maximum shift or operating hours if there is no assembly area
+Hospital
 3 for every two patient beds
 Hotel, motel, boarding house, or resort
 1 per lodging/accommodation unit
@@ -86,21 +89,30 @@ Library
 1 per 300 square feet of floor area
 Manufactured dwelling park
 2 for each manufactured dwelling space
-Nursing home, convalescent care facility, extended care facility, or similar institution 1 for every three patient/resident beds
+Nursing home, convalescent care facility, extended care facility, or similar institution
+1 for every three patient/resident beds
 Office
 1 per 300 square feet of floor area
 Park
-For a park with an athletic field: 1 per 3 spectator seats, 1 space per 18 inches of bench-viewer bench length, or 25 per field, whichever amount is greatest Park
+For a park with an athletic field: 1 per 3 spectator seats, 1 space per 18 inches of bench-viewer bench length, or 25 per field, whichever amount is greatest
+Park
 For a park without an athletic field: 2.6 per acre
-Religious institution, membership club or community center, fraternal hall, or similar place of assembly 1 for every six seats or one space for each 50 square feet of floor area used for assembly, whichever is greater Retail store (general), including a grocery store, book store, gift shop, or any other general retail or shop 1 per 300 square feet of floor area
-Retail store (bulk), including for sale of furniture, appliances, vehicles, building materials, home furnishings, garden supplies, or agricultural supplies 1 per 500 square feet of bulk merchandise area or storage
-School for children, including a preschool, kindergarten, elementary, middle, or junior high school 2 per classroom
+Religious institution, membership club or community center, fraternal hall, or similar place of assembly
+1 for every six seats or one space for each 50 square feet of floor area used for assembly, whichever is greater
+Retail store (general), including a grocery store, book store, gift shop, or any other general retail or shop
+1 per 300 square feet of floor area
+Retail store (bulk), including for sale of furniture, appliances, vehicles, building materials, home furnishings, garden supplies, or agricultural supplies
+1 per 500 square feet of bulk merchandise area or storage
+School for children, including a preschool, kindergarten, elementary, middle, or junior high school
+2 per classroom
 School, other (including a high school, trade school, or college facility)
 5 per classroom
 Service or repair shop
 1 per 500 square feet of floor area
 Short-term rental of dwelling
-1 per rented bedroom in addition to parking required for dwelling, with never less than 2 total parking spaces on the subject property Skating rink, arcade, gym, or other similar indoor recreational or athletic use or commercial amusement enterprise 1 per 100 square feet of floor area
+1 per rented bedroom in addition to parking required for dwelling, with never less than 2 total parking spaces on the subject property
+Skating rink, arcade, gym, or other similar indoor recreational or athletic use or commercial amusement enterprise
+1 per 100 square feet of floor area
 Warehouse, storage, or similar enterprise
 1 per 2,000 square feet of floor area
 Other business or industrial use not elsewhere listed

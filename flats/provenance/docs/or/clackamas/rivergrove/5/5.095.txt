@@ -13,8 +13,10 @@ Residential units, less than 500           1 covered, enclosed space per        
 sq. ft., 1 bedroom, except                 unit, 1 off-street parking space
 “over-the-garage” 1 bedroom                per unit.
 units, which require no additional parking
-Multi-family, townhouse one                1 covered, enclosed space per              No maximum bedroom                                    unit, 1.25 off-street.
-Multi-family, townhouse two                2 covered, enclosed spaces per             No maximum bedroom                                    unit, 1.5 off-street parking spaces per unit.
+Multi-family, townhouse one                1 covered, enclosed space per              No maximum
+bedroom                                    unit, 1.25 off-street.
+Multi-family, townhouse two                2 covered, enclosed spaces per             No maximum
+bedroom                                    unit, 1.5 off-street parking spaces per unit.
 Multi-family, townhouse three              2 covered, enclosed spaces per             No maximum
 bedroom or more                            unit, 1.75 off-street parking spaces per unit.
 

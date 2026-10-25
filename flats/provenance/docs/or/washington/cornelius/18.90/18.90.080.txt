@@ -1,0 +1,295 @@
+§ 18.90.080. Definitions.
+
+Unless specifically defined below or within Chapter 18.195 CMC, words or phrases used in this chapter shall be interpreted so as to give them the meaning they have in common usage and to give this chapter its most reasonable application.
+
+"Addition" means an alteration to an existing structure that results in any increase in its ground floor area.
+
+"Ancillary features" means features of a development that are not directly related to the primary purpose of the development.
+
+"Appeal" means a request for a review of the interpretation of any provision of this chapter or a request for a variance.
+
+"Area of shallow flooding" means a designated zone AO, AH, AR/AO or AR/AH on the flood insurance rate map (FIRM) with a one percent or greater annual chance of flooding to an average depth of one to three feet where a clearly defined channel does not exist, where the path of flooding is predictable and where velocity flow may be evident.
+Such flooding is characterized by ponding or sheet flow.
+The base flood depths range from one to three feet; a clearly defined channel does not exist; the path of flooding is unpredictable and indeterminate; and velocity flow may be evident.
+AO is characterized as sheet flow.
+
+"Area of special flood hazard" means the land in the floodplain subject to a one percent or greater chance of flooding in any given year.
+It is shown on the flood insurance rate map (FIRM) as zone A, AO, AH, A1 – A30, AE, A99, and AR.
+"Special flood hazard area" is synonymous in meaning and definition with the phrase "area of special flood hazard."
+
+"Base flood" means flood having a one percent chance of being equaled or exceeded in any given year.
+Also referred to as the "100-year flood."
+Designation on maps always includes the letters A, AE, AH, AO, or AR.
+
+"Base flood elevation (BFE)" means the elevation to which floodwater is anticipated to rise during the base flood.
+
+"Basement" means any area of a building having its floor subgrade (below ground level) on all sides.
+
+"Breakaway wall" means a wall that is not part of the structural support of the building and is intended, through its design and construction, to collapse under specific lateral loading forces, without causing damage to the elevated portion of the building or supporting foundation system.
+
+"Conditional letter of map revision (CLOMR)" means letter from FEMA commenting on whether a proposed project, if built as proposed, would meet the minimum National Flood Insurance Program standards for proposed hydrology changes.
+If the project, built as proposed, revises the flood insurance rate map and/or flood insurance study, a letter of map revision (LOMR) is required to be submitted no later than six months after project completion.
+
+"Critical facility" means a facility for which even a slight chance of flooding might be too great.
+Critical facilities include, but are not limited to, schools, nursing homes, hospitals, police, fire and emergency response installations, installations which produce, use or store hazardous materials or hazardous waste.
+
+"Development" means any manmade change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation, drilling operations, or the storage of equipment or materials located within a special flood hazard area.
+
+"Elevated building" means, for insurance purposes, a nonbasement building which has its lowest elevated floor raised above ground level by foundation walls, shear walls, posts, piers, pilings, or columns.
+
+"Enhancement" means the process of improving upon the natural functions and/or values of an area or feature which has been degraded by human activity.
+
+"Fill" means placement of any materials such as soil, gravel, crushed stone, or other materials that change the elevation of the floodplain.
+The placement of fill is considered "development."
+
+"Fish accessible space" means the volumetric space available to fish to access.
+
+"Fish egress-able space" means the volumetric space available to fish to exit or leave from.
+
+"Flood" or "flooding" means:
+
+(1)
+
+A general and temporary condition of partial or complete inundation of normally dry land areas from:
+
+(a)
+
+The overflow of inland waters; and/or
+
+(b)
+
+The unusual and rapid accumulation or runoff of surface waters from any source;
+
+(c)
+
+Mudslides (i.e., mudflows) which are proximately caused by flooding as defined by subsection (1)(b) of this definition and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current.
+
+(2)
+
+The collapse or subsidence of land along a body of water as a result of erosion or undermining caused by currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood or some similarly unusual and unforeseeable event which results in flooding defined in subsection (1)(a) of this definition.
+
+"Flood elevation study" means an examination, evaluation and determination of flood hazards and, if appropriate, corresponding water surface elevations, or an examination, evaluation and determination of mudslide (i.e., mudflow) and/or flood-related erosion hazards.
+
+"Flood insurance rate map (FIRM)" means the official map on which the Federal Emergency Management Agency has delineated both the special flood hazard areas and the risk premium zones applicable to the community.
+
+"Flood insurance study"
+(see also "flood elevation study") means the official report provided by the Federal Insurance Administration that includes flood profiles, the flood insurance rate map, and the water surface elevation of the base flood.
+
+"Floodplain" means any land area susceptible to being inundated by water from the sources specified in the "flood(ing)" definition.
+
+"Floodplain management regulations" means the provisions of this chapter in addition to the development and zoning code, building codes, health regulations, and other applications of police power.
+The term describes such state or local regulations, in any combination thereof, which provide standards for the purpose of flood damage prevention and reduction.
+
+"Floodplain storage capacity" means the volume of floodwater that an area of floodplain can hold during the one percent annual chance flood.
+
+"Floodway, regulatory" means the channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than one foot.
+The regulatory floodway is delineated by the Federal Emergency Management Agency on the flood insurance study and flood insurance rate map.
+
+"Footprint" means the existing measurements of the structure related to the three floodplain functions and their proxies.
+The footprint related to floodplain storage refers to the volumetric amount of developed space measured from the existing ground level to the BFE, and the footprint related to water quality refers to the area of impervious surface that the structure creates.
+
+"Functionally dependent use" means a use which cannot perform its intended purposes unless it is located or carried out in proximity to water.
+The term includes only docking facilities, port facilities that are necessary for the loading and unloading of cargo or passengers, and ship building and ship repair facilities, but does not include long-term storage or related manufacturing facilities.
+
+"Green infrastructure" means the use of natural or human-made hydrological features to manage water and provide environmental and community benefits.
+Green infrastructure uses management approaches and technologies that use, enhance, and/or mimic the natural hydrologic cycle processes of infiltration, evapotranspiration, and reuse.
+At a large scale, it is an interconnected network of greenspace that conserves natural systems and provides assorted benefits to human populations.
+At a local scale, it manages stormwater by infiltrating it into the ground where it is generated using vegetation or porous surfaces, or by capturing it for later reuse.
+Green infrastructure practices can be used to achieve no net loss of pervious surface by creating infiltration of stormwater in an amount equal to or greater than the infiltration lost by the placement of new impervious surface.
+
+"Habitat restoration activities" means activities with the sole purpose of restoring habitat that have only temporary impacts and long-term benefits to habitat.
+Such projects cannot include ancillary structures such as a storage shed for maintenance equipment, must demonstrate that no rise in the BFE would occur as a result of the project and obtain a CLOMR and LOMR, and have obtained any other required permits (e.g., CWA Section 404 permit).
+
+"Hazard trees" means standing dead, dying or diseased trees or ones with a structural defect that makes it likely to fail in whole or in part and that present a potential hazard to a structure or as defined by the city.
+
+"Highest adjacent grade" means the highest natural elevation of the ground surface prior to construction next to the proposed walls of a structure.
+
+"Historic structure" means any structure that is:
+
+(1)
+
+Listed individually on the National Register of Historic Places or preliminarily determined by the Secretary of the Interior as meeting the requirements for individual listing on the National Register;
+
+(2)
+
+Certified or preliminarily determined by the Secretary of the Interior as contributing to the historical significance of a registered historic district or a district preliminarily determined by the Secretary of the Interior to qualify as a registered historic district;
+
+(3)
+
+Individually listed on the Oregon state inventory of historic places; or
+
+(4)
+
+Individually listed on the city's inventory of historic places.
+
+"Hydraulically equivalent elevation" means a location (e.g., a site where no net loss standards are implemented that is approximately equivalent to one another (e.g., the impact site) relative to the same 100-year water surface elevation contour or base flood elevation.
+This may be estimated based on a point that is along the same approximate line perpendicular to the direction of flow.
+
+"Hydrodynamic loads" means loads induced on buildings or structures by the flow of floodwater moving at moderate or high velocity around the buildings or structures or parts thereof, above ground level when openings or conduits exist which allow the free flow of floodwaters.
+Hydrodynamic loads are basically of the lateral type and relate to direct impact loads by the moving mass of water, and to drag forces as the water flows around the obstruction.
+
+"Hydrologically connected" means the interconnection of ground water and surface water such that they constitute one water supply and use of either results in an impact to both.
+
+"Hydrostatic loads" means loads caused by water either above or below the ground surface, free or confined, which is either stagnant or moves at very low velocities, of up to five feet per second.
+These loads are equal to the product of the water pressure times the surface area on which the water acts.
+The pressure at any point is equal to the product of the unit weight of water (62.5 pounds per cubic foot) multiplied by the height of water above that point or by the height to which confined water would rise if free to do so.
+
+"Impervious surface" means a surface that cannot be penetrated by water and thereby prevents infiltration and increases the amount and rate of surface water runoff, leading to erosion of stream banks, degradation of habitat, and increased sediment loads in streams.
+Such surfaces can accumulate large amounts of pollutants that are then "flushed" into local water bodies during storms and can also interfere with recharge of groundwater and the base flows to water bodies.
+
+"Letter of map change (LOMC)" means an official FEMA determination, by letter, to amend or revise effective flood insurance rate maps and/or flood insurance studies.
+LOMCs are issued in the following categories:
+
+(1)
+
+"Letter of map amendment (LOMA)" means an amendment to the flood insurance rate maps based on technical data showing that an existing structure, parcel of land, or portion of a parcel of land that has not been elevated by fill (natural grade) was inadvertently included in the special flood hazard area because of an area of naturally high ground above the base flood.
+
+(2)
+
+"Letter of map revision (LOMR)" means:
+
+(a)
+
+LOMR-F (letter of map revision based on fill) is a letter from FEMA stating that an existing structure or parcel of land that has been elevated by fill would not be inundated by the base flood.
+
+(b)
+
+A LOMR revises the current flood insurance rate map and/or flood insurance study to show changes to the floodplains, floodways or flood elevations.
+LOMRs are generally based on manmade alterations that affect the hydrologic or hydraulic characteristics of a flooding source and thus result in modification to the existing regulatory floodway, the effective base flood elevation, or the special flood hazard area.
+A conditional letter of map revision (CLOMR) may be approved by FEMA prior to issuing a permit to start a project if the project has a potential to affect the special flood hazard area.
+
+"Low impact development," in the context of this chapter, means an approach to land development (or redevelopment) that works with nature to manage stormwater as close to its source as possible.
+It employs principles such as preserving and recreating natural landscape features and minimizing effective imperviousness to create functional and appealing site drainage that treats stormwater as a resource rather than a waste product.
+Low impact development refers to designing and implementing practices that can be employed at the site level to control stormwater and help replicate the predevelopment hydrology of the site.
+Low impact development helps achieve no net loss of pervious surface by infiltrating stormwater in an amount equal to or greater than the infiltration lost by the placement of new impervious surface.
+LID is a subset of green infrastructure.
+
+"Lowest floor" means the lowest floor of the lowest enclosed area (including basement).
+An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access, or storage, in an area other than a basement area, is not considered a building's lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable nonelevation design requirements of this chapter.
+
+"Manufactured dwelling," in the context of this chapter, means a structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
+The term "manufactured dwelling" does not include a "recreational vehicle."
+
+"Manufactured home park or subdivision," in the context of this chapter, means a parcel (or contiguous parcels) of land divided into two or more manufactured home lots for rent or sale.
+
+"Mechanical equipment" means electrical, heating, ventilation, plumbing, and air conditioning equipment, storage tanks and other service facilities.
+
+"Mitigation" means the reduction of adverse effects of a proposed project by considering, in the following order:
+
+(1)
+
+Avoiding the impact altogether by not taking a certain action or parts of an action;
+
+(2)
+
+Minimizing impacts by limiting the degree or magnitude of the action and its implementation;
+
+(3)
+
+Rectifying the impact by repairing, rehabilitating, or restoring the affected environment;
+
+(4)
+
+Reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures;
+
+(5)
+
+Mitigating for the impact by replacing or providing comparable substitute floodplain areas.
+
+"New construction," in the context of this chapter, means structures for which the "start of construction" commenced on or after the effective date of the ordinance codified in this chapter.
+
+"No net loss" means a standard where adverse impacts must be avoided or offset through adherence to certain requirements so that there is no net change in function from the existing condition when a development application is submitted to the state, tribal, or local jurisdiction.
+The floodplain functions of floodplain storage, water quality, and vegetation must be maintained.
+
+"Off site" means mitigation occurring outside the project site.
+
+"On site" means mitigation occurring within the project site.
+
+"Ordinary high water mark" means the line on the shore established by the fluctuations of water and indicated by physical characteristics such as a clear, natural line impressed on the bank; shelving; changes in the character of soil; destruction of terrestrial vegetation; the presence of litter and debris; or other appropriate means that consider the characteristics of the surrounding areas.
+
+"Permanent foundation" means a natural or manufactured support system to which a structure is anchored or attached.
+A "permanent foundation" is capable of resisting flood forces and may include posts, piles, poured concrete or reinforced block walls, properly compacted fill, or other systems of comparable flood resistivity and strength.
+
+"Pervious surface" means a surface that allows rain and snowmelt to seep into the soil and gravel below.
+Pervious surface may also be referred to as permeable surface.
+
+"Qualified professional" means an appropriate subject matter expert that is defined by the community.
+
+"Reach" means a section of stream or river along which similar hydrologic conditions exist, such as discharge, depth, area and slope.
+It can also be the length of a stream or river (with varying conditions) between major tributaries or two stream gages, or a length of river for which the characteristics are well described by readings at a single stream gage.
+
+"Reconstruction" means the repair of a structure damaged by any cause (not limited to flooding) without increasing the floor area of the structure.
+
+"Recreational vehicle," in the context of this chapter, means a vehicle which is:
+
+(1)
+
+Built on a single chassis;
+
+(2)
+
+Four hundred square feet or less when measured at the largest horizontal projection;
+
+(3)
+
+Designed to be self-propelled or permanently towable by a light duty truck; and
+
+(4)
+
+Designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+
+"Rehabilitation" means any improvements and repairs made to the interior and exterior of an existing structure that do not result in an increase in the ground floor area of the structure.
+Examples include remodeling a kitchen, gutting a structure and redoing the interior, or adding a second story.
+
+"Restoration" means the process of returning a disturbed or altered area or feature to a previously existing natural condition.
+Restoration activities reestablish the ecological structure, function, and/or diversity to that which occurred prior to impacts caused by human activity.
+
+"Riparian" means of, adjacent to, or living on the bank of a river, lake, pond or other water body.
+
+Riparian Buffer Zone (RBZ).
+The outer boundary of the riparian buffer zone is measured from the ordinary high-water line of a fresh waterbody (lake; pond; ephemeral, intermittent, or perennial stream).
+The riparian buffer zone includes the area between these outer boundaries on each side of the stream, including the stream channel.
+Where the RBZ is larger than the special flood hazard area, the no net loss standards shall only apply to the area within the special flood hazard area.
+
+"Riparian buffer zone fringe" means the area outside the RBZ and floodway but still within the special flood hazard area.
+
+"Silviculture" means the art and science of controlling the establishment, growth, composition, health, and quality of forests and woodlands.
+
+Special Flood Hazard Area (SFHA).
+See "area of special flood hazard" for this definition.
+
+"Start of construction" includes substantial improvement, and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, placement or other improvement was within 180 days of the permit date.
+The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation.
+Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundations or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure.
+For a substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+
+"Structure" means, for the purposes of this section, a walled and roofed building, a modular or temporary building, or a gas or liquid storage tank that is principally above ground.
+
+"Substantial damage" means damage of any origin sustained by a structure whereby the cost of restoring the structure to its before-damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+"Substantial improvement" means any reconstruction, rehabilitation, addition, or improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure before the start of construction of the improvement.
+The term includes structures which have incurred substantial damage, regardless of the actual repair work performed.
+The term does not include:
+
+(1)
+
+Improvements to a structure to correct existing violations identified of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+
+(2)
+
+Any alteration of a historic structure; provided, that the alteration would not preclude the structure's continued designation as a historic structure.
+
+"Undeveloped space" means the volume of flood capacity and fish-accessible/egress-able habitat from the existing ground to the base flood elevation that is undeveloped.
+Any form of development including, but not limited to, the addition of fill, structures, concrete structures (vaults or tanks), pilings, levees and dikes, or any other development that reduces flood storage volume and fish accessible/egress-able habitat must achieve no net loss.
+
+"Variance" means a grant of relief from the requirements of this chapter which permits construction in a manner that would otherwise be prohibited by this chapter.
+
+"Violation" means the failure of a structure or other development to be fully compliant with this chapter.
+A structure or development without the elevation certificate, other certifications, or other evidence of compliance with this chapter is presumed to be in violation until such time as that documentation is provided.
+
+"Water dependent" means a structure for commerce or industry which cannot exist in any other location and is dependent on the water by reason of the intrinsic nature of its operations.
+
+"Water surface elevation" means heights, in relation to a specific datum, of floods of various magnitudes and frequencies in the floodplains.
+
+(Ord. 2025-05 § 1 (Exh.
+A), 2025)

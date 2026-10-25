@@ -1,0 +1,236 @@
+§ 18.60.050. Civic Use Categories.
+
+A.
+
+Basic Utility.
+
+1.
+
+Characteristics: A Basic Utility is an infrastructure service that must be located in or near where the service is provided.
+Basic Utility uses generally do not have employees at the site other than for construction or maintenance.
+Service may be public or privately provided.
+
+2.
+
+Accessory Uses: Accessory uses may include parking; control, monitoring, data, or transmission equipment; and shelters.
+
+3.
+
+Examples: Examples include water towers or reservoirs, data centers, energy production including solar production as a standalone use, water quality or flow control facilities, water conveyance systems, water harvesting or re-use conveyance systems or pump stations, stormwater facilities or conveyance systems, power substations, and transit stations.
+
+4.
+
+Clarifications.
+
+a.
+
+Utility offices where employees or customers are generally present are categorized as Office.
+
+b.
+
+Fleet vehicle storage as a primary use is categorized as Off-Site Services.
+
+c.
+
+Public or private passageways, including easements, for the express purpose of transmitting or transporting electricity, gas, oil, water, sewage, communication signals, or other similar services on a regional level are categorized as Transportation and Utility Corridor.
+
+d.
+
+Does not include utilities proposed with or for a specific development, including solar arrays, which are considered accessory to the primary use.
+
+B.
+
+Cemetery.
+
+1.
+
+Characteristics: A cemetery is a facility for the permanent storage of human remains.
+
+2.
+
+Accessory uses: Accessory uses may include chapels, mortuaries, offices, maintenance facilities, or parking.
+
+C.
+
+Detention Facility.
+
+1.
+
+Characteristics: A detention facility is devoted to the judicially required detention, incarceration, or supervision of people.
+
+2.
+
+Accessory uses: Accessory uses may include offices, recreational or health facilities, therapy facilities, maintenance facilities, or hobby or manufacturing facilities.
+
+3.
+
+Examples: Examples include prisons, jails, probation centers, juvenile detention homes, or related post-incarceration.
+
+4.
+
+Clarifications:
+
+a.
+
+Programs that provide care or training or treatment for psychiatric, alcohol, or drug problems, where patients are residents of the program, but where patients are not supervised by public safety personnel, are categorized as Residential use.
+
+b.
+
+Temporary holding cells within a police station are considered accessory to a Government Services use.
+
+D.
+
+Government Services.
+
+1.
+
+Characteristics: A Government Services use is a government-operated indoor or outdoor facility that is intended at least in part for use or access by the public.
+
+2.
+
+Accessory uses: Accessory uses may include office, parking, cafes, or storage.
+
+3.
+
+Examples: Examples include parks, libraries, city hall, police or fire stations, public plazas, or administrative offices for school or fire districts when designed as a campus.
+
+4.
+
+Clarifications:
+
+a.
+
+Does not include fleet vehicle parking as a standalone use or fleet vehicle parking with accessory office, which are categorized as Off-Site Services.
+
+b.
+
+Does not include administrative offices for school or fire districts located in a single office building or existing buildings, which are categorized as Office.
+
+E.
+
+Railroad Yard.
+
+1.
+
+Characteristics: A railroad yard contains multiple railroad tracks used for rail car switching, assembling of trains, or the transhipment of goods from other transportation modes to or from trains.
+
+2.
+
+Accessory uses: Accessory uses may include office, employee facilities, storage areas, or rail car maintenance or repair facilities.
+
+F.
+
+School or Religious Facility.
+
+1.
+
+Characteristics: A school or religious facility is an institution intended for preschool, K-12 education, or religious purposes.
+
+2.
+
+Accessory uses: Accessory uses may include play areas, cafeterias, recreational or sports facilities, athletic fields, auditoriums, or before- or after-school day-care.
+
+3.
+
+Examples: Examples include public or private daytime schools at the primary, elementary, middle, junior high, or high-school level that provide state-mandated basic education; or places of worship.
+
+4.
+
+Clarifications: Does not include day cares, trade schools, colleges, or vocational schools, which are categorized as Indoor Sales and Services.
+
+G.
+
+Temporary Shelter.
+
+1.
+
+Characteristics: A temporary shelter is operated by a public or non-profit agency and provides mass shelter or short-term housing where tenancy may be arranged for periods of less than one month.
+The use may also provide special counseling, education, or training of a public, nonprofit, or charitable nature.
+
+2.
+
+Accessory uses: Accessory uses may include offices, meeting areas, food preparation areas, parking, health and therapy areas, day cares, and athletic facilities.
+
+3.
+
+Examples: Examples include homeless shelters and shelters for women and children.
+
+4.
+
+Clarifications:
+
+a.
+
+Does not include for-profit lodging where tenancy may be arranged for periods less than one month, which is categorized as Commercial Lodging.
+
+H.
+
+Transportation and Utility Corridor.
+
+1.
+
+Characteristics: A transportation and utility corridor is a regional corridor in public or private ownership, including easements, dedicated for the express use of rail lines; multi-use trails; above-grade or underground power or communication lines; water, sewer, or storm sewer lines; or similar services.
+
+2.
+
+Accessory uses: Accessory uses may include trailhead improvements such as public restrooms or parking lots.
+
+3.
+
+Examples: Examples include rail trunk or feeder lines; multi-use trails; regional electrical transmission lines; or regional gas stormwater or sewage main petroleum pipelines.
+
+4.
+
+Clarifications:
+
+a.
+
+Railroad lead or spur lines for delivery of rail cars to sites or for unloading of rail cars on specific sites are considered accessory to the primary use of the site.
+
+b.
+
+Does not include railroad switch yards as a primary use, which are categorized as railroad yard.
+
+c.
+
+Transportation and utility corridors contained within motor vehicle rights-of-way are not included.
+
+d.
+
+Utility offices where employees or customers are generally present are categorized as Office.
+
+I.
+
+Wireless Communications Facility.
+
+1.
+
+Characteristics: A wireless communication facility includes all devices, equipment, machinery, structures, or supporting elements necessary to produce electromagnetic radiation to produce a discrete wireless signal or message.
+Towers may be self-supporting, guyed, or mounted on poles or buildings.
+
+2.
+
+Accessory uses: Accessory uses may include related ancillary equipment structures.
+
+3.
+
+Examples: Examples include television or AM/FM radio transmission towers, microwave relay stations, or cellular communications equipment.
+
+4.
+
+Clarifications:
+
+a.
+
+Does not include transmission facilities that are part of the public safety network, which are categorized as Basic Utility.
+
+b.
+
+Does not include amateur (ham) radio antennas or towers.
+
+c.
+
+Does not include radio or television studios, which are categorized as Office.
+
+(Ord. 10-15 §1; Ord. 15-05 §2; Ord. 18-23 §2; Ord. 20-01 §1; Ord. No. 24-05, 4/23/2024)
+

@@ -358,6 +358,9 @@ def _cut(
             heading=rule.heading,
             words=words,
             head=rule.page_head,
+            # A print with a page map is a PDF, wrapped at its margin; one
+            # without is a web print, a paragraph or a cell to a line.
+            margin=pages is not None,
         )
         problems = readable.prove(
             raw, text, breaks=local, furniture=rule.page_furniture, head=rule.page_head

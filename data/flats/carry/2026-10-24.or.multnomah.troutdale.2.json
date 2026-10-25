@@ -1,0 +1,302 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "390823e21500205b47823074e1a7e501340e583acaf40520f83bf4324e11231a",
+  "new_quote": "or/multnomah/troutdale/3/3.120.txt#L17",
+  "old_fingerprint": "c7cd3be625291787295e73bb9874745c315c97b3aace3ffc369d008551fdbaa0",
+  "old_quote": "or/multnomah/troutdale/3/3.120.txt#L16",
+  "when_key": "",
+  "zone": "LDR-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "7b69d43c2e971645fb732e5e0d98bf4510db605d97a3a9f5bac45ded0ed776f4",
+  "new_quote": "or/multnomah/troutdale/3/3.120.txt#L17",
+  "old_fingerprint": "eecc70289b52f8d10834fb637516c889fdfd2c5f98a8874944c4ff6405205f8e",
+  "old_quote": "or/multnomah/troutdale/3/3.120.txt#L16",
+  "when_key": "",
+  "zone": "LDR-2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "b96f76b3bd329405bbd1a44c1924c10797617e1f9d4149c650703fa1e5943621",
+  "new_quote": "or/multnomah/troutdale/3/3.120.txt#L17",
+  "old_fingerprint": "4a660a087cdebd97809ad113fdf7120ce13714d7d0eff818546cdc3c469aa076",
+  "old_quote": "or/multnomah/troutdale/3/3.120.txt#L16",
+  "when_key": "",
+  "zone": "MDR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "62fdc0b1544aac26b7173bf7e69b9285839e6c943d92f4815650d6a407badf43",
+  "new_quote": "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L17",
+  "old_fingerprint": "1dc017ad0a269b08cd2ad54aa8b0f844e578abf54668d8a6f55c2e56a9050269",
+  "old_quote": "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L16",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "badd8e3efca03021d2fb6a8a49a90105c5c0813a7cb341388feba437dce10e1a",
+  "new_quote": "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L18",
+  "old_fingerprint": "8c5170e0932e3750f0c878e87495b978fadf9969479a59a944836580caa6fb9d",
+  "old_quote": "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L17",
+  "when_key": "unit_lots",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "253ec4dd8df9b6ce3ab1ced6c78a86b1e4a0b344f7dd754969c22329713ca52b",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35",
+  "old_fingerprint": "0eae631083926054047f32387cf4402fb29288dd1a6170d40ccb129b44a5e0ea",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32",
+  "when_key": "",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "6ec864285b2357d6fd25b3868b1a6371d1815124044f78fee5d6d1cadde062bb",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L36-L38",
+  "old_fingerprint": "6eee2559389d5a2af2715f6162d358b028f26f0d6a649ce0c5fbbe627510e076",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L33",
+  "when_key": "abuts_alley",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "e981f3d27a713fccdda1e45e4a4162d4974b065696c82aa278253d8b13456771",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35",
+  "old_fingerprint": "015d0aa922164f859c5a8b677546f18abd7561d686df0114cdde27d77b79e066",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32",
+  "when_key": "",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "fa1ee41ed71dfc8350f2b90e6d537049c417a3a19679b3a349b835adf71a2f03",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "314c3ed9ae03a50a57e24ebee0fb3668056a206b3da08712f3c0495f0fded2b2",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "attached_wall",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "3e16d1a651cd85e6450fbb1df5f8828f9da380414e82b1f3e3aab8723e3c948b",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "6717e285889f4fc11a15806314782fe2479134257cd915ae2b50ee6454961df7",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "abuts_nonresidential_zone+attached_wall",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "d3cb9e7ae4f15e9dcb8d88600c9716617767478ec37e1cc81fbbfdad1b53ba0f",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "41b98aa7c4fafa9670f0f4a088fe05ce910450151c5e72d410b3f1c5ed9e9711",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "abuts_side_yard+attached_wall",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "eed2b6c17d7db8a3220f05b8448f46c36dbe2aa0c4487f7b212e73e51a95b5b0",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L42-L43,L53-L54",
+  "old_fingerprint": "3b28fb5597f9bb14ed903d255c0a4a2c8e824d7c84dd011d4667e5516a9a0f22",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L37-L38,L48-L49",
+  "when_key": "",
+  "zone": "MU-1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "99cae4bf0b521d7db637dde906e52617ff520c9b2f446a4efe827c931beb715c",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L48",
+  "old_fingerprint": "ab030a4ea4586b8aae044d3a09e2835e7a7ee8bda7e860555cc80b0ed339a40c",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L43",
+  "when_key": "",
+  "zone": "MU-1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "6a8285cec2b47c2a30bcbfff2c9383908099b7335029db2f9e65271ed274b33e",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35",
+  "old_fingerprint": "47d0e9f873556d10e275bd1db1b9f852702734a5d15de96f09daef243b700fb8",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32",
+  "when_key": "",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "946cda1ad442752f2134254c4b7cbb1a84f941275367b26a7061a3fbbafbd529",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L36-L38",
+  "old_fingerprint": "c955ae15a0d8ea0fb1ad3d8ed11434b9d8411c64cbbe3370efa2de30527f11a5",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L33",
+  "when_key": "abuts_alley",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "fe1cd78f285bb60366088a23ec70ed02a542fabdea28cc837a227e3285dd6b0f",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35",
+  "old_fingerprint": "f99016d8f8d97b5a55adb5a864658a6c7dd8ca88b7e82b87b9b508e520728997",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32",
+  "when_key": "",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "e7eb2fa25e284eb946b630b1d083bcd9bf7b985afb37092c1cc8519749e33d7e",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "5638c0e95874ec1f776c24ff1f958b2ce1fd46021c21e5bba9990d72c49c16b2",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "attached_wall",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "1c3c621b750e24390e9ebd5c670d2b39c7beddb06cfa394b700049f747a1b682",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "b9c9d20b22fa8f34cdfb1e3ae8191b5169dbee5a3b398b179b00ff625328c9a2",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "abuts_nonresidential_zone+attached_wall",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "02b162fae50cd431bbd93326768e4d230461c75fe1f3de60320bb5b617fe8798",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "dda8324fc9d2e8991b3c6837cb646f3bbe039ace638d255751058f8e35d88b1e",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "abuts_side_yard+attached_wall",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "6f13564ba5c8488da9cc8ea6e3cd23bc52ba1bad78862334623cdc8ee8775ade",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L42-L43,L53-L54",
+  "old_fingerprint": "cf212ecef1804e541e3a6e824e9171f8232e7bb49368263eefa9b905ad8148bc",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L37-L38,L48-L49",
+  "when_key": "",
+  "zone": "MU-2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "e6e68ff119870e8e9ccee13b9d450c6e9e44778f5ce9e8f40bad39e141724ee0",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L48",
+  "old_fingerprint": "12d19c751b19d6de35ee2d3cdb6707f1be8243f55f4705aeba8869762848ed22",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L43",
+  "when_key": "",
+  "zone": "MU-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "975febd3d5647ca9b5b550b3fc2550b98fc56f38d9b7f6ad9f54fb6709a291d0",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "9a00eab9172310d8a78d0494a4b4ee57b7fb9a73c1dd6e2ebf02044b278d7e16",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "attached_wall",
+  "zone": "MU-3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "18a31bbed0e0c5ead1367f36b4464554f54f16f305a514b4851ca68deeb8cbef",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "9255f4d4d0dc194fcaa85b2bb9a1d536a02b1dbae73aa9026b5145a25f0688fa",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "abuts_nonresidential_zone+attached_wall",
+  "zone": "MU-3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "807a762d1b05dafb7128c74d90c1ead6be6d86b531089306ebe93cef665e6985",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "old_fingerprint": "53ed5ce673048df2989aac8427dbeb9b6417e7b35b34a98f33e0ae3172f596bf",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L36",
+  "when_key": "abuts_nonresidential_zone+abuts_park+attached_wall",
+  "zone": "MU-3"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "1ad04298b382d85cd07eeb44758aa3fc9e48652e83a81eb62d81c3c29517a492",
+  "new_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L46",
+  "old_fingerprint": "b3f384de113c5c0a12c472698c3862a96dc320bc024580bce70900235a074916",
+  "old_quote": "or/multnomah/troutdale/3/3.230.txt#L25,L41",
+  "when_key": "",
+  "zone": "MU-3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "67c257bd86f3cf97c5cfc7f13cfa63f1989c4a1b0cacc36b0a84a9824746b882",
+  "new_quote": "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L16",
+  "old_fingerprint": "33755c97cd4d1161c7848c7ff683133dce6886d346c6e31f3794e4f18e01bfea",
+  "old_quote": "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L15",
+  "when_key": "",
+  "zone": "IP"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "c7d3b1107a4951e1a0f96bd459c91e4b2f5a325f2bdd34c452ab9acae961cabd",
+  "new_quote": "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L16",
+  "old_fingerprint": "27fb6532a5fb1edb06233dd33eb084051ff7b19cba494de5e7dca18cf8204b89",
+  "old_quote": "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L15",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "c862cc64fb03a72c028eec71c15577bcd846f92f570ee7cb2d45e1859cfd55b5",
+  "new_quote": "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L16",
+  "old_fingerprint": "f1198683a25c3e3fe1bbcadcd35e1daa729203016dee329750db737fbc30a369",
+  "old_quote": "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L15",
+  "when_key": "",
+  "zone": "GI"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "9002e99875dafc14fae5c6c46eb3015a5bf8c4f3d07729cb2f49d67f400620f6",
+  "new_quote": "or/multnomah/troutdale/9/9.010.txt#L18,L21-L22",
+  "old_fingerprint": "8ccc0935795d824b3adad17c2a6526a9c9c2ec579ab15128142a285742d711bb",
+  "old_quote": "or/multnomah/troutdale/9/9.010.txt#L17,L20",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/troutdale",
+  "new_fingerprint": "0447f3121d3ce1759026f0714d3ef34bf97ad659c260539d4c8e9b9a955542d3",
+  "new_quote": "or/multnomah/troutdale/9/9.010.txt#L13,L18,L23-L24",
+  "old_fingerprint": "b9d285e73d6acf29b48a23322a6040e11a41dc7f5b094d0160eb824f726cf8a6",
+  "old_quote": "or/multnomah/troutdale/9/9.010.txt#L13,L17,L21",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

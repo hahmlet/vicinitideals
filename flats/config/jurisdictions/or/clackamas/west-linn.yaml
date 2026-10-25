@@ -11,7 +11,7 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   states a frontage standard as such. CORRECTED 2026-09-10 -- the rest of this reading used to say that
   the "Average minimum lot width" printed three rows beneath it was a subdivision average and therefore
   not encoded. It is not a subdivision average, and the city''s own glossary is what says so. CDC 02.030,
-  at 02.030.txt#L891-L892: "Lot width. The horizontal distance between side lot lines, measured at
+  at 02.030.txt#L911-L912: "Lot width. The horizontal distance between side lot lines, measured at
   right angles to the lot depth. Average lot width is measured at the midpoints of opposite lot lines."
   That is one lot, measured on one line, and it is the same measurement Oregon City states in OCMC
   17.04.700 and the screen already takes (`side_midpoints`, Lot Analysis/quadfit/lotdims.py). So the
@@ -41,7 +41,7 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   stands from the line — and inventing a setback to stand in for it would produce a number no reviewer
   could find on the page. It is written here so the next reader starts from the reading rather than
   from the reference.
-  (4) max_far is read against CDC 02.030''s own definition, at 02.030.txt#L598-L605: "the FAR is that
+  (4) max_far is read against CDC 02.030''s own definition, at 02.030.txt#L614-L621: "the FAR is that
   percentage of the total lot size that can be built as habitable space ... on a 10,000-square-foot lot,
   an FAR of 0.45 will allow a 4,500-square-foot house". Habitable floor area over lot area, which is
   what the screen computes; the definition excludes attached and detached garages, accessory dwellings
@@ -126,7 +126,7 @@ readings:
       width at front lot line 45 ft" and, three rows under it, "Average minimum lot width 80 ft".
       This file held the smaller, and the layer note above called the second a subdivision average
       and therefore not encodable. IT IS NOT A SUBDIVISION AVERAGE, AND THE CITY'S OWN GLOSSARY IS
-      WHAT SAYS SO. CDC 02.030, at 02.030.txt#L891-L892: "Lot width. The horizontal distance
+      WHAT SAYS SO. CDC 02.030, at 02.030.txt#L911-L912: "Lot width. The horizontal distance
       between side lot lines, measured at right angles to the lot depth. Average lot width is
       measured at the midpoints of opposite lot lines." One lot, one line, and the same
       measurement Oregon City states in OCMC 17.04.700 -- which the screen already takes, as
@@ -156,7 +156,7 @@ readings:
       the two West Linn zones whose two width rows disagree: 35 ft at the front lot line, which
       this file held, and 50 ft average, which it did not. The reason for leaving it open rather
       than raising the held number was that min_lot_width_ft named no measurement -- and the
-      city's own glossary names both. CDC 02.030 at 02.030.txt#L891-L892: lot width is "the
+      city's own glossary names both. CDC 02.030 at 02.030.txt#L911-L912: lot width is "the
       horizontal distance between side lot lines, measured at right angles to the lot depth", and
       "average lot width is measured at the midpoints of opposite lot lines". Against a figure
       taken at the front lot line, that means a lot thirty-five feet wide at the street and sixty
@@ -691,7 +691,7 @@ defaults:
   # four single-family residential homes". If the land is ever divided first,
   # the pod becomes single-family attached and the looser branch is the one
   # that applies -- worth knowing, because the plat path is already modelled.
-  # (or/clackamas/west-linn/02/02.030.txt#L1107-L1108,L1327-L1329,L1331-L1334,
+  # (or/clackamas/west-linn/02/02.030.txt#L1127-L1128,L1347-L1349,L1351-L1354,
   #  or/clackamas/west-linn/46/46.150.txt#L20-L22,L29-L32)
 
   # NO MINIMUM. Not stated as an exemption anywhere -- West Linn simply
@@ -903,7 +903,7 @@ defaults:
     cite: West Linn CDC Chapter 2, Lot line, front, the shortest street lot line on a corner lot
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/02/02.030.txt#L862-L863"
+    quote: "or/clackamas/west-linn/02/02.030.txt#L882-L883"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -916,7 +916,7 @@ defaults:
     cite: West Linn CDC Chapter 2, Lot line, rear, a double-frontage lot that is not a corner lot has no rear lot line
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/02/02.030.txt#L860,L871"
+    quote: "or/clackamas/west-linn/02/02.030.txt#L880,L891"
   #
   # NOT ENCODED: curb cut spacing, 48.060(C) and (D). Eleven numbers between
   # them and every one is selected by a street classification -- 150 feet from
@@ -1074,7 +1074,7 @@ zones:
       quote: "or/clackamas/west-linn/08/08.070.txt#L22"
     max_coverage_pct:
       value: 25
-      quote: "or/clackamas/west-linn/08/08.070.txt#L44"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L45"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
       (only cottage clusters exempt). Corner side-yard read as 30 ft.'
     max_far:
@@ -1084,7 +1084,7 @@ zones:
       # binds only on an undersized lot, which is what a screen over existing
       # parcels mostly sees.
       value: 0.45
-      quote: "or/clackamas/west-linn/08/08.070.txt#L53-L54"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L54-L55"
       measured_on:
         fact: net_developable_area
         # Not the density net area: this chapter's own subtraction, one item
@@ -1099,7 +1099,7 @@ zones:
         # based on the whole property. That is a floor under what is allowed
         # and can only loosen, so it is read and not encoded.
         cite: 'West Linn CDC 08.070, Type I and II lands'
-        quote: "or/clackamas/west-linn/08/08.070.txt#L56-L58"
+        quote: "or/clackamas/west-linn/08/08.070.txt#L57-L59"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1590,7 +1590,7 @@ zones:
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
+      # triplex, or quadplex" (02.030.txt L1347-L1349); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -1741,7 +1741,7 @@ zones:
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
+      # triplex, or quadplex" (02.030.txt L1347-L1349); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -1908,7 +1908,7 @@ zones:
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
+      # triplex, or quadplex" (02.030.txt L1347-L1349); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -2182,7 +2182,7 @@ zones:
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
+      # triplex, or quadplex" (02.030.txt L1347-L1349); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -2263,17 +2263,17 @@ zones:
       # The zone's own note has said the standard does not apply since the
       # quadfit import; the value did not.
       exempt: true
-      quote: "or/clackamas/west-linn/16/16.070.txt#L49-L51"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L51-L53"
     max_far:
       # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
       # Recorded rather than left absent: an absent field and a field the code
       # switches off read the same to the screen and not to a reviewer, and
       # this city states both in zones two pages apart.
       exempt: true
-      quote: "or/clackamas/west-linn/16/16.070.txt#L55,L57"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L57,L59"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/16/16.070.txt#L44"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L45"
   # === The September 2026 map's six codes, ruled 2026-09-20 ================
   #
   # Steph's rule: every code the county map carries is read once, its reason
@@ -2574,7 +2574,7 @@ drawn_areas:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/west-linn/02/02.030.txt#L1370-L1371"
+  quote: "or/clackamas/west-linn/02/02.030.txt#L1390-L1391"
   says: "A public or private right-of-way"
   cite: "CDC 02.030 (Street; Private street; Lot line, front; Corner lot)"
   note: >-

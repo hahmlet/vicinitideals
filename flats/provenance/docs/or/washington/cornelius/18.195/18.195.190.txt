@@ -1,0 +1,99 @@
+§ 18.195.190. S definitions.
+
+"Security" means an irrevocable letter of credit and/or other financial instrument approved by the city.
+
+"Setback" means the minimum allowable horizontal distance from a given point or line of reference to the nearest vertical wall or other element of a principal building or structure as defined herein.
+The point of line of reference will be the lot line following any required dedication, or a special or reservation line if one is required pursuant to this title.
+
+"Shade" means a shadow cast by the shade point of a structure or vegetation when the sun is at an altitude of 21.3 degrees and an azimuth ranging from 22.7 degrees east and west of true south.
+
+"Shade point" means the part of a structure or nonexempt tree that casts the longest shadow onto the adjacent northern lot(s) when the sun is at an altitude of 21.3 degrees and an azimuth ranging from 22.7 degrees east and west of true south, except a shadow caused by a narrow object such as a mast or whip antenna, a dish antenna with a diameter of three feet or less, a chimney, utility pole, or wire.
+The height of the shade point shall be measured from the shade point to either the average elevation at the front lot line or the elevation at the midpoint of the front lot line.
+If the shade point is located at the north end of a ridgeline of a structure oriented within 45 degrees of a true north-south line, the shade point height computed according to the preceding sentence may be reduced by three feet.
+If a structure has a roof oriented within 45 degrees of a true east-west line with a pitch that is flatter than five feet (vertical) in 12 feet (horizontal), the shade point will be the eave of the roof.
+If such a roof has a pitch that is five feet in 12 feet or steeper, the shade point will be the peak of the roof (see Chapter 18.165 CMC, Figures 4 and 5).
+
+"Shade reduction line" means a line drawn parallel to the northern lot line that intersects the shade point (see Chapter 18.165 CMC, Figure 6).
+
+"Shadow pattern" means a graphic representation of an area that would be shaded by the shade point of a structure or vegetation when the sun is at an altitude of 21.3 degrees and an azimuth ranging between 22.7 degrees east and west of true south (see Chapter 18.165 CMC, Figure 12).
+
+"Sign" means a presentation or representation, other than a house number, by words, letters, figures, designs, pictures, or colors publicly displayed so as to give notice relative to a person, a business, an article or merchandise, a service, an assemblage, a solicitation or a request for aid, or other type of advertising.
+This includes the surface upon which the presentation or representation is displayed.
+Each display surface of a sign shall be considered to be a sign.
+
+"Solar access height limit" means a series of contour lines establishing the maximum permitted height for nonexempt vegetation on lots affected by a solar access permit (see Chapter 18.165 CMC, Figure 11).
+
+"Solar access permit" means a document issued by the city that describes the maximum height that nonexempt vegetation is allowed to grow on lots to which a solar access permit applies.
+
+"Solar feature" means a device or combination of devices or elements that does or will use direct sunlight as a source of energy for such purposes as heating or cooling of a structure, heating or pumping of water, and generating electricity.
+Examples of a solar feature include a window that contains at least 20 square feet of glazing oriented within 45 degrees east and west of true south, a solar greenhouse, or a solar hot water heater.
+A solar feature may be used for purposes in addition to collecting solar energy, including but not limited to serving as a structural member of part of a roof, wall, or window.
+A south-facing wall without windows and without other features that use solar energy is not a solar feature for purposes of this title.
+
+"Solar gain line" means a line parallel to the northern property line(s) of the lot(s) south of and adjoining given lot, including lots separated only by a street, that intersects the solar feature on that lot (see Chapter 18.165 CMC, Figure 7).
+
+"Solar-oriented lot" means:
+
+(1)
+
+A lot with a front lot line oriented to within 30 degrees of a true east-west line.
+When the lot line abutting a street is curved, the "front lot line" shall mean the chord or straight line connecting the ends of the curve.
+For a flag lot, the "front lot line" shall mean the lot line that is most parallel to the closest street, excluding the "pole portion of the flag lot"; or
+
+(2)
+
+A lot which, when a straight line is drawn from a point midway between the side lot lines at the required front yard setback to a point midway between the side lot lines at the required rear yard setback, is oriented to within 30 degrees of true north along said line; or
+
+(3)
+
+A corner lot with a south lot line oriented to within 30 degrees of a true east-west line, which south lot line adjoins a public street or permanently reserved open space; provided, however, that the abutting street right-of-way or open space has a minimum north-south dimension of at least 50 feet.
+For the purposes of this definition, "permanently reserved open space" shall include, without limitation, parks, cemeteries, golf courses and other similar outdoor recreation areas, drainage ditches and ponds, irrigation ditches and reservoirs, lakes, ponds, wetlands, open spaces reserved on plats for neighborhood use and other like and similar permanent open space.
+
+"South" or "south facing" means true south, or 20 degrees east of magnetic south.
+
+"Square feet" means the square feet or gross floor area under roof measured from the face of the building or structure, excluding only space devoted to covered off-street parking or loading.
+
+"Storage, self-service" means the provision of separate storage areas for individual (or business) uses.
+The storage areas may be designed to allow private access by the tenant for storing and removing personal property.
+Examples include mini-storage units, multistory facilities and recreational vehicle storage.
+
+"Storage yard" means any lot, or portion of a lot, which is used for the sole purpose of the outdoor storage of fully operable vehicles, construction equipment, construction materials, or other tangible materials and equipment.
+
+"Story" means that portion of a building included between the upper surface of any floor and the upper surface of the floor next above, except that the top story shall be that portion of a building included between the upper surface of the top floor and the ceiling above.
+If the finished floor level directly above the basement or cellar is more than six feet above grade, such basement or cellar shall be considered a story.
+
+"Street" means the entire width between the boundary lines of every way which provides for public use for the purpose of vehicular and pedestrian traffic and the placement of utilities and including the terms road, highway, lane, place, avenue, or other similar designations.
+
+"Street side lot line" means a lot line which abuts a public street, alley or way.
+A given lot may have more than one street side lot line, depending upon the number of lot lines abutting a public street, alley, or way.
+
+"Street side yard" means a yard located between the street side lot line and the nearest point of the building, and between the interior or other streetside lot line or lines of the subject lot.
+
+"Street tree" means any tree located within the public or private right-of-way or easement for vehicular access, or associated public utility.
+
+"Structural alteration" means a change to the supporting members of a structure including foundations, bearing walls or partitions, columns, beams, girders, or the roof.
+
+"Structure" means that which is built or constructed.
+An edifice or building of any kind or any piece of work artificially built up or composed of parts joined together in some definite manner and which requires location on the ground or which is attached to something having a location on the ground.
+
+"Subdivide land" means to divide an area or tract of land into four or more lots within a calendar year.
+
+"Subdivider" means an individual, firm, association, syndicate, copartnership, corporation, trust, or any other legal entity commencing proceedings under CMC § 17.05.040, to effect a subdivision of land hereunder for himself or for another.
+
+"Subdivision" means either an act of subdividing land or an area or a tract of land subdivided.
+
+"Subdivision plat" includes a final map and other writing containing all the descriptions, locations, specifications, dedications, provisions and information concerning a subdivision.
+
+"Substantial construction."
+Providing there are buildings on the site, the completion of construction of footings for the building where the principal use will take place shall constitute substantial construction.
+
+"Sunchart" means one or more photographs that plot the position of the sun between 10:30 a.m. and 1:30 p.m. on January 21st, prepared pursuant to guidelines issued by the city manager or his designee.
+The sunchart shall show the southern skyline through a transparent grid on which is imposed solar altitude for a 45-degree and 30-minute northern latitude in 10-degree increments and solar azimuth from true south in 15-degree increments.
+
+"Surety bond" means an irrevocable letter of credit and/or other financial instrument approved by the city.
+
+(Code 2000 § 11.60.00; Ord. 841 Exh. 2, 2003; Ord. 916 § 1 (Exh.
+A), 2010; Ord. 2018-05 § 1 (Exh.
+A), 2018; Ord. 2020-05 § 1 (Exh.
+A), 2020)
+

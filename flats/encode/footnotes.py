@@ -117,6 +117,13 @@ NOTES_LEAD = re.compile(
 #: that lifts the four-consecutive-townhouse limit in the GMU zone. So a legend
 #: line is stepped over rather than believed, and anything else that is not a
 #: note still ends it.
+#:
+#: Readable text puts one sentence to a line, so a definition of two or three
+#: sentences arrives as the legend line and then "Type III review required to
+#: establish a new CSU or for major modification of an existing CSU." on a
+#: line of its own. A line that names the code of the legend line above it is
+#: more of that definition and is stepped over with it; one that does not
+#: still ends the block.
 LEGEND_LINE = re.compile(r"^(?P<code>[A-Z][A-Z/-]{0,6})\s*=\s*\S")
 
 #: The same legend with the extraction pulled apart: the code, the equals sign
@@ -1429,6 +1436,10 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     led = False
     #: Whether a legend has been stepped over. See `LEGEND_LINE`.
     legend = False
+    #: The code the last legend line defined, whose further sentences name it.
+    defined = ""
+    #: Whether the reading is inside a repeated copy of a note already taken.
+    copy = False
     #: Whether that legend arrived one part per line. See `LEGEND_CODE`.
     split = False
     highest = (-1, -1)
@@ -1533,7 +1544,10 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                     # line. Fairview's density note arrives seven times. Read
                     # as seven notes it is six bodies nobody points at, and a
                     # document that reports itself unreconciled for a reason
-                    # that is not a reason.
+                    # that is not a reason. Readable text carries a copy's
+                    # later sentences on lines of their own; they are the
+                    # copy's too, and are not read into the note twice.
+                    copy = True
                     i += 1
                     continue
                 if mark == "1" and " ".join(texts[-1]).rstrip().endswith(":"):
@@ -1578,6 +1592,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             text = opening.groupdict().get("text") or ""
             bodies.append(Body(doc="", line=i + 1, mark=mark, text=text))
             texts.append([text] if text else [])
+            copy = False
             cols.append(col)
             highest = _order(mark)
             anchor = i
@@ -1590,11 +1605,20 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                 led = True
                 i += 1
                 continue
-            if not furniture and LEGEND_LINE.match(stripped):
+            if not furniture and (code := LEGEND_LINE.match(stripped)) is not None:
                 # A permission legend under the same heading as the notes.
                 # Stepped over rather than believed: a legend alone still
                 # yields no bodies and is still refused. See `LEGEND_LINE`.
                 legend = True
+                defined = code.group("code")
+                i += 1
+                continue
+            if (
+                defined
+                and not furniture
+                and re.search(rf"\b{re.escape(defined)}\b", stripped) is not None
+            ):
+                # The next sentence of that legend line's definition.
                 i += 1
                 continue
             if not furniture and (
@@ -1621,7 +1645,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             # last note would swallow its markers -- they sit inside a block
             # and blocks are where markers are not counted.
             break
-        if _flat(stripped) in above:
+        if _flat(stripped) in above or (copy and stripped in texts[-1]):
             i += 1
             continue
         texts[-1].append(stripped)

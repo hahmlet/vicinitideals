@@ -131,3 +131,45 @@ def test_a_quote_whose_lines_run_out_of_order_is_refused_and_left(tmp_path) -> N
     assert moved == []
     assert [why for _, _, why in refused] == ["its spans are out of order"]
     assert rules.read_text(encoding="utf-8") == f'a: "{S100}#L3,L1"\n'
+
+
+def test_a_file_the_recut_left_alone_keeps_its_citations_and_a_blank_stays_inside_a_span(
+    tmp_path,
+) -> None:
+    """The 2026-10-24 re-cut (readable/3) changed a few sections of each city.
+    A citation into a section whose text did not change stays exactly as
+    written (re-deriving it re-addressed Tualatin quotes for nothing), and an
+    empty line inside a cited span stays inside it: it holds no printed words,
+    so on its own it would land nowhere and split "L1-L4" into "L1,L3"."""
+    chapter = [
+        "TDC 40.100. Purpose.",
+        "",
+        LONG,
+        "work nearby in its shops and offices.",
+        "TDC 40.200. Uses.",
+        "",
+        "Quadplexes are permitted outright.",
+    ]
+    store = ProvenanceStore(tmp_path / "docs")
+    store.save(f"{LAYER}/40.res.txt", url="https://example.test/code.pdf",
+               text="\n".join(chapter) + "\n", retrieved=date(2026, 10, 23))
+    write(store, RULE)
+    store.text_path(S100).write_text("\n".join(chapter[:4]) + "\n", encoding="utf-8")
+    paths = [p for p, part in store.parts().items() if part.layer == LAYER]
+    before = Before(
+        layer=LAYER,
+        text={p: store.text_path(p).read_text(encoding="utf-8").splitlines() for p in paths},
+        held={p: held(store, p, KNOWN) for p in paths},
+        pages={p: page_map.read(store, p) for p in paths},
+        cards={},
+        signed={},
+    )
+    write(store, RULE)
+    s200 = f"{LAYER}/40/40.200.txt"
+    rules = tmp_path / "town.yaml"
+    rules.write_text(f'a: "{S100}#L1-L4"\nb: "{s200}#L1,L3"\nc: "{s200}#L1-L3"\n', encoding="utf-8")
+    moved, refused = _move_citations(store, before, [rules], {rules}, write_files=True, known=KNOWN)
+    assert refused == []
+    assert {(a, b) for _, a, b in moved} == {(f"{S100}#L1-L4", f"{S100}#L1-L3")}
+    text = rules.read_text(encoding="utf-8")
+    assert f'b: "{s200}#L1,L3"' in text and f'c: "{s200}#L1-L3"' in text

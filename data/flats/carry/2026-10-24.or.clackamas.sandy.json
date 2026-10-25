@@ -1,0 +1,732 @@
+[
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "a43171900bf44693850f7b3daed3c18b2d334dc296d6f37b50fafffec3725623",
+  "new_quote": "or/clackamas/sandy/17.10/17.10.30.txt#L583-L585",
+  "old_fingerprint": "7100300b118c388fa83cd3a963fe686b3c83cf1aaf791c3f7d5b059472a175ff",
+  "old_quote": "or/clackamas/sandy/sdc.17.10.txt#L563",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "bc4a815bbbdfab61707d83330ecdd5894219b6443f8696284876c430eb382d2d",
+  "new_quote": "or/clackamas/sandy/17.10/17.10.30.txt#L162,L166-L168",
+  "old_fingerprint": "9af02470d74e75b967cb3974cfcf3ae19b639d5d54922aece0e30f8d141d336c",
+  "old_quote": "or/clackamas/sandy/sdc.17.10.txt#L191,L195",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "0b228cbc1e09cace21a91670b33eb55fb882b7dc62634321766116dc1c11569a",
+  "new_quote": "or/clackamas/sandy/17.10/17.10.30.txt#L162,L166-L168",
+  "old_fingerprint": "df444bea9026117d4935ed85b337e3214ea2fb276f8087f1e19b661a99dc46af",
+  "old_quote": "or/clackamas/sandy/sdc.17.10.txt#L191,L195",
+  "when_key": "unit_lots",
+  "zone": "R-1"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "058600afafabb8bd1b734173e9dbe9ca204b90a931e4ede7483c1c5867ab9e57",
+  "new_quote": "or/clackamas/sandy/17.10/17.10.30.txt#L162,L166-L168",
+  "old_fingerprint": "4b24a4f21a3637848254917ca75ed2fe545eed82d8add57b9074b1de2fa62ef5",
+  "old_quote": "or/clackamas/sandy/sdc.17.10.txt#L191,L195",
+  "when_key": "unit_lots",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "d3163cc82bd83922a9ad07c0afa397995e5137002dee7f7e9d806020b0767d86",
+  "new_quote": "or/clackamas/sandy/17.10/17.10.30.txt#L162,L166-L168",
+  "old_fingerprint": "082cd77320e6bec47317e27be651c47d2082957d0453c94dc3eec1b33bbc4dca",
+  "old_quote": "or/clackamas/sandy/sdc.17.10.txt#L191,L195",
+  "when_key": "unit_lots",
+  "zone": "R-3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "60a753dbc14eefa0b9ee9bedd76a85ebfd898c0a19562b77d6c4af09442a998c",
+  "new_quote": "or/clackamas/sandy/17.32/17.32.20.txt#L1,L6",
+  "old_fingerprint": "3d642ea331dffa7a08d1739d8b07dbb8d67a3e0a3d17fc390f0d5a1f59762801",
+  "old_quote": "or/clackamas/sandy/sdc.17.32.txt#L27,L32",
+  "when_key": "",
+  "zone": "POS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "29c4635ab0d432d6bb0c19ab2ae2c0d6092dc46754968d2451701136f894380b",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.10.txt#L6,L22",
+  "old_fingerprint": "c8838e1ac40e3f8befdbe0f772007b13a0975478aad0fa69e3d8759dd402c863",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L22,L38",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "d07911cd656624c96f107f064dd5ed19509d3bd6228cba23ad60dbf5923a564c",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.10.txt#L22",
+  "old_fingerprint": "c17d578bbb6d1238608f514b9bde6ecdc585764427de9f5f6d9a10acd08a52a0",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L38",
+  "when_key": "unit_lots",
+  "zone": "R-1"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "69944251bf267f68d2c5c1b1b4ee03d8b8afab35e38b47b32bd31cbbd1c33788",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L7",
+  "old_fingerprint": "933e1951aa9733f495575ecf9fcc58a6581046c37e126e66e5231a7a76577d15",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L159",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "816e88c0217777b2c899347bbd692f39e7586fa8aab9e999adab5965b14a3858",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L11",
+  "old_fingerprint": "104ff5ac86a26499df3cdd4092fce4fccd5247df8238666044b297bb990a5a60",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L163",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "112234de40032b121e29d96a9cff56f3c0a333c5d290a19514dc58a5e2b66599",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L12",
+  "old_fingerprint": "8877a42a79d9ac7da900d7d49521b8713ed980304076fa9c043469fa34dcc318",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L164",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "64f39f68ba4f2f12ff43dd27ea5bc72708d78f2af46bcc3e89a10230383a814a",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.00.txt#L4-L7",
+  "old_fingerprint": "7179dae24b802a350bf0636d04aa7ed68d020d9b1851b57766905d257dcfb62d",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L12",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "c07ad09abee35c7050308fa7626861314337b16cce50e24cf6e0a692c3226860",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.00.txt#L4-L7",
+  "old_fingerprint": "686e76f4e94753f5002d481451506593891d66bbbb2e1e2bd7895671dac382de",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L12",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "37cd6895c4ee2ce6c2e12f24c9806fb80152733028c7a5cbc0528485bdd81a17",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L21",
+  "old_fingerprint": "ef8cf1d29cfdd5c36ede9e8c61fde7b8cc62a1325dbd9c3e6217b4895f89c85d",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L173",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "6cea141a40748f6e746801129f16b3a30fd5dc77050860409765aaa1ae68cd3d",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L22",
+  "old_fingerprint": "64b30914b2e040ce890beeff1961fc49d6d3428915d2118fdf77c9ab63645896",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L174",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "6eab992e07918ff5686e802b847db4ae06a16a07cbc68e4c15f1c50ddef27d00",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L22",
+  "old_fingerprint": "353d799e773a97bb1f52b1a35213dbaa0ac1d7c719cf816b438db0f777c774d2",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L174",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "1de94ed9c862dbf6ddc67c97efc03f26fa140f797e9b0b0eff5401eb9cc6fa0c",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L14",
+  "old_fingerprint": "31d390020d57f4f7f3d466b45b8f259fa21b16c6a7b1d14ee6d57f2e8303aab4",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L166",
+  "when_key": "local_street",
+  "zone": "R-1"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "01d53408995d9c6f0d86f1ce6497726a954f49e37edd2e1ea7bd82115260fd2e",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L17",
+  "old_fingerprint": "4a795ff808cdf383ca25602e82280f3ce08b9dce6b417d7e82bd4af0271b3801",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L169",
+  "when_key": "local_street",
+  "zone": "R-1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "fd610e2397ceb660d2125222ce5cac17e7f3050c3a98f40d58c2f998dbdcda85",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L15",
+  "old_fingerprint": "0a3bd4bc923a3734c5e0c5efe68de4f9c4066fd732dcd8d78dd1fd9ee71f486c",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L167",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "f70f2a34481f3b70202b919c904f25fd0e35cb69288d060b7411696d4fda7c30",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L16",
+  "old_fingerprint": "ba90e99ca1222cec0340f8e1997558a02814c35d8c26f2a069abee42ae45eebd",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L168",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "89d71eb34ec1f7f0c7540d8a8462c631ec7511233dd0895fa435965bda908471",
+  "new_quote": "or/clackamas/sandy/17.36/17.36.30.txt#L14",
+  "old_fingerprint": "d2fb1e528504840adeb8aa650e1c073f6ffc223590331d426657e12793f09a74",
+  "old_quote": "or/clackamas/sandy/sdc.17.36.txt#L166",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "e337eb2cd2c1b4e91c4a26abb85df55ffec673d14eb240255f975bd97e77bb9e",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.10.txt#L18,L26",
+  "old_fingerprint": "04c188e8672700b0c0a9e0b6c4dc9db177eb773319fb232568fe45d275251f54",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L34,L42",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "184d500adb1852edf649d7f537264d611226d98056472f8de942ba4d654cb3f6",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L5",
+  "old_fingerprint": "8ff57ff010e3eba114415b82a0f4f9216a792328c907d6cef0e862798c77370a",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L165",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "d5dac46d500f022d5c6d7e91bce1261a612750228f34de02e6ae3fde9b828327",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L9",
+  "old_fingerprint": "0de13d63a9dc11fbb03dce8f3a246f0dc42847633b17794932b39ff831d141e4",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L169",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "49328ef4791c4b1069049cc200b19124a6e8cdaaac5492b613ae4c056c7c86d0",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L10",
+  "old_fingerprint": "559f6fb3afa0983317cb8262a150b427db7b4dfd5504a9d211fedc5acf9e8364",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L170",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "aadec2f4c4d3f450901ef6140bb943e9afd310b185968a24289bb586272b67bf",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.00.txt#L4-L6",
+  "old_fingerprint": "1613abf8e8ff4b9241b9eca5764d5d11ca1b6ec20937988e81c3a5858c82065a",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L12",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "7b58f70e75dc45c1f4ae27c94f2dd804c4a8ceccfd48c36265c0697f3d7c4baa",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.00.txt#L4-L6",
+  "old_fingerprint": "cc71d04504548ce97c3b40e6e735a9f2a05214012439482cd8bd1934d628f360",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L12",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "72fb177b4b8cfdabd2008d32ac0a0a24f5d04417b20abcb7ed728f876a4267c2",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L20",
+  "old_fingerprint": "d41e1bf2470c1cc7dce2319692af8b8cb008bc52d6832620c0257319cc2b12b7",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L180",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "7825af916949e082734d176c25f77cee1e7c2388496dc8a3e9b9ed41f68cc435",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L21",
+  "old_fingerprint": "e810699978266f5e689d9bec806ab87870dd74eaf1937713545113b26036bba4",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L181",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "bd03521e2ac31b61f6c5788aa026a6f326627eda7f355735f933c40569e5fa1a",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L21",
+  "old_fingerprint": "9683a6862642b94e26de7e1149e572e725bb94716a79920789cb1d54f9ede80b",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L181",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "632f2fa8dbe3b4f7977a78f393dcf05fd26b3435785ef40692847fbf3e917599",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L19",
+  "old_fingerprint": "49fa44bd39632a2b7d1005f379911e2c95261b4478d0e40a26708d88b8f21f69",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L179",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "34e322da3080c96265c04bc6e1d68db9a7668edd5b2b349086491860b0bd90ac",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L12",
+  "old_fingerprint": "8045e5c5478c9e92573f57e3bf9cc4c363172ba061017779eef219eabecfd54f",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L172",
+  "when_key": "local_street",
+  "zone": "R-2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "f97cafcf2c960d580561b75dceae706791ec5c1846613c344e1a3ffa82ee7c50",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L15",
+  "old_fingerprint": "c4d5d39329ea53f078696c99c338234c9616fc210909c85212b4d18a2669e88b",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L175",
+  "when_key": "local_street",
+  "zone": "R-2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "0a604762375d6e8c02cad58507d7402d32b0651eed690cf7f671cbcdd9f93ffb",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L13",
+  "old_fingerprint": "a72e0ffe0fd60a3136b63807ad6c73c1acee7289c2c8ebce678048642fa92cba",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L173",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "ec141297fe5c15c59f29a2f55b83697b9d52ffc636ede2fab5a28aae11911934",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L14",
+  "old_fingerprint": "cd6f3f991edb189cb160a404b9eb1908594b56b8dcdaec07317355f84e669fd8",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L174",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "4b22d9799b38c398d36c8381352502b80a509be5aa39fb7a29b341a8bccbc2c5",
+  "new_quote": "or/clackamas/sandy/17.38/17.38.30.txt#L12",
+  "old_fingerprint": "7f1894b0ee15556b599974585aff7362f696fc58d44369470314b5e7e7347d51",
+  "old_quote": "or/clackamas/sandy/sdc.17.38.txt#L172",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "c71dbc2711d0fa3acb1c8cfa336e5db643412421c97ba39033f12a5c7d51993d",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.10.txt#L22,L26",
+  "old_fingerprint": "b9fa540fc1338c0d2e041c5d7ccc4836f12dd71490a7dd749bf090e8f824c9a0",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L38,L42",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "af4719df0f9f07b1e41ed92dfd7dc05ac1c482e57c5c297ff3ece2c7791a5f8c",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L5",
+  "old_fingerprint": "fc8ab178b36fe65a3d8db64a5a8b5cd0a1842df6daa79004a8c81cb414fbdb64",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L165",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "8e916cf2865a86f04a35138945805bc7097f2977d2aa102963c09a5426c1e8d7",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L8",
+  "old_fingerprint": "3a9cd289fcc63a45e0c0f511a56a880ae4dcdc8374c02d1db7929127f488d689",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L168",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "cf7fbac2a2de3f1b0a261ffa2bcd9065bfcf2f38e1adcf2d7b5559763e183ae1",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L9",
+  "old_fingerprint": "a925a1ecf5c3d5ddc12ac4a1d880225dd7d9b05286f93daf7404dc8e3e6a9dd5",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L169",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "544ad917a8ffcfa55643c9c1ac8896b904601ce884146b7fccd83b3c83d3adfb",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.00.txt#L4-L8",
+  "old_fingerprint": "7a61e0fa284864b59dc916d61aa0725d5ea95d6caa47703fb5715537f5f86de5",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L12",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "1f1ef61dff6ca4d70d6250bd5ba068da7342e6532d66e921dbdd7035ad0fc206",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.00.txt#L4-L8",
+  "old_fingerprint": "9aa70e904ad6367f80160398e79b5a3d3d52874fd0438a45697825da2ff2d564",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L12",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "fddcd91dbae0354824b53b67997115d654b65f66688001baeca57f25d7c8eb48",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L18",
+  "old_fingerprint": "5656dae6d97730b3f1fe1581431194adfcbffdd0da645e3ed756b697f48c276a",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L178",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "f59bfdabb3cb3f9878a80a66fe1a6da92fa39fb14dda8eba0d1ab29ed474ae06",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L19",
+  "old_fingerprint": "cb8a4aef056eaa5628b15265fbc823540296f94c8aecaf5aa526931ccab07098",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L179",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "92c65e0795b5db79bf83c7b7cbb40727babfa8486268fac8d321a350579bb612",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L19",
+  "old_fingerprint": "230a440a5243f30c728799be6c63e52dfa6ccfc5e048614d4302d9733182394d",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L179",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "9645413c5d218225fca2b17d733c3dfffa6508e865a1b4c18194762e2c076b85",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L20",
+  "old_fingerprint": "b1ce44f3efa79a0772d94692e1d8d84d5d8f6b92c9408f5c05f487d342251722",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L180",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "cd1fdd042ea0055c03735e9d0509ee1b6dd156b8830810fe35d6f1d36d1346b6",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L11",
+  "old_fingerprint": "4f84b44eda50293101fc78bddb3f634c7aba92e10b81860878135cd2cb153e6b",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L171",
+  "when_key": "local_street",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "25d890ecc27822517d592b887b8328d5db95a88213752f04142b8e344dfd25c0",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L14",
+  "old_fingerprint": "80cb12a5ca26fcf7bee2114cfb65133da0d65091192906d6fb5e2a55e06074d0",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L174",
+  "when_key": "local_street",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "21fb3487ee6f1bcff1567a95b58188b254c52fb657e7688f5a091bff466da930",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L12",
+  "old_fingerprint": "c7e50352405400ee07d1c698013a302243d76779de4a038b3eaf25f4fc4f1afa",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L172",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "a73ceb6f2673d4ffebada8dc82539d3463765d65281d4afecdb5a7ae1e7c7e25",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L13",
+  "old_fingerprint": "6f65ba7ff5b45fed937fa39b2f60cb118cc141d35d9704bace40bea883b1aac4",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L173",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "9a187b6fc429dc0cb7f7bb0eca898269694984e1458c2af4dd2e7f5967601e42",
+  "new_quote": "or/clackamas/sandy/17.40/17.40.30.txt#L11",
+  "old_fingerprint": "719181e61faa12a91f291a66af51e6af2ce14ae533a2398bff4c457f27c65e95",
+  "old_quote": "or/clackamas/sandy/sdc.17.40.txt#L171",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "80cdc7808d227352f2a3a2f9bb5a5f062e7f39caf18cf8e99acef3c53df47935",
+  "new_quote": "or/clackamas/sandy/17.42/17.42.10.txt#L6,L10,L22",
+  "old_fingerprint": "ef22acffbeaecf80044be91b2c974ac778e65dfb36e4f40dff4b9030f86a2179",
+  "old_quote": "or/clackamas/sandy/sdc.17.42.txt#L24,L28,L40",
+  "when_key": "",
+  "zone": "C-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "b2a3ce11ed19d9688a83ebc13683f0ee5ab85eab3a24c0ef13dbf11f2391ab99",
+  "new_quote": "or/clackamas/sandy/17.44/17.44.10.txt#L6,L10",
+  "old_fingerprint": "2f1ea680002da501f5e511285c7232531679c709e4fe6d88fc2e389e71fcc2f9",
+  "old_quote": "or/clackamas/sandy/sdc.17.44.txt#L22,L26",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "b037f16e05370377620bb3c96ebf79c68bef555e9a4dc5e79c31c5f8052bb6f9",
+  "new_quote": "or/clackamas/sandy/17.46/17.46.10.txt#L6,L10",
+  "old_fingerprint": "15541720dd37c8d120c88c9349bacc0e819c99f0e74ab4e9ab790a2b776bd753",
+  "old_quote": "or/clackamas/sandy/sdc.17.46.txt#L22,L26",
+  "when_key": "",
+  "zone": "C-3"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "72755a606aeb20498249c3ed4f3c694c43936746fdc04f7f513c6b3b7c91587d",
+  "new_quote": "or/clackamas/sandy/17.80/17.80.20.txt#L4-L5",
+  "old_fingerprint": "7987b369d74a9f1469433e8dccfc571b6e06a66762a5b2ef04c2a2c7a5f02c3f",
+  "old_quote": "or/clackamas/sandy/sdc.17.80.txt#L28",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "142417ed7b068cb1bd5818eacb9130c58f85be52683a73895d6c191be9998743",
+  "new_quote": "or/clackamas/sandy/17.80/17.80.20.txt#L4-L5",
+  "old_fingerprint": "a1713f7e63e5991270dbfc28c93fe7f959be110ea47cf9cc2807aa6cdb63ce22",
+  "old_quote": "or/clackamas/sandy/sdc.17.80.txt#L28",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "e61efb05d0d0e5273652479cee1fd92bac90d38542d6efb63a118691cdcb6ae7",
+  "new_quote": "or/clackamas/sandy/17.80/17.80.20.txt#L4-L5",
+  "old_fingerprint": "bf218bd300785c31fc9085333cb3b44e145f9201c5c6d8a5660bee9831c53890",
+  "old_quote": "or/clackamas/sandy/sdc.17.80.txt#L28",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "2b596a153a164fae7dd93368aeafca214b69181a07562a31862c06fedd9c35a3",
+  "new_quote": "or/clackamas/sandy/17.80/17.80.20.txt#L4-L5",
+  "old_fingerprint": "2c83be91c9f5377f3ef28d93aa4efb78a2d54562bb31bae8ddebaef3ca63a9e7",
+  "old_quote": "or/clackamas/sandy/sdc.17.80.txt#L28",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "90610ef1eeb31f7a04b4c73c2ef6cd08bf49248829db3a5a2b9e057bb08f7675",
+  "new_quote": "or/clackamas/sandy/17.80/17.80.20.txt#L4-L5",
+  "old_fingerprint": "01e383cc6e6201cee5c7572040788c87d93e8c84092bfe5b9b795d5270f95443",
+  "old_quote": "or/clackamas/sandy/sdc.17.80.txt#L28",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "066012901df669682f3a95e34e792dba0cd6b8518d314dcb5aace820e2a50669",
+  "new_quote": "or/clackamas/sandy/17.80/17.80.20.txt#L4-L5",
+  "old_fingerprint": "39f468580d0ece716bc2b6ab9cfcafcfb7222e64d8251eace194a11be8f64730",
+  "old_quote": "or/clackamas/sandy/sdc.17.80.txt#L28",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "a5bd7ed25a9bd6f0b8739d161b0c4e209fdb293e01156930120f2eedeb774ce1",
+  "new_quote": "or/clackamas/sandy/17.90/17.90.160.txt#L1,L4,L74,L76",
+  "old_fingerprint": "137d1e8de624efb4223e5721d8047e01a3b56730a058b726e20b6d6ba7a28eb3",
+  "old_quote": "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2289,L2291",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "d355db742ef3f9445c1b891070889a29a24438b2691570993b86e501de72f8d4",
+  "new_quote": "or/clackamas/sandy/17.90/17.90.160.txt#L1,L4,L74,L76",
+  "old_fingerprint": "1bbf1898eaba2b36e0527942e2962280bbcd5cda00e7c3606280680ed73adf10",
+  "old_quote": "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2289,L2291",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "6dc7dc056b1d446fc11125762c65e52bec637b3654db837ef10319a14c9cf620",
+  "new_quote": "or/clackamas/sandy/17.90/17.90.160.txt#L1,L4,L7,L11-L12",
+  "old_fingerprint": "889852c6ad22a4b0bc6559c59e6d0e375bd44ee87662f72fbcac8e520091cc4d",
+  "old_quote": "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "b5f1bb5780301942a5b156eb2b4e14e8585174e5eefcb0bca21c1f3286ea68e1",
+  "new_quote": "or/clackamas/sandy/17.90/17.90.160.txt#L1,L4,L7,L11-L12",
+  "old_fingerprint": "f4859627756590ea7a850233decb7b0faade5b2c793908500dc224c882724cf1",
+  "old_quote": "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231",
+  "when_key": "",
+  "zone": "R-2"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "bf4f9af0ef650fe66a70eb56225e702cb1539050fd46b51b5b086244fcfe5af9",
+  "new_quote": "or/clackamas/sandy/17.90/17.90.160.txt#L1,L4,L7,L11-L12",
+  "old_fingerprint": "54292fddfbd1b0d6f390262e08e419d1c9864577eaa98e945e6b9bfbb4c15eac",
+  "old_quote": "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "c9d33b93422d05f2e2a9812ab297be6a31b09d5afbd297923b936330f88344aa",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.20.txt#L40,L43",
+  "old_fingerprint": "e52b01c2788865fd9de842f413031cd0f0b72cd63248e60e80aa87231ccc536b",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L157,L160",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "51c297cb5748fb40785aadad6eebefeaaa118f37180e2179bd26231fc6066de4",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.60.txt#L15",
+  "old_fingerprint": "cba16fffb283b4125bc947dc551828ed85cf619fc8a7102f3e9addae11de875d",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L276",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "5af518af2503f71ac0bd2b594dca641c26e6dd83452ec6a720ddc81e941069cf",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.60.txt#L15",
+  "old_fingerprint": "ab049682ffdc43b54167f1b4bbae2fc6045f87911c2b17e18c8d543596db2cab",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L276",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "73e9312ee81907743c9d5ec8723417cada757f16ad9d596dc6a9fc0e1dd211f1",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.60.txt#L43-L44",
+  "old_fingerprint": "253bcb0e94fe46ccb55f595c2aabc95b9ccec4da6fa63b1d914bec84cf0676b4",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L302-L303",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "635f4052fabb850cefdaca52eff84920c06f8fc6e7ab9efc700be695dfc75301",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.60.txt#L43-L44",
+  "old_fingerprint": "aa3c4dd1a8345948e74c94a4e39427a30433f97dcb220e473cdd3ade42f61aec",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L302-L303",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "2f296353ade6d903ecf7cfca8267b702eda7707a51fc0bdbe4c1254cc437d24d",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.100.txt#L6",
+  "old_fingerprint": "599a36e131da44b5e07b9fd3415eed5010bd3363d15596b3a9089572a22bd1ae",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L440",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "2b06d43ea8d023a57b42844421a4f5e29582f887430e73d20bb1602d0d039e0c",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.100.txt#L6",
+  "old_fingerprint": "c66dfe7ab6b41282f8ee7ccb78d90686cf52332ec09164706aa337a9c8417a10",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L440",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/sandy",
+  "new_fingerprint": "b002175639c825a50425f2d6d23c015c5ec7c35fc78829eae9bcae14389f89ac",
+  "new_quote": "or/clackamas/sandy/17.98/17.98.100.txt#L6",
+  "old_fingerprint": "f6d90f61567b71abcf1e86ad87a225c5f74a6cbacbaa0abebb4caf8d56e3a34b",
+  "old_quote": "or/clackamas/sandy/sdc.17.98.txt#L440",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

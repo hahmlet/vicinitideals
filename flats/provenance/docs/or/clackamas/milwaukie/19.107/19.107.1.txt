@@ -1,0 +1,27 @@
+§ 19.107.1. Zone Classifications.
+
+For the purposes of this title, the following base zones and overlay zones are established in the City per Table 19.107.1:
+
+Table 19.107.1 Classification of Zones  Table 19.107.1 Classification of Zones
+Zone Description                        Abbreviated Description
+Base Zones                              Base Zones
+Residential                             R-MD
+Residential                             R-HD
+Downtown Mixed Use                      DMU
+Open Space                              OS
+General Commercial                      C-G
+Community Shopping Commercial           C-CS
+Manufacturing                           M
+Business Industrial                     BI
+Planned Development                     PD
+Tacoma Station Area Mixed Use           MUTSA
+General Mixed Use                       GMU
+North Milwaukie Employment              NME
+Neighborhood Mixed Use                  NMU
+Small Mixed Use                         SMU
+Overlay Zones                           Overlay Zones
+Willamette Greenway                     WG
+Historic Preservation                   HP
+Flex Space                              FS
+Aircraft Landing Facility               L-F
+

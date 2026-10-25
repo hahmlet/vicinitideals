@@ -1,0 +1,230 @@
+§ 19.402.6. Activities Requiring Type I Review.
+
+Within either WQRs or HCAs, the following activities and items are subject to Type I review per Section 19.1004:
+
+A.
+
+Limited Tree Removal
+
+1.
+
+For trees not exempted by Subsections 19.402.4.A.6 (general exemptions) or 19.402.6.A.2 (development scenarios), the Planning Manager may approve an application for limited tree removal or major pruning within WQRs and HCAs under any of the following circumstances:
+
+a.
+
+The tree poses an immediate emergency, as determined by the Urban Forester, Planning Manager, or designee; or a hazardous but nonemergency situation, with an unreasonable risk to the occupants of the property, the adjacent property, or the general public, as determined by an ISA Certified Arborist that is Tree Risk Assessment Qualified (TRAQ) in accordance with current ISA Tree Risk Assessment Best Management Practices.
+
+Immediate emergencies may include, but are not limited to, situations in which a tree or portion of a tree has been compromised and has damaged or is damaging structures or utilities on private or public property, or where a tree or portion of a tree is prohibiting safe passage in the public right-of-way.
+Examples include but are not limited to trees that have fallen into or against a house or other occupied building, or trees downed across power lines or roadways.
+Emergency situations do not offer time for the normal review process and will be evaluated retroactively once the emergency has been resolved.
+
+A situation may be deemed hazardous if a tree, or portion of a tree, has undergone a recent change in health or condition in a manner that may pose a danger to people, to structures on private property, to public or private utilities, or to travel on private property or in the public right-of-way.
+Examples of imminent hazards may include, but are not limited to, trees that are broken, split, cracked, uprooted, or otherwise in danger of collapse.
+
+Approval will be limited to removal of the tree, or portion of the tree, as necessary to eliminate the emergency or hazard.
+Any damage or impacts to the designated natural resource must be repaired after the emergency or hazard has been resolved.
+Any applicable requirements of Chapter 16.32 must also be met.
+
+b.
+
+The tree is dead, diseased, or dying and cannot be saved, as determined and documented in a report by an ISA Certified Arborist in accordance with ISA standards.
+This includes situations where a tree has sustained physical damage that will cause it to die or enter an advanced state of decline.
+
+c.
+
+The tree is categorized as nuisance species on the Milwaukie Plant List.
+
+d.
+
+The tree is a downed tree, but more than 150 sq ft of earth disturbance is necessary to remove it.
+
+e.
+
+The tree is part of a stormwater management system and has grown too large to remain an effective part of the system.
+
+f.
+
+The tree location conflicts with areas of public street widening, construction, or extension as shown in the Transportation System Plan and there is no practicable alternative to removing the tree.
+
+g.
+
+Tree removal is required for the purposes of utility or infrastructure repair and there is no practicable alternative to removing the tree.
+
+h.
+
+The tree is recommended for removal by a designated fire marshal for Clackamas County because it presents a significant fire risk to habitable structures or limits emergency access for rescue workers, and the risk or access issue cannot be abated through pruning or other means that would result in tree retention.
+
+i.
+
+The tree is not categorized as either a nuisance or native species on the Milwaukie Plant List, is less than 12-in DBH, and is not located in a WQR categorized as Class A ("Good"), according to Table 19.402.11.C, provided that no more than 3 such trees will be removed during any 12-month period.
+In residential zones, for the proposed removal of more than one such tree (i.e., non-nuisance, non-native, not in a “Good” WQR area) during any 12-month period, the Type B tree permit process outlined in Subsection 16.32.044.E is applicable in addition to the provisions of Subsection 19.402.6.A.
+
+j.
+
+For major pruning, as defined in Section 19.201, a certified arborist has determined, and documented in a report, that the tree will survive the proposed pruning.
+
+2.
+
+The provisions of Subsection 19.402.6.A.1 do not apply to tree removal proposed in association with development or other activities regulated by Section 19.402, for which other approval criteria and mitigation standards may apply.
+
+3.
+
+The Planning Manager will require the application to comply with all of the following standards:
+
+a.
+
+A construction management plan must be prepared in accordance with Subsection 19.402.9.
+When earth disturbance is necessary for the approved removal or pruning, all open soil areas that result from the disturbance must be replanted and/or protected from erosion.
+
+b.
+
+All pruning and/or tree removal must be done in accordance with the standards of the International Society of Arboriculture (ISA) and must comply with the applicable requirements in Chapter 16.32.
+
+c.
+
+Any tree that is removed in accordance with Subsection 19.402.6.A must be replaced with a new tree, of at least 1.5-in caliper or at least 5-ft overall height after planting.
+An exception to this requirement may be granted if the applicant demonstrates that a replacement tree has already been planted in anticipation of tree removal or if dense canopy coverage otherwise precludes tree replacement.
+Any other proposed exception to this replanting requirement is subject to the mitigation fees established in conjunction with Section 16.32.044.
+
+d.
+
+The replacement tree(s) must be located in the general vicinity of the removed tree(s), somewhere within the designated natural resource (WQR or HCA).
+The replacement tree(s) does not have to be a native species; but, in accordance with Subsection 19.402.5.C, the replacement tree(s) must not be categorized as a nuisance species on the Milwaukie Plant List.
+The property owner must ensure that the replacement tree(s) survives at least 2 years beyond the date of its planting.
+
+B.
+
+Limited WQR Disturbance for New Dwelling Units
+
+1.
+
+Within WQRs, nonexempt residential development that is not listed in Subsection 19.402.7 or 19.402.8 and that is in compliance with the following nondiscretionary standards is allowable subject to Type I review:
+
+a.
+
+The disturbance (temporary or permanent) is directly related to the construction of a new dwelling unit (primary or accessory); and
+
+b.
+
+The area of the site that is not categorized as WQR and that is outside the minimum required yard setbacks for the underlying zone is 1,500 sq ft or less.
+In such cases, the disturbance area within the WQR is limited by the following formula: subtract the area of the site that is not categorized as WQR from the area of the site that is categorized as WQR; if that number is positive, that amount of WQR on the site can be disturbed, up to a maximum of 800 sq ft (see Figure 19.402.6.B.1.b); and
+
+c.
+
+The WQR being disturbed is not categorized as Class A ("Good") according to Table 19.402.11.C; and
+
+d.
+
+The disturbance area is at least 30 ft from the top of bank of a stream or drainage or 50 ft from the edge of a wetland; and
+
+e.
+
+The disturbance does not include the removal of any trees 6-in DBH or greater that are categorized as a native species on the Milwaukie Plant List; and
+
+f.
+
+The disturbance will not result in any increased direct stormwater discharges to the WQR.
+
+2.
+
+Where limited WQR disturbance is allowed by this subsection, mitigation must be provided in accordance with the general standards of Subsection 19.402.11.B (including for plant species, size, spacing, survival, etc.) and as follows:
+
+a.
+
+For temporary disturbances, the disturbance area must be replanted at a minimum with native ground-cover species sufficient to cover all bare or exposed soil.
+
+b.
+
+For permanent disturbances, an area equal in size to the disturbance area must be established as a mitigation area.
+Within the mitigation area, all vegetation categorized as a nuisance species on the Milwaukie Plant List must be removed and native-species trees and shrubs must be planted at a ratio of 5 trees and 25 shrubs per 500 sq ft of allowed disturbance.
+Any remaining bare soil within the mitigation area must be replanted with native ground-cover species.
+
+These standards apply in addition to any other applicable provisions related to tree removal as established in Section 16.32.042.
+
+C.
+
+Activities within HCAs in Compliance with Nondiscretionary Standards
+
+Within HCAs but outside of WQRs, nonexempt development that is not listed in Subsection 19.402.7 or 19.402.8 and that is in compliance with the following nondiscretionary standards is subject to Type I review.
+
+1.
+
+Single Detached and Middle Housing Residential Uses
+
+For single detached and middle housing residential uses, including any related public facilities as required by Chapter 19.700 Public Facility Improvements, the amount of nondiscretionary disturbance allowed within an HCA is determined by subtracting the area of the lot or parcel outside of the total resource area (WQR and HCA) from the maximum potential disturbance area within the HCA (which is 50% of the total HCA, up to a maximum of 5,000 sq ft)—see Table 19.402.6.C.1 for examples.
+Such disturbance will be subject to Type I review and the mitigation requirements described in Subsection 19.402.11.D.2.
+
+Table 19.402.6.C.1
+Method for Calculating Allowable Nondiscretionary Disturbance within an HCA for Single
+Detached Dwellings and Middle Housing Residential Uses
+X = The maximum potential disturbance area within the HCA, which is 50% of the total HCA, up to a maximum of 5,000 sq ft.
+Y = The area of the lot or parcel outside the total resource area (WQR and HCA).
+Z = The net amount of disturbance area allowed within the HCA (Z = X-Y).
+If (Y) is greater than (X), disturbance is not permitted within the HCA; otherwise, the applicant may disturb up to the net amount of disturbance area allowed (Z) within the HCA.
+Example 1: 8,000-sq-ft lot with 3,000 sq ft of HCA and 5,000 sq ft outside of HCA/WQR X = 1,500 sq ft (50% of HCA)
+Y = 5,000 sq ft outside of HCA/WQR
+Z = -3,500 sq ft (1,500 sq ft — 5,000 sq ft)
+Conclusion: Y is greater than X; therefore, development is not permitted within the HCA.
+Example 2: 8,000-sq-ft lot with 6,000 sq ft of HCA and 2,000 sq ft outside of HCA/WQR X = 3,000 sq ft (50% of HCA)
+Y = 2,000 sq ft outside of HCA/WQR
+Z = 1,000 sq ft (3,000 sq ft - 2,000 sq ft)
+Conclusion: Y is not greater than X; therefore, the applicant may disturb up to the value of Z (1,000 sq ft) within the HCA.
+
+2.
+
+All Other Uses
+
+A maximum net disturbance area of 10% of the HCA on the site is allowed by right, subject to Type I review and the mitigation requirements described in Subsection 19.402.11.D.2.
+
+D.
+
+Natural Resource Management Plans
+
+Natural resource management plans that meet the standards outlined in Subsection 19.402.10.A are subject to Type I review.
+These are typically plans that have already been approved by a qualified agency.
+
+E.
+
+Maintenance of Existing Utility Facilities
+
+Routine repair and maintenance of existing utility facilities, accesses, streets, driveways, and/or parking improvements that disturbs a WQR and/or HCA is subject to Type I review, provided such activities can meet the general standards for special uses established in Subsection 19.402.11.E.1.
+These include, but are not limited to, the requirement to provide a mitigation plan and to restore the disturbed area.
+
+F.
+
+Utility Connections
+
+Unless they are exempt per Subsection 19.402.4, connections to existing or new utility lines that involve disturbance to a WQR and/or HCA are subject to Type I review against the following criteria:
+
+1.
+
+The activities required to establish the connection shall not disturb a protected water feature.
+Utility connections that will disturb a protected water feature are subject to the review procedures for special uses established in Subsection 19.402.11.E.
+
+2.
+
+The activities required to establish the connection shall not disturb an area greater than 10 ft wide.
+
+3.
+
+The connection can meet the general standards for special uses established in SubSection 19.402.11.E.1.
+
+G.
+
+Nuisance Abatement
+
+Measures to remove or abate nuisances; or any other violation of state statute, administrative agency rule, or City or County ordinance; shall be subject to Type I review of a construction management plan, to be approved by the Planning Manager prior to the abatement activity.
+The person or agency undertaking the action shall repair any impacts to the designated natural resource resulting from the nuisance or violation (e.g., restore disturbed soils, restore hydrologic connections, replant disturbed areas with native vegetation, etc.) unless subsequent development has been approved.
+
+H.
+
+Boundary Verification
+
+Boundary verifications that propose minor corrections will be processed in accordance with Subsection 19.402.15.A.1 and are subject to Type I review.
+
+I.
+
+Low-Impact Partitions
+
+Partitions that meet the standards established in Subsection 19.402.13.F are subject to Type I review.
+

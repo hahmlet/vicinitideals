@@ -1,0 +1,5 @@
+§ 19.107.5. Zoning of Lots with Multiple Zones.
+
+If a zone boundary for a base zone in Chapter 19.300, as shown on the Zoning Map, divides a lot between 2 or more base zones, the entire lot shall be deemed to be in the base zone in which the greater area of the lot lies, provided that this adjustment involves a distance not to exceed 20 ft from the mapped base zone boundary.
+If an adjustment exceeds 20 ft, the regulations for the base zones shall apply to the lot as depicted on the Zoning Map.
+

@@ -1,0 +1,127 @@
+§ 18.660.080. Building Design Standards.
+
+A.
+
+Purpose. The purpose of these standards is to create safe, comfortable, and attractive streetscapes for pedestrians and support small-scale incremental development.
+In keeping with the stated purpose of this section, building design standards do not apply to street property lines along Interstate 5 and Highway 217.
+
+B.
+
+Building height. The maximum allowed building height is six stories, except for properties shown on Map 18.660.A that have a maximum allowed building height of four stories.
+Basements, as defined in Chapter 18.30, Definitions, are not considered stories for purposes of meeting this standard.
+The height standard for each type of story is provided in Table 18.660.7.
+Vertical building projections not used for human habitation such as chimneys, flag poles, and elevator shaft housings are exempt from the building height standards of this chapter, expect for wireless communication facilities, which are subject to the standards in Chapter 18.450, Wireless Communication Facilities.
+
+Table 18.660.7 Height by Type of Story  Table 18.660.7 Height by Type of Story
+Type of Story                           Height
+First story                             12 feet (min.) and 25 feet (max.)
+Middle stories                          14 feet (max.)
+Top story                               18 feet (max.)
+
+C.
+
+Building entrances. Building entrances must be provided on street-facing building facades as follows:
+
+1.
+
+Quantity. A minimum of one building entrance must be provided for:
+
+a.
+
+Every 80 feet of street-facing facade.
+Fractional entrance requirements are rounded up to one for street-facing facades less than 80 feet in width and rounded down to the nearest whole number for street-facing facades 80 feet in width or greater.
+Buildings that front onto two or more streets:
+
+i.
+
+Must calculate the required number of entrances for each street-facing facade separately,
+
+ii.
+
+Must meet this quantity requirement on at least one facade, and
+
+iii.
+
+Are exempt from this quantity requirement on street-facing facades that are less than 50 feet in width.
+
+b.
+
+Each individual residence or tenant space with a street-facing facade that is not provided with a shared street-facing entrance.
+
+2.
+
+Location. The maximum setback for a required building entrance is 20 feet from the street property line.
+A required building entrance must be at an angle that is no more than 45 degrees from the street, except for entrances to individual residences.
+Entrances to individual residences that open onto a porch or stoop must be at an angle that is no more than 90 degrees from the street.
+
+3.
+
+Grade. Required entrances must be within 1 foot above or below the grade of the adjacent sidewalk, except for entrances to individual residences.
+There is no grade requirement for entrances to individual residences.
+
+4.
+
+Weather protection. A required building entrance must be covered, recessed, or treated with a permanent architectural feature that provides weather protection for pedestrians.
+The required weather protection must be at least as wide as the entrance, a maximum of 6 feet above the top of the entrance, and a minimum of 3 feet in depth.
+The required weather protection may project into the minimum building setback and public right-of-way as allowed by Paragraph 18.660.080.D.3.
+Weather protection standards are shown in Figures 18.660.3 and 18.660.4.
+
+D.
+
+Building projections. Building projections are allowed as follows:
+
+1.
+
+Architectural elements such as eaves, cornices, and bay windows may project into the minimum building setback as shown in Figure 18.660.3.
+
+Figure 18.660.3 Building Projection Standards
+
+2.
+
+Balconies may project into the minimum building setback and public right-of-way as shown in Figure 18.660.3.
+Balconies may project a maximum of 4 feet into the right-of-way.
+Balconies that project into the right-of-way must have a minimum vertical clearance of 10 feet from sidewalk grade and are subject to approval by the City Engineer.
+
+3.
+
+Weather protection elements for pedestrians along building facades, such as canopies or awnings, may project into the minimum building setback and public right-of-way as shown in Figure 18.660.3.
+Weather protection elements may project into the right-of-way a maximum of 6 feet or the minimum sidewalk width along the building frontage, whichever is less.
+Elements that project into the right-of-way must have a minimum vertical clearance of 8 feet from sidewalk grade and are subject to approval by the City Engineer.
+
+4.
+
+Signs may project into the minimum building setback and public right-of-way subject to the standards in Subparagraph 18.435.130.G.1.c and approval by the City Engineer.
+
+E.
+
+Building facade windows.
+Building facade windows are required as follows:
+
+1.
+
+Windows are required on all street-facing facades within 35 feet of any street property line and are subject to the window area standards in Table 18.660.8 and as shown in Figure 18.660.4.
+Any portion of a street-facing facade that contains vehicle parking, such as a parking structure, does not have to provide windows but must provide facade openings that meet the minimum required window area in Table 18.660.8.
+If required facade openings contain glass, they must meet the standards in Paragraph 18.660.080.E.3.
+If required facade openings do not contain glass, they may contain architectural elements that are no more than 30 percent sight-obscuring.
+
+2.
+
+Window area is the aggregate area of the glass within each window, including any interior grids, mullions, or transoms.
+Facade area is the aggregate area of each street-facing vertical wall plane.
+
+3.
+
+Required windows must be clear glass and not mirrored, frosted, or reflective.
+Clear glass within doors may be counted toward meeting the window coverage standard.
+
+Table 18.660.8 Minimum Window Area  Table 18.660.8 Minimum Window Area  Table 18.660.8 Minimum Window Area
+Story                               Use                                 Minimum Window Area
+First Story                         Nonresidential                      50% of facade
+First Story                         Residential                         30% of facade
+Upper Stories                       Nonresidential                      30% of facade
+Upper Stories                       Residential                         20% of facade (not applicable to stories with sloped roofs or dormers)
+
+Figure 18.660.4 Window Area and Weather Protection Standards
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-02 §3; Ord. 22-06 §2)
+

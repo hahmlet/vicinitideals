@@ -1,0 +1,76 @@
+§ 18.670.060. Housing Types.
+
+A.
+
+A housing type is not a use category.
+It describes a type of development that can contain a Residential use.
+
+B.
+
+A list of allowed, limited, and prohibited housing types is provided in Table 18.670.2.
+Terms and abbreviations used are defined as follows:
+
+1.
+
+Yes, allowed (Y).
+Housing types that are allowed.
+
+2.
+
+Limited (L). Housing types that are allowed subject to specific limitations.
+
+3.
+
+No, prohibited (N).
+Housing types that are not allowed under any circumstance.
+
+C.
+
+All housing types are subject to the standards and provisions of the applicable development standards chapter.
+The applicable chapter for each housing type is provided in Table 18.670.2.
+
+D.
+
+All allowed housing types may be built on site or manufactured off site.
+
+Table 18.670.2 Washington Square Regional Center Housing Types  Table 18.670.2 Washington Square Regional Center Housing Types  Table 18.670.2 Washington Square Regional Center Housing Types  Table 18.670.2 Washington Square Regional Center Housing Types  Table 18.670.2 Washington Square Regional Center Housing Types
+Housing Types                                                   Applicable Chapter                                              MUC                                                             MUE                                                             MUR
+Accessory Dwelling Units                                        18.220                                                          N                                                               N                                                               L
+Apartments                                                      18.230                                                          L                                                               N                                                               Y
+Cottage Clusters                                                18.240                                                          N                                                               N                                                               L
+Courtyard Units                                                 18.250                                                          N                                                               N                                                               L
+Mobile Home Parks                                               18.260                                                          N                                                               N                                                               N
+Quads                                                           18.270                                                          N                                                               N                                                               L
+Rowhouses                                                       18.280                                                          L                                                               N                                                               L
+Small Form Residential                                          18.290                                                          N                                                               N                                                               L
+Mixed-Use Development                                           18.670                                                          Y                                                               Y                                                               Y
+
+Y = Yes, Allowed
+L = Limited
+N = No, Prohibited
+
+E.
+
+Limited housing types in subdistricts.
+
+1.
+
+Limited housing types in the MUC zone.
+
+a.
+
+Rowhouses are allowed only in the Design Review Subdistrict.
+
+b.
+
+Only mixed-use development is allowed in the Metzger Business Subdistrict.
+All other housing types are prohibited.
+
+2.
+
+Limited housing types in the MUR zone.
+Only apartments and mixed-use development are allowed in the Apartment Subdistrict.
+All other housing types are prohibited.
+
+(Ord. No. 24-05, 4/23/2024)
+

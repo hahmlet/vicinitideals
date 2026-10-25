@@ -1,0 +1,290 @@
+§ 16.25.010. Industrial districts.
+
+A.
+
+Purpose.
+
+1.
+
+Employment Center (EC). The purpose of the Employment Center (EC) District is to provide for a mix of employment opportunities, located where they are accessible by a variety of transportation modes, including transit services and safe and convenient pedestrian connections.
+These areas provide sites suitable for business and office parks, campus and light industrial uses, professional and corporate offices, medical offices and clinics, tech/flex businesses, creative arts and services, technical/vocational schools and other related businesses.
+Building types range from large single user campuses, multiple tenant business parks to multistory mixed-use buildings.
+Quality design and a connected and walkable character of the surrounding environment will be provided.
+Housing is allowed when combined in vertical mixed-use buildings.
+
+2.
+
+Industrial Campus (IC). Pursuant to Metro's Urban Growth Management Functional Plan Title 4 for Regionally Significant Industrial Areas (RSIA) the purpose of the Industrial Campus District is to provide a ready supply of developable industrial land for the City of Happy Valley and the southeast metropolitan area.
+It seeks to promote economic development, job creation, sustainable businesses and green building practices, jobs-housing balance, land optimization and freight mobility by preserving large contiguous areas for industrial clusters near existing and planned residential areas and transportation corridors.
+In order to protect the viability and integrity of industrial land, this district is not intended for residential use and shall allow only limited retail and commercial components.
+The Industrial Campus District is intended to be a mix of, but not limited to, the following industries:
+
+a.
+
+Green building products and design;
+
+b.
+
+Advanced materials;
+
+c.
+
+Medical devices;
+
+d.
+
+Specialized software applications;
+
+e.
+
+Forestry and agricultural biotechnology;
+
+f.
+
+Nanotechnology;
+
+g.
+
+Recreational equipment/recreation technology;
+
+h.
+
+Corporate headquarters;
+
+i.
+
+Professional services;
+
+j.
+
+Specialty food processing;
+
+k.
+
+Transportation equipment/technology;
+
+l.
+
+Logistics.
+
+B.
+
+Permitted Uses. Table 16.25.010-1 identifies the land uses that are allowed in the EC and IC Districts.
+
+Table 16.25.010-1 Industrial (EC, IC) Permitted Uses                                                                                                                    Table 16.25.010-1 Industrial (EC, IC) Permitted Uses  Table 16.25.010-1 Industrial (EC, IC) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                            P=Permitted; C=Conditional Use; X=Prohibited          P=Permitted; C=Conditional Use; X=Prohibited
+Land Use                                                                                                                                                                EC                                                    IC
+Residential                                                                                                                                                             Residential                                           Residential
+Pre-existing dwellings. Preexisting dwellings may be allowed to remodel or expand and shall not be subject to the provisions of Chapter 16.72                           P                                                     P
+Home occupations in pre-existing dwellings                                                                                                                              P                                                     P
+New residential uses                                                                                                                                                    P[1]                                                  X
+Commercial—Retail                                                                                                                                                       Commercial—Retail                                     Commercial—Retail
+Commercial day care                                                                                                                                                     C                                                     C
+Entertainment, major event                                                                                                                                              X                                                     X
+Hotels                                                                                                                                                                  C                                                     X
+Indoor health and recreation facilities, such as racquetball court, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities    C                                                     C
+Mobile food units                                                                                                                                                       P[3,12]                                               P[3,12]
+Outdoor recreation, commercial                                                                                                                                          X/C[9]                                                X
+Parking lot (when not an accessory use)                                                                                                                                 X                                                     C/X[7]
+Quick vehicle servicing or vehicle repair                                                                                                                               C                                                     P
+Retail sales—Includes used homes, trailers, motor homes and recreational vehicles                                                                                       P[2,7]                                                P[3,7]
+Commercial service                                                                                                                                                      P[2]                                                  P[3]
+Self-service storage—Includes mini-storage and recreational vehicle storage facilities                                                                                  X                                                     P/X[7]
+Marijuana retailing                                                                                                                                                     X                                                     X
+Psilocybin service center                                                                                                                                               X                                                     X
+Commercial—Office                                                                                                                                                       Commercial—Office                                     Commercial—Office
+Offices                                                                                                                                                                 P                                                     P[4]
+Industrial[5]
+Industrial services—Fully enclosed                                                                                                                                      P                                                     P
+Industrial services—Not enclosed                                                                                                                                        C                                                     P
+Manufacturing and production and fabrication and assembly—Fully enclosed                                                                                                P                                                     P
+Research and development activities and laboratories—Fully enclosed                                                                                                     P                                                     P
+Research and development activities and laboratories—Not fully enclosed                                                                                                 C[5]                                                  P[5]
+Repair, finishing and testing—Fully enclosed                                                                                                                            P                                                     P
+Repair, finishing and testing—Not fully enclosed                                                                                                                        C[5]                                                  P[5]
+Distribution center and warehouse                                                                                                                                       P[6]                                                  P[8]
+Waste-related                                                                                                                                                           X                                                     C/X[7]
+Helipads or heliports[11]                                                                                                                                               P                                                     P
+Transfer station                                                                                                                                                        C                                                     P[7]
+Wholesale activities                                                                                                                                                    P[2]                                                  P[3]
+Institutional                                                                                                                                                           Institutional                                         Institutional
+Basic utilities                                                                                                                                                         P                                                     P
+Colleges                                                                                                                                                                C[2]                                                  X
+Institutional uses; educational institutes and trade schools; art, music, or dance studios; radio and television studios, excluding transmission towers                 C[2]                                                  C
+Public parks and open space—Pedestrian amenities                                                                                                                        P                                                     P
+Public parks and open space—Parks and recreation facilities                                                                                                             C                                                     P
+Public parks, usable open space                                                                                                                                         P                                                     P
+Churches, synagogues, temples or places of worship, library, post office, community center, etc.
+C[2]                                                  X
+Public and private schools (includes commercial day care, dancing and music schools)                                                                                    X/C[2,7]                                              X
+Other                                                                                                                                                                   Other                                                 Other
+Agriculture—Animals, when an existing use as of May 5, 2009                                                                                                             P                                                     P
+Agriculture—Animals, when accessory to a permitted industrial use                                                                                                       X                                                     P
+Agriculture—Animals, when new use                                                                                                                                       X                                                     X
+Agriculture—Nurseries and similar horticulture (See also wholesale and retail uses)                                                                                     C                                                     P
+Agriculture—Vegetative processing/recycling, log processing—Not enclosed                                                                                                C                                                     C
+Buildings and structures exceeding the height limits in Table 16.25.010-2                                                                                               C                                                     C
+Marijuana processing, production and wholesaling                                                                                                                        P[10,13]                                              P[10,13]
+Psilocybin processing, production and wholesaling                                                                                                                       P[10,13]                                              P[10,13]
+Radio frequency transmission facilities—Within height limit of district                                                                                                 P                                                     P
+Radio frequency transmission facilities—Exceeds height limit (freestanding or building-mounted facilities)                                                              C                                                     C
+Rail lines and utility corridors                                                                                                                                        P                                                     P
+Temporary uses (limited to "P" and "C" uses), per Section 16.69.010                                                                                                     C                                                     C
+Transportation facilities (operation, maintenance, preservation, and construction in accordance with the City's Transportation System Plan)                             P                                                     P
+Wireless telecommunication facilities: wireless telecommunication facilities are subject to the requirements of Section 16.44.020 (Wireless Communications Facilities)  P/C                                                   P/C
+Any accessory use or structure, not otherwise prohibited, that the Planning Official or designee finds to be customarily accessory and incidental to a permitted use    P                                                     P
+Any use that the Planning Official or designee finds to be similar to one or more of those specified above                                                              P/C                                                   P/C
+
+NOTES:
+[1] Residential uses on upper floors of mixed use buildings are permitted.
+In the Rock Creek Employment District, the ground floor may contain a residential use (including ancillary residential uses within the same tenant space such as lobbies, day care, community rooms, exercise facilities, office, and activity spaces), provided that residential uses, accessory and ancillary uses, whether shared with commercial uses or separate occupy no more than 80% of the overall interior square footage of the site.
+No ground floor residential use may be within 20 feet of a transit street.
+[2] New commercial retail uses shall not exceed 60,000 square feet gross leasable area on a single lot or parcel or contiguous lots or parcels.
+For the purposes of this limitation, parcels or lots separated by only a transportation right-of-way are considered to be contiguous.
+The use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+[3] Uses are subject to the following limitations:
+a. New uses:
+1. No single store, branch, agency or other outlet shall exceed 5,000 square feet in area (including buildings and outdoor storage and sales areas); and
+2. On sites with multiple outlets, the cumulative area dedicated to these uses shall not exceed 20,000 square feet (including buildings and outdoor storage and sales areas);
+b. Existing uses and buildings: Notwithstanding subsection (a) above, the use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+[4] Permitted as an accessory use—Executive and administrative offices must relate to the operation of the industrial use and may not exceed 40% of the total gross floor area.
+[5] If not fully enclosed, must be located more than 200 feet from residential districts and petroleum storage and refining.
+[6] Permitted as an accessory use—May not exceed 20% of the total site area.
+[7] All uses are prohibited within the Rock Creek Employment Center Subdistrict as defined in subsection F. Specific to retail sales, prohibition is on sale of used homes, trailers, motor homes and recreational vehicles.
+[8] Within the Rock Creek Employment Center Subdistrict as defined in subsection F, use is permitted only as an accessory use—May not exceed 20% of the total site area except as noted in subsection F.3.
+[9] Outdoor recreation facilities without permanent buildings are allowed as a conditional use within the EC zone.
+[10] Use is prohibited within the Rock Creek Employment Center Subdistrict as defined in Section 16.25.010.F.
+[11] Subject to applicable FAA rules and regulations.
+[12] Pursuant to Section 16.69.030.
+[13] Pursuant to Chapter 16.49.
+
+C.
+
+Conditional Uses Approval Criteria.
+
+1.
+
+Conditional uses may be allowed subject to review pursuant to Chapter 16.64 (Conditional Use).
+In addition to the criteria for approval listed in that chapter, conditional uses in the EC and IC Districts shall be reviewed against the following criteria:
+
+a.
+
+If a service-related use, buildings shall have existing employment or industrial users as their primary market;
+
+b.
+
+Uses shall not undermine the ability of the district to retain and attract employment and industrial uses; and
+
+c.
+
+Uses shall not create substantial use incompatibilities or significantly alter the overall industrial campus character of the area based on the existing proportion of industrial to non-industrial uses.
+
+D.
+
+Additional General Provisions for the Employment Center and Industrial Campus Districts.
+The procedures and application requirements under Chapter 16.62 (Design Review) and Chapter 16.48 (Industrial Design Standards) shall apply to all development in the EC and IC Districts.
+If language within these sections conflicts with specific requirements and standards of the districts, the standards within the design review and general site design standards chapters shall prevail.
+
+E.
+
+Development Standards. The development standards in Table 16.25.010-2 apply to all uses, structures, buildings, and development within the EC and IC Districts.
+
+Table 16.25.010-2 Development Standards for EC and IC Districts  Table 16.25.010-2 Development Standards for EC and IC Districts  Table 16.25.010-2 Development Standards for EC and IC Districts
+Standard                                                         EC                                                               IC
+Residential density (maximum)                                    NA                                                               NA
+Lot size (minimum)                                               None                                                             None[1]
+Lot width (minimum)                                              None                                                             None
+Lot depth (minimum)                                              None                                                             None
+Lot coverage, including all impervious surfaces (maximum)        85%                                                              75%
+Open space (minimum)                                             15%                                                              15%
+Building setbacks (minimum):
+Front                                                            10 ft.                                                           10 ft.
+Rear (abutting a nonresidential district)                        10 ft.                                                           20 ft.
+Rear (abutting a residential district)                           20 ft.                                                           20 ft./50 ft.[3]
+Side                                                             0 ft./10 ft.[2]                                                  0 ft./20 ft./50 ft. [2,3]
+Building setbacks (maximum):
+Front                                                            None                                                             None
+Rear                                                             None                                                             None
+Side                                                             None                                                             None
+Building height (maximum)                                        45 ft.[4]                                                        45 ft.
+
+NOTES:
+[1] Lots or parcels larger than 50 acres may be divided into smaller lots and parcels pursuant to a master plan approved by the City so long as the resulting division yields at least one lot or parcel of at least 50 acres in size.
+[2] The minimum required side and rear building setbacks shall be increased by one-half foot for each foot by which building height exceeds 20 feet.
+Zero lot lines area allowed along interior side lot lines where both parcels are within the EC or IC zones subject to approval by the building official and Clackamas fire district.
+[3] The minimum setback for buildings and outdoor storage or activities within the Rock Creek Employment Center is 50 feet when abutting a residential zone.
+Within the 50 foot setback, parking and maneuvering of noncommercial vehicles may be allowed up to 20 feet from the property line.
+[4] In the Rock Creek Employment Center the maximum height for mixed use buildings is 55 feet.
+
+F.
+
+Rock Creek Employment Center Subdistrict.
+
+1.
+
+The boundaries of the Rock Creek Employment Center Subdistrict are shown on Figure 16.25.010-1.
+
+2.
+
+Subarea A—Trip Limitation Requirement.
+The standards in this subsection apply to all development proposed within Subarea A identified on Figure 16.25.010-1.
+
+a.
+
+The cumulative total p.m. peak hour trips for the subarea shall not exceed 217 trips except as permitted by subsection F.3.
+
+b.
+
+Development applications within the subarea shall include a trip generation estimate demonstrating that proposed development will not cause the subarea to exceed 217 total cumulative p.m. peak hour trips.
+
+c.
+
+The trip limitation of 217 p.m. peak hour trips may be exceeded if an applicant can demonstrate that there are funded transportation projects in the area to accommodate the additional trips or if a subsequent traffic analysis shows that additional traffic will not have a significant effect on the transportation system.
+
+3.
+
+Subarea B—Distribution Center and Warehouses.
+Distribution centers and warehouses are permitted as primary uses within the area identified as Subarea B on Figure 16.25.010-1 and are exempted from the provisions of Chapter 16.65 (Master Planned Developments) provided:
+
+a.
+
+At least eight percent but not more than 40% of the gross floor area square footage of the distribution center or warehouse facility is executive and/or administrative offices related to the operation of the distribution center or warehouse; or
+
+b.
+
+The distribution center or warehouse is intended and designed to accommodate at least one employee per 2,000 square feet of gross floor area.
+
+4.
+
+Development in the Industrial Campus (IC) District abutting a residential zone shall comply with the following within the setback along the adjoining property lines:
+
+a.
+
+Installation of a minimum 12 foot tall fully sight-obscured masonry wall.
+
+b.
+
+Landscaping on the either side of the wall including:
+
+i.
+
+A row of coniferous trees a minimum of six feet in height planted on average 30 feet on center; and
+
+ii.
+
+An evergreen hedge screen of 42 inches high or shrubs a minimum of two feet in height spaced no more than four feet apart on average; and
+
+iii.
+
+Ground cover plants, which includes grasses covering all landscaping areas.
+Mulch (as a ground cover) shall only be allowed underneath plants at full growth and within two feet of the base of a tree.
+
+c.
+
+The emission of air pollutants or odorous gasses and changes in temperature detectable by the human senses without the aid of instruments on adjacent residential property is prohibited.
+No maneuvering or parking of commercial vehicles is permitted within the minimum setback, except for the driveway access.
+
+Figure 16.25.010-1 Rock Creek Employment Center Subdistrict
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 443 § 1, 2013; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 491 § 1, 2016; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 526 § 1, 2017; Ord. 545 § 1, 2019; Ord. 556 § 1, 2021; Ord. 572 § 1, 2023; Ord. 573 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 598, 10/7/2025)

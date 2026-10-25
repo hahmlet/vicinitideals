@@ -32,7 +32,7 @@ EXHIBIT = "or/clackamas/gladstone/amended/ord1545.txt"
 EFFECTIVE = date(2026, 8, 13)
 DAY_BEFORE = date(2026, 8, 12)
 HAPPY_VALLEY = "or/clackamas/happy-valley"
-CHAPTER_16_44 = "or/clackamas/happy-valley/16.44.special-standards.txt"
+CHAPTER_16_44 = "or/clackamas/happy-valley/16.44/16.44.120.txt"
 
 
 @pytest.fixture(scope="module")

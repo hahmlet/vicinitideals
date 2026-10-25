@@ -15,11 +15,11 @@ a.     Townhouses shall meet the development standards contained within the dime
 b.     Townhouse projects shall meet:
 i.      The development standards contained within the dimensional standards table in Section 3.130.C of this Code.
 ii.      Any applicable general development standards contained within Division 8.000 of this Chapter.
-iii.     Any applicable clear and objective platting standards contained within Chapter 7 of this Code or otherwise required by state law. iv.
-The additional development standards contained within this Section (8.130.B).
+iii.     Any applicable clear and objective platting standards contained within Chapter 7 of this Code or otherwise required by state law.
+iv.     The additional development standards contained within this Section (8.130.B).
 c.     The following standards are invalid and do not apply to townhouses or townhouse projects allowed by this Code, except as specified within this Section 8.130:
-i.      Additional development standards of the applicable base zone related to the standards addressed under Subsections 2. and 3. of this Section B. ii.
-Development standards of the applicable base zone related to lot dimensions, lot coverage, landscape or open space area, or the siting or design of dwellings.
+i.      Additional development standards of the applicable base zone related to the standards addressed under Subsections 2. and 3. of this Section B.
+ii.      Development standards of the applicable base zone related to lot dimensions, lot coverage, landscape or open space area, or the siting or design of dwellings.
 iii.     The jurisdiction's other development standards that apply only to townhouses and that conflict with provisions of this Code.
 
 2.     Off-Street Parking.
@@ -38,8 +38,8 @@ If on-street parking spaces meet all the standards in Subsections
 i. through iv. below, they shall be counted toward the minimum off-street parking requirement.
 i.      The space must be abutting the subject site;
 ii.      The space must be in a location where on-street parking is allowed by the jurisdiction;
-iii.     The space must be a minimum of twenty-two (22) feet long; and iv.
-The space must not obstruct a required sight distance area.
+iii.     The space must be a minimum of twenty-two (22) feet long; and
+iv.     The space must not obstruct a required sight distance area.
 
 4.     Areas Owned in Common. Common areas must be maintained by a homeowners association or other legal entity.
 A homeowners association may also be responsible for exterior building maintenance.
@@ -52,10 +52,10 @@ Mandates for construction of a garage or carport and any other design standards 
 1.     Entry Orientation. The main entrance of each townhouse must:
 a.     Be within eight (8) feet of the longest street-facing wall of the dwelling unit, if the lot has public street frontage; and
 b.     Either:
-i.      Face the street (see Figure 8.120.C.2.b.i in the preceding Section); ii.
-Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.4.b.iii in the preceding Section);
-iii.     Face a common open space or private access or driveway that is abutted by dwellings on at least two (2) sides; or iv.
-Open onto a porch (see Figure 8.120.C.4.b.iv in the preceding Section).
+i.      Face the street (see Figure 8.120.C.2.b.i in the preceding Section);
+ii.      Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.4.b.iii in the preceding Section);
+iii.     Face a common open space or private access or driveway that is abutted by dwellings on at least two (2) sides; or
+iv.     Open onto a porch (see Figure 8.120.C.4.b.iv in the preceding Section).
 The porch must:
 (a)    Be at least twenty-five (25) square feet in area; and
 (b)    Have at least one (1) entrance facing the street or have a roof.
@@ -85,8 +85,8 @@ i.      Off-street parking areas shall be accessed on the back façade or locate
 No off-street parking shall be allowed in the front yard or side yard of a townhouse.
 ii.      A townhouse project that includes a corner lot shall take access from a single driveway approach on the side of the corner lot (see Figure 8.130.C.4.b.ii at the end of this Section).
 iii.     Townhouse projects that do not include a corner lot shall consolidate access for all lots into a single driveway.
-The driveway and approach are not allowed in the area directly between the front façade and front lot line of any of the townhouses (see Figure 8.130.C.4.b.iii at the end of this Section). iv.
-A townhouse project that includes consolidated access or shared driveways shall grant access easements to allow normal vehicular access and emergency access.
+The driveway and approach are not allowed in the area directly between the front façade and front lot line of any of the townhouses (see Figure 8.130.C.4.b.iii at the end of this Section).
+iv.     A townhouse project that includes consolidated access or shared driveways shall grant access easements to allow normal vehicular access and emergency access.
 
 
 c.     Townhouse projects in which all units take exclusive access from a rear alley are exempt from compliance with Subsection b.

@@ -1,0 +1,67 @@
+§ 18.05.030. Zoning map.
+
+The city is divided into the following zoning districts, each of which shall include a suffix letter designator with its map symbol to indicate its classification:
+
+ZONING DISTRICT           MAP SYMBOL             DENSITY
+Residential Districts     Residential Districts  Residential Districts
+Urban Low Density         R-10                   Single-Family
+Urban Low Density         R-7                    Single-Family
+Urban Medium Density      A-2                    Multi-Family
+Core Residential          CR                     Multi-Family
+Manufactured Home Park    MHP
+Mixed Use Districts       Mixed Use Districts    Mixed Use Districts
+Central Mixed Use         CMU
+Gateway Mixed Use         GMU
+Commercial Districts      Commercial Districts   Commercial Districts
+General Commercial        C-1
+Highway Commercial        C-2
+Corridor Commercial       CC
+Industrial Districts      Industrial Districts   Industrial Districts
+General Industrial        M-1
+Light Industrial          LI
+Natural Resource          Natural Resource       Natural Resource
+Floodplain                FP
+Natural Resource Overlay  NRO
+
+(A)
+
+The boundaries of the zoning districts established in this title are indicated on a map entitled the "Zoning Map of the City of Cornelius" which shall hereinafter be referred to as the "city zoning map."
+The city zoning map and all amendments and changes thereto, and all legends, symbols, notations, references and other matters shown thereon, are hereby adopted by reference.
+
+(B)
+
+Amendments to the city zoning map may be made in accordance with the provisions of this title.
+Copies of all map amendments shall be dated with the effective date of the document adopting the map amendment and shall be maintained without change, together with the adopting document, on file in the office of the city recorder.
+
+(C)
+
+The community development director shall maintain an up-to-date copy of the city zoning map to be revised from time to time so that it accurately portrays changes of zone boundaries.
+A separate map shall also be maintained and show the location of conditional use permits, planned unit developments, variances and the location of historical uses.
+The community development director shall maintain a log that identifies the following land use actions: zone change, conditional use, planned unit development, variance, or historical use and the number of the resolution, ordinance, order or other document authorizing the same.
+
+(D)
+
+Interpretation of District Boundaries. Where due to the scale, lack of detail or illegibility of the city zoning map or due to any other reason there is uncertainty, contradiction or conflict as to the intended location of any district boundary, the exact location of a district boundary line shall be determined by the community development director in accordance with the following standards:
+
+(1)
+
+Street Lines. Where district boundaries are indicated as approximately following the center line or right-of-way line of streets, such lines shall be construed to be such district boundaries.
+
+(2)
+
+Street Vacations. Whenever any street is lawfully vacated, and when the lands within the boundaries thereof attach to and become a part of lands adjoining such street, such lands formerly within such vacated street shall automatically be subject to the same zoning regulations as are applicable to lands to which same shall attach.
+
+(3)
+
+Lot Lines. Where district boundaries are indicated as approximately following lot lines, such lot lines shall be construed to be said boundaries.
+If a district boundary divides a lot into two or more districts, the entire lot shall be placed in the district that accounts for the greater area of the lot by the adjustment of the district boundary; provided, that the boundary adjustment is for a distance of less than 20 feet.
+If an adjustment of more than 20 feet is required, the change in the district boundary shall be treated as a change of zone.
+
+(4)
+
+Watercourses. District boundary lines are intended to follow the center lines of watercourses unless such boundary lines are fixed by dimensions shown on the city zoning map.
+
+(Ord. 810, 2000; Code 2000 § 11.10.03; Ord. 841 Exh. 2, 2003; amended during 2007 recodification; Ord. 2019-10 § 1 (Exh.
+A), 2019; Ord. 2020-05 § 1 (Exh.
+A), 2020)
+

@@ -1,0 +1,136 @@
+§ 18.670.080. Building Design Standards.
+
+A.
+
+General provisions.
+
+1.
+
+Building design standards for nonresidential and mixed-use development are provided in Subsections 18.670.080.B - H.
+
+2.
+
+Residential development, except for mixed-use development, is subject to standards of the applicable housing type in Part 18.200, Residential Development Standards.
+
+3.
+
+Development reviewed through a development design review application is not subject to these standards and is evaluated through the development design review process.
+
+B.
+
+Building height.
+
+1.
+
+The minimum and maximum height for each zone and subdistrict is provided in Table 18.670.4.
+
+2.
+
+The facade facing a public or private street must include a first story with a minimum height of 12 feet and maximum height of 25 feet.
+Where the minimum height is 25 feet in Table 18.670.5, the building must provide a minimum of two stories.
+
+Table 18.670.4 Height by Zone and Subdistrict  Table 18.670.4 Height by Zone and Subdistrict  Table 18.670.4 Height by Zone and Subdistrict  Table 18.670.4 Height by Zone and Subdistrict  Table 18.670.4 Height by Zone and Subdistrict
+Zone or Location                               Development or Use                             Minimum Height (in feet)                       Minimum Stories Required                       Maximum Height (in feet)
+MUE                                            Nonresidential                                 12                                             1                                              75
+MUE                                            Mixed-Use                                      25                                             2                                              100
+MUC Outside of a Subdistrict                   Any                                            12                                             1                                              185
+MUC in the Design Review Subdistrict           Any                                            12                                             1                                              185
+MUC in the Metzger Business Subdistrict        Nonresidential                                 12                                             1                                              60
+MUC in the Metzger Business Subdistrict        Mixed-Use                                      25                                             2                                              75
+MUR Outside of a Subdistrict                   Residential                                    12                                             1                                              60
+MUR Outside of a Subdistrict                   Mixed-Use                                      25                                             2                                              60
+MUR in the Apartment Subdistrict               Any                                            36                                             3                                              115
+
+C.
+
+Entrances.
+
+1.
+
+A minimum of one entrance per building, or tenant space within a building without internal building access, must be visible and accessible from a public street.
+
+2.
+
+For every 200 linear feet of street frontage, a minimum of one path must be provided that connects an adjacent planned or existing sidewalk to a building entrance or structure intended for public access.
+
+3.
+
+A required entrance must be within one foot above or below the grade of the adjacent sidewalk.
+
+4.
+
+A required building entrance must be at an angle that is no more than 45 degrees from the street that it faces.
+
+5.
+
+A required building entrance must be covered, recessed, or treated with a permanent architectural feature that provides weather protection for pedestrians.
+The required weather protection must be at least as wide as the entrance, a maximum of six feet above the top of the entrance, and a minimum of three feet in depth.
+The required weather protection may project into the minimum front setback.
+
+D.
+
+Facade design. All facades that extend more than 50 feet fronting a public or private street and are located within 35 feet of the street-facing property line must provide at least one of the following features:
+
+1.
+
+A change in surface or siding material, color, or pattern; or
+
+2.
+
+A wall recession or projection that is a minimum of six feet in width and two feet in depth for the entire height of the facade.
+
+E.
+
+Building projections.
+
+1.
+
+Architectural elements such as eaves, cornices, and bay windows may project a maximum one foot into the minimum building setback as shown in Figure 18.670.1.
+
+Figure 18.670.1 Building Projection Standards
+
+2.
+
+Balconies may project into the minimum building setback and public right-of-way as shown in Figure 18.320.1.
+Balconies may project a maximum of four feet into the right-of-way.
+Balconies that project into the right-of-way must have a minimum vertical clearance of 10 feet from sidewalk grade and are subject to approval by the city engineer.
+
+3.
+
+Weather protection elements, such as canopies or awnings, may project into the right-of-way a maximum of six feet or the minimum sidewalk width along the building frontage, whichever is less.
+Elements that project into the right-of-way must have a minimum vertical clearance of eight feet from sidewalk grade and are subject to approval by the city engineer.
+
+F.
+
+Windows.
+
+1.
+
+Windows are required on all street-facing facades located within 35 feet of the street property line and are subject to the window area standards in Table 18.670.5.
+Any portion of a street-facing facade that contains vehicle parking, such as a parking structure, does not have to provide windows but must provide facade openings that meet the minimum required window area in Table 18.670.5.
+If required facade openings contain glass, they must meet the standards in Paragraph 18.670.080.F.3 If required facade openings do not contain glass, they may contain architectural elements that are no more than 30 percent sight-obscuring.
+
+2.
+
+Window area is the aggregate area of the glass within each window, including any interior grids, mullions, or transoms.
+Facade area is the aggregate area of each street-facing vertical wall plane.
+
+3.
+
+Required windows must be clear glass and not mirrored, frosted, or reflective.
+Clear glass within doors may be counted toward meeting the window coverage standard.
+
+Table 18.670.5 Minimum Window Area  Table 18.670.5 Minimum Window Area    Table 18.670.5 Minimum Window Area
+Story                               Use                                   Minimum Window Area
+First Story                         Nonresidential or Mixed-Use Building  50% of facade
+First Story                         Residential Building                  30% of facade
+Upper Stories                       Nonresidential or Mixed-Use Building  30% of facade
+Upper Stories                       Residential Building                  20% of facade (not applicable to stories with sloped roofs or dormers)
+
+G.
+
+Roofs. Roofs must have a minimum solar reflectance index of at least 64.
+Any roof area not meeting this standard must be constructed as an ecoroof, except where being used for mechanical equipment, stairwells, solar arrays, maintenance access, rooftop parking, rooftop decks, skylights, or mechanical equipment.
+
+(Ord. No. 24-05, 4/23/2024)
+

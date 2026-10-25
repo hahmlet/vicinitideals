@@ -1,0 +1,11 @@
+§ 18.40.050. Building Facade Area.
+
+The area of a specific facade of a building is determined by adding the square footage of surface area of each section of wall visible from that perspective.
+For buildings with articulated facades, all of the walls are included in the total area.
+The total area does not include any roof area.
+See Figure 18.40.9.
+
+Figure 18.40.9 Building Facade Area
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 20-01 §1)
+

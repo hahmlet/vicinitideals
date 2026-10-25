@@ -1299,7 +1299,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.80/19.80.020.txt#L3-L7,L9-L20,L89-L92"
+      quote: "or/multnomah/fairview/19.80/19.80.020.txt#L3-L7,L9-L20,L97-L100"
     notes: >-
       Table 19.80.020.A has four use categories -- Industrial, Commercial,
       Civic and Semi-Public, Other -- and no residential one at all. The
@@ -1315,7 +1315,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.85/19.85.020.txt#L3-L7,L9-L20,L39-L41"
+      quote: "or/multnomah/fairview/19.85/19.85.020.txt#L3-L7,L9-L20,L40-L43"
     notes: >-
       This table does have a Residential category and it is one row: "One
       caretaker unit shall be permitted for each development, subject to the
@@ -1333,7 +1333,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.70/19.70.020.txt#L3-L7,L9-L20,L74-L83"
+      quote: "or/multnomah/fairview/19.70/19.70.020.txt#L3-L7,L9-L20,L79-L88"
     notes: >-
       Row 4 of Table 19.70.020.A is Residential and it lists three things:
       residential mixed use, manufactured homes on individual lots where the

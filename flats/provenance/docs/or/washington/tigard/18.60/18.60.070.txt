@@ -1,0 +1,167 @@
+§ 18.60.070. Industrial Use Categories.
+
+A.
+
+Industrial and Manufacturing.
+
+1.
+
+Characteristics: Industrial and manufacturing engages in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, usually requiring the use of machinery.
+This includes assembling component parts of manufactured products.
+The new product of a manufacturing establishment may be finished in the sense that it is for utilization or consumption, or it may be semi-finished to become an input for further manufacturing.
+Industrial and Manufacturing uses involve some amount of physical or characteristic change to materials necessary to make them suitable for sale.
+
+2.
+
+Accessory uses: Accessory uses may include parking, office, storage, or maintenance facilities.
+
+3.
+
+Examples: Examples include additive, advanced, or contract manufacturing; make to stock, make to order, or make to assemble manufacturing; discrete, process, mixed mode, job shop, or repetitive manufacturing; production of metals or metal products including enameling or galvanizing; production of cars, trucks, recreational vehicles; indoor agriculture; food processing; breweries, distilleries, or wineries; production of apparel or textiles; woodworking including cabinet makers; production or manipulation of chemical, rubber, leather, clay, bone, plastic, stone, or glass materials; manufacturing or production of machinery; large-scale recycling centers; the manufacturing or assembly of small-scale machinery, appliances, computers, or other electronic equipment; manufacturing, assembly, bottling of pharmaceuticals; manufacturing of scientific or musical instruments; production of toys or precision goods; sign-making; or commercial kitchens.
+
+4.
+
+Clarifications:
+
+a.
+
+Does not include energy production from the biological decomposition of organic materials, which is categorized as Waste-Related Facility.
+
+b.
+
+Does not include storage or distribution of products involving no physical change to materials, packaging of previously prepared commercial products, or storage or distribution for e-commerce, which are categorized as warehouse and distribution.
+
+c.
+
+Does not include breaking bulk for commercial, institutional, or industrial users, which is categorized as wholesale and equipment rental.
+
+d.
+
+Does not include uses meeting the definition of Basic Utility.
+
+e.
+
+Does not include the use of a kiln or other machinery that is accessory to a public-facing arts use, which is categorized as indoor sales and services.
+
+B.
+
+Off-Site Services.
+
+1.
+
+Characteristics: An off-site services use primarily provides services at a client's location or a third-party site.
+The site is primarily used for parking of company or employee vehicles, equipment, or some accessory office.
+Few customers, especially the general public, come to the site.
+
+2.
+
+Accessory uses: Accessory uses may include office, parking, or warehouse or storage space.
+
+3.
+
+Examples: Examples include exterminators; freestanding fleet vehicle parking or fleet parking as a primary use; janitorial services; trade contractors; mobile pet grooming; mobile auto services; or off-site windshield repair.
+
+C.
+
+Warehouse and Distribution.
+
+1.
+
+Characteristics: Warehouse and Distribution uses store and move large quantities of materials or products for themselves or other establishments with limited to no other activity on site except for accessory office.
+The use is usually associated with significant truck and rail traffic.
+There may be some repackaging of products but no physical change to materials occurs on site.
+
+2.
+
+Accessory uses: Accessory uses may include offices, parking, staging areas, storage, docks, rail spur or lead lines, and the repackaging of goods.
+
+3.
+
+Examples: Examples include freestanding warehouses associated with e-commerce, retail furniture, or appliance outlets; cold storage plants; weapon and ammunition storage; and truck, marine and air freight terminals.
+
+4.
+
+Clarifications:
+
+a.
+
+Uses that involve the transfer or storage of solid or liquid wastes are categorized as waste-related facility.
+
+b.
+
+Does not include storage or transport of materials that are accessory to a primary use.
+
+c.
+
+Does not include uses where some physical change to materials occurs on site to create a saleable unit.
+Such uses, regardless of the amount of warehouse or storage space associated with the use, are categorized as Industrial and Manufacturing.
+
+D.
+
+Waste-Related Facility.
+
+1.
+
+Characteristics: A waste-related facility receives solid or liquid wastes from others for disposal on site or for transfer to another location; collects sanitary wastes; manufactures and produces goods from the biological decomposition of organic material; and receives hazardous wastes from others and is subject to state regulations regarding hazardous waste management.
+
+2.
+
+Accessory uses: Accessory uses may include parking, recycling of materials, offices, and repacking and transshipment of by-products.
+
+3.
+
+Examples: Examples include recycling/garbage transfer stations; landfills; waste composting, energy recovery, portable sanitary equipment storage and pumping, and sewage treatment plants.
+
+4.
+
+Clarifications:
+
+a.
+
+Infrastructure services that must be located in or near the area where the service is provided in order to function are categorized as Basic Utility uses.
+Examples include sewer pipes that serve a development or water re-use pipes and tanks, pump stations, and collection stations necessary for the water re-use that serve a development or institution.
+
+b.
+
+The disposal of clean fill, as defined in OAR 340-093-0030, is not categorized as waste-related facility.
+
+c.
+
+Does not include consumer recycling or bottle drop centers, which are considered as accessory to a primary use, categorized as indoor sales and services when standalone and indoors, or outdoor sales and services when standalone and outdoors.
+
+E.
+
+Wholesale and Equipment Rental.
+
+1.
+
+Characteristics: Wholesale and Equipment Rental is characterized by the sale, leasing, or rental of equipment or products primarily intended for industrial, institutional, or commercial users.
+The use emphasizes on-site sales or order taking, and often includes display areas.
+Products may be picked up on site or delivered to the customer.
+
+2.
+
+Accessory uses: Accessory uses may include offices; product repair; warehouses; stockpiling of sand, gravel, drywall, construction materials, bark dust, lumber, or other aggregate or landscaping materials; parking; and the repackaging of goods primarily for commercial, institutional, or industrial users.
+
+3.
+
+Examples: Examples include the sale or rental of machinery, equipment, building materials, special trade tools, welding supplies, machine parts, electrical supplies, janitorial supplies, restaurant equipment, and store fixtures; mail order houses; and wholesalers of food, clothing, auto parts, and building hardware.
+
+4.
+
+Clarifications:
+
+a.
+
+Establishments that engage primarily in sales to the general public are categorized as Indoor Sales and Service.
+
+b.
+
+Establishments that are primarily storing goods with little on-site sales activity are categorized as Warehouse and Distribution.
+
+c.
+
+Establishments that engage primarily in storage and sale of products for e-commerce are categorized as warehouse and distribution.
+
+(Ord. 10-15 §1; Ord. 18-23 §2; Ord. 18-28 §1; Ord. No. 24-05, 4/23/2024)
+

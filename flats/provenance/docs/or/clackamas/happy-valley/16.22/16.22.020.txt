@@ -1,0 +1,214 @@
+§ 16.22.020. Very low density residential zones.
+
+A.
+
+Purpose.
+
+1.
+
+Residential—Forty thousand Square Feet (R-40).
+This district reflects the first developmental step in the conversion of agricultural or open space land to residential purposes.
+Through benefit of available public services and faculties, land in this district is capable of supporting lower densities, yet constraints may still exist which would limit present and future carrying capacities.
+This district provides the transition to the more fully urban development of higher districts while expressing physical limitations on the potential of the land.
+The district may be applied in sloped areas where clustering and other hillside protection standards are applied.
+The numerical designation R-40 shall be interpreted to mean that the maximum density shall be one primary dwelling unit per 40,000 square feet of lot area.
+
+2.
+
+Residential—Twenty thousand Square Feet (R-20).
+This low density urban residential district responds to development patterns already established in the City and perpetuates those patterns in recognition of the potential for infilling and the overall carrying capacity of the land.
+Single-family detached dwellings on larger lots are encouraged in this district which seeks to maintain "elbow room and breathing space" within the urban framework of the City.
+This district is a buffer between the low density and undeveloped areas and the higher density, more typical urban residential districts.
+It is within this district that uses and standards begin to change to reflect the desired urban trends and patterns.
+The district may be applied in sloped areas where clustering and other hillside protection standards are applied.
+The numerical designation of R-20 shall be interpreted to mean that the maximum density shall be one primary dwelling unit per 20,000 square feet of lot area.
+
+3.
+
+Residential—Fifteen thousand Square Feet (R-15).
+This low density urban residential district responds to the continuing urbanization of the City due to the availability of public sanitary sewers in areas previously zoned R-40 or R-20.
+Single-family detached dwellings are encouraged in this district which seeks to maintain "estate development" within the urban framework of the City.
+This district is a buffer between the densities allowed in the lower density R-20 district and the densities allowed in the medium density, more typical urban residential districts.
+The numerical designation of R-15 shall be interpreted to mean that the maximum density shall be one primary dwelling unit per 15,000 square feet of lot area.
+
+B.
+
+Permitted Uses. Table 16.22.020-1 identifies the land uses allowed in the R-40, R-20 and R-15 Districts.
+
+Table 16.22.020-1 Very Low Density Residential (R-40, R-20, R-15) Permitted Uses
+Table 16.22.020-1 Very Low Density Residential (R-40, R-20, R-15) Permitted Uses
+Table 16.22.020-1 Very Low Density Residential (R-40, R-20, R-15) Permitted Uses
+Table 16.22.020-1 Very Low Density Residential (R-40, R-20, R-15) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+Land Use
+R-40
+R-20
+R-15
+Residential
+Residential
+Residential
+Residential
+One single-family dwelling, townhome, duplex, triplex, quadplex, cottage cluster, modular dwelling unit or manufactured home per lot[1]
+P
+P
+P
+Multiple-family units or manufactured housing, approved as part of a PUD application pursuant to Section 16.63.130
+P
+P
+P
+Accessory dwelling units complying with Section 16.44.050
+P
+P
+P
+Temporary manufactured home to allow for care of an aged or infirmed relative, provided that adequate water, sewage, disposal and fire protection are available, and that tongue, undercarriage and axles remain intact on the unit.
+Undercarriage wheels and supporting base must be covered with a full ground length sign-obscuring skirting around the entire circumference of the manufactured home.
+C
+C
+C
+Residential care home
+P
+P
+P
+Residential care facilities
+C
+C
+C
+Home occupation as defined in Section 16.12.030, per the provisions of Section 16.69.020
+P
+P
+P
+Rooming houses
+X
+X
+X
+Commercial
+Commercial
+Commercial
+Commercial
+Commercial daycare facilities
+C
+C
+C
+Special event centers for hosting functions such as weddings, anniversary celebrations, corporate parties and similar events
+C
+C
+C
+Institutional/Utilities
+Institutional/Utilities
+Institutional/Utilities
+Institutional/Utilities
+Public and semi-public buildings and functions
+C
+C
+C
+Public utility substations or other function
+C
+C
+C
+Cemeteries
+C
+C
+C
+Church, synagogue, temple or other place of worship
+C
+C
+C
+Public or private school(s)
+C
+C
+C
+Other
+Other
+Other
+Other
+Agriculture and related activities, not to include the commercial processing of any type of agricultural products, whether animal or vegetable
+P
+P
+P
+Public or private open spaces, parks and playgrounds, tennis courts and similar outdoor recreational activity areas and recreational buildings, facilities and grounds, which include fully or partially enclosed structures for the primary or secondary use
+P
+P
+P
+Large scale recreational facilities such as golf courses, aquatic centers, aquariums, amusement parks and similar uses
+C
+C
+C
+Temporary use of a trailer, mobile home, or other building for a use incidental to construction work provided that:
+C
+C
+C
+The maximum time period is six months, with a maximum extension for another six months;
+The trailer, mobile home, or other building is connected to an approved sewage disposal system;
+A building permit for a permanent structure has been issued;
+The temporary home or building shall be removed upon completion or abandonment of construction; and
+No reasonable alternative, such as the availability of nearby rental housing exists.
+Wireless communication facilities, not to include antenna support structures, subject to the provisions of Section 16.44.020 of this title
+C
+C
+C
+Construction of new streets and roads, including the extensions of existing streets and roads, that are included with the adopted transportation system plan
+P
+P
+P
+Helipad
+C
+C
+C
+Any accessory structure which is customarily incidental to any of the permitted uses, located on the same lot
+P
+P
+P
+
+NOTES:  NOTES:
+[1]     Applies to a parent lot.
+Duplexes, triplexes, quadplexes, and cottage clusters are not permitted on a child lot (i.e., previously subdivided lot from a middle housing land division).
+
+C.
+
+Development Standards. The development standards in Table 16.22.020-2 apply to all uses, structures, buildings, and development in the R-40, R-20 and R-15 Districts.
+
+Table 16.22.020-2 Development Standards for R-40, R-20, R-15                                                     Table 16.22.020-2 Development Standards for R-40, R-20, R-15    Table 16.22.020-2 Development Standards for R-40, R-20, R-15    Table 16.22.020-2 Development Standards for R-40, R-20, R-15
+Standard                                                                                                         R-40                                                            R-20                                                            R-15
+Lot size (minimum and maximum density): Single-family detached, duplex, triplex, quadplex, cottage cluster[1,6]  40,000 sq. ft.                                                  20,000 sq. ft.                                                  15,000 sq. ft.
+Lot size (minimum): Townhome[1]                                                                                  1,500 sq. ft.                                                   1,500 sq. ft.                                                   1,500 sq. ft.
+Townhome maximum density (units per net acre)                                                                    4.4 du/net acre                                                 8.7 du/net acre                                                 11.6 du/net acre
+Lot width (minimum)[2,6]                                                                                         100 feet                                                        80 feet                                                         70 feet
+Lot depth (minimum)                                                                                              200 feet                                                        100 feet                                                        90 feet
+Street frontage (minimum)
+Lots fronting on cul-de-sac                                                                                      70 feet                                                         50 feet                                                         50 feet
+All other lots                                                                                                   100 feet                                                        80 feet                                                         60 feet
+Townhomes                                                                                                        20 feet                                                         20 feet                                                         20 feet
+Lot coverage (maximum)[3,6,7]                                                                                    20%                                                             30%                                                             35%
+Building setbacks (minimum)[6]
+Front                                                                                                            22 feet                                                         22 feet                                                         22 feet
+Rear                                                                                                             22 feet                                                         22 feet                                                         22 feet
+Interior side                                                                                                    15/0[4] feet                                                    10/0[4] feet                                                    7/0[4] feet
+Street side (corner lot)                                                                                         15 feet                                                         15 feet                                                         15 feet
+Cottage cluster, front                                                                                           10 feet                                                         10 feet                                                         10 feet
+Cottage cluster, rear                                                                                            10 feet                                                         10 feet                                                         10 feet
+Cottage cluster, interior side                                                                                   10 feet                                                         10 feet                                                         7 feet
+Cottage cluster, street side                                                                                     10 feet                                                         10 feet                                                         10 feet
+Building height (maximum)                                                                                        45 feet[5]                                                      45 feet[5]                                                      45 feet[5]
+Shared outdoor recreation areas                                                                                  400 sq. ft./unit provided in accordance with Section 16.42.080  400 sq. ft./unit provided in accordance with Section 16.42.080  400 sq. ft./unit provided in accordance with Section 16.42.080
+
+NOTES:  NOTES:
+[1]     Density calculations for single-family detached shall be made pursuant to Section 16.63.020(F).
+Cottage clusters must meet a minimum density of four units per gross acre.
+[2]     Townhomes are exempt from the lot width requirements.
+[3]     Cottage cluster housing is exempt from lot coverage requirements.
+[4]     Interior side yard setbacks for townhomes may be reduced to zero in compliance with applicable sections of the adopted Uniform Building Code.
+[5]     The single-family residential building height maximum is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet.
+[6]     If a duplex, triplex, fourplex, or cottage cluster has been divided by a middle housing land division, per LDC 16.61, the development standards that are applicable to the lot shall apply to the middle housing parent lot, not to the middle housing child lot.
+[7]     Maximum lot coverage for townhomes is the greater of the percentage identified in the table or up to 1,000 square feet of buildings, decks, stairways and entry bridges that are more than 30 inches above grade (excluding eaves).
+Compliance with all other standards is required.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 406 § 1, 2010; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 468 § 1, 2014; Ord. 561 § 1(Exh.
+A), 2022; Ord. 571 § 1, 2022; Ord. 582, 3/19/2024)
+
+[1]
+Editor's Note: Ord. 589, which amended this section with regard to Cottage Clusters, was remanded by the courts and all amendments were removed at request of the City.
+

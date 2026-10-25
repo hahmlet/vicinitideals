@@ -108,13 +108,13 @@ def test_mr_numbers_and_quotes(layer, rules) -> None:
     assert unit["setback_side_ft"].value == 0
     assert unit["min_lot_sqft"].value == 4800  # 1,200 x 4 lots
     for field, line in (
-        ("setback_front_ft", "L21-L22"),
-        ("setback_side_ft", "L26-L27"),
-        ("setback_rear_ft", "L36-L37"),
-        ("setback_street_side_ft", "L31-L32"),
+        ("setback_front_ft", "L22-L23"),
+        ("setback_side_ft", "L27-L28"),
+        ("setback_rear_ft", "L37-L38"),
+        ("setback_street_side_ft", "L32-L33"),
         ("min_lot_sqft", "L12-L13"),
-        ("max_height_ft", "L41-L42"),
-        ("min_landscaped_pct", "L44-L45"),
+        ("max_height_ft", "L42-L43"),
+        ("min_landscaped_pct", "L45-L46"),
     ):
         assert f"17.14/17.14.050.txt#{line}" in _quote(layer, "MR", field), field
     assert layer.zones["MR"].values["min_density_du_per_acre"].measured_on == "net_developable_area"

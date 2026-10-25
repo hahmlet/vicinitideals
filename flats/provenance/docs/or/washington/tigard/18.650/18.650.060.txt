@@ -1,0 +1,55 @@
+§ 18.650.060. Housing Types.
+
+A.
+
+A housing type is not a use category.
+It describes a type of development that contains a residential use.
+
+B.
+
+A list of allowed, limited, and prohibited housing types in the MU-CBD zone is provided in Table 18.650.2.
+The terms and abbreviations in Table 18.650.2 are as follows:
+
+1.
+
+Yes, allowed (Y).
+Housing types that are allowed.
+
+2.
+
+Limited (L). Housing types that are allowed subject to specific limitations.
+
+3.
+
+No, prohibited (N).
+Housing types that are not allowed under any circumstance.
+
+C.
+
+All housing types are subject to the standards and provisions of the applicable development standards chapter.
+The applicable chapter for each housing type is provided in Table 18.650.2.
+
+D.
+
+All allowed housing types may be built on site or manufactured off site.
+
+Table 18.650.2 MU-CBD Zone Housing Types  Table 18.650.2 MU-CBD Zone Housing Types  Table 18.650.2 MU-CBD Zone Housing Types
+Housing Types                             Applicable Chapter                        MU-CBD
+Accessory Dwelling Units                  18.220                                    N
+Apartments                                18.230                                    Y
+Cottage Clusters                          18.240                                    N
+Courtyard Units                           18.250                                    N
+Mobile Home Parks                         18.260                                    L
+Quads                                     18.270                                    N
+Rowhouses                                 18.280                                    Y
+Small Form Residential                    18.290                                    N
+Mixed-Use Development                     18.650                                    Y
+
+E.
+
+Limited housing types.
+Mobile home parks that were lawfully in existence prior to the adoption of the MU-CBD zone are allowed.
+All new mobile home parks are prohibited.
+
+(Ord. No. 24-05, 4/23/2024)
+

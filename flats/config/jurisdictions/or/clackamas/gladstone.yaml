@@ -1395,23 +1395,23 @@ zones:
       quote: "or/clackamas/gladstone/17.14/17.14.020.txt#L3-L7"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L21-L22"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L22-L23"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L26-L27"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L27-L28"
       variants:
         # "Townhouse projects are allowed a zero-foot side setback for lot lines
         # where townhouse units are attached." Printed under all four setback
         # rows; carried on the side row only, the way R5 and R7.2 carry it.
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L29"
+          quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L30"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L36-L37"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L37-L38"
     setback_street_side_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L31-L32"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L32-L33"
     min_lot_sqft:
       # 17.14.050, Minimum Lot Area: a row per housing type, and the quadplex
       # has its own -- 5,000 sq ft, against 4,000 for a triplex. The townhouse
@@ -1426,14 +1426,14 @@ zones:
           quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L16-L17"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L41-L42"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L42-L43"
     min_landscaped_pct:
       # "At least 20 percent of the total area of the lot must be left or
       # planted in vegetation." Unlike R5's row, which is against
       # multi-household dwellings, this row names no housing type, so it is
       # read as reaching a quadplex.
       value: 20
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L44-L45"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L45-L46"
     min_density_du_per_acre:
       # "Minimum Density: 80 percent of the maximum. In no case shall the
       # minimum density exceed 25 units per net acre." The maximum is "based on
@@ -1445,7 +1445,7 @@ zones:
       # subdivisions (R-7.2's does); its only exception is for altering an
       # existing development.
       value: 25
-      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L46,L48"
+      quote: "or/clackamas/gladstone/17.14/17.14.050.txt#L47,L49"
       measured_on:
         fact: net_developable_area
         cite: GMC 17.06.358 "Net acre", the subtraction list (road rights-of-way and dedications; open water, FM, WQ, Goal 5 resource areas, slopes over 25 percent, Section 404 wetlands)

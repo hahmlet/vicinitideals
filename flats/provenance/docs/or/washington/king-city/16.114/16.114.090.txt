@@ -98,8 +98,8 @@ h. Topographic map illustrating the existing and proposed topography of the subj
 On properties that are two acres or larger, such a contour map is required only for the portion of the property to be developed.
 The topographic map shall be prepared using the following contour intervals:
 i. For slopes of five percent or less, contour intervals not more than one foot;
-ii. For slopes greater than five percent and up to and including ten percent, contour intervals not more than two feet; and iii.
-For slopes greater than ten percent, contour intervals not more than five feet.
+ii. For slopes greater than five percent and up to and including ten percent, contour intervals not more than two feet; and
+iii. For slopes greater than ten percent, contour intervals not more than five feet.
 i. Current photos of site conditions;
 j. Construction management plan per Section 16.114.090.G; and
 k. Verification of any other permits required by other local, state, or federal agencies and the status of those permit applications.

@@ -233,7 +233,7 @@ def test_the_corner_lot_qualifier_the_stacked_shape_was_hiding(store: list) -> N
     on a local or connector street. It is in a stacked block, in a document we
     have held all along, and nothing in the encoding knew about it."""
     happy = next(
-        row for row in store if row.doc.endswith("happy-valley/16.22.residential.txt")
+        row for row in store if row.doc.endswith("happy-valley/16.22/16.22.050.txt")
     )
     eleven = [b for b in happy.bodies if b.mark == "11" and "corner lot" in b.text.lower()]
     assert eleven, "the stacked block is not being read"

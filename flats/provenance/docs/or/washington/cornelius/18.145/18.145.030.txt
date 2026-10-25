@@ -1,0 +1,275 @@
+§ 18.145.030. Required off-street parking spaces.
+
+(A)
+
+Off-street parking shall be provided based on the primary use of the site according to the following standards and regardless of the parking zone in which the use is located (see Map 1 following this chapter).
+
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Land Use
+Minimum Parking Standards
+Maximum Parking Standards
+Maximum Parking Standards
+Minimum Bicycle Parking Standards
+Land Use
+Minimum Parking Standards
+Zone A
+Zone B
+Minimum Bicycle Parking Standards
+RESIDENTIAL
+RESIDENTIAL
+RESIDENTIAL
+RESIDENTIAL
+RESIDENTIAL
+Detached Single Dwelling Units
+1.0/DU none none none
+Middle Housing
+1.0/DU none none none
+Multi-Unit Dwellings
+1.0/DU none none
+1.0/2 DUs except elderly, which is 1.0/20 DUs
+Manufactured Units
+1.0/DU none none none
+Mobile Home Parks
+1.0/DU none none none
+GROUP LIVING
+1.0/room
+1.0/2.5 beds non
+2.7/1,000 non
+2.7/1,000
+1.0/5 beds
+TRANSITIONAL HOUSING
+1.0/2.5 beds none none
+1.0/5 beds
+HOME OCCUPATION none none none none
+CIVIC
+CIVIC
+CIVIC
+CIVIC
+CIVIC
+Basic Utilities none none none none
+Colleges
+1.0/5 students/staff
+1.0/3.3 students/staff
+1.0/3.3 students/staff
+1.0/3.0 students/staff
+Community Recreation
+2.0/1,000
+2.5/1,000
+4.0/1,000
+0.3/1,000
+Cultural Institutions
+2.5/1,000
+3.5/1,000
+4.5/1,000
+0.5/1,000
+Medical Centers
+2.0/1,000
+3.7/1,000
+4.2/1,000
+0.2/1,000
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+Motor Vehicle Sales/Rental
+1.0/1,000 but no less than 4
+1.3/1,000 but no less than 4
+2.0/1,000 but no less than 4
+0.2/1,000 sales area
+Motor Vehicle Servicing/Repair
+2.0/1,000 but no less than 4
+2.3/1,000
+2.6/1,000
+0.2/1,000
+Vehicle Fuel Sales
+3.0 + 2.0/service bay
+4.0 + 2.0/service bay
+4.0 + 2.0/service bay
+0.2/1,000
+OFFICE
+2.7/1,000
+3.4/1,000
+4.1/1,000
+0.5/1,000
+COMMERCIAL
+COMMERCIAL
+COMMERCIAL
+COMMERCIAL
+COMMERCIAL
+Commercial Lodging
+1.0/room
+1.2/room
+1.4/room
+1.0/10 rooms
+Eating and Drinking Establishments fast food: 9.9/1,000 other: 15.3/1,000
+12.4/1,000
+19.1/1,000
+14.9/1,000
+23/1,000
+All: 1.0/1,000
+Self-Service Storage
+1/5,000 sf up to 20,000 sf; 1/20,000 sf thereafter none none
+1/50,000 sf
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+Major Event Entertainment
+1.0/3 seats or 1.0/6' bench
+1.0/2.5 seats or 1.0/5' bench
+1.0/2 seats or 1.0/4' bench
+1.0/10 seats or 40' bench
+Outdoor Entertainment
+4.0/1,000
+4.5/1,000
+5.0/1,000
+0.4/1,000
+Indoor Entertainment
+4.3/1,000 theater: 1.0/3 seats
+5.4/1,000 theater: 1.0/2.5 seats
+6.5/1,000 theater: 1.0/2.0 seats
+0.5/1,000
+1.0/10 seats
+Adult Entertainment
+2.5/1,000
+1.0/3 seats
+3.5/1,000
+1.0/1.25 seats
+6.5/1,000
+1.0/2.0 seats
+0.5/1,000
+1.0/10 seats
+GENERAL RETAIL
+GENERAL RETAIL
+GENERAL RETAIL
+GENERAL RETAIL
+GENERAL RETAIL
+Sales-Oriented
+3.7/1,000
+5.1/1,000
+6.2/1,000
+0.3/1,000
+Personal Services
+2.5/1,000 bank with drive-in: 4.3/1,000
+3.0/1,000
+5.4/1,000
+4.5/1,000
+6.5/1,000
+1.0/1,000
+1.0/1,000
+Repair-Oriented
+3.3/1,000
+4.0/1,000
+4.5/1,000
+0.3/1,000
+Bulk Sales
+1.0/1,000 but no less than 10
+1.3/1,000
+2.0/1,000
+0.3/1,000
+Outdoor Sales
+1.0/1,000 sales area
+1.3/1,000 sales area
+2.0/1,000 sales area
+0.1/1,000 sales area
+Animal-Related
+3.3/1,000
+4.0/1,000
+4.5/1,000
+0.3/1,000
+INDUSTRIAL
+INDUSTRIAL
+INDUSTRIAL
+INDUSTRIAL
+INDUSTRIAL
+Industrial Services
+0.8/1,000
+1.2/1,000
+1.8/1,000
+0.1/1,000
+Manufacturing; Production; Light Industrial; General Industrial; Heavy Industrial
+1.6/1,000 none none
+0.1/1,000
+Research and Development
+2.0/1,000
+3.0/1,000
+3.8/1,000
+0.5/1,000
+Warehouse/Freight Movement
+< 150,000 sq ft: 0.5/1,000
+> 150,000 sq ft: 0.3/1,000
+0.8/1,000
+0.4/1,000
+1.2/1,000
+0.5/1,000
+0.1/1,000
+Waste-Related
+5
+7
+10 none
+Wholesale Sales
+0.8/1,000
+1.2/100
+1.8/1,000
+0.1/1,000
+OTHER
+OTHER
+OTHER
+OTHER
+OTHER
+Agriculture/Horticulture
+2.5/1,000 sales area but no less than 4 none none none
+Cemeteries exempt exempt exempt none
+Detention Facilities
+1.0/2.5 beds none none
+1.0/15 beds
+Wireless Communication Facility none none none none
+Postal Services
+2.5/1,000
+3.0/1,000
+4.5/1,000
+0.3/1,000
+Public Support Facilities none none none none
+Religious Institutions
+0.25/seat in main assembly area
+0.6/seat in main assembly area
+0.8/seat in main assembly area
+1.0/20 seats in main assembly area
+Schools preschool: 5.0 + 1/classroom elementary/JR: 2.0/classroom
+SR: 1.0/5 students/staff preschool: 7.0 + 1/classroom elementary/JR: 2.5/classroom
+SR: 1.0/3.3 students/staff preschool: 10.0 + 1/classroom elementary/JR: 3.5/classroom
+SR: 1.0/3.3 students/staff preschool: 1.0/classroom elementary/JR: 6.0/classroom
+SR: 6.0/classroom
+Social/Fraternal Clubs/Lodges
+10.0/1,000 main assembly area
+12.0/1,000 main assembly area
+14.0/1,000 main assembly area
+2.0/1,000 main assembly area
+
+All uses providing drive-in service as defined by this title shall provide on the same site a reservoir for inbound vehicles as follows:
+
+Land Use                              Reservoir Requirement
+Drive-In Banks                        5 spaces/service terminal
+Drive-In Restaurants                  10 spaces/service window
+Drive-In Theaters                     10% of theater capacity
+Gasoline Service Stations             3 spaces/pump
+Mechanical Car Washes                 3 spaces/washing unit
+Parking Facilities – Free Flow Entry  1 space/entry driveway
+Ticket Dispense Entry                 2 spaces/entry driveway
+Manual Ticket Dispensing              8 spaces/entry driveway
+
+(Ord. 810, 2000; Code 2000 § 11.40.13; Ord. 841 Exh. 1, 2003; Ord. 2018-02 § 1 (Exh.
+A), 2018; Ord. 2022-03 § 1 (Exh.
+A), 2022)
+

@@ -213,7 +213,7 @@ def test_density_is_measured_on_the_city_s_net_acre(milwaukie: Layer) -> None:
     ):
         held = _value(milwaukie, zone, field)
         assert held.measured_on == "net_developable_area"
-        assert (held.measured_on_quote or "").endswith("19.200.definitions.txt#L529-L530")
+        assert (held.measured_on_quote or "").endswith("19/19.201.txt#L444-L445")
 
 
 def test_every_number_is_quoted_from_a_line_that_states_it(

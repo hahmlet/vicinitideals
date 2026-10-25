@@ -1,0 +1,1520 @@
+§ 19.508.4. Downtown Design Elements.
+
+All development that meets the applicability provisions in Subsection 19.508.2 must meet the following design standards or guidelines for each design element.
+A design feature may be used to comply with more than one standard or guideline.
+
+A.
+
+Site Frontage
+
+1.
+
+Purpose
+
+To encourage building design and site placement that enlivens the public realm and streetscape through significant building presence along site frontages and active groundfloor uses.
+
+2.
+
+Design Standards
+
+a.
+
+Frontage Occupancy
+
+(1)
+
+Minimum frontage occupancy requirements are established for block faces identified in Figure 19.508.4.A.2.a.(1) and detailed in Table 19.508.4.A.2.a.(1).
+Frontage occupancy requirements are used in combination with the required build-to line of Subsection 19.508.4.A.2.b.
+
+Figure 19.508.4.A.2.a.(1) Minimum Frontage Occupancy
+
+Table 19.508.4.A.2.a.(1) Minimum Frontage Occupancy Requirements                                      Table 19.508.4.A.2.a.(1) Minimum Frontage Occupancy Requirements  Table 19.508.4.A.2.a.(1) Minimum Frontage Occupancy Requirements
+Block Faces[1]                                                                                        Minimum Frontage Occupancy Requirement                            Notes
+Main Street                                                                                           90%                                                               If the development site has frontage on Main Street and another street, the frontage occupancy requirement must be met on Main Street only.
+Secondary Streets (Harrison Street, Monroe Street, Washington Street, Adams Street, and 21st Avenue)  75%                                                               If the development site has frontage on one of the streets listed here and another street where neither frontage is on Main Street, the frontage occupancy requirement must be met on the streets listed here only.
+Tertiary Streets (All others)                                                                         50%
+
+1.
+As illustrated in Figure 19.508.4.A.2.a, which controls in the instance of a conflict with the street names as listed here.
+
+(2)
+
+Frontage occupancy is calculated as the building frontage divided by the site frontage, as illustrated in Figure 19.508.4.A.2.a.(2).
+The building frontage includes both portions of the building at the build-to line and portions of the building set back from the front lot line consistent with maximum setbacks, as specified in Subsection 19.508.4.A.2.b.
+
+Figure 19.508.4.A.2.a.(2) Frontage Occupancy Requirements
+
+b.
+
+Build-To Lines / Street Setbacks
+
+(1)
+
+A build-to line as illustrated in Figure 19.508.4.A.2.b.(1) must be met for those block faces identified in Figure 19.508.4.A.2.b as follows:
+
+Figure 19.508.4.A.2.b First-Floor Build-to Requirements
+
+(a)
+
+Of the minimum frontage occupancy required for the site per Subsection 19.508.4.A.2.a, a minimum of 75% of the building's first floor must be built to the front lot line with a zero-foot setback, or up to a 2-ft setback for recesses in the building façade incorporated to comply with façade articulation requirements.
+
+(b)
+
+The portions of the building used to meet the build-to-line requirement must have an interior depth of at least 20 ft.
+
+(c)
+
+The remaining 25% of the first floor used to meet the build-to-line requirement may be set back from the front lot line a maximum of 20 ft. At least 50% of any front setback area must be developed as usable open space, such as a plaza or pedestrian amenities, that meets the requirements of Subsection 19.508.4.M.2.
+
+Figure 19.508.4.A.2.b.(1) First-Floor Build-To Lines
+
+(2)
+
+For other block faces, there is no build-to-line requirement and the maximum setback is 10 ft. At least 50% of any front setback area must be developed as usable open space, such as a plaza or pedestrian amenities, that meets the requirements of Subsection 19.508.4.M.2.
+(See Figure 19.508.4.A.2.b.(2).)
+
+Figure 19.508.4.A.2.b.(2) Maximum Setbacks
+
+(3)
+
+The Downtown Mixed Use (DMU) zone is exempt from the clear vision area requirements of Chapter 12.24, with the exception of driveway and street intersections with McLoughlin Boulevard.
+
+c.
+
+Active Ground-Floor Space
+
+For new buildings fronting Main Street, excluding ground-floor residential, the following standards must be met as illustrated in Figure 19.508.4.A.2.c:
+
+(1)
+
+At least 75% of the ground-floor height must be at least 15 ft, as measured from the finished floor to the ceiling, or from the finished floor to the bottom of the structure above (as in a multistory building).
+The bottom of the structure above is the lowest portion of the structure and includes supporting beams.
+
+(2)
+
+At least 75% of the interior floor area adjacent to Main Street must be at least 20 ft deep, as measured from the inside building wall or windows facing Main Street.
+
+Figure 19.508.4.A.2.c Active Ground-Floor Space Standards
+
+3.
+
+Design Guidelines
+
+a.
+
+A strong and high-percentage presence of buildings on the site edge, and spacious active ground-floor spaces and uses should be provided to create a continuous building frontage on the street to create compatibility and harmony between buildings and to encourage pedestrian activities.
+Building placement along the street should contribute to a continuous street wall that integrates storefront opportunities and architectural interest along the street, and should bring buildings up to the sidewalk for pedestrian interest.
+The amount of building presence should be scaled to the uses and intensity of the street.
+
+b.
+
+Where buildings are set back from the property line and sidewalk, the setback distance should be minimized and plazas and open space should be located between the building and sidewalk edge, helping to enliven the street edge and pedestrian realm.
+The plaza and open space area should incorporate pedestrian-scale features consistent with guidelines in SubSection 19.508.4.M.
+
+c.
+
+Ground floors of commercial, public, and mixed-use buildings should be flexible and offer ample space for active uses serving occupants and visitors, such as retail, service, or food service.
+The amount of active groundfloor space should be scaled to match the uses and intensity of the street, with the greatest amount in new buildings along Main Street.
+High groundfloor heights and adequate depths should provide flexible interior spaces for active uses.
+
+B.
+
+Wall Structure and Building Façade Detail
+
+1.
+
+Purpose
+
+To add visual interest to buildings and enhance the street environment with engaging and varied wall structures.
+Use design features and details to break down the scale and mass of a building to create comfortable, pedestrian-friendly environments and enclosure to public areas.
+
+2.
+
+Design Standards
+
+a.
+
+Vertical Articulation
+
+Buildings of 2 stories and above must be divided vertically to create a defined base, middle, and top by incorporating the following elements as shown in Figure 19.508.4.B.2.a:
+
+Figure 19.508.4.B.2.a Vertical Articulation Features
+
+(1)
+
+Base. The base of the building extends between the sidewalk and the top of the ground floor or the belt course/string course that separates the ground floor from the middle of the building.
+A minimum of the first 2 ft above finished grade of the ground-floor street-facing façade must be constructed of brick, stone, or concrete, excluding windows, entrances, and garage openings.
+The remainder of the base must meet the exterior building materials standards in Subsection 19.508.4.C.
+
+(2)
+
+Middle. The middle of the building between the top of the ground floor and top of the highest floor must incorporate at least one of the following elements:
+
+(a)
+
+A change in exterior building materials and/or material color between the ground floor and upper floors.
+
+(b)
+
+Street-facing balconies or decks at least 2 ft deep and 4 ft wide for at least 25% of the length of the building façade.
+
+(c)
+
+Horizontal architectural elements such as masonry string courses, ledges, and water tables at least 8 in tall that project or recess at least one in from the building face and extend across a minimum of 75% of the façade length.
+
+(3)
+
+Top. The top of the building extends from the ceiling of the uppermost floor to the highest vertical point on the roof of the building.
+The building top must be distinguished from the building façades by one of the following (see Figure 19.508.4.B.2.a.(3)):
+
+Figure 19.508.4.B.2.a.(3) Façade Top Details
+
+(a)
+
+Cornice or wall cap including a change of materials with a minimum projection of 6 in and minimum height of 12 in.
+
+(b)
+
+A pitched or overhang roof with a minimum fascia height of 7 in and eaves, exclusive of rain gutters, that project from the building wall at least 12 in.
+
+b.
+
+Horizontal Articulation
+
+(1)
+
+The street-facing façade must create a sense of rhythm and variation by incorporating the following as illustrated in Figure 19.508.4.B.2.b:
+
+(a)
+
+The ground floor façade must include columns, piers, pilasters or revealed structural elements projecting a minimum of 4 in from the building face no less than every 30 ft.
+
+(b)
+
+The upper story façade must include one of the following no less than every 30 ft:
+
+i.
+
+A change in wall plane of not less than 2 ft deep and 2 ft wide.
+Breaks may include but are not limited to an offset, recess, window reveal, pilaster, pediment, coursing, column or similar architectural feature.
+
+ii.
+
+Architectural bays at least 6 ft wide projecting 4 inches or more from the building face, with windows covering at least 50% of the projected wall area.
+
+(c)
+
+As an alternative to complying with (a) and (b) separately, features meeting the requirements of either (a) or (b) may be extended vertically across all stories.
+
+(2)
+
+Horizontal datum lines—such as belt lines, cornices, or upper-floor windows—must line up with adjacent façades if applicable.
+
+Figure 19.508.4.B.2.b Horizontal Articulation Details
+
+3.
+
+Design Guidelines
+
+a.
+
+Street-facing façades should engage the street, achieving a distinct and high-quality treatment that contributes to the downtown as the center of the community.
+
+b.
+
+Building façades should create a sense of coherence through holistic and human-scale design.
+They should be designed with vertical divisions such as a tripartite façade of base, middle, and top, and horizontal design elements that reference traditional storefront widths and create a sense of rhythm, or an alternative design of vertical and horizontal elements that bring a human scale to the space of the street.
+Such vertical and horizontal architectural elements should create a coherent pattern and visual interest at a pedestrian scale, particularly for larger buildings.
+
+c.
+
+Buildings should avoid blank wall faces on street-facing façades, particularly on ground floors and building corners at street intersections.
+
+d.
+
+Building façades should integrate façade articulation techniques to add visual interest to the built environment and clearly demarcate areas of visual interest, highlighting entries or displays.
+
+e.
+
+Massing should be purposeful and cohesive, boldly showing depth and/or visual lightness to enrich the pedestrian zone, integrating façade articulation techniques to reduce the perceived scale of larger buildings.
+
+C.
+
+Exterior Building Materials
+
+1.
+
+Purpose
+
+To encourage the use of high-quality building materials that highlight architectural elements, create a sense of permanence, are compatible with downtown Milwaukie and the surrounding built and natural environment, and activate the building around the Pedestrian realm.
+
+2.
+
+Design Standards
+
+Table 19.508.4.C.2 specifies the primary, secondary, accent, and prohibited material types referenced in this standard.
+
+Table 19.508.4.C.2 Exterior Building Materials for Street-Facing Façades                                                                 Table 19.508.4.C.2 Exterior Building Materials for Street-Facing Façades                          Table 19.508.4.C.2 Exterior Building Materials for Street-Facing Façades
+Allowed Status of Material P = Primary S = Secondary A = Accent R = Review needed X = Prohibited  Allowed Status of Material P = Primary S = Secondary A = Accent R = Review needed X = Prohibited
+Material Type                                                                                                                            Ground Floor (First story down to sidewalk grade)                                                 Upper Floors
+Brick or brick veneer                                                                                                                    P                                                                                                 P
+Architectural concrete block or veneer                                                                                                   P                                                                                                 S
+Architectural treated poured in place concrete                                                                                           P                                                                                                 S
+Tilt-up concrete walls (finished)                                                                                                        P                                                                                                 P
+Pre-cast concrete                                                                                                                        P                                                                                                 P
+Stone veneer (natural or manufactured)                                                                                                   A-R                                                                                               A-R
+Stucco (topcoat with sand finish)                                                                                                        P                                                                                                 P
+Exterior insulation finishing system (EIFS) or other synthetic stucco panels                                                             P-R                                                                                               P-R
+Metal siding = Finished metal panels (e.g., anodized aluminum, stainless steel, copper) featuring a polished, brushed, or patina finish  P                                                                                                 P
+Composite wall panels                                                                                                                    P                                                                                                 P
+Ceramic tile                                                                                                                             A                                                                                                 S
+Finished natural wood siding and composite wood siding                                                                                   A                                                                                                 A
+Fiber-reinforced cement siding and panels (5/16-in or thicker)                                                                           A                                                                                                 P
+Through color reinforced cement siding and panels                                                                                        A                                                                                                 S
+Glazing (refer to Façade Transparency element)                                                                                           P                                                                                                 P
+Vinyl siding                                                                                                                             X                                                                                                 X
+Plywood paneling                                                                                                                         X                                                                                                 X
+Plastic or vinyl fencing                                                                                                                 X                                                                                                 X
+Chain-link fencing                                                                                                                       X                                                                                                 X
+
+a.
+
+New Buildings
+
+The following standards are applicable to the street-facing façades of all new buildings, as well as façades facing plazas and/or open spaces.
+
+(1)
+
+Façade coverage
+
+(a)
+
+Table 19.508.4.C.2.a.(1) establishes façade coverage requirements.
+
+Table 19.508.4.C.2.a.(1) Façade Coverage Materials Requirements  Table 19.508.4.C.2.a.(1) Façade Coverage Materials Requirements  Table 19.508.4.C.2.a.(1) Façade Coverage Materials Requirements  Table 19.508.4.C.2.a.(1) Façade Coverage Materials Requirements
+Façade Type                                                      Primary Materials (Minimum)                                      Secondary Materials (Maximum)                                    Accent Materials (Maximum)
+Ground-floor façades                                             90%                                                              n/a                                                              10%
+Upper-floor façades                                              65%                                                              35%                                                              10%
+
+(b)
+
+The use of the following materials requires a Director's Determination consistent with Section 19.903.
+The applicant must provide materials specifications and proposed installation details to inform the determination.
+
+i.
+
+Materials permitted as review uses in Table 19.508.4.C.
+
+ii.
+
+Materials similar to the primary, secondary, and accent materials listed in Table 19.508.4.C.
+
+(c)
+
+Materials prohibited in Table 19.508.4.C may not be used on any exterior wall, whether or not it is a street-facing façade.
+
+(2)
+
+Ground-floor or street-level materials must wrap around to the nonstreet-facing façade of the building to minimum depth of 10 ft or to the edge of the abutting building, whichever is less.
+
+b.
+
+Existing Buildings
+
+(1)
+
+Street-facing façade modifications that affect more than 50% of the existing façade area must comply with standards of Subsection 19.508.4.C.2.a for the modified portion of the façade.
+
+(2)
+
+Building expansions or additions that add street-facing façade area greater than 25% of the existing façade area, as measured in square feet, or 500 sq ft of façade area, whichever is less, must meet the standards of Subsection 19.508.4.C.2.a for the façade of the building expansion or addition.
+
+3.
+
+Design Guidelines
+
+a.
+
+Exterior materials and finishes should be durable, long-lasting, and lowmaintenance and create a sense of permanence and high quality.
+
+b.
+
+Exterior materials for street-facing façades should include a palette that is visually interesting, coherent, compatible, related to its place, and observant of environmental elements of our region.
+
+c.
+
+Ground-floor materials should consist primarily of a simple palette of longlasting materials such as brick, stone, or concrete to create a sense of groundedness.
+
+d.
+
+Upper-floor materials should be attractive and compatible with the dominant materials and colors used on ground-floor façades of the building.
+Upper-floor materials should not overwhelm ground floor materials.
+
+e.
+
+Street-facing façade materials should be wrapped around the edge to nonstreet facing façades to create a seamless appearance.
+
+f.
+
+For renovations to existing development, new and existing materials should create a unified appearance.
+
+D.
+
+Façade Transparency and Activation
+
+1.
+
+Purpose
+
+To activate building interiors and exteriors by ensuring transparency through the building, allowing for daylighting of ground-floor commercial and public uses of buildings, and promoting a safe and vibrant pedestrian environment through visual and physical connections between interior and exterior spaces.
+To limit blank walls and promote alternatives to glazing where needed to activate façades and engage pedestrians viewing building exteriors.
+
+2.
+
+Design Standards
+
+a.
+
+Transparency must be created through glazing, defined here as windows and the glazed portions of doors.
+
+b.
+
+Nonresidential and Mixed-Use Buildings
+
+(1)
+
+Ground Floor
+
+(a)
+
+Along Main Street, a minimum of 50% of the ground-floor street-facing wall area must consist of glazing.
+
+(b)
+
+For all other block faces, a minimum of 40% of the ground-floor street-facing wall area must consist of glazing.
+
+(c)
+
+The ground-floor street-facing wall area is defined as the area from 3 ft above finished grade to 12 ft above finished grade or to the bottom of the ceiling joists or, where there is no ceiling, to the bottom of the roof rafters of the space fronting the street, whichever is less.
+
+(2)
+
+Upper Floors
+
+Along all block faces, the following standards are applicable on street-facing upper-floor building façades:
+
+(a)
+
+The wall area of street-facing upper floors must include a minimum of 30% glazing.
+
+(b)
+
+The required street-facing upper-floor glazing does not apply to floors where sloped roofs and dormer windows are used.
+
+See Figure 19.508.4.D.2.b for an illustration of these standards.
+
+Figure 19.508.4.D.2.b Glazing Standards for Nonresidential and Mixed-Use Buildings
+
+(3)
+
+Street-facing blank walls that contain no glazing are limited to 450 sq ft or 30 linear ft, whichever is less.
+In instances where a blank wall exceeds 450 sq ft or 30 linear ft, at least one of the following techniques must be employed in addition to the horizontal articulation requirements of Subsection 19.508.4.B.2.a.(2):
+
+(a)
+
+Provide a landscaped planting bed(s) with plant materials capable of obscuring or screening at least 50% of the blank wall's surface area within three years.
+
+(b)
+
+Provide a public art mural or original art mural, as defined in Section 20.04.020, over at least 50% of the blank wall surface.
+
+(4)
+
+Blank walls on façades that are not street-facing must also employ one or more of the techniques in Subsections 19.508.4.D.2.(3)(a) and (b) if they meet any of the following criteria:
+
+(a)
+
+Ground-floor blank walls that exceed 450 sq ft or 30 linear ft, whichever is less, without glazing, that are visible from an adjacent public street.
+A side or rear façade is considered visible if there is no intervening building, wall, fence, or landscaping with a ground-floor wall area equal to at least 50% of the ground-floor wall area of the subject building between the subject façade and the adjacent public street.
+Ground-floor wall area is defined as the area from finished grade to 12 ft above finished grade or to the bottom of the ceiling joists or, where there is no ceiling, to the bottom of the roof rafters, whichever is less.
+
+(b)
+
+Upper-floor blank walls that exceed 750 sq ft or 50 linear ft, whichever is less, without glazing, that face, or are within 45 degrees of, a shared property line where the abutting lot has no building taller than 25 ft between the subject façade and an adjacent public street.
+
+(c)
+
+Blank walls on façades facing, or within 45 degrees of, on-site pedestrian walkways, that exceed 450 sq ft or 30 linear ft, whichever is less, without glazing.
+
+(d)
+
+A blank wall spanning both the ground floor and upper floors may provide a unified landscaping or mural treatment meeting the requirements of Subsections 19.508.4.D.2.(3)(a) and (b).
+
+c.
+
+Residential-Only Buildings
+
+(1)
+
+Twenty-five percent of the total street-facing façade for all floors must consist of glazing.
+
+(2)
+
+Street-facing blank walls that contain no glazing are limited to 450 sq ft or 30 linear ft. In instances where a blank wall exceeds 450 sq ft or 30 linear ft, at least one of the following techniques must be employed:
+
+(a)
+
+Articulate the wall with projections or recesses consistent with Subsection 19.508.4.B.2.a.(2).
+
+(b)
+
+Provide a landscaped planting bed or raised planter bed at least 3 ft wide in front of the wall, with plant materials that obscure or screen at least 50% of the wall's surface within 3 years.
+
+(c)
+
+Provide artwork (mosaic, mural, sculpture, relief, etc.) over at least 50% of the blank wall surface.
+
+(3)
+
+Façades that are not street-facing are subject to the blank wall standards of Subsection 19.508.4.D.2.b.(4).
+
+3.
+
+Design Guidelines
+
+a.
+
+Design street-facing nonresidential and mixed-use ground floors with a high percentage of glazing to create transparency and engagement at the pedestrian eye level.
+
+b.
+
+Design nonresidential and mixed-use street-facing upper floors with sufficient glazing coverage to create visual interest along the façade and access to views, light, and air for building inhabitants.
+
+c.
+
+Design residential street-facing façade glazing coverage to balance transparency and privacy for residents.
+
+d.
+
+Arrange glazing to provide balanced coverage of the façade and limit blank walls on both street-facing and street-visible façades.
+If blank walls are proposed, use alternatives to glazing such as artwork, murals, vertical landscaping, and changes in materials or articulation to create visual interest.
+
+e.
+
+Design window and doors to maximize transparency and flexibility for ongoing use and adaptation that can be integrated into planned and future building uses and operations, considering such future treatments as shades, curtains, security fencing, and product shelving near windows or doors.
+
+E.
+
+Building Entrances
+
+1.
+
+Purpose
+
+To create pedestrian-friendly development by providing building entrances that are oriented to the sidewalk or other public space and connected with clearly marked pedestrian walkways.
+
+2.
+
+Design Standards
+
+a.
+
+All new buildings must have at least one primary entrance facing an abutting street.
+For purposes of this standard, "facing" means within 45 degrees of the street property line.
+Any entrance that faces the parking area must be secondary to the primary entrance.
+
+b.
+
+For lots with frontage along more than one street, including multiple lots under common ownership being developed as a single site, the primary entrance must be located as follows:
+
+(1)
+
+For lots with one frontage along a transit street, the primary entrance must be oriented to the transit street with the exception of Subsection 19.508.4.E.2.c.
+
+(2)
+
+For lots with frontage along 2 transit streets, the primary entrance must be oriented to the street with higher-frequency transit service or the corner of the 2 streets.
+
+(3)
+
+For lots with frontage along Main Street, the primary entrance must be oriented to Main Street or the corner of the 2 streets, even if the other frontage is along a transit street.
+
+(4)
+
+For lots without frontage on Main Street or a transit street, the primary entrance may be oriented to either street.
+
+c.
+
+Where a development contains multiple buildings or multiple individual storefronts or residential units and there is insufficient street frontage to meet the above entrance location standards for all buildings, storefronts, or residential units on the subject site, the primary entrances for each Building, storefront, or residential unit may orient to a plaza, courtyard, or similar pedestrian space designed as usable open space meeting the standards of Subsection 19.508.4.M.
+When oriented this way, the primary entrances must be connected to the street by an on-site pedestrian walkway either directly or through a plaza, courtyard, or similar pedestrian space as shown in Figure 19.508.4.E.2.
+
+Figure 19.508.4.E.2 Primary Entrance Locations
+
+d.
+
+For nonresidential and mixed-use buildings:
+
+(1)
+
+Primary entrances for mixed-use and nonresidential buildings must be clearly defined and distinguished from other parts of the building by incorporating at least one of the following design elements:
+
+(a)
+
+Recessed or projected entry.
+
+(b)
+
+Entry surrounds such as arches, columns, insets, and design elements above and/or flanking the entrance.
+
+(c)
+
+Transom windows above the entrance door.
+
+(2)
+
+The glazed portions of doors for primary entrances must be 75% or more of the door area.
+
+e.
+
+For residential-only buildings, primary entrances must:
+
+(1)
+
+Incorporate one of the design elements in Subsection 19.508.4.E.2.d.(1) above; or
+
+(2)
+
+Incorporate a covered porch, stoop, or patio with a minimum depth of 4 ft that may be elevated from sidewalk grade by no more than 8 ft.
+
+f.
+
+All entrances must be lighted consistent with Subsection 19.508.4.N.
+
+3.
+
+Design Guidelines
+
+a.
+
+Entryways should be sited to provide access where the highest amount of pedestrian activity is planned and where the pedestrian experience is designed to be exceptional.
+Primary building entries should be located along the Main Street or transit street frontage, where present, or at the corner of 2 such frontages for corner lots, whenever possible.
+Primary entries should not be oriented towards parking lots and service areas.
+
+b.
+
+Building entries should be designed as prominent architectural features that are clearly defined and demarcated.
+Entryways should integrate features such as scale, materials, glazing, projecting or recessed forms, architectural details, and color in entryway areas, along with accent features such as lighting and landscaping to set an entry apart.
+
+c.
+
+Nonresidential doors should create a strong connection to the street through the use of techniques such as storefront doors and surrounding windows with a high percentage of glazing, double doors, and large glazed sectional doors.
+
+d.
+
+Residential entryways should incorporate vertical and horizontal layering by including a comfortable change of grade or entry features such as porches, terraces, stoops, or covered landings to create a connection to the street while maintaining a respectful separation for resident privacy.
+Residential doors should be substantial enough to suggest privacy yet still express a welcoming sense of friendly contact for those who approach and enter.
+
+F.
+
+Windows
+
+1.
+
+Purpose
+
+To integrate windows made of high-quality materials that are compatible with the building design to create visually interesting exterior façades and that function to create sufficient interior light and enhance connections between interior and exterior spaces.
+
+2.
+
+Design Standards
+
+a.
+
+General Standards
+
+(1)
+
+Window openings must provide shadowing by recessing windows 4 in into the façade and/or incorporating exterior trim of at least 4-in reveal and of a contrasting material or color.
+
+(2)
+
+The following materials are approved for new window frames:
+
+(a)
+
+Anodized or painted aluminum windows
+
+(b)
+
+Wood
+
+(c)
+
+Fiberglass
+
+(d)
+
+Alternatively, frameless window systems may be used.
+
+(3)
+
+The use of spandrel glass is limited to floor lines and parapets.
+
+(4)
+
+For modification and expansion of existing buildings, replacement windows must match existing windows with respect to materials and dimensions.
+Alternatively, landmarks subject to Section 19.403 must comply with Subsection 19.403.5.E.4.
+
+b.
+
+Prohibited Window Elements
+
+For all street-facing building windows, the following window elements are prohibited:
+
+(1)
+
+Opaque, reflective or mirrored glazing.
+Opaque glazing is allowed on non-Main-Street façades as necessary for privacy (such as for bathrooms).
+
+(2)
+
+Glazing tinted beyond energy code requirements.
+
+(3)
+
+Simulated divisions (internal or applied synthetic materials).
+
+c.
+
+Window Placement and Proportion
+
+(1)
+
+For nonresidential ground-floor windows, the bottom edge of windows along pedestrian walkways must be an average of no less than one foot and an average of no more than 3 ft above the abutting finished grade.
+
+(2)
+
+For all windows on street-facing façades, each window must comply with at least one of the following to create a sense of pattern and compatible design:
+
+(a)
+
+Window shares the same width or height as another window on the same façade.
+
+(b)
+
+The top or bottom edge of the window aligns with the top or bottom edge of another window on the same façade.
+
+d.
+
+For modification and expansion of existing buildings, replacement windows must match existing windows with respect to materials and dimensions. alternatively, landmarks subject to Section 19.403 must comply with SubSection 19.403.5.E.4.
+
+3.
+
+Design Guidelines
+
+a.
+
+Window materials should be compatible with other primary wall and surface materials while providing a degree of contrast.
+Materials should be high quality and provide a high degree of transparency.
+Windows should provide shadowing through use of trim and/or recesses.
+
+b.
+
+Nonresidential uses should provide windows at the street level, inviting pedestrians in and providing views both in and out, maintaining transparency and visibility regardless of the time of day.
+
+c.
+
+Ground-floor street-facing nonresidential windows should engage with the street and connect indoor and outdoor spaces, such as through the use of operable, opening windows (e.g., sliding, pivoting, or articulating windows).
+
+d.
+
+Window groupings, proportions and orientation should create a sense of rhythm and pattern to provide architectural interest to the overall building composition.
+
+G.
+
+Corners
+
+1.
+
+Purpose
+
+To create a strong architectural statement at street corners, provide opportunities for pedestrian-scale activity, establish visual landmarks, and enhance visual variety.
+
+2.
+
+Design Standards
+
+a.
+
+Nonresidential or Mixed-Use Buildings
+
+On corner lots or development sites consisting of more than one lot under common ownership at the corner of 2 public streets—or at the corner of a street and a public area, park, or plaza—nonresidential or mixed-use Buildings must incorporate at least 2 of the following features:
+
+(1)
+
+The primary entrance located within 5 ft of the corner of the building.
+
+(2)
+
+A lobby or retail space a minimum of 100 sq ft in floor area with 90% transparency on facing windows and entrances within 5 ft of the corner of the building.
+
+(3)
+
+A pedestrian canopy or marquee at least 10 ft long at the corner of the building.
+
+(4)
+
+A chamfered corner at least 10 ft wide with an entry on the chamfer, or a similarly dimensioned rounded or stepped corner.
+
+(5)
+
+Enhanced pedestrian amenities including at least 2 of the following 3 options adjacent to the public right-of-way: a minimum of 100 sq ft of special paving materials, a minimum of 2 pieces of street furniture such as a bench or garbage can, water fountain, and/or a minimum of 20 sq ft of landscaping or planters.
+
+(6)
+
+Only for corner lots with frontage along Main Street and either Harrison, Monroe, Washington or Adams Streets, a prominent architectural element including one of the following:
+
+(a)
+
+Height modulation element such as tower, turret or cupola, defined as an architectural feature that projects a minimum of 5 ft and maximum of 10 ft above the surrounding building, with a minimum width of 8 ft, which has a separate roof structure and is uniquely identifiable from the rest of the building.
+Such features are exempt from maximum height standards in Subsection 19.304.4.B provided they are not used for human occupancy.
+
+(b)
+
+Corner offset projecting at least 2 ft from the main façade and extending at least 10 linear ft on both sides of the corner, incorporating distinctive materials compared to the main façade and extending a minimum height of one story.
+
+(c)
+
+Corner inset from the building face by at least 8 ft on at least the first story and extending at least 10 linear ft on both sides of the corner, including a recessed entrance.
+A pedestrian canopy or marquee at least 10 ft long at the corner of the building.
+A chamfered corner at least 10 ft wide with an entry on the chamfer, or a similarly dimensioned rounded or stepped corner.
+Enhanced pedestrian amenities including at least 2 of the following 3 options adjacent to the public right-of-way: a minimum of 100 sq ft of special paving materials, a minimum of 2 pieces of street furniture such as a bench or garbage can, water fountain, and/or a minimum of 20 sq ft of landscaping or planters.
+
+3.
+
+Design Guidelines
+
+a.
+
+For all nonresidential and mixed-use buildings at the corner of 2 public streets or at the corner of a street and a public area, park, or plaza, highlight and make the corner prominent through the use of features such as:
+
+(1)
+
+Change in building material
+
+(2)
+
+Window coverage pattern
+
+(3)
+
+Chamfered, rounded or stepped corner
+
+(4)
+
+Increased building height at the corner, potentially incorporating features such as tower, turret or cupola
+
+(5)
+
+Façade articulation
+
+(6)
+
+Projecting or recessed building entrances
+
+(7)
+
+Canopies or marquees
+
+(8)
+
+Active retail and semi-public spaces such as building lobbies
+
+b.
+
+Design of the corner should have a scale and character compatible with the scale of the corner and other buildings at the corner and the level of activity at the corner.
+
+c.
+
+For all nonresidential and mixed-use buildings, create active exterior spaces at site corners, particularly where building corners are set back, in ways that emphasize pedestrian use and encourage people to come together and gather through features such as street furnishings, special paving materials and planting materials.
+
+H.
+
+Building Massing and Transitions
+
+1.
+
+Purpose
+
+To promote building massing that creates compatible building scale and relationships between adjacent downtown buildings including massing variation that reflects the rhythm of traditional storefronts and breaks up the perceived massing of larger buildings, while creating an inviting pedestrian realm on the street by increasing access to light and air.
+To provide scaled transitions to adjacent residential uses to minimize impacts of building massing.
+
+2.
+
+Design Standards
+
+a.
+
+Building Massing
+
+For any street-facing portion of the building above the base maximum height as identified in Figure 19.304-4, buildings must include:
+
+(1)
+
+A step back of at least 6 ft along the street-facing portion of the building.
+
+(2)
+
+The step back area may be used for balconies, roof-top gardens, or other common or private open spaces.
+
+b.
+
+Building Façade Height Variation
+
+The height of building elements along street-facing façades must be varied in order to break up the overall bulk and mass of buildings as illustrated in Figure 19.508.4.H.2.b.
+At least one variation in height along the street-facing façade(s) must be provided for every 50-ft interval or portion thereof.
+Exact spacing of variations may vary provided that the total number of variations required is met and no portion of the façade exceeds 50 ft without a variation.
+Building façade height variation must be accomplished by using one or more of the following methods:
+
+(1)
+
+Vertical offset of height along the façade by minimum of 4 ft.
+
+(2)
+
+Dormer or other projecting element along or within 2 ft of the façade with minimum 4-ft height and 4-ft width.
+
+(3)
+
+Recessed balcony or step back from the façade on the upper floor with a minimum 4-ft depth and minimum 6-ft width.
+
+(4)
+
+Other techniques approved by the Planning Manager, shown to create variation along the top of street-facing façade through modulations in height, mass or bulk.
+
+Figure 19.508.4.H.2.b Building Façade Height Variation
+
+c.
+
+Building Transitions
+
+For any property in the Downtown Mixed Use (DMU) zone that is north of Harrison Street and within 50 ft of the property line abutting the moderate density residential zone (R-MD), the following transition measures are required for any new building (see Figure 19.508.4.H.2.c):
+
+(1)
+
+The new building must be located at least 6 ft from any property line abutting a low-density residential zone.
+This requirement supersedes the applicability of the transition area measures provided in Subsection 19.504.6.
+
+(2)
+
+The new building must provide a step back of at least 6 ft for any portion of the building above 35 ft in height above grade.
+
+Figure 19.508.4.H.2.c Building Transition Measures
+
+3.
+
+Design Guidelines
+
+a.
+
+Building massing should contribute to a welcoming and pedestrian-scaled sense of enclosure and definition of the street.
+
+b.
+
+Buildings that utilize bonus height should mitigate impacts of additional height and mass by including step backs, façade insets, high façade permeability, and other perceived mass-reducing techniques to ensure access to light, privacy, and sky views for nearby building occupants and people on the street.
+
+c.
+
+Building façades should incorporate variation in height or character to break up the perceived bulk and mass of the building into pedestrian-scale components that create a sense of pattern and rhythm.
+Such variation should be aligned with horizontal articulation elements to create a harmonious design.
+(See Subsection 19.508.4.B.3.)
+
+d.
+
+For buildings abutting the moderate density residential zone, building setbacks, step backs, façade articulation, landscaping, fencing, and/or transition measures should be deployed to blend building massing between downtown and any adjacent residentially zoned neighborhoods to reduce perceived mass of buildings.
+
+I.
+
+Weather Protection
+
+1.
+
+Purpose
+
+To create an all-season pedestrian environment shielded from the elements, whether by the building structure itself or with added-on features such as awnings and canopies, that is integrated with rather than obscures the building design.
+Overhead protection encourages window shopping and lingering, and weather protection features can provide interest and detail to a façade as well as create outdoor sidewalk seating areas for restaurants and cafés.
+
+2.
+
+Design Standards
+
+a.
+
+Minimum Weather Protection Coverage
+
+(1)
+
+All ground-floor building entries must be protected from the weather by awnings, canopies, marquees, recesses, or similar weather protection.
+
+(2)
+
+Awnings, canopies, marquees, recesses, or similar weather protection must be provided along at least 50% of the ground-floor elevation(s) of a nonresidential or mixed-use building where the building abuts a sidewalk, plaza, courtyard, or similar pedestrian space designed as usable open space meeting the standards of Subsection 19.508.4.M, or on-site pedestrian walkway.
+
+(3)
+
+Weather protection used to meet this section must extend at least 4 ft over the pedestrian area but no more than 4 ft into the right-of-way.
+Balconies and recesses meeting these dimensional requirements can be counted toward this requirement.
+
+(4)
+
+Weather protection used to meet the above standards must be at least than 8 ft above the finished grade, including any valance.
+
+See Figure 19.508.4.I.2.a for an illustration of these standards.
+
+Figure 19.508.4.I.2.a Weather Protection Requirements
+
+b.
+
+Weather Protection Materials, Design, and Details
+
+(1)
+
+Materials
+
+(a)
+
+Awnings must be constructed of a non-vinyl cloth or canvas with a matte finish or a material similar in appearance and texture.
+
+(b)
+
+Canopies must be constructed of rigid plastic, metal, glass, or a material similar in appearance and texture.
+
+(c)
+
+Marquees must be constructed of metal, glass, wood, or a material similar in appearance and texture.
+
+(d)
+
+Vinyl or any similar flexible plastic sheet material is prohibited for all weather protection features.
+
+(e)
+
+The structure or frame materials for awnings and canopies must be aluminum or steel.
+
+(2)
+
+Awnings or canopies must be attached directly above an entry or window.
+Awning and canopy width must not exceed the width of the entry or associated window opening and may not extend over more than one storefront opening.
+Marquees must be attached to the building directly above the entrance and may extend past the entrance.
+
+(3)
+
+For awnings and canopies, only lighting that illuminates the building and/or sidewalk is allowed.
+Awnings and canopies must not be illuminated from below or internally.
+
+(4)
+
+Any signage on awnings, canopies or marquees must be consistent with requirements of Subsection 14.16.060.C.
+
+3.
+
+Design Guidelines
+
+a.
+
+Along the ground floor, buildings should protect pedestrians from inclement weather and provide shade in the summer through use of awnings, canopies, marquees, or elements of the building structure itself such as recesses or balconies.
+The total amount of awning, canopy, and/or marquee coverage along a façade should provide adequate weather protection for pedestrians without overly shadowing the sidewalk.
+
+b.
+
+Awnings, canopies, and marquees should be placed over all building entrances and storefront windows or other similar locations and integrated with other entryway design features.
+(See Subsection 19.508.4.E.)
+The total amount of awning, canopy and/or marquee coverage along a façade should provide adequate weather protection for pedestrians without overly shadowing the sidewalk.
+
+c.
+
+The design of awnings, canopies, marquees, and elements of the building structure should be an integral and well-proportioned component of the building façade.
+Awnings, canopies and marquees should not obscure or negatively impact the character-defining features of the subject building.
+
+d.
+
+Canopies and awnings should be sized to match individual entrances and storefront windows.
+They should be placed directly above such features and should not extend outside the piers and lintel of the storefront opening.
+A single awning or canopy spanning across multiple commercial storefronts and that obscures character-defining features is strongly discouraged.
+
+e.
+
+Weather protection features should be well proportioned relative to the sidewalks.
+Features should not be so project so far into the public right-of-Way as to detract from street trees, light fixtures, or street furniture, but should extend far enough to provide coverage for pedestrians at entrances and windows.
+Features should provide adequate vertical clearance for pedestrian movement.
+
+f.
+
+Awnings, canopies, and marquees should be of high-quality materials and should not include vinyl.
+
+g.
+
+Awning or canopy lighting, if provided, should highlight the building or illuminate the sidewalk and should not illuminate awnings or canopies from below or internally.
+
+J.
+
+Roofs and Rooftop Equipment Screening
+
+1.
+
+Purpose
+
+To create a visually interesting feature at the top of the building that enhances the quality and character of the building and complements the building design, while reducing or eliminating the visual impact of rooftop equipment on the street pedestrian environment by providing screening or other concealing design features that also contribute to the high-quality design and visual interest of the building.
+
+2.
+
+Design Standards
+
+a.
+
+Rooftop Design
+
+(1)
+
+The roof of a building must follow one (or a combination) of the following forms:
+
+(a)
+
+Flat roof (less than 1/12 pitch) or low-slope roof (between 1/12 and 4/12 pitch)
+
+(b)
+
+Hip roof
+
+(c)
+
+Gabled roof
+
+(d)
+
+Dormers
+
+(e)
+
+Shed roof
+
+(2)
+
+Roofs are subject to the following standards as applicable:
+
+(a)
+
+All flat or low-slope roofs must be architecturally treated or articulated with a parapet wall that projects vertically above the roofline at least 12 in and/or a cornice that projects from the building face at least 6 in.
+See Figure 19.508.4.B.2.a(3).
+
+(b)
+
+All hip or gabled roofs exposed to view from adjacent public streets and properties must have a minimum 4/12 pitch.
+
+(c)
+
+Sloped roofs with a 4/12 pitch or higher must have eaves, exclusive of rain gutters, that project from the building wall at least 12 in.
+
+(d)
+
+When an addition to an existing structure, or a new structure, is proposed in an existing development, the roof forms for the new structure(s) must have the same slope and be constructed of the same materials as the existing roofing.
+
+b.
+
+Rooftop Equipment Screening
+
+(1)
+
+The following rooftop elements do not require screening:
+
+(a)
+
+Solar panels, wind generators, and green roof features.
+
+(b)
+
+Equipment under 2 ft high, if set back a minimum of 10 ft from the outer edge of the roof.
+
+(2)
+
+If visible from public street view, elevator mechanical equipment or a mechanical penthouse may not extend above the height limit by more than 16 ft, and must use a consistent exterior building material for the mechanical shaft or penthouse.
+
+(3)
+
+Satellite dishes, communications equipment, and all other roofmounted mechanical equipment must be set back a minimum of 10 ft from the roof edge and must be screened from public street view.
+For purposes of this standard, "public street view" means the pedestrian level from across the adjacent public street and does not include views from adjacent buildings.
+If necessary, screening from public street view must be achieved by one of the following methods that is at least as tall as the tallest part of the equipment being screened:
+
+(a)
+
+A screen around the equipment that is made of an exterior building material used on other portions of the building, or masonry.
+
+(b)
+
+Vertical green roof features or regularly maintained, dense foliage that forms an opaque barrier year-round when planted.
+
+(4)
+
+Required screening will not be included in the building's maximum height calculation.
+
+See Figure 19.508.4.J.2.b for an illustration of these standards.
+
+Figure 19.508.4.J.2.b Rooftop Equipment Screening
+
+3.
+
+Design Guidelines
+
+a.
+
+Building rooflines should enliven the pedestrian experience and be of visual interest, with detail and variation that will create a skyline composed of interesting forms and shadows.
+Building silhouette should be compatible with those of other buildings along the existing streetscape.
+
+b.
+
+Roof shape, surface materials, colors, mechanical equipment and other penthouse functions should all be integrated into the overall building design and should be considered an additional façade to complement the Building's design.
+
+c.
+
+Roof mounted mechanical equipment should be hidden from public street view by parapets, screening walls, vertical landscaping or green roof features, enclosures installed as an integral part of the architectural composition, strategic placement, or similar treatments.
+If such treatments are not practicable, mechanical units may be painted in lieu of screening with muted, neutral colors that make the equipment visually subordinate to the building and any adjacent buildings.
+
+K.
+
+Service Areas (Screening)
+
+1.
+
+Purpose
+
+To preserve well-designed building frontages and pedestrian environments by minimizing the potential negative impacts of service areas on visual design and circulation while maintaining sufficiently accessible and functional loading, waste collection, utility, and other service areas.
+
+2.
+
+Design Standards
+
+Service areas include external utility structures, loading docks, recycling facilities, trash containers, and other similar areas; they exclude off-street parking areas which are subject to Subsection 19.304.5.C.
+
+a.
+
+Service areas must be located for access from the most minor street.
+
+b.
+
+Screening must be established on all sides of service areas, except where an opening is required for access.
+If access is possible only on a side that is visible from a public street, a solid gate or door is required.
+
+c.
+
+Landscaping, structural elements, painting, and/or murals or other public art must be used to screen service areas that are located along a public street frontage.
+The required screening must result in an opaque barrier to a minimum height of 6 ft.
+
+d.
+
+Where structural forms of screening are utilized, the materials must match the primary or secondary building materials and colors as described in Subsection 19.508.4.C.
+
+e.
+
+For new buildings, waste collection areas must be located within the Building itself rather than a stand-alone waste enclosure.
+
+f.
+
+Residential-only multifamily and mixed-use buildings must meet the recycling area standards of Table 19.505.3.D.10.
+
+3.
+
+Design Guidelines
+
+a.
+
+Service areas, loading docks, waste enclosures, external utility structures, and other similar features should be located away from pedestrian areas, public street frontages especially Main Street, or at a less visible portion of the site to reduce possible impacts of these facilities on building aesthetics and pedestrian circulation.
+
+b.
+
+Whenever possible, all sides of service areas, loading docks, waste enclosures, and other outbuildings should be screened and concealed.
+Solid gates or doors should be used on sides requiring access.
+
+c.
+
+Screening, fencing, landscaping, decorative walls, or other treatments should be used to provide screening, using materials and designs compatible with the primary building they serve.
+Screening should be of a height, width, and opacity necessary to sufficiently screen all equipment and service areas.
+
+d.
+
+Waste collection areas should be located and designed to minimize visual, odor, and noise nuisances, and should be integrated into the building.
+If separate waste collection enclosures are utilized, they must be screened, covered with a roof or be self-contained.
+
+e.
+
+Residential-only multifamily and mixed-use buildings should provide recycling areas that are appropriately sized to accommodate the amount of recyclable materials generated by residents.
+Areas should be located such that they provide convenient access for residents and for waste and recycling haulers.
+Recycling areas located outdoors should be appropriately screened or located so that they are not prominent features viewed from the street.
+
+L.
+
+Resident Open Space
+
+1.
+
+Purpose
+
+To promote livability in the downtown environment by providing open space amenities within the development site for use by residents.
+
+2.
+
+Design Standards
+
+a.
+
+The following standards apply to mixed-use buildings and residential-only multifamily buildings with 4 or more units.
+
+b.
+
+Fifty sq ft of resident open space is required for each dwelling unit.
+The open space may be developed entirely as private open space or common open space, or it may be a combination of the 2 types of open space.
+Usable open space required by Subsection 19.508.4.A.2.b that meets the design standards of Subsection 19.508.4.M.2 may also be counted towards the resident open space requirement.
+
+c.
+
+Private Open Space
+
+(1)
+
+Private open space, if provided, must be contiguous to the unit it serves and must be directly accessible from the interior of the dwelling unit.
+
+(2)
+
+Private open space may be provided in the form of a porch, deck, balcony, patio, terrace, or other private outdoor area.
+
+(3)
+
+Areas used for entrances or exits will not be considered as private open space except where such entrances or exits are for the sole use of the unit they serve.
+
+(4)
+
+Balconies, decks, porches and patios must have a minimum depth of 4 ft and may project up to a minimum of 4 ft into the public right-of-way.
+
+d.
+
+Common Open Space
+
+(1)
+
+Common open space, if provided, must be at least 15 ft by 15 ft in dimension and may be provided in the form of decks, shared patios, plazas, courtyards, landscaped areas, roof gardens, recreation rooms, lobbies, or other gathering spaces created strictly for the occupants and not associated with storage or circulation.
+
+(2)
+
+Outdoor common open space areas must integrate amenities such as tables, benches, movable seating, trees, shrubs, landscaping areas or planters, garden plots, and/or fountains.
+
+(3)
+
+Outdoor common open space must be lighted as required by Subsection 19.508.4.N.
+
+(4)
+
+When provided at ground level, outdoor common open space must be abutted on at least one side by the building, with at least one window and one door to access the space; and must be bordered on at least one other side by fencing or walls less than 42 in high, landscaping strip or planters at least 2 ft wide, site furnishings, or other building walls.
+
+(5)
+
+Regardless of location (ground-level or above), where any building wall abuts an outdoor common open space, the wall must include at least one window or door with a minimum of 50% glazing.
+
+3.
+
+Design Guidelines
+
+a.
+
+Building design should incorporate ample open space opportunities for residents with a mix of private and/or common open spaces to provide access to outdoor recreation, scenic amenity, or shared outdoor space for people to gather.
+
+b.
+
+Any private open spaces should be scaled to enhance usability by residents and have direct access from the dwelling unit and should be visually and/or physically separate from common areas.
+
+c.
+
+Any common open spaces should be inviting and enhance opportunities for use by residents.
+These spaces should be human-scaled, accessible, durable, attractive, and secure.
+
+d.
+
+Any common open spaces should integrate amenities for residents' use and enjoyment, including landscaping in outdoor spaces.
+
+e.
+
+Any common open spaces should be well-defined by surrounding Buildings, walls, fences, landscaping, or other techniques to provide visual definition for the space.
+Adjacent buildings should incorporate transparent windows and doors to provide physical and visual access to the space and should include active use areas that front the open space.
+
+M.
+
+Plazas and Usable Open Space
+
+1.
+
+Purpose
+
+To ensure that downtown plazas and open spaces are designed for usability and a variety of activities during all hours and seasons; provide amenities for downtown visitors, businesses, and residents; promote livability; and help soften the effects of built and paved areas.
+
+2.
+
+Design Standards
+
+Open spaces such as plazas, courtyards, gardens, terraces, outdoor seating, small parks, and similar spaces, including usable open space provided to meet the standards of Subsection 19.508.4.A.2.b, must meet the following standards.
+
+a.
+
+Where any building wall abuts an open space, the wall must include at least one window or door with a minimum of 50% glazing.
+
+b.
+
+Usable open space must be directly accessible at grade adjacent to the public sidewalk.
+
+c.
+
+Hardscaping in open spaces must utilize concrete or unit paving and may not use asphalt or gravel surfacing.
+
+d.
+
+Landscaping must be integrated into open spaces to meet the following:
+
+(1)
+
+A minimum of 10% of the open space area must be landscaped areas incorporating trees, shrubs, and ground cover.
+
+(2)
+
+No more than 20% of this landscaped area can be covered in mulch or bark dust.
+This requirement excludes mulch or bark dust under the canopy of trees or shrubs.
+
+(3)
+
+Nuisance species listed in the Milwaukie Native Plant List are prohibited.
+
+e.
+
+Open spaces must provide at least 3 ft of seating area (e.g., bench, ledge, etc.) or one individual seat, including movable seating for outdoor seating areas, per 60 sq ft of plaza or open space area.
+
+f.
+
+Open spaces must be lighted as required by Element N (Outdoor and Exterior Building Lighting).
+
+3.
+
+Design Guidelines
+
+a.
+
+Plazas and open spaces should be inviting and create opportunities for a variety of uses.
+
+b.
+
+Plazas and open spaces should avoid separation from the street by visual barriers or significant change of grade.
+Plazas and open spaces should create visual and physical connections to abutting buildings.
+
+c.
+
+Plazas and open spaces should be human-scaled, accessible, durable, and attractive, and should enhance users' comfort and enjoyment by integrating features such as:
+
+(1)
+
+Pedestrian amenities such as water features, drinking fountains, and/or distinctive paving or artwork
+
+(2)
+
+Permanent or movable seating
+
+(3)
+
+Weather protection, especially weather protection that can be moved or altered to accommodate conditions
+
+(4)
+
+Transitional zones along building edges to allow for outdoor eating areas and a planted buffer
+
+(5)
+
+Lighting
+
+d.
+
+Plazas and open spaces should create visual interest by including a mix of hardscape and landscape elements such as trees, shrubs, and plants.
+
+e.
+
+Landscaping in plazas and open spaces should be integrated to provide shade for hardscaped areas and to provide visual interest and texture.
+
+f.
+
+Buildings adjacent to plazas and open spaces should incorporate transparent windows and doors to provide physical and visual access to the space and should include active use areas that front the open space.
+
+g.
+
+Plazas and open space should be designed to integrate sustainability and enhance the relationship to the natural environment, including consideration of the sun angle at noon and the wind pattern in the design of the space and incorporation of water treatment features such as rain gardens.
+
+N.
+
+Outdoor and Exterior Building Lighting
+
+1.
+
+Purpose
+
+To incorporate outdoor and exterior building lighting that increases pedestrian comfort, accentuates design and architectural features, enhances safety, and minimizes light pollution (both spill and casting or glare).
+
+2.
+
+Design Standards
+
+a.
+
+Lighting must be designed to comply with the following standards:
+
+(1)
+
+Primary building entrances required in Subsection 19.508.4.E must have a minimum illumination of 2.0 foot-candles.
+
+(2)
+
+All other building entrances and areas underneath weather protection elements described in Element I (Weather Protection) must have a minimum illumination of 1.0 foot-candles.
+
+(3)
+
+Common open spaces for residents subject to Subsection 19.508.4.L must be lighted with pedestrian-scaled lighting (no more than 14 ft in height) at a level at least 1.0 foot-candles throughout the space.
+
+(4)
+
+Plazas and usable open space subject to Subsection 19.508.4.M must be lighted with pedestrian-scaled lighting (no more than 14 ft in height) at a level at least 2.0 foot-candles throughout the space.
+
+(5)
+
+If off-street parking areas are present, lighting must comply with standards in Subsection 19.606.3.F.
+
+b.
+
+Lighting luminaires must have a cutoff angle of 90 degrees or greater to ensure that lighting is directed downward, except as provided for uplighting of flags and permitted building-mounted signs.
+
+c.
+
+Lighting must not cause a light trespass of more than 0.5 footcandles measured vertically at all shared property lines of the site, with the exception of property lines along public right-of-way.
+
+d.
+
+Flashing or strobe lights, fluorescent tube lights, and security spotlights are prohibited on building exteriors.
+
+3.
+
+Design Guidelines
+
+a.
+
+Exterior lighting should be used to articulate the building elements, including (but not limited to) entrances, common open spaces for residents, plazas and usable open space, signage, canopies, cornices, storefronts, and other architectural features.
+Lighting levels of entrances, areas underneath weather protection elements, and all open spaces should be pedestrian scale and provide a sense of safety.
+
+b.
+
+All lighting should be designed to prevent unnecessary illumination of adjacent sites, with the exception of adjacent sidewalks within a public-right-of-Way where illumination is desired.
+As a rule of thumb, lighting levels should be no greater than necessary to provide for pedestrian safety, property or business identification, and crime prevention.
+
+c.
+
+Flashing or strobe lights, fluorescent tube lights, and security spotlights are strongly discouraged from use on building exteriors.
+

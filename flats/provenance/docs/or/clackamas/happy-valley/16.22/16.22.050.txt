@@ -1,0 +1,552 @@
+§ 16.22.050. High density residential—Attached.
+
+A.
+
+Purpose.
+
+1.
+
+Single-Family Attached Residential (SFA). This district is intended to promote the livability, stability and improvement of Happy Valley's new neighborhoods and to provide opportunities for a variety of medium density residential housing types with a density range of 10 to 15 dwelling units per acre, as well as certain neighborhood commercial uses.
+The district is intended to:
+
+a.
+
+Make efficient use of land and public services, and implement the Comprehensive Plan, by providing minimum and maximum density standards for housing.
+
+b.
+
+Accommodate a range of housing needs, including owner-occupied and rental housing.
+
+c.
+
+Provide for compatible building and site design at an appropriate neighborhood scale.
+
+d.
+
+Reduce reliance on the automobile for neighborhood travel and provide options for walking and bicycling.
+
+e.
+
+Provide direct and convenient access to schools, parks and neighborhood services.
+
+2.
+
+Mixed Use Residential—Attached (MUR-A).
+Mixed use residential will promote compact form, and residential and commercial or residential and office mixed vertically, in addition to across the district.
+Minimum densities are provided to comply with the Urban Growth Management Functional Plan, Title 1 requirements.
+MUR-A has a maximum density of 15 units per net acre and a minimum density of 10 units per net acre.
+
+3.
+
+Village Townhouse District (VTH). This district is based on the Village Townhouse District in the Clackamas County Zoning and Development Ordinance.
+It was adopted by the City of Happy Valley to provide consistent land use regulations for areas recently annexed to the City.
+
+a.
+
+A Traffic Impact Analysis (TIA) shall be submitted with each development application pursuant to the City's Traffic Impact Study Guidelines.
+The TIA shall address, but is not limited to, the following traffic management mechanisms: physical site controls on existing traffic, p.m. peak hour existing traffic limitations, traffic monitoring, restrictions on the number of parking spaces, transportation/transit information center; flextime, staggered working hours, car and van pool spaces, and similar ride share programs.
+
+b.
+
+The procedures and application requirements under Chapter 16.63 (Land Divisions and Property Line Adjustments) and Article 16.4 (Community Design Standards) shall apply to all development in the Village Townhouse District.
+If language within these sections conflicts with specific requirements and standards of the village townhouse district, the standards within the village townhouse district shall prevail.
+
+B.
+
+Permitted Uses. Table 16.22.050-1 identifies the land uses that are allowed in the SFA, MUR-A and VTH Districts.
+
+Table 16.22.050-1 High Density Attached Residential (SFA, MUR-A, VTH) Permitted Uses
+Table 16.22.050-1 High Density Attached Residential (SFA, MUR-A, VTH) Permitted Uses
+Table 16.22.050-1 High Density Attached Residential (SFA, MUR-A, VTH) Permitted Uses
+Table 16.22.050-1 High Density Attached Residential (SFA, MUR-A, VTH) Permitted Uses
+P = Permitted; C = Conditional Use; X = Prohibited
+P = Permitted; C = Conditional Use; X = Prohibited
+P = Permitted; C = Conditional Use; X = Prohibited
+P = Permitted; C = Conditional Use; X = Prohibited
+Land Use
+SFA
+MUR-A
+VTH
+Residential
+Residential
+Residential
+Residential
+Single-family detached dwellings (existing)
+P
+P
+P[1]
+Single-family detached dwellings (new)
+X
+X[8]
+X
+Single-family attached dwellings (townhouses, rowhouses)
+P
+P
+P
+Two-family dwelling (duplex)
+P
+P
+P
+Three-family dwelling (triplex)
+P
+P
+P
+Four-family dwelling (quadplex)
+P
+P
+P
+Cottage cluster dwellings
+X
+P
+X
+Multifamily dwellings containing five or more dwelling units or condominiums
+X
+X
+X
+Senior housing, congregate housing or nursing homes
+X
+P
+X
+Rooming houses
+X
+X
+X
+Accessory dwelling units (per Section 16.44.050)
+P
+P
+P[2]
+Home occupation (per Section 16.69.020)
+P
+P
+P[3]
+Bed and breakfast residencies
+C
+C
+C
+Rental information offices
+P
+P
+P[3]
+Neighborhood Commercial Uses
+Neighborhood Commercial Uses
+Neighborhood Commercial Uses
+Neighborhood Commercial Uses
+Coffee shops, cafés, sandwich shops and delicatessens, restaurants (no drive through service allowed)
+P[4,7]
+P[4,7]
+X
+Florists
+P[4,7]
+P[4,7]
+X
+Grocery, food, specialty foods, and produce stores
+P[4,7]
+P[4,7]
+X
+Laundromats and dry cleaners
+P[4,7]
+P[4,7]
+X
+Personal services (e.g., barbershops, hair salons, spas)
+P[4,7]
+P[4,7]
+X
+Yogurt and ice cream stores
+P[4,7]
+P[4,7]
+X
+Video rental stores
+P[4,7]
+P[4,7]
+X
+Retail and service commercial uses similar to those above but not listed elsewhere in this section upon administrative determination through the design review process
+P[4,7]
+P[4,7]
+X
+Commercial—Offices
+Commercial—Offices
+Commercial—Offices
+Commercial—Offices
+Professional and administrative offices
+C[4]
+C[4]
+X
+Medical and dental office, clinics and laboratories
+C[4]
+C[4]
+X
+Institutional/Utilities
+Institutional/Utilities
+Institutional/Utilities
+Institutional/Utilities
+Churches, synagogues, temples or places of worship
+C
+C
+C[5]
+Private and public schools
+C
+C
+C
+Commercial daycare facilities
+C
+C
+C
+Utility facilities (telecommunication, pump stations, substations, utility carrier cabinets)
+C
+C
+C
+Other
+Other
+Other
+Other
+Public or private open spaces, parks and playgrounds, tennis courts and similar outdoor recreational activity areas and recreational buildings, facilities and grounds, which include fully or partially enclosed structures for the primary or secondary use
+P
+P
+P[6]
+New streets and roads, including the extensions of existing streets and roads, that are included with the adopted transportation system plan
+P
+P
+P
+Wireless telecommunication facilities
+P/C
+P/C
+P
+Uses and structures customarily accessory and incidental to a primary use
+P
+P
+P[3]
+Temporary storage of recyclables/reuseables: The temporary storage within an enclosed structure of source-separated recyclable/reusable materials generated and/or used on-site prior to on-site reuse or removal by the generator or licensed or franchised collector to a user or broker
+P
+P
+P[3]
+Temporary buildings for uses incidental to construction work subject to the provisions of Section 16.69.010—Such buildings shall be removed upon completion or abandonment of the construction work
+P
+P
+P[3]
+Bus shelters, bicycle facilities, street furniture, drinking fountains, kiosks, art works and other pedestrian and transit amenities
+P
+P
+P[3]
+Helipad
+X
+X
+X
+Uses similar to those upon administrative determination by the Planning Official
+P/C
+P/C
+P/C
+
+NOTES:  NOTES:
+[1]     Preexisting single-family dwellings and residential homes may be altered or expanded.
+[2]     Residential care homes/facilities, duplexes, triplexes, quadplexes, cottage clusters, and accessory dwellings are exempt from the density standards.
+Townhouses have a maximum density of 25 units/acre.
+[3]     Permitted only as an accessory use.
+[4]     Neighborhood commercial use subject to the provisions of Section 16.44.080.
+[5]     Alteration or expansion of a religious facility which was lawfully established prior to July 1, 1993.
+The use shall not extend beyond the property which was under the ownership of, or occupied by, the preexisting religious facility and associated facilities prior to July 1, 1993.
+[6]     Public parks, playgrounds, recreational and community buildings and grounds, tennis courts, and similar recreational uses, all of a noncommercial nature, are permitted; provided that any principal building or swimming pool shall be located a minimum of 30 feet from any other lot in a residential district.
+[7]     Neighborhood commercial uses are permitted within the Happy Valley Town Center Plan Area.
+[8]     Single-family detached units with a maximum floor area of 2,000 square feet are permitted in the MUR-A zone within the Happy Valley Town Center Plan Area.
+
+C.
+
+Development Standards. The development standards in Table 16.22.050-2 apply to all uses, structures, buildings, and development in the SFA, MUR-A and VTH Districts.
+
+Table 16.22.050-2 Development Standards for SFA, MUR-A and VTH Districts
+Table 16.22.050-2 Development Standards for SFA, MUR-A and VTH Districts
+Table 16.22.050-2 Development Standards for SFA, MUR-A and VTH Districts
+Table 16.22.050-2 Development Standards for SFA, MUR-A and VTH Districts
+Standard
+SFA
+MUR-A
+VTH
+Residential density (maximum)[1]
+15 du/net acre[2]
+15 du/net acre[2]
+2,000 sf/primary unit[9]
+Residential density (minimum)[1]
+10 du/net acre[2]
+10 du/net acre
+3,000 sf/primary unit[9]
+Lot size (minimum)
+2,000 sf
+3,000 sf[9]
+2,000 sf
+Lot width (minimum)
+None
+None
+None
+Lot depth (minimum)
+None
+None
+None
+Lot coverage (maximum)
+75%[12]
+75%[12]
+65%
+Setbacks (minimum):
+Front
+10 feet[3]
+10 feet[3]
+10 feet[10,11]
+Rear
+15 feet[3,4]
+15 feet[3,4]
+15 feet[10,11]
+Interior side
+5 feet[3,4,5]
+5 feet[3,4,5]
+5 feet[5,10]
+Street side
+8 feet[3]
+8 feet[3]
+5 feet [10,11]
+Cottage cluster, rear
+10 feet
+Garage and carport entrances
+Entrances not facing an alley
+22 feet
+22 feet
+22 feet[10]
+Entrances facing an alley
+22 feet to base floor (foundation only, not including posts or other support mechanisms) 6 feet to upper floors (wall face)
+22 feet to base floor (foundation only, not including posts or other support mechanisms) 6 feet to upper floors (wall face)
+22 feet to base floor (foundation only, not including posts or other support mechanisms) 6 feet to upper floors (wall face)[10]
+Between groupings of residential buildings on the same lot
+10 feet
+10 feet
+10 feet
+Setback (maximum from street right-of-way or designated accessway)
+None
+None
+18 feet
+Building height (maximum)
+45 feet[8]
+65 feet[8]
+35 feet
+Shared outdoor recreation areas
+400 sq. ft./unit provided in accordance with Section 16.42.080
+400 sq. ft./unit provided in accordance with Section 16.42.080
+400 sq. ft./unit provided in accordance with Section 16.42.080
+
+NOTES:
+NOTES:
+[1]
+Density calculations shall be made pursuant to Section 16.63.020(F).
+Cottage clusters must meet a minimum density of four units per gross acre.
+[2]
+Residential care homes/facilities, duplexes, triplexes, quadplexes, cottage clusters, and accessory dwellings are exempt from the density standards.
+Townhouses may have a maximum density of 25 units/acre.
+[3]
+The minimum front, rear, side and street side building setbacks for public and institutional uses in the SFA district is 20 feet.
+Cottage clusters shall have a perimeter setback of 10 feet in the MUR-A zone.
+[4]
+Where the SFA district abuts lower density residential districts, the abutting yards shall have a 10-foot landscaped buffer area.
+[5]
+Side yard building setbacks for attached single-family (townhouse) may be reduced to zero in compliance with applicable sections of the adopted Uniform Building Code.
+[7]
+(Reserved)
+[8]
+Maximum building height for single-family detached/attached is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet in height.
+[9]
+Each lot for an attached single-family (townhouse) dwelling in the SFA and VTH zones shall have a minimum size of 2,000 square feet and a maximum size of 3,000 square feet, or each lot shall have a minimum size of 2,000 square feet and the average size of all lots shall not exceed 2,500 square feet.
+Each lot for a townhouse in the MUR-A zone shall have a minimum size of 1,500 square feet and no maximum lot size.
+Lots created for congregate care facilities, two- and three-family dwellings, or multifamily dwellings are not subject to minimum, maximum, or average lot size standards.
+However, the density provisions of Section 1012 are applicable.
+A new lot created for a preexisting single-family dwelling shall have a minimum lot size of 3,000 square feet, and a maximum lot size of 5,000 square feet.
+A lot created for a preexisting dwelling shall not be included in the gross site area used to determine the maximum density for the remaining lot.
+[10]
+Preexisting dwellings and their accessory structures shall comply with the Clackamas County VR-4/5 setback standards.
+[11]
+On a corner lot, one of the required front yard building setbacks may be reduced to eight feet when abutting a local or connector street.
+Awnings, porches, bays, and overhangs may extend up to four feet into this setback.
+[12]
+Lot coverage maximum for existing, or where allowed, proposed single-family detached units is 50%.
+Maximum lot coverage does not apply to cottage clusters.
+
+D.
+
+Special Standards for Certain Uses.
+
+1.
+
+Special Standards for Public and Institutional Uses.
+
+a.
+
+Minimum Setbacks.
+
+i.
+
+Front. Twenty feet.
+
+ii.
+
+Rear. Twenty feet.
+
+iii.
+
+Side. Twenty feet.
+
+iv.
+
+Street Side. Twenty feet.
+
+2.
+
+Attached Single-Family Dwellings in the VTH District.
+
+a.
+
+Configuration and Façades.
+
+i.
+
+Attached single-family dwellings shall orient to and line streets with a series of attached "rowhouse" units.
+
+ii.
+
+Front façades shall be designed with balconies and/or bays.
+Façades facing a street right-of-way or designated accessway shall not consist of a blank wall.
+
+iii.
+
+Window trim shall not be flush with exterior wall treatment.
+Windows shall be provided with an architectural surround at the jamb, head, and sill.
+
+b.
+
+Entries and Porches.
+
+i.
+
+Primary entries shall be accessed directly from a street right-of-way and must be visible from the street.
+
+ii.
+
+Porches are required for each unit and must be located immediately adjacent to the primary entry.
+Porches must cover a minimum of 50% of the primary façade (not including the garage) with a minimum net depth of six feet.
+
+c.
+
+Roofs. Hipped, gambrel, or gabled roofs are required.
+Flat roofs are prohibited.
+
+3.
+
+Accessory Structures in the VTH District. The following standards apply to accessory structures:
+
+a.
+
+A maximum of two accessory structures, including one accessory dwelling unit, may be permitted on a lot.
+
+b.
+
+An accessory structure and its projections shall be detached and separated from other structures by a minimum of three feet.
+
+c.
+
+Only one accessory structure per lot may exceed 100 square feet in area.
+
+d.
+
+Accessory structures greater than 100 square feet in area shall comply with the following requirements:
+
+i.
+
+The accessory structure shall be constructed with similar exterior building materials as that of the primary dwelling.
+
+ii.
+
+The square footage of the ground floor of the accessory structure shall not exceed either 500 square feet or the square footage of the ground floor of the primary dwelling, whichever is less.
+An accessory dwelling unit shall not exceed 500 square feet in size.
+
+iii.
+
+The detached accessory structure shall have a maximum building height of 25 feet or the building height of the primary dwelling, whichever is less.
+
+e.
+
+The front yard setback shall be no less than the front façade of the primary dwelling unit (not including porches, bays, garages, and architectural features).
+Garages shall comply with the front yard setback standards of Clackamas County ZDO Subsection 1604.06(F).
+
+f.
+
+No side or rear yard setback shall be required for any detached accessory structure that is 100 square feet or less in area and does not exceed a height of feet.
+
+g.
+
+For structures that exceed 100 square feet in area or eight feet in height, rear and side yard setbacks shall be as follows, except where a rear or side lot line is adjacent to a street, pedestrian path, sidewalk, or accessway, in which case a minimum setback of five feet is required:
+
+i.
+
+For structures greater than eight feet and up to 20 feet in height, the minimum side yard setbacks shall be zero on one side and three feet on the other side.
+The minimum rear yard setback where the rear property line abuts an alley shall be six feet.
+The minimum rear yard setback where the rear property line does not abut an alley shall be three feet.
+
+ii.
+
+For structures greater than 20 feet in height, the minimum side yard setbacks shall be zero on one side and five feet on the other side.
+The minimum rear yard setback where the rear property line abuts an alley shall be six feet, except that a second-level accessory dwelling unit may cantilever up to four feet.
+The minimum rear yard setback where the rear property line does not abut an alley shall be five feet.
+
+4.
+
+Garages in the VTH District.
+
+a.
+
+A minimum of one off-street parking space shall be located in a garage and no required parking or loading space shall be used for storing a recreational vehicle, camper, or boat.
+
+b.
+
+A detached garage may be placed at the rear of a lot.
+
+c.
+
+A front-access garage attached to the dwelling structure shall be recessed a minimum of two feet behind the front façade (not including porches, bays, and architectural features) and a minimum of 20 feet from the street right-of-way.
+
+d.
+
+A minimum two-foot deep trellis or bay window shall be placed above the garage opening.
+The trellis shall extend the full width of the garage, and the bay window shall be a minimum of eight feet in width.
+
+e.
+
+If located in the front, the garage opening and the driveway shall not exceed a width of 10 feet.
+
+f.
+
+If an alley adjoins a lot, then garage access from the street is prohibited.
+
+5.
+
+Fences and Sight-Obscuring Plantings in the VTH District.
+
+a.
+
+Fences and sight-obscuring plantings shall comply with intersection sight distance requirements.
+
+b.
+
+The maximum height of a fence or sight-obscuring planting shall be six feet along the side and rear yards behind the front building line, and four feet forward of the front building line.
+
+6.
+
+Manufactured Dwelling Parks in the VTH District.
+
+a.
+
+Existing manufactured dwelling parks shall not be redeveloped with a different use until a plan for relocation of the existing tenants is submitted and approved by the Planning Official or designee.
+
+7.
+
+Variances. The requirements of this section may be modified pursuant to Chapter 16.71.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 406 § 1, 2010; Ord. 422 § 1, 2012; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 501 § 1, 2016; Ord. 521 § 3, 2017; Ord. 545 § 1, 2019; Ord. 561 § 1(Exh.
+A), 2022; Ord. 571 § 1, 2022; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025)
+
+[1]
+Editor's Note: Ord. 589, which amended this section with regard to Cottage Clusters, was remanded by the courts and all amendments were removed at request of the City.
+

@@ -1,0 +1,103 @@
+§ 18.320.050. Building Design Standards.
+
+A.
+
+Floor Area Ratio (FAR). There are no minimum or maximum FAR requirements for development in commercial zones.
+
+B.
+
+Entrances.
+
+1.
+
+A minimum of one entrance per building, or tenant space within a building without internal building access, must be visible and accessible from a public street.
+
+2.
+
+A required entrance must be within one foot above or below the grade of the adjacent sidewalk.
+
+3.
+
+A required building entrance must be at an angle that is no more than 45 degrees from the street that it faces.
+
+4.
+
+A required building entrance must be covered, recessed, or treated with a permanent architectural feature that provides weather protection for pedestrians.
+The required weather protection must be at least as wide as the entrance, a maximum of six feet above the top of the entrance, and a minimum of three feet in depth.
+The required weather protection may project into the minimum front setback.
+
+C.
+
+Windows. Building facades facing public or private streets when located within 35 feet of the street-facing property line must include a minimum window area as provided in Table 18.320.3.
+
+Table 18.320.3 Minimum Window Area  Table 18.320.3 Minimum Window Area  Table 18.320.3 Minimum Window Area
+Story                               Use                                 Minimum Window Area
+First Story                         Nonresidential                      50% of facade
+First Story                         Residential                         30% of facade
+Upper Stories                       Nonresidential                      30% of facade
+Upper Stories                       Residential                         20% of facade (not applicable to stories with sloped roofs or dormers)
+
+D.
+
+Building height.
+
+1.
+
+The minimum and maximum building height for each zone is provided in Table 18.320.4.
+
+2.
+
+In all zones, the facade facing a public or private street must include a first story with a minimum height of 12 feet and maximum height of 25 feet.
+Where the minimum height is 25 feet in Table 18.320.4, the building must provide a minimum of two stories.
+
+Table 18.320.4 Height by Zone  Table 18.320.4 Height by Zone  Table 18.320.4 Height by Zone      Table 18.320.4 Height by Zone  Table 18.320.4 Height by Zone
+Zone                           Development or Use             Minimum Building Height (in feet)  Minimum Stories Required       Maximum Building Height (in feet)
+COM                            Nonresidential                 12                                 1                              45
+COM                            Mixed-use                      25                                 2                              100
+MUE                            Nonresidential                 12                                 1                              75
+MUE                            Mixed-use                      25                                 2                              100
+MUC                            Any                            12                                 1                              185
+MUR                            Residential                    12                                 1                              60
+MUR                            Mixed-use                      25                                 2                              60
+
+E.
+
+Roofs. Roofs must have a minimum solar reflectance index of at least 64.
+Any roof area not meeting this standard must be constructed as an ecoroof, except where being used for mechanical equipment, stairwells, solar arrays, maintenance access, rooftop parking, rooftop decks, skylights, or mechanical equipment.
+
+F.
+
+Building projections. Building projections are allowed as follows:
+
+1.
+
+Architectural elements such as eaves, cornices, and bay windows may project a maximum one foot into the minimum building setback as shown in Figure 18.320.1.
+
+2.
+
+Balconies may project into the minimum building setback and public right-of-way as shown in Figure 18.320.1.
+Balconies may project a maximum of 4 feet into the right-of-way.
+Balconies that project into the right-of-way must have a minimum vertical clearance of 10 feet from sidewalk grade and are subject to approval by the city engineer.
+
+3.
+
+Weather protection elements, such as canopies or awnings, may project into the right-of-way a maximum of 6 feet or the minimum sidewalk width along the building frontage, whichever is less.
+Elements that project into the right-of-way must have a minimum vertical clearance of 8 feet from sidewalk grade and are subject to approval by the city engineer.
+
+Figure 18.320.1 Building Projection Standards
+
+G.
+
+Facade variation. All street-facing facades more than 50 feet in length that are located within 35 feet of a street property line must provide at least one element from the following list.
+Elements must be repeated or distributed along the length of the facade so that there is no more than 40 feet between elements.
+
+1.
+
+A change in surface or siding material, color, or pattern; or
+
+2.
+
+A wall projection or recession that is a minimum of six feet in width and two feet in depth for a minimum of half the height of the facade.
+
+(Ord. 18-28 §1; Ord. 20-01 §1; Ord. No. 24-05, 4/23/2024)
+

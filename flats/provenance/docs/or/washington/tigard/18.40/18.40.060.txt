@@ -1,0 +1,25 @@
+§ 18.40.060. Lot Width, Lot Frontage, and Segmented Lot Lines.
+
+A.
+
+Lot width is measured from the front lot line as shown in the figure below.
+
+Figure 18.40.10 Lot Width
+
+B.
+
+Lot frontage is measured along the front lot line as shown in the figure below.
+
+Figure 18.40.11 Lot Frontage
+
+C.
+
+Segmented lot lines include one or more lateral changes in direction.
+A lateral change is measured by drawing a hypothetical straight line between opposing lot corners and measuring the horizontal distance between the hypothetical straight line and the furthest extent of the actual lot line perpendicular from the hypothetical straight line.
+Cumulative lateral changes are measured by repeating this process for each lateral change in direction and summing all the distances as shown in the figure below.
+In the case of flag lots, the pole portion of the lot is not included in the measurement of cumulative lateral changes; cumulative lateral changes are measured only between the opposing corners of the flag portion of the lot.
+
+Figure 18.40.12 Segmented Lot Lines
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1)
+

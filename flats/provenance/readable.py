@@ -41,7 +41,7 @@ from typing import Iterable, Mapping, Sequence
 
 #: The name of the cleaning, stored with every cut so a later change to it is
 #: a re-cut and not a silent edit.
-VERSION = "readable/2"
+VERSION = "readable/3"
 
 #: A printed line at least this long ran to the margin, so the sentence on it
 #: carries on to the next line. Tualatin's prose lines run 80-103 characters.
@@ -63,6 +63,7 @@ _OPENS = re.compile(
       | \(\s*[a-zA-Z]{1,5}\s*\)         # (a) (iv) (A)
       | [0-9]{1,3}[.)]\s                # 1.  1)
       | [a-zA-Z][.)]\s                  # a.  A)
+      | (?:ii|iii|iv|vi|vii|viii|ix|xi|xii)[.)]\s  # ii.  iv. -- a lower-case roman item
       | \[\s*[0-9A-Za-z]{1,3}\s*\]\s*$  # [2] -- a web print's note marker, alone
       | [•●▪◦–—*-]\s   # bullets and dashes
       | (?:Table|Figure|Map|Exhibit|Chapter|Section|Sections)\b
@@ -70,6 +71,11 @@ _OPENS = re.compile(
     )""",
     re.VERBOSE,
 )
+
+#: An enumerator alone on its line ("a.", "2."), its text on the next. Only
+#: in a web print: in a PDF a line can end a sentence on a number ("through a
+#: central angle of" / "14.").
+_ALONE = re.compile(r"^\s*(?:[0-9]{1,3}|[a-zA-Z]|ii|iii|iv|vi|vii|viii|ix)[.)]\s*$")
 
 #: The end of a sentence: a stop, then space, then a capital or an opening
 #: bracket or quote.
@@ -215,32 +221,77 @@ def _broken_word(upper: str, lower: str) -> tuple[str, str] | None:
     return head.group(1), tail.group(1)
 
 
-def _carries_on(upper: str, lower: str, heading: re.Pattern[str] | None) -> bool:
+def _carries_on(
+    upper: str, lower: str, heading: re.Pattern[str] | None, *, margin: bool = True
+) -> bool:
     """Whether ``lower`` is the rest of the sentence ``upper`` started.
 
     Two signs, either enough: ``upper`` ran to the margin, or ``lower`` opens
     in lower case after a line that did not end its sentence -- a table cell
     wrapping ("May be reduced to 30 feet if on" / "a cul-de-sac."). Never when
     ``lower`` opens a block of its own.
+
+    ``margin`` is whether the print wraps its lines at a margin at all. A PDF
+    does; a web print does not -- each of its lines is a whole paragraph or a
+    whole table cell, however long -- so there a long line is no sign that the
+    next one carries it on (West Linn, Gladstone and Fairview table cells
+    joined onto the cell above).
     """
     if _OPENS.match(lower) or (heading is not None and heading.match(lower)):
         return False
+    if not margin and _ALONE.match(lower):
+        return False
     upper = upper.rstrip()
     ended = re.search(r"[.:;]$", upper) is not None
-    if _table_row(upper) and _table_row(lower):
+    upper_row, lower_row = _table_row(upper), _table_row(lower)
+    if upper_row and lower_row:
         # Two rows of one space-set table. The second opening in lower case is
         # a row label ("when abutting a park ... 0 0 10" over "when abutting a
         # non-residential zoning district ... 0 0 0", Troutdale 3.230), not
         # the rest of a cell.
         return False
+    if lower_row and len(upper) < WIDTH:
+        # A row under a short line is a row of its own: the line above is a
+        # label the rows below it share ("without alley access" over "to the
+        # garage door of units with a driveway ... 20 20", Troutdale 3.230),
+        # not the start of this row's label.
+        return False
+    if (
+        upper_row
+        and _indent(lower) <= _indent(upper) + 4
+        and _cells(upper) >= 3
+        and len(_last_cell(upper).split()) <= 3
+    ):
+        # A line set where the label of a row of values starts is the next
+        # row's label ("from street" under "... driveway   20   20"), not the
+        # rest of the last cell -- which wraps under its cell ("$15.00" over
+        # "per lot plus actual City Costs"). Prose spaced once ("12.2.16
+        # "Limited Land Use ..." or "co   -location of") is not a row of values.
+        return False
     if re.match(r"\s*[a-z]", lower) and not ended:
         return True
-    if _table_row(upper) or _table_row(lower):
+    if upper_row or lower_row or not margin:
         # A row of a space-set table runs to the margin because its columns
         # do, not because its sentence does: joining rows makes one line of a
         # whole table.
         return False
     return len(upper) >= WIDTH and not (ended and re.match(r"\s*[A-Z(]", lower))
+
+
+def _indent(line: str) -> int:
+    return len(line) - len(line.lstrip())
+
+
+def _cells(row: str) -> int:
+    """How many cells a space-set row has, its first word passed over as
+    :func:`_table_row` does."""
+    body = re.sub(r"^\S+\s+", "", row.strip(), count=1)
+    return len(re.split(r" {3,}", body))
+
+
+def _last_cell(row: str) -> str:
+    """A space-set row's last cell: what follows its last column gap."""
+    return re.split(r" {3,}", row.strip())[-1]
 
 
 #: Two cells of a row set apart by spaces, as an extraction prints columns.
@@ -294,13 +345,15 @@ def clean(
     heading: re.Pattern[str] | None = None,
     words: Mapping[str, int] | None = None,
     head: re.Pattern[str] | None = None,
+    margin: bool = True,
 ) -> Readable:
     """``lines`` of an extraction as readable text.
 
     ``breaks`` are the lines (1-based) a printed page starts on; one past the
     last line counts when the slice ends where its book does. ``heading`` is
     the jurisdiction's section heading, which always opens a line. ``head``
-    is a running header printed on a page's own first line.
+    is a running header printed on a page's own first line. ``margin`` is
+    False for a print that does not wrap its lines at a margin (a web print).
     """
     words = words or {}
     page_starts = sorted(set(breaks))
@@ -336,15 +389,15 @@ def clean(
                 # The margin's hyphen goes; the word's own ("single-family")
                 # stays. The code's own spelling decides which this is.
                 whole, hyphened = f"{head}{tail}".lower(), f"{head}-{tail}".lower()
-                margin = words.get(whole, 0) > words.get(hyphened, 0)
+                hyphen_at_margin = words.get(whole, 0) > words.get(hyphened, 0)
                 while last and last[-1][0].isspace():
                     last.pop()
-                if margin:
+                if hyphen_at_margin:
                     last.pop()  # the hyphen
                 lead = len(text) - len(text.lstrip())
                 last.extend(chars[lead:])
                 joined = True
-            elif _carries_on(upper, text, heading):
+            elif _carries_on(upper, text, heading, margin=margin):
                 while last and last[-1][0].isspace():
                     last.pop()
                 last.append((" ", None))

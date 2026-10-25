@@ -22,7 +22,8 @@ Additional Standards
 a. Heavy manufacturing, assembly, and processing of raw materials
 CU
 Subject to special standards for certain uses, see FMC 19.85.070
-b. Light manufacture (e.g., electronic equipment, printing, bindery, furniture, and similar goods) P
+b. Light manufacture (e.g., electronic equipment, printing, bindery, furniture, and similar goods)
+P
 Subject to special standards for certain uses, see FMC 19.85.070
 c. Warehousing and distribution
 P
@@ -38,21 +39,28 @@ P
 See FMC 19.85.020(B)
 2. Residential
 a. One caretaker unit shall be permitted for each development, subject to the standards in FMC 19.85.070(B).
-Other residential uses are not permitted, except that residences existing prior to the effective date of the ordinance codified in this section may continue, subject to the requirements for nonconforming uses and developments P
+Other residential uses are not permitted, except that residences existing prior to the effective date of the ordinance codified in this section may continue, subject to the requirements for nonconforming uses and developments
+P
 Subject to special standards for certain uses, see FMC 19.85.070
 3. Commercial
-a. Offices and other commercial uses (e.g., administrative offices, wholesale of goods produced on location, and similar uses) CU
+a. Offices and other commercial uses (e.g., administrative offices, wholesale of goods produced on location, and similar uses)
+CU
 Permitted when integral to a primary preexisting or concurrently established industrial use
-b. Retail and commercial service uses up to 5,000 square feet in gross floor area (e.g., convenience market, small restaurant, secondary use for wholesaler, similar uses) CU
+b. Retail and commercial service uses up to 5,000 square feet in gross floor area (e.g., convenience market, small restaurant, secondary use for wholesaler, similar uses)
+CU
 4. Community Services/Parks Uses
-a. Government facilities (e.g., public safety, utilities, school district bus facilities, public works yards, transit and transportation, and similar facilities where the public is generally not received) CU
+a. Government facilities (e.g., public safety, utilities, school district bus facilities, public works yards, transit and transportation, and similar facilities where the public is generally not received)
+CU
 Subject to special standards for certain uses, see FMC 19.85.070
-b. Private utilities (e.g., natural gas, electricity, telephone, cable, and similar facilities) CU
+b. Private utilities (e.g., natural gas, electricity, telephone, cable, and similar facilities)
+CU
 Subject to special standards for certain uses, see FMC 19.85.070
 c. Passive open space (e.g., natural areas)
 CU
-d. Special district facilities (e.g., irrigation district, and similar facilities) CU
-e. Vocational schools co-located with parent industry or sponsoring organization CU
+d. Special district facilities (e.g., irrigation district, and similar facilities)
+CU
+e. Vocational schools co-located with parent industry or sponsoring organization
+CU
 f. Uses similar to those listed above
 CU
 See FMC 19.85.020(B)
@@ -67,7 +75,8 @@ d. Ornamental metal works
 P
 e. Welding or sheet metal shop and other manufacturing of a similar nature
 P
-f. Any other uses, including similar to those listed in FMC 19.85.080, as may be determined by the city to pose a high potential risk to the ground and surface water resources P
+f. Any other uses, including similar to those listed in FMC 19.85.080, as may be determined by the city to pose a high potential risk to the ground and surface water resources
+P
 g. All uses occurring within the city's groundwater protection area
 P
 6. Other

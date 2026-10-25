@@ -169,7 +169,8 @@ def test_a_quote_that_straddles_a_notes_block_takes_both_regions(
     taking only the first line's region would drop half the evidence.
 
     Happy Valley's party-wall zero is the case in hand -- it quotes the row,
-    the cell, and note 5 that explains what the zero is for.
+    the cell, and note 5 that explains what the zero is for (line 346 of the
+    section file 16.22.050 since the cut, 2026-10-24).
     """
     straddling = next(
         r
@@ -178,7 +179,7 @@ def test_a_quote_that_straddles_a_notes_block_takes_both_regions(
         and r.field.startswith("setback_side_ft [")
         and r.zone == "SFA"
     )
-    assert "L1022" in straddling.quote
+    assert "L346" in straddling.quote
     assert straddling.governing
 
 

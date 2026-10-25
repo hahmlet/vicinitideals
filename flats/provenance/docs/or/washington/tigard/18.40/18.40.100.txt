@@ -1,0 +1,9 @@
+§ 18.40.100. Floor Area.
+
+The total floor area of a building or structure is the sum of the floor area of all stories in the building.
+The floor area of a story of a building or structure is measured from the outside of exterior walls, and includes all stairwells, ramps, shafts, chases, and the area devoted to garages and structured parking.
+
+Figure 18.40.20 Floor Area of a Building
+
+(Ord. 18-23 §2; Ord. 19-09 §1)
+

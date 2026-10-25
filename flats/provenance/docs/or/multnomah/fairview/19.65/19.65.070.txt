@@ -38,40 +38,48 @@ Residential
 Nonresidential
 B1
 Street Level Commercial Space. A vertical mixed use development that provides housing units above a ground floor commercial space.
-The ground floor commercial space must occupy a minimum of 50 percent of the width of the total street frontage of the site. 10 ft
+The ground floor commercial space must occupy a minimum of 50 percent of the width of the total street frontage of the site.
+10 ft
 10%
 20%
 B2
 Small-Scale Commercial Spaces. A vertical mixed use development that provides housing units above a ground floor commercial space.
-The ground floor commercial space must include a minimum of three tenant spaces that are each no greater than 800 square feet in floor area. 10 ft
+The ground floor commercial space must include a minimum of three tenant spaces that are each no greater than 800 square feet in floor area.
+10 ft
 None
 20%
 B3
-Affordable Housing. A development that includes affordable housing units meeting the following standards: 10 ft
+Affordable Housing. A development that includes affordable housing units meeting the following standards:
+10 ft
 20%
 None
 B3
-a. Ten percent of the total number of dwelling units must be affordable to those earning no more than 60 percent of the area median family income; or 10 ft
+a. Ten percent of the total number of dwelling units must be affordable to those earning no more than 60 percent of the area median family income; or
+10 ft
 20%
 None
 B3
-b. Twenty percent of the total number of dwelling units in the new building or the alteration must be affordable to those earning no more than 80 percent of the area median family income; and 10 ft
+b. Twenty percent of the total number of dwelling units in the new building or the alteration must be affordable to those earning no more than 80 percent of the area median family income; and
+10 ft
 20%
 None
 B3
 c. The property owner must execute a covenant or development agreement with the city that must ensure that the affordable dwelling units will remain affordable to households meeting the income restriction for a minimum of 30 years.
-The covenant or agreement must be provided prior to issuance of the building permit. 10 ft
+The covenant or agreement must be provided prior to issuance of the building permit.
+10 ft
 20%
 None
 B4
-High-Quality Design. A development that incorporates design elements identified in Table 19.65.090(B)(2) which total five points in addition to the points needed to meet the minimum requirement. 10 ft
+High-Quality Design. A development that incorporates design elements identified in Table 19.65.090(B)(2) which total five points in addition to the points needed to meet the minimum requirement.
+10 ft
 10%
 20%
 B5
 Additional Open Space. A development that incorporates a pedestrian access plaza or outdoor recreation area.
 The plaza must meet the minimum standards of design element P1 in Table 19.65.090(B)(2).
 The outdoor recreation area must meet the standards of design element P2 in Table 19.65.090(B)(2).
-If this bonus is used in combination with bonus B4, then these design elements may not count toward the minimum points needed to be eligible for bonus B4. 10 ft
+If this bonus is used in combination with bonus B4, then these design elements may not count toward the minimum points needed to be eligible for bonus B4.
+10 ft
 10%
 20%
 B6

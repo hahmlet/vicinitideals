@@ -1,0 +1,115 @@
+§ 19.609.3. Bicycle Parking Quantity Modification and Required Parking Determinations.
+
+Subsection 19.609.3 allows for the modification of minimum bicycle parking quantities from Table 19.609.2 as well as the determination of minimum bicycle parking requirements when a proposed use is not listed in Table 19.609.2.
+
+A.
+
+Applicability
+
+The procedures of Subsection 19.609.3 will apply in the following situations:
+
+1.
+
+If the proposed use is not listed in Table 19.609.2 and the quantity requirements for a similar use, as determined by the Planning Manager, cannot be applied.
+
+2.
+
+If the applicant seeks a modification from the minimum required quantities as calculated per Table 19.609.2.
+
+B.
+
+Application
+
+Determination or modification of bicycle parking ratios in situations listed above shall be reviewed as a Type I land use decision, per Section 19.1004 Type I Review.
+The application for a determination or modification must include the following:
+
+1.
+
+Describe the proposed uses of the site, including information about the size and types of the uses on site, and information about site users (employees, customers, residents, etc.).
+
+2.
+
+Identify factors specific to the proposed use and/or site, such as the proximity of bicycle infrastructure, availability of shared bicycle parking, and/or special characteristics of the customer, client, employee, or resident population that affect bicycle parking demand.
+
+3.
+
+Provide data and analysis specified in Subsection 19.609.3.B.3 to support the determination or modification request.
+The Planning Manager may waive requirements of Subsection 19.609.2.B.3 if the information is not readily available or relevant.
+
+a.
+
+Analyze bicycle parking demand information from professional literature that is pertinent to the proposed development.
+Such information may include data or literature from cycling organizations, transportation planning associations, or other relevant sources.
+
+b.
+
+Present bicycle parking quantity and utilization data from existing developments that are similar to the proposed development.
+The information about the existing development and its bicycle parking demand must include enough detail to evaluate similarities and differences between the existing development and the proposed development.
+
+c.
+
+Identify factors specific to the site, such as the availability of secure bicycle parking facilities or the integration of bicycle infrastructure in the vicinity.
+
+4.
+
+Propose a minimum bicycle parking ratio.
+For phased projects or projects where the tenant mix is unknown or subject to change, the applicant may propose a range (low and high number of bicycle parking spaces) for each development phase and a minimum number of bicycle parking spaces to be provided at the completion of the project.
+
+5.
+
+Address the approval criteria in Subsection 19.609.3.C.
+
+C.
+
+Approval Criteria
+
+The Planning Manager will consider the following criteria in deciding whether to approve the determination or modification.
+The Planning Manager, based on the applicant's materials and other data the Planning Manager deems relevant, will set the minimum bicycle parking requirement.
+Conditions of approval may be placed on the decision to ensure compliance with the bicycle parking determination.
+
+1.
+
+All modifications and determinations must demonstrate that the proposed bicycle parking quantities are reasonable based on existing bicycle parking demand for similar uses in other locations, bicycle parking requirements for the use in other Portland metropolitan area jurisdictions, and professional literature about the bicycle parking demands of the proposed use.
+
+2.
+
+The requested reduction is the smallest reduction needed based on the specific circumstances of the use and/or site or is otherwise consistent with City or Comprehensive Plan policy.
+
+3.
+
+In addition to the criteria in Subsection 19.609.2.C.1 and Subsection 19.609.2.C.2, requests for modifications to decrease the amount of minimum required bicycle parking must meet one or more of the following criteria:
+
+a.
+
+Alternative and Climate-Friendly Transportation Amenities
+
+The development includes other amenities that promote alternative transportation methods, such as secure bicycle sharing programs, on-site electric vehicle charging stations, or carpooling initiatives.
+
+b.
+
+Specific Demographic Considerations
+
+The targeted demographic for the development has inherent characteristics that make them unlikely to cycle or start cycling.
+For example, if the development is primarily frequented by or developed for older residents or individuals with disabilities, who may have limited mobility options, the need for extensive bicycle parking could be reduced.
+
+c.
+
+Comprehensive Bicycle Infrastructure Plan
+
+The applicant can propose a comprehensive bicycle infrastructure plan that outlines future measures to enhance bicycle accessibility and promote cycling within the development or the surrounding area.
+This plan could include commitments to improve signage, create bike-sharing programs, or establish connections to existing cycling networks.
+By demonstrating a long-term commitment to bicycle infrastructure, the applicant may be granted a reduction in current parking requirements.
+
+d.
+
+Availability of Future Expansion Space
+
+If the applicant can demonstrate that there is available space within the development that can be easily converted to additional bicycle parking in the future, they could be allowed a reduction in the current requirement.
+
+e.
+
+Proximity to Existing Bicycle Infrastructure
+
+The development is located in close proximity to well-established bicycle parking, such as ample existing short-term bicycle parking, or previously established shared long-term parking in a multitenant space/development.
+This assumes that users of the new facility can easily access existing parking and may not need additional on-site parking.
+

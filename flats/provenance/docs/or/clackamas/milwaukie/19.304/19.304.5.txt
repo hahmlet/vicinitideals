@@ -1,0 +1,240 @@
+§ 19.304.5. Detailed Development Standards.
+
+The following detailed development standards describe additional allowances, Restrictions, and exemptions related to the development standards of Table 19.304.4.
+
+A.
+
+Floor Area Ratios
+
+1.
+
+Intent
+
+The floor area ratio (FAR) is a tool for regulating the intensity of development.
+Minimum floor area ratios help to ensure that the intensity of development is controlled and that more intense forms are confined to appropriate areas of the downtown.
+In some cases, FAR densities are provided for provision of a public benefit or amenity to the community.
+
+2.
+
+Standards
+
+a.
+
+The minimum floor area ratios in Subsection 19.304.4.B.1 apply to all nonresidential building development.
+Stand-alone residential densities are controlled by minimum density requirements.
+
+b.
+
+Required minimum floor area ratios are calculated on a project-by-project basis and may include multiple contiguous parcels.
+In mixed-use developments, residential floor space will be included in the calculations of floor area ratio to determine conformance with minimum FARs.
+
+c.
+
+If a project is to be developed in phases, the required FAR must be met for the land area in the completed phase(s), without consideration of the land area devoted to future phases.
+
+d.
+
+FAR bonuses are available for provision of structured parking per SubSection 19.611.4.
+
+3.
+
+Exemptions
+
+The following are exempt from the minimum floor area ratio requirement.
+
+a.
+
+Parking facilities.
+
+b.
+
+Public parks and plazas.
+
+B.
+
+Building Height
+
+1.
+
+Intent
+
+Minimum and maximum building height standards serve several purposes.
+They promote a compatible building scale and relationship of one structure to another.
+A minimum Building height is established to ensure that the traditional building scale for the downtown area is maintained.
+
+2.
+
+Standards
+
+a.
+
+The minimum building height standards apply to new commercial, office, residential, and mixed-use buildings.
+
+b.
+
+Minimum building heights are specified in Table 19.304.4.
+The minimum building height of 25 ft must be met along all street frontages for a depth of at least 25 ft from the front of the building.
+
+c.
+
+Base maximum building heights are specified in Figure 19.304-4.
+Height bonuses are available for buildings that meet the standards of Subsection 19.304.5.B.3.
+
+3.
+
+Height Bonuses
+
+To incentivize the provision of additional public amenities or benefits beyond those required by the baseline standards, height bonuses are available for buildings that include desired public amenities or components; increase downtown vibrancy; and/or help meet sustainability goals.
+
+A building can utilize up to 2 of the development incentive bonuses of this subsection, for a total of 24 ft of additional height above the height maximum specified in Figure 19.304-4.
+
+Height bonuses cannot be applied within 50 ft of the moderate density residential (R-MD) zone.
+
+a.
+
+Residential
+
+New buildings that devote at least one story or 25% of the gross floor area to residential uses are permitted an additional 12 ft of building height.
+The residential height bonus cannot be used in combination with the lodging height bonus.
+
+b.
+
+Lodging
+
+New buildings that devote at least one story or 25% of the gross floor area to lodging uses are permitted an additional 12 ft of building height.
+The lodging height bonus cannot be used in combination with the residential height bonus.
+
+c.
+
+Green Building
+
+Project proposals that receive approvals and certification as identified in Section 19.510 are permitted an additional 12 ft of building height.
+
+d.
+
+Building Height Variance
+
+Additional building height may be approved through Type III variance review, per Subsection 19.911.6 Building Height Variance.
+
+4.
+
+Exemptions
+
+The following are exempt from the minimum building height standards.
+
+a.
+
+Additions to existing buildings.
+
+b.
+
+Accessory structures.
+
+c.
+
+Buildings with less than 1,000 sq ft of floor area.
+
+C.
+
+Street Setbacks
+
+1.
+
+Intent
+
+Buildings are allowed and encouraged to build up to the street right-of-way in the DMU Zone to ensure that the ground floors of buildings engage the street right-of-way.
+
+2.
+
+Standards
+
+a.
+
+No minimum street setbacks are required.
+
+b.
+
+Minimum setbacks are used in combination with the Site Frontage design element in Subsection 19.508.4.A.
+
+3.
+
+Exemption
+
+The DMU Zone is exempt from the clear vision area requirements of Chapter 12.24 of the Milwaukie Municipal Code, with the exception of driveway and street intersections with McLoughlin Boulevard.
+
+D.
+
+Off-Street Parking
+
+1.
+
+Intent
+
+The desired character for the DMU Zone, particularly along Main Street, is defined by a continuous façade of buildings close to the street, with adjacent on-street parking.
+
+2.
+
+Standards
+
+a.
+
+If off-street parking is provided for residential or nonresidential uses, the parking maximums in Table 19.605.1 will apply.
+All other applicable standards of Chapter 19.600 will also apply.
+
+b.
+
+Off-street surface parking lots (including curb cuts) must not be located within 50 ft of the Main Street right-of-way.
+Off-street surface parking lots approved prior to October 31, 2015, the effective date of Ordinance #2106, are exempt from this prohibition.
+This exemption applies only to the property owner on file with the Clackamas County Assessor as of October 31, 2015, the effective date of Ordinance #2106, and is dissolved upon transfer of ownership.
+
+The Planning Commission may permit off-street parking lots and curb cuts within 50 ft of the Main Street right-of-way only upon finding, through Type III Variance review pursuant to Section 19.911, that:
+
+(1)
+
+The overall project meets the intent of providing a continuous façade of buildings close to Main Street.
+
+(2)
+
+The off-street parking area or curb cut is visually screened from view from Main Street.
+
+(3)
+
+The community need for the off-street parking area or curb cut within 50 ft of Main Street outweighs the need to provide a continuous façade of buildings in that area.
+
+c.
+
+Off-street parking must not be located between a building and the street-facing lot line.
+
+Figure 19.304.5.D.2 Off-Street Parking Standards
+
+E.
+
+Residential Density
+
+1.
+
+Intent
+
+There is a minimal amount of land available for new housing development within the downtown zones.
+Minimum densities are applied to residential development in the DMU Zone to assure efficient use of land at densities that support transit use and nearby Downtown businesses.
+
+2.
+
+Standards
+
+a.
+
+Minimum densities for townhouses and live/work units are 25 units per acre.
+There is no maximum residential density for townhouses or live/work units.
+
+b.
+
+Minimum densities for stand-alone multifamily dwellings and senior/retirement housing in the DMU Zone are 30 units per acre.
+Maximum residential densities are effectively controlled by height limits.
+
+3.
+
+Exemption
+
+There are no minimum density requirements when residential units are developed as part of a mixed-use building.
+

@@ -20,7 +20,7 @@
 # disposition binds to the words, not to the line.
 notes:
   # --- Table 19.301.4, R-MD ------------------------------------------
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L280"
+  - quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L195"
     digest: "153def8cd904"
     state: dismissed
     reason: >-
@@ -29,7 +29,7 @@ notes:
       Declining it costs a corner lot in the 3,000-3,500 range called
       ineligible for the split-plat route; it cannot certify one that is not
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L281"
+  - quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L196"
     digest: "1e379b18a919"
     state: dismissed
     reason: >-
@@ -38,7 +38,7 @@ notes:
       the housing type is not the one being placed, and the vintage rule only
       exempts older lots from a standard
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L282"
+  - quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L197"
     digest: "4ed7c068ec63"
     state: encoded
     encoded_as: "quadplex_allowed variant, when [unit_lots, flag_lot], false"
@@ -47,7 +47,7 @@ notes:
       a single lot is a quadplex and unaffected; split onto four lots it is
       townhouses, and on a flag lot that path closes
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
+  - quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L198-L199"
     digest: "f78ad643b37f"
     state: encoded
     encoded_as: >-
@@ -68,7 +68,7 @@ notes:
   #
   # Notes 1 and 2 print the same sentences as 19.301.4's notes 2 and 4 and are
   # ruled by those digests. What follows is what only R-HD prints.
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L511"
+  - quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L50"
     digest: "938212bc2d9d"
     state: dismissed
     reason: >-
@@ -76,7 +76,7 @@ notes:
       density purposes. It changes the arithmetic for a housing type this
       screen does not place, and in the direction that fits more of it
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L512"
+  - quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L51"
     digest: "e12f4a926291"
     state: encoded
     encoded_as: "setback_street_side_ft variant, when [unit_lots], 5 ft"
@@ -90,7 +90,7 @@ notes:
   # One reason, said twice: these are GMU, NMU and SMU standards, and the only
   # thing joining them to an R-HD side yard is how wide a block's region is
   # read.
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1071"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L135"
     digest: "37167cf5ee63"
     state: dismissed
     reason: >-
@@ -99,8 +99,8 @@ notes:
       zone, and the R-HD value it reaches is read from Table 19.302.4 several
       pages earlier
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1072"
-    digest: "acdaf14a0a9d"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L136"
+    digest: "1017a6aa8399"
     state: dismissed
     reason: >-
       an edge treatment mapped in Figure 19.303.4.C.2.b, applying to the
@@ -123,7 +123,7 @@ notes:
   # maximum of 4 in R-MD. The pod is four attached units. It is exactly at
   # that limit, not over it, and a fifth would not be placeable in either
   # zone on the townhouse path.
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L921"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L263"
     digest: "d78fa7eb669e"
     state: dismissed
     reason: >-
@@ -132,7 +132,7 @@ notes:
       and the High Density Zone at 4, and the pod is 4, so the relief this
       note grants is relief the screen has no use for
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L923"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L266"
     digest: "91c3a69264e6"
     state: dismissed
     reason: >-
@@ -140,14 +140,14 @@ notes:
       conditional use review in the NMU zone. No NMU zone is encoded, and the
       pod is not a vertical mixed-use building
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L925"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L268"
     digest: "9978199cdba9"
     state: dismissed
     reason: >-
       note 3 caps nonresidential uses in the NMU zone at 10,000 sq ft. No NMU
       zone is encoded and the pod is residential
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L927"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L271"
     digest: "4712ab671432"
     state: dismissed
     reason: >-
@@ -155,14 +155,14 @@ notes:
       nonresidential cap of note 3. A single named lot, a nonresidential use,
       and a zone this layer does not encode
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L929"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L274"
     digest: "92169e06e893"
     state: dismissed
     reason: >-
       note 5 requires vehicle retail sales in the GMU zone to be conducted
       indoors. Not a residential use and not an encoded zone
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L931"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L276"
     digest: "4843487e6d01"
     state: dismissed
     reason: >-
@@ -170,15 +170,15 @@ notes:
       zones to be conducted indoors. Not a residential use and not an encoded
       zone
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L933"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L278"
     digest: "170f39a1c4f3"
     state: dismissed
     reason: >-
       note 7 limits day care and child care uses to 5,000 sq ft. Not the use
       being placed
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L935"
-    digest: "61372e1c8420"
+  - quote: "or/clackamas/milwaukie/19.303/19.303.2.txt#L280"
+    digest: "0567379ff8d1"
     state: dismissed
     reason: >-
       note 8 limits manufacturing and production uses to 5,000 sq ft on the
@@ -193,7 +193,7 @@ notes:
   # neither, so the only thing they reach is the width of their own block's
   # region. Ruled rather than left unread because an unread note is a claim
   # that nobody has looked, and somebody has.
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3809"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L366"
     digest: "f95296254a7d"
     state: dismissed
     reason: >-
@@ -203,22 +203,22 @@ notes:
       zone is encoded, and the note widens what may be built rather than
       narrowing it
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3812"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L371"
     digest: "4c9baa0192c1"
     state: dismissed
     reason: >-
       note 2 sets the siting criteria for adult entertainment businesses.
       Not the use being placed
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3819"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L378"
     digest: "230419440ff3"
     state: dismissed
     reason: >-
       note 3 requires trade school activities to be conducted indoors. Not
       the use being placed
 
-  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3822"
-    digest: "8685e08aea37"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L381"
+    digest: "3830bba1eac0"
     state: dismissed
     reason: >-
       note 4 grandfathers waste management uses in existence before 31
@@ -232,7 +232,7 @@ notes:
   # these two footnotes are between them the whole of Milwaukie's vehicle
   # parking MINIMUM for middle housing -- which is why one of them is encoded
   # and why the pair had to be ruled before the cap above them could be.
-  - quote: "or/clackamas/milwaukie/19.600.parking.txt#L292"
+  - quote: "or/clackamas/milwaukie/19.605/19.605.1.txt#L83"
     digest: "72796b908751"
     state: encoded
     encoded_as: "parking_min_per_unit = 0.5 at the base of the layer's defaults"
@@ -249,8 +249,8 @@ notes:
       publishes a table with no minimum column, and a quotable zero cannot be
       made out of a missing column
 
-  - quote: "or/clackamas/milwaukie/19.600.parking.txt#L293"
-    digest: "775e266e954e"
+  - quote: "or/clackamas/milwaukie/19.605/19.605.1.txt#L84-L85"
+    digest: "778d33bee621"
     state: dismissed
     reason: >-
       note 2 asks 0.5 spaces per unit of "townhouse developments of 8 or more
@@ -269,42 +269,42 @@ notes:
   # off a water feature. FLATS takes that ground from quadfit's Milwaukie
   # WQR map (resource_overlays.milwaukie_wqr), not from this table, and none
   # of the six says anything about whether a greenway use is conditional.
-  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2155"
+  - quote: "or/clackamas/milwaukie/19.402/19.402.15.txt#L18"
     digest: "fc5dec2357eb"
     state: dismissed
     reason: >-
       a note to Table 19.402.15 (vegetated corridor width off a protected
       water feature); it governs no value FLATS encodes -- the Willamette
       Greenway use rule in 19.401 sits in its region only by the sweep
-  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2156"
+  - quote: "or/clackamas/milwaukie/19.402/19.402.15.txt#L19-L20"
     digest: "3043c9e9d2fe"
     state: dismissed
     reason: >-
       a note to Table 19.402.15 (vegetated corridor width off a protected
       water feature); it governs no value FLATS encodes -- the Willamette
       Greenway use rule in 19.401 sits in its region only by the sweep
-  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2157"
+  - quote: "or/clackamas/milwaukie/19.402/19.402.15.txt#L21"
     digest: "6087788a6acb"
     state: dismissed
     reason: >-
       a note to Table 19.402.15 (vegetated corridor width off a protected
       water feature); it governs no value FLATS encodes -- the Willamette
       Greenway use rule in 19.401 sits in its region only by the sweep
-  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2158"
+  - quote: "or/clackamas/milwaukie/19.402/19.402.15.txt#L22"
     digest: "c6d3c29b3c34"
     state: dismissed
     reason: >-
       a note to Table 19.402.15 (vegetated corridor width off a protected
       water feature); it governs no value FLATS encodes -- the Willamette
       Greenway use rule in 19.401 sits in its region only by the sweep
-  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2159"
+  - quote: "or/clackamas/milwaukie/19.402/19.402.15.txt#L23-L24"
     digest: "8685d4898c23"
     state: dismissed
     reason: >-
       a note to Table 19.402.15 (vegetated corridor width off a protected
       water feature); it governs no value FLATS encodes -- the Willamette
       Greenway use rule in 19.401 sits in its region only by the sweep
-  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2160"
+  - quote: "or/clackamas/milwaukie/19.402/19.402.15.txt#L25-L26"
     digest: "ee5156f1bbe4"
     state: dismissed
     reason: >-

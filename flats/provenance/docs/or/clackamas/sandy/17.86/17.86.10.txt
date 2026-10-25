@@ -1,0 +1,79 @@
+Sec. 17.86.10. - Minimum parkland dedication requirements.
+
+
+Parkland Dedication: Residential subdivisions and partitions, single-family or multi-family developments, and manufactured dwelling park developments are required to provide parkland to serve residents of those developments.
+Congregate multi-family housing development that provides services and/or facilities, as defined in Chapter 17.10 of the City's Municipal Code, are considered to be multi-family developments for the purpose of parkland dedication.
+Licensed adult congregate care living facilities, nursing homes, and all other residential care facilities that provide clients with individual beds and sleeping quarters, but in which all other care and services are communal and provided by facility employees, are exempt from parkland dedication.
+The dedication or provision of parks, open space, trails, and amenities shall be located in compliance with the 2022 Parks and Trails Master Plan Maps 8 and 14, dedicated pursuant to the formula in Subsection 17.86.10.B., and in compliance with the improvement standards in Section 17.86.20.
+The level of service standards as well as the park and trail level of service needs as identified in Chapter 4, Table 10, of the 2022 Parks and Trails Master Plan are specifically incorporated by this reference.
+A.
+
+The required parkland shall be dedicated as a condition of approval for the following:
+
+1.
+
+Single-family and duplex building permits;
+
+2.
+
+Tentative plat for a subdivision or partition;
+
+3.
+
+Design review for a multi-family development or manufactured dwelling park;
+
+4.
+
+Design review for a multi-family development accessory to commercial or industrial development; and,
+
+5.
+
+Replat or amendment of any site plan for multi-family development or manufactured dwelling park where dedication has not previously been made or where the density of the development involved will be increased.
+
+B.
+
+Calculation of Required Dedication. The required parkland acreage to be dedicated shall be based on the following formula:
+
+Required parkland dedication (acres) = (proposed dwelling units) x (persons/dwelling unit) x 0.0068 (per person park land dedication factor)
+
+1.
+
+Population Formula: The following table shall be used to determine the number of persons per unit to be used in calculating required parkland dedication:
+
+Type of Unit                  Total Persons Per Dwelling Unit
+Single family dwelling unit   3.0
+Duplex dwelling unit          3.0 *
+Standard multi-family unit    2.0
+Manufactured dwelling unit    2.0
+Congregate multi-family unit  1.5
+
+* The total persons per unit for the entire duplex (both units) would be six.
+
+The specific formula for the dedication of land will, therefore, be subject to periodic review and amendment.
+A fee-in-lieu under Section 17.86.40 shall be based on the number and type of dwelling units proposed at time of plat, but an additional fee in-lieu will be required and calculated on a per lot basis if any lots are constructed or converted to add additional dwelling units.
+For example, if an existing single family dwelling unit is converted into a duplex dwelling unit the existing single family dwelling unit shall receive a credit, but the new dwelling unit shall pay the difference in persons per dwelling unit.
+This would equate to one proposed dwelling unit multiplied by three additional persons multiplied by 0.0068 for the above example.
+
+2.
+
+Per Person Parkland Dedication Factor: The total parkland dedication requirement shall be 0.0068 of an acre per person based on the adopted standard of 6.8 acres of land per 1,000 of population per the 2022 Parks and Trails Master Plan. * This standard represents the citywide land-to-population ratio for city parks at 5.25 acres of land per 1,000 of population, and land for trails at 1.55 acres of land per 1,000 of population.
+
+C.
+
+Notwithstanding Subsection 17.86.10.A. above, when the amount of land to be dedicated is less than one quarter acre, or the level of service standards for mini parks in the 2022 Parks and Trails Master Plan have been met for the subject site, the applicant shall pay a fee in lieu of dedication as provided in Subsection 17.86.40.B., with the following exceptions:
+
+1.
+
+When the land to be dedicated is for a trail identified in Map 14 Proposed Trail System, Table 12 Tier 1 Capital Improvement Plan, or Table A-4 Proposed Trail Capital Improvement Plan of the 2022 Parks and Trails Master Plan;
+
+2.
+
+When the land to be dedicated abuts existing or planned parkland that necessitates additional acreage to meet the identified parkland acreage needs as identified in Map 8 Proposed Park System, Table 12 Tier 1 Capital Improvement Plan, or Table A-3 Proposed Park Capital Improvement Plan of the 2022 Parks and Trails Master Plan.
+
+(Ord. No. 2021-03, § 8(Exh.
+H), 5-17-2021; Ord. No. 2021-16, § 13(Exh.
+L), 8-16-2021; Ord. No. 2022-10, § 2(Exh.
+B), 6-6-2022; Ord. No. 2024-01, § 1(Exh.
+A), 2-20-2024)
+
+

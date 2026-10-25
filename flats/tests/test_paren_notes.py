@@ -140,6 +140,19 @@ def test_a_notes_block_repeated_across_a_colspan_is_read_once() -> None:
     assert seen.unmarked == ()
 
 
+def test_a_repeated_notes_later_sentences_are_not_read_in_twice() -> None:
+    """Sandy's access-spacing note prints four times, and readable text puts
+    each of its sentences on a line of its own. The copy's first line was
+    always skipped; its later lines are the copy's too."""
+    copy = [
+        "[1] Minimum spacing is the existing city block spacing.",
+        "Public road connections are preferred over private driveways.",
+        "Note: All distances measured from center to center.",
+    ]
+    seen = census("\n".join(["Notes:", *copy, *copy, *copy]), doc="d.txt")
+    assert [b.text for b in seen.bodies] == [" ".join(copy)[4:]]
+
+
 # --- what the chapter says now --------------------------------------------
 
 
@@ -162,7 +175,7 @@ def test_the_note_that_sends_a_quadplex_to_its_design_standards(chapter) -> None
     assert "19.30.040" in fifth.text
 
     ruled = {(row.doc, row.line): row for row in dispositions(FAIRVIEW)}
-    ruling = ruled[(USES, 159)]
+    ruling = ruled[(USES, 160)]
     assert ruling.state == "encoded"
     assert "entrance_only" in ruling.encoded_as
 
@@ -183,8 +196,8 @@ def test_the_two_notes_the_glossary_keeps_off_the_pod(store: ProvenanceStore) ->
     assert "located on an individual lot or parcel" in glossary[816]  # townhouse
 
     ruled = {(row.doc, row.line): row for row in dispositions(FAIRVIEW)}
-    assert "five or more" in ruled[(USES, 156)].reason
-    assert "individual lot" in ruled[(USES, 158)].reason
+    assert "five or more" in ruled[(USES, 157)].reason
+    assert "individual lot" in ruled[(USES, 159)].reason
 
 
 def test_and_nothing_the_chapter_encodes_is_left_blocked() -> None:

@@ -1,0 +1,374 @@
+§ 19.505.1. One-to Four-Unit Residential Development.
+
+A.
+
+Purpose
+
+The design standards for one-to four-unit dwellings (including single detached dwellings, duplexes, triplexes, and quadplexes) require a minimum level of design on every dwelling.
+These standards are intended to promote attention to detail, human-scale design, street visibility, and privacy of adjacent properties, while affording flexibility to use a variety of architectural styles.
+
+1.
+
+Dwellings must address the following design objectives:
+
+a.
+
+Articulation All street-facing buildings must incorporate design elements that break up façades into smaller planes.
+
+b.
+
+Eyes on the street - A certain percentage of the area of each street-facing façade must be windows or entrance doors.
+
+c.
+
+Main entrance On street-facing façades, at least one main entrance must meet standards for location, orientation, and visibility.
+
+d.
+
+Detailed design - All street-facing buildings must include several features selected from a menu.
+
+In addition, site design standards are intended to facilitate the development of attractive housing that encourages multimodal transportation.
+They encourage good site design, which contributes to livability, safety, and sustainability; helps create a stronger community; and fosters a quality environment for residents and neighbors.
+
+2.
+
+Site design is intended to meet the following objectives:
+
+a.
+
+Livability Development should contribute to a livable neighborhood by incorporating visually pleasing design, minimizing the impact of vehicles, emphasizing pedestrian and bicycle connections, and providing public and private open spaces for outdoor use.
+
+b.
+
+Compatibility - Development should have a scale that is appropriate for the surrounding neighborhood and maintains the overall residential character of Milwaukie.
+
+c.
+
+Safety and functionality - Development should be safe and functional, by providing visibility into and within a residential development and by creating a circulation system that prioritizes bicycle and pedestrian safety.
+
+d.
+
+Sustainability Development should incorporate sustainable design and building practices, such as energy conservation, preservation of trees and open space, quality building materials, and alternative transportation modes.
+
+B.
+
+Applicability of Design Standards
+
+The building design standards in this subsection apply to the development of one to 4 units when the closest wall of the street-facing façade is within 50 ft of a front or street side lot line and to dwellings in a cluster or grouping, either facing a shared open space (e.g., a common courtyard) or a pedestrian path.
+The site design standards apply to plex developments (i.e., 2 to 4 units).
+
+1.
+
+New Construction. The full list of design standards applies to construction of new single detached and plex dwellings.
+
+2.
+
+Expansions of single detached dwellings in Subsection 19.505.1.B.1 that add area to any street-facing façade are subject to the design standards as follows:
+
+a.
+
+Expansions that add 75 sq ft or less of street-facing façade area are exempt from all design standards in Subsection 19.505.1.
+
+b.
+
+Expansions that add more than 75 sq ft and less than 200 sq ft of street-facing façade area are subject to Subsection 19.505.1.C.2 Eyes on the Street.
+The expanded façade area must meet the standards of Subsection 19.505.1.C.2.
+
+c.
+
+Expansions that add 200 sq ft or more of street-facing façade area are subject to the following design standards:
+
+(1)
+
+The entire street-facing façade shall comply with Subsection 19.505.1.C.2 Eyes on the Street.
+
+(2)
+
+Subsection 19.505.1.C.3 Main Entrance is applicable if an expansion would create a new main entrance.
+No expansion shall bring the street-facing façade out of conformance, or further out of conformance if already nonconforming, with the design standard.
+
+(3)
+
+Subsection 19.505.1.C.1 Articulation is applicable for expansions that add 20 lineal ft or more to the length of the street-facing façade.
+
+d.
+
+Subsection 19.505.1.C.4 Detailed Design is not applicable for expansions.
+However, no expansion shall bring the street-facing façade out of conformance, or further out of conformance if already nonconforming, with the Detailed Design standards.
+
+e.
+
+Multiple expansions are allowed within a five-year period if the street-facing façade will comply with the design standards that would have been applicable if the expansions occurred at the same time.
+
+f.
+
+Conversions of an attached garage to a habitable residential space.
+When applicable, the design standards apply only to the street-facing façade of the garage being converted.
+The following design standards are applicable:
+
+(1)
+
+Subsection 19.505.1.C.3 Main Entrance is applicable if the garage conversion would create a new main entrance.
+No conversion shall bring the street-facing façade out of conformance, or further out of conformance if already nonconforming, with the design standard.
+
+(2)
+
+Subsection 19.505.1.C.4 Detailed Design is not applicable.
+However, no conversion shall bring the street-facing façade out of conformance, or further out of conformance if already nonconforming, with the design standard.
+
+3.
+
+Remodels, additions, and conversions that create new dwelling units.
+
+a.
+
+Internal conversion of an existing single detached dwelling, or an addition to an existing single detached dwelling, into a duplex, triplex, or quadplex (as provided in OAR 660-046-0230) is exempt from this section, provided that the conversion or addition does not increase nonconformance with applicable clear and objective standards.
+New duplexes, triplexes, and quadplexes created by adding square footage on a site occupied by an existing single detached dwelling must comply with this section.
+
+b.
+
+Conversion of an existing accessory structure into a plex dwelling unit must meet the Eyes on the Street standard for the street-facing façade(s) and is exempt from minimum base zone setback requirements and the minimum building separation requirements in Subsection 19.505.1.D.1.
+
+4.
+
+Placement of a new manufactured home on a lot outside of a manufactured home park is subject to the requirements of Section 19.506 and the standards of Subsection 19.505.1.
+
+5.
+
+Remodels of existing dwellings that affect the street-facing façade, but that do not add new area to the street-facing façade, must not bring the façade further out of conformance with design standards.
+
+C.
+
+Dwelling Standards
+
+All buildings that meet the applicability provisions in Subsection 19.505.1.B must meet the following design standards.
+The graphics provided are intended to illustrate how development could comply with these standards and should not be interpreted as requiring a specific architectural style.
+An architectural feature may be used to comply with more than one standard.
+
+An applicant may request a variance to the Detailed Design standards in Subsection 19.505.1.C.4 through a Type II review, pursuant to Subsection 19.911.3.B. variances to any other design standards requires a variance through a Type III review, per Subsection 19.911.3.C.
+
+1.
+
+Articulation
+
+All buildings must incorporate design elements that break up all street-facing façades into smaller planes as follows.
+See Figure 19.505.1.C.1 for illustration of articulation.
+
+a.
+
+For buildings with 30-60 ft of street frontage, a minimum of one of the following elements must be provided along the street-facing façades:
+
+(1)
+
+A porch at least 5 ft deep.
+
+(2)
+
+A balcony that is at least 2 ft deep and is accessible from an interior room.
+
+(3)
+
+A bay window that extends at least 2 ft wide.
+
+(4)
+
+A section of the façade that is recessed by at least 2 ft deep and 6 ft long.
+
+(5)
+
+A gabled dormer.
+
+b.
+
+For buildings with over 60 ft of street frontage, at least one element in Subsection 19.505.1.C.1.a(1)-(4) above must be provided for every 30 ft of street frontage.
+Elements must be distributed along the length of the façade so that there are no more than 30 ft between 2 elements.
+
+c.
+
+For buildings with less than 30 ft of street frontage, the building articulation standard is not applicable.
+
+Figure 19.505.1.C.1 Building Articulation
+
+2.
+
+Eyes on the Street
+
+At least 15% of the area of each street-facing façade must be windows or entrance doors.
+See Figure 19.505.1.C.2 for illustration of eyes on the street.
+
+a.
+
+Windows used to meet this standard must be transparent and allow views from the building to the street.
+Glass blocks and privacy windows in bathrooms do not meet this standard.
+
+b.
+
+Half of the total window area in the door(s) of an attached garage counts toward the eyes on the street standard.
+All of the window area in the street-facing wall(s) of an attached garage count toward meeting this standard.
+
+c.
+
+Window area is considered the entire area within the outer window frame, including any interior window grid.
+
+d.
+
+Doors used to meet this standard must face the street or be at an angle of no greater than 45 degrees from the street.
+
+e.
+
+Door area is considered the portion of the door that moves.
+Door frames do not count toward this standard.
+
+Figure 19.505.1.C.2 Eyes on the Street
+
+3.
+
+Main Entrance
+
+At least one main entrance must meet both of the following standards.
+See Figure 19.505.1.C.3 for illustration of main entrances.
+Dwellings on flag lots or back lots are exempt from these main entrance design standards.
+
+a.
+
+Be no further than 8 ft behind the longest street-facing wall of the building.
+
+b.
+
+Face the street, be at an angle of up to 45 degrees from the street, or open onto a porch.
+If the entrance opens up onto a porch, the porch must meet all of these additional standards:
+
+(1)
+
+Be at least 25 sq ft in area with a minimum 4-ft depth.
+
+(2)
+
+Have at least one porch entry facing the street.
+
+(3)
+
+Have a roof that is no more than 12 ft above the floor of the porch.
+
+(4)
+
+Have a roof that covers at least 30% of the porch area.
+
+Figure 19.505.1.C.3 Main Entrances
+
+4.
+
+Detailed Design
+
+All buildings shall include at least 5 of the following features on any street-facing façade.
+See Figure 19.505.1.C.4 for illustration of detailed design elements.
+
+a.
+
+Covered porch at least 5 ft deep, as measured horizontally from the face of the main building façade to the edge of the deck, and at least 5 ft wide.
+
+b.
+
+Recessed entry area at least 2 ft deep, as measured horizontally from the face of the main building façade, and at least 5 ft wide.
+
+c.
+
+Offset on the building face of at least 16 in from one exterior wall surface to the other.
+
+d.
+
+Dormer that is at least 4 ft wide and integrated into the roof form.
+
+e.
+
+Roof eaves with a minimum projection of 12 in from the intersection of the roof and the exterior walls.
+
+f.
+
+Roof line offsets of at least 2 ft from the top surface of one roof to the top surface of the other.
+
+g.
+
+Clay tile, slate, or wood shingle roofs.
+
+h.
+
+Horizontal lap siding between 3 to 7 in wide (the visible portion once installed).
+The siding material may be wood, fiber-cement, or vinyl.
+
+i.
+
+Brick, cedar shingles, stucco, or other similar decorative materials covering at least 40% of the street-facing façade.
+
+j.
+
+Gable roof, hip roof, or gambrel roof design.
+
+k.
+
+Window trim around all windows at least 3 in wide and 5/8 in deep.
+
+l.
+
+Window recesses, in all windows, of at least 3 in as measured horizontally from the face of the building façade.
+
+m.
+
+Balcony that is at least 3 ft deep, 5 ft wide, and accessible from an interior room.
+
+n.
+
+One roof pitch of at least 500 sq ft in area that is sloped to face the southern sky and has its eave line oriented within 30 degrees of the true north/south axis.
+
+o.
+
+Bay window at least 2 ft deep and 5 ft wide.
+
+p.
+
+Attached garage width, as measured between the inside of the garage door frame, of 35% or less of the length of the street-facing façade.
+
+q.
+
+The following design element counts as 2 elements.
+Dwelling must be built to meet universal access as follows:
+
+(1)
+
+Dwelling must have a bedroom on the ground floor.
+
+(2)
+
+A ramp complying with R311.8 Oregon Residential Specialty Code (ORSC) must be provided to the main entrance of the dwelling.
+
+(3)
+
+Doors must have a minimum clear width of 32 in.
+
+(4)
+
+Horizontal and vertical grab bars must be provided in one bathroom on the main floor at the toilet, bath and shower.
+(See ANSI A117-1 Section 609 for size and location requirements.)
+
+Figure 19.505.1.C.4 Detailed Design Elements
+
+D.
+
+Site Design Standards
+
+The site design standards do not apply to single detached dwellings, only to plex developments.
+
+1.
+
+Minimum separation between detached units is 6 ft.
+
+2.
+
+Privacy and Screening
+
+a.
+
+All fences on the interior of the development must be no more than 6 ft high.
+Fences along the side and rear perimeter of the development may be up to 6 ft high, except as restricted by Chapter 12.24 Clear Vision at Intersection.
+Chain-link fences are prohibited.
+

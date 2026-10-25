@@ -1,0 +1,219 @@
+§ 18.90.070. No net loss standards.
+
+(A)
+
+General Provisions.
+
+(1)
+
+No net loss of the proxies for the floodplain functions is required for development in the special flood hazard area that would reduce undeveloped space, increase impervious surface, or result in a loss of trees that are six-inch diameter at breast height (dbh) or greater.
+No net loss can be achieved by first avoiding negative effects to floodplain functions to the degree possible, then minimizing remaining effects, then replacing and/or otherwise compensating for, offsetting, or rectifying the residual adverse effects to the three floodplain functions.
+
+(2)
+
+Compliance with no net loss for undeveloped space or impervious surface is preferred to occur prior to the loss of habitat function but, at a minimum, shall occur concurrent with the loss.
+
+(3)
+
+No net loss must be provided within, in order of preference:
+
+(a)
+
+The lot or parcel that floodplain functions were removed from;
+
+(b)
+
+The same reach of the waterbody where the development is proposed; or
+
+(c)
+
+The special flood hazard area within the same hydrologically connected area as the proposed development.
+Table 18.90.070(H) presents the no net loss ratios, which increase based on the preferences listed above.
+
+(B)
+
+Undeveloped Space. Development proposals shall not reduce the fish-accessible and egress-able habitat and flood storage volume created by undeveloped space within the special flood hazard area.
+A development proposal with an activity that would impact undeveloped space shall achieve no net loss of fish-accessible and egress-able space and flood storage volume.
+Lost undeveloped space must be replaced with fish-accessible and egress-able compensatory volume based on the ratio in Table 18.90.070(H) and must be hydrologically connected to the waterbody that is the flooding source.
+
+(C)
+
+Impervious Surfaces. Impervious surface mitigation shall be mitigated through any of the following:
+
+(1)
+
+Development proposals shall not result in a net increase in impervious surface area within the special flood hazard area through the use of ratios prescribed in the table within subsection (H) of this section;
+
+(2)
+
+Use low impact development or green infrastructure to infiltrate and treat stormwater produced by the new impervious surface, as documented by a qualified professional; or
+
+(3)
+
+If prior methods are not feasible and documented by a qualified professional, stormwater retention is required to ensure no increase in peak volume or flow and to maximize infiltration, and treatment is required to minimize pollutant loading.
+See subsection (E) of this section for stormwater retention specifications.
+
+(D)
+
+Trees. Development proposals shall result in no net loss of trees six inches dbh or greater within the special flood hazard area.
+
+(1)
+
+Trees of or exceeding six inches dbh that are removed from the riparian buffer zone (RBZ), floodway, or RBZ-fringe must be replaced at the ratios in Table 18.90.070(H) and planted within the special flood hazard area.
+
+(2)
+
+Replacement trees must be native species that would occur naturally in the Level III ecoregion of the impact area.
+
+(E)
+
+Stormwater Management. Any development proposal that cannot mitigate as specified in subsections (C)(1) and (C)(2) of this section must include the following:
+
+(1)
+
+Water quality (pollution reduction) treatment for post-construction stormwater runoff from any net increase in impervious area; and
+
+(2)
+
+Water quantity treatment (retention or detention facilities) unless the outfall discharges into the ocean.
+
+(3)
+
+Retention and detention facilities must:
+
+(a)
+
+Limit discharge to match the predevelopment peak discharge rate (i.e., the discharge rate of the site based on its natural groundcover and grade before any development occurred) for the 10-year peak flow using a continuous simulation for flows between 50 percent of the two-year event and the 10-year flow event (annual series).
+
+(b)
+
+Treat stormwater to remove sediment and pollutants from impervious surfaces such that at least 80 percent of the suspended solids are removed from the stormwater prior to discharging to the receiving water body.
+
+(c)
+
+Be designed to not entrap fish.
+
+(d)
+
+Be certified by a qualified professional.
+
+(4)
+
+Detention facilities must be designed by a qualified professional and drain to the source of flooding.
+
+(5)
+
+Stormwater treatment practices for multiparcel facilities, including subdivisions, shall have an enforceable operation and maintenance agreement to ensure the system functions as designed.
+This agreement will include:
+
+(a)
+
+Access to stormwater treatment facilities at the site by the city of Cornelius for the purpose of inspection and repair.
+
+(b)
+
+A legally binding document specifying the parties responsible for the proper maintenance of the stormwater treatment facilities.
+The agreement will be recorded and bind all subsequent purchasers and sellers even if they were not party to the original agreement.
+
+(c)
+
+For stormwater controls that include vegetation and/or soil permeability, the operation and maintenance manual must include maintenance of these elements to maintain the functionality of the feature.
+
+(d)
+
+The responsible party for the operation and maintenance of the stormwater facility shall have the operation and maintenance manual on site and available at all times.
+Records of the maintenance and repairs shall be retained and made available for inspection by the city of Cornelius for five years.
+
+(F)
+
+Exempt Activities. The following activities are not subject to the no net loss standards; however, they may not be exempt from floodplain development permit requirements:
+
+(1)
+
+Normal maintenance of structures, such as reroofing and replacing siding, provided there is no change in the footprint or expansion of the roof of the structure;
+
+(2)
+
+Normal street, sidewalk, and road maintenance, including filling potholes, repaving, and installing signs and traffic signals, that does not alter contours, use or alters culverts and is less than six inches above grade.
+Exempt activities do not include expansion of paved areas;
+
+(3)
+
+Routine maintenance of landscaping that does not involve grading, excavation or filling;
+
+(4)
+
+Routine agricultural practices such as tilling, plowing, harvesting, soil amendments, and ditch cleaning that does not alter the ditch configuration provided the spoils are removed from the special flood hazard area or tilled into fields as a soil amendment;
+
+(5)
+
+Routine silviculture practices (harvesting of trees), including hazardous fuels reduction and hazard tree removal as long as root balls are left in place;
+
+(6)
+
+Removal of noxious weeds and hazard trees, and replacement of nonnative vegetation with native vegetation;
+
+(7)
+
+Normal maintenance of above ground utilities and facilities, such as replacing downed power lines and utility poles, provided there is no net change in footprint;
+
+(8)
+
+Normal maintenance of a levee or other flood control facility prescribed in the operations and maintenance plan for the levee or flood control facility.
+Normal maintenance does not include repair from flood damage, expansion of the prism, expansion of the face or toe or addition of protection on the face or toe with rock armor;
+
+(9)
+
+Habitat restoration activities;
+
+(10)
+
+Preemptive removal of documented susceptible trees to manage the spread of invasive species;
+
+(11)
+
+Projects that are covered under consultations under Section 4(d), 7, or 10 of the Endangered Species Act (ESA).
+
+(G)
+
+Riparian Buffer Zone (RBZ).
+
+(1)
+
+The riparian buffer zone is measured from the ordinary high-water line of a fresh water body (lake; pond; ephemeral, intermittent or perennial stream) or mean higher-high water of a marine shoreline or tidally influenced river reach to 170 feet horizontally on both sides of the stream or inland of the MHHW.
+The riparian buffer zone includes the area between those outer boundaries on each side of the stream, including the stream channel.
+
+(2)
+
+Functionally dependent uses are only subject to the no net loss standards of this section for development within the RBZ.
+Ancillary facilities that are associated with, but do not directly impact, the functionally dependent use in the RBZ (including manufacturing support facilities and restrooms) are subject to the beneficial gain standard in addition to the no net loss standard.
+
+(3)
+
+Any other use of the RBZ requires a greater offset to achieve no net loss of floodplain functions on top of the no net loss standards described above, through the beneficial gain standard.
+
+(4)
+
+Under FEMA's beneficial gain standard, an area within the same reach of the project and equivalent to five percent of the total project acres within the RBZ shall be planted with native herbaceous shrub and tree vegetation.
+
+(H)
+
+Table of No Net Loss Mitigation Standards.
+
+Basic Mitigation Ratios                                                                     Undeveloped Space (ft[3])  Impervious Surface (ft[2])  Trees (6" DBH < 20" DBH)  Trees (20" DBH < 39" DBH)  Trees (> 39" DBH)
+RBZ and floodway                                                                            2:1                        1:1                         3:1                       5:1                        6:1
+RBZ-fringe                                                                                  1.5:1                      1:1                         2:1                       4:1                        5:1
+Mitigation multipliers
+Mitigation on site to mitigation off site, same reach                                       100%                       100%                        100%                      100%                       100%
+Mitigation on site to mitigation off site, different reach, same watershed (5th Field HUC)  200%                       200%                        200%                      200%                       200%
+
+NOTES:
+NOTES:
+1. Mitigation multipliers of 100 percent resulting in the required mitigation occurring at the same value described by the ratios above, while multipliers of 200 percent resulting in the required mitigation being doubled.
+1. Mitigation multipliers of 100 percent resulting in the required mitigation occurring at the same value described by the ratios above, while multipliers of 200 percent resulting in the required mitigation being doubled.
+a. For example, if a development would create 1,000 square feet of new impervious surface, then 1,000 square feet new pervious surface would need to be created.
+However, if only 500 square feet can be created within the same reach, then the remaining 500 square feet created in a different reach would need to be 1,000 square feet because of the 200 percent multiplier.
+
+(Ord. 2025-05 § 1 (Exh.
+A), 2025)
+

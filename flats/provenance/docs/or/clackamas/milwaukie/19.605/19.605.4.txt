@@ -1,0 +1,54 @@
+§ 19.605.4. Electric Vehicle (EV) Charging Requirements.
+
+Required EV charging spaces.
+All new buildings that are commercial, industrial, multi-unit with 5 or more dwelling units, or mixed-use with 5 or more dwelling units and that provide new off-street parking must include sufficient space for electrical service capacity to support at least a Level 2 EV charger at required EV charging spaces as outlined below.
+For terms not defined elsewhere in Title 19, see applicable sections of the state building code and/or OAR 918-460-0200.
+
+A.
+
+Commercial and Industrial Buildings
+
+For new commercial and industrial buildings where new off-street parking spaces are constructed, choose one of the following:
+
+1.
+
+At least 50% of the total number of newly constructed parking spaces must include electrical conduit adjacent to the spaces that will allow for the installation of at least a Level 2 EV charger; or
+
+2.
+
+At least 20% of the total number of newly constructed parking spaces must include electrical conduit adjacent to the spaces that will allow for the installation of at least a Level 2 EV charger.
+At least 5% of newly constructed parking spaces must include an installed Level 2 or Level 3 EV charger.
+Parking spaces with installed chargers count toward the 20% minimum requirement.
+
+B.
+
+Multi-Unit and Mixed-Use Residential Buildings
+
+For new multi-unit and mixed-use buildings with 5 or more dwelling units, where new off-street parking spaces are constructed, choose one of the following:
+
+1.
+
+All (100%) of the newly constructed parking spaces must include electrical conduit adjacent to the spaces that will allow for the installation of at least a Level 2 EV charger; or
+
+2.
+
+At least 40% of the total number of newly constructed parking spaces must include electrical conduit adjacent to the spaces that will allow for the installation of at least a Level 2 EV charger.
+At least 10% of newly constructed parking spaces must include an installed Level 2 or Level 3 EV charger.
+Parking spaces with installed chargers count toward the 40% minimum requirement.
+
+C.
+
+Structured Parking Facilities
+
+For new structured parking facilities, where new off-street parking spaces are constructed, choose one of the following:
+
+1.
+
+At least 50% of the total number of newly constructed parking spaces must include electrical conduit adjacent to the spaces that will allow for the installation of at least a Level 2 EV charger; or
+
+2.
+
+At least 20% of the total number of newly constructed parking spaces must include electrical conduit adjacent to the spaces that will allow for the installation of at least a Level 2 EV charger.
+At least 5% of newly constructed parking spaces must include an installed Level 2 or Level 3 EV charger.
+Parking spaces with installed chargers count toward the 20% minimum requirement.
+

@@ -1,0 +1,515 @@
+§ 18.660.090. Transportation Facility Standards.
+
+A.
+
+Purpose. The purpose of these standards and procedures is to create safe, comfortable, and attractive streetscapes for pedestrians, improve connectivity for all modes of travel, and remove barriers for small-scale incremental development.
+
+B.
+
+General provisions. This section contains the standards and procedures for improvements to public transportation facilities for all property located in the Tigard Triangle Plan District, including specific standards for vehicle, pedestrian, bicycle, and transit facilities.
+The terms "transportation facilities" and "transportation improvements" generally include those facilities, or improvements to those facilities, that accommodate all modes of travel that are usually located in public rights-of-way, also commonly referred to as streets.
+"Frontage improvements" are transportation improvements immediately adjacent to a proposed development's street frontage.
+"Off-site improvements" are transportation improvements not adjacent to a proposed development's street frontage.
+
+C.
+
+Transportation facility standards.
+
+1.
+
+General standards.
+
+a.
+
+All transportation and associated utility improvements to be placed in a public right-of-way or public access easement must:
+
+i.
+
+Except as expressly provided in Subsection 18.660.090.C, meet the standards of the city as provided in the Public Improvement Design Standards and Chapter 18.910, Improvement Standards;
+
+ii.
+
+Tie into existing transportation and associated utility improvements;
+
+iii.
+
+Be reviewed and approved through the city's public facilities permitting process, including, but not limited to, the requirements in Subsection 18.910.030.S and Sections 18.910.130 through 18.910.200; and
+
+iv.
+
+Obtain all necessary approvals and permits from other applicable road authorities if the right-of-way to be improved is not under the city's jurisdiction.
+
+b.
+
+Right-of-way must be dedicated to the public for transportation purposes in accordance with the standards in this chapter.
+
+i.
+
+Additional right-of-way dedication may be required at intersections for needed improvements identified by a transportation impact study or applicable road authority.
+Where practicable or required, such as along 72nd Avenue, right-of-way provided for parking lanes may be used for intersection operational needs in lieu of additional right-of-way subject to approval by the City Engineer.
+
+ii.
+
+Additional right-of-way dedication or public easements may be required to address slope or drainage issues as determined by the City Engineer in addition to the maximum right-of-way widths required in Tables 18.660.9–10.
+
+c.
+
+Partial transportation improvements, also called half-street improvements, resulting in other than full improvements on both sides of the street are generally not acceptable.
+Partial transportation improvements may be approved where the city finds that it will be possible for the adjoining property to dedicate and improve the remainder of the street when it develops.
+
+2.
+
+Intersection design and spacing.
+
+a.
+
+Streets must generally intersect at right angles (90 degrees).
+Angles of less than 75 degrees are not allowed unless approved by the City Engineer.
+Streets must generally intersect so that centerlines are not offset.
+
+b.
+
+Street intersections must have curb extensions to reduce pedestrian crossing distances, except on streets that do not have dedicated on-street parking lanes.
+
+c.
+
+New street intersections, including alleys, not shown on Map 18.660.B Transportation Network Map are subject to approval by the City Engineer and require an access report.
+The City Engineer will specify the technical information that must be included in the report.
+At a minimum, the access report must show that the proposed street intersection meets stacking, sight distance, and deceleration standards provided in the Public Improvement Design Standards or the American Association of State Highway and Transportation Officials (AASHTO) publications, or other standards as determined by the applicable road authority.
+
+d.
+
+Clear vision standards in Chapter 18.930, Vision Clearance Areas, and street spacing standards in Chapter 18.910, Improvement Standards, do not apply to street intersections in the TMU zone.
+
+3.
+
+Transportation network connectivity.
+
+a.
+
+Minimum required transportation improvements are shown on Map 18.660.B Transportation Network Map.
+Additional transportation improvements for network connectivity may be required by Subparagraphs 18.660.090.C.3.b and c. Alleys are encouraged but not required.
+Private streets are prohibited.
+
+b.
+
+Block perimeters must be 2,500 feet or less in length as measured along the centerlines of streets, unless:
+
+i.
+
+It is not practicable to construct a street due to topographical constraints, protected natural resource areas, or existing development patterns, and the applicant has submitted an adjustment application as provided in Paragraph 18.660.040.C.4 and obtained the necessary land use approval; or
+
+ii.
+
+A future street, path, or trail on Map 18.660.B Transportation Network Map provides for a possible future connection that is feasible at the time of the proposed development and meets the block perimeter standard when included as part of the block perimeter measurement.
+
+c.
+
+Bicycle and pedestrian connections are required where the addition of a connection would link the end of a permanent turnaround to an adjacent street or provide a midblock connection through a long block.
+A midblock connection is required where at least one block face is 800 feet or more in length.
+A required connection must go through the interior of the block and connect the block face that is 800 feet or more in length to its opposite block face.
+Bicycle and pedestrian connections include off-street trails and paths as described in Subsection 18.660.090.C.4.e.
+
+4.
+
+Transportation facility design.
+
+a.
+
+Street design. All streets are subject to the standards in Table 18.660.9 and as shown in Figure 18.660.5, except for Dartmouth Street, 72nd Avenue, Pacific Highway, and the future business access street parallel to Pacific Highway that connects the western portion of Atlanta Street to the future 74th Avenue.
+
+i.
+
+72nd Avenue is subject to the standards in Subparagraph 18.660.090.C.4.b.
+
+ii.
+
+Dartmouth Street and Pacific Highway are subject to the standards in Subsection 18.910.030.E.
+
+iii.
+
+The future business access street is subject to the standards in Subsection 18.910.030.E, specifically the local street standard shown in Figure 18.910.6.A.
+
+Table 18.660.9
+Street Elements and Widths
+Table 18.660.9
+Street Elements and Widths
+Table 18.660.9
+Street Elements and Widths
+Street Element
+Width
+Notes
+Maximum Right-of-Way (without bike lanes)
+64′
+Any turn lanes required by the City Engineer must be accommodated in the on-street parking lane.
+Maximum Right-of-Way (with bike lanes)
+70′ – 76′
+Any turn lanes required by the City Engineer must be accommodated in the on-street parking lane.
+Bike lanes are required on specific streets.
+See Map 18.660.B for bike lane locations.
+Bike lanes are 6′ in width and usually, but not always, located on both sides of the street.
+Vehicle Lane
+10′
+One travel lane in each direction is required.
+The need for a center lane is determined by the City Engineer.
+Parking Lane
+8′
+Parking on both sides of the street is required along the full length of each block face unless otherwise approved by the City Engineer for access, sight distance, stormwater facilities, bus stops, right turn lanes, or other need as identified by the City Engineer.
+Sidewalk Corridor
+14′
+Sidewalk corridors are required on both sides of the street.
+Each corridor must include a sidewalk, landscape strip or tree well, and a 6″ curb.
+• Minimum sidewalk width is 6′
+• Minimum landscape strip width is 5′
+• Minimum tree well dimensions are 5′ x 14′
+Landscape strips and tree wells may be designed as stormwater facilities.
+See below for additional standards on street trees and stormwater facilities.
+Curb extensions must be included at all intersections where dedicated on-street parking lanes are provided.
+
+Figure 18.660.5 Street Elements and Widths
+
+b.
+
+72nd Avenue street design. 72nd Avenue is subject to the standards below, in Table 18.660.10, and as shown in Figures 18.660.6A–6E.
+
+i.
+
+Sidewalks must have a minimum width of 9 feet when not adjacent to a bus stop.
+This minimum width includes a 1-foot-wide buffer on the side abutting the bike lane.
+Sidewalks must have a minimum width of 6 feet when adjacent to a bus stop.
+
+ii.
+
+Landscape corridors must have a minimum width of 5 feet and include the required number of street trees in a continuous landscape strip or tree wells.
+If tree wells are provided, minimum dimensions are 5′ by 14′.
+Landscape strips and tree wells may be designed as stormwater facilities.
+See below for additional standards on street trees and stormwater facilities.
+
+iii.
+
+Bus stops located in landscape corridors or parking lanes must have a minimum width of 8 feet.
+
+iv.
+
+Parking lanes must be provided along the full length of each block face where required, except where otherwise approved for mid-block crossings, private property access, sight distance, stormwater facilities, bus stops, or other needs identified by the City Engineer.
+Any right turn lanes required by the City Engineer must be accommodated in the on-street parking lane.
+
+v.
+
+Curb extensions must be included at all intersections where dedicated on-street parking lanes are provided, except where they would interfere with bus movements.
+
+vi.
+
+A reduced right-of-way width with minimal street elements is required where 72nd Avenue crosses Red Rock Creek to minimize natural resource impacts.
+The maximum right-of-way width is 54 feet through this sensitive lands area.
+The cross section includes 2 travel lanes and sidewalks and bike lanes on both sides of the street.
+
+Table 18.660.10
+72nd Avenue Street Elements and Widths
+Table 18.660.10
+72nd Avenue Street Elements and Widths
+Table 18.660.10
+72nd Avenue Street Elements and Widths
+Street Element
+Width
+Notes
+Pacific Highway to Red Rock Creek (Figure 18.660.6A)
+Pacific Highway to Red Rock Creek (Figure 18.660.6A)
+Pacific Highway to Red Rock Creek (Figure 18.660.6A)
+Maximum Right-of-Way
+62′
+See 18.660.090.C.4.b.vi for reduced right-of-way width over Red Rock Creek.
+Vehicle Lane
+10′
+One travel lane in each direction is required.
+No center turn lane is required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+Red Rock Creek to Dartmouth Street (Figure 18.660.6B)
+Red Rock Creek to Dartmouth Street (Figure 18.660.6B)
+Red Rock Creek to Dartmouth Street (Figure 18.660.6B)
+Maximum Right-of-Way
+90′ – 94′
+See 18.660.090.C.4.b.vi for reduced right-of-way width over Red Rock Creek.
+An additional 4′ of right-of-way is required to accommodate bus pull-outs in parking lanes at bus stop locations only.
+Vehicle Lane
+11′ – 12′
+One 11′ travel lane in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+Parking Lane
+8′ – 10′
+See 18.660.090.C.4.b.iv and v.
+Parking lanes on both sides of the street are required.
+Parking lanes must be widened to 10′ to accommodate bus pull-outs where bus stops are provided or required.
+Dartmouth Street to Beveland Street (Figure 18.660.6C)
+Dartmouth Street to Beveland Street (Figure 18.660.6C)
+Dartmouth Street to Beveland Street (Figure 18.660.6C)
+Maximum Right-of-Way
+96′
+Vehicle Lane
+11′ – 12′
+One 11′ travel lane in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+Flex Parking Lane
+11′
+See 18.660.090.C.4.b.iv.
+Flex parking lanes on both sides of the street are required.
+Flex parking lanes must accommodate bus pull-outs where bus stops are provided or required.
+Flex parking lanes provide on-street parking during non-peak travel times and convert to travel lanes during peak travel times.
+Signage with parking and travel times, including violation warnings and consequences, is required.
+Beveland Street to Gonzaga Street (Figure 18.660.6D)
+Beveland Street to Gonzaga Street (Figure 18.660.6D)
+Beveland Street to Gonzaga Street (Figure 18.660.6D)
+Maximum Right-of-Way
+104′
+Vehicle Lane
+11′ – 12′
+Two 11′ travel lanes in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape Corridor
+5′
+See 18.660.090.C.4.b.ii.
+Parking Lane
+8′
+See 18.660.090.C.4.b.iii, iv, and v.
+A parking lane on the east side of the street is required.
+The parking lane must accommodate bus stops where provided or required.
+Gonzaga Street to Highway 217 (Figure 18.660.6E)
+Gonzaga Street to Highway 217 (Figure 18.660.6E)
+Gonzaga Street to Highway 217 (Figure 18.660.6E)
+Maximum Right-of-Way
+96′
+Vehicle Lane
+11′ – 12′
+Two 11′ travel lanes in each direction and a continuous 12′ center turn lane are required.
+Sidewalk
+6′ – 9′
+See 18.660.090.C.4.b.i.
+Bike Lane
+6′
+Landscape/Bus Stop Corridor
+5′ – 8′
+See 18.660.090.C.4.b.ii and iii.
+
+Figure 18.660.6A Street Elements and Widths for 72nd Avenue Pacific Highway to Red Rock Creek
+
+Figure 18.660.6B Street Elements and Widths for 72nd Avenue Red Rock Creek to Dartmouth Street
+
+Figure 18.660.6C Street Elements and Widths for 72nd Avenue Dartmouth Street to Beveland Street
+
+Figure 18.660.6D Street Elements and Widths for 72nd Avenue Beveland Street to Gonzaga Street
+
+Figure 18.660.6E Street Elements and Widths for 72nd Avenue Gonzaga Street to Highway 217
+
+c.
+
+Street trees.
+
+i.
+
+Street trees are required along all street frontages.
+The minimum number of required street trees is determined by dividing the length (in feet) of the proposed development's street frontage by 40 feet.
+When the result is a fraction, the number of street trees required is the nearest whole number.
+
+ii.
+
+Street trees must meet the standards in Section 2, Section 12, and Appendix 2 of the Tigard Urban Forestry Manual for tree size, spacing, maintenance, soil volume, and species.
+If tree wells are used, paving stones or Belgian blocks must be used to protect tree roots in lieu of metal or rubber grating.
+
+iii.
+
+Street tree removal is subject to the city's tree removal permit process and the standards in Section 3 of the Tigard Urban Forestry Manual.
+
+iv.
+
+Any Oregon white oak initially identified as a district tree, as defined in Subsection 18.660.070.H, that is located in the public right-of-way is regulated as a street tree and preserved where practicable.
+
+d.
+
+Stormwater facilities.
+
+i.
+
+Stormwater facilities for managing stormwater runoff from transportation facilities must meet all applicable Clean Water Services and City of Tigard standards.
+
+ii.
+
+Above-ground vegetated water quality facilities are required wherever practicable.
+
+iii.
+
+Water quality facilities may be located in an on-street parking lane in lieu of on-street parking or in the landscape strip or tree well area of the sidewalk corridor.
+
+iv.
+
+Any stormwater facilities proposed in the public right-of-way are subject to approval by the City Engineer.
+
+e.
+
+Pedestrian facilities.
+
+i.
+
+Pedestrian facilities include sidewalks, trails, and paths.
+Definitions for these facilities are as follows:
+
+•  Sidewalks are paved on-street transportation facilities for pedestrians.
+•  Trails are paved off-street transportation facilities for pedestrians and bicyclists that span multiple developments, lots, or blocks.
+They are often located next to other linear corridors such as streams, highways, or rail lines and allow users to travel greater distances than paths.
+•  Paths are paved off-street transportation facilities for pedestrians and bicyclists that provide connections through or between developments within a single block or for short distances.
+
+ii.
+
+Sidewalks, trails, and paths must comply with the standards of this section and applicable federal and state accessibility requirements.
+
+iii.
+
+Sidewalks, trails, and paths must generally be located within the public right-of-way.
+They may be located outside of the public right-of-way within a public access easement with approval by the City Engineer.
+
+iv.
+
+Sidewalks must have a minimum unobstructed width of 6 feet for pedestrian through-travel, except for A-frame signs where the minimum unobstructed width is 4 feet.
+Any permanent structures or utilities within the required through-travel area are subject to approval by the City Engineer.
+Any sidewalk area outside of the required through-travel area may be used for commercial purposes by adjacent development or may contain pedestrian amenities, such as street furniture, bicycle parking, trash cans, and drinking fountains.
+Use of this area for commercial purposes includes, but is not limited to: customer seating, merchandise display, and A-frame signs.
+Use of this area for commercial purposes is at the sole discretion of the Director.
+A-frame signs are also subject to the standards and procedures in Chapter 18.435, Signs.
+
+v.
+
+Trails must have a minimum right-of-way width of 15 feet and a minimum improved surface width of 10 feet.
+Trail widths may be reduced where constrained by existing development, protected natural resource areas, or topography as determined by the City Engineer.
+
+vi.
+
+Paths must have a minimum right-of-way width of 12 feet and a minimum improved surface width of 8 feet.
+Path widths may be reduced where constrained by existing development, protected natural resource areas, or topography as determined by the City Engineer.
+Paths must be located to provide a reasonably direct connection between likely pedestrian destinations.
+
+f.
+
+Bicycle facilities.
+
+i.
+
+Bicycle facilities include bicycle parking, on-street shared lanes, on-street bike lanes (including buffered or protected bike lanes), trails, and paths.
+Trails and paths are defined in Subparagraph 18.660.090.C.4.e.i.
+
+ii.
+
+Bicycle facility improvements include, but are not limited to: bicycle racks, signage, pavement markings, intersection treatments, traffic calming, and traffic diversion.
+
+g.
+
+Transit facilities.
+
+i.
+
+Transit facilities include transit stops, transit shelters, transfer stations, and other related public transit facilities.
+
+ii.
+
+Transit facility improvements include, but are not limited to: benches, signage, shelters, bus turnouts, curb extensions, bicycle parking, pedestrian crossings, and pedestrian lighting.
+
+iii.
+
+Factors that determine the level of transit improvements needed include, but are not limited to: street classification, existing and planned level of transit service on adjacent streets, block length, proximity of major pedestrian destinations, existing and estimated ridership, and estimated transit needs of the proposed development.
+
+iv.
+
+Transit facilities must comply with current TriMet and city standards with final approval by the City Engineer.
+
+D.
+
+Fee in lieu of construction (FILOC).
+If improvements to public transportation facilities are required by Subparagraph 18.660.040.B.2.b, the applicant may request to pay a fee in lieu of constructing the required improvements.
+The provisions of this Subsection do not allow the applicant to a pay a fee in lieu of dedicating any needed public right-of-way.
+
+1.
+
+FILOC review criteria.
+The city may accept a fee in lieu of constructing the required improvements when one or more of the following conditions exist.
+
+a.
+
+The city is actively in the process of studying or developing new design standards for one or more of the streets on which the proposed development has frontage.
+
+b.
+
+Required improvements are not feasible due to the location of existing development or frontage improvements.
+
+c.
+
+Required improvements are not feasible due to the inability to achieve proper design and safety standards.
+
+d.
+
+Required improvements are part of a larger approved capital improvement project that is listed as a funded project in a local or regional Capital Improvement Program (CIP).
+
+2.
+
+FILOC findings. If the City Engineer determines that a fee in lieu of construction satisfies one of the criteria in Paragraph 18.660.090.D.1, the city will accept a fee upon the City Engineer finding that deferring construction of required improvements will not result in any of the following.
+
+a.
+
+Safety hazards as determined by the City Engineer.
+
+b.
+
+New and significant street drainage issues as determined by the City Engineer.
+
+If the City Engineer cannot make such findings, then the city will not accept a fee and will require construction of the required improvements.
+
+3.
+
+FILOC fees. If the City Engineer determines that required improvements are eligible for FILOC, the applicant must pay the fee in lieu of constructing the required improvements unless the city determines that the fee is not roughly proportional to the number of new trips estimated to be generated by the proposed development.
+The City Engineer will determine the fee based upon an estimate to construct the required improvements using the average cost of the most recent capital improvement project itemized bid prices.
+The applicant must pay the fee to the city prior to the issuance of any development permits.
+
+a.
+
+If full transportation facility improvements have been assessed with previous development on the site and the proposed development has additional impacts, the city may only assess additional FILOC fees when there has been a change to the city's street design standards.
+
+b.
+
+If partial transportation facility improvements have been assessed with previous development on the site and the proposed development has additional impacts, the city may assess additional FILOC fees for the balance of the improvements.
+
+c.
+
+If the applicant pays a fee in lieu of constructing the required improvements and is issued a development permit by the city but does not develop as planned, the applicant may request a refund of the FILOC fee within 3 years of payment.
+Any refunds are subject to the approval of the City Engineer.
+
+4.
+
+FILOC program administration.
+Fees collected by the city will be used to construct public transportation facilities or to leverage additional grant money for larger transportation projects.
+An accounting of fees collected and expended will be made available by the city to the public on an annual basis at the end of the fiscal year.
+Expenditure of fees is subject to the following: Fees will be used for construction of public transportation facilities that benefit the development sites that paid the fees.
+
+(Ord. 17-22 §2; Ord. 17-25 §3; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 22-02 §3)
+

@@ -11,10 +11,12 @@ D.     Gyms up to five thousand (5,000) square feet shall not be permitted in ar
 Specific
 Land Use                                                                  IP                LI                GI                Standards
 Residential Uses
-One Caretaker unit in conjunction with an ex-                                 N                 P                 P isting industrial use
+One Caretaker unit in conjunction with an ex-                                 N                 P                 P
+isting industrial use
 All other residential uses                                           N                 N                 N
 Commercial Uses
-Commercial sports complexes including, but                                    N                 C                 C not limited to, health clubs, tennis courts, aquatic centers, skating rinks, and similar facilities
+Commercial sports complexes including, but                                    N                 C                 C
+not limited to, health clubs, tennis courts, aquatic centers, skating rinks, and similar facilities
 Convenience stores                                                   C                 N                 N             3.440.I
 Eating and drinking establishments
 Restaurants and bars                                             P                 N                 N            3.440.H
@@ -25,15 +27,18 @@ Hotels/Motels/Convention Halls                                 C                
 Marijuana facilities                                                     N                 C                 C            3.440.F
 Medical and dental clinics                                          C                 P                 P           3.440.D.1
 Personal services                                                      C                 N                 N          3.440.D.1
-Product sales, service, and/or display acces-                                 N                 P                 P            3.440.K sory to any manufacturing, fabricating, or processing use
+Product sales, service, and/or display acces-                                 N                 P                 P            3.440.K
+sory to any manufacturing, fabricating, or processing use
 Professional Offices                                                   P                 P                 N          3.440.D.1
 Storage facilities                                                        N                 C                 N            3.440.J
 Automobile, truck, trailer, heavy equipment, recreational vehicle, boat and manufactured home services
-Card-lock fueling stations, truck stops, ser-                              N                 C                 P vice stations, tire shops, and oil change facilities.
+Card-lock fueling stations, truck stops, ser-                              N                 C                 P
+vice stations, tire shops, and oil change facilities.
 Repair and modification shops                               N                 P                 P
 Sales and rentals                                                   N                 P                 P           3.440.D.1
 3.440.D.3
-Wholesale trade/retail/discount sales and ser-                                C                 P                 P           3.440.D.1 vices
+Wholesale trade/retail/discount sales and ser-                                C                 P                 P           3.440.D.1
+vices
 Industrial Uses
 Aggregate resource                                                   N                 N                 P              4.000
 
@@ -45,13 +50,17 @@ Assembly and limited manufacturing                     C                 P      
 Concrete and asphalt manufacturing plants          N                 N                 C
 Electronic and appliance products                         N                 C                 P
 Food and beverage products
-Food processing involving slaughtering,                                  N                 N                 C fermentation, or fat rendering
-Beverage processing involving brewing,                                   C                 P                 P distilling, roasting, or fermentation
+Food processing involving slaughtering,                                  N                 N                 C
+fermentation, or fat rendering
+Beverage processing involving brewing,                                   C                 P                 P
+distilling, roasting, or fermentation
 Other food and beverage products                     P                 P                 P
 Furniture and related products                               N                 P                 P
 Machinery and transportation equipment               N                 C                 P
-Use and temporary storage in the manufac-                                     N                 N                 P turing process of toxic or hazardous material by-products
-The manufacturing or storing of toxic or                                      N                 N                 C hazardous materials when done in compliance with federal and state regulations
+Use and temporary storage in the manufac-                                     N                 N                 P
+turing process of toxic or hazardous material by-products
+The manufacturing or storing of toxic or                                      N                 N                 C
+hazardous materials when done in compliance with federal and state regulations
 Marijuana processors                                             N                 N                 C            3.440.G
 Metal and fabricated metal products
 Primary manufacturing or milling                        N                 N                 P
@@ -78,14 +87,18 @@ Marine industrial or service facilities                          N              
 
 Specific
 Land Use                                                                  IP                LI                GI                   Standards
-Research, experimental, or testing                                              P                 P                 P laboratories
-Sanitary landfills, recycling centers, and                                      N                 N                 C transfer stations.
+Research, experimental, or testing                                              P                 P                 P
+laboratories
+Sanitary landfills, recycling centers, and                                      N                 N                 C
+transfer stations.
 Trade or commercial schools                                     P                 P                 P
 Other Uses
 Agricultural or animal-based uses                             N                 N                 N
-Child-care facilities in conjunction with a                                     C                 C                 C          3.440.D.1 permitted use or an approved conditional use
+Child-care facilities in conjunction with a                                     C                 C                 C          3.440.D.1
+permitted use or an approved conditional use
 Community service uses                                           C                 C                 C
-Public Parks, parkways, trails, and related                                     P                 P                 P facilities
+Public Parks, parkways, trails, and related                                     P                 P                 P
+facilities
 Recreation facilities (active)                                       C                 C                 C
 Gym (up to 5,000 s.f.)
 P                 P                 P            3.420.D

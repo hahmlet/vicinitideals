@@ -13,14 +13,22 @@ Table 3 Maximum Disturbance Area for Urban Low Density Residential Property
 HCA Type 1
 Maximum Disturbance Area
 High
-50 percent of the area of the subject property, up to a maximum of 5,000 square feet Moderate/Low2
-65 percent of the area of the subject property, up to a maximum of 6,000 square feet 1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type.
-For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA. 2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type. 1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type.
-For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA. 2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type.
+50 percent of the area of the subject property, up to a maximum of 5,000 square feet
+Moderate/Low2
+65 percent of the area of the subject property, up to a maximum of 6,000 square feet
+1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type.
+For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA.
+2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type.
+1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type.
+For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA.
+2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type.
 
 Table 4 Maximum Disturbance Area for Other Property Inside the City
 HCA Type                                                                                                                                                 Maximum Disturbance Area1
-High                                                                                                                                                     10 percent of High HCA on the subject property Moderate                                                                                                                                                 15 percent of Moderate HCA on the subject property Low                                                                                                                                                      50 percent of Low HCA on the subject property 1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed.
+High                                                                                                                                                     10 percent of High HCA on the subject property
+Moderate                                                                                                                                                 15 percent of Moderate HCA on the subject property
+Low                                                                                                                                                      50 percent of Low HCA on the subject property
+1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed.
 Table 4 imposes no limit on disturbance area outside an HCA.  1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed.
 Table 4 imposes no limit on disturbance area outside an HCA.
 
@@ -162,13 +170,24 @@ Table 7 Ecological Functional Values of Riparian Corridors
 Ecological function
 Landscape features providing functional values
 Microclimate and shade
-Forest canopy or woody vegetation within 100 feet of a stream; a wetland1; or a flood area2 Streamflow moderation and water storage
-A wetland or other water body3 with a hydrologic connection to a stream; or a flood area2 Bank stabilization, sediment and pollution control
+Forest canopy or woody vegetation within 100 feet of a stream; a wetland1; or a flood area2
+Streamflow moderation and water storage
+A wetland or other water body3 with a hydrologic connection to a stream; or a flood area2
+Bank stabilization, sediment and pollution control
 All sites within 50 feet of a surface stream;
-Forest canopy, woody vegetation, or low structure vegetation/open soils within 100 feet of a stream or a wetland; or forest canopy, woody vegetation, or low structure vegetation/open soils within a flood area; and Forest canopy, woody vegetation, or low structure vegetation/open soils within 100-200 feet of a stream if the slope is greater than 25 percent Large wood and channel dynamics
-Forest canopy within 150 feet of a stream or wetland, or within a flood area; and The channel migration zone is defined by the flood area, but where there is no mapped flood area, a default of 50 feet is established to allow for the channel migration zone.
+Forest canopy, woody vegetation, or low structure vegetation/open soils within 100 feet of a stream or a wetland; or forest canopy, woody vegetation, or low structure vegetation/open soils within a flood area; and
+Forest canopy, woody vegetation, or low structure vegetation/open soils within 100-200 feet of a stream if the slope is greater than 25 percent
+Large wood and channel dynamics
+Forest canopy within 150 feet of a stream or wetland, or within a flood area; and
+The channel migration zone is defined by the flood area, but where there is no mapped flood area, a default of 50 feet is established to allow for the channel migration zone.
 Organic material sources
-Forest canopy or woody vegetation within 100 feet of a stream or wetland, or within a flood area 1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area. 2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value. 3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond. 1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area. 2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value. 3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond.
+Forest canopy or woody vegetation within 100 feet of a stream or wetland, or within a flood area
+1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area.
+2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value.
+3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond.
+1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area.
+2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value.
+3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond.
 
 c. If there is more than one category of HCA on the subject property, then development within a higher-valued HCA shall be considered more detrimental than development within a lower-valued HCA.
 
@@ -214,7 +233,8 @@ Part (c): Miscellaneous Other Habitat-Friendly Design and Construction Practices
 1. Use native vegetation throughout the development (not just in HCA).
 2. Locate landscaping (required by other sections of this Ordinance) adjacent to HCA.
 3. Reduce light spill-off into HCAs from development.
-4. Preserve and maintain existing trees and tree canopy coverage, and plant trees, where appropriate, to maximize future tree canopy coverage. 1 These development practices represent the state of scientific knowledge at the time of the adoption of Chapter 17.25.
+4. Preserve and maintain existing trees and tree canopy coverage, and plant trees, where appropriate, to maximize future tree canopy coverage.
+1 These development practices represent the state of scientific knowledge at the time of the adoption of Chapter 17.25.
 If more effective habitat-friendly practices become available, they may be used.
 
 3. If development in an HCA is approved pursuant to Subsection 17.25.100(B), compliance with the following mitigation standards shall be required, except that the mitigation standards for development in a wetland (as distinct from an HCA that is adjacent to a wetland) shall be only those required by federal and state law.

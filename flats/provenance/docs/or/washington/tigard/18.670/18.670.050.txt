@@ -1,0 +1,270 @@
+§ 18.670.050. Land Use Standards.
+
+A.
+
+General provisions. A list of allowed, restricted, conditional, and prohibited uses is provided in Table 18.670.1.
+
+1.
+
+Allowed (A). Uses that are allowed, subject to all of the applicable provisions of this title.
+
+2.
+
+Restricted (R). Uses that are subject to special requirements, exceptions, or restrictions provided in Subsections 18.670.050.B-D. Use restrictions may be adjusted through an adjustment application as provided in Chapter 18.715, Adjustments, a development design review application as provided in Chapter 18.725, Development Design Reviews, or a planned development review application as provided in Chapter 18.770, Planned Developments.
+
+3.
+
+Conditional (C). Uses that require the approval of the Hearings Officer using discretionary criteria.
+The approval process and criteria are provided in Chapter 18.740, Conditional Uses.
+
+4.
+
+Prohibited (P). Uses that are not allowed under any circumstance and are not adjustable through an adjustment nor a development design review.
+
+Table 18.670.1 Land Uses by Zone     Table 18.670.1 Land Uses by Zone  Table 18.670.1 Land Uses by Zone  Table 18.670.1 Land Uses by Zone
+Land Use Categories                  MUC Zone                          MUE Zone                          MUR Zone
+Residential Use Category             Residential Use Category          Residential Use Category          Residential Use Category
+Residential Use                      A                                 R                                 A
+Civic Use Categories                 Civic Use Categories              Civic Use Categories              Civic Use Categories
+Basic Utility                        R/C                               R/C                               R/C
+Cemetery                             P                                 P                                 P
+Detention Facility                   P                                 P                                 P
+Government Services                  A                                 A                                 A
+Railroad Yard                        P                                 P                                 P
+School or Religious Facility         C                                 C                                 C
+Temporary Shelter                    A                                 A                                 A
+Transportation and Utility Corridor  A                                 A                                 A
+Wireless Communications Facility     R                                 R                                 R
+Commercial Use Categories            Commercial Use Categories         Commercial Use Categories         Commercial Use Categories
+Adult Entertainment                  P                                 P                                 P
+Commercial Lodging                   A                                 A                                 A
+Indoor Sales and Services            R                                 R                                 R
+Major Event Entertainment            C                                 P                                 P
+Mobility Hub                         R                                 R                                 R
+Motor Vehicle Fuel Sales             P                                 A                                 P
+Motor Vehicle Sales and Rental       R                                 R                                 P
+Motor Vehicle Servicing              P                                 R                                 P
+Non-Accessory Parking                R                                 R                                 P
+Office                               A                                 A                                 R
+Outdoor Sales and Services           P                                 P                                 P
+Self-Service Storage                 P                                 P                                 P
+Industrial Use Categories            Industrial Use Categories         Industrial Use Categories         Industrial Use Categories
+Industrial and Manufacturing         R                                 R                                 P
+Off-Site Services                    P                                 R                                 P
+Warehouse and Distribution           P                                 P                                 P
+Waste-Related Facility               P                                 P                                 P
+Wholesale and Equipment Rental       P                                 R                                 P
+
+B.
+
+MUC Zone Use restrictions.
+
+1.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+2.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+3.
+
+Indoor Sales and Services.
+
+a.
+
+The maximum gross floor area is 30,000 square feet per tenant for new buildings and additions.
+New tenants in the existing footprint of existing buildings are exempt from this restriction.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+c.
+
+Outdoor animal kennels are prohibited.
+All animal kennels associated with breeding, boarding, or sales must be contained completely within a building.
+
+d.
+
+Uses with drive-through services are prohibited.
+
+4.
+
+Mobility Hub. A maximum of ten car charging stations is allowed per hub.
+
+5.
+
+Motor Vehicle Sales and Rental.
+
+a.
+
+This use is prohibited outside the Design Review Subdistrict.
+
+b.
+
+All sales and rental inventory, materials and equipment, and vehicle service areas must be contained completely inside a building, except for the existing Motor Vehicle Sales and Rental development located at the northwest corner of Highway 217 and Greenburg Road.
+
+c.
+
+If the use includes accessory motor vehicle servicing activities,
+
+i.
+
+Any adverse impacts from the proposed servicing activities are mitigated to the extent practicable, including, but not limited to, noise, odors, and vibrations;
+
+ii.
+
+All customer vehicle drop-off areas associated with the proposed servicing activities are clearly identified and designed to prevent vehicle idling and queuing outside of a building; and
+
+iii.
+
+The proposed servicing activities and associated driveways, accessways, drive aisles, and parking areas are located and designed to support pedestrian access, safety, and comfort.
+
+6.
+
+Non-Accessory Parking. This use is allowed only as structured parking with at least two floors of parking.
+
+7.
+
+Industrial and Manufacturing. All inventory and materials, except parking, must be contained completely within a building.
+
+C.
+
+MUE Zone Use restrictions.
+
+1.
+
+Residential Use.
+
+a.
+
+Any combination of residential and nonresidential use proposed for the same site and not contained in a mixed-use development requires planned development review.
+
+b.
+
+Allowed civic, allowed commercial, or restricted industrial uses must make up at least 30 percent of the gross floor area.
+
+2.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+3.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+4.
+
+Indoor Sales and Services.
+
+a.
+
+The maximum gross floor area is 30,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+c.
+
+Outdoor animal kennels are prohibited.
+All animal kennels associated with breeding, boarding, or sales must be contained completely within a building.
+
+d.
+
+Uses with drive-through services are prohibited.
+
+5.
+
+Mobility Hub. A maximum of 10 car charging stations is allowed per hub.
+
+6.
+
+Motor Vehicle Sales and Rental. All sales and rental inventory, materials and equipment, and vehicle service areas must be contained completely within a building or located behind a building such that inventory and service areas are not visible from Cascade Avenue.
+
+7.
+
+Motor Vehicle Servicing. All activities and storage, including any vehicle inventory, must be contained completely within a building.
+
+8.
+
+Non-Accessory Parking. This use is allowed only as structured parking with at least two floors of parking.
+
+9.
+
+Industrial and Manufacturing. All inventory and materials, except parking, must be contained completely within a building.
+
+10.
+
+Off-Site Services.
+
+a.
+
+The maximum gross floor area is 20,000 square feet per tenant.
+
+b.
+
+A maximum of 20 vehicles may be parked overnight on-site.
+
+c.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+11.
+
+Wholesale and Equipment Rental.
+
+a.
+
+The maximum gross floor area is 20,000 square feet per tenant.
+
+b.
+
+All inventory and materials, except parking, must be contained completely within a building.
+
+D.
+
+MUR Zone Use restrictions.
+
+1.
+
+Basic Utility.
+
+a.
+
+This use is conditionally allowed.
+
+b.
+
+Data centers are conditionally allowed only on or above the second story of a mixed-use development.
+
+2.
+
+Wireless Communications Facility. See Chapter 18.450, Wireless Communication Facilities, for allowed and restricted facilities.
+
+3.
+
+Indoor Sales and Services. This use is allowed only as part of a mixed-use development.
+
+4.
+
+Office. This use is allowed only as part of a mixed-use development.
+
+(Ord. No. 24-05, 4/23/2024)
+

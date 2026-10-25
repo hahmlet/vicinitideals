@@ -137,21 +137,25 @@ The ground floor window standards of R2 must be met, and the ground level of the
 R3
 i. The distance from the finished floor to the bottom of the ceiling structure above must be at least 12 feet.
 The bottom of the structure above includes supporting beams;
-R3 ii. The area meeting this standard must be at least 25 feet deep, measured from the street-facing facade; and R3 iii.
-Each unit must include a front entrance that is located at the level of the finished grade and can be accessed without steps.
+R3
+ii. The area meeting this standard must be at least 25 feet deep, measured from the street-facing facade; and
+R3
+iii. Each unit must include a front entrance that is located at the level of the finished grade and can be accessed without steps.
 R3
 b. Front setback.
 b. Front setback.
 R3
 i. The portions of the building with residential dwelling units on the ground floor must be set back at least five feet from the street lot line.
-The setback must be landscaped to at least the standards of FMC 19.163.030(E)(1); and/or hard-surfaced for use by pedestrians; and R3 ii.
-Windows must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
+The setback must be landscaped to at least the standards of FMC 19.163.030(E)(1); and/or hard-surfaced for use by pedestrians; and
+R3
+ii. Windows must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
 R3
 c. Raised ground floor.
 c. Raised ground floor.
 R3
 i. The portion of the building with residential dwelling units on the ground floor must have the finished floor of each residential unit at least two feet above the grade of the closest adjoining sidewalk.
-R3 ii. Window must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
+R3
+ii. Window must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
 R3
 Ground Floor Residential Entrances. At least 50 percent of the dwelling units on the street-facing ground floor of a building must provide a pedestrian access between the main entrance of the dwelling and the street.
 The entrance must be set back at least eight feet from the street lot line and have at least two of the following within the setback:
@@ -173,7 +177,8 @@ X
 X
 R3
 c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or
-c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or X
+c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or
+X
 X
 R3
 d. A change of grade where the door to the dwelling unit is 18 to 36 inches above the grade of the right-of-way.
@@ -306,7 +311,8 @@ a. The fixtures must be spaced a maximum of 30 feet apart;
 X
 R10
 b. The bottom of each fixture is a maximum of 15 feet above the adjoining grade or sidewalk; and
-b. The bottom of each fixture is a maximum of 15 feet above the adjoining grade or sidewalk; and X
+b. The bottom of each fixture is a maximum of 15 feet above the adjoining grade or sidewalk; and
+X
 R10
 c. Lights must not project light upward or to the side of the fixture.
 c. Lights must not project light upward or to the side of the fixture.
@@ -329,28 +335,36 @@ Fifteen percent of the plaza must be landscaped with a tree for each 100 square 
 The plaza must include benches or seating that provides at least 15 linear feet of seats.
 The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits.
 The plaza may also count toward meeting standard R7.
-A plaza provided to meet R6 may count toward meeting this standard. 3 pts
+A plaza provided to meet R6 may count toward meeting this standard.
+3 pts
 P2
 Outdoor Recreation Area. Provide at least 800 square feet of outdoor common area with a minimum dimension of 20 feet by 20 feet.
-The outdoor area must meet one of the following: 3 pts
+The outdoor area must meet one of the following:
+3 pts
 P2
 a. The entire outdoor area is a community garden with the area divided into individual raised garden beds.
 The beds are raised at least 12 inches above grade and can each be between 12 and 50 square feet in area.
-Individual beds are separated by pathways at least three feet in width; or 3 pts
+Individual beds are separated by pathways at least three feet in width; or
+3 pts
 P2
 b. The entire outdoor area is a children's play area that includes a play structure at least 100 square feet in area and manufactured to the American Society for Testing and Materials (ASTM) standards for public playground equipment.
-At least four linear feet of seating per 100 square feet of area must be located adjacent to the play structure. 3 pts
+At least four linear feet of seating per 100 square feet of area must be located adjacent to the play structure.
+3 pts
 P2
-Up to 20 percent of the outdoor area may be landscaped to the standards of FMC 19.163.030(E)(1). 3 pts
+Up to 20 percent of the outdoor area may be landscaped to the standards of FMC 19.163.030(E)(1).
+3 pts
 P3
 Additional Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 15 feet.
 For ground floor area associated with a residential use, the height is 12 feet.
-The bottom of the structure includes supporting beams. 2 pts
+The bottom of the structure includes supporting beams.
+2 pts
 P4
 Small Commercial Spaces. Provide at least three separate tenant spaces on the ground floor for commercial use that are a minimum of 300 and a maximum of 800 square feet.
-Each space must include at least one main entrance that faces the street and is within five feet of the street lot line. 2 pts
+Each space must include at least one main entrance that faces the street and is within five feet of the street lot line.
+2 pts
 P5
-Original Art Mural. Provide an original art mural that meets the following requirements: 1 pt
+Original Art Mural. Provide an original art mural that meets the following requirements:
+1 pt
 P5
 a. The mural is on a wall or structure that is visible from Halsey Street; and
 1 pt
@@ -359,13 +373,16 @@ b. The mural is at least 32 square feet in area.
 1 pt
 P6
 Public Art Installation. Provide an art feature on the site that has been approved by the planning commission and is not a mural.
-The feature must be set back a maximum of 15 feet from Halsey Street. 2 pts
+The feature must be set back a maximum of 15 feet from Halsey Street.
+2 pts
 P7
 Water Feature. Provide a water feature, such as a fountain, waterfall, or reflecting pool.
 The feature must be set back a maximum of 20 feet from Halsey Street.
-The water feature must have the following: 1 pt
+The water feature must have the following:
+1 pt
 P7
-a. A feature area of at least six square feet that contains water year-round; and 1 pt
+a. A feature area of at least six square feet that contains water year-round; and
+1 pt
 P7
 b. A bench or seat with six linear feet of seating adjacent to it.
 1 pt
@@ -373,35 +390,46 @@ P7
 The feature can be part of a stormwater facility.
 1 pt
 P8
-Transit Amenities. If there is a transit stop along the site's frontage or within 200 feet of the site, and the site provides the following amenities: 2 pts
+Transit Amenities. If there is a transit stop along the site's frontage or within 200 feet of the site, and the site provides the following amenities:
+2 pts
 P8
-a. A transit shelter approved by Tri-Met (if the stop is located along the site's frontage); 2 pts
+a. A transit shelter approved by Tri-Met (if the stop is located along the site's frontage);
+2 pts
 P8
 b. A pedestrian access plaza that abuts a sidewalk on a public right-of-way.
 The plaza must be a minimum of 500 square feet.
 The plaza must include benches or seating that provides at least six linear feet of seats in addition to any seating within the transit shelter.
-The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits. 2 pts
+The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits.
+2 pts
 P8
-This option may not be used if the transit amenities are provided to receive a parking credit under FMC 19.65.070. 2 pts
+This option may not be used if the transit amenities are provided to receive a parking credit under FMC 19.65.070.
+2 pts
 P9
-Additional Ground Floor Windows. Provide ground floor windows as required by standard R4, except the windows cover at least 70 percent of the applicable ground floor wall area(s). 1 pt
+Additional Ground Floor Windows. Provide ground floor windows as required by standard R4, except the windows cover at least 70 percent of the applicable ground floor wall area(s).
+1 pt
 P10
-Additional Weather Protection. Provide weather protection structures as required by standard R4, except the weather protection is provided along at least 70 percent of the length of the applicable facade(s). 1 pt
+Additional Weather Protection. Provide weather protection structures as required by standard R4, except the weather protection is provided along at least 70 percent of the length of the applicable facade(s).
+1 pt
 P11
-Additional Corner Feature. Provide a corner feature meeting one of the two options allowed to satisfy standard R8, except the option for the type of corner feature must not be the same option used to satisfy standard R8. 1 pt
+Additional Corner Feature. Provide a corner feature meeting one of the two options allowed to satisfy standard R8, except the option for the type of corner feature must not be the same option used to satisfy standard R8.
+1 pt
 P13
 Oversized Opening. Provide an oversized operable door, such as a roll-up door or movable storefront, for at least one ground floor tenant space that faces the street lot line.
 Buildings with more than one ground floor tenant space that faces the street must provide the door opening for at least 50 percent of the tenant spaces that face the street.
-The oversized operable door opening must be at least eight feet wide and cannot open up into utility, garbage, or parking areas. 1 pt
+The oversized operable door opening must be at least eight feet wide and cannot open up into utility, garbage, or parking areas.
+1 pt
 P14
 Public Seating. Provide at least 10 linear feet of seating or bench within 25 feet of a main entrance.
 The seating or bench must be accessible to the sidewalk or trail and the access must be open to the public.
-The seating surface must be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits. 1 pt
+The seating surface must be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits.
+1 pt
 P15
-Pervious Paving. At least 50 percent of all new vehicle area must be surfaced with pervious pavement approved by the public works department. 1 pt
+Pervious Paving. At least 50 percent of all new vehicle area must be surfaced with pervious pavement approved by the public works department.
+1 pt
 P16
 Additional Landscaping with Native Plants. Provide landscaping on 10 percent of the site that meets the standards of FMC 19.163.030.
-At least 30 percent of the total landscaped area must be planted with native species listed on the Metro Native Plant List, and 80 percent of all trees planted on site must be native trees listed on the Metro Native Plant List. 1 pt
+At least 30 percent of the total landscaped area must be planted with native species listed on the Metro Native Plant List, and 80 percent of all trees planted on site must be native trees listed on the Metro Native Plant List.
+1 pt
 
 (Formerly 19.65.070; Ord. 6-2001 § 1; Ord. 1-2022 § 1 (Att.
 A); Ord. 1-2024 § 1 (Att.

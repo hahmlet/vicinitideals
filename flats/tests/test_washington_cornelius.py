@@ -176,7 +176,7 @@ def test_the_single_family_zones_carry_the_sun_rule_as_a_warning(zone: str) -> N
     flag = held["solar_shade_limit"]
     assert flag.value is True
     assert "all structures in all single-family zones" in _text(flag.prov.quote)
-    assert "solar-balance-point" in flag.prov.quote
+    assert "cornelius/18.160/" in flag.prov.quote
     # The old carrier is gone, so nothing can lean on it.
     assert "solar_shade_point" not in CONDITIONS
 

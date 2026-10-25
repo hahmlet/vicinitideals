@@ -384,12 +384,14 @@ A designated Zone AO, AH, AR/AO or AR/AH (or VO) on a community’s flood insura
 Such flooding is characterized by ponding or sheet flow.
 Area of special flood hazard.
 The land in the floodplain within a community subject to a one percent or greater chance of flooding in any given year.
-It is shown on the flood insurance rate map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, or AR. “Special flood hazard area” is synonymous in meaning and definition with the phrase “area of special flood hazard.” (Also see city definition for “floodplain.”) Area of special flood hazard.
+It is shown on the flood insurance rate map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, or AR. “Special flood hazard area” is synonymous in meaning and definition with the phrase “area of special flood hazard.” (Also see city definition for “floodplain.”)
+Area of special flood hazard.
 The land in the floodplain within a community subject to a one percent or greater chance of flooding in any given year.
-It is shown on the flood insurance rate map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, or AR. “Special flood hazard area” is synonymous in meaning and definition with the phrase “area of special flood hazard.” (Also see city definition for “floodplain.”) Area of special flood hazard.
+It is shown on the flood insurance rate map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, or AR. “Special flood hazard area” is synonymous in meaning and definition with the phrase “area of special flood hazard.” (Also see city definition for “floodplain.”)
+Area of special flood hazard.
 The land in the floodplain within a community subject to a one percent or greater chance of flooding in any given year.
-It is shown on the flood insurance rate map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, or AR. “Special flood hazard area” is synonymous in meaning and definition with the phrase “area of special flood hazard.” (Also see city definition for “floodplain.”) Base flood.
-The flood having a one percent chance of being equaled or exceeded in any given year.
+It is shown on the flood insurance rate map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, or AR. “Special flood hazard area” is synonymous in meaning and definition with the phrase “area of special flood hazard.” (Also see city definition for “floodplain.”)
+Base flood. The flood having a one percent chance of being equaled or exceeded in any given year.
 Base flood. The flood having a one percent chance of being equaled or exceeded in any given year.
 Base flood. The flood having a one percent chance of being equaled or exceeded in any given year.
 Base flood elevation (BFE).
@@ -430,12 +432,14 @@ Flood or flooding.
 Flood or flooding.
 1.
 A general and temporary condition of partial or complete inundation of normally dry land areas from:
-A general and temporary condition of partial or complete inundation of normally dry land areas from: a.
+A general and temporary condition of partial or complete inundation of normally dry land areas from:
+a.
 The overflow of inland or tidal waters.
 b.
 The unusual and rapid accumulation or runoff of surface waters from any source.
 c.
-Mudslides (i.e., mudflows) which are proximately caused by flooding as defined in subsection (1)(b) of this definition and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current. 2.
+Mudslides (i.e., mudflows) which are proximately caused by flooding as defined in subsection (1)(b) of this definition and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current.
+2.
 The collapse or subsidence of land along the shore of a lake or other body of water as a result of erosion or undermining caused by waves or currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood or an abnormal tidal surge, or by some similarly unusual and unforeseeable event which results in flooding as defined in subsection (1)(a) of this definition.
 The collapse or subsidence of land along the shore of a lake or other body of water as a result of erosion or undermining caused by waves or currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood or an abnormal tidal surge, or by some similarly unusual and unforeseeable event which results in flooding as defined in subsection (1)(a) of this definition.
 Flood insurance rate map (FIRM).
@@ -466,12 +470,12 @@ Floodproofing. Any combination of structural and nonstructural additions, change
 Floodproofing. Any combination of structural and nonstructural additions, changes, or adjustments to structures which reduce or eliminate risk of flood damage to real estate or improved real property, water and sanitary facilities, structures, and their contents.
 Floodproofing. Any combination of structural and nonstructural additions, changes, or adjustments to structures which reduce or eliminate risk of flood damage to real estate or improved real property, water and sanitary facilities, structures, and their contents.
 Floodway. The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
-Also referred to as “regulatory floodway.” Floodway.
-The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
-Also referred to as “regulatory floodway.” Floodway.
-The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
-Also referred to as “regulatory floodway.” Floodway fringe.
-The area of the floodplain, lying outside the floodway, which does not contribute appreciably to the passage of floodwater, but serves as a retention area.
+Also referred to as “regulatory floodway.”
+Floodway. The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
+Also referred to as “regulatory floodway.”
+Floodway. The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
+Also referred to as “regulatory floodway.”
+Floodway fringe. The area of the floodplain, lying outside the floodway, which does not contribute appreciably to the passage of floodwater, but serves as a retention area.
 Floodway fringe. The area of the floodplain, lying outside the floodway, which does not contribute appreciably to the passage of floodwater, but serves as a retention area.
 Floodway fringe. The area of the floodplain, lying outside the floodway, which does not contribute appreciably to the passage of floodwater, but serves as a retention area.
 Functionally dependent use.
@@ -494,27 +498,34 @@ Historic structure. Any structure that is:
 Historic structure. Any structure that is:
 1.
 Listed individually in the National Register of Historic Places (a listing maintained by the Department of the Interior) or preliminarily determined by the Secretary of the Interior as meeting the requirements for individual listing on the National Register;
-Listed individually in the National Register of Historic Places (a listing maintained by the Department of the Interior) or preliminarily determined by the Secretary of the Interior as meeting the requirements for individual listing on the National Register; 2.
+Listed individually in the National Register of Historic Places (a listing maintained by the Department of the Interior) or preliminarily determined by the Secretary of the Interior as meeting the requirements for individual listing on the National Register;
+2.
 Certified or preliminarily determined by the Secretary of the Interior as contributing to the historical significance of a registered historic district or a district preliminarily determined by the Secretary to qualify as a registered historic district;
-Certified or preliminarily determined by the Secretary of the Interior as contributing to the historical significance of a registered historic district or a district preliminarily determined by the Secretary to qualify as a registered historic district; 3.
-Individually listed on a state inventory of historic places in states with historic preservation programs which have been approved by the Secretary of the Interior; or Individually listed on a state inventory of historic places in states with historic preservation programs which have been approved by the Secretary of the Interior; or 4.
+Certified or preliminarily determined by the Secretary of the Interior as contributing to the historical significance of a registered historic district or a district preliminarily determined by the Secretary to qualify as a registered historic district;
+3.
+Individually listed on a state inventory of historic places in states with historic preservation programs which have been approved by the Secretary of the Interior; or
+Individually listed on a state inventory of historic places in states with historic preservation programs which have been approved by the Secretary of the Interior; or
+4.
 Individually listed on a local inventory of historic places in communities with historic preservation programs that have been certified either:
-Individually listed on a local inventory of historic places in communities with historic preservation programs that have been certified either: a.
-By an approved state program as determined by the Secretary of the Interior; or b.
+Individually listed on a local inventory of historic places in communities with historic preservation programs that have been certified either:
+a.
+By an approved state program as determined by the Secretary of the Interior; or
+b.
 Directly by the Secretary of the Interior in states without approved programs.
-(Also see city’s “historic definitions.”) Lowest floor.
-The lowest floor of the lowest enclosed area (including basement).
+(Also see city’s “historic definitions.”)
+Lowest floor. The lowest floor of the lowest enclosed area (including basement).
 An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage in an area other than a basement area is not considered a building’s lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements of this chapter.
 Lowest floor. The lowest floor of the lowest enclosed area (including basement).
 An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage in an area other than a basement area is not considered a building’s lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements of this chapter.
 Lowest floor. The lowest floor of the lowest enclosed area (including basement).
 An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage in an area other than a basement area is not considered a building’s lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements of this chapter.
 Manufactured dwelling. A structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
-The term “manufactured dwelling” does not include a “recreational vehicle” and is synonymous with “manufactured home.” Manufactured dwelling.
-A structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
-The term “manufactured dwelling” does not include a “recreational vehicle” and is synonymous with “manufactured home.” Manufactured dwelling.
-A structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
-The term “manufactured dwelling” does not include a “recreational vehicle” and is synonymous with “manufactured home.” Manufactured dwelling park or subdivision.
+The term “manufactured dwelling” does not include a “recreational vehicle” and is synonymous with “manufactured home.”
+Manufactured dwelling. A structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
+The term “manufactured dwelling” does not include a “recreational vehicle” and is synonymous with “manufactured home.”
+Manufactured dwelling. A structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
+The term “manufactured dwelling” does not include a “recreational vehicle” and is synonymous with “manufactured home.”
+Manufactured dwelling park or subdivision.
 A parcel (or contiguous parcels) of land divided into two or more manufactured dwelling lots for rent or sale.
 Manufactured dwelling park or subdivision.
 A parcel (or contiguous parcels) of land divided into two or more manufactured dwelling lots for rent or sale.
@@ -537,7 +548,8 @@ Built on a single chassis;
 Built on a single chassis;
 2.
 Four hundred square feet or less when measured at the largest horizontal projection;
-Four hundred square feet or less when measured at the largest horizontal projection; 3.
+Four hundred square feet or less when measured at the largest horizontal projection;
+3.
 Designed to be self-propelled or permanently towable by a light duty truck; and
 Designed to be self-propelled or permanently towable by a light duty truck; and
 4.
@@ -578,10 +590,14 @@ This term includes structures which have incurred “substantial damage,” rega
 The term does not, however, include either:
 Substantial improvement. Any reconstruction, rehabilitation, addition, or other improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure before the “start of construction” of the improvement.
 This term includes structures which have incurred “substantial damage,” regardless of the actual repair work performed.
-The term does not, however, include either: 1.
-Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or 2.
-Any alteration of a “historic structure”; provided, that the alteration will not preclude the structure’s continued designation as a “historic structure.” Any alteration of a “historic structure”; provided, that the alteration will not preclude the structure’s continued designation as a “historic structure.” Variance.
-A grant of relief by West Linn from the terms of a floodplain management regulation.
+The term does not, however, include either:
+1.
+Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+2.
+Any alteration of a “historic structure”; provided, that the alteration will not preclude the structure’s continued designation as a “historic structure.”
+Any alteration of a “historic structure”; provided, that the alteration will not preclude the structure’s continued designation as a “historic structure.”
+Variance. A grant of relief by West Linn from the terms of a floodplain management regulation.
 Variance. A grant of relief by West Linn from the terms of a floodplain management regulation.
 Variance. A grant of relief by West Linn from the terms of a floodplain management regulation.
 Violation. The failure of a structure or other development to be fully compliant with the community’s floodplain management regulations.
@@ -720,9 +736,9 @@ Historic resource. A historic landmark or historic district listed on the Nation
 Historic resource. A historic landmark or historic district listed on the National Register or designated as a local historic landmark or historic district by the City Council.
 Massing. The perception of the general shape, form, and size of a building in three dimensions, not just its outline from a single perspective.
 Massing. The perception of the general shape, form, and size of a building in three dimensions, not just its outline from a single perspective.
-National Register of Historic Places. The nation’s official list of buildings, structures, sites, objects, and districts important in the nation’s history and maintained by the National Park Service in Washington, D.C., and hereinafter referred to as the “National Register.” National Register of Historic Places.
-The nation’s official list of buildings, structures, sites, objects, and districts important in the nation’s history and maintained by the National Park Service in Washington, D.C., and hereinafter referred to as the “National Register.” Non-contributing.
-A building, structure, object, or site originally constructed within the applicable period of significance that does not retain or exhibit sufficient integrity (due to its location, design, setting, materials, workmanship, feeling, and association) to convey a sense of history.
+National Register of Historic Places. The nation’s official list of buildings, structures, sites, objects, and districts important in the nation’s history and maintained by the National Park Service in Washington, D.C., and hereinafter referred to as the “National Register.”
+National Register of Historic Places. The nation’s official list of buildings, structures, sites, objects, and districts important in the nation’s history and maintained by the National Park Service in Washington, D.C., and hereinafter referred to as the “National Register.”
+Non-contributing. A building, structure, object, or site originally constructed within the applicable period of significance that does not retain or exhibit sufficient integrity (due to its location, design, setting, materials, workmanship, feeling, and association) to convey a sense of history.
 These properties do not strengthen the historic integrity of an existing or potential historic district in their current condition.
 Non-contributing. A building, structure, object, or site originally constructed within the applicable period of significance that does not retain or exhibit sufficient integrity (due to its location, design, setting, materials, workmanship, feeling, and association) to convey a sense of history.
 These properties do not strengthen the historic integrity of an existing or potential historic district in their current condition.
@@ -749,9 +765,10 @@ The dates stated in the official designation of a historic district that identif
 Primary structure. The principal structure on a site, typically a residence or a commercial building.
 Primary structure. The principal structure on a site, typically a residence or a commercial building.
 Property pending designation.
-A building, structure, site, or object for which a formal application for local historic designation has been initiated, or for which an application has been submitted to the State Historic Preservation Office for nomination to the National Register, or a building, structure, site, or object within a proposed historic district for which a formal application for historic designation has been submitted, but which has not yet been reviewed by the Keeper of the National Register, or has been reviewed by the Keeper and determined to be “eligible.” Property pending designation.
-A building, structure, site, or object for which a formal application for local historic designation has been initiated, or for which an application has been submitted to the State Historic Preservation Office for nomination to the National Register, or a building, structure, site, or object within a proposed historic district for which a formal application for historic designation has been submitted, but which has not yet been reviewed by the Keeper of the National Register, or has been reviewed by the Keeper and determined to be “eligible.” Rehabilitation.
-The process of returning a historic resource to a state of utility through repair, alterations, and additions, which makes possible an efficient use while preserving those portions or features of the historic resource that convey its historic significance.
+A building, structure, site, or object for which a formal application for local historic designation has been initiated, or for which an application has been submitted to the State Historic Preservation Office for nomination to the National Register, or a building, structure, site, or object within a proposed historic district for which a formal application for historic designation has been submitted, but which has not yet been reviewed by the Keeper of the National Register, or has been reviewed by the Keeper and determined to be “eligible.”
+Property pending designation.
+A building, structure, site, or object for which a formal application for local historic designation has been initiated, or for which an application has been submitted to the State Historic Preservation Office for nomination to the National Register, or a building, structure, site, or object within a proposed historic district for which a formal application for historic designation has been submitted, but which has not yet been reviewed by the Keeper of the National Register, or has been reviewed by the Keeper and determined to be “eligible.”
+Rehabilitation. The process of returning a historic resource to a state of utility through repair, alterations, and additions, which makes possible an efficient use while preserving those portions or features of the historic resource that convey its historic significance.
 Rehabilitation. The process of returning a historic resource to a state of utility through repair, alterations, and additions, which makes possible an efficient use while preserving those portions or features of the historic resource that convey its historic significance.
 Scale. The proportions of a building in relation to its surroundings, or the size of parts or details of the building, particularly in relation to the size of a person or adjacent structure.
 Scale refers to the apparent size, not the actual size.
@@ -768,9 +785,12 @@ An architectural style that was intended to create visual continuity and a prosp
 Defining characteristics include:
 Western false front.
 An architectural style that was intended to create visual continuity and a prosperous urban atmosphere during the early settlement period of American western towns.
-Defining characteristics include: 1.
-The street facing facade(s) rises to form a parapet (upper wall) which hides most or nearly all of the roof; 2.
-The roof is almost always a front gable, though gambrel and bowed roofs are occasionally found; 3.
+Defining characteristics include:
+1.
+The street facing facade(s) rises to form a parapet (upper wall) which hides most or nearly all of the roof;
+2.
+The roof is almost always a front gable, though gambrel and bowed roofs are occasionally found;
+3.
 The street facing facade(s) may exhibit greater ornamentation than other sides of the building.
 
 Home occupation. Any activity carried out for gain by a resident and conducted as a customary, incidental, and accessory use in the resident’s dwelling unit.
@@ -1290,10 +1310,10 @@ Sign, marquee. Any sign affixed to or constructed in a permanent roofed structur
 Sign, non-conforming. Any sign lawfully installed prior to the effective date of this code, or any subsequent amendment thereto, which does not meet the current applicable standards for compliance.
 Sign, non-conforming. Any sign lawfully installed prior to the effective date of this code, or any subsequent amendment thereto, which does not meet the current applicable standards for compliance.
 Sign, permanent. A sign constructed of durable materials such as wood, plastic, or metal which can withstand the deteriorating effects of weathering (e.g., tearing, cracking, peeling, warping) for a period of not less than six years.
-See illustration for “Sign.” Sign, permanent.
-A sign constructed of durable materials such as wood, plastic, or metal which can withstand the deteriorating effects of weathering (e.g., tearing, cracking, peeling, warping) for a period of not less than six years.
-See illustration for “Sign.” Sign, roof.
-A sign erected upon or above a roof or parapet wall of a building and which is wholly or partially supported by said building.
+See illustration for “Sign.”
+Sign, permanent. A sign constructed of durable materials such as wood, plastic, or metal which can withstand the deteriorating effects of weathering (e.g., tearing, cracking, peeling, warping) for a period of not less than six years.
+See illustration for “Sign.”
+Sign, roof. A sign erected upon or above a roof or parapet wall of a building and which is wholly or partially supported by said building.
 Sign, roof. A sign erected upon or above a roof or parapet wall of a building and which is wholly or partially supported by said building.
 Sign, subdivision monument.
 A sign at the entry to a subdivision on land owned by the homeowners association or the developer.

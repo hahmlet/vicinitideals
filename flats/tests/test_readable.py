@@ -165,3 +165,62 @@ def test_a_web_prints_note_marker_alone_opens_a_block() -> None:
     got = clean(lines)
     assert got.lines[0] == LONG
     assert "[2]" in got.lines[1]
+
+
+def test_sub_row_labels_stay_on_their_own_lines() -> None:
+    """Troutdale 3.230 sets labels the rows below share ("without alley
+    access", "from street") on lines of their own between rows of values.
+    Read as the rest of the row above, "from street" printed after the 20s of
+    the garage-door row, and the next row joined onto it."""
+    lines = [
+        "   Front yard:",
+        "        without alley access",
+        "            to the garage door of units with a driveway                                      20                  20",
+        "           from street",
+        "            to the front façade of a residential unit                        15                  15",
+        "            to the front porch of a residential unit                          10                  10",
+    ]
+    got = clean(lines)
+    assert got.lines == tuple(line.strip() for line in lines)
+    _same(lines, got)
+    # the last cell of a row still takes the words that wrap under it
+    fee = [
+        "TYPE I LAND DIVISION                                                    $15.00",
+        "                                                   per lot plus actual City Costs",
+    ]
+    assert clean(fee).lines == ("TYPE I LAND DIVISION                                                    $15.00 per lot plus actual City Costs",)
+    # and prose spaced once in the middle is not a row of values (Durham 3.7)
+    prose = [
+        "3.7.1.4.2         for 3 to 49 dwelling units, 1 two-way at least 30 feet wide or 2 one               -way each at",
+        "least 20 feet wide, 5 foot sidewalk required on one side, no curb required;",
+    ]
+    assert len(clean(prose).lines) == 1
+
+
+def test_a_web_prints_cells_never_join_on_width() -> None:
+    """A web print has no margin: each line is a whole paragraph or a whole
+    table cell, however long. Joined because the cell above ran past 80
+    characters, Fairview's "10 ft" and West Linn's "CU" printed as the last
+    words of the standard beside them, and Gladstone's notes 1-3 as one."""
+    cell = "The ground floor commercial space must occupy a minimum of 50 percent of the width of the total street frontage."
+    lines = [cell, "10 ft", LONG, "CU", LONG + " to provide", "access to the street."]
+    got = clean(lines, margin=False)
+    assert got.lines == (cell, "10 ft", LONG, "CU", LONG + " to provide access to the street.")
+    _same(lines, got)
+    # a PDF line that ran to the margin still carries on
+    assert clean([LONG, "CU and more"]).lines == (LONG + " CU and more",)
+    # an enumerator alone on its line opens a block in a web print only: in a
+    # PDF a sentence can end on a number ("a central angle of" / "14.")
+    alone = ["inundation of normally dry land areas from:", "a.", "Overflow of waters."]
+    assert clean(alone, margin=False).lines[1] == "a."
+    angle = ["THENCE following the arc of a 477.50 foot radius curve to the right, through a central angle of", "14."]
+    assert len(clean(angle).lines) == 1
+
+
+def test_a_lower_case_roman_item_opens_a_block() -> None:
+    """Troutdale and King City number items "i.", "ii.", "iii."; "ii." read
+    as the end of the item above, so each item began on the line before."""
+    lines = ["i.      Face the street; and", "ii.      Be at an angle of up to 45 degrees."]
+    got = clean(lines)
+    assert got.lines == ("i.      Face the street; and", "ii.      Be at an angle of up to 45 degrees.")
+    _same(lines, got)
