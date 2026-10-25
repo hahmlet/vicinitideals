@@ -13,8 +13,8 @@ C. Administration.
 D. Submittal requirements.
 1. In addition to the application form and information required in Section 16.44.030, the applicant shall submit each of the following:
 a. A site plan, with the number of copies to be determined at the preapplication conference, and necessary data or narrative which explains how the development conforms to the standards, and:
-i. The scale for site plan shall be an engineering scale; and ii.
-All drawings of structure elevations or floor plans shall be a standard architectural scale, being one-fourth inch or one-eighth inch.
+i. The scale for site plan shall be an engineering scale; and
+ii. All drawings of structure elevations or floor plans shall be a standard architectural scale, being one-fourth inch or one-eighth inch.
 b. The site plan, data, narrative, and reports shall include the following:
 i. An existing site conditions analysis as described in Section 16.114.150.E;
 ii. A site plan, as detailed in Section

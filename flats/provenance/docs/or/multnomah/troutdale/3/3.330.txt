@@ -8,10 +8,12 @@ Minimum lot depth (ft.)                                                         
 Minimum lot frontage (ft.)                                                                        20                      50
 Setbacks (ft):
 Front yard                                                                                            20                      20
-Side yard when abutting a non-residential zoning district                                 0                        0
+Side yard
+when abutting a non-residential zoning district                                 0                        0
 when abutting a residential zoning district                                 see note 1         see note 1
 Street side yard                                                                                   10                       5
-Rear yard when abutting a non-residential zoning district                                 0                        0
+Rear yard
+when abutting a non-residential zoning district                                 0                        0
 when abutting a residential zoning district                                 see note 2         see note 2
 In cases of insufficient right-of-way                                               see note 3         see note 3
 Maximum building height (ft.)                                                                  45                      45

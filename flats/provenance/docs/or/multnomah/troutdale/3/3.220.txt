@@ -47,9 +47,12 @@ Kiosks (drive-thru only)                                 C                    C 
 
 Specific
 Land Use                                                      MU-1             MU-2             MU-3                                   Standards
-Mobile food vendor (individually                                       P                    P                    P                5.200 placed, in park or right-of-way)
-Mobile food vendor (individually                                       P                    P                    N                5.200 placed, on privately owned lot)
-Food cart pod, micro-retail pod, or out-                                  P                    P                    C door market
+Mobile food vendor (individually                                       P                    P                    P                5.200
+placed, in park or right-of-way)
+Mobile food vendor (individually                                       P                    P                    N                5.200
+placed, on privately owned lot)
+Food cart pod, micro-retail pod, or out-                                  P                    P                    C
+door market
 Financial institutions (no drive-thru)                  P                    P                    P
 Financial institutions (with drive-thru)               P                    P                    P
 Personal services                                             P                    P                    P

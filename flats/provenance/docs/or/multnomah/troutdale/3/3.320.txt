@@ -32,8 +32,10 @@ Land Use                                                                        
 Restaurants & bars (no drive-thru)                                      P                    P
 Restaurants & bars (with drive-thru)                                   P                    P
 Kiosks (drive-thru only)                                                       P                    P                 5.200
-Mobile food vendor (individually placed, in park or                                           P                    P                 5.200 right-of-way)
-Mobile food vendor (individually placed, on pri-                                              P                    P                 5.200 vately owned lot)
+Mobile food vendor (individually placed, in park or                                           P                    P                 5.200
+right-of-way)
+Mobile food vendor (individually placed, on pri-                                              P                    P                 5.200
+vately owned lot)
 Food cart pod, micro-retail pod, or outdoor market                P                    P                 5.200
 Financial institutions (no drive-thru)                                        P                    P
 Financial institutions (with drive-thru)                                     P                    P

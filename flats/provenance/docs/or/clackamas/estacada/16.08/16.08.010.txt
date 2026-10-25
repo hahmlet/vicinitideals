@@ -441,7 +441,8 @@ The terms "street", "access drive" and "highway" for the purposes of the ordinan
 
 1 "Arterial" means a street designed to carry traffic from one community to another, to carry traffic to and from major traffic generators and to carry through traffic.
 
-2 "Collector or secondary street" means a street designed to carry traffic between minor streets and the arterial system, to function as primary traffic carries within a neighborhood, to carry traffic to local traffic generators, and in commercial and industrial areas, This street classification includes Major and Minor collectors. to provide access to commercial and industrial properties.
+2 "Collector or secondary street" means a street designed to carry traffic between minor streets and the arterial system, to function as primary traffic carries within a neighborhood, to carry traffic to local traffic generators, and in commercial and industrial areas, This street classification includes Major and Minor collectors.
+to provide access to commercial and industrial properties.
 
 3 "Cul-de-sac" or "dead end street" means a minor street with only one outlet which provides a vehicular turnaround.
 

@@ -1,0 +1,72 @@
+[
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "5e3ae40cc60faebb2b934b222bae3d4d079f4e3a3c5838de22d8b4de26291df3",
+  "new_quote": "or/clackamas/west-linn/02/02.030.txt#L882-L883",
+  "old_fingerprint": "50d5b2bca572d9d5629ec781759dc4850292e19ee42294bb2eda5dbf99e07149",
+  "old_quote": "or/clackamas/west-linn/02/02.030.txt#L862-L863",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "ba6e701dce9c8860483668cef56fa319413130bcbff654e95cdf7ca23c4f55e8",
+  "new_quote": "or/clackamas/west-linn/02/02.030.txt#L880,L891",
+  "old_fingerprint": "74a7039a9084f86c10866313ef24c877402273c8adf7898c15da62eb5de1336f",
+  "old_quote": "or/clackamas/west-linn/02/02.030.txt#L860,L871",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "2d6a652cf6a1baf67931f910cf185ee4ed65689e376afe20c487cd2c90f5d1cd",
+  "new_quote": "or/clackamas/west-linn/08/08.070.txt#L45",
+  "old_fingerprint": "7aa1d44fa5f2dc47d3e2bfd71b816fd4616fdaa3c8fdc34f1be9cf909015656b",
+  "old_quote": "or/clackamas/west-linn/08/08.070.txt#L44",
+  "when_key": "",
+  "zone": "R-40"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "b35935d0f052347e27754f9742acf8a6b2a43c286366156ff1a6112c491ce189",
+  "new_quote": "or/clackamas/west-linn/08/08.070.txt#L54-L55",
+  "old_fingerprint": "41b7fa1b5ee79141a6effcf3ac5b1ca95d8857b2f80ab4fcb493b158aef4a124",
+  "old_quote": "or/clackamas/west-linn/08/08.070.txt#L53-L54",
+  "when_key": "",
+  "zone": "R-40"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "ede235044fcbf2fd48220b071e71f4478fa1a9b3638be3155a0fc1938b20c158",
+  "new_quote": "or/clackamas/west-linn/16/16.070.txt#L51-L53",
+  "old_fingerprint": "6b3199a16632e49f39ba672f0b5722aee07ebfb0af955d49604e24b8ed2e27d8",
+  "old_quote": "or/clackamas/west-linn/16/16.070.txt#L49-L51",
+  "when_key": "",
+  "zone": "R-2.1"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "156dfd649c9e6b28857f2e5483d749a871c04faa18d78f8d0e3e276f45b6acc9",
+  "new_quote": "or/clackamas/west-linn/16/16.070.txt#L57,L59",
+  "old_fingerprint": "96770900e7b9d525d27d3456e7db066cb7aa2b4f87cd74f0edfcadcd44dcf0c5",
+  "old_quote": "or/clackamas/west-linn/16/16.070.txt#L55,L57",
+  "when_key": "",
+  "zone": "R-2.1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/west-linn",
+  "new_fingerprint": "258b1ed23061268b07d86e58dc240ebad27e5c6bea7902cb9b2e7b9300bd8df1",
+  "new_quote": "or/clackamas/west-linn/16/16.070.txt#L45",
+  "old_fingerprint": "16df87255a723874e090059ab004c5c4b17fce79309b2332748e407f207adeb7",
+  "old_quote": "or/clackamas/west-linn/16/16.070.txt#L44",
+  "when_key": "",
+  "zone": "R-2.1"
+ }
+]

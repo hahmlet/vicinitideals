@@ -46,8 +46,8 @@ i. Dwelling, multi, mixed-use, and commercial developments shall comply with the
 [4] Applicable to building elevations facing public parks and open spaces.
 [5] Applicable to dwellings in a cluster or grouping, either facing a shared open space (e.g., a common courtyard) or a pedestrian path.
 [6] Applicable to ground floor dwellings with a primary entrance with access from the street or shared open space (e.g., a common courtyard), when the primary entrance is located:
-i. Within ten feet of the street-facing property line, or ii.
-Within the front yard setback, or
+i. Within ten feet of the street-facing property line, or
+ii. Within the front yard setback, or
 iii. Within ten feet of a shared open space common tractor easement.
 Table 16.114-5 Applicable Building Design Standards
 
@@ -126,8 +126,8 @@ Weather Protection
 9 ft. Vertical Clearance
 No requirement No requirement
 25 Minimum ground floor height standard shall be limited to commercial uses on the ground floor.
-i. Lot frontages that contain dwelling-multi, mixed-use, and commercial development shall locate the buildings so that at least sixty percent is occupied by the building as illustrated in Figure 16.114-6. ii.
-Weather protection shall be provided with a recessed entryway, an awning or other projected element, or a combination of those methods.
+i. Lot frontages that contain dwelling-multi, mixed-use, and commercial development shall locate the buildings so that at least sixty percent is occupied by the building as illustrated in Figure 16.114-6.
+ii. Weather protection shall be provided with a recessed entryway, an awning or other projected element, or a combination of those methods.
 Figure 16.114-5 Transparency
 4. Main entrance.
 a. Elevation(s) of dwelling-multi, mixed-use, or commercial buildings that contain a primary building entrance or multiple tenant entrance shall be designed to comply with the standards of Table 16.114-6.
@@ -139,10 +139,10 @@ Figure 16.114-7 Main Entrances
 c. Be no further than eight feet behind the longest street-facing wall of the building.
 d. Face the street, be at an angle of up to forty-five degrees from the street, or open onto a porch.
 If the entrance opens onto a porch, the porch shall meet all of the following additional standards:
-i. Be at least twenty-five square feet in area with a minimum four-foot depth, ii.
-Have at least one porch entry facing the street, iii.
-Have a roof that is no more than twelve feet above the floor of the porch, and iv.
-Have a roof that covers at least thirty percent of the porch area.
+i. Be at least twenty-five square feet in area with a minimum four-foot depth,
+ii. Have at least one porch entry facing the street,
+iii. Have a roof that is no more than twelve feet above the floor of the porch, and
+iv. Have a roof that covers at least thirty percent of the porch area.
 5. Detailed design.
 Buildings shall include at least five of the following features.
 See Figure

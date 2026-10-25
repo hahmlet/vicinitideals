@@ -39,7 +39,8 @@ Rear yard
 Maximum building height
 Maximum building height
 40 ft
-Except for steeply sloped lots, in which case the provisions of Chapter 41 CDC shall apply Maximum lot coverage
+Except for steeply sloped lots, in which case the provisions of Chapter 41 CDC shall apply
+Maximum lot coverage
 Maximum lot coverage
 25%
 Maximum lot coverage does not apply to cottage clusters.

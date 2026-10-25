@@ -126,12 +126,14 @@ BUILDING LOCATION AND ORIENTATION
 BUILDING LOCATION AND ORIENTATION
 BUILDING LOCATION AND ORIENTATION
 BUILDING LOCATION AND ORIENTATION
-All building entrances are recessed or covered by pedestrian shelters: No = 0, Yes = 2 N/A
+All building entrances are recessed or covered by pedestrian shelters: No = 0, Yes = 2
+N/A
 0
 1
 2
 Primary building entrances are at least fifty (50) percent transparent so that two-way views, in and out of a building, are possible.
-This standard can be met by a door with a window, a transom window above the door, or sidelights beside the door: No = 0, Yes = 2 N/A
+This standard can be met by a door with a window, a transom window above the door, or sidelights beside the door: No = 0, Yes = 2
+N/A
 0
 1
 2
@@ -150,11 +152,13 @@ N/A
 0
 1
 2
-Windows on buildings fronting Broadway Street incorporates trim, reveals or recesses of not less than four (4) inches in width or depth: No = 0, Yes = 2 N/A
+Windows on buildings fronting Broadway Street incorporates trim, reveals or recesses of not less than four (4) inches in width or depth: No = 0, Yes = 2
+N/A
 0
 1
 2
-Wall-mounted lighting consistent with the architecture of the building illuminates primary building entrances and building mounted signage: No = 0, Yes = 1 N/A
+Wall-mounted lighting consistent with the architecture of the building illuminates primary building entrances and building mounted signage: No = 0, Yes = 1
+N/A
 0
 1
 2
@@ -168,20 +172,24 @@ BUILDING LINE AND RHYTHM
 BUILDING LINE AND RHYTHM
 BUILDING LINE AND RHYTHM
 BUILDING LINE AND RHYTHM
-New building design follows prominent horizontal lines on existing adjacent buildings, including elements such as window trim, parapet line, or awning line: No = 0, Yes = 2 N/A
+New building design follows prominent horizontal lines on existing adjacent buildings, including elements such as window trim, parapet line, or awning line: No = 0, Yes = 2
+N/A
 0
 1
 2
-New buildings maintain clear visual division between ground floor and upper floors: No = 0, Yes = 1 N/A
+New buildings maintain clear visual division between ground floor and upper floors: No = 0, Yes = 1
+N/A
 0
 1
 2
 New buildingsincorporate rhythmic divisions relating to historic building patterns and proportions.
-For example, front elevations may be be articulated (e.g. defined by an offset, recess, projection or similar "break" in the wall plane) not less than once every twenty-five (25) feet: No = 0, Yes = 2 N/A
+For example, front elevations may be be articulated (e.g. defined by an offset, recess, projection or similar "break" in the wall plane) not less than once every twenty-five (25) feet: No = 0, Yes = 2
+N/A
 0
 1
 2
-New buildings reflect vertical orientation through volume, roof form, and/or surface detail, including elements such as vertically oriented sash windows, brick or stucco cladding and trim, or board and batten siding: No = 0, Yes = 2 N/A
+New buildings reflect vertical orientation through volume, roof form, and/or surface detail, including elements such as vertically oriented sash windows, brick or stucco cladding and trim, or board and batten siding: No = 0, Yes = 2
+N/A
 0
 1
 2
@@ -195,15 +203,18 @@ MATERIALS AND COLOR
 MATERIALS AND COLOR
 MATERIALS AND COLOR
 MATERIALS AND COLOR
-All four sides of the building incorporate complementary exteriors: No = 0, Yes = 1 N/A
+All four sides of the building incorporate complementary exteriors: No = 0, Yes = 1
+N/A
 0
 1
 2
-Pitched roofs are wood, slate, cement tile, asphalt shingles, flat metal or standing rib seam sheet metal: No = 0, Yes = 2 N/A
+Pitched roofs are wood, slate, cement tile, asphalt shingles, flat metal or standing rib seam sheet metal: No = 0, Yes = 2
+N/A
 0
 1
 2
-Buildings fronting Broadway Street have cornices or parapets that incorporate materials that are consistent with overall composition of the building: No = 0, Yes = 2 N/A
+Buildings fronting Broadway Street have cornices or parapets that incorporate materials that are consistent with overall composition of the building: No = 0, Yes = 2
+N/A
 0
 1
 2
@@ -217,15 +228,18 @@ PEDESTRIAN SHELTERS, PUBLIC SPACE
 PEDESTRIAN SHELTERS, PUBLIC SPACE
 PEDESTRIAN SHELTERS, PUBLIC SPACE
 PEDESTRIAN SHELTERS, PUBLIC SPACE
-Buildings fronting Broadway Street contain pedestrian shelters such as awnings, canopies, or recesses at least five (5) feet over the pedestrian area along a minimum sixty percent (60%) of ground floor elevation: No = 0, Yes = 2 N/A
+Buildings fronting Broadway Street contain pedestrian shelters such as awnings, canopies, or recesses at least five (5) feet over the pedestrian area along a minimum sixty percent (60%) of ground floor elevation: No = 0, Yes = 2
+N/A
 0
 1
 2
-At least three percent (3%) and not less than three hundred (300) square feet of each new development site is designated and improved as ADA accessible civic space: No = 0, Yes = 1 N/A
+At least three percent (3%) and not less than three hundred (300) square feet of each new development site is designated and improved as ADA accessible civic space: No = 0, Yes = 1
+N/A
 0
 1
 2
-Street frontages are improved with pedestrian amenities, as defined in EMC 16.08.010, equal to or greater than 0.5% of the estimated construction cost of the proposed building(s): No = 0, Yes = 2 N/A
+Street frontages are improved with pedestrian amenities, as defined in EMC 16.08.010, equal to or greater than 0.5% of the estimated construction cost of the proposed building(s): No = 0, Yes = 2
+N/A
 0
 1
 2

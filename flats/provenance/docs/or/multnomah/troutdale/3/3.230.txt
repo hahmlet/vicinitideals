@@ -29,8 +29,13 @@ Minimum lot depth (ft.)                                                   see 3.
 Minimum lot frontage (ft.)                                                       15                  15                  15
 Minimum setbacks (ft):                                                                                                 see 3.230.A
 Front yard:
-without alley access to the garage door of units with a driveway                                      20                  20 from street to the front façade of a residential unit                        15                  15
-to the front porch of a residential unit                          10                  10 with alley access to the front façade of a residential unit                        10                  10
+without alley access
+to the garage door of units with a driveway                                      20                  20
+from street
+to the front façade of a residential unit                        15                  15
+to the front porch of a residential unit                          10                  10
+with alley access
+to the front façade of a residential unit                        10                  10
 to the front porch of a residential unit                           5                    5
 Side yard                                                                   see 3.235.C.2 see 3.235.C.2
 Building side                                                                        0                    0                    0

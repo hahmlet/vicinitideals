@@ -1,0 +1,32 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "f62b2728cf7d70d976e01c26be94d34bf73b8c9960f68a04872c6a37cc9ac23a",
+  "new_quote": "or/multnomah/fairview/19.70/19.70.020.txt#L3-L7,L9-L20,L79-L88",
+  "old_fingerprint": "67b70e8ce57e848d58036720072cd02608049210b9d068154bf6e8532a4335c9",
+  "old_quote": "or/multnomah/fairview/19.70/19.70.020.txt#L3-L7,L9-L20,L74-L83",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "e11b2d880ee6d77c8c5394e0a391cee3f2b661b8fbbb0bd08445a8c19d008a20",
+  "new_quote": "or/multnomah/fairview/19.80/19.80.020.txt#L3-L7,L9-L20,L97-L100",
+  "old_fingerprint": "82e1ae57a127aa4fc209ef4febcf006bc47cc4eb9cfd0a63c8ccbbc5cf98b09f",
+  "old_quote": "or/multnomah/fairview/19.80/19.80.020.txt#L3-L7,L9-L20,L89-L92",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9f3d3af8fcaa428d57af8e4b814db9e3feec1f254f6c8229be4c69cef25796a6",
+  "new_quote": "or/multnomah/fairview/19.85/19.85.020.txt#L3-L7,L9-L20,L40-L43",
+  "old_fingerprint": "1a3c67d2b782346bd82451d9a3c6f5bc731c1a279fd07c54728e6420b0a5f30c",
+  "old_quote": "or/multnomah/fairview/19.85/19.85.020.txt#L3-L7,L9-L20,L39-L41",
+  "when_key": "",
+  "zone": "GI"
+ }
+]

@@ -33,23 +33,28 @@ P
 Subject to special standards for certain uses, see FMC 19.70.090
 f. Office uses (i.e., those not otherwise listed)
 P
-g. Personal and professional services (e.g., child care center, catering/food services, restaurants, laundromats and dry cleaners, barber shops and salons, and similar uses) P
+g. Personal and professional services (e.g., child care center, catering/food services, restaurants, laundromats and dry cleaners, barber shops and salons, and similar uses)
+P
 h. Repair services (must be enclosed within building)
 P
-i. Retail trade and services (e.g., grocery, hardware and variety stores, banks and financial institutions) P
+i. Retail trade and services (e.g., grocery, hardware and variety stores, banks and financial institutions)
+P
 j. Child care center (more than 16 children)
 P
-k. Uses similar to those listed above (subject to CU requirements, as applicable) CU
+k. Uses similar to those listed above (subject to CU requirements, as applicable)
+CU
 See FMC 19.70.020
 2. Industrial
-a. Light manufacture (e.g., small-scale crafts, electronic equipment, furniture, similar goods when in conjunction with retail or if determined by the planning commission to be compatible with the purposes of the district and other uses in the district) CU
+a. Light manufacture (e.g., small-scale crafts, electronic equipment, furniture, similar goods when in conjunction with retail or if determined by the planning commission to be compatible with the purposes of the district and other uses in the district)
+CU
 Subject to special standards for certain uses, see FMC 19.70.090
 3. Public and Institutional
 a. Churches and places of worship
 CU
 b. Clubs, lodges, similar uses
 CU
-c. Government offices and facilities (administration, public safety, transportation, utilities, and similar uses) CU
+c. Government offices and facilities (administration, public safety, transportation, utilities, and similar uses)
+CU
 d. Libraries, museums, community centers, concert halls and similar uses
 CU
 e. Public parking lots and garages

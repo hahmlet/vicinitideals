@@ -447,7 +447,7 @@ crossrefs:
       use list. Troutdale''s Quadplex row reads P in five of its six residential districts and N in
       the sixth, with its own standards at 8.120. The pod is never on a C row, so the chapter does
       not reach it.
-      (or/multnomah/troutdale/3/3.120.txt#L16)
+      (or/multnomah/troutdale/3/3.120.txt#L17)
   "5.030":
     outcome: narrows_only
     note: >-
@@ -601,26 +601,26 @@ defaults:
     cite: TDC 9.010, Table 1, Triplex and Quadplex row, lot of 7,000 sq. ft. or greater
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-29'
-    quote: "or/multnomah/troutdale/9/9.010.txt#L13,L17,L21"
+    quote: "or/multnomah/troutdale/9/9.010.txt#L13,L18,L23-L24"
     variants:
       - spaces_total: 1
         band: {measure: lot_sqft, less_than: 3000}
         cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size of less than 3,000 sq. ft.
         url: https://api.municode.com/PublicationPdfDownload/1813
         retrieved: '2026-08-29'
-        quote: "or/multnomah/troutdale/9/9.010.txt#L17-L18"
+        quote: "or/multnomah/troutdale/9/9.010.txt#L18-L19"
       - spaces_total: 2
         band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
         cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size of less than 5,000 sq. ft.
         url: https://api.municode.com/PublicationPdfDownload/1813
         retrieved: '2026-08-29'
-        quote: "or/multnomah/troutdale/9/9.010.txt#L17,L19"
+        quote: "or/multnomah/troutdale/9/9.010.txt#L18,L20"
       - spaces_total: 3
         band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
         cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size between 5,000 and 6,999 sq. ft.
         url: https://api.municode.com/PublicationPdfDownload/1813
         retrieved: '2026-08-29'
-        quote: "or/multnomah/troutdale/9/9.010.txt#L17,L20"
+        quote: "or/multnomah/troutdale/9/9.010.txt#L18,L21-L22"
   # And no ceiling. Every bullet of the Triplex and Quadplex row prints "No
   # maximum" in the right-hand column, and the column is a real ceiling
   # elsewhere in the same table -- 6.2 spaces per 1,000 sq ft for general
@@ -632,7 +632,7 @@ defaults:
     cite: TDC 9.010, Table 1, Triplex and Quadplex row, Maximum column
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-29'
-    quote: "or/multnomah/troutdale/9/9.010.txt#L13,L17,L21"
+    quote: "or/multnomah/troutdale/9/9.010.txt#L13,L18,L23-L24"
   # HOW BIG. 9.115 states both halves in one section and states them for
   # everybody: "The following off-street parking development and maintenance
   # shall apply in all cases". A. Size: nine by eighteen, with the area
@@ -975,11 +975,11 @@ zones:
       quote: "or/multnomah/troutdale/3/3.230.txt#L25,L29"
     setback_front_ft:
       value: 15
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35"
       variants:
         - value: 10
           when: [abuts_alley]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L33"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L36-L38"
     parking_street_setback_ft:
       same_as: setback_front_ft
       cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
@@ -988,7 +988,7 @@ zones:
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35"
     setback_side_ft:
       value: 15
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L738-L745"
@@ -1004,13 +1004,13 @@ zones:
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L737-L738"
         - value: 0
           when: [attached_wall]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
         - value: 0
           when: [attached_wall, abuts_nonresidential_zone]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
         - value: 0
           when: [attached_wall, abuts_side_yard]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L749,L759-L761"
@@ -1032,10 +1032,10 @@ zones:
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L750-L751"
     setback_street_side_ft:
       value: 0
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L37-L38,L48-L49"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L42-L43,L53-L54"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L43"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L48"
     # 3.140.B.3.c: "In all other zoning districts where townhouses are
     # permitted, the maximum density for a townhouse project shall not exceed
     # twenty-five (25) units per net acre" -- MU-1 is one (3.230.B, "Density
@@ -1137,7 +1137,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L15"
+      quote: "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L16"
     notes: >-
       3.420 states one residential permission -- "One Caretaker unit in conjunction with an existing industrial use" -- and then "All other residential uses N" in all three industrial columns. Industrial Park refuses even the caretaker unit. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
   LI:
@@ -1148,7 +1148,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L15"
+      quote: "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L16"
     notes: >-
       3.420 permits one caretaker unit alongside an existing industrial use and reads "All other residential uses N". One unit tied to an industrial operation is not four attached townhomes, and the row that would carry them says N. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
   GI:
@@ -1159,7 +1159,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L15"
+      quote: "or/multnomah/troutdale/3/3.420.txt#L1,L8,L12,L16"
     notes: >-
       3.420 permits one caretaker unit alongside an existing industrial use and reads "All other residential uses N". 153 lots, the largest unread zone in the city, and the answer is one cell. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
   OS:
@@ -1257,11 +1257,11 @@ zones:
       # access, 10 with. The porch rows -- 10 and 5 -- are a shallower
       # standard for a projecting porch and are not the building line.
       value: 15
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35"
       variants:
         - value: 10
           when: [abuts_alley]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L33"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L31,L36-L38"
     # 9.095(D), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the only figure the sentence carries is an industrial floor that does
@@ -1278,7 +1278,7 @@ zones:
       # a porch and no garage row, which is what a code does when the garage is
       # off the alley and not on the street at all.
       value: 20
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L32"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35"
     setback_side_ft:
       # 3.235.C.2.b.ii is two numbers for one yard: seven and a half feet from
       # an adjoining SIDE yard and fifteen from an adjoining REAR yard. Which
@@ -1305,16 +1305,16 @@ zones:
         # setback on each of its three interior walls.
         - value: 0
           when: [attached_wall]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
         # Spelled out against the neighbour's zoning for the same reason the
         # rear pairs are: two variants one condition deep would tie, and a wall
         # standing on the line owes no yard whatever is on the far side of it.
         - value: 0
           when: [attached_wall, abuts_nonresidential_zone]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
         - value: 0
           when: [attached_wall, abuts_side_yard]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
     setback_rear_ft:
       # 3.235.C.5.b: fifteen feet of rear yard against a residential district
       # for single-storey construction and twenty for two storeys or more. The
@@ -1357,10 +1357,10 @@ zones:
       # of one particular access layout. Recorded here because a corner lot in
       # MU-2 whose only workable access is off the side street pays it.
       value: 0
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L37-L38,L48-L49"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L42-L43,L53-L54"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L43"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L48"
     notes: >-
       Central Mixed-Use, and the first district in this corpus whose
       dimensional table is mostly cross-references. 3.230.B prints "see
@@ -1483,13 +1483,13 @@ zones:
         # not send to 3.230.A.
         - value: 0
           when: [attached_wall]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
         # Spelled out against the neighbour's zoning for the same reason the
         # rear pairs are: two variants one condition deep would tie, and a wall
         # standing on the line owes no yard whatever is on the far side of it.
         - value: 0
           when: [attached_wall, abuts_nonresidential_zone]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
         # The park row, as on the front. Its attached-wall pair is spelled out
         # three deep so the wall on the line keeps its zero against the ten.
         - value: 10
@@ -1497,7 +1497,7 @@ zones:
           quote: "or/multnomah/troutdale/3/3.230.txt#L10,L13-L14,L25,L30"
         - value: 0
           when: [attached_wall, abuts_nonresidential_zone, abuts_park]
-          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L36"
+          quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
     setback_rear_ft:
       value: 20
       quote: "or/multnomah/troutdale/3/3.230.txt#L10,L13-L16,L25,L30"
@@ -1514,7 +1514,7 @@ zones:
       # rather than bounding it: a lot abutting a residential district has one
       # legal front setback and it is 20 feet.
       value: 20
-      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L41"
+      quote: "or/multnomah/troutdale/3/3.230.txt#L25,L46"
     min_building_height_ft:
       # A FLOOR, not a ceiling, and the only standard in this corpus a pod can
       # fail by being too short. Troutdale states it twice and the two agree.
@@ -1523,7 +1523,7 @@ zones:
       # twenty-five (25) feet" -- in the section headed "Standards in the MU-3
       # (Urban Mixed-Use) Zoning District". Table 3.230.B says the same number
       # by column: its Minimum building height row prints N/A under MU-1 and
-      # MU-2 and 25 under MU-3, at 3.230.txt#L25,L42. Both
+      # MU-2 and 25 under MU-3, at 3.230.txt#L25,L47. Both
       # catalogued pods stand 26 ft, so this clears by one foot -- on a
       # dimension the catalog itself flags as not taken from a drawing set.
       value: 25
@@ -1629,7 +1629,7 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/troutdale/3/3.120.txt#L16"
+      quote: "or/multnomah/troutdale/3/3.120.txt#L17"
     # Base is 3.130.B, the triplex-and-quadplex table: one building, one lot.
     # Every `unit_lots` variant is 3.130.C, the townhouse table, which is what
     # applies if the four units are platted onto four lots.
@@ -1790,7 +1790,7 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/troutdale/3/3.120.txt#L16"
+      quote: "or/multnomah/troutdale/3/3.120.txt#L17"
     # Base is 3.130.B, the triplex-and-quadplex table: one building, one lot.
     # Every `unit_lots` variant is 3.130.C, the townhouse table, which is what
     # applies if the four units are platted onto four lots.
@@ -1951,7 +1951,7 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/troutdale/3/3.120.txt#L16"
+      quote: "or/multnomah/troutdale/3/3.120.txt#L17"
     # Base is 3.130.B, the triplex-and-quadplex table: one building, one lot.
     # Every `unit_lots` variant is 3.130.C, the townhouse table, which is what
     # applies if the four units are platted onto four lots.
@@ -2108,7 +2108,7 @@ zones:
       # and N in HDR. The quote carries the legend -- P permitted, C
       # conditional, N not permitted -- so the letter is readable on its own.
       value: false
-      quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L16"
+      quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L17"
       variants:
         # The Townhouse row of the same table reads P in all six columns, and
         # 1.020 puts each townhouse "on an individual lot or parcel". 8.130.A
@@ -2120,7 +2120,7 @@ zones:
         - value: true
           when: [unit_lots]
           cite: "TDC 3.120, Townhouse row (P in HDR); TDC 1.020 \"Dwelling, Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
-          quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L17"
+          quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L18"
     notes: >-
       quadfit confidence: verified | Multifamily/townhouse zone -- no detached SFD, no quadplex;
       OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode

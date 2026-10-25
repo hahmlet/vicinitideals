@@ -36,6 +36,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from bisect import bisect_right
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -175,6 +176,18 @@ def _move_citations(
     after = {proof: addresses(store, proof, known) for proof in set(proof_of.values())}
     moved: list[tuple[Path, str, str]] = []
     refused: list[tuple[Path, str, str]] = []
+    # A section file the re-cut left word for word as it was keeps every
+    # citation into it as written: its lines say what they said, and moving
+    # them anyway would only re-address quotes (and re-issue their page
+    # checks) for nothing.
+    same = {
+        p
+        for p in before.text
+        if store.part_of(p) is not None
+        and store.text_path(p).is_file()
+        and store.text_path(p).read_text(encoding="utf-8").splitlines() == before.text[p]
+    }
+    letter_maps: dict[str, list[set[int]] | None] = {}
 
     for file in files:
         original = file.read_text(encoding="utf-8")
@@ -187,6 +200,8 @@ def _move_citations(
             if prefix and prefix != path.rsplit("/", 1)[0] + "/":
                 return found.group(0)
             if not prefix and file not in own:
+                return found.group(0)
+            if path in same:
                 return found.group(0)
             try:
                 ref = parse_quote(f"{path}#L{found.group('spans').replace(' ', '')}")
@@ -207,10 +222,36 @@ def _move_citations(
                 refused.append((file, found.group(0), "lands in no section or in two"))
                 return found.group(0)
             target = targets.pop()
-            lines = sorted({k for _, ks in landed for k in ks})
             new_text = store.text_path(target).read_text(encoding="utf-8").splitlines()
-            whole = _letters(new_text[k - 1] for k in lines)
             old_text = before.text[path]
+            # The same section cut again: its letters are the same letters, so
+            # each old line goes to exactly the new lines that hold its own
+            # letters. A printed line two sentences share would otherwise
+            # carry a one-line quote onto both ("3.330.txt#L23" onto "L25-L26").
+            if target != path:
+                mapped = None
+            elif path not in letter_maps:
+                mapped = letter_maps[path] = _by_letters(old_text, new_text)
+            else:
+                mapped = letter_maps[path]
+            per_span: list[list[int]] = []
+            for first, last in ref.spans:
+                if mapped is not None:
+                    own_lines = sorted({k for n in range(first, last + 1) for k in mapped[n - 1]})
+                else:
+                    held_by = {k for n in range(first, last + 1) for k in stored[n - 1]}
+                    own_lines = sorted(
+                        {k for _t, ks in (where[h] for h in held_by if h in where) for k in ks}
+                    )
+                # An empty line holds no printed words, so it lands nowhere;
+                # one inside a span of the quote stays inside it rather than
+                # splitting the span. Between two spans the quote's gap stays.
+                per_span.append(_bridged(own_lines, new_text))
+            lines = sorted({k for span in per_span for k in span})
+            if not lines:
+                refused.append((file, found.group(0), "lands in no section or in two"))
+                return found.group(0)
+            whole = _letters(new_text[k - 1] for k in lines)
             for first, last in ref.spans:
                 if _letters(old_text[first - 1 : last]) not in whole:
                     refused.append((file, found.group(0), "the old words are not in the new quote"))
@@ -230,6 +271,40 @@ def _move_citations(
         if write_files and text != original:
             file.write_text(text, encoding="utf-8", newline="")
     return moved, refused
+
+
+def _by_letters(old: Sequence[str], new: Sequence[str]) -> list[set[int]] | None:
+    """For each old line, the new lines (1-based) holding any of its letters;
+    None when the two texts are not the same letters in the same order."""
+    if _letters(old) != _letters(new):
+        return None
+    ends: list[int] = []
+    at = 0
+    for line in new:
+        at += len(_letters([line]))
+        ends.append(at)
+    out: list[set[int]] = []
+    at = 0
+    for line in old:
+        size = len(_letters([line]))
+        if size:
+            first = bisect_right(ends, at)
+            last = bisect_right(ends, at + size - 1)
+            out.append(set(range(first + 1, last + 2)))
+        else:
+            out.append(set())
+        at += size
+    return out
+
+
+def _bridged(lines: Sequence[int], text: Sequence[str]) -> list[int]:
+    """``lines`` with every run of empty lines between two of them put back."""
+    out: list[int] = []
+    for k in lines:
+        if out and k > out[-1] + 1 and all(not text[j - 1].strip() for j in range(out[-1] + 1, k)):
+            out.extend(range(out[-1] + 1, k))
+        out.append(k)
+    return out
 
 
 def _carry_readings(
@@ -335,7 +410,14 @@ def _relog(reissued: Sequence[tuple[tuple, str, str, str, str]], *, verify_log: 
 
 def carry_file(layer_id: str, reissued: Sequence[tuple[tuple, str, str, str, str]], day: date) -> Path:
     """The production half: which page checks and signing-inbox rows to re-issue."""
-    target = CARRY_DIR / f"{day.isoformat()}.{layer_id.replace('/', '.')}.json"
+    stem = f"{day.isoformat()}.{layer_id.replace('/', '.')}"
+    target = CARRY_DIR / f"{stem}.json"
+    # A second re-cut the same day gets a file of its own: the first one's
+    # rows may already be applied, and are the record of what that one moved.
+    n = 1
+    while target.exists():
+        n += 1
+        target = CARRY_DIR / f"{stem}.{n}.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     rows = [
         {"layer": k[0], "zone": k[1], "field": k[2], "when_key": "+".join(k[3]),
@@ -383,7 +465,8 @@ def recut(
             )
             report.reissued = _reissue(before, layer_id)
             _relog(report.reissued, verify_log=verify_log, dispute_log=dispute_log)
-            carry_file(layer_id, report.reissued, day or date.today())
+            if report.moved or report.reissued:
+                carry_file(layer_id, report.reissued, day or date.today())
     finally:
         if not write_files:
             for p in directory.rglob("*"):

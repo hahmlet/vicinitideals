@@ -117,12 +117,12 @@ defaults:
     cite: Estacada EMC 16.76.010, triplex and fourplex 1.5 for each dwelling unit, rounded up
     url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
     retrieved: '2026-10-07'
-    quote: "or/clackamas/estacada/16.76/16.76.010.txt#L66-L67"
+    quote: "or/clackamas/estacada/16.76/16.76.010.txt#L66-L68"
     variants:
       - value: 2
         when: [unit_lots]
         cite: Estacada EMC 16.76.010, commonwall dwellings 2 for each dwelling
-        quote: "or/clackamas/estacada/16.76/16.76.010.txt#L68-L69"
+        quote: "or/clackamas/estacada/16.76/16.76.010.txt#L69-L71"
   # THE STALL. 16.08.010: "not less than eighteen (18) feet by eight (8) feet,
   # exclusive of maneuvering and access area" (L318). The code prints no aisle
   # or driveway width for a dwelling court, so none is stated here.

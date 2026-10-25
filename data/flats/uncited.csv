@@ -380,18 +380,18 @@ or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.44/16.44.030.txt,5,16.
 or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.54/16.54.050.txt,49,16.54.050,1,"1 Within 500 feet of the outer edge of the RPZ, 1 unit per acre;"
 or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.54/16.54.050.txt,57,16.54.050,1,"10 Water impoundments are prohibited within 5,000 feet from the edge or end of a runway."
 or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.54/16.54.060.txt,7,16.54.060,1,"1 Within an approach surface and within 5,000 feet from the end of a runway; or"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,49,16.76.010,3,1 per 300 square feet of floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,49,16.76.010,4,1 per 300 square feet of floor area
 or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,61,16.76.010,1,"3.5 per 1,000 square feet of floor area"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,84,16.76.010,1,1 per 200 square feet of leasable floor area
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,95,16.76.010,1,"Religious institution, membership club or community center, fraternal hall, or similar place of assembly 1 for every six seats or one space for each 50 square feet of floor area used for assembly, whi"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,96,16.76.010,1,"Retail store (bulk), including for sale of furniture, appliances, vehicles, building materials, home furnishings, garden supplies, or agricultural supplies 1 per 500 square feet of bulk merchandise ar"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,101,16.76.010,1,1 per 500 square feet of floor area
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,105,16.76.010,1,"1 per 2,000 square feet of floor area"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,138,16.76.010,1,4 The space is at least 22 feet long and 7 feet wide.
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,208,16.76.010,1,"Office 2, or 1 per 10,000 sq. ft. of floor area 2, or 1 per 40,000 sq. ft. of floor area"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,212,16.76.010,1,"Manufacturing And Production 2, or 1 per 15,000 sq. ft. of floor area None"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,213,16.76.010,1,"Warehouse And Freight Movement 2, or 1 per 40,000 sq. ft. of floor area None"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,224,16.76.010,1,"Daycare 2, or 1 per 10,000 sq. ft. of net building area None"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,87,16.76.010,1,1 per 200 square feet of leasable floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,105,16.76.010,1,1 per 500 square feet of bulk merchandise area or storage
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,111,16.76.010,1,1 per 500 square feet of floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,115,16.76.010,1,1 per 100 square feet of floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,117,16.76.010,1,"1 per 2,000 square feet of floor area"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,150,16.76.010,1,4 The space is at least 22 feet long and 7 feet wide.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,220,16.76.010,1,"Office 2, or 1 per 10,000 sq. ft. of floor area 2, or 1 per 40,000 sq. ft. of floor area"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,224,16.76.010,1,"Manufacturing And Production 2, or 1 per 15,000 sq. ft. of floor area None"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,225,16.76.010,1,"Warehouse And Freight Movement 2, or 1 per 40,000 sq. ft. of floor area None"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,236,16.76.010,1,"Daycare 2, or 1 per 10,000 sq. ft. of net building area None"
 or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.08/16.08.010.txt,115,16.08.010,1,"""Compact parking space"" means a parking space measuring between sixteen (16) and eighteen (18) feet by eight (8) feet, exclusive of maneuvering and access area, permanently reserved for the temporary "
 or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.08/16.08.010.txt,121,16.08.010,1,"""Cottage cluster"" means a grouping of no fewer than three detached dwelling units on the same lot of record, with each dwelling unit having a footprint of less than 900 square feet, all dwellings shar"
 or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.08/16.08.010.txt,164,16.08.010,1,"""Dwelling unit"" means a building or portion thereof with one or more rooms designed for occupancy by one family for living purposes which provides a minimum of two hundred (200) square feet of floor a"
@@ -489,9 +489,8 @@ or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.60/16.60.010
 or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.60/16.60.030.txt,6,16.60.030,1,An accessory structure not used for human habitation and separated from the main building may be located up to five feet from a rear property line if the structure is no more than fifteen (15) feet in
 or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.60/16.60.050.txt,5,16.60.050,1,1 The required front or rear setback for a structure may be based upon the average of the front or rear setbacks of dwellings/garages on all lots within one hundred (100) feet of both sides of the pro
 or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,12,16.76.010,1,"4 Off-street parking spaces shall be located on the same lot or on an adjoining lot or lot located within one hundred fifty (150) feet, unless otherwise approved by the planning commission."
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,103,16.76.010,1,"1 per rented bedroom in addition to parking required for dwelling, with never less than 2 total parking spaces on the subject property Skating rink, arcade, gym, or other similar indoor recreational o"
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,111,16.76.010,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue.
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,116,16.76.010,1,2 Reduce the minimum parking standard by twenty (20) percent where the city decision-making body determines there is public on-street parking adjacent to the subject site in a quantity equal to the re
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,123,16.76.010,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue.
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,128,16.76.010,1,2 Reduce the minimum parking standard by twenty (20) percent where the city decision-making body determines there is public on-street parking adjacent to the subject site in a quantity equal to the re
 or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.040.txt,3,16.76.040,1,"The required number of vehicle parking spaces may be reduced by up to 25 percent if the site has a bus stop with transit service located adjacent to it, and the site's frontage is improved with a bus "
 or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.050.txt,7,16.76.050,1,2 Transit-supportive plazas may be substituted for up to 10 percent of the required parking spaces on the site.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10/17.10.030.txt,9,17.10.030,1,(a) Front—20 feet.
@@ -521,12 +520,14 @@ or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.14/17.14.055.txt,89,
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.22/17.22.070.txt,19,17.22.070,1,(A) Shall not exceed 50 square feet in area;
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.22/17.22.070.txt,40,17.22.070,1,(B) Not exceed 16 square feet in area;
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.040.txt,57,17.25.040,1,2. The facility includes less than 500 square feet of new impervious surface; and
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.090.txt,108,17.25.090,5,"Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors. 4"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,16,17.25.100,1,"50 percent of the area of the subject property, up to a maximum of 5,000 square feet Moderate/Low2"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,17,17.25.100,1,"65 percent of the area of the subject property, up to a maximum of 6,000 square feet 1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type."
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,23,17.25.100,1,High 10 percent of High HCA on the subject property Moderate 15 percent of Moderate HCA on the subject property Low 50 percent of Low HCA on the subject property 1 The MDA refers only to the maximum p
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,167,17.25.100,1,All sites within 50 feet of a surface stream;
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,169,17.25.100,1,"Forest canopy within 150 feet of a stream or wetland, or within a flood area; and The channel migration zone is defined by the flood area, but where there is no mapped flood area, a default of 50 feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.090.txt,112,17.25.090,5,5 Only if within 300 feet of a river or surface stream.
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,16,17.25.100,1,"50 percent of the area of the subject property, up to a maximum of 5,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,18,17.25.100,1,"65 percent of the area of the subject property, up to a maximum of 6,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,28,17.25.100,1,High 10 percent of High HCA on the subject property
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,29,17.25.100,1,Moderate 15 percent of Moderate HCA on the subject property
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,30,17.25.100,1,Low 50 percent of Low HCA on the subject property
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,177,17.25.100,1,All sites within 50 feet of a surface stream;
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25/17.25.100.txt,181,17.25.100,1,"Forest canopy within 150 feet of a stream or wetland, or within a flood area; and"
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,79,17.27.020,2,<25 percent
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,81,17.27.020,1,50 feet
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,83,17.27.020,1,=25 percent for 150 feet or more
@@ -534,50 +535,49 @@ or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,87,17.27.0
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,93,17.27.020,1,15 feet
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,95,17.27.020,1,=25 percent
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,235,17.27.042,1,(A) The site plan shall be drawn at a scale of no less than one inch equaling 20 feet;
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,175,17.48.030,1,Residential Unit Under 750 Square Feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,243,17.48.030,1,1 space per 400 square feet plus 1 space per 2 employees
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,269,17.48.030,1,1 space per 4 seats or 8 feet of bench length
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,270,17.48.030,1,0.4 space per seat or 2 feet of bench length
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,271,17.48.030,1,0.5 space per seat or 2 feet of bench length
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,279,17.48.030,1,1 space 100 square feet plus 1 space per 2 employees
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,284,17.48.030,1,1 space per 200 square feet plus 1 space per 2 employees
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,289,17.48.030,1,"4.3 spaces per 1,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,290,17.48.030,1,"5.4 spaces per 1,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,291,17.48.030,1,"6.5 spaces per 1,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,294,17.48.030,2,"1 space per 1,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,295,17.48.030,1,"1.3 spaces per 1,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,296,17.48.030,1,"1.5 spaces per 1,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,304,17.48.030,4,1 space per 300 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,305,17.48.030,1,1 space per 196 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,306,17.48.030,2,1 space per 161 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,308,17.48.030,1,"Service or Repair Shop, Retail Store Handling Exclusively Bulky Merchandise Such as Automobiles or Furniture 1 space per 600 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,309,17.48.030,2,1 space per 294 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,314,17.48.030,1,1 space per 185 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,315,17.48.030,1,1 space per 154 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,318,17.48.030,1,1 space per 370 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,320,17.48.030,1,1 space per 244 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,323,17.48.030,1,1 space per 256 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,324,17.48.030,1,1 space per 204 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,325,17.48.030,1,1 space per 170 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,329,17.48.030,1,1 space per 52 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,330,17.48.030,1,1 space per 44 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,334,17.48.030,1,1 space per 81 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,335,17.48.030,1,1 space per 67 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,338,17.48.030,1,1 space per 6 seats or 8 feet of bench length in chapels
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,351,17.48.030,2,"Less than 25,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,353,17.48.030,1,1 space per 600 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,356,17.48.030,2,"Greater than or equal to 25,000 square feet and less than 50,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,358,17.48.030,1,1 space per 700 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,361,17.48.030,2,"Greater than or equal to 50,000 square feet and less than 80,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,363,17.48.030,1,1 space per 800 square feet
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,366,17.48.030,2,"Greater than or equal to 80,000 square feet and less than 200,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,371,17.48.030,2,"Greater than or equal to 200,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,373,17.48.030,2,"1 space per 2,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,381,17.48.030,2,"Less than 50,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,386,17.48.030,2,"Greater than or equal to 50,000 square feet and less than 150,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,388,17.48.030,2,"1 space per 5,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,391,17.48.030,2,"Greater than or equal to 150,000 square feet"
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,403,17.48.030,1,1 space per employee plus 1 space per 700 square feet of patron service area
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,176,17.48.030,1,Residential Unit Under 750 Square Feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,247,17.48.030,1,1 space per 400 square feet plus 1 space per 2 employees
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,277,17.48.030,1,1 space per 4 seats or 8 feet of bench length
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,278,17.48.030,1,0.4 space per seat or 2 feet of bench length
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,279,17.48.030,1,0.5 space per seat or 2 feet of bench length
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,287,17.48.030,1,1 space 100 square feet plus 1 space per 2 employees
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,292,17.48.030,1,1 space per 200 square feet plus 1 space per 2 employees
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,297,17.48.030,1,"4.3 spaces per 1,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,298,17.48.030,1,"5.4 spaces per 1,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,299,17.48.030,1,"6.5 spaces per 1,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,302,17.48.030,2,"1 space per 1,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,303,17.48.030,1,"1.3 spaces per 1,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,304,17.48.030,1,"1.5 spaces per 1,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,312,17.48.030,4,1 space per 300 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,313,17.48.030,1,1 space per 196 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,314,17.48.030,2,1 space per 161 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,317,17.48.030,2,1 space per 600 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,318,17.48.030,2,1 space per 294 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,323,17.48.030,1,1 space per 185 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,324,17.48.030,1,1 space per 154 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,327,17.48.030,1,1 space per 370 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,329,17.48.030,1,1 space per 244 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,332,17.48.030,1,1 space per 256 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,333,17.48.030,1,1 space per 204 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,334,17.48.030,1,1 space per 170 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,338,17.48.030,1,1 space per 52 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,339,17.48.030,1,1 space per 44 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,343,17.48.030,1,1 space per 81 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,344,17.48.030,1,1 space per 67 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,347,17.48.030,1,1 space per 6 seats or 8 feet of bench length in chapels
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,360,17.48.030,2,"Less than 25,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,365,17.48.030,2,"Greater than or equal to 25,000 square feet and less than 50,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,367,17.48.030,1,1 space per 700 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,370,17.48.030,2,"Greater than or equal to 50,000 square feet and less than 80,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,372,17.48.030,1,1 space per 800 square feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,375,17.48.030,2,"Greater than or equal to 80,000 square feet and less than 200,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,380,17.48.030,2,"Greater than or equal to 200,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,382,17.48.030,2,"1 space per 2,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,390,17.48.030,2,"Less than 50,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,395,17.48.030,2,"Greater than or equal to 50,000 square feet and less than 150,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,397,17.48.030,2,"1 space per 5,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,400,17.48.030,2,"Greater than or equal to 150,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48/17.48.030.txt,412,17.48.030,1,1 space per employee plus 1 space per 700 square feet of patron service area
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.06/17.06.148.txt,3,17.06.148,1,“Cottage cluster” means a grouping of no fewer than four detached dwelling units per acre with a footprint of less than 900 square feet each that includes a common courtyard on a single lot or on indi
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.06/17.06.435.txt,3,17.06.435,1,“Recreation vehicle” means a vacation trailer or self-propelled vehicle or structure equipped with wheels for highway use which is intended for human occupancy and is being used for recreation or vaca
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.06/17.06.491.txt,4,17.06.491,1,Up to 15 percent of the total number of dwelling units may be provided as single-household units or duplex units with full kitchens.
@@ -605,7 +605,7 @@ or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.12/17.12.0
 or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.12/17.12.065.txt,63,17.12.065,1,"(b) Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines."
 or/clackamas/gladstone,unread,setback_garage_entrance_ft,or/clackamas/gladstone/17.12/17.12.065.txt,78,17.12.065,1,(d) Garage doors for attached and detached individual garages must not exceed 20 feet in width.
 or/clackamas/gladstone,unread,setback_street_side_ft,or/clackamas/gladstone/17.14/17.14.030.txt,23,17.14.030,1,"The minimum front and street side setbacks for such courtyards, patios and decks shall be 15 feet."
-or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.14/17.14.050.txt,57,17.14.050,1,(1) All PUDs with residential uses must include a mix of two or more middle housing types for a minimum of 25 percent of the total dwelling units proposed.
+or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.14/17.14.050.txt,58,17.14.050,1,(1) All PUDs with residential uses must include a mix of two or more middle housing types for a minimum of 25 percent of the total dwelling units proposed.
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.14/17.14.055.txt,13,17.14.055,1,"(c) Average Unit Size. The maximum average floor area for a cottage cluster is 1,400 square feet per dwelling unit."
 or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.14/17.14.055.txt,76,17.14.055,1,"(B) Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines."
 or/clackamas/gladstone,unread,setback_garage_entrance_ft,or/clackamas/gladstone/17.14/17.14.055.txt,91,17.14.055,1,(D) Garage doors for attached and detached individual garages must not exceed 20 feet in width.
@@ -1965,10 +1965,11 @@ or/clackamas/tualatin,unread,parking_min_per_unit,or/clackamas/tualatin/73C/73C.
 or/clackamas/tualatin,unread,parking_min_per_unit,or/clackamas/tualatin/73C/73C.030.txt,34,73C.030,1,"(13) Climate Mitigation. Developments with off-street parking areas of one-half acre (21,780 square feet) or more, as measured using the method provided in TDC 73C.020, must provide at least one of th"
 or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/73C/73C.030.txt,39,73C.030,1,"(c) Tree canopy covering at least 40 percent of the new parking lot area at maturity, but no more than 15 years after planting."
 or/clackamas/tualatin,unread,max_height_ft,or/clackamas/tualatin/73C/73C.220.txt,4,73C.220,1,(a) Must be planted with deciduous trees an average of not more than 30 feet on center and shrubs at least 30 inches in height which provide screening of vehicular headlights; and
-or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/02/02.030.txt,619,02.030,2,Basements are exempt from FAR if less than 50 percent of basement is exposed above grade.
-or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/02/02.030.txt,1456,02.030,1,"1. Slope: Land that has slopes over 25 percent, as shown on the RLIS topography GIS layer."
-or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/08/08.070.txt,51,08.070,1,20 ft
+or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/02/02.030.txt,635,02.030,2,Basements are exempt from FAR if less than 50 percent of basement is exposed above grade.
+or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/02/02.030.txt,1476,02.030,1,"1. Slope: Land that has slopes over 25 percent, as shown on the RLIS topography GIS layer."
+or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/08/08.070.txt,52,08.070,1,20 ft
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/15/15.070.txt,30,15.070,1,20 ft
+or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/16/16.070.txt,47,16.070,1,3.5 stories or 45 feet for a garden apartment medium rise unit;
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/18/18.070.txt,13,18.070,1,"a. For a front yard, 25 feet."
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/18/18.070.txt,17,18.070,1,"c. For a side yard abutting a street, 15 feet."
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/19/19.070.txt,9,19.070,1,3. The average minimum lot depth shall not be less than 90 feet.
@@ -1995,8 +1996,8 @@ or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/48/48.060.txt,26,48.060
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/48/48.060.txt,28,48.060,1,"3. Between any two curb cuts on the same lot or parcel on a local street, 30 feet."
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/02/02.030.txt,224,02.030,1,Dwelling units have a building footprint of less than 900 square feet per dwelling unit that includes a common courtyard with at least 150 square feet per cottage.
 or/clackamas/west-linn,unread,min_frontage_ft,or/clackamas/west-linn/02/02.030.txt,368,02.030,1,"Flag lot. A lot complying with all other provisions of the Community Development Code which does not meet the minimum street frontage requirement of 35 feet, and which gains access to the public right"
-or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/02/02.030.txt,927,02.030,1,"Minor modification. A change in the approved design that is equal to or less than a 10 percent increase in the length, width or height of the facility."
-or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/02/02.030.txt,1432,02.030,1,"Tree. A woody perennial plant usually having one dominant trunk, the capacity to achieve a mature height greater than 16 feet, and primarily referred to as a tree in scientific literature."
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/02/02.030.txt,947,02.030,1,"Minor modification. A change in the approved design that is equal to or less than a 10 percent increase in the length, width or height of the facility."
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/02/02.030.txt,1452,02.030,1,"Tree. A woody perennial plant usually having one dominant trunk, the capacity to achieve a mature height greater than 16 feet, and primarily referred to as a tree in scientific literature."
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/08/08.070.txt,26,08.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/09/09.070.txt,26,09.070,1,"Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/10/10.070.txt,26,10.070,1,"Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall"
@@ -2015,7 +2016,7 @@ or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16/16.050.txt,25,
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16/16.050.txt,42,16.050,1,f. The maximum number of units allowed in a senior citizens or handicapped housing facility shall be 50 percent above the allowed density for the property.
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16/16.050.txt,50,16.050,1,2) No more than 25 percent of the total number of units may be used for nursing care patients.
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/16/16.070.txt,31,16.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
-or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16/16.070.txt,46,16.070,1,Multifamily dwelling units are limited to 3.5 stories in height.
+or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16/16.070.txt,48,16.070,1,Multifamily dwelling units are limited to 3.5 stories in height.
 or/clackamas/west-linn,unread,min_lot_width_ft,or/clackamas/west-linn/18/18.070.txt,5,18.070,1,1. The minimum front lot line length or the minimum lot width at the front lot line shall be 35 feet.
 or/clackamas/west-linn,unread,min_average_lot_width_ft,or/clackamas/west-linn/18/18.070.txt,7,18.070,1,2. The average minimum lot width shall be 35 feet.
 or/clackamas/west-linn,unread,max_coverage_pct,or/clackamas/west-linn/18/18.070.txt,22,18.070,1,"5. The maximum lot coverage shall be 50 percent; however, the above requirements in this section may be modified for developments under the planned unit development provisions of Chapter 24 CDC."
@@ -3333,14 +3334,14 @@ or/multnomah/_unincorporated,unread,parking_min_per_unit,or/multnomah/_unincorpo
 or/multnomah/_unincorporated,unread,max_height_ft,or/multnomah/_unincorporated/39.uf-20.txt,238,39.4743,1,Maximum Structure Height ¬ 35 feet.
 or/multnomah/_unincorporated,unread,min_lot_sqft,or/multnomah/_unincorporated/39.urban-ldr-general.txt,39,39.4782,1,ten percent of the lot area or 25 percent of any
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.040.txt,142,19.106.040,1,Invasive vegetation removal of 300 square feet or less (per calendar year).
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.040.txt,702,19.106.040,1,• Within 10 feet of the outer boundary of the 40-foot riparian resource protection area.
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.070.txt,18,19.106.070,1,Greater than 15 feet from the outer limits of the 35- or 40-foot resource protection area Type I boundary verification required prior to site development or earth disturbing activity 55-foot and 80-fo
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.040.txt,703,19.106.040,1,• Within 10 feet of the outer boundary of the 40-foot riparian resource protection area.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.070.txt,18,19.106.070,1,Greater than 15 feet from the outer limits of the 35- or 40-foot resource protection area
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,19,19.106.080,1,80 feet in each direction measured from the centerline of creek.
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,20,19.106.080,1,Total width 160 feet. 55-foot resource protection area
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,24,19.106.080,1,55 feet measured in each direction from the centerline of the creek.
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,25,19.106.080,1,Total width 110 feet. 40-foot resource protection area
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,29,19.106.080,1,"Total resource width 80 feet, measured 40 feet in each direction from centerline of creek. 35-foot resource protection area"
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,31,19.106.080,1,"Total resource width 70 feet, measured 35 feet in each direction from centerline of creek."
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,20,19.106.080,1,Total width 160 feet.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,25,19.106.080,1,55 feet measured in each direction from the centerline of the creek.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,26,19.106.080,1,Total width 110 feet.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,31,19.106.080,1,"Total resource width 80 feet, measured 40 feet in each direction from centerline of creek."
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106/19.106.080.txt,34,19.106.080,1,"Total resource width 70 feet, measured 35 feet in each direction from centerline of creek."
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.110/19.110.035.txt,18,19.110.035,1,Area. Maximum face area of 75 square feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.110/19.110.035.txt,26,19.110.035,1,Width shall be limited to a maximum of 15 feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.13/19.13.030.txt,32,19.13.030,1,"""Constrained slope"" means land on slope that is between 15 to 20 percent."
@@ -3361,17 +3362,14 @@ or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30/19.30.060.txt,157,1
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30/19.30.060.txt,187,19.30.060,1,Individual detached garages must not exceed 400 square feet in floor area.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30/19.30.060.txt,195,19.30.060,1,Accessory Structures. Accessory structures must not exceed 400 square feet in floor area.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30/19.30.080.txt,155,19.30.080,1,Accessory structures larger than 200 square feet must meet the following standards:
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.070.txt,46,19.65.070,1,The ground floor commercial space must include a minimum of three tenant spaces that are each no greater than 800 square feet in floor area. 10 ft
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.070.txt,63,19.65.070,1,The covenant or agreement must be provided prior to issuance of the building permit. 10 ft
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.070.txt,67,19.65.070,1,High-Quality Design. A development that incorporates design elements identified in Table 19.65.090(B)(2) which total five points in addition to the points needed to meet the minimum requirement. 10 ft
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.070.txt,74,19.65.070,1,"If this bonus is used in combination with bonus B4, then these design elements may not count toward the minimum points needed to be eligible for bonus B4. 10 ft"
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.090.txt,304,19.65.090,2,a. The fixtures must be spaced a maximum of 30 feet apart;
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.090.txt,358,19.65.090,1,b. The mural is at least 32 square feet in area.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.070.txt,42,19.65.070,8,10 ft
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.090.txt,309,19.65.090,2,a. The fixtures must be spaced a maximum of 30 feet apart;
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65/19.65.090.txt,372,19.65.090,1,b. The mural is at least 32 square feet in area.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.70/19.70.030.txt,20,19.70.030,1,Maximum Setback. The maximum setback is 20 feet.
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.80/19.80.020.txt,57,19.80.020,1,"j. Retail trade and services, not exceeding 5,000 square feet of floor area per building P"
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.80/19.80.020.txt,58,19.80.020,1,"k. Wholesale trade and services not exceeding 5,000 square feet of floor area per building P"
-or/multnomah/fairview,unread,min_lot_sqft,or/multnomah/fairview/19.106/19.106.040.txt,567,19.106.040,1,"In order to accommodate any transferred residential densities, dimensional standards and lot sizes may be adjusted by no more than 20 percent."
-or/multnomah/fairview,unread,max_far,or/multnomah/fairview/19.106/19.106.040.txt,572,19.106.040,1,"The transfer credit of 10,000 square feet floor area ratio (FAR) per acre of land with an upland habitat or riparian resource protection designation on the project site is permitted when development i"
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.80/19.80.020.txt,60,19.80.020,1,"j. Retail trade and services, not exceeding 5,000 square feet of floor area per building"
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.80/19.80.020.txt,62,19.80.020,1,"k. Wholesale trade and services not exceeding 5,000 square feet of floor area per building"
+or/multnomah/fairview,unread,min_lot_sqft,or/multnomah/fairview/19.106/19.106.040.txt,568,19.106.040,1,"In order to accommodate any transferred residential densities, dimensional standards and lot sizes may be adjusted by no more than 20 percent."
+or/multnomah/fairview,unread,max_far,or/multnomah/fairview/19.106/19.106.040.txt,573,19.106.040,1,"The transfer credit of 10,000 square feet floor area ratio (FAR) per acre of land with an upland habitat or riparian resource protection designation on the project site is permitted when development i"
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.106/19.106.050.txt,12,19.106.050,1,The other 15 feet remaining on either side may allow wooden fences up to six feet in height and plantings using only materials shown on the Fairview Village plant list.
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.106/19.106.050.txt,19,19.106.050,1,The other 15 feet remaining on either side may allow wooden fences up to six feet in height with plantings using only materials shown on the Fairview plant list (Fairview uses the Metro Plant List).
 or/multnomah/fairview,unread,min_lot_width_ft,or/multnomah/fairview/19.106/19.106.060.txt,68,19.106.060,1,"In the Fairview Lake Area. Decks and similar structures; provided, that no more than 20 percent of the lot width within the buffer setback area be occupied by such a structure or structures."
@@ -3424,23 +3422,21 @@ or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.060
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.070.txt,14,19.65.070,1,Height Bonus Options. A height bonus of 10 feet in addition to the base height identified in FMC 19.65.060 is allowed as identified in Table 19.65.070.
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.070.txt,15,19.65.070,1,A maximum of two height bonus options may be used for a total bonus of 20 feet.
 or/multnomah/fairview,unread,parking_min_per_unit,or/multnomah/fairview/19.65/19.65.070.txt,20,19.65.070,1,"More than one credit may be used; however, in no case shall the credits result in an off-street parking requirement that is less than one space per dwelling unit or two spaces per 1,000 square feet of"
-or/multnomah/fairview,unread,min_frontage_ft,or/multnomah/fairview/19.65/19.65.070.txt,41,19.65.070,1,The ground floor commercial space must occupy a minimum of 50 percent of the width of the total street frontage of the site. 10 ft
-or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.070.txt,50,19.65.070,1,Affordable Housing. A development that includes affordable housing units meeting the following standards: 10 ft
-or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.070.txt,54,19.65.070,1,a. Ten percent of the total number of dwelling units must be affordable to those earning no more than 60 percent of the area median family income; or 10 ft
-or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.070.txt,58,19.65.070,1,b. Twenty percent of the total number of dwelling units in the new building or the alteration must be affordable to those earning no more than 80 percent of the area median family income; and 10 ft
+or/multnomah/fairview,unread,min_frontage_ft,or/multnomah/fairview/19.65/19.65.070.txt,41,19.65.070,1,The ground floor commercial space must occupy a minimum of 50 percent of the width of the total street frontage of the site.
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.070.txt,57,19.65.070,1,a. Ten percent of the total number of dwelling units must be affordable to those earning no more than 60 percent of the area median family income; or
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.070.txt,62,19.65.070,1,b. Twenty percent of the total number of dwelling units in the new building or the alteration must be affordable to those earning no more than 80 percent of the area median family income; and
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.090.txt,79,19.65.090,2,"Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 12 feet."
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.090.txt,80,19.65.090,2,"For ground floor area associated with a residential use, the height is 10 feet."
 or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,91,19.65.090,2,The following standards apply to the portions of a ground floor wall of a street-facing facade that are 20 feet or closer to a street lot line or a publicly accessible plaza and that is not the wall o
 or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,129,19.65.090,2,The ground floor wall area of street-facing facades of dwelling units that are 20 feet or closer to a street lot line must meet at least one of the following standards:
-or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,148,19.65.090,1,Windows must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
-or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,154,19.65.090,1,R3 ii. Window must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
-or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,156,19.65.090,2,Ground Floor Residential Entrances. At least 50 percent of the dwelling units on the street-facing ground floor of a building must provide a pedestrian access between the main entrance of the dwelling
-or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,175,19.65.090,1,"c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or"
-or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,176,19.65.090,1,"c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or X"
-or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,341,19.65.090,1,b. The entire outdoor area is a children's play area that includes a play structure at least 100 square feet in area and manufactured to the American Society for Testing and Materials (ASTM) standards
-or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,344,19.65.090,1,Up to 20 percent of the outdoor area may be landscaped to the standards of FMC 19.163.030(E)(1). 3 pts
-or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.090.txt,346,19.65.090,1,"Additional Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 15 feet."
-or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.090.txt,347,19.65.090,1,"For ground floor area associated with a residential use, the height is 12 feet."
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,151,19.65.090,1,ii. Windows must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,158,19.65.090,1,ii. Window must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.65/19.65.090.txt,160,19.65.090,2,Ground Floor Residential Entrances. At least 50 percent of the dwelling units on the street-facing ground floor of a building must provide a pedestrian access between the main entrance of the dwelling
+or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,179,19.65.090,2,"c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or"
+or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,350,19.65.090,1,b. The entire outdoor area is a children's play area that includes a play structure at least 100 square feet in area and manufactured to the American Society for Testing and Materials (ASTM) standards
+or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.65/19.65.090.txt,354,19.65.090,1,Up to 20 percent of the outdoor area may be landscaped to the standards of FMC 19.163.030(E)(1).
+or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.090.txt,357,19.65.090,1,"Additional Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 15 feet."
+or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.65/19.65.090.txt,358,19.65.090,1,"For ground floor area associated with a residential use, the height is 12 feet."
 or/multnomah/fairview,unread,setback_rear_ft,or/multnomah/fairview/19.70/19.70.030.txt,33,19.70.030,1,When a building abuts a residential district the minimum rear setback shall be 15 feet.
 or/multnomah/fairview,unread,max_coverage_pct,or/multnomah/fairview/19.70/19.70.040.txt,3,19.70.040,1,"There are no maximum lot coverage or floor area ratio requirements, except that compliance with other sections of this code may preclude full (100 percent) lot coverage for some land uses."
 or/multnomah/fairview,unread,parking_min_per_unit,or/multnomah/fairview/19.70/19.70.050.txt,16,19.70.050,1,From adjoining street right-of-way to building entrances and off-street parking these pathways shall be provided with an average maximum interval of 100 feet along the street right-of-way.
@@ -5844,7 +5840,7 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.130.txt,151,3.130,1
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.130.txt,156,3.130,1,"ii. With an alley that is platted either as an easement or a separate tract that is at least 20 feet in width, and the alley intervenes between the dwelling or structure and the other residential zoni"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.325.txt,9,3.325,1,B. Major entertainment businesses shall not be permitted within the town center boundary and shall not be located within three hundred (300) feet of a residentially zoned property.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.330.txt,9,3.330,1,Setbacks (ft):
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.430.txt,29,3.430,1,"3. Additional setback requirements: If any use in this district abuts or faces any residential zoning district, a setback of fifty (50) feet from the property line or centerline of an intervening publ"
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.430.txt,30,3.430,1,"3. Additional setback requirements: If any use in this district abuts or faces any residential zoning district, a setback of fifty (50) feet from the property line or centerline of an intervening publ"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.440.txt,11,3.440,1,"1. In order to ensure that certain permitted and conditional non-industrial uses are primarily intended to serve the needs of workers in the immediate area, professional offices; medical and dental cl"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.440.txt,12,3.440,1,"If there are multiple businesses within these categories of uses that occur within a single building or within multiple buildings that are part of the same development project, then the cumulative gro"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.440.txt,20,3.440,1,"This buffer shall not apply to new schools or parks located within one thousand (1,000) feet of an existing Marijuana Facility."
@@ -5858,14 +5854,14 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.060.txt,30,8.060,1,
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.060.txt,31,8.060,1,Trees having an average mature spread of crown less than fifteen (15) feet may be substituted by grouping the same so as to create the equivalent of a fifteen (15) foot crown spread.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.060.txt,62,8.060,1,Screening shall consist of six (6) foot-high walls constructed of any of the following materials:
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,21,8.120,1,"iii. In zones with a minimum lots size of seven thousand (7,000) square feet or greater:"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,32,8.120,1,iii. The space must be a minimum of twenty-two (22) feet long; and iv.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,47,8.120,1,Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.2.b.ii at the end of this Section);
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,32,8.120,1,iii. The space must be a minimum of twenty-two (22) feet long; and
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,47,8.120,1,ii. Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.2.b.ii at the end of this Section);
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,52,8.120,1,(a) Be at least twenty-five (25) square feet in area; and
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,76,8.120,1,(a) Two (2) driveway approaches not exceeding thirty-two (32) feet in total width on one (1) frontage; or
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,77,8.120,1,(b) One (1) maximum sixteen (16) foot-wide driveway approach per frontage (see Figure 8.120.C.5.c.iii at the end of this Section).
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.120.txt,88,8.120,1,Main Entrance at 45 Degree Angle from the Street
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,41,8.130,1,iii. The space must be a minimum of twenty-two (22) feet long; and iv.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,56,8.130,1,Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.4.b.iii in the preceding Section);
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,41,8.130,1,iii. The space must be a minimum of twenty-two (22) feet long; and
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,56,8.130,1,ii. Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.4.b.iii in the preceding Section);
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,60,8.130,1,(a) Be at least twenty-five (25) square feet in area; and
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,64,8.130,1,a. A roof dormer a minimum of four (4) feet in width.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,65,8.130,1,"b. A balcony a minimum of two (2) feet in depth and four (4) feet in width and accessible from an interior room, which may encroach into a required setback area."
@@ -5873,12 +5869,12 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,68,8.130,1,
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,69,8.130,1,"d. An offset of the facade of a minimum of two (2) feet in depth, either from the neighboring townhouse or within the façade of a single townhouse."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,70,8.130,1,e. An entryway that is recessed a minimum of three (3) feet.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.130.txt,71,8.130,1,f. A covered entryway with a minimum depth of four (4) feet.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,28,8.140,1,iii. The space must be a minimum of twenty-two (22) feet long; and iv.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,42,8.140,1,"ii. Be within ten (10) feet from the common courtyard, measured from the façade of the cottage to the nearest edge of the common courtyard; and iii."
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,28,8.140,1,iii. The space must be a minimum of twenty-two (22) feet long; and
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,42,8.140,1,"ii. Be within ten (10) feet from the common courtyard, measured from the façade of the cottage to the nearest edge of the common courtyard; and"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,45,8.140,1,c. Cottages within twenty (20) feet of a street property line may have their entrances facing the street.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,60,8.140,1,d. The common courtyard must be a minimum of fifteen (15) feet wide at its narrowest dimension.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,83,8.140,1,b. The pedestrian path must be hard-surfaced and a minimum of four (4) feet wide.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,92,8.140,1,Parking clusters must be separated from other spaces by at least four (4) feet of landscaping.
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,92,8.140,1,iii. Parking clusters must be separated from other spaces by at least four (4) feet of landscaping.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,96,8.140,1,"(a) Within twenty (20) feet from any street property line, except alley property lines;"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,100,8.140,1,Driveways and drive aisles are permitted within ten (10) feet of other property lines.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.140.txt,101,8.140,1,"c. Screening. Landscaping, fencing, or walls at least three (3) feet tall shall separate clustered parking areas and parking structures from common courtyards and public streets."
@@ -5892,7 +5888,7 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.150.txt,60,8.150,1,
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.150.txt,72,8.150,1,"b. Each upper level unit shall have an attached outdoor private space, such as a balcony, of not less than sixty (60) square feet in area."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,23,8.160,1,4. Minimum park depth—One hundred fifty (150) feet.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,28,8.160,1,a. A perimeter setback and buffer area of at least twenty (20) feet shall be provided.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,32,8.160,1,"A six (6) foot high decorative masonry wall, wooden fence, and a combination of evergreen and deciduous trees, shrubs, and groundcover arranged so as to achieve an effective sight and sound buffer to "
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,32,8.160,1,"ii. A six (6) foot high decorative masonry wall, wooden fence, and a combination of evergreen and deciduous trees, shrubs, and groundcover arranged so as to achieve an effective sight and sound buffer"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,36,8.160,1,a. Front yard—Ten (10) feet.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,37,8.160,1,"b. Rear yard—Twenty (20) feet, if not abutting a perimeter strip."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,41,8.160,1,d. Minimum distance between dwellings—Fifteen (15) feet.
@@ -5908,15 +5904,15 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.240.txt,25,8.240,1,
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.240.txt,26,8.240,1,2. A minimum area of five (5) feet in width adjacent to the sidewalk must be landscaped.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.240.txt,31,8.240,1,6. Street trees shall be planted in sidewalk tree wells meeting City specifications and spaced every forty (40) feet.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,7,9.010,1,"If all parking is off-site, parking for people with disabilities must be located within the shortest possible distance of an accessible entrance via an accessible path and no greater than two hundred "
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,23,9.010,1,"Cottage Cluster 0 space per unit if the floor No maximum area is less than 1,000 sq. ft."
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,24,9.010,1,"1 space per unit if the floor area is over 1,000 sq. ft."
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,39,9.010,1,"General retail with bulky 2 spaces per 1,000 sq. ft. of 3 spaces per 1,000 sq. ft. of"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,49,9.010,1,"Food trucks: 1 per truck Kiosks: 12.4 spaces per 1,000 sq. ft. of gross floor area"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,56,9.010,1,"Personal services or minor 4.3 spaces per 1,000 sq. ft. of 6.5 spaces per 1,000 sq. ft. of"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,61,9.010,1,"Service station 0.5 space per 1,000 sq. ft. of 1 space per 1,000 sq. ft. of"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,66,9.010,1,Major entertainment facility 1 spaces per 100 sq. ft. of 1.5 spaces per 100 sq. ft. of
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,75,9.010,1,"Library or museum 2.5 spaces per 1,000 sq. ft. of 3 spaces per 1,000 sq. ft. of"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,79,9.010,1,space for 7 feet of bench spaces for 7 feet of bench length length
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,26,9.010,1,"Cottage Cluster 0 space per unit if the floor No maximum area is less than 1,000 sq. ft."
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,27,9.010,1,"1 space per unit if the floor area is over 1,000 sq. ft."
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,47,9.010,1,"General retail with bulky 2 spaces per 1,000 sq. ft. of 3 spaces per 1,000 sq. ft. of"
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,58,9.010,1,"Food trucks: 1 per truck Kiosks: 12.4 spaces per 1,000 sq. ft. of gross floor area"
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,65,9.010,1,"Personal services or minor 4.3 spaces per 1,000 sq. ft. of 6.5 spaces per 1,000 sq. ft. of"
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,70,9.010,1,"Service station 0.5 space per 1,000 sq. ft. of 1 space per 1,000 sq. ft. of"
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,75,9.010,1,Major entertainment facility 1 spaces per 100 sq. ft. of 1.5 spaces per 100 sq. ft. of
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,84,9.010,1,"Library or museum 2.5 spaces per 1,000 sq. ft. of 3 spaces per 1,000 sq. ft. of"
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,88,9.010,1,space for 7 feet of bench spaces for 7 feet of bench length length
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.090.txt,22,9.090,1,An access aisle of at least five (5) feet wide shall be provided and maintained beside or between each row of bicycle parking.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.095.txt,8,9.095,1,There shall be a sight-obscuring screen which is at least eighty percent (80%) opaque when viewed horizontally from between two (2) and eight (8) feet above eighty percent (80%) average ground level.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.115.txt,20,9.115,1,3. Twenty (20) feet in width for forty-five degree (45°) parking.
@@ -5948,13 +5944,13 @@ or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.130.txt,1
 or/multnomah/troutdale,unread,setback_side_ft,or/multnomah/troutdale/3/3.235.txt,37,3.235,1,"The minimum side yard setback for residential uses adjoining a rear yard in a residential zoning district other than HDR, and the minimum rear yard setback (without an alley) adjoining a residential d"
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.235.txt,40,3.235,1,"b. For each one (1) foot reduction in the minimum setback, the building height ceiling shall be reduced by two (2) feet."
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.235.txt,41,3.235,1,"Thus, a building that is set back the maximum five (5) feet closer to the common property line has a building height ceiling that is ten (10) feet lower than the maximum."
-or/multnomah/troutdale,unread,setback_rear_ft,or/multnomah/troutdale/3/3.330.txt,22,3.330,1,"2. Rear yard setback shall be the same rear yard setback as required by the abutting zoning district, but in no case shall be less than fifteen (15) feet."
+or/multnomah/troutdale,unread,setback_rear_ft,or/multnomah/troutdale/3/3.330.txt,24,3.330,1,"2. Rear yard setback shall be the same rear yard setback as required by the abutting zoning district, but in no case shall be less than fifteen (15) feet."
 or/multnomah/troutdale,unread,min_lot_width_ft,or/multnomah/troutdale/3/3.430.txt,7,3.430,1,Minimum lot width 150 ft. None None
 or/multnomah/troutdale,unread,setback_front_ft,or/multnomah/troutdale/3/3.430.txt,10,3.430,1,Front yard setback 20 ft. 20 ft. 20 ft.
 or/multnomah/troutdale,unread,setback_side_ft,or/multnomah/troutdale/3/3.430.txt,11,3.430,1,Side yard setback 15 ft. 10 ft. None see 3.430.B.4
 or/multnomah/troutdale,unread,setback_street_side_ft,or/multnomah/troutdale/3/3.430.txt,12,3.430,1,Street side yard setback 15 ft. 10 ft. None see 3.430.B.4
 or/multnomah/troutdale,unread,setback_rear_ft,or/multnomah/troutdale/3/3.430.txt,13,3.430,1,Rear yard setback 10 ft. None None see 3.430.B.4
-or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.430.txt,19,3.430,1,Maximum Height of the Structure 35 ft. 45 ft. see 3.430.B.2 see 3.430.B.2
+or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.430.txt,20,3.430,1,Maximum Height of the Structure 35 ft. 45 ft. see 3.430.B.2 see 3.430.B.2
 or/multnomah/troutdale,unread,max_units,or/multnomah/troutdale/8/8.060.txt,16,8.060,1,"2. For multi-family residential development and mixed-use development, usable recreation areas shall be provided for development containing more than five (5) dwelling units at the rate of two hundred"
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/8/8.060.txt,32,8.060,1,b. Trees shall be a minimum of seven (7) feet in overall height or one and one half (1 ½) inches in caliper immediately after planting.
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/8/8.060.txt,38,8.060,1,c. Shrubs shall be a minimum of one (1) gallon in size or two (2) feet in height when measured immediately after planting.
@@ -5966,10 +5962,10 @@ or/multnomah/troutdale,unread,min_frontage_ft,or/multnomah/troutdale/8/8.130.txt
 or/multnomah/troutdale,unread,setback_garage_entrance_ft,or/multnomah/troutdale/8/8.130.txt,82,8.130,1,"iv. The garage width does not exceed twelve (12) feet, as measured from the inside of the garage door frame."
 or/multnomah/troutdale,unread,max_units,or/multnomah/troutdale/8/8.140.txt,15,8.140,1,"2. Average Unit Size. The maximum average floor area for a cottage cluster is one thousand four hundred (1,400) square feet per dwelling unit."
 or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/8/8.140.txt,20,8.140,1,"The minimum number of required off-street parking spaces for a cottage cluster project is zero (0) spaces per unit with a floor area of less than one thousand (1,000) square feet and one (1) space per"
-or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/8/8.140.txt,99,8.140,1,"Off-street parking spaces shall not be located within ten (10) feet of any other property line, except alley property lines."
+or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/8/8.140.txt,99,8.140,1,"ii. Off-street parking spaces shall not be located within ten (10) feet of any other property line, except alley property lines."
 or/multnomah/troutdale,unread,setback_garage_entrance_ft,or/multnomah/troutdale/8/8.140.txt,111,8.140,1,v. Garage doors for attached and detached individual garages must not exceed twenty (20) feet in width.
 or/multnomah/troutdale,unread,max_units,or/multnomah/troutdale/8/8.150.txt,15,8.150,1,a. Private streets or driveways greater than twenty (20) feet in length and that serve more than one (1) dwelling unit shall have sidewalks on at least one (1) side that connect to the nearest public 
-or/multnomah/troutdale,unread,setback_garage_entrance_ft,or/multnomah/troutdale/8/8.150.txt,62,8.150,1,"The garage door is behind or even with the front door and the dwelling has a roofed front porch, which is at least one-third (1/3) as wide as the front elevation and at least five (5) feet deep."
+or/multnomah/troutdale,unread,setback_garage_entrance_ft,or/multnomah/troutdale/8/8.150.txt,62,8.150,1,"ii. The garage door is behind or even with the front door and the dwelling has a roofed front porch, which is at least one-third (1/3) as wide as the front elevation and at least five (5) feet deep."
 or/multnomah/troutdale,unread,setback_front_ft,or/multnomah/troutdale/8/8.150.txt,63,8.150,1,The porch may encroach within the required front yard setback a maximum of five (5) feet without a variance provided the foundation for the dwelling complies with the minimum front setback standard; a
 or/multnomah/troutdale,unread,max_units,or/multnomah/troutdale/8/8.150.txt,70,8.150,1,a. Each ground level dwelling unit shall have an attached accessible outdoor private space of not less than sixty (60) square feet in area.
 or/multnomah/troutdale,unread,open_space_min_pct,or/multnomah/troutdale/8/8.150.txt,71,8.150,1,"Individual outdoor areas for ground level units must be visually screened from each other by walls, fences, or vegetation screening that is at least six (6) feet high and totally sight-obscuring."

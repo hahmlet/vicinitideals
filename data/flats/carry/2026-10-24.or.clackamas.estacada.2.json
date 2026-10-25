@@ -1,0 +1,22 @@
+[
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "c76d148446556a6bf4601a051e83be355d2ad1a2f4793328c793943211440e51",
+  "new_quote": "or/clackamas/estacada/16.76/16.76.010.txt#L66-L68",
+  "old_fingerprint": "fdf631469524531524cca7c47d7b416b9541f5b09260089f178dd67614db390c",
+  "old_quote": "or/clackamas/estacada/16.76/16.76.010.txt#L66-L67",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "59a433695cbcb1b29a64af6a852352c14f65daafceba7b36fed31c2030ad7668",
+  "new_quote": "or/clackamas/estacada/16.76/16.76.010.txt#L69-L71",
+  "old_fingerprint": "470bf34f4db60943f954460fa20c3d7af12678d580bb248834a382c7fe596603",
+  "old_quote": "or/clackamas/estacada/16.76/16.76.010.txt#L68-L69",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ }
+]

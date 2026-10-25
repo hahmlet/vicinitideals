@@ -19,7 +19,8 @@ Permitted (P)
 Conditional Use (CU)
 Additional Standards
 1. Industrial
-a. Light manufacture (e.g., electronic equipment, printing, bindery, furniture, and similar goods) P
+a. Light manufacture (e.g., electronic equipment, printing, bindery, furniture, and similar goods)
+P
 Subject to special standards for certain uses (see FMC 19.80.080)
 b. Laboratories
 P
@@ -33,7 +34,8 @@ e. Similar uses
 P
 See FMC 19.80.020(B)
 2. Commercial
-a. Automobile-oriented uses (vehicle repair, sales, rental, storage, service; drive-up, drive-in, and drive-through facilities; and similar uses) CU
+a. Automobile-oriented uses (vehicle repair, sales, rental, storage, service; drive-up, drive-in, and drive-through facilities; and similar uses)
+CU
 Subject to special standards for certain uses, see FMC 19.80.080
 b. Delicatessen shops
 CU
@@ -47,26 +49,32 @@ CU
 f. Outdoor commercial uses (e.g., outdoor storage, sales and display)
 CU
 Subject to special standards for certain uses, see FMC 19.80.080
-g. Personal and professional services (e.g., catering/food services, restaurants, laundromats and dry cleaners, barber shops and salons, banks and financial institutions, and similar uses) CU
+g. Personal and professional services (e.g., catering/food services, restaurants, laundromats and dry cleaners, barber shops and salons, banks and financial institutions, and similar uses)
+CU
 Subject to special standards for certain uses, see FMC 19.80.080
 h. Child care centers (more than 16 children)
 P
 i. Repair services
 CU
 Subject to special standards for certain uses, see FMC 19.80.080
-j. Retail trade and services, not exceeding 5,000 square feet of floor area per building P
-k. Wholesale trade and services not exceeding 5,000 square feet of floor area per building P
+j. Retail trade and services, not exceeding 5,000 square feet of floor area per building
+P
+k. Wholesale trade and services not exceeding 5,000 square feet of floor area per building
+P
 l. Professional, executive and administrative offices
 CU
 m. Uses similar to those listed above
 CU
 See FMC 19.80.020(B)
 3. Civic and Semi-Public Uses
-a. Government facilities (e.g., public safety, utilities, school district bus facilities, public works yards, transit and transportation, and similar facilities) CU
+a. Government facilities (e.g., public safety, utilities, school district bus facilities, public works yards, transit and transportation, and similar facilities)
+CU
 Subject to special standards for certain uses, see FMC 19.80.080
-b. Utilities (e.g., natural gas, electricity, telephone, cable, and similar facilities) CU
+b. Utilities (e.g., natural gas, electricity, telephone, cable, and similar facilities)
+CU
 Subject to special standards for certain uses, see FMC 19.80.080
-c. Special district facilities (e.g., irrigation district, and similar facilities) CU
+c. Special district facilities (e.g., irrigation district, and similar facilities)
+CU
 Subject to special standards for certain uses, see FMC 19.80.080
 d. Trade or commercial schools
 CU

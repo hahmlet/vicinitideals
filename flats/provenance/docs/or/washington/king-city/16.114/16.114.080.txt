@@ -47,8 +47,8 @@ b. All drawings of structures elevations, prepared by a registered civil enginee
 c. A scale drawing that clearly depicts the wetland boundary, the surface water source, existing trees and vegetation, property boundaries, and proposed site alterations including proposed excavation, fill, structures, and paved areas.
 d. Existing and proposed topography within the property boundaries using the following contour intervals:
 i. For slopes of five percent or less, contour intervals not more than one foot;
-ii. For slopes greater than five percent and up to and including ten percent, contour intervals not more two feet; and iii.
-For slopes greater than ten percent, contour intervals not more than five feet.
+ii. For slopes greater than five percent and up to and including ten percent, contour intervals not more two feet; and
+iii. For slopes greater than ten percent, contour intervals not more than five feet.
 e. A delineation of the wetland boundary completed in accordance with Oregon Department of
 State Lands rules.
 If the proposed project is designed to avoid wetlands, or if the subject property is within one hundred feet of a wetland that is located exclusively on an adjacent property, a wetland determination report may be provided in place of the delineation.

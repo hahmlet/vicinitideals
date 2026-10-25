@@ -127,7 +127,8 @@ RESIDENTIAL COMMERCIAL
 r. Personal services (e.g., barber shops, salons, similar uses)
 X(2)
 RESIDENTIAL COMMERCIAL
-s. Repair services, conducted entirely within building; auto repair and similar uses excluded X(2)
+s. Repair services, conducted entirely within building; auto repair and similar uses excluded
+X(2)
 RESIDENTIAL COMMERCIAL
 t. Mixed use building – Residential with other permitted use
 X(2)

@@ -10,7 +10,8 @@ Specific
 MDR                         HDR        Stan-
 Land Use                             LDR-1     LDR-2      MDR                       (TC)        HDR             (TC)         dards
 Residential Dwellings and Uses
-Single-family                                P             P             P             P             N             P          8.110 detached
+Single-family                                P             P             P             P             N             P          8.110
+detached
 Duplex                                       P             P             P             P             N             P          8.110
 Triplex                                       P             P             P             P             N             P          8.120
 Quadplex                                  P             P             P             P             N             P          8.120
@@ -32,7 +33,8 @@ Land Use                             LDR-1     LDR-2      MDR                   
 Shared dwellings                      P             P             P             P             P             P          8.180
 Residential facility                     P             P             P             P             P             P
 Other Uses
-Agricultural or                                  C             N             N             N             N             N          5.090 animal-based uses
+Agricultural or                                  C             N             N             N             N             N          5.090
+animal-based uses
 Bed and breakfast inns             P             P             P             P             P             P          5.100
 Community service uses          C             C             C             C             C             C
 Food stand                                P             P             P             P             P             P          5.200
@@ -44,8 +46,10 @@ Human services                        C             C             C             
 Specific
 MDR                          HDR        Stan-
 Land Use                             LDR-1     LDR-2      MDR                         (TC)        HDR             (TC)         dards
-Recreation facilities (ac-                   C             C             C             C             C             C tive)
-Recreation facilities (pas-                  P             P             P             P             P             P sive)
+Recreation facilities (ac-                   C             C             C             C             C             C
+tive)
+Recreation facilities (pas-                  P             P             P             P             P             P
+sive)
 Utility facilities                           C             C             C             C             C             C
 (major)
 Utility facilities                           P             P             P             P             P             P

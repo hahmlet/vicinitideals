@@ -12,32 +12,41 @@ Parking spaces are based on one (1) per one thousand (1,000) sq. ft. of gross le
 
 Residential Land Use                      Minimum                                  Maximum
 Accessory Dwelling Unit (ADU)      None                                        None
-Single-family detached and                      1 space per dwelling unit         No maximum manufactured home on lot
+Single-family detached and                      1 space per dwelling unit         No maximum
+manufactured home on lot
 Duplex                                             2 spaces total                           No maximum
 Triplex and Quadplex
 • Lot size of less than 3,000 sq. ft.  1 space total                             No maximum
 • Lot size of less than 5,000 sq. ft.  2 spaces total                           No maximum
-• Lot size between 5,000 sq. ft.                3 spaces total                           No maximum and 6,999 sq. feet
-• Lot size of 7,000 sq. ft. or                  3 spaces total per triplex                 No maximum greater                                         4 spaces total per quadplex
+• Lot size between 5,000 sq. ft.                3 spaces total                           No maximum
+and 6,999 sq. feet
+• Lot size of 7,000 sq. ft. or                  3 spaces total per triplex                 No maximum
+greater                                         4 spaces total per quadplex
 Townhome                                      1 space per dwelling unit
 Cottage Cluster                               0 space per unit if the floor                No maximum area is less than 1,000 sq. ft.
 1 space per unit if the floor area is over 1,000 sq. ft.
 Multi-family dwelling                        1 space per dwelling unit1        No maximum
 Affordable units, as defined in                 None                                        No maximum
 OAR 660-039-0010
-Residential units smaller than 750              None                                        No maximum sq. ft.
+Residential units smaller than 750              None                                        No maximum
+sq. ft.
 Single room occupancy housing     None                                        No maximum
 Shared dwelling                              None                                        No maximum
-Public supported housing as                     None                                        No maximum defined in ORS 456.250
+Public supported housing as                     None                                        No maximum
+defined in ORS 456.250
 Manufactured home park                1 space per dwelling unit         No maximum
-Facilities for people with                      None                                        No maximum disabilities as defined in ORS
+Facilities for people with                      None                                        No maximum
+disabilities as defined in ORS
 443.400
-Domestic violence, emergency,                   None                                        No maximum and transitional shelters
+Domestic violence, emergency,                   None                                        No maximum
+and transitional shelters
 Commercial Land Use                    Minimum                                  Maximum
 General retail or personal service,             4.1 spaces per 1,000 sq. ft. of            6.2 spaces per 1,000 sq. ft. of
-including shopping centers and                  gross floor area                           gross floor area grocery stores
+including shopping centers and                  gross floor area                           gross floor area
+grocery stores
 General retail with bulky                       2 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of
-merchandise, such as a furniture                gross floor area                           gross floor area or appliance store
+merchandise, such as a furniture                gross floor area                           gross floor area
+or appliance store
 Eating and drinking establishment               10 spaces per 1,000 sq. ft. of             19.1 spaces per 1,000 sq. ft.
 without a drive-thru                            gross floor area                           of gross floor area
 
@@ -82,7 +91,8 @@ Hospital                                           1.5 spaces per bed           
 
 Industrial Land Use                         Minimum                                  Maximum
 Storage, warehouse, or                      1 space per employee on the            1.5 spaces per employee on
-manufacturing establishment; air,           largest shift                          the largest shift rail, or trucking freight terminal
+manufacturing establishment; air,           largest shift                          the largest shift
+rail, or trucking freight terminal
 (Ord. No. 899, § 2(Att.
 A), 6-24-2025)
 
