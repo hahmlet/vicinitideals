@@ -41,9 +41,11 @@ def test_reader_walks_from_the_shelf_to_a_cited_line(logged_in_page: Page) -> No
     expect(target.locator(".readers a").first).to_be_visible()
 
     # Clicking a line number makes that line the citation.
-    page.locator("tr[data-line] .n a").nth(2).click()
+    number = page.locator("tr[data-line]:not(.blank) .n a").nth(2)
+    n = number.inner_text()
+    number.click()
     expect(page.locator("tr.hit")).to_have_count(1)
-    assert page.url.endswith("#L3")
+    assert page.url.endswith(f"#L{n}")
 
 
 def test_search_reaches_the_line_it_found(logged_in_page: Page) -> None:
@@ -151,6 +153,17 @@ def test_section_buttons_stay_put_and_the_arrow_keys_turn_pages(logged_in_page: 
     page.get_by_label("Shown here").fill("abc")
     page.get_by_label("Shown here").press("ArrowLeft")
     assert page.url.endswith("/31/31.060.txt")
+
+
+def test_empty_lines_are_a_small_gap_not_a_row(logged_in_page: Page) -> None:
+    # Steph 2026-10-25: the empty lines do not help reading.
+    page = logged_in_page
+    page.goto("/flats/code/or/clackamas/west-linn/08/08.010.txt")
+    blank = page.locator("#L2")
+    expect(blank).to_have_class("blank")
+    expect(blank).to_be_attached()
+    box = blank.bounding_box()
+    assert box and box["height"] < 10
 
 
 def test_a_misread_word_carries_a_squiggle(logged_in_page: Page) -> None:

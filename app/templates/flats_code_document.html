@@ -11,6 +11,8 @@
   .code-lines .n a { color:inherit; text-decoration:none; }
   .code-lines .n a:hover { text-decoration:underline; }
   .code-lines .t { white-space:pre-wrap; overflow-wrap:anywhere; }
+  .code-lines tr.blank td, .code-lines tr.blank .n { padding:0; height:6px; font-size:0; line-height:0; }
+  .code-lines tr.blank.hit td { height:14px; }
   .code-lines .t.grid { white-space:pre; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; overflow-x:auto; }
   .code-lines tr.read .t { border-left:3px solid rgba(22,163,74,.55); padding-left:6px; }
   .code-lines .t.label { padding-left:calc(var(--d) * 1.8em + 2.2em); text-indent:-2.2em; }
@@ -97,7 +99,9 @@
   {% endif %}
 
   {% macro line_row(line) %}
-      <tr id="L{{ line.n }}" data-line="{{ line.n }}"{% if line.readers %} class="read"{% endif %}>
+      {# An empty line is kept (citations count lines) but drawn as a small gap,
+         not a full row (Steph 2026-10-25: the empty lines do not help reading). #}
+      <tr id="L{{ line.n }}" data-line="{{ line.n }}"{% if line.readers %} class="read"{% elif not line.text.strip() %} class="blank"{% endif %}>
         <td class="n"><a href="#L{{ line.n }}">{{ line.n }}</a></td>
         <td>
           <div class="t{% if line.grid %} grid{% endif %}{% if line.kind %} {{ line.kind }}{% endif %}"{% if line.kind in ("label", "body") %} style="--d:{{ line.depth }}"{% endif %}{% if line.kind == "history" %} title="Legislative history: the ordinances that adopted and amended this section, with their dates"{% endif %}>{{ line.html }}{% if line.notes_from %} <span class="note-back">↩ marked on {% for f in line.notes_from %}<a href="#L{{ f }}">line {{ f }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</span>{% endif %}</div>
