@@ -644,13 +644,13 @@ def create_app() -> FastAPI:
     def _warm_flats_check() -> None:
         import threading
 
-        from app.api.routers.ui_flats import _reading_tally
+        from app.api.routers.ui_flats import warm_reading
         from app.api.routers.ui_flats_check import warm
         from app.api.routers.ui_flats_code import _library
         from flats.provenance import spelling
 
         threading.Thread(target=warm, name="flats-check-warm", daemon=True).start()
-        threading.Thread(target=_reading_tally, name="flats-reading-warm", daemon=True).start()
+        threading.Thread(target=warm_reading, name="flats-reading-warm", daemon=True).start()
         threading.Thread(target=_library, name="flats-code-warm", daemon=True).start()
         threading.Thread(target=spelling.warm, name="flats-spelling-warm", daemon=True).start()
 

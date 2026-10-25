@@ -468,13 +468,30 @@ _SCANNED: dict[
 ] = {}
 
 
+#: Each layer's "does the store open this reference" test, on the same
+#: bargain and the same key as ``_SCANNED``. Building one lists the store and
+#: reads every document the layer owns; once the codes were cut into section
+#: files that was most of a word-queue click (38 of 43 s locally, every click).
+_OPENS: dict[tuple[str, str], Callable[[str], bool]] = {}
+
+
 def refresh(layer_id: str | None = None) -> None:
     """Drop the scan cache — call after fetching a document into the store."""
     if layer_id is None:
         _SCANNED.clear()
+        _OPENS.clear()
         return
     for key in [k for k in _SCANNED if k[1] == layer_id]:
         del _SCANNED[key]
+    _OPENS.pop((str(DOCS), layer_id), None)
+
+
+def _opens(layer: Layer) -> Callable[[str], bool]:
+    key = (str(DOCS), layer.layer)
+    held = _OPENS.get(key)
+    if held is None:
+        held = _OPENS[key] = crossrefs.opens(layer)
+    return held
 
 
 def _scan(
@@ -974,7 +991,7 @@ def cards(
     # test reads every document this layer owns (0.1s for Portland), and
     # asking for it per card would read them again for each of twenty words.
     opens = (
-        crossrefs.opens(layer)
+        _opens(layer)
         if any(m.sends for shown in sampled.values() for m in shown)
         else _NOTHING_OPENS
     )

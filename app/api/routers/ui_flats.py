@@ -242,6 +242,21 @@ def _reading_tally() -> dict[str, tuple[int, int]]:
     return reading_counts(store=_store())
 
 
+def warm_reading() -> None:
+    """Pay the reading pages' cold scans at startup, off the event loop.
+
+    The landing counts, the reference ledger and the word scans the hand-off
+    page reads; cold, the hand-off took over 20 s on the server. A failure
+    only means the first open is as slow as it was.
+    """
+    try:
+        _reading_tally()
+        feed(store=_store(), ruled=True)
+        word_orders()
+    except Exception:  # noqa: BLE001 — warming is best effort
+        pass
+
+
 _LAYER_KIND_WORDS = {
     "state": "statewide rules",
     "county": "countywide rules",

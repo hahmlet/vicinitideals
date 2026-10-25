@@ -1065,3 +1065,27 @@ class TestRule:
     def test_a_layer_we_do_not_hold_is_refused(self) -> None:
         with pytest.raises(ValueError, match="not a layer we hold"):
             rule("../../../../etc/passwd", "lot width", "defined", "matches", "x" * 80)
+
+
+def test_a_layers_reference_test_is_built_once_per_store(tmp_path, monkeypatch) -> None:
+    """Building it lists the store and reads every document the layer owns --
+    most of a word-queue click once the codes were cut into sections."""
+    from types import SimpleNamespace
+
+    built: list[str] = []
+
+    def opens(layer):
+        built.append(layer.layer)
+        return lambda ref: False
+
+    monkeypatch.setattr(W.crossrefs, "opens", opens)
+    monkeypatch.setattr(W, "DOCS", tmp_path)
+    layer = SimpleNamespace(layer="or/test/town")
+
+    W._opens(layer)
+    W._opens(layer)
+    assert built == ["or/test/town"]
+
+    W.refresh("or/test/town")
+    W._opens(layer)
+    assert built == ["or/test/town", "or/test/town"]
