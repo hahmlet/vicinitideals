@@ -2611,6 +2611,32 @@ async def test_the_landing_page_names_a_mode_and_its_size(
     assert "Why didn&#39;t we take it?" in response.text or "Why didn't we take it?" in response.text
 
 
+async def test_the_landing_page_counts_the_queues_once_per_process(
+    client: AsyncClient, session: AsyncSession, monkeypatch
+):
+    """Counting walks every line of the corpus -- minutes cold -- so the first
+    open after a deploy timed out. It is counted once and kept."""
+    from app.api.routers import ui_flats
+
+    calls = []
+
+    def counting(**kwargs):
+        calls.append(kwargs)
+        return {kind: (1, 2) for kind in ui_flats.KINDS}
+
+    monkeypatch.setattr(ui_flats, "reading_counts", counting)
+    ui_flats._reading_tally.cache_clear()
+    try:
+        await _login(client, session)
+        first = await client.get("/flats/reading")
+        second = await client.get("/flats/reading")
+    finally:
+        ui_flats._reading_tally.cache_clear()
+
+    assert first.status_code == second.status_code == 200
+    assert len(calls) == 1
+
+
 async def test_each_queue_offers_only_its_own_answers(
     client: AsyncClient, session: AsyncSession
 ):

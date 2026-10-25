@@ -230,6 +230,18 @@ def _section_files() -> frozenset[str]:
     return _store().section_files()
 
 
+@lru_cache(maxsize=1)
+def _reading_tally() -> dict[str, tuple[int, int]]:
+    """Cards and lines behind each reading queue, for the landing page.
+
+    Minutes cold -- the uncited ledger walks every line of the corpus -- and
+    everything it reads is baked into the image, so it is counted once per
+    process and warmed at startup. Uncached, the first open after a deploy
+    outran the browser's 30 s wait.
+    """
+    return reading_counts(store=_store())
+
+
 _LAYER_KIND_WORDS = {
     "state": "statewide rules",
     "county": "countywide rules",
@@ -2343,7 +2355,7 @@ async def flats_reading_index(request: Request, session: DBSession) -> HTMLRespo
     """
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
-    tally = await run_in_threadpool(reading_counts)
+    tally = await run_in_threadpool(_reading_tally)
     return templates.TemplateResponse(
         request,
         "flats_reading_index.html",

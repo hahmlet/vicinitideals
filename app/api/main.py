@@ -639,15 +639,18 @@ def create_app() -> FastAPI:
     app.include_router(ui_flats_check_router)
 
     # Warm the page check's caches off the event loop so the first card is not
-    # a 7 s cold start; startup and the health check do not wait for it.
+    # a 7 s cold start (the reading landing page's counts take minutes);
+    # startup and the health check do not wait for it.
     def _warm_flats_check() -> None:
         import threading
 
+        from app.api.routers.ui_flats import _reading_tally
         from app.api.routers.ui_flats_check import warm
         from app.api.routers.ui_flats_code import _library
         from flats.provenance import spelling
 
         threading.Thread(target=warm, name="flats-check-warm", daemon=True).start()
+        threading.Thread(target=_reading_tally, name="flats-reading-warm", daemon=True).start()
         threading.Thread(target=_library, name="flats-code-warm", daemon=True).start()
         threading.Thread(target=spelling.warm, name="flats-spelling-warm", daemon=True).start()
 
