@@ -48,7 +48,7 @@ readings:
       the pod carries no garage.
     fingerprint: 13f405d45de414c2
 
-  "19.300.base-zones.txt#19.302.4":
+  "19.302.4.txt#19.302.4":
     queue: missed
     outcome: not_here
     note: >-
@@ -62,7 +62,7 @@ readings:
       "identified in Figure 19.302.4" to a 5 ft minimum front yard instead of the 20 the table
       states -- a relaxation, on a set of properties defined by a map this pipeline does not hold,
       so ignoring it refuses land the city would allow rather than the reverse.
-    fingerprint: 6084c94964c95590
+    fingerprint: 069bb96bc1b7b358
   "19.300.base-zones.txt#19.312.7":
     queue: missed
     outcome: not_here
@@ -77,7 +77,7 @@ readings:
       side rather than being simply waved away: it is not a standard we missed, it is a district
       we have never encoded.
     fingerprint: 101378d2fde02980
-  "19.500.supplementary.txt#19.511":
+  "19.511.txt#19.511":
     queue: missed
     outcome: not_here
     note: >-
@@ -88,8 +88,8 @@ readings:
       households at or below eighty percent of area median income. Reading a bonus can only ever
       let more building through, so leaving it unread is the conservative direction as well as the
       correct one. The two zones the bonuses name (DMU, GMU) are encoded as of 2026-10-08, with the base heights; the bonuses stay unread.
-    fingerprint: 1b5af50bbd41dab8
-  "19.600.parking.txt#19.606.4":
+    fingerprint: e785ae6c9b68304c
+  "19.606.4.txt#19.606.4":
     queue: missed
     outcome: not_here
     note: >-
@@ -100,16 +100,16 @@ readings:
       order of two thousand square feet, a fifth of the threshold. The remaining statements --
       preserved canopy counting toward coverage, isolated planters not counting -- are rules for
       how to satisfy a standard this project never triggers.
-    fingerprint: a5d1c75cfcbd1355
-  "19.200.definitions.txt#19.202.3":
+    fingerprint: 64f46939505dc63e
+  "19.202.3.txt#19.202.3":
     queue: missed
     outcome: not_here
     note: >-
       A measurement definition, not a standard: existing trees are measured at four and a half
       feet above mean ground level at the base, which is diameter at breast height. It tells a
       surveyor where to put the tape and says nothing about how tall a building may be.
-    fingerprint: 8774345d6cbec5c8
-  "19.500.supplementary.txt#19.504.6":
+    fingerprint: d2f388958f732f0a
+  "19.504.6.txt#19.504.6":
     queue: missed
     outcome: not_here
     note: >-
@@ -124,15 +124,15 @@ readings:
       pipeline identifies a flag lot, so it is not a standard we missed; it is a lot shape we do
       not detect. Worth putting beside the corner-lot and lot-line-bearing work, because a flag is
       as computable from parcel geometry as a corner is.
-    fingerprint: 4755eb8d87789ea2
-  "19.500.supplementary.txt#19.507.3":
+    fingerprint: cd8de71950510507
+  "19.507.3.txt#19.507.3":
     queue: missed
     outcome: not_here
     note: >-
       Home occupation signage: one sign, no more than four square feet. A sign area on an
       accessory use, matched to a height field only because it states a figure in feet. Nothing
       about a dwelling's dimensions is in it.
-    fingerprint: 1ca8b560a662838a
+    fingerprint: 427d6c3a74725a7d
   "19.300.base-zones.txt#19.600":
     queue: missed
     outcome: not_here
@@ -157,7 +157,7 @@ readings:
       Section 19.510 are permitted an additional allowance. A bonus, in a district this file does
       not encode, and reading it could only raise a limit.
     fingerprint: 2319467dc89f2fd1
-  "19.600.parking.txt#19.608.3":
+  "19.608.3.txt#19.608.3":
     queue: missed
     outcome: not_here
     note: >-
@@ -165,7 +165,7 @@ readings:
       clearance. Loading berths are required of commercial and industrial uses by floor area, and
       a four-unit dwelling triggers none. The numbers measure a truck bay, not a building or a
       lot.
-    fingerprint: f50d0f31301eff0a
+    fingerprint: bbe6ae4b4c2789c4
   "19.300.base-zones.txt#19.308.5":
     queue: condition
     outcome: never
@@ -179,7 +179,7 @@ readings:
       ruling. Seventeen lots is the whole exposure, and every one of them is already reported as
       unscreened rather than screened green.
     fingerprint: 3fff08ddf77729c4
-  "19.500.supplementary.txt#19.501.1":
+  "19.501.1.txt#19.501.1":
     queue: condition
     outcome: cant_tell
     note: >-
@@ -211,8 +211,8 @@ readings:
       the exposure is possible false REDs in Milwaukie, never a false GREEN. What changes is the
       record: the old reason was checkable and wrong, and a wrong reason on a closed card is the
       failure this queue exists to prevent.
-    fingerprint: 3c1e314eff97b8c6
-  "19.500.supplementary.txt#19.502.3":
+    fingerprint: f22b7f0d8fd35357
+  "19.502.3.txt#19.502.3":
     queue: condition
     outcome: never
     note: >-
@@ -222,7 +222,7 @@ readings:
       the lot. If a cistern were ever added to a site plan it would be measured against these
       figures and would not change the building's own height, coverage or setbacks, which are what
       this screen decides on. Nothing here can move max_height_ft for the pod.
-    fingerprint: c3584aa6c4719c75
+    fingerprint: 466d3f4923ba78b4
   "19.500.supplementary.txt#19.505.5":
     queue: condition
     outcome: never
@@ -241,7 +241,7 @@ readings:
       in 19.505.5.E.1 either: the requirement of two abutting lots meeting the residential Tables
       19.301.4 and 19.302.4 is recorded on the DMU notes as a standard no field holds.
     fingerprint: a29592741a522e33
-  "19.600.parking.txt#19.606.1":
+  "19.606.1.txt#19.606.1":
     queue: condition
     outcome: never
     note: >-
@@ -252,8 +252,8 @@ readings:
       being made for the first time here. Milwaukie's middle-housing parking sits in 19.505, which
       this corpus encodes. So the section is not a standard we missed for this building; it is a
       standard the city itself directs away from it.
-    fingerprint: f6313cabf3f8a37b
-  "12.16.access-management.txt#12.16.040":
+    fingerprint: 21f98efcf9134388
+  "12.16.040.txt#12.16.040":
     queue: condition
     outcome: applies
     note: >-
@@ -269,8 +269,8 @@ readings:
       same page is deliberately left out of this ruling -- it is self-relieving on existing lots
       by the code's own words. Ruled `applies` so the card stays open as ordered work: an apron
       field, then the encoding.
-    fingerprint: 5d0a0a9e5b37bcb1
-  "19.500.supplementary.txt#19.505.1":
+    fingerprint: 36d880618f23c9b3
+  "19.505.1.txt#19.505.1":
     queue: condition
     outcome: never
     note: >-
@@ -282,7 +282,7 @@ readings:
       ruled in Gladstone and Wilsonville, and it is being recorded again rather than assumed,
       because the menu structure has to be read in each city's own words to be sure the code
       really offers a choice and does not require all of them.
-    fingerprint: dee2326117d5b937
+    fingerprint: 362df975926991b6
   "19.300.base-zones.txt#19.307.3":
     queue: condition
     outcome: never
@@ -295,7 +295,7 @@ readings:
       a district nobody has encoded, which is the zone-gap ledger's business rather than this
       queue's.
     fingerprint: 235ce802e32a0440
-  "19.500.supplementary.txt#19.505.7":
+  "19.505.7.txt#19.505.7":
     queue: condition
     outcome: never
     note: >-
@@ -310,8 +310,8 @@ readings:
       than skipped because a card whose statements are all about a facade is exactly the kind a
       reviewer stops reading, and the reason it does not apply is the heading rather than the
       content.
-    fingerprint: 7e1fd7b06d56943b
-  "19.300.base-zones.txt#19.302.5":
+    fingerprint: 47b117b82ad05a46
+  "19.302.5.txt#19.302.5":
     queue: condition
     outcome: never
     note: >-
@@ -323,7 +323,7 @@ readings:
       green. Ignoring them costs a lot that could have been built; taking them would let a lot
       pass on a bonus nobody has applied for. The conservative default here is not a preference,
       it is the whole design: an unelected bonus is not a standard the lot has met.
-    fingerprint: 7cb3c78ccb9dfcaf
+    fingerprint: 5f880c3490c17dd0
   "19.500.supplementary.txt#19.505.3":
     queue: condition
     outcome: applies
@@ -353,7 +353,7 @@ readings:
       recorded here rather than encoded, and this card stays open as the standing request for the
       offset form and the frontage-occupation field.
     fingerprint: 9d4809ff8e8a6a46
-  "19.300.base-zones.txt#19.301.5":
+  "19.301.5.txt#19.301.5":
     queue: condition
     outcome: never
     note: >-
@@ -363,8 +363,8 @@ readings:
       unelected bonus is not a standard a lot has met. Ruled separately from the 19.302.5 card
       because they are separate subsections governing separate zone families, and a decision on
       one may not silently close the other.
-    fingerprint: 7f6ea90f0a9501cc
-  "19.300.base-zones.txt#19.304.5":
+    fingerprint: 26b8903e2c4b130d
+  "19.304.5.txt#19.304.5":
     queue: condition
     outcome: never
     note: >-
@@ -389,7 +389,7 @@ readings:
       development is five or more units by MMC 19.200, a four-unit building on one lot is not
       listed in the zone at all, and the unit-lots path is townhouses, whose minimum E.2.a is 25
       du/acre and is encoded.
-    fingerprint: 53187061fdc10ac9
+    fingerprint: 87b1fcf4cefa2fc3
   "19.500.supplementary.txt#19.508.4":
     queue: condition
     outcome: never
@@ -403,7 +403,7 @@ readings:
       pattern of glass and massing across an elevation is not a rule about where a wall may stand
       on a lot.
     fingerprint: cf0b881be951d4df
-  "19.500.supplementary.txt#19.502.2":
+  "19.502.2.txt#19.502.2":
     queue: condition
     outcome: never
     note: >-
@@ -416,7 +416,7 @@ readings:
       skipped because an accessory-structure setback wearing the zone's citation is the expensive
       kind of wrong, and this is the third city whose accessory chapter has matched a setback
       field for that reason.
-    fingerprint: 3c4151e36ce4b770
+    fingerprint: f251b57301a85e4e
   "19.300.base-zones.txt#19.303.4":
     queue: condition
     outcome: cant_tell
@@ -438,7 +438,7 @@ readings:
       figure, so none of this reaches them. cant_tell because the figure is the missing fact; it stays on the
       unmeasured list until the commercial edges are traced.
     fingerprint: b292838d04354fe6
-  "19.400.overlays.txt#19.402.4":
+  "19.402.4.txt#19.402.4":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -449,8 +449,8 @@ readings:
       maintenance instruction to whoever holds the machete. The overlay itself is geometry the
       screening layer carves rather than a dimension this file holds, which is the same treatment
       every resource corridor in this corpus gets.
-    fingerprint: 8c1c4e0b5fdc2ac7
-  "19.400.overlays.txt#19.404.6":
+    fingerprint: 4c2dbba2bb536191
+  "19.404.6.txt#19.404.6":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -466,8 +466,8 @@ readings:
       elsewhere -- Portland's commercial zones are the case on the record -- and 50 feet is loose
       even where it applies: it pushes a building toward the street rather than away from it, and
       this pod's front setback is never near 50.
-    fingerprint: 52043c54d3944b46
-  "19.400.overlays.txt#19.401.3":
+    fingerprint: 8f2cc9455a4ccb47
+  "19.401.3.txt#19.401.3":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -484,8 +484,8 @@ readings:
       Blvd" -- the pod is 26 -- and "new private noncommercial docks exceeding 400 sq ft", which
       is a dock. The grading and tree-cutting prohibition in the buffer is corridor geometry the
       overlay layer holds.
-    fingerprint: 1579f4b4688e9326
-  "19.400.overlays.txt#19.402.15":
+    fingerprint: 0ac2b58758ca81c8
+  "19.402.15.txt#19.402.15":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -500,8 +500,8 @@ readings:
       measured from a feature the parcel data locates, never from a lot line, so it carves
       buildable area rather than becoming a Value. The verification options in the same subsection
       are how an applicant argues the map is wrong, which is a hearing rather than a standard.
-    fingerprint: a9195948ceaf4f3f
-  "19.400.overlays.txt#19.402.6":
+    fingerprint: 5b19886847964385
+  "19.402.6.txt#19.402.6":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -513,7 +513,7 @@ readings:
       than by any field here, and a mitigation ratio changes what a developer plants, not what a
       lot can hold. The rest of 19.402.6 is limited tree removal, major pruning and utility
       connections, all of them activities rather than dimensions.
-    fingerprint: cb4d7af76f1ec8ac
+    fingerprint: b3de7f08785edecd
   "19.600.parking.txt#19.609.4":
     queue: nofield
     outcome: design
@@ -528,7 +528,7 @@ readings:
       or inside it, no field in this registry measures a bicycle space, and the same table was
       ruled the same way on Portland's 33.266.21 card in this pass.
     fingerprint: 6752857f0381a532
-  "19.200.definitions.txt#19.202.4":
+  "19.202.4.txt#19.202.4":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -543,7 +543,7 @@ readings:
       minimum density does bite it is already handled by a field: Portland carries its RM floors
       as sqft_per_unit precisely so what is checked is the operand the table prints rather than a
       quotient nothing prints. Nothing on this card is such an operand.
-    fingerprint: 46267ce3e0ba9967
+    fingerprint: 68727c6a9496b8aa
   "19.300.base-zones.txt#19.301.4":
     queue: nofield
     outcome: not_a_statement
@@ -575,15 +575,15 @@ readings:
       tracked on its own, and it is not made smaller by ruling on a fragment. Filed to the
       extractor list.
     fingerprint: 27565de3a738282b
-  "19.300.base-zones.txt#19.304.3":
+  "19.304.3.txt#19.304.3":
     queue: nofield
     outcome: other_building
     note: >-
       "In the DMU Zone, production-related office uses are limited to 20,000 sq ft in total area."
       A floorplate cap on office space in the Downtown Mixed Use zone -- a zone this layer does
       not carry, and a use the pod does not contain.
-    fingerprint: f1f54baec96f00f5
-  "19.300.base-zones.txt#19.309.6":
+    fingerprint: 2729cb577f401c14
+  "19.309.6.txt#19.309.6":
     queue: nofield
     outcome: other_building
     note: >-
@@ -592,15 +592,15 @@ readings:
       of street frontage. An industrial zone, which does not permit dwellings and is not among the
       two zones this layer carries. The curb-cut allowance is also the loosest access rule in this
       corpus and would be an amnesty rather than a constraint if it were ever borrowed sideways.
-    fingerprint: f7a5b977ca2439a9
-  "19.300.base-zones.txt#19.310.4":
+    fingerprint: 5d069548e056b148
+  "19.310.4.txt#19.310.4":
     queue: nofield
     outcome: other_building
     note: >-
       "Maximum floor area for a limited use shall be 4,000 sq ft" in the Business Industrial Zone
       BI -- a cap on how large a secondary use may be inside an industrial district. A different
       zone and a different building, and a maximum in any case.
-    fingerprint: 626bb70a2a5a728a
+    fingerprint: b949ffd0dcff5c79
   "19.300.base-zones.txt#19.500":
     queue: nofield
     outcome: design
@@ -610,7 +610,7 @@ readings:
       nothing about how much land is planted, which is the only thing about landscaping that
       competes with a building, and the areas themselves are set elsewhere.
     fingerprint: a1eafe284acbe50d
-  "19.500.supplementary.txt#19.501.2":
+  "19.501.2.txt#19.501.2":
     queue: nofield
     outcome: design
     note: >-
@@ -620,8 +620,8 @@ readings:
       may stand in a yard the pod's encoded setbacks already reserve, and the pod does not need
       it. Recorded rather than skipped because a number beside the words "front lot line" reads
       like a setback and is the opposite of one.
-    fingerprint: 8db3b96e652e2053
-  "19.500.supplementary.txt#19.504.7":
+    fingerprint: 6a0334862042c943
+  "19.504.7.txt#19.504.7":
     queue: nofield
     outcome: design
     note: >-
@@ -629,8 +629,8 @@ readings:
       rule for pedestrian entries along a frontage, and it can only require a second walkway on a
       site with more than 300 feet of street -- an order of magnitude more than a lot holding one
       pod. A walkway also fits in ground the building and its court already leave.
-    fingerprint: 136a946064562068
-  "19.600.parking.txt#19.604.2":
+    fingerprint: 126bc69d5f4efafc
+  "19.604.2.txt#19.604.2":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -640,8 +640,8 @@ readings:
       is the situation this screen exists to detect, and a lot whose stalls are three blocks away
       has not fitted a pod. It also requires common ownership of two parcels, which is a fact
       about a portfolio rather than about land.
-    fingerprint: 76c0bcbe66500424
-  "19.600.parking.txt#19.606.2":
+    fingerprint: c353c627264ebe4e
+  "19.606.2.txt#19.606.2":
     queue: nofield
     outcome: design
     note: >-
@@ -653,8 +653,8 @@ readings:
       surface lot; four stalls carry 100 square feet of planting, less than one of the
       120-square-foot beds the same sentence requires, which is the tell that the rule is written
       for a different scale.
-    fingerprint: c4762195fd944574
-  "19.600.parking.txt#19.606.3":
+    fingerprint: a8504ce207293751
+  "19.606.3.txt#19.606.3":
     queue: nofield
     outcome: design
     note: >-
@@ -665,8 +665,8 @@ readings:
       pedestrian access must reach every space within 100 feet measured along the drive aisle,
       which four stalls in a rear court satisfy by construction. Neither adds a dimension the
       court must clear.
-    fingerprint: 944df200cde930cb
-  "19.600.parking.txt#19.605.1":
+    fingerprint: 6d016cda8d9590fe
+  "19.605.1.txt#19.605.1":
     queue: nofield
     outcome: other_building
     note: >-
@@ -675,8 +675,8 @@ readings:
       2. Five rows from a table of other people's buildings. What the pod owes is held in this
       layer as parking_min_per_unit and comes from the residential row, which is not in this
       extract.
-    fingerprint: 7b667a918d32fe15
-  "19.600.parking.txt#19.608.2":
+    fingerprint: 709b9fca1f8e5cb7
+  "19.608.2.txt#19.608.2":
     queue: nofield
     outcome: other_building
     note: >-
@@ -684,8 +684,8 @@ readings:
       to 50,000, two above. The pod is a fraction of the first threshold, so the operative row for
       this building is the one that requires nothing. Portland's 33.266.310 and Troutdale's 9.120
       state the same family and were ruled the same way in this pass.
-    fingerprint: b08810013c47954f
-  "19.600.parking.txt#19.609.2":
+    fingerprint: 5ca662d7a72ae2ef
+  "19.609.2.txt#19.609.2":
     queue: nofield
     outcome: other_building
     note: >-
@@ -693,8 +693,8 @@ readings:
       schools by the classroom, high schools by the classroom. A hotel's and a school's problem.
       The residential row is not in this extract, and a bicycle space is not a screen question in
       any case.
-    fingerprint: 57914e6b31933706
-  "19.600.parking.txt#19.611.4":
+    fingerprint: 9dc8b60acb60d4e7
+  "19.611.4.txt#19.611.4":
     queue: nofield
     outcome: other_building
     note: >-
@@ -704,8 +704,8 @@ readings:
       conservative default declines throughout this corpus, and it is bought with structured
       parking, which the standing ruling that this pod has no garage rules out. A bonus on a
       MAXIMUM also points away from anything this screen can fail on.
-    fingerprint: 605a2dfca589869f
-  "19.500.supplementary.txt#19.503.1":
+    fingerprint: 9a2ac950cadf1ff7
+  "19.503.1.txt#19.503.1":
     queue: nofield
     outcome: other_building
     note: >-
@@ -713,7 +713,7 @@ readings:
       outside dwellings held to a stated height. A mast is not a building: it takes a footing
       rather than a footprint, and the county's MCC 39.4782(G) exempts chimneys and antennae from
       the height maximum outright for the same reason. Nothing here dimensions a dwelling.
-    fingerprint: 75a46fa50a0408e8
+    fingerprint: 1dd4f5232ee58a48
 crossrefs:
 
   # --- four references out of the use table, none of them this building ----
@@ -2383,7 +2383,7 @@ zones:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/milwaukie/19/19.201.txt#L666-L671"
+  quote: "or/clackamas/milwaukie/19/19.201.txt#L666-L670"
   says: "may be dedicated or deeded to the public"
   cite: "MMC 19.201 (Right-of-way; Street; Frontage; Corner lot)"
   note: >-

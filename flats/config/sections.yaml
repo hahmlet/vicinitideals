@@ -18,6 +18,16 @@
 #              rule; the fetched document stays the one citations name
 #   any_order: documents served with whole sections out of number order;
 #              allowed only when every heading is also in the contents list
+#   opens:     headings above the section -- an article, chapter or division
+#              -- each made a page of its own, holding the heading and what
+#              is printed between it and the next section: `kind` names it,
+#              `line` matches the heading with its number as group `n` (the
+#              printed word as `kind`) or a bare title as group `title`, and
+#              `above: true` takes a title only when the next line opens a
+#              section. Without it such a heading reads as the closing lines
+#              of the section before, or -- above the first -- is in no page.
+#   lead_in:   a line printed just above such a heading, with only contents
+#              entries between, that starts its page
 
 or/clackamas/tualatin:
   # "TDC 40.220. Lot Size and Dimensional Standards." -- the number, a full
@@ -40,6 +50,16 @@ or/clackamas/tualatin:
   # page start of Tualatin's 24 chapters: every other line in those places is
   # code text ("Sections:", "CHAPTER 42", an ordinance history) and stays.
   page_furniture: '^\s*(?:TDC\s?\d+[A-Z]?:\d+(?:Supp\. No\. \d+)?|TDC \d+[A-Z]?\.\d+\s*(?:TUALATIN DEVELOPMENT CODE|[A-Z][A-Z ,&()/''-]+))\s*$'
+  # Each extract after a chapter's last section prints the next one's
+  # heading -- "CHAPTER 41 / MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML) /
+  # Sections: ..." and "CHAPTERS 45—48 / RESERVED" -- and two chapters print a
+  # subchapter title in capitals over its first section ("COMPLIANCE AND
+  # ENFORCEMENT" over 31.105, "PARKING LOT LANDSCAPING" over 73C.200).
+  # Measured 2026-10-24: 18 chapter headings in 17 extracts. "Chapter 73F ."
+  # in 56.200 is a reference wrapped to the margin, not in capitals.
+  opens:
+    - {kind: Chapter, line: '^\s*(?P<kind>CHAPTERS?)\s+(?P<n>\d+[A-Z]?(?:—\d+)?)\s*$'}
+    - {kind: Title, line: '^\s*(?P<title>(?!TDC)[A-Z][A-Z ,&()/-]{6,}[A-Z)])\s*$', above: true}
 
 or/washington/durham:
   # "2.8     Single Dwelling Residential (SDR) District." and the untitled
@@ -69,6 +89,11 @@ or/clackamas/rivergrove:
   # foot. Every bare number in the band is its page's printed number (PDF
   # page minus 8 or 9), measured 2026-10-24.
   page_furniture: '^\s*(?:\d{1,3}|THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE|LAND DEVELOPMENT ORDINANCE\.\s+THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED\.)\s*$'
+  # "ARTICLE 3 / PLANNING COMMISSION AND HEARINGS OFFICER" alone at the
+  # centre of the page over each article's first section. Measured 2026-10-24: articles
+  # 1-9, all nine; "Article 8." at the margin in 4.060 ends a sentence.
+  opens:
+    - {kind: Article, line: '^\s*ARTICLE\s+(?P<n>\d+)\s*$'}
 
 or/washington/king-city:
   # Municode: "16.84.020 Permitted Uses." at the margin, printed once in the
@@ -89,6 +114,13 @@ or/washington/king-city:
   # ("174.78(King City Supp. No. 14, 12-23)", "174-19 (King City Supp.
   # No.2, 3-04)", "174-20").
   page_furniture: '^\s*(?:16\.\d+\.\d+|174[.-]\d+(?:\.\d+)*\s*(?:\(King City Supp\. No\.\s?\d+, \d+-\d+\))?|\(King City Supp\. No\.\s?\d+, \d+-\d+\))\s*$'
+  # "Chapter 16.108 / COMMUNITY FACILITIES ZONE (CF) / Sections:" over each
+  # chapter, and "Article IV .  Development Standards" over Chapter 16.116.
+  # Measured 2026-10-24: 20 in 11 extracts; "Chapter 16.152 when:" in
+  # 16.104.060 and "Article II of this title" in 16.114.080 are sentences.
+  opens:
+    - {kind: Chapter, line: '^\s*Chapter\s+(?P<n>16\.\d+)\s*$'}
+    - {kind: Article, line: '^Article\s+(?P<n>[IVX]+)\s*\.\s+[A-Z]'}
 
 or/clackamas/estacada:
   # municipalcodeonline print: "16.16.020 Uses Permitted Outright" on its own
@@ -102,6 +134,11 @@ or/clackamas/estacada:
   # 16.16.010-030, 16.12.020-030, ...); each section is whole, and every one
   # of its 117 headings is printed exactly twice.
   any_order: [emc.16.zones]
+  # "Chapter 16.20 MEDIUM DENSITY RESIDENTIAL (R-2)" or "Chapter 16.118
+  # (RESERVED)" over each chapter's contents list. Measured 2026-10-24: 31 in
+  # 8 prints, 21 of them in the zones print.
+  opens:
+    - {kind: Chapter, line: '^Chapter\s+(?P<n>16\.\d+)\s+[A-Z(][A-Z0-9 ,()/&.''-]*$'}
 
 or/multnomah/troutdale:
   # Municode print of the TDC: "3.130  Dimensional Standards for ..." at the
@@ -110,7 +147,10 @@ or/multnomah/troutdale:
   # ZONING DISTRICTS") are indented, so they do not cut; they print at the
   # foot of the section before. The left-page running header "3.030
   # TROUTDALE DEVELOPMENT CODE" names the section on the page, not a new one.
-  heading: '^(?P<n>\d{1,2}\.\d{3})\s{2,}[A-Z]'
+  # One title opens on a number: "8.510  257th Avenue Corridor Standards."
+  # (measured 2026-10-24: the only margin number followed by a digit, in
+  # the contents list and over its text).
+  heading: '^(?P<n>\d{1,2}\.\d{3})\s{2,}(?:[A-Z]|\d+(?:st|nd|rd|th)\s)'
   furniture: '^\d{1,2}\.\d{3}\s+TROUTDALE DEVELOPMENT CODE'
   # Every chapter opens with its title in capitals ("ZONING DISTRICTS").
   front: [1.020.definitions, 3.zoning-districts, 8.development-standards, 9.parking]
@@ -125,6 +165,13 @@ or/multnomah/troutdale:
   # are one of these; the other is "CHAPTER 4", the next chapter's title at
   # the foot of Chapter 3, and it stays.
   page_head: '^\s*(?:(?:\d{1,2}\.\d{3}\s+)?TROUTDALE DEVELOPMENT CODE|(?:INTRODUCTORY PROVISIONS|ZONING DISTRICTS|DEVELOPMENT AND DESIGN STANDARDS|OFF-STREET PARKING AND LOADING)(?:\s+\d{1,2}\.\d{3})?)\s*$'
+  # The indented division titles -- "3.100  RESIDENTIAL ZONING DISTRICTS",
+  # "8.300  Commercial Standards (Reserved)." -- two spaces after the number
+  # (the contents list prints four), and "CHAPTER 4" at the foot of Chapter
+  # 3. Measured 2026-10-24: 13 in 2 chapters.
+  opens:
+    - {kind: Division, line: '^\s{10,}(?P<title>\d{1,2}\.\d00 {2}\S.*?)\s*$'}
+    - {kind: Chapter, line: '^\s*(?P<kind>CHAPTER)\s+(?P<n>\d+)\s*$'}
 
 or/washington/sherwood:
   # Municode print, as King City: "16.22.030 Development Standards" at the
@@ -159,6 +206,15 @@ or/washington/sherwood:
   # page's own first line rather than in the band above.
   page_furniture: '^\s*(?:16\.\d+\.\d+|\[The next page (?:is|1s) \d+\]|(?:\[The next page (?:is|1s) \d+\]\s*)?(?:\d+(?:[.-]\d+)?\s?)?\(?(?:Sh\w+wood )?Supp\.? No\.? ?[\dl.]+(?:[,.] \d+-\d+\))?(?:\s?\d+(?:[.-]\d+)?)?)\s*$'
   page_head: '^\s*16\.\d+\.\d+\s*$'
+  # "Chapter 16.108" alone at the margin over each chapter, with the
+  # chapter's "Sections:" list printed ABOVE it, and "Division III.
+  # ADMINISTRATIVE PROCEDURES". Measured 2026-10-24: 14 in 12 extracts;
+  # "Chapter 16.10" under the heading of 16.10.010 is its own chapter, and
+  # "Division VIII." in 16.40.060 ends a sentence.
+  opens:
+    - {kind: Chapter, line: '^\s*Chapter\s+(?P<n>16\.\d+)\s*$'}
+    - {kind: Division, line: '^Division\s+(?P<n>[IVX]+)\.\s+[A-Z]'}
+  lead_in: '^Sections:\s*$'
 
 or/clackamas/west-linn:
   # codepublishing web text: "12.070 DIMENSIONAL REQUIREMENTS, ..." on its
@@ -238,6 +294,11 @@ or/washington/cornelius:
           cmc.18.195.definitions, cmc.18.20.r-7, cmc.18.25.r-10, cmc.18.30.mhp,
           cmc.18.35.a-2, cmc.18.45.c-2, cmc.18.54.li, cmc.18.55.m-1, cmc.18.60.cmu,
           cmc.18.65.cc, cmc.18.70.cr, cmc.18.75.gmu, cmc.18.90.fp, cmc.18.95.nro]
+  # "Chapter 16.20. SHELTER SITING" at the foot of 16.10's last section, and
+  # each print's own chapter line above its first. Measured 2026-10-24: one
+  # past a print's first section.
+  opens:
+    - {kind: Chapter, line: '^Chapter\s+(?P<n>1[678]\.\d+)\.\s+\S'}
 
 or/clackamas/milwaukie:
   # ecode360 print in two depths: the zoning title's sections "§ 19.301.

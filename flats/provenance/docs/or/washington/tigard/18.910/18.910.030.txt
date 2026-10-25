@@ -228,9 +228,7 @@ Varies
 12′
 Not allowed
 6′ (New Streets) 5′—6′ (Existing Streets)
-8′ (Res. & Ind.
-Zones) 10′ (Comm.
-Zones)
+8′ (Res. & Ind. Zones) 10′ (Comm. Zones)
 5′
 12′ [1]
 Collector
@@ -240,9 +238,7 @@ Varies
 11′
 8′ [2]
 6′ (New Streets) [3] 5′—6′ (Existing Streets) [3]
-6′ (Res. & Ind.
-Zones) 8′ (Comm.
-Zones)
+6′ (Res. & Ind. Zones) 8′ (Comm. Zones)
 5′
 12′ [1]
 Neighborhood Route

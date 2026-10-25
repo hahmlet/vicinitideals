@@ -23,7 +23,5 @@ A building may have more than one primary entry, as defined in the International
 
 Statutory Reference: ORS Ch. 197, Ch. 227
 
-History: Ord. 1131 §2 (Part), 1990; Ord. 1323 §1, 2002; Ord. 1392 §6, 2008, Ord. 1404, 2008; Ord. 1517 §2 (Exh.
-B), 2023; Ord. 1535 §1 (Exh.
-A), 2024.
+History: Ord. 1131 §2 (Part), 1990; Ord. 1323 §1, 2002; Ord. 1392 §6, 2008, Ord. 1404, 2008; Ord. 1517 §2 (Exh. B), 2023; Ord. 1535 §1 (Exh. A), 2024.
 

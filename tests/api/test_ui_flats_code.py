@@ -237,3 +237,25 @@ async def test_the_section_buttons_name_both_neighbours_or_say_there_is_none(cli
     page = await client.get(f"/flats/code/{order[0]}")
     nav = page.text.split("data-code-nav", 1)[1].split("</nav>", 1)[0]
     assert 'rel="prev"' not in nav and "← first" in nav
+
+
+async def test_an_article_heading_is_its_own_page_named_for_its_title(client, session):
+    """Rivergrove's "ARTICLE 3 / PLANNING COMMISSION AND HEARINGS OFFICER"
+    read as the last lines of 2.090. It is a page of its own, between 2.090
+    and 3.010, listed and headed by its title."""
+    await _login(client, session)
+    city = "or/clackamas/rivergrove"
+    page_path = f"{city}/3/article-3.txt"
+    shelf = code._where(page_path)[1]
+    order = shelf.order()
+    at = order.index(page_path)
+    assert order[at - 1].endswith("/2.090.txt") and order[at + 1].endswith("/3.010.txt")
+    contents = await client.get(f"/flats/code/{city}")
+    row = contents.text.split(f'href="/flats/code/{page_path}"', 1)[1].split("</div>", 1)[0]
+    assert "Article 3" in row and "Planning Commission and Hearings Officer" in row
+    page = await client.get(f"/flats/code/{page_path}")
+    assert page.status_code == 200
+    assert "Article 3 — Planning Commission and Hearings Officer" in page.text
+    # the section above no longer ends on the next article's heading
+    before = ProvenanceStore().load(f"{city}/2/2.090.txt").text
+    assert "ARTICLE 3" not in before

@@ -30,6 +30,5 @@ A lateral change is measured by drawing a hypothetical straight line between opp
 Cumulative lateral changes are measured by repeating this process for each lateral change in direction and summing all the distances as shown in the figure below.
 In the case of flag lots or parcels, the pole portion of the lot or parcel is not included in the measurement of cumulative lateral changes; cumulative lateral changes are measured only between the opposing corners of the flag portion of the lot or parcel.
 
-(Ord. 1763 § 1 (Exh.
-A), 2025)
+(Ord. 1763 § 1 (Exh. A), 2025)
 

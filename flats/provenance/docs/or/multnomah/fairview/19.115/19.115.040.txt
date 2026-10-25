@@ -117,5 +117,4 @@ G.
 
 Special Development Standards. All development in this zone shall comply with applicable development standards in Chapter 19.145 FMC and the applicable design standards in FMC 19.30.040 through 19.30.060.
 
-(Ord. 6-2001 § 1; Ord. 1-2024 § 1 (Att.
-A))
+(Ord. 6-2001 § 1; Ord. 1-2024 § 1 (Att. A))

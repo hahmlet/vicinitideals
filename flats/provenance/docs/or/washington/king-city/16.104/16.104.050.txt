@@ -13,5 +13,4 @@ Maximum window sill height Minimum sill height above finished first floor elevat
 No sill height standard for all other windows.
 Required outdoor area
 Multi-family units Provided in accordance with Section 16.152.110.
-(Ord. No. O-2015-01, § 1(Exh.
-A), 3-18-2015)
+(Ord. No. O-2015-01, § 1(Exh. A), 3-18-2015)

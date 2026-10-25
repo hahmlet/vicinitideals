@@ -54,8 +54,7 @@ Expiration. Where an approved assessment or report as defined and required by th
 If a Certified Engineering Geologist or Geotechnical Engineer cannot provide such a letter due to changes to the environmental conditions associated with the site or surrounding the site change, or due to material changes to the proposed land use activity or development, the applicant shall submit an amendment to the required assessment or report, which may be reviewed and approved through the peer review process.
 A new assessment or report is required after five years from submission of the land use application.
 
-(Ord. No. 2024-01, § 1(Exh.
-A), 2-20-2024)
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
 
 APPENDIX A
 GEOLOGICAL ASSESSMENT REQUIREMENTS
@@ -319,8 +318,7 @@ RECOMMENDED TECHNIQUES/SYSTEMS TO CONSIDER
 
 • Engineering geology mapping can be done using the Genesis-Lithology-Qualifier (GLQ) system (Keaton, 1984), rather than the conventional Time-Rock system commonly used in geologic mapping.
 The GLQ system promotes communication of geology information to non-geologists.
-The Unified Soil Classification System (U.S. Army Corps of Engineers, 1960 - Tech.
-Memo 3-357, and American Society for Testing and Materials, 1984) has been used in engineering for many years and has been incorporated into the GLQ system.
+The Unified Soil Classification System (U.S. Army Corps of Engineers, 1960 - Tech. Memo 3-357, and American Society for Testing and Materials, 1984) has been used in engineering for many years and has been incorporated into the GLQ system.
 
 • The Unified Rock Classification System (Williamson, 1984) provides a systematic and reproducible method of describing rock weathering, strength, discontinuities, and density in a manner directly usable by engineers.
 
@@ -339,23 +337,19 @@ REFERENCES
 
 American Society for Testing and Materials, 1984, Standard practice for description and identification of soils (visual-manual procedure): ASTM Standard D-2488-84, p. 409-423.
 
-Keaton, J.R., 1984, Genesis-lithology-qualifier (GLQ) system of engineering geology mapping symbols: Bulletin of the Association of Engineering Geologists, Vol.
-XXI, No. 3, p. 355-365.
+Keaton, J.R., 1984, Genesis-lithology-qualifier (GLQ) system of engineering geology mapping symbols: Bulletin of the Association of Engineering Geologists, Vol. XXI, No. 3, p. 355-365.
 
 McCalpin, James, 1984, Preliminary age classification of landslides for inventory mapping: 21st Annual Symposium on Engineering Geology and Soils Engineering, Proceedings, University of Idaho, Moscow, ID, p. 99-111.
 
-Slosson, J.E., 1984, Genesis and evolution of guidelines for geologic reports: Bulletin of the Association of Engineering Geologists, Vol.
-XXI, No. 3, p. 295-316.
+Slosson, J.E., 1984, Genesis and evolution of guidelines for geologic reports: Bulletin of the Association of Engineering Geologists, Vol. XXI, No. 3, p. 295-316.
 
 U.S. Army Corps of Engineers, 1960, The Unified Soil Classification System: U.S. Army Technical Memorandum 3-357.
 
 Utah Section of the Association of Engineering Geologists, 1986, Guidelines for preparing engineering geologic reports in Utah: Utah Geologic and Mineral Survey Miscellaneous Publication M, 2 p.
 
-Wieczorek, G.F., 1984, Preparing a detailed landslide-inventory map for hazard evaluation and reduction: Bulletin of the Association of Engineering Geologists, vol.
-XXI, No. 3, p. 337-342.
+Wieczorek, G.F., 1984, Preparing a detailed landslide-inventory map for hazard evaluation and reduction: Bulletin of the Association of Engineering Geologists, vol. XXI, No. 3, p. 337-342.
 
-Williamson, D.A., 1984, Unified Rock Classification System: Bulletin of the Association of Engineering Geologists, Vol.
-XXI, No. 3, p. 345-354.
+Williamson, D.A., 1984, Unified Rock Classification System: Bulletin of the Association of Engineering Geologists, Vol. XXI, No. 3, p. 345-354.
 
 APPENDIX C
 GEOTECHNICAL REPORT REQUIREMENTS

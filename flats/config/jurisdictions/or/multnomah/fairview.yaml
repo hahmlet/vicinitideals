@@ -1440,7 +1440,7 @@ zones:
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L319"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -1660,7 +1660,7 @@ zones:
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L319"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -1861,7 +1861,7 @@ zones:
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L319"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -2081,7 +2081,7 @@ zones:
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L319"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -2225,7 +2225,7 @@ zones:
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L319"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table

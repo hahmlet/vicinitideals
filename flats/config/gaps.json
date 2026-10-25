@@ -1,5 +1,5 @@
 {
-  "digest": "f43f5ed47388e1f65a0759087897e29c711e2d89871fec5ad4437d0ac42c07d1",
+  "digest": "479262a7d9b887648aa86ca4696e43156b05a80e1ac40ebf3143e0e96e0eeffe",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -946,7 +946,7 @@
           "field": "row_to_centerline_collector_ft",
           "claimed": "18.910.1",
           "found": "18.910.030",
-          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L236-L237",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L234-L235",
           "kind": "unlocated"
         },
         {
@@ -954,7 +954,7 @@
           "field": "row_to_centerline_neighborhood_route_ft",
           "claimed": "18.910.1",
           "found": "18.910.030",
-          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L248-L249",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L244-L245",
           "kind": "unlocated"
         },
         {
@@ -962,7 +962,7 @@
           "field": "row_to_centerline_local_ft",
           "claimed": "18.910.1",
           "found": "18.910.030",
-          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L258-L259,L268-L270",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L254-L255,L264-L266",
           "kind": "unlocated"
         },
         {

@@ -737,12 +737,12 @@ or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.44/16.44.130.t
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.44/16.44.130.txt,243,16.44.130,1,Individual detached garages must not exceed 400 square feet in floor area.
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.44/16.44.140.txt,10,16.44.140,1,"The live/work unit shall not be greater than 3,000 square feet in area."
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,123,16.12.030,1,"Roofs of buildings, provided they are 30 feet or more in height above the street grade upon which such buildings front, church steeples, existing and replacement utility poles, flagpoles, street light"
-or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.12/16.12.030.txt,624,16.12.030,3,The units must comply with the definition of an attached structure and share a common wall of at least 20 feet in width or common floor/ceiling of at least 20 feet in width.
-or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.12/16.12.030.txt,642,16.12.030,1,"A dwelling, located on its own lot excluding an accessory dwelling unit, which shares one or more common or abutting walls of at least 20 feet in width with one or more other dwellings on another lot."
-or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,1864,16.12.030,1,The facilities are mounted on structures 50 feet or less in height including their antennas (as defined in CFR 1.1320.d);
-or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,1872,16.12.030,1,"The facilities do not extend existing structures on which they are located to a height of more than 50 feet or by more than 10%, whichever is greater;"
-or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,2036,16.12.030,1,"The modification would increase the existing height of a support tower by more than 10%, or by the height of one additional antenna array with separation from the nearest existing antenna not to excee"
-or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,2040,16.12.030,1,"The modification would protrude from the edge of the support tower more than 20 feet, or more than the width of the support tower structure at the level of the appurtenance, whichever is greater, and "
+or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.12/16.12.030.txt,621,16.12.030,3,The units must comply with the definition of an attached structure and share a common wall of at least 20 feet in width or common floor/ceiling of at least 20 feet in width.
+or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.12/16.12.030.txt,639,16.12.030,1,"A dwelling, located on its own lot excluding an accessory dwelling unit, which shares one or more common or abutting walls of at least 20 feet in width with one or more other dwellings on another lot."
+or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,1861,16.12.030,1,The facilities are mounted on structures 50 feet or less in height including their antennas (as defined in CFR 1.1320.d);
+or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,1869,16.12.030,1,"The facilities do not extend existing structures on which they are located to a height of more than 50 feet or by more than 10%, whichever is greater;"
+or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,2033,16.12.030,1,"The modification would increase the existing height of a support tower by more than 10%, or by the height of one additional antenna array with separation from the nearest existing antenna not to excee"
+or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12/16.12.030.txt,2037,16.12.030,1,"The modification would protrude from the edge of the support tower more than 20 feet, or more than the width of the support tower structure at the level of the appurtenance, whichever is greater, and "
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22/16.22.010.txt,110,16.22.010,1,[2] The single-family residential building height maximum is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet.
 or/clackamas/happy-valley,unread,max_density_du_per_acre,or/clackamas/happy-valley/16.22/16.22.020.txt,14,16.22.020,1,"The numerical designation R-40 shall be interpreted to mean that the maximum density shall be one primary dwelling unit per 40,000 square feet of lot area."
 or/clackamas/happy-valley,unread,max_density_du_per_acre,or/clackamas/happy-valley/16.22/16.22.020.txt,24,16.22.020,1,"The numerical designation of R-20 shall be interpreted to mean that the maximum density shall be one primary dwelling unit per 20,000 square feet of lot area."
@@ -5854,7 +5854,7 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/1/1.020.txt,221,1.020,1
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/1/1.020.txt,233,1.020,1,A. Areas where the elevation of the floor is four (4) feet or more below the adjacent right-of-way;
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/1/1.020.txt,255,1.020,1,"Includes both mobile cars, and also temporary stands with a maximum size of one hundred (100) square feet."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/1/1.020.txt,521,1.020,1,"B. An attic or similar space under a gable, hip, or gambrel roof, the wall plates of which on at least two (2) opposite exterior walls are not more than two (2) feet above the floor of such space."
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/1/1.040.txt,269,1.040,1,B. Four hundred (400) square feet or less when measured at the largest horizontal projection;
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/1/1.040.txt,268,1.040,1,B. Four hundred (400) square feet or less when measured at the largest horizontal projection;
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.130.txt,92,3.130,1,Setbacks (ft): N/A N/A
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.130.txt,124,3.130,1,"5 to 14 9,000 sq. ft. plus 2,500 sq. ft. for each unit over 3 45%"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3/3.130.txt,125,3.130,1,"15 to 37 41,000 sq. ft. plus 2,000 sq. ft. for each unit over 15 50%"
@@ -5928,9 +5928,9 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,82,8.160,1,
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.160.txt,94,8.160,1,"i. Recreational vehicles such as camping trailers, boats, campers, motor homes, and other such vehicles shall be parked or stored within an area specifically designated for such use and enclosed by a "
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.180.txt,11,8.180,1,"C. General storage area spaces at a minimum of ten (10) square feet within each unit, not including regular kitchen, bedroom, and linen storage."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.230.txt,10,8.230,1,"1. Office uses fifteen thousand (15,000) square feet or less of gross floor area shall be located within a multi-story structure unless the office space is temporary in nature or an accessory or incid"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.240.txt,25,8.240,1,1. The sidewalk on 257th Avenue shall be a minimum of nine (9) feet wide.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.240.txt,26,8.240,1,2. A minimum area of five (5) feet in width adjacent to the sidewalk must be landscaped.
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.240.txt,31,8.240,1,6. Street trees shall be planted in sidewalk tree wells meeting City specifications and spaced every forty (40) feet.
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.510.txt,14,8.510,1,1. The sidewalk on 257th Avenue shall be a minimum of nine (9) feet wide.
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.510.txt,15,8.510,1,2. A minimum area of five (5) feet in width adjacent to the sidewalk must be landscaped.
+or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8/8.510.txt,20,8.510,1,6. Street trees shall be planted in sidewalk tree wells meeting City specifications and spaced every forty (40) feet.
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,7,9.010,1,"If all parking is off-site, parking for people with disabilities must be located within the shortest possible distance of an accessible entrance via an accessible path and no greater than two hundred "
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,26,9.010,1,"Cottage Cluster 0 space per unit if the floor No maximum area is less than 1,000 sq. ft."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9/9.010.txt,27,9.010,1,"1 space per unit if the floor area is over 1,000 sq. ft."
@@ -5972,7 +5972,7 @@ or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.130.txt,1
 or/multnomah/troutdale,unread,setback_side_ft,or/multnomah/troutdale/3/3.235.txt,37,3.235,1,"The minimum side yard setback for residential uses adjoining a rear yard in a residential zoning district other than HDR, and the minimum rear yard setback (without an alley) adjoining a residential d"
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.235.txt,40,3.235,1,"b. For each one (1) foot reduction in the minimum setback, the building height ceiling shall be reduced by two (2) feet."
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/3/3.235.txt,41,3.235,1,"Thus, a building that is set back the maximum five (5) feet closer to the common property line has a building height ceiling that is ten (10) feet lower than the maximum."
-or/multnomah/troutdale,unread,setback_rear_ft,or/multnomah/troutdale/3/3.330.txt,24,3.330,1,"2. Rear yard setback shall be the same rear yard setback as required by the abutting zoning district, but in no case shall be less than fifteen (15) feet."
+or/multnomah/troutdale,unread,setback_rear_ft,or/multnomah/troutdale/3/3.330.txt,23,3.330,1,"2. Rear yard setback shall be the same rear yard setback as required by the abutting zoning district, but in no case shall be less than fifteen (15) feet."
 or/multnomah/troutdale,unread,min_lot_width_ft,or/multnomah/troutdale/3/3.430.txt,7,3.430,1,Minimum lot width 150 ft. None None
 or/multnomah/troutdale,unread,setback_front_ft,or/multnomah/troutdale/3/3.430.txt,10,3.430,1,Front yard setback 20 ft. 20 ft. 20 ft.
 or/multnomah/troutdale,unread,setback_side_ft,or/multnomah/troutdale/3/3.430.txt,11,3.430,1,Side yard setback 15 ft. 10 ft. None see 3.430.B.4
@@ -6007,7 +6007,7 @@ or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/8/8.16
 or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/8/8.165.txt,15,8.165,1,The minimum slope shall be not less than a nominal three (3) feet in height for each twelve (12) feet in width.
 or/multnomah/troutdale,unread,max_units,or/multnomah/troutdale/8/8.170.txt,18,8.170,1,"2. Accessory dwelling units shall not exceed eight hundred (800) square feet in area or fifty percent (50%) of the primary dwelling's floor area, whichever is smaller."
 or/multnomah/troutdale,unread,max_units,or/multnomah/troutdale/8/8.170.txt,19,8.170,1,"For interior conversions only, accessory dwelling units that result from conversion of a floor may occupy the entire floor area, even if that area exceeds eight hundred (800) square feet."
-or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/8/8.240.txt,30,8.240,1,Trees separated by at least fifteen (15) feet are not subject to a height limitation.
+or/multnomah/troutdale,unread,max_height_ft,or/multnomah/troutdale/8/8.510.txt,19,8.510,1,Trees separated by at least fifteen (15) feet are not subject to a height limitation.
 or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/9/9.010.txt,5,9.010,1,"A. Required parking spaces may be provided off-site, within two thousand (2,000) feet of pedestrian travel of a site."
 or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/9/9.010.txt,10,9.010,1,"Parking spaces are based on one (1) per one thousand (1,000) sq. ft. of gross leasable area primary to the functional use, per Metro Title 3; ADU standards are per OAR Division 46."
 or/multnomah/troutdale,unread,parking_min_per_unit,or/multnomah/troutdale/9/9.040.txt,3,9.040,1,A. Any existing or proposed use subject to minimum off-street parking requirements and located within four hundred (400) feet of an existing transit route may reduce the number of required parking spa
@@ -7510,14 +7510,14 @@ or/washington/cornelius,unfielded,,or/washington/cornelius/18.30/18.30.070.txt,1
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.30/18.30.070.txt,133,18.30.070,1,All corners shall have a minimum curb radius of 20 feet.
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.35/18.35.070.txt,31,18.35.070,1,"Be multisectional and enclose a space of not less than 1,000 square feet."
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.45/18.45.040.txt,13,18.45.040,1,"The front yard shall be 10 feet, except that:"
-or/washington/cornelius,unfielded,,or/washington/cornelius/18.45/18.45.060.txt,51,18.45.060,1,Two-way traffic: 24 feet;
-or/washington/cornelius,unfielded,,or/washington/cornelius/18.45/18.45.060.txt,55,18.45.060,1,One-way traffic: 15 feet.
+or/washington/cornelius,unfielded,,or/washington/cornelius/18.45/18.45.060.txt,50,18.45.060,1,Two-way traffic: 24 feet;
+or/washington/cornelius,unfielded,,or/washington/cornelius/18.45/18.45.060.txt,54,18.45.060,1,One-way traffic: 15 feet.
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.54/18.54.050.txt,14,18.54.050,1,"The front yard shall be 20 feet, except that:"
-or/washington/cornelius,unfielded,,or/washington/cornelius/18.54/18.54.070.txt,51,18.54.070,1,Two-way traffic: 24 feet;
-or/washington/cornelius,unfielded,,or/washington/cornelius/18.54/18.54.070.txt,55,18.54.070,1,One-way traffic: 20 feet.
+or/washington/cornelius,unfielded,,or/washington/cornelius/18.54/18.54.070.txt,50,18.54.070,1,Two-way traffic: 24 feet;
+or/washington/cornelius,unfielded,,or/washington/cornelius/18.54/18.54.070.txt,54,18.54.070,1,One-way traffic: 20 feet.
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.55/18.55.050.txt,14,18.55.050,1,"The front yard shall be 20 feet, except that:"
-or/washington/cornelius,unfielded,,or/washington/cornelius/18.55/18.55.070.txt,51,18.55.070,1,Two-way traffic: 24 feet;
-or/washington/cornelius,unfielded,,or/washington/cornelius/18.55/18.55.070.txt,55,18.55.070,1,One-way traffic: 20 feet.
+or/washington/cornelius,unfielded,,or/washington/cornelius/18.55/18.55.070.txt,50,18.55.070,1,Two-way traffic: 24 feet;
+or/washington/cornelius,unfielded,,or/washington/cornelius/18.55/18.55.070.txt,54,18.55.070,1,One-way traffic: 20 feet.
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.60/18.60.060.txt,173,18.60.060,1,Outdoor seating areas shall be permitted on up to 25 percent of the gross site area.
 or/washington/cornelius,unfielded,,or/washington/cornelius/18.90/18.90.060.txt,171,18.90.060,1,Nonresidentially zoned property: structure size is limited to 120 square feet;
 or/washington/cornelius,unread,max_units,or/washington/cornelius/17.05/17.05.070.txt,106,17.05.070,1,Creates enough lots or parcels to allow building residential units at 80 percent or more of the maximum net density permitted by the zoning designation of the site; or
@@ -8962,8 +8962,8 @@ or/washington/tigard,unfielded,,or/washington/tigard/18.670/18.670.050.txt,219,1
 or/washington/tigard,unfielded,,or/washington/tigard/18.670/18.670.100.txt,12,18.670.100,1,Segment Location Maximum ROW (ft) Required Elements
 or/washington/tigard,unfielded,,or/washington/tigard/18.805/18.805.030.txt,80,18.805.030,9,Maximum Lot Size (ft)
 or/washington/tigard,unfielded,,or/washington/tigard/18.840/18.840.050.txt,27,18.840.050,1,"The area must be 200 square feet or less, measured as shown in Figure 18.840.1;"
-or/washington/tigard,unfielded,,or/washington/tigard/18.910/18.910.030.txt,435,18.910.030,1,• No parking permitted within 30 feet of an intersection.
-or/washington/tigard,unfielded,,or/washington/tigard/18.910/18.910.030.txt,798,18.910.030,1,When the site is within 500 feet of an ODOT facility; or
+or/washington/tigard,unfielded,,or/washington/tigard/18.910/18.910.030.txt,431,18.910.030,1,• No parking permitted within 30 feet of an intersection.
+or/washington/tigard,unfielded,,or/washington/tigard/18.910/18.910.030.txt,794,18.910.030,1,When the site is within 500 feet of an ODOT facility; or
 or/washington/tigard,unfielded,,or/washington/tigard/18.910/18.910.110.txt,31,18.910.110,1,The minimum width for bikeways within the roadway is 5 feet per bicycle travel lane.
 or/washington/tigard,unfielded,,or/washington/tigard/18.920/18.920.030.txt,100,18.920.030,1,The minimum spacing of local streets along a local street is 125 feet.
 or/washington/tigard,unfielded,,or/washington/tigard/18.920/18.920.030.txt,112,18.920.030,1,Small Form Residential 1 10 ft 10 ft
@@ -9044,9 +9044,9 @@ or/washington/tigard,unread,min_lot_width_ft,or/washington/tigard/18.805/18.805.
 or/washington/tigard,unread,setback_side_ft,or/washington/tigard/18.805/18.805.030.txt,205,18.805.030,1,Any lot line may be designated as the front lot line provided that no side setback is reduced to less than 10 feet.
 or/washington/tigard,unread,max_units,or/washington/tigard/18.840/18.840.050.txt,15,18.840.050,1,"Each sublot line must be a minimum of 1.5 feet from the footprint of the associated dwelling unit, except where dwelling units share a common wall; and"
 or/washington/tigard,unread,max_units,or/washington/tigard/18.840/18.840.050.txt,19,18.840.050,1,"Each sublot line must be a maximum of three feet from the footprint of the associated dwelling unit, except that a single sublot line along a side or rear facade of a unit may be located a maximum of "
-or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.910/18.910.030.txt,437,18.910.030,1,• Must provide a minimum of 1 off-street parking space for every 20 feet of restricted street frontage.
-or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.910/18.910.030.txt,440,18.910.030,1,A. Standard (sample) B. Skinny Street Option (criteria) Criteria: • Must provide a minimum of 1 off-street parking space for every 20 feet of restricted street frontage. • No parking permitted within 
-or/washington/tigard,unread,max_units,or/washington/tigard/18.910/18.910.030.txt,553,18.910.030,1,"Cul-de-sacs. A cul-de-sac shall be no more than 200 feet long, shall not provide access to greater than 20 dwelling units, and shall only be used when environmental or topographical constraints, exist"
+or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.910/18.910.030.txt,433,18.910.030,1,• Must provide a minimum of 1 off-street parking space for every 20 feet of restricted street frontage.
+or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.910/18.910.030.txt,436,18.910.030,1,A. Standard (sample) B. Skinny Street Option (criteria) Criteria: • Must provide a minimum of 1 off-street parking space for every 20 feet of restricted street frontage. • No parking permitted within 
+or/washington/tigard,unread,max_units,or/washington/tigard/18.910/18.910.030.txt,549,18.910.030,1,"Cul-de-sacs. A cul-de-sac shall be no more than 200 feet long, shall not provide access to greater than 20 dwelling units, and shall only be used when environmental or topographical constraints, exist"
 or/washington/tigard,unread,max_units,or/washington/tigard/18.920/18.920.030.txt,115,18.920.030,1,Courtyard Units 1 20 ft 20 ft
 or/washington/tigard,unread,max_units,or/washington/tigard/18.920/18.920.030.txt,117,18.920.030,1,"Apartments, 2 units 1 10 ft 10 ft"
 or/washington/tigard,unread,max_units,or/washington/tigard/18.920/18.920.030.txt,118,18.920.030,1,"Apartments, 3-49 units 1 30 ft 24 ft if two-way 15 ft if one-way curbs and 5 ft walkway required"

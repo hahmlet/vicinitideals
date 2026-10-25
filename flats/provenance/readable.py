@@ -41,7 +41,7 @@ from typing import Iterable, Mapping, Sequence
 
 #: The name of the cleaning, stored with every cut so a later change to it is
 #: a re-cut and not a silent edit.
-VERSION = "readable/3"
+VERSION = "readable/4"
 
 #: A printed line at least this long ran to the margin, so the sentence on it
 #: carries on to the next line. Tualatin's prose lines run 80-103 characters.
@@ -82,6 +82,17 @@ _ALONE = re.compile(r"^\s*(?:[0-9]{1,3}|[a-zA-Z]|ii|iii|iv|vi|vii|viii|ix)[.)]\s
 _STOP = re.compile(r"""[.?!]["')\]]*(?=\s+["'(\[]?[A-Z])""")
 
 #: Words a stop follows without ending the sentence.
+#:
+#: The last line is measured, not guessed: every cut :func:`_sentences` made
+#: across the fifteen cut cities (13,729 on 2026-10-24), tallied by the word
+#: before the stop, and kept only where the corpus never ends a sentence on it
+#: (grep of every stored document, cut or not). "Exh." and "Att." alone were
+#: 1,800 of them -- every ordinance history "(Ord. 1745 § 1 (Exh. A), 2023)"
+#: printed over two lines -- then "s.f.)" inside a Troutdale use-table row,
+#: "Mt. Scott Creek", "33 U.S.C. Sections", "44 C.F.R. Part", "(Pub. L.
+#: 97-348)", "Vol. XXI", "Tech. Memo", "T.V. Highway" and "(Res. & Ind.
+#: Zones) 10′ (Comm. Zones)". "p.m." stays out: "ten p.m. No business shall"
+#: ends its sentence there.
 _ABBREVIATIONS = frozenset(
     """
     no nos supp ord sec secs ss ch art fig p pp para subd subsec
@@ -90,6 +101,7 @@ _ABBREVIATIONS = frozenset(
     ft sq yd mi ac hr min max approx avg
     e.g i.e u.s s.w s.e n.w n.e sw se nw ne vs v cf viz al
     mr mrs ms dr jr sr
+    exh att s.f mt u.s.c c.f.r pub vol tech t.v ind comm
     """.split()
 )
 

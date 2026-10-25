@@ -131,7 +131,7 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 readings:
-  "16.22.residential.txt#16.22.020":
+  "16.22.020.txt#16.22.020":
     queue: missed
     outcome: not_here
     note: >-
@@ -144,7 +144,7 @@ readings:
       screen does not place. The last is footnote 7, maximum lot coverage for townhomes being "the
       greater of the percentage identified in the table or up to 1,000 square feet", which raises
       a ceiling rather than setting one.
-    fingerprint: 22480da8c4ea6d6c
+    fingerprint: e7b2eea491832641
 
   "16.22.residential.txt#16.22.030":
     queue: missed
@@ -156,7 +156,7 @@ readings:
       paragraph arguing for a number is not the number; the dimensional standards for both
       districts are in the tables further down the same file and are already encoded.
     fingerprint: 54c79a368022210f
-  "16.22.residential.txt#16.22.040":
+  "16.22.040.txt#16.22.040":
     queue: missed
     outcome: not_here
     note: >-
@@ -170,8 +170,8 @@ readings:
       table or up to 1,000 square feet", which is a relaxation. The usable open space footnote in
       the same block, twenty percent of net developable area under Section 16.42.030, is already
       quoted by this file.
-    fingerprint: 2df4eede4d09cb57
-  "16.43.parking.txt#16.43.030":
+    fingerprint: 5447f6f0eaa4a1bd
+  "16.43.030.txt#16.43.030":
     queue: missed
     outcome: not_here
     note: >-
@@ -187,7 +187,7 @@ readings:
       parking may sit off site within two thousand feet, and units smaller than 750 square feet or
       meeting the affordable-housing definitions are exempt from minimum parking altogether. The
       residential rows of the same table are already encoded.
-    fingerprint: 16f78ebabd498c5a
+    fingerprint: 9f36a913f3982014
   "16.22.residential.txt#16.22.010":
     queue: missed
     outcome: not_here
@@ -202,7 +202,7 @@ readings:
       pod is placed on today, so the thirteen lots are correctly outside the screen rather than
       wrongly missing from it.
     fingerprint: ee5c60adfe9ea6f9
-  "16.22.residential.txt#16.22.060":
+  "16.22.060.txt#16.22.060":
     queue: missed
     outcome: not_here
     note: >-
@@ -211,8 +211,8 @@ readings:
       pursuant to the definitions chapter. It states an allowance for a building type this screen
       does not place, and the twenty percent usable open space footnote sitting immediately above
       it on the same block is already quoted by this file.
-    fingerprint: 3ae187be8eb90d24
-  "16.22.residential.txt#16.22.050":
+    fingerprint: 39b63ce573f62267
+  "16.22.050.txt#16.22.050":
     queue: condition
     outcome: cant_tell
     note: >-
@@ -243,7 +243,7 @@ readings:
       and rear, which is a housing type this screen does not place; and 16.22.050's
       accessory-structure block governs sheds. VTH's 18-foot maximum front setback, which is the
       one genuinely binding number in the same table, is already encoded from L998,L1001.
-    fingerprint: fccea64078dae66a
+    fingerprint: 2a18e257e2299291
   "16.12.definitions.txt#16.12.030":
     queue: chapter
     outcome: nothing_here
@@ -288,7 +288,7 @@ readings:
       as an unmeasured site fact, and it carves land out rather than shrinking what may be built
       on what is left.
     fingerprint: 3b6a5df40afbcaf8
-  "16.32.steep-slopes.txt#16.32.040":
+  "16.32.040.txt#16.32.040":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -303,8 +303,8 @@ readings:
       gives it. The two numbers are worth naming as what they are, because 3,000 square feet and
       50 feet read like thresholds a site must clear and are the opposite: they are the size a
       protected pocket must be UNDER for the argument to be available at all.
-    fingerprint: c178d9697fc2671e
-  "16.34.natural-resources.txt#16.34.030":
+    fingerprint: e857f569ab225f66
+  "16.34.030.txt#16.34.030":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -314,8 +314,8 @@ readings:
       exempts from is geometry the screening layer holds rather than a dimension in this file.
       Happy Valley's environmental overlays were brought into the screen with the rest of
       Clackamas on 2026-09-03, after the finding that an absent overlay grades as clear land.
-    fingerprint: 0b031aafdb414c3d
-  "16.34.natural-resources.txt#16.34.060":
+    fingerprint: 33ea1fc04c402436
+  "16.34.060.txt#16.34.060":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -329,8 +329,8 @@ readings:
       ruled the same way in the same pass, and the consistency is deliberate: Gladstone's WQ
       ladder, Milwaukie's WQRs, Fairview's creek corridors, Tualatin's NRPO and now Happy Valley
       all state the same kind of number and all of them belong to the screening layer.
-    fingerprint: a7f36853150849de
-  "16.34.natural-resources.txt#16.34.070":
+    fingerprint: bf24429dde9e1b6d
+  "16.34.070.txt#16.34.070":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -345,8 +345,8 @@ readings:
       HABITAT AREA may be developed, inside a chapter about habitat, and a lot with no mapped
       habitat has no ceiling from it at all. Read the other way it would be the tightest coverage
       limit in this corpus, which is exactly why it is written out here rather than waved past.
-    fingerprint: 4f60bc3d6f5f2776
-  "16.63.land-divisions.txt#16.63.030":
+    fingerprint: 39250d821261d253
+  "16.63.030.txt#16.63.030":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -358,8 +358,8 @@ readings:
       created lots, its own two-unit ceiling puts it below this building, and twelve feet is a
       driveway rather than a court, which is the same finding this project has now recorded in
       Gresham, Wilsonville, Oregon City, Fairview and Milwaukie.
-    fingerprint: 208aab7202218528
-  "16.42.landscaping.txt#16.42.030":
+    fingerprint: 30d88ab28a0c45c2
+  "16.42.030.txt#16.42.030":
     queue: nofield
     outcome: design
     note: >-
@@ -370,7 +370,7 @@ readings:
       planted along the edge of an area the stalls and aisle have already sized. Recorded rather
       than skipped because "within 100 feet of any property line" reads like a setback and is a
       trigger for planting.
-    fingerprint: 32bbe7dc06b70afe
+    fingerprint: 8ccde37daff14aec
   "16.42.landscaping.txt#16.42.050":
     queue: nofield
     outcome: design
@@ -390,7 +390,7 @@ readings:
       that -- landscaping is one way to screen and a fence or wall is another. Six feet of shrub
       takes no ground the buffer strip has not already been given.
     fingerprint: 8a6f6760d5d7137d
-  "16.43.parking.txt#16.43.040":
+  "16.43.040.txt#16.43.040":
     queue: nofield
     outcome: design
     note: >-
@@ -398,7 +398,7 @@ readings:
       within 50 feet of the public entrance. A rack's placement, ruled the same way in Portland,
       Milwaukie, Wilsonville and Fairview in this pass. No field in this registry measures a
       bicycle space.
-    fingerprint: 6cbdd8d83d7bf13d
+    fingerprint: 1f8410a8ab090278
   "16.63.land-divisions.txt#16.63.020":
     queue: nofield
     outcome: other_stage
@@ -411,7 +411,7 @@ readings:
       overlay is also the one already on this project's unmeasured-site-facts list under its own
       mask.
     fingerprint: dcf661a44e375c1c
-  "16.63.land-divisions.txt#16.63.130":
+  "16.63.130.txt#16.63.130":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -422,8 +422,8 @@ readings:
       no-garage ruling closes. A relaxation granted while lots are drawn is not a standard this
       screen can hold, and taking it would report land as buildable on the strength of a plan
       nobody has drawn.
-    fingerprint: 2eabc8e3a4f44302
-  "16.63.land-divisions.txt#16.63.140":
+    fingerprint: 443fa2fdcdfcc742
+  "16.63.140.txt#16.63.140":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -433,8 +433,8 @@ readings:
       compliance with Article 16.2, which is where this layer's dimensions were read from. The
       trailing clause, that no resulting lot may be more than 75 percent of something, is a rule
       about the shape of a division. Nothing new to encode and a different stage besides.
-    fingerprint: 53799629555e7a1a
-  "16.42.landscaping.txt#16.42.080":
+    fingerprint: 0f7450d8f81120cb
+  "16.42.080.txt#16.42.080":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -443,7 +443,7 @@ readings:
       is why this section sits in the standards for one; a ten-thousand-square-foot square is
       larger than most lots this screen looks at, which is itself the tell that the requirement is
       addressed to a subdivision rather than to a building.
-    fingerprint: 77fd96a9dc2d4a80
+    fingerprint: 426989dc0589940f
 crossrefs:
 
   # --- two accessory-use references out of the district use table ----------
@@ -550,7 +550,7 @@ definitions:
     test: intersecting_frontages
     count: 2
     max_intersection_angle_deg: 135.0
-    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1067-L1069"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1064-L1066"
     cite: "HV LDC 16.12.030, Corner lot"
 
 code:
@@ -891,7 +891,7 @@ defaults:
     cite: HV LDC 16.12, Lot line, front, the applicant or property owner chooses on a corner lot
     url: https://ecode360.com/print/HA4934?guid=43529904
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1034-L1038"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1031-L1035"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -907,7 +907,7 @@ defaults:
     cite: HV LDC 16.12, Lot line, front, on a through lot the applicant or property owner chooses the front and the rear lot line
     url: https://ecode360.com/print/HA4934?guid=43529904
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1035-L1038"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1032-L1035"
   #
   # NOT ENCODED: a driveway approach width, because Happy Valley states none.
   # The sentence above ends "not less than the full width of the standard
@@ -920,7 +920,7 @@ defaults:
   # site facts nothing measures: 12 feet of vertical clearance, a 12 percent
   # slope ceiling for a driveway (15 with a design exception), vision
   # clearance, and shared driveways where the City Engineer requires them.
-  # (or/clackamas/happy-valley/16.41/16.41.030.txt#L39-L90)
+  # (or/clackamas/happy-valley/16.41/16.41.030.txt#L40-L89)
   #
   # ENCODED PER ZONE, not here: LDC 16.43.030.E.4, Parking Location. "Parking
   # areas shall be set back from a lot line adjoining a street the same
@@ -3028,7 +3028,7 @@ zones:
       # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: HV LDC 16.12, dwelling, multiple-family (five or more families); 16.22.050(B)(2), attached single-family dwellings only
-      quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L627-L631"
+      quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L624-L628"
       variants:
         - value: 1
           when: [unit_lots]
@@ -3754,7 +3754,7 @@ zone_rulings:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1942-L1944"
+  quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1939-L1941"
   says: "A public right-of-way or private tract"
   cite: "HVMC 16.12.020 (Street; Private street; Front lot line; Corner lot)"
   note: >-

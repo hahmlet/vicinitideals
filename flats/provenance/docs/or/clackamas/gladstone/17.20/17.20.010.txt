@@ -4,7 +4,5 @@ The purpose of a C-3 district is to implement the Comprehensive Plan and to prov
 
 Statutory Reference: ORS Ch. 197, Ch. 227
 
-History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh.
-A), 2024; Ord. 1539 §1 (Exh.
-A), 2025.
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024; Ord. 1539 §1 (Exh. A), 2025.
 

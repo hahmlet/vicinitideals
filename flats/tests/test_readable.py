@@ -224,3 +224,19 @@ def test_a_lower_case_roman_item_opens_a_block() -> None:
     got = clean(lines)
     assert got.lines == ("i.      Face the street; and", "ii.      Be at an angle of up to 45 degrees.")
     _same(lines, got)
+
+
+def test_an_ordinance_history_abbreviation_does_not_end_a_sentence() -> None:
+    """"(Ord. 1745 § 1 (Exh. A), 2023)" was cut after "Exh." and printed as two
+    lines, 1,836 times across twelve cities; the words after an abbreviation
+    measured in the corpus stay on its line, and a real sentence end still
+    cuts."""
+    for printed in (
+        "(Ord. 1745 § 1 (Exh. A), 2023)",
+        "(Ord. 2019-04 § 2 (Att. B), 2019)",
+        "Uses as listed in 33 U.S.C. 1344 apply.",
+        "Recorded in Vol. 12 of the deeds.",
+    ):
+        assert clean([printed]).lines == (printed,), printed
+    got = clean(["Quiet hours start at ten p.m. No business shall open before seven a.m."])
+    assert len(got.lines) == 2

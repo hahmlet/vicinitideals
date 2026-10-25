@@ -16,14 +16,10 @@ Live-Work units (residential/commercial)                                P       
 Live-Make units (residential/industrial)                                   C                    N
 Flex units (commercial/industrial)                                           C                    C
 Commercial Uses
-General retail (up to 60,000 s.f.)
-P                    P
-General retail (above 60,000 s.f.)
-C                    P
-Offices (up to 60,000 s.f.)
-P                    P
-Offices (above 60,000 s.f.)
-N                    P
+General retail (up to 60,000 s.f.)                                             P                    P
+General retail (above 60,000 s.f.)                                           C                    P
+Offices (up to 60,000 s.f.)                                                       P                    P
+Offices (above 60,000 s.f.)                                                     N                    P
 Eating & drinking establishments
 
 
@@ -59,13 +55,10 @@ Other Uses
 Agricultural or animal-based uses                                          N                    P
 Community service uses                                                        C                    C
 Recreation facilities (active)                                                   C                    C
-Gym (up to 5,000 s.f.)
-P                    P
-Gym (above 5,000 s.f.)
-C                    C
+Gym (up to 5,000 s.f.)                                                         P                    P
+Gym (above 5,000 s.f.)                                                       C                    C
 Recreation facilities (passive)                                                 P                    P
 Utility facilities (major)                                                            C                    C
 Utility facilities (minor)                                                             P                    P
-(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att.
-A), 2-25-2025)
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
 

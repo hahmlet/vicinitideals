@@ -7,8 +7,7 @@ Maximum density for multi-family dwellings is based on the maximum number of dwe
 Density for all other housing types is based on minimum lot size per dwelling unit.
 These standards are provided in the base zone chapters of the EMC.
 
-Editor's note—Ord. No. 2016-003, § 1(Exh.
-C), adopted May 23, 2016, repealed § 16.60.060, which pertained to bed and breakfast inns and derived from prior code § 10.598.
+Editor's note—Ord. No. 2016-003, § 1(Exh. C), adopted May 23, 2016, repealed § 16.60.060, which pertained to bed and breakfast inns and derived from prior code § 10.598.
 
 HISTORY
 Amended by Ord. 2022-010 on 12/12/2022

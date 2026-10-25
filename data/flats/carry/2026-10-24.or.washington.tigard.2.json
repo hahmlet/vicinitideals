@@ -1,0 +1,52 @@
+[
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1e7916d0b3312a6199ce341d519b1350abf7b5f8cacf79e781d8cf7c3937b767",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L234-L235",
+  "old_fingerprint": "657f620aae8aa15510ca0eee665b5817a4fa3d629f766dc9f9a2d0cde6377df0",
+  "old_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L236-L237",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b2e26f2d14ff18b86f6e2291f9f194bffb66af8de0587da0863cc29385498d8e",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L244-L245",
+  "old_fingerprint": "1e9bbf497379ad76a7094a83aa64485f96056f012d6b0dd117ece435f44122f8",
+  "old_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L248-L249",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c7c17af7da5c5079631088c5cc3fad03431b87e6b60dab8d0fc6f9e9cc823267",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L254-L255,L264-L266",
+  "old_fingerprint": "f933fd44f5a42af8b75cd15c71b63411218a02e010f685373e7efdbe92e0844f",
+  "old_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L258-L259,L268-L270",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "2ea7a637fb104aa5858a6ba4ec39f2296267b6ebed0c3fc516a995fcceb1f969",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L325-L326,L335-L336,L345-L346,L355-L356,L365-L366",
+  "old_fingerprint": "cddcf9199df970574579066ccfe03908ca52bbac7f36e861f99739fae80eac81",
+  "old_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L329-L330,L339-L340,L349-L350,L359-L360,L369-L370",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "554e99f8022521e9d290e5c2c30e2d0c6973d485a76595eae5193f5637441b49",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L325-L326,L335-L336,L345-L346,L355-L356,L365-L366",
+  "old_fingerprint": "c0a324af146ed1432f473a70c61b2967cc8e151612502d2004c49902bf12d29f",
+  "old_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L329-L330,L339-L340,L349-L350,L359-L360,L369-L370",
+  "when_key": "",
+  "zone": "MU-CBD"
+ }
+]

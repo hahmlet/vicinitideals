@@ -29,6 +29,5 @@ The reasons for a conclusion to approve or deny.
 
 The decision to deny or approve the proposed change with or without conditions.
 
-(Code 2000 § 11.10.34; Ord. 2020-05 § 1 (Exh.
-A), 2020)
+(Code 2000 § 11.10.34; Ord. 2020-05 § 1 (Exh. A), 2020)
 

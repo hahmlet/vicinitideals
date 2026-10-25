@@ -100,14 +100,11 @@ Community service uses                                           C              
 Public Parks, parkways, trails, and related                                     P                 P                 P
 facilities
 Recreation facilities (active)                                       C                 C                 C
-Gym (up to 5,000 s.f.)
-P                 P                 P            3.420.D
-Gym (above 5,000 s.f.)
-C                 C                 C
+Gym (up to 5,000 s.f.)                                            P                 P                 P            3.420.D
+Gym (above 5,000 s.f.)                                          C                 C                 C
 Recreation facilities (passive)                                    P                 P                 P
 Utility facilities (major)                                                C                 C                 P
 Utility facilities (minor)                                                P                 P                 P
 Other uses similar to those listed above                  P/C              P/C              P/C
-(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att.
-A), 2-25-2025)
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
 

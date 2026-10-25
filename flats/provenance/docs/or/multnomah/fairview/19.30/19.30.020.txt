@@ -160,8 +160,5 @@ Notes:
 (5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
 (6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
 
-(Ord. 1-2024 § 1 (Att.
-A); Ord. 2-2025 § 1 (Att.
-A); Ord. 3-2026 § 1 (Att.
-A))
+(Ord. 1-2024 § 1 (Att. A); Ord. 2-2025 § 1 (Att. A); Ord. 3-2026 § 1 (Att. A))
 

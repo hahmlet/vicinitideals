@@ -286,19 +286,19 @@ defaults:
     cite: Tigard CDC Table 18.910.1, Collector, right-of-way width 58-96 ft (the top of the range)
     url: https://ecode360.com/print/TI5024?guid=43709279
     retrieved: '2026-10-15'
-    quote: "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L236-L237"
+    quote: "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L234-L235"
   row_to_centerline_neighborhood_route_ft:
     value: 58
     cite: Tigard CDC Table 18.910.1, Neighborhood Route, right-of-way width 50-58 ft (the top of the range)
     url: https://ecode360.com/print/TI5024?guid=43709279
     retrieved: '2026-10-15'
-    quote: "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L248-L249"
+    quote: "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L244-L245"
   row_to_centerline_local_ft:
     value: 54
     cite: Tigard CDC Table 18.910.1, Local Residential under 1500 ADT, right-of-way width 54 ft (the widest local row; Local Industrial/Commercial 50 ft)
     url: https://ecode360.com/print/TI5024?guid=43709279
     retrieved: '2026-10-15'
-    quote: "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L258-L259,L268-L270"
+    quote: "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L254-L255,L264-L266"
   # River Terrace Boulevard, a Collector on the TSP layer, is held by its
   # own standard: "Right-of-way width must be 110 feet", wider
   # than the Collector row (18.640.080.A.1).
@@ -1249,13 +1249,13 @@ zones:
       cite: Tigard CDC 18.910.030.E and Table 18.910.1, Downtown Mixed Use 3 - Upper Burnham, right-of-way width 62-74 ft (the widest downtown street character row; the designation map is not held)
       url: https://ecode360.com/print/TI5024?guid=43709279
       retrieved: '2026-10-15'
-      quote: "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L329-L330,L339-L340,L349-L350,L359-L360,L369-L370"
+      quote: "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L325-L326,L335-L336,L345-L346,L355-L356,L365-L366"
     row_to_centerline_neighborhood_route_ft:
       value: 74
       cite: Tigard CDC 18.910.030.E and Table 18.910.1, Downtown Mixed Use 3 - Upper Burnham, right-of-way width 62-74 ft (the widest downtown street character row; the designation map is not held)
       url: https://ecode360.com/print/TI5024?guid=43709279
       retrieved: '2026-10-15'
-      quote: "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L329-L330,L339-L340,L349-L350,L359-L360,L369-L370"
+      quote: "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L325-L326,L335-L336,L345-L346,L355-L356,L365-L366"
     quadplex_allowed:
       value: true
       cite: Tigard CDC Table 18.650.1, Residential Use A/R in MU-CBD, Table 18.650.2, Rowhouses Y, and 18.650.030.B.2.a with 18.650.040.B.1 (Type II review on the chapter's standards)
