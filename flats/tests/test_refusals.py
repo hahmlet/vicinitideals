@@ -376,7 +376,10 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 156, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
+# 156 -> 157 notes on 2026-10-28 (FOLLOWUPS 109 chunk 4, Troutdale Town Center): HDR's note
+# records 9.035's Town Center parking waiver and 3.235.C.5.a's ten-foot rear against a
+# non-residential district as read and not encoded (both could only loosen).
 # 157 -> 156 notes on 2026-10-28 (FOLLOWUPS 109 chunk 4): Gresham DCL's note recorded its
 # 60-unit density ceiling as not encoded because the use was barred; the townhouse form is
 # open now and the ceiling is encoded.

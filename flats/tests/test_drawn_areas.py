@@ -49,6 +49,7 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "oregon_city_park_place",
         "oregon_city_south_end",
         "rockwood_design_district",
+        "troutdale_town_center",
         "willamette_historic_district",
     )
     assert set(DRAWN_CONDITIONS) <= set(CONDITIONS)

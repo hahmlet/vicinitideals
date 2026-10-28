@@ -1,5 +1,5 @@
 {
-  "digest": "52d7d66cd7e7dc259f3fd44894f7b665138158591c496284c4ca4813399a9b87",
+  "digest": "b8e73f43a69b3bef8708726bdc408dd5778833cb6f8cbe9292fd30033d79a028",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -473,7 +473,64 @@
     },
     "or/multnomah/troutdale": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "HDR",
+          "field": "min_lot_depth_ft [troutdale_town_center]",
+          "claimed": "3.120 3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L7-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "min_lot_depth_ft [abuts_alley+access_easement+troutdale_town_center]",
+          "claimed": "3.120 3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L7,L9",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "min_lot_sqft [troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L4-L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24,L30-L32",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [multi_story+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24,L30-L31,L33",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [alley_at_rear+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24,L30,L35",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [alley_at_rear+multi_story+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24,L30,L35",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Troutdale",
       "counts": {},
       "gaps": []

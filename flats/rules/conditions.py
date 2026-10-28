@@ -925,6 +925,22 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "troutdale_town_center",
+        "site_fact",
+        "The lot lies inside Troutdale's Town Center Overlay District. The "
+        "city's residential tables print two extra columns for it, MDR (TC) "
+        "and HDR (TC) (TDC 3.120, 3.130), and the zoning layer carries only "
+        "MDR and HDR, so which column a lot is measured against is this "
+        "fact. HDR (TC) permits the quadplex that HDR refuses; both TC "
+        "columns put a 20 ft front yard on a lot whose driveway comes off "
+        "the front. The district is a layer the city publishes apart from "
+        "its zoning (City_GIS MapServer layer 78, Town Center).",
+        evidence=(
+            "Troutdale's Town Center layer -- held as Troutdale's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_park_place",
         "site_fact",
         "The parcel is inside Oregon City's Park Place Concept Plan area. "
@@ -1245,6 +1261,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_park_place",
     "oregon_city_south_end",
     "rockwood_design_district",
+    "troutdale_town_center",
     "willamette_historic_district",
 )
 

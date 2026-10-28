@@ -155,7 +155,12 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 445, "numeric": 141, "marker": 0, "dash": 2, "silent": 7}
+EXPECTED = {"stated": 450, "numeric": 141, "marker": 0, "dash": 2, "silent": 8}
+# 445 -> 450 stated and 7 -> 8 silent on 2026-10-28 (FOLLOWUPS 109 chunk 4, Troutdale Town
+# Center). Stated: HDR's townhouse width and depth "none" (base, and kept for the townhouse plat
+# inside the Town Center). Silent: HDR (TC)'s lot size, which 3.130.B prints as "see 3.235" and
+# 3.235.A answers "based on the minimum lot width and minimum lot depth standards" -- a
+# deferral to the width (20) and depth (70) encoded beside it, read the way MU-2 reads it.
 # 435 -> 445 stated and 137 -> 141 numeric on 2026-10-28 (FOLLOWUPS 109 chunk 4, Gresham's
 # townhouse-only zones). Stated: the townhouse lot size "none" in CNTH, CNTM, CNRM, DMU, DEM
 # and DCL, and the density ceilings "none" / "No maximum" in CNTH, CNTM, DMU and DEM. Numeric:

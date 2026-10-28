@@ -202,7 +202,10 @@ readings:
       is a mapped zone in the parcel data -- Troutdale's zones there are LDR-1, LDR-2, MDR, HDR,
       MU-1, MU-2, MU-3, CC, GC, IP, LI, GI, OS and NSA -- so no lot this screen touches is
       measured against a cell those notes govern. If a Town Center zone is ever added, this ruling
-      is the note to read first. The rest of the card is elsewhere: the duplex rear-yard notes
+      is the note to read first. UPDATED 2026-10-28: the city's Town Center layer is now held
+      (`drawn_areas`, troutdale_town_center), so MDR and HDR lots inside it ARE measured against
+      the TC columns, and both notes are carried there on the MDR and HDR blocks -- front 20 and,
+      for HDR (TC), street side 20, each dropped to the plain figure on an alley lot. The rest of the card is elsewhere: the duplex rear-yard notes
       above our table, the townhouse table's front yard, a 5,400 square foot minimum for "all
       other uses", and, at the far end of the file, the 50-foot buffer and the floor-area caps of
       Section 3.430, which is the industrial districts -- IP, LI and GI, all of which prohibit
@@ -1993,6 +1996,13 @@ zones:
         - value: 15
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.130.txt#L58-L59,L63,L80"
+        # MDR (TC), 3.130.B: sixteen feet of frontage where MDR asks twenty.
+        - value: 16
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L42"
+        - value: 15
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L58-L59,L63,L80"
     setback_front_ft:
       # 10, unqualified. Note 1 under this table -- "20 feet if driveway
       # access is taken from front yard" -- attaches to the MDR (TC) and HDR
@@ -2000,6 +2010,26 @@ zones:
       # bare 10. The quote opens on the header row so the count is checkable.
       value: 10
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L44-L45"
+      variants:
+        # The MDR (TC) columns, for a lot inside the Town Center
+        # (`drawn_areas` below): "10 or 20 see note 1" in 3.130.B, note 1
+        # being "20 feet if driveway access is taken from front yard", and
+        # "10 or 20" in 3.130.C on note 2's same trigger. The pod parks off
+        # a driveway at the front unless an alley runs behind it, so the
+        # twenty is carried and the ten is the alley lot's. Before the area
+        # was held these lots were read in the MDR column's bare ten.
+        - value: 20
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L44-L45,L53-L54"
+        - value: 10
+          when: [troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L44-L45"
+        - value: 20
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L65,L79,L81"
+        - value: 10
+          when: [unit_lots, troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L65"
     # 9.095(D), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the only figure the sentence carries is an industrial floor that does
@@ -2057,6 +2087,10 @@ zones:
       which is what lets four units share three walls; and the whole of 3.130.C behind `unit_lots`,
       for the one-lot-per-unit plat -- it removes lot size, width and depth outright, drops the side
       yard to 5, and zeroes the rear yard on an alley.
+
+      TOWN CENTER, 2026-10-28: a lot inside the city''s Town Center layer is read in the MDR (TC)
+      columns -- front 20 with a front driveway (10 on an alley), frontage 16. Every other MDR (TC)
+      cell matches MDR''s.
 
       NOT ENCODED: 3.130.B''s density standards (see 3.140) and accessory-structure setbacks (see
       5.010), neither of which the pod turns on, and the zero-lot-line note under 3.130.A, which
@@ -2121,10 +2155,39 @@ zones:
           when: [unit_lots]
           cite: "TDC 3.120, Townhouse row (P in HDR); TDC 1.020 \"Dwelling, Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
           quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L18"
+        # The sixth column, HDR (TC), reads P on the Quadplex row: inside the
+        # Town Center the building the HDR column refuses is permitted on one
+        # lot. The zoning layer says HDR either way; the drawn area
+        # (`drawn_areas` below) says which column a lot is read in. The pair
+        # is spelled out so a townhouse plat inside the Town Center is not
+        # two one-condition variants tying.
+        - value: true
+          when: [troutdale_town_center]
+          cite: "TDC 3.120, Quadplex row (P in HDR (TC))"
+          quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L17"
+        - value: true
+          when: [unit_lots, troutdale_town_center]
+          cite: "TDC 3.120, Townhouse row (P in HDR (TC))"
+          quote: "or/multnomah/troutdale/3/3.120.txt#L1,L3,L7,L9-L11,L18"
     notes: >-
       quadfit confidence: verified | Multifamily/townhouse zone -- no detached SFD, no quadplex;
       OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode
       does not distinguish HDR-TC -- treated as excluded (conservative; 369 lots).
+
+
+      OPENED IN THE TOWN CENTER 2026-10-28 (districts chunk 4). The city's
+      Town Center layer is now held (`drawn_areas`, troutdale_town_center),
+      so a lot inside it reads the HDR (TC) columns: 3.120 permits the
+      quadplex there, and 3.130.B's HDR (TC) column -- width 20, frontage
+      20, depth 70 (3.235.B.1), side 5, building side 0, front 20 with a
+      front driveway (note 1), street side 20 with a side-street driveway
+      (note 2), rear per 3.235.C.5, height 35 through 8.120.B.1.a.ii --
+      replaces the multi-family figures the base carries. A lot the line
+      cuts is unanswered and screens unknown. Read and NOT ENCODED: 9.035's
+      waiver of off-street parking in and within a quarter mile of the
+      Town Center (the zone's one-space-per-unit stays, which can only hold
+      a lot back), and 3.235.C.5.a's ten-foot rear against a
+      non-residential district (the twenty is carried).
 
 
       OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
@@ -2137,6 +2200,16 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/troutdale/3/3.130.txt#L77"
+      variants:
+        # 3.130.B prints "N/A" for height in the HDR (TC) column. 8.120.B.1.a.ii
+        # holds a quadplex to "all other clear and objective development
+        # standards that apply to detached single-family dwellings in the
+        # same zone (including ... building height)", and 3.130.A's HDR (TC)
+        # column gives the detached house 35 feet.
+        - value: 35
+          when: [troutdale_town_center]
+          cite: "TDC 8.120.B.1.a.ii (a quadplex takes the detached house's height) and 3.130.A, HDR (TC) column (35 ft)"
+          quote: "or/multnomah/troutdale/3/3.130.txt#L3,L5-L6,L23"
     # The figures below that are not on a `unit_lots` variant were ported from
     # 3.130.E (multi-family). The townhouse door reads 3.130.C, the townhouse
     # table, HDR column (the fifth of six; the two (TC) columns are the fourth
@@ -2153,10 +2226,59 @@ zones:
         - value: 15
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L63,L79-L80"
+        # 3.130.B, HDR (TC): twenty feet for the quadplex on one lot; the
+        # townhouse column's note 1 is the same fifteen as HDR's.
+        - value: 20
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L42"
+        - value: 15
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L63,L79-L80"
     min_lot_sqft:
       exempt: true
       cite: TDC 3.130.C, townhouse dwellings, Minimum lot size "none" (HDR)
       quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L60"
+      variants:
+        # 3.130.B, HDR (TC): "see 3.235", and 3.235.A says "The minimum lot
+        # size shall be based on the minimum lot width and minimum lot depth
+        # standards" -- a deferral, not a figure (MU-2 reads the same
+        # sentence the same way). Width and depth are encoded below.
+        - exempt: true
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L4-L5"
+    # Width and depth: "none" in every column of 3.130.C, so the base and the
+    # townhouse plat owe neither; the quadplex on one lot in the Town Center
+    # owes 3.130.B's HDR (TC) column -- 20 feet wide, and "see 3.235" deep,
+    # which is 3.235.B.1's seventy for a lot with a driveway from the street.
+    min_lot_width_ft:
+      exempt: true
+      quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L61"
+      variants:
+        - value: 20
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L40"
+        - exempt: true
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L61"
+    min_lot_depth_ft:
+      exempt: true
+      quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L62"
+      variants:
+        - value: 70
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L7-L8"
+        # 3.235.B.2, ninety feet where the alley access runs in an easement
+        # that is part of the lot (MU-2 carries the same pair). Two
+        # unmeasured facts at once, recorded so the ninety is not lost.
+        - value: 90
+          when: [troutdale_town_center, abuts_alley, access_easement]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L7,L9"
+        - exempt: true
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L62"
+        - exempt: true
+          when: [unit_lots, troutdale_town_center, abuts_alley, access_easement]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L62"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/troutdale/3/3.130.txt#L131"
@@ -2166,6 +2288,24 @@ zones:
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L64-L65"
+        # The Town Center columns. 3.130.B, HDR (TC): "10 or 20 see note 1",
+        # and note 1 is "Front yard setback is 20 feet if driveway access is
+        # taken from front yard." The pod parks off a driveway at the front
+        # unless an alley runs behind it, so twenty is the base here and ten
+        # is the alley lot's. 3.130.C, HDR (TC): "0 see note 2", the same
+        # twenty on the same trigger, and nothing on an alley.
+        - value: 20
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L44-L45,L53-L54"
+        - value: 10
+          when: [troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L44-L45"
+        - value: 20
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L65,L79,L81"
+        - value: 0
+          when: [unit_lots, troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L65"
     # "10 or 18, see note 3": eighteen only "if driveway access is taken from
     # street side yard", a choice made when the pod is placed (MU-2 reads the
     # same note the same way).
@@ -2173,6 +2313,30 @@ zones:
       value: 10
       cite: TDC 3.130.C, townhouse dwellings, Street side yard (HDR)
       quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L68-L69,L82"
+      variants:
+        # The Town Center columns: "10 or 20 see note 2" for the quadplex and
+        # "0 or 18" (note 3) for the townhouse, the larger figure "if driveway
+        # access is taken from street side yard". Outside the Town Center
+        # this file reads that as a choice made when the pod is placed. In
+        # the newly opened columns the larger figure is carried instead: a
+        # corner lot takes its driveway off the side street unless the front
+        # is the quieter street (Steph 2026-10-02/05), so the smaller figure
+        # could screen GREEN a corner lot the code would not pass. A corner
+        # lot is charged both twenties -- tighter than any one layout, which
+        # is the safe way to be wrong. An alley behind takes the driveway off
+        # both streets.
+        - value: 20
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L48,L53,L55"
+        - value: 10
+          when: [troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L48"
+        - value: 18
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L68-L69,L79,L82"
+        - value: 0
+          when: [unit_lots, troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L56,L58-L59,L68"
     setback_rear_ft:
       value: 10
       cite: TDC 3.130.C, townhouse dwellings, Rear yard (HDR), note 4
@@ -2180,6 +2344,39 @@ zones:
       variants:
         - value: 0
           when: [alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L72-L75,L83"
+        # 3.130.B, HDR (TC): "see 3.235", and 3.235.C.5.b is fifteen feet
+        # against a residential district for one storey and twenty for two
+        # or more, five from the edge of an alley. The pod is two storeys.
+        # 3.235.C.5.a's ten feet against a non-residential district is read
+        # and NOT carried: the twenty is the larger, so leaving it out can
+        # only hold a lot back. The townhouse column (3.130.C, HDR (TC)) is
+        # "10 or 0" on note 4, the same as HDR's. Each pairing is spelled
+        # out, because a one-condition-deeper match is the only way the
+        # model picks between two variants.
+        - value: 15
+          when: [troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L24,L30-L32"
+        - value: 20
+          when: [troutdale_town_center, multi_story]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L24,L30-L31,L33"
+        - value: 5
+          when: [troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L24,L30,L35"
+        - value: 5
+          when: [troutdale_town_center, multi_story, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.235.txt#L24,L30,L35"
+        - value: 10
+          when: [unit_lots, troutdale_town_center]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L72-L75,L83"
+        - value: 10
+          when: [unit_lots, troutdale_town_center, multi_story]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L72-L75,L83"
+        - value: 0
+          when: [unit_lots, troutdale_town_center, alley_at_rear]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L72-L75,L83"
+        - value: 0
+          when: [unit_lots, troutdale_town_center, multi_story, alley_at_rear]
           quote: "or/multnomah/troutdale/3/3.130.txt#L72-L75,L83"
     # 3.140.A: "Minimum density standards shall apply to all residential
     # development" at "eighty percent (80%) or more of the maximum number of
@@ -2234,6 +2431,12 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/multnomah/troutdale/3/3.130.txt#L66"
+      variants:
+        # The Building Side row, 0 in the HDR (TC) column of both tables: the
+        # walls the four units share owe no yard.
+        - value: 0
+          when: [troutdale_town_center, attached_wall]
+          quote: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L47"
 
 # Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
 # Steph's rule: read every code, write the reason down, never show it again;
@@ -2335,6 +2538,28 @@ parks:
       fact unstated and the lot screens UNKNOWN on it. A point in no ORCA
       unit is read as no park -- the reading's one assumption, since ORCA is
       the region's inventory of exactly this land.
+
+drawn_areas:
+  town_center:
+    condition: troutdale_town_center
+    zones: [MDR, HDR]
+    file: or/multnomah/troutdale/town-center.geojson
+    source: >-
+      City of Troutdale GIS, Public_Web/City_GIS MapServer layer 78 (Town
+      Center), one polygon, fetched 2026-10-22 and held in EPSG:2913
+      (docs/flats/ingest_c2_2026-10-22.md). Not cross-checked against the
+      CFEC parking map.
+    quote: "or/multnomah/troutdale/3/3.114.txt#L4,L6-L7"
+    cite: TDC 3.113, 3.114, 3.120, 3.130
+    note: >-
+      Troutdale's residential tables print two columns the zoning layer does
+      not carry, MDR (TC) and HDR (TC), for lots "within the Town Center
+      district" (3.113.B, 3.114.B); the layer codes those lots plain MDR and
+      HDR. This area says which column a lot is read in. Inside it HDR
+      permits the quadplex (3.120) and both TC columns charge a 20 ft front
+      yard to a lot with a front driveway (3.130.B note 1, 3.130.C note 2).
+      A lot at least 90 percent inside is in, at most 10 percent is out,
+      and one the line cuts is unanswered and screens unknown on the fact.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
