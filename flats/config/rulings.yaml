@@ -2048,6 +2048,35 @@
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/rules/conditions.py
     - flats/ingest/quadfit.py
+- id: 2026-10-28-gresham-downtown-street-types-traced
+  kind: ruling
+  date: 2026-10-28
+  scope:
+    county: multnomah
+    city: gresham
+    zones: [DMU, DEM, DCL]
+  question: >-
+    Gresham's Downtown street types (Map 4.1140) bar townhouses from Main
+    Avenue and bar townhouse or parking access from Urban Boulevards, Beech
+    and Stanley. The city publishes the map only as a picture. Trace it, or
+    keep every Downtown townhouse lot yellow on it?
+  ruling: >-
+    "Trace"
+  effect: >-
+    Map 4.1140 (PDF page 23) is traced onto the RLIS centrelines as a drawn
+    layer (flats/config/areas/or/multnomah/gresham/downtown-street-types.geojson).
+    gresham_downtown_barred_street is measured per DMU, DEM and DCL lot:
+    every street line of a barring type is RED on the use; a Downtown Local
+    or Cleveland line, or a rear alley, opens the townhouse path; a Main
+    Avenue corner, or a street line with no traced centreline beside it
+    (Stanley, Beech outside NE 4th-5th, which RLIS does not carry), stays
+    unanswered and out of GREEN.
+  source: Steph 2026-10-28 (chat, via the coordinator), docs/FOLLOWUPS.md item 109 chunk 4
+  encoded_in:
+    - flats/config/areas/or/multnomah/gresham/downtown-street-types.geojson
+    - flats/geom/street_types.py
+    - flats/ingest/quadfit.py
+    - flats/rules/conditions.py
 - id: 2026-10-22-gresham-corner-frontage-main-street
   kind: ruling
   date: 2026-10-22

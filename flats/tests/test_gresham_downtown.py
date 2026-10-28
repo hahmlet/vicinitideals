@@ -19,7 +19,8 @@ cell reads P, and since 2026-10-28 (FOLLOWUPS 109 chunk 4, Steph's
 2026-10-15 ruling that townhomes have separate lots) the pod opens there as
 four townhouses on four unit lots, on the chapter's own "Townhouse in DCC,
 DMU, DTM, DEM, and DCL" setback row -- and only where Map 4.1140's street
-types do not bar it, which nothing here can yet say.
+types do not bar it, which the traced map answers (flats.geom.street_types,
+flats/tests/test_street_types.py).
 """
 
 from __future__ import annotations
@@ -134,8 +135,8 @@ def test_a_prohibited_quadplex_opens_only_as_townhouses(rules: RuleSet) -> None:
     """NP still closes the one-lot quadplex; the Townhouse P opens unit lots.
 
     And the street-type bar rides on top: unanswered, it leaves the use
-    unknown rather than open, so no Downtown townhouse lot reaches GREEN
-    until Map 4.1140 is traced.
+    unknown rather than open, so a Downtown townhouse lot the traced Map
+    4.1140 cannot answer (flats.geom.street_types) does not reach GREEN.
     """
     for zone in BARRED:
         assert rules.resolve(GRESHAM, zone).values["quadplex_allowed"].value is False, zone

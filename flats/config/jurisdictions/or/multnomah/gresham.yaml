@@ -5931,9 +5931,13 @@ zones:
         # back on some streets: "Not allowed on this street type" on Main
         # Avenue (Table 4.1130, L477), no access to townhouses from an Urban
         # Boulevard or Beech (4.1142(A)(6), (C)(9)), no parking access from
-        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Nothing here holds
-        # the map, so every lot is unanswered on it and screens UNKNOWN, not
-        # GREEN, until Map 4.1140 is traced.
+        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Map 4.1140 is traced
+        # (areas/or/multnomah/gresham/downtown-street-types.geojson, PDF page
+        # 23, 2026-10-28; flats.geom.street_types): True where every street
+        # line of the lot is of a barring type, False where a Downtown Local
+        # or Cleveland line or a rear alley gives the townhouses a way in,
+        # unanswered -- UNKNOWN, not GREEN -- on a Main corner or a street
+        # line no traced centreline explains (Stanley, most of Beech).
         - value: false
           when: [unit_lots, gresham_downtown_barred_street]
           cite: GDC Table 4.1130 (Townhouse not allowed on the Main Avenue street type) and 4.1142(A)(6), (C)(9), (D)(3), (E)(4) (no townhouse or parking access from Urban Boulevard, Beech, Main or Stanley)
@@ -6059,10 +6063,13 @@ zones:
       what is encoded. The earlier note on this district held the townhouse
       subdivision open as a legal reading rather than encode it on mine; the
       ruling is Steph's. Every setback is the strict limb across the six
-      Downtown street types, because Map 4.1140 is not held: front 10,
-      maximum front 10, street side 10, garage 15. The same map decides the
-      street-type bars on the use variant (gresham_downtown_barred_street),
-      so these lots screen UNKNOWN rather than GREEN until it is traced. The
+      Downtown street types, because no field carries a per-line street
+      type: front 10, maximum front 10, street side 10, garage 15. Map
+      4.1140, traced 2026-10-28, decides the street-type bars on the use
+      variant (gresham_downtown_barred_street): a lot whose every street bars
+      it is RED on the use, one with a local street or a rear alley opens,
+      and a Main corner or a street line the trace cannot place screens
+      UNKNOWN rather than GREEN. The
       Downtown Local curb-cut permission is review_discretion. The 4.1152
       frontage percentages sit under "All Development", which leaves
       townhouses out (L1234), and the townhouse orientation rules (S6) are
@@ -6095,9 +6102,13 @@ zones:
         # back on some streets: "Not allowed on this street type" on Main
         # Avenue (Table 4.1130, L477), no access to townhouses from an Urban
         # Boulevard or Beech (4.1142(A)(6), (C)(9)), no parking access from
-        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Nothing here holds
-        # the map, so every lot is unanswered on it and screens UNKNOWN, not
-        # GREEN, until Map 4.1140 is traced.
+        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Map 4.1140 is traced
+        # (areas/or/multnomah/gresham/downtown-street-types.geojson, PDF page
+        # 23, 2026-10-28; flats.geom.street_types): True where every street
+        # line of the lot is of a barring type, False where a Downtown Local
+        # or Cleveland line or a rear alley gives the townhouses a way in,
+        # unanswered -- UNKNOWN, not GREEN -- on a Main corner or a street
+        # line no traced centreline explains (Stanley, most of Beech).
         - value: false
           when: [unit_lots, gresham_downtown_barred_street]
           cite: GDC Table 4.1130 (Townhouse not allowed on the Main Avenue street type) and 4.1142(A)(6), (C)(9), (D)(3), (E)(4) (no townhouse or parking access from Urban Boulevard, Beech, Main or Stanley)
@@ -6223,10 +6234,13 @@ zones:
       what is encoded. The earlier note on this district held the townhouse
       subdivision open as a legal reading rather than encode it on mine; the
       ruling is Steph's. Every setback is the strict limb across the six
-      Downtown street types, because Map 4.1140 is not held: front 10,
-      maximum front 10, street side 10, garage 15. The same map decides the
-      street-type bars on the use variant (gresham_downtown_barred_street),
-      so these lots screen UNKNOWN rather than GREEN until it is traced. The
+      Downtown street types, because no field carries a per-line street
+      type: front 10, maximum front 10, street side 10, garage 15. Map
+      4.1140, traced 2026-10-28, decides the street-type bars on the use
+      variant (gresham_downtown_barred_street): a lot whose every street bars
+      it is RED on the use, one with a local street or a rear alley opens,
+      and a Main corner or a street line the trace cannot place screens
+      UNKNOWN rather than GREEN. The
       Downtown Local curb-cut permission is review_discretion. The 4.1152
       frontage percentages sit under "All Development", which leaves
       townhouses out (L1234), and the townhouse orientation rules (S6) are
@@ -6259,9 +6273,13 @@ zones:
         # back on some streets: "Not allowed on this street type" on Main
         # Avenue (Table 4.1130, L477), no access to townhouses from an Urban
         # Boulevard or Beech (4.1142(A)(6), (C)(9)), no parking access from
-        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Nothing here holds
-        # the map, so every lot is unanswered on it and screens UNKNOWN, not
-        # GREEN, until Map 4.1140 is traced.
+        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Map 4.1140 is traced
+        # (areas/or/multnomah/gresham/downtown-street-types.geojson, PDF page
+        # 23, 2026-10-28; flats.geom.street_types): True where every street
+        # line of the lot is of a barring type, False where a Downtown Local
+        # or Cleveland line or a rear alley gives the townhouses a way in,
+        # unanswered -- UNKNOWN, not GREEN -- on a Main corner or a street
+        # line no traced centreline explains (Stanley, most of Beech).
         - value: false
           when: [unit_lots, gresham_downtown_barred_street]
           cite: GDC Table 4.1130 (Townhouse not allowed on the Main Avenue street type) and 4.1142(A)(6), (C)(9), (D)(3), (E)(4) (no townhouse or parking access from Urban Boulevard, Beech, Main or Stanley)
@@ -6388,10 +6406,13 @@ zones:
       what is encoded. The earlier note on this district held the townhouse
       subdivision open as a legal reading rather than encode it on mine; the
       ruling is Steph's. Every setback is the strict limb across the six
-      Downtown street types, because Map 4.1140 is not held: front 10,
-      maximum front 10, street side 10, garage 15. The same map decides the
-      street-type bars on the use variant (gresham_downtown_barred_street),
-      so these lots screen UNKNOWN rather than GREEN until it is traced. The
+      Downtown street types, because no field carries a per-line street
+      type: front 10, maximum front 10, street side 10, garage 15. Map
+      4.1140, traced 2026-10-28, decides the street-type bars on the use
+      variant (gresham_downtown_barred_street): a lot whose every street bars
+      it is RED on the use, one with a local street or a rear alley opens,
+      and a Main corner or a street line the trace cannot place screens
+      UNKNOWN rather than GREEN. The
       Downtown Local curb-cut permission is review_discretion. The 4.1152
       frontage percentages sit under "All Development", which leaves
       townhouses out (L1234), and the townhouse orientation rules (S6) are

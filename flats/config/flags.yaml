@@ -1339,7 +1339,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Trace Gresham's Downtown street-type map (Map 4.1140) against the lot's street lines"
+    path: "Check the lot against Gresham's Downtown street-type map (Map 4.1140, PDF page 23): a Main Avenue corner, or a street line the traced map has no centreline for (NW Stanley Ave; NE Beech Ave outside NE 4th-5th)"
     priority: later
     status: pending
     approved_by: null

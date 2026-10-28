@@ -453,9 +453,15 @@ _C: tuple[ConditionDef, ...] = (
         "street type\" for townhouses on Main Avenue, and 4.1142 prohibits "
         "townhouse access from an Urban Boulevard or Beech and any parking "
         "access from Main or Stanley. The street types are drawn on Map "
-        "4.1140, which no data here holds, so the fact is unmeasured and every "
-        "Downtown townhouse lot (DMU, DEM, DCL) stays out of GREEN on it.",
-        evidence="GDC Map 4.1140, Downtown Plan District street types, against the lot's street lines",
+        "4.1140, traced 2026-10-28 onto the RLIS centrelines "
+        "(flats/config/areas/or/multnomah/gresham/downtown-street-types.geojson, "
+        "flats.geom.street_types). Answered per DMU, DEM and DCL lot from its "
+        "street lines: True when every one is of a barring type (or, with "
+        "Main, when Main is the only street), False when a Downtown Local or "
+        "Cleveland line or a rear alley gives a way in, unanswered -- out of "
+        "GREEN -- on a Main corner or a street line no traced centreline "
+        "explains.",
+        evidence="GDC Map 4.1140 (PDF page 23), traced onto RLIS centrelines, against the lot's s4 street lines",
         assume=None,
     ),
     ConditionDef(

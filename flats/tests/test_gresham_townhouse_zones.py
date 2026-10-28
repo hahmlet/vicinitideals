@@ -9,8 +9,10 @@ unit lots, on the code's own townhouse rows -- and each district's own limit
 on that permission rides on top of it:
 
 * Downtown: Map 4.1140's street types bar townhouse access from some streets.
-  The map is not held, so ``gresham_downtown_barred_street`` is unmeasured and
-  every lot stays out of GREEN on it.
+  The map is traced (flats.geom.street_types): ``gresham_downtown_barred_street``
+  is True for a lot whose only streets bar it, False where a street that bars
+  nothing or a rear alley gives a way in, and unanswered -- out of GREEN --
+  where a street line has no traced centreline beside it.
 * RTC: Table 4.0420 note 3 wants a non-residential ground floor on Stark.
   ``rockwood_stark_frontage`` is read off the street network by name, the way
   CMF's corridor is.
@@ -176,11 +178,61 @@ def test_a_civic_lot_passes_as_townhouses_with_the_land_division_flag(corpus, po
     assert land_division(got)
 
 
-def test_a_downtown_lot_waits_on_the_street_type_map(corpus, policies) -> None:  # noqa: F811
+def _placed(r: dict, x: float, y: float) -> dict:
+    """The same lot moved so its front line's west end sits at ``(x, y)``."""
+    import shapely
+    from shapely import affinity
+
+    raw = json.loads(r["edges_json"])
+    dx, dy = x - raw[0][0], y - raw[0][1]
+    edges = [[a + dx, b + dy, c + dx, d + dy, k] for a, b, c, d, k in raw]
+    moved = {
+        key: shapely.to_wkb(affinity.translate(shapely.from_wkb(r[key]), dx, dy))
+        for key in ("wkb", "lot_wkb")
+    }
+    return {**r, "edges_json": json.dumps(edges), **moved}
+
+
+def _downtown(corpus, policies, x: float, y: float, zone: str = "DMU"):  # noqa: F811
+    """The townhouse form of a 120 x 160 lot of ``zone`` placed at ``(x, y)``:
+    its colour, its binds and its flag codes (from the signed result where
+    the bridge kept that form)."""
+    r = row("gresham", zone, width=120.0, depth=160.0)
+    _, got = both(corpus, policies, _placed(r, x, y), design=wide())
+    if got.forms["kept"] == "townhomes":
+        s = got.signed
+        return s.colour, {b.check for b in s.binds}, {f.code for f in s.flags}
+    form = got.forms["townhomes"]
+    return (
+        Colour(form["colour"]),
+        {b["check"] for b in form.get("binds", ())},
+        {f["code"] for f in form.get("flags", ())},
+    )
+
+
+def test_a_downtown_lot_the_street_type_map_does_not_place_waits_on_it(corpus, policies) -> None:  # noqa: F811
     _, got = both(corpus, policies, row("gresham", "DMU", width=120.0, depth=160.0), design=wide())
     assert got.signed.colour is not Colour.green
     codes = {f["code"] for f in got.forms["townhomes"]["flags"]}
     assert "FACT-GRESHAM-DOWNTOWN-BARRED-STREET" in codes
+
+
+@pytest.mark.parametrize("zone", DOWNTOWN)
+def test_a_downtown_lot_on_a_local_street_opens_as_townhouses(corpus, policies, zone: str) -> None:  # noqa: F811
+    # 30 ft north of NE 8th St's centreline: Downtown Local on Map 4.1140.
+    colour, binds, codes = _downtown(corpus, policies, 7_708_700.0, 675_373.0, zone)
+    assert "FACT-GRESHAM-DOWNTOWN-BARRED-STREET" not in codes
+    assert "use" not in binds
+    assert colour is not Colour.red
+
+
+@pytest.mark.parametrize("zone", DOWNTOWN)
+def test_a_downtown_lot_on_an_urban_boulevard_alone_is_red(corpus, policies, zone: str) -> None:  # noqa: F811
+    # 30 ft north of E Powell Blvd, no other street and no alley.
+    colour, binds, codes = _downtown(corpus, policies, 7_708_000.0, 673_581.0, zone)
+    assert colour is Colour.red
+    assert "FACT-GRESHAM-DOWNTOWN-BARRED-STREET" not in codes
+    assert "use" in binds
 
 
 #: Inside THR-SW's density window: 4 units on 10,014 to 14,520 sq ft net.

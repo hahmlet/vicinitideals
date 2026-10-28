@@ -133,6 +133,7 @@ from flats.geom.sidewalk import (
     load_streets,
     observed_sidewalk_easement,
 )
+from flats.geom.street_types import CONDITION as STREET_TYPE_FACT, observed_street_types
 from flats.geom.street_class import (
     LOCAL_STREET,
     load_class_maps,
@@ -350,6 +351,9 @@ OBSERVABLE: tuple[str, ...] = (
     *CORRIDOR_FACTS,
     # Gresham RTC lots only: True touching SE Stark (corridors.yaml).
     "rockwood_stark_frontage",
+    # Gresham DMU/DEM/DCL lots only, from the traced Map 4.1140
+    # (flats.geom.street_types).
+    STREET_TYPE_FACT,
     "corner_lot",
     "through_lot",
     "split_zone",
@@ -549,6 +553,7 @@ def observed_facts(
                     edges, _layer_id(row), corridors, zone=row.get("zone"), lot=row.get("lot_wkb")
                 )
             )
+        out.update(observed_street_types(edges, _layer_id(row), row.get("zone")))
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
     if layers is not None and edges:
