@@ -4895,25 +4895,53 @@ jurisdictions:
       "Town Center": "KTTC"
     zones:
       - zone: "R-9"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 12
+        setback_side_ft: 3
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 60
+        min_density_du_per_acre: 7.2
         source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in R-9) and 16.84.020 permitted uses"
         source_url: "https://api.municode.com/PublicationPdfDownload/3913"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/king-city R-9) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-12"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 3
+        setback_rear_ft: 10
+        setback_street_side_ft: 8
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 60
+        min_density_du_per_acre: 9.6
         source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.94.020 permitted uses"
         source_url: "https://api.municode.com/PublicationPdfDownload/3913"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/king-city R-12) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-15"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_rear_ft: 20
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 12
+        setback_side_ft: 0
         source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.96.020 permitted uses"
         source_url: "https://api.municode.com/PublicationPdfDownload/3913"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/king-city R-15) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-24"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 19.2
         source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.100.020 permitted uses"
         source_url: "https://api.municode.com/PublicationPdfDownload/3913"
         confidence: "needs_verification"
@@ -4925,7 +4953,14 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/king-city SF) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "AT"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 80
+        min_density_du_per_acre: 12
         source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.92.020 permitted uses"
         source_url: "https://api.municode.com/PublicationPdfDownload/3913"
         confidence: "needs_verification"

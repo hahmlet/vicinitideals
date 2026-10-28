@@ -155,7 +155,11 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 450, "numeric": 141, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 450, "numeric": 148, "marker": 0, "dash": 2, "silent": 8}
+# 141 -> 148 numeric on 2026-10-28 (FOLLOWUPS 109 chunk 4, King City townhouses): the "-"
+# cells of 16.84.040 in the columns that open -- R-15's depth, street side and interior side,
+# R-24's depth and street side, AT's street side and garage -- each cited on its row, whose
+# other columns print figures.
 # 445 -> 450 stated and 7 -> 8 silent on 2026-10-28 (FOLLOWUPS 109 chunk 4, Troutdale Town
 # Center). Stated: HDR's townhouse width and depth "none" (base, and kept for the townhouse plat
 # inside the Town Center). Silent: HDR (TC)'s lot size, which 3.130.B prints as "see 3.235" and

@@ -108,10 +108,14 @@ def test_only_kingston_terrace_admits_the_pod(king_city: Layer) -> None:
 def test_the_older_districts_refuse_on_the_housing_type_table(
     king_city: Layer,
 ) -> None:
-    """No triplex or fourplex row, and multi-dwelling is five or more units."""
+    """No triplex or fourplex row, and multi-dwelling is five or more units.
+
+    The fourplex on one lot. Five of the six open as townhouses on unit lots
+    since 2026-10-28 (test_king_city_townhouses.py); SF holds the refusal
+    alone."""
+    assert set(king_city.zones["SF"].values) == {"quadplex_allowed"}
     for zone in OLDER_RESIDENTIAL:
         held = king_city.zones[zone]
-        assert set(held.values) == {"quadplex_allowed"}, zone
         use = held.values["quadplex_allowed"]
         assert use.value is False, zone
         text = _text(use.prov.quote)

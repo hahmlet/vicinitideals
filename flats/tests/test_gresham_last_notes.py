@@ -107,7 +107,7 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
         assert design.parking.stalls_per_unit.preferred <= 2.0, design.id
 
 
-def test_the_layers_that_state_a_parking_ceiling_are_the_five_that_state_one() -> None:
+def test_the_layers_that_state_a_parking_ceiling_are_the_six_that_state_one() -> None:
     """Portland was the only one until 2026-08-27, and Milwaukie is the second.
 
     Milwaukie's is the tighter of the two and it is aimed at this housing type
@@ -172,4 +172,7 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_five_that_state_one() -
         "or/clackamas/west-linn",
         "or/washington/hillsboro",
         "or/washington/beaverton",
+        # 2026-10-28 (FOLLOWUPS 109 chunk 4): King City's townhouse districts read
+        # 16.132.040, "Townhome 1.5 spaces per unit" -- six stalls, above the pod's four.
+        "or/washington/king-city",
     }

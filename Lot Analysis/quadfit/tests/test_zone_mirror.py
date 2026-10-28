@@ -172,6 +172,12 @@ PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
     "gresham/DCL",
     "gresham/RTC",
     "gresham/THR-SW",
+    # 2026-10-28 (FOLLOWUPS 109 chunk 4): King City's older districts, Single dwelling attached P.
+    "king_city/R-9",
+    "king_city/R-12",
+    "king_city/R-15",
+    "king_city/R-24",
+    "king_city/AT",
 })
 
 
@@ -1032,9 +1038,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
-    "setback_garage_entrance_ft": 121,
+    "setback_garage_entrance_ft": 125,
     "min_landscaped_pct": 59,
-    "setback_front_max_ft": 101,
+    "setback_front_max_ft": 103,
     "max_density_du_per_acre": 63,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
@@ -1052,24 +1058,24 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 5,
-    "parking_aisle_two_way_ft": 12,
-    "parking_aisle_one_way_ft": 12,
+    "parking_aisle_two_way_ft": 17,
+    "parking_aisle_one_way_ft": 17,
     "driveway_approach_max_width_ft": 10,
     "corner_access_street": 4,
-    "max_impervious_pct": 14,
-    "min_average_lot_width_ft": 2,
+    "max_impervious_pct": 19,
+    "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
     "open_space_min_dimension_ft": 6,
-    "driveway_min_width_one_way_ft": 12,
-    "driveway_min_width_two_way_ft": 12,
+    "driveway_min_width_one_way_ft": 17,
+    "driveway_min_width_two_way_ft": 17,
     "driveway_one_lane_ft": 1,
     "min_ground_story_ft": 2,
     "parking_covered_required": 5,
-    "parking_stall_depth_ft": 9,
-    "parking_stall_width_ft": 9,
+    "parking_stall_depth_ft": 14,
+    "parking_stall_width_ft": 14,
     "solar_shade_limit": 2,
     #: Road land to a distance from the street's centre line (FOLLOWUPS 67/77):
     #: per street lot line, measured by the FLATS bridge
@@ -1124,6 +1130,12 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: Steph 2026-10-22: a Gresham corner lot owes the share on its main
     #: street only (GDC 3.0100 Primary Street), measured per street class.
     "building_frontage_corner": 2,
+    #: FOLLOWUPS 109 chunk 4 (2026-10-28): King City's five townhouse districts (R-9,
+    #: R-12, R-15, R-24, AT) carry 16.84.050's per-lot outdoor area (no dimension under
+    #: 10 ft), and with it 16.132's stalls and aisles, 16.136.030 A's 30 ft access strip,
+    #: 16.84.040's garage and maximum-front rows, note 3's 24 ft average width and the
+    #: coverage of buildings and paving -- counted on the keys above.
+    "private_open_space_min_dimension_ft": 5,
 }
 
 

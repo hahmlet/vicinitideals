@@ -317,7 +317,8 @@ OPEN = {
     "or/washington/beaverton 20.05.15 -> 20.25.05",
     "or/washington/beaverton 20.15.15 -> 60.50.05",
     "or/washington/king-city 16.114.040 -> 16.84.060",
-    "or/washington/king-city 16.114.130 -> 16.132",
+    # "or/washington/king-city 16.114.130 -> 16.132" left 2026-10-28 (FOLLOWUPS 109
+    # chunk 4): 16.132 is read for the older districts' townhouse path and quoted there.
     # 2026-10-24, surfaced when KCC was cut into one file per section: the
     # wrapped line "16.102.060.C, or is subject to liquor license review"
     # opened a printed line, so the old heading guess took it for 16.102.060's
@@ -431,6 +432,10 @@ FOLLOWED = {
     # 2026-10-02, when 12.50.360.F's perimeter planter strip was encoded as
     # `parking_lot_line_buffer_ft`.
     "or/washington/hillsboro 12.50.350 -> 12.50.360",
+    # 2026-10-28 (FOLLOWUPS 109 chunk 4): King City's townhouse districts quote
+    # 16.132.030-.050 for their parking, so Kingston Terrace's pointer into the
+    # chapter is followed.
+    "or/washington/king-city 16.114.130 -> 16.132",
     # 510.03 -> 510.05 arrived with Section 510 the same day as the 510.04 row
     # above, and it is worth reading the two together because the ledger calls
     # them differently for a reason that is about our citation and not about

@@ -40,6 +40,7 @@ pytest.importorskip("shapely")
 
 from flats.designs.model import load_catalog  # noqa: E402
 from flats.encode.extract import _subject  # noqa: E402
+from flats.encode.readiness import quotes_the_number  # noqa: E402
 from flats.fit.rectangle import Fit  # noqa: E402
 from flats.provenance.store import ProvenanceError, ProvenanceStore  # noqa: E402
 from flats.rules.fields import FIELDS, OPTIONAL_FIELDS, REQUIRED_FIELDS  # noqa: E402
@@ -309,7 +310,9 @@ def test_every_encoded_average_width_is_quoted_from_a_line_that_states_it() -> N
         except ProvenanceError as exc:  # pragma: no cover
             pytest.fail(f"{layer} {zone} cites {quote}, which the store cannot serve: {exc}")
         digits = f"{value:g}"
-        assert digits in text.replace(",", ""), (
+        # The corpus-wide check, which reads a spelled figure too: King City's
+        # note 3 prints "in feet: twenty-four" (2026-10-28).
+        assert digits in text.replace(",", "") or quotes_the_number(text, value), (
             f"{layer} {zone} states {digits} ft but {quote} reads {text!r}"
         )
 

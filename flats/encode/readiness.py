@@ -590,7 +590,17 @@ def _says(text: str, number: float, *, spaced: bool = False) -> bool:
         r"(?:\b|(?<=\bor)|(?<=\band))" + r"[-\s]*(?:and[-\s]+)?".join(parts) + r"\b",
         re.I,
     )
-    return any(_UNIT_WORD.match(text[found.end():]) for found in pattern.finditer(text))
+    return any(
+        _UNIT_WORD.match(text[found.end():]) or _UNIT_BEFORE.search(text[: found.start()])
+        for found in pattern.finditer(text)
+    )
+
+
+#: A unit printed BEFORE the spelled number, as a heading names it: King City
+#: 16.84.040 note 3, "Minimum average lot width, in feet: twenty-four." The
+#: unit is the same guard, read the other way round, and only in that "in
+#: <unit>:" form -- "four years: twenty" states no number of feet.
+_UNIT_BEFORE = re.compile(r"\bin\s+(?:feet|square\s+feet|units)\s*:\s*$", re.I)
 
 
 #: A word broken across a line by the typesetter, in either of the two hyphens

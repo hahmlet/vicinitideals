@@ -431,7 +431,10 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # + 6 on 2026-10-28 (FOLLOWUPS 109 chunk 4): Gresham DMU, DEM and DCL
     # townhouse rows, alley rear 3 ft and back to 10 where the rear abuts a
     # lower-density district (Table 4.1130 note 11), keyed to the rear line.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6
+    # + 4 on 2026-10-28 (FOLLOWUPS 109 chunk 4): Troutdale HDR inside the Town
+    # Center, the 3.235.C.5.b alley rear (5 ft) and the townhouse column's (0),
+    # each with and without multi_story, keyed to the rear line.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:
