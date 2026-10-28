@@ -131,6 +131,7 @@ def test_a_plain_interior_lot_on_a_main() -> None:
         "abuts_alley": False,
         "alley_at_rear": False,
         "alley_at_side": False,
+        "no_alley_at_rear": True,
         "fronts_cul_de_sac": False,
         "corner_lot": False,
         "through_lot": False,

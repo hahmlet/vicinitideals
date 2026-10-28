@@ -2020,6 +2020,34 @@
   source: Steph 2026-10-28 (chat), docs/FOLLOWUPS.md item 109 chunk 4
   encoded_in:
     - flats/config/jurisdictions/or/washington/king-city.yaml
+- id: 2026-10-28-gresham-springwater-no-alley-yellow
+  kind: ruling
+  date: 2026-10-28
+  scope:
+    county: multnomah
+    city: gresham
+    zones: [THR-SW]
+  question: >-
+    Springwater's THR-SW permits townhouses (Table 4.1507, P), but Table
+    4.1508 prints the townhouse rear yard only for a lot with an alley
+    behind it (Rear With Alley 8 in.; Rear No Alley N/A) and row L wants
+    garage entrances off an alley. Does a townhouse unit lot with no alley
+    at the rear stay closed (red), or is it an open question (yellow)?
+  ruling: >-
+    "I'm good with yellow"
+  effect: >-
+    Silence, not a prohibition: no zone sits under THR-SW for the N/A to
+    defer to, and 7.0431 (applied by 4.1510.B) writes townhouse driveways
+    for a lot with "no improved alley". The townhouse permission opens on
+    every THR-SW unit lot. A lot with no alley along its whole rear is held
+    open by name on no_alley_at_rear (FACT-NO-ALLEY-AT-REAR): YELLOW at
+    best, never GREEN. Alley-backed lots keep the stated 8 in. rear yard and
+    their path to GREEN.
+  source: Steph 2026-10-28 (chat), docs/FOLLOWUPS.md item 109 chunk 4
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
+    - flats/rules/conditions.py
+    - flats/ingest/quadfit.py
 - id: 2026-10-22-gresham-corner-frontage-main-street
   kind: ruling
   date: 2026-10-22

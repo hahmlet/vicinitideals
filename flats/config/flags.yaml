@@ -1345,6 +1345,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NO-ALLEY-AT-REAR:
+    description: "No alley runs the lot's whole rear line, where the code states the rear yard only for a lot with one (Gresham Springwater THR-SW townhouses: Rear No Alley N/A). Steph 2026-10-28: silence, not a prohibition -- YELLOW"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "Ask Gresham planning what rear yard a THR-SW townhouse lot without an alley owes, and whether row L's alley-only garage entrance leaves the pod's parking a way in"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-NO-EXISTING-DWELLING:
     description: "The lot holds no home on the county roll, or the roll does not say (Wilsonville Village zone): the quadplex standards in 4.125(.23) are only for lots previously developed with a home; a vacant Villebois lot goes through the Development Review Board's SAP/PDP/FDP process, which states no quadplex standard"
     kind: categorical

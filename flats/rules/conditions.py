@@ -459,6 +459,24 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "no_alley_at_rear",
+        "site_fact",
+        "No alley runs the lot's whole rear line: the measured negation of "
+        "`alley_at_rear`, answered wherever that is. Its own fact rather "
+        "than `alley_at_rear` False because it is the trigger of a rule no "
+        "number states, which a qualifier may only name on a fact the "
+        "registry refuses to assume. Gresham's Springwater THR-SW is the "
+        "reader: Table 4.1508 prints the townhouse rear yard only \"With "
+        "Alley\" (8 in.; Rear No Alley N/A), and Steph ruled 2026-10-28 that "
+        "the code is silent there, not prohibiting (rulings.yaml "
+        "2026-10-28-gresham-springwater-no-alley-yellow): True holds such a "
+        "lot open by name, YELLOW at best, never GREEN; False lets the "
+        "stated rear yard answer it. A lot with an alley along only part of "
+        "its rear reads True, the conservative way to be wrong.",
+        evidence="quadfit s4 edges: alley_at_rear answered (flats.geom.alley.registry_alley), negated",
+        assume=None,
+    ),
+    ConditionDef(
         "civic_corridor_setback",
         "site_fact",
         "A street lot line of the site is adjacent to a Civic Corridor shown "

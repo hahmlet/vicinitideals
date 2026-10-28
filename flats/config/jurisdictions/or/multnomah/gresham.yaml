@@ -7855,19 +7855,24 @@ zones:
       # a quadplex" (L962-L964) is about that other path, and does not reach
       # four lots platted first and built on as a row.
       #
-      # Only where an alley runs along the rear. Table 4.1508's setback row
-      # for a THR-SW townhouse prints "N/A" under Rear No Alley and 8 in.
-      # under Rear With Alley (L342), and row L requires alley access for a
-      # townhouse garage here (L301-L302): the district is laid out
-      # alley-loaded, and a townhouse lot with no alley behind it has no rear
-      # yard the code states. Those lots stay closed.
+      # With or without an alley at the rear. Table 4.1508's setback row for
+      # a THR-SW townhouse prints "N/A" under Rear No Alley and 8 in. under
+      # Rear With Alley (L342), and row L requires alley access for a
+      # townhouse garage here (L301-L302). Steph 2026-10-28 (rulings.yaml
+      # 2026-10-28-gresham-springwater-no-alley-yellow): "I'm good with
+      # yellow" -- no zone sits under THR-SW for the N/A to defer to, and
+      # 7.0431 (applied by 4.1510.B) writes townhouse driveways for "no
+      # improved alley", so the code is silent there, not prohibiting. The
+      # permission opens on every unit lot; a lot with no alley along its
+      # rear is held open on the rear yard below (no_alley_at_rear), YELLOW
+      # at best and never GREEN. Alley-backed lots keep the stated 8 in.
       value: false
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L145"
       variants:
         - value: true
-          when: [unit_lots, alley_at_rear]
-          cite: GDC Table 4.1507, Townhouse P in THR-SW; Table 4.1508, THR-SW townhouse setbacks stated for a lot with an alley at the rear (Rear No Alley N/A)
-          quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L146,L318-L342"
+          when: [unit_lots]
+          cite: GDC Table 4.1507, Townhouse P in THR-SW
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L146"
     max_height_ft:
       value: 45
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L278"
@@ -7938,10 +7943,17 @@ zones:
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L318-L342"
     setback_rear_ft:
       # Rear With Alley: 8 in. -- the only rear yard the row states for a
-      # townhouse (Rear No Alley N/A), and the permission above opens only
-      # where the alley is at the rear.
+      # townhouse (Rear No Alley N/A). On a lot with no alley along its
+      # rear the code states none, so the 8 in. is carried and the lot is
+      # held open by name on no_alley_at_rear: YELLOW at best, never GREEN
+      # (Steph 2026-10-28, rulings.yaml
+      # 2026-10-28-gresham-springwater-no-alley-yellow).
       value: 0.67
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L318-L342"
+      qualified_by:
+        fact: no_alley_at_rear
+        cite: GDC Table 4.1508 (continued), THR-SW Townhouse "Rear No Alley N/A" -- no rear yard stated for a townhouse lot without an alley, and row L wants garage entrances off an alley; 4.1510.B applies 7.0431, whose 7.0431(B)(3)(a)(i) allows front garages and driveways where "There is no improved alley from which to take access"; Steph 2026-10-28 rules it silence, YELLOW
+        quote: "or/multnomah/gresham/4.1500.springwater.txt#L301-L302,L342,L364-L365"
     review_discretion:
       # Rows M and O, note 4: buffering and a Master Plan are required in
       # the THR-SW area adjacent to the east edge of the Village Center, and
@@ -7957,11 +7969,13 @@ zones:
       unit lots, under Steph's 2026-10-15 ruling: Table 4.1507 reads NP for a
       quadplex and P for a townhouse, and this is the Townhouse Residential
       district ("primarily Townhouses and Cottage Clusters", L125-L126). The
-      Townhouse rows of Table 4.1508 are encoded. Only lots with an alley
-      along the rear open: the setback row states no rear yard for a
-      townhouse without one (Rear No Alley N/A) and row L wants garages off
-      an alley, so a no-alley lot has a standard nobody can read and stays
-      closed. The density pair is the window that binds: 12.0 to 17.4 units
+      Townhouse rows of Table 4.1508 are encoded. A lot with an alley along
+      the rear takes the stated 8 in. rear yard; one without is held open
+      by name (no_alley_at_rear) and is YELLOW at best: the setback row
+      states no rear yard for a townhouse without an alley (Rear No Alley
+      N/A) and row L wants garages off an alley, which Steph ruled
+      2026-10-28 is the code's silence, not a prohibition (rulings.yaml
+      2026-10-28-gresham-springwater-no-alley-yellow). The density pair is the window that binds: 12.0 to 17.4 units
       per net acre, four units on 10,014 to 14,520 sq ft. Table 4.1508
       states no maximum number of attached townhouses for THR-SW (row J,
       N/A). Parking: row K sends the maximum to 9.0851; no minimum

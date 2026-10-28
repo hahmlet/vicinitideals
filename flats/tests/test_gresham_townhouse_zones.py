@@ -15,7 +15,9 @@ on that permission rides on top of it:
   ``rockwood_stark_frontage`` is read off the street network by name, the way
   CMF's corridor is.
 * THR-SW: the setback row states no rear yard for a townhouse without an
-  alley (Rear No Alley N/A), so only an alley-backed lot opens.
+  alley (Rear No Alley N/A). Steph 2026-10-28, "I'm good with yellow": every
+  unit lot opens, and one with no alley along its rear is held open by name
+  on ``no_alley_at_rear`` -- YELLOW at best, never GREEN.
 
 These tests pin the mechanism, not a lot count.
 """
@@ -30,7 +32,7 @@ from shapely.geometry import box, mapping
 
 from flats.encode.readiness import quotes_the_number
 from flats.geom.corridor import load_maps, named_specs
-from flats.ingest.quadfit import observed_facts
+from flats.ingest.quadfit import NO_REAR_ALLEY, observed_facts
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
@@ -84,14 +86,29 @@ def test_rockwood_stark_frontage_closes_rtc(rules: RuleSet) -> None:
     assert on_stark.values["quadplex_allowed"].value is False
 
 
-def test_springwater_opens_only_with_an_alley_at_the_rear(rules: RuleSet) -> None:
-    assert rules.resolve(GRESHAM, "THR-SW", ("unit_lots",)).values["quadplex_allowed"].value is False
-    alley = rules.resolve(GRESHAM, "THR-SW", ("unit_lots", "alley_at_rear"))
-    assert alley.values["quadplex_allowed"].value is True
-    assert alley.missing_required == ()
-    # Rear With Alley: 8 in., stored in feet.
-    assert alley.values["setback_rear_ft"].value == pytest.approx(8 / 12, abs=0.01)
-    assert alley.values["min_lot_sqft"].value == 1800
+def test_springwater_opens_on_unit_lots_and_its_rear_yard_turns_on_the_alley(rules: RuleSet) -> None:
+    for held in (("unit_lots",), ("unit_lots", "alley_at_rear"), ("unit_lots", NO_REAR_ALLEY)):
+        got = rules.resolve(GRESHAM, "THR-SW", held)
+        assert got.values["quadplex_allowed"].value is True, held
+        assert got.missing_required == (), held
+        # Rear With Alley: 8 in., stored in feet -- the only rear yard stated.
+        assert got.values["setback_rear_ft"].value == pytest.approx(8 / 12, abs=0.01)
+        assert got.values["min_lot_sqft"].value == 1800
+    rear = rules.resolve(GRESHAM, "THR-SW", ("unit_lots",)).values["setback_rear_ft"]
+    # A qualifier, not a number: the code states no rear yard without an alley.
+    assert NO_REAR_ALLEY in rear.levers
+    assert rear.unencoded == frozenset({NO_REAR_ALLEY})
+
+
+def test_no_alley_at_rear_is_the_measured_negation_of_alley_at_rear() -> None:
+    plain = observed_facts(row("gresham", "THR-SW"))
+    assert plain["alley_at_rear"] is False
+    assert plain[NO_REAR_ALLEY] is True
+    alley = observed_facts(_alley_backed(row("gresham", "THR-SW")))
+    assert alley["alley_at_rear"] is True
+    assert alley[NO_REAR_ALLEY] is False
+    # No edges, no alley record: unanswered, never a False that reads as a measurement.
+    assert NO_REAR_ALLEY not in observed_facts({**row("gresham", "THR-SW"), "edges_json": "[]"})
 
 
 # --- the townhouse rows -------------------------------------------------------
@@ -166,10 +183,35 @@ def test_a_downtown_lot_waits_on_the_street_type_map(corpus, policies) -> None: 
     assert "FACT-GRESHAM-DOWNTOWN-BARRED-STREET" in codes
 
 
-def test_a_springwater_lot_without_an_alley_stays_red(corpus, policies) -> None:  # noqa: F811
-    _, got = both(corpus, policies, row("gresham", "THR-SW", width=120.0, depth=160.0), design=wide())
-    assert got.signed.colour is Colour.red
-    assert "use" in {b["check"] for b in got.forms["townhomes"]["binds"]}
+#: Inside THR-SW's density window: 4 units on 10,014 to 14,520 sq ft net.
+SPRINGWATER = dict(width=105.0, depth=135.0)
+
+
+def _alley_backed(r: dict) -> dict:
+    """The same lot with an alley along its whole rear line."""
+    edges = json.loads(r["edges_json"])
+    edges[2][4] = "A"
+    cover = [None] * len(edges)
+    cover[2] = "1" * 10
+    return {**r, "edges_json": json.dumps(edges), "alley_cover_json": json.dumps(cover)}
+
+
+def test_a_springwater_lot_without_an_alley_is_yellow_never_green(corpus, policies) -> None:  # noqa: F811
+    _, got = both(corpus, policies, row("gresham", "THR-SW", **SPRINGWATER), design=wide())
+    assert got.lot.observed[NO_REAR_ALLEY] is True
+    assert got.signed.colour is Colour.yellow
+    assert "use" not in {b.check for b in got.signed.binds}
+    assert "FACT-NO-ALLEY-AT-REAR" in {f.code for f in got.signed.flags}
+
+
+def test_an_alley_backed_springwater_lot_keeps_its_path(corpus, policies) -> None:  # noqa: F811
+    _, bare = both(corpus, policies, row("gresham", "THR-SW", **SPRINGWATER), design=wide())
+    _, got = both(corpus, policies, _alley_backed(row("gresham", "THR-SW", **SPRINGWATER)), design=wide())
+    assert got.lot.observed[NO_REAR_ALLEY] is False
+    assert "FACT-NO-ALLEY-AT-REAR" not in {f.code for f in got.signed.flags}
+    # The flag is the only thing between them: the alley lot is held by
+    # nothing the no-alley lot is not also held by.
+    assert {f.code for f in got.signed.flags} <= {f.code for f in bare.signed.flags} | {"ACCESS-ALLEY"}
 
 
 # --- Rockwood's Stark frontage, read off the street network --------------------

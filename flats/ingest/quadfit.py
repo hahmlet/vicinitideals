@@ -325,11 +325,17 @@ S5O_COLUMNS: tuple[str, ...] = (
     *sorted({c for cols in NET_MEASURED.values() for c in cols}),
 )
 
+#: The measured negation of ``alley_at_rear`` -- the trigger Springwater's
+#: THR-SW rear yard is qualified by (Rear No Alley N/A; Steph 2026-10-28).
+NO_REAR_ALLEY = "no_alley_at_rear"
+
 #: The site facts this bridge can observe, in the order they are reported.
 #: Anything not here is left to the registry -- assumed and named, or
 #: unknown -- exactly as if no data layer had been consulted.
 OBSERVABLE: tuple[str, ...] = (
     *ALLEY_FACTS,
+    # Wherever alley_at_rear is answered, its negation (Springwater THR-SW).
+    NO_REAR_ALLEY,
     *CUL_DE_SAC_FACTS,
     # Only ever False, and only where no street ends near the lot.
     STREET_END_FACT,
@@ -409,6 +415,11 @@ def observed_facts(
       lot has edges: a lot s4 could not trace (tier ``D``) has no alley record
       and gets the registry's assumption, named, rather than a False that
       reads as a measurement.
+    * ``no_alley_at_rear`` -- ``alley_at_rear`` negated, on every lot that
+      answers it: the fact Springwater's THR-SW rear yard is qualified by,
+      so a townhouse lot with no alley along its whole rear is held open
+      by name (YELLOW, never GREEN; rulings.yaml
+      2026-10-28-gresham-springwater-no-alley-yellow).
     * ``fronts_cul_de_sac`` -- s4's bulb test; False is the conservative
       row and so is answered on every lot.
     * ``at_street_end`` -- False only where no street ends within
@@ -525,6 +536,7 @@ def observed_facts(
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     if edges:
         out.update(registry_alley(edges, bearings, _cover(row, edges)))
+        out[NO_REAR_ALLEY] = not out["alley_at_rear"]
         through = through_lot(edges, bearings)
         out["through_lot"] = through
         if _counts_streets(row, layers) and through:
