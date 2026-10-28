@@ -1,0 +1,69 @@
+12.80.096  Partition.
+A. When Applicable.
+An application for Partition (PAR) shall be required for the creation of 2 or 3 new parcels from at least 1 lot of record (parent parcel) in 1 calendar year.
+B. Compliance with ORS Chapter 92.
+PAR applications shall conform to all state regulations set forth in ORS Chapter 92, Subdivisions and Partitions.
+C. Lot Size Limitations for Partitions.
+In order to effectively implement density standards and subdivision requirements, and except as provided in subsection D. below, partitions for single detached or duplex residential development shall not be processed on single lots or aggregated contiguous lots under the same ownership with sufficient net acreage to allow creation of more than 3 lots meeting the density range requirements of this Code for single detached dwellings.
+D. Homestead Exception.
+On the larger lots cited in subsection C. above, a 2-lot partition application may be processed only to divide 1 smaller parcel for a single detached dwelling or middle housing from a larger parent parcel, provided the parcel for the single detached dwelling or middle housing does not have sufficient lot area to allow further division under the standards of the applicable base zone, except for creation of townhouse lots or middle housing land divisions.
+This exception may also include creation of tracts for natural resource preservation.
+E. Procedure. Partitions are reviewed through a 2-step procedure, a preliminary plat and a final plat.
+1. The preliminary partition plat is subject to the Type II procedure, as described in Section 12.70.040.
+2. The final partition plat is subject to the Type I procedure, as described in Section 12.70.030.
+F. Submittal Requirements.
+Type II application submittal requirements are set forth in Section 12.70.040 and more specific submittal requirements are provided on application forms and checklists as authorized in Section 12.70.110.
+Type I application submittal requirements are set forth in Section 12.70.030 and more specific submittal requirements are provided on application forms and checklists as authorized in Section 12.70.110.
+At a minimum, an application for a preliminary partition shall include the following:
+1. An application form, signed by the applicant or applicant's representative and the property owner or owner's representative;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on the date of submittal;
+3. A preliminary partition plat with all information required on the application form and/or checklist;
+4. A connectivity analysis demonstrating compliance with Section 12.50.520; and
+5. A narrative describing the project and addressing compliance with all approval criteria and applicable standards.
+G. Approval Criteria for a Preliminary Partition Plat.
+To approve a preliminary partition application, the Review Authority shall make findings of fact, based on evidence provided, that the following criteria are satisfied:
+1. All proposed parcels comply with the development standards of the base zone;
+2. Adequate public facilities are available or can be provided to serve the proposed parcels;
+3. The application provides for the dedication or conveyance of public rights-of-way or utility easements necessary and adequate to meet the standards of the applicable master plan; and
+4. All proposed improvements including access locations meet City and applicable agency standards.
+H. Concurrent Processing of Minor Adjustments.
+A request for a Minor Adjustment to any standards shall be made in accordance with Section 12.80.154 and shall be reviewed as part of the preliminary partition application.
+The Minor Adjustment process cannot be used to vary or take an exception from the standards listed in Subsection 12.80.150.C.
+I. Conditions of Approval on a Preliminary Partition Plat.
+Pursuant to Section 12.70.120, the Director may impose conditions on the approval of a preliminary partition plat to ensure compliance with the approval criteria.
+J. Appeal of a Decision.
+Refer to Section 12.70.180.
+K. Expiration of a Decision.
+Refer to Section 12.70.140.
+L. Extension of a Decision.
+Refer to Section 12.70.150.
+M. Final Partition Plat Submittal.
+An application for final partition plat shall be reviewed under the Type I procedure, as described in Section 12.70.030.
+At a minimum, an application for a final partition shall include the following:
+1. The application form, signed by the owner of the property to be partitioned;
+2. Payment in full of the appropriate application fee, based on the fee schedule in effect on the date of submittal;
+3. A final plat prepared by a land surveyor or engineer licensed to practice in Oregon, incorporating any applicable conditions of approval imposed by the Director as part of the preliminary plat approval;
+4. A narrative addressing compliance with the preliminary plat approval and all conditions of that approval; and
+5. Signed and notarized copies of all supplemental documents required by the preliminary plat approval, such as Covenants, Conditions and Restrictions, Waivers of Remonstrance, or easements.
+Such document(s) shall be fully executed.
+N. Final Partition Plat Approval Criterion.
+If the final partition plat is consistent with the approved preliminary plat, and if the conditions of approval have been satisfied, the Director shall sign the final plat.
+O. Implementation of Final Plat Approval.
+1. The approved final partition plat shall be recorded prior to expiration of the original decision.
+Refer to Section 12.70.140.
+If the final plat is not recorded within this time, the final plat shall be null and void.
+If the Director has signed the final plat, but it has not yet recorded, the Director has the authority to revoke the City's approval of the final plat.
+2. The applicant shall be responsible for all recording fees and shall provide the City with a copy of the recorded plat within 15 days of the recording.
+The Director has the authority, as applicable, to stop submittal of building permits, issuance of permits, or issuance of Certificate of Occupancy until provided with the recorded copies.
+3. The applicant shall provide the City with copies of any recorded supplemental documents required by the preliminary plat approval, such as Covenants, Conditions and Restrictions, Waivers of Remonstrance, or easements within 5 days of the recording.
+The Director has the authority, as applicable, to stop submittal of building permits, issuance of permits, or issuance of Certificate of Occupancy until provided with copies of the recorded supplemental documents.
+P. Building Permit Issuance.
+1. With the exception of a model home as a project sales office pursuant to Section 12.40.200, no residential building permit shall be issued on a parcel created by a partition plat until the approved final partition plat has been recorded at Washington County.
+2. Prior to either issuance of an occupancy permit or final inspection, all improvements required by the conditions of approval shall be constructed or the construction shall be guaranteed through a performance bond or other instrument acceptable to the City Engineer.
+Q. Appeal of a Final Decision.
+Refer to Section 12.70.180.
+R. Expiration of a Decision.
+Refer to Section 12.70.140.
+S. Extension of a Decision.
+Refer to Section 12.70.150.
+(Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

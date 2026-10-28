@@ -1,0 +1,233 @@
+60.05.30. Lighting Design Standards.
+
+All standards apply in all zoning districts unless otherwise noted in Section 60.05.11 or within the standards below.
+[ORD 4859; January 2025]
+1.Adequate on-site lighting and minimal glare on adjoining properties and Natural Areas.
+[ORD 4584; June 2012] [ORD 4859; January 2025]
+A. Lighting shall be provided at lighting levels for development and redevelopment in all zoning districts consistent with the City's Technical Lighting Standards.
+B. Lighting shall be provided in vehicular circulation areas and pedestrian circulation areas.
+C. Lighting shall be provided in pedestrian plazas, if any developed.
+D. Lighting shall be provided at building entrances.
+E. Canopy lighting shall be recessed so that the bulb or lens is not visible from a public right-of-way.
+F. Notwithstanding A. through E. above, lighting within and adjacent to Natural Areas shall be limited to minimize glare and Light Trespass into Natural Areas in accordance with the Special Design Standards of
+Section 60.05-1.I. [ORD 4859; January 2025]
+2.Pedestrian-scale on-site lighting.
+A. Pole-mounted Luminaires shall comply with the City's Technical Lighting Standards, and shall not exceed a maximum of:
+1. 15 feet in height for on-site pedestrian paths of travel.
+[ORD 4859; January 2025]
+2. 20 feet in height for on-site vehicular circulation areas for residential uses in applicable Residential zoning districts.
+[ORD 4859; January 2025]
+3. 30 feet in height for on-site vehicular circulation areas in non-residential zoning districts.
+[ORD 4859;
+January 2025]
+4. 15 feet for the top deck of non-covered parking structures.
+[ORD 4859; January 2025]
+5. The height of the poles for on-site pedestrian ways and on-site vehicular circulation areas shall be measured from the site's finished grade.
+6. The height of the poles on the top deck of non-covered parking structures shall be measured from the finished floor elevation of the top deck.
+7. The poles and bases for pole-mounted luminaires shall be finished or painted a non-reflective color.
+B. Non-pole-mounted luminaires shall comply with the City's Technical Lighting Standards.
+C. Notwithstanding A. and B. above, all pole-mounted and wall-mounted luminaires within and adjacent to Natural Areas shall comply with the maximum permitted luminary height standards of Section 60.05- 1.I.
+[ORD 4859; January 2025]
+D. Lighted bollards when used to delineate on-site pedestrian and bicycle pathways shall have a maximum height of 48 inches.
+[ORD 4332, 01/01/2005; ORD 4584, 06/01/2012; ORD 4822, 06/30/2022; ORD 4859, 01/02/2025] Effective on: 1/2/2025
+Table 60.05-1. TECHNICAL LIGHTING STANDARDS
+
+A.Types of Lighting.
+The Technical Lighting Standards Section shall apply to bollard luminaire, pole-mounted luminaire, and non-pole-mounted luminaire.
+B.Areas to Be Applied.
+The driveways, drive aisles, private alleys, parking lots, vehicle maneuvering areas, non-exempt pathways and sidewalks of all new developments, and building entrances shall be lighted in conformance to the technical lighting standards.
+These standards are not intended to apply to public street lighting.
+[ORD 4857;
+October 2024] [ORD 4859; January 2025]
+C.Conformity of Lighting Plans to this Section.
+All lighting plans submitted to the City shall comply with the standards of this table, unless otherwise approved through Design Review.
+[ORD 4857; October 2024]
+D.Standards. The following standards are required of all exterior lighting:
+1. When a bollard luminaire, or pole-mounted luminaire, or non-pole-mounted luminaire has total cutoff of an angle greater than 90 degrees, the minimum required interior illumination, the maximum permitted illumination at the property line, and the maximum permitted height of Luminaires shall be as shown on
+Table 60.05-1. [ORD 4859; January 2025]
+2. When a bollard luminaire, or pole-mounted luminaire, or non-pole-mounted luminaire has total cutoff of light at an angle 90 degrees or less and is located so that the bare light bulb, lamp, or light source is completely shielded from the direct view of an observer 5 feet above the ground at the point where the cutoff angle intersects the ground, then the minimum permitted interior illumination, the maximum permitted illumination 5 feet beyond the property line, and the maximum permitted height of Luminaires is also shown on Table 60.05-1.
+[ORD 4857; October 2024] [ORD 4859; January 2025]
+3. These standards (Section 60.05-1.D.1-2) shall not apply along shared property lines that are under common ownership at the time of submittal, unless the property line abuts a protected Natural Area, unless otherwise approved through a land use application.
+[ORD 4857; October 2024] [ORD 4859; January 2025]
+4. These standards (Section 60.05-1.D.1-2) shall not apply to property lines abutting public right-of-way.
+[ORD 4857; October 2024]
+E.General Provisions. Notwithstanding any other provision of this Section to the contrary: 1.Design Standards for Residential, Commercial, Industrial and Multiple-Use Districts:
+a. No flickering or flashing lights shall be permitted.
+b. No bare bulb lights shall be permitted for townhouse development and multi-dwelling development.
+[ORD 4822; June 2022]
+c. No strobe lights shall be permitted.
+d. Light sources or Luminaires shall not be located within areas identified for screening or buffering except on pedestrian pathways or driveways.
+[ORD 4857; October 2024] [ORD 4859; January 2025] 2.Special Design Standard for Residential Districts.
+No exterior neon lights shall be permitted. 3.Special Design Standard for Commercial and Multiple-Use Districts.
+Exterior neon lights shall only be permitted when incorporated into the architectural design of a building.
+F.Exemption for Specified Public Outdoor Recreation Uses:
+1. Because of their unique requirements for nighttime visibility, public ball diamonds, public playing fields, and public tennis courts only, inclusive of facilities located on school district properties, are exempted from the exterior lighting standards of Sections D.1 through D.2 above.
+These outdoor recreational uses must meet all other requirements for this Section and of the Code.
+2. The outdoor recreational uses specified above shall not exceed a maximum permitted post height of 80 feet.
+[ORD 4859; January 2025]
+3. The outdoor recreational uses specified above may exceed a total cutoff angle of 90 degrees, provided that the luminaire is shielded to prevent light and glare spillover to adjacent properties.
+The maximum permitted illumination at the property line or, if required, the interior buffering line, shall not exceed 2 foot-candles.
+[ORD 4859; January 2025]
+G.Exemption for Public Parks in Cooper Mountain.
+In the Cooper Mountain Community Plan area, Public Parks that have operating hours of sunrise to sunset and that do not permit park use during nighttime hours are exempt from the Technical Lighting Standards of Sections A through D, above.
+Public parks that do not qualify for this exemption shall illuminate to a minimum of 0.5 foot-candles the pathways that connect any lighted park facilities with off-street parking areas and the surrounding street network to allow for safe travel before and after programmed events that occur after dusk.
+Pedestrian facilities that either abut or are located within vehicular maneuvering areas do not qualify for this exemption, unless the abutting pedestrian facility is separated from the vehicular
+maneuvering area using physical improvements such as bollards, curbs, or fences.
+This exemption does not apply to segments of the Cooper Mountain trails identified in Figure 6.2b of Comprehensive Plan Volume 1, Chapter 6 that pass through Public Parks.
+Lighting requirements for all identified trails is regulated by Section 60.05-1.H below.
+H.Special Design Standards for Cooper Mountain Trails.
+1. In the Cooper Mountain Community Plan area, lighting of trails is required as follows:
+a. Lighting is required for trails as identified in Figure 6.2b of Comprehensive Plan Volume 1, Chapter 6.
+On required trails, lighting is exempt from the Technical Lighting Standards of Sections A through D, above, and is instead subject to Section 60.05-1.H.2.
+If lighting is provided for trails identified in Figure 6.2b that do not require lighting, lighting shall be provided consistent with Section 60.05-1.H.2.
+Lighting of trails within the right of way is subject to the requirements of the Engineering Design Manual.
+b. Except for Nature Trails, trails that are not identified in Figure 6.2b are considered pedestrian pathways and shall be illuminated consistent with the Technical Lighting Standards of Section 60.05-1, unless otherwise exempt by a provision contained herein.
+c. Nature Trails that are unavailable for use between sunset and sunrise are exempt from the Technical Lighting Standards of Section A through D, above, and may be unilluminated.
+When lighting is provided for Nature Trails, it shall be consistent with Section 60.05-1.H.2.
+2. Lighting of Cooper Mountain trails shall comply with the following illumination and fixture requirements:
+a. Maximum permitted illumination of the trail surface: 0.7 foot-candles
+b. Minimum required illumination of the trail surface: 0.2 foot-candles
+c. Minimum required average illumination of the trail surface: 0.5 foot-candles
+d. Maximum permitted illumination at 10 horizontal feet from the edge of the travel surface, except where abutting the public right of way or a private street: 0.0 foot-candles
+e. Luminaires may be bollard, pole-mounted, or wall-mounted.
+i. The height of pole- and wall-mounted luminaires shall not exceed 12 feet, as measured from grade to top of light fixture.
+ii. The height of bollard luminaires shall not exceed four feet, as measured from grade to top of bollard.
+f. Luminaires shall use shields or shades to direct light downwards and onto the travel surface.
+g. Luminaires shall utilize warm-colored light up to 2,700 Kelvin.
+h. Luminaires shall utilize an automatic timer to illuminate all luminaires at sunset and to extinguish all luminaires at sunrise.
+I.Special Design Standards for development within and adjacent to Natural Areas.
+Except for trails in the Cooper Mountain Community Plan area, which are subject to Section 60.05-1.H, development within and adjacent to Natural Areas in all zoning districts shall comply with the following requirements:
+1. The following illumination and fixture standards apply to the site areas identified by Section 60.05-1.B that are located within a Natural Area:
+a. For the purpose of this standard for land within the Resource Overlay, only those areas of the Resource Overlay protected in a tract or easement consistent with Section 60.37 are considered a Natural Area.
+b. Lighting shall only be provided to illuminate applicable site areas or to comply with Americans with Disabilities Act (ADA), building code, or fire code requirements.
+Other lighting is prohibited.
+c. Except when alternative requirements of the ADA, building code, or fire code apply, lighting shall meet the following illumination and fixture standards:
+i. Minimum required illumination: 0.5 foot-candles
+ii. Maximum permitted illumination: 0.7 foot-candles
+iii. Maximum permitted illumination at 10 horizontal feet from the edge of any applicable area, except where abutting the public right of way or a private street: 0.0 foot-candles
+iv. Luminaires shall use shields or shades to direct light downwards.
+v. Luminaires shall utilize warm-colored light up to 2,700 Kelvin.
+vi. Maximum permitted height of luminaires for pedestrian pathways: 12 feet
+vii. Maximum permitted height of luminaires for vehicle circulation areas: 20 feet
+2. The following illumination and fixture standards apply to the site areas identified by Section 60.05-1.B that are adjacent to a Natural Area:
+a. For the purpose of this standard, the following site areas are considered adjacent to Natural Areas:
+i. Land within 5 feet of a Natural Area, except for the Resource Overlay and the Cooper Mountain Nature Park;
+ii. Land within 25 feet of the Resource Overlay tract or easement boundary; and
+iii. Land within 25 feet of the Cooper Mountain Nature Park.
+b. Except when alternative requirements of the ADA, building code, or fire code apply, lighting adjacent to a Natural Area shall meet the following illumination and fixture standards:
+i. Minimum required illumination: 0.5 foot-candles
+ii. Maximum permitted illumination at the Natural Area boundary: 0.5 foot-candles
+iii. Maximum permitted illumination of all other areas: 2.0 foot-candles
+iv. Maximum permitted illumination at 10 horizontal feet internal to the Natural Area, except where abutting the public right of way or a private street: 0.0 foot-candles
+v. Luminaires shall use shields or shades to direct light downwards and away from the Natural Area.
+vi. Maximum permitted height of luminaires for pedestrian pathways: 15 feet
+vii. Maximum permitted height of luminaires for vehicle circulation areas: 20 feet
+
+Table 60.05-1Technical Lighting Standards
+
+Zoning District
+Type
+Minimum
+Required
+Illumination
+(internal) in
+Foot-candles:
+>90
+Minimum
+Required
+Illumination
+(internal) in
+Foot-candles:
+<90
+Maximum
+Permitted
+Illumination
+(internal) in
+Foot-candles:
+>90
+Maximum
+Permitted
+Illumination
+(internal) in
+Foot-candles:
+<90
+Maximum
+Permitted
+Illumination at property line in
+Foot-candles
+Residential 1.0 0.7 None None 0.5
+Commercial and industrial 1.5 1.0 None None 0.5
+Multiple Use:
+A. Residential only N/A 0.7 None None 0.5
+Multiple Use:
+B. Multiple use with residential
+N/A 0.7 None None 0.5
+Zoning District
+Type
+Minimum
+Required
+Illumination
+(internal) in
+Foot-candles:
+>90
+Minimum
+Required
+Illumination
+(internal) in
+Foot-candles:
+<90
+Maximum
+Permitted
+Illumination
+(internal) in
+Foot-candles:
+>90
+Maximum
+Permitted
+Illumination
+(internal) in
+Foot-candles:
+<90
+Maximum
+Permitted
+Illumination at property line in
+Foot-candles
+Multiple Use:
+C. Multiple Use
+Non-residential development
+1.5 1.0 None None 0.5
+Multiple Use:
+D. Non-multiple use/non-residential development
+1.5 1.0 None None 0.5
+Private alleys in all zoning districts 0.51 0.51 N/A N/A N/A
+Zoning District Type Maximum Permitted Height of Luminaires
+Residential
+Pole-mounted Luminaires (inclusive of above grade base and light fixture):
+●15 feet for on-site pedestrian ways.
+●20 feet for on-site vehicular circulation areas.
+Wall-mounted Luminaires for the lighting of pedestrian or vehicular circulation areas: ●20 feet above building finished grade.
+Commercial and industrial
+Pole-mounted Luminaires (inclusive of above grade base and light fixture):
+●15 feet for on-site pedestrian ways.
+●30 feet for on-site vehicular circulation areas.
+●15 feet for the top deck of non-covered parking structures.
+Wall-mounted Luminaires for the lighting of pedestrian or vehicular circulation areas: ●15 feet above building finished grade for on-site pedestrian circulation areas. ●30 feet above building finished grade for on-site vehicular circulation areas.
+Multiple Use
+Pole-mounted Luminaires (inclusive of above grade base and light fixture):
+●15 feet for on-site pedestrian ways for all development types.
+●20 feet for on-site vehicular circulation areas for residential only and multiple use with residential.
+●30 feet for on-site vehicular circulation areas for multiple use non-residential development and non-multiple use/non-residential development.
+●15 feet for the top deck of non-covered parking structures for all development types.
+Wall-mounted Luminaires for the lighting of pedestrian or vehicular circulation areas: ●20 feet above building finished grade for residential only and multiple use with residential development.
+●15 feet above building finished grade for multiple use non-residential development and non-multiple use/non-residential development.
+Zoning District Type Maximum Permitted Height of Luminaires
+Private alleys in all zoning districts
+Pole-mounted Luminaires (inclusive of above grade base and light fixture):
+●15 feet for on-site pedestrian ways.
+●20 feet for on-site vehicular circulation areas.
+Wall-mounted Luminaires for the lighting of pedestrian or vehicular circulation areas: 20 feet above building finished grade.
+[ORD 4859; January 2025]
+Footnotes:
+1. The minimum required illumination for alleys shall achieve an average of the required foot-candles over the area of the alley.
+[ORD 4332, 01/01/2005; ORD 4531, 04/01/2010; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025]
+Effective on: 9/14/2026

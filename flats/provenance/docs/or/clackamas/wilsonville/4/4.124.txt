@@ -1,0 +1,144 @@
+Section 4.124. Standards Applying to all Planned Development Residential Zones.
+(.01) Permitted Uses:
+A. Open Space.
+B. Single-Family Dwelling Units.
+C. Duplexes, triplexes, quadplexes, townhouses.
+D. Cluster housing, including cottage clusters.
+E. Multiple-Family Dwelling Units.
+F . Public parks, playgrounds, recreational and community buildings and grounds, tennis courts, and similar recreational uses, all of a non-commercial nature, provided that any principal building or public swimming pool shall be located not less than 45 feet from any other lot.
+G. Manufactured homes.
+(.02) Permitted accessory uses to single family and middle housing:
+A. Accessory uses, buildings and structures customarily incidental to any of the principal permitted uses listed above, and located on the same lot.
+B. Living quarters without kitchen facilities for persons employed on the premises or for guests.
+Such facilities shall not be rented or otherwise used as a separate dwelling unless approved as an accessory dwelling unit or duplex.
+C. Accessory dwelling units, subject to the standards of Section 4.113 (.10).
+D. Home occupations.
+E. A private garage or parking area.
+G. Temporary real estate signs, small announcement or professional signs, and subdivision signs, as provided in the provisions of Sections 4.156.05, 4.156.07, 4.156.09, and 4.156.10.
+H. Temporary buildings for uses incidental to construction work, which buildings shall be removed upon completion or abandonment of the construction work.
+I. Accessory buildings and uses shall conform to front and side yard setback requirements.
+If the accessory buildings and uses do not exceed 120 square feet or ten feet in height, and they are detached and located behind the rear-most line of the main buildings, the side and rear yard setbacks may be reduced to three feet.
+J . Livestock and farm animals, subject to the provisions of Section 4.162.
+(.03) Permitted accessory uses for multiple-family dwelling units:
+A. Accessory uses, buildings, and structures customarily incidental to any of the aforesaid principal permitted uses, located on the same lot therewith.
+B. Home occupations.
+C. A private garage or parking area.
+D. Temporary buildings for uses incidental to construction work, which buildings shall be removed upon completion or abandonment of the construction work.
+E. Accessory buildings and uses shall conform to front and side yard setback requirements.
+If the accessory buildings and uses do not exceed 120 square feet or ten feet in height, and they are detached and located behind the rear-most line of the main buildings, the side and rear yard setbacks may be reduced to three feet.
+F . Livestock and farm animals, subject to the provisions of Section 4.162.
+(.04) Uses permitted subject to Conditional Use Permit requirements:
+A. Public and semi-public buildings and/or structures essential to the physical and economic welfare of an area, such as fire stations, sub-stations and pump stations.
+B. Public or private clubs, lodges or meeting halls.
+Public or private parks, playground, golf courses, driving ranges, tennis clubs, community centers and similar recreational uses.
+C. Churches, public, private and parochial schools, public libraries and public museums.
+D. Neighborhood Commercial Centers limited to the provisions of goods and services primarily for the convenience of and supported by local residents, and not requiring a zone change to a commercial designation:
+1. The site of a Neighborhood Commercial Center was proposed at the time of the original application.
+2. Such centers are of a scale compatible with the surrounding residential structures.
+3. Such centers shall be compatible with the surrounding residential uses.
+4. The site of a Neighborhood Commercial Center shall be at least one-quarter mile from any other sites zoned for commercial uses.
+5. The site of a Neighborhood Commercial Center shall not exceed five percent of the total area or one acre, whichever is less.
+6. The site of a Neighborhood Commercial Center shall have direct access to a street of a collector classification and shall have direct pedestrian access to the residential areas.
+7. The site of a Neighborhood Commercial Center shall not include more than one quadrant of an intersection and shall not result in traffic of a nature which causes a substantial adverse impact on the residential character of the planned development.
+E. Commercial Recreation which is compatible with the surrounding residential uses and promotes the creation of an attractive, healthful, efficient and stable environment for living, shopping or working.
+All such uses except golf courses and tennis courts shall conform to the requirements of subsection "D" (Neighborhood Commercial Centers), above.
+F . Home businesses.
+(.05) Appropriate PDR Zoning Designation and Maximum and Minimum Density based on Comprehensive Plan Density Range District:
+Table 1: PDR Zoning Designation and Maximum and Minimum Density based on
+Comprehensive Plan Density Range District
+Zoning
+Designation
+Comprehensive
+Plan Map
+Density Range
+District a Max. Density per Acre b, c
+Min. Density per Acre d
+PDR-1 0-1 1 .8
+PDR-2 2-3 3 2.4
+PDR-3 4-5 5 4
+PDR-4 6-7 7.5 6
+PDR-5 10-12 12 9.6
+PDR-6 16-20 20 16
+PDR-7 Over 20 As approved by Zoning Order/Stage
+1 Master Plan, at least 25
+80% of Max
+Density
+a. Accessory Dwelling Units are not included for calculating density .
+b. Middle Housing, besides, townhouses, is not included in calculating maximum density beyond one unit per lot or parcel.
+c. For townhouses, the maximum density is the less of: (1) four times the maximum net density listed in Table 1; or (2) net density of 25 units per acre.
+If applying a maximum density for townhouses of four times the density listed in Table 1, the minimum density remains 80 percent of the maximum density listed in Table 1.
+d. For Cottage Clusters, the minimum net density shall be no less than four units per acre.
+(.06) Unit Count Limitations.
+Unit count limitations are calculated as follows:
+A. Maximum Unit Count.
+Maximum unit count at build out of Stage I Master Plan area: is calculated by taking the Gross Development Area multiplied by Maximum Density per Acre stated in Table 1 of this Code section, plus any density transferred from SROZ areas pursuant to Subsection 4.139.11(.02).
+For example, any number greater than four and less than five shall be rounded down to four.
+B. Minimum Unit Count.
+Minimum unit count at build out of Stage I Master Plan area: 80 percent of maximum unit count described in A. above.
+C. If the Stage I Master Plan area is subject to more than one Comprehensive Plan Map Density Range District and Zoning Designation, calculations for areas of differing densities shall be done separately and then summed together, and the final summed number rounded down to the nearest whole number.
+(.07) Lot Standards:
+Table 2: Lot Standards for All PDR Zoned Lots
+Zoning
+Designation
+Minimum
+Lot Size
+(square feet)
+AB
+Setbacks
+Maximum Lot Coverage
+(percent of lot area) of
+Largest Building/All
+BuildingsC
+Minimum Lot Width at building Line/Minimum
+Street Frontage of LotDE
+(feet)
+Minimum
+Lot Depth
+(feet)
+Maximum
+Building
+Height (feet)
+PDR-1 20,000
+Per Section
+4.113 (.02)
+20/25 80/80 100
+35
+PDR-2 7,000 25/30 (more than 12,000 and less than 20,000 sf lot)
+40/50 (more than 8,000 up to 12,000 sf lot)
+45/55 (7,000 to 8,000 sf lot)
+60/30 70
+PDR-3 4,500 50/60 40/40
+F 60
+PDR-4 3,000 75/75 35/35 F 60
+PDR-5 2,000 75/75 30/30 60
+PDR-6 NA 75/75 30/30 60
+PDR-7 NA 75/75 30/30 60
+A. For townhouses the minimum lot size in PDR-1 through PDR-5 zones is 1,500 square feet.
+B. For the PDR 3 through PDR 7 zones, the minimum lot size for triplexes and three-unit cluster housing is 5,000 square feet; the minimum lot size for quadplexes, four-unit cluster housing, and cottage clusters is 7,000 square feet.
+C. A building must be completely detached from the largest building to be considered a separate building for the purpose of lot coverage calculations.
+Cottage clusters are exempt from maximum lot coverage standards.
+D. Lot frontage may be on a public street or approved, platted private drive.
+E. For townhouses the minimum lot width at building line and minimum street frontage is 20 feet in all PDR zones.
+F . Lot frontage may be reduced to 24 feet when the lot fronts a cul-de-sac.
+(.08) Adjustments to Ensure Minimum Density is Met.
+In development not involving Multi-Family Dwelling Units, if demonstrated by the applicant that it is not physically possible to accommodate the minimum number of units at the required minimum lot size and the minimum open space, the following adjustments, A.—B., shall be made to the minimum extent necessary to enable minimum density to be met.
+To prioritize the provision of required open space, adjustments to minimum lot size, width, and depth shall be used to the extent allowed, as described in A. below, prior to any adjustment to open space requirements as described in B. below.
+A. Adjustments to Minimum Lot Size, Width, and Depth: Reduce minimum lot size of up to 20 percent of the residential lots, rounded consistent with Subsection (.06) above or one lot for a four-lot subdivision, by up to 20 percent.
+For example, the potential adjustment, if determined necessary, for a 100- lot subdivision in the PDR-4 zone would be to reduce 20 lots to as low as 2,400 square feet (a 20 percent reduction of the 3,000 square foot minimum lot size).
+Also reduce the minimum lot width and minimum lot depth by up to 20 percent as necessary to allow the reduction of lot size.
+B. Adjustment to Open Space Area.
+Reduce the amount of open space area required pursuant to Subsection 4.113(.01).
+Reduce non-usable open space to the extent possible prior to usable
+open space required by Subsection 4.113(.01)C.3.
+After any adjustment to open space, all subdivisions with ten or more units must still include a minimum of one usable, programmed open space of at least 2,000 square feet meeting the requirements of Subsection 4.113(.01)C.3.
+Subdivisions less than ten units shall require one usable open space of at least 1,000 square feet meeting the same requirements.
+(.09) Block and access standards:
+1. Maximum block perimeter in new land divisions: 1,800 feet.
+2. Maximum spacing between streets or private drives for local access: 530 feet, unless waived by the Development Review Board upon finding that barriers such as railroads, freeways, existing buildings, topographic variations, or designated Significant Resource Overlay Zone areas will prevent street extensions meeting this standard.
+3. Maximum block length without pedestrian and bicycle crossing: 330 feet, unless waived by the Development Review Board upon finding that barriers such as railroads, freeways, existing buildings, topographic variations, or designated Significant Resource Overlay Zone areas will prevent pedestrian and bicycle facility extensions meeting this standard.
+(.10) Signs. Per the requirements of Sections 4.156.01 through 4.156.11.
+(.11) Parking. Per the requirements of Section 4.155.
+(.12) Corner Vision Clearance.
+Per the requirements of Section 4.177.
+(Ord. No. 538, 2-21-2002; Ord. No. 682, 9-9-2010; Ord. No. 704, 6-18-2012; Ord. No. 825, 10-15-2018;
+Ord. No. 841, eff. 6-4-2020)

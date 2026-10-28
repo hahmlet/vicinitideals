@@ -1,0 +1,23 @@
+12.21.620  Housing Types.
+Table 12.21.620-1 lists housing types permitted in the SCR-LD zone.
+Housing types are defined in
+Section 12.01.500.
+Table 12.21.620-1:
+Housing Types Permitted in the SCR-LD Zone
+Housing Type Status Notes
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure N
+Manufactured dwelling L Permitted subject to additional standards in
+Section 12.40.190.
+Table 12.21.620-1:
+Housing Types Permitted in the SCR-LD Zone
+Housing Type Status Notes
+Manufactured dwelling project N
+Live-work dwellings N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)

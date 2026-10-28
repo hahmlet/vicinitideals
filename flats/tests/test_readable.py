@@ -158,6 +158,29 @@ def test_a_running_head_goes_only_from_a_pages_first_line() -> None:
     _same(lines, got, breaks=[2], head=head)
 
 
+def test_a_two_line_running_head_goes_and_a_third_line_stays() -> None:
+    """Beaverton's encodeplus print heads every page with two lines: the
+    code's name, then the print date and chapter. Both go; the header is
+    never more than two lines, so the same words lower down stay."""
+    head = re.compile(r"^(?:Beaverton Development Code|Date Printed: .*)$")
+    lines = ["One sentence here.", "Beaverton Development Code", "Date Printed: May 1, 2026",
+             "Beaverton Development Code", "Two sentence here."]
+    got = clean(lines, breaks=[2], head=head)
+    assert got.removed == (2, 3)
+    assert "Beaverton Development Code" in got.lines
+    _same(lines, got, breaks=[2], head=head)
+
+
+def test_a_notes_heading_is_never_joined_to_the_line_above() -> None:
+    """Beaverton prints "Footnotes:" under a table's ordinance history; run
+    onto that line, the footnote reader could not find the notes at all."""
+    lines = [LONG, "Footnotes:", "1. Applies to townhouses."]
+    got = clean(lines)
+    assert got.lines[0] == LONG
+    assert got.lines[1] == "Footnotes:"
+    _same(lines, got)
+
+
 def test_a_web_prints_note_marker_alone_opens_a_block() -> None:
     """Fairview's web print sets a footnote marker "[2]" on a line of its own;
     joined onto the cell above, it read as part of that cell's number."""

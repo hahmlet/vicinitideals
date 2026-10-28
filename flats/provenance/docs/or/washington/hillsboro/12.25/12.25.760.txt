@@ -1,0 +1,53 @@
+12.25.760  Development Standards.
+Base zone development standards in the ESID zone are listed in Table 12.25.760-1.
+Certain standards are illustrated in Figure 12.25.760-A.
+Table 12.25.760-1:
+Development Standards in the ESID Zone
+Standard Requirement Clarifications
+Minimum Lot Size Varies See Subsection 12.25.780.B.6.
+Maximum Lot Size Varies
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions
+• Width (at front building plane) None
+• Depth None
+• Frontage 25 feet
+Table 12.25.760-1:
+Development Standards in the ESID Zone
+Standard Requirement Clarifications
+Minimum Setbacks* See also Subsection 12.25.780.B.1. regarding increased setbacks for off-street parking and loading.  • Buildings up to 45 feet high
+
+%
+Front 35 feet 10-foot setback applicable abutting non-residential zones;
+25-foot setback applicable abutting residential zones.
+
+%
+Side 10 or 25 feet
+
+%
+Rear 10 or 25 feet
+• Buildings > 45 feet in height
+
+Minimum setbacks increase 1 additional foot for each foot of structural height over 45 feet.
+
+%
+Front 35+ feet
+% Side 10+ or 25+ feet
+
+%
+Rear 10+ or 25+ feet
+Maximum Setbacks None
+Minimum Building Height* None
+Maximum Building Height
+• High Profile Industrial
+Buildings 150 feet or less
+45 feet and 150 feet heights applicable adjacent to non-residential zones.
+
+Within 100 feet of a residential zone: maximum height 45 feet minus 1 feet for every 2 feet less than the 100-foot setback.  • All other buildings 45 feet or less
+Maximum Building Coverage 50%
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.25.760-A
+(Ord. 6401 § 1, 2022)

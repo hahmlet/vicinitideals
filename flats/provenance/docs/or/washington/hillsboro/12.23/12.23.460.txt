@@ -1,0 +1,72 @@
+12.23.460  Development Standards.
+Development standards in the SCC-SC zone are listed in Table 12.23.460-1.
+Certain standards are illustrated in Figure 12.23.460-A.
+Table 12.23.460-1:
+Development Standards in the SCC-SC Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density
+• Free-standing, within 1,300
+
+of an LRT station 30 du/na
+• Free-standing, beyond
+1,300  from an LRT station 24 du/na
+• In Mixed-Use Buildings None
+Maximum Density
+• Free-standing, within 1,300
+
+of an LRT station 36 du/na
+• Free-standing, beyond
+1,300
+
+from an LRT station 30 du/na
+• In Mixed-Use Buildings None
+Minimum FAR
+• within 1,300
+
+of an LRT station 0.5
+• beyond 1,300  from an LRT station 0.4
+Minimum Lot Dimensions*
+• Width (at front building plane) 25 feet
+• Depth 25 feet
+Table 12.23.460-1:
+Development Standards in the SCC-SC Zone
+Standard Requirement Clarifications
+Minimum Setbacks*
+
+Setbacks subordinate to OSSC and public utility easements.
+• Front Yard None
+• Side Yard None
+• Rear Yard None
+Maximum Setbacks*
+• Front Yard
+Additional 10 feet front yard setback for pedestrian amenities may be requested and approved through Development Review.
+
+%
+Mixed-Use or Commercial 10 feet
+% Residential 15 feet
+• Side Yard
+
+%
+Mixed-Use or Commercial None
+
+%
+Residential 5 feet (none on alleys)
+• Rear Yard
+
+% Mixed-Use or Commercial None
+
+%
+Residential 5 feet (none on alleys)
+Minimum Building Height*
+• Within 800 ft. of an LRT
+Station 30 feet
+• Beyond 800 ft. of an LRT
+Station None
+Maximum Building Height* 75 feet
+Maximum Lot Coverage Not applicable
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Variable See Section 12.50.220.
+* Standards illustrated in Figure 12.23.460-A
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

@@ -1,0 +1,55 @@
+12.50.625  Power and Communications Utility Undergrounding.
+A. Purpose. To require the undergrounding of all above ground electric power lines and communication lines along the site's frontage, and to include service connections to on-site development, in order to improve public safety, the reliability of service during and after storms, and streetscape aesthetics.
+B. Applicability.
+1. The standards in this Section 12.60.625 apply to new and existing utility lines that operate below 35,000 volts.
+2. Exemptions. Applicants are not required to underground existing electric power lines and other co-located communication lines or pay fee-in-lieu (FIL) of undergrounding these utilities in the following situations:
+a. The site is already fully in compliance with the requirements of this Section 12.50.625;
+b. The project is the result of damages caused by natural disaster (e.g., earthquake, flood, etc.) which is outside the influence of the property owner and/or applicant;
+c. The application is for one of the following:
+i. Minor partition in a middle housing zone (per Table 12.01.200-1),
+ii. Single detached dwelling, accessory dwelling unit, or middle housing development,
+iii. Type I review,
+iv. Expansion of existing multi-dwelling residential, commercial or mixed use buildings which increase existing floor area by less than 10% or 5,000 square feet, whichever is less.
+Cumulative expansions that increase floor area over
+10% are not exempt,
+v. Expansion of existing industrial buildings which increase existing floor area by less than 15% or 5,000 square feet, whichever is less.
+Cumulative expansions that increase floor area over 15% are not exempt.
+3. Type A Projects. Type A projects are projects that are not exempt, but which meet one of the criteria below.
+Type A projects are subject to the standards of Subsection C.
+a. The site has less than 100 feet of street frontage with existing above ground electric power lines that is subject to the undergrounding requirement;
+b. Undergrounding the existing above ground electric power lines would not result in a decrease in the number of electric utility poles.
+The change in the number of utility poles shall be based on an estimate provided by the electric power franchise.
+4. Type B Projects. Except for capital improvement projects which are subject to the City of Hillsboro's Capital Improvement Plan and Type A projects which are subject to the standards of Subsection C, all other projects are considered Type B projects and are subject to the standards in Subsection D.
+C. Standards Applicable to Type A Projects.
+1. All above ground electric power lines and co-located communication lines along the site's frontage and related service connections to on-site development shall be installed underground unless the applicant opts to pay a FIL in accordance with Paragraph C.3 or D.2.
+2. Electric power lines and co-located communication lines to be installed underground are subject to the installation standards in Subsection E.
+3. Applicants for Type A projects may opt to make a partial payment of the required FIL using the percent of project valuation methodology in this section or pay the full FIL using the methodology in Subsection D.2.
+Project Type Amount of FIL
+Subdivisions 10% of the project valuation
+Projects other than subdivisions 5% of the project valuation
+a. Project valuation shall be determined utilizing valuation tables or through use of an estimate provided by the architect, engineer, or contractor for the project, whichever is higher.
+b. For subdivisions, the FIL shall be paid to the City prior to approval of a final plat.
+For other projects, the FIL shall be paid to the City prior to the issuance of the first building permit for the project.
+c. The fees shall be deposited in a fund to be used only for undergrounding of utilities in the City and purposes directly related thereto.
+d. If the project valuation estimate is less than the linear foot estimate in Subsection D.2, additional FIL payments up to the full amount required by Subsection D.2 shall be required at the time when the site further develops or redevelops.
+D. Standards Applicable to Type B Projects.
+1. Except where an Adjustment has been approved pursuant to Section 12.80.154 or
+Section 12.80.156, all above ground electric power lines and co-located communication lines along the site's frontage and related service connections to on-site development shall be placed underground.
+2. If an Adjustment is approved, the applicant shall pay a FIL of undergrounding the utilities.
+a. The FIL shall be based on the City's approved fee schedule.
+b. If a partial fee has already been paid on a site, the fee is reduced by the amount that has previously been paid.
+If 100% of the fee has been paid on a site, no further fees are due.
+c. For subdivisions, the FIL shall be paid to the City prior to approval of a final plat.
+For other projects, the FIL shall be paid to the City prior to the issuance of the first building permit for the project.
+d. The fees shall be deposited in a fund to be used only for undergrounding of utilities in the City and purposes directly related thereto.
+E. Installation Standards for the Undergrounding Electric Power Lines and Other Co-Located Communication Lines.
+1. Electric power lines and co-located communication lines shall be undergrounded in the locations listed in Table 12.50.625-1, subject to the approval of the City Engineer.
+2. As an alternative to the locations listed in Table 12.50.625-1, the Review Authority may require utilities to be placed underground within an adjacent alley right-of-way if such right-of-way is available, with vault locations as approved by the City Engineer and the utility provider.
+Table 12.50.625-1:
+Electric Power Lines and Other Co-Located
+Communication Lines Undergrounding Scenarios
+Applicable Situation Location for Undergrounding
+Applicable minimum zone setback is 10 feet or greater Located in a PUE with a minimum width of 8 feet
+Applicable minimum zone setback is less than 10 feet
+Located in the right-of-way under the sidewalk with approval of the City Engineer, or in a PUE
+(Ord. 6437 § 1, 2023; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

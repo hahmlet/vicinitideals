@@ -1,0 +1,52 @@
+Section 4.133.05. Administration.
+Section 4.133.05 delineates the responsibilities of the City, in coordination with ODOT , to monitor and evaluate vehicle trip generation impacts on the Wilsonville Road Interchange from development approved under this Section.
+(.01) Traffic Impact Analysis:
+A. Purpose. The purpose of this section of the Code is to implement Section 660-012-0045
+(2) (e) of the State Transportation Planning Rule that requires the City to adopt a process to apply conditions to development proposals in order to minimize adverse impacts to and protect transportation facilities.
+This section establishes the standards for when a proposal in the IAMP Overlay Zone must be reviewed for potential traffic impacts; when a Traffic Impact Analysis must be submitted with a development application in order to determine whether conditions are needed to minimize impacts to and protect transportation facilities; what must be in a Traffic Impact Study; and who is qualified to prepare the Study .
+B. Typical Average Daily Trips.
+The latest edition of the Trip Generation Manual, published by the Institute of Transportation Engineers (ITE) shall be used as standards by which to gauge average daily vehicle trips, unless a specific trip generation study is approved by the City Engineer.
+A trip generation study could be used to determine trip generation for a specific land use which is not well represented in the ITE Trip Generation Manual and for which a similar facility is available to count.
+C. When required, a Traffic Impact Analysis shall be required to be submitted to the City with a land use application, when the following conditions apply:
+1. The development application involves one or more of the following actions:
+a. A change in zoning or a plan amendment designation; or
+b. The development requires a Development Permit pursuant to Section
+4.004; or
+c. The development may cause one or more of the following effects to access or circulation, which can be determined by site observation, traffic impact analysis or study, field measurements, and information and studies provided by the local reviewing jurisdiction and/or ODOT:
+i. The location of the access driveway does not meet minimum intersection sight distance requirements, or is located where vehicles entering or leaving the property are restricted, or such vehicles queue or hesitate, creating a safety hazard; or
+ii. The location of the access driveway does not meet the access spacing standard of the roadway on which the driveway is located; or
+iii. The location of the access driveway is inconsistent with th e Wilsonville
+Road Interchange Area Management Plan Access Management Plan.
+iv. A change in internal traffic patterns that may cause safety problems, such as back up onto the highway or traffic crashes in the approach area.
+D. Traffic Impact Analysis Requirements:
+1. Preparation. A Traffic Impact Analysis shall be prepared by a professional engineer under retainer to the City .
+The traffic analysis will be paid for by the applicant.
+2. Transportation Planning Rule Compliance. The traffic impact analysis shall be sufficient in detail to determine compliance with Oregon Administrative Rule
+(OAR) 660-012-0060.
+3. Traffic Impact Analysis Scoping.The applicant will coordinate with the Wilsonville City Engineer prior to submitting an application that requires a Traffic Impact
+Analysis. The City has the discretion to determine the required elements of the
+TIA and the level of analysis expected.
+Coordination with ODOT is advisable and is at the City's discretion.
+E. Approval Criteria:
+1. Criteria. When a Traffic Impact Analysis is required, approval of the development proposal requires satisfaction of the following criteria:
+a. The Traffic Impact Analysis was prepared by a professional engineer selected by the City; and
+b. If the proposed development meets the criteria in Section C, above, or other traffic hazard or negative impact to a transportation facility, the Traffic
+Impact Analysis shall include mitigation measures that meet the City's performance standards (i.e. Level-of-Service and/or Volume/Capacity ratio) and are satisfactory to the City Engineer and ODOT; and
+c. The proposed site design and traffic and circulation design and facilities, for all transportation modes, including any mitigation measures, are designed to:
+i. Have the least negative impact on all applicable transportation facilities; and
+ii. Accommodate and encourage non-motor vehicular modes of transportation to the extent practicable; and
+iii. Make the most efficient use of land and public facilities as practicable;
+and
+iv. Provide the most direct, safe and convenient routes practicable between on-site destinations, and between on-site and off-site destinations; and
+v. Otherwise comply with applicable requirements of the Cit y of
+Wilsonville's Development Code.
+F . Conditions of Approval.
+The City may deny, approve, or approve a development proposal with appropriate conditions.
+1. Where the existing transportation system will be impacted by the proposed development, dedication of land for streets, transit facilities, sidewalks, bikeways, paths, or access ways may be required to ensure that the transportation system is adequate to handle the additional burden caused by the proposed use.
+2. Where the existing transportation system is shown to be burdened by the proposed use, improvements such as paving, curbing, installation or contribution to traffic signals, construction of sidewalks, bikeways, access ways, paths, or streets that serve the proposed use may be required.
+3. Where planned local street connectivity is required to improve local circulation for the betterment of interchange function, local street system improvements will be required.
+(.02) Land Use Review Coordination:
+A. The City shall not deem the land use application complete unless it includes a Traffic Impact Analysis prepared in accordance with the requirements of this Section.
+B. The City shall provide written notification to ODOT when the application within ten calendar days of receiving a complete Class II Permit application.
+C. ODOT shall have at least 20 calendar days, measured from the date completion notice was mailed, to provide written comments to the City .
+If ODOT does not provide written comments during this 20-day period, the City staff report will be issued without consideration of ODOT comments.

@@ -1,0 +1,101 @@
+12.21.750  Development Standards.
+Base zone development standards in the SCR-OTC zone are listed in Table 12.21.750-1.
+Certain standards are illustrated in Figure 12.21.750-A.
+Table 12.21.750-1:
+Development Standards in the SCR-OTC Zone
+Standard Requirement Clarifications
+Minimum Lot Size
+
+For townhouse lots, average minimum lot size is 1,500 sq. ft.
+• Residential 7,500 sq. ft.
+• Non-Residential and
+Mixed-Use None
+Maximum Lot Size
+
+Maximum residential lot size subject to original townsite lot dimensions (see Subsection
+12.62.300.A).
+• Residential See clarifications
+• Non-Residential and
+Mixed-Use None
+Minimum Density 6.0 du/na
+Table 12.21.750-1:
+Development Standards in the SCR-OTC Zone
+Standard Requirement Clarifications
+Maximum Density 12.0 du/na
+Maximum density does not apply to duplexes, triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR 0.4
+Applicable only to commercial development on lots abutting NE Alder St between NE 68th Ave and NE Century Blvd.
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width and frontage is 20 feet and minimum lot depth is 65 feet.
+
+Alley frontage not permitted without street frontage on the same lot; flag lots not permitted
+(see Subsection 12.62.400.I).
+
+Exception provided for child lots/parcels in middle housing land divisions under Section
+12.80.099.
+• Width (at front building plane) 50 feet
+• Depth 150 feet
+• Frontage 50 feet
+Minimum Setbacks*: Residential
+
+Minimum front yard setback subordinate to public utility easements.
+
+Garage locations subject to additional requirements in Section 12.62.500.
+
+Common wall garages permitted with zero side setback, subject to IBC compliance.
+
+Side yard setbacks on the common wall shall be waived for townhouses permitted under
+Table 12.21.720-1.
+
+For cottage clusters, the minimum rear yard setback to dwellings is 10 feet.
+
+Garage locations subject to additional requirements in Section 12.62.400.
+• Front Yard
+
+% to dwelling 5 feet
+
+% to garage door 19 feet
+• Side Yard 5 feet; sum of 2 side yards at least 15 feet
+• Rear Yard
+
+% to front-loaded dwelling 10 feet
+
+% to rear-loaded dwelling 16 feet to alley
+% to garage door Either 5 feet or less;
+or 19 feet or more
+Minimum Setbacks:
+Non-Residential and Mixed-Use None All setbacks subordinate to public utility easements and IBC requirements.
+Maximum Setbacks: Residential
+• Front Yard 20 feet
+• Side Yard None
+• Rear Yard None
+Table 12.21.750-1:
+Development Standards in the SCR-OTC Zone
+Standard Requirement Clarifications
+Maximum Setbacks:
+Non-Residential and Mixed-Use
+• Front Yard 10 feet
+• Side Yard None
+• Rear Yard None
+Minimum Building Height
+• Residential* None
+• Non-Residential and
+Mixed-Use
+
+%
+< 800 ft. from LRT Station 2 stories or 25 feet, whichever is less
+
+% > 800 ft. from LRT Station None
+Maximum Building Height
+
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+• Residential* 2 stories or 35 feet
+• Non-Residential and
+Mixed-Use 3 stories or 40 feet
+Maximum Lot Coverage None
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Illustrated in Figure 12.21.750-A
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6283 § 1, 2018; Ord. 6120 § 1, 2015)

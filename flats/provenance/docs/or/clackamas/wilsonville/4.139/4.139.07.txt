@@ -1,0 +1,115 @@
+Section 4.139.07. Mitigation Standards.
+The following mitigation standards apply to significant wildlife habitat resource areas for encroachments within the Area of Limited Conflicting Uses, and shall be followed by those proposing such encroachments.
+Wetland mitigation shall be conducted as per permit conditions from the US Army Corps of Engineers and Oregon Division of State Lands.
+While impacts are generally not allowed in the riparian corridor resource area, permitted impacts shall be mitigated by: using these mitigation standards if the impacts are to wildlife habitat values; and using state and federal processes if the impacts are to wetland resources in the riparian corridor.
+Mitigation is not required for trees lost to a natural event such as wind or floods.
+(.01) The applicant shall review the appropriate Goal 5 Inventory Summary Sheets for wildlife habitat (i.e. upland) contained in the City of Wilsonville Natural Resource Inventory and Goal 5/Title 3/ESA Compliance and Protection Plan ("Compliance and Protection Plan" - May 2000) to determine the resource function ratings at the time the inventory was conducted.
+(.02) The applicant shall prepare a Mitigation Plan document containing the following elements:
+A. The Mitigation Plan shall contain an assessment of the existing natural resource function ratings at the time of the proposed encroachment for the site compared to the function ratings recorded in the Compliance and Protection Plan.
+B. The Mitigation Plan shall contain an assessment of the anticipated adverse impacts to significant wildlife habitat resources.
+The impact assessment shall discuss impacts by resource functions (as listed in the Compliance and Protection Plan, May 2000) for each resource type, and shall map the area of impact (square feet or acres) for each function.
+C. The Mitigation Plan shall present a proposed mitigation action designed to replace the lost or impacted resource functions described in Subsection B, above.
+The mitigation plan shall be designed to replace lost or impacted functions by enhancement of existing resources on, or off the impact site, or creation of new resource areas.
+D. For mitigation projects based on resource function enhancement, the area ratios presented in Table NR-2 shall be applied.
+These ratios are based on the resource function ratings at the time of the proposed action, as described in Subsection A, above.
+The mitigation action shall be conducted on the appropriate size area as determined by the ratios in Table NR-2.
+E. The Mitigation Plan shall include a planting plan containing the following elements:
+1. Required Plants and Plant Densities. All trees, shrubs and ground cover shall be native vegetation.
+An applicant shall comply with Section 4.139.06(.02)(E)(1)(a) or (b), whichever results in more tree plantings, except where the disturbance area is one acre or more, the applicant shall comply with Section 4.139.06(.02)(E)(1)(b).
+a. The mitigation requirement shall be calculated based on the number and size of trees that are removed from the site.
+Trees that are removed from the site shall be replaced as shown in Table NR-3.
+Conifers shall be replaced with conifers.
+Bare ground shall be planted or seeded with native grasses or herbs.
+Table NR-3: Tree Replacement Requirements
+Size of Tree to be Removed
+(inches in diameter at breast height)
+Number of Trees and Shrubs to be Planted
+6 to 12 2 trees and 3 shrubs over 12 to 18 3 trees and 6 shrubs over 18 to 24 5 trees and 12 shrubs over 24 to 30 7 trees and 18 shrubs over 30 10 trees and 30 shrubs
+b. The mitigation requirement shall be calculated based on the size of the disturbance within the Significant Resource Overlay Zone.
+Native trees and shrubs shall be planted at a rate of five trees and 25 shrubs per every 500 square feet of disturbance area (calculated by dividing the number of
+square feet of disturbance area by 500, and then multiplying that result times five trees and 25 shrubs, and rounding all fractions to the nearest whole number of trees and shrubs; for example, if there will be 330 square feet of disturbance area, then 330 divided by 500 equals 0.66, and 0.66 times five equals 3.3, so three trees shall be planted, and 0.66 times 25 equals 16.5, so 17 shrubs shall be planted).
+Bare ground shall be planted or seeded with native grasses or herbs.
+2. Plant Size. Replacement trees and shrubs shall be at least one-gallon in size and shall be at least 12 inches in height.
+3. Plant Spacing. Trees shall be planted between eight and 12 feet on center, and shrubs shall be planted between four and five feet on center, or clustered in single species groups of no more than four plants, with each cluster planted between eight and ten feet on center.
+When planting near existing trees, the drip line of the existing tree shall be the starting point for plant spacing measurements.
+4. Plant Diversity.Shrubs shall consist of at least two different species.
+If five trees or more are planted, then no more than 50 percent of the trees may be of the same genus.
+5. Invasive Vegetation.Invasive non-native or noxious vegetation shall be removed within the mitigation area prior to planting, and shall be removed or controlled for five years following the date that the mitigation planting is completed.
+6. Mulching and Browse Protection.Mulch shall be applied around new plantings at a minimum of three inches in depth and 18 inches in diameter.
+Browse protection shall be installed on trees and shrubs.
+Mulching and browse protection shall be maintained during the two-year plant establishment period.
+7. Tree and Shrub Survival. Trees and shrubs that die shall be replaced in kind to the extent necessary to ensure that a minimum of 80 percent of the trees and shrubs initially required shall remain alive on the fifth anniversary of the date that the mitigation planting is completed.
+(.03) Proposals for mitigation action where new natural resource functions and values are created (i.e. creating wetland or wildlife habitat where it does not presently exist) will be reviewed and may be approved by the Development Review Board or Planning Director if it is determined that the proposed action will create natural resource functions and values that are equal to or greater than those lost by the proposed impact activity .
+(.04) Mitigation actions shall be implemented prior to or at the same time as the impact activity is conducted.
+(.05) Mitigation plans shall have clearly stated goals and measurable performance standards.
+(.06) All mitigation plans shall contain a monitoring and maintenance plan to be conducted for a period of five years following mitigation implementation.
+The applicant shall be responsible for ongoing maintenance and management activities, and shall submit an annual report to the Planning Director documenting such activities, and reporting progress towards the
+mitigation goals. The report shall contain, at a minimum, photographs from established photo points, quantitative measure of success criteria, including plant survival and vigor if these are appropriate data.
+The Year 1 annual report shall be submitted one year following mitigation action implementation.
+The final annual report (Year 5 report) shall document successful satisfaction of mitigation goals, as per the stated performance standards.
+If the ownership of the mitigation site property changes, the new owners will have the continued responsibilities established by this section.
+(.07) The Mitigation Plan document shall be prepared by a natural resource professional.
+(.08) Prior to any site clearing, grading or construction, the SROZ area shall be staked, and fenced per approved plan.
+During construction, the SROZ area shall remain fenced and undisturbed except as allowed by an approved development permit.
+(.09) For any development which creates multiple parcels intended for separate ownership, the City shall require that the SROZ areas on the site be encumbered with a conservation easement or tract.
+(.10) The City may require a conservation easement over the SROZ that would prevent the owner from activities and uses inconsistent with the purpose of this Section and any easements therein.
+The purpose of the conservation easement is to conserve and protect resources as well as to prohibit certain activities that are inconsistent with the purposes of this section.
+Such conservation easements do not exclude the installation of utilities.
+(.11) At the Planning Directors discretion, mitigation requirements may be modified based on minimization of impacts at the impact activity site.
+Where such modifications are granted by the Planning Director, the Director shall clearly indicate the reasons for doing so in the record, citing the relevant information relied upon in reaching the decision.
+(.12) The Director may study the possibility of a payment-in-lieu-of system for natural resource impact mitigation.
+This process would involve the public acquisition and management of natural resource properties partially funded by these payments.
+TABLE NR-4: NATURAL RESOURCE ENHANCEMENT MITIGATION RATIOS
+Existing Function*
+Rating at Impact Site
+Existing Function*
+Rating at
+Mitigation Site
+Proposed Function*
+Rating at
+Mitigation Site
+Area Ratio
+(Mitigation: Impact)
+L L M 2:1
+L L H 1 ½ : 1
+L M H 2 : 1
+M L M 3 : 1
+M L H 2 : 1
+M M H 2 ½ : 1
+H L M 4 : 1
+H L H 3 : 1
+H M H 2 ½ : 1
+Existing Function*
+Rating at Impact Site
+Existing Function*
+Rating at
+Mitigation Site
+Proposed Function*
+Rating at
+Mitigation Site
+Area Ratio
+(Mitigation: Impact)
+H H H+ 5 : 1
+* mitigation function (i.e. water quality, ecological integrity) shall be the same as impacted function + improve on a H rating
+NOTE: These mitigation ratios were created by specifically for the Natural Resources Plan by Fishman Environmental Services.
+Examples for using Table NR-4—The Doe Property
+The Doe property (fictitious) was rated as a significant wildlife habitat site in the 2000 Compliance and Protection Plan report with the following function ratings: wildlife habitat, L (low plant diversity); water quality protection, M (adjacent to the Willamette River); ecological integrity, L (a planted woodland); connectivity, M (adjacent to larger forest unit); and uniqueness, L (no sensitive species or unique natural features).
+In 2015, the function ratings were determined to be the same, except for wildlife habitat, which increased to M and ecological integrity, which rated M, both due to an increase in native plant species diversity and a reduction in Himalayan blackberry resulting from good stewardship practices by the Doe family .
+A project proposed by the Does would remove 0.2 acre of trees, shrubs and ground cover plants in the Area of Limited Conflicting Uses having an impact on wildlife habitat function.
+The Does propose to mitigate for the impact by enhancing another area of their property that has continuing invasive plant problems.
+By removing blackberry, instituting a five-year blackberry control program, and planting/ maintaining native shrubs, they will improve the mitigation site ratings for wildlife habitat and ecological integrity from L to M. Using Table NR-2, they determine that a 3:1 ratio will be required, and they plan to enhance 0.6 acres of the mitigation site.
+Calculation summary: existing function rating at impact site = M existing function rating at mitigation site = L proposed function rating at mitigation site = M
+Table NR-4 required ration = 3:1
+Impact area × 3 = 0.2 acre × 3 = 0.6 acre.
+Note: both impacted functions are mitigated by the same action.
+Calculation summary:
+Wildlife Habitat function:
+existing function rating at impact site = H existing rating at mitigation site = H proposed function rating at mitigation site = H+
+Table NR-4 required ratio = 5:1
+Impact area × 5 = 0.04 acre × 5 = 0.2 acre
+Water Quality Protection function:
+existing function rating at impact site = H existing rating at mitigation site = M
+proposed function rating at mitigation site = H
+Table NR-4 required ratio = 2½:1
+Impact area × 2½ = 0.04 acre × 2½ = 0.1 acre
+(Ord. No. 674, 11-16-2009)

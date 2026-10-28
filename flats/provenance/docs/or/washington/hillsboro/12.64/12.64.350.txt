@@ -1,0 +1,14 @@
+12.64.350  Vehicle Loading.
+Loading spaces meeting the number and dimensional standards in Table 12.64.350-1 shall be provided for primary structures containing at least 25,000 square feet of gross floor area, if the structures are occupied by land Uses requiring regular or periodic receipt or distribution of materials or merchandise by vehicles with a gross weight over 25,000 pounds.
+Table 12.64.350-1:
+Minimum Number and Dimensions of Loading Spaces Where Required
+Primary Structure Size
+Minimum Spaces
+Required Minimum Space Dimensions
+25,001—50,000 sq. ft. GFA 1 space 20 ft. × 12 ft. × 15 tall
+50,001—100,000 sq. ft. GFA 2 spaces 1st space: 20 ft. × 12 ft. × 15 tall
+2nd space: 40 ft. × 12 ft. × 15 tall
+> 100,001 sq. ft. GFA 3 spaces
+1st space: 20 ft. × 12 ft. × 15 tall
+2nd and 3rd spaces: 40 ft. × 12 ft. × 15 tall
+(Ord. 6401 § 1, 2022)

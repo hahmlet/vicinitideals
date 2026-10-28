@@ -1,0 +1,31 @@
+60.55.10. General Provisions.
+
+[ORD 4302; June 2004]
+1. All public and private transportation facilities shall be designed and improved in accordance with the standards of this code and the Engineering Design Manual and Standard Drawings.
+In addition, when development abuts or impacts a transportation facility under the jurisdiction of one or more other governmental agencies, the City shall condition the development to obtain permits required by the other agencies.
+[ORD 4782; April 2020]
+2. In order to protect the public from potentially adverse impacts of the proposal, to fulfill an identified need for public services related to the development, or both, development shall provide traffic capacity, traffic safety, and transportation improvements in rough proportion to the identified impacts of the development.
+[ORD 4103; May 2000]
+3. For applications that meet the threshold criteria of section 60.55.15.
+(Traffic Management Plan) or of section 60.55.20.
+(Traffic Impact Analysis), these analyses or limited elements thereof may be required.
+4. The decision-making authority may impose development conditions of approval per Section 10.65.1. of this code.
+Conditions of approval may be based on the Traffic Management Plan and Traffic Impact Analysis.
+Additional street, bicycle, and pedestrian connections may also be required per 60.55.25.
+(Street and Bicycle and Pedestrian Connection Requirements).
+5. Dedication of right-of-way shall be determined by the decision-making authority.
+6. Traffic calming may be approved or required by the decision-making authority in a design of the proposed and/or existing streets within the Area of Influence or any additional locations identified by the City Engineer.
+Traffic calming measures shall be designed to City standards.
+7. Intersection performance shall be determined using the Highway Capacity Manual 2000 published by the Transportation Research Board.
+The City Engineer may approve a different intersection analysis method prior to use when the different method can be justified.
+Terms used in this subsection are defined in the Highway Capacity Manual 2000.
+At a minimum, the impacts of development on a signalized intersection shall be mitigated to peak hour average control delay no greater than 65 seconds per vehicle using a signal cycle length not to exceed 120 seconds.
+The volume-to-capacity ratio for each lane group for each movement shall be identified and considered in the determination of intersection performance.
+The peak hour volume-to-capacity (V/C) ratio for each lane group shall be no greater than 0.98.
+Signal progression shall also be considered.
+If the intersection is under County or ODOT jurisdiction, the V/C ratio for each lane group shall not exceed the V/C ratio imposed by that jurisdiction.
+[ORD 4706; May 2017]
+At a minimum, the impacts of development on a two-way or an all-way stop-controlled intersection shall be mitigated to a peak hour average control delay of no greater than 45 seconds per vehicle.
+If the existing control delay or volume-to-capacity ratio of an intersection is greater than the standards of this subsection, the impacts of development shall be mitigated to maintain or reduce the respective control delay or volume-to-capacity ratio.
+[ORD 4061, 10/15/1999; ORD 4103, 05/04/2000; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4418, 02/22/2007; ORD 4706, 05/19/2017; ORD 4782, 04/17/2020]
+Effective on: 4/17/2020

@@ -1,0 +1,19 @@
+12.24.120  Housing Types.
+Table 12.24.120-1 lists the Housing Types permitted in the MU-N zone.
+Housing Types are defined in Section 12.01.500.
+Table 12.24.120-1:
+Housing Types Permitted in the MU-N Zone
+Housing Type Status Clarifications
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage cluster P
+Multiple dwelling structure P
+Manufactured dwelling L Subject to additional standards in Section
+12.40.190.
+Manufactured dwelling project N
+Live-work dwelling L Residential Uses Permitted above or behind commercial Uses.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)

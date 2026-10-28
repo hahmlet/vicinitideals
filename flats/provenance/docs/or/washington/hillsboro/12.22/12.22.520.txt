@@ -1,0 +1,22 @@
+12.22.520  Housing Types.
+Table 12.22.520-1 lists Housing Types permitted in the SCR-HD zone.
+Housing Types are defined in
+Section 12.01.500.
+Table 12.22.520-1:
+Housing Types Permitted in the SCR-HD Zone
+Housing Type Status Notes
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster N
+Multiple-dwelling structure P
+Manufactured dwelling N
+Table 12.22.520-1:
+Housing Types Permitted in the SCR-HD Zone
+Housing Type Status Notes
+Manufactured dwelling project N
+Live-work dwellings N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)

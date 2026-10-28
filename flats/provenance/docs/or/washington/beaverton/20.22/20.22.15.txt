@@ -1,0 +1,202 @@
+20.22.15. Site Development Standards
+
+[ORD 4859; January 2025]
+Site Development Standards support implementing development consistent with the corresponding zoning district.
+All superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+
+Table 20.22.15 Cooper Mountain Site Development Standards
+
+Superscript Refers to Footnotes
+# Standard CM-
+CS
+CM-
+HDR
+CM-
+MR CM-RM Unit of
+Measurement
+A. Minimum Land Area N/A N/A N/A N/A Square Feet
+B.1. Minimum Lot Area1, 2 - Single-Detached and Duplex
+N/A N/A N/A 3,000 Square Feet
+B.2. Minimum Lot Area1, 2 - Triplex and
+Quadplex
+N/A N/A N/A 4,000 Square Feet
+# Standard CM-
+CS
+CM-
+HDR
+CM-
+MR CM-RM Unit of
+Measurement
+B.3. Minimum Lot Area1, 2 - Multi-Dwelling (5-6 units)
+N/A N/A N/A 5,00023 Square Feet
+B.4. Minimum Lot Area1, 2 - Townhouse N/A N/A N/A 1,30016 Square Feet
+B.5. Minimum Lot Area1, 2 - Cottage Cluster N/A N/A N/A 7,000 Square Feet
+B.6. Minimum Lot Area1, 2 - Single-Room
+Occupancies
+N/A N/A N/A 3,000 Square Feet
+C. Maximum Lot Area N/A N/A N/A 6,0004 Square Feet
+D. Maximum Residential Density26 N/A N/A N/A N/A Units Per Acre
+E. Minimum Residential Density3, 27 34 34 34 10 Units Per Acre
+F. Minimum Lot Width2, 5 N/A N/A 14 2016 Feet
+G.1.a. Yard Setbacks2 - Front Minimum 0 0 10 10 Feet
+G.2.a. Yard Setbacks2 - Side Minimum22: Abutting
+Lot
+N/A N/A 0, 3 or
+57
+0, 3 or 57 Feet
+G.2.b. Yard Setbacks2 - Side Minimum22: Abutting
+Street (public or private)
+N/A N/A 0, 3 or
+57
+0, 3 or 57 Feet
+G.3. Yard Setbacks2 - Side Maximum N/A N/A N/A N/A Feet
+G.4. Yard Setbacks2 - Rear Minimum N/A N/A 10 158 Feet
+G.5. Yard Setbacks2 - Minimum Side or Rear
+Yards Abutting Property Zoned
+Residential9
+10 10 N/A N/A Feet
+G.6. Yard Setbacks2 - Minimum Side or Rear
+Yards Abutting Cooper Mountain Nature
+Park property25
+25 25 25 25 Feet
+G.7. Yard Setbacks2 - Garage and Carport
+Minimum10
+N/A N/A 5 or
+18.511
+18.5 Feet
+G.8. Yard Setbacks2 - Garage Door to Rear
+Minimum12
+N/A N/A 22 22 Feet
+G.9. Yard Setbacks2 - Minimum Between
+Buildings13
+N/A N/A 6 6 Feet
+H.1. Building Height - Minimum N/A N/A N/A N/A Feet
+H.2. Building Height - Maximum14 6515 65 65 45 Feet
+I.1. Floor Area Ratio (FAR) - Minimum 0.4 0.4 N/A N/A N/A
+I.2. Floor Area Ratio (FAR) - Minimum with
+Cooper Mountain Development Plan
+0.3 0.3 N/A N/A N/A
+J.0. Maximum Floor Area Ratio (FAR)2, 17, 18 2.024 2.024 1.524 Refer to Maximum
+FARfor each housing type in J.1. through J.6.
+N/A
+J.1. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Single-Detached Dwelling
+N/A N/A N/A 0.80 N/A
+J.2. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Duplex
+N/A N/A N/A 0.90 N/A
+# Standard CM-
+CS
+CM-
+HDR
+CM-
+MR CM-RM Unit of
+Measurement
+J.3. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Triplex and Quadplex
+N/A N/A N/A 1.20 N/A
+J.4. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Townhouse
+N/A N/A N/A N/A N/A
+J.5. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Cottage Cluster
+N/A N/A N/A N/A N/A
+J.6. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Multi-Dwelling (5 to 6 units)
+N/A N/A N/A 1.20 N/A
+J.7. Maximum Floor Area Ratio (FAR)2, 17, 18 -
+Non-Residential Uses and Conditional
+Uses
+N/A N/A N/A N/A N/A
+Table 20.22.15 Cooper Mountain Site Development Standards - Wireless Communication Facilities
+
+Superscript Refers to Footnotes
+# Standard CM-CS CM-HDR CM-MR CM-RM Unit of
+Measurement
+K.1. Maximum
+Height - WCF19
+80 80 80 80 Feet
+K.2. Maximum
+Height -
+Equipment
+Shelters20
+12 12 12 12 Feet
+K.3. Maximum
+Height - Roof
+Mounted
+Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+N/A
+L.1. Yard
+Setbacks21 -
+Requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+N/A
+L.2. Yard Setbacks21
+- Other
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+N/A
+Footnotes:
+1. Minimum lot area standards apply to land divisions, except middle housing land divisions.
+For middle housing, the standards also determine the minimum lot size needed for each middle housing type to be built on an existing lot.
+2. If a duplex, triplex, quadplex, or cottage cluster has been divided by a middle housing land division, the development standards that are applicable to the lot shall apply to the middle housing parent lot, not to the middle housing child lots.
+3. Refer to Section 20.25.05 for exceptions to minimum density standards in the CM-RM district.
+4. Only applies to lots with small-scale commercial uses in the CM-RM zone.
+5. Corner lots may need to provide a greater minimum lot width to accommodate the sight clearance areas specified in the Engineering Design Manual.
+6. Reserved.
+7. Side setbacks are 5 feet except when a different dimension is described in this footnote.
+For townhouses, the minimum side setback is zero for the attached side of the townhouse and 5 feet for sides that are not attached.
+For land divisions, except for townhouses or middle housing land divisions, the perimeter side setbacks are 5 feet, but side setbacks internal to the land division may be reduced to 3 feet with a total of 6 feet between buildings.
+In no case shall a building encroach into a Public Utility Easement (PUE).
+8. The minimum rear setback to cottage cluster dwellings is 10 feet.
+9. The 10-foot setback is applicable only to any portion of a building taller than 40 feet.
+The setback for any portion of a building 40 feet or shorter is 5 feet.
+Rear yard setback is applicable to only the portion of the rear yard that abuts a residential zone; otherwise, the minimum rear yard setback is 0 feet.
+For the purposes of this standard, “residential zone” is any of the zones under Residential Districts in Section 10.25.
+10. Garage setbacks shall be measured from the elevation containing the garage door to the property line.
+Carport setbacks shall be measured from the elevation of the vehicle entrance of the carport to the property line.
+For all other garage and carport elevations besides the door/vehicle entrance, the building setbacks applies.
+11. Either no greater than 5 feet or a minimum of 18.5 feet.
+12. Measured from garage door elevation to opposite side of the alley right-of-way, common accessway, common driveway, or access easement line.
+13. Minimum spacing between buildings on the same lot or in the same development.
+In CM-CS and CM-HDR, residential accessory structures including detached Accessory Dwelling Units shall not be located within 6 feet of the main building.
+Required separation distances for commercial and industrial zoned lots shall be determined by the applicable Building Code.
+14. Maximum building height for all structures in a cottage cluster development is 25 feet.
+15. Maximum building height of a building or portion of a building within 35 feet of a residentially zoned property, measured from the residential property line, is 45 feet or the maximum height permitted in the residential district, whichever is greater.
+16. Townhouses in the CM-RM zone designed with rear-loaded parking areas, parking areas shared between two or more dwellings, or no off-street parking shall have a minimum lot size of 1,000 square feet and a minimum lot width of 14 feet.
+For the purpose of this footnote, parking areas may include driveways, parking spaces, garages, or carports.
+17. Single-detached, duplex, triplex, quadplex, or 5- to 6-unit multi-dwelling structures in existence as of January 2, 2025, that exceed the applicable maximum FAR standard are allowed to expand up to 500 square feet in floor area above the maximum FAR permitted in the zone.
+If such existing structures are unintentionally destroyed, they may be rebuilt to exceed the maximum FAR by 500 square feet.
+18. Accessory dwelling units added to an existing single-detached dwelling as of January 2, 2025, are excluded from the maximum FAR limitations.
+19. Inclusive of antenna.
+20. At-grade equipment shelters.
+21. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+22. For buildings in commercial zones not abutting a residential use in a residential zone, minimum setback does not apply.
+Under the thresholds in Section 40.30, an application may be made for zero side yard setbacks on parcels abutting residential use in a residential zone.
+23. In CM-RM, limited to one 5- or 6-unit multi-dwelling structure per lot.
+24. See Section 20.25.10 to determine if a site with Resource Overlay or other environmental constraints qualifies for a higher maximum FAR.
+25. This rear or side yard setback only applies for property lines shared with Cooper Mountain Nature Park.
+The setback shall be landscaped according to the landscape buffer Design Standards or Guidelines of Section 60.05.25.17.C, 60.05.60.2.S9, 60.05.60.3.S9, 60.05.60.4.S22, or 60.05.65, as applicable to the proposed development.
+26. Up to six (6) single-room occupancy units on each lot or parcel are permitted within the CM-RM zoning district.
+This is not intended to exempt single-room occupancies from minimum density requirements of the underlying zone.
+27. Single-room occupancies shall have a minimum of 4 attached units, regardless of lot size.
+This is not intended to exempt single-room occupancies from minimum density requirements of the underlying zone.
+[ORD 4859, 01/02/2025]
+Effective on: 8/21/2026

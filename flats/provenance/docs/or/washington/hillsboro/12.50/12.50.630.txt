@@ -1,0 +1,34 @@
+12.50.630  Site Grading.
+A. Purpose. The standards of this section are intended to assure that grading prior to or during site development, or independently from development, is planned and accomplished to avoid adverse impacts to adjacent or abutting properties and significant natural resource areas, maintain pedestrian and bicycle connectivity between properties were applicable, and maintain accessibility to public and private utility lines and easements.
+B. Applicability.
+1. The on-site surface contour grading standards specified in this section are applicable to all major and minor site alterations as defined in Section 12.01.500 where site fill or excavation, mass grading or soil stockpiling is proposed.
+2. Pursuant to the requirements of Public Works Design and Construction Standards
+Section 115.3, a site grading plan is required for any development that involves excavation or fill on public or private property or in public right-of-way.
+Plans for grading proposed in conjunction with a Type I, Type II or Type III land use application development shall be submitted with the land use applications pursuant to Subchapter 12.80 Applications.
+3. The section does not supersede Section 12.27.100 Regulatory Floodplain Overlay or
+Section 12.27.200 Significant Natural Resource Overlay: where these standards conflict with those sections, the requirements of those sections supersede.
+C. Exemptions. The following site alterations are exempt from the standards in this section:
+1. Public right-of-way road improvements including new streets, street widening, sidewalks, and similar or related improvements;
+2. Public utility improvements including new water, sanitary sewer, or storm drainage lines, public storm water facilities, and similar or related improvements; and
+3. Filling, excavating, and grading on private properties adjacent to public improvements listed in Paragraphs 1 and/or 2 above, when such alterations are undertaken as part of and in conjunction with the construction of the improvements.
+D. Standards Applicable within and Adjacent to Single Dwelling Residential Zones.
+1. Except as provided in subsection F below, when grading a site within 25 feet of a property line within or abutting any property zoned single dwelling residential (as listed in Section 12.21.010), on-site grading shall be finished to the surface contours shown in Table 12.50.630-1:
+Table 12.50.630-1:
+On-Site Grading Grade Differential Requirements in and Adjacent to Single Dwelling Residential Zones
+Distance from Property Line Difference from existing or finished elevation of abutting property as applicable
+0.0 feet to 1.0 feet No grade differential
+1.0 feet to 5.0 feet Maximum 2 feet grade differential
+5.1 feet to 10.0 feet Maximum 4 feet grade differential
+10.1 feet to 15.0 feet Maximum 6 feet grade differential
+15.1 feet to 20.0 feet Maximum 8 feet grade differential
+Over 20.0 feet Maximum 10 feet grade differential
+2. Where an existing grade differential before site alteration exceeds 1 or more of the standards in Table 12.50.630-1 above, the grade differential after alteration shall not exceed the original.
+3. The on-site grading differential standards in paragraph 1 above apply only to perimeter property lines of a parent property, and not to internal property lines created by a land division process under Section 12.80.090.
+E. Standards Applicable Adjacent to Significant Natural Resource Areas.
+1. Notwithstanding the requirements of subsections D and E above, grading within 25 feet of a Significant Natural Resource (SNR) boundary or Resource Impact Areas (IA) boundary, whether located on or off site, shall be finished to the following surface contours:
+a. From 0.0 to 10.0 feet from the boundary: no change in pre-development ground elevation; and
+b. From 10.1 feet to 25.0 feet from the boundary: a maximum 10% slope gradient difference from the pre-development ground elevation.
+2. Based on the recommendation of a Qualified Natural Resources Professional as defined in Section 12.01.500, the Review Authority may require additional surface contouring or other grading measures to protect the SNR or IA area from grading or erosion impacts.
+F. Land Use Approval Required for Mass Grading or Site Grading Not Associated with Development.
+If mass grading or stockpiling as defined in Section 12.01.500 is proposed on public or private property, the site grading plan required under D & C Standards Section 120.4 shall be submitted as a Type II Development Review application pursuant to Section 12.80.040.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6258 § 1, 2018)

@@ -1,0 +1,60 @@
+12.50.140  Building Height.
+A. Definition and Purposes.
+Building height is defined in Section 12.01.500.
+Minimum and maximum building height standards promote relationship of scale among structures in residential, commercial, and industrial neighborhoods, helping to create harmonious environments which enhance a sense of place.
+Variations in maximum building height among zones allow increased intensity of development in light rail, Mixed-Use and Urban Center zones.
+B. Standards and Measurement Methodology.
+1. Standards. Except as provided under subsections C and D below, structures built after September 4, 2014 must comply with the maximum (and minimum if applicable) building height standards of the applicable base zone, unless a Variance or Adjustment has been granted by the Review Authority pursuant to Section 12.80.150.
+2. Figure 12.50.140-A illustrates the methods to measure building heights for buildings with flat roofs, mansard roof, and pitch or hip roofs.
+Except as provided under paragraph 4 below, building height is measured from finished grade at the center of the front building plane.
+
+3. Minimum and maximum building height in light rail, Mixed-Use, and non-residential standard zones is calculated in feet, to the points shown in Figure 12.50.140-A.
+4. Figure 12.50.140-B illustrates the method to measure building heights for buildings on slopes.
+Except as provided under paragraph 5 below, building height is measured from finished grade at the center of the front building plane.
+
+Figure 12.50.140-A:
+Measuring Building Height on Various Roof Types
+Figure 12.50.140-B:
+Measuring Building Height on Slopes
+5. If a difference of 6 feet or more exists between the elevations at finished grade of the front and rear building planes, building height shall be measured from the center of the side walls between the front and rear building planes.
+6. Minimum and maximum building height in single dwelling and multi-dwelling residential zones is calculated in stories, as shown in Figure 12.50.140-C below.
+In calculating minimum and maximum height in stories, a residential "story" is considered to be not more than 10 feet.
+7. Figure 12.50.140-C illustrates measurement of building height in stories related to basements and top stories.
+As illustrated, a basement is not a story if its finished floor is at least 6 feet below finished grade at the mid-point of the wall.
+
+C. Building Height Transition in Mixed-Use Zones.
+Building heights for new development in the MU-N and MU-C zones shall "step-down" and provide for a transition where adjacent to existing single detached and middle housing residential zoning to provide compatible scale and privacy between developments.
+1. Building height transitions shall be applied to new and vertically expanded buildings in the MU-N and MU-C zones within 20 feet (measured horizontally) of an existing single detached residential or middle housing building 30 feet or less in height.
+2. The building height transition standard is met when the height of the taller building (x) does not exceed 1 foot of height for every 1 foot separating the new building from the existing single detached residential or middle housing structure (y) as shown in Figure 12.50.140-D.
+Figure 12.50.140-C:
+Measuring Building Height in Relation to Basements and Top Stories
+D. Exceptions to Maximum Building Height.
+1. The structures or structural parts listed below, while subject to Oregon Structural Specialty Code requirements, are not subject to the maximum building height requirements of the applicable base zone:
+a. Chimneys
+b. Elevated storage tanks
+c. Spires or belfries
+d. Domes
+e. Monuments and flagpoles
+f. Emergency services training towers
+g. Observation towers
+h. Telecommunications towers
+i. Cooling towers
+j. Elevator shafts
+k. Electrical transmission towers
+l. Smokestacks
+m. Wind turbines, with the limitation listed in paragraph 2.b below
+n. Photovoltaic or solar equipment, with the limitation listed in paragraph 2.a below
+o. Roof-mounted, non-habitable mechanical penthouses for heating, cooling or ventilation equipment, with or without screening
+Figure 12.50.140-D:
+Building Height Transition in Mixed-Use Zones
+2. Limitations in Urban Center Zones. The exceptions to maximum building height listed in paragraph 1 above are limited in certain Urban Center zones as follows:
+a. On-site or roof mounted solar energy production equipment: maximum exception
+36 inches above the applicable height limit.
+b. On-site or roof-mounted wind energy production equipment in the UC-OR and
+UC-RP zones: maximum exception 30 feet above height limit.
+3. Limitations Based on Federal Aviation Regulations. Regardless of the building height standards in any base zone, all structures or parts of structures shall be consistent with Federal Aviation Regulation (FAR) Part 77 "Objects Affecting Navigable Airspace" (14 CFR 77).
+4. Limitations for Structured Parking in MU-N and MU-C Zones.
+Pursuant to Subsection 12.24.250.C, in the MU-N and MU-C zones for buildings where structured parking is integrated into the building envelope, the floors occupied by parking shall not be counted toward the maximum building height, provided that:
+a. The design of the building with integrated structured parking complies with the standards in Section 12.50.800, and with the standards in Subsection 12.50.360.D. for location and design of structured parking.
+b. The design of the building complies with the design standards contained in Section 12.50.800 regarding building façade and architectural design requirements.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015)

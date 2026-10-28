@@ -1,0 +1,170 @@
+12.40.107  Affordable Housing and Emergency Shelters.
+A. Senate Bill 8 Affordable Housing.
+Senate Bill 8 (2021) requires local governments to allow affordable housing without requiring a zone change or conditional use permit if certain criteria and standards are met.
+These requirements are implemented by this subsection.
+1. Applicability Criteria. Affordable housing projects allowed pursuant to this Subsection 12.40.107.A. must meet subsection A.1.a. and either subsection A.1.b. or c. below:
+a. Affordability. The affordability of the units is enforceable, including as described in ORS 456.270 to 456.295, for a duration of no less than 30 years and shall meet either paragraph i. or ii. below:
+i. Each unit on the property is made available to own or rent to families with incomes of 80% or less of the area median income as determined by the
+Oregon Housing Stability Council based on information from the United States
+Department of Housing and Urban Development; or
+ii. The average of all units on the property is made available to families with incomes of 60% or less of the area median income.
+b. Ownership. The housing is owned by:
+i. A public body, as defined in ORS 174.109; or
+ii. A nonprofit corporation that is organized as a religious corporation.
+c. Zoning. The property is zoned for or allows for 1 or more of the following:
+i. Commercial uses;
+ii. Places of assembly for religious institutions;
+iii. Institutional and Open Space Zones per Subchapter 12.26; or
+iv. Industrial uses provided the property is publicly owned, adjacent to lands zoned for residential uses or schools, and not specifically designated for heavy industrial uses including all of the Industrial Zones in Subchapter 12.25.
+2. Standards. Only affordable housing developed pursuant to Subsection 12.40.107.A. is subject to the following standards.
+a. Site Suitability.
+The site shall be suitable for development of affordable housing.
+Affordable housing shall not be located on lands where the City determines that:
+i. The development on the property cannot be adequately served by water, sewer, storm water drainage or streets, or will not be adequately served at the time that development on the lot is complete;
+ii. The property contains a slope of 25% or greater;
+iii. The property is within a 1% annual chance floodplain;
+iv. The development of the property is constrained by land use regulations based on statewide land use planning goals relating to: natural disasters and hazards; or natural resources, including air, water, land or natural areas (but not including open spaces or historic resources); or
+v. The property is zoned for industrial use and does not meet the criteria in subsection A.1.c.iv. above.
+b. Density and Height in Areas That Are Zoned for Residential Uses.
+Except as provided by subsection A.2.b.iii. below, the greater of density and height standards in subsections A.2.b.i. or ii. below, shall apply:
+i. Any City density bonus for affordable housing; or
+ii. Without consideration of any local density bonus for affordable housing:
+(A) For property with existing maximum density of 16 or fewer units per net acre, based on the proposed housing type, 200% of the existing density and 12 additional feet;
+(B) For property with existing maximum density of 17 or more units per net acre, and 45 or fewer units per net acre, based on the proposed housing type, 150% of the existing density and 24 additional feet; or
+(C) For property with existing maximum density of 46 or more units per net acre, based on the proposed housing type, 125% of the existing density and 36 additional feet.
+iii. Exceptions to the density and height bonuses.
+(A) The density and height bonuses provided by this section do not apply to housing in areas that are not zoned for residential uses.
+(B) The City may reduce the density or height of the density bonus as necessary to address a health, safety or habitability issue, including fire safety, or to comply with a protective measure adopted pursuant to a statewide land use planning goal provided the City adopts findings supported by substantial evidence demonstrating the necessity of this reduction.
+c. Density and Height in Zones That Do Not Allow Housing.
+i. Industrial Zones.
+The maximum density shall be based on the density applicable to the contiguously zoned residential property including the density bonuses described in subsection c, above.
+If there is more than 1 contiguous residential property, the zoning of the property with the greatest density applies.
+If the proposed development site is not contiguous to a residentially zoned site, then the density standards of the MR-3 zone shall apply.
+The height standard of the base zone shall apply.
+ii. SCFI Station Community Fair Complex Institutional.
+The maximum density shall be based on the density applicable to the contiguously zoned residential property including the density bonuses described in subsection A.2.b., above.
+If there is more than 1 contiguous residential property, the zoning of the property with the greatest density applies.
+If the proposed development site is not contiguous to a residentially zoned site, then the density standards of the
+MR-3 zone shall apply.
+The height standard of the base zone shall apply.
+d. Affordable housing projects allowed pursuant to this section are subject to the development standards in the applicable zone and to a residential multi-dwelling use.
+A Type II approval is required if it would otherwise be required for a development of that scale in that zone.
+B. House Bill 2008 Affordable Housing.
+House Bill 2008 (2021) and this subsection establish standards to allow a nonprofit corporation organized as a religious corporation to develop affordable housing.
+1. Applicability Criteria. Affordable housing projects all owed pursuant to Section 12.40.107.B. must meet subsection B.1.a. and b. below:
+a. Affordability. The affordable housing meets the definition in ORS 197.311.
+b. Ownership. The property is owned by a nonprofit corporation organized as a religious corporation.
+2. Standards.
+a. Residential and Nonresidential Sites.
+The City shall only apply restrictions or conditions of approval to the development of affordable housing that are:
+i. Clear and objective as described in ORS 197.307(4); or
+ii. Discretionary standards related to health, safety, habitability or infrastructure.
+For the purposes of this standard, that means that affordable housing shall not be located on lands where the City determines that the development on the property cannot be adequately served by water, sewer, storm water drainage or streets, or will not be adequately served at the time that development on the lot is complete.
+b. Nonresidential Sites.
+i. The City shall approve the development of affordable housing on property not zoned for housing if:
+(A) The property is not zoned for industrial uses; and
+(B) The property is contiguous to property zoned to allow residential uses.
+ii. Affordable housing allowed under this subsection shall be subject only to the restrictions applicable to the contiguously zoned residential property as limited by subsection B.2.a. of this section and without requiring that the property be rezoned for residential uses.
+If there is more than 1 contiguous residential property, the zoning of the property with the greatest density applies.
+C. Conversion of a Hotel or Motel to an Emergency Shelter or Affordable Housing.
+House Bill 3261 (2021) and this subsection allow the conversion of a hotel or motel to an emergency shelter or affordable housing when the following criteria and standards are met.
+1. Definitions. The definition of "regulated affordable housing" is specified in Section 12.01.500 and the definitions of "conversion" and "lawful use" applicable to this Subsection 12.40.107.C. are specified below.
+a. "Conversion" includes an alteration to a building that changes the number of units but does not expand the building footprint.
+A conversion under this section is not a land use decision as defined in ORS 197.015.
+b. "Lawful use" includes a nonconforming use as described in ORS 215.130(6) or any other local land use regulation allowing for the continuation of a use that was lawful when first enacted.
+2. Applicability Criteria. Proposed conversions allowed under this Subsection 12.40.107.C. must meet 1 of the following:
+a. The proposed conversion is from use as a hotel or motel to use as an emergency shelter; or
+b. The proposed conversion is from use as a hotel or motel to use as affordable housing; or
+c. The proposed conversion is from an emergency shelter to use as affordable housing.
+3. Standards.
+a. Site Suitability.
+The conversion of a hotel or motel to an emergency shelter or affordable housing pursuant to this section is not permitted on sites where the City determines that:
+i. There is inadequate transportation access to commercial and medical services;
+ii. The site is specifically for heavy industrial uses including all of the Industrial Zones in Subchapter 12.25; or
+iii. The site is designated for a statewide land use planning goal relating to natural disasters or hazards, including flood plains or mapped environmental health hazards, unless the converted use complies with regulations directly related to the disasters or hazards.
+b. Emergency Shelters.
+Conversion of a hotel or motel to an emergency shelter if no site alterations are proposed is subject only to the following standards:
+i. Applicable building codes; and
+ii. Occupancy limits.
+c. Affordable Housing.
+Conversion of a hotel or motel to affordable housing, or conversion of a hotel or motel that was previously converted to an emergency shelter to affordable housing is subject to the following standards:
+i. Applicable building codes;
+ii. Occupancy limits; and
+iii. Standards applicable to multi-dwelling residential in Subchapter 12.50.
+d. Site Alteration.
+Site alterations, including but not limited to alterations to parking areas and landscaping, are subject to the applicable standard in Subchapter 12.50.
+D. Non-Temporary Emergency Shelters.
+1. Effectiveness and Vesting. The special use standards described in this Subsection 12.40.107(D) shall not apply to shelters meeting the applicability of Section 3, House Bill
+2006 (Section 3, Chapter 18, Oregon Laws 2021) while the bill remains in effect.
+When
+Section 3, House Bill 2006 (2021) is repealed, the special use standards below shall be effective City-wide.
+Any non-temporary emergency shelter established in compliance with Section 3, House Bill 2006 (2021) is considered vested and not subject to the special use standards below as long as the use of the shelter as an emergency shelter is not interrupted or abandoned for more than 2 years.
+Any non-temporary emergency shelter not meeting the applicability of Section 3, House Bill 2006 (2021) while the bill remains in effect shall be subject to the special use standards below.
+2. Intent. It is the intent of these standards to ensure that any conflicts between a non-temporary emergency shelter and the surrounding land uses are mitigated through the special use standards, while also ensuring that shelter providers are not subject to overly prohibitive standards that would diminish shelter access within the community.
+3. Characteristics. An emergency shelter is defined in Section 12.01.500 and provides shelter on a temporary basis for individuals and families who lack permanent housing, as well as those without adequate protection during times of extreme weather.
+As used in this section, a non-temporary emergency shelter is a shelter that is within an existing or newly constructed building(s) and is available year-round rather than being operated during shorter periods of time.
+Being available year-round shall not require that the shelter is open 365 days per year.
+4. Exceptions. The following special use standards apply to all non-temporary emergency shelters, except those allowed through Subsection 12.40.107.C.
+A temporary emergency shelter that meets the provisions of HMC Subchapter 11.12 is not subject to these special use standards.
+5. Approval Process. A non-temporary emergency shelter requires approval of a non-temporary emergency shelter application subject to the Type I procedure identified in CDC Section 12.70.030.
+6. Stakeholder Engagement. A non-temporary emergency shelter applicant/operator shall facilitate a stakeholder engagement process prior to submittal of the land use application that meets the following minimum standards:
+a. An invitation shall be mailed to all property owners and tenants within the areas identified below inviting them to engage with the applicant/operator on the proposed use.
+In that invitation, the applicant/operator shall request a written/verbal response within 7 days of the invitation being mailed and shall provide a specific email address and phone number where those responses can be sent.
+In addition, the invitation shall also include an area for the recipients to identify their preferred topic area.
+The invitations shall be mailed to all property owners and tenants within the radii specified below that shall be taken from the boundary of the subject property:
+i. Shelters With 49 Beds or Less: Within 2,000 feet
+ii. Shelters With 50 Beds or More: Within 3,000 feet
+b. The applicant is encouraged to choose the most appropriate form of engagement based on the amount of interest received and the stakeholders involved.
+Examples of this engagement shall include, but not be limited to, in-person or virtual meetings, a singular large group meeting, and/or multiple smaller group meetings with written/verbal dialogue answering questions;
+c. In these engagement discussions, the applicant/operator shall provide preliminary details of the major elements of the shelter, including compliance with the standards listed in subsection D.7. below; and
+d. The applicant/operator shall include a copy of the list of parties notified, affidavits of mailing, copies of all materials provided during the engagement, and notes from the engagement with the application upon submittal.
+If the shelter proposal is revised after the engagement process, a second stakeholder engagement process with a new invitation shall be required before the revised application is submitted.
+7. Standards. A non-temporary emergency shelter shall conform to the following standards.
+Unless otherwise modified, the standards of the base zone also apply.
+a. An operations plan for the shelter shall be included with the land use application.
+An operations plan shall include, at a minimum, items addressing shelter supervision and management, client interaction, rules for shelter use, facility operations and maintenance, safety and security provisions, and signage that complies with the
+Hillsboro Municipal Code.
+b. A shelter shall meet the separation standards in Table 12.40.107-1 and shall not exceed the maximum number of beds dependent upon the zone where the shelter is located.
+Table 12.40.107-1:
+Shelter Separation and Density Standards
+Zones
+Minimum Separation
+Between Properties*
+Maximum Number of
+Beds Per Shelter**
+R-10 — R-4.5; SCR-LD; SCR-OTC;
+SCR-DNC 500 feet 50
+MR-1 — MR-2; SCR-MD; MU-N; MU-VTC;
+SCR-V 500 feet 60
+MR-3; SCR-HD; MU-C; UC-RM; C-N;
+UC-NC 500 feet 70
+C-G; SCC-DT; SCC-SC; SCC-MM;
+UC-MU; UC-AC; UC-OR 1,000 feet 80
+UC-RP; SCFI 1,000 feet 90
+I-G; I-P; I-S; SCBP; SCI; SSID; HSID;
+ESID Not permitted Not permitted
+* The distances are measured from any property line on which the shelter is located to any other shelter's closest property line.
+** If the site has split zoning, the smaller number applies.
+c. Except for a shelter that supports families, children, and/or unaccompanied youth, a non-temporary emergency shelter shall not be located within 1,000 feet of a public or private elementary, middle, or high school or other school attended primarily by children under 18 years of age.
+This proximity restriction does not apply to day cares.
+If schools are sited after a shelter becomes operational, then the shelter shall be allowed to continue to operate and expand.
+For purposes of this subsection, the distances are measured from any property line on which the shelter is located to the closest property line of the school.
+d. All functions associated with the shelter, except for children's play areas, outdoor recreation areas, parking, animal runs, and outdoor waiting must take place within the building(s) proposed to house the shelter.
+Outdoor waiting for clients, if any, shall not be in, and shall be separated from, the public right-of-way.
+Recreational vehicles may be permitted to park on the property; however, no living, sleeping, or residing may occur in recreational vehicles parked on the same property as a non-temporary emergency shelter unless permitted by ORS.
+8. Suspension and Closure. A shelter may be suspended or closed in accordance with the following procedures and criteria.
+a. The Manager may close the shelter if:
+i. More than 40 valid emergency service calls within 30 calendar days are made regarding on-site activity associated with the shelter;
+ii. Any safety issues are identified during an inspection, including, but not limited to, fire and life safety issues that warrant closure; and/or
+iii. Any violation of the building or fire permits or land use decision, Hillsboro Municipal Code and/or State or Federal law occurs.
+b. Prior to closure, the Manager shall start by suspending the shelter and providing the operator with a written notice of the Manager's intent to close the shelter that specifies which of the above criteria apply.
+In the written suspension notice, the Manager shall provide the operator a minimum of 7 days to either: (i) provide a written response identifying the plan to reduce the number of valid emergency service calls; and/or (ii) to correct safety issues and violations.
+The shelter may be allowed to continue sheltering clients during the suspension unless the Manager finds that there is a case of an emergency or threat to human health or life safety.
+c. If the operator has not corrected the issue(s) identified in the written notice within 7 days, the Manager shall move to close the facility.
+The Manager shall give the operator, clients of the shelter, and the property owner 7 days to remove shelter components, and for clients to vacate the location of the shelter.
+In cases of emergency or threat to human health or life safety, less than 7 days' notice may be given.
+The Manager's decision to close a shelter shall be effective immediately and shall specify the duration of the closure.
+An operator shall be permitted to reopen the facility following the specified duration of time as long as all items have been corrected and those corrections have been documented in writing and confirmed by
+the Manager. An appeal on the closure shall be made to the City Council.
+The owner or operator shall not be required to remove components utilized for the shelter that are also part of the owner or operator's other routine operations on the property.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

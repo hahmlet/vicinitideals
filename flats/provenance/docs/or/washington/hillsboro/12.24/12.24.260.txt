@@ -1,0 +1,80 @@
+12.24.260  Development Standards.
+Base zone development standards in the MU-C zone are listed in Table 12.24.260-1.
+Certain standards are illustrated in Figure 12.24.260-A.
+Table 12.24.260-1:
+Development Standards in the MU-C Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density
+• On or above the second floor in vertical Mixed-Use buildings
+12
+• In free-standing buildings 23 du/na
+Maximum Residential Density
+• On or above the second floor in vertical Mixed-Use buildings
+None
+• In free-standing buildings None
+Minimum FAR
+(includes both residential and non-residential square footages)
+0.75
+Maximum FAR
+(includes both residential and non-residential square footage)
+None
+Increased FAR above the minimum .75 permitted subject to PUD approval under
+Section 12.80.120.
+Minimum Lot Dimensions*
+• Width (at front building plane) 18 feet
+• Depth None
+• Lot Frontage 18 feet
+Table 12.24.260-1:
+Development Standards in the MU-C Zone
+Standard Requirement Clarifications
+Minimum Setbacks*
+Setbacks subordinate to public utility easements and ORSC or OSSC requirements as applicable.
+• Front Yard
+
+% to residential structure 5 feet
+
+% to garage door 19 feet
+% to commercial or mixed-use structure None
+• Side Yard
+5 feet; more if required adjacent to single detached and middle housing zone
+Side yard setbacks on the common wall may be waived for townhouse partitions permitted under Table 12.24.220-1.
+See also Section 12.50.140 regarding setbacks and building height transitions.
+• Rear Yard (residential)
+
+% to residential structure with front yard garage access
+10 feet
+
+% to residential structure with rear yard garage access
+Either 5 feet or less, or
+19 feet or more
+5-foot or 19-foot setback measured to garage door.
+• Rear Yard (commercial or
+Mixed-Use)
+None unless required adjacent to single detached and middle housing zone
+See also Section 12.50.140 regarding setbacks and building height transitions.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility easements and ORSC or OSSC requirements as applicable.
+• Front Yard 10 feet
+On sites with frontage on Collector or Local streets, maximum front setbacks apply on all street frontages including Private Street tracts.
+On sites with frontage only on an Arterial street, maximum front setbacks apply on the Arterial street frontage.
+• Side Yard/Rear Yard None
+Minimum Building Height* 45 feet See Subsection 12.50.140.E.4. regarding increased building height for buildings with structured parking integrated into the building envelope.
+See Subsection 12.50.140.C. regarding building height transitions.
+Maximum Building Height* 70 feet
+Table 12.24.260-1:
+Development Standards in the MU-C Zone
+Standard Requirement Clarifications
+Maximum Lot Coverage (primary buildings only)
+• Without structured parking 30,000 gsf
+• With structured parking 40,000 gsf Structured parking subject to development standards in Section 12.50.300.
+Minimum Usable Open Space
+(applicable to residential development only)
+100 sq. ft./du See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.24.260-A
+
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+Figure 12.24.260-A:
+Minimum Lot Dimensions, Setbacks and Height Requirements in the MU-C Zone

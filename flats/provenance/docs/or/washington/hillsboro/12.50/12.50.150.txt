@@ -1,0 +1,31 @@
+12.50.150  Floor Area Ratio.
+A. Definition and Purpose.
+Floor area ratio (FAR) is defined in Section 12.01.500.
+Minimum FAR standards are intended to achieve an increased intensity of non-residential development in light rail zones and Mixed-Use and Urban Center zones, within walking distance of high capacity transit.
+Minimum FAR standards therefore are not applicable in every zone.
+B. Standards and Measurement Methodology.
+1. Except as provided under subsections C and D below, projects developed after September 4, 2014 must comply with the minimum FAR standard of the applicable base zone, unless a Variance or Adjustment has been granted by the Review Authority pursuant to
+Section 12.80.150.
+2. Figure 12.50.150-A illustrates the methods to calculate FAR.
+
+3. Calculation of Floor Area Ratio in mixed-use buildings includes the entire residential square footage including hallways, common space, mechanical rooms and other utility features.
+4. Floor Area Ratio for automobile service stations includes the service area covered under the service canopy.
+5. Floor Area Ratios for above-grade parking structures includes all areas within the exterior faces of the structure, whether used for parking stalls, ramps and aisles, equipment rooms, stairwells or commercial space.
+6. Floor Area Ratios may be calculated on a project-wide basis including multiple contiguous blocks, pursuant to subsection D below.
+7. In calculating FAR for non-residential development, 25% of employee parking area may be subtracted from net acreage if parking is provided at a ratio of 0.5 spaces per employee or less for the average number of employees in any 8-hour shift.
+Figure 12.50.150-A:
+Measuring Floor Area Ratio (FAR)
+8. In calculating FAR for non-residential development on a site containing existing mature or specimen trees as defined in Section 12.50.230, net lot area on a development site may be reduced by subtracting the area within the drip line of the trees, up to a maximum reduction of 35% of the original net area.
+Applications proposing net lot area reductions to preserve existing trees shall include a certified arborist's report and tree preservation plan.
+The approval of the development may be conditioned by the Review Authority on implementation of the recommended tree preservation measures.
+C. Exemptions from Minimum Floor Area Ratios in Phased Developments.
+Phased development in the following categories is exempt from minimum FAR requirements:
+1. Properties subject to an approved Concept Development Plan in the SCR-V zone;
+2. Properties in any phased commercial, industrial or institutional development subject to an approved Concept Development Plan or PUD; or
+3. Any development specified as exempt in a plan district under Subchapters 12.60 through 12.67.
+D. Exceptions to Minimum Floor Area Ratios.
+Each phase in a phased development must meet the applicable minimum FAR standard unless the following standards are met:
+1. The subject phase is not more than 10% of the total project area;
+2. An FAR reduction in the subject phase is mitigated by an FAR increase of 10% or less in a later phase, which does not rely on redevelopment of early phases, and which is approved in an amended phasing plan and required in a binding legal instrument; or
+3. The subject phase combined with earlier phases meets the minimum FAR requirement.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 7, 2015)

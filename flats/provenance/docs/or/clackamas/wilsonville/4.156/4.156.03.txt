@@ -1,0 +1,33 @@
+Section 4.156.03. Sign Measurement.
+(.01) Sign Area:
+A. Cabinet Signs and Similar :The area for signs enclosed by cabinet, frame, or other background (including lighted surface) not otherwise part of the architecture of a building or structure shall be the area of a shape drawn around the outer dimension of the cabinet, frame, or background.
+1. If the cabinet, frame, or background is an irregular shape the signs perimeter shall be measured the same as an individual element sign under B. below .
+2. The sign area does not include:
+a. Foundations, supports, and other essential structures that are not designed to serve as a backdrop or border to the sign;
+b. Architectural elements of a freestanding or ground mounted sign designed to match or complement the architectural design of buildings on the site not and otherwise meeting the definition of a sign;
+c. A pole or other structural support, unless such pole or structural support is internally illuminated or otherwise so designed to constitute a display device.
+B. Individual Element Signs: The area for signs constructed of individual elements (letters, figures, etc.) attached to a building wall or similar surface or structure shall be the summed area of up to three squares, rectangles, circles, or triangles drawn around all sign elements.
+1. The descender on the lower case letters "q, y, p g, or j." shall not be included in sign area when the letter otherwise matches the font of other letters in the sign, the descender is no more than ½ the cap height of the font, and the descender is no wider than the main body of the letter.
+Figure S-1. Measurement of Cabinet or Similar Signs
+C. Round or Three-Dimensional Signs.The area of a round or three-dimensional sign shall be the maximum surface area visible from any one location on the ground measured the same as A. above except if the maximum surface area is an irregular shape the signs perimeter shall be measured the same as an individual element sign under B. above.
+D. Awning or Marquee Signs.
+The area of signs incorporated into awnings or marquees shall be the area of the entire panel containing the sign measured the same as A. above unless it is clear that part of the panel contains no sign-related display or decoration, other than the background color of the awning.
+E. Painted Wall Signs.
+The area of painted wall signs shall be determined as follows:
+1. If individual elements are painted without a background it shall be calculated in the manner indicated in B. above.
+2. If a background is painted it shall be calculated in the manner indicated in A. above.
+F . Temporary Signs.The area of temporary signs including banners, lawn signs, and rigid signs shall be calculated in the manner indicated in A. above.
+G. Unless otherwise specified, the sign area of a two-sided sign, with two matching sides, shall be considered to be the area of one side.
+For example, the sign area of a two-sided sign having 32 square feet per sign face shall be considered to be 32 square feet, unless this Code specifies otherwise.
+(.02) Sign Height above Ground:
+A. The height above ground of a freestanding or ground-mounted sign is measured from the average grade directly below the sign to the highest point of the sign or sign structure except as follows:
+1. A freestanding or ground mounted sign on a man-made base, including a graded earth mound, shall be measured from the grade of the nearest pavement or top of any pavement curb to the highest point of the sign or sign structure.
+In all cases signs on a berm shall be allowed to be eight feet in height from the top of the berm.
+Figure S-2. Measurement of Individual Element Signs
+2. A freestanding or ground mounted sign placed below the elevation of the right-of-way it fronts shall be measured from the lowest point in the right-of-way along the frontage to the highest point of the sign.
+(.03) Sign Height and Length:
+A. Height of a sign is the vertical distance between the lowest and highest points of the sign.
+B. Length of a sign is the horizontal distance between the furthest left and right points of the sign.
+(.04) Final Determination of Sign Measurement.
+The Planning Director shall be responsible for determining the area, height above ground and height and length of a sign, subject to appeal as specified in Section 4.022.
+Applicants for sign plans and permits shall provide the dimensions needed to calculate the area, height above ground, height, and length.

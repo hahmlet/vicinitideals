@@ -283,10 +283,33 @@ OPEN = {
     # belong to the next sentence, not the one naming 19.510.
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/wilsonville 4.001 -> 4.140",
-    "or/clackamas/wilsonville 4.135 -> 4.156.01",
-    "or/clackamas/wilsonville 4.135 -> 4.156.11",
-    "or/clackamas/wilsonville 4.135.5 -> 4.400",
     "or/clackamas/wilsonville 4.136 -> 4.400",
+    # 2026-10-28, surfaced or re-labelled when Beaverton, Hillsboro and
+    # Wilsonville were cut into one file per section (batch 4): one sentence
+    # to a line, so a pointer wrapped across two printed lines is seen, and
+    # the section a line sits in is the file's, not a guess (Wilsonville's
+    # "4.135 -> 4.156.01/.11" and "4.135.5 -> 4.400" were 4.125's and
+    # 4.136.5's). Not read from: signs (4.156.x), Site Design Review (4.400,
+    # 4.138), FDP applications (4.034, 4.421), Beaverton's own subsections of
+    # 60.05.60 (tree planting, cottage clusters) and 60.05.15-.30 for compact
+    # detached housing, Hillsboro's height-exception and Development Review
+    # exemption pointers (12.80.150, 12.80.170).
+    "or/clackamas/wilsonville 4.113 -> 4.156.05",
+    "or/clackamas/wilsonville 4.113 -> 4.156.07",
+    "or/clackamas/wilsonville 4.113 -> 4.156.09",
+    "or/clackamas/wilsonville 4.113 -> 4.156.10",
+    "or/clackamas/wilsonville 4.123 -> 4.138",
+    "or/clackamas/wilsonville 4.125 -> 4.034",
+    "or/clackamas/wilsonville 4.125 -> 4.156.01",
+    "or/clackamas/wilsonville 4.125 -> 4.156.11",
+    "or/clackamas/wilsonville 4.125 -> 4.421",
+    "or/clackamas/wilsonville 4.136.5 -> 4.400",
+    "or/washington/beaverton 60.05.60 -> 60.05.30",
+    "or/washington/beaverton 60.05.60 -> 60.05.60.2",
+    "or/washington/beaverton 60.05.60 -> 60.05.60.3",
+    "or/washington/beaverton 60.05.60 -> 60.05.60.4",
+    "or/washington/hillsboro 12.50.140 -> 12.80.150",
+    "or/washington/hillsboro 12.80.040 -> 12.80.170",
     # 2026-10-08: was FOLLOWED while EFU's farm-labor-housing variant was
     # encoded (its citation landed in the target). Steph's by-right-only
     # ruling removed that variant, so the row is open again. 39.4245(A)
@@ -541,6 +564,17 @@ FOLLOWED = {
     # sections and so stays on the chapter), and the cut files those lines
     # under 16.40.040, so the target is read.
     "or/washington/sherwood 16.40.050 -> 16.40.040",
+    # 2026-10-28, batch-4 cut: one sentence to a line makes these pointers
+    # visible, and a value's citation already lands in each target.
+    "or/clackamas/wilsonville 4.113 -> 4.124",
+    "or/clackamas/wilsonville 4.113 -> 4.125",
+    "or/clackamas/wilsonville 4.123 -> 4.113",
+    "or/clackamas/wilsonville 4.127 -> 4.113",
+    "or/clackamas/wilsonville 4.135 -> 4.131",
+    "or/clackamas/wilsonville 4.136 -> 4.131",
+    "or/washington/beaverton 20.30.05 -> 20.30.10",
+    "or/washington/beaverton 60.05.25 -> 60.05.60",
+    "or/washington/beaverton 60.05.60 -> 60.05.15",
 }
 
 

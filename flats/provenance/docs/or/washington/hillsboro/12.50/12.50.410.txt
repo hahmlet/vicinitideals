@@ -1,0 +1,172 @@
+12.50.410  Bicycle Parking.
+A. Purpose. Standards for bicycle parking encourage bicycle use, help to reduce principal reliance on the automobile, and increase bicyclists' safety and security.
+B. Applicability. Bicycle parking shall be provided in conjunction with all new developments, expansions of existing development or changes of use, except those exempt housing types and uses listed in subsection C below.
+C. Exemptions.
+1. The following housing types are exempt from bicycle parking requirements:
+a. Detached single dwellings, including manufactured dwellings;
+b. Accessory dwelling units;
+c. Live-work dwellings;
+d. Middle housing; and
+e. Any housing units constructed with individual assigned and enclosed garage or carport spaces or storage spaces 80 square feet or larger.
+2. The following uses are exempt from bicycle parking requirements:
+a. Home occupations;
+b. Mobile and/or temporary businesses as defined in Municipal Code Chapter 5.08; and
+c. Expansions of pre-existing commercial, industrial or institutional uses which are less than 50% of the existing net floor area or 3,000 square feet, whichever is less.
+D. Number of Bicycle Parking Spaces Required.
+1. Except as listed in subsection C above, all new development or expansions of existing development shall provide the minimum number of bicycle parking spaces specified in Tables 12.50.410-1 through 12.50.410-5.
+New free-standing commercial, industrial or institutional Uses requiring vehicle parking shall provide at least 2 bicycle parking spaces.
+Multiple tenant buildings or developments may consolidate bicycle parking based on the aggregated net square footage, pursuant to Subsection 12.50.410.G.8.
+2. For expansions of existing commercial, industrial or institutional uses larger than 50% of the current net floor area or 3,000 square feet (whichever is less), bicycle parking shall be calculated based on total net square footage rather than the expansion area.
+3. Bicycle parking for changes in use shall be calculated based upon the requirements for the new use.
+4. For any use not specifically mentioned in Tables 12.50.410-1 through 12.50.410-5, bicycle parking requirements shall be the same as for the use which is most similar to the use not specifically mentioned, as determined by the Director pursuant to Section 12.80.050.
+E. Adjustments to Number of Bicycle Parking Spaces.
+The Review Authority may adjust minimum bicycle parking provided for changes of Use or expansions of an existing use under Subsection 12.80.156.D.8.
+Table 12.50.410-1:
+Required Bicycle Parking Spaces for Housing Types or Residential Uses
+(spaces are per dwelling unit unless otherwise specified)
+Use Category Number of Spaces Required
+Household Living
+Multiple Dwelling Structure None if exempt under Subsection
+12.50.410.C.1; otherwise 0.25
+Group Living 0.25/resident
+Residential Services None
+Residential Business (for residential portion only) 1 in Zone A; none in Zone B
+
+Table 12.50.410-2:
+Required Bicycle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified) Use Type Number of Spaces Required
+Commercial Lodging
+All Uses 0.13/room
+Commercial Parking
+Surface Parking Lots None
+Structured Parking 1/20 vehicle spaces provided
+Commercial Recreation
+Indoor facilities 1.5
+Table 12.50.410-2:
+Required Bicycle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified) Use Type Number of Spaces Required
+Court sports 1/court
+Outdoor facilities (with bleachers) 1/60 ft. of bench length
+Outdoor facilities (without bleachers) 1/field
+Durable Goods Sales
+All Uses 0.05
+Eating and Drinking Establishments
+Fast food 2
+Casual dining 0.25
+Fine dining 0.13
+Educational Services (parking calculated per FTE student or employee)
+All Uses 0.01
+Office
+General office 0.1
+Medical office 0.2
+Retail Products and Services
+Minor Assembly Facilities 0.1
+All other Uses
+1/2,500 square feet up to 50,000 sq. ft.;
+plus 1/5,000 square feet thereafter
+Self-Service Storage
+All Uses None
+Vehicle Service and Repair
+All Uses 0.075
+Note: Minimum 2 spaces required for all free-standing Uses: See Subsection 12.50.410.D.1.
+Table 12.50.410-3:
+Required Bicycle Parking Spaces for Industrial Uses
+(spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Industrial Services
+All Uses 0.1
+Manufacturing and Production
+All Uses 0.08
+Solid Waste Treatment and Recycling
+All Uses 0.05
+Vehicle Storage
+All Uses 0.01/employee
+Warehouse and Freight Movement
+All Uses 0.01
+Wholesale Sales
+All Uses 0.08
+Note: Minimum 2 spaces required for all free-standing Uses: See Subsection 12.50.410.D.1.
+
+Table 12.50.410-4:
+Required Bicycle Parking Spaces for Institutional Uses
+(spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Colleges and Universities (measured per classroom)
+All Uses 4
+Community Services
+All Uses 0.2
+Detention Facilities (measured per bed)
+All Uses 0.01
+Hospitals (measured per bed)
+All Uses 0.1
+Table 12.50.410-4:
+Required Bicycle Parking Spaces for Institutional Uses
+(spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified)
+Use Type Number of Spaces Required
+Assembly Facilities (measured by maximum occupancy* in largest room)
+All Uses 0.02
+Schools (measured per classroom)
+Elementary school (grades K—5) 3
+Middle school (grades (6—8) 2
+High School (grades 9—12) 2
+* As determined by the Building Official.
+Note: Minimum 2 spaces required for all free-standing Uses: See Subsection 12.50.410.D.1.
+
+Table 12.50.410-5:
+Required Bicycle Parking Spaces for Infrastructure and Utility Facilities Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified) Use Type Number of Spaces Required
+Aviation Uses
+Hangars (measured per aircraft space) None
+All other aviation uses per commercial or industrial requirements
+Parks and Open Areas
+Indoor facilities 2
+Court sports 0.15/court
+Outdoor facilities (with bleachers) 1/60 ft. of bench length
+Outdoor facilities (without bleachers) 1/field
+Playgrounds To be determined during land use approval process.
+Nature parks; natural open space
+Public Safety Facilities (measured per FTE employee)
+All uses
+Table 12.50.410-5:
+Required Bicycle Parking Spaces for Infrastructure and Utility Facilities Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area unless otherwise specified) Use Type Number of Spaces Required
+Surface Alternative Transportation Facilities
+Park and ride facilities 1/20 of provided spaces
+Maintenance yards None
+All other uses None
+Telecommunication Facilities
+All uses None
+Utility Facilities
+All uses None
+F. Bicycle Parking Location.
+1. Bicycle parking shall be located on site in secure and accessible locations near a main building entrance.
+2. Outdoor bicycle parking shall be visible from on-site buildings or the street.
+Indoor bicycle parking for non-residential uses shall be located on the first floor.
+Indoor bicycle parking may be allowed on any floor in multi-story residential structures.
+3. If required, bicycle parking location(s) shall be shown on the off-street vehicle parking and loading plans submitted to the Review Authority.
+G. Bicycle Parking: Improvements.
+1. Space Size. Spaces shall be at least 6 feet long and 2½ feet wide.
+An access aisle at least 5 feet wide shall be provided and maintained beside or between each row of parking.
+Each required space shall be accessible without moving another bicycle.
+2. Security. Secure parking shall be provided as either a lockable storage enclosure or a stationary rack to which bicycles can be locked.
+All racks, lockers or other facilities shall be securely anchored to the ground or to a structure.
+Racks shall be designed so that every bicycle can be locked by the frame and secured to prevent falling or wheel damage.
+3. Separation Required. Bicycle parking shall be separated from motor vehicle parking and maneuvering areas by a barrier or a distance of at least 5 feet.
+4. Connectivity Required. Outside bicycle parking shall be connected to each building's main building entrance by pedestrian accessible walkways.
+Outside bicycle parking also shall have reasonably direct hard-surfaced connections to public rights-of-way and to existing and proposed pedestrian/bicycle accessways.
+5. Signage. Required parking shall be signed and reserved for bicycle parking only.
+If a bicycle parking area is not plainly visible from the main building entrance, a directional sign shall be posted at the building entrance indicating the location of the bicycle parking area.
+6. Sidewalk Obstruction Not Permitted. Bicycle parking shall not obstruct required minimum widths of sidewalks or pedestrian connections.
+As part of a Type II or III review, the Review Authority may allow bicycle parking on the public sidewalk only in locations where it would not obstruct required minimum widths or conflict with access to doorways.
+7. Landscaping or Usable Open Space Occupancy Not Permitted. Bicycle parking shall not occupy curbside landscape strips, landscape buffers or required usable open space.
+8. Distribution between Buildings.
+Bicycle parking may be distributed as the Review Authority determines appropriate as part of a Type II or III review to serve multiple buildings in a development.
+If a building has 2 or more main building entrances, the Review Authority may require bicycle parking to be located to serve all main building entrances.
+9. Coverage Required/Encouraged. Coverage or shelter is encouraged for all required bicycle parking.
+If more than 20 bicycle parking spaces are required, at least 25% of the spaces shall be covered or enclosed.
+If covered, the overhead clearance shall be at least 7 feet.
+Coverage can be provided through roof extensions, overhangs, awnings, arcades, carports or enclosures.
+Similar means of coverage can be approved through a Type II or III review.
+Covered parking can also be provided within a parking structure, garage, or bicycle locker, under a separate roof, or in a designated area within a building or residential complex.
+10. Security at Transit Stations. At transit transfer stations and park-and-ride lots, at least 20% of the required spaces shall be lockers and at least 50% of the remaining required spaces shall be covered or enclosed.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

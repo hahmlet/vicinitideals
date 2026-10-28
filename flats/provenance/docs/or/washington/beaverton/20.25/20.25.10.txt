@@ -1,0 +1,32 @@
+20.25.10. Floor Area Ratio
+
+1.Floor Area. [ORD 4857; October 2024]
+A.Minimum Floor Area Ratio: Unless otherwise specified, minimum Floor Area Ratio is the ratio of gross floor area in square feet to net square footage on a site.
+[ORD 4857; October 2024]
+B.Maximum Floor Area Ratio: Except in RMA, RMB, RMC, and CM-RM, maximum Floor Area Ratio is the ratio of gross floor area in square feet to gross square footage on the site.
+In RMA, RMB, RMC, and CM-RM, maximum Floor Area Ratio is the ratio of gross floor area in square feet to net square footage on a lot.
+[ORD 4857; October 2024] [ORD 4859; January 2025] [ORD 4879; April 2026]
+C.Floor Area Ratios for Multiple Use Developments: Multiple Use Developments with single-use residential buildings are governed by residential density and FAR provisions, as calculated by Section 20.25.10.4, below.
+[ORD 4857; October 2024] [ORD 4859; January 2025]
+2.Permitted Floor Area Ratio.
+Except as otherwise approved through the Planned Unit Development process, phased development may be proposed so long as each phase complies with the minimum Floor Area Ratio requirements.
+[ORD 4857; October 2024]
+3.Accommodating Floor Area.
+Outside the Cooper Mountain Community Plan area, Floor Area may be accommodated on a site where undevelopable areas cannot practicably allow development.
+The Floor Area allowance may be transferred from undevelopable areas to developable areas.
+Where higher Floor Area is proposed greater than the Code allowance, Planned Unit Development approval is necessary.
+In the Cooper Mountain Community Plan area, sites in CM-CS, CM-HDR, and CM-MR that have Resource Overlay and environmentally constrained lands as identified in the Net Acreage definition that combined are equal to or greater than 30 percent of the site shall have a maximum Floor Area Ratio that is 20 percent higher than that identified in
+Section 20.22.15. [ORD 4859; January 2025]
+4.Method of Calculating Minimum Development Intensity for Multiple Use Development with Single-use Residential Buildings.
+[ORD 4584; June 2012] [ORD 4799; January 2021]
+For Multiple Use Developments with single-use residential buildings, minimum residential densities and non-residential minimum FARs shall be implemented as follows: [ORD 4584; June 2012] [ORD 4879; April 2026]
+Figure 20.25.10.A Development Intensity Calculations
+[ORD 4799; January 2021]
+5.Multiple Buildings. For developments or phases that involve multiple buildings, the minimum Floor Area Ratio may be averaged by totaling the square footage of the buildings divided by the square footage of the net acreage of land within such development or phase.
+[ORD 4857; October 2024]
+6.Phased Development. Projects may use the Planned Unit Development (PUD); Design Review Build-Out Concept Plan (DRBCP) process, as outlined in Section 40.20.10; or the Cooper Mountain Development Plan (CMDP) process, as outlined in Section 40.20.10.5.C, to develop a site in phases to achieve the minimum FAR established in this section.
+Such projects must demonstrate in the submittal plans how future development of the site, to the minimum development standards established in this ordinance or greater, can be achieved at ultimate build out of the PUD, DRBCP, or CMDP.
+The DRBCP may be used if the only Site Development Requirement being phased, altered, or otherwise varied is the minimum FAR.
+If any other Site Development Requirement is being phased, altered, or otherwise varied, the PUD process is to be used.
+[ORD 4822; June 2022] [ORD 4859; January 2025] [ORD 4584; June 2012]
+[ORD 4224, 09/19/2002; ORD 4332, 01/01/2005; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4799, 01/08/2021; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025; ORD 4879, 04/02/2026] Effective on: 4/2/2026

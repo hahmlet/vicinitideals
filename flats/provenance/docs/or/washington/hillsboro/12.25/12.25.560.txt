@@ -1,0 +1,43 @@
+12.25.560  Development Standards.
+Base zone development standards in the SCI zone are listed in Table 12.25.560-1.
+Certain standards are illustrated in Figure 12.25.560-A.
+Table 12.25.560-1:
+Development Standards in the SCI Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR
+• Industrial uses .35
+• Commercial uses (as permitted)
+
+%
+Within 2,600 feet from an
+LRT station .50
+
+% Beyond 2,600 feet from an LRT station None
+Table 12.25.560-1:
+Development Standards in the SCI Zone
+Standard Requirement Clarifications
+Minimum Lot Dimensions
+• Width None
+• Depth None
+• Frontage 30 feet
+Minimum Setbacks None Setbacks subordinate to public utility easements and OSSC requirements.
+Maximum Setbacks None
+Minimum Building Height*
+• Within 800 feet of an LRT station
+
+%
+Commercial buildings 2 stories
+
+%
+All other buildings none
+• Beyond 800 ft. from an LRT station none
+Maximum Building Height* 4 stories
+Maximum Building Coverage None
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Variable See Section 12.50.220.
+* Standards illustrated in Figure 12.25.560-A
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

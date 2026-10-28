@@ -1,0 +1,4 @@
+Section 4.182. Exceptions and Modifications—Setback Modifications.
+In any residential zone where the average depth of at least two existing front yards on adjoining lots or within 150 feet of the lot in question and within the same block front is less or greater than the minimum or maximum front yard depth prescribed elsewhere in this Code, the required depth of the front yard on such lot shall be modified.
+In such case, the front yard depth shall not be less than the average depth, nor more than the greater depth, of existing front yards on at least two adjoining lots within 150 feet.
+In the case of a corner lot, the depth of the front yard may be reduced to that of the lot immediately adjoining, provided, however, that the depth of a front yard on any corner lot shall be at least ten feet.

@@ -1,0 +1,53 @@
+12.50.270  Waste and Recycling Facilities.
+A. Purpose. These standards are intended to assure that development incorporates functional and adequate space and access for on-site storage and efficient collection of mixed solid waste and recyclables prior to pick up and removal.
+B. Applicability. Except as provided in subsection E, below, the standards of this section apply to:
+1. All new construction subject to a Type II or III review procedure in any of the following zones:
+a. Commercial;
+b. Mixed-Use;
+c. Industrial.
+2. All new construction of institutional development subject to a Type II or III review procedure in any zone; and
+3. All expansions of existing commercial, mixed-use, industrial or institutional development which meets the threshold of the Development Review process as described in Subsection 12.80.040.B. paragraph 5 or 6; and
+4. Construction of new residential structures which include 5 or more dwelling units; and
+5. In any zone, any expansion of existing multi-dwelling residential development which meets the threshold of the Development Review process as described in Subsection 12.80.040.B. paragraph 5 or 6.
+C. Standards.
+1. Combined Storage Areas. Storage areas for townhouses, multiple dwelling structures, or multiple uses on a single site or adjacent sites may be combined and shared.
+Storage area space requirements can be satisfied with a single location or multiple locations, and can combine both interior and exterior locations.
+2. Co-Location. To encourage its use, the storage area for recyclables shall be co-located with the storage area for residual mixed solid waste.
+3. Storage Area Size. Buildings shall provide the minimum storage areas shown in Table 12.50.270-1 below.
+If a building has more than one of the uses listed, the storage area requirement for the entire building shall be the sum of the requirements for the areas of each use.
+For purposes of this calculation, the floor area of the storage facility itself shall not be included in the gross floor area (GFA).
+Table 12.50.270-1:
+Waste and Recycling Storage Area Size Requirements
+Type of Use Minimum Storage Area
+Residential: Shared facilities 100 sq. ft. plus 5 sq. ft. per unit for each unit above 10 (can be provided in multiple locations)
+Commercial:
+• Retail Products and
+Services 50 sq. ft. plus 5 sq. ft./1,000 sq. ft. GFA
+• Food Services Operations 100 sq. ft. plus 10 sq. ft./1,000 sq. ft. GFA
+• All other uses 50 sq. ft. plus 5 sq. ft./1,000 sq. ft. GFA
+Industrial 50 sq. ft. plus 6 sq. ft./1,000 sq. ft. GFA
+Institutional 50 sq. ft. plus 4 sq. ft./1,000 sq. ft. GFA
+All other uses 50 sq. ft. plus 4 sq. ft./1,000 sq. ft. GFA
+4. Storage Height. The specific areas in paragraph 3 above are based on a storage height of 4 feet.
+Vertical storage higher than 4 feet but no higher than 7 feet may be used to accommodate the same volume of storage in a smaller floor area.
+If vertical or stacked storage is proposed, the site plan shall include drawings to illustrate the layout of the storage area and dimensions of containers.
+D. Location, Design and Access Standards for Storage Areas.
+1. Location Standards.
+a. Exterior storage areas shall be located in central and visible locations on the site to enhance security for users.
+b. Storage areas shall not obstruct on-site or off-site pedestrian or vehicle traffic movement.
+c. Storage areas shall be accessible to waste collection vehicles, on accessways compliant with paragraph 3 below, without requiring backing movements onto a public or private street or alley.
+2. Design Standards.
+a. Exterior storage areas shall be contained within opaque enclosures and gates, built with the same type of materials as the primary structure on the site.
+Storage areas shall be screened and buffered from on-site or existing off-site residential living spaces.
+b. Gate openings which allow access to users and haulers shall be provided on all storage areas.
+Gate openings for haulers shall be a minimum of 12 feet wide and capable of being secured in both closed and open positions.
+3. Access Standards.
+a. Storage areas shall be accessible to users at convenient times of the day, and to waste collection service personnel on the day and approximate time collection service is scheduled.
+However, access to storage areas may be limited for security reasons.
+b. Storage areas shall be designed and surfaced to be easily accessible to waste collection trucks and equipment.
+Storage areas and vehicle approach drives shall be paved, and the maximum slope on any approach drive shall be no greater than
+3%.
+c. The full length of the accessway to any enclosed or covered storage area shall provide at least 12 feet horizontal clearance and 20 feet vertical clearance shall be provided to accommodate collection trucks and containers.
+d. If only a single access point is available to the storage area, adequate turning radius shall be provided to allow collection vehicles to safely exit the site by driving forward.
+E. Exemptions. Curbside collection of solid waste and recyclables from individual dwelling units in townhouse buildings containing 5 or more units on a public or private street or alley may be permitted with the consent of the applicable collection service.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)

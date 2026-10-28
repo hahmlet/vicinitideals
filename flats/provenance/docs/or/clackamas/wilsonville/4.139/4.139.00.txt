@@ -1,0 +1,98 @@
+Section 4.139.00. Significant Resource Overlay Zone (SROZ) Ordinance.
+Definitions:
+1. Area of Limited Conflicting Uses. An Area of Limited Conflicting Uses is either:
+a. An area located between the riparian corridor boundary, riparian impact area or the Urban Growth Management Functional Plan (UGMFP) Metro Title 3 Water Quality
+Resource Area boundary, whichever is furthest away from the wetland or stream, and the outside edge of the SROZ; or
+b. An isolated significant wildlife habitat (upland forest) resource site.
+2. Bankful Stage. The stage or elevation at which water overflows the natural banks of streams or other waters of the state and begins to inundate upland areas.
+In the absence of physical evidence, the two-year recurrence interval flood elevation may be used to approximate the bankful stage.
+3. Emergency.Any human-caused or natural event or circumstances causing or threatening loss of life, injury to person or property, and includes, but is not limited to fire, explosion, flood, severe weather, drought, earthquake, volcanic activity, spills or releases of hazardous material, contamination, utility or transportation disruptions, and disease.
+4. Encroachment Area. An area within the Area of Limited Conflicting Uses where development may be permitted.
+5. Impact Area. The area adjacent to the outer boundary of a Significant Resource within which development or other alteration activities may be permitted through the review of a Significant Resource Impact Report (SRIR) or where an SRIR has been waived in accordance with this ordinance.
+The impact area is 25 feet wide unless otherwise specified in this ordinance or by the decision making body .
+6. Riparian Corridor .Is a Goal 5 resource that includes the water areas, fish habitat, adjacent riparian areas, and wetlands within the riparian area boundary .
+The "riparian area" is the area adjacent to a river, lake, stream, consisting of lands that include the area of transition from aquatic ecosystem to a terrestrial ecosystem.
+The Riparian Corridor is diagrammati-cally defined in Section 4.139.00.
+7. Riparian Corridor Cross Sections. Riparian corridor significance for the City of Wilsonville is based on assessment of several factors:
+a. The presence of habitat used by species listed as threatened or endangered by the Endangered Species Act.
+The resource is considered significant if ESA-listed salmonid fish species utilize portions of the resource area.
+b. The protection of ESA listed species habitat both on - or off-site.
+The resource is considered significant if it provides functions that protect the habitat of ESA-listed species, either on- or off-site.
+Riparian corridors can protect water quality parameters such as temperature, suspended sediment and contaminants of downstream waters that are ESA-listed species habitat.
+c. The inclusion of other significant Goal 5 resource areas.
+Riparian corridor resources that contain significant wetlands and/or wildlife habitat are considered significant.
+d. The provision of habitat continuity for wildlife.
+Riparian corridor resources that provide a link or continuity for wildlife movement between significant wildlife habitat areas are considered significant.
+e. Headwater areas, including intermittent streams, can be important for fish and wildlife resources.
+These areas can provide good quality water, protection of water quality, insect and organic materials, and other factors for habitat areas downstream.
+Generalized riparian corridor types are shown on the following pages.
+Riparian area adjacent to the stream is less than one APTH wide, and has an adjacent slope.
+The adjacent slope is designated as riparian impact area, based on the potential for activities on the slope to have direct impacts on riparian area functions.
+Notes for all riparian figures: (1) The "area of limited conflicting use" and "SR Impact Area" are regulatory areas defined in the proposed City of Wilsonville Significant Resource Overlay Zone (4.139.00).
+The SR Impact Area is always 25 feet wide from the edge of the significant resource (SR).
+Riparian area adjacent to the stream is less than the width of the streamside terrace or bench, and the base of the adjacent slope is a distance greater than one APTH from the stream bank.
+If the riparian area is less wide than the distance of one APTH, then the remaining APTH distance is the riparian impact area.
+Riparian area adjacent to the stream is upland, forested wetland, or a mosaic of upland and wetland, and does not have adjacent steep slopes within 200 ft. If the riparian area, including wetlands adjacent to the stream, is less wide than one APTH, the riparian impact area extends to a distance of one APTH from the top of the stream bank.
+Riparian area is emergent or emergent/shrub wetland, and does not have adjacent steep slopes within 200 ft. The wetland is the riparian corridor.
+The potential impacts of human activities adjacent to the wetland/riparian area do not warrant placing a riparian impact area on this corridor type.
+Riparian area is confined to a portion of the river bank where the adjacent land is not inundated annually (i.e. not an operational floodplain).
+The riparian impact area is a minimum 75 feet wide from the top of the stream bank.
+For any areas along the Willamette River that have an operational floodplain (i.e. flooded annually), the riparian area is the extent of the operational floodplain.
+8. Riparian Impact Area. An area within which human activities could have adverse impacts on functions of adjacent riparian corridor resources.
+9. Significant Resource Impact Report (SRIR). A report that delineates specific resource boundaries and analyzes the impacts of development on significant natural resources.
+It outlines measures to prevent negative impacts, and also provides mitigation and enhancement plans.
+10. Significant Resource Overlay Zone (SROZ): The delineated outer boundary of a significant natural resource that includes: a significant Goal 5 natural resource, lands protected under Metro's Urban Growth Management Functional Plan Title 3 (Water Quality Resource
+Areas), riparian corridors, and significant wildlife habitat.
+11. Starting Point for Measurement: Is the edge of the defined channel (bankful stage) for streams/rivers, delineated wetland boundary, delineated spring boundary, and/or average high water for lakes or ponds, whichever offers greatest resource protection.
+Intermittent springs located more than 15 feet from streams/rivers or wetlands shall not serve as a starting point for measurement.
+Table NR-1: Metro Water Quality Resource Area Slope Calculations
+Protected Water
+Feature Type
+(See definitions)
+Slope Adjacent to
+Protected Water
+Feature
+Starting Point for
+Measurements from Water Feature
+Width of Vegetated
+Corridor (Setback)
+Primary Protected
+Water Features
+1
+<25% -Edge of bankful stage or 2-year storm level;
+-Delineated edge of Title 3 wetland
+50 feet
+Primary Protected
+Water Features
+1
+≥25% for 150 feet or more
+5
+-Edge of bankful stage or 2-year storm level;
+-Delineated edge of Title 3 wetland
+200 feet
+Primary Protected
+Water Features
+1
+≥25% for less than 150 feet
+5
+Edge of bankful stage or 2-year storm level;
+-Delineated edge of Title 3 wetland
+Distance from starting point of measurement to top of ravine (break in ≥25% slope)
+3, plus 50 feet4
+Secondary Protected
+Water Features
+2
+<25% Edge of bankful stage or 2-year storm level;
+-Delineated edge of Title 3 wetland
+15 feet
+Secondary Protected
+Water Features
+2
+≥25%5 Edge of bankful stage or 2-year storm level;
+-Delineated edge of Title 3 wetland
+50 feet
+1 Primary Protected Water Features include: all perennial streams and streams draining greater than 100 acres, Title 3 wetlands, natural lakes and spring.
+2 Secondary Protected Water Features include intermittent streams draining 50—100 acres. 3 Where the protected Water Feature is confined by a ravine or gully, the top of ravine is the break in the >25 percent slope
+4 A maximum reduction of 25 feet may be permitted in the width of vegetated corridor beyond the slope break if a geotechnical report demonstrates that slope is stable.
+To establish the width of the vegetated corridor, slope should be measured in 25-foot increments away from the water feature until slope is less than 25 percent (top of ravine). 5 Vegetated corridors in excess of 50-feet from primary protected features, or in excess of 15-feet from secondary protected features, apply on steep slopes only in the uphill direction from the protected water feature.
+(Ord. No. 674, 11-16-2009)

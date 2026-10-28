@@ -1,0 +1,1972 @@
+[
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3b8a1280cd2055ab8c5d4d7bf577f2f0b5e393bfdf0d67a1f52571f62647f918",
+  "new_quote": "or/clackamas/wilsonville/4/4.155.txt#L176-L184,L186-L188",
+  "old_fingerprint": "0d33dc797a464da1e46c9c477807deec47b4959758624dbcda7c429e9bbcc459",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L13405-L13414,L13416-L13420",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "49f573294b31f0b46912e3f8da88914c19fd78c71ab126e59fbd65f8da288eb3",
+  "new_quote": "or/clackamas/wilsonville/4/4.155.txt#L11,L14-L16,L176-L181",
+  "old_fingerprint": "1ecce5aced66ac306be2dc85578671963d6ddee71cbba46f53f45268c205f905",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L13093-L13095,L13102-L13107,L13405-L13410",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "72d20363b0774db2eaeefc898aba0941ba0b151366aa42ef394dbd14c395ee3a",
+  "new_quote": "or/clackamas/wilsonville/4/4.001.txt#L393",
+  "old_fingerprint": "80b505e4ce2af0ff73b7647b8f093c85a458e7651387573806df562e66381b27",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L1019-L1020",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "8ce042b9962ab84d8cff0e96e59e6526732a064762243a1de6d21239c584623d",
+  "new_quote": "or/clackamas/wilsonville/4/4.001.txt#L393",
+  "old_fingerprint": "2b50ff30cfad6118369b8ce1e73b459176a3f308d0fee8ea058cb197d2dc3232",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L1019-L1020",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "6c831a0a57975122fae8498f40a0a6e372c62ae7637c2b9f3ae89b1918196a36",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L344-L345",
+  "old_fingerprint": "37da7a92dbc1a50a258aeb2fce156b2e2838acd668ecb9e1d12e064f28b5effa",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3538-L3541",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "415bb5ce7b4a40c6396508ed04da3d23274c5ae43a8cfbf2ec6899c690255323",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L344-L345",
+  "old_fingerprint": "efe91bd06e14bc58d5d4bda0904a0b606c749e30db9f197dbf42afcedcc00e0c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3538-L3541",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "fed911c53145f96fd87f4c5e4acd31075f4cda6db0ffeb1467a4c47b8de4aaa7",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L344-L345",
+  "old_fingerprint": "60ba6040bed573ffe4240704f5482d73250c6cbc495eb755488fc75298179446",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3538-L3541",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_alley_access_required",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7edd9af86458898dbe0a14a87b4f4e8ce1fa68adefbbc1cb619f2af1bc801de1",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L354-L356,L544-L546",
+  "old_fingerprint": "6df1e6dfab6f337ca4d11c2bf0d696b4e923e027641f37ff5ad483164105feba",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3556-L3559,L3835-L3838",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f043d020c5a1af10796d1b4827af2dbcd0942df89a1ed35f1671611d514cd9ed",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L344-L345",
+  "old_fingerprint": "e55ebcd2a3b0a08027c715378679b97e08828fba673c8c5c3d367f4fe4e7a9d7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3538-L3541",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "bfd50858e3192d56e90a3c4bce3f3c848c1fb905d436eddaa3b8ee60a643373d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L416-L417",
+  "old_fingerprint": "1b7229134c69ed1801a2d3224db593f4de07a9a4ce0d6c86de338b017ee0503e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3643-L3645",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "23fa6b2a2e3cdee5453d4d25ead98df1a1990009b8b1b803984bb5cacbf419b2",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L418-L420",
+  "old_fingerprint": "bc9b7791a70c7f6420eacab885dc8865989554ad7475bdf540345aefaa10baf1",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3646-L3648",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a1dc00511e9c39b30d6731cf98ae3243046bf554334dd3f018243ad04beac898",
+  "new_quote": "or/clackamas/wilsonville/4/4.001.txt#L288-L291",
+  "old_fingerprint": "d2bab28e75a6aecdfe5dce5e258a0ecdff57454eb9b4dce29950944ab3ba22b7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L804-L810",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0a5e4cbf061ca61b801d845502e34743f0e1471f9d95a5b7f15a1936fcc59524",
+  "new_quote": "or/clackamas/wilsonville/4/4.169.txt#L2",
+  "old_fingerprint": "d874c60e8fc97211ba96ed56faf95954eaf4f7b08db027698e5cf9ad600e6b82",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L14583-L14584",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "8f6bfcc224a0d105b4a63cb9c596d45c1f820f99a0cff90a1ee95c623ab2d80d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L344-L345",
+  "old_fingerprint": "a5f5f8a52e4504de012bd0b0ac0b78f6e0592ab29a58b58c5b9d1ca51be289fd",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3538-L3541",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "646e9d666478a46da2cd7fbb908a9ef876b361de47e6330dcfce501fa7d5822d",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L6,L8,L14",
+  "old_fingerprint": "54a673351379e65ac6cfd1286fb71722cc227160ffa2032e9028fac424ebc5f7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4385,L4388,L4394-L4395",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9b28c20657724364fad97c60082e92f96c3de1480c4d1c12f271a489dd497482",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L6,L8-L9,L15-L16",
+  "old_fingerprint": "b415ad587a720ffc34d6d8b995f56e4189d28dc09dbdedfe49ea500d89108b2e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4385,L4388-L4389,L4396-L4397",
+  "when_key": "unit_lots",
+  "zone": "R"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "c07005b3ca4980e82c7d7200c067cddbe5576d9dc65cd82cf9837b5de33c6340",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L57",
+  "old_fingerprint": "7aa1e564462db017c55a4286f971ae34c000ebf56eec287216a87414ddfd9c39",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4457",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "33d3d0181364c1ded0290f65646fa581a92c4d1007d78eb5583fba509af070e4",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "321ace1b3f6b5b9640a4a192f19f3ebb9e4bd08ac77127538fd77e78eaa0210a",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b0293ca73845fef7865b5598cd783a1c4bff2f12332caf73cf32c5bdc8246145",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "858c36ca66cfcf1c29b6e9214e2b113e732b6c49c9d3c5a371e2281fb463b8a5",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "62f40392146e7019b376cc59f73d1293695e91824e0938254a8cdc6d518f0e43",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "9a9fbc317daf7f81c2493ced56eee0e072dde883106ebeaae62756445392bef1",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "R"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "09434c72b082e78e57416776666a21234ee0e876c3342d7303d786110ee46874",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "b666ae8e54e25bcac2f38d476ec5ce47081d1bf72bc06439097f40a2881dc543",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "R"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "acb11e5998286356e4ddc311a74a35f4d7648c2a982825244b80ddc2af55bdf9",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "21e5b4410ee740890511167bdbed6e5c58d4d1e7bf52426c0dd8e9d273989a2b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "72fd97ab443380e3abc8840c1c4d6e8b2254098da4c509ddd9049a41e04a919d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "79d8bca849456ec80895b99a280b30bd06478c29b8b6e8dbb9b502dad6806788",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "R"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "5596663bb730ee12b457b17c972294b91bbbdfc02690719f3d1c9858bec83a21",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "64a3ef87b8086fa997d206252e2790a1bd79c6c0a402869788ec76608d0ea990",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "16a4d01ef6b324505a9a2d6fa5b77253e2560ca6299bca20ca7fba5add97c999",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "87f6716ef86cb99074a7829873c0b3a5cd71820d8fcd24a3855d4f5ea2c7d874",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "R"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "600285489ff956c726e675392975802eab505ec1cd7cb0b1bd4b375c4c3ffdbb",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "f0ca06ae3670282ee4ffd792209d730325e9f217699d584100322e652ad6924c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "2af40c455aac63a52f38b222f509b04edd5a810ef292ff390c428cd44ce3b106",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "51a86bc2114a445f3556b7da7b1a5229f81d835ad31392e9f9a4362fc245cfe4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "R"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "871cf0553361243b023919e84b63d4af138f162a44e8d7877976da93a9f16b89",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L51-L53",
+  "old_fingerprint": "717c765d19b903934bb4f20020adf38c9b979656adff22040e0d1fd436de3009",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4450-L4453",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3faa2172bda6860956ea242bf23c214c915b2ab64ab249512c7777378c2ba49a",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L55",
+  "old_fingerprint": "2f1fba7b39a1299729b412cfd6198cd673271f12a11a731e8acc1ccbb227ee94",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4455",
+  "when_key": "unit_lots",
+  "zone": "R"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "909ca356238a3e653ea612aaed27309e6f68ece18089c1ff1699df9a202ef96d",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L43-L45",
+  "old_fingerprint": "54c34cd4a8f8373f230ea10ef8e9cc130fe11a71b3a7bdf4747c2598ff6694ef",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4440-L4442",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "07518622ca65ee2d7634b3b2b5ff3874f873da9254a6ce52f897304db322e65e",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L43-L45",
+  "old_fingerprint": "1a0b03c62b5c72c2ece4154b029b19754e8d1a8317506e34c09474d9d2241f6b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4440-L4442",
+  "when_key": "unit_lots",
+  "zone": "R"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "549fccdfeb44975237eeddb214787d2814084a0ce479d82d4dcc9515d0ada188",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L56",
+  "old_fingerprint": "7cd200f1cea0f50c268fd9e177b064aa31ff96857024afb4ef54df27b78fadaf",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4456",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "5745f6d01366537488d7e6f3862db1c015456b0a7352867a82c7c3874bd3a544",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L46-L49",
+  "old_fingerprint": "c0521ec867dd3199d35f62b1092da5e5d8b6c6ca8eac9a9f882a58ece88c1e3f",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4443-L4446",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4fffa5611c329b76eb3b02d8e37c0306271180a4568c5904f953f7275dd31369",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L46-L49",
+  "old_fingerprint": "56359b87c6e1b648f99ce54c5901c8a186636831e3a59df62737c021339db2b7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4443-L4446",
+  "when_key": "unit_lots",
+  "zone": "R"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "cef231103c803c8124800952e56bf29ce514301f7bf1d22fae0f4929c5996303",
+  "new_quote": "or/clackamas/wilsonville/4/4.122.txt#L58-L66",
+  "old_fingerprint": "9d79eaea459d9a438671f6a113dc7bc089b8ec5308dc5e2d2f462dbaac17d9fc",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4458-L4467",
+  "when_key": "",
+  "zone": "R"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "1c2fee10a713da9ce3388d28ffe00c1a872a6eb43dacadef023606338f332219",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "cd1ee50e3d31fd34d0f59dbc28d49af770c9225ee961dadf8168e1703b884c54",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "18ac2ceb5e697fda44a50e5c39b0a540340e1a20d3b573aea3afc086dc09ba8c",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "91d3b4ecea899f0adb7cb59915e01cec5fce2f2e519051c6539c8f6a49dc875c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "13cd3da1b56347f47891a5e901045512d12351b8739663d802b24563d3ab9821",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "77e431b66fb2b9d848dd749e46ce6ff65206815293c3fec03f5a11478e733325",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "fb134851dfceee27cce4dcd5b11573cb48a4b03c41112f9c189308d4cae949ff",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "2dc6d8e5cbea2b751a64984245295465fb8aad186336999817266944da21c331",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "75fca1ff213db48b1e48f247c20ea73a9e6cf2efa47868ea9195e36aefc608d3",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "fca30c94e345ebbf2b5191d9d8a6a7d226f57abc2475de94e1732af3c85f1ddb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0845750e4202dcb19e8de09b6de9f7e7bce78456c444c5b4cb58db5e231fb030",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "3220c818372120331671578b4d53f9c4394f76dc2df699b7669420badcaeb553",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a4a5969605457100c358952d4efbb800746ff53c2555fbc2ded5d38b48ad92a2",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "39a89e821367565a28f3aad773177926e2c35e7c8753a3f4b5a7756082fad6fa",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b1141118cecfe158d623aff39dca2c31abd1d6dce57a7421ffb7a7079cc7aed3",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "4d7ba16543d5b3336d411f46ec83debe00ad5aebae96e761265da669997ba613",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3eaa8ef85e7f80ee449a075451ba32469da560ee9e6e3eaeda88ba56968ad9c2",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "9569f2cb4de8a1e17fe8a48d5762fb994259c92ac092924c2c0de408f0f67a51",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "bf5106ee07ba10d7dfa4a531412ec5656ba15f1ec6b108b6e0d7e1116466604c",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "618663a8ebb1fb8403a6b96fd4ee337e97894aa5a922ac7cf437a8e08a247f31",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "OTR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f8a18e56ca74bc4979e1fcfbaa81c3c46baf1fd60359fd29d8133e423127606e",
+  "new_quote": "or/clackamas/wilsonville/4/4.123.txt#L25-L28",
+  "old_fingerprint": "c51b26a92107ddfe61d6937e9c09f6542060f2ea7bc495ea70dc97724b79ed66",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4516-L4520",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "c855b47fcbdebbbe3aa1fb06d459887165e87779f656fb2706a35387ec99f260",
+  "new_quote": "or/clackamas/wilsonville/4/4.123.txt#L29-L32",
+  "old_fingerprint": "187dbb85ee87bf29251e05f60d5274f6dbaa64d398f93ce66b88bd94343084d7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4521-L4525",
+  "when_key": "unit_lots",
+  "zone": "OTR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "97d50e2da44e354bc88ae49621f78ebc6b4483e719b6d909ca7253219b82c4a9",
+  "new_quote": "or/clackamas/wilsonville/4/4.123.txt#L19-L21",
+  "old_fingerprint": "844200a91aa551e584a95e54a28b56da2ea13b0e507ae80eb2c507b8e84a73f2",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4510-L4512",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "767117cdca2a742c2a5fd7b4ebc4a936e1e83527847b4a9df892749ca5460d86",
+  "new_quote": "or/clackamas/wilsonville/4/4.123.txt#L19-L21",
+  "old_fingerprint": "841ac71d68528d07d770ec550cf95b580b8ef0a02c61347d927008d7f9040db4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4510-L4512",
+  "when_key": "unit_lots",
+  "zone": "OTR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a09a6988129b47ef820986df3599357a584d8e60898f4c782243045391ace6cc",
+  "new_quote": "or/clackamas/wilsonville/4/4.123.txt#L22-L24",
+  "old_fingerprint": "f2846f693e1be575681dff2c06b62d6f62b97933df05f2765031a79bc7fb3968",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4513-L4515",
+  "when_key": "",
+  "zone": "OTR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "18d9e431ef1a6b04f6d23ea3dc604177057ae5e69fbc24800fea6431cff824e7",
+  "new_quote": "or/clackamas/wilsonville/4/4.123.txt#L22-L24",
+  "old_fingerprint": "52355de3ee05e041bf923746790d8ae146706fd6db7c40c2f435f7b61a46cabb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4513-L4515",
+  "when_key": "unit_lots",
+  "zone": "OTR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3068d5d69a4237ff7f79a590815581e4f3d5d8f6abe47f6d24aecd4871b8eb62",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67",
+  "old_fingerprint": "5e7851983920805c8770b90edfde846fad09fe4438be8a4f2a096419713ad9d4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3fff7e03f32be810d34138ac515b98fb9f2771c2d9254179a8a529b7a7c08e2c",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L56,L68-L69",
+  "old_fingerprint": "204b8a691b262cb2b364d45389f98ae556a12471d000a91c8a101ccac1511ae2",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4657,L4670-L4671",
+  "when_key": "unit_lots",
+  "zone": "PDR1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "2b08f3ad97aaa30899a247778a13b40be43dfe4e49e150e39d53471b20576b09",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L1-L5",
+  "old_fingerprint": "0beff8b5a1451b178684001813f6679627bf27a3a2b2229c04e1806ec5b95b88",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4572-L4576",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7acab4e1ff3657bcc2f167a81f2e702e45d4b0326d3ec3979e81f97ef70d639e",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105",
+  "old_fingerprint": "8e76d7a2b7563dea1b60bb4d6d0b2fa65d3c7a3521b45baf73e1bc4e70c45f26",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "666006b5f95132a3cd698bd84688fc1075a8d20d0051e60e888e531d2f62a604",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "9ddf61f9e516ef6b0eb3c46fdbc290dc569827799ccb113b26dce6c5bb65e814",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4b7db8ba2278f27be45c953f842d4394b38aa072ae8c46ec024e8f28ec7b2d44",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "d938ff8238d769fc03dd3c981399be6dc25c360f72b3c5f24107d8bee83b62d6",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f57e0078b7b5d6c102a275fc41c0e44e0d77b4faab527272b35be876e3245aab",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "a49c52ea3a8e736e1b8260ca67a547e764e258f465622b87ecf607013ce0f1de",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "57e03fadde848d0eaa77b1c5efe325bed9695f31721afb873b487636fe3acf53",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "95925635b685940785e9e0cc5d593f2c831bffd8bf77a0b4f9f7954bf79891f6",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "98ae629b2c828865c8d8fe03d4d35a1321f349611ec73e6a06d531632607a086",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "1c2fe6ef4bef1b618a3ecedaa64641d6db8e1db974361d7e4950c1c1081a5893",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e65a3b2bda3bebca1190fe54b5796d2a12b6af543fda34cc2579716d814d490e",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "452c1426782b5cf0ce4f72222cec8daee7dd03eae0892b75b49d91b81cc4a3f3",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9ed44745f83a52e59fe82bdf55547ca6e6878b6c765746127fada49ed04aaa16",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "c46ea03c038372d2159e3880934f08de6efdbb8935ce5aa803ea2984b82978f9",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9b6790a1ceb8e903feabdad5fcbed725430f5864ee7e3a3778e43bafa398e7e2",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "fe1b54be8d81f127723371122a7c1b97fa1c200aff1e4212e68aeff4908f804c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "fe0d68788021e7ba0ade813e646e498d262f1a30768fd06faee6d510b59fdc7d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "7096a08cab4986d413c06e2dc0c8f1c8ebaf88969ae34f06df16d96ab60bc4ca",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e3290f0d0e01ec5eb78d9dd1a831185113005732c706ca8117bc1064c5200d5b",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "6bf0a394dff1d3048b718c0e4f47a3194fd00ffd2859394f4d5f1cf3bb3c1446",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "PDR1"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "1f4d1a573d42e42b406af9ccd2bd77e1808ba001a36fa1c912cae2f98be1bc0b",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L101",
+  "old_fingerprint": "7b2b36a4946133dbcb81fca0aca1adb8d474de8dcbc1e1f15b21b4e00f8499c6",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4713",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7aea86fb19ba6d8200245e3c7a5dcdbe7dd89976c4ff4e3801b6966f9bad7a4d",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L104",
+  "old_fingerprint": "6104b0c1324e5cb1d269add8e759319bf9b9dd83758a6a128e540be1e98952e7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4716",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "13a02532b613daa508e19b0fa3f44de40384fe567f39b796f8c707ebf827a947",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L104",
+  "old_fingerprint": "5b730fc4cda60688e219d8491619e70f76e4f50733bebf689dc5987f9f03949c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4716",
+  "when_key": "",
+  "zone": "PDR1"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "25ba8f8242fbbf23508ad452682380b4edff52333f560530ca043dc4f9e2998a",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67",
+  "old_fingerprint": "7858c749d9a581c75f67f9aa95bf48d1ef8f84d914b13be52471ce22a45398b7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "02869a3928f38e3b24e214e7b2dd690fad0a47954f020f768b56b7455d408d43",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L57,L68-L69",
+  "old_fingerprint": "b9303e5e7b6c1d73bce4a254f89b96b89b22e8df6abbb4ebc249685ee91f3586",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4658,L4670-L4671",
+  "when_key": "unit_lots",
+  "zone": "PDR2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "bf76a188e9453b7d63519b317fc8b5b0a6639015c583d4be784c5e906e5d3909",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L1-L5",
+  "old_fingerprint": "0e36a503b0c021dce964ba25fb9a997aee8e5e28da055fe82ab36acf0a980032",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4572-L4576",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "cdd70ab8b2c1339f20a066582d3d852bf683265f9f536c99bbacc20dff5236fe",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105",
+  "old_fingerprint": "2e8c91c50acfd9b860a0d8975e1777036642ae9a487da12fcc8ee9a409d502da",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "af9f36dae4f25f109d8bdcfa06e5ecb7593dad5e7459b65319fe31b4267e7df0",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "61789e21b17febb013644f198d4e3c0ba7e54e9b5012678a5a8e25df0191ed01",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f645050671fed764d1983cdbc7e2c418670e1df727e3af85807255c62f22a716",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "af8823167854c93b970c35cc80af75815429d6cb8975d21145c015148845d18b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4ae7a0525328faff82bafb0ece324c0985f470624f1ebfd1bf997034db1fe4c4",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "918205674334e7758cd6e93f0f07d8bddfd385f94201d9ac1107a4fb42fac95c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a25ca6f46e03cb1f906e85204a954977486bdcc86d963e64cce3127d60681a4c",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "74dc037c26de2bdc7d45547ef6ecf0e8475d070efd9bdb851fdedf7628d8ddd5",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3cc3cf21a2c950bb862b9da452465dadf0e60c9ed05e08648d37809a182dc3f8",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "3c09bdc342cc2675e8cc622ce4e32260200c74e39c253424947d7223337eb363",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e66db578069bc3feb5a70494f2581ac6b09d442dd377b9f528ce79d3bff60ca8",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "b0a5c559bc6c32784ca6d38a6ab53e5837f242a6e0ed4a83bd6a5a07696aadbe",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f6dd225aafa427cbeae3ba6794b96cc1188851662bdd687580c0ab8b90016a37",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "ffc1db22619e6a712dfd836b64cefe988f596188dc7a47e40d9227e828f9db37",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7146d78a84e5980fad8e0e3ba9a3243e55615aa854aa78f936b26c70e2405d3d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "d9628706c579c053bca36f343f4cd6bbe5d97fa72ded2907d32095333b16bc35",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "979122a2f4d286edd9249291300506d864f77d8e3ccc45c434c30c67f25dac93",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "caf91046ed7c5f872667505a2f1b1b987ca41ceda8bc20aa36adaf09bc82d136",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "6ddd5677e1c36e3809734b0d60c026a5bf8a19fc138324a5a96e7f7e3de2883d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "0f3b284b8f4f329799eb570182870261ca24f8b8c703b97047f830e52bef78d4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "PDR2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a1acd46c89d5a0587d16ae61fa5f2589f5f13cc6fc69b53355f3b69fbf79b13c",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L106",
+  "old_fingerprint": "d36a177a2bdefafe84b582f94e3e8b7fa45383ed1a41c1c38aa850e1ae0823d0",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4718",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "59b69148609bff7a3b714fc04cccd06b2e039fe3fb2db93034aaf473b96ebeaf",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L109",
+  "old_fingerprint": "c194d67918d1c3289735aa20c9abfed84ffba99590ef7e44f15e208db4cf021b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4723",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4c572f1c676f1ad321c6a83b81998d9d2756c95642444061e9dc59118cc083e1",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L108",
+  "old_fingerprint": "370a700d587102145a60133de0bcf68a44afd2b24862395b1345aa8214a1a21c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4722",
+  "when_key": "",
+  "zone": "PDR2"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "1e32b7118b58b0632ff6307b9e1f4560dc8d14670652f121f08cec099507ac1a",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67",
+  "old_fingerprint": "aedf80ea55c14574be35d3571a929a9baad92b67ddb24003fd5fc28888d02656",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "66b68b71b021c03e92c2f7298bc178a06214cd10a5cbc33e4fbb1b6d95f2c1c0",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L58,L68-L69",
+  "old_fingerprint": "88b9522551e0db6e878b77cfe20ccaddcd7231f6020e9395f64d13927668dd92",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4659,L4670-L4671",
+  "when_key": "unit_lots",
+  "zone": "PDR3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e0999d1fccf90c4d3df77cc6414b6aed801957ba30343dd290c3c1b9dd19541d",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L1-L5",
+  "old_fingerprint": "0eb78b67250f76cb3ace95d310afa6eb8b0c79c03226c03b2b8f037951d7b1f5",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4572-L4576",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "d3c17b58e30b8a72936cc90657b42110c1e0191034bd0a7bb4f6dae4425259f9",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105",
+  "old_fingerprint": "690aa3d22cafa3adfb20488451c6208ea95f8266156a641c8ec67f15a44e511a",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9d9d546fbe6095fa5b7adc1e489c50babb34550fb0a01ff02b6c975e9137ab34",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "8ed6be2e8a7565ec9acf8b48d1458ce0983c880cf36fc117d328d9bd3d1c73af",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "8d727f19f585b9f238f3a3def802efd572fee6e6543b321d9dd982914d35af6f",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "fbb3bd80c4cbbae3ff90a6e3161ebcd01a6230f0a2c3f6d05d3f6552110c55fe",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e9fec5e281734b88d63b4d5ecb53a8cb67e6cc1bad6c2c609b35102a7e9ad1ad",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "59742db4a886def6ac3169c951409c753bbb0b7bcef2c3eb3e2564f89fcfa613",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0bc4da120a98948be54fc432f4919e3dfdfa29de4935347bbbdadf94371ba680",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "290f20f0d01e3863a955300a2ba23dbcd817d897ee2d47fdd6f09d2faa5c503b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7e7772ee09babcdc2020864a7cd74e0d976400d97a12e57c6bd3c8824fa4262d",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "2607ec73c9c5247b3c93d1276852654297eba29b7d21c990b9235901ecdad005",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b574ef00f141f6ee9f4be56af9052d29c269c304dd0c1961f6be5651d666403a",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "e2108654600d0690e6b6e1476a2a5fa621d241de0ab4e8be3ab210bb00438173",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "2f204750e021170137cdce8b429730d60b8191accac0b873e4d417c5f3cbc5a3",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "5bfdb1019a0ad114a81e985c4c6af28d40cf143ff15352cb0d876ea16af90970",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e22e705f65ad8c9502fb52c749c7028781f8b70304e3a30706a2e4097ed6460a",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "2f86b5ea66436ef38a5646f8c1a512975ad3ec13322a74519468f0bb48674840",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "db542ad3e11491ce1391c6fb102e4000375ed99f2df6588ebe4b3379568d8d77",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "9f46789581ceefcf3ac1abef09eb4a3fdb1891ede6e748aa55efbde8e295b429",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "fd4ea55300fd21bb539f4e4454faf2a69d45660ebc59db574f4b04f6dc509b01",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "1cee9d3103b873d251bd4f3dd85bd24cda3af04372a2781b80a301e8b150b2fd",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "PDR3"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "65ffbe2b07f4adc994f48f21cae2fc8b782a9606910aa86dbbec4984b7f3b14b",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L117",
+  "old_fingerprint": "362727057bbfbc01cb0d14f93ffd4922e00dd3444d7a58cfd0d129a4fca067bd",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4731-L4733",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "033d6d7e43590cab9e0255f3a3815ea3da91f3fa4f0404b5bc49e88c77953a0c",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L110",
+  "old_fingerprint": "3c297bbe8fd3470d74aee5a67183073d925083559fd8f5a46a489960b1998430",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4724",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0ed425a278b0c427fb29301a8494eb5356876b61d336a0882b780ad527af3f68",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L122",
+  "old_fingerprint": "8bcaa46d6fad8c65d1a0dcc3b5d1e31a16af36594addbad68aa02d8ffdc44f1b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4740",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "PDR3"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "d9b289365835255a220bae96e6e7486a0b4bc13353782afdab8b749a76a0bcb1",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L110",
+  "old_fingerprint": "d78eb93b22d35459183fac8d2a4c7240ce65ad9f437eb2b8539872b19035f12c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4724",
+  "when_key": "",
+  "zone": "PDR3"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b33fcb8d71df03cc015ce298264c20ae8f2dcd416f665408bdf5f8970bc711ea",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67",
+  "old_fingerprint": "5b8394a94ba81ae4ef6f80dc88ee02ceacc52311dea4fa43c57ada1853042783",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7c8910714a29901a8bdfc3cab1302ebe7f55c90d39fa3ea51ba181b2f2127c6a",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L59,L68-L69",
+  "old_fingerprint": "25aad14b16a5acefa56d5a0aa0d5c8cb548a13c8b09561684bdf0056dc92489c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4660,L4670-L4671",
+  "when_key": "unit_lots",
+  "zone": "PDR4"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "970750f5306af258e741f28ad3424796970c028716401a953b86f8efa1e558ce",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L1-L5",
+  "old_fingerprint": "743704eab0aef0b985b35fae19bb013e081a45ee590e0fc5d212ad0e1cd8689c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4572-L4576",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4db00c11af55fa39108a4207511c4fb8e5dcbd75fa8ba13d3bfd7d6903366dec",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105",
+  "old_fingerprint": "eadfaeaa4ca3aaa8a7f277de2c5b9bd09b94cc747b650aef7c8180f72ff6d9ac",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "346e0e60eeef306bc0cea6c5c90009b8f9fcc97af9dfb012a4ce5f294a985c99",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "a2aad839b98de9c75408126bbd611f8434f86b016fda7e1f077d1003bb747149",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "1d6b66c840ff64999e0730b89a0d4f920e3915e81f39af9aa6d1764630ab17ee",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "39493f55fb437e089e9f010b01ec3582e4b1a1d1c865a920f817c9c26af06ab4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b8a8d9be1e8ce702ff8e75ad6b7b86e42fb1de3f71aad5e60256c31f948644b9",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "592faabbadbd743557e95518112b513fc63934b042e57baf16a81ec287fd906c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "00376df12bbf36d81a226230b4fd58aa40c0929a1cf3af525e7a63329a3cb59a",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "995cc61213f670dada45b7a498425116058df9a2a96719d84071446f583c4658",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "8212722213d2d969f6521ffc15e84a92e01e2ff201bf033da56de57ea9d2dcc8",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "7f7dfe53489f8ae56393fe1aff9309a7158eca94df14c6a06d339552ab122c02",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a584848ac11bd4865ab9f2d5b4f51aa5deb72a09015153a6e7f5f458229ffda0",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "075748482723f1b52737d4fdaa01394a937215e35ac5a392a96b8349203b3896",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3dc9a2dab0f97b25e882a1bdd861e560dcc042acdab0ebe1e42fd3fc703b2369",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "50e66361b7ac1c5e10647591706af16e9e75c57331e0c29aab83c467ce9793d8",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "deb78033d76ec6c6a5be95f2cf27ddb416aa4a683f442bb59415983ff7fd81d4",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "51700ffdac9c06160c643f828489f197bbb66662fcbeb729b4ab21f9320826eb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "40d5581344d202e05d840325a83c5f614c900c92ac854a1b8b8dcc79b90de3f9",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "a7d65a48e866f4f9c3466202571ed419055089750587cb950e2e6da746131335",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f4cbe11b8ee0f07e15e355469ddd4628a83e4be6d69a96a272bc430f3739814a",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "91fff1e9bb357956857053d60a619e2853213d2629a81d8cefc6b7a60174bc28",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "PDR4"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "56b502c6e84fca62c93afa6797e621807ee595b559294c935ebee9b699f934e8",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L117",
+  "old_fingerprint": "953f4b6fb9cfb35771569cac5fc75c7a9e8bb477f5481e593b5c7a3a9e89e5c5",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4731-L4733",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "075878f88b6ca05f8ffc5b6bd49a87e50915a9e14899e9be868b813b8a310b60",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L112",
+  "old_fingerprint": "c3006027fc91461e1818f3039d230d366c5c6397455ac181c8ea68270778ecb4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4726",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "752013ca429457f7abfd0b9c72a4aac322fab661ae09f480af2375cab8be298b",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L122",
+  "old_fingerprint": "ed9241b0eb3b35b9e3846f367d06b19433691470735b9c0fd2bbacae7121759d",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4740",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "PDR4"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b40c60a92c3274ee84455869d862eb542d169f9baecc451a1e56e33bd847d990",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L112",
+  "old_fingerprint": "007d7aa5bb567eccbe1f216b4e3abfc8fe4edb83d08fd64d2c30e598048ccfec",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4726",
+  "when_key": "",
+  "zone": "PDR4"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0adb93e97a4b3ac41577f540df34230d1e11ea73c86a6613cc34346150bbadbf",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67",
+  "old_fingerprint": "13df49aa13ff9f4ed1e2b355af70277dbac9246981fff3a7d43a35f0ea3880e1",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "581878116be2b03a6ec6cf010aef0ecaa2d460b6b079da2c8f429cc01dfe12ad",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L60,L68-L69",
+  "old_fingerprint": "2c35a2759f471616cd2ab0c1448220aefcf501acce4d096656eeb0d7e3774cb4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4661,L4670-L4671",
+  "when_key": "unit_lots",
+  "zone": "PDR5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "5ceada1a6877f95dd75264da1a735bd778c10875f02f9914e9f5a0f86bef69d0",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L1-L5",
+  "old_fingerprint": "5bedda2455d923efb6abee4ebb51fa846cf0b5480d782170e80db23fa7f69ba1",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4572-L4576",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "cfd2b3e92a7dfa152d4251b6616f85501603f7c0963b688fc20dfba2bf51f174",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105",
+  "old_fingerprint": "8024cb6b596ebd3de367b5f39237077da7eb8e9efdef684e1cc469f4fd6f9d4e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "12b06c0f89ee93c98f53bd766bd2710489e986ce0c759d3d65024b393f4cbddb",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "607400777752db1e05649adc7a9d43cbf5cf13ce8ea7fb9f9ade99a66d14ade2",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3385faa51c647c4bd7dafb5257666a3084797077f5f69557f809bc964c2ce8a0",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "1dac2726a145f8303374d0a88a091aa8d170452e9b66e12ab87caa9a5428a139",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9c239722c5ca636c34666fabd12217ad207007e63a62b9df2f993f1df68566a0",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "c42ba875108fc0ec834acde6ab2dcd9f8debcc30c2c2b7b57ecff4b45bdfabe4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "73c12c93b923c36422ade90acab4b02b011c8987b6896adb3e530e209d268546",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "34fb8abe5fcddaf66a65700c369233cc2810fba65b161517f759ce69187f4652",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f2a783df2edf4b54cf1acdf2a02b7687ca28afe9ea725ee99da85b9ad99f93d4",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "cb642f54bea889bb1aec5f99e8ee4101e0763ae91812d7e99e3d78f32e05f5fb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "ec14576726d9a2b92ab6a79d522b40add822a012d6ab75f62e374aa49e791bd7",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "b6697357eff0fcc324a20ccd0f5755e909322d63c09bf43388f41596b92a77e3",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0e00f1e51df4f0461422c442a6af05a3bfbf0947d6fb41f1126dc8d44217da79",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "293d93927899e828da44e6aec6ab4ed714c93150cd9cfc184f1f49f8b220d7f7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "ccd6e7d61f472b924e1ee17af9726f6cdcfe6c47f03c6d16cecb299e2ce1b967",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "c54b03247e2100065e4e28ad1f5f73b2be1c4f5a45430a88b50b6983110fd2aa",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "6dd2a53699e67c427d47c15f47ecfe066324d0facb43a809c1478e3bd114cf5b",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "1fea0bd09a905662803dbbba713c2ff9d38d724b35af6c0be680e4e1c6c39dfc",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "458a7f0ac45f127799f24c4aeb5c6cb03ac5553986a40024c5e93806c5d17039",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "a81dc75751f72d568de37ab51aabe38e8226a0030150097efb76b8661201aa8b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "PDR5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "570f00b2376c4b23d5b105a8062a55be508e5e4eef74cb04ad2c4c528d40c6a8",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L117",
+  "old_fingerprint": "cf371a26309a5583f6da053b4587181b3ed2ca116b27f220e075dffa80135259",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4731-L4733",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "417e42ee7721760f39dda1c90e7c14ddb54ebd72d676816a6f0f8ab5a9613509",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L113",
+  "old_fingerprint": "5a7aef31647228f5046ba6586276fcc3c272c7adc1984e44c563aeaacb9f0f3e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4727",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "97b101a51090f22f4e162042c830e999d3ccbe5deaf72dce8e35c21e2ab6582d",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L113",
+  "old_fingerprint": "542a3a432f144abb7f6b26ee4c4c02ac3e66c8bffba880bd6a17a985433c9dcf",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4727",
+  "when_key": "",
+  "zone": "PDR5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b5ae9225420dcd47042032049efd505910ba55064935261d646b10ee2db03506",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67",
+  "old_fingerprint": "dc3c8c44bee354c9ee3a958c12cfb1218582029ad0f894939a78f064c406bf50",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0b3fccd089e5526ff16fd50d77427edeb7b87b2ed6e07f75d18b58cf506e68c0",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L61,L68-L69",
+  "old_fingerprint": "a306568d660a3f9aa14b8aabaf4a8a4aa336ba672a0bbf7a47c7140e6fed5ace",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4662,L4670-L4671",
+  "when_key": "unit_lots",
+  "zone": "PDR6"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "7927c216426c1f3dcc819e7fdefbf1b31d50bbbb3b4de6391799bc26159bf6a5",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L1-L5",
+  "old_fingerprint": "a26de53de24049043fe29ec4458fe6ebb3ecc87e2fd52130b47faaa59f5bba0f",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4572-L4576",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "47fa521623dea714b67979e6014de1f887a6c802b814850743b2ba2858b9c0fa",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105",
+  "old_fingerprint": "34ce81e950b861336a97b5019d8581050bc321b9fb4c45931ee23c5b8ddca2e7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "6f7b6df555a4761c698a6d6dcb3e942a2abcb7848f11fee170bbc7f36973ffc1",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L42-L43",
+  "old_fingerprint": "d98ffb7fada8446e8fc94832dae08a22aea51df51d91b7f44ebf7367278fb24e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0600d98210972378409f44d6170cf1b9ea2ec14aee1fd19d78c8cb95d8bcdb0c",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "715ceceacc8b78f36721038827e10ef66b4af81d6d19b2da774a118517402d23",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "87aeb9031c8eea94cf86f544f296bb88d2ac97d3003378e7de13f3a6943a82f3",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L59-L60",
+  "old_fingerprint": "6d3e91203e9758554a706a2eb956d14cd40aa461600a35fc9987bcd0e909bb16",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3037",
+  "when_key": "multi_story",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3504330b0ff67c8c354945b8c0b11ece81ffbb2de48686c621f1d5329876babb",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L72",
+  "old_fingerprint": "feda4d2e42e9ff675fd7a340ce7703a594e999f9baf9e85a1d4a357f394f6b58",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3059-L3060",
+  "when_key": "attached_wall",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "93cb624e8b8594302dff5342f23668f803814ce44697147d5b19bc6f0dbf74ba",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L50-L51",
+  "old_fingerprint": "46f867b216444c9345a18b36fed3cb3acfb76e6f5219cbc788320811ecd0b4b9",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3025",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "2a755d6e1140bf5ef689dffe6bf4fe93277a3fa8fe343753c6d54225167037c6",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L66-L68",
+  "old_fingerprint": "a9034051700bbb9156381d6a5a902081d141ddea700df0e73d4f527bfea5bc05",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3051",
+  "when_key": "multi_story",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f91f3717122ba0c7ad19c8f0223de6d1ce6dfd994c4286edd6d4ed03138dad89",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L60",
+  "old_fingerprint": "05a1d811611dc6291c0fe9f3ee2a9898d5d175cba2731811146d1dfb57dcf964",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "13a55ae2bd6a6e3e2fd62ace5b23ad71fcb2ae28f61876ef350df159cd0f6245",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L44-L45",
+  "old_fingerprint": "9720b09ba1459e35a7be355640cf75ecf8415d03039a83cd6749f2b110c18eef",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+  "when_key": "corner_lot",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "8ac5e7c8246efc95a9a6551822f5dbc66f5abdc28af499206eab602f5f4241d4",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L63-L64",
+  "old_fingerprint": "90877c45c7a3c09eb6367923d54071710fb327d89590cac395213ff27bcc459d",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3047",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "655fdcc6b170ff378749275a23bc4f96d9ac6a61c4587bcf2c0b77d76edd6387",
+  "new_quote": "or/clackamas/wilsonville/4/4.113.txt#L64-L65",
+  "old_fingerprint": "f9009803064c25ee526e2b627b0d29de2fe20635749c4d08665f1a366799df7e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050",
+  "when_key": "abuts_alley",
+  "zone": "PDR6"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9c4046282bfd6e13530360656e36842d9d834ab61d2cb378a90e89d1ca28f31c",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L117",
+  "old_fingerprint": "0e9ce29e0281d4e62b6531c83157fefb579fe1bf3cba13f3438e7b1642fb1563",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4731-L4733",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "23dc4bc030f7f194016edbac6054ad141be07654c1bfb4c819ba4075db6aa660",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L114",
+  "old_fingerprint": "15d731dc44d3ff68a3f1d348771643186578cc4f9dac001f73ce2f34edad2fd6",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4728",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "76c845d44c747dd4d2a45ed30ebaf8db7523feeb19b4b607191abcb4ed130908",
+  "new_quote": "or/clackamas/wilsonville/4/4.124.txt#L114",
+  "old_fingerprint": "503c7a5adfe9fea02587a18b0a34190e20f9414efe865c1e6b4f2724795127f6",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4728",
+  "when_key": "",
+  "zone": "PDR6"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "cf65ca59dc092cebe8319cf61e41d131e77061517e3ade3ff8253db121a91738",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L13-L19",
+  "old_fingerprint": "3825984fa205095d22736f4435ce545eead0c6d96925778f332b176a7d4bc9fb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L6498-L6505",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "752cdca1679e1a3dcf3fc4b2c388bf8e0dd7e567a69f9cb74923d9c4a2dc11c1",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "1aeb650f7b7283c3b0bf5864df82fe03a7571c1524d4275f181b1ba1bc1b5bd9",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "ba0594e2ee823dc8180de1f7cdc58fb4d058f92433676fff60b247ea22d642a0",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L495",
+  "old_fingerprint": "02050affe31f194999c95c9cca2a84b9dd8c215b71066aecd804381a07663161",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7243",
+  "when_key": "unit_lots",
+  "zone": "RN"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "dde9ed7674292f0701961e06185cd5a2cfef13efc7426a376320921d14206361",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "1b852ae8d936c864a237ce2b0baaf94e5b6d52c325c046b8d709020d76109e71",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "233777bf0f2f7d2fa2b243f3244e87c602c447c2524ca6b19451f12d2635cde1",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L504",
+  "old_fingerprint": "a68e4684d7a1167d045f7f281683b3d3d3734f4cb23a1ff3fd7f5503a39dadf9",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7253",
+  "when_key": "unit_lots",
+  "zone": "RN"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "8154e7da65890de08f86d28e065a89a348947157258fda64798ddbd82e04f7de",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "d34a5d46d22bc08ed42f7670a1d3783c61d6e909eb65f3eafae8b4bc89df287b",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "0371b767a079ff781825ceca63f69b51331b66d6dbe0118f7e0c81b49ff93d21",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "1ffb15ac13937a131f03f7414cc9f3af92a219ca09b588ae9a9ad0b9e489312e",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "cd4c05110843be3363e6bf4cf6d21c7ad691d9dd92682849d058601bfe0c0115",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L505-L506",
+  "old_fingerprint": "33d84f94b7159f270cbb45efe4742fc9479d2ca28882519b972723978c175fc5",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7254",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "RN"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "efeab935e61a2dff205af8f92fcd8cece9bef1d3c238b1609d9da4f4cda738c0",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L504",
+  "old_fingerprint": "df6ac7381c5f541b25bef59d3463ae0d02ddb57e9fad65485afcd2dc9cf473a4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7253",
+  "when_key": "unit_lots",
+  "zone": "RN"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "375b9cef45933fc4d1b1fc52724c63226dc7f5e1c642aadc1eb9e2e1f1007c2a",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L504",
+  "old_fingerprint": "647049efeefbfd196c5dff581e96b752141c3651a2f084279427868140635068",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7253",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "RN"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "a7abb752042c062d7c73ea978ecff803cadf19bc707f247ecf9756ee68e643bb",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "4504c089982467d5a8911033da493580dba42d19c25b6b26b7067df65d620dfb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e4ede3b11d919926b9608a1a1a6e890a36be2a1450df02d5c4e1d4adeccac503",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "011b91d4f2140b486642e6c355724b6e784c14fe907575c046cfe7a336e027a4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "328a10a43aa518355ac6e015d0eee4412327545d0333bfa2b27eb8a79c30c09f",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "9bf6421476bea035813bec6032ee471bdb39970191f3c17083d8218b27169ecb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "ed569f59ec806ff2aec9cd4356e8496a96cca1b29e60037d621cf33c27519176",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L510",
+  "old_fingerprint": "3276225224faa8cf9d6486c17960cc00cb88f37db76b295e2aa82d3d7e637117",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7263-L7265",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "015a6054f1790d3cab8d7007f89a5ee773b004cbdbab429181f9467c4550d30d",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L510",
+  "old_fingerprint": "5d206003c908799feb170179113114c170e86f20badbbcbb84309e10f8e785eb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7263-L7265",
+  "when_key": "corner_lot",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_side_total_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4698301defd9ada758da81fcc8cf09c1799986b8d7e8b6ef9f5a04d01431d3a4",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L510",
+  "old_fingerprint": "1c84f6a41c7f2fc4b688ad4712b0c18aead64a24b45003883b72453d2037a3b0",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7263-L7265",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b7f6bfccba3d8e76f48deabf289c7765eafd9d0c871dad565ba561a3bf9c7229",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L510",
+  "old_fingerprint": "01cba1c2466d9c8db8dc54fe9c7558f65bfa6ea10bc2e5c60f61295b38c5e848",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7263-L7265",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "119a0682461ae161e9b95ce02adde7e6cc7e357e1c7d3d30f9273f91eb7885e0",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L438-L492",
+  "old_fingerprint": "7616287b4c1344ab5829d5bce526d50ae4b40ddbba9c7b2a071938d84940cfb8",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7179-L7236",
+  "when_key": "",
+  "zone": "RN"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "e1a34fb8b30d919a166094408e9139571ea693366a029a1a7b5416e3854118ea",
+  "new_quote": "or/clackamas/wilsonville/4/4.127.txt#L501-L502",
+  "old_fingerprint": "108be71c1475867f883401e56bdbc1f514400ddbe630346087f97e7fa8c85a72",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L7249-L7250",
+  "when_key": "abuts_alley",
+  "zone": "RN"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "520b6d44054335544fdd143f3da2f2c4d5bdc0d7d35e9c0604e7407615996829",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L193,L1019,L1022",
+  "old_fingerprint": "8d064c9190a0acd63c0f9b4412088c57f3c6193ba6e2141d3df8faf2fd240edb",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5050,L6449,L6454-L6455",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "f0566684ac7d8f58e3b813bed8cd0c6908f3b208c4cc9e1facdb0dd3f03d2abf",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L141-L145,L180",
+  "old_fingerprint": "f7039b1b6c78fb7ee145660ffcb694bd71717241e53f9f4c27fa7fa78e70e154",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4984-L4988,L5023",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "9d7dbb5ade8ba6e68d6fb90ad68457a2c774fb9ea52224e1e56bf917d82c6ef8",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L141,L146-L147,L180",
+  "old_fingerprint": "42a9146b190131952100c263866cb0a7cfde776df2716a3cf8e6df07e07e3df4",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4984,L4989-L4990,L5023",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "00424a17852ed2290e5bf3245a0e4b38cfc66c8ea9e9837b50813be561104906",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L141,L155-L157,L180",
+  "old_fingerprint": "7b2f7a9e2ed65031f98f8ac8000f03834cdfd7ca74f2acb43b1d99a94f3b9dd2",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4984,L4998-L5000,L5023",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "61a527c38927492b84c293a487be83fe51fb75ea922aa480997c16b2d7008f32",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L180,L184-L185",
+  "old_fingerprint": "a35daf2ee9abfbdb161bdae5dfbfd77ab7cb2f30a2f78f5ece5b922b65bd6926",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5023,L5032",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "84d38ffa540b78eed86dc4ed16e43aed85107cd61ea6d886c65b145bbc5036d0",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L163,L180",
+  "old_fingerprint": "47796da70f38a72d97dd80257eec795804316a5a37fcd57461b99d6c6e5f18bc",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5006,L5023",
+  "when_key": "local_street",
+  "zone": "V"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "2dd65e16f5846e4a940972ebb9ef54192bbc2b586ab0ef55270181bd747e4b00",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L164-L165,L180",
+  "old_fingerprint": "3d13c54818085da336e467827111826d5022041655b13f0ac38c937f2938ade2",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5007-L5008,L5023",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "5bf1c7aa7eeb92b152596ec6e8a294cce85caca63ec992241909fa42b65208ed",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L166-L167,L180,L191-L192",
+  "old_fingerprint": "35cd77ad97fa332236c8f3e981f45c915a1fc592fd156ba63a6a291eb5cec1c3",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5009-L5010,L5023,L5042",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "06933eefe8be54ef478724d7d24ab61bd3a48e0ea4829e6170f45b2a62654eaa",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L168-L169,L180,L192",
+  "old_fingerprint": "6de1b3657e584adddbc8bd05b5aa0a8560c212aa2feef1c9b442be2c3c51f5f0",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023,L5044",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_side_total_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "37a3686e185eb6a4b9a374bee59b637821848512b75773a0c33eeb4078fff26f",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L192",
+  "old_fingerprint": "d3e6ffda7683adc8209865eff38ed696f320db0ddacfff1971d0f7316f51b217",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5044",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "26f355ef21f8d7e4faeadc737b9ae8d2c9438a7d1262caf5b38ea5ebed5e4ae8",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L184-L185",
+  "old_fingerprint": "319ecd2c7ef5792822ae3fd8930c8d1547812cb13bbfab9eb4a42e23702f40d6",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5032",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "65bcaf4de39f7328e8a6385a4dd7f2b4f4574950c7408cfecb4af72ac32a8fd3",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L168-L169,L180",
+  "old_fingerprint": "622f5bba4e41f998a570a3a6b1528756c6c1c6a67e7621493185c8335736bb53",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023",
+  "when_key": "local_street",
+  "zone": "V"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "c44208057c1441d8d1db2d3cb991e14b27729a12f76f6baa98387912fc9c97b7",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L180,L183,L193",
+  "old_fingerprint": "d486d7275e1e0009e05fa40bd313665a64ae02b98af09794d1a582eb820ba411",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L5023,L5027-L5028,L5049",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "parking_alley_access_required",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "3e83d4c8ec88270b0fc3a9178986642b6862b1b254ee6ff2adedc6d622153b58",
+  "new_quote": "or/clackamas/wilsonville/4/4.125.txt#L112",
+  "old_fingerprint": "796c6f9473065df829d50c24ef27429716eed47727303749095d94505fcf5109",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4928-L4929",
+  "when_key": "",
+  "zone": "V"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "5cc6db2fdfbce7bd87e6996e485292d69821fadfce13eada9e1486b65d1cca0d",
+  "new_quote": "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51",
+  "old_fingerprint": "acfa80c1574f44efd025c8fe416b7e711563a84cb2a9645c246cfaae0445edcc",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362",
+  "when_key": "",
+  "zone": "FDAHR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "dae16f3553cc45740eb43ce8b8bb6d47062ffa242e4d7ac0e0a99eab82bc2975",
+  "new_quote": "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51",
+  "old_fingerprint": "a9923759b7f59044e85bac64986e7316273419b4e055b0f99ca5952bbe49dd23",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362",
+  "when_key": "",
+  "zone": "FDAHC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "bf989d29238c76a74226ecf1af8b8362b6be6921057f8b443751e8e44f954cf7",
+  "new_quote": "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51",
+  "old_fingerprint": "bd31412ea34caba2bcecdb6a18f0285f250078e2a5f8cf0277d092f106596585",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362",
+  "when_key": "",
+  "zone": "FDAHI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "89f8d66865e430651628f902939c67e5f630a5bad2759df41929c7f4432c143b",
+  "new_quote": "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51",
+  "old_fingerprint": "52a68256dfbc56fc552ec9bbd3febed1ba4f48b54d3bc13a08299f1deb7726e7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362",
+  "when_key": "",
+  "zone": "FDAHP"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "ba9f1fd96c6a5eed47eac329f00fd2d70458c8be8a5093527a058a5478d0796f",
+  "new_quote": "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51",
+  "old_fingerprint": "0569008ecc153497ce3589f03e5e95dad5f3a9862529ac92ec2346f1c1f638b1",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362",
+  "when_key": "",
+  "zone": "FDAHV"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "4b3d422b7555122c556b209d71874891b768c240a9aaec0bca5e82f55ad78fb8",
+  "new_quote": "or/clackamas/wilsonville/4/4.131.txt#L1-L11,L45-L46",
+  "old_fingerprint": "67e9be5a7b8c0a01c00f9e4b83c1374c21b1eeaa5ddda5124a5d1be6dfae8804",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L8183-L8198,L8250-L8256",
+  "when_key": "",
+  "zone": "PDC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "35d05a4ee4f28168e3c88638153fd6243561bc33795ed5885b3dd55463c11cd2",
+  "new_quote": "or/clackamas/wilsonville/4/4.135.txt#L1-L4,L19-L20,L25-L29",
+  "old_fingerprint": "1214543534bfa1f2e3945eeafe5184aaed4d13258132c276b130cf5d894729b7",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L10260-L10265,L10284-L10285,L10300-L10305",
+  "when_key": "",
+  "zone": "PDI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "b4e27c83ad15a7d73faa988701feb7e925f4ff77fb088269b631d395795acaaa",
+  "new_quote": "or/clackamas/wilsonville/4/4.136.txt#L1-L27",
+  "old_fingerprint": "d72e06a82a92cf0c22d023d2ba42c2ff2719503b742a178ddf2dadd7fe936c97",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L10610-L10637,L10640",
+  "when_key": "",
+  "zone": "PF"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/wilsonville",
+  "new_fingerprint": "2d8fd79c06984b9ed3e1060b76ca38f5d901641440de7e387de451c3066d1978",
+  "new_quote": "or/clackamas/wilsonville/4.136/4.136.5.txt#L1-L4,L7-L10",
+  "old_fingerprint": "e821b171a7c9155dcaf816285b648fdfeeb4182a7cc7037e1a723f01fe35f87c",
+  "old_quote": "or/clackamas/wilsonville/4.planning.txt#L10666-L10670,L10676-L10679",
+  "when_key": "",
+  "zone": "PFC"
+ }
+]

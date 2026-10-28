@@ -1,0 +1,52 @@
+Section 4.199.60. Major Additions or Modifications to Pre-Existing Sites.
+(01.) Major Additions.
+If a major addition occurs on a property, all of the luminaires on the site shall comply with the requirements of this Section.
+For purposes of this sub-section, the following are considered to be major additions:
+A. Additions of 50 percent or more in terms of additional dwelling units, gross floor area, seating capacity, or parking spaces, either with a single addition or with cumulative additions after July 2, 2008.
+B. Modification or replacement of 50 percent or more of the outdoor lighting luminaries' within a five-year timeframe existing as of July 2, 2008.
+Table 7: Maximum Wattage And Required Shielding
+Lighting
+Zone
+Fully
+Shielded
+Shielded Partly
+Shielded
+Unshielded
+LZ 1 70 20 13 Low voltage landscape lighting 50 watts or less
+LZ 2 100 35 39 Low voltage landscape lighting 50 watts or less
+LZ 3 250 100 70 Landscape and facade lighting 100 watts or less; ornamental lighting on private drives of 39 watts and less
+LZ 4 450 150 150 Landscape and facade lighting 250 watts or less; ornamental lights on private drives and lanterns 70 watts or less; marquee lighting not employing medium based lamps
+Table 8: Maximum Lighting Mounting Height In Feet
+Lighting
+Zone
+Lighting for private drives, driveways, parking, bus stops and other transit facilities
+Lighting for walkways, bikeways, plazas and other pedestrian areas
+All other lighting
+LZ 0 20 8 4
+LZ 1 25 12 4
+LZ 2 40 18 8
+LZ 3 40 18 16
+LZ 4 Height limit to be determined by Special Use Permit Only
+Lighting mounted onto buildings or other structures shall not exceed a mounting height greater than four feet higher than the tallest part of the building or structure at the place where the lighting is installed, nor higher than 33.33 percent of the horizontal distance of the light from the nearest property line, whichever is less.
+Table 9: Performance Method
+Lighting
+Zone
+Maximum percentage of direct uplight lumens
+Maximum Light Level at Property Line
+Horizontal plane at grade
+(foot candles fc)
+Vertical plane facing the site in question, from grade to mounting height of highest mounted luminaire (foot candles - fc)
+LZ 0 0 0.01 fc 0.02 fc
+LZ 1 1% 0.05 fc 0.1 fc
+LZ 2 5% 0.2 fc 0.4 fc
+LZ 3 10% 0.4 fc 0.8 fc
+LZ 4 20% 0.8 fc 1.6 fc
+Table 10: Curfew
+Lighting Zone Curfew Time
+LZ 0 8:00 PM (2000 hours)
+LZ 1
+LZ 2 10:00 PM (2200 hours)
+LZ 3
+Midnight (2400 hours)LZ 4
+(Ord. No. 649, 6-2-2008; Ord. No. 682, 9-9-2010; Ord. No. 688, 11-15-2010; Ord. No. 821, 7-2-2018)
+Figure 30: Lighting Overlay Zone Map

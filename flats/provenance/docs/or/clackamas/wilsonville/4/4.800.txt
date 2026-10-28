@@ -1,0 +1,53 @@
+Section 4.800.  Wireless Communications Facilities—Permitted, Conditionally Permitted, and Prohibited Uses.
+Purpose:
+Wireless Communications Facilities ("WCF") play an important role in meeting the communication needs of the Wilsonville community.
+This Section aims to balance the proliferation of and need for WCF with the importance of keeping Wilsonville a livable and attractive City, consistent with City regulations for undergrounding utilities to the greatest extent possible.
+In accordance with the guidelines and intent of Federal law and the Telecommunications Act of 1996, these regulations are intended to: 1) protect and promote the public health, safety, and welfare of the
+Wilsonville community; 2) preserve neighborhood character and overall City-wide aesthetic quality; and
+3) encourage siting of WCF in locations and by means that minimize visible impact through careful site selection, design, configuration, screening, and camouflaging techniques.
+As used herein, reference to Wireless Communications Facilities is broadly construed to mean any facility, along with all of its ancillary equipment, used to transmit and/or receive electromagnetic waves, radio or television signals including, but not limited to, antennas, dish antennas, microwave antennas, small cells, distributed antenna systems ("DAS"), 5G, small cell sites/DAS, and any other types of equipment for transmission or receipt of signals, including telecommunication towers, poles, and similar supporting structures, equipment cabinets or buildings, parking and storage areas, and all other accessory development.
+Reference to Small Wireless Facilities (SWF) herein is construed to mean WCF and associated equipment that meet the definition of small wireless facilities as stated in 47 C.F .R. § 1.6002(I).
+Reference to Macro WCF means WCF that do not meet the definition of small wireless facilities.
+This Section does not apply to (i) amateur radio stations defined by the Federal Communication Commission and regulated pursuant to 47 C.F .R.
+Part 97; or (ii) WCF owned by, or operated solely for, the City of Wilsonville.
+If any provision of this Code directly conflicts with State or Federal law, where State or Federal law preempts local law, then that provision of this Code shall be deemed unenforceable, to the extent of the conflict, but the balance of the Code shall remain in full force and effect.
+Nothing contained in this Section shall be construed in any way to waive or limit the City's proprietary rights over its real and personal property, including without limitation any proprietary interest in the right-of-way.
+Thus, if it is determined the City has authority to exert greater rights or impose additional conditions or limitations beyond those set forth in this Section, the City reserves the absolute right to do so, as it determines appropriate or necessary.
+(.01) Permitted Uses:
+A. New towers, poles, and structures for Macro WCF and ancillary facilities thereto are permitted in all of the following locations:
+1. Any property owned by the City of Wilsonville, including public right-of-way;
+2. Any property owned by the West Linn - Wilsonville School District;
+3. Any property owned by the Tualatin Valley Fire District;
+4. Any property within an electric utility substation.
+B. Co-located WCF pursuant to Section 4.802 on all existing, legally established, towers, poles, and structures in all zones.
+C. Modification of existing towers, poles, and structures for WCF and ancillary facilities not meeting the co-location requirements of Section 4.802.
+D. SWF as follows:
+1. Attached to an existing structure (i.e., utility pole, tower, streetlight, traffic signal, building, etc.) within the public right-of-way.
+2. Incorporated into a freestanding or replacement structure (i.e., a standalone pole intended to support only the wireless equipment or a replacement pole that supports both the wireless equipment and the other utilities, traffic control or other pre-existing attachments) within the public right-of-way.
+3. Attached or mounted to an existing structure (i.e., rooftop, building façade, sports field light, etc.) outside the public right-of-way.
+E. Satellite communications antennas:
+1. Not exceeding one meter in diameter shall be permitted in any zone without requiring Administrative Review.
+2. One meter or larger shall be subject to Administrative Review.
+(.02) Conditional Uses.
+A. Historical Buildings and Structures.
+No WCF shall be allowed on any building or structure, or in any district, that is listed on any Federal, State, or local historical register unless it is determined by the Development Review Board that the facility will have no adverse effect on the appearance of the building, structure, or district.
+No change in architecture and no high visibility facilities are permitted on any such building, any such site, or in any such district.
+B. Tower or Pole Heights.
+Towers or poles may exceed the height limits otherwise provided for in the Development Code with compelling justification only.
+Costs and cost efficiency are not compelling justifications.
+C. Lighting. If beacon lights or strobe lights are required by the Federal Aviation Administration (FAA) or other applicable authority, the Development Review Board shall review the available alternatives and approve the design with the least visual impact.
+D. Except as indicated as permitted in (.01) above, WCF can be conditionally permitted in all zones, pursuant to Section 4.184 of the Wilsonville Code.
+(.03) Prohibited Uses.
+WCF are prohibited on all lands within the Significant Resource Overlay Zone.
+(.04) Exemptions. The following shall be considered exempt structures or activities under this Code Chapter:
+A. Antennas (including direct-to-home satellite dishes, TV antennas, and wireless cable antennas) used by viewers to receive video programming signals from direct broadcast facilities, broadband radio service providers, and TV broadcast stations regardless of zone capacity.
+B. Cell on Wheels (COW), which are permitted as temporary uses in nonresidential zones for a period not to exceed 60 days, except that such time period may be extended by the City during a period of emergency as declared by the City, County, or State.
+C. Replacement antennas or equipment, provided the replace ment antennas and/or equipment have the same function, size, and design to the replaced antenna and/or equipment and do not exceed the overall size of the original approved antenna and/or equipment.
+(.05) Undergrounding Requirement.
+The City of Wilsonville is an underground utility City (Undergrounding District) for the purposes of public safety, service reliability, and aesthetic design; where these mandatory design standards do not unreasonably preclude WCF by requiring undergrounding of all equipment to the maximum extent possible.
+Therefore, no new vertical elements will be allowed on City property if there are existing facilities available to reasonably accommodate the WCF , and all equipment other than the antennas shall be placed underground to the maximum extent possible.
+The following shall be used to determine maximum extent possible:
+A. Equipment functional underground;
+B. Location available to underground near associated antenna; and
+C. Conflicts with other underground uses as determined by the City.
+(Ord. No. 831, 1-24-2019; Ord. No. 882, § 2(Exh. A), 10-2-2023)

@@ -976,7 +976,7 @@ definitions:
     incomplete: >-
       clause (2), a shortest lot line abutting a tract with a non-vehicular
       pathway, is unmeasurable from any layer held
-    quote: "or/clackamas/wilsonville/4.planning.txt#L795-L798"
+    quote: "or/clackamas/wilsonville/4/4.001.txt#L283-L284"
     cite: "Wilsonville Planning and Land Development Ordinance 4.001(157), Lot, Corner"
 
 code:
@@ -1059,7 +1059,7 @@ defaults:
     cite: Wilsonville Development Code 4.155(.04) Table 5, row a.1 + 4.001(181), (251)
     url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.155GERE
     retrieved: '2026-08-22'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L13405-L13414,L13416-L13420"
+    quote: "or/clackamas/wilsonville/4/4.155.txt#L176-L184,L186-L188"
   parking_min_per_unit:
     # Not a minimum of zero -- there is no minimum, and Table 5's own shape is
     # the evidence. Its two columns are PARKING MAXIMUMS and BICYCLE MINIMUMS;
@@ -1076,7 +1076,7 @@ defaults:
     cite: Wilsonville Development Code 4.155(.04) Table 5 (columns) + 4.154(C), (F)
     url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.155GERE
     retrieved: '2026-08-22'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L13093-L13095,L13102-L13107,L13405-L13410"
+    quote: "or/clackamas/wilsonville/4/4.155.txt#L11,L14-L16,L176-L181"
   # STALL GEOMETRY, read 2026-08-26 after Steph pointed out that "no minimum"
   # answers the wrong question: this product gets built with parking whatever
   # a city requires, so what matters here is what a stall has to measure once
@@ -1094,13 +1094,13 @@ defaults:
     cite: Wilsonville Development Code 4.001(220), Parking Space
     url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.001DE
     retrieved: '2026-08-26'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L1019-L1020"
+    quote: "or/clackamas/wilsonville/4/4.001.txt#L393"
   parking_stall_depth_ft:
     value: 18
     cite: Wilsonville Development Code 4.001(220), Parking Space
     url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.001DE
     retrieved: '2026-08-26'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L1019-L1020"
+    quote: "or/clackamas/wilsonville/4/4.001.txt#L393"
   #
   # NOT ENCODED: the aisle. Chapter 4 dimensions a standard space, a compact
   # space (7 ft 6 in by 15 ft, 4.001(222)) and a motorcycle space, and states
@@ -1217,7 +1217,7 @@ defaults:
     cite: Wilsonville Development Code 4.113(.14)D.3, combined width of garages and outdoor parking and maneuvering areas as a share of any street frontage
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L344-L345"
   parking_area_frontage_any_street:
     # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
     # A court behind the building on a lot with no street behind it is not reached.
@@ -1225,7 +1225,7 @@ defaults:
     cite: "Wilsonville Development Code 4.113(.14)D.3, combined width of garages and outdoor parking and maneuvering areas as a share of any street frontage (any street frontage: front, side and rear streets)"
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L344-L345"
   # Exempt rather than true: D.3 caps front-yard parking at half the frontage
   # and does not ban it. The ban is E.5.c, on the townhouse path, and reached
   # only by a project that fails the four standards at E.5.b.
@@ -1234,7 +1234,7 @@ defaults:
     cite: Wilsonville Development Code 4.113(.14)D.3, which caps outdoor parking and maneuvering at half of any street frontage rather than prohibiting it
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L344-L345"
   # 4.113(.14)(D)(4)(c)(i), the quadplex driveway standard: "For lots or
   # parcels abutting an alley that is improved with a paved surface, access
   # must be taken from the alley (see Figure 8. Alley Access)"; the townhouse
@@ -1253,7 +1253,7 @@ defaults:
     cite: Wilsonville Development Code 4.113(.14)(D)(4)(c)(i), access from the alley for lots abutting a paved one; townhouse copy at 4.113(.14)E.5
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L3556-L3559,L3835-L3838"
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L354-L356,L544-L546"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -1275,12 +1275,12 @@ defaults:
     cite: Wilsonville Development Code 4.113(.14)D.3, which caps outdoor parking at half of any street frontage and states no side-yard ban
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L344-L345"
     variants:
       - value: true
         when: [unit_lots]
         cite: Wilsonville Development Code 4.113(.14)E.5.c.i, no off-street parking in the front yard or side yard of a townhouse
-        quote: "or/clackamas/wilsonville/4.planning.txt#L3643-L3645"
+        quote: "or/clackamas/wilsonville/4/4.113.txt#L416-L417"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1302,7 +1302,7 @@ defaults:
       - value: side
         when: [unit_lots]
         cite: Wilsonville Development Code 4.113(.14)E.5.c.ii, a townhouse project that includes a corner lot takes access from a single driveway approach on the side of the corner lot
-        quote: "or/clackamas/wilsonville/4.planning.txt#L3646-L3648"
+        quote: "or/clackamas/wilsonville/4/4.113.txt#L418-L420"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -1319,7 +1319,7 @@ defaults:
     cite: Wilsonville Development Code 4.001(161), Lot Line, Front, the shortest street lot line on a corner lot
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L804-L810"
+    quote: "or/clackamas/wilsonville/4/4.001.txt#L288-L291"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -1335,7 +1335,7 @@ defaults:
     cite: Wilsonville Development Code 4.169(.01), buildings on through lots meet the front yard setback on both streets
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L14583-L14584"
+    quote: "or/clackamas/wilsonville/4/4.169.txt#L2"
   # Subsection E is "Standards applicable to Townhouses", which under state
   # law is this building on four unit lots rather than one -- the `unit_lots`
   # lever, said in Wilsonville's words. E.5.a requires access from a paved
@@ -1360,7 +1360,7 @@ defaults:
     cite: Wilsonville Development Code 4.113(.14)D.3, which caps a share of the frontage and states no maneuvering-area width
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
-    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L344-L345"
     variants:
       - value: 12
         when: [unit_lots]
@@ -1374,7 +1374,7 @@ defaults:
   # Area: A specific measurement. See Section 4.125(.08), Open Space").
   # Nothing in the R, RA-H or PDR zones states a private open space minimum,
   # so a Wilsonville site plan outside the Village reserves none -- the code
-  # as read, not an omission. (or/clackamas/wilsonville/4.planning.txt#L997-L1002)
+  # as read, not an omission. (or/clackamas/wilsonville/4/4.001.txt#L380-L384)
   #
   # 4.113 IS NOT SILENT, and the sentence above used to say it was. Corrected
   # 2026-09-09 while reading the 4.113 card: Subsection (.01)C states "the
@@ -1501,7 +1501,7 @@ zones:
       # ceiling any R lot can be held to. Unread is conservative.
       exempt: true
       cite: WC 4.122(.02) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4385,L4388,L4394-L4395"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L6,L8,L14"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -1511,7 +1511,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.122(.02) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4396-L4397"
+        quote: "or/clackamas/wilsonville/4/4.122.txt#L15-L16"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -1522,7 +1522,7 @@ zones:
           times: 4
           when: [unit_lots]
           cite: WC 4.122(.02) Table 1 (the 2-3 row, a maximum of 3) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4385,L4388-L4389,L4396-L4397"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L6,L8-L9,L15-L16"
     quadplex_allowed:
       # 4.122(.04)B permits "Middle Housing"; 4.001(181) is where that term is
       # defined as the class containing quadplexes. The quote reads both, so
@@ -1540,47 +1540,47 @@ zones:
       # project's purposes. Now it points at one.
       value: 35
       cite: Wilsonville Development Code 4.122(.05)E (R Zone lot standards)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4457"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L57"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -1597,40 +1597,40 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4450-L4453"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L51-L53"
       variants:
         # 4.122(.06)C.4. R states a per-lot townhouse minimum and, unlike
         # OTR, no cumulative figure for a row of them.
         - value: 1250
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4455"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L55"
     min_lot_width_ft:
       value: 60
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4440-L4442"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L43-L45"
       variants:
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4440-L4442"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L43-L45"
     min_lot_depth_ft:
       value: 70
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4456"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L56"
     min_frontage_ft:
       value: 30
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4443-L4446"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L46-L49"
       variants:
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4443-L4446"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L46-L49"
     max_coverage_pct:
       # 4.122(.06)F is five rows on lot area, and the file held the loosest
       # of them as the zone's figure. Each row prints two numbers, largest
@@ -1644,17 +1644,17 @@ zones:
       # always knows lot area, so the base is a backstop rather than an
       # answer.
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+      quote: "or/clackamas/wilsonville/4/4.122.txt#L58-L66"
       variants:
         - value: 50
           band: {measure: lot_sqft, at_most: 7000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L58-L66"
         - value: 45
           band: {measure: lot_sqft, more_than: 7000, at_most: 8000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L58-L66"
         - value: 40
           band: {measure: lot_sqft, more_than: 8000, at_most: 12000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L58-L66"
         # The code writes this row "more than 12,000 sf and less than 20,000
         # sf". This band read `at_most: 19999` and said the grammar had no
         # exclusive upper bound; it has `less_than`, which is the exact mirror
@@ -1664,7 +1664,7 @@ zones:
         # Found 2026-09-07 by the footnote-application check.
         - value: 25
           band: {measure: lot_sqft, more_than: 12000, less_than: 20000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+          quote: "or/clackamas/wilsonville/4/4.122.txt#L58-L66"
     notes: 'quadfit confidence: verified | Permits Middle Housing outright. Setbacks per 4.113(.02): lots
       <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot
       7,000 (SFD/duplex/triplex 5,000).'
@@ -1699,44 +1699,44 @@ zones:
       quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L217"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -1753,40 +1753,40 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4516-L4520"
+      quote: "or/clackamas/wilsonville/4/4.123.txt#L25-L28"
       variants:
         # 4.123(.05)C.4. OTR states the cumulative figure R leaves out, and
         # it lands on the same 7,000 as the single-lot quadplex: four
         # attached units need 7,000 square feet however the plat is drawn.
         - value: 7000
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4521-L4525"
+          quote: "or/clackamas/wilsonville/4/4.123.txt#L29-L32"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4510-L4512"
+      quote: "or/clackamas/wilsonville/4/4.123.txt#L19-L21"
       variants:
         # No minimum per townhouse lot, 35 cumulative for the attached row --
         # which is the same 35, so the split-lot path buys nothing in width.
         - value: 35
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4510-L4512"
+          quote: "or/clackamas/wilsonville/4/4.123.txt#L19-L21"
     min_frontage_ft:
       value: 35
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4513-L4515"
+      quote: "or/clackamas/wilsonville/4/4.123.txt#L22-L24"
       variants:
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4513-L4515"
+          quote: "or/clackamas/wilsonville/4/4.123.txt#L22-L24"
     notes: 'Zone code + quadplex use VERIFIED (Middle Housing permitted). Lot standards read against
       4.123(.05) on 2026-08-16 and quoted per cell: width 35 at the building line, street frontage 35
       or 20 for townhouses, minimum lot size 7,000 for a quadplex and 7,000 cumulative for four
@@ -1815,7 +1815,7 @@ zones:
       # net density of 25 units per acre". Four times PDR-1's 1 is 4, under the 25.
       exempt: true
       cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -1825,7 +1825,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        quote: "or/clackamas/wilsonville/4/4.124.txt#L68-L69"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -1836,14 +1836,14 @@ zones:
           times: 4
           when: [unit_lots]
           cite: WC 4.124(.05) Table 1 (the PDR-1 row, a maximum of 1) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4657,L4670-L4671"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L56,L68-L69"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
       # Development Residential Zones", so it is one block for all six PDR
       # zones rather than six blocks that happen to agree.
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L1-L5"
     max_height_ft:
       # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
       # Building Height (feet), 35, one merged cell spanning all seven PDR
@@ -1864,47 +1864,47 @@ zones:
       # because in the flattened text the figure alone names nothing.
       value: 35
       cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -1921,23 +1921,23 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 20000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4713"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L101"
     min_frontage_ft:
       value: 80
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4716"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L104"
     max_coverage_pct:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4716"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L104"
     notes: 'quadfit confidence: verified | PDR-1 base min lot 20,000sf (>10,000 -> 20/10/20 setbacks).
       Depth 100ft, height 35ft. Permits duplex/triplex/quadplex outright.'
   PDR2:
@@ -1956,7 +1956,7 @@ zones:
       # net density of 25 units per acre". Four times PDR-2's 3 is 12, under the 25.
       exempt: true
       cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -1966,7 +1966,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        quote: "or/clackamas/wilsonville/4/4.124.txt#L68-L69"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -1977,14 +1977,14 @@ zones:
           times: 4
           when: [unit_lots]
           cite: WC 4.124(.05) Table 1 (the PDR-2 row, a maximum of 3) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4658,L4670-L4671"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L57,L68-L69"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
       # Development Residential Zones", so it is one block for all six PDR
       # zones rather than six blocks that happen to agree.
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L1-L5"
     max_height_ft:
       # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
       # Building Height (feet), 35, one merged cell spanning all seven PDR
@@ -2005,47 +2005,47 @@ zones:
       # because in the flattened text the figure alone names nothing.
       value: 35
       cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -2062,23 +2062,23 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4718"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L106"
     min_frontage_ft:
       value: 30
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4723"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L109"
     max_coverage_pct:
       value: 45
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4722"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L108"
     notes: 'quadfit confidence: verified | Base min lot 7,000sf. Depth 70ft, height 35ft. Coverage curve
       45/40/25 as lot grows. 2-story: side 7/rear 20.'
   PDR3:
@@ -2097,7 +2097,7 @@ zones:
       # net density of 25 units per acre". Four times PDR-3's 5 is 20, under the 25.
       exempt: true
       cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -2107,7 +2107,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        quote: "or/clackamas/wilsonville/4/4.124.txt#L68-L69"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -2118,14 +2118,14 @@ zones:
           times: 4
           when: [unit_lots]
           cite: WC 4.124(.05) Table 1 (the PDR-3 row, a maximum of 5) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4659,L4670-L4671"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L58,L68-L69"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
       # Development Residential Zones", so it is one block for all six PDR
       # zones rather than six blocks that happen to agree.
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L1-L5"
     max_height_ft:
       # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
       # Building Height (feet), 35, one merged cell spanning all seven PDR
@@ -2146,47 +2146,47 @@ zones:
       # because in the flattened text the figure alone names nothing.
       value: 35
       cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -2203,20 +2203,20 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L117"
     min_frontage_ft:
       value: 40
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4724"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L110"
       variants:
         # Table 2 note F, on this cell and PDR-4's: "Lot frontage may be
         # reduced to 24 feet when the lot fronts a cul-de-sac." Held since
@@ -2227,10 +2227,10 @@ zones:
         # a bulb still owes 40.
         - value: 24
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4740"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L122"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4724"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L110"
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (note B, PDR-3..7; base lot min 4,500).
       Depth 60ft, height 35ft. 2-story: side 7/rear 20. 24 ft frontage on a cul-de-sac.'
   PDR4:
@@ -2249,7 +2249,7 @@ zones:
       # net density of 25 units per acre". Four times PDR-4's 7.5 is 30, so the printed 25 governs.
       exempt: true
       cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -2259,7 +2259,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        quote: "or/clackamas/wilsonville/4/4.124.txt#L68-L69"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -2269,14 +2269,14 @@ zones:
         - value: 25
           when: [unit_lots]
           cite: WC 4.124(.05) Table 1 (the PDR-4 row, a maximum of 7.5) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4660,L4670-L4671"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L59,L68-L69"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
       # Development Residential Zones", so it is one block for all six PDR
       # zones rather than six blocks that happen to agree.
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L1-L5"
     max_height_ft:
       # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
       # Building Height (feet), 35, one merged cell spanning all seven PDR
@@ -2297,47 +2297,47 @@ zones:
       # because in the flattened text the figure alone names nothing.
       value: 35
       cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -2354,20 +2354,20 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L117"
     min_frontage_ft:
       value: 35
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4726"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L112"
       variants:
         # Table 2 note F, on this cell and PDR-4's: "Lot frontage may be
         # reduced to 24 feet when the lot fronts a cul-de-sac." Held since
@@ -2378,10 +2378,10 @@ zones:
         # a bulb still owes 35.
         - value: 24
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4740"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L122"
     max_coverage_pct:
       value: 75
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4726"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L112"
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (base lot min 3,000). Depth 60ft, height
       35ft. 2-story: side 7/rear 20.'
   PDR5:
@@ -2400,7 +2400,7 @@ zones:
       # net density of 25 units per acre". Four times PDR-5's 12 is 48, so the printed 25 governs.
       exempt: true
       cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -2410,7 +2410,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        quote: "or/clackamas/wilsonville/4/4.124.txt#L68-L69"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -2420,14 +2420,14 @@ zones:
         - value: 25
           when: [unit_lots]
           cite: WC 4.124(.05) Table 1 (the PDR-5 row, a maximum of 12) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4661,L4670-L4671"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L60,L68-L69"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
       # Development Residential Zones", so it is one block for all six PDR
       # zones rather than six blocks that happen to agree.
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L1-L5"
     max_height_ft:
       # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
       # Building Height (feet), 35, one merged cell spanning all seven PDR
@@ -2448,47 +2448,47 @@ zones:
       # because in the flattened text the figure alone names nothing.
       value: 35
       cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -2505,23 +2505,23 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L117"
     min_frontage_ft:
       value: 30
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4727"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L113"
     max_coverage_pct:
       value: 75
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4727"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L113"
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (base lot min 2,000). Depth 60ft, height
       35ft. 2-story: side 7/rear 20.'
   PDR6:
@@ -2540,7 +2540,7 @@ zones:
       # net density of 25 units per acre". Four times PDR-6's 20 is 80, so the printed 25 governs.
       exempt: true
       cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L67"
       # "Net density" (note c). The code defines no net acre for density;
       # its one list is "net developable area" in 4.127's R-5 open space rule
       # (no SROZ land, streets and private drives, alleys, paths). Read
@@ -2550,7 +2550,7 @@ zones:
       measured_on:
         fact: net_developable_area
         cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
-        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        quote: "or/clackamas/wilsonville/4/4.124.txt#L68-L69"
         less: []
         may_less: [drive_aisle]
         assumed_none:
@@ -2560,14 +2560,14 @@ zones:
         - value: 25
           when: [unit_lots]
           cite: WC 4.124(.05) Table 1 (the PDR-6 row, a maximum of 20) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
-          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4662,L4670-L4671"
+          quote: "or/clackamas/wilsonville/4/4.124.txt#L47,L54,L61,L68-L69"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
       # Development Residential Zones", so it is one block for all six PDR
       # zones rather than six blocks that happen to agree.
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L1-L5"
     max_height_ft:
       # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
       # Building Height (feet), 35, one merged cell spanning all seven PDR
@@ -2588,47 +2588,47 @@ zones:
       # because in the flattened text the figure alone names nothing.
       value: 35
       cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L80,L98-L100,L105"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
       variants:
         - value: 7
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
         - value: 0
           when: [attached_wall]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
       variants:
         - value: 20
           when: [multi_story]
           band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
       variants:
         # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
         # than 100 feet in width ... the side yard on the street or private
@@ -2645,23 +2645,23 @@ zones:
           band:
             - {measure: lot_sqft, more_than: 10000}
             - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
       variants:
         - value: 4
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L117"
     min_frontage_ft:
       value: 30
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4728"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L114"
     max_coverage_pct:
       value: 75
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4728"
+      quote: "or/clackamas/wilsonville/4/4.124.txt#L114"
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (no base lot minimum). Depth 60ft, height
       35ft. 2-story: side 7/rear 20.'
   RN:
@@ -2677,7 +2677,7 @@ zones:
       # West and RN covers two other neighborhoods, but nothing published says
       # which one a lot is in.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L6498-L6505"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L13-L19"
     # Every dimension below is the R-10 Large Lot column: the binding row of
     # three, taken because nothing published says which row a lot is in. Each
     # quote spans the header block and all three rows so the choice is visible
@@ -2687,25 +2687,25 @@ zones:
       # a quadplex figure for -- it states 7,000 for R-5 and R-7 only, so the
       # single-family base governs in R-10 and it is the larger number besides.
       value: 8000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
       variants:
         # Note B, townhouses in all sub-districts.
         - value: 1500
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7243"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L495"
     min_lot_width_ft:
       value: 40
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
       variants:
         # Note I, townhouses in all sub-districts.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L504"
     min_lot_depth_ft:
       # The one column where all three rows agree, so the sub-district
       # question does not reach it.
       value: 60
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
     min_frontage_ft:
       # Restored, and it is the same column as lot width rather than a column
       # of its own: the header reads "Min. Lot Width I, J, N" and both of those
@@ -2722,32 +2722,32 @@ zones:
       # would waive this entirely. A lot the screen has not proven on a bulb
       # still owes 40.
       value: 40
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
       variants:
         # Note J: "May be reduced to 24' when the lot fronts a cul-de-sac."
         - value: 24
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7254"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L505-L506"
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L504"
         # Note I gives a townhouse 20 whatever it fronts, and a relief cannot
         # tighten it. Spelled out so the two one-condition rows do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L504"
     max_coverage_pct:
       # 40 is R-10. The three rows read 40 / 45 / 60 and the file used to hold
       # the 60 -- the loosest end of a twenty-point spread -- as the zone's one
       # figure, which is the exact shape that turns a lot green by mistake.
       value: 40
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
     setback_side_ft:
       # Table 8A prints "(note)" in this column and hands it to note M, which
       # is three rules: 5 ft on an ordinary lot, 10 ft a side (20 combined) on
@@ -2756,14 +2756,14 @@ zones:
       # band fires on area alone -- which is the stricter reading, since a wide
       # lot inside the band gets the deeper yard either way.
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
       variants:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
         - value: 10
           when: [corner_lot]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
     setback_side_total_ft:
       # The third rule in note M, and the one the per-side numbers cannot
       # carry: on a lot over 10,000 sq ft the two side yards must add up to
@@ -2774,23 +2774,23 @@ zones:
       # same reason it is dropped on setback_side_ft: area alone is the
       # stricter reading.
       exempt: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
       variants:
         - value: 20
           band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      quote: "or/clackamas/wilsonville/4/4.127.txt#L438-L492"
       variants:
         # Note G: 18 ft to a garage door facing an alley, to leave a parking
         # apron. Same 18 the table's own alley column prints.
         - value: 18
           when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L7249-L7250"
+          quote: "or/clackamas/wilsonville/4/4.127.txt#L501-L502"
     notes: 'REBUILT 2026-08-16 on Table 8A, which is the table that governs: 4.127(.05)C says the lot
       and development standards for Frog Pond West "are established by Table 8A", and 4.113(.02) --
       where every setback here used to come from -- applies only "unless otherwise provided for by the
@@ -2889,7 +2889,7 @@ zones:
         # to" (L5801-L5805) is not quoted here: the routing ledger files those
         # lines under 4.140, off L5794's "4.140(.02) through (.06)", and a
         # quote there would close the 4.001 -> 4.140 row nobody has followed.
-        quote: "or/clackamas/wilsonville/4.planning.txt#L6318-L6320,L6332-L6333,L6439-L6441"
+        quote: "or/clackamas/wilsonville/4/4.125.txt#L957-L958,L962,L1013-L1014"
     min_lot_sqft:
       # THE ONLY NUMBER IN THIS ZONE WRITTEN FOR A QUADPLEX, and it is not in
       # Table V-1. Table V-1 has no middle-housing row at all -- its building
@@ -2912,16 +2912,16 @@ zones:
       # this one figure replaces that row's 2,250.
       value: 7000
       cite: Wilsonville Development Code 4.125(.23)(B)(3)
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5050,L6449,L6454-L6455"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L193,L1019,L1022"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4984-L4988,L5023"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L141-L145,L180"
     min_lot_depth_ft:
       value: 50
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4984,L4989-L4990,L5023"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L141,L146-L147,L180"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4984,L4998-L5000,L5023"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L141,L155-L157,L180"
     setback_front_ft:
       # Table V-1 prints 12 and note 6 raises it: "For Standard, or Large Lots
       # on Collector Avenues, front setbacks are 20 ft. min." Two conditions,
@@ -2935,24 +2935,24 @@ zones:
       # the relief never fires and every Village lot is screened at 20. If the
       # functional-classification layer ever lands, this loosens by eight feet.
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5023,L5032"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L180,L184-L185"
       variants:
         - value: 12
           when: [local_street]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L5006,L5023"
+          quote: "or/clackamas/wilsonville/4/4.125.txt#L163,L180"
     setback_front_max_ft:
       # Villebois is a build-to zone: 20 feet is a ceiling as well as, on a
       # collector, the floor. Note 19 lets the maximum grow for deeper porches,
       # building code, utility easements and open space -- all of them
       # loosenings on facts nothing measures, so none is taken.
       value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5007-L5008,L5023"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L164-L165,L180"
     setback_rear_ft:
       # Note 13 is the measurement rule and it matters on an alley lot: "On
       # lots with alleys, Rear Setback shall be measured from the rear lot line
       # abutting the alley." Same line the screen uses.
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5009-L5010,L5023,L5042"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L166-L167,L180,L191-L192"
     setback_side_ft:
       # 5 from the table. Note 15's other sentence would drop it to zero -- "On
       # Small and Medium Lots, minimum side setback shall be 0 ft. or as
@@ -2961,7 +2961,7 @@ zones:
       # which category a lot is in. A loosening on an unknown is not a
       # loosening.
       value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023,L5044"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L168-L169,L180,L192"
     setback_side_total_ft:
       # The other half of note 15, and the half that tightens: "On Estate Lots
       # and Large Lots with frontage 70 ft. or wider, the minimum combined side
@@ -2981,11 +2981,11 @@ zones:
       # the code says and the misquote gate correctly refused. It was inert
       # anyway: the side setback above already holds both yards at 5.
       exempt: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L168-L169,L180"
       variants:
         - value: 15
           band: {measure: lot_width_ft, at_least: 70}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L5044"
+          quote: "or/clackamas/wilsonville/4/4.125.txt#L192"
     setback_street_side_ft:
       # Table V-1 has no street-side column, so on a local street a corner lot
       # takes the ordinary 5-foot side yard. Note 6 writes the collector case:
@@ -2993,11 +2993,11 @@ zones:
       # way as the front: the collector number is the base, the local-street
       # number is the relief, and the relief does not fire.
       value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5032"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L184-L185"
       variants:
         - value: 5
           when: [local_street]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023"
+          quote: "or/clackamas/wilsonville/4/4.125.txt#L168-L169,L180"
     max_coverage_pct:
       # Table V-1's coverage cell holds a note number rather than a figure, and
       # note 2 is four figures: "Small lots: 75%, Medium Lots: 65%, Standard
@@ -3012,7 +3012,7 @@ zones:
       # adds ten points where a detached accessory building is built, and is
       # not taken -- it is a loosening, and the pod has no outbuilding.
       value: 45
-      quote: "or/clackamas/wilsonville/4.planning.txt#L5023,L5027-L5028,L5049"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L180,L183,L193"
     # The layer holds this from 4.113(.14)(D)(4)(c)(i), and the Village Zone
     # states its own copy at 4.125(.05)(B) with fewer conditions -- no second
     # frontage, no paved surface: "All lots with access to a public street,
@@ -3023,7 +3023,7 @@ zones:
     parking_alley_access_required:
       value: true
       cite: Wilsonville Development Code 4.125(.05)(B), vehicular access from the alley
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4928-L4929"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L112"
     notes: 'THE VILLAGE ZONE IS VILLEBOIS, and until 2026-09-01 the screen dropped every lot in it.
       This is the largest single block of unencoded land left in the corpus -- 2,508 lots at s2, more
       than PDR-3''s 1,778 and larger than any other Wilsonville zone -- and it was invisible rather
@@ -3227,7 +3227,7 @@ zones:
       # the section, the WCF height rule and the treatment plant. 98 lots
       # under the R letter, 154 under all five.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+      quote: "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51"
     notes: >-
       Encoded 2026-09-20 from 4.120. The 30,000 sq ft minimum lot and the
       75 ft frontage (L4335, L4346) are the holding zone's, written so the
@@ -3255,7 +3255,7 @@ zones:
       # The same zone as FDAHR below: the ordinance has one FDA-H zone and
       # the map appends the plan's future designation. One lot.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+      quote: "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51"
     notes: >-
       Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated commercial land; the state middle-housing mandate does not reach it.
   FDAHI:
@@ -3270,7 +3270,7 @@ zones:
       # The same zone as FDAHR below: the ordinance has one FDA-H zone and
       # the map appends the plan's future designation. 47 lots.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+      quote: "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51"
     notes: >-
       Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated industrial land; the state middle-housing mandate does not reach it.
   FDAHP:
@@ -3285,7 +3285,7 @@ zones:
       # The same zone as FDAHR below: the ordinance has one FDA-H zone and
       # the map appends the plan's future designation. Four lots.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+      quote: "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51"
     notes: >-
       Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated public land; the state middle-housing mandate does not reach it.
   FDAHV:
@@ -3300,7 +3300,7 @@ zones:
       # The same zone as FDAHR below: the ordinance has one FDA-H zone and
       # the map appends the plan's future designation. Four lots.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4279-L4292,L4306-L4311,L4360-L4362"
+      quote: "or/clackamas/wilsonville/4/4.120.txt#L1-L9,L15-L16,L50-L51"
     notes: >-
       Encoded 2026-09-20 from 4.120 with FDAHR; read that block. Plan-designated village land -- the V Zone that follows it refuses the building in its own words (4.125), so the answer is the same on either side of the zone change.
   PDC:
@@ -3324,7 +3324,7 @@ zones:
       # zone -- the mixed-use case item 5 admits -- and set street spacing
       # for it, not a use. 179 lots.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L8183-L8198,L8250-L8256"
+      quote: "or/clackamas/wilsonville/4/4.131.txt#L1-L11,L45-L46"
     notes: >-
       Encoded 2026-09-20 from 4.131(.01). Whole-section grep of 4.131
       (L8183-L8267) for dwelling, residential, housing: the two block-and-
@@ -3361,7 +3361,7 @@ zones:
       # residential districts (noise, loading, lighting) and nothing else.
       # 275 lots -- the largest code on Wilsonville's map.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L10260-L10265,L10284-L10285,L10300-L10305"
+      quote: "or/clackamas/wilsonville/4/4.135.txt#L1-L4,L19-L20,L25-L29"
     notes: >-
       Encoded 2026-09-20 from 4.135(.03). Refused on silence the way PDC is,
       and the silence is an industrial zone's: the one route to a dwelling
@@ -3391,7 +3391,7 @@ zones:
       # (L10610-L10665) for dwelling, residential, housing: nothing. 19
       # lots.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L10610-L10637,L10640"
+      quote: "or/clackamas/wilsonville/4/4.136.txt#L1-L27"
     notes: >-
       Encoded 2026-09-20 from 4.136. Twenty-one uses on two lists and every
       one a public or quasi-public facility; the dimensional standards at
@@ -3471,7 +3471,7 @@ zones:
       # nobody having read 4.400. The purpose clause (L10667-L10668) names
       # the corrections use the quote no longer shows.
       value: false
-      quote: "or/clackamas/wilsonville/4.planning.txt#L10666-L10670,L10676-L10679"
+      quote: "or/clackamas/wilsonville/4.136/4.136.5.txt#L1-L4,L7-L10"
     notes: >-
       Ruled 2026-10-01 from 4.136.5. Five uses on two lists and every one a
       corrections or public facility. The (.08)B master plan "would allow
@@ -3488,13 +3488,13 @@ crossrefs:
       PDI-RSIA 4.135.5(.03)I admits a PDC use only if it "is planned and developed in a
       manner consistent with the purposes and objectives of Sections 4.130 to 4.140" --
       a consistency test on top of the use list, which can only take a use away
-      (4.planning.txt L10437-L10439).
+      (4.135.5.txt L13).
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/wilsonville/4.planning.txt#L795"
+  quote: "or/clackamas/wilsonville/4/4.001.txt#L283"
   says: "each abut a street or private drive"
   cite: "WDC 4.001(157), (161), (312)"
   note: >-

@@ -1,0 +1,13 @@
+12.24.010  Mixed-Use and Urban Center Zones.
+There are 9 mixed-use and urban center zones in the City:
+A. MU-N Mixed-Use — Neighborhood;
+B. MU-C Mixed-Use — Commercial;
+C. MU-VTC Mixed-Use — Village Town Center;
+D. SCR-V Station Community Residential Village;
+E. UC-RM Urban Center — Residential Medium Density;
+F. UC-MU Urban Center — Mixed-Use Urban Density;
+G. UC-AC Urban Center — Activity Center;
+H. UC-NC Urban Center — Neighborhood Center;
+I. UC-OR Urban Center — Office/Research; and
+J. UC-RP Urban Center — Research Park.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 4, 2015)

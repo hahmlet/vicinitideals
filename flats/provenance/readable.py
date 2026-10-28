@@ -51,6 +51,10 @@ WIDTH = 80
 #: footer. Measured on Tualatin: two lines, sometimes three.
 BAND = 4
 
+#: How many lines at a page's top a running header can take. Beaverton's
+#: encodeplus print sets two: the code's name, then the print date and page.
+HEAD_LINES = 2
+
 #: A capital letter set apart from the rest of its word by kerning: "T able".
 #: Not A or I, which are words.
 _KERNED = re.compile(r"(?<![A-Za-z])([B-HJ-Z]) ([a-z]+)(?![A-Za-z])")
@@ -67,6 +71,7 @@ _OPENS = re.compile(
       | \[\s*[0-9A-Za-z]{1,3}\s*\]\s*$  # [2] -- a web print's note marker, alone
       | [•●▪◦–—*-]\s   # bullets and dashes
       | (?:Table|Figure|Map|Exhibit|Chapter|Section|Sections)\b
+      | (?:Footnotes?|Notes?):?\s*$     # a table's notes heading, alone
       | [A-Z][A-Z0-9 ,&()/'-]{5,}$      # A HEADING IN CAPITALS
     )""",
     re.VERBOSE,
@@ -189,8 +194,9 @@ def _furniture(
     Some books print their running header at the top of the page, so the
     extraction puts it on the first line of the page rather than in the band
     above it: Troutdale's "TROUTDALE DEVELOPMENT CODE" and Sherwood's bare
-    section number. Only that one line is looked at, so the same words in the
-    text below it stay.
+    section number. Only the page's top line is looked at -- and the one
+    under it, when the top line is header too -- so the same words in the
+    text below stay.
     """
     out: set[int] = set()
     for brk in breaks:
@@ -198,8 +204,18 @@ def _furniture(
             for k in range(max(1, brk - BAND), min(brk, len(lines) + 1)):
                 if furniture.match(lines[k - 1]):
                     out.add(k)
-        if head is not None and 1 <= brk <= len(lines) and head.match(lines[brk - 1]):
-            out.add(brk)
+        # A header can run to more than one line ("Beaverton Development Code"
+        # over "Date Printed: ... Chapter 20, ZD-2"): every line from the page
+        # start while each is one, never past HEAD_LINES.
+        k = brk
+        while (
+            head is not None
+            and 1 <= k <= len(lines)
+            and k < brk + HEAD_LINES
+            and head.match(lines[k - 1])
+        ):
+            out.add(k)
+            k += 1
     return out
 
 

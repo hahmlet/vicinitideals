@@ -1,0 +1,210 @@
+20.22.20. Land Uses
+
+[ORD 4859; January 2025]
+The following Land Uses are classified in the following three categories: Permitted (P) including their accessory uses and structures, Conditional Uses (C), or Prohibited (N) uses as identified in the table below for Cooper Mountain Zoning Districts.
+
+Table 20.22.20.A
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+Additional Requirements by District: See 20.22.30 through 20.22.40
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+1.A. Residential Care Facilities P P P P
+2.A. Residential Dwellings - Accessory Dwelling Units P P P P
+2.B. Residential Dwellings - Single-Detached Dwelling N1 N1 N1, 2 P2
+2.C. Residential Dwellings - Duplex P7 P7 P7 P
+2.D. Residential Dwellings - Triplex and Quadplex P7 P7 P7 P
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+2.E. Residential Dwellings - Townhouse P P P P
+2.F. Residential Dwellings - Cottage Cluster N N N P
+2.G. Residential Dwellings - Multi-Dwelling P P P P27
+2.H. Residential Dwellings - Home Occupation P P P P
+2.I. Residential Dwellings - Manufactured and Mobile Homes4 P P P P
+2.J. Residential Dwellings - Manufactured Home Parks N N N P
+2.K. Residential Dwellings - Home Testing of Consumer Electronic Products10 N N P P 2.L.
+Residential Dwellings - Single-Room Occupancies P P P P
+3.A. Commercial3 Animal Care, Major C C C11 C11
+3.B. Commercial3 Animal Care, Minor P P C11 C11
+4.A. Commercial3 Hospitals P P C C
+4.B. Commercial3 Medical Clinics P P C C
+4.C. Commercial3 Child Care Centers P P P P5, 31
+4.D. Commercial3 Residential Care Facilities P P C P30 C
+5. Commercial3 Commercial Amusement C C N N
+6. Commercial3 Drive-Up Window Facilities N9 N9 N9 N9
+7. Commercial3 Eating and Drinking Establishments P P N P5
+8. Commercial3 Financial Institutions P P N N
+9. Commercial3 Food Cart Pods16 P P N N
+10. Commercial3 Live/Work Uses14 P P N N29
+11.A. Commercial3 Marijuana Dispensary18 P N N N
+11.B. Commercial3 Marijuana Processing N N N N
+11.C. Commercial3 Retail Marijuana Sales8 P N N N
+11.D. Commercial3 Wholesale Marijuana Sales N N N N
+12. Commercial3 Meeting Facilities P C19 P C19 N N
+13. Commercial3 Office P P N P5
+14.A. Commercial3 Parking as the Principal Use - Structures C C N N
+14.B. Commercial3 Parking as the Principal Use - Surface C C N N
+15.A. Commercial3 Bulk Retail15 P N N N
+15.B. Commercial3 Retail Trade15 P P N P5
+16. Commercial3 Rental Business P21, 26 P21, 26 N N
+17. Commercial3 Service Business/Professional Services P21 P21 N P5
+18.A. Commercial3 Cold Storage Plants N N N N
+18.B. Commercial3 Self Storage Facilities N N N N
+18.C. Commercial3 Storage Yards N N C28 C28
+18.D. Commercial3 Storage Yard for Building Materials N N N N
+19. Commercial3 Temporary Living Quarters P P C6 P20 C6
+20.A. Commercial3 Auto, Truck and Trailer Rental N N N N
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+20.B. Commercial3 Automotive Service, Major N N N N
+20.C. Commercial3 Automotive Service, Minor P N N N
+20.D. Commercial3 Bulk Fuel Dealerships N N N N
+20.E. Commercial3 Heavy Equipment Sales N N N N
+20.F. Commercial3 Vehicle Rental C21, 22 C21, 22 N N
+20.G. Commercial3 Vehicle Sales or Lease N N N N
+20.H. Commercial3 Trailer, Recreational Vehicle or Boat Storage N N N N
+20.I. Commercial3 Trailer Sales or Repair N N N N
+20.J. Commercial3 Vehicle Storage Yard N N N N
+21. Civic3, 12 Cemetery N N C C
+22.A. Civic3, 12 Commercial Schools P P22 N N
+22.B. Civic3, 12 Educational Institutions P P C C
+22.C. Civic3, 12 Job Training and Vocational Rehabilitation Services P22 P22 N N
+23. Civic3, 12 Places of Worship P P C C
+24.A. Civic3, 12 Public Buildings and Uses - Non-Profit Public Services in Public Buildings
+P P C C
+24.B. Civic3, 12 Public Buildings and Uses - Public Buildings P P C C
+24.C. Civic3, 12 Public Buildings and Uses - Public Sewer and Water and Utility
+Transmission Lines
+P P P P
+24.D. Civic3, 12 Public Buildings and Uses - Public Sewer, Water Supply, Water
+Conservation and Flood Control Facilities Other than
+Transmission Lines
+C C C C
+25.A. Civic3, 12 Railroad Tracks and Facilities - Passenger P P C C
+25.B. Civic3, 12 Railroad Tracks and Facilities - Freight N N N N
+26.A. Civic3, 12 Public Park P P P P
+26.B. Civic3, 12 Public Dog Parks or Dog Runs P P P P
+26.C. Civic3, 12 Public Recreational Facilities P P C C
+26.D. Civic3, 12 Private Recreational Facilities17 P P C C
+26.E. Civic3, 12 Community Gardens P P P P
+27.A. Civic3, 12 Domestic Violence Shelters P P P P
+27.B. Civic3, 12 Emergency Shelters P25 P25 P25 P25
+27.C. Civic3, 12 Mass Shelters P P P P
+28. Civic3, 12 Social Organizations P P C C
+29. Civic3, 12 Transit Centers P P N N
+30.A. Civic3, 12 Utilities - Utility Substations and Related Facilities other than Transmission Lines
+C C C C
+30.B. Civic3, 12 Utilities - Transmission Lines P P P P
+31. Civic3, 12 Vehicle Camping13 P P P P
+32. Civic3, 12 Wireless Communications Facilities P P P P
+# Land Use
+Category Specific Use CM-
+CS
+CM-
+HDR
+CM-
+MR
+CM-
+RM
+33. Industrial3 Laboratory P23, 24 P23, 24 N N
+34. Industrial3 Manufacturing, Fabricating, Assembly, Processing, and Packing P23, 24 N N N
+35. Other Planned Unit Development C C C C
+Footnotes:
+1. Existing single-detached dwellings as of January 2, 2025 and their accessory uses are Permitted uses and can be expanded or can be rebuilt if destroyed.
+New single-detached dwellings are Prohibited.
+2. Compact Detached Dwellings are prohibited.
+3. Uses may be open to the public between the hours of 7:00 a.m. and 10:00 p.m., and staff may occupy the premises between the hours of 6:00 a.m. and 11:00 p.m. with the following exceptions:
+a. Office, Domestic Violence Shelter, Emergency Shelter, Mass Shelter, and Vehicle Camping uses may operate at any time.
+b. See footnote 8 for restrictions on Retail Marijuana Sales and footnote 18 for restrictions on Marijuana Dispensary uses.
+c. In the CM-CS zoning district:
+i. Uses located in a building or portion thereof that is 500 feet or greater from a Residential zone may be open to the public between the hours of 10:00 p.m. and 7:00 a.m. with staff on the premises up to 60 minutes before and after public hours of operation.
+ii. Uses located in a building or portion thereof that is less than 500 feet from a Residential zone require a Conditional Use to be open to the public between the hours of 10:00 p.m. and 7:00 a.m.
+With Conditional Use approval, staff may occupy the premises up to 60 minutes before and after public hours of operation, unless otherwise approved by the decision-making authority.
+4. The placement of a manufactured home is subject to the design and placement criteria found in Section
+60.20.20. In Cooper Mountain districts where single-detached dwellings are prohibited, manufactured homes are not allowed on individual lots by themselves.
+5. These permitted uses shall only be allowed consistent with Section 20.22.35 rules for small-scale commercial uses in CM-RM, except as allowed in footnote 31 for Child Care Centers.
+[ORD 4876; January 2026]
+6. Limited to uses of Boarding, Rooming, or Lodging House uses
+7. All units of a duplex, triplex, or quadplex must be attached.
+8. Retail Marijuana Sales shall:
+a. be subject to the provisions of ORS 475B.109-119 and OAR Chapter 845, division 25;
+b. be located 1,000 feet from any existing Marijuana Dispensary or Retail Marijuana Sales use, except for instances of colocation within the same premises of Marijuana Dispensary and Retail Marijuana Sales uses when such colocation is permitted by state law; and
+c. be allowed to operate only between the hours of 7:00 AM and 10:00 PM.
+Hours of operation may not be extended through the Conditional Use process as identified in this Code.
+9. Drive-through uses are Prohibited; walk-ups Permitted.
+In CM-RM, walk-up windows are only allowed as an accessory to a small-scale commercial use allowed in Section 20.22.35.
+10. Home Testing of Consumer Electronic Products uses shall:
+a. be limited to the hours of 7:00 AM and 7:00 PM, Monday through Saturday, in which technicians are allowed to occupy the residence;
+b. have at least two off-street parking spaces for technicians, so no on-street parking would occur with the use;
+c. be limited to two vehicles on-site at any one time;
+d. have a 24-hour on-site security system;
+e. have a contract for landscape and maintenance services to ensure that the home testing properties are well maintained for the neighborhood;
+f. be limited to no more than three home testing dwelling units within a quarter mile radius at any time;
+g. be limited to single-detached dwelling units; and
+h. comply with the noise and odor limits contained in the City Code.
+11. Animal Care uses provided as a private amenity to residents in multi-dwellings or on a common area serving multiple households.
+12. Public Art shall be permitted pursuant to Section 60.50.25.13.
+13. Vehicle Camping may occur only where allowed through a program established by Council resolution and administered by the City Manager.
+The use is subject to the special requirements found in Section 60.50.25.14.
+14. Non-residential uses that are part of a Live/Work use shall be uses that are permitted in the zone.
+15. No outdoor storage or sales of animals or livestock are allowed with this use.
+16. Food Cart Pods and their amenities, as described in Section 60.11, are exempt from the Site Development Standards of 20.22.15 but are subject to the standards of 60.11 of the Development Code.
+17. Privately owned facilities, such as fitness clubs, racquetball or handball clubs, tennis courts or swimming pools exclusive of spectator sports facilities.
+18. Marijuana dispensary shall:
+a. be subject to the provisions of ORS 475B.858; and
+b. be allowed to operate only between the hours of 7:00 AM and 10:00 PM.
+Hours of operation may not be extended through the Conditional Use process as identified in this Code.
+19. Buildings larger than 10,000 square feet, for a single use, are subject to approval of a Conditional Use.
+20. Limited to single-room occupancy structures in CM-RM.
+Single-room occupancy structures are residential developments with no fewer than four attached units that are independently rented, lockable, and provide living and sleeping space for the exclusive use of an occupant but that require the occupant share sanitary or food preparation facilities with other units in the occupancy.
+Single-room occupancy structures shall be limited to six units per lot.
+21. This activity shall be conducted wholly within an enclosed structure.
+Accessory open air sales or display related to the principal use may be permitted, provided that the outdoor space devoted to these uses does not occupy an area greater than the equivalent of 15 percent of the building gross floor area, excluding activities associated with a Temporary Use Permit.
+No outdoor sales or outdoor storage of animals or livestock are allowed with this use.
+22. The maximum building footprint size for a building involving a single use shall be 10,000 square feet.
+In addition, the maximum square footage for these uses within a multiple use development shall be 25 percent of the total square footage of the development.
+23. Permitted only within multiple use developments, as long as the floor area of this use does not exceed 50 percent of the total proposed floor area within a multiple use development.
+24. Uses subject to additional restrictions below.
+a. Outdoor manufacturing activity, including but not limited to testing of products or processes, is prohibited.
+b. Outdoor storage is prohibited, including both raw materials and finished products.
+c. Movement of heavy equipment on and off the site, except truck deliveries, is prohibited.
+d. Exterior display or storage of industrial equipment, such as tools, equipment, vehicles, products, materials, or other objects that are part of or used for the business operation is prohibited.
+e. Processes involving live animals or the waste or by product of dead animals is prohibited.
+f. Electrical disturbances that interfere with the normal operation of equipment or instruments on adjacent properties are prohibited.
+g. Processes involving highly combustible, explosive or hazardous materials or waste is prohibited.
+h. Potential nuisances are subject to Beaverton Code Chapter 5.05.IV Nuisances Affecting Public Health.
+25. Emergency Shelters may occur where allowed pursuant to Section 10.70.10.
+26. The maximum floor area for this use shall be 5,000 square feet.
+This use shall be conducted wholly within an enclosed structure.
+27. Limited to one five- or six-unit multi-dwelling structure, and no other dwellings, per lot.
+28. Storage yards for recreational vehicles, boats, and trailers owned by residents in a residential development or Planned Unit Development.
+29. Live/work uses shall only be allowed in CM-RM consistent with the small-scale commercial standards in Section 20.22.35.
+30. Residential Care Facility is a Permitted use in CM-RM within a Planned Unit Development – Cooper Mountain consistent with Section 40.15.15.6 and Section 60.36.
+31. Permitted anywhere in the zone when collocated with a legally established institutional use, including public buildings, public recreation facilities, public parks, places of worship, and educational institutions.
+Collocated use is not subject to the provisions of Section 20.22.35.
+[ORD 4876; January 2026] [ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 8/10/2026

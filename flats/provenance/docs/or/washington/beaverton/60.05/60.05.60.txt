@@ -1,0 +1,1514 @@
+60.05.60. Design Standards and Guidelines for Single-Detached
+Dwellings and Middle Housing.
+
+[ORD 4822; June 2022]
+1.Applicability.
+A. Unless otherwise noted, the standards and guidelines in this section apply to single-detached dwellings (including manufactured homes but excluding compact detached housing) and middle housing in the RMA, RMB, RMC, and CM-RM zoning districts.
+Compact detached housing is subject to the standards in Sections 60.05.15 – 60.05.30.
+[ORD 4859; January 2025]
+B. These standards and guidelines do not apply to middle housing created through conversion of, or addition to, an existing single-detached dwelling; however, the conversion or addition shall not increase nonconformance with these standards or guidelines.
+C. These standards and guidelines do not apply to small-scale commercial uses created through the conversion of, or addition to, an existing single-detached dwelling, except for the following.
+The conversion or addition shall not increase nonconformance with any of the standards or guidelines in Table 60.05.60.2.
+The standards and guidelines that apply to the conversion or addition are:
+1. Entries (Standards 60.05.60.2.S2c through S2e / Guidelines 60.05.60.2.G2a and G2b)
+2. Lighting Design (Standard 60.05.60.2.S15 / Guidelines 60.05.60.2.G15a and G15b)
+3. Solid Waste Facilities (Standard 60.05.60.2.S16b and 60.05.60.2.S17 / Guidelines 60.05.60.2.G16 and 60.05.60.2.G17a and G17b)
+[ORD 4859; January 2025]
+D. If a duplex, triplex, quadplex, or cottage cluster has been divided by a middle housing land division, the standards and guidelines that are applicable to the lot or applicable on a per-lot basis shall apply to the middle housing parent lot, not to the middle housing child lots, unless otherwise noted.
+[ORD 4857; October 2024]
+E. In the CM-RM zoning district, the small-scale commercial uses described in Section 20.22.35 are also subject to these standards and guidelines.
+1. The standards and guidelines in Table 60.05.60.2 apply to the following scenarios:
+a. A small-scale commercial use in a detached building that is the only use on a lot;
+b. A small-scale commercial use that is in a detached building on a lot that also contains a single-detached dwelling, duplex, triplex, or quadplex; and
+c. A small-scale commercial use within an attached building on a lot that also contains a single-detached dwelling, duplex, triplex, or quadplex.
+2. The standards and guidelines in Table 60.05.60.3 apply to the following scenarios:
+a. A small-scale commercial use in a detached building on a lot that also contains a townhome; and
+b. A small-scale commercial use within an attached building on a lot that also contains a townhome.
+[ORD 4859; January 2025]
+2.Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes.
+Unless otherwise noted, single-detached dwellings (including manufactured homes), duplexes, triplexes, and quadplexes, and the small-scale commercial uses in Section 60.05.60.1.E.1, shall meet the standards of this section.
+[ORD 4859;
+January 2025]
+
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Entries
+
+Entries - Design Standard Entries - Design Guideline
+S1. Dwellings. At least one entry to each structure containing at least one dwelling shall meet the standards in 60.05.60.2.S1a and 60.05.60.2.S1b. See Figure 5.
+[ORD
+4859; January 2025]
+An entry is a building opening designed to be used by pedestrians.
+It does not include any door exclusively designated as an emergency exit, any door that leads to a utility room or closet, or a garage door not designed as a pedestrian entrance.
+a. The entry shall be within 10 feet of the longest street-facing wall of the dwelling unit; and
+b. The entry shall comply with one of the following:
+1. Face a public or private street;
+2. Be at an angle of up to 45 degrees from the street;
+3. Open onto a porch or an outdoor space, such as a patio, stoop, forecourt, or mezzanine.
+The porch or outdoor space shall be at least 25 square feet in area and at least one entrance to the porch or outdoor space shall face the street;
+or
+4. Face an outdoor open area that is shared by at least two dwellings and is adjacent to the street.
+Adjacent means that some part of the open area is within 10 feet of a lot line that abuts a street.
+c. The following are exempt from this standard:
+1. Any detached structure for which more than 50 percent of its public or private street-facing façade is separated from the street property line by another dwelling as seen in plan view from the front lot line.
+2. Manufactured homes are exempt from this standard.
+G1a. Type 3.
+Some entries, especially those closest to the street, shall be accessible from the street.
+From the street and on-site parking areas, pedestrians shall be able to see some entries and identify pedestrian routes to other entries on the site.
+G1b. Type 2.
+Design Standard S1 shall be met.
+Entries - Design Standard Entries - Design Guideline
+S2. CM-RM Small-scale Commercial.
+At least one entry to the small-scale commercial use shall meet the standards in
+60.05.60.2.S2a through 60.05.60.2.S2e.
+An entry is a building opening designed to be used by pedestrians.
+It does not include any door exclusively designated as an emergency exit, any door that leads to a utility room or closet, or a garage door not designed as a pedestrian entrance.
+Any detached structure for which more than 50 percent of its public or private street-facing façade is separated from the street property line by another dwelling as seen in plan view from the front lot line is exempt from 60.05.60.2.S2a and 60.05.60.2.S2b.
+a. The entry shall be within 10 feet of the longest street-facing wall of the unit in the building containing the small-scale commercial use; and
+b. The entry shall comply with one of the following:
+1. Face a public or private street;
+2. Be at an angle of up to 45 degrees from the street;
+3. Open onto a porch or an outdoor space, such as a patio, stoop, forecourt, or mezzanine.
+The porch or outdoor space shall be at least 25 square feet in area and at least one entrance to the porch or outdoor space shall face the street;
+or
+4. Face an outdoor open area that is shared with at least one dwelling and is adjacent to the street.
+Adjacent means that some part of the open area is within 10 feet of a lot line that abuts a street.
+c. A reasonably direct walkway connection is required between the entry and public and private streets.
+The walkway shall have a minimum of 5-foot-wide, unobstructed clearance and shall be paved with scored concrete or modular paving materials.
+In the event that the Americans with Disabilities Act (ADA) contains stricter standards for any pedestrian walkway, the ADA standards shall apply.
+d. The entry shall be covered, recessed, or treated with a permanent architectural feature in such a way that weather protection is provided.
+The covered area providing weather protection shall be at least 6 feet wide and 4 feet deep.
+e. Directional signage to the small-scale commercial use shall be provided if the small-scale commercial use is not directly visible from the public right of way.
+[ORD 4859; January 2025]
+G2a. Type 3.
+The entry to a small-scale commercial use shall be visible and accessible from the street or shall provide directional signage.
+A pedestrian connection shall connect the entry to nearby streets and other pedestrian destinations.
+The design of the building shall incorporate features such as roofs, alcoves, awnings, and canopies to protect pedestrians from the rain and sun.
+G2b. Type 2.
+Design Standard S2 shall be met.
+[ORD 4859; January 2025]
+Figure 5
+Main Entry Options
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Windows
+
+Windows - Design Standard Windows - Design Guideline
+S3. A minimum of 15 percent of the area of all public or private street-facing façades shall include windows or entrance doors.
+Half of the window area in the door of an attached garage may count toward meeting this standard.
+See Figure 6.
+a. Any detached structure for which more than 50 percent of its public or private street-facing façade is separated from the street property line by another dwelling, as seen in plan view from the front lot line, is exempt from this standard.
+b. Manufactured homes are exempt from this standard.
+G3a. Type 3.
+The number, size, and placement of windows shall provide the opportunity for a visual connection between the residential living area of units and the street for units that are near the street and between small-scale commercial uses and the street if small-scale commercial uses are near the street.
+[ORD 4859; January 2025]
+G3b. Type 2.
+The required window and door percentage may be reduced to 12 percent if the decision-making authority makes findings of fact based on evidence provided by the applicant demonstrating that all the following criteria are satisfied:
+a. Special conditions or circumstances exist on the site that make it physically difficult or impossible to meet the applicable development standard for an otherwise acceptable proposal and the special conditions and circumstances do not result from the actions of the applicant and such conditions and circumstances do not merely constitute financial hardship or inconvenience; and
+b. At least 12 percent of the area of all public or private street-facing façades includes windows or entrance doors, excepting façades that are not visible from the street because other structures are between the façade and the street.
+Figure 6
+Street-Facing Windows
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Outdoor Open Area
+
+Outdoor Open Area - Design Standard Outdoor Open Area - Design Guideline
+S4. Outdoor Open Area Standards for Dwellings.
+An outdoor open area is a common area for use by residents of a single-detached dwelling, duplex, triplex, quadplex or townhouse.
+An outdoor open area may function as a community yard.
+For a small-scale commercial use on a lot that also contains dwelling units, the standards in
+60.05.60.2.S4a and 60.05.60.2.S4b apply.
+For a small-scale commercial use that is the only use on the lot, the standards in 60.05.60.2.S5a through 60.05.60.2S5c shall apply instead.
+[ORD 4859; January 2025] a.Minimum Required Outdoor Open Area.
+Single-detached dwellings, duplexes, triplexes and quadplexes shall meet the following minimum outdoor open area standards.
+1. For lots with an area of less than 3,000 square feet, a minimum of 200 square feet of open area is required per lot.
+2. For lots with an area that is equal to or greater than 3,000 square feet and less than 7,000 square feet, a minimum of 300 square feet of open area is required per lot.
+3. For lots with an area of 7,000 square feet or greater, a minimum of 500 square feet of open area is required per lot.
+b.Design Requirements
+1. At least one portion of the required outdoor open area shall be shaped so a 12-foot by 12- foot square can fit inside of it and be accessible to all units.
+2. Required open area may be in rear yard or side yard setback areas but shall not be in front yard setbacks.
+3. Except as required in subsection 1, the required outdoor open area may be shared by two or more dwellings or may be provided through private outdoor space such as decks or patios.
+4. The outdoor open area shall be developed with a mix of landscaping, groundcover, lawn, pedestrian ways, and/or paved courtyard area, and may also include recreational amenities.
+Impervious elements of the outdoor open area shall not exceed 75 percent of the total outdoor open area.
+G4a. Type 3.
+Developments shall ensure opportunities for outdoor relaxation or recreation.
+a. The outdoor open area shall be of an adequate size and shape to be usable for active or passive uses.
+b. The outdoor open area may be accessible to all units.
+Alternatively, the outdoor open area may be provided through private outdoor space, such as decks or patios, provided each unit has access to an adequate outdoor space.
+G4b. Type 2.
+For lots with an area that is equal to or greater than 3,000 square feet, an applicant may reduce the minimum required outdoor open area required in
+S4.a2 or S4.a3 by up to 20 percent if:
+a. The applicant demonstrates that special conditions or circumstances exist on the site that make it physically difficult or impossible to meet the applicable development standard for an otherwise acceptable proposal and the special conditions and circumstances do not result from the actions of the applicant and such conditions and circumstances do not merely constitute financial hardship or inconvenience.
+b. At least one portion of the required outdoor open area shall be shaped so a 10-foot by 10-foot square can fit inside of it and, when possible, be accessible to all units.
+Outdoor Open Area - Design Standard Outdoor Open Area - Design Guideline
+S5. Outdoor Open Area Standards for Stand-alone CM-
+RM Small-scale Commercial Uses. At least 15 percent of the total gross lot area shall be landscaped.
+Environmentally sensitive areas and above-ground water quality treatment facilities shall count toward the minimum landscape requirement.
+a. Developments shall provide the following landscaping:
+1. One tree shall be provided for every 800 square feet of required landscaped area.
+Evergreen trees shall have a minimum planting height of 5 feet.
+Deciduous trees shall have a minimum caliper of 1.5 inches at time of planting.
+2. One evergreen shrub shall be provided for every
+400 square feet of required landscaped area.
+3. Live ground cover consisting of low-height plants, shrubs, or grass shall be planted in the portion of the landscaped area not occupied by trees or evergreen shrubs.
+Bare gravel, rock, bark, or other similar materials may be used but are not a substitute for ground cover plantings and shall be limited to no more than 25 percent of the required landscape area.
+b. A hard surface pedestrian plaza or combined hard surface and soft surface pedestrian plaza, if proposed, shall count toward meeting the minimum landscaping requirement, provided that the hard-surface portion of the plaza shall not exceed 25 percent of the minimum landscaping requirement.
+Plazas shall be comprised of the following:
+1. Brick pavers, or stone, scored, or colored concrete; and,
+2. One tree having a minimum mature height of 20 feet for every 300 square feet of plaza square footage; and,
+3. Street furniture including but not limited to benches, tables, chairs, and trash receptacles;
+and,
+4. Pedestrian-scale lighting consistent with the
+City’s Technical Lighting Standards.
+[ORD 4859; January 2025]
+G5a. Type 3.
+Landscaping shall soften the edges of buildings and parking areas if provided, add aesthetic interest, and generally increase the attractiveness of a development and its surroundings.
+Plazas and common areas designed for pedestrian traffic shall be surfaced with a combination of landscape and decorative pavers or decorative concrete.
+G5b. Type 2.
+Design Standard S5 shall be met.
+[ORD 4859; January 2025]
+
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Tree Planting and Tree Preservation
+
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree Preservation - Design Guideline
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree Preservation - Design Guideline
+S6. Developments that add a dwelling unit or a small-scale commercial use, except for conversions or additions to existing single-detached dwellings to create middle housing or add a small-scale commercial use, shall meet the tree planting requirements in 60.05.60.2.S6.a and the planting standards in 60.05.60.2.S6.b, unless they meet the tree preservation or in-lieu fee standards of 60.05.60.2.S6.c or
+60.05.60.2.S6.d. [ORD 4859; January 2025] a.Tree Planting Requirements.
+For these standards, the tree planting area equals 30 percent of the site or the site area minus the building footprint of existing and proposed development, whichever is smaller.
+Sites with at least 50 square feet of available tree planting area (the required area for a small tree, provided in 60.05.60.2.S6.a.3.iii) shall be subject to the requirements in S6.a.1 or in S6.a.2, as applicable.
+[ORD 4859;
+January 2025]
+1. Outside the Cooper Mountain Community Plan area.
+The tree planting area shall be planted with some combination of large, medium, or small trees from the City of Beaverton
+Tree List for private property trees as designated by the
+Director at the rates listed below.
+The City’s tree list indicates the minimum planting area for each tree size.
+[ORD
+4859; January 2025]
+i. Large trees (those listed for 8-foot planting areas): 1 large tree counts toward 1,200 square feet of the tree planting area.
+ii. Medium trees (those listed for 4-foot or 6-foot planting areas): 1 medium tree counts toward 600 square feet of the tree planting area.
+iii. Small trees (those listed for 3-foot planting areas): 1 small tree counts toward 300 square feet of the tree planting area.
+2. Inside the Cooper Mountain Community Plan area.
+i. The tree planting area shall be planted with trees on the
+City of Beaverton Tree List.
+ii. The square footage of canopy coverage that counts toward the required tree planting area will be based on the Mature Tree Canopy area listed in the City of
+Beaverton Tree List.
+[ORD 4859; January 2025]
+3. The minimum area required to plant trees, by type, is:
+i. Large tree: 150 square feet, including a 10-foot-by-10- foot area within that 150 square feet.
+ii. Medium tree: 75 square feet, including a 6-foot-by-6- foot area within that 75 square feet.
+iii. Small tree: 50 square feet, including a 3-foot-by-3-foot area within that 50 square feet.
+b.Planting Standards for Required Trees.
+1. Outside the Cooper Mountain Community Plan area, required trees shall not be planted within 6 feet of structures or 3 feet of property lines at the perimeter of the site.
+[ORD
+4859; January 2025]
+2. Trees planted to meet other Code requirements, such as buffer requirements, shall also count toward the tree planting requirement.
+[ORD 4859; January 2025]
+3. Deciduous trees shall have a minimum caliper of 1.5 inches and shall be balled and burlapped.
+4. Evergreen trees shall be a minimum of 5 feet in height at the time of planting.
+[ORD 4859; January 2025]
+5. Areas subject to Clean Water Services regulations including stormwater facilities, vegetated corridors, and sensitive natural areas shall be planted consistent with Clean Water
+Services requirements.
+6. Irrigation shall be provided to ensure trees planted will survive their establishment period.
+Inside the Cooper
+Mountain Community Plan area, irrigation systems shall also comply with Sections 60.37 and 60.61.35 and if requirements in those sections contain stricter standards, the stricter standards shall apply.
+Establishment period irrigation shall be provided through one of the following options or a combination of options:
+i. A permanent, in-ground irrigation system with an automatic controller.
+ii. An irrigation system designed and certified by a licensed landscape architect as part of a landscape plan that provides sufficient water to ensure that the plants will become established.
+The system does not have to be permanent if a licensed landscape architect certifies that the plants chosen will survive.
+iii. Irrigation by hand for a maximum of 500 square feet per site.
+[ORD 4859; January 2025]
+7. Trees planted under the standards in this section are not considered Landscape Trees.
+c.Tree Preservation.
+1. Outside the Cooper Mountain Community Plan area.
+[ORD
+4859; January 2025]
+i. Existing non-nuisance trees that are preserved on the site shall satisfy the planting requirements of
+60.05.60.2.S6.a as follows:
+1. Trees that are at least 1.5 inches DBH and less than
+6 inches DBH count toward 600 square feet of required tree planting area.
+2. For trees 6 inches or more DBH, every full 6-inch increment in DBH shall count toward an additional
+600 feet of required tree planting area.
+ii. For every existing non-exempt surveyed tree that is preserved, development may have an additional 150 square feet of building area over the maximum floor area ratio (FAR), up to a maximum additional 0.15 FAR or additional 600 square feet, whichever is less.
+iii. Community trees that are preserved trees shall be classified as Landscape Trees and will be subject to
+CHAPTER 40 and CHAPTER 60.
+Protected trees that are preserved shall remain classified as Protected Trees.
+2. Inside the Cooper Mountain Community Plan area.
+Existing, non-exempt, on-site trees over 6-inch DBH that are preserved shall satisfy the planting requirements of
+60.05.60.2.S6.a as follows:
+i. The square footage of preserved canopy coverage that counts toward the required tree planting area will be based on the mature canopy area listed in the City of
+Beaverton Tree List.
+[ORD 4859; January 2025] d.In-Lieu Fee.
+In lieu of meeting the planting requirements of
+60.05.60.2.S6.a, applicants may contribute to the Tree
+Preservation Fund at a rate designated by the City Council.
+G6. Design Standard S4 shall be met.
+
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+South Cooper Mountain Community Plan Open Space and Natural Resources
+
+South Cooper Mountain Community Plan Open
+Space and Natural Resources - Design Standard
+South Cooper Mountain Community Plan Open
+Space and Natural Resources - Design Guideline
+S7. For properties within the South Cooper Mountain
+Community Plan area,
+a. An outdoor open area shall be provided on site in whichever one of the following methods results in the greater amount of outdoor open area:
+1. Outdoor open area shall be equivalent to the square footage of Significant Natural
+Resource Area located on the subject site or;
+2. Outdoor open area shall be consistent with applicable standards of Section 60.05.60.2.S4
+Outdoor Open Area.
+b. Regardless of which method is used to determine the amount of outdoor open area required, the outdoor open area dimensions, amenities and other features shall comply with applicable provisions of Section 60.05.60.2.S4
+c. Significant Natural Resource Areas preserved on a site and placed within a conservation easement or conservation tract, recorded with a deed restriction, may count toward a site’s total outdoor open area requirement, provided applicable provisions in Section
+60.05.60.2.S4 are met.
+d. Tree Planting and Tree Preservation areas, as outlined in Section 60.05.60.2.S6 may also count toward a site’s total outdoor open area requirement, provided applicable provisions in
+Section 60.05.60.2.S6 are met.
+e. Within the South Cooper Mountain Community
+Plan area, development abutting SW Tile Flat
+Road shall provide a PB-10 buffer consistent with applicable standards of Section
+60.05.25.13. Proposals being reviewed as a
+Planned Unit Development are exempt from this standard but shall address applicable policies of the South Cooper Mountain Community
+Plan. [ORD 4879; April 2026]
+For properties in the South Cooper Mountain Community
+Plan area without Significant Natural Resource Areas on the site, the following guidelines apply if S7 cannot be met.
+G7a. Type 3.
+Developments shall ensure opportunities for outdoor relaxation or recreation.
+1. The outdoor open area shall be of an adequate size and shape to be usable for active or passive uses.
+2. The outdoor open area may be accessible to all units.
+However, if special conditions or circumstances exist on the site that make it physically difficult to provide access, then the outdoor open area does not need to be accessible to all units.
+G7b. Type 2.
+For lots with an area that is equal to or greater than 3,000 square feet, an applicant may reduce the minimum required outdoor open area required in
+S4.a2 or S4.a3 by up to 20 percent if:
+1. The applicant demonstrates that special conditions or circumstances exist on the site that make it physically difficult or impossible to meet the applicable development standard for an otherwise acceptable proposal and the special conditions and circumstances do not result from the actions of the applicant and such conditions and circumstances do not merely constitute financial hardship or inconvenience.
+2. At least one portion of the required outdoor open area shall be shaped so a 10-foot by 10-foot square can fit inside of it and, when possible, be accessible to all units.
+Properties within the South Cooper Mountain Community
+Plan area with Significant Natural Resource Areas on the site shall meet Design Standard S7 unless proposal is reviewed as a Planned Unit Development.
+
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Cooper Mountain Community Plan Open Space
+
+Cooper Mountain Community Plan Open Space - Design
+Standard
+Cooper Mountain Community Plan Open
+Space - Design Guideline
+S8. Within the Cooper Mountain Community Plan area, sites shall provide at least 15 percent open space per gross site area at the time of Initial Development through one or more of the methods below.
+This open space requirement shall be met in addition to the standards of Section 60.05.60.2.S4 through S6.
+If a site includes the development of uses that are not subject to the requirements of this Section, the minimum open space requirement shall be calculated as 15 percent of the portion of the site that is subject to the requirements of Section
+60.05.60.
+a. Open space tracts in the Parks Overlay identified in Section
+20.22.45.
+b. On-site area within the Resource Overlay protected in a separate tract.
+c. Open space tracts that have 50 percent tree canopy or are planted so they will have 50 percent tree canopy cover within 15 years after planting consistent with the Technical Specifications for Tree Preservation and Planting of Section 60.61.30.
+1. A combination of existing tree canopy and planted trees is acceptable to meet this standard.
+2. Open space designated to meet this requirement outside the
+Parks Overlay and Resource Overlay shall have minimum length and width dimensions of 25 feet.
+The open space may be placed in more than one location on the site.
+3. Property owners are not required to dedicate open space tracts but may do so voluntarily to the Tualatin Hills Park &
+Recreation District or other public agency per Section
+60.15.15.3. Dedicated tracts shall count 150 percent toward the open space requirement.
+The additional credit shall not be used to reduce the open space required to be within the
+Parks Overlay that is shown in 20.22.45.1 but may be used to meet requirements for open space outside the Parks
+Overlay. To qualify for this credit, a tract shall have at least
+75 percent Parks Overlay Open Space Developable Area with minimum length and width dimensions of 200 feet.
+[ORD 4859; January 2025]
+G8. Deviations from Design Standard S8 are subject to review through the Planned Unit
+Development application. [ORD 4859; January
+2025]
+Cooper Mountain Community Plan Open Space - Design
+Standard
+Cooper Mountain Community Plan Open
+Space - Design Guideline
+S9. A landscape buffer consistent with the following requirements shall be provided along side and rear property lines that abut the
+Cooper Mountain Nature Park.
+a. The landscape buffer width shall be a minimum of 25 feet.
+b. All plantings within the required buffer area shall be native species.
+c. The required landscape buffer area shall be planted according to the following plant types, sizes, and spacing:
+1. Trees: One tree is required per 30 linear feet of the required buffer area.
+Evergreen trees shall be planted at a minimum height of 6 feet; deciduous trees shall be planted at a minimum 2-inch caliper.
+At least 50 percent of the required trees in the buffer area shall be evergreen.
+Spacing between trees may vary within the buffer area but shall not exceed 50 linear feet between trees.
+2. Shrubs: One shrub with a minimum mature height of 4 feet is required for every 200 square feet of required buffer area.
+At least 50 percent of the required shrubs in the buffer area shall be of a hedging, evergreen variety.
+3. Ground cover: Live ground cover consisting of low-height plants, shrubs, or grasses shall be planted in remaining required buffer area.
+Bare gravel, rock, bark or other similar materials may be used but shall be limited to no more than
+25 percent of the required buffer area.
+[ORD 4859; January 2025]
+G9a. Type 3.
+A landscape buffer with a minimum width of 25 feet shall be provided along side and rear property lines that abut the Cooper Mountain Nature Park.
+The buffer shall be densely planted with native varieties of trees, shrubs, and groundcover in a way that creates an attractive and natural-looking transition to the existing vegetation along the boundary of the Cooper Mountain Nature
+Park. Evergreen shrubs and trees are preferred.
+G9b. Type 2.
+Design Standard S9 shall be met.
+[ORD 4859; January 2025]
+
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Grading at Residential Property Lines
+
+Grading at Residential Property Lines - Design
+Standard
+Grading at Residential Property Lines - Design
+Guideline
+S10. Where grading is proposed, the requirements listed in
+Section 60.15.10. shall apply.
+Outside the Cooper Mountain Community Plan area, notwithstanding the requirements of 60.15.10.3, grading within 25 feet of a property line shall not change the existing slopes by more than 10 percent within a tree root zone of an identified Significant Individual Tree, identified
+Historic Tree, or a tree within an identified Significant
+Grove or Significant Natural Resource Area located on an abutting property unless evidence provided by a certified arborist supports additional grading that will not harm the subject grove or tree.
+[ORD 4859; January 2025]
+Inside the Cooper Mountain Community Plan area, notwithstanding the requirements of 60.15.10.3, grading within 25 feet of a property line shall not change the existing slopes by more than 10 percent within a root protection zone of a tree located on an abutting property unless evidence provided by a certified arborist supports additional grading that will not harm the subject grove or tree.
+[ORD 4859; January 2025]
+G10a. Type 3.
+For changes to existing on-site surface contours at residential property lines, the perimeters of properties shall be graded in a manner to avoid conflicts with abutting residential properties such as drainage impacts, damage to tree root zones, and blocking sunlight.
+G10b. Type 2.
+Design Standard S10 shall be met.
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Garages and Off-Street Parking Areas
+
+Garages and Off-Street Parking Areas - Design
+Standard
+Garages and Off-Street Parking Areas - Design
+Guideline
+S11. The combined width of all garages, as measured from the inside of the garage door frame, (attached and detached) and outdoor on-site parking and maneuvering areas shall not occupy more than 50 percent of any public or private street frontage (other than an alley) of any individual lot.
+If the Engineering Design Manual contains stricter standards for driveways, the Engineering Design
+Manual standards shall apply.
+See Figure 7.
+[ORD 4844;
+August 2023] [ORD 4876; January 2026]
+a. If vehicle access to the lot is inside a cul-de-sac, then the combined width of all garages and outdoor on-site parking and maneuvering areas shall not occupy more than 50 percent of any street frontage as measured 20 feet from the right of way.
+G11a. Type 3.
+Developments shall support a pedestrian-friendly street environment by minimizing the visual and safety impacts of garages, parking areas, and vehicle circulation areas and promoting room on the lot for housing near streets.
+Applicable Engineering Design
+Manual standards shall be met, unless otherwise approved by the City Engineer.
+[ORD 4844; August 2023]
+G11b. Type 2.
+Design Standard S11 shall be met.
+Figure 7
+Garages and Off-Street Parking Areas
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Driveway Location
+
+Driveway Location - Design Standard Driveway Location - Design Guideline
+S12. Notwithstanding the corner clearance for driveway standards in the Beaverton Engineering Design Manual
+(EDM), driveways may be located as close as 3 or 6 feet from property lines depending on sidewalk type classified by the EDM.
+This standard does not apply to shared driveways serving two lots.
+[ORD 4876; January 2026]
+G12. Design Standard S12 shall be met.
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Driveway Approaches
+
+Driveway Approaches - Design Standard Driveway Approaches - Design Guideline
+S13. Driveway approaches shall comply with the following:
+a. The total width of all driveway approaches for a lot shall not exceed 32 feet per public or private street frontage, as measured at the property line.
+See Figure 8.
+For lots with more than one frontage, see 60.05.60.2.S13.b.
+If the
+Engineering Design Manual contains stricter standards for driveways, the Engineering Design Manual standards shall apply.
+[ORD 4844; August 2023]
+b. In addition, lots with more than one public or private street frontage shall comply with the following:
+1. If vehicular access exists or is proposed on the site, lots shall access the street with the lowest functional classification per the city's adopted Transportation
+System Plan. For lots abutting an alley, access may be taken from the alley.
+If the lot has frontage on two local streets, driveways may access one or both streets.
+[ORD
+4844; August 2023]
+2. If vehicular access exists or is proposed on the site, lots may have either: [ORD 4844; August 2023]
+a. Two driveway approaches not exceeding 32 feet in total width on one public or private street frontage
+(See Figure 10); or
+b. One driveway approach per public or private street frontage.
+The combined width of both approaches cannot exceed 32 feet.
+See Figure 11.
+c. Driveway approaches along public streets shall also meet the residential driveway standards in the Beaverton Engineering
+Design Manual. [ORD 4876; January 2026]
+d. Driveway approaches serving individual units accessed from private transportation facilities, such as private shared driveways, private alleys, or similar, shall have a minimum width of 9 feet.
+[ORD 4876; January 2026]
+G13a. Type 3.
+Developments shall limit potential conflicts between vehicles and pedestrians, preserve on-street parking, allow adequate space for street trees, and minimize the visual impact of off-street vehicle parking and circulation areas.
+Applicable Engineering
+Design Manual standards shall be met, unless otherwise approved by the City
+Engineer. [ORD 4844; August 2023]
+G13b. Type 2.
+Design Standard S13 shall be met.
+Figure 8
+Driveway Approach Width and Separation
+Figure 9
+Reserved
+
+Figure 10
+Driveway Approach Options for Multiple Street Frontages –
+Driveways on One Frontage
+
+Figure 11
+Driveway Approach Options for Multiple Street Frontages –
+Driveways on One Frontage
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Driveway Design
+
+Driveway Design - Design Standard Driveway Design - Design Guideline
+S14. Driveways shall be designed to the standards listed below, based on the number of units the driveway could potentially serve: [ORD 4876; January 2026]
+a. Up to eight units: Minimum 9-foot paved width for shared vehicle and pedestrian movement.
+An additional one horizontal foot on either side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+b. Nine to 20 units: Minimum 12-foot paved width for vehicle movement, and a minimum five-foot wide, grade separated hard surface walkway for pedestrian movement.
+Pedestrian walkway may be on one or both sides of driveway.
+If one side of the driveway does not have an abutting pedestrian walkway, an additional one horizontal foot on that side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+c. Greater than 20 units: Minimum 20-foot paved width for vehicle movement, and a minimum five-foot wide, grade separated hard surface walkway for pedestrian movement.
+Pedestrian walkway must be on both sides of the driveway if units take access on both sides of the driveway.
+If one side of the driveway does not have an abutting pedestrian walkway, an additional one horizontal foot on that side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+G14a. Type 3.
+Design Standard S14 or Design Guideline
+G14b shall be met.
+G14b. Type 2.
+Driveways should connect parking, drive aisles, and other improvements with at least one street.
+If vehicular access exists or is proposed, on-site vehicle circulation shall be easily identified and include a higher level of improvements such as curbs, sidewalks, and landscaping, with the scale of improvements reflecting the number of units served and projected frequency of vehicle trips.
+Alternative designs shall be subject to review and approval of the City Engineer.
+[ORD 4844; August
+2023] [ORD 4876; January 2026]
+
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Lighting Design
+
+Lighting Design - Design Standard Lighting Design - Design Guideline
+S15. Sites with an off-street parking lot area that exceeds 1,400 square feet shall comply with Technical Lighting Standards (Table 60.05-1).
+The off-street parking lot area includes the combined square footage of parking stalls and drive aisles only.
+G15a. Type 3.
+Sites with an off-street parking lot area that exceeds 1,400 square feet shall:
+a. Utilize lighting to maximize safety within a development,
+b. Minimize direct and indirect glare impacts to abutting properties and streets, and,
+c. Where the proposal does not comply with Table 60.05-1, describe why compliance with the standard is either infeasible or unnecessary.
+G15b. Type 2.
+Design Standard S15 shall be met.
+S16. Sites with a small-scale commercial use shall provide lighting that complies with Technical Lighting Standards (Table 60.05-1) at the commercial use entry and the walkways that connect the commercial use entry to public and private streets, transit stops, and other destinations.
+[ORD 4859; January 2025]
+G16a. Type 3.
+Sites with a small-scale commercial use shall:
+a. Utilize lighting to maximize pedestrian safety within a development,
+b. Minimize direct and indirect glare impacts to abutting properties and streets, and,
+c. Where the proposal does not comply with Table 60.05-1, describe why compliance with the standard is either infeasible or unnecessary.
+G16b. Type 2.
+Design Standard S16 shall be met.
+[ORD 4859; January 2025]
+Table 60.05.60.2. Design Guidelines and Standards for Single-Detached Dwellings, Duplexes, Triplexes, and Quadplexes
+
+Solid Waste Facilities
+
+Solid Waste Facilities - Design Standard Solid Waste Facilities - Design Guideline S17.
+Minimum Required Storage Area and Location.
+a.Dwellings. Lots with one or more buildings with a combined floor area of less than 4,000 square feet shall provide a minimum storage area of 40 square feet for waste storage and/or recycling containers.
+Lots with one or more buildings with a combined floor area of 4,000 square feet or greater shall provide a minimum storage area of 80 square feet for waste storage and/or recycling containers.
+[ORD 4859;
+January 2025]
+Storage of solid waste facilities shall comply with the following:
+1. Storage areas for multiple units on one lot may be combined or shared and be located on the same lot as the units or shared tract.
+[ORD 4857; October 2024]
+2. Storage area requirements may be satisfied with a single location or multiple locations and may combine both interior and exterior locations.
+If multiple locations are used, the minimum footprint for each storage area shall be 3-feet by 3-feet.
+3. Storage areas shall not be in required outdoor open areas, as provided in 60.05.60.2.S4.
+4. Storage areas shall be located in areas accessible to waste service vehicles.
+[ORD 4844; August 2023]
+5. Storage areas shall be located so that they do not obstruct pedestrian or vehicle traffic movement on the site or on public or private streets adjacent to the site.
+6. Exterior storage areas shall comply the corner clearance for driveway standards in the Beaverton Engineering
+Design Manual.
+b.CM-RM Small-scale Commercial.
+There is no minimum required storage area or location for small-scale commercial uses; however, any storage area that is provided outside of a building shall be fully screened from view using one or more screening methods of 60.05.60.2.S18.b.1 through 3.
+This standard applies to both a small-scale commercial use on a lot shared with a dwelling(s) and as a stand-alone use on a lot.
+[ORD 4859; January 2025]
+G17. Design Standard S17 shall be met.
+[ORD
+4857; October 2024]
+S18. Screening.
+a. Waste storage and/or recycling containers shall be in an area not visible from a public or private street or shall be fully screened from view from a public or private street.
+b. Screening from public view for waste storage and/or recycling containers shall be constructed a minimum of one foot higher than the feature to be screened, and shall be accomplished by one or more of the following methods:
+1. Solid wall constructed of an exterior finish material
+G18a. Type 3.
+Design Standard S18 or Design
+Guideline G18b shall be met.
+G18b. Type 2.
+Waste storage and/or recycling containers shall be designed and/or located so that they are screened from an abutting public or private street.
+Solid Waste Facilities - Design Standard Solid Waste Facilities - Design Guideline utilized on one or more buildings;
+2. A hedge with a minimum of ninety-five (95) percent opacity within two (2) years; or
+3. Solid wood fence
+c. Screening from public view by chain-link fence with or without slats is prohibited.
+3.Design Guidelines and Standards for Townhouses.
+Unless otherwise noted, townhouse developments, and the small-scale commercial uses in Section 60.05.60.1.E.2, shall meet the standards of this section.
+[ORD 4859; January 2025]
+
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Maximum Number of Units in a Structure
+
+Maximum Number of Units in a Structure - Design
+Standard
+Maximum Number of Units in a Structure - Design
+Guideline
+S1. The maximum number of dwelling units that may be attached in a townhouse structure is specified below.
+a. RMA zone: 8 attached units.
+b. RMB, RMC, and CM-RM zones: 5 attached units.
+[ORD 4859; January 2025]
+G1a. Type 3.
+The maximum number of units in a structure, as provided in Design Standard S1, may be exceeded if adequate pedestrian access is available into the site, the site has adequate landscaping; and the building design includes visual breaks in the façade between some units to reduce the perceived mass and length of the building.
+Examples of visual breaks include a change in plane (such as setting back one unit from the abutting building, recessing some or all main entries, angling some or all main entries, or varying roof heights for each unit) or added articulation to some or all units.
+In each zone, building façade lengths shall not exceed:
+a. In the RMA zone, 150 feet; and
+b. In the RMB, RMC, and CM-RM zones, 125 feet
+[ORD 4859; January 2025]
+G1b. Type 2.
+Design Standard S1 shall be met.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Entries
+
+Entries - Design Standard Entries - Design Guideline
+S2. Dwellings. At least one entry to each townhouse shall meet the standards in 60.05.60.3.S2.a and 60.05.60.3.S2.b.
+See Figure 5.
+[ORD
+4859; January 2025]
+An entry is a building opening designed to be used by pedestrians.
+It does not include any door exclusively designated as an emergency exit, any door that leads to a utility room or closet, or a garage door not designed as a pedestrian entrance.
+a. The entry shall be within 10 feet of the longest street-facing wall of the dwelling unit; and
+b. The entry shall comply with one of the following:
+1. Face the street;
+2. Be at an angle of up to 45 degrees from the street;
+3. Open onto a porch or an outdoor space, such as a patio, stoop, forecourt, or mezzanine.
+The porch or outdoor space shall be at least 25 square feet in area and at least one entrance to the porch or outdoor space shall face the street;
+or
+4. Face a common courtyard or private access or driveway that is abutted by dwellings on at least two sides.
+If the parent lot has public or private street frontage, then the common courtyard shall be within 20 feet of a lot line that abuts a street.
+G2a. Type 3.
+Some entries, especially those closest to the street, shall be accessible from the street.
+From the street and on-site parking areas, pedestrians shall be able to see some entries and identify pedestrian routes to other entries on the site.
+G2b. Type 2.
+Design Standard S2 shall be met.
+S3. CM-RM Small-scale Commercial.
+At least one entry to the small-scale commercial use shall meet the standards in 60.05.60.3.S3a through 60.05.60.3.S3d.
+An entry is a building opening designed to be used by pedestrians.
+It does not include any door exclusively designated as an emergency exit, any door that leads to a utility room or closet, any door that leads into a dwelling unit, or a garage door not designed as a pedestrian entrance.
+a. The entry shall be within 10 feet of the longest street-facing wall of the building containing the small-scale commercial use; and
+b. The entry shall comply with one of the following:
+1. Face a public or private street;
+2. Be at an angle of up to 45 degrees from the street; or
+3. Open onto a porch or an outdoor space, such as a patio, stoop, forecourt, or mezzanine.
+The porch or outdoor space shall be at least 25 square feet in area and at least one entrance to the porch or outdoor space shall face the street.
+c. A reasonably direct walkway connection is required between the entry and public and private streets, transit stops, and other destinations.
+The walkway shall have a minimum of 5-foot-wide, unobstructed clearance and shall be paved with scored concrete or modular paving materials.
+In the event that the Americans with Disabilities Act (ADA) contains stricter standards for any pedestrian walkway, the ADA standards shall apply.
+G3a. Type 3.
+The entry to a small-scale commercial use shall be visible and accessible from the street or shall provide directional signage.
+A pedestrian connection shall connect the entry to nearby streets and other pedestrian destinations.
+The design of the building shall incorporate features such as roofs, alcoves, awnings, and canopies to protect pedestrians from the rain and sun.
+G3b. Type 2.
+Design Standard S3 shall be met.
+[ORD 4859; January 2025]
+Entries - Design Standard Entries - Design Guideline
+d. The entry shall be covered, recessed, or treated with a permanent architectural feature in such a way that weather protection is provide The covered area providing weather protection shall be at least 6 feet wide and 4 feet deep.
+e. Directional signage to the small-scale commercial use shall be provided if the small-scale commercial use is not directly visible from the public right of way.
+[ORD 4859; January 2025]
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Windows
+
+Windows - Design Standard Windows - Design Guideline
+S4. A minimum of 15 percent of the area of all public or private street-facing façades shall include windows or entrance doors.
+Half of the window area in the door of an attached garage may count toward meeting this standard.
+Facades that are more than 80 feet from the street are exempt from this standard.
+See Figure 6.
+[ORD 4859;
+January 2025]
+G4a. Type 3.
+The number, size, and placement of windows shall provide the opportunity for a visual connection between the residential living area of units and the street for units that are near the street, or for the small-scale commercial use and the street, for small-scale commercial uses that are near the street.
+[ORD 4859; January 2025]
+G4b. Type 2.
+An applicant may reduce the required window and door percentage to 12 percent by demonstrating that special conditions or circumstances exist on the site that make it physically difficult or impossible to meet the applicable development standard for an otherwise acceptable proposal, and the special conditions and circumstances do not result from the actions of the applicant and such conditions and circumstances do not merely constitute financial hardship or inconvenience.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Outdoor Open Area
+
+Outdoor Open Area - Design Standard Outdoor Open Area - Design Guideline
+S5. Minimum Required Outdoor Open Area.
+An outdoor open area is a common area for use by residents of a single-detached dwelling, duplex, triplex, quadplex or townhouse.
+For townhouse developments, these standards apply to the cumulative lot areas of the townhouse structure.
+If there are multiple townhouse structures on a site, the lot areas are not additive, the minimum required outdoor open area applies to each townhouse structure independently.
+For a small-scale commercial use on a lot that also contains a townhouse, the standards in 60.05.60.3.S5a through 60.05.60.3.S5g apply.
+[ORD 4857; October 2024] [ORD 4859;
+January 2025]
+a. For townhouse structures with a total lot area of less than 3,000 square feet, a minimum of 200 square feet of open area is required per townhouse structure.
+[ORD 4857; October 2024]
+b. For townhouse structures with a total lot area that is equal to or greater than 3,000 square feet and less than 7,000 square feet, a minimum of 300 square feet of open area is required per townhouse structure.
+[ORD 4857; October 2024]
+c. For townhouse structures with a total lot area of 7,000 square feet or greater, a minimum of 500 square feet of open area is required per townhouse structure.
+[ORD 4857; October 2024]
+Design Requirements
+d. Required outdoor open area may be shared by two or more dwellings or may be provided through private open space such as decks or patios.
+e. If shared by two or more dwellings, at least one portion of the required outdoor open area shall be shaped so a 12-foot by 12- foot square can fit inside of it and be accessible to all units.
+f. Required open area may be in rear yard or side yard setback areas but shall not be in front yard setbacks.
+g. The outdoor open area shall be developed with a mix of landscaping, groundcover, lawn, pedestrian ways, and/or paved courtyard area, and may also include recreational amenities.
+Impervious elements of the outdoor open area shall not exceed
+75 percent of the total outdoor open area.
+G5a. Type 3.
+Developments shall ensure opportunities for outdoor relaxation or recreation.
+The outdoor open area shall be of an adequate size and shape to be usable for active or passive uses.
+G5b. Type 2.
+Design Standard S5 shall be met.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Tree Planting and Tree Preservation
+
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree
+Preservation -
+Design Guideline
+S6. Townhouse and small-scale commercial use developments shall meet the tree planting requirements in 60.05.60.3.S6.a and the planting standards in
+60.05.60.3.S6.b, unless they meet the tree preservation or in-lieu fee standards of 60.05.60.3.S6.c or 60.05.60.3.S6.d.
+[ORD 4859; January 2025] a.Tree Planting Requirements.
+For these standards, the tree planting area equals 30 percent of the site or the site area minus the building footprint of existing and proposed development, whichever is smaller.
+Sites with at least
+50 square feet of available tree planting area (the required area for a small tree, provided in 60.05.60.3.S6.a.3.iii) shall be subject to the requirements in S6.a.1 or in S6.a.2, as applicable.
+[ORD 4859; January 2025]
+1. Outside the cooper Mountain Community Plan area.
+The tree planting area shall be planted with some combination of large, medium, or small trees from the City of Beaverton Tree List for private property trees as designated by the Director at the rates listed below.
+The City’s tree list indicates the minimum planting area for each tree size.
+[ORD 4859;
+January 2025]
+i. Large trees (those listed for 8-foot planting areas): 1 large tree counts toward 1,200 square feet of the tree planting area.
+ii. Medium trees (those listed for 4-foot or 6-foot planting areas): 1 medium tree counts toward 600 square feet of the tree planting area.
+iii. Small trees (those listed for 3-foot planting areas): 1 small tree counts toward 300 square feet of the tree planting area.
+2. Inside the Cooper Mountain Community Plan area.
+i. The tree planting area shall be planted with trees on the City of
+Beaverton Tree List.
+ii. The square footage of canopy coverage that counts toward the required tree planting area will be based on the Mature Tree Canopy area listed in the City of Beaverton Tree List.
+[ORD 4859; January 2025]
+3. The minimum area required to plant trees, by type, is:
+i. Large tree: 150 square feet, including a 10-foot-by-10-foot area within that 150 square feet.
+ii. Medium tree: 75 square feet, including a 6-foot-by-6-foot area within that 75 square feet.
+iii. Small tree: 50 square feet, including a 3-foot-by-3-foot area within that 50 square feet.
+b.Planting Standards for Required Trees.
+1. Outside the Cooper Mountain Community Plan area, required trees shall not be planted within 6 feet of structures or 3 feet of property lines at the perimeter of the site.
+[ORD 4859; January 2025]
+2. Trees planted to meet other Code requirements, such as buffer requirements, shall also count toward the tree planting requirement.
+[ORD 4859; January 2025]
+G6. Design Standard S6 shall be met.
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree
+Preservation -
+Design Guideline
+3. Deciduous trees shall have a minimum caliper of 1.5 inches and shall be balled and burlapped.
+4. Evergreen trees shall be a minimum of 5 feet in height at the time of planting.
+[ORD 4859; January 2025]
+5. Areas subject to Clean Water Services regulations including stormwater facilities, vegetated corridors, and sensitive natural areas shall be planted consistent with Clean Water Services requirements.
+6. Irrigation shall be provided to ensure trees planted will survive their establishment period.
+Inside the Cooper Mountain Community Plan area, irrigation systems shall also comply with Sections 60.37 and 60.61.35 and if requirements in those sections contain stricter standards, the stricter standards shall apply.
+Establishment period irrigation shall be provided through one of the following options or a combination of options:
+i. A permanent, in-ground irrigation system with an automatic controller.
+ii.  An irrigation system designed and certified by a licensed landscape architect as part of a landscape plan that provides sufficient water to ensure that the plants will become established.
+The system does not have to be permanent if a licensed landscape architect certifies that the plants chosen will survive.
+iii. Irrigation by hand for a maximum of 500 square feet per site.
+[ORD 4859; January 2025]
+7. Trees planted under the standards in this section are not considered
+Landscape Trees.
+c.Tree Preservation.
+1. Outside the Cooper Mountain Community Plan area.
+[ORD 4859; January
+2025]
+i. Existing non-nuisance trees that are preserved on the site shall satisfy the planting requirements of 60.05.60.3.S6.a as follows:
+1. Trees that are at least 1.5 inches DBH and less than 6 inches
+DBH count toward 600 square feet of required tree planting area.
+2. For trees 6 inches or more DBH, every full 6-inch increment in
+DBH shall count toward an additional 600 feet of required tree planting area.
+ii. For every existing non-exempt surveyed tree that is preserved, development may have an additional 150 square feet of building area over the maximum floor area ratio (FAR), up to a maximum additional 0.15 FAR or additional 600 square feet, whichever is less.
+iii. Community trees that are preserved trees shall be classified as
+Landscape Trees and will be subject to CHAPTER 40 and CHAPTER 60.
+Protected trees that are preserved shall remain classified as
+Protected Trees.
+2. Inside the Cooper Mountain Community Plan area.
+Existing, non-exempt,
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree
+Preservation -
+Design Guideline on-site trees over 6-inch DBH that are preserved shall satisfy the planting requirements of 60.05.60.3.S6.a as follows:
+i. The square footage of preserved canopy coverage that counts toward the required tree planting area will be based on the mature canopy area listed in the City of Beaverton Tree List).
+[ORD 4859; January 2025] d.In-Lieu Fee.
+In lieu of meeting the planting requirements of 60.05.60.3.S6.a, applicants may contribute to the Tree Preservation Fund at a rate designated by the City Council.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+South Cooper Mountain Community Plan Open Space and Natural Resources
+
+South Cooper Mountain Community Plan Open Space and
+Natural Resources - Design Standard
+South Cooper Mountain Community Plan
+Open Space and Natural Resources -
+Design Guideline
+S7. For properties within the South Cooper Mountain Community Plan area,
+a. An outdoor open area shall be provided on site in whichever one of the following methods results in the greater amount of outdoor open area:
+1. Outdoor open area shall be equivalent to the square footage of Significant Natural Resource Area located on the subject site or;
+2. Outdoor open area shall be consistent with applicable standards of Section 60.05.60.3.S5 Outdoor Open Area.
+b. Regardless of which method is used to determine the amount of outdoor open area required, the outdoor open area dimensions, amenities and other features shall comply with applicable provisions of Section 60.05.60.3.S5.
+c. Significant Natural Resource Areas preserved on a site and placed within a conservation easement or conservation tract, recorded with a deed restriction, may count toward a site’s total outdoor open area requirement, provided applicable provisions in Section 60.05.60.3.S5 are met.
+d. Tree Planting and Tree Preservation areas, as outlined in Section
+60.05.60.3.S6 may also count toward a site’s total outdoor open area requirement, provided applicable provisions in Section
+60.05.60.3.S5 are met.
+e. Within the South Cooper Mountain Community Plan area, development abutting SW Tile Flat Road shall provide a PB-10 buffer consistent with applicable standards of Section
+60.05.25.13. Proposals being reviewed as a Planned Unit
+Development as exempt from this standard but shall address all applicable policies of the South Cooper Mountain Community
+Plan. [ORD 4879; April 2026]
+For properties in the South Cooper Mountain
+Community Plan area without Significant
+Natural Resource Areas on the site, the following guidelines apply if S7 cannot be met.
+G7a. Type 3.
+Developments shall ensure opportunities for outdoor relaxation or recreation.
+The outdoor open area shall be of an adequate size and shape to be usable for active or passive uses.
+G7b. Type 2.
+Design Standard S7 shall be met.
+Properties within the South Cooper Mountain
+Community Plan area with Significant Natural
+Resource Areas on the site, shall meet Design
+Standard S7 unless proposal is reviewed as a
+Planned Unit Development.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Cooper Mountain Community Plan Open Space
+
+Cooper Mountain Community Plan Open Space - Design
+Standard
+Cooper Mountain Community Plan Open
+Space - Design Guideline
+S8. Within the Cooper Mountain Community Plan area, sites shall provide at least 15 percent open space per gross site area at the time of initial Land Division through one or more of the methods below.
+This open space requirement shall be met in addition to the standards of Section 60.05.60.3.S4 through S6.
+If a site includes the development of uses that are not subject to the requirements of this Section, the minimum open space requirement shall be calculated as 15 percent of the portion of the site that is subject to the requirements of Section
+60.05.60.
+a. Open space tracts in the Parks Overlay identified in Section
+20.22.45.
+b. On-site area within the Resource Overlay protected in a separate tract.
+c. Open space tracts that have 50 percent tree canopy or are planted so they will have 50 percent tree canopy cover within 15 years after planting consistent with the Technical Specifications for Tree Preservation and Planting of Section 60.61.30.
+1. A combination of existing tree canopy and planted trees is acceptable to meet this standard.
+2. Open space designated to meet this requirement outside the
+Parks Overlay and Resource Overlay shall have minimum length and width dimensions of 25 feet.
+The open space may be placed in more than one location on the site.
+3. Property owners are not required to dedicate open space tracts but may do so voluntarily to the Tualatin Hills Park &
+Recreation District or other public agency per Section
+60.15.15.3. Dedicated tracts shall count 150 percent toward the open space requirement.
+The additional credit shall not be used to reduce the open space required to be within the
+Parks Overlay that is shown in 20.22.45.1 but may be used to meet requirements for open space outside the Parks
+Overlay. To qualify for this credit, a tract shall have at least
+75 percent Parks Overlay Open Space Developable Area with minimum length and width dimensions of 200 feet.
+[ORD 4859; January 2025]
+G8. Deviations from Design Standard S8 are subject to review through the Planned Unit
+Development application. [ORD 4859; January
+2025]
+S9. A landscape buffer consistent with the following requirements shall be provided along side and rear property lines that abut the
+Cooper Mountain Nature Park.
+a. The landscape buffer width shall be a minimum of 25 feet.
+b. All plantings within the required buffer area shall be native species.
+c. The required landscape buffer area shall be planted according to the following plant types, sizes, and spacing:
+1. Trees: One tree is required per 30 linear feet of the required buffer area.
+Evergreen trees shall be planted at a minimum
+G9a. Type 3.
+A landscape buffer with a minimum width of 25 feet shall be provided along side and rear property lines that abut the Cooper Mountain Nature Park.
+The buffer shall be densely planted with native varieties of trees, shrubs, and groundcover in a way that creates an attractive and natural-looking transition to the existing vegetation along the boundary of the Cooper Mountain Nature
+Park. Evergreen shrubs and trees are preferred.
+Cooper Mountain Community Plan Open Space - Design
+Standard
+Cooper Mountain Community Plan Open
+Space - Design Guideline height of 6 feet; deciduous trees shall be planted at a minimum 2-inch caliper.
+At least 50 percent of the required trees in the buffer area shall be evergreen.
+Spacing between trees may vary within the buffer area but shall not exceed 50 linear feet between trees.
+2. Shrubs: One shrub with a minimum mature height of 4 feet is required for every 200 square feet of required buffer area.
+At least 50 percent of the required shrubs in the buffer area shall be of a hedging, evergreen variety.
+3. Ground cover: Live ground cover consisting of low-height plants, shrubs, or grasses shall be planted in remaining required buffer area.
+Bare gravel, rock, bark or other similar materials may be used but shall be limited to no more than
+25 percent of the required buffer area.
+[ORD 4859; January 2025]
+G9b. Type 2.
+Design Standard S9 shall be met.
+[ORD 4859; January 2025]
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Grading at Residential Property Lines
+
+Grading at Residential Property Lines - Design Standard Grading at Residential Property Lines - Design Guideline
+S10. Where grading is proposed, the requirements listed in Section
+60.15.10 shall apply.
+Outside the Cooper Mountain Community Plan, notwithstanding the requirements of 60.15.10.3, grading within 25 feet of a property line shall not change the existing slopes by more than 10 percent within a tree root zone of an identified Significant Individual Tree, identified
+Historic Tree, or a tree within an identified Significant Grove or
+Significant Natural Resource Area located on an abutting property unless evidence provided by a certified arborist supports additional grading that will not harm the subject grove or tree.
+[ORD 4859;
+January 2025]
+Inside the Cooper Mountain Community Plan area, notwithstanding the requirements of 60.15.10.3, grading within 25 feet of a property line shall not change the existing slopes by more than 10 percent within a root protection zone of a tree located on an abutting property unless evidence provided by a certified arborist supports additional grading that will not harm the subject grove or tree.
+[ORD 4859;
+January 2025]
+G10a. Type 3.
+For changes to existing on-site surface contours at residential property lines, the perimeters of properties shall be graded in a manner to avoid conflicts with abutting residential properties such as drainage impacts, damage to tree root zones, and blocking sunlight.
+G10b. Type 2.
+Design Standard S10 shall be met.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Garages and Off-Street Parking Areas
+
+Garages and Off-Street Parking Areas - Design Standard Garages and Off-Street Parking Areas - Design Guideline
+S11. If a townhouse development has frontage on a public or private street, then the following standards apply.
+[ORD 4859; January 2025]
+a. If the lot width for a townhouse unit is 20 feet or greater, the combined widths of all garages and outdoor on-site parking and maneuvering areas shall not occupy more than 50 percent per lot of any street frontage.
+See Figure 7.
+[ORD 4876; January
+2026]
+b. If the lot width for a townhouse unit is under 20 feet, the combined widths of all garages and outdoor on-site parking and maneuvering areas shall not occupy more than 60 percent per lot of any street frontage.
+[ORD 4876; January 2026]
+c. Driveway approaches serving individual units accessed from private transportation facilities, such as private shared driveways, private alleys, or similar, shall have a minimum width of 9 feet.
+[ORD 4876; January 2026]
+d. If the Engineering Design Manual contains stricter standards for driveways, the Engineering Design Manual standards shall apply.
+[ORD 4844; August 2023]
+G11a. Type 3.
+Developments shall support a pedestrian-friendly street environment by minimizing the visual and safety impacts of garages, parking areas, and vehicle circulation areas and promoting room on the lot for housing near streets.
+Applicable Engineering
+Design Manual standards shall be met, unless otherwise approved by the City
+Engineer. [ORD 4844; August 2023]
+G11b. Type 2.
+Design Standard S11 shall be met.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Driveway Location
+
+Driveway Location - Design Standard Driveway Location - Design Guideline
+S12. Notwithstanding driveway standards in the Beaverton
+Engineering Design Manual (EDM), the following driveway location standards apply:
+a. For lot lines that are external to the townhouse development site, driveways may be located as close as 3 or 6 feet from the lot line depending on sidewalk type classified by the EDM.
+b. For lot lines that are internal to the townhouse development site (i.e., shared by abutting townhouse lots or tracts), driveways may be located 0 feet from the lot line.
+G12. Design Standard S12 shall be met.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Driveway Access
+
+Driveway Access - Design Standard Driveway Access - Design Guideline
+S13. Off-street parking areas for townhouse developments may take access through alleys, the front yard, or shared driveways
+(consolidated access). Depending upon the option(s) selected, the following standards apply: [ORD 4859; January 2025] a.Alley Access.
+Townhouse development sites abutting an alley may take access to the rear of townhouse units from the alley rather than the public street.
+b.Front Access. Off-street parking areas in the front yard, and driveways in front of a townhouse are allowed if they meet the following standards (see Figure 12):
+1. Each townhouse unit lot has public or private street frontage of at least 15 feet on a local street or neighborhood route.
+2. A maximum of one (1) driveway approach is allowed for every townhouse unit.
+Driveway approaches and/or driveways may be shared.
+3. Outdoor on-site parking and maneuvering areas do not exceed 12 feet wide on any lot.
+4. The garage width does not exceed 12 feet, as measured from the inside of the garage door frame.
+c.Consolidated Access. See Figure 13.
+1.Corner Lots. If vehicular access exists or is proposed, a townhouse development that includes a corner lot shall take access from a single driveway approach on the side of the corner lot that is on a lower classification street per the city's adopted Transportation System Plan.
+The driveway and approach are not allowed in the area between the front building façade and front lot line of any of the townhouses.
+[ORD 4844; August 2023]
+2.Interior Lots. A townhouse development that does not include a corner lot shall consolidate access for all lots into a single driveway.
+The driveway and approach are not allowed in the area between the front building façade and front lot line of any of the townhouses.
+3. Townhouse developments shall include access easements for vehicular access and emergency access for any consolidated access or shared driveways.
+G13a. Type 3.
+Townhouse developments shall limit potential conflicts between vehicles and pedestrians, preserve on-street parking, allow adequate space for street trees, and minimize the visual impact of off-street vehicle parking and circulation areas.
+Rear vehicle access to townhouse units, where possible, is encouraged over front yards with driveways.
+G13b. Type 2.
+Design Standard S13 shall be met.
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Driveway Design
+
+Driveway Design - Design Standard Driveway Design - Design Guideline
+S14. Driveways shall be designed to the standards listed below, based on the number of units the driveway could potentially serve: [ORD
+4876; January 2026]
+a. Up to eight units: Minimum nine-foot paved width for shared vehicle and pedestrian movement.
+An additional one horizontal foot on either side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+b. Nine to 20 units: Minimum 12-foot paved width for vehicle movement, and a minimum five-foot wide, grade separated hard surface walkway for pedestrian movement.
+Pedestrian walkway may be on one or both sides of driveway.
+If one side of the driveway does not have an abutting pedestrian walkway, an additional one horizontal foot on that side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+c. Greater than 20 units: Minimum 20-foot paved width for vehicle movement, and a minimum five-foot wide, grade separated hard surface walkway for pedestrian movement.
+Pedestrian walkway must be on both sides of the driveway if units take access on both sides of the driveway.
+If one side of the driveway does not have an abutting pedestrian walkway, an additional one horizontal foot on that side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+G14a. Type 3.
+Design Standard S14 or Design
+Guideline G14b shall be met.
+G14b. Type 2.
+Driveways should connect parking, drive aisles, and other improvements with at least one street.
+If vehicular access exists or is proposed, on-site vehicle circulation shall be easily identified and include a higher level of improvements such as curbs, sidewalks, and landscaping, with the scale of improvement reflecting the number of units serviced and projected frequency of vehicle trips.
+Alternative designs shall be subject to review and approval of the City
+Engineer. [ORD 4844; August 2023] [ORD
+4876; January 2026]
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Lighting Design
+
+Lighting Design - Design Standard Lighting Design - Design Guideline
+S15. Sites with an off-street parking lot area that exceeds 1,400 square feet shall comply with Technical Lighting Standards (Table 60.05-1).
+The off-street parking lot area includes the combined square footage of parking stalls and drive aisles only.
+G15a. Type 3.
+Sites with an off-street parking lot area that exceeds 1,400 square feet shall:
+d. Utilize lighting to maximize safety within a development,
+e. Minimize direct and indirect glare impacts to abutting properties and streets, and,
+f. Where the proposal does not comply with Table 60.05-1, describe why compliance with the standard is either infeasible or unnecessary.
+G15b. Type 2.
+Design Standard S15 shall be met.
+S16. Sites with a small-scale commercial use shall provide lighting that complies with Technical Lighting Standards (Table 60.05-1) at the commercial use entry and the walkways that connect the commercial use entry to public and private streets, transit stops, and other destinations.
+[ORD 4859; January 2025]
+G16a. Type 3.
+Sites with a small-scale commercial use shall:
+a. Utilize lighting to maximize pedestrian safety within a development,
+b. Minimize direct and indirect glare impacts to abutting properties and streets, and,
+c. Where the proposal does not comply with Table 60.05-1, describe why compliance with the standard is either infeasible or unnecessary.
+G16b. Type 2.
+Design Standard S16 shall be met.
+[ORD 4859; January 2025]
+Table 60.05.60.3. Design Guidelines and Standards for Townhouses
+
+Solid Waste Facilities
+
+Solid Waste Facilities - Design Standard Solid Waste Facilities - Design Guideline S17.
+Minimum Required Storage Area and Location.
+a.Dwellings. Townhouse structures with a combined floor area of less than 4,000 square feet shall provide a minimum storage area of 40 square feet for waste storage and/or recycling containers.
+Townhouse structures with a combined floor area of
+4,000 square feet or greater shall provide a minimum storage area of 80 square feet for waste storage and/or recycling containers.
+[ORD 4859; January 2025]
+Storage of solid waste facilities shall comply with the following:
+1. Storage areas for multiple units in one building may be combined or shared.
+2. Storage area requirements may be satisfied with a single location or multiple locations and may combine both interior and exterior locations.
+If multiple locations are used, the minimum footprint for each storage area shall be 3-feet by
+3-feet.
+3. Storage areas shall not be in required outdoor open areas, as provided in 60.05.60.3.S5.
+4. Storage areas shall be located in areas accessible to waste service vehicles.
+[ORD 4844; August 2023]
+5. Storage areas shall be located so that they do not obstruct pedestrian or vehicle traffic movement on the site or on public or private streets adjacent to the site.
+6. Exterior storage areas shall comply the corner clearance for driveway standards in the Beaverton Engineering Design
+Manual.
+b.CM-RM Small-scale Commercial.
+There is no minimum required storage area or location for small-scale commercial uses;
+however, any storage area that is provided outside of a building shall be fully screened from view using one or more screening methods of 60.05.60.3.S18.b.1 through 3.
+[ORD 4859; January
+2025]
+G17. Design Standard S17 shall be met.
+S18. Screening. All townhouse developments shall meet the following standards.
+a. Waste storage and/or recycling containers shall be in an area not visible from a public or private street or shall be fully screened from view from a public or private street.
+b. Screening from public view for waste storage and/or recycling containers shall be constructed a minimum of one foot higher than the feature to be screened, and shall be accomplished by one or more of the following methods:
+1. Solid wall constructed of an exterior finish material utilized on one or more structures,
+2. A hedge with a minimum of ninety-five (95) percent opacity within two (2) years.
+3. Solid wood fence
+G18a. Type 3.
+Design Standard S18 or Design
+Guideline G18b shall be met.
+G18b. Type 2.
+Waste storage and/or recycling containers shall be designed and/or located so that they are screened from an abutting public or private street.
+Solid Waste Facilities - Design Standard Solid Waste Facilities - Design Guideline
+c. Screening from public view by chain-link fence with or without slats is prohibited.
+Figure 12
+Front Access
+
+Figure 13
+Consolidated Access
+Figure 13
+Consolidated Access
+4.Design Guidelines and Standards for Cottage Clusters.
+Unless otherwise noted, cottage clusters developments shall meet the standards of this section.
+
+
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Minimum Number of Dwellings
+
+Minimum Number of Dwellings - Design Standard Minimum Number of Dwellings - Design Guideline S1.
+A single cottage cluster shall contain a minimum of 5 cottages.
+[ORD 4859; January 2025]
+G1. Design Standard S1 must be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Maximum Number of Dwellings
+
+Maximum Number of Dwellings - Design Standard Maximum Number of Dwellings - Design Guideline S2.
+The maximum number of cottages per cluster is specified below:
+a. A cottage cluster shall contain a maximum of 12 cottages if the cluster complies with 60.05.60.4.S12 and 60.05.60.4.S13.
+b. A cottage cluster may include up to 16 cottages per cluster if the cottage cluster provides 250 square feet of courtyard space per unit for each unit in excess of 12 units rather than the per-unit standard in 60.05.60.4.S12, and if the common courtyard includes a minimum dimension of at least 25 feet at its narrowest dimension rather than the standard in
+60.05.60.4.S13.
+G2. Design Standard S2 shall be met.
+S3. A cottage cluster development may have more than one cottage cluster.
+Each cottage cluster shall have its own common courtyard.
+G3. Design Standard S3 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Cottage Orientation
+
+Cottage Orientation - Design Standard Cottage Orientation - Design Guideline
+S4. Cottages shall be clustered around a common courtyard.
+See Figure 14.
+Each cottage within a cluster shall either abut the common courtyard or shall be directly connected to it by a pedestrian way.
+G4. Design Standard S4 shall be met.
+S5. A minimum of 50 percent of cottages within a cluster shall be oriented to the common courtyard and shall:
+a. Have a main entrance facing the common courtyard;
+b. Be within 10 feet from the common courtyard, measured from the façade of the cottage to the nearest edge of the common courtyard; and
+c. Be connected to the common courtyard by a
+G5a. Type 3.
+Cottage clusters shall be designed to encourage and facilitate community gathering and social interaction in a common courtyard or courtyards, including having most cottages oriented with entrances facing the courtyard or, if near the street, facing the street.
+G5b. Type 2.
+Design Standard shall be met.
+Cottage Orientation - Design Standard Cottage Orientation - Design Guideline pedestrian way.
+Cottages within 20 feet of a street property line may have a main entrance facing the common courtyard or, if the cottage is within 20 feet of a street property line, have an entrance facing the street consistent with S7.a or S7.b
+Cottages within 20 feet of a property line that have their entrances facing the street only, and not the common courtyard, may count towards Design Standard S5.
+[ORD
+4859; January 2025]
+S6. Cottages not facing the common courtyard, or the street shall have their main entrances facing a pedestrian way that is directly connected to the common courtyard.
+G6. Design Standard S6 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Entries
+
+Entries - Design Standard Entries - Design Guideline
+S7. For cottages within 20 feet of a street property line, at least one entry to each structure containing a dwelling shall meet one of the options in standards in 60.05.60.4.S7.
+An entry is a building opening designed to be used by pedestrians.
+It does not include any door exclusively designated as an emergency exit, any door that leads to a utility room or closet, or a garage door not designed as a pedestrian entrance.
+The entry shall comply with one of the following:
+a. Face the street and be within 10 feet of the longest street-facing wall of the dwelling unit;
+b. Be at an angle of up to 45 degrees from the street and be within
+10 feet of the longest street-facing wall of the dwelling unit;
+c. Open to a porch or an outdoor space, such as a patio, stoop, forecourt, or mezzanine and be within 10 feet of the longest street-facing wall of the dwelling unit.
+The porch or outdoor space shall be at least 25 square feet in area and at least one entrance to the porch or outdoor space shall face the street.
+d. Face a common courtyard, or an outdoor open area that is shared by at least two dwellings, and is adjacent to the street.
+Adjacent means that some part of the open area is within 20 feet of a lot line that abuts a street; or
+If a cottage cluster includes a manufactured home(s), the manufactured home(s) is exempt from this standard.
+G7a. Type 3.
+Some entries, especially those closest to the street, shall be accessible from the street.
+From the street and on-site parking areas, pedestrians shall be able to see some entries and identify pedestrian routes to other entries on the site.
+G7b. Type 2.
+Design Standard shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Windows
+
+Windows - Design Standard Windows - Design Guideline
+S8. For cottages within 20 feet of a street property line, a minimum of 15 percent of the area of all public or private street-facing façades on each individual unit must include windows or entrance doors.
+Half of the window area in the door of an attached garage may count toward meeting this standard.
+See Figure 6.
+Manufactured homes are exempt from this standard.
+G8. Design Standard S8 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Common Courtyards (see Figure 14)
+
+Common Courtyards -
+Design Standard
+Common Courtyards - Design Guideline
+S9. For cottage cluster developments, outdoor open area shall be provided as Common Courtyards.
+At least one courtyard shall be provided for each cottage cluster development.
+Each cottage cluster shall share a common courtyard to provide a sense of openness and community for residents.
+G9. Design Standard S9 shall be met.
+S10. The common courtyard shall be a single, contiguous piece.
+G10. Design Standard S10 shall be met.
+S11. Cottages shall abut the common courtyard on at least two sides of the courtyard.
+G11. Design Standard S11 shall be met.
+S12. The common courtyard shall contain a minimum of
+150 square feet per cottage within the cluster.
+G12a. Type 3.
+Common courtyards shall be sized to provide adequate space for relaxation, recreation, and socializing.
+G12b. Type 2.
+Design Standard S12 shall be met.
+S13. The common courtyard shall be a minimum of 15 feet wide at its narrowest dimension.
+G13. Design Standard S13 shall be met.
+S14. The common courtyard shall be developed with a mix of landscaping, groundcover, lawn, pedestrian ways, and/or paved courtyard area, and may also include recreational amenities.
+Impervious elements of the common courtyard shall not exceed 75 percent of the total common courtyard area.
+G14. Type 3.
+Courtyards shall include a mix of landscaping, groundcover, lawn, pedestrian ways, and/or paved courtyard area, and may also include recreational amenities.
+Impervious elements shall not be the dominant feature of a cluster’s courtyard if the cluster has one courtyard.
+If a cluster has more than one courtyard area, impervious elements shall not dominate the combined area of all courtyards.
+G14b. Type 2.
+Design Standard S14 shall be met.
+S15. Pedestrian ways shall be included in a common courtyard.
+Pedestrian ways that are contiguous to a courtyard shall count toward the courtyard’s minimum dimension and area.
+Parking areas, required setbacks, and driveways do not qualify as part of a common courtyard.
+G15. Design Standard S15 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Community Buildings
+
+Community Buildings - Design Standard Community Buildings - Design Guideline
+S16. Cottage cluster developments may include community buildings for the shared use of residents that provide space for accessory uses such as community meeting rooms, guest housing, exercise rooms, daycare, or community eating areas.
+Each cottage cluster is permitted one community building.
+G16a. Type 3.
+Cottage cluster developments may include community buildings for the shared use of residents that provide space for accessory uses such as community meeting rooms, guest housing, exercise rooms, daycare, or community eating areas.
+Larger cottage cluster developments may have more than one community building.
+G16b. Type 2.
+Design Standard S16 shall be met.
+S17. Community buildings shall have a maximum floor area of 1,800 square feet.
+G17a. Type 3.
+Community buildings shall be compatible in scale with dwellings in a cottage cluster.
+G17b. Type 2.
+Design Standard S17 shall be met.
+S18. Community buildings shall not be used for long-term residential occupancy.
+For the purposes of this standard, long-term residential occupancy shall mean the continued use by the same occupant for longer than 14 days in any
+60-day timeframe or for more than 30 days in a calendar year.
+G18. Design Standard S18 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Tree Planting and Tree Preservation
+
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree Preservation - Design Guideline
+S19. Cottage clusters shall meet the tree planting requirements in
+60.05.60.4.S19.a and the planting standards in 60.05.60.4.S19.b, unless they meet the tree preservation or in-lieu fee standards of
+60.05.60.4.S19.c or 60.05.60.4.S19.d.
+a.Tree Planting Requirements.
+For these standards, the tree planting area equals 30 percent of the site or the site area minus the building footprint of existing and proposed development, whichever is smaller.
+Sites with at least 50 square feet of available tree planting area (the required area for a small tree, provided in 60.05.60.4.S19.a.3.iii) shall be subject to the requirements in S19.a.1 or in S19.a.2, as applicable.
+[ORD 4859;
+January 2025]
+1. Outside the Cooper Mountain Community Plan area.
+The tree planting area shall be planted with some combination of large, medium, or small trees from the City of Beaverton
+Tree List for private property trees as designated by the
+Director at the rates listed below.
+The City’s tree list indicates the minimum planting area for each tree size.
+[ORD
+4859; January 2025]
+i. Large trees (those listed for 8-foot planting areas): 1 large tree counts toward 1,200 square feet of the tree planting area.
+ii. Medium trees (those listed for 4-foot or 6-foot planting areas): 1 medium tree counts toward 600 square feet of the tree planting area.
+iii. Small trees (those listed for 3-foot planting areas): 1 small tree counts toward 300 square feet of the tree planting area.
+2. Inside the Cooper Mountain Community Plan area.
+i. The tree planting area shall be planted with trees on the
+City of Beaverton Tree List.
+ii. The square footage of canopy coverage that counts toward the required tree planting area will be based on the Mature Tree Canopy area listed in the City of
+Beaverton Tree List.
+[ORD 4859; January 2025]
+3. The minimum area required to plant trees, by type, is:
+i. Large tree: 150 square feet, including a 10-foot-by-10- foot area within that 150 square feet.
+ii. Medium tree: 75 square feet, including a 6-foot-by-6- foot area within that 75 square feet.
+iii. Small tree: 50 square feet, including a 3-foot-by-3-foot area within that 50 square feet.
+b.Planting Standards for Required Trees.
+1. Outside the Cooper Mountain Community Plan area,
+G19. Design Standard S19 shall be met.
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree Preservation - Design Guideline required trees shall not be planted within 6 feet of structures or 3 feet of property lines at the perimeter of the site.
+[ORD
+4859; January 2025]
+2. Trees planted to meet other Code requirements, such as buffer requirements, shall also count toward the tree planting requirement.
+[ORD 4859; January 2025]
+3. Deciduous trees shall have a minimum caliper of 1.5 inches and shall be balled and burlapped.
+4. Evergreen trees shall be a minimum of 5 feet in height at the time of planting.
+[ORD 4859; January 2025]
+5. Areas subject to Clean Water Services regulations including stormwater facilities, vegetated corridors, and sensitive natural areas shall be planted consistent with Clean Water
+Services requirements.
+6. Irrigation shall be provided to ensure trees planted will survive their establishment period.
+Inside the Cooper
+Mountain Community Plan area, irrigation systems shall also comply with Sections 60.37 and 60.61.35 and if requirements in those sections contain stricter standards, the stricter standards shall apply.
+Establishment period irrigation shall be provided through one of the following options or a combination of options:
+i. A permanent, in-ground irrigation system with an automatic controller.
+ii. An irrigation system designed and certified by a licensed landscape architect as part of a landscape plan that provides sufficient water to ensure that the plants will become established.
+The system does not have to be permanent if a licensed landscape architect certifies that the plants chosen will survive.
+iii. Irrigation by hand for a maximum of 500 square feet per site.
+[ORD 4859; January 2025]
+7. Trees planted under the standards in this section are not considered Landscape Trees.
+c.Tree Preservation.
+1. Outside the Cooper Mountain Community Plan area.
+i. Existing non-nuisance trees that are preserved on the site shall satisfy the planting requirements of
+60.05.60.4.S19.a as follows:
+1. Trees that are at least 1.5 inches DBH and less than
+6 inches DBH count toward 600 square feet of required tree planting area.
+2. For trees 6 inches or more DBH, every full 6-inch increment in DBH shall count toward an additional
+Tree Planting and Tree Preservation - Design Standard Tree Planting and Tree Preservation - Design Guideline
+600 feet of required tree planting area.
+ii. Community trees that are preserved trees shall be classified as Landscape Trees and will be subject to
+CHAPTER 40 and CHAPTER 60.
+Protected trees that are preserved shall remain classified as Protected Trees.
+2. Inside the Cooper Mountain Community Plan area.
+Existing, non-exempt, on-site trees over 6-inch DBH that are preserved shall satisfy the planting requirements of
+60.05.60.4.S19.a as follows:
+i. The square footage of preserved canopy coverage that counts toward the required tree planting area will be based on the mature canopy area listed in the City of
+Beaverton Tree List.
+[ORD 4859; January 2025] d.In-Lieu Fee.
+In lieu of meeting the planting requirements of
+60.05.60.4.S19.a, applicants may contribute to the Tree
+Preservation Fund at a rate designated by the City Council.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+South Cooper Mountain Community Plan Open Space and Natural Resources
+
+South Cooper Mountain Community Plan Open Space and
+Natural Resources - Design Standard
+South Cooper Mountain Community Plan
+Open Space and Natural Resources -
+Design Guideline
+S20. For properties within the South Cooper Mountain Community
+Plan area,
+a. An outdoor open area shall be provided on site in whichever one of the following methods results in the greater amount of outdoor open area:
+1. Outdoor open area shall be equivalent to the square footage of Significant Natural Resource Area located on the subject site or;
+2. Outdoor open area shall be consistent with applicable standards of Section 60.05.60.4.S9-S15.
+b. Regardless of which method is used to determine the amount of outdoor open area required, the outdoor open area dimensions, amenities and other features shall comply with applicable provisions of Section 60.05.60.3.S4.
+c. Significant Natural Resource Areas preserved on a site and placed within a conservation easement or conservation tract, recorded with a deed restriction, may count toward a site’s total outdoor open area requirement, provided applicable provisions in Section 60.05.60.4.S9-S15 are met.
+d. Tree Planting and Tree Preservation areas, as outlined in Section
+60.05.60.4.S5 may also count toward a site’s total outdoor open area requirement, provided applicable provisions in Section
+60.05.60.4.S9-S15 are met.
+e. Within the South Cooper Mountain Community Plan area development abutting SW Tile Flat Road, shall provide a 10-foot wide, B2-Medium screen buffer and shall comply with applicable standards of Section 60.05.25.14.
+Proposals being reviewed as a
+Planned Unit Development as exempt from this standard but shall address all applicable policies of the South Cooper
+Mountain Community Plan.
+For properties in the South Cooper Mountain
+Community Plan area without Significant
+Natural Resource Areas on the site, the following guidelines apply if S20 cannot be met.
+G20a. Type 3.
+Common courtyards shall be sized to provide adequate space for relaxation, recreation, and socializing (Standard
+60.05.60.4.S12).
+G20b. Type 3.
+Courtyards shall include a mix of landscaping, groundcover, lawn, pedestrian ways, and/or paved courtyard area, and may also include recreational amenities.
+Impervious elements shall not be the dominant feature of a cluster’s courtyard if the cluster has one courtyard.
+If a cluster has more than one courtyard area, impervious elements shall not dominate the combined area of all courtyards (Standard
+60.05.60.4.S14)
+All other standards for Common Courtyards shall be met.
+Properties within the South Cooper Mountain
+Community Plan area with Significant Natural
+Resource Areas on the site, shall meet Design
+Standard S20 unless proposal is reviewed as a
+Planned Unit Development.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Cooper Mountain Community Plan Open Space
+
+Cooper Mountain Community Plan Open Space - Design
+Standard
+Cooper Mountain Community Plan Open
+Space - Design Guideline
+S21. Within the Cooper Mountain Community Plan area, sites shall provide at least 15 percent open space per gross site area at the time of initial Land Division through one or more of the methods below.
+This open space requirement shall be met in addition to the applicable standards of Section 60.05.60.4.S9 through S19.
+If a site includes the development of uses that are not subject to the requirements of this
+Section, the minimum open space requirement shall be calculated as
+15 percent of the portion of the site that is subject to the requirements of Section 60.05.60.
+a. Open space tracts in the Parks Overlay identified in Section
+20.22.45.
+b. On-site area within the Resource Overlay protected in a separate tract.
+c. Open space tracts that have 50 percent tree canopy or are planted so they will have 50 percent tree canopy cover within 15 years after planting consistent with the Technical Specifications for Tree Preservation and Planting of Section 60.61.30.
+1. A combination of existing tree canopy and planted trees is acceptable to meet this standard.
+2. Open space designated to meet this requirement outside the
+Parks Overlay and Resource Overlay shall have minimum length and width dimensions of 25 feet.
+The open space may be placed in more than one location on the site.
+3. Property owners are not required to dedicate open space tracts but may do so voluntarily to the Tualatin Hills Park &
+Recreation District or other public agency per Section
+60.15.15.3. Dedicated tracts shall count 150 percent toward the open space requirement.
+The additional credit shall not be used to reduce the open space required to be within the
+Parks Overlay that is shown in 20.22.45.1 but may be used to meet requirements for open space outside the Parks
+Overlay. To qualify for this credit, a tract shall have at least
+75 percent Parks Overlay Open Space Developable Area with minimum length and width dimensions of 200 feet.
+[ORD 4859; January 2025]
+G21. Deviations from Design Standard S21 are subject to review through the Planned Unit
+Development application. [ORD 4859; January
+2025]
+S22. A landscape buffer consistent with the following requirements shall be provided along side and rear property lines that abut the
+Cooper Mountain Nature Park.
+a. The landscape buffer width shall be a minimum of 25 feet.
+b. All plantings within the required buffer area shall be native species.
+c. The required landscape buffer area shall be planted according to the following plant types, sizes, and spacing:
+1. Trees: One tree is required per 30 linear feet of the required buffer area.
+Evergreen trees shall be planted at a minimum
+G22a. Type 3.
+A landscape buffer with a minimum width of 25 feet shall be provided along side and rear property lines that abut the Cooper Mountain Nature Park.
+The buffer shall be densely planted with native varieties of trees, shrubs, and groundcover in a way that creates an attractive and natural-looking transition to the existing vegetation along the boundary of the Cooper Mountain Nature
+Park. Evergreen shrubs and trees are preferred.
+Cooper Mountain Community Plan Open Space - Design
+Standard
+Cooper Mountain Community Plan Open
+Space - Design Guideline height of 6 feet.
+Deciduous trees shall be planted at a minimum 2-inch caliper.
+At least 50 percent of the required trees in the buffer area shall be evergreen.
+Spacing between trees may vary within the buffer area but shall not exceed 50 linear feet between trees.
+2. Shrubs: One shrub with a minimum mature height of 4 feet is required for every 200 square feet of required buffer area.
+At least 50 percent of the required shrubs in the buffer area shall be of a hedging, evergreen variety.
+3. Ground cover: Live ground cover consisting of low-height plants, shrubs, or grasses shall be planted in remaining required buffer area.
+Bare gravel, rock, bark or other similar materials may be used but shall be limited to no more than
+25 percent of the required buffer area.
+[ORD 4859; January 2025]
+G22b. Type 2.
+Design Standard S22 shall be met.
+[ORD 4859; January 2025]
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Grading at Residential Property Lines
+
+Grading at Residential Property Lines - Design Standard Grading at Residential Property Lines - Design Guideline
+S23. Where grading is proposed, the requirements listed in Section
+60.15.10 shall apply.
+Outside the Cooper Mountain Community Plan area, notwithstanding the requirements of 60.15.10.3, grading within 25 feet of a property line shall not change the existing slopes by more than 10 percent within a tree root zone of an identified Significant Individual Tree, identified Historic Tree, or a tree within an identified Significant Grove or Significant Natural Resource Area located on an abutting property unless evidence provided by a certified arborist supports additional grading that will not harm the subject grove or tree.
+Inside the Cooper Mountain Community Plan area, notwithstanding the requirements of 60.15.10.3, grading within 25 feet of a property line shall not change the existing slopes by more than 10 percent within a root protection zone of a tree located on an abutting property unless evidence provided by a certified arborist supports additional grading that will not harm the subject grove or tree.
+[ORD 4859; January 2025]
+G23a. Type 3.
+For changes to existing on-site surface contours at residential property lines, the perimeters of properties shall be graded in a manner to avoid conflicts with abutting residential properties such as drainage impacts, damage to tree root zones, and blocking sunlight.
+G23b. Type 2.
+Design Standard S23 shall be met.
+Figure 14
+Cottage Orientation and Common Courtyard Standards
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Pedestrian Ways
+
+Pedestrian Ways - Design Standard Pedestrian Ways - Design Guideline
+S24. Cottage clusters shall meet the following pedestrian way standards:
+a. An accessible pedestrian way shall be provided that connects the main entrance of each cottage to:
+1. The common courtyard;
+2. Shared parking areas;
+3. Community buildings; and
+4. Sidewalks in public rights-of-way abutting the site or rights-of-way if there are no sidewalks.
+b. The pedestrian way shall be hard-surfaced and a minimum of 5  feet wide.
+[ORD 4859; January 2025]
+G24a. Type 3.
+Accessible pedestrian ways shall connect the main entrance of each cottage to the common courtyard, to public rights-of-way abutting the site, and where possible, to other shared community spaces.
+G24b. Type 2.
+Design Standard S24 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Driveway Location
+
+Driveway Location - Design Standard Driveway Location - Design Guideline
+S25. Notwithstanding the corner clearance for driveway standards in the Beaverton Engineering Design Manual, driveways may be located as close as 3 or 6 feet from property lines depending on sidewalk type.
+G25. Design Standard S25 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Driveway Design
+
+Driveway Design - Design Standard Driveway Design - Design Guideline
+S26. Driveways shall be designed to the standards listed below, based on the number of units the driveway could potentially serve: [ORD 4876; January 2026]
+a. Up to eight units: Minimum nine-foot paved width for shared vehicle and pedestrian movement.
+An additional one horizontal foot on either side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+b. Nine to 20 units: Minimum 12-foot paved width for vehicle movement, and a minimum five-foot wide, grade separated hard surface walkway for pedestrian movement.
+Pedestrian walkway may be on one or both sides of driveway.
+If one side of the driveway does not have an abutting pedestrian walkway, an additional one horizontal foot on that side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+c. Greater than 20 units: Minimum 20-foot paved width for vehicle movement, and a minimum five-foot wide, grade separated hard surface walkway for pedestrian movement.
+Pedestrian walkway must be on both sides of the driveway if units take access on both sides of the driveway.
+If one side of the driveway does not have an abutting pedestrian walkway, an additional one horizontal foot on that side of the driveway shall be clear of any obstructions, including, but not limited to, structures, trees, fences or walls, above ground utilities, mechanical units or similar appurtenances.
+G26a. Type 3.
+Design Standard S26 or Design Guideline
+G26b shall be met.
+G26b. Type 2.
+Driveways should connect parking, drive aisles, and other improvements with at least one street.
+If vehicular access exists or is proposed, on-site vehicle circulation shall be easily identified and include a higher level of improvements such as curbs, sidewalks, and landscaping, with the scale of improvements reflecting the number of units served and projected frequency of vehicle trips.
+Alternative designs shall be subject to review and approval of the City Engineer.
+[ORD 4844; August 2023]
+[ORD 4876; January 2026]
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Garages and Off-Street Parking Areas
+
+Garages and Off-Street Parking Areas - Design
+Standard
+Garages and Off-Street Parking Areas - Design
+Guideline
+S27. The combined width of all garages (including detached garages) and outdoor on-site parking and maneuvering areas on a site shall not occupy more than 50 percent of any public or private street frontage (other than an alley).
+See Figure 7.
+If the Engineering Design
+Manual contains stricter standards for driveways, the
+Engineering Design Manual standards shall apply.
+[ORD
+4844; August 2023]
+G27a. Type 3.
+Developments shall support a pedestrian-friendly street environment by minimizing the visual and safety impacts of garages, parking areas, and vehicle circulation areas and promoting room on the lot for housing near streets.
+Applicable Engineering Design
+Manual standards shall be met, unless otherwise approved by the City Engineer.
+[ORD 4844; August 2023]
+G27b. Type 2.
+Design Standard S27 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Parking Design
+
+Parking Design - Design Standard Parking Design - Design Guideline
+S28. Clustered Parking.
+Off-street parking may be provided with individual cottages or arranged in clusters.
+If clustered parking is proposed, it shall meet the following standards:
+a. Cottage cluster developments with fewer than 16 cottages are permitted parking clusters of not more than 5 contiguous spaces.
+b. Cottage cluster developments with 16 cottages or more are permitted parking clusters of not more than 8 contiguous spaces.
+c. Parking clusters shall be separated from other parking spaces or parking clusters by at least 4 feet of landscaping.
+If all parking spaces are made of pervious pavement, then this standard does not apply.
+d. Clustered parking areas may be covered.
+e. Clustered parking areas shall meet the standards in
+Section 60.30.15, if applicable.
+G28a. Type 3.
+Clustered Parking. If clustered parking is proposed, the site design should minimize the visual impact of parking areas by providing landscape islands within larger parking areas and/or feature multiple smaller shared parking areas instead of larger parking areas.
+G28b. Type 2.
+Clustered Parking. An applicant may increase the number of contiguous spaces in a parking cluster above the S28.a. or b. standard, or reduce the required landscaping below the S28.c. standard, by demonstrating that special conditions or circumstances exist on the site that make it physically difficult or impossible to meet the applicable standard.
+Otherwise,
+Design Standard S28 shall be met.
+S29. Parking Location and Access.
+a. Off-street parking areas with 5 or more spaces shall not be located within 20 feet from any lot line that abuts a street (except an alley).
+b. No off-street parking space is permitted within 10 feet of a lot line that does not abut a street or an alley.
+c. Driveways shall meet the driveway standards in the
+Beaverton Engineering Design Manual.
+G29a. Type 3.
+Parking Location and Access. Off-street parking areas shall be located so as not to detract from a pedestrian-friendly street environment.
+Driveways shall meet the driveway standards in the Beaverton Engineering
+Design Manual.
+G29b. Type 2.
+Parking Location and Access. Design
+Standard S29 shall be met.
+S30. Screening. Landscaping, fencing, or walls at least 3 feet tall shall separate clustered parking areas and parking structures from common courtyards and public streets.
+G30a. Type 3.
+Screening. Clustered parking areas and parking structures shall be screened from common courtyards and public streets by landscaping, fencing, or
+Parking Design - Design Standard Parking Design - Design Guideline walls.
+G30b. Type 2.
+Screening. Design Standard S30 shall be met.
+S31. Garages and Carports.
+a. Garage entries and carports (whether shared or individual) shall not abut common courtyards.
+b. Garage doors for attached and detached individual garages shall not exceed 20 feet in width.
+G31. Garages and Carports.
+Design Standards S31a and
+S31b shall be met.
+S32. Sites with an off-street parking lot area that exceeds
+1,400 square feet shall comply with Technical Lighting
+Standards (Table 60.05-1).
+The off-street parking lot area includes the combined square footage of parking stalls and drive aisles only.
+G32a. Type 3.
+Sites with an off-street parking lot area that exceeds 1,400 square feet shall:
+a. Utilize lighting to maximize safety within a development,
+b. Minimize direct and indirect glare impacts to abutting properties and streets, and,
+c. Where the proposal does not comply with Table
+60.05-1, describe why compliance with the standard is either infeasible or unnecessary.
+G32b. Type 2.
+Design Standard S32 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Accessory Structures
+
+Accessory Structures - Design Standard Accessory Structures - Design Guideline
+S33. Accessory structures shall not exceed 400 square feet in floor area.
+G33a. Type 3.
+Accessory structures shall be appropriately scaled to the size of cottages.
+G33b. Type 2.
+Design Standard S33 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Existing Structures
+
+Existing Structures - Design Standard Existing Structures - Design Guideline
+S34. An existing single-detached dwelling, and an existing accessory dwelling unit, on a lot to be used for a cottage cluster development may remain within the cottage cluster development.
+The existing dwelling(s) may be nonconforming with respect to the Design Standards of this Table 60.05.60.4., except that each detached dwelling shall count toward the maximum number of cottages in a cottage cluster provided in 60.05.60.3.S2.
+G34. Design Standard S34 shall be met.
+S35. The existing dwelling(s) may be expanded up to a maximum height of 25 feet or a building footprint of less than 900 square feet; however, existing dwellings that
+G35. Design Standard S35 shall be met.
+Existing Structures - Design Standard Existing Structures - Design Guideline exceed the maximum height and/or footprint standards may not be expanded.
+S36. The existing dwelling(s) shall be excluded from the calculation of orientation toward the common courtyard, per 60.05.60.4.S11.
+G36. Design Standard S36 shall be met.
+Table 60.05.60.4. Design Guidelines and Standards for Cottage Clusters
+
+Solid Waste Facilities
+
+Solid Waste Facilities - Design Standard Solid Waste Facilities - Design Guideline S37.
+Minimum Required Storage Area. Cottage cluster developments with a combined floor area of less than
+4,000 square feet shall provide a minimum storage area of
+40 square feet for waste storage and/or recycling containers.
+Cottage cluster developments with a combined floor area of 4,000 square feet or greater shall provide a minimum storage area of 80 square feet for waste storage and/or recycling containers.
+Storage of solid waste facilities shall comply with the following:
+a. Storage areas for multiple units in the same cottage cluster development may be combined or shared.
+b. Storage area requirements may be satisfied with a single location or multiple locations and may combine both interior and exterior locations.
+If multiple locations are used, the minimum footprint for each storage area shall be 3-feet by 3-feet.
+c. Storage areas shall not be in common courtyards, as provided in 60.05.60.4.S10.
+d. Storage areas shall be located so that they do not obstruct pedestrian or vehicle traffic movement on the site or on public or private streets adjacent to the site.
+e. Exterior storage areas shall comply the corner clearance for driveway standards in the Beaverton
+Engineering Design Manual.
+[ORD 4844; August 2023]
+G37. Design Standard S37 shall be met.
+S38. Screening. All cottage cluster developments shall meet the following standards.
+a. Waste storage and/or recycling containers shall be in an area not visible from a public street or shall be fully screened from view from a public street.
+b. Screening from public view for waste storage and/or recycling containers shall be constructed a minimum of one foot higher than the feature to be screened,
+G38a. Type 3.
+Design Standard S38 or Design Guideline
+G38b shall be met.
+G38b. Type 2.
+Waste storage and/or recycling containers shall be designed and/or located so that they are screened from an abutting public street.
+Solid Waste Facilities - Design Standard Solid Waste Facilities - Design Guideline and shall be accomplished by one or more of the following methods:
+1. Solid wall constructed of an exterior finish material utilized on one or more buildings,
+2. A hedge with a minimum of ninety-five (95) percent opacity within two (2) years; or
+3. Solid wood fence.
+c. Screening from public view by chain-link fence with or without slats is prohibited.
+Figure 15
+Cottage Cluster Parking Design Standards
+[There are no ordinances associated with this section.]
+Effective on: 8/21/2026
+

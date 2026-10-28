@@ -45,7 +45,7 @@ PROV = Provenance(
     cite="WDC 4.113(.02)A.2",
     url="https://library.municode.com/or/wilsonville",
     retrieved=date(2026, 9, 16),
-    quote="or/clackamas/wilsonville/4.planning.txt#L3013-L3016",
+    quote="or/clackamas/wilsonville/4/4.113.txt#L44-L45",
 )
 
 CITE = (
@@ -478,7 +478,7 @@ def test_the_variant_cites_the_sentence_and_the_sentence_prints_the_share() -> N
     store = ProvenanceStore()
     for zone in TAKES_4113:
         (variant,) = layer.zones[zone].values["setback_street_side_ft"].variants
-        assert variant.prov.quote == "or/clackamas/wilsonville/4.planning.txt#L3013-L3016"
+        assert variant.prov.quote == "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         ref = parse_quote(variant.prov.quote)
         text = " ".join(store.load(ref.path).lines(ref).splitlines())
         assert "20 percent of the width of" in text and "not less than ten feet" in text

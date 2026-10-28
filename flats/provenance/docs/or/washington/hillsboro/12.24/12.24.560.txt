@@ -1,0 +1,79 @@
+12.24.560  Development Standards.
+Base zone development standards in the UC-RM zone are listed in Table 12.24.560-1.
+Certain standards are illustrated in Figure 12.24.560-A.
+Table 12.24.560-1:
+Development Standards in the UC-RM Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Residential Density 24 du/na
+See Subsection 12.24.030.G.4.
+Maximum Residential Density 43 du/na
+Minimum FAR None
+See Subsection 12.24.030.G.4.
+Maximum FAR None
+Minimum Lot Dimensions*
+• Width (at front building plane)
+
+%
+Detached 25 feet
+
+%
+Townhouse, duplex, triplex, quadplex, or multiple-dwelling structure
+18 feet
+• Depth 50 feet
+• Frontage
+
+% Detached 25 feet
+
+%
+Townhouse, duplex, triplex, quadplex, or multiple-dwelling structure
+18 feet
+Table 12.24.560-1:
+Development Standards in the UC-RM Zone
+Standard Requirement Clarifications
+Minimum Setbacks*
+Minimum setbacks subordinate to public utility easements and ORSC or OSSC requirements as applicable.
+• Front
+
+%
+To residential structure None
+
+%
+To garage door None
+• Side 5 feet
+Adjustments to side setbacks permitted for townhouse partitions allowed under Table
+12.24.420-1.
+• Rear
+
+%
+To residential structure with front yard garage access
+10 feet
+
+% To residential structure with rear yard garage access
+Either 5 feet or less, or
+19 feet or more
+5-foot or 19-foot setback measured to garage door.
+Front Property Line Coverage
+75% of primary street frontage must be occupied by the first 2 stories of the front façade.
+Front setback area not occupied by building must contain landscaping or usable open space; subject to plan district standards in
+Subchapter 12.64 as applicable.
+Standard does not apply on 185th or NE John Olsen Ave frontages.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility easements and ORSC or OSSC requirements as applicable.
+• Front 15 feet
+• Side and Rear None
+Minimum Building Height* 25 feet Subject to Amberglen Plan District standards in
+Section 12.64.800 as applicable.
+Maximum Building Height* 55 feet
+Maximum Lot Coverage None
+Minimum Usable Open Space Varies Subject to Amberglen Plan District standards in
+Section 12.64.210 as applicable.
+Minimum Landscaping Varies Subject to Amberglen Plan District standards in
+Section 12.64.220 as applicable.
+* Standards illustrated in Figure 12.24.560-A
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+Figure 12.24.560-A:
+Minimum Lot Dimensions, Setbacks and Height Requirements in the UC-RM Zone
+Figure 12.24.560-B:
+Examples of UC-RM Development Types

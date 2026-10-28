@@ -1,0 +1,7 @@
+12.64.750  Low Impact Development Approach Guidelines.
+A. Low Impact Development Approaches (LIDAs), as defined by the current version of the CWS LIDA Handbook, may be used in stormwater facility construction to provide sustainability benefits, LEED credits, or other development objectives.
+B. Construction of LIDA facilities shall not reduce the size or need to use consolidated regional water quality facilities as set forth in Section 12.64.730.
+Where construction of such public facilities is not practicable, LIDA may be incorporated into the design of a private water quality facility as approved by the City Engineer.
+C. When provided, LIDAs should be designed in accordance with the techniques and specifications provided in the current version of the CWS LIDA Handbook.
+Specific approaches should be selected based on their suitability to the soil and drainage characteristics of individual development sites.
+(Ord. 6401 § 1, 2022)

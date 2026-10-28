@@ -1,0 +1,2022 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e8a67ef64ebe02f129156be002b2fb6020eb910b70d41caac3169afac0de5a31",
+  "new_quote": "or/washington/beaverton/20.05/20.05.20.txt#L6,L12,L17,L74-L75",
+  "old_fingerprint": "1ee6eaf037d52ac2e5301e0c938d209189fc1b3c488aad4bdacba49878157b0c",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474,L533",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "ae267e97752e397013179a95d805747ae0b312dc2c65120350a112e88ae0c89c",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18",
+  "old_fingerprint": "e8bc7751e91e8806f1ba279120bd7ca40dce51fd68f10c03f6e3a9f7663d26f7",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "93324a4e3b0d11da362e27f4f8eda9f78ee4951be43a4d30890b0b06436864cc",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L26",
+  "old_fingerprint": "421665a7695e68e556fc302e51340d42cf43fa578d7535d3c68ca22152abe659",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "8b1ffdd3f563e3de6a24fce1c87b236477b86c21554bb01610a2500cf690666d",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L27",
+  "old_fingerprint": "a9795cdbe97bba17cff830d940d91665bec7dc885bf83e8f47254427c5e5dfe9",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "343edaaf9e7f551979aed150522cf1f92c8280f89cabcc194c3448ebcf3c77fc",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L28",
+  "old_fingerprint": "e55c720d76e5da70f942fe158cb0eccd84034a8592160b56924ac42935d8ec2c",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "efc33a43efba8b7ebdad27334482fbf8c3e53511b9add921544e675dba5af438",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L29,L309-L311",
+  "old_fingerprint": "acb7f460fadcc640441bfc57bad43b408b1f2dcf3eeb19574a75d8e2e156f18d",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L65,L415-L417",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "7056b42c48dfa68d739d5456fbd11464e098a7210a2e9789c52807916617914c",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L30-L32",
+  "old_fingerprint": "3d782897b4561edbe5c3d01d4bc0d9d6189e1d2e66b08edde9ff2a51aab52a42",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L66-L69",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "3efaa6cf049a546b83deec2c3babde33bdb9c088f4d03a0b735462c1061ebac1",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L44",
+  "old_fingerprint": "4274e181c789fe6771f2f3430a1ca2cd61bfb28b2e4ff9956cbfbd943458821d",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "de42de5de33918bd2252c1ceba9a8baaba2d930b321bbaa2fbac4b9f78464bc7",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L64-L67",
+  "old_fingerprint": "e80f8ed494277f1027e6b8a86c2fb3ca1a0961359368df2c8ab9ae4517fb428d",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113-L116",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "79af834b94920a5c79e00c388cdba7c1582a69a924144b273c8cf47c04c42e6c",
+  "new_quote": "or/washington/beaverton/20.05/20.05.16.txt#L1,L3,L8-L10",
+  "old_fingerprint": "cf4287d0dd135e53a0ebf907947f0147e2a3747d057d9c7e4b054fbfb4f0aa62",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L435,L437,L444-L447",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c0b49310faba3849c44c665a2257f66776f40f83236305ea6f4e9525ea4f3971",
+  "new_quote": "or/washington/beaverton/20.05/20.05.20.txt#L6,L12,L17",
+  "old_fingerprint": "80fe425efe73ec3c9481d28b3e054100e07f7dbe457309f5ba63c16d3eddd91b",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5a984034ee956d78286b7b8d47aa62213d56bc2a5970796776af1406bff68d0c",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271",
+  "old_fingerprint": "88ca18a8dae69de96586edf962fb37484ad3777e6c438733858bbf72cf590476",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "1858437bb960896d8552d561a827bd05eb5253344d3763a440448f157a821127",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L26",
+  "old_fingerprint": "28836a15f4e3ba14b47393dfaaa6611dc409564ce76cb28d57817c5bd6e1588b",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5d9f506767f38a4fad40d1487670b39fc43172d0a2605bf5c25ab63e861fa10b",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L27",
+  "old_fingerprint": "78922c12fa146a231d9f2fdef087ccaf031cfdc4e014ecc4ccea43d2c67eae75",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4a0bee1ce91cb28a56ab3463e97e37cb1d641a0aa5b079dc7610a6fa83616279",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L28",
+  "old_fingerprint": "6e1fbcfb482c6aab9c01e02ab2036a94d417837f71185523a2894d640bf8f42c",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "20cbf22c13dee95fedb07e58ca93d495e78314f635a2ae5e6ac964d5349757dd",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L37-L40",
+  "old_fingerprint": "ee1d411d173ab88cccefa452af1d77b083de80fc0d05f138683459715e39c3ce",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5772cad5e993ef38a3626e20a05172db8036baf47b52664e9d4affe75adbf8b2",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L44,L284-L285",
+  "old_fingerprint": "f614b620a25b5e9266fb69f820a9255d0d314e449b3a40955c6279946011cc26",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "769ad953a881243f38d84e58afab70d8795c30bff6cb53d0a6af7404ed4be39d",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L64",
+  "old_fingerprint": "8e325739e9dd973235404ec16605da780661bf5d848c63830cb24fecc12b1f34",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "78b1a235cf3548feeed266e2bacad5e85bf521ddd5e239dd6ee8ec0918245911",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L110-L119",
+  "old_fingerprint": "8a78cb133ab4ba8902347e119910282dca1fbcd2a5a58170f00ad3dfe96400e5",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L172",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "94b0f4bdf0d0992827ad286d566fde544264f5f4934953a79838ed8c0c92af71",
+  "new_quote": "or/washington/beaverton/20.05/20.05.20.txt#L6,L12,L17",
+  "old_fingerprint": "31a98c7fca374f1fdaeb5638fc54c0820c6d352347d41d8e5ca1a9e4e3ac7f9e",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a70e2da860b92e2c8233ba4cc81b9c2f400888ada1d3a0baa79d1867080d3ed8",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271",
+  "old_fingerprint": "cc4097891eac6a2fa1410bc89f84ffd300fcdbcda748339a0be5d6b75e7d5e55",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "977d0ba57d5ecaddbd1f140d8f6c1ca8f0fbcddcf072e388db4bf958fb7c346e",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L26",
+  "old_fingerprint": "b06c50559cc95fad1468f3dfc7920f5de38d05177d1125035c27f19e87e0da58",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b771834aa2efa76adc4aed2c9790a187334b11de35a39a07d651aa0970cde3bf",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L27",
+  "old_fingerprint": "da1d6e29426cd91909e261682cf63275e7ac08da295699a5415d3d919f899573",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9bf7fc854620627079236883dccf932f6503ea953c8ad20295bbd7f298eabe7c",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L28",
+  "old_fingerprint": "81533bd51b0bde65f3a8a22c1e98616eeb830fa622d9d470484469c11db1013c",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4064d73507c1ef084d828dab59cf1114dbe7f0aa8e0685e1bb981e1294ef22cf",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L37-L40",
+  "old_fingerprint": "b35ef2b658f4bd7f3041c3782801ccfe3330ffb2595d53490aafd681797a8b8f",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "82995797b20bb743366c8e96e73dd17f94c8af78ecb249133192e94595788976",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L44,L284-L285",
+  "old_fingerprint": "49db7c2838a1486e62afef5a84037cc9db5e8958a6123a244e6397549e335d77",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f5dba29e21d71365d62677f092f5d449ea3e6f1332afe7d12e91319449adb51f",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L64,L297-L298",
+  "old_fingerprint": "77682b08944857cb0ed77399efd5e632e308ad86550d0b8c3821b28338e8b5fa",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113,L402",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9a8200d16fe476de0ba0ae2a1f6fae5d07ada929bc4b660d113e7aa2d3c0f755",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L110-L112,L120-L124",
+  "old_fingerprint": "5c622a8c0e33ebe3b6b14d1a920e2ec780055abddc967f3ce07259154bce7477",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L173-L178",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "37c91ad124309d183f9abd5ca5f8fc2805d91dbf3cab140eb19e183048730369",
+  "new_quote": "or/washington/beaverton/20.05/20.05.20.txt#L6,L12,L17",
+  "old_fingerprint": "10e30da6cb4147d6169948ac086e41d70a6de5ca234655cb7a825ba758c10d2d",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L461,L469,L474",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "66af0c3d31fa4fada43baf4e261bc6e7f445c5e0ccd86d715c74d8ab2893415f",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271",
+  "old_fingerprint": "a586e3dfad119a68455cc106f6e4b1da886df72b6c6fb700a305680db7ba37bf",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L50-L52,L378-L381",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "863cc5cc40e05b5c6afd29a9e9e444b15e10f6a0b873daec52952820deff8da5",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L26",
+  "old_fingerprint": "16a22cffa59044aa8642c48d03dec1e32ddf023c3e69256509366e599aedd732",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L62",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9b341ccfc1ee5fd3f17ff118e530b1f02485d195fe6a5b817bc725edcbfc64a5",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L27",
+  "old_fingerprint": "2cbfdfc16af2811ca12f75f79f755e563a4ed2c7fe93a42ecdbe2bfbcb9b4187",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L63",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "664ea6fc34b99f98bf47955f187cd367ecbdc20157fe342237ffcf70fa409f3b",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L28",
+  "old_fingerprint": "cd3fd1ccf9d84ce446daf09fee8cd1b2f00bc1ebab65715d5b19252bf0e12c55",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L64",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f534a5157844640073e0afeae9470fec20d5420c5da0ade18525ee5bf052d620",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L37-L40",
+  "old_fingerprint": "a5c032b51e714a8fc62ea7484bda6bebfe3c0955abf3826616d44fd1068e58a1",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L77-L80",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "91b830aed0eb634f906beaac9a3b2a60838e924ed0ba63d9ed2a35854fa8240a",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L44,L284-L285",
+  "old_fingerprint": "3cd4934d95b883b2e836bbdd3038b24fd7a46c6980b37387d8236639d7aab1ca",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L41,L44-L45,L84,L393",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "ed09c187ada4909054f15ef6ec786b50fb787bb3c5e6cbc258370dfa26ec3280",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L64,L297-L298",
+  "old_fingerprint": "3b6120a576047b2e46864050180d8f87eac02f4617da0b7b77ed727075fd84cb",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L113,L402",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f59ba753a0d98c7d08e69e8bc926bbf45252c33058624be747f8e601285f97fe",
+  "new_quote": "or/washington/beaverton/20.05/20.05.15.txt#L45-L46,L110-L112,L125-L129",
+  "old_fingerprint": "50b359f3cbcd039989407717eba37768f9a9d791db74948273503b7ef2d9a6b6",
+  "old_quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L179-L184",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c7adcd0f61ba421c0714649b4de9779368ab4e172554bd783f9ea312c38d4f88",
+  "new_quote": "or/washington/beaverton/20.22/20.22.20.txt#L6,L13-L21,L26",
+  "old_fingerprint": "c5de316f0bb4babe47f830fb0ba8522732ce6daab99404ddbd572f9f6ebe137f",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e6b6196caa93f7fd15800798cd028ad0da22d03de4f8f10b2e908d6847377366",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22,L157-L158",
+  "old_fingerprint": "260a14c17400acfd2e8a3c84a341d1f87b377363b3a4570f407fa1951a32effc",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55,L242-L244",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b7414f952f4ca46f31ef79769469610762d359389ed6b4254c90e2b93196b346",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L39",
+  "old_fingerprint": "7c38e81a4a25e3ea49f081a0621aa521a9c0d011c4f1b5e6e018eaa064c73cbb",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "cb02b487850dbf2057e886172b7ba2ab02d9f0cdc5bbda2d691aed2d05c0d9a1",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L40,L183-L184",
+  "old_fingerprint": "dc290af0a9c184dcaf6434a02ebc76e388d090bfd40791de73400dca4d204e4d",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L76,L277-L279",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "452caf7704e1ace23c0554b4323ab61155de78e45d878ce0219ae175014e34e8",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L41",
+  "old_fingerprint": "fa5833440d6be11078f9a006b1b84d7d6c6c8ccd4ad90492548f6aec5b068da1",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "7c26c0cdb1fcbaaa2c1e9c762e93f6ff83a7a2a6f077f4697b366418a93b8de5",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L42-L46,L164-L167",
+  "old_fingerprint": "652c30140b5c983efbd6c9688b102d562c1bc639e715046fcf6fbeb041c9ec7d",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L82,L253-L257",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "72a0818a7811d4a1e946d8fa2b216372d09c2a01035ad61296b5b4691460345d",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L53,L168",
+  "old_fingerprint": "3ca00a397d7439b007e4308e0b0ab07f3dd1fbb30da47e5285291f50667317d5",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89,L258",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5b49a4bfb9e27ccc0200abea9ed755224e2b0d383a1fd38ebbde60d2a162f263",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L74",
+  "old_fingerprint": "64c71eee637fd43ba54873d084fa6196e8042b530bbbca4619376b70d0fb1df6",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b449bc831f0553ef4c9c77cc3fa65a28477c57f9069b568dbac2c08b7ee53f81",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L88-L97",
+  "old_fingerprint": "c1a33d1f4607970366706d0dca041f110aff560c53aa7187ab54c0af04bbabc9",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L127-L136",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5794596f79898417b6aaec6778eda7ed65c331724f3495884dd6878bde1c42ff",
+  "new_quote": "or/washington/beaverton/20.22/20.22.20.txt#L6,L13-L21,L26,L152",
+  "old_fingerprint": "cc3aca5fe24bc1feb89925d3bf25e89decd188150f49f4633949228c30f4e4ee",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336,L478",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "75a078e1e3f89fa7c450a7b2d9e4879ebb595e60f82a35e16fdcab68e936e964",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22",
+  "old_fingerprint": "68f54a682a3664ad901add020c2a80e7c50e17e2743d1c4647bc3296de9b3e21",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "8c5f798c451ac2c2b5c3ba605300fe7437642b06901027fbd631c7ed30b8a8ca",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L39",
+  "old_fingerprint": "3c5b797e2d3f6baa015ed5d5efaa5b951282f7a61422b03561569ce31f155089",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b08e97daaf714ef112cb9f4c1e01173ed9f568a9192c9850bfdd87bd80e63177",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L40",
+  "old_fingerprint": "58df2bffea371f6102193984a677f78489334ead70766a06f7c34d10d4e10ac4",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L76",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "190bfe8207332bcd4deb4a443039bab532e2b9989d52c8d403ea2b62d87cdbe7",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L41",
+  "old_fingerprint": "bd20c4b51f9a3c09ae1ea96193370eaed684c871c004169bb9509d122534f393",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "83421cf4e23572b15a9931191a63ead62c87e90734a10087ddcd0cdbb93b13cf",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L42-L46,L164-L167",
+  "old_fingerprint": "b27ba2ceb7ee25653e6690d9b7964e8f70b8799015e5905506ad340900b3efce",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L82,L253-L257",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "7546e5a7cd38c927240135512f324fa2a98e0306c39917b284726cad97ba8b07",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L53",
+  "old_fingerprint": "c2e9bbcd3fc44a0ada492c2574806cf37a01c5b9d271479b45d2d9ae2f74e0a2",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "1dec07c7ef196818d9e25447dc443faac9ad798e33a8c17143256f33cfc3f4e5",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L74",
+  "old_fingerprint": "2c9befd1b44e2164ea87be0b93f1ef2e272c9e487b84992f73a2a553a6d0ea1d",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "bc6aedc39a1293a210c46cf4560b7dc1be280765e2076f8d490158f4f12c2a82",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L79-L81,L194",
+  "old_fingerprint": "6e174bce82ec979e33c574ee13864d1a62b00e9165f67cf8f51852cff47ed89c",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "677cee301cb43a8bf09cf1f9c2b7d312035119fe7dfa11bbb30bef5a1b53cf36",
+  "new_quote": "or/washington/beaverton/20.22/20.22.20.txt#L6,L13-L21,L26,L152",
+  "old_fingerprint": "fe1fe99423ac6d85d8e46793c37fa7705030172ff5a89410da0d0ad48ecedf5e",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336,L478",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "bdbb0a3b395989f2e3a7cc6c4306524cc954901369b0bc15153630c423ed165c",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22",
+  "old_fingerprint": "632323a908a4ebda11821ef1b9f815cb6e92acf202966be28c808e0de46081a0",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "cd05f987c75e727e02fe385324c6c7d221c3ce92cc9d8aa7cffba3391ae59b03",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L39",
+  "old_fingerprint": "1f74aa18dd734bff7f74cf2a537b73557d772cc33906197556827e39fec974fb",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f12ef0f1a85eee2e622bf99b41aaa1a53b4f4e61011ea2bcd05c9e1f900249c1",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L41",
+  "old_fingerprint": "05a194db55d50a1727f256a4924a02a1458df00d929affabdadebfaee718e0d9",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e73a6a22fed4a2caf0d09e948f044641ff23a2d25bb549ef18d8a1f6bbc4141a",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L42-L44",
+  "old_fingerprint": "d733b663cff24b1fae5f6b29c93ffb37552052aaceb7eb161ef82fe0cd864d1f",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L80",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "822c06e0f999a662ff0f8bc602840e2655d2789edb004bf417704ea4d90d487c",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L54-L57,L169-L172",
+  "old_fingerprint": "f88fd5f2c619242217643e9e6580af8d8aa1b3418b3250ee04066a27939ecc70",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262",
+  "when_key": "abuts_residential_zone",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "912f7656132928a9bd663e0812feb561eb5ccd49a1df7d1cd60ff5f4a443d95b",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L53",
+  "old_fingerprint": "5ad273f8eec0502dd6ac8ef768bfdfb6f57aea4d50abc39abcaeccc4a1e16dcf",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4f8feb809305e3f9d1b6e459a701f601de5905e1c154bb11ee0158f44021089b",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L54-L57,L169-L172",
+  "old_fingerprint": "9d335af5d6f504ac449a968fcb467d98d66a6be3ad1fb068f841c7ae4c5cb108",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262",
+  "when_key": "abuts_residential_zone",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "bd30ddc3cc0c9b4eaceb237ea06f0d6d431351fef700d57c38660db323856245",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L74",
+  "old_fingerprint": "bb65b72722d60de53cfd423b710cf4e3cccdf4b45e240c2d1c40b84e82dc5ebc",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c96b0baf0f0563f2982f4c102fe2043003e8d7249020cc3c91d6fff4ee588a11",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L79-L81,L194",
+  "old_fingerprint": "82db2311962ea0365355c21d4ae4e55dbcca5aacf13980b3f5906e29ad39251e",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4c986cbb2187649d1b485152510cac95dda94820827f4b42e6c5fe1d9690443f",
+  "new_quote": "or/washington/beaverton/20.22/20.22.20.txt#L6,L13-L21,L26,L152",
+  "old_fingerprint": "d19073e5606743d3d8900853622d680bd749c9914f58390b867083d2057ce916",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L316,L323-L331,L336,L478",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "80149d68dae980462e2f1f698be62a2438fa760a625f321357f5afb668059426",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22",
+  "old_fingerprint": "10aba6ff643eeac184fa3573e6714eab449c5b72072ca51fbf4c030e8d25d92b",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L39,L42-L48,L53-L55",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d936de747eec56dcc2e582c6c2ae49e8fdea4e466a3da4da24d000a6eab8d445",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L39",
+  "old_fingerprint": "06e67d7c4d83a145f8a193d3fb98373d19d1d6a11bb79a6b37692c17cf320908",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L75",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "bd0fccccd8456eb7c1a0abba9f6f2e89081b4b8ebfa95d1dc10e57652186b8e9",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L41",
+  "old_fingerprint": "638d8c93b7b4bab7cdff5cbff4ec7a2f314b599e5537fa6c0d28aefeaf109301",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L77",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "993958ea510bf128ce23171d2786611f6faa1cd506d5012ef9caa2ccacffd48c",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L42-L44",
+  "old_fingerprint": "dc1b96d405963fc37a26db5e256ecac82849d682a6400a11044e3c188faca02c",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L78-L80",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "0e6142a0a06fba455ce55adc43f9275d9bcc183a2f87c1879deb258e57cba41c",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L54-L57,L169-L172",
+  "old_fingerprint": "fe1b0fd56369652321b2ae96900d1af3ff5d097659d36a5c92aaf24920c0a356",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262",
+  "when_key": "abuts_residential_zone",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "2bacba4ac3ba4ca8d339df5316d91fc356fe98ff5e8fb6263402671cc454fe10",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L53",
+  "old_fingerprint": "545750f65a63e8c298e4aa9bbfc5cfc4f209a283e669a198f399448e778a6179",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L89",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c290d7e02a25d8b4b45cd870982061c11b9f22fa51824795f8021bcd56dd97c1",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L54-L57,L169-L172",
+  "old_fingerprint": "e092c210ae16e7efd8198b18ec92e0701213fe0fad54a1cdcb387556a423a79a",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L90-L93,L259-L262",
+  "when_key": "abuts_residential_zone",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "8fa8bf37f9cc8b99a62157484edf1913e5329248617686533786518781435971",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L74",
+  "old_fingerprint": "3315f29f894713c9b94dfe2d6e72e658e58fa8cedb3eeafb293124b03f6f9013",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9152f70a816c5392b4900cae44e5eb3011a7233a16a5842388f480a0d0490561",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L74,L182",
+  "old_fingerprint": "5af17c0e6c846c8b6f21031debd8d794745191dcb420c11a8e675b7a5e8fa1d5",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110,L274-L276",
+  "when_key": "abuts_residential_zone",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "408e7bbbd1cac43360680fcd1ca595c2ce522bd134994cba1a40cc6d7a35501f",
+  "new_quote": "or/washington/beaverton/20.22/20.22.15.txt#L23-L29,L79-L81,L194",
+  "old_fingerprint": "89019e57924d7bcdfe47394525703c9fd2b2679de6002b95123ed74f6747eb63",
+  "old_quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "ad8d4f0dedfef1144a857cba1c49287bd498ae07f4089fed881596a4af471957",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "a4160b1b779d8827e38be2b2869d303da4eda2c93c9066e946149ddd05f79908",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "MR"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a4f64d6a68e53deb3d4565fc1acd72a8cde350be2007b829497238c980360234",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "dce434e3685322d56df4d91f8ed9e20afec0009dc537cd09fcaa5de89890592c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "8543092e77cd3f9cbc20b767596dd261984d18dd7fcd3e629d7f2e3210ba6a09",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "8eabd122db705df8438807ee2e7263392d56c9a5f611d3d18d6fa9f040f41e12",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "838bccc2e1cb3c6708e4ce7a421806c8ff15b7811a6b7f9f62f5cc1d1146221c",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "0878c697b427f6776d41fb6392b34501fcfe81b147161b9587e920ea51427684",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "95289a6ea391fec69c6c185a86f479ec56a659f74203d6375565c31dac697d5e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "d168d4218c1770cb3e135ba9293a6f6085cf7052a58368b536e34dfd05e9748e",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "dfb501f3207e4540722f7ab91878a2f7b2a4722e83277fdb1888e3f70cdfd75e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "413ad0f9782d32c3412e691a162b25be3752d7bfbb1f11d118310a992ebfc8cb",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f4b79b28462ce2833218f57b6cd6240e3524b6d050ae73db60f5d66fee4c68cd",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407-L413",
+  "old_fingerprint": "f863cab081ca2ee578536b2f7cee4acc883f97422f0af09d45bcc0e48d552713",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a84be50f0166f21bb14cfa2b1e6ade4ac0da3f4827145d5f1cd79a3f5661ac69",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407,L414-L419",
+  "old_fingerprint": "6f78905abbf3a6eab4743f8cbb98943833e3ce5f6a30fe77d5761680bc22c890",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "0dbd027134ca9f26c3661ef3eb6c74777ff7eb03bbc621eb4fe12122ac23fa45",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L116-L117,L122-L123,L125",
+  "old_fingerprint": "97e9e3df8310a7956f61961ca244d773dbb3f2f12a6ced5287a2b3d05ef68c17",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624",
+  "when_key": "",
+  "zone": "RMA"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "df825bcf880697fc5b420708514cb4246f4abf41f7d0e2054aea47e13ba4f9d9",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "9fb141dd2520c82d7c855df9cc19e719de73fa329d380a70f6b99f2acb3c29bb",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "14689e69cc5aee218732aa139eb9a806cb807d6c98e18ccb0adc30c1043eef4a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "48b71b4436b397da7577ff722155677a0e3415f7a4fbaa8bdd35e86bdf21e180",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "af44997f635fc9a81a2aec848c5eb10afa45ed52008ac7410c5b12f0419b3723",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407-L413",
+  "old_fingerprint": "88b2e85acbb47da186ed62a84db8f6d8f0802e084de7c16f3e27df14881010e8",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "0c20d35799a3ab2d6d2e81c855d06149530d88303a6501659f3b0d70f68c7e9e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407,L414-L419",
+  "old_fingerprint": "629322f9f2ac5c7492451508b896312652649756d3fe180b5a015f14f3f975bb",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "65dd7efa73f3d5f25176867d36958ce8d30d46ff2c9052c5d06b35ece18e29bb",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L116-L117,L122-L123,L125",
+  "old_fingerprint": "41fa759a7bc10de520d7ecea768d3ef9f336ba7d3c0f0e44e17cdb528152e627",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624",
+  "when_key": "",
+  "zone": "RMB"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "8aedaed90b77563dfdc6d789e075aeb5e73318d59b8d1dcda70275c054f915ac",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "75966e967acc58020fb3408717c76e99cc74da44d480bb149c2b21a8053e72b3",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "38773e3feaef00af8d8a835fb2485f7eb2b33069a5f457c0a66bf5e164e2365e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "43ba403569079238ea17847754dd7b8c2a487ccd1a2ae9a82ea9e45a54754c90",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a45cb218abd032d76787fa5559f357afd7675392b703afb8f12d40b5f7516b11",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407-L413",
+  "old_fingerprint": "66f1ddc256cc859e53a008aa21dcbbda068e5868cc3b1e85584f50ace1fded7f",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "99631b2f8489339b614337d52c08b4cfbb50c2c98ccb8022e03106dbf3236478",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407,L414-L419",
+  "old_fingerprint": "fdf00c3463af16eb77f79cde58e3dbd0fa0fc71d932317f8a992695aaf36df4d",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4d0c190b60998d69e8ddc027c6b0aa66d57c98aa8cd77af1fea39a29d388cca6",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L116-L117,L122-L123,L125",
+  "old_fingerprint": "c4ec22fb802bdb9d1cf1a912c156b557a4693054619e40c3ebac0fb942e45381",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624",
+  "when_key": "",
+  "zone": "RMC"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "46ce0e72462df24bd9dfdd30233d1c33c944ed219c5938ce7a9c999a9fce7840",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "cb9d26bae31fb107435053bf605589651e8af8e700b1d6ea6179003549353eaa",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "7760f1773ef225aae420fce71e9dbe599b9300e57c9e4be5907cb2145c36ea80",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381",
+  "old_fingerprint": "0591a1febb9a8448b8ee0d5695b134ba52b0fe7b0567f649a9704d7af40b34cf",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "18bc3936e21886dfc2a7b21af88487cc87619d17702115fe58182b0fd481dab3",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407-L413",
+  "old_fingerprint": "8c81e07b5626858e360cb16970d57b0aa3b441e99de87382d970d673bd20e5f4",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136-L3143",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "70dfd419afe2c05217379087aad12aad3e1b79e95b413d6e69b37994df74a255",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L402,L407,L414-L419",
+  "old_fingerprint": "6d1594e5ffccccec76c066c0e3d374f156734bc3d833b54ce8045e39db362952",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3130-L3131,L3136,L3144-L3152",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b93d47b8bb13a94cd8a6ca67c1ec84649c85d844199fa1b458819f504522a04b",
+  "new_quote": "or/washington/beaverton/60.05/60.05.60.txt#L116-L117,L122-L123,L125",
+  "old_fingerprint": "0a93401f80c44458453b998a35087d8e5fa8ad830997c2f460d58d28e2472b3a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2604,L2614-L2617,L2621-L2624",
+  "when_key": "",
+  "zone": "CM-RM"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b88fdb4645f953f6fd92de6ff7172be1cb9f17ae80e542a5ed002717d474cce8",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "a5705e825d05144c0b9f725cdc0d019229096eab63b1ee9458d9cdbb41788e5b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "CM-MR"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9a3ec2f567b1f8f86a6cc8889f86e6baebb9fa3f6c9807666af98f372870ca9c",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "6d2df0b46f469f1c4a382d4229e00e85c873b79099b4fb3e013bdccad8ca5ae8",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "52b458a10e9045f6fd6b83edf3341a670889ff6f4fec0f0b65f456be69756720",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "48223b7f60776540520f5bfcef68f1850c197991d2a5ac1bbd3d4ddbc1a53037",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "eed31f2f88a5d66b578f1370d0f1529933f79f8cf6f574ce442b0c2cd82de907",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "46d5dc347bf256c257f6f64408810a40df72cc61a6f9ce6431368445e7d3b826",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "37cf4f3056281aa5851964c7ad5521ee282beb7e35ad9bc5f07a64e5d8decaf0",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "2be600e55ad9d93d19e36ef7571da83ad9ec14c1e26d3d8f7489d2d5e68bf263",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "2ffaa116b1f2f14f10e282f62306f349bd81dc323a086b4bbd790bb10f1eb79a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "b86d7740654c263b5f584c8970b1744436dc14ef0d514564d02d85a96a8f953c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "7937106e00bf0fbb94df1b3b08d8d42a4099ac6e766ec59bf08111c49defc532",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "0cb88ab2d28d83b7dd6c5784ec1648e4c0018ac56c51b8cccce79f5ccb07f4dc",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e3ee4632890e2cae9ca1d4dd199628cfb54f2e9c74910b32d1c996a9a2fceff5",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "a0288aafa174f97ec2aaafdad392ac08ccc6fa2e37a9af9409cb6fcc8ddbf451",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9910f1f9e3fb7cab611012176ead97369a7365d288c52957c291ba97b388e4e0",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "c2c25477c9474416a3b56858997c4fc0cbe39a35b4b10bffee718982fdbb5b72",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "CM-HDR"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "fbe0647df41e1376c5ee71d453e5580f078b6358df3b3f27dc2ce3e15883d36c",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "89f44432c0a256290492a120290b32f2a337bca91bcb674b6846302d10e26ffe",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "59f495fa5c1a3119663dfde6dd3cc2d9d8d81c2a0ee847a6a1584ac59f5cac7f",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "c65a008672ab2e1de5b28165d319e3f31be384f0e76b1aec6a797255a8708594",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "27f409ebe12dea8ceca861665c5a1e07eba2d0b575b41d0e04be76a5daa4bb0e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "11e44a6ca515948c85483eeecbd5cfde8126705d8e447c859343b81b04610487",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "eccf02ad3827c815446100a0c41ed27636bddd9e47699445bb944651491bf77a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L111-L113",
+  "old_fingerprint": "d77965488eeae4523cac8fe2bdb4224c7c7e206f0ad178ffd824ef239d42c9bc",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L299-L302",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "1405d324d07aaf725ab7a52785771523d9962c5a5bd80e6872e9e5009663119f",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L111,L117-L118",
+  "old_fingerprint": "6ed25ab940dde2a81e5fd2dd95fcb482a06368e941cde2d2f09b562afa8b9730",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L299-L300,L308-L309",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "94f8a8e67e9e72f3d13ff4a868fd058a8850d80105a96b9bddfa581fe87e3891",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L119-L120",
+  "old_fingerprint": "3f59f404112953104c133af87fdfeefee37eba7b49fee17abd0218d20b8fa1f9",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L312-L314",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9ca2817da1b546c398359750ceede47c2f04d29dbd2af8b153d40d197e68a62f",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L119,L123",
+  "old_fingerprint": "8ad3020e9ac87cb7c877a0889388c8eccd260958622e8be3480fa0f26f17df6b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L312-L313,L318",
+  "when_key": "",
+  "zone": "CM-CS"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a54353625b70201cfe05ef303ca327df58fc1b61b70b8762d120ab59423bba06",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "15a76a273e91d9f9ad9e00787992c88beec5b51de20d5991691a78350b050a4c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d4132f5fc0f48d422dab0b680d8e590e5c5c5201a76ebf22e6db6d64edaa3399",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "76ae58fd325514e039e817c4ce4d823e41036ce05a6d58efbab377a3e38d453a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "7c18b20f4c72a313243f093e5ce02dc9d86aa3bb2383f0749813080785785335",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "a0158e9c9aa7814e99ea4c5b6d3a81580ec79c6208c0976a38dae95c9a6d0940",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "53694f589a1eedbff2e13f42f491bdf7f822c58bf32b87253c89ccfad1d69c9d",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "283b39b13964bc14ec7bf9f5940125dc791fa8de7f84f1f77b4680d15779a664",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "dcd03b9f17610550f3ceae532ac7e6f0ee118fb997eb6d8e9427e40f03166885",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "9b4c037db92331473f6f304bd5983201887261931ab1e807030dc209bc80147c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "45fcf1b7a30642fcef69ebc593aae971bb08068f0095e2c9eddd761d4e360e27",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "f8267157f8f71020228a287286c52fbe4cfad8f7d8ab96f4f54f87eb8cad7628",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "3e525119ac939d4ca5f5a1e58a46a80adb2924e798d3d6e07ff0217858415557",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "73e0dc7d6f1efe0534cd5684a97dad1b59689501d02b3667ead93cbc8509addd",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "de43a0d10d6efc7adbceb11c30537efc5281f3483f90fdc8c69b2736fc589d83",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "c3ead2ea4145b533cc01bf62ef4685d918665cc1d94ccde2814e172360edecd6",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "NS"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "707819941106dd3f4554e14b330e29854bf105d4b1497cf0582a27e797d1ac3a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "d8f4f17d5b5458683f8f4ef8f35cf850a2117707247608d982233e612413e16c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "CS"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "de3d8195bc4b77067030566e7c030833137272989fd4692887dc0df096b2270e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "96bfea0729af75604eb5aa07c2d98c66644ace853303e86f30e7de2c6a2e428a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b7e880620f12d83551bd293764f94161496dd2ecd63670788543b646153c366b",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "4ad83b5d3a83d2fd13feb4d43af39e675d499911e3dfcda199a1907ba597f30f",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "90044104cabbfa26a90843d6cc64a98d038a0412ee762c453bf7374798d4e4b3",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "6f854e9a989916dd293dca08f948dce7f2fa59a437a4262bc882a4cd285b8e12",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "258280b6ecddb2f5a5d2fb81ec1e9a40fdef28750a294bd2a2cab56e56a18996",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "2ab2dc994ea9d19989dfcd88f4051c4472edd87a3e6a595d5272f91537035a68",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e081de3c5ba30e5c144ab5bcd1fefc522d6876f097823bec5fddd8388cac4456",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "61305f7bd8965c311a635eb16282365413229f12107f2fb53b572c94f297a3e9",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "2f4542ef0a7d59358fd90beb91cbcb94e2cecc64e364014875cf443c2ae3f902",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "f39852c95b0d965a194a96f915ca51692b46534dbc697c7c93f7aaf08f59c292",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d8e141039018e632a06aa7423c720c88749dcd833a05bc3a5c08b31937b77b74",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "4956242ed1c201c3cdf7e2850b66af1608f09b0d2519bfddcc78d71b2812d6bf",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "CS"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "13c3b024de4879360eba11c06c31969ee3eb6c082e7ff5ccdde66cc685f69e20",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "b364be609c68c733cfa6f030a69b050b40dd58b2756b2bfca7ad25286e037062",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "CC"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "b4e2d7ae044fcb7e6c7ab0873617baf1bd20ac3ed06f1f7669f789ca1428efa8",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "e4842ef84cd18c66d34a07ba5b00a1df2b163bc23a7dced8db800bf5051cb50a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "6f43f1b0d5ce17e83a2df7d073395d3a3c35bf490358c448939bddc116db134f",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "94924e8944a1efa9c414fafdbf55def220b5aca17269a6dab105705e9b188612",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "60c070b48b379aa77062769c984ccbf0d1bbb6079814d1489ddc33f51cbde930",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "054411f0a6bebc6e7868b4ddb80c9f0983d08fd2bc8b2af8588a3aa15b9a9eb0",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e98094b63b87911a71383c8df4e8f3a09d33f8f938df3bed6e46648c219dc262",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "0c78c739a703d8613f6745106da2b7860f05b14316c018b4dfe09d118e1cb143",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "86214e4ac2c07486a39e96a5b59f03349c08a0ce01ca443cc34e091b5e6bd022",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "309ffc7140943d5260d3009efd787dcd022f5056ac803009753a6ee1b0f0ef40",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c8c2c4c462230048a10bb431a29d30384bb5ecb430c970d6c9356827a22be152",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "d13e030e822afb71d0418aedbc82b7fdd80963368840247a56814ee218edec2b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "fc202d05ddf08d091a06a5c8bda23bb0c0b90dff05e0f96522af24675218e174",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "8f8db66419c57c5e866adacf5de9bc94ead2ea20dfe523fbf0d84a3e5a7ea64c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "1f00ea292147b9523e37f6d4aba8836f33c04236dffd6bcd3788f6b9bb464df2",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "f8e21fdf2fc68971724d8ee2fbb393c1ded594e5083444d131fe316048c08e54",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "GC"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d046cdfc09df6945731beb49693b7538e30de3348633e301098d3ff0bec14a2c",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "a22e6ddf89dad191f8cfcdebf1ffe41a5169fbf54518539ca6ac713893dae7c0",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5d5ea5d15b262c81409cb285d028204c154b0b692704bc9f9e68e56b724709d4",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "6ef916296ef82e19ece622884cf451a9d319287aff0889242998325bf821ce50",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "50f0797bfd6ca3ee316d966430c08ffce804a03be948efaf409b7d4f5e7a2da1",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "17b3e9939f64882ec573ea93c5c0e017eb880e4cf1511e6e13cc50b5ff590c15",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "9c0970428f856056849fb6f1e4559e688851fc683a464d3aa95c872db23dcb79",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "65df51b387466c20fab556bc762ba11e9220169904f8cc2a1ebcd05e4d157bcb",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "da011c8887a3c4fa0b8ebb4768f0672876acaaceb51de8be7b9906172ccbd922",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "8f5beb3935a5cc64ce04dda7d897a1b2e764c60c96bcd3cfc4ebf2ae69eb0887",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4cfc07696e02646282a823efec8db69d6ed24fd4cbf1e2a7d25f07bfe33cf06e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "eb5d1b1a111d938964b795666d3b99e52da10c12fd3b1e211cd260f5b0d7663b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "2f9a011c8f6d66f0252aac1f8be635dc673d1cdd5f7b04fcce6de8bc25399c2e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "c7e344ee38bbb797304c7ae943264e41519bef57cfcb98f848f9f67a9e59dba2",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "81daf21427e9614784715c54746a3ab91f70a872e2b78b4845add36406584d3d",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "4b94fc7bba7d1f55591758c457e2c647c7c96a628610d66ceaae4406f8cc0fdb",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "RC-E"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "ffb5c1d0d55aae87671a0e6eff809711b6ff937317bb7697328253bdc9abde8a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "2bfa18973853d1761d7fc2d56018bd4434f8e333f8bbdb11dce7c2768ad04a5e",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a0bd5f0ec5644b823b23208d3aaef4d6d5d1bb7dfb4420091400e952d460ae86",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "4cf61b53490eb16edfe37b6a573eaf4f12d11e71313835eb48ba24ee5b91cc87",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "333d64281fd4d519826ae6f9ca3f8c009966f7d2ab5f9d3ca0f82c057f011043",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "273a1db897ae08b8d91024b2b6978e0165fbb53836ce10361778f58f26d56294",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "0bc45a06301377b1b0eb8fc9d9d043fe1ab62069496b729df816e4e4976206ab",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "9fab0521681a5fd198f05ad80f402c484fb22b24edc0dd138c8f225f15f34230",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c37e7bc86317bb054272d4e9bb4a9cdc903fe43699ca9c172cef1b25c8c31386",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "01f09ff13525b1d98e92e969bcef57e9a95206a0766349a9c2e0eb06c8aa74b2",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "350cbfaa97f2287e7f91082ed10436b7f5db7ebd88774093a5bd0e286d42f813",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "8a736d066ff0ce3e84776d53c86e79fa6adfcee4dca934d2325bd82fb5606eea",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "993eadb01bb556aa38cba663b9564db515c0802bdbb58c948d31264913966f51",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "69729673c54a708c68ef3454b74f0cabfdc04523a5d328720d72a0ba250f7cdc",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "ffcb68683e51a182d13850da8868e3495a14d7670366765a4c263e2e4c9bdb1c",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "73fa760a2426fe6c72e6df14fdf89611de14d5a5fbad878a2c2ae9569efb3291",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "RC-E"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "1ac8c8c3ea64cd27ba8bbc1392d4b2ccc3d8d4fd791401763a6be0a74234c59a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "9f96e15e1ffbcbd36dd24406792d93054005d89077c8e4ac06fd2d9171e138cd",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "501c2484fac4c1a7b063cf332c01874412dc3ff29fe8c6a7547538d48bd2bd16",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "62231de1bf0f8480d0a62cc4ebc1f9b4fd593e240af92ce972a90cff2e6de297",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f52a8b2d63cb4733f1272e4b0896a40be965e1a5f0a0b61668ef32046e38f429",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "4905c5f1fd243e057b1873100f7fb8edf83fe8ec9e35d31c5ccec43b068fee9d",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "26165ce65f8a6fb411c81eea169e2765a2c0a283420c6d480e8ee9cce64add00",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "b2acbff69d3a87ff3b3f3dd74cd6d7194bba4d449e95b309fafde3508204ec48",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "105ddf76016d11c650dcb912f18ba9b5b772feddf91875d7cd56eb3fdc91e112",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "26d2a6c18a64972c23deba7fe808dc0808bdf3fb5b302738266068dd3bd3107d",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "117fc78a6d771445682772c626ba4ab79d8c3503c914674a4a3a839507825d80",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "1b02302bcb3b4e8c6dc692502571bdadf6a66f5a41f8b003f188cc8725c5ebaf",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "c53c30d87ed23d67ddf17d2d95c1381ecfe0810a821024ffa0661b91e411e6dd",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "a191179674511818ae724abd8150e5784711a49faac85f6c855519d85e4a7a9a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "70b1ae94b9bf1b13b6df41ccc583cf00648ca0b84fc76fdb1e2a89247ea1dabe",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "61fe09b605f2721cadc88a8d1d45fb11d096b1ee4a22edbbb7532cb67a44e44b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a73425b8216f95af5c7e6bc02d3501c833013bd63b060cc26dae76da8eb2e444",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "b15b13f6a5ea9cf67fe2e34ea86652883fd38cf6099283fe82be8ea627141a9a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "TC-MU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "0ba7f2c5c174e71fe8ad88cb56c39fe6a0a2da24c3eb8d9e991a801d49ecbef2",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "aa0918f790457dfa196e9d3716da106823b554a95ccdbc6fdea4cb8becb96c88",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "8dfd057d3585c0be2b257363682eab1671e1ee1cced6f230a5787313ece60baf",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "f457140854998ed5a083436a2051e2be6a37761881fdd3bcbe9a10908cc41f01",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "12c3cdca8ca59f2528e944eb2980b0e0cdf49df86117546c81e863709a43f6cf",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "e59705d82843b1602f20f7b941630fd8fcdae1b2ac1b155573c6938bf5c6afe8",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "e86661409bec0fa2d619c61acae36a02e4f066334c771602f6ad73916ebc1b4e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "8fc1ca28821a4700a2f8cbfc1b199a996d08879323a92fdf99a4f047317e054f",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f2a7c8943ca30b101125183c21e0278a85b9494581311a2987b64ae0a7a8c590",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "74f4bad019ec4e1342e46447f3ebd776204561e2231e114a4e8798490694f1fe",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "bb2a2f8b529dd021abb68aefe39ce4a143350e1ed451508d8eac263ebae8006a",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "ce0e33face28256572a84759d74aaf51d2fc8bc59a3a96c357e855e1ad73455b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d03a91151d23953e9997bbba84d8a67b72ed93c831afd82ae1722e888a35a04e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "79d2280570fecea783d64979752b3ec10b4e9f8bfe207ba4e23a8a5e53fefc63",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "243c5f212a00dbb648486e79976185bc191ca9ae1da7551eba54b0fa266a727f",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "d2a5e42abfc8ca8d1ab70279b83cda4340fff8132cde079fb80b38094f69471b",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d4d0debc64b6cfe08e0d7f1bd41abd0f7081dae86445e7f340781455e2a606bf",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "9ad90f66e52b514da5165b656a912d187877dc15a4fcd87ca344dd4b7f1cd38c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "TC-HDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "65d87d33675c6ac61a22322576231db773e5121526d8c03a7518781bf6232daf",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "0c05757f7a1cd04fed4dc9b9bfeaaae3283a9378cc52e2c7a3834dae8d9dfda5",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "639bf327147fe9ece9b2942166da78b29b37248847af720d119dcdd3de140ba9",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "42ac2f5022932170aab7aa6c8b65de34aaa433630441f367925595379540b67c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "f2073fa290c1d4265d1e26bddd65def7bed6de2cfe2f322a2884196054dce922",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "6f6916d96f396b3a5a303e28aa2e9aa4670b4988611295a827156f1f36332912",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "d65c672805808ae3bdf753cd69988cc54f023e783199392567a16f8ad11fbc66",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "f5fd7685138de996e2b031ae58f650b9a1afc9de90d65380e0fb4340d086847a",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5d437c46837a739f8599161b1250a51afae3c7e2bf0ccc2b6a04d53910f52957",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "5f38d31819d697217ff7ffedfa9a9bc957196f2ba6ba0b8eafff45aa1adff754",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "dc1e5f8dfd9550427d18950e11f14c35c8b889773a9b317a77a35646eadba7cd",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "6b3c4d5eca07b56a7e19ce5af6405d49ccc341a2fab8cc873cd697e5ace8f48f",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "28ddcf989be26eb847c173c118742d3ca84473d72113c11515524f0c8cb93486",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "68156fb22535d8e731ac810aa29875d2b93032263c54c4689a4e4d76bf9cd7b9",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "cab781d16341f2ccc80a0ddc122c20d880c2d010fcd379add2a8b796743fb9f2",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "89ed5c63d789037c3b8eea3c56d5083924dff2e140c757c3b579918bcafe67bc",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "2cc1bb6791e3aa5d9d595d4e7cf94145882b445c18302624d306fe4185b05e77",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "da4ac8192bd69c32fea5412e581142097e19a0243bff2821022c44107c242885",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "SC-MU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "90fbd81b8feab475cef0a37fda3fc49f73d6373a54e930e0a2bdc82db7afa2fb",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "3f1d5b3249e0f231d33c9a50b197f82689283dbc11a9bce14f0bbba2c5917ec5",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a9b2932333c499294cfecb4867fbdaa8c7c2a8f66dc5f348c530585f0d4eb4b9",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "71615ffd389457ba5b84139475842b7f96d229d6b12598a7f96cc3bf13e58012",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5a47e25a60309f5511c18bda1a57c1f41d24412e5e9d99367518b054815f621e",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "a4070a8e12df3c35dbb641727792cf15dee5f76bf6c63c4601a734d033f4a8f8",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4dd61caa7766f469e29c0e891aa3203f89b6d71db8774735f59e672bafce5bfe",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "47727ad9e55b8c9819b1a85254ba085359f482ee98b59be321400b8756f1e405",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "478cd55f2d1f662278501c951fa29bc0928b0be66033706387f75a431dc42a7b",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "36e4aef507f2f35baf7e7f596569d52ee50a25f4e78bcdf41c93a3186fc32fcd",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5923eb5f0497c9ef792779c04f1672bb644c19c54e6842a74b150c38b77d2d37",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "b6e84985c3e1c18cae6c5e50be9b182ee5430c71858b3d40579e74c0ad835e0d",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "2eaed0abf655e059736734f2d5e024baef652fac362e02a0333bdeb2c8fee85d",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "3e72a1d7d8a85027d31a427b1860786bdef0547b2268ced81e61a7181982c9b8",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "a552fb746f844b0695e2495bebc4a70ba3060fa2ed348ad1e3d048505e5abf20",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "3fd719787cb8ac642c5e248cadb162d7fa1e34a6a1cf3f79cea73055432f2acc",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "cc5910fc73ed0601e2d117b6d056c381e84f2012fa9d847ceea61a3c5ca0acd7",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "93cba7dfb045df5aec6bc4fb9c459abcb8a51fad53a23015f997def330d55f1c",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "SC-HDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "96e95addb1e0bd836bfbacf79d45d43340c77fc7e39a952722cafa9611ea2a34",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L132-L135",
+  "old_fingerprint": "c6c0f01be1d45004d8ae0deef41fc4665a5199af764df71a27274fbb877966e0",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333",
+  "when_key": "abuts_residential_zone",
+  "zone": "SC-S"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "3aa1e3269baced625684bff054665eae46e3760dcdff3efdb3766a5476833d4d",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L1,L89-L94",
+  "old_fingerprint": "ff1466b645263c3071c4eae53d781e77b2014b7b3d698b6ec4fb6a26ad7976dd",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "491607e9728fb750ade1dcdc11044b029090e978111060ff61340b65a6c33499",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L115",
+  "old_fingerprint": "3f55cb5ae8f55a55c90c3340965c5f5770d042ddc1cf638b250c1a43a838ee23",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L671",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "3d339ff014a71010571cf844065b56aa179cea524aae6a75515227e8137afd6b",
+  "new_quote": "or/washington/beaverton/60.05/60.05.20.txt#L1,L114-L119",
+  "old_fingerprint": "f43d8ab33f6694cf1b63da8e843dff1cd0402fe855d1a691ca60a4d16ac485ce",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L498,L669-L676",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "21d3a7aa8b08171ef4000d48329451fb299b9ee7aac72ea56881473deff55ebd",
+  "new_quote": "or/washington/beaverton/60.05/60.05.25.txt#L1,L3-L4,L10-L13",
+  "old_fingerprint": "f47bc45b37432d2a2e606ef0f4df601d5a4382bc3bd7e3b87aaeaac08f078122",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "55955133cdda41aeca0025b1f859649dc3442c2b41cfe66d6fd4348ef0875f75",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L98",
+  "old_fingerprint": "d2e0c3b38adc6ddfba559b1905129d8f0dafa5e3bed8522866980fc797070e39",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "building_frontage_other_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "1a2c625c518c9e839449b2bd97a1b9c714250dbbaad5ef1a1f9b9eb62bed5655",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L89-L92,L99-L100",
+  "old_fingerprint": "a5a04544db03c3ebf794a9e2bab7550391178ec44eb9bd3367e9d7048f1ddb4f",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "building_frontage_less_drive",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "4e94bbbf23034235ba8dfd32016a2f70679cd6bd472065da686594f7d38afc43",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102-L103",
+  "old_fingerprint": "6c6fe7fc4cb3034ba538c086157d9b7fe8c1347beaa89ac50b65a50e3a1eb697",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288",
+  "when_key": "",
+  "zone": "SC-S"
+ },
+ {
+  "field": "building_frontage_plaza_pct",
+  "layer": "or/washington/beaverton",
+  "new_fingerprint": "5d668bc27fc38b0be628e923ca421187e499001d8908504f65a5fcc996c32952",
+  "new_quote": "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106",
+  "old_fingerprint": "def1955481dc13d796f301acbb93d3aae233764e409c141cb3c0b4da3cdef3c4",
+  "old_quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292",
+  "when_key": "",
+  "zone": "SC-S"
+ }
+]

@@ -1,0 +1,88 @@
+12.01.200  Zoning Map.
+A. The location and boundaries of the zones designated in subsection B, below, are hereby established as shown on the map entitled "City of Hillsboro Zoning Map" hereafter referred to as the "Zoning Map."
+Copies of the Zoning Map showing all amendments shall be maintained by the Community Development and Information Services Departments.
+B. For the purposes of this Code, the City is divided into zones identified as shown in Table 12.01.200-1.
+The term "standard zones" includes all zones with an R, MR, C or I prefix as well as all zones with ID in the abbreviation; the term "light rail zones" includes all zones with a SC prefix; the term "mixed-use zones" includes all zones with an MU prefix; and the term "urban center zones" includes all zones with a UC prefix.
+The term "conservation zone" refers to the subset of light rail zones with the word "conservation" in the title (SCR-DNC or SCR-OTC).
+The term "middle housing zone" refers to a zone in which residential dwellings are the primary use and single detached dwellings are permitted, and which implements a residential Comprehensive Plan Map designation in accordance with OAR 660-046-0020.
+"Middle housing zones" are identified in Table 12.01.200-1.
+Table 12.01.200-1: Zones
+Abbreviation Zone Classification Zone Type
+R-10 R-10 Residential Standard; Middle housing
+R-8.5 R-8.5 Residential Standard; Middle housing
+R-7 R-7 Residential Standard; Middle housing
+R-6 R-6 Residential Standard; Middle housing
+R-4.5 R-4.5 Residential Standard; Middle housing
+SCR-LD SCR-LD Station Community Residential -
+Low Density
+Light rail; Middle housing
+SCR-OTC SCR-OTC Station Community
+Residential - Orenco Townsite
+Conservation
+Light rail; Conservation; Middle housing
+SCR-DNC SCR-DNC Station Community
+Residential - Downtown Neighborhood
+Conservation
+Light rail; Conservation; Middle housing
+MR-1 MR-1 Multi-Dwelling Residential Standard; Middle housing
+MR-2 MR-2 Multi-Dwelling Residential Standard
+MR-3 MR-3 Multi-Dwelling Residential Standard
+SCR-MD SCR-MD Station Community Residential
+- Medium Density
+Light rail; Middle housing
+Table 12.01.200-1: Zones
+Abbreviation Zone Classification Zone Type
+SCR-HD SCR-HD Station Community Residential -
+High Density
+Light rail
+C-N C-N Commercial - Neighborhood Standard
+C-G C-G Commercial - General Standard
+SCC-DT SCC-DT Station Community Commercial
+- Downtown
+Light rail
+SCC-SC SCC-SC Station Community Commercial
+- Station Commercial
+Light rail
+SCC-MM SCC-MM Station Community Commercial
+- Multi-Modal
+Light rail
+MU-N MU-N Mixed-Use - Neighborhood Mixed-use; Middle housing
+MU-C MU-C Mixed-Use - Commercial Mixed-use
+MU-VTC MU-VTC Mixed-Use - Village Town
+Center
+Mixed-use; Middle housing
+SCR-V SCR-V Station Community Residential -
+Village
+Light rail; Middle housing
+UC-RM Urban Center - Residential Medium
+Density
+Urban center
+UC-MU Urban Center - Mixed-Use Urban Density Urban center
+UC-AC Urban Center - Activity Center Urban center
+UC-NC Urban Center - Neighborhood Center Urban center
+UC-OR Urban Center - Office/Research Urban center
+UC-RP Urban Center - Research Park Urban center
+I-G I-G Industrial - General Standard
+I-P I-P Industrial Park Standard
+I-S I-S Industrial Sanctuary Standard
+SCBP SCBP Station Community Business Park Light rail
+SCI SCI Station Community Industrial Light rail
+SSID SSID Shute Road Special Industrial
+District
+Standard
+Table 12.01.200-1: Zones
+Abbreviation Zone Classification Zone Type
+HSID HSID Helvetia Special Industrial District Standard
+ESID ESID Evergreen Special Industrial District Standard
+SCFI SCFI Station Community Fair Complex
+Institutional
+Light rail
+C. Zone Boundaries and Interpretation.
+The Director shall resolve any dispute over the exact location of a zone boundary.
+In interpreting the location of a zone boundary, the Director shall rely on the Comprehensive Plan Land Use map and the following guidelines:
+1. Unless otherwise specified, zone boundaries are lot lines, the center line of streets, highways, alleys or railroad rights-of-way, or such lines extended.
+Where a zone boundary divides a lot between 2 zones, the entire lot shall be placed in the zone that accounts for the greater area of the lot by the adjustment of the boundaries, provided the boundary adjustment is a distance of less than 20 feet.
+2. Zone boundaries indicated as approximately following the centerline of streams, rivers or other bodies of water shall be construed to follow such centerline.
+3. Where a zone change references a specific property description, that description shall establish the zone boundary.
+Where 2 or more property descriptions establish conflicting boundaries, the most recent description shall govern.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6112 § 1, 2015; Ord. 6110 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

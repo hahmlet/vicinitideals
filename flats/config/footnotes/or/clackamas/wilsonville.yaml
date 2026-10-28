@@ -42,7 +42,7 @@ notes:
   # Note 2 is welded to its own first word -- "2No additional off-street
   # parking" -- and read as the tail of note 1 until the census learned the
   # shape. One ruling used to cover both sentences; there are two now.
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L5290"
+  - quote: "or/clackamas/wilsonville/4/4.125.txt#L377"
     digest: "e947bb3a9564"
     state: dismissed
     reason: >-
@@ -51,7 +51,7 @@ notes:
       holds, and the values the block's region reaches are setbacks and lot
       dimensions read from Sections 4.113, 4.122 and 4.123, printed pages
       earlier under different tables
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L5291"
+  - quote: "or/clackamas/wilsonville/4/4.125.txt#L378"
     digest: "5631c7a4ff61"
     state: dismissed
     reason: >-
@@ -75,7 +75,7 @@ notes:
   # and comes from 4.127(.02)B.1.a.ii -- "quadplexes are not permitted". A
   # note about how a master plan meets a minimum cannot permit a use the zone
   # prohibits.
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6807"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L250"
     digest: "ae0097e7a0bb"
     state: dismissed
     reason: >-
@@ -83,7 +83,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6826"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L257"
     digest: "9b9181572c4f"
     state: dismissed
     reason: >-
@@ -91,7 +91,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6829"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L259"
     digest: "4e2786600854"
     state: dismissed
     reason: >-
@@ -99,7 +99,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6831"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L260"
     digest: "5c3b5b22af37"
     state: dismissed
     reason: >-
@@ -107,7 +107,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6833"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L261"
     digest: "9d4e6599b39f"
     state: dismissed
     reason: >-
@@ -115,7 +115,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6835"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L262"
     digest: "4730b020d36c"
     state: dismissed
     reason: >-
@@ -123,7 +123,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6839"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L263"
     digest: "77a5a639f6bc"
     state: dismissed
     reason: >-
@@ -131,7 +131,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6854"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L267"
     digest: "f5c49ec693a0"
     state: dismissed
     reason: >-
@@ -139,7 +139,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6867"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L271"
     digest: "2c3e918c8cd0"
     state: dismissed
     reason: >-
@@ -147,7 +147,7 @@ notes:
       unit mix; nothing in its notes permits a use, and the value they govern
       is a prohibition stated in 4.127(.02)B.1.a.ii
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L6871"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L272"
     digest: "8e88f1aab514"
     state: dismissed
     reason: >-
@@ -159,7 +159,7 @@ notes:
   #
   # Ruled one at a time. This is the table the whole zone is read from, and
   # the notes are where most of what it says about a townhouse lives.
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7238"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L494"
     digest: "fa55835adb9f"
     state: dismissed
     reason: >-
@@ -169,7 +169,7 @@ notes:
       enforces, so declining the relief can only call a lot too small -- never
       buildable when it is not
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7243"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L495"
     digest: "7bc9e14efc98"
     state: encoded
     encoded_as: "min_lot_sqft variant, when [unit_lots], 1,500 sq ft"
@@ -177,7 +177,7 @@ notes:
       note B states the townhouse minimum lot size for all sub-districts, and
       it is the number the split-plat path is screened against
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7244"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L496"
     digest: "a71324764e2a"
     state: dismissed
     reason: >-
@@ -187,14 +187,14 @@ notes:
       besides. If the sub-district a lot sits in becomes knowable, this note
       is an encoding rather than a dismissal
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7245"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L497"
     digest: "e69c1262c142"
     state: dismissed
     reason: >-
       note D states the minimum lot size for a triplex, which is not the
       housing type this screen places
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7246"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L498-L499"
     digest: "01663669556d"
     state: dismissed
     reason: >-
@@ -202,7 +202,7 @@ notes:
       are built, and exempts cottage clusters outright. Both loosen a ceiling
       this screen enforces, and the pod is one building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7248"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L500"
     digest: "9c897ef423ce"
     state: dismissed
     reason: >-
@@ -210,7 +210,7 @@ notes:
       relaxes the setback for a projection the pod does not have, and the
       envelope is screened against the unrelaxed number
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7249"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L501"
     digest: "a5381e9cff3c"
     state: encoded
     encoded_as: "setback_garage_entrance_ft variant, when [abuts_alley], 18 ft"
@@ -218,7 +218,7 @@ notes:
       note G sets the garage setback from an alley at 18 feet so a parking
       apron fits, which is the same 18 the table's own alley column prints
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7251"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L503"
     digest: "84c9cfab8151"
     state: dismissed
     reason: >-
@@ -227,7 +227,7 @@ notes:
       the zone. A relief on a ceiling nobody is testing against changes no
       answer
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L504"
     digest: "9f937f4da067"
     state: encoded
     encoded_as: "min_lot_width_ft and min_frontage_ft variants, when [unit_lots], 20 ft"
@@ -237,7 +237,7 @@ notes:
       it out as lot width and street frontage together, so the 20 ft is
       carried into both fields
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7254"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L505-L506"
     digest: "bef8175d7056"
     state: dismissed
     reason: >-
@@ -247,7 +247,7 @@ notes:
       condition is one this screen observes -- declining them costs a lot
       called too narrow, never a lot called buildable that is not
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7257"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L507-L508"
     digest: "950f8fbeb718"
     state: unmeasured
     fact: access_easement
@@ -257,7 +257,7 @@ notes:
       easement line sits inside the lot, so the envelope starts further in
       than the plat suggests and by a distance nothing here holds
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7259"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L509"
     digest: "d8f9534c7134"
     state: dismissed
     reason: >-
@@ -265,7 +265,7 @@ notes:
       accessory dwelling units, neither of which is the housing type this
       screen places
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7263"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L510"
     digest: "ef5b0c4618ba"
     state: encoded
     encoded_as: >-
@@ -279,7 +279,7 @@ notes:
       frontage half of the large-lot test -- 70 ft or wider -- is dropped, so
       the band fires on area alone, which is the stricter reading
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7266"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L511"
     digest: "c62c02dbe9c5"
     state: dismissed
     reason: >-
@@ -288,7 +288,7 @@ notes:
       this screen places and a measurement that only helps a lot meet the
       standard
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7269"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L512"
     digest: "53e21f616110"
     state: dismissed
     reason: >-
@@ -299,7 +299,7 @@ notes:
       unit its own apron would fail it, and would have to be caught where the
       plan is drawn
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7271"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L513"
     digest: "8be9bb18ea5b"
     state: unmeasured
     fact: sidewalk_easement
@@ -368,7 +368,7 @@ notes:
   # it is the same Urban Form Type question, because the maximum is 10 ft in
   # Type 1, 25 ft in Type 2 and none at all in Type 3.
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7425"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L585-L586"
     digest: "e189e647d3f2"
     state: dismissed
     reason: >-
@@ -381,7 +381,7 @@ notes:
       settled false and the Urban Form Type is not a thing this system can
       look up
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7427"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L588"
     digest: "46324fcfec77"
     state: dismissed
     reason: >-
@@ -393,7 +393,7 @@ notes:
       against a side yard the code does not ask for there. Declining it costs
       a lot called too narrow, never a lot called buildable that is not
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7428"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L589"
     digest: "202389e0afee"
     state: dismissed
     reason: >-
@@ -401,7 +401,7 @@ notes:
       maximum lot coverage standard. Neither is the housing type this screen
       places, and an exemption is a relief besides
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7429"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L590"
     digest: "6896378388dc"
     state: dismissed
     reason: >-
@@ -413,7 +413,7 @@ notes:
       already tests the parent footprint, so the note describes what is
       already done rather than changing it
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7431"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L591"
     digest: "630c2a9fdd6c"
     state: dismissed
     reason: >-
@@ -427,7 +427,7 @@ notes:
       cannot hold, since it is a maximum and a minimum at once and it depends
       on a site plan rather than on the lot
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7436"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L595"
     digest: "f4708818c45c"
     state: dismissed
     reason: >-
@@ -438,7 +438,7 @@ notes:
       the building rather than of the lot. The pod is 56 ft or 80 ft wide
       depending on the catalog entry, so it would land in either branch
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7439"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L596"
     digest: "e1c3133f21f9"
     state: dismissed
     reason: >-
@@ -449,7 +449,7 @@ notes:
       here for the alternative to be an alternative to, and the note is a
       relief in any case
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7450"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L601"
     digest: "fed2bdf91340"
     state: dismissed
     reason: >-
@@ -457,7 +457,7 @@ notes:
       accessory dwelling units, neither of which is the housing type this
       screen places
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7451"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L602"
     digest: "d7759dc62c12"
     state: dismissed
     reason: >-
@@ -469,7 +469,7 @@ notes:
       attached dwelling units on a single lot by 4.001(251), so the row it
       names is not this one
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7490"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L631"
     digest: "0d79d69dbc77"
     state: dismissed
     reason: >-
@@ -479,7 +479,7 @@ notes:
       already carried on setback_garage_entrance_ft. Nothing here to encode,
       and nothing lost
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7492"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L632"
     digest: "63d7765cfe13"
     state: dismissed
     reason: >-
@@ -491,7 +491,7 @@ notes:
       application. The 6 ft it modifies is not encoded either, being a Type 1
       figure
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7496"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L635"
     digest: "b8e593b3ad0f"
     state: dismissed
     reason: >-
@@ -500,7 +500,7 @@ notes:
       whole of it. It relieves a maximum, and this layer holds no maximum
       setback for RN to relieve
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7499"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L636"
     digest: "3472b812871b"
     state: dismissed
     reason: >-
@@ -510,7 +510,7 @@ notes:
       maximum against a minimum that would otherwise be unsatisfiable, and it
       relieves the maximum. Neither figure is encoded for RN
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L7502"
+  - quote: "or/clackamas/wilsonville/4/4.127.txt#L638"
     digest: "e7443396d4ac"
     state: dismissed
     reason: >-
@@ -552,7 +552,7 @@ notes:
   # with no detached housing in it -- these eight reopen again, and this time
   # the dimensions are in 4.132(.06) and (.07) waiting to be read.
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8677"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L191-L192"
     digest: "9ab685488fe9"
     state: dismissed
     reason: >-
@@ -561,7 +561,7 @@ notes:
       realm standard about what goes in the right of way, not a standard on
       the lot; and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8680"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L193"
     digest: "335b4fab39a2"
     state: dismissed
     reason: >-
@@ -569,7 +569,7 @@ notes:
       parklet occupies on-street parking spaces, which are not the off-street
       stalls this screen fits; and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8740"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L242-L243"
     digest: "6e789cafee3d"
     state: dismissed
     reason: >-
@@ -579,7 +579,7 @@ notes:
       non-question: the standards apply in full to exactly what this screen
       places. What it does not do is create a use. the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8742"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L244"
     digest: "01cdc76bc62e"
     state: dismissed
     reason: >-
@@ -590,7 +590,7 @@ notes:
       dimensions and setback_front_max_ft exists to hold one, so this is
       dismissed on the use and not on the dimension: the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8747"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L248-L249"
     digest: "4c5ef80a9aad"
     state: dismissed
     reason: >-
@@ -598,7 +598,7 @@ notes:
       false fronts. It polices a design dodge around the two-storey minimum
       rather than stating a dimension, and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8749"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L250"
     digest: "3119d5e4524b"
     state: dismissed
     reason: >-
@@ -608,7 +608,7 @@ notes:
       does not need it. It was flagged to be read again the day TC was
       encoded; it has been, and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8754"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L251"
     digest: "a1c54d894de5"
     state: dismissed
     reason: >-
@@ -618,7 +618,7 @@ notes:
       under a two-storey minimum would put the roof above this pod's 26 feet.
       It relieves rather than binds, and in any case the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L8755"
+  - quote: "or/clackamas/wilsonville/4/4.132.txt#L252-L253"
     digest: "8bc467ec570b"
     state: dismissed
     reason: >-
@@ -645,7 +645,7 @@ notes:
   # BICYCLE MINIMUMS -- and 4.154(F) refers to minimum parking requirements
   # only in the past tense.
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L13562"
+  - quote: "or/clackamas/wilsonville/4/4.155.txt#L294"
     digest: "7676a5b173e7"
     state: dismissed
     reason: >-
@@ -654,8 +654,8 @@ notes:
       square feet, two orders of magnitude under the trigger, and the standard
       is a ratio between two areas rather than a stall count
 
-  - quote: "or/clackamas/wilsonville/4.planning.txt#L13564"
-    digest: "3424da09f59e"
+  - quote: "or/clackamas/wilsonville/4/4.155.txt#L295"
+    digest: "807e6272db7d"
     state: dismissed
     reason: >-
       note 2 exempts tuck-under, underground and structured parking from the

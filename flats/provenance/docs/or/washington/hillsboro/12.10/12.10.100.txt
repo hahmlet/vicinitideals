@@ -1,0 +1,7 @@
+12.10.100  Residential Use Categories.
+Residential use categories include the following sections:
+12.10.110 Household Living
+12.10.120 Group Living
+12.10.130 Residential Services
+12.10.140 Residential Business
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)

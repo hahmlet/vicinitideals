@@ -1,0 +1,92 @@
+Section 4.803.  Development Review Standards.
+All WCF shall comply with the following Development Review standards, unless exempted under State or Federal law:
+(.01) The following development standards are applicable to all WCF and SWF applications:
+A. Maximum Number of High Visibility Facilities Per Lot or Parcel.
+No more than one high visibility WCF is allowed on any one lot or parcel of five acres or less.
+The Development Review Board may approve exceeding the maximum number of high visibility WCF per lot or parcel if one of the following findings is made through a Class III review process: (1) co-location of additional high visibility WCF is consistent with neighborhood character, (2) the provider has shown that denial of an application for additional high visibility WCF would prohibit or have the effect of prohibiting service because the WCF would fill a significant gap in coverage and no alternative locations
+are available and technologically feasible, or (3) the provider has shown that denial of an application for additional high visibility WCF would unreasonably discriminate among providers of functionally equivalent services.
+In such cases, the Development Review Board shall be the review authority for all related applications.
+B. Height. The height of WCF is regulated as follows:
+1. The tower or pole height of a freestanding WCF in R, PDR and FDA-H zones shall not exceed 50 feet, except the following:
+a. FDA-H zoned property occupied by the City Wastewater Treatment Plant and the PDR zoned property occupied by the Elligsen Road Water Reservoir shall be exempted from the height limitations of the subject zones.
+b. Small Wireless Facilities in the public right-of-way.
+SWF in the public right-of-way shall not exceed the height permitted under WC 4.801(.02)H.
+2. In all other zones, towers or poles shall not exceed the height limits provided for in the Development Code without compelling justification.
+Costs and cost efficiency are not compelling justifications.
+C. WCF Adjacent to Residentially Designated Property.
+In order to ensure public safety, all WCF located adjacent to any property designated as residential in Wilsonville shall be set back from all residential property lines by a distance at least equal to the maximum height of the facility including any antennas or other appurtenances attached thereto.
+The setback shall be measured from that part of the WCF that is closest to the neighboring residentially designated property.
+D. Accessory Building Size.
+Within the public right-of-way, no above-ground accessory buildings shall be permitted.
+Outside of the public right-of-way, all accessory buildings and structures permitted to contain equipment accessory to a WCF shall not exceed 12 feet in height unless a greater height is necessary and required by a condition of approval to maximize architectural integration.
+Each accessory building or structure is limited to 200 square feet, unless approved through a Conditional Use Permit.
+E. Utility Vaults and Equipment Pedestals.
+Within the public right-of-way, utility vaults and equipment pedestals associated with WCF must be underground to the maximum extent possible.
+F . Visual Impact.
+All WCF shall be designed to minimize the visual impact to the maximum extent possible by means of placement, screening, landscaping, and camouflage.
+All WCF shall also be designed to be compatible with existing architectural elements, building materials, and other site characteristics.
+All WCF shall be sited in such a manner as to cause the least detriment to the viewshed from other properties.
+The use of radomes and/or other camouflage techniques acceptable to the City to conceal antennas, associated equipment and wiring, and antenna supports is required.
+G. Color Schemes.
+For the sake of visual impact, no wooden poles are allowed except Small Wireless Facilities on existing poles with high voltage power lines that would require thermal hydraulic cooling if undergrounded.
+Color schemes must be approved by the City to best camouflage with the surrounding landscape.
+H. Antennas. Façade­mounted antennas shall be architecturally integrated into the building design and otherwise made as unobtrusive as possible.
+As appropriate, antennas shall be located entirely within an existing or newly created architectural feature so as to be completely screened from view.
+Façade­mounted antennas shall not extend more than two feet out from the building face.
+Roof-mounted antennas shall be constructed at the minimum height possible to serve the operator's service area and shall be set back as far from the building edge as possible or otherwise screened to minimize visibility from the public right-of-way and adjacent properties.
+I. Noise. Noise from any equipment supporting the WCF shall meet the requirements of City Code Section 6.204—Noise.
+J. Signage. No signs, striping, graphics, or other attention-getting devices are permitted on any WCF except for warning and safety signage with a surface area of no more than three square feet.
+Except as required by law, all signs are prohibited on WCF except for one non-illuminated sign, not to exceed two square feet, which shall be provided at the main entrance to the WCF , stating the owner's name, the wireless operator(s) if different from the owner, and address and a contact name and phone number for emergency purposes.
+WCF may be placed entirely behind existing street or building signs as one method of camouflage.
+K. Traffic Obstruction.
+Maintenance vehicles servicing facilities located in the public right-of-way shall not park on the traveled way or in a manner that obstructs traffic.
+No maintenance vehicle parking shall be permitted in red curb zones, handicap zones, or loading zones.
+L. Reserved.
+M. Sidewalks and Pathways.
+Cabinets and other equipment shall not impair pedestrian use of sidewalks or other pedestrian paths or bikeways on public or private land and shall be screened from view.
+Cabinets shall be undergrounded, to the maximum extent possible.
+N. Lighting. WCF shall not include any beacon lights or strobe lights, unless required by the Federal Aviation Administration (FAA) or other applicable authority.
+If beacon lights or strobe lights are required, the Development Review Board shall review the available alternatives and approve the design with the least visual impact.
+All other site lighting for security and maintenance purposes shall be shielded and directed downward, and shall comply with the City's outdoor lighting standards in City Code Section 4.199, unless otherwise required under Federal law.
+O. Paint and Finish.
+Towers, poles, antennas, and associated equipment shall either maintain a galvanized steel finish or be painted a non-reflective, neutral color, as approved by the Planning Director or Development Review Board, to minimize visibility.
+Attached communication facilities shall be painted so as to be identical to or compatible with the existing structure.
+Towers more than 200 feet in height shall be painted in accordance with the Oregon State Aeronautics Division and Federal Aviation Administration rules.
+Applicants shall attempt to seek a waiver of OSAD and
+FAA marking requirements.
+When a waiver is granted, towers shall be painted and/or camouflaged in accordance with subsection (.01), above.
+All ancillary facilities shall be colored or surfaced so as to blend the facilities with the surrounding natural and built environment.
+P . Use of Concealments.
+Concealments are customized structures engineered to cover cell towers, antennas, DAS equipment and beautify them and make them either less visible or more pleasing to have in the landscape.
+Applicant shall present a proposal for concealment intended to meet the foregoing goal.
+Q. Public Works Standards.
+Additional applicable construction and design standards are as set forth in the City's 2015 Public Works Standards.
+R. Compliance With All Laws.
+Every WCF shall comply with all local, state, and federal laws, codes, and regulations including without limitation to the Americans with Disabilities Act, 42 U.S.C. § 12101 et seq.
+T. Security Fencing.
+WCF or towers shall be enclosed by decay-resistant security fencing not less than six feet in height and shall be equipped with an appropriate anti-climbing device.
+Fencing shall be compatible with other nearby fencing.
+Such requirements may be waived for attached WCF .
+U. Landscaping. Landscaping shall be placed around the outside perimeter of the security fencing and shall consist of fast growing vegetation that can be expected to reach a minimum height of six feet and form a continuous hedge within two years of planting.
+Drought tolerant landscaping materials shall be required and otherwise meet the landscaping standards of City Code Section 4.176.
+Trees and shrubs in the vicinity of guy wires shall be of a kind that would not exceed 20 feet in height and would not affect the stability of the guys should they be uprooted.
+Landscaping shall be compatible with other nearby landscaping.
+V . Conflict with Right-of-Way.
+No WCF shall be located within a planned or existing public right-of-way, unless it is specifically designed for the purpose in a way that will not impede pedestrian, bicycle, or vehicular traffic and the installation of any sidewalk or path that is a planned future improvement.
+W . Change to Approved WCF.
+Any change to or expansion of a WCF that will in any way change the physical appearance of the WCF will require a new application.
+(.02) Additional development standards applicable to new Macro WCF:
+A. Site Size.
+The site on which a transmission tower/pole is located shall be of a sufficient shape and size to provide all required setbacks as specified in this Code Section.
+Towers or poles only as permitted herein may be located on sites containing other principal uses in the same buildable area as long as all of the other general requirements of this Code Section are met.
+B. Separation and Setbacks.
+1. WCF shall be set back from any other property line by a distance at least equal to the maximum height of the facility including any antennas or other appurte-
+nances attached thereto unless this requirement is specifically waived by the
+Planning Director or the Development Review Board for purposes of mitigating visual impacts or improving compatibility with other uses on the property.
+2. A guyed tower located on sites containing other principal uses must maintain a minimum distance between the tower and other principal uses of the greater of
+100 percent breakpoint or 25 feet, unless this requirement is specifically waived by the Planning Director or Development Review Board for purposes of mitigating visual impacts or improving compatibility with other uses on the property.
+3. WCF mounted on rooftops or City-approved alternative tower structures shall be exempt from these minimum separation requirements.
+However, WCF and related equipment may be required to be set back from the edge of the roof line in order to minimize their visual impact on surrounding properties and must be screened.
+4. WCF towers and poles are prohibited in the required front yard, back yard, or side yard setback of any lot in any zone, and no portion of any antenna array shall extend beyond the property lines.
+For guyed towers or poles, all guy anchors shall be located outside of the setback from all abutting properties.
+(Ord. No. 831, 1-24-2019; Ord. No. 882, § 2(Exh. A), 10-2-2023; Ord. No. 899, § 2(Exh. A), 8-4-2025)

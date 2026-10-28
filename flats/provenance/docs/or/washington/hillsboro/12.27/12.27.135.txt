@@ -1,0 +1,126 @@
+12.27.135  Standards for specific development types.*
+A. Topographic Alterations.
+1. Topographic Alterations are permitted within the RFO with approval of a FA I. In addition to the general standards in Section 12.27.130, the following requirements apply:
+a. Must be located outside of the floodway and not involve alteration of a watercourse;
+b. No more than 30% of the total site area within the RFO (prior to the alteration) is altered;
+c. Fills are balanced by corresponding cuts to retain the onsite storage capacity of the floodplain;
+d. Cuts and fills are not more than 5 feet deep or are commensurate with the surrounding topography;
+e. No alterations are made below the lowest current elevation on the site;
+f. New slopes created by the alteration that will be below the site's Base Flood Elevation are either:
+i. No greater than 20%, or
+ii. Certified to remain permanently stable under a variety of hydraulic flow conditions in a stamped geotechnical report;
+g. All impacted areas which are not covered by structure or impervious surface are stabilized from erosion with vegetation or other means;
+h. All activity is conducted to avoid disturbing areas adjacent to the alteration.
+If disturbed, adjacent areas shall be restored to their natural state;
+i. All alteration activity is completed consistent with the Design and Construction Standards and any required grading and erosion control permits;
+j. A registered professional engineer has certified that the alteration will not increase the elevation of the base flood.
+2. All other topographic alterations require a FA II and are subject to the following standards:
+a. A registered professional engineer has certified that the alteration will not increase the elevation of the base flood or a CLOMR has been approved by FEMA per Table
+12.27.115-1.
+b. Any alteration within the floodway or to a watercourse shall meet any additional LOMA requirements in Table 12.27.115-1.
+In addition,
+i. The City shall notify Washington County, DLCD, the Corps, CWS, DSL, and any adjacent jurisdictions prior to any alteration of watercourses within the
+City and shall submit evidence of such notification to the Federal Insurance
+Administration.
+*Editor’s note—Ord. No. 6500, § 1(Exh. A), adopted June 17, 2025, repealed the former § 12.27.135, and enacted a new § 12.27.135 as set out herein.
+The former § 12.27.135 pertained to major uses and activities permitted with type III approval and derived from Ord. 6401 § 1, adopted 2022; Ord. 6276 § 1, adopted 2018; Ord. 6192 § 1, adopted 2016; Ord. 6120 § 1, adopted 2015.
+ii. An alteration to watercourses within the floodplain shall be designed and maintained so that flood-carrying capacity is not diminished.
+B. New construction including new structures, additions to existing structures and conversion of existing structures used for parking, access or storage to usable floor space.
+In addition to the general standards in Section 12.27.130, the following requirements apply:
+1. Flood Openings.
+a. All new construction and substantial improvements with fully enclosed areas below the lowest floor (excluding basements) are subject to the following requirements.
+Enclosed areas below the Base Flood Elevation, including crawl spaces, shall:
+i. Be designed to automatically equalize hydrostatic flood forces on walls by allowing for the entry and exit of floodwaters;
+ii. Be solely used for parking, storage, or building access;
+iii. Be certified by a registered professional engineer or architect or meet all of the following minimum criteria:
+1. A minimum of two openings;
+2. The total net area of non-engineered openings shall be not less than one square inch for each square foot of enclosed area where the enclosed area is measured on the exterior of the enclosed walls;
+3. The bottom of all openings shall be no higher than one foot above grade;
+4. Openings may be equipped with screens, louvers, valves or other coverings or devices provided that they shall allow the automatic flow of floodwater into and out of the enclosed areas and shall be accounted for in the determination of the net open area; and
+5. All additional higher standards for flood openings in the State of Oregon
+Residential Specialty Codes Section R322.2.2 shall be complied with when applicable.
+2. Below-grade crawlspaces.
+a. Below-grade crawlspaces are permitted and shall meet the following standards:
+i. Crawlspaces under the structure shall comply with FEMA and Federal Insurance and Mitigation Administration guidelines as found in FEMA Technical
+Bulletin 11-01, Crawlspace Construction for Buildings Located in Special
+Flood Hazard Areas;
+ii. Crawlspace construction is not allowed in areas with base flood velocities greater than 5 feet per second unless the design is reviewed and stamped by a qualified design professional such as a registered architect or professional engineer.
+iii. Flood openings are required per CDC Section 12.27.135.A.1.
+iv. Portions of the building below the BFE shall be constructed with materials and techniques resistant to flood damage.
+v. Joists and insulation shall be above BFE.
+vi. Any building utility systems within the crawlspace shall be elevated above
+BFE or designed so that floodwaters cannot enter or accumulate within the system components during base flood conditions.
+In particular, ductwork shall either be placed above the BFE or sealed from floodwaters.
+vii. The interior grade of a crawlspace below the BFE shall not be more than 2 feet below the lowest adjacent exterior grade.
+viii. Any building utility systems within the crawlspace shall be elevated above BFE or designed so that floodwaters cannot enter or accumulate within the system components during base flood conditions.
+In particular, ductwork shall either be placed above the BFE or sealed from floodwaters.
+ix. The interior grade of a crawlspace below the BFE shall not be more than 2 feet below the lowest adjacent exterior grade.
+x. The height of the below-grade crawlspace, measured from the interior grade of the crawlspace to the underside of the floor framing, shall not exceed 4 feet at any point.
+xi. The crawlspace complies with FEMA Technical Bulletin 11-01, Crawlspace
+Construction for Buildings Located in Special Flood Hazard Areas.
+3. Residential Construction.
+a. Residential construction is permitted within the RFO outside of the floodway with the approval of a FA II permit.
+In addition to the general development standards in
+Section 12.27.130, the following requirements apply:
+i. All new construction and substantial improvements shall be constructed with materials and utility equipment resistant to flood damage and using methods and practices that minimize flood damage.
+ii. All new construction, conversion to residential and substantial improvements of any residential structure shall have the lowest floor, including basement, elevated to at least one foot above the Base Flood Elevation.
+iii. Attached garages may be constructed with the garage floor slab below the
+Base Flood Elevation if only used for parking, access and/or storage and the floors are at or above grade on at least one side.
+iv. Any topographic alterations needed to facilitate construction shall meet the standards of 12.27.135.A.
+v. A registered professional civil engineer has certified that the placement of the structure will not reduce the site's capacity to carry the base flood, nor cause any increase in the base flood level;
+vi. FEMA Elevation Certificates are required to be filed with the Floodplain
+Administrator three times due to the importance of verifying elevations before, during, and after construction: (1) prior to issuance of a building permit; (2) upon placement of the lowest floor, including any basement, and prior to
+further vertical construction; and (3) prior to issuance of a certificate of occupancy or approval of final inspections.
+Each FEMA Elevation Certificate shall be prepared and sealed by a professional land surveyor.
+4. Non-Residential Construction.
+a. Non-Residential construction is permitted within the RFO outside of the floodway with the approval of a FA II permit.
+In addition to the general development standards in Section 12.27.130, the following requirements apply:
+i. The lowest floor including the basement must be located at least one foot above the Base Flood Elevation, or
+ii. The structure and all associated utility systems must be floodproofed to one foot above the base flood elevation.
+iii. A registered professional civil engineer has certified that the placement of the structure will not reduce the site's capacity to carry the base flood, nor cause any increase in the base flood level;
+iv. FEMA Floodproofing Certificates are required to be filed with the Floodplain Administrator three times due to the importance of verifying floodproofing elevations before, during and after construction: (1) prior to issuance of a building permit; (2) upon placement of the lowest floor, including any basement, and prior to further vertical construction; and (3) prior to issuance of a certificate of occupancy or approval of final inspections.
+Each FEMA Floodproofing Certificate shall be prepared and sealed by a professional land surveyor.
+v. Applicants floodproofing non-residential buildings shall be notified that flood insurance premiums will be based on rates that are one (1) foot below the floodproofed level (e.g. a building floodproofed to the base flood level will be rated as one (1) foot below.
+C. Alteration or renovation of an existing structure.
+In addition to the general standards in Section 12.27.130, the following requirements apply to all alterations or renovations of existing structures.
+1. Alteration or renovation of an existing structure which meets all of the following standards requires a FA I.
+a. The alteration or renovation is not a substantial improvement.
+b. Any additions to the structure must meet the standards of Section 12.27.135.
+2. All other alterations which are considered substantial improvements require a FA II permit and must meet the standards of Section 12.27.135.
+D. Reconstruction or repair of a damaged existing structure.
+1. Reconstruction or repair of a damaged existing structure which meets the following standards requires a FA I.
+a. The structure has not been substantially damaged.
+2. All other reconstruction or repair which is a result of substantial damage requires a FA II and must meet the standards of Section 12.27.135.
+E. Accessory Structures (for parking, access, and/or storage).
+Accessory structures are permitted within the RFO with the approval of a FA I. In addition to the general development standards in
+Section 12.27.130, the following requirements apply:
+1. The accessory structure must be located outside of the floodway;
+2. The accessory structure is used for parking, access and/or storage only and shall not be used for human habitation;
+3. The portions of the accessory structure located below the Base Flood Elevation shall be built using flood resistant materials;
+4. The accessory structure must be designed to equalize hydrostatic forces on exterior walls and comply with the requirements for flood openings in Section 12.27.135A.1.
+5. Accessory structures shall not be used to store toxic materials, oil, gasoline or any priority persistent pollutant identified by the Oregon Department of Environmental Quality unless confined in a tank installed in compliance with Section 12.27.130.4.C.
+6. Electrical, mechanical and other utilities shall be elevated above the base flood elevation or floodproofed to prevent water from entering or accumulating within the components during a flooding event.
+F. Placement of Manufactured Dwellings.
+Manufactured dwellings are permitted in the RFO with the approval of a FA II.
+In addition to the general standards in Section 12.27.130, the following requirements apply:
+1. The dwelling must be located outside of the floodway.
+2. The bottom of the longitudinal chassis frame beam shall be at least one foot above the Base Flood Elevation.
+3. If the dwelling is elevated using solid foundation walls, the walls shall be constructed with flood openings as required by Section 12.27.135.A.
+4. Manufactured dwellings shall be anchored to prevent flotation, collapse and lateral movement during the base flood.
+Anchoring methods may include but are not limited to use of over-the-top or frame ties to ground anchors (Reference FEMA's "Manufactured Home Installation in Flood Hazard Areas" guidebook for additional techniques;
+5. Electrical crossover connections shall be a minimum of 12 inches above the Base Flood Elevation.
+G. Storage of Material or Equipment.
+Storage of material or equipment is permitted in the RFO with the approval of a FA I. In addition to the general standards in Section 12.27.130, the following requirements apply:
+1. The material or equipment must be anchored to prevent flotation.
+H. Infrastructure construction including underground and above ground utilities, public and private streets, light rail transit tracks, associated bridges, crossings, bikeways and footpaths.
+Infrastructure construction is permitted in the RFO with the approval of a FA I. In addition to the general standards in Section 12.27.130, the following requirements apply:
+1. A registered professional civil engineer has certified that the infrastructure construction will not increase the elevation of the base flood; and a no-rise analysis prepared and stamped by a registered professional civil engineer may be required;
+2. Construction of public streets, light rail transit tracks and associated bridges and crossings which implement the adopted Transportation System Plan shall have travel surfaces elevated 1 foot or more above the elevation of the Base Flood;
+3. Construction of public or private streets not implementing the Transportation System Plan may be constructed at existing grade.
+I. Surface Parking.
+Surface Parking is permitted with the approval of a FA I. In addition to the general standards in Section 12.27.130, the following requirements apply:
+1. The parking must be located outside of the floodway;
+2. The parking must be constructed at existing grade or meet the requirements for topographic alterations in Section 12.27.130.
+J. Water-dependent uses.
+Water-dependent uses not covered by other sections of this code (i.e. infrastructure) are permitted with the approval of a FA I. Water-dependent uses must meet the general standards in Section 12.27.130.
+(Ord. No. 6500, § 1(Exh. A), 6-17-2025)

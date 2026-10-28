@@ -1,0 +1,85 @@
+12.61.300  Standards Applicable to All Zones.
+A. Exception to Minimum and Maximum Residential Densities for Multiple-Dwelling Development.
+Minimum and maximum residential densities established for the base zone shall apply.
+Where multiple-dwelling infill development includes an existing residence, residential densities shall be calculated as follows:
+1. Minimum and maximum residential densities for the parent parcel shall be calculated by applying the base zone density standards to the undeveloped portion of the lot only as described in paragraph 2 below;
+2. The undeveloped portion of the property excludes the portion of the lot surrounding the retained house, including minimum required side and rear yard setbacks from the structure; and
+3. The existing residence shall be included in the overall density calculation as a single dwelling unit.
+B. Alley Dedication and Improvement Requirements.
+The system of existing and previously vacated alleys in the Downtown Plan District is shown in Figure 12.61.300-A. Unless exempted under paragraphs 4 or 5 below, new developments in the Downtown Plan District shall use alleys for vehicular access wherever practicable to provide secondary access to block interiors, thereby encouraging preservation of traditional downtown streetscapes.
+1. The Review Authority shall condition approval of developments in the Downtown Plan District adjacent to any existing or vacated alleys shown on Figure 12.61.300-A to provide for future alley dedications or easements as shown in Table 12.61.300-1.
+Table 12.61.300-1:
+Alley Dedication or Easement Requirements
+Property Location in Relation to
+Existing or Vacated Alley Dedication or Easement Requirement
+Corner property at intersection of alley and street
+Dedicate or rededicate sufficient to complete 20-foot ultimate right-of-way width
+Interior property on alley; alley open at both ends (extends full depth of block)
+Dedicate or rededicate sufficient to complete 20-foot ultimate right-of-way width
+Interior property on alley; alley open at 1 end only (does not extend full depth of block)
+Dedicate or rededicate sufficient to complete 20-foot ultimate right-of-way width
+Interior property on alley; previous vacations have closed both ends (does not extend full depth of block)
+Provide permanent easement to city sufficient to complete 20-foot ultimate right-of-way width
+
+2. Unless exempt under paragraph 4 below, the Review Authority shall also condition approval of developments in the Downtown Plan District adjacent to any existing or vacated alleys shown on Figure 12.61.300-A to construct improvements to the widths specified in Table 12.61.300-2 below.
+The improvements shall be constructed to Public Works Design and Construction Standards in any alley right-of-way adjacent to the site where the full 20-foot ultimate right-of-way width is available.
+Accessory structures and accessory dwelling units are exempt from the requirement to construct improvements to existing or vacated alleys unless the alley is proposed for vehicular access.
+Figure 12.61.300-A:
+Downtown Plan District Alley System
+Table 12.61.300-2:
+Alley Improvement Requirements
+Property Location in
+Relation to Existing or Vacated Alley
+Ultimate 20-Foot
+Alley R-O-W
+Available?
+Required Improvement
+Corner property at intersection of alley and street
+Yes
+16-foot paved surface with drainage to
+PW D&C standards across full lot frontage
+No
+No improvement required; development conditioned to provide payment of fee in lieu of construction
+Interior property on alley; alley open at both ends (extends full depth of block)
+Yes
+16-foot paved surface with drainage to
+PW D&C standards across full lot frontage; interim gravel improvement to nearest street
+No
+No improvement required; development conditioned to provide payment of fee in lieu of construction
+Interior property on alley; alley open at 1 end only (does not extend full depth of block)
+Yes
+16-foot paved surface with drainage to
+PW D&C standards across full lot frontage; interim gravel improvement to nearest street
+No
+No improvement required; development conditioned to provide payment of fee in lieu of construction
+Interior property on alley; previous vacations have closed both ends (does not extend full depth of block)
+Yes
+No improvement required; development conditioned to provide payment of fee in lieu of construction
+No
+No improvement required; development conditioned to provide payment of fee in lieu of construction
+3. Plans for the gravel improvements required under Table 12.61.300-2 above shall be subject to review and approval by the City Engineer.
+At a minimum, the interim gravel improvement shall include storm drainage, a gravel surface sufficient to accommodate emergency vehicles, and street lighting at the intersections of the alley and the street.
+4. The Review Authority may approve an application for development approval adjacent to an existing or vacated alley, which does not include alley dedication and construction under paragraphs 1 through 3 above, only if the applicant can demonstrate that alley
+construction is not feasible.
+Economic hardship does not meet this requirement.
+If the Review Authority accepts the demonstration, the development must comply with all other applicable standards.
+C. Sidewalks. On the street frontages shown on Figure 12.61.300-B, the Review Authority shall condition development approvals on construction of sidewalk improvements, either 12 feet minimum width, with street trees in wells (no planter strip); or 8 feet minimum width, with a 4-foot minimum width planter strip, on the street.
+On street frontage not specified on Figure 12.61.300-B, sidewalk improvements shall be constructed at a 5 feet minimum width, with a 4-foot minimum width planter strip.
+All sidewalk construction shall meet Public Works Design and Construction (PW D&C) Standards.
+Figure 12.61.300-B:
+Downtown Plan District Sidewalk Requirements
+D. Street Trees.
+1. Trees from the PW D&C Standards approved street tree list shall be required with all new development.
+In areas with planter strips, street trees shall be planted consistent with the PW D&C Standards.
+In areas with 12-foot sidewalks, street trees shall be planted within wells with a minimum planting area of 16 square feet and metal grates.
+Street trees shall be planted in compliance with PW D&C Standards except as provided under paragraph 2 below.
+2. Street tree spacing may be varied with the approval of the City Engineer and the Director where new development meets the site criteria listed below:
+a. The site is in the SCC-DT zone, and has frontage on an existing street which is striped for parallel parking;
+b. Buildings along the street are uniformly built with zero setback from the sidewalk; and
+c. The streetscape includes ornamental streetlights supplemented with additional decorations (hanging baskets, banners, holiday and festival lighting, etc., maintained on a year-round basis).
+3. On streets meeting the criteria in paragraph 2 above, street trees may be spaced according to the following standards:
+a. One tree every 44 feet or corresponding to the dividing line between every-other parking space; or
+b. At greater or lesser intervals which would not obscure or interfere with the visibility of traffic signals or pre-existing marquees or projecting signs, provided the adjustment in spacing is the least necessary to avoid visual obstruction; or
+c. At a greater or lesser intervals to coordinate with ornamental streetlights on the same block face.
+Regardless of spacing adjustments, provision shall be made for at least 2 trees, evenly spaced between every pair of streetlights on the same block face, and, where possible 1 street tree between each intersection and the streetlight nearest to the intersection.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

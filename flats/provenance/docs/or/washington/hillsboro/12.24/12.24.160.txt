@@ -1,0 +1,93 @@
+12.24.160  Development Standards.
+Base zone development standards in the MU-N zone are listed in Table 12.24.160-1.
+Certain standards are illustrated in Figure 12.24.160-A.
+Table 12.24.160-1:
+Development Standards in the MU-N Zone
+Standard Requirement Clarifications
+Minimum Lot Size
+• Single detached dwelling or duplex
+
+% Lots fronting local or
+Collector streets 4,000 sq. ft.
+
+%
+Lots fronting Arterial streets 1,800 sq. ft.
+• Triplex 5,000 sq. ft.
+• Quadplex or Cottage Cluster 7,000 sq. ft.
+• Townhouse 1,500 sq. ft. (average)
+• Multiple dwelling structure None
+• Non-residential structure None
+Table 12.24.160-1:
+Development Standards in the MU-N Zone
+Standard Requirement Clarifications
+Maximum Lot Size None
+Minimum Residential Density
+• Residential buildings on lots fronting local or Collector streets
+8 du/na
+On corner lots at the intersection of local/Collector streets and Arterial streets, minimum residential density is 8 du/na.
+• Residential buildings on lots fronting Arterial streets 12 du/na
+• Mixed-use buildings on or above the second floor None
+Maximum Residential Density
+• Residential buildings on lots fronting local or Collector streets
+11 du/na
+On corner lots at the intersection of local/Collector streets and Arterial streets, maximum residential density is 11 du/na.
+
+Maximum density does not apply to duplexes, triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+• Residential buildings on lots fronting Arterial streets 24 du/na
+• Mixed-use buildings on or above the second floor 24 du/na
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions*
+• Width (at front building plane) 18 feet
+• Depth None
+• Lot frontage 18 feet
+Exception to lot frontage provided for child lots/parcels in middle housing land divisions under Section 12.80.099.
+Minimum Setbacks*
+Minimum setbacks subordinate to public utility easements and ORSC or OSSC requirements as applicable.
+• Front Yard
+
+% to residential structure 10 feet
+
+% to garage door 19 feet
+
+% to commercial or mixed-use structure None
+Table 12.24.160-1:
+Development Standards in the MU-N Zone
+Standard Requirement Clarifications
+• Side Yard
+5 feet; additional required if adjacent to single detached and middle housing zone
+Side yard setbacks on the common wall shall be waived for townhouses permitted under
+Table 12.24.120-1.
+See also Section 12.50.140 regarding setbacks and building height transitions.
+• Rear Yard
+
+% to residential structure with front yard garage access
+10 feet
+
+% to residential structure with rear yard garage access
+Either 5 feet or less, or
+19 feet or more
+5-foot or 19-foot setback measured to garage door.
+
+%
+Rear Yard (commercial or
+Mixed-Use) 5 feet See also Section 12.50.140 regarding setbacks and building height transitions.
+Maximum Setbacks*
+Maximum setbacks subordinate to public utility easements and ORSC or OSSC requirements as applicable.
+• Front Yard 20 feet
+• Side Yard None
+• Rear Yard None
+Minimum Building Height* None
+Maximum Building Height* 45 feet
+See Section 12.50.140 regarding setbacks and building height transitions.
+Maximum height for cottage clusters is in Subsection 12.50.715.E.4.
+Maximum Lot Coverage (primary building(s) only) 12,000 gsf
+Does not apply to cottage cluster lots.
+Lot coverage for townhouses is calculated based on the overall townhouse project, rather than each townhouse lot.
+Minimum Usable Open Space
+(applicable to residential development only)
+100 sq. ft./du See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.24.160-A
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

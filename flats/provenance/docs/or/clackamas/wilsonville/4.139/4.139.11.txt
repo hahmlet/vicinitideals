@@ -1,0 +1,15 @@
+Section 4.139.11. Special Provisions.
+(.01) Reduced front, rear and side yard setback.
+Applications on properties containing the SROZ may reduce the front, rear and side yard setback for developments or additions to protect the significant resource, as approved by the Development Review Board.
+(.02) Density Transfer .For residential development proposals on lands zoned Planned Development Residential (PDR) which contain land within the SROZ, a transfer of density shall be permitted within the Stage I Master Plan area.
+Density can only be transferred to land outside the SROZ and within the Stage I Master Plan area.
+The formula in A. through B. below shall be used to calculate the density that may be transferred.
+A. Step 1.
+Calculate Expected Maximum Density . The Expected Maximum Density (EMD) is calculated by multiplying the gross acreage of the Stage I Master Plan area within the SROZ but outside any BP A easements by the maximum density for the Zoning Designation as shown in Table 1 of Section 4.124.
+B. Step 2.
+Reduce the EMD obtained in Step 1 by 50 percent and then round down to the nearest whole number.
+This is the density (number of units) able to be transferred from the SROZ area to elsewhere in the Stage I Master Plan area provided applicable standards for the zone are still met including, but not limited to, allowed uses, setbacks, standards for outdoor living area, landscaping, building height and parking.
+(.03) Alteration of constructed drainageways.
+Alteration of constructed drainageways may be allowed provided that such alterations do not adversely impact stream flows, flood storage capacity and in stream water quality and provide more efficient use of the land as well as provide improved habitat value through mitigation, enhancement and/or restoration.
+Such alterations must be evaluated through an SRIR and approved by the City Engineer and Development Review Board.
+(Ord. No. 841, 6-4-2020)

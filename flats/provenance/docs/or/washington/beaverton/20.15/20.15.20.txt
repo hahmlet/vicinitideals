@@ -1,0 +1,151 @@
+20.15.20. Land Uses
+
+The following Land Uses are Permitted (P), allowed with a Conditional Use (C) approval, or Prohibited (N) as identified in the following table for the Employment and Industrial Zoning Districts.
+[ORD 4584; June 2012]
+
+Table 20.15.20.A Employment/Industrial
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Numbers Refer to Footnote
+# Category Specific Use OI OI-NC IND
+1.A. Commercial Animal Care, Major1 N N C
+1.B. Commercial Animal Care, Minor1 P N P
+2.A. Commercial Hospitals1 P N C
+2.B. Commercial Medical Clinics1 P P24 C
+2.C. Commercial Child Care Centers1 P P P
+3.A. Commercial Parking as the Principal Use - Structures P N C
+3.B. Commercial Parking as the Principal Use - Surface N N C
+4.A. Commercial Retail and Service Business - Eating and Drinking
+Establishments
+P2 P24 C2
+4.B. Commercial Retail and Service Business - Equipment and Supply Sales4 P N P5 4.C.
+Commercial Retail and Service Business - Equipment Rental Agencies6 C N C
+4.D. Commercial Retail and Service Business - Freestanding Retail or Service
+Business up to and Including 5,000 sq. ft.7
+P P24 N
+4.E. Commercial Retail and Service Business - Freestanding or Combination of
+Retail or Service Business of More than 5,000 but Less than
+30,000 sq. ft.7
+C P24 N
+4.F. Commercial Retail and Service Business - Professional Services P P24 C
+4.G. Commercial Retail and Service Business - Wholesale or Retail Lumber,
+Building, and or Landscaping Materials Yard
+P N P
+4.H. Commercial Retail and Service Business - Wholesale Marijuana Sales P N P
+4.I. Commercial Retail and Service Business - Marijuana Dispensaries N N N
+4.J. Commercial Retail and Service Business - Retail Marijuana Sales N N N
+5.A. Commercial Cold Storage Plants1 N N P
+5.B. Commercial Self Storage Facilities1 N N C
+5.C. Commercial Storage or Sale Yard1, 8 N P24 P
+5.D. Commercial Storage Yard for Building Materials1 N N P
+6. Commercial Temporary Living Quarters C N N
+7.A. Commercial Auto, Truck and Trailer Rental1 N N C
+7.B. Commercial Automotive Service, Major1 N N P10
+7.C. Commercial Automotive Service, Minor1 N N P
+7.D. Commercial Bulk Fuel Dealerships1 N N P
+7.E. Commercial Heavy Equipment Sales1, 11 N N P
+7.F. Commercial Trailer, Recreational Vehicle or Boat Storage1 N P24 P
+7.G. Commercial Trailer Sales or Repair1 N N C
+7.H. Commercial Vehicle Storage Yards1 N N C
+# Category Specific Use OI OI-NC IND
+8. Commercial Food Cart Pods25 P N N
+9. Industrial Concrete Mixing and Asphalt Batch Plants N N C
+10. Industrial Fuel Oil Distributors N N P
+11. Industrial Heliport C C C
+12. Industrial Mail Order Houses, Wholesale or Retail, Exclusive of On-Site
+Sales to the Public1
+P P P
+13. Industrial Manufacturing, Fabricating, Assembly, Processing, Packing, and Storage1
+P12, 13 P P13
+14. Industrial Marijuana Processing P12 N P12
+15. Industrial Motor Freight Terminal N N C
+16. Industrial Operation Centers14 N N P
+17. Industrial Laboratory1 P12, 13 P P
+18. Industrial Salvage Yards, Recycling Centers and Solid Waste Transfer
+Stations1
+N N C
+19. Industrial Warehousing, Wholesale and Distributive Activities1 P12 P P
+20.A. Civic3 Commercial Schools1 C N N
+20.B. Civic3 Educational Institutions1 C N C
+20.C. Civic3 Job Training and Vocational Rehabilitation Services1 P N P
+21. Civic3 Public Buildings and Uses15 P N C
+22.A. Civic3 Railroad Tracks and Facilities - Freight16 P N P
+22.B. Civic3 Railroad Tracks and Facilities - Passenger P N P
+23.A. Civic3 Public Parks and Recreational Facilities1 P N P
+23.B. Civic3 Public Dog Parks and Dog Runs1 C N C
+23.C. Civic3 Private Recreational Facilities1, 17 P P P
+24.A. Civic3 Domestic Violence Shelters P P P
+24.B. Civic3 Emergency Shelters P20 P20 P20
+24.C. Civic3 Mass Shelters P P P
+25. Civic3 Transit Centers18 P P C
+26.A. Civic3 Utilities - Facilities Related to Utility Distribution, such as
+Substations, Water Towers, Pump Station, other than
+Transmission Lines or Power Plants
+C C C
+26.B. Civic3 Utilities - Transmission Lines P P P
+27. Civic3 Vehicle Camping26 P P P
+28. Civic3 Wireless Communications Facilities P P P
+29. Office Office1 P P P19
+30. Office Financial Institutions1 P P24 C
+31. Other Planned Unit Development C C C
+[ORD 4876; January 2026]
+Footnotes:
+1. Ancillary showrooms and retail area are Permitted if comprising not more than 10% of gross building floor area, and provided that no individual retail use exceeds 2,000 square feet of gross building floor area.
+Ancillary showrooms and retail area are Conditional if use is between 10% and 20% of gross building floor area and no individual retail business use exceeds 5,000 square feet of gross building floor area.
+2. Drive-through uses are Prohibited; walk-ups Permitted.
+3. Public Art shall be permitted pursuant to Section 60.50.25.13.
+[ORD 4782; April 2020]
+4. Industrial and professional equipment and supply stores, including incidental service and repair of the same.
+5. Includes incidental service and repair, but excludes retail sales of specific items on display.
+6. Exclusive of trucks, vehicles, or heavy equipment.
+7. No outdoor storage or sales of animals or livestock are allowed with this use.
+8. For contractor's equipment, house mover, delivery vehicles, trucking terminal, used equipment in operable condition, and transit storage.
+9. [Repealed ORD 4673; March 2016]
+10. Entirely within enclosed building.
+11. Including incidental service and repair.
+12. Laboratories, manufacturing, assembly, fabricating, processing, packing, storage, wholesale and distribution activities shall meet the following requirements:
+a. Activities are entirely enclosed within a building or structure whose appearance is compatible with normal industrial or office building design.
+b. Odors, noise, vibrations or other emissions are controlled within the confines of the building or structure.
+c. Are not for servicing or use by the general public.
+d. Do not entail outdoor storage of raw materials or finished products.
+e. Do not entail movement of heavy equipment on and off the site, except truck deliveries.
+f. Do not involve bringing live animals or the waste or by product of dead animals to the site.
+g. Do not involve outdoor testing of products or processes on the site.
+h. Do not involve highly combustible, explosive or hazardous materials or waste.
+i. Examples of uses which normally meet all of the above characteristics include but are not limited to: printing, publishing and allied arts, communications equipment, electronic components, measuring, analyzing and controlling instruments manufacturing.
+13. Any use having the primary function of storing, utilizing, testing, experimenting or manufacturing of explosive material is Prohibited.
+14. For public agencies and utility uses.
+If major and minor automotive services are provided, the following limitations shall apply:
+a. Fueling, repair, washing, and servicing of vehicles is limited to fleet vehicles parked on site for these uses established after August 23, 2007.
+[ORD 4584; June 2012]
+b. All automotive service activities with the exception of those described in Subsection c, below shall be undertaken in an enclosed building.
+c. The following automotive service activities are not required to be conducted within an enclosed building:
+d. Vehicle fueling from a fixed source;
+[ORD 4443; August 2007]
+1. Routine check of fluid level and tire pressure and replacement of minor equipment such as light bulbs and windshield wipers.
+Should such a check result in the need to replace fluids, e.g., oil, anti-freeze, the vehicle shall be moved into the enclosed building on site for this operation.
+2. Emergency repair of disabled vehicles, e.g., tire replacement.
+15. Excluding services offered on premises to individuals or the general public.
+16. Such as switching yards, spur or holding tracks and freight depots, but not within 200 feet of a residential zone.
+17. Privately owned facilities, such as fitness clubs, racquetball or handball clubs, tennis courts or swimming pools exclusive of spectator sports facilities.
+18. Stations and stops exclusive of terminals or transit storage areas.
+19. Unless the Office use is within a multi-story Office building only, or is ancillary to the primary use, Office is Permitted as principal use up to 15% of the total land area of a site.
+20. Emergency Shelters may occur where allowed pursuant to Section 10.70.10.
+[ORD 4838; March 2023]
+21. [Footnote repealed and reserved] [ORD 4804; August 2021]
+22. [Footnote repealed and reserved] [ORD 4804; August 2021]
+23. [Footnote repealed and reserved] [ORD 4804; August 2021]
+24. The use is permitted as an ancillary use to serve the employees and/or support the primary permitted use of the site.
+The ancillary use is intended to provide flexibility for and complement the operation of the primary use of the site.
+The ancillary use is not intended for the use by the general public.
+[ORD 4649; February 2015]
+25. Food Cart Pods, and their amenities as described in Section 60.11, are exempt from the Site Development Standards of 20.15.15 but are subject to the standards of 60.11 of the Development Code.
+[ORD 4662; September 2015] [ORD 4857; October 2024]
+26. Vehicle Camping may occur only where allowed through a program established by Council resolution and administered by the Mayor.
+The use is subject to the special requirements found in Section 60.50.25.14.
+[ORD 4779; March 2020]
+[ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4595, 02/08/2013; ORD 4648, 11/28/2014; ORD 4649, 02/13/2015; ORD 4659, 07/10/2015; ORD 4662, 09/11/2015; ORD 4673, 03/04/2016; ORD 4674, 02/10/2016; ORD 4702, 01/04/2017; ORD 4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4804, 08/13/2021; ORD 4811, 10/14/2021;
+ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 8/10/2026

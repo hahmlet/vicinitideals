@@ -1,0 +1,12 @@
+12.01.400  Figures, Calculations, and Measuring Distance.
+A. Figures. Figures are provided for terms, phrases or standards in order to provide an illustrative example.
+In this Code, figures are drawn to scale but a particular scale is not specified to avoid confusion when figures are enlarged or reduced.
+B. Calculations. In determining compliance with numeric standards of this Code, calculations shall be rounded up or down as follows:
+1. Dwelling units per acre: less than 0.5 rounded down to the nearest whole unit; 0.5 or more rounded up to the nearest whole unit.
+2. Parking spaces: less than 0.5 rounded down to the nearest whole space; 0.5 or more rounded up to the nearest whole space.
+3. Distances (such as lot dimensions or setbacks): cannot be rounded up or down.
+4. Percentages (such as floor area ratio or usable open space): cannot be rounded up or down.
+C. Measuring Distance.
+Where a distance is specified in this Code, the distance shall be measured from nearest point to nearest point.
+Where distance is measured from a zone boundary, the zone boundary shall be considered to be the property line.
+(Ord. 6401 § 1, 2022)

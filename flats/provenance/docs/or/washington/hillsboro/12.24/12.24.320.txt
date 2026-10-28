@@ -1,0 +1,35 @@
+12.24.320  Housing Types.
+Table 12.24.320-1 lists housing types permitted in the MU-VTC zone.
+Housing types are defined in
+Section 12.01.500.
+Table 12.24.320-1:
+Housing Types Permitted in the MU-VTC Zone
+Housing Type Status Clarifications
+Single detached dwelling L
+Within the South Hillsboro Plan District, type only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030.
+Duplex L
+Within the South Hillsboro Plan District, type only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030.
+Triplex P
+Quadplex P
+Townhouse P/L
+Within the South Hillsboro Plan District:
+two-dwelling townhouses only permitted outside
+Village and Town Center Core Areas established pursuant to Section 12.65.030; 3 dwelling (or more) townhouses permitted throughout MU-VTC zone.
+Cottage cluster L
+Within the South Hillsboro Plan District, type only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030.
+Multiple-dwelling structure P
+Manufactured dwelling L
+Within the South Hillsboro Plan District, type only permitted outside Village and Town Center
+Core Areas established pursuant to Section
+12.65.030 and subject to Special Use
+Standards in Section 12.40.190.
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6110 § 5, 2015)

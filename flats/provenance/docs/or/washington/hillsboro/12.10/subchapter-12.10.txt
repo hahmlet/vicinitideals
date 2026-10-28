@@ -1,0 +1,43 @@
+SUBCHAPTER 12.10
+USE CATEGORIES
+12.10.010 General Principles.
+12.10.020 Uses Not Specifically Addressed.
+12.10.030 Special Use Standards.
+12.10.100 Residential Use Categories.
+12.10.110 Household Living.
+12.10.120 Group Living.
+12.10.130 Residential Services.
+12.10.140 Residential Business.
+12.10.200 Commercial Use Categories.
+12.10.210 Commercial Lodging.
+12.10.215 Commercial Recreation.
+12.10.220 Commercial Parking.
+12.10.225 Durable Goods Sales.
+12.10.230 Eating and Drinking Establishments.
+12.10.235 Educational Services.
+12.10.240 Office.
+12.10.245 Retail Products and Services.
+12.10.250 Self-Service Storage.
+12.10.255 Vehicle Service and Repair.
+12.10.300 Industrial Use Categories.
+12.10.310 Industrial Services.
+12.10.320 Manufacturing and Production.
+12.10.330 Solid Waste Treatment and Recycling.
+12.10.340 Vehicle Storage.
+12.10.350 Warehouse and Freight Movement.
+12.10.360 Wholesale Sales.
+12.10.400 Institutional Use Categories.
+12.10.410 Colleges and Universities.
+12.10.420 Community Services.
+12.10.430 Detention Facilities.
+12.10.440 Hospitals.
+12.10.450 Major Assembly Facilities.
+12.10.460 Schools.
+12.10.500 Infrastructure and Utilities Categories.
+12.10.510 Aviation Uses.
+12.10.520 Parks and Open Areas.
+12.10.530 Public Safety Facilities.
+12.10.540 Surface Alternative Transportation Facilities.
+12.10.550 Telecommunication Facilities.
+12.10.560 Utility Facilities.
+

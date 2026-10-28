@@ -1,0 +1,75 @@
+12.27.235  Standards for Specific Development Types within a Resource Site or Impact Area.
+A. New or expanded development or redevelopment (as defined in Section 12.01.500) except as listed in Subsections B—G, below.
+In addition to the general standards in Section 12.27.230
+the following standards apply to all regulated development activities involving new or expanded development or redevelopment (except for those activities listed in Subsections B—G, below).
+1. New or expanded development or redevelopment which meets all of the following standards requires an SNRP I.
+a. The proposed development or redevelopment is on one of the following:
+i. A lot of record existing as of the date of the ordinance from which these are sections is derived, June 18, 2024.
+ii. A lot within an existing or proposed residential land division provided that the land division included at least 90% of the Significant Natural Resources (SNR)
+Site and Impact Area within a separate tract.
+b. The following maximum development area allowances are not exceeded.
+i. Except as specified in Subsection ii, the maximum development area (permanent and temporary) allowed within the Impact Area on a lot is determined by subtracting all portions of the lot outside the Resource Site and Impact Area from 6,000 square feet.
+This is calculated as follows:
+Maximum potential development area of 6,000 SF 6,000 SF
+Less area of a lot NOT within a Resource Site or
+Impact Area
+Less    SF
+Total development area allowed within the Impact Area equals
+SF
+ii. Exception: If the application of this standard would preclude a 40-foot by
+40-foot development footprint on the site, the maximum development area allowed within the Impact Area may be increased by the minimum area required to allow such a development footprint.
+The applicant may exclude the following areas from the development footprint: existing utility and access easements, floodplains, and land with slopes in excess of 25%.
+Hypothetical examples of standards applied to a 20,000 SF lot (200 ft. by 100 ft.)
+
+iii. Of the 6,000 square feet maximum development area permitted, no more than
+4,000 square feet shall be permanent development area.
+The balance may be temporary development area.
+Within the temporary development area, no trees 24 inches dbh or larger shall be removed.
+iv. Trees may be removed within the permanent development area.
+If any part of the Critical Root Zone of a 24-inch dbh or larger tree is within a proposed permanent development area, the entire Critical Root Zone of the tree shall be included for the purposes of calculating the maximum permanent development area.
+2. All other new or expanded development or redevelopment (except as listed in Subsections B—G and A.3), below, require an SNRP II and are subject to the SNRP II approval criteria in Section 12.80.130.G.
+B. Utility Expansion or Enlargement.
+Utility Expansion or Enlargement are subject to the general standards in Section 12.27.230.
+An SNRP I is required.
+NOTE: For utility projects undertaken by utility providers across property that is not owned by the provider, the utility provider shall not be required to map or provide any information about the property except for the area within 50 feet on either side of the proposed development area of the utility's project.
+C. Public and Private Streets and Access.
+In addition to the general standards in Section 12.27.230, the following requirements apply to all regulated development activities involving new or expanded streets and access.
+1. Street and access projects which will be constructed at a location specified in an adopted City plan require an SNRP I.
+2. All other street and access expansion or enlargement projects require an SNRP II.
+The SNRP II approval criteria in Section 12.80.130.G. do not apply; however, the applicant must demonstrate that all of the following requirements are met:
+a. The street or access is necessary to provide access to the buildable area(s) of the property(ies) and is the minimum necessary within the SNR Site which allows safe passage by vehicles, bicycles and/or pedestrians.
+b. There is no other means of providing access, within the project boundaries or off-site through the use of easements, which does not affect an SNR Site or Impact Area.
+c. Where multiple properties require crossing an SNR Site for access, access has been consolidated into a single crossing by use of shared access easements, tracts, or dedication of public right-of-way.
+d. The location of the street or access does not preclude a future extension to buildable areas on adjacent properties.
+D. Outdoor recreation facilities.
+In addition to the general standards in Section 12.27.230, the following requirements apply to all regulated development activities involving new or expanded outdoor recreation facilities.
+1. New outdoor recreation facilities which meet all of the following standards require an SNRP I.
+a. The proposed trail, path, or enhancement is publicly owned or within a public easement and is implementing master planned park facilities or identified in the most recent City of Hillsboro Parks and Recreation System Plan.
+b. The proposed facilities are compatible with preserving natural resource functions: viewing shelters; benches; picnic tables; nature trails and interpretive signs, and similar uses and facilities.
+c. No trees 24-inch dbh or larger shall be removed.
+Dangerous Trees or invasive trees are exempt from this standard and may be removed.
+2. All other outdoor recreation facilities, including all proposals for high impact or facilities for active recreation such as athletic fields or courts; golf courses; and similar uses, require an SNRP II and are subject to the SNRP II approval criteria in Section 12.80.130.G.
+E. Removal of a Dangerous Tree(s) not in conjunction with other development.
+Except where noted otherwise, in addition to the general standards in Section 12.27.230, the following requirements apply to the removal of a Dangerous Tree (not in conjunction with other development).
+The removal of a Dangerous Tree(s) that meets all of the following standards requires an SNRP I and is exempt from the mitigation requirements of Section 12.27.240.
+1. An International Society of Arboriculture (ISA) basic tree risk assessment has been prepared by an ISA certified arborist.
+2. Removal of the tree is recommended by the qualified certified arborist, professional forester or landscape architect who has completed the basic tree risk assessment for the tree.
+F. Natural Resource Enhancement Plans and Projects.
+Except where noted otherwise, in addition to the general standards in Section 12.27.230, the following requirements apply to natural resource enhancement plans and projects.
+1. A natural resource enhancement plan or project that meets all of the following standards requires an SNRP I and is exempt from the mitigation requirements of Section 12.27.240.
+a. The proposal is for bank stabilization, riparian vegetation enhancement, in-channel habitat improvements, or similar activities which improve or maintain the quality of a SNR Site or its Impact Area.
+b. The quality of 1 or more ecological functions or values of the SNR will be improved.
+c. Plantings include only species from the CWS Native Plants List.
+2. All other natural resource enhancement plans and projects require an SNRP Type II and are subject to the SNRP II approval criteria in Section 12.80.130.G.
+G. Natural Resource Management Plans for Transportation Facilities.
+To protect public health and safety, airports and other public transportation facilities may require regulatory flexibility in addressing natural resource management issues.
+Public agencies responsible for transportation facilities (such as ODOT or the Port of Portland) may prepare and submit a Natural Resource Management Plan application for consideration by the Planning Commission.
+1. Through the Natural Resource Management Plan approval, the applicant may request approval for exceptions to the following requirements of this Code to the General Development Standards in Subsection 12.27.230.A. and the Compensatory Mitigation Standards in Section 12.27.240.
+2. Natural Resource Management Plans for Transportation Facilities require a SNRP III.
+The applicant must demonstrate that all of the following standards are met:
+a. The applicant is a public agency responsible for major transportation facilities.
+b. The applicant has submitted an Environmental Report prepared in accordance with Subsection 12.27.230.C.
+c. The Plan substantially conforms to the purposes of the SNRO zone.
+d. The Plan will improve the overall functions and values of the SNR sites within the Plan area.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.

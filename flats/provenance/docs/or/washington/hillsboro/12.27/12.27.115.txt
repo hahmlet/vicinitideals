@@ -1,0 +1,68 @@
+12.27.115  Administrative and Regulatory Coordination.
+A. Designation of the Local Floodplain Administrator.
+The Director and designated Floodplain Administrator are hereby appointed to administer and implement the requirements and provisions of Sections 12.27.100 and 12.80.070.
+The Floodplain Administrator may delegate authority to implement these provisions.
+B. Responsibilities of the Floodplain Administrator.
+Duties of the Floodplain Administrator, or their designee, shall include but not be limited to:
+1. Permit Review. Review all development permits to:
+a. Determine that the requirements of the Regulatory Floodplain Overlay have been satisfied on any development therein;
+b. Determine that all required Federal, State, or local governmental permits have been obtained and approved;
+c. Determine if the proposed development is located in the floodway.
+If located in the floodway, assure that the encroachment provisions of Section 12.27.100 are met;
+d. Determine if the proposed development is located in an area where base flood elevation data is provided through the Flood Insurance Study or FIRM and provide to the Building Official the Base Flood Elevation applicable to any building requiring a development permit;
+e. Ensure proposed development activity is reviewed to determine whether such proposals will be reasonably safe from flooding.
+If a new development includes new development in a flood-prone area, any such proposals shall be reviewed to assure that:
+i. such proposals minimize potential for flood damage within the flood-prone area,
+ii. all public utilities and facilities, such as sewer, gas, electrical, and water systems are located and constructed to minimize or eliminate flood damage,
+iii. adequate drainage is provided to reduce exposure to flood hazards, and
+iv. all development-related activities comply with Section 12.27.100;
+f. Ensure that if the base flood elevation has not been provided or is not available from another authoritative source, it is generated for subdivision proposals and other proposed developments of at least 50 lots or 5 acres (whichever is less), and all permits are reviewed to confirm that the building sites are expected to be reasonably safe from flooding;
+g. Determine if the proposed development qualifies as a substantial improvement.
+h. Determine if the proposed development activity is a watercourse alteration.
+If a watercourse alteration is proposed, ensure compliance with the provisions in Section 12.27.135.
+i. Determine if the proposed development activity includes the placement of fill or excavation.
+j. Ensures all records pertaining to the provisions of Section 12.27.100, including but not limited to any variances granted, elevation certificates, floodproofing certificates, hydrologic and hydraulic analyses, substantial improvement and damage determinations and no net loss records are maintained and available for public inspection.
+C. Other Affected Agencies.
+The regulations of other agencies may apply to development proposals and other projects within the floodplain.
+These agencies include the Federal Insurance Administration, the Federal Emergency Management Agency, the U.S. Army Corps of Engineers, the Oregon Department of State Lands, the U.S. Fish and Wildlife Service, the Environmental Protection Agency, the Oregon Department of Fish and Wildlife, Washington County, and Clean Water Services.
+D. Community Boundary Alterations.
+The Floodplain Administrator shall notify the Federal Insurance Administrator in writing whenever the boundaries of the community have been modified by annexation to ensure that the Flood Hazard Boundary Maps and FIRMs accurately represent the community's boundaries.
+E. Letters of Map Change.
+1. When a development will alter a watercourse within the floodplain, modify floodplain boundaries, or modify Base Flood Elevations, the person responsible for the development or other project shall obtain approvals or comments from other affected agencies, including FEMA, and submit the approvals or comments to the City prior to requesting City permits and inspections, commencing work on the site in the floodplain, and/or after completing work on the site, as determined by the City.
+Such approvals or comments shall include, but may not be limited to:
+a. Conditional Letter of Map Revision (CLOMR).
+An application for a Conditional Letter of Map Revision from FEMA, which may entail site-specific studies prepared by a qualified expert of habitat (e.g., Endangered Species), hydrology, hydraulics, and/or other topics related to the project or its impacts.
+A CLOMR is required according to
+Table 12.27.115-1.
+b. Letter of Map Revision (LOMR).
+Where required in Table 12.27.115-1, an application for a Letter of Map Revision (LOMR) shall be submitted to FEMA depicting as-built conditions within 6 months of project completion.
+The applicant shall include either:
+i. A proposed maintenance plan to assure the flood carrying capacity within the altered or relocated portion of the watercourse is maintained; or
+ii. Certification by a registered professional engineer that the project has been designed to retain its flood carrying capacity without periodic maintenance.
+c. Letter of Map Revision based on Fill (LOMR-F).
+A LOMR-F is required for placement of fill in the floodplain to elevate a structure.
+Applicant must receive approval of a LOMR-F prior to issuance of building permits for structures using fill to meet the elevation requirements.
+Table 12.27.115-1:
+Required Submittals of Letters of Map Changes to FEMA
+Use or Activity
+Conditional Letter of Map
+Revision (CLOMR) Required
+Letter of Map Revision
+(LOMR) Required
+Alteration of a watercourse X X
+Proposed floodway development that increases the base flood elevations
+X X
+Proposed development which increases the base flood elevation by more than one foot in areas where FEMA has provided base flood elevations but no floodway
+X X
+Modifications to Floodplain
+Boundaries including physical alterations or to revise boundaries
+X
+Placement of fill in the floodplain to elevate a structure
+X (LOMR-F)
+2. The applicant is responsible for completing and submitting application forms, preparing technical data and studies to support evaluation of the applications, and paying any processing or application fees to other agencies.
+The complete submittal packages (applications as well as supporting documentation and models) shall be provided to the City upon request.
+3. The Floodplain Administrator is under no obligation to sign a Community Acknowledge-ment Form for a FEMA application until it has been demonstrated that the project as proposed meets the requirements of this Code and all applicable State and Federal laws.
+4. The applicant shall construct the project as approved and required by any applicable reviews, conditions of approval, and/or permitting processes.
+If deviations from or revisions to reviewed or approved plans are desired, the applicant shall request authorization in advance from the City as well as other regulatory agencies.
+The City may require additional reviews, public notices, and/or permits prior to authorizing deviations from approved project plans.
+(Ord. 6401 § 1, 2022; Ord. 6276 § 1, 2018; Ord. 6192 § 1, 2016; Ord. No. 6500, § 1(Exh. A), 6-17-2025; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

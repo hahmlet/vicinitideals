@@ -1,0 +1,52 @@
+12.25.460  Development Standards.
+Development standards in the SCBP zone are listed in Table 12.25.460-1.
+Certain standards are illustrated in Figure 12.25.460-A.
+Table 12.25.460-1:
+Development Standards in the SCBP Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR
+• Office and industrial uses
+
+%
+Within 2,600 feet of an
+LRT station .35
+
+%
+Beyond 2,600 feet from an LRT station None
+• Commercial uses (as permitted)
+
+%
+Within 2,600 feet of an
+LRT station .50
+
+% Beyond 2,600 feet from an LRT station None
+Minimum Lot Dimensions
+• Width None
+• Depth None
+• Frontage 30 feet
+Minimum Setbacks None Setbacks subordinate to public utility easements and OSSC requirements.
+Maximum Setbacks None
+Minimum Building Height*
+• Within 800 feet of an LRT station
+
+%
+Commercial buildings 2 stories
+
+%
+All other buildings None
+• Beyond 800 feet from an
+LRT station None
+Maximum Building Height* 5 stories
+Table 12.25.460-1:
+Development Standards in the SCBP Zone
+Standard Requirement Clarifications
+Maximum Lot Coverage None
+Minimum Useable Open Space Variable See Section 12.50.210.
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.25.460-A
+
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

@@ -1,0 +1,13 @@
+12.64.120  Exceptions to Floor Area and Minimum Floor Area Ratio (FAR).
+A. In the Amberglen Plan District, Floor Area does not include the following: Basements, attics, closets, restrooms, lobbies, hallways, stairwells and elevators, utility and mechanical spaces and loading docks.
+B. Lots developed below the minimum non-residential FAR standard of the applicable base zone may redevelop in accordance with subsection C, below, without reaching the minimum FAR if all of the following conditions are met:
+1. No portion of the subject lot is located within 800 feet of a Light Rail Transit (LRT) or High Capacity Transit (HCT) station;
+2. The subject lot is developed with non-residential Uses at less than 50% of the minimum FAR; and
+3. More than ½ of the adjacent developed parcels with non-residential Uses are also developed below the minimum FAR.
+For purposes of this condition, intervening streets between lots do not interrupt adjacency.
+C. If the conditions in subsection B, above, are met, the subject lot can be redeveloped with non-residential Uses at whichever of the levels listed in paragraphs 1 and 2, below, results in a greater FAR.
+If the result of either, calculation in paragraphs 1 and 2, below, exceeds the minimum FAR standard of the applicable base zone, then the minimum FAR standard shall apply.
+Figure 12.64.120-A illustrates the provisions of this subsection for the UC-MU Zone:
+1. Redevelopment level 1: a non-residential FAR of not less than the current developed non-residential FAR on the subject parcel plus 50% of the existing FAR; or
+2. Redevelopment level 2: the current developed non-residential FAR of the adjacent parcel with the highest non-residential FAR below the minimum FAR for the zone plus 50% of that FAR, whichever is greater.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

@@ -1,0 +1,75 @@
+20.15.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district.
+All superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+[ORD 4584; June 2012] [ORD 4649; Feb 2015]
+
+20.15.15 Employment/Industrial Site Development Standards
+
+Superscript Numbers Refer to Footnote
+# Standard OI OI-NC IND Unit of
+Measurement
+A.1. Minimum Parcel Area None None None Square Feet
+B.1. Residential Density - Minimum/Maximum N/A N/A N/A N/A
+C.1. Floor Area Ratio - Minimum/Maximum N/A None/0.355 N/A N/A
+D.1. Lot Dimensions - Minimum Width None None None Feet
+D.2. Lot Dimensions - Minimum Depth None None None Feet
+E.1. Minimum Yard Setbacks1 - Any Yard Abutting A Residential
+Zone
+75 None 75 Feet
+E.2. Minimum Yard Setbacks1 - Front 35 None 35 Feet
+E.3. Minimum Yard Setbacks1 - Side1,2 10 None 10 Feet
+E.4. Minimum Yard Setbacks1 - Rear2 None None None Feet
+F.1. Building Height - Maximum3 80 80 - 1106 45 Feet
+G.1. Public Parks4 Exempt Exempt Exempt N/A
+20.15.15 Employment/Industrial Site Development Standards - Wireless Communication Facilities
+
+Superscript Numbers Refer to Footnote
+# Standards OI OI-NC IND Unit of
+Measurement
+H.1. Maximum
+Height7 - WCF7
+80 80 80 Feet
+H.2. Maximum
+Height7 -
+Equipment
+Shelters8
+12 12 12 Feet
+# Standards OI OI-NC IND Unit of
+Measurement
+H.3. Maximum
+Height7 - Roof
+Mounted
+Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+N/A
+I.1. Yard Setbacks9 -
+Requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+N/A
+I.2. Yard Setbacks9 -
+Other
+Refer to 60.70.35.14.A and B
+Refer to 60.70.35.14.A and B
+Refer to 60.70.35.14.A and B
+N/A
+[ORD 4649; February 2015] [ORD 4804; August 2021] [ORD 4857; October 2024]
+Footnotes:
+1. Reduction to Setback Standards: Under the thresholds outlined in Section 40.30.05, application may be made for zero side yard setbacks.
+2. No side or rear yard setbacks required where side or rear property lines abut a railroad right-of-way or spur track.
+3. Except as provided by Section 60.50.05.
+(Accessory Uses and Structures).
+4. Public parks, parkways, recreation facilities, trails and related facilities are exempt from these site development requirements.
+5. If non-residential or mixed use development is proposed in excess of 0.35 FAR, the applicant shall demonstrate that the transportation system serving the development site has adequate planned capacity to accommodate additional site-generated traffic, consistent with the applicable adopted level of service standard.
+6. Buildings within 500 linear feet from the nearest residentially designated property shall have a maximum height of 80 feet.
+Buildings may be constructed up to 110 feet in height on portions of the subject properties that are 500 feet or more from the nearest residentially designated property.
+7. Inclusive of antenna.
+8. At-grade equipment shelters.
+9. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+[ORD 3213, 06/09/1981; ORD 3314, 04/28/1983; ORD 3494, 03/27/1986; ORD 3499, 04/24/1986; ORD 3739, 09/08/1990; ORD 3975, 03/07/1997; ORD 4071, 11/25/1999; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4354, 07/14/2005; ORD 4443, 08/23/2007; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4649, 02/13/2015;
+ORD 4702, 01/04/2017; ORD 4804, 08/13/2021; ORD 4857, 10/03/2024]
+Effective on: 9/14/2026

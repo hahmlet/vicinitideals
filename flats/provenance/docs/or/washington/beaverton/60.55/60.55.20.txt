@@ -1,0 +1,103 @@
+60.55.20. Traffic Impact Analysis.
+
+[ORD 4103; May 2000] [ORD 4302; June 2004]
+For each development proposal that exceeds the Analysis Threshold of 60.55.20.2, the application for land use or design review approval shall include a Traffic Impact Analysis as required by this code.
+The Traffic Impact Analysis shall be based on the type and intensity of the proposed land use change or development and its estimated level of impact to the existing and future local and regional transportation systems.
+1.Engineer Certification. The Traffic Impact Analysis shall be prepared and certified by a traffic engineer or civil engineer licensed in the State of Oregon.
+2.Analysis Threshold.
+A. A Traffic Impact Analysis is required when the proposed land use change or development will generate 300 vehicles or more per day (vpd) in average weekday trips as determined by the City Engineer.
+[ORD 4706; May 2017]
+B. A Traffic Impact Analysis or some elements of a Traffic Impact Analysis may be required when the volume threshold under subsection A. of this section is not met but the City Engineer finds that the traffic impacts attributable to the development have the potential to significantly impact the safe and efficient operation of the existing public transportation system.
+3.Study Area. The Traffic Impact Analysis shall evaluate the Area of Influence of the proposed development and all segments of the surrounding transportation system where users are likely to experience a change in the quality of traffic flow.
+The City Engineer may identify additional locations for study if existing traffic operation, safety, or performance is marginal or substandard.
+Prior to report preparation, the applicant shall submit the proposed scope and analysis assumptions of the Traffic Impact Analysis.
+The City Engineer shall determine whether the scope and analysis assumptions are adequate.
+4.Contents of the Traffic Impact Analysis Report.
+The Traffic Impact Analysis report shall contain the following information organized in a logical format:
+A. Executive Summary
+B. Description of Proposed Development
+C. Existing Conditions
+D. Traffic Forecasts
+E. Traffic Impacts
+F. Mitigation Identification
+G. Recommendations
+A. Executive Summary.
+An Executive Summary of no more than three single-sided pages shall be included at the beginning of the Traffic Impact Analysis report.
+The Executive Summary shall summarize the analysis and conclusions and identify recommended transportation improvements.
+B. Description of Proposed Development.
+The Traffic Impact Analysis shall provide a comprehensive project description including but not limited to the following:
+1. Vicinity map.
+2. Site plan.
+3. Project phasing.
+4. Time schedule.
+5. Intended use of the site, including the range of uses allowed without additional land-use approvals.
+6. Intensity of use.
+C. Existing Conditions.
+The Traffic Impact Analysis shall provide a complete evaluation of existing conditions and include maps and/or tables displaying the following information for the Area of Influence and any additional locations previously identified by the City Engineer:
+1. Street system including street names and functional classifications.
+2. Pavement and shoulder widths.
+3. Striping and channelization.
+4. Driveways.
+5. Freight access and loading areas.
+6. Intersections.
+7. Traffic volumes.
+a. Existing traffic shall be measured within the previous twelve months.
+b. Traffic volumes shall be based on data from a minimum of two typical weekdays (Tuesday through Thursday).
+In addition, data shall be provided for weekends if weekends are the peak traffic period for either the existing street or the proposed development.
+[ORD 4706; May 2017]
+c. Seasonal variations in traffic volumes shall be considered.
+8. Existing intersection performance indicators including volume-to-capacity ratio and control delay.
+9. Transit information including stop and shelter locations, route numbers, headways, passenger loading, pull outs, and times of service.
+10. Bicycle ways, sidewalks, and accessways.
+11. Collision data for the most recent three-year period for which collision data is available.
+D. Traffic Forecasts.
+The Traffic Impact Analysis report shall provide forecasts of future traffic within the Area of Influence and any additional locations previously identified by the City Engineer.
+Traffic forecasts shall be provided for both the Buildout Year and the Long-Range Forecast Year.
+The report shall include complete documentation of trip generation calculations including Institute of Transportation Engineers (ITE) Trip Generation (latest published edition) use code(s) or an alternative basis of trip generation and the rationale for using the alternative.
+1. Buildout Year Analysis. Buildout Year forecasts shall be Total Traffic at the time of anticipated completion and occupancy of each phase of the development and at the time of completion and occupancy of the entire development.
+The City shall provide traffic information on other developments to consider in the calculation of Added Traffic.
+2. Long-Range Forecast Year Analysis. The Traffic Impact Analysis shall include an analysis of the potential worst-case long-range impacts to the local transportation system identified in the City’s Comprehensive Plan Transportation Element and the regional transportation system identified in Metro’s Regional Transportation Plan.
+The forecast year shall be the forecast year of the Comprehensive Plan Transportation Element or an alternate year approved by the City Engineer.
+The Traffic Impact Analysis shall include a prediction of whether any phase of the proposed development will change the long-range transportation needs identified in the Comprehensive Plan and the extent to which traffic from the proposed development contributes to the long-range improvement needs.
+3. Traffic Forecast Analysis Assumptions.
+a. Trip generation.
+Estimates of the proposed development’s trip generation shall be made for peak period traffic.
+Selection of the peak period used in the analysis shall be justified and shall consider, at a minimum, the peak period for the proposed development and the peak period for surrounding streets.
+The City Engineer may require review of other time periods based on known or anticipated marginal or substandard traffic capacity or traffic safety.
+Trip generation estimates shall be based on ITE’s Trip Generation (latest published edition).
+The City Engineer may approve different trip
+generation rates when trip generation rates are not available in ITE’s Trip Generation or different rates are justified.
+b. Trip distribution and assignment.
+Traffic generated by the proposed development shall be logically distributed and assigned to the street system within the Area of Influence and any additional locations previously identified by the City Engineer.
+Trip distribution and assignment shall be based on trip distribution information from Washington County, ODOT, or Metro, on analysis of local traffic patterns based on data less than 12 months old, or on alternative data approved by the City Engineer.
+4. Intersection and Highway Interchange Analysis. Intersection and highway interchange analysis shall conform to the method for operations analysis described in the Highway Capacity Manual 2000 published by the Transportation Research Board.
+The City Engineer may approve an alternative analysis method.
+The analysis shall document that the impacts of queuing from adjacent intersections or traffic restrictions has been addressed.
+E. Traffic Impacts.
+The Traffic Impact Analysis shall evaluate access, safety, operation, capacity, circulation, level of service, and performance of the transportation system within the proposed development’s Area of Influence and any additional locations previously identified by the City Engineer for both the Buildout Year and any phases thereof, and the Long-Range Forecast Year.
+Performance analysis shall be based on the standards of Section 60.55.10.7.
+1. Safety considerations shall be evaluated.
+Potential safety problems resulting from conflicting turning movements between and among driveways, intersections, and internal traffic shall be addressed.
+Distance to the nearest driveways on both sides of streets fronting the site and in both directions from site access points shall be shown.
+On-Site driveway stacking and queuing impacts shall be assessed.
+The potential for shared access with adjacent development shall be assessed.
+2. Geometric design and operational improvements including but not limited to acceleration lanes, deceleration lanes, turning lanes, traffic signals, and channelization shall be considered, evaluated, and recommended when determined necessary by standards and practices adopted by ODOT, Washington County, the City or approved by the City Engineer.
+3. Adequacy of sight distance shall be addressed at the proposed road access point(s) for both the. existing road configuration and for the ultimate road configuration based on improvements planned for the development and improvements identified in the Comprehensive Plan Transportation Element.
+Sight distance shall meet City standards.
+4. The analysis shall also identify and evaluate related impacts on bicycle, pedestrian, and transit access, circulation, and facilities.
+5. Other, operational, circulation, safety, and capacity issues shall be evaluated and addressed as required by this code and by the City Engineer.
+F. Mitigation Identification.
+In order to protect the public transportation system from potentially adverse impacts of the proposal, to fulfill an identified need for public services within the impacted area related to the development, or both, the Traffic Impact Analysis shall identify methods of mitigating on-site and off-site deficiencies for present and proposed phases of the development.
+The analysis shall make recommendations for improvements necessary for safe and efficient traffic flow and bicycle, pedestrian, and transit movement and access based on and roughly proportional to the identified impacts.
+Buildout Year, Long-Range Forecast Year, and project phasing impacts shall be considered.
+[ORD 4418; February 2007] The traffic impact analysis shall discuss the estimated levels of impact, improvements, and mitigations, and shall demonstrate how the recommended mitigations are roughly proportional to the identified impacts.
+[ORD 4418; February 2007]
+Mitigation shall be consistent with improvements identified in the Comprehensive Plan Transportation Element.
+At a minimum, the Traffic Impact Analysis shall consider ultimate rights-of-way and additional streets, bicycle, and pedestrian connections and extensions and intersection improvements that are identified in the Comprehensive Plan Transportation Element Figures 6.1 through 6.23 and Tables 6.1 through 6.6 and connections required by Section 60.55.25. of this code.
+Mitigation measures may also include, but are not limited to, additional street connections and street extensions, turn lanes, signalization, signal modifications, installation of medians, shared access and other access management strategies, geometric improvements such as lane geometry improvements, and intersection realignments.
+Where stop-controlled intersections do not meet the minimum performance standard of Section 60.55.10.7., an additional street connection or a street extension shall be considered as a potential mitigation measure.
+G. Recommendations. The Traffic Impact Analysis report shall clearly state the mitigation measures recommended by the analysis and shall summarize how the recommended mitigations are roughly proportional to the identified impacts.
+The recommended street and highway mitigation measures shall be shown on a scaled drawing that depicts existing and recommended improvements.
+[ORD 4418; February 2007]
+[ORD 4061, 10/15/1999; ORD 4103, 05/04/2000; ORD 4224, 09/19/2002; ORD 4302, 06/10/2004; ORD 4418, 02/22/2007; ORD 4584, 06/01/2012; ORD 4706, 05/19/2017]
+Effective on: 5/19/2017

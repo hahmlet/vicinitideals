@@ -348,3 +348,113 @@ or/clackamas/sandy:
 # the subdivision densities above it ("... 14 units/acre Maximum (units/acre)").
 # Switched off (eligible: false) besides; left whole until readable text can
 # tell a table cell from a wrapped sentence.
+
+or/washington/beaverton:
+  # encodeplus PDF print: "20.05.15. Site Development Standards" at the
+  # margin, number and stop, a capital (or "[Repealed]"), printed over the
+  # text and -- in Chapters 10 and 70 -- once before in a "Contents:" list.
+  # The section's own two-part title ("20.05. Residential Zoning Districts",
+  # "10.05. Title.") is a heading too: Chapter 10's sections are two-part,
+  # and elsewhere the two-part line opens the section's subsections. A table
+  # caption repeats the number with no stop ("20.05.15 Residential Site
+  # Development Standards") and does not cut. Chapter 70 prints its headings
+  # over the text with no stop ("70.05.05 Purpose") and with one in its
+  # contents lists, and so does 40.21.05 ("40.21.05 Purpose").
+  heading: '^(?P<n>\d{2}\.\d{2}(?:\.\d{2})?)(?:\.|(?<=^70\.\d\d)|(?<=^70\.\d\d\.\d\d)|(?<=^40\.21\.05))\s+(?:[A-Z]|\[Repealed\])'
+  # References wrapped to the margin that read as a heading: "40.97. The
+  # overlay maps ..." (Chapter 10), "60.20.20. In Cooper Mountain districts
+  # ..." (20.22) and "70.20.10. Building Design guidelines and standards
+  # except for the ..." (Chapter 70, a third printing).
+  furniture: '^(?:40\.97\.|60\.20\.20\.\s+In Cooper|70\.20\.10\.\s+Building Design guidelines)'
+  front: [bdc.10.general-provisions, bdc.70.downtown]
+  # Four chapters stay whole. Each holds a value whose one citation names two
+  # of its sections (a use-table row and the dimension table, or a stall
+  # table and its notes), so the citation must stay on the proof copy -- and
+  # a value cited to a proof copy is joined to no footnote at all once its
+  # chapter is cut. Cutting these would unhook 38 encoded or unmeasured notes
+  # from CC/CS/GC FAR, the RC/SC/TC multiple-use FAR, the RC downtown lot
+  # minimum and the default stall size (measured 2026-10-28).
+  uncut: [bdc.20.10.commercial, bdc.20.20.multiple-use, bdc.60.30.parking, bdc.70.downtown]
+  page_head: '^(?:Beaverton Development Code|Date Printed: \w+ \d+, \d{4} Chapter \d+, [A-Z]+-\d+)\s*$'
+  page_furniture: '^(?:Beaverton Development Code|Date Printed: \w+ \d+, \d{4} Chapter \d+, [A-Z]+-\d+)\s*$'
+
+or/washington/hillsboro:
+  # Municode PDF print: "12.21.150  Development Standards." at the margin,
+  # TWO spaces, a capital. The subchapter's contents list and each zone's own
+  # list print the same numbers with one space ("12.21.150 Development
+  # Standards"), and so does the running header ("12.21.150 HILLSBORO
+  # COMMUNITY DEVELOPMENT CODE"), so one space never cuts. Measured
+  # 2026-10-28: every number printed with two spaces is printed so once, in
+  # number order, in all 23 extracts; "12.27.145 Reserved" is listed and
+  # never printed over text.
+  heading: '^(?P<n>12\.\d{2}\.\d{3,4})\s{2,}[A-Z]'
+  # Each extract opens "SUBCHAPTER 12.21 / SINGLE DETACHED AND MIDDLE HOUSING
+  # RESIDENTIAL ZONES" over its contents list; the three 12.50 extracts cut
+  # mid-subchapter open on a section heading.
+  front: [cdc.12.01.general, cdc.12.10.use-categories, cdc.12.21.middle-housing-zones,
+          cdc.12.22.multi-dwelling-zones, cdc.12.23.commercial-zones,
+          cdc.12.24.mixed-use-urban-center-zones, cdc.12.25.industrial-zones,
+          cdc.12.26.institutional-zones, cdc.12.27.overlay-zones, cdc.12.40.special-uses,
+          cdc.12.50.100-270.lot-and-site, cdc.12.60-61.downtown, cdc.12.62.orenco,
+          cdc.12.63.hawthorn-farm, cdc.12.64.amberglen, cdc.12.65.south-hillsboro,
+          cdc.12.66.north-hillsboro-industrial, cdc.12.67.witch-hazel-village,
+          cdc.12.68.witch-hazel-village-south, cdc.12.80.applications]
+  # The Municode footer "CDC12.21:5", "CDC12.01:22.1Supp. No. 1", and the
+  # running header -- the section on the page, then the code's name or the
+  # subchapter's title, glued or spaced ("12.21.030 HILLSBORO COMMUNITY
+  # DEVELOPMENT CODE", " 12.21.030SINGLE DETACHED ...", " MIXED-USE AND URBAN
+  # CENTER ZONES"). Measured 2026-10-28 on every page start of the 23
+  # extracts: every capitals-only line in the band is one of these titles.
+  page_furniture: '^\s*(?:CDC\s?\d+\.\d+:\d+(?:\.\d+)?(?:\s?Supp\. No\. \d+)?|(?:\d+\.\d+\.\d+\s?)?(?:HILLSBORO COMMUNITY DEVELOPMENT CODE|GENERAL PROVISIONS|USE CATEGORIES|SINGLE DETACHED AND MIDDLE HOUSING RESIDENTIAL ZONES|MULTI-DWELLING RESIDENTIAL ZONES|COMMERCIAL ZONES|MIXED-USE AND URBAN CENTER ZONES|INDUSTRIAL ZONES|INSTITUTIONAL AND OPEN SPACE ZONES|OVERLAY ZONES|SPECIAL USE STANDARDS|DEVELOPMENT AND DESIGN STANDARDS|PLAN DISTRICTS GENERALLY|DOWNTOWN PLAN DISTRICT|ORENCO PLAN DISTRICT|HAWTHORN FARM/FAIR COMPLEX PLAN DISTRICT|AMBERGLEN PLAN DISTRICT|SOUTH HILLSBORO PLAN DISTRICT|NORTH HILLSBORO INDUSTRIAL AREA PLAN DISTRICT|WITCH HAZEL VILLAGE(?: SOUTH)? PLAN DISTRICT|APPLICATIONS))\s*$'
+  # "SUBCHAPTER 12.61 / DOWNTOWN PLAN DISTRICT" over its contents list,
+  # below the last section of 12.60, and each extract's own above its first.
+  opens:
+    - {kind: Subchapter, line: '^\s*(?P<kind>SUBCHAPTER)\s+(?P<n>12\.\d+)\s*$'}
+
+or/clackamas/wilsonville:
+  # Municode PDF print of Chapter 4, one extract: "Section 4.113.  Standards
+  # Applying to ..." at the margin, printed once in the chapter's contents
+  # list and again over the text -- with or without the stop, one space or
+  # two ("Section 4.007 Lawfully Existing Development.").
+  heading: '^Section\s+(?P<n>4\.\d{3}(?:\.\d+)?)\.?\s+[A-Z]'
+  # References wrapped to the margin that read as a heading -- a section
+  # number, its stop, a capital -- found as the printings out of number order
+  # (measured 2026-10-28: nine, every one a sentence that carries on).
+  furniture: '^Section\s+4\.(?:035\.\s+(?:All parties|Site plans|The Director)|012\.\s+The notice|232\.\s+Additionally|600\.\s+This report|137\.\s+If Section|137\.3\.\s+The fee|196\.\s+Except)'
+  # The extract opens "PLANNING AND LAND DEVELOPMENT" over the contents list.
+  front: [4.planning]
+  # The Municode footer "CD4:5Supp. No. 5", "CD4:12.1Supp. No. 3", and the
+  # running header -- "§ 4.001 WILSONVILLE CODE" on the left page, "§
+  # 4.001PLANNING AND LAND DEVELOPMENT" on the right, either without its
+  # number on a contents page. Measured 2026-10-28 on every page start.
+  page_furniture: '^\s*(?:CD\s?4:\d+(?:\.\d+)?(?:\s?Supp\. No\. \d+)?|(?:§\s?4\.\d+(?:\.\d+)?\s?)?(?:WILSONVILLE CODE|PLANNING AND LAND DEVELOPMENT))\s*$'
+  page_head: '^\s*(?:§\s?4\.\d+(?:\.\d+)?\s?)?(?:WILSONVILLE CODE|PLANNING AND LAND DEVELOPMENT)\s*$'
+  # A division's title in capitals over its first section: "ZONING", "LAND
+  # DIVISIONS", "WILLAMETTE RIVER GREENW A Y" (letter-spaced as printed).
+  # Measured 2026-10-28: 10, each over the section the contents list opens
+  # the division with.
+  opens:
+    - {kind: Division, line: '^\s*(?P<title>[A-Z][A-Z ,&/-]{4,}[A-Z])\s*$', above: true}
+
+or/clackamas/oregon-city:
+  # Scanned Municode print: "16.12.021 Same--Grades and curves." at the
+  # margin over its text; the chapter's contents list prints the numbers
+  # bare, and the running header is the bare number at the page's top.
+  # The scan can space a heading's number apart ("16.12 .01 5 Street
+  # design--Generally."); the spaces are not part of the number.
+  heading: '^(?P<n>16\s?\.\s?12\s?\.\s?\d(?:\s?\d)*)\s+[A-Z]'
+  # 16.12 opens on the tail of its contents list ("16.12.030 / 16.12.031").
+  front: [16.12.streets]
+  # Title 17 is a scan whose headings do not take a rule: the flood chapter
+  # prints its numbers spaced apart ("17 . 42 . 090", "17.42 .060"), six
+  # sections (17.24.035, 17.29.050, 17.34.080, 17.39.040, 17.50.070,
+  # 17.65.080) print a bare number with the title scattered below it, and
+  # the bare running header also falls mid-page. Where those sections start
+  # is a reading, so the chapter stays whole (measured 2026-10-28).
+  uncut: [17.zoning]
+  # The scan's footer in all its spellings -- "Oregon City Supp. No. 44 250",
+  # "2 51 Oreg on City Supp. No. 44", "266 . 1 Oreg on City Supp. No . 40",
+  # "Or e gon Ci ty Supp. No. 46 266.4" -- and the bare running header
+  # ("16.12.011", "16.12 . 01 6").
+  page_furniture: '^\s*(?:(?:[\d .]+\s?)?O\s?r\s?e\s?g\s?o\s?n\s?C\s?i\s?t\s?y\s?S\s?u\s?p\s?p\s?\.?\s?N\s?o\s?\.?\s?\d+(?:\s?[\d .]+)?|16\s?\.\s?12\s?\.\s?\d(?:\s?\d)*)\s*$'
+  page_head: '^\s*16\s?\.\s?12\s?\.\s?\d(?:\s?\d)*\s*$'

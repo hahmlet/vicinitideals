@@ -1,0 +1,20 @@
+12.24.220  Housing Types.
+Table 12.24.220-1 lists housing types permitted in the MU-C zone.
+Housing types are defined in
+Section 12.01.500.
+Table 12.24.220-1:
+Housing Types Permitted in the MU-C Zone
+Housing Type Status Clarifications
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage cluster N
+Multiple dwelling structure P
+Manufactured dwelling N Subject to additional standards in Section
+12.40.190.
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted above or behind commercial uses.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)

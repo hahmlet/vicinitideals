@@ -1,0 +1,30 @@
+12.26.160  Development Standards.
+Base zone development standards in the SCFI zone are listed in Table 12.26.160-1.
+Table 12.26.160-1:
+Development Standards in the SCFI Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable Household living uses are limited to single detached dwellings for on-site caretakers.
+Maximum density for certain affordable housing developments is specified in Section
+12.40.107. Maximum Density Not applicable
+Minimum FAR
+• for fairgrounds uses None
+• for hotels .75
+• for all other commercial uses .50
+Maximum FAR none
+Minimum Lot Dimensions
+• Width (at front building plane) None
+• Depth None
+• Frontage 30 feet
+Minimum Setbacks None Setbacks subordinate to public utility easements and OSSC requirements.
+Maximum Setbacks 35 feet (front only) Measured from street right-of-way or tract.
+Minimum Building Height
+• Fairground animal exhibit halls None
+• All other buildings 2 stories Includes exhibit halls; conference facilities;
+commercial; mixed-use; hotel and office.
+Maximum Building Height 5 stories
+Maximum Building Coverage None
+Minimum Usable Open Space Varies See Section 12.50.210.
+Minimum Landscaping 15% See Section 12.50.220.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6120 § 1, 2015; Ord. 6112 § 1, 2015)

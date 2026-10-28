@@ -215,7 +215,13 @@ def test_a_card_carries_the_footnotes_over_the_lines_it_cites(built) -> None:
     """
     cards, _, _ = built
     carrying = [c for c in cards if c["notes"]]
-    assert len(carrying) > len(cards) * 0.5
+    # A share, and one that falls as chapters are cut: a notes block in a
+    # whole chapter reached every line above it, a section's reaches only its
+    # own. Batch 4 (2026-10-28) took 2,264 cards to 1,999 of 4,027, every
+    # note lost a dismissed one -- Wilsonville's 4.planning blocks had been
+    # reaching across the chapter -- and no encoded or unmeasured note left
+    # any value it governed (compared value by value against main).
+    assert len(carrying) > len(cards) * 0.4
     assert all(isinstance(n, str) and n.startswith("[note ") for c in carrying for n in c["notes"])
 
 

@@ -1,0 +1,9 @@
+12.10.500  Infrastructure and Utilities Categories.
+Infrastructure and utilities use categories include the following sections:
+12.10.510 Aviation Uses
+12.10.520 Parks and Open Areas
+12.10.530 Public Safety Facilities
+12.10.540 Surface Alternative Transportation Facilities
+12.10.550 Telecommunication Facilities
+12.10.560 Utility Facilities
+(Ord. 6401 § 1, 2022)

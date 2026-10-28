@@ -1,0 +1,21 @@
+12.64.830  Massing and Form.
+A. Height Transitions.
+1. In addition to the maximum building heights established in the UC base zones standards in Subchapter 12.24, transitions in height shall be provided as follows:
+a. No portion of a building located within 100 feet of a property zoned UC-RM or UC-RP may exceed 55 feet in height except as provided in Subsection 12.50.140.E.3;
+b. No portion of a building located within 100 feet of a UC-NC zone may exceed 65 feet in height;
+c. No portion of a building located within 200 feet of Central Park may exceed 105 feet in height; and
+d. No portion of a building located within 50 feet of NE John Olsen Ave, Stucki Ave south of NE Gibbs Dr, or the UC-RP zone may exceed 35 feet in height.
+2. To meet the requirements in Subsection 1, above, height transitions shall be accomplished through gradual changes in building mass and height that complement the overall design and function of the building, rather than abrupt "step-downs" in height.
+B. Bulk Plane Requirements.
+To preserve views to the Central Park and to preserve solar access at the street level and for upper stories, a bulk plane shall be established over the properties in the UC-MU zone that abut all east/west streets and all north/south streets that abut the Central Park.
+The bulk plane shall begin at a height of 65 feet measured at the property line at the street frontage and shall extend upward at a 15-degree angle, as illustrated in Figure 12.64.830-A.
+
+C. Maximum Tower Lot Coverage.
+1. Purpose. The standards in this subsection are intended to preserve generalized solar access to surrounding properties and to protect views into the Central Park area for properties located farther from the Park.
+2. Standards. In the UC-MU zone, portions of buildings that exceed 65 feet in height shall meet the following standards:
+a. The footprint of the building over 65 feet in height shall not exceed 35% of the lot area; and
+Figure 12.64.830-A:
+Example of Bulk Plane Geometry Requirements
+b. Any portion of the building over 65 feet in height must maintain at least 50 feet in spacing from portion(s) of any adjacent building(s) that also exceed 65 feet in height, as illustrated in Figure 12.64.830-B.
+
+(Ord. 6401 § 1, 2022)

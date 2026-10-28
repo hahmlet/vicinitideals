@@ -1,0 +1,181 @@
+12.50.320  Number of Spaces.
+A. All development shall include not less than 1 Americans with Disabilities Act compliant accessible parking space if the context or use of the site meets any of the following:
+1. The structure or use requires accessible parking per the Oregon Structural Specialty Code or Oregon Residential Specialty Code;
+2. The adjacent street does not have designated on-street parking; or
+3. The use is not an accessory dwelling unit.
+B. If provided off-site, parking for people with disabilities must be located within the shortest possible distance of an accessible entrance via an accessible path and no greater than 200 feet from that entrance.
+C. Notwithstanding 12.50.320(A), the Review Authority may determine through a Type II procedure that the accessible space is not required under ORS 447.233 and not necessary or feasible.
+D. Maximum parking requirements are calculated based on the location of a site in Zone A or Zone B shown on Figure 12.50.320-A. If any portion of a lot or parcel is within Zone A, the entire site shall be construed to be within Zone A.
+E. For land uses located in Zone A with more than 65,000 square feet of floor area, surface parking may not consist of more area than the floor area of the building.
+1. Non-surface parking such as tuck-under parking, parking underground, and subsurface parking, and parking structures are exempted from this calculation.
+2. Surface parking shall be measured inclusive of all surface area on which a vehicle is designed to maneuver including all parking stalls, driveways and drive-through lanes within the property regardless of length, and all maneuvering areas regardless of depth.
+3. Paved areas not for use by passenger vehicles, such as loading areas or outdoor storage of goods or materials, are not counted as surface parking area.
+F. Uses may share off-site parking if the shared parking is located within 800 feet of the uses.
+Shared parking located off-site shall be signed for use by the remote development.
+
+Figure 12.50.320-A:
+Maximum Parking Zones Map
+Table 12.50.320-1:
+Required Vehicle Parking Spaces for Residential Uses
+(required spaces are per dwelling unit unless specified otherwise)
+(see Section 12.50.335 for exceptions)
+Use Type
+Maximum*
+Zone A Zone B
+Household Living
+Single Detached Dwelling
+(includes manufactured dwellings and residential homes)
+1 per bedroom, not to exceed 2 per dwelling unit
+None
+Accessory Dwelling Unit 1 2
+Duplex
+1 per bedroom, not to exceed 2 per dwelling unit
+None
+Townhouse 2 None
+Triplex 2 None
+Quadplex 2
+Cottage Cluster 2 None
+Multiple Dwelling Structure 2 None
+Studio Dwelling 1.2 None
+Dwelling in a Mixed-Use Building or Live-Work
+Dwelling
+0.9 per bedroom, not to exceed 2 per dwelling unit
+None
+Regulated Affordable Housing
+1 per bedroom, not to exceed 2 per dwelling unit
+None
+Group Living
+Group Living *(includes student housing) 1.0/resident 1.0/resident
+Residential Services
+Independent Living Units (senior) 1 2
+Other Residential Services Facilities (includes assisted living and convalescent care)
+0.50 per resident
++1/staff
+0.50/resident
++1/staff
+Table 12.50.320-1:
+Required Vehicle Parking Spaces for Residential Uses
+(required spaces are per dwelling unit unless specified otherwise)
+(see Section 12.50.335 for exceptions)
+Use Type
+Maximum*
+Zone A Zone B
+Residential Business (calculated for residential portion only)
+Residential Business (includes Live-Work) 2 None
+
+Table 12.50.320-2:
+Required Vehicle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) unless otherwise specified) (See Section 12.50.335 for exceptions)
+Use Type
+Maximum*
+Zone A Zone B
+Commercial Lodging
+All uses 1/room None
+Commercial Recreation
+Indoor facilities 5 6
+Court sports 5/court 6/court
+Outdoor facilities (with bleachers) None None
+Outdoor facilities (without bleachers) 40/field None
+Durable Goods Sales
+All uses 3 4
+Eating and Drinking Establishments
+Fast food 10 None
+Casual dining 12 None
+Fine dining 15 None
+Educational Services
+All uses (parking calculated per
+FTE student or employee) 0.30 None
+Table 12.50.320-2:
+Required Vehicle Parking Spaces for Commercial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) unless otherwise specified) (See Section 12.50.335 for exceptions)
+Use Type
+Maximum*
+Zone A Zone B
+Office
+General office 4 4
+Medical office 5 6
+Customer Service Communications Center 5 8
+Retail Products and Services
+Minor Assembly Facilities 5 6
+All other uses 5 6
+Self-Service Storage
+All uses
+1/4,000 sq. ft. up to
+20,000 sq. ft.;
+1/20,000 sq. ft.
+thereafter
+None
+Vehicle Service and Repair
+All types 4 None
+
+Table 12.50.320-3:
+Required Vehicle Parking Spaces for Industrial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+Maximum*
+Zone A Zone B
+Industrial Services
+All uses None None
+Manufacturing and Production
+All uses 2.5 None
+Table 12.50.320-3:
+Required Vehicle Parking Spaces for Industrial Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+Maximum*
+Zone A Zone B
+Solid Waste Treatment and Recycling
+All uses None None
+Vehicle Storage
+All Uses 1.0/employee None
+Warehouse and Freight Movement
+All uses 0.4 0.5
+Wholesale Sales
+All Uses 3 None
+
+Table 12.50.320-4:
+Required Vehicle Parking Spaces for Institutional Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+Maximum*
+Zone A Zone B
+Colleges and Universities (measured per FTE student and employee)
+All uses 0.3 0.3
+Community Services
+All uses 4 5
+Detention Facilities (measured per bed)
+All uses 0.4 None
+Hospitals (measured per bed)
+All uses 3 None
+Assembly Facilities (measured by seating type/maximum occupancy* in largest assembly room)
+Per fixed seat where provided 1/3 seats 1/2 seats
+Table 12.50.320-4:
+Required Vehicle Parking Spaces for Institutional Uses
+(required spaces are per 1,000 sq. ft. Net Floor Area (NFA) or per student/employee on the largest shift, unless otherwise specified)
+Use Type
+Maximum*
+Zone A Zone B
+Per foot of bench/pew length where provided 0.5 0.8
+Per person where fixed seating not provided 0.6 1.0
+Schools (measured either per classroom or per student and employee)
+Elementary school (grades K—5) 4/classroom None
+Middle school (grades (6—8) 2/classroom 2/classroom
+High School (grades 9—12) 0.2/student and FTE employee
+0.2/student and FTE employee
+* As determined by the Building Official.
+
+Table 12.50.320-5:
+Required Vehicle Parking Spaces for Infrastructure and Utilities Facilities Uses (required spaces are per 1,000 sq. ft. Net Floor Area (NFA) or per employee on the largest shift, unless otherwise specified)
+Use Type
+Maximum*
+Zone A Zone B
+Aviation Uses
+Hangars (measured per aircraft space) 2 None
+Parks and Open Areas
+Indoor facilities 5 6
+Court sports 5/court 6/court
+Outdoor facilities (with bleachers) None None
+Outdoor facilities (without bleachers) 40/field None
+Public Safety Facilities (measured per FTE employee)
+All uses 2 2
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6275 § 1, 2018; Ord. 6149 § 1, 2015; Ord. 6110 § 7, 2015)

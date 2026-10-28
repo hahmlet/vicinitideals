@@ -1,0 +1,64 @@
+12.65.940  Street Cross-Sections.
+The Transportation Studies, Public Facility Master Plan Compliance Requirements, Figures and Maps, and Street Figures section includes the following figures:
+Figure 12.65.940-A: "L1" — City Residential Cul-de-sac/Local Street (No Parking)
+Figure 12.65.940-B: "L2" — City Residential Cul-de-sac/Local Street (Parking One Side)
+Figure 12.65.940-C: "L3" — City Residential Local Street (Parking Both Sides)
+Figure 12.65.940-D: "L4" — City Mixed-Use Local Street
+Figure 12.65.940-E: "Y1" — City Alley
+Figure 12.65.940-F: "N1" — City Neighborhood Route
+Figure 12.65.940-G: "N2" — City Green Neighborhood Route
+Figure 12.65.940-H: "C1" — City 3-Lane Collector
+Figure 12.65.940-I: "C2" — City 3-Lane Neighborhood Collector
+Figure 12.65.940-J: "C3" — City 3-Lane Collector with 12-Foot Sidewalks
+Figure 12.65.940-K: "C4" — City 3-Lane Collector at UGB Boundary
+Figure 12.65.940-L: "C5" — County 3-Lane Collector
+Figure 12.65.940-M: "C6" — County 3-Lane Collector at UGB Boundary
+Figure 12.65.940-N: "A1" — County 7-Lane Arterial with 12-Foot Sidewalks
+Figure 12.65.940-O: "A2" — County 5-Lane Arterial
+Figure 12.65.940-P: "A3" — County 5-Lane Arterial with 12-Foot Sidewalks
+Figure 12.65.940-Q: "A4" — County 3-Lane Arterial at UGB Boundary
+Figure 12.65.940-R: "A5" — County 3-Lane Arterial in a 5-Lane Right-of-Way
+Figure 12.65.940-S: Active Use Overlay
+Figure 12.65.940-T: Trail Adjacent to Public Local Street
+Note: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the eave or the top of the parapet, whichever is greater, may require an increased drivable surface width of 26 paved feet.
+
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Note #2: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the eave or the top of the parapet, whichever is greater, may require an increased drivable surface width (not including parking) of 26 paved feet.
+Figure 12.65.940-A: "L1" — City Residential Cul-de-sac/Local Street
+(<250 vehicles per day; no on-street parking)
+Figure 12.65.940-B: "L2" — City Residential Cul-de-sac/Local Street
+(> 250 vehicles per day but <1,500 vehicles per day; on-street parking on one side only)
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Note #2: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the eave or the top of the parapet, whichever is greater, may require an increased drivable surface width (not including parking) of 26 paved feet.
+
+Note: Where on street parking is provided, curb bulb-outs shall be used at all public and private street intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Figure 12.65.940-C: "L3" — City Residential Local Street
+(>1,500 vehicles per day; on-street parking on both sides)
+Figure 12.65.940-D: "L4" — City Mixed-Use Local Street
+Note: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the eave or the top of the parapet, whichever is greater, may require an increased drivable surface width of 26 paved feet.
+
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Figure 12.65.940-E: "Y1" — City Alley
+Figure 12.65.940-F: "N1" — City Neighborhood Route
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Note #2: Building height in excess of 30 feet as measured from the grade plane (as defined by Fire Code) to the eave or the top of the parapet, whichever is greater, may require an increased drivable surface width (not including parking) of 26 paved feet.
+
+Figure 12.65.940-G: "N2" — City Green Neighborhood Route
+Figure 12.65.940-H: "C1" — City 3-Lane Collector
+Figure 12.65.940-I: "C2" — City 3-Lane Neighborhood Collector
+Figure 12.65.940-J: "C3" — City 3-Lane Collector with 12-Foot Sidewalks
+Figure 12.65.940-K: "C4" — City 3-Lane Collector at UGB Boundary
+Figure 12.65.940-L: "C5" — County 3-Lane Collector
+Figure 12.65.940-M: "C6" — County 3-Lane Collector at UGB Boundary
+Figure 12.65.940-N: "A1" — County 7-Lane Arterial with 12-Foot Sidewalks
+Note #1: Where on street parking is provided, curb bulb-outs shall be used at all public and private street intersections, and at all commercial and multi-dwelling (5 or more dwellings) residential driveways.
+Figure 12.65.940-O: "A2" — County 5-Lane Arterial
+Figure 12.65.940-P:
+"A3" — County 5-Lane Arterial with 12-Foot Sidewalks
+Figure 12.65.940-Q:
+"A4" — County 3-Lane Arterial at UGB Boundary
+Figure 12.65.940-R:
+"A5" — County 3-Lane Arterial in a 5-Lane Right-of-Way
+(Ord. 6401 § 1, 2022; Ord. 6110 § 8, 2015)
+Figure 12.65.940-S: Active Use Overlay
+Figure 12.65.940-T: Trail Adjacent to Public Local Street

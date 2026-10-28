@@ -1,0 +1,41 @@
+12.40.240  Telecommunication Facilities.
+A. Characteristics. Telecommunication facilities are categorized in Section 12.10.550.
+Telecommunication facilities include a free-standing tower with attached antennae, and 1 or more ground-mounted equipment cabinets.
+B. Approval Process.
+Where allowed, telecommunication faci lities are subject to approval through the Conditional Use process under Section 12.80.020 and the Development Review process under Section 12.80.040.
+Requests for eligible modifications to existing facilities are subject to approval through a Type II Development Review process under Section 12.80.040.
+"Eligible modification requests" are defined in subsection D below.
+C. Exemptions. The following types of communications facilities are exempt from this section:
+1. Replacement of existing antenna on approved towers;
+2. Facilities regulated by the FCC under the Code of Federal Regulations: industrial, scientific and medical equipment; military and government communication towers; amateur (ham) and citizen band towers; and
+3. Temporary facilities used during community emergencies.
+D. Modifications to Existing Facilities.
+All modifications and expansions to existing facilities are permitted in every zone, subject to the requirements of this section.
+Certain modifications are deemed minor in nature and are deemed "eligible modifications" These modifications include the addition, removal, and/or replacement of transmission equipment that do not make a substantial change to the physical dimensions (height, mass, width) of the existing tower, support structure, or base station.
+Replacement of an existing tower may also be considered an eligible modification if such replacement meets the standards in paragraph 4 below.
+1. For the purpose of this section, "substantial change" means the following:
+a. The mounting of the proposed antenna on the tower would increase the existing height of the tower by more than 10%, or by the height of 1 additional antenna array with separation from the nearest existing antenna not to exceed 20 feet, whichever is greater, except that the mounting of the proposed antenna may exceed the size limits set forth in this subsection by up to an additional 5% if necessary to avoid interference with existing antennas; or
+b. The mounting of the proposed antenna would involve the installation of more than the standard number of new equipment cabinets for the technology involved (not to exceed 4) or more than 1 new equipment shelter; or
+c. The mounting of the proposed antenna would involve adding an appurtenance to the body of the tower that would protrude from the edge of the tower more than 20 feet, or more than the width of the tower structure at the level of the appurtenance, whichever is greater, except that the mounting of the proposed antenna may exceed the size limits set forth in this subsection to the extent necessary to shelter the antenna from inclement weather or to connect the antenna to the tower via cable; or
+d. The mounting of the proposed antenna would involve excavation outside the current tower site, defined as the current boundaries of the leased or owned property surrounding the tower and any access or utility easements currently related to the site.
+2. Increases to height allowed by this subsection above the existing tower shall be based on the existing height of the tower, excluding any tower lighting required in the original land use approval or in the proposed modification request.
+3. To the extent feasible, additional equipment shall maintain the appearance intended by the original facility, including, but not limited to, color, screening, landscaping, mounting configuration, or architectural treatment.
+
+4. To be considered an eligible modification, a replacement tower shall not exceed the height of the original tower by more than 10%, or the diameter of the original tower by more than 25% at any given point.
+E. Standards for Free-Standing Towers.
+1. Tower Finishes. Paint and color finishes on free-standing towers shall be selected and applied to reduce the tower's visual impact against the skyline.
+2. Co-Location Required. Approved new towers shall be designed and constructed to allow co-location of additional antennas.
+The Review Authority may require owners of approved towers to negotiate in good faith with parties seeking co-location.
+3. Equipment Cabinets. Ground-mounted equipment cabinets shall be enclosed within secure fences and screened with landscaping.
+4. Additional Setbacks. The Review Authority may require additional setbacks to a proposed tower to mitigate its visual impacts, protect existing vegetation, or allow use of a shared access.
+F. Standards for Antenna Installation.
+1. On Utility Poles. If antennas are installed on existing utility poles, the poles shall be maintained with the same colors as poles without antennas.
+If the antennas do not increase the overall height of the pole more than 20 feet, or by more than the minimum height necessary to achieve safety clearances as required by the utility pole owner, whichever is greater, Conditional Use approval is not required.
+2. On Existing Buildings. If antennas are installed on existing buildings, secondary equipment on the building roof shall be screened.
+If the antennas are not over 20 feet in height, or are below the maximum building height of the applicable zone, Conditional Use approval is not required.
+3. On or within Architectural Elements.
+Antenna may be installed on or within architectural elements such as church steeples or flag poles, if such installation is scaled in proportion with the architectural element.
+G. Restrictions.
+1. Antenna Required. Installation of towers without antenna, based on speculation of future antenna installation, is not permitted.
+2. Installation on Trees. Installation of transmitting or receiving equipment on trees is not permitted.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)

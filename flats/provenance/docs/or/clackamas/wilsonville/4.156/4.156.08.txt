@@ -1,0 +1,101 @@
+Section 4.156.08. Sign Regulations in the PDC, TC, PDI, and PF Zones.
+(.01) Freestanding and Ground Mounted Signs:
+A. One freestanding or ground mounted sign is allowed for the first 200 linear feet of site frontage.
+One additional freestanding or ground mounted sign may be added for through and corner lots having at least 200 feet of frontage on one street or right-of-way and 100 feet on the other street or right-of-way .
+B. The allowed height above ground of a freestanding or ground mounted sign is 20 feet except as noted in 1-2 below .
+1. The maximum allowed height above ground for signs along the frontage of Interstate 5, and parallel contiguous portions of streets, as identified in Figure S-4, associated with multiple tenants or businesses may be increased by three feet for each tenant space of 10,00 square feet or more of gross floor area up to a maximum of 35 feet.
+2. The allowed height above ground for signs in the TC Zone, Old T own Overlay Zone, and PDI Zone is eight feet, except those signs along the frontage of Interstate 5 and parallel contiguous portions of streets identified in Figure S-4.
+C. The maximum allowed area for each freestanding or ground-mounted sign is determined based on gross floor area and number of tenant spaces:
+1. For frontages along streets other than those indicated in two below sign area allowed is calculated as follows:
+a. The sign area allowed for signs pertaining to a single tenant:
+Gross Floor Area in a Single Building Maximum Allowed Sign Area
+Less than 11,000 sq. ft. 32 sq. ft.
+11,000—25,999 sq. ft. 32 sq. ft. + 2 sq. ft. per 1,000 sq. ft. of floor area greater than 10,000 rounded down to the nearest 1,000 sq. ft.
+26,000 sq. ft. or more 64 sq. ft.
+i. For PF (Public Facility) zoned properties adjacent to residential zoned land the maximum allowed area is 32 square feet.
+b. The maximum allowed sign area for signs pertaining to multiple tenants or businesses is 32 square feet plus the following for each tenant space:
+Gross Floor Area of Tenant Space
+Additional Allowed Sign Area for Tenant
+Space
+Less than 1,000 sq. ft. 3 sq. ft.
+1,000—10,999 3 sq. ft. + 3 sq. ft. per 1,000 sq. ft. of floor area rounded down to the nearest
+1,000 sq. ft.
+11,000 sq. ft. or more 32 sq. ft.
+i. The total sign area shall not exceed 200 square feet, except in the TC Zone,
+Old T own Overlay Zone, and PDI Zone the total sign area shall not exceed
+80 square feet.
+ii. Though the maximum allowed sign area is calculated based on number of tenant spaces and their size, the content of the sign and area used for different content is at the discretion of the sign owner, except for required addressing.
+2. Signs fronting Interstate 5 and parallel contiguous street sections, as identified in
+Figure S-4.
+a. For signs on properties or within developments with a single tenant or business the sign area allowed is 64 square feet.
+b. For signs on properties or within developments with multiple tenants or businesses the maximum allowed area is 64 square feet plus an additional 32 square feet for each tenant space of 10,000 square feet or more of gross floor area up to a maximum total sign area of 300 square feet.
+i. Though the sign area allowed is calculated based on number of large tenant spaces, the content of the sign and area used for different content is at the discretion of the sign owner, except for any required addressing.
+D. Pole or sign support placement shall be installed in a full vertical position.
+E. Freestanding and ground mounted signs shall not extend into or above public rights-of-way, parking areas, or vehicle maneuvering areas.
+F . The location of free standing or ground mounted signs located adjacent to or near the Public Right-of-Way shall be in compliance with the City's Public W orks Standards for sight distance clearance.
+Prior to construction, the location of the sign shall be approved by the City of Wilsonville Engineering Division.
+G. Freestanding and ground mounted signs shall be designed to match or complement the architectural design of buildings on the site.
+H. For freestanding and ground mounted signs greater than eight feet in height, the width of the sign shall not exceed the height.
+I. Along street frontages in the TC Zone and Old T own Overlay Zone monument style signs are required.
+J . Freestanding and ground mounted signs shall be no further than 15 feet from the property line and no closer than two feet from a sidewalk or other hard surface in the public right-of-way .
+K. Except for those signs fronting Interstate 5, freestanding and ground mounted signs shall include the address number of associated buildings unless otherwise approved in writing by the City and the Fire District.
+L. When a sign is designed based on the number of planned tenant spaces it shall remain a legal, conforming sign regardless of the change in the number of tenants or configuration of tenant spaces.
+(.02) Signs on Buildings:
+A. Sign Eligible Facades.
+Building signs are allowed on a facade of a tenant space or single tenant building when one or more of the following criteria are met:
+1. The facade has one or more entrances open to the general public;
+2. The facade faces a lot line with frontage on a street or private drive with a cross section similar to a public street, and no other buildings on the same lot obstruct the view of the building facade from the street or private drive; or
+3. The facade is adjacent to the primary parking area for the building or tenant.
+B. Sign Area Allowed:
+1. The sign area allowed for all building signs on a sign eligible façade is shown in the table below:
+Linear Length of Façade (feet) Sign Area Allowed*
+Less than 16 Area equal to linear length
+16 to 24 24 sq. ft.
+Greater than 24 to 32 32 sq. ft.
+Greater than 32 to 36 Area equal to linear length
+Linear Length of Façade (feet) Sign Area Allowed*
+Greater than 36 to 72 36 sq. ft.
+Greater than 72 36 sq. ft. plus 12 sq. ft. for each 24 linear feet or portion thereof greater than 72 up to a maximum of 200 sq. ft.
+* Except as noted in 2. through 5. below
+2. The sign area allowed for facades with a primary public entrance or with a frontage along a public street dominated by windows or glazing may be increased by transferring to the façade up to one-half the sign area allowed for adjacent facades up to 50 square feet.
+In no case shall the allowed sign area exceed an area equal to the linear length of the façade.
+3. The sign area allowed is increased as follows for signs at separate building entrances:
+a. For building entrances open to the general public located at least 50 feet apart on the same facade, the sign area allowed is increased by 50 percent up to 50 square feet.
+b. For building entrances located less than 50 feet apart on the same facades, the sign area allowed is increased by 20 percent up to 20 square feet.
+4. For businesses occupying multiple buildings in a campus setting, sign area shall be limited to that allowed for the largest building. which may then be distributed throughout the campus.
+5. If a façade otherwise not sign eligible faces a lot line with frontage on Interstate 5, the applicant can transfer sign area allowed from one of the locations described in a. and b. below .
+In no case shall the allowed sign area exceed an area equal to the allowed sign area for a sign eligible façade of the same linear length.
+a. The freestanding sign along the Interstate 5 frontage.
+This generally involves placing building signs on the subject façade in lieu of installing a freestanding sign.
+b. Adjacent façade up to 50 square feet, when a majority of the adjacent façade from which the sign area is being transferred is visible from Interstate 5.
+6. Calculating linear length of a façade for the purpose of determining maximum sign area allowed.
+For facades of a single tenant building the length the facade measured at the building line, except as noted in a. and b. below .
+For multi-tenant buildings the width of the façade of the tenant space shall be measured from the centerline of the party walls or the outer extent of the exterior wall at the building line, as applicable, except as noted in a. and b. below .
+Applicants shall provide the dimensions needed to calculate the length.
+Each tenant space or single occupant building shall not be considered to have more than five total facades.
+a. If a façade is curvilinear, stepped, or otherwise not a straight line, the façade shall be measured by drawing a straight line between the edges of the façade as shown in the figure below .
+b. For an "L" shaped tenant space or single tenant building the longest leg of the interior of the "L" shall be basis for measuring the length of the L-shaped facade.
+Sign area allowed based on the longest leg can be distributed between legs.
+
+C. The length of individual tenant signs shall not exceed 75 percent of the length of the facade of the tenant space.
+D. The height of building signs shall be within a definable sign band, fascia, or architectural feature and allow a definable space between the sign and the top and bottom of the sign band, fascia, or architectural feature.
+E. Types of signs permitted on buildings include wall flat, fascia, projecting, blade, marquee and awning signs.
+Roof-top signs are prohibited.
+(.03) Additional signs.
+Notwithstanding the signs allowed based on the site in (.01) and (.02) above, the following signs may be permitted, subject to standards and conditions in this Code:
+A. Directional Signs.
+In addition to exempt directional signs allowed under Subse ction 4.156.05(.02)C. freestanding or ground mounted directional signs six square feet or less in area and four feet or less in height:
+1. The signs shall be designed to match or complement the architectural design of buildings on the site;
+2. The signs shall only be placed at the intersection of internal circulation drives; and
+3. No more than one sign shall be placed per intersection corner with no more than two signs per intersection.
+B. Planned Development Signs.
+Up to 32 square feet of the allowed sign area for freestanding signs in a planned development may be used for a separate on-site monument sign or off-site monument sign on an adjacent parcel identifying the Planned Development project.
+C. Blade Signs.
+To aid in pedestrian wayfinding, one blade sign, not to exceed six square feet, per facade eligible for building signs.
+Blade signs over pedestrian accessible areas shall provide a minimum of eight feet of clearance from the ground.
+D. Fuel or Service Station Price Signs.
+In addition to the freestanding or ground mounted signs allowed, changeable copy signs shall be allowed for the purpose of advertising fuel prices, subject to the following standards and conditions:
+1. The signs shall have a maximum of 11 square feet in area per face per type of fuel sold and shall be permanently affixed to the building or a freestanding sign.
+2. The signs shall not be considered in calculating the sign area or number of signs allowed.
+3. Signs on fuel pumps shall be permitted, providing that they do not project beyond the outer edge of the pump in any direction.
+(Ord. No. 835, 6-5-2019)

@@ -1,0 +1,22 @@
+12.23.420  Housing Types.
+Table 12.23.420-1 lists Housing Types permitted in the SCC-SC zone.
+Housing Types are defined in
+Section 12.01.500.
+Table 12.23.420-1:
+Housing Types Permitted in the SCC-SC Zone
+Housing Types Status Clarifications
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+Table 12.23.420-1:
+Housing Types Permitted in the SCC-SC Zone
+Housing Types Status Clarifications
+Townhouse P
+Cottage Cluster N
+Multiple-dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling L Residential uses permitted behind or above commercial use.
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)

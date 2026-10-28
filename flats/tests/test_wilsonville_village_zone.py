@@ -252,4 +252,4 @@ def test_the_refusals_name_what_the_model_cannot_hold(
     held = village.values["parking_alley_access_required"]
     assert held.value is True
     assert "4.125(.05)(B)" in held.prov.cite
-    assert held.prov.quote == "or/clackamas/wilsonville/4.planning.txt#L4928-L4929"
+    assert held.prov.quote == "or/clackamas/wilsonville/4/4.125.txt#L112"
