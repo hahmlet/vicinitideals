@@ -536,14 +536,18 @@ datasets:
 
   corridor_blocks_gresham:
     kind: arcgis
-    label: Gresham CMF zoning blocks (the NE Glisan / NE 162nd corridor)
+    label: Gresham CMF and RTC zoning blocks (the NE Glisan / NE 162nd corridor; SE Stark in Rockwood)
     provides: overlay
     url: https://gis.greshamoregon.gov/ext/rest/services/GME/Planning/MapServer/4
-    where: "ZONE = 'CMF'"
+    where: "ZONE IN ('CMF', 'RTC')"
     fields: [ZONE]
     serves: [or/multnomah/gresham]
     notes: >-
-      Gresham's own zoning layer (the one zoning_gresham fetches), CMF only.
+      Gresham's own zoning layer (the one zoning_gresham fetches), CMF and RTC
+      only. RTC added 2026-10-28 (FOLLOWUPS 109 chunk 4) for the Rockwood
+      Town Center's Stark frontage (Table 4.0420 note 3, corridors.yaml
+      rockwood_stark); each named corridor keeps only its own zone's
+      polygons, so the CMF answer is unchanged.
       Gresham maps no corridor: Tables 4.0420 note 2 and 4.0430 note 14 name
       "the areas of CMF along the NE Glisan Street and NE 162nd Avenue
       corridors". flats/config/corridors.yaml reads the corridor off the

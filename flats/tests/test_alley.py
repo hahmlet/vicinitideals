@@ -428,7 +428,10 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # + 2 on 2026-10-20 (FOLLOWUPS 104): Gresham CMF on the NE Glisan / NE
     # 162nd corridor takes TLDR's rear yards (Table 4.0430 note 14), whose
     # alley rear is 8 feet; keyed to the rear line like the rest.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2
+    # + 6 on 2026-10-28 (FOLLOWUPS 109 chunk 4): Gresham DMU, DEM and DCL
+    # townhouse rows, alley rear 3 ft and back to 10 where the rear abuts a
+    # lower-density district (Table 4.1130 note 11), keyed to the rear line.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:

@@ -733,17 +733,23 @@ jurisdictions:
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf"
         confidence: verified
         notes: "Quadplexes explicitly prohibited in Gresham Butte overlay (hillside/fire risk); duplex max."
-      - zone: THR-SW
-        quadplex_allowed: false
+      # ported 2026-10-28 (FOLLOWUPS 109 chunk 4) by port_from_flats.zone_row: Townhouse P on unit lots
+      # with an alley at the rear (Table 4.1508 states no rear yard without one).
+      - zone: "THR-SW"
+        quadplex_allowed: true
+        setback_front_ft: 6
+        setback_side_ft: 5
+        setback_rear_ft: 0.67
+        setback_street_side_ft: 8
+        min_lot_sqft: 1800
+        min_frontage_ft: 20
+        min_lot_width_ft: 25
         min_lot_depth_ft: 65
-        # Table 4.1508 D.1 "Width at building line: Interior lot", "All Other Uses"
-        # row. Corner lot line asks more, not carried.
-        #   or/multnomah/gresham/4.1500.springwater.txt#L260
-        min_lot_width_ft: 20
-        source: "Gresham Development Code Table 4.1507 (Springwater)"
+        min_density_du_per_acre: 12
+        source: "Gresham Development Code Tables 4.1507/4.1508 (Springwater)"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf"
-        confidence: verified
-        notes: "Quadplex NP and detached SFD also NP — OAR mandate does not attach (townhouse/cottage-cluster zone)."
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham THR-SW) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       # ---- ported from the FLATS corpus 2026-09-02 -------------------------
       # These zones permit a quadplex and this file had never heard of them, so
       # every lot in them was dropped at `zone_not_in_rules` before anything was
@@ -928,6 +934,113 @@ jurisdictions:
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/multnomah/gresham DTM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      # ported 2026-10-28 (FOLLOWUPS 109 chunk 4) by port_from_flats.zone_row: zones that take the pod
+      # only as four townhouses on four unit lots (Steph 2026-10-15, "'Townhomes' will have separate
+      # lots"); RTC off SE Stark (Table 4.0420 note 3), DMU/DEM/DCL pending Map 4.1140's street types.
+      # Measured here so a lot whose pod cannot fit is RED; FLATS resolves the variants per lot.
+      - zone: "CNTH"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        setback_street_side_ft: 10
+        min_lot_width_ft: 25
+        min_density_du_per_acre: 30
+        source: "Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham CNTH) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CNTM"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        setback_street_side_ft: 10
+        min_lot_width_ft: 25
+        min_density_du_per_acre: 24
+        source: "Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham CNTM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CNRM"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        setback_street_side_ft: 10
+        min_lot_width_ft: 25
+        min_density_du_per_acre: 17
+        source: "Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham CNRM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "DMU"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
+        # lower-density district, note 11 -- FLATS reads that per lot).
+        #   or/multnomah/gresham/4.1100.downtown.txt#L476,L486,L488
+        setback_alley_ft: 3
+        setback_street_side_ft: 10
+        min_frontage_ft: 20
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 70
+        min_density_du_per_acre: 20
+        source: "Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham DMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "DEM"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
+        # lower-density district, note 11 -- FLATS reads that per lot).
+        #   or/multnomah/gresham/4.1100.downtown.txt#L476,L486,L488
+        setback_alley_ft: 3
+        setback_street_side_ft: 10
+        min_frontage_ft: 20
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 70
+        min_density_du_per_acre: 17
+        source: "Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham DEM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "DCL"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
+        # lower-density district, note 11 -- FLATS reads that per lot).
+        #   or/multnomah/gresham/4.1100.downtown.txt#L476,L486,L488
+        setback_alley_ft: 3
+        setback_street_side_ft: 10
+        min_frontage_ft: 20
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 70
+        min_density_du_per_acre: 17
+        source: "Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham DCL) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RTC"
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        min_lot_sqft: 10000
+        min_frontage_ft: 100
+        min_density_du_per_acre: 18
+        source: "Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/gresham RTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
 
   troutdale:
     eligible: true

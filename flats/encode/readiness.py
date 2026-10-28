@@ -730,8 +730,16 @@ _INCHES = re.compile(
 )
 
 
+#: A dimension in inches alone. Gresham's Springwater setback table gives the
+#: THR-SW townhouse rear yard on an alley as "8 in." -- the corpus stores
+#: feet, 0.67, and the quote states no such figure. Read only where the
+#: inches are not the tail of a feet-and-inches phrase (those are read above),
+#: and stated to the hundredth of a foot, which is how the corpus writes it.
+_INCHES_ONLY = re.compile(r"(?<![\d.])(\d+)\s*(?:in\.|inches|inch)(?![a-z])", re.I)
+
+
 def _in_feet(text: str) -> str:
-    """The same text with "8 ft. 6 in." also stated as 8.5.
+    """The same text with "8 ft. 6 in." also stated as 8.5, and "8 in." as 0.67.
 
     Added rather than substituted. The feet and the inches are each a number
     the page really prints, and a row elsewhere may be cited for one of them;
@@ -742,6 +750,8 @@ def _in_feet(text: str) -> str:
         for m in _INCHES.finditer(text)
         if int(m.group(2)) < 12
     ]
+    alone = _INCHES.sub(" ", text)
+    extra += [f"{round(int(m.group(1)) / 12, 2):g}" for m in _INCHES_ONLY.finditer(alone) if int(m.group(1)) < 12]
     return f"{text} {' '.join(extra)}" if extra else text
 
 
@@ -757,7 +767,12 @@ def _in_feet(text: str) -> str:
 #: earlier pattern skipped any token containing a point, so a whole column of
 #: correctly cited rates read as misquoted -- the check disagreeing with the
 #: flag that was set to tell it about this exact document.
-_GLUED = re.compile(r"(?<![\d.,])(\d+(?:\.\d+)?)(?![\d.,])")
+#:
+#: A comma after the token ends it when a space follows: Gresham's Downtown
+#: table prints a maximum front setback of 10 with notes 12 and 16 as
+#: "1012, 16", and "7,500" -- a comma with a digit straight after -- is still
+#: one number and still left alone.
+_GLUED = re.compile(r"(?<![\d.,])(\d+(?:\.\d+)?)(?![\d.]|,\d)")
 
 
 def _unmarked(text: str) -> str:

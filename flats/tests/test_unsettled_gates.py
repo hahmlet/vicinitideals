@@ -103,7 +103,11 @@ def test_a_narrowed_note_settles_the_gate_it_never_spoke_to(
     resolved = rules.resolve(layer, zone)
 
     assert resolved.values["quadplex_allowed"].value is False
-    assert resolved.values["quadplex_allowed"].levers == frozenset()
+    # RTC's Townhouse L3 opened the unit-lot form on 2026-10-28, so its gate
+    # now turns on the plat and on note 3's Stark frontage -- its own levers,
+    # never the CMF note's `civic_corridor`.
+    opened = {"unit_lots", "rockwood_stark_frontage"} if zone == "RTC" else set()
+    assert resolved.values["quadplex_allowed"].levers == frozenset(opened)
     assert "quadplex_allowed" not in caps_for(layer, zone)
 
 

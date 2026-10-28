@@ -427,6 +427,38 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "rockwood_stark_frontage",
+        "site_fact",
+        "A Gresham RTC lot touches SE Stark Street. Table 4.0420 note 3 limits "
+        "the townhouse permission in the Rockwood Town Center: inside the "
+        "Rockwood Town Center Mixed-Use Area, buildings on parcels with at "
+        "least 100 ft of frontage on Stark within 500 ft of the 181st or "
+        "187th intersections must put non-residential uses on the ground "
+        "floor, which a row of four townhouses cannot. Read off the street "
+        "network by name (flats/config/corridors.yaml, rockwood_stark) the "
+        "way Gresham's CMF corridor is: true for a street lot line on SE "
+        "Stark or land within reach of it, false for a lot in an RTC block "
+        "that does or does not reach Stark whose own land does not touch it. "
+        "Wider than the note -- no 100 ft or 500 ft test -- so it can close a "
+        "lot the note leaves open, never open one it closes. Unanswered where "
+        "the data is short, which leaves the lot out of GREEN.",
+        evidence="the RLIS centreline of SE Stark St and Gresham's RTC zoning blocks",
+        assume=None,
+    ),
+    ConditionDef(
+        "gresham_downtown_barred_street",
+        "site_fact",
+        "The Gresham Downtown lot's townhouses could take access only from a "
+        "street type that bars it: Table 4.1130 prints \"Not allowed on this "
+        "street type\" for townhouses on Main Avenue, and 4.1142 prohibits "
+        "townhouse access from an Urban Boulevard or Beech and any parking "
+        "access from Main or Stanley. The street types are drawn on Map "
+        "4.1140, which no data here holds, so the fact is unmeasured and every "
+        "Downtown townhouse lot (DMU, DEM, DCL) stays out of GREEN on it.",
+        evidence="GDC Map 4.1140, Downtown Plan District street types, against the lot's street lines",
+        assume=None,
+    ),
+    ConditionDef(
         "civic_corridor_setback",
         "site_fact",
         "A street lot line of the site is adjacent to a Civic Corridor shown "

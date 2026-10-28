@@ -1,5 +1,5 @@
 {
-  "digest": "479262a7d9b887648aa86ca4696e43156b05a80e1ac40ebf3143e0e96e0eeffe",
+  "digest": "52d7d66cd7e7dc259f3fd44894f7b665138158591c496284c4ca4813399a9b87",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -194,7 +194,7 @@
       ]
     },
     "or/multnomah/gresham": {
-      "section_unread": 309,
+      "section_unread": 395,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -253,6 +253,30 @@
           "kind": "heading_same_file"
         },
         {
+          "zone": "DCL",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "DEM",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "DMU",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957",
+          "kind": "heading_same_file"
+        },
+        {
           "zone": "DRL-1",
           "field": "building_frontage_min_pct [unit_lots]",
           "claimed": "7.0420",
@@ -379,6 +403,30 @@
           "found": "7.0512",
           "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
           "kind": "heading_other_file"
+        },
+        {
+          "zone": "RTC",
+          "field": "building_frontage_min_pct [unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0431",
+          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "RTC",
+          "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "RTC",
+          "field": "orientation_constraint [unit_lots]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "7.0431",
+          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
+          "kind": "heading_same_file"
         },
         {
           "zone": "SC",
@@ -395,6 +443,14 @@
           "found": "7.0512",
           "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
           "kind": "heading_other_file"
+        },
+        {
+          "zone": "THR-SW",
+          "field": "review_discretion",
+          "claimed": "4.1507 4.1508",
+          "found": "4.1508 4.1532 4.1534",
+          "quote": "or/multnomah/gresham/4.1500.springwater.txt#L304-L309,L314,L816-L818,L829-L831",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Gresham",

@@ -443,7 +443,9 @@ def test_a_neighbours_alias_is_spelled_as_the_block_it_screens_under(layers) -> 
 
 
 def test_a_layer_that_declares_no_list_answers_nothing_however_the_fabric_reads(layers) -> None:
-    # Gresham has the fact registered and no list: silence, as before.
+    # Gresham lists only `abuts_lower_density_zone` (since 2026-10-28, for the
+    # Downtown townhouse rows): that one is answered and the facts it lists
+    # nothing for stay silent, as before.
     got = observed_facts(
         row(
             jurisdiction="gresham",
@@ -452,7 +454,10 @@ def test_a_layer_that_declares_no_list_answers_nothing_however_the_fabric_reads(
         ),
         layers,
     )
-    assert not any(name.startswith("abuts_") and name.endswith("_zone") for name in got)
+    assert {name for name in got if name.startswith("abuts_") and name.endswith("_zone")} == {
+        "abuts_lower_density_zone"
+    }
+    assert got["abuts_lower_density_zone"] is False
 
 
 def test_a_stage_file_from_before_the_neighbour_column_leaves_the_facts_unasked(layers) -> None:

@@ -4742,45 +4742,381 @@ zones:
   CNTH:
     section: ["4.12"]
     cite_default:
-      cite: Gresham Development Code Table 4.1220(A) (Civic Neighborhood)
+      cite: Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
       retrieved: '2026-08-19'
     quadplex_allowed:
+      # Table 4.1220(A): NP for a quadplex in all three Civic Neighborhood
+      # columns (L200) and P for a townhouse in all three (L201).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
       value: false
       quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.1220(A), Townhouse P in the CNTH column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L201"
+    max_height_stories:
+      # Table 4.1230(A), Maximum Building Height, CNTH column: 10 stories.
+      # Height in storeys only; no figure in feet anywhere in the chapter.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316-L319"
+    min_density_du_per_acre:
+      # Table 4.1230(A), Residential Net Density Minimum, CNTH column. A
+      # floor per acre: four units clear it on a small lot and fall short on
+      # a large one.
+      value: 30
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316,L323"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Table 4.1230(A), Residential Net Density Maximum, CNTH column:
+      # "none" -- exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316,L323-L324"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    min_lot_sqft:
+      # Table 4.1230(B), Townhouse: "Minimum Lot Size none". The zone takes
+      # the pod only as townhouses, so this is each unit lot's standard.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L363"
+    min_lot_width_ft:
+      # "Width at building line, interior lot: 16 feet"; corner lot 25.
+      value: 16
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L361"
+      variants:
+        - value: 25
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L362"
+    setback_front_ft:
+      # Table 4.1230(B), Townhouse, by the street type of the site's primary
+      # frontage (Map 4.1242, not held): 10 on an Urban Boulevard and on
+      # Wallula, 5 on the other three. The largest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L355"
+    setback_front_max_ft:
+      # Maximum front: 20, 10, 20, 10, 10 by street type. The smallest is
+      # taken -- a maximum, so the small number is the strict one -- and with
+      # the 10 ft minimum above it pins the facade at 10 ft, which sits
+      # inside every street type's own window.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L354,L359"
+    setback_street_side_ft:
+      # Street Side 5 on every street type, but note 3: 10 where the street
+      # side fronts NW Wallula Avenue. The 10 is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L356,L385"
+    setback_side_ft:
+      # Side 0 on an Urban Boulevard, 5 on the other four; note 2: interior
+      # side, not common wall. The 5 is taken.
+      value: 5
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L354,L357,L384"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L358"
     notes: >-
-      Table 4.1220(A) reads NP for a quadplex in all three Civic Neighborhood columns and P for a townhouse in all three. Transit High Density is the densest of the three and refuses the pod on one lot just the same. The split-plat path is refused throughout Gresham for one reason:
-      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
-      Division as still "considered a quadplex", so a P on the Townhouse row
-      does not reach this building.
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling: Table 4.1220(A) reads NP
+      for a quadplex and P for a townhouse in this column, and the townhouse
+      row of Table 4.1230(B) is what is encoded. Until then the split plat
+      was refused here on the 3.0100 sentence that an MHLD-divided quadplex
+      is still a quadplex, which governs that path and not a townhouse
+      subdivision. The setbacks turn on the street type of the site's
+      primary frontage (4.1240, Map 4.1242), which no data here holds, so
+      each is the strict limb across the five types: front 10 (Urban
+      Boulevard, Wallula), maximum front 10, street side 10 (note 3,
+      Wallula), side 5, rear 5. Design review (4.1250) offers a Clear and
+      Objective Track decided by the Manager (L795-L841), so it is no field.
+      The 4.1252 townhouse standards are design details (orientation S6 --
+      already the townhouse plat's -- garage widths S12, driveway approach
+      widths S14) or the 7.0431 parking rules the defaults already carry
+      (S15, S16: no front or side parking unless every lot has 15 ft on a
+      local street; a corner project takes one approach on the side street;
+      otherwise one consolidated driveway). S2.a bars individual townhouse
+      driveways on an Urban Boulevard or Civic Drive; the pod's one shared
+      drive is the consolidated driveway S16 asks for, not an individual
+      one. Height transition (9.0600) does not apply to middle housing
+      (9.0600 L36-L37), and Gresham's middle housing includes townhouses.
+      No parking minimum (defaults, 9.0802(A)). Transit High Density is the densest of the three; at 30 units per net acre the floor holds four units to 5,808 sq ft.
   CNTM:
     section: ["4.12"]
     cite_default:
-      cite: Gresham Development Code Table 4.1220(A) (Civic Neighborhood)
+      cite: Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
       retrieved: '2026-08-19'
     quadplex_allowed:
+      # Table 4.1220(A): NP for a quadplex in all three Civic Neighborhood
+      # columns (L200) and P for a townhouse in all three (L201).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
       value: false
       quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.1220(A), Townhouse P in the CNTM column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L201"
+    max_height_stories:
+      # Table 4.1230(A), Maximum Building Height, CNTM column: 8 stories.
+      # Height in storeys only; no figure in feet anywhere in the chapter.
+      value: 8
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316-L319"
+    min_density_du_per_acre:
+      # Table 4.1230(A), Residential Net Density Minimum, CNTM column. A
+      # floor per acre: four units clear it on a small lot and fall short on
+      # a large one.
+      value: 24
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316,L323"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Table 4.1230(A), Residential Net Density Maximum, CNTM column:
+      # "none" -- exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316,L323-L324"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    min_lot_sqft:
+      # Table 4.1230(B), Townhouse: "Minimum Lot Size none". The zone takes
+      # the pod only as townhouses, so this is each unit lot's standard.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L363"
+    min_lot_width_ft:
+      # "Width at building line, interior lot: 16 feet"; corner lot 25.
+      value: 16
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L361"
+      variants:
+        - value: 25
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L362"
+    setback_front_ft:
+      # Table 4.1230(B), Townhouse, by the street type of the site's primary
+      # frontage (Map 4.1242, not held): 10 on an Urban Boulevard and on
+      # Wallula, 5 on the other three. The largest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L355"
+    setback_front_max_ft:
+      # Maximum front: 20, 10, 20, 10, 10 by street type. The smallest is
+      # taken -- a maximum, so the small number is the strict one -- and with
+      # the 10 ft minimum above it pins the facade at 10 ft, which sits
+      # inside every street type's own window.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L354,L359"
+    setback_street_side_ft:
+      # Street Side 5 on every street type, but note 3: 10 where the street
+      # side fronts NW Wallula Avenue. The 10 is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L356,L385"
+    setback_side_ft:
+      # Side 0 on an Urban Boulevard, 5 on the other four; note 2: interior
+      # side, not common wall. The 5 is taken.
+      value: 5
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L354,L357,L384"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L358"
     notes: >-
-      Table 4.1220(A) reads NP for a quadplex in all three Civic Neighborhood columns and P for a townhouse in all three. The split-plat path is refused throughout Gresham for one reason:
-      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
-      Division as still "considered a quadplex", so a P on the Townhouse row
-      does not reach this building.
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling: Table 4.1220(A) reads NP
+      for a quadplex and P for a townhouse in this column, and the townhouse
+      row of Table 4.1230(B) is what is encoded. Until then the split plat
+      was refused here on the 3.0100 sentence that an MHLD-divided quadplex
+      is still a quadplex, which governs that path and not a townhouse
+      subdivision. The setbacks turn on the street type of the site's
+      primary frontage (4.1240, Map 4.1242), which no data here holds, so
+      each is the strict limb across the five types: front 10 (Urban
+      Boulevard, Wallula), maximum front 10, street side 10 (note 3,
+      Wallula), side 5, rear 5. Design review (4.1250) offers a Clear and
+      Objective Track decided by the Manager (L795-L841), so it is no field.
+      The 4.1252 townhouse standards are design details (orientation S6 --
+      already the townhouse plat's -- garage widths S12, driveway approach
+      widths S14) or the 7.0431 parking rules the defaults already carry
+      (S15, S16: no front or side parking unless every lot has 15 ft on a
+      local street; a corner project takes one approach on the side street;
+      otherwise one consolidated driveway). S2.a bars individual townhouse
+      driveways on an Urban Boulevard or Civic Drive; the pod's one shared
+      drive is the consolidated driveway S16 asks for, not an individual
+      one. Height transition (9.0600) does not apply to middle housing
+      (9.0600 L36-L37), and Gresham's middle housing includes townhouses.
+      No parking minimum (defaults, 9.0802(A)). At 24 units per net acre the floor holds four units to 7,260 sq ft.
   CNRM:
     section: ["4.12"]
     cite_default:
-      cite: Gresham Development Code Table 4.1220(A) (Civic Neighborhood)
+      cite: Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
       retrieved: '2026-08-19'
     quadplex_allowed:
+      # Table 4.1220(A): NP for a quadplex in all three Civic Neighborhood
+      # columns (L200) and P for a townhouse in all three (L201).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
       value: false
       quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.1220(A), Townhouse P in the CNRM column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L201"
+    max_height_stories:
+      # Table 4.1230(A), Maximum Building Height, CNRM column: 6 stories, or 4 within 50 ft of the
+      # NW Wallula Ave right of way, which is not mapped here, so 4.
+      # Height in storeys only; no figure in feet anywhere in the chapter.
+      value: 4
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316-L319"
+    min_density_du_per_acre:
+      # Table 4.1230(A), Residential Net Density Minimum, CNRM column. A
+      # floor per acre: four units clear it on a small lot and fall short on
+      # a large one.
+      value: 17
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316,L323"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Table 4.1230(A), Residential Net Density Maximum, CNRM column: 30.
+      value: 30
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L316,L323-L324"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    min_lot_sqft:
+      # Table 4.1230(B), Townhouse: "Minimum Lot Size none". The zone takes
+      # the pod only as townhouses, so this is each unit lot's standard.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L363"
+    min_lot_width_ft:
+      # "Width at building line, interior lot: 16 feet"; corner lot 25.
+      value: 16
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L361"
+      variants:
+        - value: 25
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L362"
+    setback_front_ft:
+      # Table 4.1230(B), Townhouse, by the street type of the site's primary
+      # frontage (Map 4.1242, not held): 10 on an Urban Boulevard and on
+      # Wallula, 5 on the other three. The largest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L355"
+    setback_front_max_ft:
+      # Maximum front: 20, 10, 20, 10, 10 by street type. The smallest is
+      # taken -- a maximum, so the small number is the strict one -- and with
+      # the 10 ft minimum above it pins the facade at 10 ft, which sits
+      # inside every street type's own window.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L354,L359"
+    setback_street_side_ft:
+      # Street Side 5 on every street type, but note 3: 10 where the street
+      # side fronts NW Wallula Avenue. The 10 is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L356,L385"
+    setback_side_ft:
+      # Side 0 on an Urban Boulevard, 5 on the other four; note 2: interior
+      # side, not common wall. The 5 is taken.
+      value: 5
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L352-L354,L357,L384"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L354,L358"
     notes: >-
-      Table 4.1220(A) reads NP for a quadplex in all three Civic Neighborhood columns and P for a townhouse in all three. Residential Mid-Rise is the one of the three whose name suggests housing, and it is no different. The split-plat path is refused throughout Gresham for one reason:
-      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
-      Division as still "considered a quadplex", so a P on the Townhouse row
-      does not reach this building.
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling: Table 4.1220(A) reads NP
+      for a quadplex and P for a townhouse in this column, and the townhouse
+      row of Table 4.1230(B) is what is encoded. Until then the split plat
+      was refused here on the 3.0100 sentence that an MHLD-divided quadplex
+      is still a quadplex, which governs that path and not a townhouse
+      subdivision. The setbacks turn on the street type of the site's
+      primary frontage (4.1240, Map 4.1242), which no data here holds, so
+      each is the strict limb across the five types: front 10 (Urban
+      Boulevard, Wallula), maximum front 10, street side 10 (note 3,
+      Wallula), side 5, rear 5. Design review (4.1250) offers a Clear and
+      Objective Track decided by the Manager (L795-L841), so it is no field.
+      The 4.1252 townhouse standards are design details (orientation S6 --
+      already the townhouse plat's -- garage widths S12, driveway approach
+      widths S14) or the 7.0431 parking rules the defaults already carry
+      (S15, S16: no front or side parking unless every lot has 15 ft on a
+      local street; a corner project takes one approach on the side street;
+      otherwise one consolidated driveway). S2.a bars individual townhouse
+      driveways on an Urban Boulevard or Civic Drive; the pod's one shared
+      drive is the consolidated driveway S16 asks for, not an individual
+      one. Height transition (9.0600) does not apply to middle housing
+      (9.0600 L36-L37), and Gresham's middle housing includes townhouses.
+      No parking minimum (defaults, 9.0802(A)). The density window is 17 to 30 units per net acre: four units on 5,808 to 10,249 sq ft.
   DRL-1:
     section: ["4.11", "7.042"]
     min_density_du_per_acre:
@@ -5571,33 +5907,496 @@ zones:
   DMU:
     section: ["4.11"]
     cite_default:
-      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
+      # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
       value: false
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246"
-    notes: 'Table 4.1120 reads NP in this column for Quadplex (L246), and that is the whole screen: the use is out, so the chapter''s dimensional table is not read for this district and none of its standards are encoded. A decided RED and an unread district look identical in a count, so the distinction is worth stating -- this one is decided. Two other rows of the same table were checked before settling it, because either could have reopened the district. Multi-Family is a bare P here (L249), and does not reach this building: GDC 3.0100 defines a Multi-Family Dwelling as five or more units and adds that Multi-Family dwellings are not middle housing (3.0100.definitions.txt L939-L942). Townhouse is also a bare P (L247), and Table 4.1130 prints a whole setback row headed "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L476) -- so the code plainly contemplates attached housing here. What closes it is the definition: a quadplex divided onto individual lots through a Middle Housing Land Division is still "considered a quadplex" (L962-L964), so the split plat does not move the pod into the Townhouse row. The path that is NOT ruled out is a genuine townhouse subdivision -- four lots created first, then four attached units built on them, which the Townhouse definition (L952-L954) reaches on its own terms and which the Downtown row states no minimum lot size for at all. That is a legal reading rather than a sentence in the code, so it is written down here rather than encoded as a variant; a variant on unit_lots would fire off the design catalog and turn 42 lots green on my reading rather than on Gresham''s. Note 1(a) does name DMU -- plexes on a lot of record 6,500 sq ft or smaller -- and it is not a drafting error and not an opening: the Duplex row one line above (L244) reads L1 in this column where Quadplex reads NP, so the note is serving the row that carries the marker. The table and its note agree.'
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.1120, Townhouse P in the DMU column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L247"
+        # The Downtown street types (4.1140, Map 4.1140) take the townhouse
+        # back on some streets: "Not allowed on this street type" on Main
+        # Avenue (Table 4.1130, L477), no access to townhouses from an Urban
+        # Boulevard or Beech (4.1142(A)(6), (C)(9)), no parking access from
+        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Nothing here holds
+        # the map, so every lot is unanswered on it and screens UNKNOWN, not
+        # GREEN, until Map 4.1140 is traced.
+        - value: false
+          when: [unit_lots, gresham_downtown_barred_street]
+          cite: GDC Table 4.1130 (Townhouse not allowed on the Main Avenue street type) and 4.1142(A)(6), (C)(9), (D)(3), (E)(4) (no townhouse or parking access from Urban Boulevard, Beech, Main or Stanley)
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L478,L919-L921,L994,L1017-L1019,L1055-L1057"
+    max_height_ft:
+      # Table 4.1130, Maximum Height, DMU column. The second column of the
+      # row is the N Main Avenue strip (45), not a district; note 1 sends a
+      # site within 110 ft of Main's centre line to it, which still clears
+      # the pod.
+      value: 125
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424-L426"
+    min_density_du_per_acre:
+      value: 20
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L435-L437"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Table 4.1130, Maximum Residential Net Density, DMU column: "No
+      # maximum" -- exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L443"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    min_lot_sqft:
+      # "Townhouse: None". The zone takes the pod only as townhouses, so this
+      # is each unit lot's standard.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L511-L513"
+    min_lot_width_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+    min_lot_depth_ft:
+      # "Depth, interior lot: 70 feet", read as DCC reads it: no corner row.
+      value: 70
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
+    setback_front_ft:
+      # The "Townhouse in DCC, DMU, DTM, DEM, and DCL" row, by street type
+      # (Map 4.1140, not held): facade 10 on an Urban Boulevard, 5 on the
+      # others. The largest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L478"
+    setback_front_max_ft:
+      # Maximum front 10 (Urban Boulevard, Downtown Local), 15 (Beech,
+      # Stanley), 20 (Cleveland). The smallest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L476,L489,L562,L569"
+    setback_garage_entrance_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L476,L480,L568"
+    setback_street_side_ft:
+      # Streetside 10 on an Urban Boulevard, 5 elsewhere (note 13: the front
+      # facade setback of the side street's type). The 10 is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L481-L483,L564-L565"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L481-L482"
+      variants:
+        # Note 11: 10 ft where the side yard abuts DRL-1, DRL-2, LDR-5,
+        # LDR-7, TR or TLDR. Read off the lot's neighbours (the layer's
+        # `neighbours:` block) and applied to every side when any line abuts.
+        - value: 10
+          when: [abuts_lower_density_zone]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L486-L487"
+      variants:
+        - value: 3
+          when: [alley_at_rear]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L486,L488"
+        - value: 10
+          when: [alley_at_rear, abuts_lower_density_zone]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    review_discretion:
+      # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
+      # permitted without permission of the City and shall be allowed only
+      # in instances that permit no other options." A permission with no
+      # measurable test, for the pod's one drive: inside the UGB that is
+      # GREEN with CLEAR-OBJECTIVE (rulings.yaml
+      # 2026-10-15-clear-objective-green-flag).
+      value: judgement
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957"
+    notes: >-
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
+      quadplex and P for a townhouse here, and Table 4.1130 prints its own
+      "Townhouse in DCC, DMU, DTM, DEM, and DCL" row (L476-L489), which is
+      what is encoded. The earlier note on this district held the townhouse
+      subdivision open as a legal reading rather than encode it on mine; the
+      ruling is Steph's. Every setback is the strict limb across the six
+      Downtown street types, because Map 4.1140 is not held: front 10,
+      maximum front 10, street side 10, garage 15. The same map decides the
+      street-type bars on the use variant (gresham_downtown_barred_street),
+      so these lots screen UNKNOWN rather than GREEN until it is traced. The
+      Downtown Local curb-cut permission is review_discretion. The 4.1152
+      frontage percentages sit under "All Development", which leaves
+      townhouses out (L1234), and the townhouse orientation rules (S6) are
+      the townhouse plat's own. Height transition (9.0600) does not apply to
+      middle housing. The floor of 20 units per net acre holds four units to 8,712 sq ft.
   DEM:
     section: ["4.11"]
     cite_default:
-      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
+      # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
       value: false
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246"
-    notes: 'Table 4.1120 reads NP in this column for Quadplex (L246), and that is the whole screen: the use is out, so the chapter''s dimensional table is not read for this district and none of its standards are encoded. A decided RED and an unread district look identical in a count, so the distinction is worth stating -- this one is decided. Two other rows of the same table were checked before settling it, because either could have reopened the district. Multi-Family is a bare P here (L249), and does not reach this building: GDC 3.0100 defines a Multi-Family Dwelling as five or more units and adds that Multi-Family dwellings are not middle housing (3.0100.definitions.txt L939-L942). Townhouse is also a bare P (L247), and Table 4.1130 prints a whole setback row headed "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L476) -- so the code plainly contemplates attached housing here. What closes it is the definition: a quadplex divided onto individual lots through a Middle Housing Land Division is still "considered a quadplex" (L962-L964), so the split plat does not move the pod into the Townhouse row. The path that is NOT ruled out is a genuine townhouse subdivision -- four lots created first, then four attached units built on them, which the Townhouse definition (L952-L954) reaches on its own terms and which the Downtown row states no minimum lot size for at all. That is a legal reading rather than a sentence in the code, so it is written down here rather than encoded as a variant; a variant on unit_lots would fire off the design catalog and turn 30 lots green on my reading rather than on Gresham''s.'
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.1120, Townhouse P in the DEM column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L247"
+        # The Downtown street types (4.1140, Map 4.1140) take the townhouse
+        # back on some streets: "Not allowed on this street type" on Main
+        # Avenue (Table 4.1130, L477), no access to townhouses from an Urban
+        # Boulevard or Beech (4.1142(A)(6), (C)(9)), no parking access from
+        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Nothing here holds
+        # the map, so every lot is unanswered on it and screens UNKNOWN, not
+        # GREEN, until Map 4.1140 is traced.
+        - value: false
+          when: [unit_lots, gresham_downtown_barred_street]
+          cite: GDC Table 4.1130 (Townhouse not allowed on the Main Avenue street type) and 4.1142(A)(6), (C)(9), (D)(3), (E)(4) (no townhouse or parking access from Urban Boulevard, Beech, Main or Stanley)
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L478,L919-L921,L994,L1017-L1019,L1055-L1057"
+    max_height_ft:
+      # Table 4.1130, Maximum Height, DEM column. The second column of the
+      # row is the N Main Avenue strip (45), not a district; note 1 sends a
+      # site within 110 ft of Main's centre line to it, which still clears
+      # the pod.
+      value: 70
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424-L426"
+    min_density_du_per_acre:
+      value: 17
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L435-L437"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Table 4.1130, Maximum Residential Net Density, DEM column: "No
+      # maximum" -- exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L443"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    min_lot_sqft:
+      # "Townhouse: None". The zone takes the pod only as townhouses, so this
+      # is each unit lot's standard.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L511-L513"
+    min_lot_width_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+    min_lot_depth_ft:
+      # "Depth, interior lot: 70 feet", read as DCC reads it: no corner row.
+      value: 70
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
+    setback_front_ft:
+      # The "Townhouse in DCC, DMU, DTM, DEM, and DCL" row, by street type
+      # (Map 4.1140, not held): facade 10 on an Urban Boulevard, 5 on the
+      # others. The largest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L478"
+    setback_front_max_ft:
+      # Maximum front 10 (Urban Boulevard, Downtown Local), 15 (Beech,
+      # Stanley), 20 (Cleveland). The smallest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L476,L489,L562,L569"
+    setback_garage_entrance_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L476,L480,L568"
+    setback_street_side_ft:
+      # Streetside 10 on an Urban Boulevard, 5 elsewhere (note 13: the front
+      # facade setback of the side street's type). The 10 is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L481-L483,L564-L565"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L481-L482"
+      variants:
+        # Note 11: 10 ft where the side yard abuts DRL-1, DRL-2, LDR-5,
+        # LDR-7, TR or TLDR. Read off the lot's neighbours (the layer's
+        # `neighbours:` block) and applied to every side when any line abuts.
+        - value: 10
+          when: [abuts_lower_density_zone]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L486-L487"
+      variants:
+        - value: 3
+          when: [alley_at_rear]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L486,L488"
+        - value: 10
+          when: [alley_at_rear, abuts_lower_density_zone]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    review_discretion:
+      # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
+      # permitted without permission of the City and shall be allowed only
+      # in instances that permit no other options." A permission with no
+      # measurable test, for the pod's one drive: inside the UGB that is
+      # GREEN with CLEAR-OBJECTIVE (rulings.yaml
+      # 2026-10-15-clear-objective-green-flag).
+      value: judgement
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957"
+    notes: >-
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
+      quadplex and P for a townhouse here, and Table 4.1130 prints its own
+      "Townhouse in DCC, DMU, DTM, DEM, and DCL" row (L476-L489), which is
+      what is encoded. The earlier note on this district held the townhouse
+      subdivision open as a legal reading rather than encode it on mine; the
+      ruling is Steph's. Every setback is the strict limb across the six
+      Downtown street types, because Map 4.1140 is not held: front 10,
+      maximum front 10, street side 10, garage 15. The same map decides the
+      street-type bars on the use variant (gresham_downtown_barred_street),
+      so these lots screen UNKNOWN rather than GREEN until it is traced. The
+      Downtown Local curb-cut permission is review_discretion. The 4.1152
+      frontage percentages sit under "All Development", which leaves
+      townhouses out (L1234), and the townhouse orientation rules (S6) are
+      the townhouse plat's own. Height transition (9.0600) does not apply to
+      middle housing. The floor of 17 units per net acre holds four units to 10,249 sq ft.
   DCL:
     section: ["4.11"]
     cite_default:
-      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
+      # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
       value: false
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246"
-    notes: 'Table 4.1120 reads NP in this column for Quadplex (L246), and that is the whole screen: the use is out, so the chapter''s dimensional table is not read for this district and none of its standards are encoded. A decided RED and an unread district look identical in a count, so the distinction is worth stating -- this one is decided. Two other rows of the same table were checked before settling it, because either could have reopened the district. Multi-Family is a bare P here (L249), and does not reach this building: GDC 3.0100 defines a Multi-Family Dwelling as five or more units and adds that Multi-Family dwellings are not middle housing (3.0100.definitions.txt L939-L942). Townhouse is also a bare P (L247), and Table 4.1130 prints a whole setback row headed "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L476) -- so the code plainly contemplates attached housing here. What closes it is the definition: a quadplex divided onto individual lots through a Middle Housing Land Division is still "considered a quadplex" (L962-L964), so the split plat does not move the pod into the Townhouse row. The path that is NOT ruled out is a genuine townhouse subdivision -- four lots created first, then four attached units built on them, which the Townhouse definition (L952-L954) reaches on its own terms and which the Downtown row states no minimum lot size for at all. That is a legal reading rather than a sentence in the code, so it is written down here rather than encoded as a variant; a variant on unit_lots would fire off the design catalog and turn 152 lots green on my reading rather than on Gresham''s. DCL is also the one Downtown column that states a maximum residential net density -- 60 units per acre (L441-L443) -- which a four-unit pod would clear on any lot over 2,904 sq ft. Not encoded, because the use flag decides every lot here and a dimensional standard on a barred district is a number nobody reads. It is the first thing to read if the prohibition is ever revisited.'
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.1120, Townhouse P in the DCL column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L247"
+        # The Downtown street types (4.1140, Map 4.1140) take the townhouse
+        # back on some streets: "Not allowed on this street type" on Main
+        # Avenue (Table 4.1130, L477), no access to townhouses from an Urban
+        # Boulevard or Beech (4.1142(A)(6), (C)(9)), no parking access from
+        # Main or Stanley at all (4.1142(D)(3), (E)(4)). Nothing here holds
+        # the map, so every lot is unanswered on it and screens UNKNOWN, not
+        # GREEN, until Map 4.1140 is traced.
+        - value: false
+          when: [unit_lots, gresham_downtown_barred_street]
+          cite: GDC Table 4.1130 (Townhouse not allowed on the Main Avenue street type) and 4.1142(A)(6), (C)(9), (D)(3), (E)(4) (no townhouse or parking access from Urban Boulevard, Beech, Main or Stanley)
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L478,L919-L921,L994,L1017-L1019,L1055-L1057"
+    max_height_ft:
+      # Table 4.1130, Maximum Height, DCL column. The second column of the
+      # row is the N Main Avenue strip (45), not a district; note 1 sends a
+      # site within 110 ft of Main's centre line to it, which still clears
+      # the pod.
+      value: 65
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424-L426"
+    min_density_du_per_acre:
+      value: 17
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L435-L437"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Table 4.1130, Maximum Residential Net Density, DCL column: 60 (note
+      # 8, the affordable-housing bonus). The "Townhouse 25; All other uses:
+      # 12.45" cell beside it is DRL-1's, not this column's.
+      value: 60
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L443"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    min_lot_sqft:
+      # "Townhouse: None". The zone takes the pod only as townhouses, so this
+      # is each unit lot's standard.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L511-L513"
+    min_lot_width_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+    min_lot_depth_ft:
+      # "Depth, interior lot: 70 feet", read as DCC reads it: no corner row.
+      value: 70
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
+    setback_front_ft:
+      # The "Townhouse in DCC, DMU, DTM, DEM, and DCL" row, by street type
+      # (Map 4.1140, not held): facade 10 on an Urban Boulevard, 5 on the
+      # others. The largest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L478"
+    setback_front_max_ft:
+      # Maximum front 10 (Urban Boulevard, Downtown Local), 15 (Beech,
+      # Stanley), 20 (Cleveland). The smallest is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L476,L489,L562,L569"
+    setback_garage_entrance_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L473-L476,L480,L568"
+    setback_street_side_ft:
+      # Streetside 10 on an Urban Boulevard, 5 elsewhere (note 13: the front
+      # facade setback of the side street's type). The 10 is taken.
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L481-L483,L564-L565"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L481-L482"
+      variants:
+        # Note 11: 10 ft where the side yard abuts DRL-1, DRL-2, LDR-5,
+        # LDR-7, TR or TLDR. Read off the lot's neighbours (the layer's
+        # `neighbours:` block) and applied to every side when any line abuts.
+        - value: 10
+          when: [abuts_lower_density_zone]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L486-L487"
+      variants:
+        - value: 3
+          when: [alley_at_rear]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L476,L486,L488"
+        - value: 10
+          when: [alley_at_rear, abuts_lower_density_zone]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    review_discretion:
+      # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
+      # permitted without permission of the City and shall be allowed only
+      # in instances that permit no other options." A permission with no
+      # measurable test, for the pod's one drive: inside the UGB that is
+      # GREEN with CLEAR-OBJECTIVE (rulings.yaml
+      # 2026-10-15-clear-objective-green-flag).
+      value: judgement
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957"
+    notes: >-
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
+      quadplex and P for a townhouse here, and Table 4.1130 prints its own
+      "Townhouse in DCC, DMU, DTM, DEM, and DCL" row (L476-L489), which is
+      what is encoded. The earlier note on this district held the townhouse
+      subdivision open as a legal reading rather than encode it on mine; the
+      ruling is Steph's. Every setback is the strict limb across the six
+      Downtown street types, because Map 4.1140 is not held: front 10,
+      maximum front 10, street side 10, garage 15. The same map decides the
+      street-type bars on the use variant (gresham_downtown_barred_street),
+      so these lots screen UNKNOWN rather than GREEN until it is traced. The
+      Downtown Local curb-cut permission is review_discretion. The 4.1152
+      frontage percentages sit under "All Development", which leaves
+      townhouses out (L1234), and the townhouse orientation rules (S6) are
+      the townhouse plat's own. Height transition (9.0600) does not apply to
+      middle housing. DCL is the one Downtown column here with a ceiling, 60 units per net acre, which four units clear on any lot over 2,904 sq ft; the floor of 17 holds them to 10,249 sq ft.
   CMF:
     section: ["4.04", "7.042"]
     min_density_du_per_acre:
@@ -6611,8 +7410,31 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
+      # Table 4.0420: Quadplex NP in the RTC column (L148), Townhouse L3
+      # (L149).
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division.
       value: false
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L143,L148"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC Table 4.0420, Townhouse L3 in the RTC column (a Townhouse is a dwelling unit on its own lot in a row of two or more attached units, 3.0100)
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L143,L149,L219-L222"
+        # Note 3, the L3 limit: inside the Rockwood Town Center Mixed-Use
+        # Area, every building on a parcel with at least 100 ft of frontage
+        # on Stark within 500 ft of the 181st or 187th intersections puts
+        # non-residential uses on its ground-floor Stark frontage. Read as
+        # any RTC lot touching SE Stark (flats/config/corridors.yaml,
+        # rockwood_stark) -- wider than the note, never narrower, so a lot
+        # it may not reach stays closed rather than one it does opening.
+        - value: false
+          when: [unit_lots, rockwood_stark_frontage]
+          cite: GDC Table 4.0420 note 3 (non-residential ground floor on Stark frontage in the Rockwood Town Center Mixed-Use Area)
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L219-L222"
     max_height_stories:
       # Row I, RTC column. Three figures by area and use: six storeys inside
       # the Triangle for exclusively commercial/institutional buildings, four
@@ -6729,11 +7551,80 @@ zones:
       # Row K reads None in every Corridor column.
       value: 0
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L392-L393"
-    notes: 'Table 4.0420 reads NP for Quadplex in the Rockwood Town Center column (L148), so the use is out. Duplex and Triplex read NP here too, which is unusual -- the other Corridor districts that allow anything allow all three -- and it is the town centre being held for larger buildings rather than an oversight: Multi-Family is L3,4 and Townhouse is L3 in the same column. The Townhouse permission is the one to reread if this is ever revisited, and note 3 is what limits it: inside the Rockwood Town Center Mixed-Use Area, buildings on parcels with at least 100 feet of frontage on Stark within 500 feet of the 181st or 187th intersections must put non-residential uses on the ground floor.
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # and these are Corridor districts.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+        # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
+        # for townhouses in so many words (below): kept as it was.
+        - value: axis_required
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
+    notes: 'Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four unit lots, under Steph''s 2026-10-15 ruling. Table 4.0420 reads NP for a quadplex in the Rockwood Town Center column (L148) and L3 for a townhouse (L149); Duplex and Triplex read NP too, the town centre held for larger buildings. Note 3 is the L3 limit: inside the Rockwood Town Center Mixed-Use Area, buildings on parcels with at least 100 feet of frontage on Stark within 500 feet of the 181st or 187th intersections must put non-residential uses on the ground floor. That is encoded as a use variant on rockwood_stark_frontage, read off the street network as any RTC lot touching SE Stark -- wider than the note (no 100 ft or 500 ft test), so it can keep a lot closed the note would open and never the other way. The townhouse rows are the ones read: note 6 removes the lot size for townhouse lots, note 11 sets their frontage (16 ft interior, 25 ft on a corner with shared access), note 1 their setbacks (5 front and interior side, 0 common wall, 10 rear, 5 to an alley), Row E their density floor (18 units per net acre, four units on at most 9,680 sq ft). RTC lies in the Rockwood Design District, so 7.0512(A)(2) S2 asks 50 percent of the site''s street frontage built up, less the shared drive, measured on the original lot (the fields copied from CMU, which reads the same way).
 
-      Table 4.0430 is encoded anyway, on 2026-08-21, and the reason recorded for doing so was wrong. It said the NP was not a settled NP, because Table 4.0420 note 2 sits in the region this cell is quoted from and is ruled unmeasured. Note 2 is CMF''s: its first sentence is the L2 marker on that column''s own cells and its second names the CMF district outright. It reached this column only because a footnote governs its whole notes block, which is the conservative default and was over-scoped here. Narrowed to CMF on 2026-08-26. The NP in this column carries no marker at all, so the gate is shut and settled, and the standards below are kept because they were read correctly rather than because anything obliges them -- note 3 on the Townhouse cell is the one to reread if the column is ever revisited. The residential column of the setback row is what is read -- 5 ft front and street-side, 0 interior side, 15 rear -- not the commercial one above it.
-
-      Two readings to keep. RTC states height in storeys, not feet: six inside the Stark/Burnside/181st Triangle for exclusively commercial or institutional buildings, four for buildings that include any other use, ten outside the Triangle. A building with dwellings in it is never the six-storey case, and whether a lot is inside the Triangle is a map nothing here reads, so four storeys is taken. It cannot bind a 26 ft pod either way. And the minimum-density row names Townhouses (18) and multi-family (20) and no third figure, the same shape SC and SC-RJ print, so the floor does not reach a four-unit building on one lot: Gresham''s Multi-Family Dwelling is five units or more and expressly not middle housing. It is encoded exempt with the 18 riding as a unit_lots variant, because split the plat and the building is a townhouse and the same cell states its floor outright -- against a lot size note 6 has already switched off.'
+      Two readings kept from the 2026-08-21 encoding. RTC states height in storeys, not feet: six inside the Stark/Burnside/181st Triangle for exclusively commercial or institutional buildings, four for buildings that include any other use, ten outside the Triangle. A building with dwellings in it is never the six-storey case, and whether a lot is inside the Triangle is a map nothing here reads, so four storeys is taken. And the minimum-density row names Townhouses (18) and multi-family (20) and no third figure, so the floor does not reach a four-unit building on one lot; it is encoded exempt with the 18 riding as a unit_lots variant.'
   CC:
     section: ["4.04"]
     cite_default:
@@ -6952,29 +7843,146 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
-      # Table 4.1507, Quadplex row: NP in the THR-SW column. Detached single
-      # dwellings read NP too, so the state mandate does not attach.
+      # Table 4.1507, Quadplex row: NP in the THR-SW column (L145); Townhouse
+      # P (L146). Detached single dwellings read NP too, so the state mandate
+      # does not attach.
+      # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
+      # "'Townhomes' will have separate lots." GDC 3.0100 defines a Townhouse
+      # as "a dwelling unit on its own lot, constructed in a row of two or
+      # more attached units" (3.0100.definitions.txt L952-L954): the pod on
+      # four unit lots created by a land division. The 3.0100 sentence that a
+      # quadplex divided through a Middle Housing Land Division "is considered
+      # a quadplex" (L962-L964) is about that other path, and does not reach
+      # four lots platted first and built on as a row.
+      #
+      # Only where an alley runs along the rear. Table 4.1508's setback row
+      # for a THR-SW townhouse prints "N/A" under Rear No Alley and 8 in.
+      # under Rear With Alley (L342), and row L requires alley access for a
+      # townhouse garage here (L301-L302): the district is laid out
+      # alley-loaded, and a townhouse lot with no alley behind it has no rear
+      # yard the code states. Those lots stay closed.
       value: false
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L145"
-    notes: 'quadfit confidence: verified | Quadplex NP and detached SFD also NP — OAR mandate does not
-      attach (townhouse/cottage-cluster zone).'
+      variants:
+        - value: true
+          when: [unit_lots, alley_at_rear]
+          cite: GDC Table 4.1507, Townhouse P in THR-SW; Table 4.1508, THR-SW townhouse setbacks stated for a lot with an alley at the rear (Rear No Alley N/A)
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L146,L318-L342"
     max_height_ft:
       value: 45
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L278"
+    min_lot_sqft:
+      # Row A, Townhouse: 1,800 sq ft. The zone takes the pod only as
+      # townhouses, so this is each unit lot's standard.
+      value: 1800
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243-L245"
+    min_density_du_per_acre:
+      # Row B, All Uses: 12.0 units per acre.
+      value: 12.0
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L247,L249"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
+    max_density_du_per_acre:
+      # Row C, Townhouses: 17.4 units per acre. Four units need 10,014 sq ft
+      # of net land under it, and the floor above holds them to 14,520.
+      value: 17.4
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L250,L254"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     min_lot_width_ft:
+      # Row D, Townhouse: 20 ft interior, 25 ft corner.
       value: 20
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L260"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L257-L259"
       variants:
         - value: 25
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.1500.springwater.txt#L263"
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L261-L262"
     min_frontage_ft:
-      # 20 feet on every row of F in this column, interior and corner alike.
+      # Row F, Townhouse: 20 feet on an interior lot and a corner lot alike.
       value: 20
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L269,L272"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L266-L268,L270-L271"
     min_lot_depth_ft:
       value: 65
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L265"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L264-L265"
+    setback_front_ft:
+      # Table 4.1508 (continued), Townhouse, THR-SW: Front Facade/Wall 6 ft
+      # (Front Porch 1 ft; Garage N/A).
+      value: 6
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L318-L342"
+    setback_side_ft:
+      # Interior Side 5 ft; Common Wall 0 ft.
+      value: 5
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L318-L342"
+    setback_street_side_ft:
+      # Street Side Wall 8 ft (Street Side Garage Access 20 ft).
+      value: 8
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L318-L342"
+    setback_rear_ft:
+      # Rear With Alley: 8 in. -- the only rear yard the row states for a
+      # townhouse (Rear No Alley N/A), and the permission above opens only
+      # where the alley is at the rear.
+      value: 0.67
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L318-L342"
+    review_discretion:
+      # Rows M and O, note 4: buffering and a Master Plan are required in
+      # the THR-SW area adjacent to the east edge of the Village Center, and
+      # 4.1532 requires Master Plan approval before development there. The
+      # area is not drawn here, and the plan's approval criteria are not in
+      # the chapter, so every THR-SW lot carries it: inside the UGB that is
+      # GREEN with CLEAR-OBJECTIVE (rulings.yaml
+      # 2026-10-15-clear-objective-green-flag), on lots it may not reach.
+      value: judgement
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L304-L309,L314,L816-L818,L829-L831"
+    notes: >-
+      Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
+      unit lots, under Steph's 2026-10-15 ruling: Table 4.1507 reads NP for a
+      quadplex and P for a townhouse, and this is the Townhouse Residential
+      district ("primarily Townhouses and Cottage Clusters", L125-L126). The
+      Townhouse rows of Table 4.1508 are encoded. Only lots with an alley
+      along the rear open: the setback row states no rear yard for a
+      townhouse without one (Rear No Alley N/A) and row L wants garages off
+      an alley, so a no-alley lot has a standard nobody can read and stays
+      closed. The density pair is the window that binds: 12.0 to 17.4 units
+      per net acre, four units on 10,014 to 14,520 sq ft. Table 4.1508
+      states no maximum number of attached townhouses for THR-SW (row J,
+      N/A). Parking: row K sends the maximum to 9.0851; no minimum
+      (defaults). 4.1510(B) applies the 7.0431 townhouse design standards,
+      which the defaults' unit_lots variants carry.
+
+# Whose land is across each lot line (FOLLOWUPS 109 chunk 4, 2026-10-28).
+neighbours:
+  abuts_lower_density_zone:
+    true_for: [DRL-1, DRL-2, LDR-5, LDR-7, TR, TLDR]
+    false_for: [LDR-PV, MDR-PV, HDR-PV, NC-PV, PUB-PV, LDR-SW, VLDR-SW, RTI-SW, IND-SW, MDR-12, MDR-24, OFR, NC, HI, GI, CNTH, CNTM, CNRM, DCC, DTM, DMU, DEM, DCL, CMF, SC, SC-RJ, CMU, RTC, CC, MC, LDR/GB, THR-SW]
+    quote: "or/multnomah/gresham/4.1100.downtown.txt#L560-L561"
+    cite: GDC Table 4.1130 note 11, side and rear setbacks of 10 feet where the yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR
+    note: >-
+      Read only by the Downtown townhouse rows (DMU, DEM, DCL): note 11
+      raises the side setback to 10 ft, and the rear to 10 ft where an alley
+      would have allowed 3, when the yard abuts one of the six districts it
+      names. The true side is those six and the false side is every other
+      district Gresham's layer carries; a line across another city's land,
+      a park or a code not listed here leaves the fact unstated, and the
+      lot stays out of GREEN.
 
 # Areas the code draws inside a zone that the zoning layer does not carry
 # (2026-10-04). See flats/rules/model.py DrawnArea.

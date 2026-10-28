@@ -138,7 +138,7 @@ def maps(tmp_path: Path) -> tuple[object, ...]:
 
 
 def test_the_registered_corridor_is_gresham_cmf_on_glisan_and_ne_162nd() -> None:
-    (spec,) = named_specs()
+    (spec,) = [s for s in named_specs() if s.key == "gresham_cmf"]
     assert spec.condition == "civic_corridor"
     assert spec.serves == (GRESHAM,)
     assert spec.zones == {"CMF"}

@@ -1300,6 +1300,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ROCKWOOD-STARK-FRONTAGE:
+    description: "Whether a Rockwood Town Center lot touches SE Stark Street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the street layer and Gresham's RTC zoning blocks"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-GRESHAM-DOWNTOWN-BARRED-STREET:
+    description: "Whether a Gresham Downtown lot's townhouses could take access only from a street type that bars it"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Trace Gresham's Downtown street-type map (Map 4.1140) against the lot's street lines"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-NO-EXISTING-DWELLING:
     description: "The lot holds no home on the county roll, or the roll does not say (Wilsonville Village zone): the quadplex standards in 4.125(.23) are only for lots previously developed with a home; a vacant Villebois lot goes through the Development Review Board's SAP/PDP/FDP process, which states no quadplex standard"
     kind: categorical

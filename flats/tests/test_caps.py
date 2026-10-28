@@ -129,7 +129,9 @@ def test_a_narrowed_note_leaves_the_columns_it_never_spoke_to() -> None:
     for zone in ("CC", "MC", "RTC"):
         use = rules.resolve("or/multnomah/gresham", zone).values["quadplex_allowed"]
         assert use.value is False
-        assert use.levers == frozenset(), f"{zone} still turns on {sorted(use.levers)}"
+        # RTC's own townhouse levers (opened 2026-10-28) are not the note's.
+        own = {"unit_lots", "rockwood_stark_frontage"} if zone == "RTC" else set()
+        assert use.levers == frozenset(own), f"{zone} still turns on {sorted(use.levers)}"
 
 
 def test_but_the_district_the_note_was_written_about_keeps_its_lever() -> None:

@@ -87,7 +87,15 @@ def test_the_use_table_splits_the_corridor_in_half(gresham: Layer) -> None:
     for zone in BARRED:
         held = gresham.zones[zone]
         assert held.values["quadplex_allowed"].value is False, zone
-        assert held.values["quadplex_allowed"].variants == (), zone
+        if zone == "RTC":
+            # Townhouse L3 (2026-10-28): open on unit lots, shut again by
+            # note 3 on a lot touching SE Stark.
+            assert [(v.value, v.when) for v in held.values["quadplex_allowed"].variants] == [
+                (True, ("unit_lots",)),
+                (False, ("unit_lots", "rockwood_stark_frontage")),
+            ]
+        else:
+            assert held.values["quadplex_allowed"].variants == (), zone
         # These three used to carry the use gate and nothing else, then a
         # footnote that turned out to be CMF's made them owe the whole column
         # of Table 4.0430. The note is narrowed and the gates are settled; the

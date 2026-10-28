@@ -376,7 +376,10 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 156, "comments": 286, "tests": 18}
+# 157 -> 156 notes on 2026-10-28 (FOLLOWUPS 109 chunk 4): Gresham DCL's note recorded its
+# 60-unit density ceiling as not encoded because the use was barred; the townhouse form is
+# open now and the ceiling is encoded.
 # 286 -> 287 comments on 2026-10-22 (gresham-corner): Rockwood 7.0512(A)(2) S3.b-c, the
 # 60 ft of building at a corner, binds neither of the pod's forms (S3 is "All Development",
 # which leaves townhouses out, and 7.0502(B) leaves plexes out of 7.0501-7.0512).

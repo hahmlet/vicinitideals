@@ -254,6 +254,8 @@ def declared(layers: dict) -> list[tuple[str, str, NeighbourRule]]:
 def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
     got = {(lid, name) for lid, name, _ in declared(corpus)}
     assert got == {
+        # 2026-10-28: Downtown Table 4.1130 note 11 (FOLLOWUPS 109 chunk 4).
+        ("or/multnomah/gresham", "abuts_lower_density_zone"),
         ("or/multnomah/portland", "abuts_nonresidential_zone"),
         ("or/multnomah/portland", "faces_residential_zone_across_street"),
         ("or/multnomah/troutdale", "abuts_nonresidential_zone"),

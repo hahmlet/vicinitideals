@@ -155,7 +155,12 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 435, "numeric": 137, "marker": 0, "dash": 2, "silent": 7}
+EXPECTED = {"stated": 445, "numeric": 141, "marker": 0, "dash": 2, "silent": 7}
+# 435 -> 445 stated and 137 -> 141 numeric on 2026-10-28 (FOLLOWUPS 109 chunk 4, Gresham's
+# townhouse-only zones). Stated: the townhouse lot size "none" in CNTH, CNTM, CNRM, DMU, DEM
+# and DCL, and the density ceilings "none" / "No maximum" in CNTH, CNTM, DMU and DEM. Numeric:
+# the Downtown "Depth, interior lot: 70 feet" read as no corner depth in DMU, DEM and DCL (as
+# DCC and DTM read it), and RTC's townhouse frontage share (J.1 names plexes only), as CMU.
 # 131 -> 137 numeric and 3 -> 7 silent on 2026-10-22, Steph's rulings on the chunk 3 questions.
 # The six numeric are Washington County 431-7's open space and its 20 ft square in TO:R24-40,
 # TO:R40-80 and TO:BUS, taken off the site within 1,300 ft (the quote holds the 400 and the

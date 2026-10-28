@@ -194,7 +194,9 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                                                      "LDR-PV", "MDR-PV", "LDR-SW",
                                                      "VLDR-SW")} | {
         ("gresham", "HDR-PV"): 5.0, ("gresham", "DRL-1"): 6.0, ("gresham", "DRL-2"): 6.0,
-            ("gresham", "DCC"): 6.0, ("gresham", "DTM"): 6.0}
+            ("gresham", "DCC"): 6.0, ("gresham", "DTM"): 6.0,
+        # 2026-10-28 (FOLLOWUPS 109 chunk 4): the Downtown townhouse row's alley rear.
+        ("gresham", "DMU"): 3.0, ("gresham", "DEM"): 3.0, ("gresham", "DCL"): 3.0}
     # and nothing the corpus holds in that shape is missing from the mirror
     field, condition = held_as["number"]
     gresham = ruleset.layers[layer_id_for("gresham")]
@@ -445,7 +447,10 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     #
     # 207 on 2026-10-19 (FOLLOWUPS 85): the ORS 197A.400 lane admits nine zones
     # (Canby, Gladstone C3, Milwaukie NMU, Estacada, Cornelius ...).
-    assert dry["stats"]["zones"] == 207
+    #
+    # 214 on 2026-10-28 (districts chunk 4): Gresham's seven townhouse-only
+    # districts opened as unit lots -- CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC.
+    assert dry["stats"]["zones"] == 214
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {

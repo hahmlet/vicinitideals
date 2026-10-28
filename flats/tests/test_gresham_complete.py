@@ -33,8 +33,10 @@ from flats.rules.resolver import RuleSet
 pytestmark = pytest.mark.unit
 
 GRESHAM = "or/multnomah/gresham"
-#: The six added here that a use table settles outright.
-REFUSED = ("NC", "HI", "GI", "CNTH", "CNTM", "CNRM")
+#: The six added here that a use table settled outright. CNTH, CNTM and CNRM
+#: reopened on 2026-10-28 as townhouses on unit lots (Steph's 2026-10-15
+#: ruling; test_gresham_townhouse_zones), so three remain.
+REFUSED = ("NC", "HI", "GI")
 #: Every zone the Gresham zoning layer reports, which the rules now carry in
 #: full. Kept as a list rather than a count so that a zone appearing or
 #: disappearing says which one.
@@ -45,7 +47,9 @@ REFUSED = ("NC", "HI", "GI", "CNTH", "CNTM", "CNRM")
 #: test_a_levered_prohibition_owes_its_dimensions_like_any_other.
 #: Shut gates. Levered by an over-scoped footnote until 2026-08-26, hence the
 #: name, kept because what these three carry is still worth pinning.
-LEVERED = ("RTC", "CC", "MC")
+#: RTC left on 2026-10-28: its Townhouse L3 opens the unit-lot form
+#: (test_gresham_townhouse_zones), so its NP now has levers.
+LEVERED = ("CC", "MC")
 
 ALL_ZONES = (
     "LDR-5", "LDR-7", "TLDR", "TR", "OFR", "MDR-12", "MDR-24",

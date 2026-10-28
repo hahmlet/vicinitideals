@@ -35,3 +35,22 @@ corridors:
     # touching the street count as 'along'. If it touches, it's along."
     # (rulings.yaml 2026-10-20-gresham-cmf-corridor-mapped).
     behind_frontage: false
+
+  rockwood_stark:
+    condition: rockwood_stark_frontage
+    serves: [or/multnomah/gresham]
+    zones: [RTC]
+    # GDC Table 4.0420 note 3 (4.0400.corridor.txt#L219-L222), the L3 limit
+    # on a townhouse in the Rockwood Town Center: "all buildings on parcels
+    # with at least 100 feet of frontage on Stark that are within 500 feet of
+    # the center lines of the intersections of Stark and 181st or 187th
+    # Avenues shall have non-residential uses at the ground floor frontages".
+    # Read wider than the note (FOLLOWUPS 109 chunk 4, 2026-10-28): any RTC
+    # lot touching SE Stark, whatever its frontage or distance from the
+    # intersections, so the fact can only keep a lot closed.
+    streets: [SE STARK ST]
+    blocks: corridor_blocks_gresham
+    zone_field: ZONE
+    # An RTC lot in a block that reaches Stark whose own land does not touch
+    # it has no frontage on Stark at all, so note 3 cannot reach it.
+    behind_frontage: false

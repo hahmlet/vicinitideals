@@ -342,6 +342,8 @@ OBSERVABLE: tuple[str, ...] = (
     *NEIGHBOUR_FACTS,
     *PARK_FACTS,
     *CORRIDOR_FACTS,
+    # Gresham RTC lots only: True touching SE Stark (corridors.yaml).
+    "rockwood_stark_frontage",
     "corner_lot",
     "through_lot",
     "split_zone",

@@ -163,6 +163,15 @@ PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
     "clackamas_unincorporated/R2.5",
     "troutdale/HDR",
     "troutdale/MU-1",
+    # 2026-10-28 (FOLLOWUPS 109 chunk 4): Gresham's townhouse-only zones, the same ruling.
+    "gresham/CNTH",
+    "gresham/CNTM",
+    "gresham/CNRM",
+    "gresham/DMU",
+    "gresham/DEM",
+    "gresham/DCL",
+    "gresham/RTC",
+    "gresham/THR-SW",
 })
 
 
@@ -1019,10 +1028,14 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: the ORS 197A.400 lane admits and the townhouse unit-lot rows add front-max, density,
 #: landscaping, garage-entrance, unit-count and review-tier standards.
 UNEXPRESSIBLE: dict[str, int] = {
-    "setback_garage_entrance_ft": 118,
+    #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
+    #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
+    #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
+    #: RTC's Rockwood frontage share -- none of which this file has a column for.
+    "setback_garage_entrance_ft": 121,
     "min_landscaped_pct": 59,
-    "setback_front_max_ft": 94,
-    "max_density_du_per_acre": 59,
+    "setback_front_max_ft": 101,
+    "max_density_du_per_acre": 63,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
@@ -1031,7 +1044,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     # pipeline still compares no ratio of two measurements.
     "max_lot_depth_ratio": 8,
     "max_units": 14,
-    "max_height_stories": 21,
+    "max_height_stories": 25,
     "setback_side_total_ft": 3,
     "min_building_height_ft": 16,
     "front_lot_line_through": 1,
@@ -1077,7 +1090,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the parking cap read on every street frontage, measured on FLATS's
     #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
     #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
-    "review_discretion": 40,
+    "review_discretion": 44,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
@@ -1095,18 +1108,18 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
     #: blocks, Washington County NMU and CCMU; quadfit draws no building.
-    "building_frontage_min_pct": 28,
+    "building_frontage_min_pct": 29,
     "building_frontage_min_pct_least": 5,
     "building_frontage_other_pct": 18,
     "building_frontage_through_one": 2,
-    "building_frontage_less_drive": 26,
+    "building_frontage_less_drive": 27,
     "building_frontage_plaza_pct": 12,
     #: Design districts chunk 3 (FOLLOWUPS 109, run 85): Gresham's design
     #: districts join the frontage share, which is measured on the unit lot or
     #: the whole site as the code bases it (Steph 2026-10-21); the pitched roof
     #: Sandy and others require (a flat-roofed pod is RED); and the outdoor
     #: square's newly read districts. Quadfit draws no building and no roof.
-    "building_frontage_basis": 27,
+    "building_frontage_basis": 28,
     "min_roof_pitch_in_12": 11,
     #: Steph 2026-10-22: a Gresham corner lot owes the share on its main
     #: street only (GDC 3.0100 Primary Street), measured per street class.

@@ -14,11 +14,12 @@ and the permission rides on a variant that cannot fire yet. Encoding it the
 other way round -- true, with the gates as a note -- would open two of the
 largest districts in the city on a lot area nobody checked.
 
-``NP`` is a decided RED, and the notes on those three zones carry the two rows
-that were checked before deciding it: Multi-Family, which Gresham defines as
-five units or more, and Townhouse, which the chapter prints a whole setback
-row for. The second is not closed by the code so much as by a definition, and
-that is written down rather than encoded.
+``NP`` closes the quadplex on one lot in the other three. Their Townhouse
+cell reads P, and since 2026-10-28 (FOLLOWUPS 109 chunk 4, Steph's
+2026-10-15 ruling that townhomes have separate lots) the pod opens there as
+four townhouses on four unit lots, on the chapter's own "Townhouse in DCC,
+DMU, DTM, DEM, and DCL" setback row -- and only where Map 4.1140's street
+types do not bar it, which nothing here can yet say.
 """
 
 from __future__ import annotations
@@ -39,7 +40,7 @@ GRESHAM = "or/multnomah/gresham"
 #: them -- which is not alphabetical, and which is how the eight-value rows are
 #: read: DCC, then the N Main Avenue strip, then the rest.
 DOWNTOWN = ("DCC", "DMU", "DTM", "DEM", "DRL-1", "DRL-2", "DCL")
-#: The three whose Quadplex cell reads NP.
+#: The three whose Quadplex cell reads NP (and whose Townhouse cell reads P).
 BARRED = ("DMU", "DEM", "DCL")
 #: The two whose Quadplex cell reads L1.
 LIMITED = ("DCC", "DTM")
@@ -129,38 +130,33 @@ def test_an_unmeasured_gate_does_not_leak_through_the_band(rules: RuleSet) -> No
         assert got.values["quadplex_allowed"].value is False, zone
 
 
-def test_a_prohibited_district_owes_nothing_else(gresham: Layer) -> None:
-    """NP settles the zone, so no dimensional standard is read for it.
+def test_a_prohibited_quadplex_opens_only_as_townhouses(rules: RuleSet) -> None:
+    """NP still closes the one-lot quadplex; the Townhouse P opens unit lots.
 
-    A decided RED and an unread district look identical in a count, which is
-    why the flag is written with a citation rather than left out. What keeps
-    it honest is that the value carries no variants: nothing can turn it on.
+    And the street-type bar rides on top: unanswered, it leaves the use
+    unknown rather than open, so no Downtown townhouse lot reaches GREEN
+    until Map 4.1140 is traced.
     """
     for zone in BARRED:
-        held = gresham.zones[zone]
-        assert set(held.values) == {"quadplex_allowed"}, zone
-        assert held.values["quadplex_allowed"].value is False, zone
-        assert held.values["quadplex_allowed"].variants == (), zone
+        assert rules.resolve(GRESHAM, zone).values["quadplex_allowed"].value is False, zone
+        split = rules.resolve(GRESHAM, zone, ("unit_lots",))
+        use = split.values["quadplex_allowed"]
+        assert use.value is True, zone
+        assert "gresham_downtown_barred_street" in use.levers, zone
+        barred = rules.resolve(GRESHAM, zone, ("unit_lots", "gresham_downtown_barred_street"))
+        assert barred.values["quadplex_allowed"].value is False, zone
 
 
-def test_the_townhouse_path_is_written_down_and_not_encoded(gresham: Layer) -> None:
-    """Splitting the plat must not reopen a district Gresham closed.
-
-    Table 4.1120 reads P for Townhouse in all seven columns, and Table 4.1130
-    prints a setback row for townhouses in five of them -- so the temptation
-    is a ``unit_lots`` variant on the use flag. GDC 3.0100 forbids it: a
-    quadplex divided onto individual lots through a Middle Housing Land
-    Division is still "considered a quadplex". A variant would fire off the
-    design catalog and turn 224 lots green on a reading rather than on a
-    sentence.
+def test_the_townhouse_path_is_opened_only_where_the_quadplex_is_barred(gresham: Layer) -> None:
+    """The unit-lot form is opened in DMU, DEM and DCL (2026-10-28), where the
+    one-lot quadplex is NP. DCC and DTM read L1 for the quadplex and are
+    encoded on that permission; their own Townhouse P is not opened here.
     """
     for zone in DOWNTOWN:
         use = gresham.zones[zone].values.get("quadplex_allowed")
         assert use is not None, zone
-        for variant in use.variants:
-            assert "unit_lots" not in variant.when, zone
-    for zone in BARRED:
-        assert "Middle Housing Land Division" in gresham.zones[zone].notes, zone
+        opened = any("unit_lots" in v.when and v.value is True for v in use.variants)
+        assert opened is (zone in BARRED), zone
 
 
 def test_the_dimensional_row_is_the_one_headed_in_any_district(
@@ -215,7 +211,7 @@ def test_the_eight_column_rows_are_read_in_the_right_order(gresham: Layer) -> No
         for z in DOWNTOWN
         if "max_height_ft" in gresham.zones[z].values
     }
-    assert heights == {"DCC": 85, "DTM": 85, "DRL-1": 35, "DRL-2": 50}
+    assert heights == {"DCC": 85, "DMU": 125, "DTM": 85, "DEM": 70, "DRL-1": 35, "DRL-2": 50, "DCL": 65}
     fars = {
         z: gresham.zones[z].values["max_far"].value
         for z in DOWNTOWN
@@ -237,7 +233,7 @@ def test_every_downtown_district_states_a_density_floor(gresham: Layer) -> None:
         for z in DOWNTOWN
         if "min_density_du_per_acre" in gresham.zones[z].values
     }
-    assert floors == {"DCC": 17, "DTM": 20, "DRL-1": 8.7, "DRL-2": 8.7}
+    assert floors == {"DCC": 17, "DMU": 20, "DTM": 20, "DEM": 17, "DRL-1": 8.7, "DRL-2": 8.7, "DCL": 17}
 
 
 def test_the_one_downtown_ceiling_that_binds_this_building(gresham: Layer) -> None:

@@ -304,6 +304,9 @@ OPEN = {
     "or/multnomah/gresham 4.0420 -> 4.0330",
     "or/multnomah/gresham 4.0434 -> 10.1700",
     "or/multnomah/gresham 4.1130 -> 10.1700",
+    # 2026-10-28 (FOLLOWUPS 109 chunk 4): the Civic Neighborhood density notes, read now
+    # that CNTH, CNTM and CNRM open as townhouses; the affordable-housing route waits.
+    "or/multnomah/gresham 4.1230 -> 10.1700",
     "or/multnomah/gresham 4.1413 -> 4.1414",
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
