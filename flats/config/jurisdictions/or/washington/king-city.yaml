@@ -531,11 +531,13 @@ zones:
       quote: "or/washington/king-city/16.84/16.84.040.txt#L4-L6,L10,L38"
     # Note 3 hangs on this column's width (30 in R-9, 28 in R-12), and an
     # average under the minimum can bind only a lot below it: the 20 ft
-    # townhouse lot of note 2. Read the stricter way, every home lot
-    # averaging 24, which a 20 ft home between party walls cannot; whether
-    # the average is the row's instead (end lots wider) is a question for
-    # Steph. Quoted without the column header, whose "R-24 SF" would read as
-    # 24 square feet.
+    # townhouse lot of note 2. Every home lot averages 24, which a 20 ft
+    # home between party walls cannot: 16.24 measures "Lot width, average"
+    # on one lot, from the midpoint of its front and rear lot lines
+    # (kcc.16.24.definitions.txt L479-L481), so the average is each lot's,
+    # not the row's (Steph 2026-10-28, rulings.yaml
+    # 2026-10-28-king-city-average-lot-width-per-lot). Quoted without the
+    # column header, whose "R-24 SF" would read as 24 square feet.
     min_average_lot_width_ft:
       value: 24
       cite: King City KCMC 16.84.040 Table, R-9 column, Minimum lot width, note 3 (minimum average lot width 24 ft)
@@ -696,11 +698,13 @@ zones:
       quote: "or/washington/king-city/16.84/16.84.040.txt#L4-L6,L10,L38"
     # Note 3 hangs on this column's width (30 in R-9, 28 in R-12), and an
     # average under the minimum can bind only a lot below it: the 20 ft
-    # townhouse lot of note 2. Read the stricter way, every home lot
-    # averaging 24, which a 20 ft home between party walls cannot; whether
-    # the average is the row's instead (end lots wider) is a question for
-    # Steph. Quoted without the column header, whose "R-24 SF" would read as
-    # 24 square feet.
+    # townhouse lot of note 2. Every home lot averages 24, which a 20 ft
+    # home between party walls cannot: 16.24 measures "Lot width, average"
+    # on one lot, from the midpoint of its front and rear lot lines
+    # (kcc.16.24.definitions.txt L479-L481), so the average is each lot's,
+    # not the row's (Steph 2026-10-28, rulings.yaml
+    # 2026-10-28-king-city-average-lot-width-per-lot). Quoted without the
+    # column header, whose "R-24 SF" would read as 24 square feet.
     min_average_lot_width_ft:
       value: 24
       cite: King City KCMC 16.84.040 Table, R-12 column, Minimum lot width, note 3 (minimum average lot width 24 ft)
@@ -833,8 +837,10 @@ zones:
       parks behind regardless.
   R-15:
     # Not on the city's map on 2026-09-29 except as "R-15 (WC)", the
-    # county's R-15 kept under 16.80.050 A (a pocket, below). The district
-    # is in 16.80.020 and has a chapter, so it is held.
+    # county's R-15 kept under 16.80.050 A (a pocket, below). Those lots
+    # are screened on Washington County's layer under its R-15 (CDC 305,
+    # 305-7.1), never under this block. The district is in 16.80.020 and
+    # has a chapter, so it is held.
     cite_default:
       cite: King City KCMC Chapter 16.96 (R-15 Multi-family Residential), 16.84.010, 16.84.040, 16.84.050 and 16.96.020
       url: https://api.municode.com/PublicationPdfDownload/3913

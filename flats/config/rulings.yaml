@@ -1995,6 +1995,31 @@
     zones). No colour changes; the 3 lots that went yellow to red in run 84
     stay red.
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+- id: 2026-10-28-king-city-average-lot-width-per-lot
+  kind: ruling
+  date: 2026-10-28
+  scope:
+    county: washington
+    city: king-city
+    zones: [R-9, R-12]
+  question: >-
+    King City KCMC 16.84.040 lets a townhouse lot be 20 ft wide (note 2) but
+    note 3 asks a minimum average lot width of 24 ft in R-9 and R-12. Is the
+    24 ft an average across the row of unit lots (end lots wider), or does
+    every unit lot have to average 24 ft on its own?
+  ruling: >-
+    "this definition was in their glossary: 'Lot width, average' means the
+    width of the lot measured from the midpoint of the front and rear lot
+    lines."
+  effect: >-
+    Per lot. 16.24 measures the average width of one lot, so note 3's 24 ft
+    applies to every unit lot. A home lot of the pod (14 or 20 ft between
+    party walls) cannot meet it, so the townhouse path stays closed in R-9
+    and R-12 (red on home_lot_average_width_ft). No values change: the
+    per-lot reading was already encoded on flats/districts-c4.
+  source: Steph 2026-10-28 (chat), docs/FOLLOWUPS.md item 109 chunk 4
+  encoded_in:
+    - flats/config/jurisdictions/or/washington/king-city.yaml
 - id: 2026-10-22-gresham-corner-frontage-main-street
   kind: ruling
   date: 2026-10-22
