@@ -681,7 +681,9 @@ class Provenance(BaseModel):
     #: quoted from Table 4.0131's TLDR column, and Table 4.0430 note 14 is why.
     #: The page check shows it boxed beside the quote; without it Steph had
     #: "no evidence that the cross-table references ... are accurate"
-    #: (2026-10-22). Same form as `quote`.
+    #: (2026-10-22). Also the other half of a split cell -- Portland's
+    #: "5/10 ft.", whose section says which number is ours (2026-10-28).
+    #: Same form as `quote`.
     via: str | None = Field(
         default=None,
         description="Path#Lnn of the cross-reference that sends the reader to `quote`.",

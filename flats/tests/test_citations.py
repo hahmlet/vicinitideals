@@ -110,3 +110,17 @@ def test_a_variant_quoting_its_own_text_does_not_inherit_the_base_cross_referenc
     assert front.prov.via is None
     corridor = next(v for v in front.variants if v.when == ("civic_corridor",))
     assert corridor.prov.via == "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
+
+
+def test_a_split_table_cell_carries_the_passage_that_splits_it() -> None:
+    """Portland's Table 120-4 prints "5/10 ft." for RM3 side setbacks: the cell
+    alone cannot say which half is ours, 33.120.220.B.1 does (Steph 2026-10-28,
+    on the page check: "I don't know what that means"). Each half carries the
+    other source, so the page check sets it aside for the two-source check."""
+    portland = load_rules()["or/multnomah/portland"]
+    side = portland.zones["RM3"].values["setback_side_ft"]
+    low = next(v for v in side.variants if v.when == ("low_rise",))
+    assert side.prov.via == low.prov.via == "or/multnomah/portland/33.120.txt#L543-L544"
+    # A variant read off its own single page stays on the page check.
+    alley = next(v for v in portland.zones["RM3"].values["setback_rear_ft"].variants if v.when == ("alley_at_rear",))
+    assert alley.prov.via is None
