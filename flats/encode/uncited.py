@@ -181,7 +181,7 @@ def uncited(layer: Layer, store: ProvenanceStore | None = None) -> list[Uncited]
     # every unread line in the corpus under the state's name — 4,686 of 10,018
     # rows, a ledger half again as long as the reading it measures, with the
     # duplicate blaming the wrong jurisdiction.
-    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
+    paths = store.documents_of(layer.layer)
     if not paths:
         return []
 

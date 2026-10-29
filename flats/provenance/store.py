@@ -308,6 +308,28 @@ class ProvenanceStore:
             and (path := str(p.relative_to(self.root)).replace("\\", "/")) not in kept
         )
 
+    def documents_of(self, layer: str) -> list[str]:
+        """:meth:`documents` whose :meth:`layer_of` is ``layer``, sorted.
+
+        Walks only the layer's own folder: every document a layer owns is
+        filed under it (a section file a folder deeper, under its chapter).
+        Each ledger asked this of every layer by walking the whole store and
+        asking :meth:`layer_of` of every document -- ~1 s a layer once the
+        rollout cut ~3,900 section files, so a cold reading queue ran past
+        CI's 120 s test timeout (2026-10-29).
+        """
+        folder = self.root / layer
+        if not folder.is_dir():
+            return []
+        kept = self.proofs()
+        return sorted(
+            path
+            for p in folder.rglob("*.txt")
+            if p.is_file()
+            and (path := str(p.relative_to(self.root)).replace("\\", "/")) not in kept
+            and self.layer_of(path) == layer
+        )
+
     def proofs(self) -> frozenset[str]:
         """Every fetched document that has been cut into section files."""
         out: set[str] = set()

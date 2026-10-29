@@ -557,7 +557,7 @@ def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str],
     # 179 of them. Found and fixed in the reading ledger and the fetch
     # queue on 2026-09-04; both left a comment saying the other was its
     # twin, and neither of them looked here. Fixed 2026-09-08.
-    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
+    paths = store.documents_of(layer.layer)
     ids = _held_ids(store, layer.layer, paths)
     headings: set[str] = set()
     for path in paths:
@@ -577,7 +577,7 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
     # 179 of them. Found and fixed in the reading ledger and the fetch
     # queue on 2026-09-04; both left a comment saying the other was its
     # twin, and neither of them looked here. Fixed 2026-09-08.
-    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
+    paths = store.documents_of(layer.layer)
     if not paths:
         return []
 

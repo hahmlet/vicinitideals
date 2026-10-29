@@ -676,11 +676,25 @@ def held(
 
 #: (store root, section file, its hash) -> what :func:`held` found.
 _ALIGNED: dict[tuple[Path, str, str], tuple[tuple[int, ...], ...]] = {}
+#: (mtime, size) of ``sections.yaml`` -> its rules, for :func:`_known`.
+_RULES_READ: dict[tuple[int, int], dict[str, Rule]] = {}
+
+
+def _known() -> dict[str, Rule]:
+    """:func:`rules`, read again only when ``sections.yaml`` changes. :func:`held`
+    wants it once per section file, ~3,900 of them after batch 4: parsing it
+    each time cost a cold reading queue ~100 s and timed CI out (2026-10-29)."""
+    st = RULES.stat()
+    key = (st.st_mtime_ns, st.st_size)
+    if key not in _RULES_READ:
+        _RULES_READ.clear()
+        _RULES_READ[key] = rules()
+    return _RULES_READ[key]
 
 
 def _held(store: ProvenanceStore, part: Part, known: Mapping[str, Rule] | None) -> tuple[tuple[int, ...], ...]:
     path = part.path
-    rule = (known if known is not None else rules())[part.layer]
+    rule = (known if known is not None else _known())[part.layer]
     lines = _lines(store.load(part.proof).text)
     raw = lines[part.first - 1 : part.last]
     local = [
