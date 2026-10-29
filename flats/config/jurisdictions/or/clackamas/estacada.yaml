@@ -546,13 +546,131 @@ zones:
       cite: Estacada EMC Chapter 16.26 (Downtown, D)
       url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
       retrieved: '2026-10-07'
+    # Districts chunk 5 (2026-10-29). 16.26.020 (D)(4) permits a fourplex
+    # outright on three conditions: (1) ground floor residential does not
+    # front Broadway Street, Main Street or OR 224, and none is south of
+    # OR 224; (2) at least sixteen units an acre; (3) 16.26.040 Subsection H
+    # (access) is met. Condition (1) is drawn in words; the layer's
+    # drawn_areas builds it from the taxlots (downtown-back-streets.geojson)
+    # and answers `inside_mapped_use_area`. Condition (3): H(1) bars access
+    # from Broadway, which no lot in the area touches; H(2) puts access to
+    # Currin Street and Acacia Road under the South Downtown Circulation and
+    # Access Plan, which is not stored, so the area leaves out every lot that
+    # touches them. The chapter lists no commonwall dwelling, so the
+    # townhouse-lot path stays refused.
     quadplex_allowed:
       value: false
       cite: Estacada EMC 16.26.020 (D), a fourplex is outright only if no ground floor residential fronts Broadway, Main or OR 224, none sits south of OR 224, and density is at least sixteen units an acre
       quote: "or/clackamas/estacada/16.26/16.26.020.txt#L11,L13-L14,L16"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area]
+          cite: Estacada EMC 16.26.020 (D)(4), multi-family dwelling, triplex or fourplex permitted where ground floor residential does not front Broadway, Main or OR 224, north of OR 224, at sixteen units an acre and with the access standards of 16.26.040 (H) met
+          quote: "or/clackamas/estacada/16.26/16.26.020.txt#L11,L13-L14,L16,L18"
+        - value: false
+          when: [inside_mapped_use_area, unit_lots]
+          cite: Estacada EMC 16.26.020, the D uses list no commonwall dwelling (townhouses on their own lots)
+          quote: "or/clackamas/estacada/16.26/16.26.020.txt#L3,L11"
+    min_density_du_per_acre:
+      # "The residential density of the development": no net-acre rule is
+      # printed, so it is read on the whole lot (the gross area is larger,
+      # which never lifts a lot over the floor it would miss on net).
+      value: 16
+      cite: Estacada EMC 16.26.020 (D)(4)(2), the residential density of the development is not less than sixteen dwelling units per acre
+      quote: "or/clackamas/estacada/16.26/16.26.020.txt#L16"
+    min_lot_sqft:
+      exempt: true
+      cite: Estacada EMC 16.26.040 (A)(1), minimum lot size none
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L5-L8"
+    min_lot_width_ft:
+      exempt: true
+      cite: Estacada EMC 16.26.040 (A), the lot size and dimensions standard is "Minimum lot size, none"; no width is printed
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L5-L8"
+    max_height_ft:
+      value: 65
+      cite: Estacada EMC 16.26.040 (F), buildings shall not exceed the maximum height of sixty-five feet
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L47"
+    min_building_height_ft:
+      # "Shall exceed the minimum height of seventeen feet": the 25-30 ft
+      # pod clears it.
+      value: 17
+      cite: Estacada EMC 16.26.040 (F), buildings shall exceed the minimum height of seventeen feet
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L47"
+    max_coverage_pct:
+      exempt: true
+      cite: Estacada EMC 16.26.040, the D standards print no lot coverage limit
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L3,L47,L51"
+    max_impervious_pct:
+      exempt: true
+      cite: Estacada EMC 16.26.040, the D standards print no impervious surface limit (the five percent landscaping is its own field)
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L3,L47,L51"
+    min_landscaped_pct:
+      value: 5
+      cite: Estacada EMC 16.26.040 (G)(1), a minimum of five percent of the area developed shall be landscaped
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L51"
+    # FRONT. Zero minimum and five maximum, "except five (5) feet minimum
+    # and ten (10) feet maximum for development abutting 2nd Avenue or 224".
+    # No fact says which lots abut 2nd Avenue, so the larger minimum is
+    # charged on every street line. The maximum is held at five, the smaller.
+    setback_front_ft:
+      value: 5
+      cite: Estacada EMC 16.26.040 (C)(1), front and street side setbacks zero feet minimum, five feet minimum abutting 2nd Avenue or OR 224; the five is charged on every lot (conservative)
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L24"
+    setback_front_max_ft:
+      value: 5
+      cite: Estacada EMC 16.26.040 (C)(1), front and street side setbacks five feet maximum (ten abutting 2nd Avenue or OR 224), met when fifty percent of a primary structure is within the yard
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L24-L25"
+    setback_street_side_ft:
+      value: 5
+      cite: Estacada EMC 16.26.040 (C)(1), front and street side setbacks, five feet minimum abutting 2nd Avenue or OR 224; charged on every lot (conservative)
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L24"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Estacada EMC 16.26.040 (C)(1), the front setback
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L24"
+    # SIDE AND REAR. "Zero feet for common wall development and ten (10)
+    # feet if abutting a residential zone; otherwise setback shall conform to
+    # building code." The pod on one lot is not common wall development, and
+    # the building-code separation is not stored, so the ten is charged on
+    # every interior line: the one figure the code prints for this pod.
+    setback_side_ft:
+      value: 10
+      cite: Estacada EMC 16.26.040 (C)(2), side setback ten feet if abutting a residential zone, otherwise building code; the ten is charged on every lot (the building-code figure is not stored)
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L29"
+    setback_rear_ft:
+      value: 10
+      cite: Estacada EMC 16.26.040 (C)(3), rear setback ten feet if abutting a residential zone, otherwise building code; the ten is charged on every lot (the building-code figure is not stored)
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L31"
+    parking_front_prohibited:
+      value: true
+      cite: Estacada EMC 16.26.040 (B)(3), off-street parking shall not be located between a primary building entrance and the street(s) to which it is oriented
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L16"
+    review_discretion:
+      # Type 2 committee review of all new construction (16.26.050 (B)(3)(2)),
+      # compatible "if and only if" the criteria of B-G are met and 65% of
+      # Table 16.26.051's points are scored. The criteria carry judgement
+      # words ("consistent with historic building design"), so this is the
+      # judgement tier: inside the UGB GREEN with the CLEAR-OBJECTIVE flag
+      # (Steph 2026-10-15, ORS 197A.400).
+      value: judgement
+      cite: Estacada EMC 16.26.050 (B)(3)(2), Type 2 committee design review of all new construction, compatible only if the criteria of 16.26.050 B-G are met and 65 percent of the Table 16.26.051 points scored; (C) exterior cladding "consistent with historic building design"
+      quote: "or/clackamas/estacada/16.26/16.26.050.txt#L19-L20,L37,L39,L41,L56"
     notes: >-
-      DRAFT. Refuses: the four-unit use is conditioned on street fronts and
-      a density floor the one-lot screen cannot test.
+      OPENED 2026-10-29 (districts chunk 5) on the lots north of OR 224 that
+      front none of Broadway, Main and OR 224, built from the taxlots
+      (downtown-back-streets.geojson); everywhere else in D the fourplex stays
+      refused. Front and street side 5 (min and max), side and rear 10,
+      17-65 ft, no lot minimum or coverage, landscaping 5 percent, parking not
+      in front, sixteen units an acre (a flag where missed). The committee
+      design review is a judgement review (green with a flag inside the
+      UGB). Doubts, all toward RED or more yard: the 20 percent parking
+      reduction (16.26.040 (B)(2)) and the no-minimum within 100 ft of
+      Broadway (B)(1) are not taken; the Lakeshore Trail ten percent open
+      space (I)(3) is not encoded -- the trail runs along the river south of
+      OR 224, outside the area; lots touching Currin Street or Acacia Road
+      are left out until the South Downtown Circulation and Access Plan is
+      read; the frontage road along OR 224 is read as OR 224.
   C-1:
     cite_default:
       cite: Estacada EMC Chapter 16.28 (General Commercial, C-1)
@@ -716,3 +834,25 @@ zone_rulings:
     note: >-
       "OS", the regional zoning layer's spelling of Estacada's O-S, Open
       Space and Public Facilities (EMC 16.44), on 2026-10-07. The block is O-S.
+
+drawn_areas:
+  downtown_back_streets:
+    condition: inside_mapped_use_area
+    zones: [D]
+    file: or/clackamas/estacada/downtown-back-streets.geojson
+    source: >-
+      Built 2026-10-29 from the Metro RLIS taxlots and the regional zoning
+      layer's D polygon: the D lots north of OR 224 from which no ray reaches
+      Broadway, Main, OR 224 or its frontage road, nor Currin Street or Acacia
+      Road. Drawn provenance and the dropped-lot counts in the file's source
+      block.
+    quote: "or/clackamas/estacada/16.26/16.26.020.txt#L11,L13-L14"
+    cite: Estacada EMC 16.26.020 (D)(4)(1)
+    note: >-
+      16.26.020 (D)(4)(1) permits the fourplex in D only where ground floor
+      residential uses do not front Broadway Street, Main Street or OR 224,
+      and prohibits them everywhere south of OR 224. The code draws that in
+      words, so the area is built from the taxlots. Of 135 D lots, 44 are
+      kept (29 of them small enough, at or under 10,890 sq ft, for four
+      homes to reach sixteen an acre). Lots touching Currin or Acacia are
+      dropped for 16.26.040 (H)(2), whose access plan is not stored.

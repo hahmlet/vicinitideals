@@ -1,5 +1,5 @@
 {
-  "digest": "be7d79b0ebb95cd5e5895c421b5f40eadcf52f7a2237921f611b111247c4f33d",
+  "digest": "ecf589e03c288b24266608b775162dd99f37d7b25c9f5f25c61fecf87366fe1f",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -1263,6 +1263,38 @@
         },
         {
           "zone": "MUC",
+          "field": "max_height_ft [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L77-L79",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
+          "field": "max_impervious_pct [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L81-L83",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
+          "field": "min_density_du_per_acre [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L91,L99",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
+          "field": "min_landscaped_pct [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L85-L87",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
           "field": "parking_aisle_one_way_ft",
           "claimed": "18.410.2",
           "found": "18.410.030",
@@ -1284,6 +1316,14 @@
           "found": "18.410.030",
           "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
           "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUC",
+          "field": "setback_front_max_ft [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L63,L71",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MUR",

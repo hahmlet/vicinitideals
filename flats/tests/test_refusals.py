@@ -376,7 +376,11 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 162, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 163, "comments": 287, "tests": 18}
+# 162 -> 163 notes and 286 -> 287 comments on 2026-10-29 (FOLLOWUPS 109 chunk 5): Tigard
+# MUC's comment records Bridgeport's 20 ft height floor, 50-an-acre ceiling, street-side
+# maximum and arterial frontage share as read and NOT ENCODED; Estacada D's note records the
+# Lakeshore Trail open space as not encoded (outside the opened area).
 # 156 -> 157 notes on 2026-10-28 (FOLLOWUPS 109 chunk 4, Troutdale Town Center): HDR's note
 # records 9.035's Town Center parking waiver and 3.235.C.5.a's ten-foot rear against a
 # non-residential district as read and not encoded (both could only loosen).
