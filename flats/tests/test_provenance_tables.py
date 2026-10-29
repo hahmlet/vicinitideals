@@ -188,3 +188,39 @@ def test_a_table_a_person_found_wrong_is_refused_and_one_found_right_says_so():
     assert not wrong.shown and "Steph 2026-10-25 found it wrong on the page: rows swapped" in wrong.problems
     # A verdict on another reader's table says nothing about this one.
     assert _judged(t, [{**said, "tool": "docling", "verdict": "wrong"}]).shown
+
+
+def test_a_city_printed_as_several_books_names_one_set_of_files_per_book():
+    from pathlib import Path
+
+    from flats.provenance.tables import CORRECTED, REVIEWED, companions
+
+    here = Path("city")
+    assert companions(here / PROPOSED) == (here / CORRECTED, here / RULED, here / REVIEWED)
+    named = companions(here / "tables.4.1400.proposed.json")
+    assert [p.name for p in named] == [
+        "tables.4.1400.corrected.json",
+        "tables.4.1400.proposed.ruled.json",
+        "tables.4.1400.reviewed.json",
+    ]
+
+
+def test_each_book_s_tables_land_only_on_sections_printed_in_that_book():
+    # Gresham prints its code as seventeen PDFs, one per chapter, so "page 5"
+    # names seventeen pages; each book's proposals sit in their own file.
+    from flats.provenance.books import expected
+
+    store = ProvenanceStore()
+    city = store.root / "or/multnomah/gresham"
+    files = {json.loads(p.read_text(encoding="utf-8"))["book"]: p.name for p in city.glob("tables.*.proposed.json")}
+    assert len(files) > 10
+    found = {k: v for k, v in tables(store).items() if k.startswith("or/multnomah/gresham/")}
+    assert sum(len(v) for v in found.values()) > 50
+    for section, drawn in found.items():
+        book = expected(store, store.parts()[section].proof)
+        assert book in files, section
+        raw = json.loads((city / files[book]).read_text(encoding="utf-8"))
+        for t in drawn:
+            assert str(t.page) in raw["pages"], (section, t.page)
+    # Pleasant Valley's residential use table, from its own book, drawn.
+    assert any(t.shown and t.page == 5 for t in found["or/multnomah/gresham/4/4.1413.txt"])

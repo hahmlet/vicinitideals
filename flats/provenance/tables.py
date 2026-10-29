@@ -50,6 +50,15 @@ so beside it. The share found wrong is the checks' miss rate.
 *Not tables.* A chapter's list of its sections ("TDC 40.100. Purpose.")
 is set out in columns, and Docling proposes it as a table; it is dropped,
 as it is printed lines and nothing in it is a table's cell.
+
+*A city printed as several books.* A proposals file is about one book, and
+its pages are that book's page numbers. Gresham prints its code as one PDF
+per chapter, so page 5 is seventeen different pages. Such a city keeps one
+set of files per book, named for it -- ``tables.4.1400.proposed.json`` and
+its ``tables.4.1400.proposed.ruled.json``, ``.corrected.json`` and
+``.reviewed.json`` -- and a named file's tables are placed only on the
+sections printed in the book its ``book`` hash names. The unnamed files keep
+their meaning: every section of the city.
 """
 
 from __future__ import annotations
@@ -465,6 +474,23 @@ def _overlaps(a: Sequence[float], b: Sequence[float]) -> bool:
     return smaller > 0 and width * height >= 0.5 * smaller
 
 
+def companions(proposed: Path) -> tuple[Path, Path, Path]:
+    """The corrected, ruled and reviewed files that go with a proposals file.
+
+    ``tables.proposed.json`` -> ``tables.corrected.json`` ...; a file named
+    for one book, ``tables.4.1400.proposed.json``, -> ``tables.4.1400.corrected.json`` ...
+    """
+    prefix = proposed.name[: -len("proposed.json")]
+    here = proposed.parent
+    return here / f"{prefix}corrected.json", here / f"{prefix}proposed.ruled.json", here / f"{prefix}reviewed.json"
+
+
+def _book(path: Path) -> str:
+    if not path.is_file():
+        return ""
+    return str(json.loads(path.read_text(encoding="utf-8")).get("book", ""))
+
+
 def _read(path: Path) -> tuple[str, dict[int, list[Mapping[str, object]]]]:
     if not path.is_file():
         return "", {}
@@ -480,16 +506,27 @@ def _tables(root: Path) -> tuple[tuple[str, tuple[Table, ...]], ...]:
     for part in parts.values():
         by_dir.setdefault(part.layer, []).append(part)
     out: dict[str, list[Table]] = {}
-    for proposed in sorted(root.rglob(PROPOSED)):
+    books: dict[str, str] = {}
+    for proposed in sorted(root.rglob("tables*.proposed.json")):
         directory = proposed.parent.relative_to(root).as_posix()
         if not (proposed.parent / INDEX).is_file():
             continue
+        corrected_path, ruled_path, reviewed_path = companions(proposed)
         docling = _read(proposed)
-        corrected = _read(proposed.parent / CORRECTED)
-        ruled = _read(proposed.parent / RULED)
+        corrected = _read(corrected_path)
+        ruled = _read(ruled_path)
         candidates = by_dir.get(directory, [])
+        if proposed.name != PROPOSED:
+            # Named for one book: its page numbers are that book's alone.
+            from flats.provenance.books import expected
+
+            book = _book(proposed)
+            for part in candidates:
+                if part.proof not in books:
+                    books[part.proof] = expected(store, part.proof)
+            candidates = [p for p in candidates if book and books[p.proof] == book]
         texts: dict[str, list[str]] = {}
-        reviews = _reviews(proposed.parent / REVIEWED)
+        reviews = _reviews(reviewed_path)
 
         def placed(proposal: Mapping[str, object], page: int, tool: str, on_page: list[Part]) -> Table | None:
             best: Table | None = None

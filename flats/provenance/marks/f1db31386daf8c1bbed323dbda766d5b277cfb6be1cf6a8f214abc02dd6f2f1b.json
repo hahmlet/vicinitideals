@@ -1,0 +1,288 @@
+{
+"book": "f1db31386daf8c1bbed323dbda766d5b277cfb6be1cf6a8f214abc02dd6f2f1b",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"3": [
+{
+"text": "st",
+"before": "deStreetonthenorth,SE181",
+"after": "AvenueonthewestandSE190t",
+"box": [
+395.4,
+556.09,
+400.37,
+563.05
+]
+},
+{
+"text": "th",
+"before": "tAvenueonthewestandSE190",
+"after": "Avenueontheeast.Thisarea",
+"box": [
+543.0,
+556.09,
+548.94,
+563.05
+]
+}
+],
+"16": [
+{
+"text": "st",
+"before": "T-OFWAYStarkSt.0ft.5ft.181",
+"after": "Ave.0ft.5ft.BurnsideSt.10ft",
+"box": [
+296.4,
+427.93,
+301.37,
+434.89
+]
+},
+{
+"text": "th",
+"before": "0ft.15ft.OakSt.10ft.15ft.185",
+"after": "Ave.10ft.15ft.187thAve.10ft",
+"box": [
+296.4,
+481.69,
+302.34,
+488.65
+]
+},
+{
+"text": "th",
+"before": "15ft.185thAve.10ft.15ft.187",
+"after": "Ave.10ft.15ft.AshSt.10ft.15",
+"box": [
+296.4,
+495.13,
+302.34,
+502.09
+]
+},
+{
+"text": "nd",
+"before": ".AshSt.10ft.15ft.Future182",
+"after": "Ave.10ft.15ft.Future183rdA",
+"box": [
+328.44,
+521.89,
+335.69,
+528.85
+]
+},
+{
+"text": "rd",
+"before": "2ndAve.10ft.15ft.Future183",
+"after": "Ave.10ft.15ft.Continuedonfo",
+"box": [
+328.44,
+535.33,
+334.38,
+542.29
+]
+}
+],
+"17": [
+{
+"text": "th",
+"before": "fEBurnsideStreetandSE187",
+"after": "Avenueprovidesalargerset",
+"box": [
+208.92,
+634.41,
+214.15,
+640.41
+]
+}
+],
+"18": [
+{
+"text": "st",
+"before": "entbuildingfrontageb.181",
+"after": "Avenue:90percentbuilding",
+"box": [
+313.68,
+397.21,
+318.65,
+404.17
+]
+},
+{
+"text": "th",
+"before": "entbuildingfrontaged.185",
+"after": "Avenue/187thAvenue/AshSt",
+"box": [
+313.68,
+424.09,
+319.62,
+431.05
+]
+},
+{
+"text": "th",
+"before": "rontaged.185thAvenue/187",
+"after": "Avenue/AshStreet/Future1",
+"box": [
+376.8,
+424.09,
+382.74,
+431.05
+]
+}
+],
+"27": [
+{
+"text": "th",
+"before": "opmentswithfrontageon185",
+"after": "and187thAvenues.Developm",
+"box": [
+491.64,
+571.33,
+497.58,
+578.29
+]
+},
+{
+"text": "th",
+"before": "ithfrontageon185thand187",
+"after": "Avenues.Developmentswith",
+"box": [
+536.16,
+571.33,
+542.1,
+578.29
+]
+}
+],
+"58": [
+{
+"text": "1",
+"before": "nationLevel(Foot-Candles)",
+"after": "PrimaryInternalDrives1.0",
+"box": [
+312.48,
+335.14,
+315.77,
+341.62
+]
+}
+],
+"84": [
+{
+"text": "st",
+"before": "atfaceSEStarkStreetor181",
+"after": "Avenueshallbecomposedofc",
+"box": [
+313.68,
+206.17,
+318.65,
+213.13
+]
+},
+{
+"text": "st",
+"before": "therthanthosethatface181",
+"after": "AvenueorSEStarkStreet,sh",
+"box": [
+530.76,
+273.37,
+535.73,
+280.33
+]
+},
+{
+"text": "st",
+"before": "atfaceSEStarkStreetor181",
+"after": "Avenueshallbecomposedofc",
+"box": [
+380.52,
+521.05,
+385.49,
+528.01
+]
+},
+{
+"text": "st",
+"before": "therthanthosethatface181",
+"after": "AvenueorSEStarkStreet,sh",
+"box": [
+383.04,
+615.01,
+388.01,
+621.97
+]
+}
+],
+"88": [
+{
+"text": "st",
+"before": "peciﬁedinthissection:•181",
+"after": "AvenueandEBurnsideStreet",
+"box": [
+318.0,
+402.85,
+322.97,
+409.81
+]
+},
+{
+"text": "st",
+"before": "ueandEBurnsideStreet•181",
+"after": "AvenueandSEStarkStreet•E",
+"box": [
+318.0,
+416.89,
+322.97,
+423.85
+]
+}
+],
+"93": [
+{
+"text": "1",
+"before": "ensional)PPStone/Masonry",
+"after": "PPStucco2PPGlass(transpa",
+"box": [
+120.12,
+160.66,
+123.41,
+167.14
+]
+},
+{
+"text": "2",
+"before": "PPStone/Masonry1PPStucco",
+"after": "PPGlass(transparentandsp",
+"box": [
+83.88,
+177.46,
+87.17,
+183.94
+]
+},
+{
+"text": "3",
+"before": "ﬁled,FlutedorRibbedMetal",
+"after": "PanelsPPFiberReinforcedC",
+"box": [
+325.2,
+228.1,
+328.49,
+234.58
+]
+},
+{
+"text": "3",
+"before": "cTileSSStandingSeamMetal",
+"after": "SSConcreteBlockswithInte",
+"box": [
+143.04,
+329.38,
+146.33,
+335.86
+]
+}
+]
+}
+}
