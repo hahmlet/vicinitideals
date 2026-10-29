@@ -965,6 +965,22 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "tigard_bridgeport_village",
+        "site_fact",
+        "The lot lies inside Tigard's Bridgeport Village Plan District "
+        "(TDC 18.620). The district is zoned MUC, and its own chapter's "
+        "standards govern there in a conflict (18.620.020.B): a residential "
+        "density floor of 25 units per net acre, a 20 ft maximum front "
+        "setback, and parking kept off the street side of the building. "
+        "The zoning layer prints only MUC; the city's Community Plan Areas "
+        "layer draws the district.",
+        evidence=(
+            "Tigard's Community Plan Areas layer (Bridgeport Village) -- held "
+            "as Tigard's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_park_place",
         "site_fact",
         "The parcel is inside Oregon City's Park Place Concept Plan area. "
@@ -1285,6 +1301,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_park_place",
     "oregon_city_south_end",
     "rockwood_design_district",
+    "tigard_bridgeport_village",
     "troutdale_town_center",
     "willamette_historic_district",
 )
