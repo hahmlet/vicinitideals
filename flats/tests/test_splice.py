@@ -10,7 +10,7 @@ import pandas as pd
 import pytest
 
 from flats.ingest.quadfit import scope_mask
-from flats.ingest.splice import MAX_SPLICES, audit, due, report, splice
+from flats.ingest.splice import MAX_AGE_DAYS, MAX_SPLICES, audit, due, report, splice
 
 LOTS = [("W1", "Wood Village", "TC"), ("W2", "Wood Village", "LR"), ("T1", "Troutdale", "R7"), ("G1", "Gresham", "TC")]
 
@@ -139,6 +139,10 @@ def test_a_full_re_screen_is_due_after_enough_splices_or_enough_days() -> None:
     assert due(meta(1, fresh), now=now) == []
     assert "partial re-screens" in due(meta(MAX_SPLICES, fresh), now=now)[0]
     assert "days ago" in due(meta(1, "2026-08-01T00:00:00+00:00"), now=now)[0]
+    # Steph, 2026-10-29: a full re-screen every two weeks (FOLLOWUPS 124)
+    assert (MAX_AGE_DAYS, MAX_SPLICES) == (14, 10)
+    assert due(meta(1, "2026-09-17T00:00:00+00:00"), now=now) == []
+    assert "14 days ago" in due(meta(1, "2026-09-16T00:00:00+00:00"), now=now)[0]
 
 
 def test_the_audit_accepts_a_move_no_change_declared_as_a_known_unknown(tmp_path: Path) -> None:

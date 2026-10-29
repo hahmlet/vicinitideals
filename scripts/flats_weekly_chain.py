@@ -46,12 +46,15 @@ lock (it waits on itself)::
       .venv/bin/python scripts/flats_weekly_chain.py --snapshot 2026-10-07 --sha <commit> \\
         --dem-from data/quadfit_demw/raw --snapshot-date 2026-10-01 \\
         --transit-reuse data/flats/transit/2026-10-01/distances.parquet \\
+        --audit-against /root/bridge_spliced_<tag in use> \\
         --status-to root@<vm114>:/root/weekly137/status.txt --app-host root@<vm114> \\
       > /root/weekly_chain.log 2>&1 < /dev/null &
 
 Re-launch the same line after anything. ``--preflight-only`` checks and
 prints the commands without running them; ``--from STEP`` runs that step and
-every one after it again. Load, drift and promote stay by hand (runbook §4b).
+every one after it again. The last step audits this run against the spliced
+bridge it replaces (``--audit-against``; FOLLOWUPS 124): read ``audit_<tag>/audit.md``
+before promoting. Load, drift and promote stay by hand (runbook §4b).
 """
 
 from __future__ import annotations
@@ -75,7 +78,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-STEPS = ("stage", "quadfit", "normalize", "institutional", "transit", "bridge", "assign", "export")
+STEPS = ("stage", "quadfit", "normalize", "institutional", "transit", "bridge", "assign", "export", "audit")
 #: The bridge's own words when a lot killed its worker twice and ended the run
 #: (flats.ingest.batch). Not "killed for memory?": a run that survived one death
 #: says that too, and may then fail for a reason more tries will not cure.
@@ -125,6 +128,8 @@ class Chain:
     chunk_size: int = 250
     bridge_args: Sequence[str] = ()
     python: str = sys.executable
+    #: the spliced bridge in use, which this full re-screen replaces (FOLLOWUPS 124)
+    audit_against: Path | None = None
 
     @property
     def sources(self) -> Path:
@@ -180,6 +185,11 @@ class Chain:
         if step == "export":
             return [py, "scripts/flats_load_bridge.py", "export", "--run-dir", str(self.work / f"assign_{self.tag}"),
                     "--out", str(self.work / f"bundle_{self.tag}")], {}
+        if step == "audit":
+            if self.audit_against is None:
+                return [py, "-c", "print('no --audit-against: nothing audited')"], {}
+            return [py, "-m", "flats.ingest.splice", "audit", "--spliced", str(self.audit_against),
+                    "--full", str(self.bridge), "--out", str(self.work / f"audit_{self.tag}")], {}
         raise ValueError(f"no step {step!r}")
 
     def gate(self, step: str) -> list[str]:
@@ -718,6 +728,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--processes", type=int, default=16, help="bridge processes (halved after a memory death)")
     ap.add_argument("--chunk-size", type=int, default=250)
     ap.add_argument("--bridge-arg", action="append", default=[], help="one more bridge argument (repeatable)")
+    ap.add_argument("--audit-against", type=Path, required=True,
+                    help="the spliced bridge in use, which this run replaces: the audit step splits every move "
+                    "into in scope and out of scope (runbook §4c)")
     ap.add_argument("--state", type=Path, help="done markers, logs, status (default: <work>/weekly_<tag>)")
     ap.add_argument("--from", dest="start_from", choices=STEPS, help="run this step and every later one again")
     ap.add_argument("--tries", type=int, default=3)
@@ -735,7 +748,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     tag = args.tag or f"{args.snapshot}_weekly"
     chain = Chain(args.snapshot, tag, args.data.resolve(), args.work.resolve(), args.root.resolve(),
                   args.dem_from.resolve(), args.transit_reuse, args.snapshot_date, args.chunk_size,
-                  tuple(args.bridge_arg))
+                  tuple(args.bridge_arg), audit_against=args.audit_against.resolve())
     state = args.state or chain.work / f"weekly_{tag}"
     status = Status(state / "status.txt", chain, args.sha, args.status_every, args.status_to)
 
@@ -751,6 +764,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         say(f"note: {note}")
     if args.transit_reuse and not args.transit_reuse.is_file():
         problems.append(f"--transit-reuse {args.transit_reuse}: no such file")
+    if not (chain.audit_against / "lots.parquet").is_file():
+        problems.append(f"--audit-against {chain.audit_against}: no lots.parquet -- not a bridge directory")
     problems += disk_problems([("the data tree", chain.data, args.min_free_gb), ("--work", chain.work, args.min_free_gb)])
     if args.app_host:
         problems += app_disk_problems(args.app_host, args.app_path, args.app_min_free_gb)

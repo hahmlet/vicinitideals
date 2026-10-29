@@ -64,6 +64,28 @@ def test_each_step_runs_the_command_the_runbook_names(wc, tmp_path) -> None:
         chain.command("promote", 8)
 
 
+def test_the_last_step_audits_the_full_run_against_the_spliced_one_it_replaces(wc, tmp_path) -> None:
+    # FOLLOWUPS 124: the audit was in the runbook and ran at no weekly; it is a step now
+    from flats.tests.test_splice import ALL_RED, bridge
+    from flats.ingest.splice import splice
+
+    assert wc.STEPS[-1] == "audit"
+    base = bridge(tmp_path / "full", ALL_RED)
+    splice(base, bridge(tmp_path / "wv", {"W1": "green"}, jurisdictions=["Wood Village"]), tmp_path / "s", change="WV")
+    chain = _chain(wc, tmp_path, audit_against=tmp_path / "s")
+    bridge(chain.bridge, {**ALL_RED, "W1": "yellow", "T1": "yellow"})
+    argv, env = chain.command("audit", 8)
+    got = subprocess.run(argv, env={**os.environ, **env}, cwd=REPO_ROOT, capture_output=True, text=True)
+    assert got.returncode == 0, got.stderr
+    # W1 a partial run re-screened (in scope); T1 none touched (out of scope);
+    # each counted per design and per answer, 2 x 2
+    assert "in scope 4, out of scope 4" in got.stdout
+    assert (tmp_path / "work" / "audit_2026-10-07_weekly" / "audit.md").is_file()
+    # a chain built without one says so and passes
+    argv, _ = _chain(wc, tmp_path).command("audit", 8)
+    assert "nothing audited" in subprocess.run(argv, capture_output=True, text=True, check=True).stdout
+
+
 # --- what a failed try leads to ------------------------------------------------------------
 
 
@@ -195,7 +217,7 @@ def test_a_relaunch_runs_only_the_steps_not_yet_done(wc, tmp_path) -> None:
     summary = json.loads((tmp_path / "state" / "chain.json").read_text(encoding="utf-8"))
     assert list(summary) == list(wc.STEPS) and summary["bridge"]["processes"] == 16
     assert "DONE " + " ".join(wc.STEPS) in (tmp_path / "state" / "status.txt").read_text(encoding="utf-8")
-    assert _run(wc, tmp_path, {}) == 0 and len(_ran(tmp_path)) == 6 + 3  # nothing left to run
+    assert _run(wc, tmp_path, {}) == 0 and len(_ran(tmp_path)) == 6 + 4  # nothing left to run
 
 
 @pytest.mark.timeout(120)
@@ -219,7 +241,7 @@ def test_a_step_gives_up_after_its_tries(wc, tmp_path) -> None:
 def test_from_a_step_runs_it_and_every_later_one_again(wc, tmp_path) -> None:
     assert _run(wc, tmp_path, {}) == 0
     assert _run(wc, tmp_path, {}, start_from="assign") == 0
-    assert [line.split()[0] for line in _ran(tmp_path)][len(wc.STEPS):] == ["assign", "export"]
+    assert [line.split()[0] for line in _ran(tmp_path)][len(wc.STEPS):] == ["assign", "export", "audit"]
 
 
 @pytest.mark.timeout(120)
@@ -229,10 +251,10 @@ def test_steps_done_at_other_code_are_not_taken_unasked(wc, tmp_path) -> None:
     assert len(_ran(tmp_path)) == len(wc.STEPS) and _final(tmp_path).startswith("REFUSED")
     # the operator says which steps the change touches: the earlier ones are kept
     assert _run(wc, tmp_path, {}, sha="bbbbbbb2", start_from="bridge") == 0
-    assert [line.split()[0] for line in _ran(tmp_path)][len(wc.STEPS):] == ["bridge", "assign", "export"]
+    assert [line.split()[0] for line in _ran(tmp_path)][len(wc.STEPS):] == ["bridge", "assign", "export", "audit"]
     # ... and a plain re-launch takes them too; a longer or shorter form of
     # the same commit is the same commit
-    assert _run(wc, tmp_path, {}, sha="bbbbbbb2c0ffee") == 0 and len(_ran(tmp_path)) == len(wc.STEPS) + 3
+    assert _run(wc, tmp_path, {}, sha="bbbbbbb2c0ffee") == 0 and len(_ran(tmp_path)) == len(wc.STEPS) + 4
     assert _run(wc, tmp_path, {}, sha="ccccccc3") == 2 and _final(tmp_path).startswith("REFUSED")
 
 

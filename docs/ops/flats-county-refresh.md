@@ -105,7 +105,7 @@ not babysat and a crash costs minutes, not the night. Launch it from a plain
 shell, never from a script that already holds the lock:
 
 ```
-cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/python scripts/flats_weekly_chain.py --snapshot <date> --sha <the commit>     --dem-from data/quadfit_demw/raw --snapshot-date <ground date>     --transit-reuse data/flats/transit/<last>/distances.parquet     --status-to root@<vm114>:/root/weekly137/status.txt --app-host root@<vm114>   > /root/weekly_chain.log 2>&1 < /dev/null &
+cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/python scripts/flats_weekly_chain.py --snapshot <date> --sha <the commit>     --dem-from data/quadfit_demw/raw --snapshot-date <ground date>     --transit-reuse data/flats/transit/<last>/distances.parquet     --audit-against /root/bridge_spliced_<tag in use>     --status-to root@<vm114>:/root/weekly137/status.txt --app-host root@<vm114>   > /root/weekly_chain.log 2>&1 < /dev/null &
 ```
 
 - **It refuses in seconds** when the checkout is not at `--sha` or has
@@ -152,6 +152,10 @@ cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/pytho
   the step and try, memory, the kernel's OOM-kill count, the bridge's parts
   and the log's tail. Its last line is `WEEKLY CHAIN DONE` or `GAVE UP at
   <step>`. Each step's output is in `~/weekly_<tag>/<step>.log`.
+- **Its last step is the splice audit** (§4c; FOLLOWUPS 124): this run
+  against `--audit-against`, the spliced bridge in use, written to
+  `~/audit_<tag>/audit.md`. `--audit-against` is required; read the report
+  before promoting.
 
 Loading, drift and promotion stay by hand (steps 11–18, §4b R3–R7).
 
@@ -207,11 +211,13 @@ since the last full run). The splice refuses a sampled run, a base that is
 itself a partial run, or two runs measured from different quadfit files.
 
 **A scope is a claim, so full re-screens stay.** A full re-screen is due
-after 5 partial runs or 30 days since the last full one, whichever comes
-first -- and never more than ONE A WEEK (Steph 2026-10-02: a
-three-county full run is ~16 h); changes merged in between wait for it or
+after 10 partial runs or 14 days since the last full one, whichever comes
+first -- and never more than ONCE EVERY TWO WEEKS (Steph 2026-10-29,
+FOLLOWUPS 124; it was once a week from 2026-10-02 -- a three-county full
+run is ~16 h, and two weeks of splices audit cleanly); changes merged in between wait for it or
 go out as a partial, and every batch of merged changes that says "all" (geometry, the fit,
-the engine) goes into one. When it has run, before promoting it:
+the engine) goes into one. The weekly chain's last step audits it (§4, under the step table);
+by hand, before promoting it:
 
 `python -m flats.ingest.splice audit --spliced <the spliced bridge in use> --full /root/bridge_<full tag> --out /root/audit_<tag>`
 

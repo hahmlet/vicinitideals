@@ -46,9 +46,10 @@ from pathlib import Path
 from typing import Any
 
 #: A full re-screen is owed after this many splices on one full run...
-MAX_SPLICES = 5
-#: ...or once the full run it descends from is this old.
-MAX_AGE_DAYS = 30
+MAX_SPLICES = 10
+#: ...or once the full run it descends from is this old. Steph, 2026-10-29:
+#: a full re-screen every two weeks, not every week (FOLLOWUPS 124).
+MAX_AGE_DAYS = 14
 
 #: The two answers a move is read on: as screened, and if the rules were signed.
 VERDICTS = ("triage", "if_signed")
