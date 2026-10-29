@@ -171,6 +171,7 @@ def _pages_of(data: bytes, *, extraction: str) -> list[list[str]]:
 
     from pypdf import PdfReader
 
+    from flats.provenance.mend import restore
     from flats.provenance.pdf_hold import held_extraction
 
     mode = {} if extraction == "plain" else {"extraction_mode": "layout"}
@@ -189,6 +190,9 @@ def _pages_of(data: bytes, *, extraction: str) -> list[list[str]]:
             # character by the fetch. Left as NUL here, every line holding one
             # would disagree with its stored twin.
             text = text.replace("\x00", "�")
+            # And a ligature glyph written out as its letters, as the fetch
+            # stores it (flats-html-text/9).
+            text = restore(text)
             out.append([line.rstrip() for line in text.split("\n")])
     return out
 

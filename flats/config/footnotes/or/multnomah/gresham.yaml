@@ -307,15 +307,15 @@ notes:
     digest: "ff7e17c3cf31"
     state: dismissed
     reason: >-
-      note 6 offers a density bonus to affordable housing; a relaxation, and
-      one that turns on an election nobody has made
+      offers a density bonus to affordable housing development; a relaxation, and one that turns
+      on an election nobody has made
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L387"
     digest: "707aaab76b9b"
     state: dismissed
     reason: >-
-      note 11 offers a height bonus to affordable housing; a relaxation, and
-      one that turns on an election nobody has made
+      offers a height bonus to affordable housing development; a relaxation, and one that turns on
+      an election nobody has made
 
   # --- Table 4.0131, the setbacks -------------------------------------
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L426"
@@ -451,7 +451,9 @@ notes:
     digest: "142ef4064dda"
     state: dismissed
     reason: >-
-      permits affordable housing under Section 10.1700; an election nobody has made, and a permission rather than a limit
+      permits affordable housing development, subject to the special criteria of Section 10.1700.
+      A permission rather than a limit, resting on an election nobody has made; at most it would
+      widen the Quadplex row, never narrow it
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L244"
     digest: "336f39cea970"
@@ -667,7 +669,8 @@ notes:
     digest: "344b30e7d6e4"
     state: dismissed
     reason: >-
-      switches off the minimum net density for affordable housing; a relaxation resting on an election nobody has made
+      switches off the minimum residential net density for affordable housing development; a
+      relaxation resting on an election nobody has made
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L492"
     digest: "bd316ba6a05b"
@@ -779,7 +782,7 @@ notes:
   # own note 1 joins them: it is the L1 that limits the Quadplex cell in
   # DCC and DTM, and it is encoded rather than dismissed.
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L528"
-    digest: "3c036597fca8"
+    digest: "b8fecbfd5ea6"
     state: dismissed
     reason: >-
       note 1 limits height and floor area ratio on the strip within 110 feet of the N Main Avenue centre line and sends it to the DCC -- N Main Avenue column, which is the table's second column and not a district of its own. It did not reach this layer while only DRL-1 and DRL-2 were held; it reaches DCC now. What the strip states is 45 feet and a ratio of 1.5 against the district's 85 and 3.0 -- a real cut, and still far above what a 26 ft four-unit pod asks of either. No lot changes colour on which side of the 110 feet it falls, so the strip is ruled here rather than carried as a variant on an unmeasured line
@@ -791,19 +794,20 @@ notes:
       note 2 lets buildings exceed the maximum height by up to 8 feet for parapets and pitched roofs in every Downtown sub-district except DRL-1 and DRL-2. It excluded the whole of this layer when only the two DRL districts were held and now reaches DCC and DTM, which changes nothing: it only ever raises a ceiling, and the ceiling it raises is already three times the pod
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L534"
-    digest: "b5860ff4afbd"
+    digest: "fe858e655151"
     state: dismissed
     reason: >-
       note 3 caps height at 45 feet within 50 feet of a district whose own limit is 40 feet or less, and 50 feet in DCC along the north side of Division Street. Against DRL-1 and DRL-2 it was no cut at all; against the 85 feet now encoded for DCC and DTM it is a real one, and it is still nearly twice a two-storey pod. Every number in the note clears the building, so no lot in the district turns on it
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L538"
-    digest: "1d4a80e6ca1f"
+    digest: "707aaab76b9b"
     state: dismissed
     reason: >-
-      note 4 offers a height bonus to affordable housing; a relaxation, and one that turns on an election nobody has made
+      offers a height bonus to affordable housing development; a relaxation, and one that turns on
+      an election nobody has made
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L539"
-    digest: "9523802bc114"
+    digest: "43ead356a38e"
     state: dismissed
     reason: >-
       note 5 exempts transit shelters, parks, utilities, wireless facilities, portable classrooms, cemeteries and museums from minimum floor area ratio and maximum setbacks; not our use
@@ -815,16 +819,18 @@ notes:
       note 6 takes the flag pole out of the site area a floor area ratio is measured against. It shrinks the denominator rather than changing the ratio, so there is no number here for the ratio field to hold; the layer assumes no flag lot (`flag_lot`), and applying the smaller site area where one is detected is geometry's job rather than this table's
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L551"
-    digest: "5fac8f09b7a9"
+    digest: "344b30e7d6e4"
     state: dismissed
     reason: >-
-      note 7 switches off the minimum residential net density for affordable housing; a relaxation resting on an election nobody has made
+      switches off the minimum residential net density for affordable housing development; a
+      relaxation resting on an election nobody has made
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L552"
-    digest: "f0c0b098a64d"
+    digest: "ff7e17c3cf31"
     state: dismissed
     reason: >-
-      note 8 offers a density bonus to affordable housing; the same ground
+      offers a density bonus to affordable housing development; a relaxation, and one that turns
+      on an election nobody has made
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L553"
     digest: "531ccdee8bd6"
@@ -869,7 +875,7 @@ notes:
       note 15 encourages townhouses to take access from a rear alley; an encouragement states no standard
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L569"
-    digest: "46a5a1fa4d45"
+    digest: "7dfff2c8757c"
     state: dismissed
     reason: >-
       note 16 releases the maximum front setback once the street type's building frontage requirement is met; it is a relaxation of a maximum, and the orientation constraint encoded for these zones already reads it
@@ -965,7 +971,10 @@ notes:
     digest: "7480057fec11"
     state: dismissed
     reason: >-
-      a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
+      permits converting an existing hotel or motel to an emergency shelter or to affordable
+      housing: a use and a building this screen never places, so it cannot reach the Quadplex or
+      Townhouse row the pod reads. Where it is printed under Springwater's Table 4.1520, those
+      rows read NP in every column in any case
 
   - quote: "or/multnomah/gresham/4.1500.springwater.txt#L516"
     digest: "4be5bdba9504"
@@ -1102,12 +1111,13 @@ notes:
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
-      "Affordable housing development is permitted. See Section 10.1700." The
-      city prints this six times across three chapters, and in every use table
-      it appears in the marker is on the Affordable Housing row -- never on a
-      dwelling row. It is a permission that turns on what is developed rather
-      than on anything about the lot, and it rests on an election nobody has
-      made: this product is market rate
+      "Affordable Housing Development is permitted. See Section 10.1700." The city prints this
+      seven times across four chapters, and in every use table it appears in the marker is on the
+      Affordable Housing row -- never on a dwelling row (Downtown's pod reads the Quadplex row,
+      which carries only the L1 in DCC and DTM, and the Townhouse row, a bare P in all six
+      sub-districts). It is a permission that turns on what is developed rather than on anything
+      about the lot, and it rests on an election nobody has made: this product is market rate. A
+      pod that qualified would gain a permission, never lose one
 
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L218"
     digest: "ffa5a848125d"
@@ -1341,12 +1351,13 @@ notes:
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
-      "Affordable housing development is permitted. See Section 10.1700." The
-      city prints this six times across three chapters, and in every use table
-      it appears in the marker is on the Affordable Housing row -- never on a
-      dwelling row. It is a permission that turns on what is developed rather
-      than on anything about the lot, and it rests on an election nobody has
-      made: this product is market rate
+      "Affordable Housing Development is permitted. See Section 10.1700." The city prints this
+      seven times across four chapters, and in every use table it appears in the marker is on the
+      Affordable Housing row -- never on a dwelling row (Downtown's pod reads the Quadplex row,
+      which carries only the L1 in DCC and DTM, and the Townhouse row, a bare P in all six
+      sub-districts). It is a permission that turns on what is developed rather than on anything
+      about the lot, and it rests on an election nobody has made: this product is market rate. A
+      pod that qualified would gain a permission, never lose one
 
   - quote: "or/multnomah/gresham/4.0200.commercial.txt#L139"
     digest: "030f791cd975"
@@ -1555,7 +1566,7 @@ notes:
   # --- 4.1100, the Downtown use table's other notes -------------------
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L312"
-    digest: "723f38894463"
+    digest: "7918cdea3776"
     state: dismissed
     reason: >-
       hotel and motel conversion to an emergency shelter or to
@@ -1567,17 +1578,19 @@ notes:
       multi-family category is five or more units
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L314"
-    digest: "b0f045edd978"
+    digest: "e70c194ccb27"
     state: dismissed
     reason: >-
-      affordable housing development is permitted, marked on the
-      Affordable Housing row. The pod reads the Quadplex row, which
-      carries only the L1 in DCC and DTM, and the Townhouse row, which
-      is a bare P in all six sub-districts. A pod that qualified as
-      affordable housing would gain a permission, never lose one
+      "Affordable Housing Development is permitted. See Section 10.1700." The city prints this
+      seven times across four chapters, and in every use table it appears in the marker is on the
+      Affordable Housing row -- never on a dwelling row (Downtown's pod reads the Quadplex row,
+      which carries only the L1 in DCC and DTM, and the Townhouse row, a bare P in all six
+      sub-districts). It is a permission that turns on what is developed rather than on anything
+      about the lot, and it rests on an election nobody has made: this product is market rate. A
+      pod that qualified would gain a permission, never lose one
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L315"
-    digest: "fca1e7ed1ee4"
+    digest: "74caa76eb35b"
     state: dismissed
     reason: >-
       a cross-reference to the auto sales and service limits in the
@@ -1586,7 +1599,7 @@ notes:
       which is a bare P in all six sub-districts
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L316"
-    digest: "457b336bc812"
+    digest: "fad3fba914ea"
     state: dismissed
     reason: >-
       a 5,000 square foot floor-area cap on Clinics and Business and
@@ -1596,7 +1609,7 @@ notes:
       Townhouse row, which is a bare P in all six sub-districts
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L319"
-    digest: "8ce40d494278"
+    digest: "0ea85b9b2c96"
     state: dismissed
     reason: >-
       the same cap at 7,500 square feet in DRL-2, on the same two
@@ -1616,7 +1629,7 @@ notes:
       is a bare P in all six sub-districts
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L323"
-    digest: "ebbf06afcf86"
+    digest: "6c911e7f8bcd"
     state: dismissed
     reason: >-
       the frontage and site-coverage conditions on Outdoor Commercial in
@@ -1625,7 +1638,7 @@ notes:
       sub-districts
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L337"
-    digest: "1baf40714ccc"
+    digest: "dd7ce6c2302a"
     state: dismissed
     reason: >-
       the conditions on a Manufacturing use: it must accompany an
@@ -1635,7 +1648,7 @@ notes:
       and the Townhouse row, which is a bare P in all six sub-districts
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L346"
-    digest: "d193a0696c79"
+    digest: "fea18a7e6cbe"
     state: dismissed
     reason: >-
       what the prohibition on warehousing and storage as a stand-alone
@@ -1731,7 +1744,7 @@ notes:
       housing; it reads the Quadplex and Townhouse rows
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L362"
-    digest: "52ff8c1f23d9"
+    digest: "cbac09ec8847"
     state: dismissed
     reason: >-
       certain locations in DCC require non-residential uses on the
@@ -1833,20 +1846,21 @@ notes:
       Quadplex row, which reads NP
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L211"
-    digest: "5de0cfbc5529"
+    digest: "7480057fec11"
     state: dismissed
     reason: >-
-      note 2 permits conversion of a hotel or motel to an emergency
-      shelter or to affordable housing. Neither the use nor the building
-      being placed
+      permits converting an existing hotel or motel to an emergency shelter or to affordable
+      housing: a use and a building this screen never places, so it cannot reach the Quadplex or
+      Townhouse row the pod reads. Where it is printed under Springwater's Table 4.1520, those
+      rows read NP in every column in any case
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L212"
-    digest: "abbcd5f6566d"
+    digest: "142ef4064dda"
     state: dismissed
     reason: >-
-      note 3 permits affordable housing development subject to Section
-      10.1700. A relaxation resting on an election nobody has made, and
-      it would widen the Quadplex row rather than narrow it
+      permits affordable housing development, subject to the special criteria of Section 10.1700.
+      A permission rather than a limit, resting on an election nobody has made; at most it would
+      widen the Quadplex row, never narrow it
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L226"
     digest: "e4334284e7ba"
@@ -1868,7 +1882,7 @@ notes:
       4.1220(A)'s Quadplex row
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L247"
-    digest: "6b4535df7322"
+    digest: "d00c41fb8f30"
     state: dismissed
     reason: >-
       the conditions on a manufacturing use in the Civic Neighborhood:
@@ -1933,7 +1947,7 @@ notes:
       on a civic use
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L333"
-    digest: "0aafad52e129"
+    digest: "b4c0c89244a7"
     state: dismissed
     reason: >-
       note 2 exempts transit facilities, parks and open space, basic
@@ -1944,7 +1958,7 @@ notes:
       quadplex_allowed, read off Table 4.1220(A)'s Quadplex row
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L341"
-    digest: "07677bf74cd9"
+    digest: "0e877268993a"
     state: dismissed
     reason: >-
       note 3 switches off the minimum residential density for affordable
@@ -1983,7 +1997,7 @@ notes:
       off Table 4.1220(A)'s Quadplex row
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L386"
-    digest: "ed81a833d880"
+    digest: "b1b8bc42e4c8"
     state: dismissed
     reason: >-
       note 4 switches off the maximum front setback once the street
@@ -1991,7 +2005,7 @@ notes:
       maximum, and no Civic Neighborhood setback is encoded
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L389"
-    digest: "b90b4b4bfc24"
+    digest: "ed7f4cc8cc66"
     state: dismissed
     reason: >-
       note 5 repeats note 2's exemption from the minimum floor area
@@ -2010,7 +2024,7 @@ notes:
       off Table 4.1220(A)'s Quadplex row
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4497"
-    digest: "a7ed6faac30a"
+    digest: "0c696c513d9f"
     state: dismissed
     reason: >-
       a facade material standard: stone shall be natural, not
@@ -2019,7 +2033,7 @@ notes:
       measures
 
   - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4500"
-    digest: "513967c23a1e"
+    digest: "8c28452a47ab"
     state: dismissed
     reason: >-
       a cross-reference to the Section 3.0103 definition of stucco. The
@@ -2049,7 +2063,7 @@ notes:
       no thinner than 24 gauge. A material specification
 
   - quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L3666"
-    digest: "9ab5e2e81c47"
+    digest: "d5f576b74943"
     state: dismissed
     reason: >-
       the Rockwood material table's stone standard: natural, not

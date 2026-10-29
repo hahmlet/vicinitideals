@@ -52,6 +52,7 @@ from flats.provenance.sources import (
     authority_for,
     fetch as fetch_source,
 )
+from flats.provenance.mend import glyphs, restore
 from flats.provenance.pdf_hold import held_extraction
 from flats.provenance.repoint import (
     config_files,
@@ -72,7 +73,13 @@ from flats.rules.model import CodeDocument, Layer
 #: /7 separates a superscript footnote marker from the value it sits on. See
 #: `_SUP_RUN`.
 #: /8 turns an undecodable glyph into U+FFFD instead of NUL. See `UNDECODED`.
-EXTRACTOR = "flats-html-text/8"
+#: /9 writes a ligature glyph (U+FB00-U+FB06: "ﬁ", "ﬂ", "ﬀ", "ﬃ", "ﬄ") out as
+#: its letters. See `flats.provenance.mend`. Only a text that held one can
+#: differ from /8's, so a /8 text with none is what /9 would store (`current`).
+EXTRACTOR = "flats-html-text/9"
+#: The extractions a stored text can come from and still be what EXTRACTOR
+#: stores, when the text holds none of the glyphs a later version changed.
+_SAME_WITHOUT_GLYPHS = frozenset({"flats-html-text/8"})
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -601,7 +608,9 @@ def pdf_to_text(
     # standards in a grid with one column per zone, and the gaps between
     # columns are the only thing that says which number belongs to which zone.
     # Collapsing them would make R5's 10 ft indistinguishable from RF's 20 ft.
-    lines = [line.rstrip() for line in "\n".join(pages).split("\n")]
+    # A ligature glyph is written out as its letters (/9): Gresham sets "fl"
+    # and "ff" as one glyph, and "ﬂoor" is a word no reader of letters reads.
+    lines = [line.rstrip() for line in restore("\n".join(pages)).split("\n")]
     return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
 
 
@@ -1105,6 +1114,19 @@ class Evidence:
         return out
 
 
+def current(document: Document) -> bool:
+    """Whether today's extraction would store this text as it is.
+
+    Stamped with this EXTRACTOR, or with one whose output differs from it only
+    in glyphs this text does not hold: /9 changed nothing but ligature glyphs,
+    so a /8 text with none is a /9 text. Without this every /8 document would
+    be listed for re-extraction, and the list would stop being read.
+    """
+    if document.extractor == EXTRACTOR:
+        return True
+    return document.extractor in _SAME_WITHOUT_GLYPHS and not glyphs(document.text)
+
+
 def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
     """Reconcile declared, stored and cited documents across the hierarchy."""
     declared_paths = {path for _, path, _ in declared(layers)}
@@ -1115,7 +1137,7 @@ def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
     outdated = set()
     for path in stored:
         try:
-            if store.load(path).extractor != EXTRACTOR:
+            if not current(store.load(path)):
                 outdated.add(path)
         except ProvenanceError:
             continue

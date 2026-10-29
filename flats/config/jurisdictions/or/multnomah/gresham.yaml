@@ -884,7 +884,7 @@ readings:
       feet to the right-of-way -- and every one of them is declined on the same one sentence
       rather than on six separate arguments. If Gresham ever deletes that bullet, this card is the
       place the whole list comes back.
-    fingerprint: 2fdfe50400396770
+    fingerprint: c570624a4e9b345c
   "4.1100.downtown.txt#4.1100":
     queue: condition
     outcome: never
@@ -931,7 +931,7 @@ readings:
       card that would reach if that zero ever moved, because the street type is a mapped fact
       nobody holds and it would be an unmeasured condition on vehicle access rather than on a
       number, which is the family the redirect ledger exists to catch.
-    fingerprint: cc7fb585ee92e6b7
+    fingerprint: 7db4b9ad03c50bbb
   "4.1200.civic-neighborhood.txt#4.1252":
     queue: condition
     outcome: never
@@ -966,7 +966,7 @@ readings:
       -- frontage occupancy percentages, transparency shares, open space ratios, walkway widths,
       parking screening -- and, as there, it is declined on applicability rather than one argument
       per standard.
-    fingerprint: c4f77ae9ce8ce832
+    fingerprint: 4aa14a31c323bc35
   "7.0500.rockwood-design.txt#7.0512":
     queue: chapter
     outcome: nothing_here
