@@ -1,0 +1,38 @@
+9.0861                             PARKING STRUCTURES
+
+A.                        Ground Floor Use.
+For all new multi-          level parking structures, a minimum of 50 percent of the ground floor street-                facing façade within 40 feet of the street excluding driveway entrances and exits, stairwells, elevators, and centralized payment booths shall be designed to accommodate commercial, institutional, or residential floor space.
+B.                          Ground Floor Transparency          .
+All parking structures shall provide ground floor windows or wall openings along the street frontages.
+Blank walls are prohibited, except where required by Building Code.
+Any wall facing the street shall contain windows, wall openings, doors or display windows for 20                                                   percent of the
+
+ground floor wall area facing the street excluding those portions of the facades                      devoted to driveway
+entrances and exits, stairwells, elevators, and                         centralized payment booths.
+Required windows or wall openings shall have a sill no more than 4 feet above grade.
+Where interior floor levels prohibit such placement, the sill may be raised to allow it to be no more than 2 feet above finished floor up to a maximum sill height of 6 feet above grade.
+C.                            Landscaping, Buffering                       and Screening, and Setbacks.
+Requirements are determined by Community Plan
+Map Designations, Design District standards, and Section 9.0100.
+D.                       Design Review.
+All parking structures where all or a portion of the structure is above ground, are subject to Design Review.
+E.                              Other Standards.
+Parking structures must comply with all standards of the Building Code for the State of Oregon as it pertains to structural design, ventilation, lighting, and fire/safety requirements and disabled accessibility.
+F.                               Parking Layout and Internal Circulation.
+The configuration of parking within a parking structure shall be subject to the requirements contained in Table 9.0861, except as described here: A modified Layout and Internal Circulation under Type II procedure may be approved by the Manager when it can be shown that
+1) a structure meets design guidelines of the Urban Land Institute Dimension of Parking, current edition  , or
+2) a similar structure functions efficiently using the proposed modified layout, circulation and dimensions.
+Table 9.0861: Parking Structure Matrix
+PARKING STRUCTURE MATRIX
+REQUIRED SPACE AND AISLE DIMENSIONS IN FEET Compact                                                                                                     Standard
+Parking                M1                   A                 W                   D                 IR                 M1                    A                    W                    D                   IR
+Angle               Base               Aisle              Stall              Stall           Interlock              Base           Aisle Width Stall Width                   Stall Depth           Interlock
+Module               Width              Width              Depth          Reduction             Module                                                                           Reduction
+Width                                                                                      width (wall
+(Wall to                                                                                         to wall)
+Wall)
+45°                 42               11.5                  8                 15                  2                  49                  13                  8.5                   18                  2.5
+60°                 46               13.5                  8                 16                1.5                  55                  16                  8.5                 19.5                    2
+75°                 49                 16                  8               16.5                  1                59.5                  20                  8.5                   20                    1
+90°                 51                 20                  8               15.5                  0                  62                  25                  8.5                   19                    0
+

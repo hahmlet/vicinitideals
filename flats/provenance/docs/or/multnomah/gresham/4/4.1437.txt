@@ -1,0 +1,16 @@
+4.14 37  GEOTHERMAL ENERGY STANDARDS FOR PLEASANT VALLEY  DISTRICTS
+Geothermal energy systems are limited in Pleasant Valley districts as follows (these standards may be restricted by 5.0700 Natural Resource Overlay):
+A. Scale.
+1. LDR-PV: Small scale geothermal energy systems are permitted in these districts.
+
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Small scale geothermal energy systems are permitted in these districts.
+Large scale systems are permitted with a Special Use Review.
+B. Type.
+1. LDR-PV: Closed-loop geothermal energy systems that are not in any well field protection areas are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Closed-loop geothermal energy systems that are not in any well field protection areas are permitted in these districts.
+C. Height.
+1. LDR-PV: Geothermal systems shall not exceed the maximum district height limits in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Geothermal systems shall not exceed the maximum district height limits in these districts.
+D. Setbacks and Yards.
+1. LDR-PV: Geothermal systems are not allowed in the required front, street-side, side or rear setbacks in these districts, except that small geothermal heating and cooling units such as heat pumps can project into the setbacks per Section 9.0900 Projections.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Geothermal systems are not allowed in the required front, street-side, side or rear setbacks in these districts, except that small geothermal heating and cooling units such as heat pumps can project into the setbacks per Section 9.0900 Projections.

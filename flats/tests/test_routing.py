@@ -325,8 +325,15 @@ OPEN = {
     "or/multnomah/gresham 4.0120 -> 10.1700",
     "or/multnomah/gresham 4.0130 -> 10.1700",
     "or/multnomah/gresham 4.0420 -> 4.0330",
-    "or/multnomah/gresham 4.0434 -> 10.1700",
+    # 2026-10-28 (FOLLOWUPS 73, batch 5): Gresham cut into sections. Note 15 of
+    # Table 4.0430 is in 4.0430 (the whole-chapter heading guess put it in 4.0434).
+    "or/multnomah/gresham 4.0430 -> 10.1700",
     "or/multnomah/gresham 4.1130 -> 10.1700",
+    # Same cut: 10.1700 now resolves as a held chapter, so note 2 of Table 4.1413
+    # (transitional housing needs a Special Use Review "unless the application
+    # qualifies as affordable housing under Section 10.1700") shows. A route
+    # that can only loosen, on an election nobody has made.
+    "or/multnomah/gresham 4.1413 -> 10.1700",
     # 2026-10-28 (FOLLOWUPS 109 chunk 4): the Civic Neighborhood density notes, read now
     # that CNTH, CNTM and CNRM open as townhouses; the affordable-housing route waits.
     "or/multnomah/gresham 4.1230 -> 10.1700",
@@ -770,3 +777,16 @@ def test_the_ledger_writes_one_row_per_redirect(tmp_path, rows: list[Routing]) -
     # Something has to still write "yes", or this assertion would pass on a
     # ledger that had quietly stopped closing rows at all.
     assert any(r["followed"] == "yes" for r in got)
+
+
+def test_a_redirect_s_see_sentence_on_the_next_line_is_its_pointer() -> None:
+    """A section file gives each sentence its own line.
+
+    Gresham's "Minimum net density does not apply to affordable housing
+    development. See Section 10.1700." was one line in the proof copy and is
+    two in 4/4.1508.txt. Read a line at a time the redirect named nothing and
+    five open rows left this ledger when the code was cut.
+    """
+    rows = redirects(load_rules()["or/multnomah/gresham"])
+    row = next(r for r in rows if r.path.endswith("/4/4.1508.txt") and r.ref == "10.1700")
+    assert "does not apply to affordable housing development. See Section 10.1700." in row.text

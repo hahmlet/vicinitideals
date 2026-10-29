@@ -249,7 +249,9 @@ def test_documents_that_lost_their_markers_are_named(store: list) -> None:
     chapter used to read the same way and did not deserve to: its markers were
     never lost, they were spelled out in words (see test_page_frame)."""
     butte = next(
-        row for row in store if row.doc.endswith("gresham/4.1300.gresham-butte.txt")
+        # 4.1300.gresham-butte.txt until Gresham was cut into sections
+        # (FOLLOWUPS 73, batch 5); the density table is section 4.1311.
+        row for row in store if row.doc.endswith("gresham/4/4.1311.txt")
     )
     assert butte.bodies and not butte.markers
     assert not butte.reconciled

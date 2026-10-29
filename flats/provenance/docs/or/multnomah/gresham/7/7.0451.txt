@@ -1,0 +1,198 @@
+7.0451                             NEIGHBORHOOD AMENITIES
+
+Where applicable, residential subdivisions shall facilitate access to neighborhood amenities, such as children's play areas, City trails, and bicycle parking.
+These standards support equal access to active and passive recreation, while ensuring new residential development benefits from usable recreational assets.
+The standards are designed to offer flexible options responsive to site conditions, development constraints, and proximity to established public assets including City parks, trails, and schools.
+A.                        Applicability. Residential subdivisions (not including multi-family/shared housing facility uses or cottage clusters) on development sites of 2.5 gross acres in size or greater.
+1.                             This section applies to tentative subdivision plan applications submitted on or after June 4, 2026.
+However, the standards in this section shall apply to all lots in a land division exceeding the exemption period identified in Section 6.0212.
+B.                           Site Amenities Requirement.
+The development shall include one of the following:
+1.                             Increased Private Open Space. Each residential parent lot shall provide a 25-foot rear setback; or
+
+2.                             Provision of Site Amenities. A combination of the site amenities listed in Table 7.0451                                                  shall be provided equaling 2 amenity points per gross acre of the development site up to a maximum of 30.
+For the purposes of calculating the minimum required amenity points, site area shall be rounded to the nearest half acre.
+For example, a 3.25 and greater acre site shall be rounded up to 3.5 acres, with 7 amenity points required; a 3.24 and less acre site shall be rounded down to 3 acres, with 6 amenity points required.
+Table 7.0451: Point Values of Site Amenities
+AMENITY                                                                                                 POINT VALUE Open Space
+Unencumbered Common Open Space                                                                   2 pts. per % of gross site area
+Common Open Space within an Overlay Area                                                         1 pt. per % of gross site area
+Private Open Space                                                                               Points allocated as specified in Section
+7.0451(D)(3)(b) for each foot of increased rear setback per lot within the subdivision (minimum 5 feet extra per lot)
+Public Park per approved Parks Master Plan                                                       1 pt. per % of gross site area
+Shared Community Building                                                                               15 pts.
+Swimming Pool                                                                                           10 pts.
+Hot Tub                                                                                                 3 pts.
+Common Green                                                                                            2 pts.
+Plaza                                                                                                   2 pts.
+Community Garden                                                                                        3 pts.
+Fenced Dog Area                                                                                         3 pts.
+Children’s Play Area                                                                                    4 pts.
+Covered Gathering Area or Gazebo                                                                        4 pts.
+Sports Court                                                                                            3 pts.
+Benches within a Common Open Space, Common                                                              1 pt. per bench up to a maximum of 3 pts.
+Green, Plaza, or Community Garden
+Picnic Tables within a Common Open Space,                                                               1 pt. per table up to a maximum of 3 pts.
+Common Green, Plaza, or Community Garden
+Bicycle Racks serving a Common Open Space,                                                              1 pt. per rack up to a maximum of 2 pts.
+Common Green, Plaza, or Community Garden
+Permanent Recreation Amenities (like Horseshoe                                                          1 pt.
+Courts, Bocce, Permanent Corn Hole, Shuffleboard)
+Dedicated City of Publicly Accessible School Park                                                       4 pts.
+within 0.25 mi. of Development Site
+
+AMENITY                                                                                                 POINT VALUE
+Development City Trail within 0.25 mi. of                                                               2 pts.
+Development Site
+On-Site Public Multi-Use Path, Multi-Use Trail, or                                                      2 pts. per 0.125 mi. (660 ft.) of path
+Connector Path as Designated in the Parks Master
+Plan or Transportation System Plan
+On-Site Common Recreation Path                                                                          1 pt. per 0.125 mi. (660 ft.) of path
+Preserved Major Tree (within an Unencumbered                                                            1 pt. per tree up to a maximum of 3
+Common Open Space)
+Preserved Tree Grove (Outside of an Overlay)                                                            4 pts.
+Planted Tree Grove                                                                                      1 pt.
+
+C.                            Open Space Requirements.
+1.                             Site Amenities
+a.                             Common site amenities shall be placed in one or more tracts of land.
+Where approved by the City and permitted by Table 7.0451          public amenities such as multi-use trails may be located on City-owned land.
+Prior to final plat approval, ownership of amenity tracts shall be identified to distinguish them from lots intended for sale.
+Amenity tracts may be identified as one of the following:
+i.                                         Common open space held by a homeowners’ association by a restrictive covenant or easement; or
+ii.                             At the owner’s option and if accepted by the City, a public park or path identified in the Parks Master Plan, where the tract has been dedicated to the City.
+Lands accepted by the City for dedication to the public are not subject to the limits in Subsection (C)(2)          and (C)(3)               below.
+2.                             There shall be a financial mechanism that ensures maintenance of all open space and amenities, except private open space.
+3.                             Except where each lot of parcel in the development abuts one or more common open space areas, site amenities shall have a minimum of 10 feet of frontage along an existing or proposed public right-of-way or be contiguous with another amenity that meets this                      standard.
+4.                             Stormwater facilities shall not be included as open space for the purpose of the provision of site amenities.
+5.                             Shared parking and vehicle circulation areas shall not be included as open space for the purpose of the provision of site amenities.
+6.                             Improvements. Prior to the issuance of Final Certificate of Occupancy for the first dwelling unit associated with the open space in the development, required common open space areas shall be entirely improved with required amenities.
+7.                             Bark mulch is not permitted as a ground cover except under trees and shrubs, as a surface for recreation paths, in children’s play areas, and in fenced dog areas.
+
+D.                       Standards for Site Amenities.
+Prior to the issuance of certificates of occupancy for the development, the site amenities needed to achieve the required amenity point total shall be entirely improved.
+1.                             Unencumbered Common Open Space.
+a.                             Unencumbered Common Open Space is common open space not located within an overlay area and accessible to all residents of the development it is associated with.
+b.                           Each common open space tract shall be a minimum of 1,200 square feet and shall include at least one area that is a minimum of 30 feet by 30 feet.
+c.                                 Common open space may include a mix of landscaping and hardscaping and shall have a maximum of 50 percent impervious area.
+i.                                           Common open space may contain other amenities.
+2.                             Common Open Space Within an Overlay Area.
+a.                             Common Open Space within an overlay area shall remain undisturbed by development, except for soft-surfaced paths provided as an amenity in accordance with the Public Works standards and when the open space and paths are identified of the Parks Master Plan.
+3.                              Private Open Space.
+a.                             Private open space shall be conditioned as part of the land division decision in the form of an increased rear setback on designated lots.
+b.                           The number of amenity points received for provision of private open space shall be calculated as follows:
+P = T(A/B) x (S/10)
+P – points received
+T – total points required for the subdivision
+A - number of lots to which the additional setback is applied B – total number of lots in the subdivision
+S – additional setback distance
+c.                                 Other amenities located within private open space shall not be counted toward total site amenity requirements.
+4.                             Public Park.
+a.                             When a designated City park identified in the Parks Master Plan is located within or partially within the development site and is dedicated as part of the development process, the following points shall be given:
+i.                                         Points for the percentage of the development site devoted to the Public Park;
+ii.                             Points for any amenities provided by the developer and accepted by the City within the park space; and
+iii.                  Points for proximity to a dedicated City park.
+5.                             Shared Community Building.
+6.                             Swimming Pool.
+a.                             Swimming pools shall have minimum dimensions of 15 feet by 30 feet.
+
+b.                           Swimming pools shall be in-ground and shall include an apron or pool deck around the perimeter of the pool a minimum of 8 feet wide.
+c.                                 Swimming pools shall be heated.
+d.                           Swimming pools shall have a minimum 6-foot-high perimeter fence that is a maximum of 25 percent opaque.
+7.                             Hot Tub.
+a.                             Hot tubs shall be designed to accommodate a minimum of four individuals.
+b.                           Hot tubs shall include an apron or deck around the perimeter a minimum of 8 feet wide.
+c.                                 Hot tubs shall be either located within a shared community building or have a minimum 6-foot-high perimeter fence that is a maximum of 25 percent opaque.
+8.                             Common Green.
+a.                             Common greens shall be a minimum of              1,200 square feet in size with a minimum width of 30 feet.
+b.                           Common greens shall have a perimeter fence 3 to 4.5 feet in height that is a maximum of 25 percent opaque.
+c.                                 Common greens may include a mix of landscaping and hardscaping and shall have a maximum of 50 percent impervious area.
+d.                           Common greens shall have a maximum of 25 percent unusable landscaped area.
+For the purposes of this standard, unusable landscaped area means portions of landscaped area where people are not intended to walk, site, or otherwise occupy.
+9.                             Plaza.
+a.                             Plazas shall be a minimum of 1,000 square feet in size with a minimum width of 25 feet.
+b.                           Plazas shall be a minimum of 75 percent hard surfaced and shall include a maximum of 50 percent unusable area.
+For the purposes of this standard, unusable area means portions of the plaza where people are not intended to walk, sit, or otherwise occupy.
+10.    Community Garden.
+a.                             Community gardens shall be a minimum of 600 square feet with a minimum dimension of 12 feet.
+b.                           Community gardens shall include a minimum of eight plots with minimum dimensions of 4 feet by 6 feet.
+c.                                 Access to water shall be provided within the community garden plot.
+11.    Fenced Dog Area.
+a.                             Fenced dog areas shall be a minimum of 600 square feet with a minimum dimension of 15 feet.
+b.                           Dog areas shall have a perimeter fence 4 to 6 feet in height that is a maximum of 25 percent opaque.
+c.                                 A kiosk for unused dog waste bags shall be provided within the fenced dog area.
+12.    Children’s Play Area.
+a.                             Each children’s play area shall include a minimum of three of the following types of play equipment.
+Play equipment must be manufactured to ASTM International (formerly known as American Society for Testing Materials) F1487-11, or most current standards or other comparable standards applicable to public playground equipment.
+
+i.                                           A swing structure with a minimum of three swings.
+ii.                             A slide.
+iii.                  A jungle gym or climbing structure.
+iv.                   A permanent sand box.
+v.                              Natural play elements including boulders, logs, and turf mounds.
+vi.                   Other children’s play equipment approved for use in a public playground.
+b.                           Each children’s play area must be enclosed along any perimeter that is within 10 feet of a street, alley, property line, or parking area using one or more of the following:
+i.                                         A 2.5 to 3-foot-high wall, planter, or fence.
+ii.                               Benches or seats a minimum of 18 inches high.
+13.    Covered Gathering Area or Gazebo.
+a.                             Covered gathering areas and gazebos shall provide a minimum covered area of 225 square feet and a minimum dimension of 15 feet.
+b.                           Covered gathering areas and gazebos shall have a hard surface floor, including wood.
+14.    Sports Court.
+a.                             Sports courts may be designed for sports including, but not limited to, tennis, pickle ball, basketball, and futsal.
+b.                           Sports courts shall be surfaced with hard-surfaced material intended for the designated sport(s).
+15.    Benches and picnic tables within a common open space, common green, plaza, or community garden.
+a.                             Benches and picnic tables shall be a minimum of 6 feet long.
+b.                           Stand-alone benches shall include back supports and arm rests.
+c.                                 Benches shall be comprised of a powder coated steel material and shall be specified for exterior use.
+d.                           Picnic tables shall be wheelchair accessible.
+Tables and associated benches shall include powder coated steel frames and shall include tops make of one of the following: Recycled plastic, treated wood, or thermoplastic coated expanded steel.
+16.    Bicycle racks serving a common open space, common green, plaza, or community garden.
+a.                             Each bicycle rack shall accommodate a minimum of 2 bicycles and shall be at the same grade as the sidewalk or at a location that can be reached by an accessible route.
+i.                                         Bicycle parking and bicycle racks shall be located to avoid conflict with pedestrian movement and accessible walkways required by the Building Code.
+With approval of the Manager, bicycle parking may be located in the public right-of-way, where this does not conflict with pedestrian accessibility and ADA access.
+b.                           Bicycle racks shall be designated to allow bicycles to be locked to the rack via a standard U-                                         lock.
+c.                                 Bicycle racks shall be permanently installed.
+d.                           Bicycle racks shall comply with the standards of Section 9.0832(B) and (C) for short-term bicycle parking.
+
+17.    Permanent Recreation Amenity.
+a.                             Permanent recreation amenities include, but are not limited to, horseshoe pits, shuffleboard, bocce courts, cornhole boards, disc golf holes, and exercise equipment.
+b.                           Recreation amenities must be designed and constructed to be permanent and stationary.
+c.                                 Non-stationary elements associated with the amenity, such as horseshoes, balls, bean bags, or discs, need not be provided.
+18.    Dedicated City park or publicly accessible school park within 0.25 miles of the development site.
+a.                             Proximity to the development site shall be measured in a direct line.
+b.                           Applicant shall provide verification that the school park has a public use agreement in place to ensure the park is available to residents for use outside of school hours.
+c.                                 School parks shall include a combination of open space, recreation equipment, children’s play areas, sports courts, and sports fields.
+19.    Designated City trail within 0.25 miles of the development site.
+a.                             Proximity to the development site shall be measured in a direct line to a trail access point.
+b.                           A designated trail located within the development site and developed as part of the development process may received amenity points under this provision and for development of a recreation path.
+20.    Multi-Use Path, Multi-Use Trail, or Connector Path.
+a.                             Multi-use paths, multi-use trails, and connector paths shall be located within an open space, common green, dedicated right-of-way, or adjacent to a stormwater pond.
+b.                           Multi-use paths, multi-use trails, and connector paths shall be developed in conformance with the City’s Transportation System Plan.
+21.     Recreation Path.
+a.                             Recreation paths shall be located within an open space, common green, or adjacent to a stormwater pond.
+b.                           Recreation paths must be surfaced in a material that contrasts from the surrounding ground cover to provide clear direction and a delineated edge to the trail.
+22.     Preserved Major Tree.
+a.                             For the purposes of this standard, preserved major trees shall be located within an unencumbered common open space.
+b.                           Preserved major trees shall be a minimum of 12 inches DBH.
+c.                                 Preserved major trees shall not be identified as an invasive species.
+23.    Preserved Tree Grove.
+a.                             Preserved tree groves shall be composed of a minimum of six non-invasive regulated trees with contiguous canopy or located in such proximity that they will have contiguous canopy at maturity.
+b.                           Trees within a grove need not be the same species.
+c.                                 Tree groves shall be non-linear groupings of trees that are at least two trees wide along multiple axes.
+
+24.     Plated Tree Grove.
+a.                             Planted tree groves shall be composed of a minimum of 6 non-invasive trees planted in such proximity that they will have contiguous canopy at maturity.
+b.                           Trees within a grove need not be the same species.
+c.                                 Trees shall be capable of achieving a minimum spread of at least 20 feet at maturity.
+d.                           Trees shall be planted a minimum of 15 feet apart.
+e.                             Planted tree groves shall be non-linear groupings of trees that are at least two trees wide along multiple axes.
+E.                              Phased Development.
+For phased developments, open space requirements shall be met by one of the following two options.
+1.                             All required amenities shall be provided in the first phase of the development.
+2.                             Required amenities shall be provided sufficient to meet the point requirement for each phase, based on the size of the phase.
+a.                             When amenity points are provided in excess of what is needed to satisfy the point requirement for a given phase, the surplus points may be applied to meet the amenity points requirement for future phases of the development.
+b.                           When an amenity or open space tract is developed and the requirements of  Section 7.0451(C) above are met, the points may be allocated to any phase of the development even if the developed amenity is located in a future development phase.
+The amenity shall be immediately accessible to residents of the phase to which the points are applied.
+F.                                Submittal Requirements.
+When the application for the tentative subdivision plan, the applicant shall submit a narrative and plan(s) demonstrating which amenity option(s) are incorporated into the development to meet the site amenity requirement, including the estimated point totals where applicable.
+

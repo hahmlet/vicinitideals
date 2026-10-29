@@ -242,14 +242,21 @@ def test_the_one_footnote_in_the_document_is_ruled(store: ProvenanceStore) -> No
     anyway. The gate is right to have asked; the answer is on file."""
     from flats.encode.qualified import qualified
 
+    from flats.encode.dispositions import notes
+
     rows = [
         r
         for r in qualified()
         if r.layer == GRESHAM and r.zone == "(defaults)" and r.field == "parking_min_per_unit"
     ]
-    assert rows, "the default should still be governed by the note, and answered"
+    # Since Gresham was cut into sections (FOLLOWUPS 73, batch 5) the gate
+    # governs by section: the default is quoted from 9.0802 and the note sits
+    # in 9.0825, so it no longer reaches the default at all. Either way the
+    # default is not held up, and the note keeps its answer.
     assert not any(r.blocking for r in rows)
     assert all(n.state == "dismissed" for r in rows for n in r.governing)
+    ruled = {n.quote: n for n in notes(GRESHAM)}
+    assert ruled["or/multnomah/gresham/9/9.0825.txt#L40"].state == "dismissed"
     assert "minimum aisle width may vary" in store.quote(
-        "or/multnomah/gresham/9.0800.parking.txt#L346"
+        "or/multnomah/gresham/9/9.0825.txt#L40"
     )

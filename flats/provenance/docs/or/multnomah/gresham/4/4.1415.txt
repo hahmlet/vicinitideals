@@ -1,0 +1,164 @@
+4.1415  DEVELOPMENT STANDARDS TABLE
+The development standards listed in Tables 4.1415A and 4.1415B are applicable to all development within the Pleasant Valley Residential sub-districts.
+Development within these sub-districts shall also be consistent with all other applicable requirements of the Community Development Code, including applicable residential design standards in Section 7.0400.
+Table 4.1415A : Development Standards in Pleasant Valley Residential Sub- Districts
+LDR-PV MDR-PV HDR-PV
+A. Minimum Buildable Lot Size
+Single Detached 5,000 sq. ft. 3,000 sq. ft. None
+Duplex, Triplex,
+Quadplex, Cottage
+Cluster
+5,000 sq. ft. 3,000 sq. ft. None
+Townhouses 1,500 sq. ft.  1,500 sq. ft. 1,500 sq. ft.
+Live-Work Units N/A 1,600 sq. ft. None
+All Other Uses 5,000 sq. ft. 5,000 sq. ft. None
+B. Minimum Net Density1 (See definition of Net Density in Article 3)
+All Residential Uses 5.3 12 25
+C. Maximum Net Density2 (See definition of Net Density in Article 3)
+Single Detached 8 units per acre 20 units per acre 40 units per acre
+Duplex, Triplex,
+Quadplex
+None None 40 units per acre
+Townhouses 25 units per acre 25 units per acre 40 units per acre
+Cottage Cluster None None 40 units per acre
+All Other Uses 8 units per acre 25 units per acre 40 units per acre
+
+LDR-PV MDR-PV HDR-PV
+D. Minimum Lot Width / Depth Ratio
+Single Detached,
+Duplex, Triplex,
+Quadplex,
+Townhouse, Cottage
+Cluster
+None None None
+All Other Uses None 0.5:1 0.5:1
+E. Minimum Street Frontage3
+1. Interior lot
+Single Detached,
+Duplex, Triplex,
+Quadplex, Cottage
+Cluster
+35 ft. 35 ft. None
+Townhouse 18 ft. 18 ft. 18 ft.
+Live-Work N/A 18 ft.  18 ft.
+All Other Uses 35 ft. 18 ft. None
+2. Corner lot
+Single Detached,
+Duplex, Triplex,
+Quadplex, Cottage
+Cluster
+40 ft. 40 ft. 20 ft.
+Townhouse 20 ft. 20 ft. 32 ft.
+Live-Work N/A 20 ft. 32 ft.
+All Other Uses 40 ft. None None
+F. Maximum Building Height4
+All Uses 35 ft. 35 ft. 45 ft.5
+G. Modifications to Maximum Building Height  Standards
+1. Section 4.1416 Building Height and Height Transition Standards
+All Uses N/A N/A Yes
+2. Section 7.000 Rear Roof Height Limit Reductions
+All Uses Yes N/A N/A
+H. Maximum Floor Area Ratio
+Single Detached,
+Duplex, Triplex,
+Quadplex
+1.0 N/A N/A
+All Other Uses N/A N/A N/A
+
+LDR-PV MDR-PV HDR-PV
+I. Maximum Number of Attached Townhouses
+Townhouse  4 units 4 units 8 units
+All Other Uses N/A N/A N/A
+J. Minimum and Maximum Off-Street Parking Required
+All Uses As provided in Section 9.0851
+K. Alley Access Required for Garage Entrances6
+Townhouse No No Yes
+All Other Uses No  Yes, if lot width is less than 60 ft.
+Yes
+L. Buffering Required
+All Uses See Buffer Matrix, Section 9.0100
+M. Clear Vision Area Required (Section 9.0200)
+All Uses Yes Yes  Yes
+N. Housing Variety
+All Residential Uses As provided in Section 7.0450 N/A
+O. Design Standards
+Single Detached,
+Duplex, Triplex,
+Quadplex,
+Townhouse, Cottage
+Cluster
+As provided in Section 7.0400
+All Other Uses Design standards in Section 7.0112 shall apply7
+P. Neighborhood Amenities (Section 4.1417)
+All Residential Uses Yes Yes Yes
+Table 4.1415A Notes
+1. Minimum net density does not apply to affordable housing development.
+See Section 10.1700.
+2. A density bonus applies to affordable housing development.
+See Section 10.1700.
+3. A reduction in the minimum street frontage may be approved when the applicant can document compliance with
+Section 10.1520 of the Community Development Code.
+4. A height bonus applies to affordable housing development.
+See Section 10.1700.
+5. Building height transition standards apply when an abutting lot is in the LDR -PV sub-district.
+See Section 4.1416.
+6. This applies to developments in which dwelling units have individual garage entrances.
+Developments with shared parking areas or parking garages are not subject to this requirement.
+7. The Corridor Design District standards in Section 7.0112 apply to new multi-family, elderly housing, residential facilities, mixed-use, and non-residential development requiring design review approval.
+
+Table 4.1415B : Setbacks
+
+FRONT SIDE REAR
+Front
+Façade/Wall
+Front Porch
+Garage
+Interior Side
+Common Wall
+Zero Lot Line
+Option
+
+Street Side
+Wall
+Street Side
+Porch
+Street Side
+Garage Access
+Rear No Alley
+Rear With
+Alley
+A. Minimum Setbacks
+Single Detached, Duplex, Triplex, Quadplex
+LDR-PV,
+MDR-PV 10 ft. 8 ft. 20 ft. 5 ft. 0 ft.
+6 in. on zero /
+6 ft.
+other
+10 ft. 6 ft. 20 ft. 10 ft. 8 ft.
+HDR-PV 5 ft. 5 ft. 20 ft. 5 ft. 0 ft. N/A 5 ft. 5 ft. 5 ft.  15 ft.  5 ft.
+Townhouse
+LDR-PV 10 ft. 8 ft. 20 ft. 5 ft. 0 ft. N/A 8ft. 8 ft. 20 ft. 10 ft. 8 ft.
+MDR-PV 10 ft. 5 ft. 20 ft. 5 ft. 0 ft. N/A 5 ft. 5 ft. 20 ft. 10 ft. 8 ft.
+HDR-PV 5 f t. 5 ft. 20 ft. 5 ft. 0 ft. N/A 5 ft. 5 ft. 20 ft. 10 ft. 5 ft.
+Cottage Cluster
+LDR-PV 10 ft. 8 ft. 20 ft. 5 ft. N/A N/A 10 ft. 8 ft. 20 ft. 10 ft. 8 ft.
+MDR-PV 10 f t. 8 ft. 20 ft. 5 ft. N/A N/A 10 ft. 8 ft. 20 ft. 10 ft. 8 ft.
+HDR-PV 5 f t. 5 ft. 20 ft. 5 ft. N/A N/A 5 ft. 5 ft. 20 ft. 10 ft. 5 ft.
+Live-Work
+LDR-PV N/A N/A N/A N/A N/A N/A N/A N/A N/A N/A N/A
+MDR-PV 5 f t. 5 ft. 20 ft.1 5 ft. 0 ft. N/A 5 ft. 5 ft. 20 ft. 10 ft. 5 ft.
+HDR-PV 5 f t. 5 ft. 20 ft.1 5 ft. 0 ft. N/A 5 ft. 5 ft. 5 ft. 15 ft. 5 ft.
+All Other Uses
+LDR-PV 10 ft. 8 ft. 20 ft. 5 ft. 0 ft. N/A 10 ft. 8 ft. 20 ft. 15 ft. 8 ft.
+MDR-PV 5 ft. 5 ft. 5 ft. 5 ft. 0 ft. N/A 5 ft. 5 ft. 5 ft. 15 ft. 5 ft.
+HDR-PV 5 ft. 5 ft. 20 ft.1 5 ft. 0 ft.  N/A 5 ft. 5 ft. 5 ft. 15 ft. 5 ft.
+B. Maximum Setbacks
+All Other Uses2
+LDR-PV N/A N/A N/A N/A N/A N/A N/A N/A N/A N/A N/A
+MDR-PV 20 ft. 20 ft. N/A N/A N/A N/A N/A 20 ft. 20 ft. N/A N/A
+HDR-PV 20 ft. 20 ft.  N/A N/A N/A N/A N/A 20 ft. 20 ft. N/A N/A
+Table 4.1415B Notes
+1. The minimum garage setback may be 5 feet when the garage is flush with an adjacent front wall or  is compliant with the Residential Design Standards in Section 7.0400, as applicable.
+
+2. The maximum front or street side setback from a building that contains dwelling units and that abuts an arterial street is 30 feet.
+For any development, the maximum front or street side setback may be exceeded when enhanced pedestrian spaces and amenities are provided.

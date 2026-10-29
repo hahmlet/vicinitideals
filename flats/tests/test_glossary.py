@@ -679,6 +679,42 @@ def test_a_lowercase_body_that_opens_with_its_verb_is_still_an_entry() -> None:
     ]
 
 
+def test_a_bulleted_sub_term_alone_on_its_line_is_an_entry() -> None:
+    """Gresham 3.0100 files sub-terms under a bullet ("• Corner Lot. A lot
+    that has frontage on two or more streets."), and readable text gives each
+    sentence its own line. Read only inline, 136 entries -- Corner Lot, Rear
+    Lot Line, Front Yard -- went unread when the chapter was cut (FOLLOWUPS
+    73, batch 5)."""
+    text = "\n".join(
+        [
+            "Lot. A generic term that describes any unit of land.",
+            "•                                            Corner Lot.",
+            "A lot that has frontage on two or more streets.",
+            "•                                            Double Frontage Lot.",
+            "A lot with street frontage along two opposite boundaries.",
+        ]
+    )
+    found = read(text)
+    assert [e.term for e in found] == ["Lot", "Corner Lot", "Double Frontage Lot"]
+    assert found[1].text == "A lot that has frontage on two or more streets."
+    assert found[1].nested
+
+
+def test_a_bulleted_sentence_alone_on_its_line_is_not_an_entry() -> None:
+    """The bullet form wants a full stop and a capital on every word but the
+    small ones; a bulleted list item or sentence is prose (Portland 33.910
+    prints "• Changes in the topography of the site." in a list)."""
+    text = "\n".join(
+        [
+            "•                                            Changes in the topography of the site.",
+            "Grading that moves more than fifty cubic yards of earth on a site.",
+            "•                                            Townhouses",
+            "A building of attached units, each on its own lot under the code.",
+        ]
+    )
+    assert read(text) == []
+
+
 def test_a_chapter_cut_into_sections_is_read_as_one_chapter(corpus: list[Chapter]) -> None:
     """A definitions chapter held in section files is one chapter, its order
     and density asked of the whole: asked of each section, one stray entry in

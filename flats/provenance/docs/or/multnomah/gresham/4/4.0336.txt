@@ -1,0 +1,12 @@
+4.0336                                       MICRO         -   HYDRO ENERGY STANDARDS FOR INDUSTRIAL DISTRICTS
+
+Micro-hydro energy systems are limited in all industrial districts as follows:
+A.                        Scale. Small scale micro-hydro energy systems are permitted.
+B.                          Type. In-pipe micro-hydro energy systems such as systems within water, stormwater or  wastewater pipe are permitted.
+C.                            Height. Generally, the district height limits apply.
+However, in -pipe systems may exceed the district height limit as allowed for mechanical equipment.
+If supplemental equipment structures accompany the in-pipe systems, then the district height limit would apply.
+D.                        Setbacks and Yards.
+Micro-hydro energy systems contained within piping are allowed and pipe can run within the required setbacks.
+However, if supplemental equipment structures accompany the in-pipe systems, then the district setback limits apply.
+

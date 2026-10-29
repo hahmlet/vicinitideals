@@ -458,3 +458,47 @@ or/clackamas/oregon-city:
   # ("16.12.011", "16.12 . 01 6").
   page_furniture: '^\s*(?:(?:[\d .]+\s?)?O\s?r\s?e\s?g\s?o\s?n\s?C\s?i\s?t\s?y\s?S\s?u\s?p\s?p\s?\.?\s?N\s?o\s?\.?\s?\d+(?:\s?[\d .]+)?|16\s?\.\s?12\s?\.\s?\d(?:\s?\d)*)\s*$'
   page_head: '^\s*16\s?\.\s?12\s?\.\s?\d(?:\s?\d)*\s*$'
+
+or/multnomah/gresham:
+  # "4.0101                    PURPOSE" -- the number at the margin, then its
+  # title in capitals. The plain-extracted chapters and a few layout pages
+  # space the number apart ("4.14 01  PURPOSE", "4. 1410", "4.141 7",
+  # "4.12  30", "9  .0201", "9.082  0"); the spaces are not part of it. Two
+  # part headings print their title in mixed case ("10.1730 Affordable
+  # Housing on Commercial Land", "10.1740 Affordable Housing Developed by
+  # Religious"). A title can be letter-spaced ("G EOT H E R M A L"). The
+  # contents list prints titles in mixed case, so it does not cut, and a
+  # reference wrapped to the margin ("3.0150   Employees" beside a definitions
+  # column, "5.0700 Natural Resource Overlay):") is not in capitals.
+  # Measured 2026-10-29 on all 17 cut documents: every contents entry has
+  # exactly one heading over the text, in number order, and none other cuts.
+  heading: '^(?P<n>\d{1,2}\s*\.\s*\d(?:\s*\d){3}[A-Z]?)\s+(?:[A-Z]\s?[A-Z]|Affordable Housing )'
+  # The document's own title ("4.1100 DOWNTOWN PLAN DESIGN DISTRICT" on line
+  # 1) and the running heading a long section reprints on each page
+  # ("4.1242 CIVIC NEIGHBORHOOD STREET TYPE STANDARDS, CONTINUED").
+  furniture: '^(?:\d{1,2}\.\d{2}00\s|.*, CONTINUED\s*$)'
+  # Each document opens "SECTION 4.0100 / RESIDENTIAL LAND USE DISTRICTS"
+  # over its contents list. pws.6.03-6.04 is the Public Works Standards'
+  # numbering ("6.03 DRIVEWAYS"), which this rule does not take: it stays
+  # whole.
+  front: [3.0100.definitions, 4.0100.residential, 4.0200.commercial, 4.0300.industrial,
+          4.0400.corridor, 4.1100.downtown, 4.1200.civic-neighborhood, 4.1300.gresham-butte,
+          4.1400.pleasant-valley, 4.1500.springwater, 7.0400.middle-housing-design,
+          7.0500.rockwood-design, 9.0200.clear-vision, 9.0600.height-transition,
+          9.0800.parking, 10.1100.shoreline-height, 10.1700.affordable]
+  # 4.0100 stays whole. Note 6 of Table 4.0131 wraps onto a line that
+  # starts "10 feet in between major structures", and once cut, the section
+  # text reads that line as a note 10 of its own: note 6 loses its second
+  # half and an unread note appears over the residential dimension table
+  # (measured 2026-10-29). Where the note ends is a reading, not a cut.
+  uncut: [4.0100.residential]
+  # The footer "[4.1100]- 39" in all its spacings ("[4.0100] -12",
+  # "[3.0100- 12]", "[10. 1700 ]-3", "[4.1100]- 12 3") and the header "City
+  # of Gresham Development Code (06/26)" (its date on a line of its own on
+  # two corridor pages). Measured 2026-10-29 on every page start of the 18
+  # documents; "Continued on following page." is printed text and stays.
+  page_furniture: '^\s*(?:\[\s*\d{1,2}\s*\.\s*\d{4}\s*(?:\]\s*-|-)\s*\d[\d ]*\]?|City of Gresham Development Code(?:\s*\(\d{2}/\d{2,4}\))?|\(\d{2}/\d{4}\))\s*$'
+  # The plain-extracted chapters put that footer and header on the page's
+  # own first lines, and the three plan districts print their running head
+  # there ("4.1152          DOWNTOWN PLAN DESIGN DISTRICT", indented).
+  page_head: '^\s*(?:\[\s*\d{1,2}\s*\.\s*\d{4}\s*(?:\]\s*-|-)\s*\d[\d ]*\]?|City of Gresham Development Code(?:\s*\(\d{2}/\d{2,4}\))?|\s\d{1,2}\.\d{4}\s+(?:DOWNTOWN PLAN DESIGN DISTRICT|CIVIC NEIGHBORHOOD PLAN DISTRICT|ROCKWOOD DESIGN DISTRICT)|\s+\d{1,2}\.\d{4})\s*$'

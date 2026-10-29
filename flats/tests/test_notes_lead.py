@@ -39,6 +39,9 @@ pytestmark = pytest.mark.unit
 
 GRESHAM = "or/multnomah/gresham"
 DOC = f"{GRESHAM}/4.1100.downtown.txt"
+#: Table 4.1120 and its notes, cut out of DOC (FOLLOWUPS 73, batch 5); the
+#: rulings are matched there. Proof-copy line 309 is section line 80.
+USES = f"{GRESHAM}/4/4.1120.txt"
 
 
 @pytest.fixture(scope="module")
@@ -218,13 +221,14 @@ def test_the_note_that_lets_a_plex_onto_a_downtown_lot(downtown) -> None:
     assert "6,500 square feet or smaller" in first.text
     assert "7,600 square feet or smaller" in first.text
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
-    assert ruled[f"{DOC}#L309"].state == "encoded"
+    assert ruled[f"{USES}#L80"].state == "encoded"
 
 
 def test_every_new_note_is_ruled_and_none_blocks() -> None:
+    assert [row for row in dispositions(GRESHAM) if row.quote.startswith(f"{USES}#L")]
     assert not [
         row
         for row in dispositions(GRESHAM)
-        if row.state == "unread" and row.quote.startswith(f"{DOC}#L3")
+        if row.state == "unread" and row.quote.startswith(f"{USES}#L")
     ]
     assert not [row for row in qualified() if row.blocking]

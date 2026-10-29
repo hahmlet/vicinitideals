@@ -1,0 +1,24 @@
+4.1135                                                                  WIND ENERGY STANDARDS FOR DOWNTOWN DISTRICTS Wind energy systems are limited in Downtown districts as follows:
+A.                        Scale.
+1.                             DRL-1 and DRL-2: Small scale wind energy systems are permitted in these districts.
+2.                             DCC, DMU, DTM, DEM, and DCL: Small and medium scale wind energy systems are permitted in these districts.
+Large scale systems are permitted with a Special Use Review.
+B.                          Ty  p e  .
+1.                             DRL-1 and DRL-2 : Roo f-top wind energy systems are permitted in these districts.
+2.                             DCC, DMU, DTM, DEM, and DCL: Roof-top and ground-mounted wind energy systems are permitted in these districts.
+C.                            Height.
+1.                             DRL-1 and DRL-2: The following limitations on maximum height apply to all wind energy systems in these districts:
+a.                             Ro of-top.
+Wind energy systems shall not exceed the district height limit in which they are located and shall not exceed 10 feet above the height of the roof on which the system is installed.
+2.                             DCC, DMU, DTM, DEM, and DCL: The following limitations on maximum height apply to all wind energy systems in these districts:
+
+
+a.                             Ro of-top.
+The height of roof-top wind energy systems shall not exceed a value equal to the building height when the building height is 45 feet or less.
+For buildings which exceed 45 feet in height, the wind energy system shall not exceed 45 feet maximum.
+b.                           Ground-mounted. The height of ground-mounted wind energy systems shall not exceed 45 feet as measured from the grade at the base of the equipment to the top of the system.
+The height limit of 45 feet can be exceeded up to 110 feet with a Special Use Review.
+D.                       Setbacks and Yards.
+1.                             DRL-1 and DRL-2: Wind energy systems are not allowed in the required front, street-side, side or rear setbacks or in any yards in these districts.
+2.                             DCC, DMU, DTM, DEM, and DCL: Wind energy systems are not allowed in the required front, street  -side, side or rear setbacks and are not allowed in the front yard or street-side yard between the building and the street in these districts.
+

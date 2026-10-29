@@ -143,14 +143,20 @@ def test_the_one_orphan_left_in_civic_neighborhood_is_a_diagram_reference(
 
 
 def test_every_newly_visible_note_is_ruled_and_none_blocks() -> None:
+    # The section files the notes were cut into (FOLLOWUPS 73, batch 5). Was:
+    # CN 210, 211, 212, 226, 247, 333, 341, 384, 389, 397, 4497, 4501;
+    # DOWNTOWN 4474, 4476; ROCKWOOD 3666, 3669; SPRINGWATER 360.
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
-    for line in (210, 211, 212, 226, 247, 333, 341, 384, 389, 397, 4497, 4501):
-        assert ruled[f"{CN}#L{line}"].state == "dismissed"
-    for line in (4474, 4476):
-        assert ruled[f"{DOWNTOWN}#L{line}"].state == "dismissed"
-    for line in (3666, 3669):
-        assert ruled[f"{ROCKWOOD}#L{line}"].state == "dismissed"
-    assert ruled[f"{SPRINGWATER}#L360"].state == "dismissed"
+    for path, lines in (
+        ("4/4.1220.txt", (28, 29, 31, 46, 65)),
+        ("4/4.1230.txt", (27, 35, 79, 83, 91)),
+        ("4/4.1252.txt", (3051, 3053)),
+        ("4/4.1152.txt", (2673, 2675)),
+        ("7/7.0512.txt", (2793, 2795)),
+        ("4/4.1508.txt", (117,)),
+    ):
+        for line in lines:
+            assert ruled[f"{GRESHAM}/{path}#L{line}"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]
 
 

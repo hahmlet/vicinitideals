@@ -1,0 +1,458 @@
+3.0102                              LIST OF TERMS
+
+Terms used in the Development Code are presented below.
+General terms that apply throughout the Code are listed in Section 3.0102.
+Terms that are specific to a Development Code section are listed after the General Terms.
+These categories are:
+A.                         Overlay District Terms and Definitions.
+Section 3.0120
+B.                          Renewable Energy Related Terms and Definitions.
+Section 3.0140
+C.                            Tree Related Terms and Definitions.
+Section 3.0150
+D.                       Temporary, Intermittent and Interim Uses Terms and Definitions.
+Section 3.0160 If a term is defined in both the General Definitions and in a Section-specific category, the Section-specific definition shall be used if the application of the term is within the parameters of the Code Section.
+
+General Terms
+A-Board Sign –            See Signs                                                                                           Assisted Living Housing – See Elderly Housing
+Abandoned Sign –           See Signs                                                                                          Awning
+Abut                                                                                                                          Awning Sign –           See Signs
+Access                                                                                                                        Balcony
+Access Aisle                                                                                                                  Balloon Sign – See Signs
+Accessory Dwelling –            See Dwelling Unit                                                                             Balustrade
+Accessory Structure –            See Structure, Accessory                                                                     Banner Sign –           See Signs
+Accessory Use –            See Use, Accessory                                                                                 Base – See Façade
+Acreage, Net                                                                                                                  Baseline
+Adjacent                                                                                                                      Basement
+Adjustments                                                                                                                   Battery Charging Station –           See Renewable Energy
+Affordable Housing –           See Housing, Affordable                                                                        Related Definitions, Section 3.0140
+Agriculture                                                                                                                   Battery Charging Unit – See Renewable Energy Alteration                                                                                                                    Related Definitions, Section 3.0140
+Alteration, Structural                                                                                                        Battery Exchange Station -            See Renewable Energy
+Amateur (“Ham”) Radio                                                                                                         Related Definitions, Section 3.0140
+Amenity Zone                                                                                                                  Bay (building façade)
+Animated Sign – See Signs                                                                                                     Bedroom
+Antenna                                                                                                                       Bench Sign – See Signs
+Antenna Support Structure                                                                                                     Berm
+Apartment                                                                                                                     Biogas – See Renewable Energy Related Definitions,
+Section 3.0140 Applicant                                                                                                                     Blade – See Renewable Energy Related Definitions,
+Application, Qualifying                                                                                                       Section 3.0140
+Aquatic Habitat – See Overlay District Definitions,                                                                           Block
+Section 3.0120                                                                                                                Buffer Area
+Arboriculture                                                                                                                 Buffer Tree –           See Tree
+Arborist                                                                                                                      Building
+•                                            Certified Arborist                                                               Building Area or Building Envelope
+•                                            Consulting Arborist                                                              Building Code
+Arcade                                                                                                                        Building Code Accessible
+Archaeological Object                                                                                                         Building, Contiguous
+Archaeological Site                                                                                                           Building Coverage
+Archaeologist                                                                                                                 Building Footprint
+Area of Shallow Flooding                                                                                                      Building Height
+Area of Special Flood Hazard                                                                                                  Building Line
+Approved Tree List
+
+Building Massing –           See Massing, Building                                                                           Consulting Arborist – See Arborist
+Building Modulation –           See Modulation, Building                                                                     Continuing Care Retirement Community –           See
+Bulkhead                                                                                                                     Elderly Housing
+Butterfly Roof –            See Roof                                                                                         Corner Lot – See Lot
+Canopy                                                                                                                       Cornice
+Carpool/Vanpool Parking                                                                                                      Corridor Design District – See Design District
+Carport                                                                                                                      Cottage
+Ceiling Height                                                                                                               Cottage Cluster
+Centralized Stormwater Management Facilities                                                                                 Court
+Certified Arborist – See Arborist                                                                                            Courtyard
+Certified Engineering Geologist – See Overlay                                                                                Courtyard Development
+District Definitions, Section 3.0120                                                                                         Critical Root Zone – See Tree Related Definitions,
+Certified Child Care Facility                                                                                                Section 3.0150
+Change of Use –           See Use, Change of                                                                                 Crosswalk
+Children’s Play Equipment                                                                                                    Crown Cover-                 See Tree Related Definitions, Section
+Citizen Band (CB) Radio                                                                                                      3.0150
+City                                                                                                                         Curb Cut
+Civic Neighborhood Design District –           See Design                                                                    Curb Ramp
+District                                                                                                                     Customer
+Clear Cutting – See Tree Related Definitions,                                                                                Dangerous Tree –           See Overlay District Definitions,
+Section 3.0150                                                                                                               Section 3.0120
+Clear Vision Area                                                                                                            Dead Tree – See Tree
+Clearing                                                                                                                     Dead-End Street
+Coarse Woody Debris –           See Overlay District                                                                         Deciduous
+Definitions. Section 3.0120.
+Deciduous Tree – See Tree
+Co-Locate                                                                                                                    Deck
+Commercial Development                                                                                                       Dedication
+Common Wall                                                                                                                  Density
+Common Open Space – See Shared Open Space                                                                                    Density, Net
+Community Garden                                                                                                             Density Rounding
+Composting Facility                                                                                                          Design District
+Comprehensive Plan – See Gresham Community                                                                                   •                                            Civic Neighborhood Design District
+Development Plan                                                                                                             •                                            Corridor Design District
+Condominium                                                                                                                  •                                              Downtown Design District
+Condominium Unit                                                                                                             •                                            Pleasant Valley Design District
+Congregate Housing                                                                                                           •                                              Rockwood Design District
+Construction Contractor                                                                                                      •                                              Springwater Design District
+Design Guidelines
+
+Design Principles                                                                                                                           Easement
+Design Standards                                                                                                                            Easement, General Utility
+Design Storm                                                                                                                                Easement, Public Access
+Design Streets                                                                                                                              Eco-Roof
+Detention                                                                                                                                   Ecological Functions –           See Overlay District
+Development                                                                                                                                 Definitions, Section 3.0120
+Developable Area –            See Overlay District Definitions,                                                                             Elderly Housing
+Section 3.0120                                                                                                                              •                                              Assisted Living Housing
+Development Permit                                                                                                                          •                                            Congregate Housing
+Development Site                                                                                                                            •                                            Continuing Care Retirement Community
+Diameter Breast Height –           See Tree Related                                                                                         •                                            Immediate Care Facility
+Definitions, Section 3.0150                                                                                                                 •                                            Skilled Nursing Facility (Nursing Home)
+Digital Flood Insurance Rate Map (DFIRM)                                                                                                    Electric Vehicle –           See Renewable Energy Related
+Definitions, Section 3.0140
+Direct Illumination Sign –           See Signs                                                                                              Electric Vehicle Charging Station –           See Renewable
+Directional Sign –           See Signs                                                                                                      Energy Related Definitions, Section 3.0140
+Directional Signs, Institutional Campus – See Signs                                                                                         Electric Vehicle Charging Unit –           See Renewable
+District                                                                                                                                    Energy Related Definitions, Section 3.0140
+Disturbance Area – See Overlay District Definitions,                                                                                        Electrical Generating Facility
+Section 3.0120                                                                                                                              Electronic Message Center Sign  – See Signs
+Double Frontage Lot –           See Lot                                                                                                     Elevated Building
+Downtown Design District –           See Design District                                                                                    Emergency Shelter –            See Shelter
+Dripline – See Tree Related Definitions, Section                                                                                            Emissivity or Emittance
+3.0150                                                                                                                                      Employees
+Drive-Through Use                                                                                                                           Entry
+Driveway                                                                                                                                    Entry, Primary
+Driveway Approach                                                                                                                           Environmental Technical Guidance Manual –                                             See
+Driveway, Shared                                                                                                                            Overlay District Definitions.
+Section 3.0120.
+Dwelling Unit                                                                                                                               Erosion
+•                                            Accessory Dwelling                                                                             Erosion and Sediment Control
+•                                            Cottage                                                                                        Erosion Prevention and Sediment Control Manual
+•                                            Duplex                                                                                         Erosion Prevention and Sediment Control Plan
+•                                              Manufactured Dwelling                                                                        Evergreen
+•                                            Multi-Family Dwelling
+•                                              Single Detached Dwelling                                                                     Evergreen Tree – See Tree
+•                                            Temporary Health Hardship Dwelling                                                             Exit
+•                                            Townhouse                                                                                      Façade
+•                                            Triplex                                                                                        •                                            Base
+•                                            Quadplex                                                                                       •                                            Top
+
+•                                            Prominent Façade Sections                                                           Galleria
+Face of a Building                                                                                                               Garage
+Face Sign –                                     See Signs                                                                        Geotechnical Engineer – See Overlay District
+Fascia Sign –            See Signs                                                                                               Definitions, Section 3.0120
+Fast Food Service                                                                                                                Grade
+Fence                                                                                                                            Green Development Practices
+Fill – See Overlay District Definitions, Section                                                                                 Green Street
+3.0120                                                                                                                           Gresham Community Development Plan, or Findings                                                                                                                         Community Development Plan
+Fin Sign –                                     See Signs                                                                         Gresham Development Plan Map
+Flag Lot –            See Lot                                                                                                    Grocery Store
+Flag Pole –           See Lot                                                                                                    Ground Floor
+Flag Sign – See Signs                                                                                                            Groundcover
+Flashing Illumination Sign –           See Signs                                                                                 Grubbing
+Fleet Vehicle – See Motor Vehicle                                                                                                Habitable Floor
+Flood or Flooding                                                                                                                Habitat Tree –           See Tree
+Flood Areas –           See Overlay District Definitions,                                                                        Hardscape
+Section 3.012                                                0                                                                   Hazardous Tree –           See Tree
+Flood, Base                                                                                                                      Height Transition Area
+Flood Insurance Rate Map (FIRM)                                                                                                  Helicopter Trip
+Flood Insurance Study                                                                                                            High Slope Subarea – See Overlay District
+Flood Management Areas –           See Overlay District                                                                          Definitions, Section 3.0120
+Definitions, Section 3.0120                                                                                                      High Value Resource Area – See Overlay
+Flood Prone                                                                                                                      Definitions, Section 3.0120
+Floodplain                                                                                                                       Hipped Roof –            See Roof
+Floor Area                                                                                                                       Historic and Cultural Landmark
+Floor Area Ratio                                                                                                                 •                                            Class 1 Historic and Cultural Landmarks
+Fore-Court                                                                                                                       •                                            Class 2 Historic and Cultural Landmarks
+Food Carts                                                                                                                       Hogan                           Cedar Tree – See Tree
+Food Cart Pod                                                                                                                    Home Occupation
+Forestry Stewardship Council (FSC) Rating                                                                                        Hotel
+Free-Standing Sign –           See Signs                                                                                         Housing, Affordable
+Front Lot Line –           See Lot Line                                                                                          Hydrological Unit Codes – See Overlay District
+Front Yard –            See Yard                                                                                                 Definitions, Section 3.0120
+Frontage                                                                                                                         Illumination Awning Sign –           See Signs
+Future Street Plan                                                                                                               Immediate Care Facility –           See Elderly Housing
+Gable Roof –            See Roof                                                                                                 Imminent Hazard Tree – See Tree
+
+Indirect Illumination Sign –           See Signs                                                                                                       Lot Depth
+Infiltration or Stormwater Infiltration                                                                                                                Lot Line
+Installation Sign –           See Signs                                                                                                                •                                            Front Lot Line
+Institutional Campus                                                                                                                                   •                                            Rear Lot Line
+Institutional Master Plan                                                                                                                              •                                            Side Lot Line
+Intent                                                                                                                                                 •                                            Zero-Lot Line
+Interior Lot – See Lot                                                                                                                                 Lot Line Adjustment
+Internal Illumination Sign –           See Signs                                                                                                       Lot of Record
+Internal Signs, Institutional Campus –           See Signs                                                                                             Lot Width
+Invasive Vegetation –            See Overlay District                                                                                                  Lowest Floor
+Definitions, Section 3.0120                                                                                                                            Main Entry or Entrance
+Irregular Shaped Lot – See Lot                                                                                                                         Maintain
+Joint Development                                                                                                                                      Major Tree – See Tree
+Kitchen                                                                                                                                                Maintenance Sign –           See Signs
+Laboratories/Research and Development Facilities                                                                                                       Manager
+Land Division                                                                                                                                          Mansard Rood –            See Roof
+Landing                                                                                                                                                Mansard Wall Sign –           See Signs
+Landscape Tree – See Tree                                                                                                                              Manufactured Dwelling
+Landscaping                                                                                                                                            Marijuana Business
+•                                            Parking Area Landscaping                                                                                  Market Area
+Landslide – See Overlay Definitions, Section 3.0120                                                                                                    Marquee Sign – See Signs
+LEEDTM                                                                                                                                                 Massing, Building
+Legal Description of Property Description                                                                                                              Master Plan
+Level of Service (LOS)                                                                                                                                 Medallion
+Light Cut-Off                                                                                                                                          Micro/Mini Wireless Communication Facility (WCF)
+Liner Space                                                                                                                                            Middle Housing
+Lintel                                                                                                                                                 Mitigation – See Overlay District Definitions,
+Local Review                                                                                                                                           Section 3.0120
+Lot                                                                                                                                                    Mixed-Use Development
+•                                              Corner Lot                                                                                              Model Home
+•                                            Double Frontage lot                                                                                       Monument Sign –           See Signs
+•                                            Flag Lot                                                                                                  Motor Vehicle
+•                                              Interior Lot                                                                                            •                                            Fleet Vehicle
+•                                            Irregular Shaped Lot                                                                                      •                                            Passenger Vehicle
+•                                              Middle Housing Lot                                                                                      •                                            Truck
+•                                              Parent Parcel or Parent Lot                                                                             Mulch
+•                                            Rectilinear Lot                                                                                           Mullion – See Window Mullion
+•                                            Subdivision Lot
+
+Munton                                                                                                                    Parent Parcel or Parent Lot – See Lot Mural                                                                                                                     Park and Ride Facility
+Multi-Business Complex Sign – See Signs                                                                                   Parking Lots
+Native Tree  – See Tree                                                                                                   Parking Module
+Native Vegetation – See Overlay District                                                                                  Parking Space
+Definitions, Section 3.0120                                                                                               Parking Structure
+Natural State                                                                                                             Partition Land
+Needed Housing – See Housing, Needed                                                                                      Passenger Vehicle –            See Motor Vehicle
+Neighborhood Activity Center                                                                                              Pedestrian Facilities
+New Construction                                                                                                          Pennant Sign –           See Signs
+Non-Conforming Development                                                                                                Perennial (or Perennial Plant)
+Non-Conforming Sign –                                     See Signs                                                       Perimeter Tree  – See Tree
+Non-Conforming Use                                                                                                        Permanent Disturbance Area –           See Overlay District
+Non-Native Tree –           See Tree                                                                                      Definitions,           Section 3.0120
+Northern Lot Line  – See Lot Line                                                                                         Permanent Sign –           See Signs
+Nuisance                                                                                                                  Person
+Occupied Space                                                                                                            Pervious (Porous) Pavement
+Offices                                                                                                                   Phased Development Project
+On-Site Directional Sign –           See Signs                                                                            Photovoltaic Panel –            See Renewable Energy
+On-Site Stormwater Management                                                                                             Related Definitions, Section 3.0140
+Ordinary High-                         Water Mark – See Overlay District                                                  Planned Development
+Definitions, Section 3.0120                                                                                               Planter Strip
+Ornamental Tree – See Tree                                                                                                Plat
+Other Waters  – See Overlay District Definitions,                                                                         Plaza
+Section 3.0120                                                                                                            Pleasant Valley Design District –           See Design District
+Outdoor Advertising Sign –           See Signs                                                                            Plinth
+Outdoor Area                                                                                                              Porch
+Outdoor Sales Display                                                                                                     Portable Sign –           See Signs
+Outdoor Storage                                                                                                           Portico
+Owner                                                                                                                     Potential Resource Area –                                  See Overlay District
+Painted Highlights Sign –           See Signs                                                                             Definitions, Section 3.0120
+Painted Wall Decoration Sign – See Signs                                                                                  Premises
+Painted Wall Sign – See Signs                                                                                             Practicable – See Overlay District Definitions,
+Parapet or Parapet Wall                                                                                                   Section 3.0120
+Parcel                                                                                                                    Primary Building Entrance/Entry
+Parking Lot Tree –           See Tree                                                                                     Primary Internal Drive
+Partition Parcel                                                                                                          Primary Street
+
+Principal Building                                                                                                                   Registered Child Care Facility
+Principal Use, Primary Use                                                                                                           Registered Consulting Arborist, S          ee Arborist
+Private Open Space                                                                                                                   Regulated Tree –            See Tree
+Private Public Property Interface – See Overlay                                                                                      Regulatory Floodway
+District Definitions, Section 3.0120                                                                                                 Remodel
+Project                                                                                                                              Renewable Energy Systems –             See Renewable
+Projecting Sign –                                    See Signs                                                                       Energy Related Definitions, Section 3.0140
+Pruning – See Tree Related Definitions, Section                                                                                      Repair Sign –            See Signs
+3.0150                                                                                                                               Required Tree – See Tree
+Public Body                                                                                                                          Reservation Line
+Public Community Park                                                                                                                Residential Facility
+Public Connector Path                                                                                                                Residential Home
+Public Neighborhood Park                                                                                                             Residential Use
+Public Path                                                                                                                          Residentially Designated Land
+Public Open Space                                                                                                                    Restaurant
+Public Place                                                                                                                         Restoration – See Overlay District Definitions,
+Public Trail                                                                                                                         Section 3.0120
+Public Trail Access Points                                                                                                           Revegetation
+Public Trailheads                                                                                                                    Right-of-Way
+Public Urban Plaza                                                                                                                   Riparian                                                                           – See Overlay District Definitions, Section
+Public Use Areas                                                                                                                     3.0120
+Public Works Standards                                                                                                               Rockwood Design District –          See Design District
+Publicly Accessible Open Space                                                                                                       Roof
+Qualified Arborist –           See Arborist                                                                                          •                                            Butterfly Roof
+Qualifying Application –           See Application, Qualifying                                                                       •                                            Gable Roof
+Radio                                                                                                                                •                                            Hipped Roof
+Radio Frequency (RF) Energy                                                                                                          •                                            Mansard Roof
+•                                            Shed Roof
+Radio Frequency (RF) Facility                                                                                                        Roof Sign –                                     See Signs
+Rain Garden                                                                                                                          Roof Line Sign –            See Signs
+Readerboard Sign –           See Signs                                                                                               Rotating Sign –                                     See Signs
+Rear Lot Line –            See Lot Line                                                                                              Routine Repair and Maintenance – See Overlay
+Rear Yard –            See Yard                                                                                                      District Definitions, Section 3.0120
+Receive-Only Antenna                                                                                                                 Same Ownership
+Rectilinear Lot – See Lot                                                                                                            Scoring
+Redemption Center                                                                                                                    School, Commercial
+Redevelopment                                                                                                                        Service Station
+Reflectivity or Reflectance                                                                                                          Setback
+
+Severe Crown Reduction  – See Tree Related                                                                                                                                                      •                                            On-Site Directory Sign
+Definitions, Section 3.0150                                                                                                                                                                     •                                            Outdoor Advertising Sign
+Shade Tree –            See Tree                                                                                                                                                                •                                            Painted Highlights Sign
+Shared Housing Facility                                                                                                                                                                         •                                              Painted Wall Decoration Sign
+Shared Open Space                                                                                                                                                                               •                                              Painted Wall Sign
+Shed Roof –           See Roof                                                                                                                                                                  •                                            Pennant Sign
+•                                            Permanent Sign
+Shelter or Emergency Shelter                                                                                                                                                                    •                                            Portable Sign
+Shrub                                                                                                                                                                                           •                                            Projecting Sign
+Side Lot Line –                                    See Lot Line                                                                                                                                 •                                            Readerboard Sign
+Sidewalk                                                                                                                                                                                        •                                            Repair,                                                                Sign
+•                                            Roof Sign
+Side Yard –           See Yard                                                                                                                                                                  •                                            Roof Line Sign
+Significant Tree, Significant Grove – See Tree                                                                                                                                                  •                                            Rotating Sign
+Signs                                                                                                                                                                                           •                                            Special Event Banner Sign
+•                                            A-Board Sign                                                                                                                                       •                                            Structural Alteration Sign
+•                                            Abandoned Sign                                                                                                                                     •                                            Structure Sign
+•                                            Animated Sign                                                                                                                                      •                                            Temporary Lawn Sign
+•                                            Awning Sign                                                                                                                                        •                                            Temporary Rigid Sign
+•                                            Illuminated Awning Sign                                                                                                                            •                                            Temporary Sign
+•                                            Balloon Sign                                                                                                                                       •                                            Under Marquee Sign
+•                                            Banner Sign                                                                                                                                        •                                            Unsafe Sign
+•                                            Bench Sign                                                                                                                                         •                                            Wind Sign
+•                                            Direct Illumination Sign                                                                                                                           •                                            Window Sign, Inside
+•                                            Directional Sign                                                                                                                                   •                                              Window Sign, Outside
+•                                            Directional Signs, Institutional Campus                                                                                                            Single Detached Dwelling – See Dwelling Unit
+•                                              Electronic Message Center Sign                                                                                                                   Single Room Occupancy (SRO) Housing
+•                                            Face Sign                                                                                                                                          Site
+•                                            Fascia Sign                                                                                                                                        Site Area, Gross
+•                                            Fin Sign                                                                                                                                           Site Area, Net
+•                                            Flap Sign
+•                                            Flashing Illumination Sign                                                                                                                         Site Plan
+•                                            Free-Standing Sign                                                                                                                                 Site Tree – See Tree
+•                                            Indirect Illumination Sign                                                                                                                         Skilled Nursing Facility –           See Elderly Housing
+•                                            Installation Sign                                                                                                                                  Slope, Cross
+•                                            Internal Illumination Sign                                                                                                                         Slope, Running
+•                                            Internal Signs, Institutional Campus
+•                                            Maintenance Sign                                                                                                                                   Solar Energy System – See Renewable Energy
+•                                            Mansard Wall Sign                                                                                                                                  Related Definitions, Section 3.0140
+•                                            Marquee Sign                                                                                                                                       Solar Reflective Index (SRI) – See Renewable Energy
+•                                            Monument Sign                                                                                                                                      Related Definitions, Section 3.0140
+•                                            Multi-Business Complex Sign                                                                                                                        Solar Water Heating System –           See Renewable
+•                                            Non-Conforming Sign                                                                                                                                Energy Related Definitions, Section 3.0140
+
+Spandrel Glass                                                                                                                                     Temporary Sign –            See Signs
+Special Event Banner Sign –           See Signs                                                                                                    Tenant
+Springwater Design District – See Design District                                                                                                  Tentative Plan
+Stand – See Tree Related Definitions, Section                                                                                                      Theme Park
+3.0150                                                                                                                                             Title 3 Wetland  – See Overlay District Definitions,
+Start of Construction                                                                                                                              Section 3.0120
+Storefront Window                                                                                                                                  Top – See Façade
+Stormwater Filtration                                                                                                                              Townhouse Project
+Stormwater Management Manual                                                                                                                       Townhouse Style
+Stormwater Planter                                                                                                                                 Tract
+Stormwater Report                                                                                                                                  Transit Facility
+Stormwater Runoff                                                                                                                                  Transit Streets and Routes
+Stormwater Treatment                                                                                                                               Transit Supportive Use
+Stormwater Treatment Facility                                                                                                                      Transitional Housing
+Story                                                                                                                                              Transitional Housing for Formerly Incarcerated
+Story, First                                                                                                                                       Individuals
+Stream – See Overlay District Definitions, Section                                                                                                 Transitional Setback Space
+3.0120                                                                                                                                             Transitway
+Street, Road or Highway                                                                                                                            Transom Window
+Street Tree –                                    See Tree                                                                                          Transportation Facility
+Structural Alteration Sign –           See Signs                                                                                                   Tree
+Structural Sign –           See Signs                                                                                                              •                                            Buffer Tree
+Structural Soil                                                                                                                                    •                                              Canopy Tree – See Shade Tree
+Structure                                                                                                                                          •                                            Dangerous Tree –           See Overlay District
+Structure, Accessory                                                                                                                                         Definitions, Section 3.0120
+Stucco                                                                                                                                             •                                              Dead Tree
+•                                            Deciduous Tree
+Subdivide Land                                                                                                                                     •                                            Evergreen Tree
+Subdivision Lot – See Lot                                                                                                                          •                                            Habitat Tree
+Substantial Damage                                                                                                                                 •                                            Hazardous Tree
+Substantial Improvement                                                                                                                            •                                              Hogan Cedar Tree
+Sun Screen/Sun Shade                                                                                                                               •                                            Imminent Hazard Tree
+•                                              Landscape Tree
+Temporary Disturbance Area – See Overlay District                                                                                                  •                                            Major Tree
+Definitions, Section 3.0120                                                                                                                        •                                              Native Tree
+Temporary Health Hardship Dwelling –           See                                                                                                 •                                            Non-Native Tree
+Dwelling Unit                                                                                                                                      •                                            Ornamental Tree
+Temporary Lawn Sign –            See Signs                                                                                                         •                                            Parking Lot Tree
+Temporary Rigid Sign –           See Signs                                                                                                         •                                              Perimeter Tree
+•                                            Regulated Tree
+
+•                                            Required Tree                                                                               Vehicular Way
+•                                            Shade Tree                                                                                  Visible
+•                                            Significant Tree, Significant Grove                                                         Visible Transmittance
+•                                            Site Tree                                                                                   Walkway
+•                                            Street Tree                                                                                 Wall
+•                                              Tree Caliper
+•                                            Tree Head Height                                                                            Water Dependent – See Overlay District
+Tree Caliper – See Tree                                                                                                                  Definitions, Section 3.0120
+Tree Head Height – See Tree                                                                                                              Water Feature –            See Overlay District Definitions,
+Tree Protection Plan –            See Tree Related Definitions,                                                                          Section 3.0120
+Section 3.0150                                                                                                                           Water Quality Resource Area –                                   See Overlay District
+Tree Removal - See Tree Related Definitions,                                                                                             Definitions, Section 3.0120
+Section 3.0150                                                                                                                           Waters of the State –             See Overlay District
+Tree Survey –            See Tree Related Definitions, Section                                                                           Definitions, Section 3.0120
+3.0150                                                                                                                                   Watershed – See Overlay District Definitions,
+Tree Topping  - See Tree Related Definitions, Section                                                                                    Section 3.0120
+3.0150                                                                                                                                   Wet Weather Season
+Tree Well  - See Tree Related Definitions, Section                                                                                       Wetland
+3.0150                                                                                                                                   Wind Sign –           See Signs
+Truck – See Motor Vehicle                                                                                                                Window Mullion
+Underground Injection Control System                                                                                                     Window Sign, Inside –           See Signs
+Under Marquee Sign –           See Signs                                                                                                 Window Sign, Outside –           See Signs
+Unsafe Sign –            See Signs                                                                                                       Wireless Communication Facility Tower or WCF
+Urban Development Value – See Overlay District                                                                                           Tower
+Definitions, Section 3.0120                                                                                                              Woody Debris – See Overlay District Definitions,
+Urban Services                                                                                                                           Section 3.0120
+Use, Accessory                                                                                                                           Woody Debris Stockpiling – See Overlay District
+Use, Change of                                                                                                                           Definitions, Section 3.0120
+Utility Facilities –           See Overlay District Definitions,                                                                         Xeriscaping
+Section 3.0120                                                                                                                           Yard
+Variance                                                                                                                                 •                                            Front Yard
+Vehicle, Recreation                                                                                                                      •                                            Rear Year
+Vehicle Repair                                                                                                                           •                                            Side Yard
+Vehicle Sales and/or Rental Lot                                                                                                          Zero Lot Line – See Lot Line
+
+Overlay District  Te   r    m    s
+Aquatic Habitat                                                                                                                              Native Vegetation
+Areal Cover                                                                                                                                  Ordinary High-                         Water Mark
+Basement                                                                                                                                     Other Water                                        s
+Below-Grade Crawl Spaces                                                                                                                     Potential Resource Area
+Building Footprint                                                                                                                           Practicable
+Certified Engineering Geologist                                                                                                              Private Public Property Interface
+Critical Facility                                                                                                                            Recreational Vehicle
+Development                                                                                                                                  Restoration
+Developable Area                                                                                                                             Riparian
+Disturbance Area                                                                                                                             Routine Repair and Maintenance
+•                                            Permanent Disturbance Area                                                                      Stream
+•                                              Temporary Disturbance Area                                                                    Structure
+Ecological Functions (or Functions)                                                                                                          Subsidized Rates
+Environmental Technical Guidance Manual                                                                                                      Substantial Improvement
+Fill                                                                                                                                         Title 3 Wetland
+Flood Areas                                                                                                                                  Utility Facilities
+Flood Management Areas                                                                                                                       •                                            Linear Utility Facilities
+Floodplain                                                                                                                                   •                                            Non-Linear Utility Facilities
+Geotechnical Engineer                                                                                                                        Water Dependent
+High Slope Subarea                                                                                                                           Waters of the State
+High Value Resource Area                                                                                                                     Watershed
+Hydrologic Unit Codes                                                                                                                        Woody Debris
+Invasive Vegetation                                                                                                                          •                                              Course Woody Debris
+Landslide                                                                                                                                    •                                              Woody Debris Stockpiling
+Mitigation                                                                                                                                   •                                              Large Woody Debris Placement
+
+Renewable Energy Related Terms
+Battery Charging Station                                                                                                                     Electric Vehicle Charging Unit
+Battery Charging Unit                                                                                                                        Photovoltaic Panel
+Battery Exchange Station                                                                                                                     Renewable Energy Systems
+Biogas                                                                                                                                       Solar Energy System Blade                                                                                                                                        Solar Reflective Index (SRI)
+Electric Vehicle                                                                                                                             Solar Water Heating System
+Electric Vehicle Charging Station
+
+Tree Related Terms
+Clear Cutting                                                                                                        Tree Protection Plan
+Critical Root Zone                                                                                                   Tree Protection Zone
+Crown Cover                                                                                                          Tree Removal
+Diameter Breast Height                                                                                               Tree Survey
+Dripline                                                                                                             Tree Topping Pruning                                                                                                              Tree Well
+Severe Crown Reduction                                                                                               Urban Forest
+Stand
+
+Temporary, Intermittent and Interim Uses Terms
+Agricultural Products Sales                                                                                          Mobile Unit
+Christmas Tree Sales                                                                                                 Real Estate Sales Office
+Commercial Stand                                                                                                     Special Event
+Farmers’ Markets                                                                                                     Temporary Commercial, Institutional or Industrial
+Film Production Studios and Trailers                                                                                 Building
+Fireworks Sales                                                                                                      Temporary Dwelling
+Intermittent Lodging                                                                                                 Warming/Cooling Shelter
+

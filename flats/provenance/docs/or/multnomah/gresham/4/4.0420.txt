@@ -1,0 +1,129 @@
+4.0420                              PERMITTED USES
+
+Table 4.0420 lists those uses that are permitted in each Corridor Land Use District.
+•                                            P = Permitted use
+•                                            L = Use is permitted, but is limited in the extent to which it may be permitted
+•                                            NP = Use not permitted
+•                                            SUR = Use permitted subject to a Special Use Review
+In addition to the permitted commercial land use types listed in Table 4.0420        , the manager, under the Type II procedure, may permit other commercial uses which the manager finds to be supportive of, and consistent with, the purposes of the Central Rockwood Plan (Appendix 39 of Volume 1) and Corridor Districts (Section 4.0400), and with applicable land use policies and implementation strategies of the Community Development Plan.
+Table 4.0420: Permitted Uses in the Corridor Land Use Districts
+USES                                                                        RTC                     SC                  SC-RJ                 CMF                  CMU                      CC                   MC
+Residential1
+Single Detached Dwelling                                               NP                     NP                    NP                     L2                  NP                     NP                    NP
+Duplex                                                                 NP                     P                     P                      P                   P                      NP                    NP
+Triplex                                                                NP                     P                     P                      P                   P                      NP                    NP
+Quadplex                                                               NP                     P                     P                      P                   P                      NP                    NP
+Townhouse                                                              L3                     P                     P                      P                   P                      NP                    NP
+Cottage Cluster29                                                      NP                     NP                    NP                     L2                  NP                     NP                    NP
+Multi-family/Shared Housing                                            L3, 4                  L4, 5                 P4                     P                   P4                     L4, 6, 7a             L4, 6, 8a
+Facility28
+Elderly Housing                                                        SUR3                   SUR                   SUR                    SUR                 SUR                    SUR                   SUR
+Manufactured Dwelling Park                                             NP                     NP                    NP                     NP                  NP                     NP                    NP
+Residential Facility                                                   P3                     P                     P                      P                   P                      L6, 7a                L 6, 8a
+Residential Home                                                       NP                     NP                    NP                     L2                  NP                     NP                    NP
+Affordable Housing                                                     P9                     P9                    P9                     P9                  P9                     P9                    P9
+Commercial
+Auto-Dependent Use                                                     L10                    NP                    P                      NP                  L11                    L7a, 7b               L8a, 8b
+Business and Retail Service and                                        P                      L12                   P                      NP                  L11                    L7a, 7b               L8a, 8b
+Trade
+Clinics                                                                P                      L12                   P                      NP                  L11                    L7a, 7b               L8a, 8b
+Commercial Parking                                                     SUR                    SUR                   SUR                    SUR                 SUR                    SUR                   SUR
+Daycare Facilities                                                     P                      L12                   SUR                    SUR                 P                      P                     P
+Live-Work                                                              P                      P                     P                      NP                  P                      P                     P
+Major Event Entertainment                                              SUR                    SUR                   SUR                    NP                  SUR                    SUR                   SUR
+Mini-Storage Facilities                                                NP                     NP                    NP                     NP                  NP                     NP                    NP
+Outdoor Commercial                                                     NP                     NP                    L13                    NP                  L13                    L7a, 7b               L8a, 8b
+
+USES                                                                       RTC                     SC                  SC-RJ                 CMF                 CMU                      CC                   MC
+Industrial Uses
+Construction                                                           NP                    NP                    L14                    NP                   NP                   NP                    NP
+Exclusive Heavy Industrial Uses                                        NP                    NP                    NP                     NP                  NP                    NP                    NP
+Industrial Office                                                      NP                    NP                    NP                     NP                  NP                    NP                    NP
+Information Services                                                   NP                    NP                    NP                     NP                  NP                    NP                    NP
+Manufacturing                                                          NP                    NP                    NP                     NP                  NP                    NP                    NP
+Miscellaneous Industrial                                               NP                    NP                    NP                     NP                  NP                    NP                    NP
+Trade Schools                                                          NP                    NP                    NP                     NP                  NP                    NP                    NP
+Transportation/Distribution                                            NP                    NP                    NP                     NP                  NP                    NP                    NP
+Warehousing/Storage                                                    NP                    NP                    NP                     NP                  NP                    NP                    NP
+Waste Management                                                       NP                    NP                    NP                     NP                  L/SUR15               L/SUR15               L/SUR15
+Wholesale Trade                                                        NP                    NP                    NP                     NP                  NP                    NP                    NP
+Institutional Uses
+Civic Uses                                                             SUR                   SUR                   SUR                    SUR                 SUR                   SUR                   SUR
+Community Services                                                     SUR                   SUR                   SUR                    SUR                 SUR                   SUR                   SUR
+Medical                                                                SUR                   SUR                   SUR                    SUR                 SUR                   SUR                   SUR
+Parks, Open Spaces, Paths, and                                         L/SUR16               L/SUR16               SUR                    SUR                 SUR                   SUR                   SUR
+Trails
+Religious Institutions                                                 P                     P                     P                      SUR                 P                     L7a, 7b               L8a, 8b
+Schools                                                                P/SUR20               P/SUR17,              P/SUR20                SUR20               P/SUR20               P/SUR20               P/SUR20
+
+20 Renewable Energy21
+Solar Energy Systems                                                   L/SUR22               L/SUR22               L/SUR22                L/SUR22             L/SUR22               L/SUR22               L/SUR22
+Wind Energy Systems                                                    L/SUR23               L/SUR23               L/SUR23                L/SUR23             L/SUR23               L/SUR23               L/SUR23
+Biomass Energy Systems                                                 L24                   L24                   L24                    L24                 L24                   L24                   L24
+Geothermal Energy Systems                                              L/SUR25               L/SUR25               L/SUR25                L/SUR25             L/SUR25               L/SUR25               L/SUR25
+Micro-Hydro Energy Systems                                             L26                   L26                   L26                    L26                 L26                   L26                   L26
+Other
+Basic Utilities
+Minor Basic Utilities                                                  P                     P                     P                      P                   P                     P                     P
+Major Basic Utilities                                                  SUR                   SUR                   SUR                    L/SUR18             SUR                   SUR                   SUR
+Helliports19                                                           SUR                   NP                    NP                     NP                  NP                    SUR                   NP
+Wireless Communication                                                 SUR                   SUR                   SUR                    SUR                 SUR                   SUR                   SUR
+Facilities
+Temporary, Intermittent &                                              P                     P                     P                      P                   P                     P                     P
+Interim Uses
+Marijuana Businesses                                                   NP                    NP                    NP                     NP                  NP                    L27                   L27
+
+Table 4.1420                                                                   Notes
+1.                                  Temporary health hardship dwellings may be permitted per Section 10.1300.
+
+2.                                  Permitted only along the NE Glisan and NE 162nd Avenue corridors.
+Middle housing land divisions are not permitted in the CMF land use district outside these areas.
+3.                                  Within the area identified on the Appendix 9.000             map (Rockwood Town Center Mixed-Use Area), all buildings on
+parcels with at least 100 feet of frontage on Stark                     that are within 500 feet of the center lines of the intersections of
+Stark and 181st or 187th Avenues shall have non-                       residential uses at the ground floor frontages with primary entries on
+Stark. In a mixed-use building, residential uses   are allowed above and behind the non-                          residential uses on Stark.
+4.                                  Conversion of a hotel or motel to an emergency shelter or affordable housing is permitted pursuant to Section 10.0420; conversion of a building from commercial use to residential use is permitted pursuant to Section 10.0430.
+Such conversions are exempt from any limitations on ground floor residential uses.
+5.                                  In the SC district, new Multi           -family shall be developed as a  mixed-use project that includes commercial and/or
+institutional uses when the subject parcel ha        s at least 100 feet of frontage as of February 5, 2025, on East Burnside
+and is within 500 feet of the center lines of the intersections of East Burnside and 162nd, 172nd or 197th Avenues      .
+Housing developed for persons with special needs is exempted from the mixed-use requirement.
+This is housing for persons with “special needs” consistent with the definition of the most recent “Consolidated Action Plan” as approved by the US.
+Department of Housing and Urban Development.
+6.                                  In the CC and MC districts on            streets classified as principal arterial, major arterial, standard arterial, or boulevard, ground floor street-facing facades within 40 feet of the street shall be occupied by commercial or institutional uses for at least 50 percent of the building’s linear street frontage.
+(Exceptions to the 50 percent requirement may be permitted when required by the building code.          )
+7.                                  Community Commercial. a) The maximum building footprint size permitted for any building, regardless of the type of uses within it, shall be 100,000 square feet; and b) The maximum total building size (floor area) for commercial uses shall be 100,000                                                                   square feet.
+8.                                  Moderate Commercial. a) The maximum building footprint size permitted for any building, regardless of the type of uses within it, shall be 40,000 square feet with an exception for a maximum building footprint size of 60,000 square feet for a grocery store                     use; b) The maximum total building size (floor area) for commercial uses shall be 80,000 square feet.
+9.                                  Affordable housing development is permitted.
+Special criteria and standards may apply, pursuant to Section 10.1700.
+10.           In the Rockwood Town Center district, Auto-Dependent Uses are limited to sites fronting on standard,    or major arterial streets.
+11.           The maximum building footprint size permitted for any building occupied entirely by a commercial use or uses shall be 20,000                                                                   square feet.
+12.           A commercial use permitted in the Station Center district (except for the Ruby Junction Overlay) must be located on a parcel of which some portion is within 500 feet of the intersection of the centerlines of East Burnside / 162nd, or East Burnside / 172nd, or East Burnside / 197th Ave.
+13.           In the SC-RJ and CMU land use districts, certain Outdoor Commercial uses are prohibited, including vehicle sales lots, pursuant to Section 4.0437.
+The maximum site size for a new Outdoor Commercial use is 2 acres.
+14.           Any industrial use shall be limited to a maximum of 45,000 square feet of gross floor area.
+In addition, any new industrial use shall employ at least one person per 500 square feet of gross floor area.
+An applicant for design review for a new industrial use  shall submit documentation as part of the application demonstrating conformance with this employee density requirement.
+Industrial developments are subject to standards pertaining to GI in Sections 4.0330 and 4.0331.
+15.           Solid waste transfer stations, composting facilities, and landfills may pursue approval through the Special Use Review process.
+When located in the Corridor Districts, waste management uses adjacent to residentially designated land shall be located at least 100 feet from the residential property.
+16.           Golf courses are not permitted through a Special Use Review.
+17.           Schools are permitted in the SC district if they are located on a parcel of which some portion is within 500 feet of the intersection of the centerlines of East Burnside / 162nd, or East Burnside / 172nd, or East Burnside / 197th Avenue.
+If they are not within this area, they are subject to a Special Use Review.
+
+18.           Electrical generating facilities are not permitted through the Special Use Review process.
+19.           Permitted as an accessory use to Medical and Civic Uses through the Special Use Review process.
+20.           Schools are permitted without a Special Use Review if they are occupying an existing commercial space.
+Schools must pursue a Special Use Review if they are proposing new construction.
+21.            See Section 10.0900 for addition                                al standards that apply.
+22.           For limitations, see Section 4.0442                                                                                                  Solar Energy Standards for Corridor Districts.
+23.           For limitations, see Section 4.0443                                                                                                  Wind Energy Standards for Corridor Districts.
+24.           For limitations, see Section 4.0444                                                                                                  Biomass Energy Standards for Corridor Districts.
+25.           For limitations, see Section 4.0445                                                                                                  Geothermal Energy Standards for Corridor Districts.
+26.           For limitations, see Section 4.0446                                                                                                    Micro-Hydro Energy Standards for Corridor Districts.
+27.           For limitations, see GRC 9.63.090.
+28.           Transitional housing for individuals transitioning from incarceration facilities are subject to a Special Use Review.
+29.           No more than one cottage cluster shall be permitted per parent parcel.
+
+CORRIDOR DISTRICT STANDARDS
+

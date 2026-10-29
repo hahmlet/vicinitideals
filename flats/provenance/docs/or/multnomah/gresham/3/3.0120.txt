@@ -1,0 +1,111 @@
+3.0120                             OVERLAY DISTRICT                         TERMS AND DEFINITIONS
+
+The following definitions apply within the Hillside and Geologic Risk Overlay, Natural Resource Overlay, and to Floodplain-related applications, including but not limited to Section 5.0100, Floodplain Overlay District.
+Aquatic Habitat. Habitat structure that is the combination of vegetation, woody materials and certain configurations of pool and riffle sequences in the stream channel, off-                           channel wetlands, side channels, oxbows, meanders, backwaters, frequently flooded areas (10 -year flood event or higher) and spawning gravel.
+Areal Cover. A measure of vegetative strata that defines the degree to which the canopy vegetative layer covers the ground surface.
+Basement. Any area of the building having its floor subgrade (below ground level) on all sides.
+Below-Grade Crawl Spaces. An enclosed area below the base flood elevation in which the interior grade is not more than two feet below the lowest adjacent exterior grade and the height, measured from the interior grade of the crawlspace to the top of the crawlspace foundation, does not exceed 4 feet at any point.
+Building Footprint.  The area that is covered by buildings or other roofed structures.
+Building footprint also includes uncovered horizontal structures such as decks, stairways and entry bridges that are more than 6 feet above grade.
+Certified Engineering Geologist.   Any State of Oregon Registered Geologist who is certified in the specialty of
+Engineering Geology under provisions of ORS 672.505 to 672.705.
+Critical Facility. A facility for which even a slight chance of flooding might be too great.
+Critical facilities include, but are not limited to schools, nursing homes, hospitals, police, fire and emergency response installations, installations which produce, use or store hazardous materials or hazardous waste.
+Dangerous Tree. A tree that meets one of the following:
+•                                            A tree which is diseased, infested by insects or fungus, or rotting and which cannot be saved by reasonable treatment or pruning or which must be removed to prevent the spread of the infestation or disease to other trees.
+•                                            A tree in such condition that presents a foreseeable danger of inflicting damage that cannot be alleviated by treatment or pruning.
+Damage may include injury to people or damage that cannot be alleviated by treatment or pruning.
+Damage may include injury to people or damage to structures or vehicles within a target zone equal to the height of the tree.
+Conditions may include root damage, instability, and completely dead trees.
+•                                            A tree that will prevent emergency access in the case of medical hardship.
+Development. Any man-made change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation or drilling operations or storage of equipment or materials.
+Disturb. To make man-made changes to the existing physical status of the land, which are made in connection with development.
+
+Disturbance Area. An area identified in an approved development permit that contains, or will contain, all legally allowed temporary and permanent development, exterior improvements, and staging and storage areas on the site.
+A disturbance area may contain two subareas, the permanent disturbance area and the temporary disturbance area.
+•                                              Permanent Disturbance Area.
+All areas occupied by existing or proposed structures or exterior improvements (including landscaping).
+The permanent disturbance area also includes areas where vegetation must be managed to accommodate overhead utilities, existing or proposed landscaped ar  eas, and roadside areas subject to regular vegetation management to maintain safe visual or vehicle clearance.
+•                                            Temporary Disturbance Area.
+The portion of the site that will be disturbed for the proposed development but not permanently occupied by structures or exterior improvements.
+It includes staging and storage areas used during construction and all areas graded to facilitate proposed development on the  site but will not be covered by permanent development.
+It also includes areas disturbed during construction to place underground utilities, where the land above the utility will not otherwise be occupied by structures or exterior improvements.
+Ecological Functions (or Functions).  The primary biological, chemical, and hydrologic characteristics of healthy fish and wildlife habitat that must be present for natural systems to work property.
+Environmental Technical Guidance Manual. A compilation of the detailed processes, timelines, and available options for meeting the intent of the regulatory language within Gresham’s Environmental Overlays, specifically the Natural Resource Overlay, the Hillside and Geologic Risk Overlay, and the Floodplain Overlay.
+Content of the guidance manual is to be used in tandem with development code and does not substitute for, amend, or supersede development code language of the environmental overlays.
+Fill. Any material such as, but not limited to, sand, soil, rock or gravel that is placed in a wetland or floodplain for the purposes of development or redevelopment.
+Flood Areas. Th           e land within the 100-year floodplain, flood area, and floodway as shown on the Federal
+Emergency Management Agency (FEMA) Flood Insurance maps and all lands that were inundated in the February 1996 flood (note that areas that were mapped as flood areas but were filled to a level above the base flood level prior to September 30, 2005, consistent with all applicable local, state, and federal laws shall no longer be considered habitat based on their status as flood areas).
+Flood Management Areas. The land          within the 100-year floodplain, flood area and floodway as shown on the
+Federal Emergency Management Agency Flood Insurance Maps and the area of inundation for the February 1996 flood.
+In addition, all lands which have documented evidence of flooding.
+Floodplain. The land subject to periodic flooding, including the 100-year floodplain as mapped by FEMA Flood Insurance Studies or other substantial evidence of actual flood events.
+Geotechnical Engineer. A Professional Engineer, registered in the State of Oregon provided by ORS 672.002 to 672.325, who by training, education, and experience is qualified in the practice of geotechnical or soils engineering practices.
+High Slope Subarea or HSS. Those lands within the Hillside and Geologic Risk Overlay boundary which have native slopes (prior to development) or 35 percent                  or greater.
+The boundaries of the subarea are based on a
+GIS-                                  supported application of the mapping protocols in Section 5.0214         .
+
+High Value Resource Area or HVRA. An area identified on the Natural Resources Overlay Map and subject to the development standards of the NRO district for High Value Resource Areas.
+Hydrologic Unit Codes (HUCs). Nationally standardized divisions of drainage basins, created by the United States Geologic Service (USGS) and Natural Resource Conservation Service, based on topographic, hydrologic, and other relevant landscape characteristics without regard for                administrative, political, or jurisdictional boundaries.
+Hydrologic Units provide a standardized system for organizing, collecting, and reporting hydrologic information for the nation.
+Metro regional Hydrologic Unit Codes can be found on HSGS’s national database, the Watershed Boundary Dataset.
+Invasive Vegetation. Plant species that are listed as invasive plants or prohibited plants on the City of Gresham Invasive Plant List (Gresham Revised Code 7.15.025).
+Landslide. The movement of a mass of rock, debris, or earth down a slope.
+Landslides are a type of “mass wasting” which denotes any down slope movement of soil and rock under the direct influence of gravity.
+The term “landslide” encompasses events such as rock falls, topples, slides, spreads, and flows.
+Landslides can be initiated by rainfall, earthquakes, volcanic activity, changes in groundwater, disturbance and change of a slope by man-made construction activities, or any combination of these factors.
+Mitigation. The reduction of adverse effects of a proposed project by considering, in the order: a) avoiding the impact all together by not taking a certain action or parts of an action; b) minimizing impacts by limiting the degree or magnitude of the action and its  implementation; c) rectifying the impact by repairing, rehabilitating or restoring the affected environment; d)reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures; and e) compensating for the impact by replacing or providing natural resource areas.
+Native Vegetation. Vegetation listed as a native plant on the City of Gresham Native Plant List and any other vegetation native to the Portland metropolitan area provided that it is not listed as an invasive/non-native, or a prohibited plant on the City of Gresham Native Plant List.
+Ordinary High-Water Mark. The point below which the presence and action of the water are so common and usual and so long continued in all ordinary years as to mark upon the soil a character distinct from that of the banks with respect to vegetation as well as with respect to the soil itself.
+Other Waters. Waters Of The State other than wetlands or streams.
+Potential Resource Area. An area identified on the Natural Resources Overlay Map and subject to the development standards of the NRO district for Potential Resource Areas.
+Practicable. Available and capable of being done after taking into consideration cost, existing technology, and logistics in light of overall project purpose and probable impact on ecological functions.
+Private Public Property Interface. The private-                                        public property interface is the area where residential or commercial land use meets publicly owned spaces, most typically natural areas.
+The interface is somewhat synonymous with the term Wildland-Urban Interface, and is a focal area for the intermingling of divergent land management strategies, that being the management of a lands for aesthetic, human use, and viewshed purposes vs the management of lands for slope stability, wildfire prevention, habitat, water quality, flood attenuation, climate resiliency.
+
+Recreational Vehicle. A vehicle which is:
+•                                            Built on a single chassis;
+•                                            400 square feet or less when measured at the largest horizontal projection;
+•                                            Designed to be self-propelled or permanently towable by a light duty truck; and
+•                                            Designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+Restoration. The process of returning a disturbed or altered area or feature to a previously existing natural condition.
+Riparian. Those areas associated with streams, lakes and wetlands where vegetation communities   are predominately influenced by their association with water.
+Routine Repair and Maintenance. Activities directed at preserving an existing allowed use or  facility, without expanding the development footprint or site use.
+Demolition is not routine repair   and maintenance.
+Stream. A body of running water moving over the earth’s surface including stream types classified as perennial or intermittent, channelized or relocated streams in a channel or bed, such as a creek, rivulet or river, or as reflected in the current definition of the Oregon Department of State Lands.
+Structure. For floodplain management purposes, a walled and roofed building, including a gas or liquid storage tank, that is principally above ground, as well as a manufactured dwelling.
+Structure, for insurance purposes, means:
+•                                            A building with two or more outside rigid walls and a fully secured roof, that is affixed to a permanent site;
+•                                            A manufactured dwelling (“a manufactured home,” also known as a mobile home, is a structure: built on a permanent chassis, transported to its site in one or more sections, and affixed to a permanent foundation); or
+•                                            A travel trailer without wheels, built on a chassis and affixed to a permanent foundation, that is regulated under the community’s floodplain management and building ordinances or laws.
+For the latter purpose, “structure” does not mean a recreational vehicle or a park trailer or other                similar vehicle, except as described above this definition, or a gas or liquid storage tank.
+Subsidized Rates. The rates established by the Federal Insurance Administrator involving in the aggregate a subsidization by the Federal Government.
+Substantial Improvement. Any reconstruction, rehabilitation, addition, or other improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure before the “start of construction” of the improvement.
+This term includes structures which have incurred “substantial damage” regardless of the actual repair work performed.
+The term does not, however, include either:
+•                                            Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official,         and which are the minimum necessary to assure safe living conditions, or
+•                                            Any alteration of a “historic structure”, provided that the alteration will not preclude the structure’s continued designation as a “historic structure”.
+
+Title 3 Wetland.
+Wetlands of metropolitan concern as shown on the Metro Water Quality and Flood Management Area Map and other wetlands added to city of county adopted Water Quality and Flood Management Area maps consistent with the criteria in Title 3, section 3.07.340(e)  (3).
+Title 3 wetlands do not include artificially constructed and managed stormwater and water quality treatment facilities.
+Utility Facilities.  Portions of a system which provides for the production or transmission of heat, light, water, power, natural gas, wastewater           , stormwater, telephone and cable television, communication and data.
+•                                            Linear Utility Facilities.
+Any linearly constructed portion of such systems including                      manholes, pipes, and lines.
+•                                            Non-Linear Utility Facilities.
+Buildings, structures or any non-linearly constructed portion of such systems
+including diversion structures, lift stations, pump stations, wellhead facilities, and multi-          lot stormwater facilities.
+Water Dependent. A structure for commerce or industry which cannot exist in any other location and is dependent on the water by reason of the intrinsic nature of its operations.
+Water of the State. All natural waterways, tidal and non-tidal bays, intermittent streams, constantly flowing streams, lakes, wetlands, that portion of the Pacific Ocean that is in the boundaries of this state, all other navigable and non-navigable bodies of water in this state and those portions of the ocean shore, as defined in ORS 390.605, where removal or fill activities are regulated under a state-assumed permit program as provided in 33 U.S.C. 1344(g) of the Federal Water Pollution Control Act, as amended.
+Watershed. A geographic unit defined by the flows of rainwater or snowmelt.
+All land in a watershed drains to a common outlet, such as a stream, lake or wetland.
+Woody Debris.
+•                                            Coarse Wood Debris.
+Downed wood such as felled trees, logs, uprooted stumps, large branches and coarse roots.
+This includes dead wood in all stages of decomposition.
+Coarse woody debris is 3 inches or greater in diameter and does not include dead trees that are still standing, dead branches that are still attached to the tree, or exposed live tree roots.
+•                                            Wood Debris Stockpiling.
+Intentional accumulation of Coarse Woody Debris in amounts exceeding 3                        feet high and 6 feet in any horizontal direction.
+•                                            Large Woody Debris Placement.
+Intentional placement of large (4-inch minimum diameter at midpoint) woody material (trees, logs, root wads, or major branches) in a waterway, for the purpose of improving the interaction of stream channel elements including water, sediment and bed material, nutrients, and aquatic organisms.
+

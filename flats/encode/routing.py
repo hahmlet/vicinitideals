@@ -67,6 +67,7 @@ from flats.encode.crossrefs import (
     _WRAPPED,
     _cited_lines,
     _doc_ids,
+    _held_ids,
     _headings,
     _resolves,
 )
@@ -305,7 +306,7 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
         return []
 
     texts = {p: store.text_path(p).read_text(encoding="utf-8") for p in paths}
-    ids = _doc_ids(paths)
+    ids = _held_ids(store, layer.layer, paths)
     headings: set[str] = set()
     heads: dict[str, dict[int, str]] = {}
     cut = store.section_files()
@@ -333,16 +334,26 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
             continue
         here = heads[path]
         starts = sorted(here)
-        for n, line in enumerate(text.splitlines(), start=1):
+        lines = text.splitlines()
+        for n, line in enumerate(lines, start=1):
             if not _ROUTE.search(line):
                 continue
+            # The readable text gives each sentence its own line, so "Minimum
+            # density does not apply to affordable housing development." and
+            # its "See Section 10.1700." -- one line in the proof copy -- are
+            # two in a section file. A "See" sentence straight after a
+            # redirect is the redirect's own pointer; without it Gresham's five
+            # such rows left this ledger when the code was cut (FOLLOWUPS 73,
+            # batch 5). A "See" on its own still routes nowhere.
+            after = lines[n] if n < len(lines) else ""
+            pointed = f"{line} {after}" if re.match(r"\s*See\s", after) else line
             section = _section_at(n, starts, here)
             # A redirect in a section no value was read from cannot have
             # moved a number: nothing here was taken from around it.
             if section is None or section not in read:
                 continue
             seen: set[str] = set()
-            for m in _REF.finditer(line):
+            for m in _REF.finditer(pointed):
                 ref = (
                     m.group("named") or m.group("abbrev") or m.group("dotted") or ""
                 ).rstrip(".")
@@ -367,7 +378,7 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
                     continue
                 followed = _is_followed(ref, read) or any(
                     _within(s, lo, hi)
-                    for lo, hi in _spans(line)
+                    for lo, hi in _spans(pointed)
                     if lo == ref
                     for s in read
                 )
@@ -378,7 +389,7 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
                         line=n,
                         section=section,
                         ref=ref,
-                        text=" ".join(line.split())[:200],
+                        text=" ".join(pointed.split())[:200],
                         followed=followed,
                     )
                 )

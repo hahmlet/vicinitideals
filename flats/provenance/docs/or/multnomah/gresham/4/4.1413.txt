@@ -1,0 +1,101 @@
+4.1413  PERMITTED USES
+Table 4.1413 lists the types of land uses permitted in the Pleasant Valley Residential sub-districts.
+• P = Permitted use
+• L = Use is permitted, but is limited in the extent to which it may be permitted
+• NP = Use not permitted
+• SUR = Use permitted subject to a Special Use Review
+Each use must comply with the land use district standards of this section and all other applicable requirements of the Community Development Code
+Table 4.1413: Permitted Uses in the Pleasant Valley District - Residential
+USES LDR-PV MDR-PV HDR-PV
+Residential
+Single Detached Dwelling P P L1
+Duplex P P P
+Triplex P P P
+Quadplex P P P
+Townhouse P P P
+Cottage Cluster16 P P P
+
+USES LDR-PV MDR-PV HDR-PV
+Multi-Family/Shared Housing Facility2 NP P P
+Elderly Housing NP SUR SUR
+Manufactured Dwelling Park NP NP NP
+Residential Facility P P P
+Residential Home P P NP
+Affordable Housing P/L3 P4 P4
+Commercial
+Auto-Dependent Use NP NP NP
+Business and Retail Service and Trade NP L5 L5
+Clinics NP L5 L5
+Commercial Parking NP SUR SUR
+Daycare Facilities P P P
+Live-Work6 NP P P
+Major Event Entertainment NP NP NP
+Mini-Storage Facilities NP NP NP
+Outdoor Commercial NP NP NP
+Industrial
+Construction  NP NP NP
+Exclusive Heavy Industrial Uses NP NP NP
+Industrial Office NP NP NP
+Information Services NP NP NP
+Manufacturing NP NP NP
+Miscellaneous Industrial NP NP NP
+Trade Schools NP NP NP
+Transportation/Distribution NP NP NP
+Warehousing/Storage NP NP NP
+Waste Management NP NP NP
+Wholesale Trade NP NP NP
+Institutional Uses
+Civic Uses SUR SUR SUR
+Community Services SUR SUR SUR
+Medical NP NP NP
+Parks, Open Spaces, Paths, and Trails SUR SUR SUR
+Religious Institutions L/SUR7 SUR SUR
+Schools SUR SUR SUR
+Renewable Energy8
+Solar Energy Systems L9 L/SUR9 L/SUR9
+Wind Energy Systems L10 L10 L10
+Biomass Energy Systems L/SUR11 L11 L11
+
+USES LDR-PV MDR-PV HDR-PV
+Geothermal Energy Systems L12 L/SUR12 L/SUR12
+Micro-Hydro Energy Systems L13 L13 L13
+Other
+Basic Utilities
+Minor Basic Utilities
+Major Basic Utilities
+
+P
+L/SUR14
+
+P
+L/SUR
+14
+
+P
+L/SUR
+14
+Helliports15 NP NP NP
+Wireless Communication Facilities  SUR SUR SUR
+Temporary, Intermittent & Interim Uses P P P
+Marijuana Businesses NP NP NP
+Table 4.1413 Notes
+1. Single detached dwellings are permitted in conjunction with a development that includes multi -family housing or middle housing types provided the minimum density is met for the overall development site.
+2. Transitional housing for individuals transitioning from incarceration facilities are subject to a Special Use Review unless the application qualifies as affordable housing under Section 10.1700.
+3. Affordable housing that meets the development standards of the land use district is permitted.
+When the proposed affordable housing is only permitted in the land use district under the affordable housing provisions  of Section 10.1700, the standards and criteria in that section shall apply.
+4. Affordable housing development is permitted.
+See Section 10.1700.
+5. Commercial uses are subject to the use limitations in Section 4.1414.
+6. The commercial portion of the structure shall face the street front and is limited to the first floor.
+Where a live-work unit has an individual garage, vehicle access to the garage must be from an alley.
+One fascia, awning, or painted wall sign limited to 32 square feet is permitted per unit.
+7. Limited to facilities used for religious worship with seating for 300 or fewer persons within the principal place of assembly.
+8. See Section 10.0900 for additional standards that apply.
+9. For limitations, see Section 4.1434 Solar Energy System Standards for Pleasant Valley Districts.
+10. For limitations, see Section 4.1435 Wind Energy System Standards for Pleasant Valley Districts.
+11. For limitations, see Section 4.1436 Biomass Energy System Standards for Pleasant Valley Districts.
+12. For limitations, see Section 4.1437 Geothermal Energy System Standards for Pleasant Valley Districts.
+13. For limitations, see Section 4.1438 Micro-Hydro Energy System Standards for Pleasant Valley Districts.
+14. Electrical generating facilities and wastewater treatment plants are not permitted.
+15. Permitted as an accessory use to Medical and Civic Use through the Special Use Review process.
+16. No more than one cottage cluster shall be permitted per parent parcel.

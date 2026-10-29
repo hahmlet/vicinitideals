@@ -107,6 +107,35 @@ STACKED = re.compile(
     r"[\"”]?(?:\s*[.:]|(?<=[\"”])\s*[–—-])?\s*$"
 )
 
+#: The stacked form behind a bullet, which only readable section text makes.
+#: Gresham's 3.0100 files its sub-terms under a parent ("Lot." then "• Corner
+#: Lot. A lot that has frontage on two or more streets.") and readable text
+#: gives each sentence its own line, so the bullet and term are left alone
+#: with the meaning beneath: 136 entries -- Corner Lot, Rear Lot Line, Front
+#: Yard -- went unread when the chapter was cut (FOLLOWUPS 73, batch 5). The
+#: full stop is required: a bulleted list item ("• Townhouses") is not a term.
+#: So is a capital on every word but the small ones: a bulleted sentence
+#: ("• Changes in the topography of the site.", Portland 33.910) is prose.
+STACKED_BULLET = re.compile(
+    r"^[•·▪◦]\s*(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})\s*\.\s*$"
+)
+
+_SMALL_WORDS = frozenset({"a", "an", "and", "as", "at", "by", "for", "in", "of", "on", "or", "the", "to"})
+
+
+def _titled(term: str) -> bool:
+    words = [w.strip("()") for w in re.split(r"[\s,/\-]+", term) if w.strip("()")]
+    return all(w[0].isupper() or w[0].isdigit() or w in _SMALL_WORDS for w in words)
+
+
+def _stacked(line: str) -> re.Match[str] | None:
+    """A term alone on its line, in either stacked form."""
+    plain = STACKED.match(line)
+    if plain is not None:
+        return plain
+    bulleted = STACKED_BULLET.match(line)
+    return bulleted if bulleted is not None and _titled(bulleted.group("term")) else None
+
 #: What a body has to open with to be a meaning rather than a pointer or a
 #: standard. Same rule the corner-lot matcher earned the hard way: a definition
 #: opens with a noun phrase, a cross-reference opens with "see", and a standard
@@ -387,7 +416,7 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
                     )
                 )
                 continue
-        stacked = STACKED.match(stripped)
+        stacked = _stacked(stripped)
         if stacked is None or not MIN_TERM <= len(stacked.group("term")) <= MAX_TERM:
             continue
         at, raw_body = _below(lines, i)
@@ -401,7 +430,7 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
             continue
         if _carries_on(stripped, body):
             continue
-        if STACKED.match(body) or FURNITURE.match(body):
+        if _stacked(body) or FURNITURE.match(body):
             # The line beneath is another term, or the page stamp between two
             # of them. Either way this entry's body is somewhere we did not
             # look, and inventing one from the next heading would put one
@@ -475,7 +504,7 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
         opens = ENTRY.match(stripped)
         if opens is not None and MIN_TERM <= len(opens.group("term")) <= MAX_TERM:
             break
-        if STACKED.match(stripped) and not _closes(body[-1], stripped) and not _LEAD_IN.search(stripped):
+        if _stacked(stripped) and not _closes(body[-1], stripped) and not _LEAD_IN.search(stripped):
             break
         body.append(stripped)
     return _collapse(" ".join(body))

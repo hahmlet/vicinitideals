@@ -106,7 +106,8 @@ def test_so_the_encoded_street_setbacks_stand(gresham: Layer) -> None:
         assert values["setback_front_ft"].value == 5, zone
         assert values["setback_front_max_ft"].value == 20, zone
         assert values["setback_street_side_ft"].value == 5, zone
-        assert "4.0400.corridor.txt" in values["setback_front_ft"].prov.quote, zone
+        # Table 4.0430, cut out of 4.0400.corridor.txt (FOLLOWUPS 73, batch 5).
+        assert "/4/4.0430.txt#" in values["setback_front_ft"].prov.quote, zone
 
 
 def test_the_numbers_that_would_have_applied_are_four_bands_not_one(

@@ -363,7 +363,9 @@ def test_the_shipped_narrowing_is_the_one_that_was_read() -> None:
     # NE Glisan / NE 162nd corridor to TLDR's tables; it names CMF alone.
     assert len(ruled) == 2, "the narrowings in Gresham moved"
     assert all(row.zones == ("CMF",) for row in ruled)
-    (note,) = [row for row in ruled if row.line == 217]
+    # Proof copy 4.0400.corridor.txt L217 until Gresham was cut into sections
+    # (FOLLOWUPS 73, batch 5); Table 4.0420 is its own section file now.
+    (note,) = [row for row in ruled if row.quote == "or/multnomah/gresham/4/4.0420.txt#L79"]
     assert note.zones == ("CMF",)
     assert note.governs("CMF")
     assert not note.governs("CC")

@@ -1179,4 +1179,5 @@ def test_a_schedule_and_an_enum_are_values_too() -> None:
     for zone in ("DRL-1", "DRL-2", "CMF"):
         axis = rules.resolve("or/multnomah/gresham", zone).values["orientation_constraint"]
         assert axis.value == "axis_required"
-        assert "7.0400.middle-housing-design.txt#L410-L418" in axis.prov.quote
+        # 7.0400.middle-housing-design.txt L410-L418 until the cut (FOLLOWUPS 73, batch 5).
+        assert "7/7.0420.txt#L165-L170" in axis.prov.quote

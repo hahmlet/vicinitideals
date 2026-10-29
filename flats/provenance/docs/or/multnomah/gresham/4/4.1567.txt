@@ -1,0 +1,8 @@
+4.1567  LIGHTING REQUIREMENTS
+A. Purpose and Scope.
+The goals of this section are to improve night sky access and reduce development impact on nocturnal environments.
+B. Lighting Requirements.
+All site lighting shall maintain safe light levels while avoiding off-site lighting and night sky pollution.
+1. The maximum candela value of all exterior lighting shall fall within the property.
+2. Any luminaire within a distance of 2.5 times its mounting height from the property boundary shall have shielding such that no light from that luminaire crosses the property boundary.
+3. Strategies can include, but are not limited to, full cutoff luminaries, low-reflectance surfaces and low-angle spotlights.

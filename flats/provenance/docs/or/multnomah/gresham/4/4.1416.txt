@@ -1,0 +1,6 @@
+4.14 16  BUILDING HEIGHT AND HEIGHT TRANSITION STANDARDS
+A. Applicability. The following standards apply to buildings to be built on lots in the HDR-PV, TC-PV, NCPV, and ME-PV sub-districts when they abut the LDR-PV land use district.
+B. At the minimum building setback from a lot line abutting a lot in the LDR-PV land use district, the maximum building height shall be 35 feet.
+For every one foot of additional building setback beyond 35 feet, the maximum building height shall increase by one foot, up to the maximum total building height for the sub-district as illustrated in Figure 4.1416.
+Figure 4.1416: Building Height Transition
+

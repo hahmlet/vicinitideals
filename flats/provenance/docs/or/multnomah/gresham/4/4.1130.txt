@@ -1,0 +1,173 @@
+4.1130                                       DOWNTOWN PLAN SUB -DISTRICT STANDARDS
+Table 4.1130 summarizes development standards that apply in the Downtown Plan District.
+The standards contained in this Table are supplemented by referenced sub-sections of 4.1100 which provide additional clarification and guidance.
+Existing developments that do not meet the standards specified for a particular sub   -district may continue in existence
+and be altered, subject to provisions of Section 8.0200            Existing and Non-Conforming Uses and Development.
+There are two key factors of development potentially allowable on parcels and development sites for each district with Downtown: building height and floor area ratio  (FAR).
+To determine the development potential of a property, the FAR number is multiplied by the site area.
+For example: A site area of 20,000 square feet multiplied by a FAR of 3.0 yields 60,000 square feet of floor area that can be built on that site.
+A.                        Development on a site must achieve at least the Minimum Floor Area Ratio and can build up to the Maximum Floor Area Ratio.
+1.                             Additional FAR, shown in the Maximum Floor Area Ratio with Bonuses column, can be achieved by including bonus elements and attributes (described in Section 4.1131).
+Multiple bonus elements can be used in combination to achieve the maximum FARs listed in the Maximum Floor Area Ratio with Bonuses column in
+Table 4.1130. Each bonus element can be used only once, unless otherwise indicated in the bonus element descriptions.
+This method allows for many combinations of uses, intensities and different features within each development.
+With bonuses, residential-only buildings can achieve a maximum FAR up to what is shown in the Residential column under Maximum Floor Area Ratio with Bonuses.
+Maximum heights cannot be exceeded in the DRL-1 and DRL-2 districts.
+Affordable housing is also eligible for separate density and height bonuses, pursuant to Section 10.1700.
+2.                             With bonuses, buildings that do not include a residential use can achieve a maximum FAR up to what is shown in the Non-residential column under Maximum Floor Area Ratio with Bonuses.
+3.                             With bonuses, buildings that combine both residential and non  -residential uses can achieve a maximum FAR up to what is shown in the combined column under Maximum Floor Area Ratio with Bonuses.
+B.                          For purposes of minimum floor-area-ratio calculations in DCC, DMU and DTM, applicants may include the following in the ground-level floor area up to a total of 1,000 square feet or 10 percent of the site, whichever is larger:
+1.                             Publicly accessible open space.
+2.                             Required minimum setbacks.
+3.                             Area removed from the first-floor building footprint to create corner features to comply with Section 4.1152                        (B)(7).
+For example, a beveled corner will have a slightly smaller footprint than a 90-degree corner because of the bevel.
+4.                             Areas between the minimum and maximum front setbacks for Commercial, Industrial and Institutional uses that are provided for usable, pedestrian- oriented uses such as walkways and outdoor dining areas.
+C.                            For purposes of minimum floor-area ratio calculations in all sub-districts, the following may be counted as ground-level floor area.
+1.                             Utility easements.
+2.                             Structured parking at grade or above.
+
+
+TABLE 4.1130
+
+DCC                                                             DMU                                               DTM                                              DEM                                               DRL-1                                              DRL-2                                         DCL
+Main Ave 1
+Maximum Height1,2,3,4 (feet)                                                                                                                             85                                                                                                                                                                                   451                                                                                                                                                          125                                                                                                                                                                  85                                                                                                                                                                                                                          70                                                                                                                                                                                                                                       35                                                                                                                                                                                                                                       50                                                                                                                                                                                         65
+Minimum Floor Area Ratio (  FA   R  )
+for non-residential and mixed-use                                                                                                                See Map 4.1130: Minimum Floor Area Ratio projects (based)1, 5, 6
+Maximum Floor Area Ratio6,9                                                                                                                            3.0                                      1.51                                              3.5                                              3.0                                              2.5                                                 1.0                                                 1.0                                       1.0
+Maximum Floor Area                                                                          Residential                                                3.5                                      2.01                                              5.0                                              3.5                                              3.0                                                 2.0                                                 2.0                                       2.0
+Ratio with bonuses                                                                          Non-
+(see 4.1131)                                                                   6            Residential                                                4.5                                                                                                                          3.01                                                                                                                                                           6.0                                                                                                                                                                 4.5                                                                                                                                                                  3.0                                                                                                                                                                              3.0                                                                                                                                                                              3.0                                                                                                                                 2.5
+Combined                                                   5.0                                      4.01                                              7.0                                              5.0                                              5.0                                                 4.0                                                 4.0                                       3.0
+Minimum Residential Net Density for all residential projects (not
+mixed-use) (units per acre)7 (See                                                                                                                                                17                                                                                                                                                                                                                                                                                                            20                                                                                                                                                                                                                         20                                                                                                                                                                                                                          17                                                                                                                                                                                                                      8.71                                                                                                                                                        8.71                                                                                                                           17
+definition of Net Density in Article
+3)
+
+Maximum Residential Net Density                                                                                                                                                                                                                                                                                                                                                         Townhouse
+(units per acre) (See definition of                                                                                                                                                                                                                                                                  No                                               No                                           25;                                             All       No
+Net Density in Article 3                                  )                                                                                                 No maximum                                                                                                                                                         No maximum maximum maximum                                other uses:                                           maximum                                                                 608
+12.458 TABLE 4.1130 CONTINUED
+Street types                                                                                                     Urban                                                      Downtown                                                                       Beech                                                                 Main                                                             Stanley                                                         Cleveland
+Boulevard                                                                      Local
+(in feet)                                                            (in feet)                                                            (in feet)                                                           (in feet)                                                            (in feet)                                                            (in feet)
+
+Commercial, Industrial, Institutional (excluding Parks, Open Spaces and Trails) (including mixed   -use building with Commercial or Institutional uses on the first floor)
+Front: 0                                                             Front: 0                                                             Front: 0                                                            Front: 0                                                             Front: 0                                                             Front: 5
+Minimum Building                                                                                Side: 011                                                            Side: 011                                                            Side: 014                                                           Side: 014                                                            Side: 014                                                            Side: 011,                             14
+Setbacks10                                                                                      Rear: 011                                                            Rear: 011                                                            Rear: 011                                                           Rear: 0                                                              Rear: 0                                                              Rear: 011
+Alley: 3                                                             Alley: 3                                                             Alley: 3                                                            Alley: 3                                                             Alley: 3                                                             Alley: 3
+Maximum Building                                                                                Front: 516                                                           Front: 516                                                           Front: 516                                                          Front: 516                                                           Front: 516                                                           Front: 1016
+Setbacks5, 9
+
+Multi-Family
+Front: 10                                                            Front: 0                                                             Front: 5                                                            Front: 0                                                             Front: 0                                                             Front: 5
+Minimum Building                                                                                Side: 012                                                            Side: 011                                                            Side: 014                                                           Side: 014                                                            Side: 014                                                            Side: 011,                             14
+Setbacks10                                                                                      Rear: 512                                                            Rear: 511                                                            Rear: 5                                                             Rear: 0                                                              Rear: 0                                                              Rear: 511
+Alley: 3                                                             Alley: 3                                                             Alley: 3                                                            Alley: 3                                                             Alley: 3                                                             Alley: 3
+Maximum Building                                                                                Front: 2012, 16                                                      Front: 1012, 16                                                      Front: 1012, 16                                                     Front: 512, 16                                                       Front: 1012, 16                                                      Front: 2016
+Setbacks
+
+
+TABLE 4.1130 CONTINUED
+
+Street types                                     Urban                     Downtown                          Beech                          Main                        Stanley                     Cleveland
+Boulevard                         Local
+(in feet)                     (in feet)                     (in feet)                     (in feet)                     (in feet)                     (in feet)
+Townhouse in DCC, DMU, DTM, DEM, and DCL
+FRONT                         FRONT                         FRONT                         Not allowed                   FRONT                        FRONT
+Façade: 10                    Façade: 5                     Façade: 5                     on this street                Façade: 5                    Façade: 5
+Po rch : 6                    Po rch : 3                    Po rch : 3                    type.
+Po rch : 3                   Po rch : 3
+Garage: 1515                  Garage: 1015                  Garage: 1015                                                Garage: 1015                 Garage: 1015
+SIDE13                        SIDE13                        SIDE13                                                      SIDE13                       SIDE13
+Minimum Building                          Interior: 5                   Interior: 5                   Interior: 5                                                 Interior: 5                  Interior: 5
+Setbacks10                                Streetside: 10                Streetside: 5                 Streetside: 5                                               Streetside: 5                Streetside: 5
+Common: 0                     Common: 0                     Common: 0                                                   Common: 0                    Common: 0
+Street Porch: 5               Street Porch: 5               Street Porch: 5                                             Street Porch: 5              Street Porch: 5
+REAR                          REAR                          REAR                                                        REAR                         REAR
+No Alley: 10                  No Alley: 10                  No Alley: 10                                                No Alley: 10                 No Alley: 10
+Alley: 3                      Alley: 3                      Alley: 3                                                    Alley: 3                     Alley: 3
+Maximum Building                          Front: 1012, 16               Front: 1012, 16               Front: 1512, 16                                             Front: 1512, 16              Front: 2012, 16
+Setbacks
+
+Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2
+FRONT                         FRONT                         FRONT                         N /A                          N /A                         FRONT
+Façade: 10                    Façade: 10                    Façade: 10                                                                               Façade: 10
+Po rch : 6                    Po rch : 6                    Po rch : 6                                                                               Po rch : 6
+Garage: 20                    Garage: 20                    Garage: 20                                                                               Garage: 20
+SIDE                          SIDE                          SIDE                                                                                     SIDE
+Interior: 5                   Interior: 5                   Interior: 5                                                                              Interior: 5
+Minimum Building                          Streetside: 10                Streetside: 10                Streetside: 10                                                                           Streetside: 10
+Setbacks10                                Street Porch: 6               Street Porch: 6               Street Porch: 6                                                                          Street Porch: 6
+Garage: 5                     Garage: 5                     Garage: 5                                                                                Garage: 5
+Common                        Common                        Common                                                                                   Common
+(Townhouse): 0                (Townhouse): 0                (Townhouse): 0                                                                           (Townhouse): 0
+REAR                          REAR                          REAR                                                                                     REAR
+No Alley: 10                  No Alley: 10                  No Alley: 10                                                                             No Alley: 10
+Alley: 6                      Alley: 6                      Alley: 6                                                                                 Alley: 6
+Maximum Building                          Front: 2012                   Front: 2012                   Front: 1512                   N /A                          N /A                         Front: 2012
+Setbacks
+
+Single detached and middle housing in DRL-1 and DRL-2: 4,000 square feet
+Minimum Lot Size                          Duplex, triplex, and quadplex in DCC, DTM, DMU, DEM: 5,000
+Townhouse: None
+Width at building line, interior lot: 35 feet single detached, duplex, triplex, and quadplex:
+Minimum Lot                               Width at building line, corner lot: 40 feet single detached, duplex, triplex, and quadplex:
+Dimensions                                Depth, interior lot: 70 feet
+Townhouse - Width at building line: 16 feet interior, 20 feet corner 35 feet, except corner lots shall be 40 feet as measured from the corner radius end point to the property
+Minimum Street                            corner.
+A reduction in the minimum street frontage may be approved when the applicant can document
+Frontage                                  compliance with Section 10.1520          of the Community Development Code
+Townhouse (in all districts): 16 feet interior, 20 feet corner
+
+
+Table 4.1130 Notes:
+1.                                       The maximum height and floor area ratio (                                                 FA  R) for the portion of development sites within 110 feet of the center line of N Main Avenue
+between E Powell Boulevard and NE 5th Street are limited to those shown in Table 4.1130                                                                                                                        for DCC –         N Main Avenue.
+A minimum 10-foot
+building step-                                       back on N                              Main Avenue is required on all stories above 35 feet.
+Affordable housing development under Section 10.0420                     may
+add the applicable height bonus to the maximum height for DCC -   Main and the building setback on N       Main Avenue.
+2.                                       Building heights in all Downtown sub-                                       districts except DRL-1 and DRL-2 shall be allowed to exceed the maximum up to 8 feet to allow for architectural elements not suitable for occupancy, such as parapet walls and pitched roofs.
+3.                                       For developments abutting a land-use district where the maximum building height is 40 feet or less, the maximum building height within 50 feet of that low-height- limit district or sub-district shall be 45 feet.
+Maximum building height shall be 50 feet in DCC along the north side of
+Division Street. Affordable housing development under Section 10.0420                                                                                 may add the applicable height bonus to these maximum building heights.
+4.                                       A height bonus applies to affordable housing development.
+See               Section 10.1700.
+5.                                       The following uses are exempt from minimum floor-area ratio and maximum setback requirements:
+a.                                                                     Transit facilities such as bus shelters and storage/utility sheds
+b.                                      Parks, Open Space,                   and Trails
+c.                                          Basic Utilities
+d.                                      Wireless Communication Facilities
+e.                                       Helicopter Landing Facilities
+f.                                               Po rtable Classrooms
+g.                                        Cemeteries and M        ausoleums
+h.                                      Sewer and water utility structures such as storage reservoirs and pump stations
+i.                                                  Museums
+6.                                       Flag pole portions of lots, which allow access to the portions of the lot away from streets, are not counted as part of the site size i  n FA  R calculations.
+The remainder of the lot not needed for access would be required to meet FAR requirements.
+7.                                       Minimum residential net density does not apply to affordable housing development.
+See Section 10.1700.
+8.                                       A density bonus applies to affordable housing development.
+See Section 10.1700.
+9.                                       Civic Uses and schools that comply with Section 4.1152                                                                                                   (A)(2)(S3)            are exempt from maximum setback requirements.
+10.                   For purposes of Table 4.1130                                                                                                                       side setbacks:
+a.                                                                     Interior means interior side (not common wall)
+b.                                      Common means interior side with common wall
+c.                                          Façade means street fa c i ng fa ça d e with the primary entry.
+d.                                      Street porch means streetside porch
+e.                                       Garage means streetside garage face
+11.                   Minimum side setback is 10 feet when side yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR .
+Minimum rear setback is 10 feet when rear yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR.
+12.                   Courtyard-type developments are exempted from maximum setbacks for that portion of the building or buildings having a courtyard area between it and the street.
+13.                   For townhouses, the street façade and garage side setbacks shall be equal to the front façade setback on the street type that applies to the side street.
+14.                   For Commercial, Industrial, Institutional and Multi-Family, the streetside setbacks shall be equal to the front façade setback on the street type that applies to the side street.
+15.                   Townhouses are encouraged to be accessed from a rear alleyway on all street types where townhouses are allowed.
+16.                   Maximum front setbacks do not apply on a site once all minimum building frontage requirements of the street type have been satisfied.
+For example, if a street type requires that 75 percent of the frontage must be occupied by a building and that requirement has been satisfied, other buildings can be constructed behind that building beyond the maximum setback.
+
+
+MAP 4.1130: MINIMUM FLOOR AREA RATIO
+
+

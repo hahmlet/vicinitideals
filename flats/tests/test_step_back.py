@@ -103,7 +103,9 @@ def test_the_district_keeps_its_own_printed_figure(gresham: Layer) -> None:
     assert held.before_step_back == 15
     assert held.step_back_at_ft == 21
     assert held.step_back_rise == 1
-    assert held.step_back_quote.startswith(DESIGN)
+    # The design chapter is cut into sections (FOLLOWUPS 73, batch 5); the
+    # step-back sentence is in 7.0420, the middle-housing standards.
+    assert held.step_back_quote.startswith(f"{GRESHAM}/7/7.0420.txt#")
 
 
 def test_the_arithmetic_is_the_sentence_and_not_a_constant(gresham: Layer) -> None:

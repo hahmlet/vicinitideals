@@ -1,0 +1,21 @@
+4.14 38  MICRO -HYDRO ENERGY STANDARDS FOR PLEASANT VALLEY  DISTRICTS
+Micro-hydro energy systems are limited in Pleasant Valley districts as follows (these standards may be restricted by Section 5.0700 Natural Resource Overlay):
+A. Scale.
+1. LDR-PV: Small scale micro-hydro energy systems are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Small scale micro-hydro energy systems are permitted in these districts.
+B. Type.
+1. LDR-PV: In-pipe micro-hydro energy systems such as systems within water, stormwater or wastewater pipe are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: In-pipe micro-hydro energy systems such as systems within water, stormwater or wastewater pipe are permitted in these districts.
+C. Height.
+1. LDR-PV: Generally the district height limits apply in these districts.
+However, in-pipe systems may exceed the district height limit as allowed for mechanical equipment.
+If supplemental equipment structures accompany the in-pipe systems, then the district height limit would apply.
+
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Generally, the district height limits apply in these districts.
+However, in-pipe systems may exceed the district height limit as allowed for mechanical equipment.
+If supplemental equipment structures accompany the in-pipe systems, then the district height limit would apply.
+D. Setbacks and Yards.
+1. LDR-PV: Micro-hydro energy systems contained within piping are allowed and pipe can run within the required setbacks in these districts.
+However, if supplemental equipment structures accompany the in-pipe systems, then the district setback limits apply.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Micro-hydro energy systems contained within piping are allowed and pipe can run within the required setbacks in these districts.
+However, if supplemental equipment structures accompany the in-pipe systems, then the district setback limits apply.

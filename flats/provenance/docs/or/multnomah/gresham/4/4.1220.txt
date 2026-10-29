@@ -1,0 +1,120 @@
+4.1220                                       PERMITTED LAND USES
+Table 4.1220                        lists the types of land uses that are permitted in the Civic Neighborhood Plan District.
+Each of these uses must comply with the land -use district standards of this section and all other applicable requirements of the Community Development Code.
+“NP ” is only used if the use category is “P ” or “L” in another sub   -district within the Development Code.
+Other categories
+not listed also are not permitted.
+Existing uses that are not permitted in a Civic Neighborhood sub    -district may continue
+in existence, subject to provisions of Development Code Section 8.0200                                     Existing and Non-Conforming Uses and
+Development. Special Uses (“SUR”) requiring additional review due to their unique characteristics or potential impacts are permitted as indicated in Table 4.1           220(A) and as provided in Section 8.0100           Special Use Review.
+
+4.1200                                                 CIVIC NEIGHBORHOOD PLAN                               DISTRICT
+
+TABLE 4.1220                       (A): PERMITTED RESIDENTIAL USES IN THE CIVIC NEIGHBORHOOD PLAN DISTRICT
+Residential Uses1                                                                                                                           CNTH                                                    CNTM                                                    CNRM
+Single Detached Dwelling                                                                                                                  NP                                                       NP                                                       NP
+Duplex                                                                                                                                    NP                                                       NP                                                       NP
+Triplex                                                                                                                                   NP                                                       NP                                                       NP
+Quadplex                                                                                                                                  NP                                                       NP                                                       NP
+Townhouse                                                                                                                                   P                                                        P                                                        P
+Cottage Cluster                                                                                                                           NP                                                       NP                                                       NP
+Multi-Family/Shared Housing Facility                                                                                                       P2                                                       P2                                                       P2
+Elderly Housing                                                                                                                          SUR                                                      SUR                                                     SUR
+Manufactured Dwelling Park                                                                                                                NP                                                       NP                                                       NP
+Residential Facility                                                                                                                        P                                                        P                                                        P
+Residential Home                                                                                                                          NP                                                       NP                                                       NP
+Affordable Housing                                                                                                                          P3                                                       P3                                                       P3
+Table 4.1220(                                                                                                                      A) Notes:
+1.                                       Temporary health hardship dwellings may be permitted in conjunction with a pre-existing single detached dwelling.
+2.                                       Conversion of a hotel or motel to an emergency shelter or to affordable housing is permitted.
+See  Section 10.0420.
+3.                                       Affordable housing development is permitted.
+Special criteria and standards may apply, pursuant to                                       Section 10.1700.
+
+TABLE 4.1220                       (B): PERMITTED COMMERCIAL USES IN THE CIVIC NEIGHBORHOOD PLAN DISTRICT
+Commercial Uses                                                                                                                             CNTH                                                    CNTM                                                    CNRM
+Auto-Dependent Use                                                                                                                        NP                                                       NP                                                       NP
+Business and Retail Service and Trade1                                                                                                      P                                                        P                                                       L2
+Clinics                                                                                                                                     P                                                        P                                                       L2
+Commercial Parking                                                                                                                       SUR                                                      SUR                                                  SUR/L2
+Daycare Facilities                                                                                                                          P                                                        P                                                        P
+Live/Work                                                                                                                                   P                                                        P                                                        P
+Major Event Entertainment                                                                                                                SUR                                                      SUR                                                       NP
+Mini-Storage Facilities                                                                                                                   NP                                                       NP                                                       NP
+Outdoor Commercial                                                                                                                        NP                                                       NP                                                       NP
+Table 4.1220(                                                                                                                    B) Notes:
+1.                                       Also see Section 4.1232                                                             Limitations on Outdoor Commercial Activity.
+2.                                       Limited to sites fronting NW Burnside Road and NW Division Street.
+
+4.1200                                                 CIVIC NEIGHBORHOOD PLAN                               DISTRICT
+
+TABLE 4.1220                       (C): PERMITTED INDUSTRIAL USES IN THE CIVIC NEIGHBORHOOD PLAN DISTRICT
+Industrial Uses                                                                                                                    CNTH                                                CNTM                                                 CNRM
+Construction                                                                                                                     NP                                                   NP                                                   NP
+Exclusive Heavy Industrial Uses                                                                                                  NP                                                   NP                                                   NP
+Industrial Office                                                                                                                  NP                                                   NP                                                   NP
+Information Ser vices                                                                                                            NP                                                   NP                                                   NP
+Manufacturing                                                                                                                L/SUR1                                               L/SUR1                                                   NP
+Miscellaneous Industrial                                                                                                         NP                                                   NP                                                   NP
+Trade Schools                                                                                                                    NP                                                   NP                                                   NP
+Transportation/Distribution                                                                                                      NP                                                   NP                                                   NP
+Warehousing /Storage                                                                                                             NP                                                   NP                                                   NP
+Waste Management                                                                                                                 NP                                                   NP                                                   NP
+Wholesale Trade                                                                                                                  NP                                                   NP                                                   NP
+Table 4.1220(                                                                                                                    C) Notes:
+1.                                       Manufacturing uses shall be compatible with other Civic Neighborhood uses and are allowed only if all of the following conditi ons are met.
+a.                                                                     The manufacturing component shall be allowed in conjunction with an allowed Business and Retail Service and Trade use .
+b.                                      The manufacturing component shall occupy no more than 10,000 square feet of floor area per site.
+c.                                          The emission of air pollutants and nuisance odorous gases and changes in temperature detectable by the human senses without the aid of instruments at any point beyond the property line is prohibited.
+d.                                      Electrical disturbances that interfere with the normal operation of equipment or instruments on adjacent properties are prohibi ted.
+e.                                       Operations that produce heat or glare shall be conducted entirely within an enclosed building.
+f.                                               Loud, unnecessary, or unusual noise that endangers health, peace or safety is prohibited.
+
+TABLE 4.1220                       (D)                              : PERMIT TED INSTITUTIONAL USES IN THE CIVIC NEIGHBORHOOD PLAN DISTRICT
+Institutional Uses                                                                                                                 CNTH                                                CNTM                                                 CNRM
+Civic Uses                                                                                                                      SUR                                                  SUR                                                  SUR
+Community Services                                                                                                              SUR                                                  SUR                                                  SUR
+Medical                                                                                                                         SUR                                                  SUR                                                    L1
+Parks, Open Spaces, and Trails                                                                                               L/SUR2                                               L/SUR2                                              L/SUR2
+Religious Institutions                                                                                                             P                                                    P                                                    P
+Schools                                                                                                                     P/  S  U R3                                          P/  S  U R3                                          P/  S  U R3
+Table 4.1220(                                                                                                                                                                      D  )    Notes:
+1.                                       Limited to sites fronting NW Burnside Road and NW Division Street.
+2.                                       Golf courses are not permitted in the Civic Neighborhood Plan District.
+3.                             Schools are permitted without a Special Use Review if they are occupying an existing commercial space.
+Schools must pursue a Special Use Review if they are proposing new construction.
+
+4.1200                                                 CIVIC NEIGHBORHOOD PLAN                               DISTRICT
+
+TABLE 4.1220                       (E): PERMIT TED RENEWABLE ENERGY           USES IN THE CIVIC NEIGHBORHOOD PLAN DISTRICT
+Renewable Energy Uses1                                                                                                                               CNTH                                                       CNTM                                                        CNRM
+Solar Energy Systems                                                                                                                         L/SUR2                                                      L/SUR2                                                      L/SUR2
+Wind Energy Systems                                                                                                                          L/SUR3                                                      L/SUR3                                                      L/SUR3
+Biomass Energy Systems                                                                                                                              L4                                                          L4                                                          L4
+Geothermal Energy Systems                                                                                                                    L/SUR5                                                      L/SUR5                                                      L/SUR5
+Micro-Hydro Energy Systems                                                                                                                          L6                                                          L6                                                          L6
+Table 4.1220(                                                                                                                           E) Notes:
+1.                                       See Section 10.0900                                                                                                                                    for additional standards that apply.
+2.                                       For limitations, see Section 4.1234                     Solar Energy System Standards for Civic Neighborhood Districts.
+3.                                       For limitations, see Section 4.1235                     Wind Energy System Standards for Civic Neighborhood Districts.
+4.                                       For limitations, see Section 4.1236                     Biomass Energy System Standards for Civic Neighborhood Districts.
+5.                                       For limitations, see Section 4.1237                     Geothermal Energy System Standards for Civic Neighborhood Districts.
+6.                                       For limitations, see Section 4.1238                     Micro-Hydro Energy System Standards for Civic Neighborhood Districts.
+
+TABLE 4.1220                       (F): PERMITTED OTHER USES IN THE CIVIC NEIGHBORHOOD PLAN DISTRICT
+Other Uses                                                                                                                                           CNTH                                                       CNTM                                                        CNRM
+Basic Utilities
+Minor basic utilities                                                                                                                          P                                                            P                                                           P
+Major basic utilities1                                                                                                                      SUR                                                         SUR                                                      L/SUR
+Helicopter Landing Facilities                                                                                                                    SUR                                                         SUR                                                         SUR
+Wireless Communications Facilities                                                                                                               SUR                                                         SUR                                                         SUR
+Temporary, Intermittent & Interim Uses                                                                                                              P                                                            P                                                           P
+Marijuana Businesses                                                                                                                                L2                                                          L2                                                        NP
+Table 4.1220(                                                                                                                     F) Notes:
+1.                                       Electrical generating facilities and sewage treatment plants are not permitted in the Civic Neighborhood Plan District.
+2.                                       For limitations, see Gresham Revised Code (GRC) 9.63.090.
+
+4.1200                                                 CIVIC NEIGHBORHOOD PLAN                               DISTRICT
+
+STANDARDS
+

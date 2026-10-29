@@ -54,7 +54,10 @@ from flats.rules.model import Layer, Provenance, Status, Value, Zone
 pytestmark = pytest.mark.unit
 
 PORTLAND = "or/multnomah/portland/33.110.txt"
-GRESHAM_PV = "or/multnomah/gresham/4.1400.pleasant-valley.txt"
+# Was 4.1400.pleasant-valley.txt until Gresham was cut into sections
+# (FOLLOWUPS 73, batch 5): a cut chapter's proof copy is quoted by nothing, so
+# these tests would pass by counting nothing. 4.0100 is kept whole.
+GRESHAM_PV = "or/multnomah/gresham/4.0100.residential.txt"
 RETRIEVED = date(2026, 8, 27)
 OLD = [f"line {n}" for n in range(1, 21)]
 
@@ -440,16 +443,19 @@ def _cited_lines(doc_path: str) -> list[str]:
 def test_the_gresham_chapter_that_started_this_survives_its_own_drift() -> None:
     """Gresham 4.1400 gained a line at 612 and lost none. Nothing is stranded,
     so accepting that refresh is a re-point rather than a re-read of every value
-    in the chapter — which is the whole reason this module exists."""
+    in the chapter — which is the whole reason this module exists.
+
+    4.1400 is now cut into sections and nothing quotes its proof copy, so the
+    same drift is replayed on 4.0100, the chapter Gresham keeps whole, at 400."""
     stored = ProvenanceStore().load(GRESHAM_PV).text.splitlines()
-    mapping = line_map(stored, stored[:611] + ["an inserted sentence"] + stored[611:])
+    mapping = line_map(stored, stored[:399] + ["an inserted sentence"] + stored[399:])
 
     moves, stranded = repoint_files(GRESHAM_PV, mapping, config_files(CONFIG_ROOT), write=False)
     assert not stranded
 
     # Derived, not pinned: exactly the citations reaching past the insertion.
     # Most of this chapter's quotes are in the tables above it and must not move.
-    below = [q for q in _cited_lines(GRESHAM_PV) if (parse_quote(q).end or 0) >= 612]
+    below = [q for q in _cited_lines(GRESHAM_PV) if (parse_quote(q).end or 0) >= 400]
     assert moves and len(moves) == len(below)
     assert len(below) < len(_cited_lines(GRESHAM_PV))
 

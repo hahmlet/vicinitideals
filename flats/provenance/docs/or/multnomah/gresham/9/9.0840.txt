@@ -1,0 +1,85 @@
+9.0840                                       OFF    -   STREET LOADING REQUIREMENTS
+
+A.                        Purpose. The purpose of these regulations is to provide the number, size, location, and screening requirements for loading areas in mixed-use, commercial, industrial and institutional uses.
+The intent of these regulations is to minimize disruption of traffic flow by freight                                                                     -carrying vehicles blocking the public right-of-way and to minimize impacts to vehicular and pedestrian circulation.
+B.                          When Loading Area Regulations Apply.
+This regulation applies to all non-residential development in mixed-use, commercial, and industrial districts, and elderly housing in any district, whether or not a permit or other approval is required for the development.
+
+C.                            General Provisions.
+1.                             Loading area requirements are provided in Table 9.0840(C)           .
+The number of required loading spaces is
+based on the use of the building(s) on the site                       and the aggregate floor area of the use, minus any residential component square footage.
+Where two or more uses are located on the same premises, the number of loading area spaces required is the sum of the spaces required for each use (based on square footage of each use) computed separately.
+Except in Design Districts as described below, the Manager may reduce but not eliminate loading area requirements, where approval criteria are satisfied.
+2.                             The provision and maintenance of off-                            street loading facilities is a continuing obligation of the property owner.
+3.                             Loading and maneuvering areas shall be hard surfaced           unless a permeable surface is required to reduce surface runoff, as determined by the Manager.
+4.                             Parking of passenger vehicles may be allowed in off-                            street loading areas subject to specific time limits
+to prevent conflicts with off-              street loading activities.
+If parking is allowed, the parking time limits shall be clearly posted.
+These parking spaces s hall not count towards meeting general parking requirements.
+5.                             Required Off-Street Loading Dimensions.
+a.                             Industrial. Each required off-street loading space in an industrial area shall have a minimum length of 60 feet, a minimum width of 12 feet, and a minimum vertical clearance of 15 feet high, inside dimensions with a 60-foot maneuvering apron.
+b.                           All Other Uses.
+Each required off-street loading space, shall have a minimum length of 30 feet, a minimum width of 12 feet, and a minimum vertical clearance of 14 feet 6 inches high, inside dimensions with 30-foot maneuvering apron.
+6.                             Loading areas must comply with the setback and perimeter landscaping and screening standards.
+When parking areas are prohibited or not allowed between a building and a street, loading areas are also not allowed unless approved by the Manager per the criteria in                            Section 9.0840(E).
+7.                             Uses not specifically mentioned: In the case of a use not specifically mentioned, the requirements for off-                             street loading facilities shall be the same as the above-mentioned uses, as determined by the Manager, which is most similar to the use not specifically mentioned.
+8.                             Concurrent different uses: When any proposed structure will be used concurrently for different uses          , determination of loading requirements will be made by the Manager but in no event shall the minimum number of loading spaces required be less than the total required for each use based upon it aggregate floor area, on the same lot or parcel of land as the structure they are intended to serve, unless the criteria for modification of loading facilities, per Section 9.0840(E)                             , are satisfied.
+9.                              Design Districts: The following off-                              street loading standards apply in DCC, DMU, DTM, DRL-2, CNTM,
+CNTH, and RTC within the Rockwood triangle as defined in Section 7.0501(D):
+a.                             Off-                             street loading spaces may be reduced or eliminated with approval by the Manager or Design
+Commission. The Manager or Design Commission shall make findings of fact based on evidence provided by the applicant that the following criteria are satisfied:
+i.                                         Loading can be accommodated:
+a)                           Off-                             street without designating a loading space on the site; or
+b)                         On-street without interfering with travel lanes in a location and configuration approved by the Manager; and
+
+ii.                             Criteria in Section 9.0840(E)(2)(a), (b) and (d).
+b.                            The maximum required off-street loading spaces is one space.
+c.                                 Required off-street loading spaces may be reduced to 18 feet long and 9 feet wide with a vertical clearance of 10 feet with approval by the Manager or Design Commission if the applicant demonstrates that the configuration of the site and building supports delivery by van for current and prospective tenants.
+Table 9.0840(C): Off   - Street Loading Requirements
+MINIMUM
+USE CATEGORY OR SUBCATEGORY                                                   AGGREGATED FLOOR AREA (SQUARE FEET)                                                            NUMBER OF
+LOADING SPACES
+REQUIRED
+Residential                                                                                              None Required                                                    None Required
+Elderly Housing                                                                                        10,000 – 100,000                                                          1 Space
+Over 100,000                                                           2 Spaces
+Industrial*                                                                                               Under 50,000                                                           1 Space
+Freight Terminals, Industrial Plants,                                                                  50,000 – 100,000                                                          2 Spaces
+Manufacturing, Processing, Wholesale                                           Each Additional 50,000 or Fraction Thereof                                              1 Additional Space
+Establishments, or Warehouses
+Mini-Storage Facilities                                                                                  None Required                                                    None Required
+Visitor Accommodations                                                                                 25,000 – 150,000                                                          1 Space
+Hotel, Convention Hall, or Sport Arena                                                                150,000 – 400,000                                                          2 Spaces
+Each Additional 150,000 or Fraction Thereof                                              1 Additional Space
+Institutions                                                                                           10,000 – 100,000                                                          1 Space
+Hospitals                                                                                                 Over 100,000                                                           2 Spaces
+Schools – Passenger Loading                                                                                 Over 14,000                                                          1 Space
+Commercial                                                                                               7,000 – 24,000                                                          1 Space
+Departments Stores, Retail                                                                              24,000 – 50,000                                                          2 Spaces
+Establishments, Restaurants, and                                                                       50,000 – 100,000                                                          3 Spaces
+Funeral Homes                                                                 Each Additional 100,000 or Fraction Thereof                                              1 Additional Space
+Office                                                                                                  25,000 – 40,000                                                          1 Space
+Office Building, Banks                                                                                 40,000 – 100,000                                                          2 Spaces
+Each Additional 100,000 or Fraction Thereof                                              1 Additional Space
+
+D.                       Location of required loading facilities.
+1.                             The off-street loading facilities, in all cases, shall be on the same lot or parcel of land as the structure they are intended to serve.
+In no case shall the required off-street loading space be part of the area used to satisfy the off-street parking requirements.
+2.                             The off-street loading facilities shall be designed and located so that loading vehicles are not parked in required setbacks, driveways, or parking spaces during loading activities.
+
+3.                             No loading space shall be so located that a vehicle using such loading space projects into any public street.
+Loading space shall be provided with access to an alley, or if no alley adjoins the lot, with access to the street.
+4.                             In the Industrial zones, loading areas shall be located so that they are not parallel to any adjacent public right-of-way except alleys.
+5.                             Bays and Doors: Truck loading bays or overhead doors shall be located so there is no                      possibility for trucks to back into bays from major or standard arterial streets.
+E.                               Approval Criteria for Modification of Loading Facilities
+1.                             The Type I Procedure, as described in Section 11.0300 - Administrative Decision -           of this code, shall apply to any modifications made to loading facilities.
+2.                             In order to approve a reduction to the number of loading spaces required in Table 9.0840(C)        –
+Required Off-Street Loading Spaces -            or any locational or                 dimensional changes to the proposed loading spaces or maneuvering areas, the Manager shall make findings of fact based on evidence provided by the applicant demonstrating that all the following criteria are satisfied:
+a.                             The determination will not create adverse impacts, considering                       the total gross floor area, and the hours of operation, and type of the use or uses.
+b.                           The proposal will not interfere with pedestrians or vehicular traffic on the street or to the proposed on-site traffic circulation patterns.
+c.                                 The proposal will be able to reasonably accommodate the off-                            street loading needs of the structure.
+d.                           The proposed dimensional changes to loading space or maneuvering area or location requirements can reasonably accommodate the on-site traffic circulation.
+
+OFF-   STREET PARKING
+

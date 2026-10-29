@@ -1,0 +1,131 @@
+4.1120                                       PERMITTED LAND USES
+Table 4.1120 lists the types of land uses that are permitted in the Downtown Plan District.
+Each of these uses must comply with the land -use district standards of this section and all other applicable requirements of the Community Development Code.
+“NP ” is only used if the use category is “P ” or “L” in another sub   -district within the Development Code.
+Other categories
+not listed also are not permitted.
+Existing uses that are not permitted in a Downtown sub    -district may continue in
+existence, subject to provisions of                             Section 8.0200 Existing and Non-Conforming Uses and Development.
+Special Uses
+(“SUR”) requiring additional review due to their unique characteristics or potential impacts are permitted as indicated in
+Table 4.1120 and as provided in Section 8.0100           Special Use Review.
+In addition to permitted commercial and employment land use types listed in   Table 4.1120, the Manager may permit other commercial and employment uses found to be supportive of, and consistent with, the Downtown Plan District (Section 4.1100), with the findings and conclusions of the Gresham Downtown Plan, and with applicable land use policies and implementation strategies of the Community Development Code.
+
+
+TABLE 4.1120: PERMIT TED USES IN THE DOWNTOWN PLAN DISTRICT
+Residential Uses                                                                       DCC              DMU                DTM               DEM              DRL-1             DRL-2               DCL
+Single Detached Dwelling                                                             NP                NP                NP                NP                  P                 P               NP
+Duplex                                                                                L1                L1                L1               NP                  P                 P               NP
+Triplex                                                                               L1               NP                 L1               NP                  P                 P               NP
+Quadplex                                                                              L1               NP                 L1               NP                  P                 P               NP
+Townhouse                                                                             P                 P                 P                  P                 P                 P                 P
+Cottage Cluster24                                                                    NP                NP                NP                NP                  P                 P               NP
+Multi-Family/Shared Housing Facility21                                           P/L2, 22               P2                P2                P2                L2                P2                P2
+Elderly Housing                                                                     SUR               SUR               SUR               SUR                NP               SUR               SUR
+Manufactured Dwelling Park                                                           NP                NP                NP                NP                NP                NP                NP
+Residential Facility                                                                  P                 P                 P                  P               NP                  P                 P
+Residential Home                                                                     NP                NP                NP                NP                  P                 P               NP
+Affordable Housing                                                                    P3                 P3                P3                P3                P3                P3                P3
+
+Commercial Uses                                                                        DCC              DMU                DTM               DEM              DRL-1             DRL-2               DCL
+Auto-Dependent Use                                                                   NP                NP                NP                NP                NP                NP                 L4
+Business and Retail Service and Trade23                                               P                 P                 P                  P                L5                L6                 P
+Clinics                                                                               P                 P                 P                  P                L5                L6                 P
+Commercial Parking                                                                    L7                L7                L7                L7               NP                 L7                L7
+Daycare Facilities                                                                    P                 P                 P                  P              SUR               SUR                  P
+Live/Work                                                                             P                 P                 P                  P               NP                  P                 P
+Major Event Entertainment                                                           SUR               SUR               SUR               SUR                NP                NP               SUR
+Mini-Storage Facilities                                                              NP                NP                NP                NP                NP                NP                NP
+Outdoor Commercial                                                                   NP                NP                NP                NP                NP                NP                 L8
+
+Industrial Uses                                                                        DCC              DMU                DTM               DEM              DRL-1             DRL-2               DCL
+Construction                                                                         NP                NP                NP                NP                NP                NP                NP
+Exclusive Heavy Industrial Uses                                                      NP                NP                NP                NP                NP                NP                NP
+Industrial Office                                                                      NP                NP                NP                NP                NP                NP                NP
+Information Services                                                                  P                 P                 P                  P               NP                NP                  P
+Manufacturing                                                                         L9                L9                L9                L9               NP                NP                 L9
+Miscellaneous Industrial                                                             NP                NP                NP                NP                NP                NP                NP
+Trade Schools                                                                        NP                NP                NP                NP                NP                NP                NP
+Transportation/Distribution                                                          NP                NP                NP                NP                NP                NP                NP
+Warehousing /Storage                                                               NP10              NP10              NP10               NP10              NP10              NP10              NP10
+Waste Management                                                                     NP                NP                NP                NP                NP                NP                NP
+Wholesale Trade                                                                      NP                NP                NP                NP                NP                NP                NP
+
+
+Institutional Uses                                                                                 DCC                   DMU                     DTM                    DEM                  DRL-1                  DRL-2                    DCL
+Civic Uses                                                                                     SUR                    SUR                    SUR                    SUR                    SUR                   SUR                    SUR
+Community Services                                                                             SUR                    SUR                    SUR                    SUR                    SUR                   SUR                    SUR
+Medical                                                                                        SUR                    SUR                    SUR                    SUR                    SUR                   SUR                    SUR
+Parks, Open Spaces and Trails                                                              L/SUR11                L/SUR11                L/SUR12                L/SUR11               L/SUR11                L/SUR11                L/SUR11
+Religious Institutions                                                                            P                      P                      P                      P                   SUR                   SUR                       P
+Schools                                                                                   P/  S  U  R12          P/  S  U  R12          P/  S  U  R12          P/  S  U  R12               SUR                   SUR                P/  S  U  R12
+
+Renewable Energy Uses15                                                                             DCC                   DMU                    DTM                    DEM                   DRL-1                 DRL-2                     DCL
+Solar Energy Systems                                                                        L/SUR16               L/SUR16                L/SUR16                L/SUR16                     L16                    L16              L/SUR16
+Wind Energy Systems                                                                         L/SUR17               L/SUR17                L/SUR17                L/SUR17                     L17                    L17              L/SUR17
+Biomass Energy Systems                                                                           L18                    L18                    L18                    L18              L/SUR18                L/SUR18                     L18
+Geothermal Energy Systems                                                                   L/SUR19               L/SUR19                L/SUR19                L/SUR19                     L19                    L19              L/SUR19
+M i c ro-Hydro Energy Systems                                                                    L20                    L20                    L20                    L20                   L20                    L20                    L20
+
+Other Uses                                                                                               DCC                 DMU                    DTM                  DEM                  DRL-1                  DRL-2                    DCL
+Basic Utilities
+Minor basic utilities                                                                          P                     P                     P                     P                     P                      P                     P
+Major basic utilities                                                                       SUR                   SUR                   SUR                  SUR                L/SUR13               L/SUR13                    SUR
+Helicopter Landing Facilities                                                                     SUR14                 SUR14                 SUR14                 SUR14                 SUR14                  SUR14                 SUR14
+Wireless Communications Facilities                                                                  SUR                   SUR                   SUR                  SUR                    SUR                    SUR                   SUR
+Temporary, Intermittent & Interim Uses                                                                 P                     P                     P                     P                     P                      P                     P
+Marijuana Businesses                                                                                 NP                    NP                    NP                    NP                    NP                     NP                    NP
+Table 4.1120                                                                                                                          Notes:
+The following describe limitations on use categories marked as limited or special use review in  Table 4.1120.
+1.                                       Plexes are allowed in the following situations provided density standards are met:
+a.                                                                     In DTM and DMU on a lot of record that is 6,500 square feet or smaller and has 70 feet of street frontage or less.
+b.                                      In DCC north of NE 8       th Street on a lot of record that is 7,600 square feet or smaller and has 70 feet of street frontage or less.
+2.                                       Conversion of a hotel or motel to an emergency shelter or to affordable housing is permitted.
+See  Section 10.0420.
+In DRL-1, multi-family residential development is other wise not permitted.
+3.                                       Affordable Housing development is permitted.
+See Section 10.1700.
+4.                                       See limits on auto sales and service in the Outdoor Commercial configuration in Section 4.1120                                                                                                                          Table Note 9.
+5.                                       Clinics and Business and Retail Service and Trade: The total floor area of all these uses combined is limited to 5,000 square  feet per site in
+DRL-1, and these uses are limited to lots with frontage on N       Main Avenue or NW        Ava Avenue.
+In a mixed-use building, the total square footage of Clinics and Business and Retail Service and Trade cannot exceed 5,000 square feet in DRL -1.
+6.                                       Clinics and Business and Retail Service and Trade: The total floor area of all these uses combined is limited to 7,500 square  feet per site in DRL-2.
+In a mixed-use building, the total square footage of Clinics and Business and Retail Service and Trade cannot exceed 7,500 square feet in DRL-2.
+7.                                       Structured parking only as per Section 9.0852(B)(5)                     .
+8.                                       Outdoor Commercial is limited to DCL and allowed only if:
+a.                                                                     The site has frontage on NE        Burnside Road or Hogan Road.
+b.                                      The site has frontage on E         Powell Boulevard east of Cleveland Avenue and west of Hogan Road and the use is not auto sales and service
+(auto sales and service is allowed if not in configuration that meets the definition of “Outdoor Commercial”) .
+c.                                          The amount of total site area covered by buildings shall amount to no less than 25 percent of the amount of site area used for outdoor storage or display.
+d.                                      Screening shall be provided along any portion of the site’s frontage which is not occupied by a building or parking area, in a manner which satisfies standards for Landscape/Screening along a Public Right-of-Way, as contained in Section 9.0823(C)(3) and (4).
+
+
+
+9.                                       Manufacturing uses shall be compatible with other Downtown uses and are allowed only if all of the following conditions are met:
+a.                                                                     The manufacturing component shall be allowed in conjunction with an allowed Business and Retail Service and Trade use .
+b.                                      In DCC, DMU, and DTM, the manufacturing component shall occupy no more than 10,000 square feet of floor area per site.
+In DEM  and DCL, the manufacturing component shall occupy no more than 20,000 square feet of floor area per site .
+c.                                          The emission of air pollutants and odorous gasses and changes in temperature detectable by the human senses without the aid of instruments at any point beyond the property line is prohibited.
+d.                                      Electrical disturbances that interfere with the normal operation of equipment or instruments on adjacent properties are prohibi ted.
+e.                                       Operations that produce heat or glare shall be conducted entirely within an enclosed building.
+f.                                               Loud, unnecessary or unusual noise that endangers health, peace or safety is prohibited.
+10.                   The prohibition on warehousing and storage as a stand-alone use does not preclude the on-site storage of materials associated with another use Downtown, such as the storage of goods and supplies as an accessory use to another allowed use.
+The prohibition o n distribution does not preclude the distribution of goods produced on-                site to locations off-site as an accessory use to another allowed use or the delivery of goods to an allowed use.
+11.                   Golf courses are not permitted.
+12.                   Schools are permitted without a Special Use Review if they are occupying an existing commercial space.
+Schools must pursue a Special Use Review if they are proposing new construction.
+13.                   Electrical generating facilities and sewage treatment plants are not permitted through the Special Use Review process.
+14.                   Permitted as an accessory use to Medical and Civic Uses through the Special Use Review.
+15.                   See Section 10.0900                                                                                                                                    for additional standards that apply.
+16.                   For limitations, see Section 4.1134                     Solar Energy System Standards for Downtown Districts.
+17.                   For limitations, see Section 4.1135                     Wind Energy System Standards for Downtown Districts.
+18.                   For limitations, see Section 4.1136                     Biomass Energy System Standards for Downtown Districts.
+19.                   For limitations, see Section 4.1137                     Geothermal Energy System Standards for Downtown Districts.
+20.                   For limitations, see Section 4.1138                     Micro-Hydro Energy System Sta ndards for Downtown Di stricts.
+21.                   Transitional housing for individuals transitioning from incarceration facilities are subject to a Special Use Review.
+22.                   Certain locations in DCC require non-                  residential uses on the ground floor.
+See Section 4.1121.
+23.                   For limitations on outdoor commercial activity, see Section 4.1132.
+For limitations on Drive-Through commercial uses, see Section 4.1        133.
+24.                   No more than one cottage cluster shall be permitted per parent parcel.
+

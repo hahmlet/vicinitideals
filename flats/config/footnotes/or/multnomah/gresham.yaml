@@ -401,31 +401,31 @@ notes:
   # Table 4.0420 is the use table and the CMF column reads a bare P for both
   # Quadplex and Townhouse, so its notes are ruled the same way 4.0120's were:
   # on the cell the marker sits in.
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L213"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L77"
     digest: "e9a7417c111f"
     state: dismissed
     reason: >-
       note 1 marks the Residential heading, and it permits an extra use -- temporary health hardship dwellings -- rather than limiting ours
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L219"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L81"
     digest: "557c23f91a1e"
     state: dismissed
     reason: >-
       requires ground-floor non-residential frontage inside the Rockwood Town Center Mixed-Use Area; it marks a cell in a district this layer does not encode
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L223"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L85"
     digest: "dde70d112d42"
     state: dismissed
     reason: >-
       governs conversion of hotels, motels and commercial buildings to housing; the pod is new construction
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L226"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L87"
     digest: "985bf6d76a8a"
     state: dismissed
     reason: >-
       applies to new multi-family in the SC district; neither the use nor the district is ours
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L232"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L93"
     digest: "a61758839a3b"
     state: dismissed
     reason: >-
@@ -435,19 +435,19 @@ notes:
       to be dismissed on the grounds that CC and MC were not encoded here, which stopped being
       true when both were encoded on 2026-08-21 and nobody came back to the sentence.
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L236"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L95"
     digest: "bd92b88e9375"
     state: dismissed
     reason: >-
       caps building footprint and commercial floor area in Community Commercial, a district this layer does not encode
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L239"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L96"
     digest: "0ae0695518ef"
     state: dismissed
     reason: >-
       the same caps for Moderate Commercial, also not encoded here
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L243"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L97-L98"
     digest: "142ef4064dda"
     state: dismissed
     reason: >-
@@ -455,67 +455,67 @@ notes:
       A permission rather than a limit, resting on an election nobody has made; at most it would
       widen the Quadplex row, never narrow it
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L244"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L99"
     digest: "336f39cea970"
     state: dismissed
     reason: >-
       limits Auto-Dependent Uses in Rockwood Town Center; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L246"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L100"
     digest: "1cbf5109f069"
     state: dismissed
     reason: >-
       caps the footprint of buildings occupied entirely by commercial use; the pod is residential
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L248"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L101"
     digest: "116be71e732f"
     state: dismissed
     reason: >-
       locates commercial uses in the Station Center district; not our use, not our district
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L251"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L102"
     digest: "86c17ad2c2af"
     state: dismissed
     reason: >-
       prohibits certain Outdoor Commercial uses in SC-RJ and CMU; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L253"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L104-L105"
     digest: "8f801e56356d"
     state: dismissed
     reason: >-
       caps industrial floor area and sets an employee density; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L258"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L108"
     digest: "5393e6f2f2ef"
     state: dismissed
     reason: >-
       governs waste management uses; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L261"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L110"
     digest: "fdec0a57829e"
     state: dismissed
     reason: >-
       golf courses; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L262"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L111"
     digest: "7bc4d7e36fd6"
     state: dismissed
     reason: >-
       locates schools in the SC district; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L268"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L114"
     digest: "943490b75f59"
     state: dismissed
     reason: >-
       electrical generating facilities; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L269"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L115"
     digest: "7314e8dc848d"
     state: dismissed
     reason: >-
       an accessory use to Medical and Civic Uses; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L270"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L116-L117"
     digest: "17d116396228"
     state: dismissed
     reason: >-
@@ -523,62 +523,62 @@ notes:
       construction, marked on the Schools row in all five of this city's use
       tables that print it. Not a use this building has
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L272"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L118"
     digest: "055abdf0d78b"
     state: dismissed
     reason: >-
       points at Section 10.0900 from a cell in a row this layer does not encode
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L273"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L119"
     digest: "9d67522f29f0"
     state: dismissed
     reason: >-
       solar energy standards; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L274"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L120"
     digest: "01e363375328"
     state: dismissed
     reason: >-
       wind energy standards; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L275"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L121"
     digest: "121aaeb67b2f"
     state: dismissed
     reason: >-
       biomass energy standards; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L276"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L122"
     digest: "646de56fd7d0"
     state: dismissed
     reason: >-
       geothermal energy standards; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L277"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L123"
     digest: "bba481f14c89"
     state: dismissed
     reason: >-
       micro-hydro energy standards; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L278"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L124"
     digest: "cb1b28682da6"
     state: dismissed
     reason: >-
       points at GRC 9.63.090 from a marijuana-business cell; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L280"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L126"
     digest: "adef69e3595a"
     state: dismissed
     reason: >-
       one cottage cluster per parent parcel; the pod is not a cottage cluster
 
   # --- Table 4.0430, the corridor standards ---------------------------
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L429"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L123"
     digest: "5a2488ebbcff"
     state: dismissed
     reason: >-
       permits a maximum front or streetside setback of up to 20 feet where enhanced pedestrian amenities are provided; it can only relax the maximum this screen enforces
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L431"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L124"
     digest: "c8ca23808a27"
     state: dismissed
     reason: >-
@@ -586,50 +586,50 @@ notes:
       Its (b) and (c) -- 10 feet for commercial buildings, 5 feet on collectors and local streets --
       are marked only on CC and MC (L353-L355), where the pod is not allowed (re-read 2026-10-20)
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L442"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L131"
     digest: "74b7a16bd317"
     state: dismissed
     reason: >-
       removes the parking maximum for townhouses; a relaxation of a standard that cannot stop a pod fitting
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L443"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L132"
     digest: "cf100c09949a"
     state: dismissed
     reason: >-
       sets the commercial parking maximum in a mixed-use development; not our use
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L453"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L140"
     digest: "57b4bf6bbce6"
     state: dismissed
     reason: >-
       removes the minimum lot size for duplexes; the pod is four units
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L454"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L141"
     digest: "25c8d62f80af"
     state: dismissed
     reason: >-
       states the minimum street frontage for duplexes; the pod is four units
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L457"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L142"
     digest: "3a426934a72d"
     state: dismissed
     reason: >-
       removes screening and buffering for townhouses abutting the lower density districts; a relaxation of a standard this screen does not encode
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L458"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L143"
     digest: "73a87ca524e2"
     state: dismissed
     reason: >-
       defines where the Central Rockwood Plan Area is; a definition pointing at a map, stating no standard
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L465"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L147"
     digest: "6740bbae18b7"
     state: dismissed
     reason: >-
       limits buildings in the Rockwood Design District to four or six stories; the pod is two.
       The note's pointer, Section 7.0512.B.6, requires at least three storeys of "Building
       masses facing and abutting" the 181st/Burnside, 181st/Stark and Burnside/Stark gateways
-      (7.0500.rockwood-design.txt L3449-L3462). RE-READ 2026-10-21 for FOLLOWUPS 104(b), "map
+      (7.0512.txt L2621-L2636). RE-READ 2026-10-21 for FOLLOWUPS 104(b), "map
       Rockwood": it does not reach the pod either way it is built. The standard sits under the
       "All Development" heading (L3447), which 7.0512 defines as "All developments, except
       townhouses ... unless otherwise stated" (L214), and B.6 states nothing otherwise -- so the
@@ -638,7 +638,7 @@ notes:
       quadplex divided through a Middle Housing Land Division is still a quadplex (3.0100
       L962-L964). No gateway lot goes red; nothing to map for this note
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L485"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L162"
     digest: "1301f87d5d82"
     state: unmeasured
     fact: civic_corridor
@@ -665,14 +665,14 @@ notes:
       count as 'along'. If it touches, it's along."). The note stays
       unmeasured so a lot the data cannot answer keeps its hold.
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L489"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L163-L164"
     digest: "344b30e7d6e4"
     state: dismissed
     reason: >-
       switches off the minimum residential net density for affordable housing development; a
       relaxation resting on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L492"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L169"
     digest: "bd316ba6a05b"
     state: dismissed
     reason: >-
@@ -685,8 +685,8 @@ notes:
       and now carries the maximum this reason was already written against
 
   # --- encoded, because they state CMF's townhouse standards ----------
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L416"
-    digest: "811c6b6a6171"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L112"
+    digest: "b3735c4defaa"
     state: encoded
     encoded_as: "CMF setback_side_ft and setback_rear_ft variants, when [unit_lots]"
     reason: >-
@@ -696,7 +696,7 @@ notes:
       setback it also states has no base standard in this zone to vary and is
       left for the parking pass
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L445"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L134"
     digest: "e4d33c03b83c"
     state: encoded
     encoded_as: "CMF min_lot_sqft exempt when [unit_lots]"
@@ -705,7 +705,7 @@ notes:
       townhouses, which is why the 10,000 square feet CMF asks of a
       multi-family site is not what a unit-lots pod is measured against
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L460"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L144"
     digest: "ecc7052c14d2"
     state: encoded
     encoded_as: "corridor min_frontage_ft variants, when [unit_lots] 16 ft, corner 25 ft (the plat's shared access)"
@@ -716,7 +716,7 @@ notes:
       court is a shared access, so 25 (Steph 2026-10-20, check 427)
 
   # --- read, and resting on where the parcel sits ---------------------
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L217"
+  - quote: "or/multnomah/gresham/4/4.0420.txt#L79-L80"
     digest: "35d4271b8f7f"
     state: unmeasured
     fact: civic_corridor
@@ -745,7 +745,7 @@ notes:
       outright were carrying twelve encoded standards each and reading as
       zones whose gate might still open.
 
-  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
+  - quote: "or/multnomah/gresham/4/4.0430.txt#L157"
     digest: "cbf12e6d1150"
     state: dismissed
     reason: >-
@@ -781,100 +781,100 @@ notes:
   # row rather than from the district and stand as written. Table 4.1120's
   # own note 1 joins them: it is the L1 that limits the Quadplex cell in
   # DCC and DTM, and it is encoded rather than dismissed.
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L528"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L126"
     digest: "b8fecbfd5ea6"
     state: dismissed
     reason: >-
       note 1 limits height and floor area ratio on the strip within 110 feet of the N Main Avenue centre line and sends it to the DCC -- N Main Avenue column, which is the table's second column and not a district of its own. It did not reach this layer while only DRL-1 and DRL-2 were held; it reaches DCC now. What the strip states is 45 feet and a ratio of 1.5 against the district's 85 and 3.0 -- a real cut, and still far above what a 26 ft four-unit pod asks of either. No lot changes colour on which side of the 110 feet it falls, so the strip is ruled here rather than carried as a variant on an unmeasured line
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L532"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L132"
     digest: "db5da3c91d2f"
     state: dismissed
     reason: >-
       note 2 lets buildings exceed the maximum height by up to 8 feet for parapets and pitched roofs in every Downtown sub-district except DRL-1 and DRL-2. It excluded the whole of this layer when only the two DRL districts were held and now reaches DCC and DTM, which changes nothing: it only ever raises a ceiling, and the ceiling it raises is already three times the pod
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L534"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L133"
     digest: "fe858e655151"
     state: dismissed
     reason: >-
       note 3 caps height at 45 feet within 50 feet of a district whose own limit is 40 feet or less, and 50 feet in DCC along the north side of Division Street. Against DRL-1 and DRL-2 it was no cut at all; against the 85 feet now encoded for DCC and DTM it is a real one, and it is still nearly twice a two-storey pod. Every number in the note clears the building, so no lot in the district turns on it
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L538"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L136-L137"
     digest: "707aaab76b9b"
     state: dismissed
     reason: >-
       offers a height bonus to affordable housing development; a relaxation, and one that turns on
       an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L539"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L138"
     digest: "43ead356a38e"
     state: dismissed
     reason: >-
       note 5 exempts transit shelters, parks, utilities, wireless facilities, portable classrooms, cemeteries and museums from minimum floor area ratio and maximum setbacks; not our use
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L549"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L148"
     digest: "630b1e0a7127"
     state: dismissed
     reason: >-
       note 6 takes the flag pole out of the site area a floor area ratio is measured against. It shrinks the denominator rather than changing the ratio, so there is no number here for the ratio field to hold; the layer assumes no flag lot (`flag_lot`), and applying the smaller site area where one is detected is geometry's job rather than this table's
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L551"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L150-L151"
     digest: "344b30e7d6e4"
     state: dismissed
     reason: >-
       switches off the minimum residential net density for affordable housing development; a
       relaxation resting on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L552"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L152-L153"
     digest: "ff7e17c3cf31"
     state: dismissed
     reason: >-
       offers a density bonus to affordable housing development; a relaxation, and one that turns
       on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L553"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L154"
     digest: "531ccdee8bd6"
     state: dismissed
     reason: >-
       note 9 exempts Civic Uses and schools from maximum setbacks; not our use
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L554"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L155"
     digest: "be521ac7b4e8"
     state: dismissed
     reason: >-
       note 10 defines the setback column headings rather than stating a standard, and the distinction it draws is the one already encoded: Interior means an interior side that is not a common wall, Common means one that is -- which is the `attached_wall` variant -- and Garage means the streetside garage face, which is why the 20-foot front garage number is held apart from the 10-foot facade
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L560"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     digest: "0156652fecfd"
     state: dismissed
     reason: >-
       note 11 raises the side and rear setback to 10 feet where the yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR, and its marker sits on the zero side and rear cells of the Commercial/Industrial/Institutional and Multi-Family rows; the row this layer reads already states 5 and 10 and carries no such marker
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L562"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L163"
     digest: "30ceb2a60cfb"
     state: dismissed
     reason: >-
       note 12 exempts courtyard developments from the maximum setbacks; its marker does sit on this row, and it can only relax a maximum
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L564"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L164"
     digest: "c151ce5d1de8"
     state: dismissed
     reason: >-
       note 13 sets the townhouse street facade and garage side setbacks from the side street's type, and its marker sits on the SIDE cells of the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row. That row names three districts this layer now holds, so the reason has to be the row rather than the district: every Downtown district here is read from "Single-detached, duplex, triplex, and quadplex dwellings in any district" below it, which carries no such note. The townhouse row is what a genuine townhouse subdivision would be read against, and the DMU, DEM and DCL notes say why that path is written down rather than encoded
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L566"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L165"
     digest: "08366eee1fa5"
     state: dismissed
     reason: >-
       note 14 does the same for Commercial, Industrial, Institutional and Multi-Family; not our use
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L568"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L166"
     digest: "6918e4242fe1"
     state: dismissed
     reason: >-
       note 15 encourages townhouses to take access from a rear alley; an encouragement states no standard
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L569"
+  - quote: "or/multnomah/gresham/4/4.1130.txt#L167-L168"
     digest: "7dfff2c8757c"
     state: dismissed
     reason: >-
@@ -883,7 +883,7 @@ notes:
   # Table 4.1120's own note, which is a use limitation rather than a
   # dimensional one: the Quadplex row reads L1 in DCC and DTM, and this is
   # what the L1 says.
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L309"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L80"
     digest: "ec8356cb36c6"
     state: encoded
     encoded_as: DCC quadplex_allowed variant (lot_sqft at most 7,600, inside_mapped_use_area + narrow_frontage); DTM quadplex_allowed variant (lot_sqft at most 6,500, narrow_frontage)
@@ -895,209 +895,254 @@ notes:
   # Table 4.1507's Quadplex and Townhouse rows are a bare P, and Table
   # 4.1520 -- the other use table in the chapter -- reads NP for both in
   # every column it prints.
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L213"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L81"
     digest: "3b2ee2fa30a0"
     state: dismissed
     reason: >-
       Table 4.1507 states the district's uses and marks the cells it limits; note 1 marks the Multi-Family/Shared Housing Facility row, and the Quadplex and Townhouse rows are a bare P in all three columns
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L218"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L86"
     digest: "f70d15550541"
     state: dismissed
     reason: >-
       Table 4.1507 states the district's uses and marks the cells it limits; note 4 marks the Live-Work cell in THR-SW, and the Quadplex and Townhouse rows are a bare P in all three columns
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L220"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L87-L88"
     digest: "79c5b057c91f"
     state: dismissed
     reason: >-
       Table 4.1507 states the district's uses and marks the cells it limits; note 5 marks the same Live-Work cell, and the Quadplex and Townhouse rows are a bare P in all three columns
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L224"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L90"
     digest: "af7a2155a778"
     state: dismissed
     reason: >-
-      Table 4.1507 states the district's uses and marks the cells it limits; note 7 prohibits electrical generating facilities, and the Quadplex and Townhouse rows are a bare P in all three columns
+      bars electrical generating facilities; it marks the Major Basic Utilities row, a use this
+      screen never places, and never a dwelling row. It is printed as note 14 of Table 4.1423
+      (Pleasant Valley mixed-use and employment), whose Quadplex row reads NP and whose Townhouse
+      row carries only note 1, as note 7 of Table 4.1507 (Springwater residential), whose Quadplex
+      and Townhouse rows carry no marker, and as note 22 of Table 4.1520 (Springwater mixed-use,
+      employment and industrial), whose Quadplex and Townhouse rows read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L226"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L92"
     digest: "062c0e6b81ff"
     state: dismissed
     reason: >-
-      Table 4.1507 states the district's uses and marks the cells it limits; note 9 marks the Solar Energy Systems row, and the Quadplex and Townhouse rows are a bare P in all three columns
+      points to Section 4.1595's solar energy system standards and marks only the Solar Energy
+      Systems row, never a dwelling row. It is printed as note 9 of Table 4.1507 (Springwater
+      residential), whose Quadplex and Townhouse rows carry no marker, and as note 25 of Table
+      4.1520 (Springwater mixed-use, employment and industrial), whose Quadplex and Townhouse rows
+      read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L227"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L93"
     digest: "f2f519d1c224"
     state: dismissed
     reason: >-
-      Table 4.1507 states the district's uses and marks the cells it limits; note 10 marks the Wind Energy Systems row, and the Quadplex and Townhouse rows are a bare P in all three columns
+      points to Section 4.1596's wind energy system standards and marks only the Wind Energy
+      Systems row, never a dwelling row. It is printed as note 10 of Table 4.1507 (Springwater
+      residential), whose Quadplex and Townhouse rows carry no marker, and as note 26 of Table
+      4.1520 (Springwater mixed-use, employment and industrial), whose Quadplex and Townhouse rows
+      read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L228"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L94"
     digest: "83a5feaa5ea9"
     state: dismissed
     reason: >-
-      Table 4.1507 states the district's uses and marks the cells it limits; note 11 marks the Biomass Energy Systems row, and the Quadplex and Townhouse rows are a bare P in all three columns
+      points to Section 4.1597's biomass energy system standards and marks only the Biomass Energy
+      Systems row, never a dwelling row. It is printed as note 11 of Table 4.1507 (Springwater
+      residential), whose Quadplex and Townhouse rows carry no marker, and as note 27 of Table
+      4.1520 (Springwater mixed-use, employment and industrial), whose Quadplex and Townhouse rows
+      read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L229"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L95"
     digest: "0c74d5861753"
     state: dismissed
     reason: >-
-      Table 4.1507 states the district's uses and marks the cells it limits; note 12 marks the Geothermal Energy Systems row, and the Quadplex and Townhouse rows are a bare P in all three columns
+      points to Section 4.1598's geothermal energy system standards and marks only the Geothermal
+      Energy Systems row, never a dwelling row. It is printed as note 12 of Table 4.1507
+      (Springwater residential), whose Quadplex and Townhouse rows carry no marker, and as note 28
+      of Table 4.1520 (Springwater mixed-use, employment and industrial), whose Quadplex and
+      Townhouse rows read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L230"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L96"
     digest: "4003fd83084b"
     state: dismissed
     reason: >-
-      Table 4.1507 states the district's uses and marks the cells it limits; note 13 marks the Micro-Hydro Energy Systems row, and the Quadplex and Townhouse rows are a bare P in all three columns
+      points to Section 4.1599's micro-hydro energy system standards and marks only the
+      Micro-Hydro Energy Systems row, never a dwelling row. It is printed as note 13 of Table
+      4.1507 (Springwater residential), whose Quadplex and Townhouse rows carry no marker, and as
+      note 29 of Table 4.1520 (Springwater mixed-use, employment and industrial), whose Quadplex
+      and Townhouse rows read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L232"
+  - quote: "or/multnomah/gresham/4/4.1507.txt#L98"
     digest: "74f3fcd4b8d9"
     state: dismissed
     reason: >-
       Table 4.1507 states the district's uses and marks the cells it limits; note 15 marks the Cottage Cluster row, and the Quadplex and Townhouse rows are a bare P in all three columns
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L314"
+  - quote: "or/multnomah/gresham/4/4.1508.txt#L75"
     digest: "26f53d060e8c"
     state: dismissed
     reason: >-
       Table 4.1508 note 4 marks the Buffering and Master Plan rows, and only for the part of THR-SW next to the east edge of the Village Center; neither row states a standard this layer encodes
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L513"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L83"
     digest: "8f0423d8adb3"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L514"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L84-L85"
     digest: "7480057fec11"
     state: dismissed
     reason: >-
       permits converting an existing hotel or motel to an emergency shelter or to affordable
       housing: a use and a building this screen never places, so it cannot reach the Quadplex or
-      Townhouse row the pod reads. Where it is printed under Springwater's Table 4.1520, those
-      rows read NP in every column in any case
+      Townhouse row the pod reads. It marks the Multi-Family/Shared Housing Facility row wherever
+      it is printed: as note 2 of Table 4.1220(A) (Civic Neighborhood residential), as note 3 of
+      Table 4.1423 (Pleasant Valley mixed-use and employment), and as note 2 of Table 4.1520
+      (Springwater mixed-use, employment and industrial)
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L516"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L88"
     digest: "4be5bdba9504"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L520"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L91"
     digest: "32c26b63cdfb"
     state: dismissed
     reason: >-
-      a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
+      limits auto-dependent uses to gas stations and similar retail; it marks the Auto-Dependent
+      Use row in the neighbourhood commercial column, a use this screen never places, and never a
+      dwelling row. It is printed as note 3 of Table 4.0220 (Commercial, NC), whose Quadplex and
+      Townhouse rows read NP, and as note 5 of Table 4.1520 (Springwater mixed-use, employment and
+      industrial), whose Quadplex and Townhouse rows read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L521"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L92"
     digest: "b07a5284476c"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L525"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L94"
     digest: "6d808c523266"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L530"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L96"
     digest: "385d51f737b0"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L531"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L97"
     digest: "bcba3810e168"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L536"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L99"
     digest: "48753bddb0bc"
     state: dismissed
     reason: >-
-      a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
+      caps the floor area of shops, offices and personal services; it marks the Business and
+      Retail Service and Trade row in the neighbourhood commercial column, a use this screen never
+      places, and never a dwelling row. It is printed as note 4 of Table 4.0220 (Commercial, NC),
+      whose Quadplex and Townhouse rows read NP, and as note 10 of Table 4.1520 (Springwater
+      mixed-use, employment and industrial), whose Quadplex and Townhouse rows read NP in every
+      column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L543"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L105"
     digest: "44bd39738f17"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L545"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L106"
     digest: "f7e41c66bc1a"
     state: dismissed
     reason: >-
-      a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
+      bars theme parks; it marks the Major Event Entertainment row, a use this screen never
+      places, and never a dwelling row. It is printed as note 8 of Table 4.1423 (Pleasant Valley
+      mixed-use and employment), whose Quadplex row reads NP and whose Townhouse row carries only
+      note 1, and as note 12 of Table 4.1520 (Springwater mixed-use, employment and industrial),
+      whose Quadplex and Townhouse rows read NP in every column
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L549"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L108"
     digest: "69b9367426dd"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L550"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L109"
     digest: "915c5845a1e1"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L554"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L110"
     digest: "1dd8d7bbfcbb"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L555"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L111-L112"
     digest: "626fcc58b12a"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L557"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L113"
     digest: "30d4198de456"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L559"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L114-L115"
     digest: "16f30b77caae"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L565"
-    digest: "05e5e7400006"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L117"
+    digest: "47f45654333d"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L572"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L119"
     digest: "e4df714fca44"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L578"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L123"
     digest: "d91a1fbbe012"
     state: dismissed
     reason: >-
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L588"
+  - quote: "or/multnomah/gresham/4/4.1520.txt#L133"
     digest: "e7272ceba7b8"
     state: dismissed
     reason: >-
-      a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
+      points to the city's marijuana business licensing rules; it marks the Marijuana Businesses
+      row, a use this screen never places, and never a dwelling row. It is printed as note 22 of
+      Table 4.1423 (Pleasant Valley mixed-use and employment), whose Quadplex row reads NP and
+      whose Townhouse row carries only note 1, and as note 30 of Table 4.1520 (Springwater
+      mixed-use, employment and industrial), whose Quadplex and Townhouse rows read NP in every
+      column
 
   # --- 4.1400, Pleasant Valley ----------------------------------------
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L210"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L82"
     digest: "ec4153a3879c"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and note 1 marks the Single Detached Dwelling cell in HDR-PV; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L212"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L83"
     digest: "6b0e1b8f842c"
     state: dismissed
     reason: >-
@@ -1107,7 +1152,7 @@ notes:
   # printed six times across three of this city's chapters, and the two rulings
   # for it each argued about one table -- so which of the two was on the record
   # was decided by file order. See `flats/encode/travelled.py`.
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L217"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L86-L87"
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
@@ -1119,69 +1164,93 @@ notes:
       about the lot, and it rests on an election nobody has made: this product is market rate. A
       pod that qualified would gain a permission, never lose one
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L218"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L88"
     digest: "ffa5a848125d"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and sends commercial uses to the limitations in Section 4.1414; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L219"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L89-L90"
     digest: "4ecf3e561702"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and governs the commercial half of a live-work unit; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L222"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L92"
     digest: "59bc74339a73"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and limits religious assembly seating; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      limits the seating of a place of religious worship; it marks the Religious Institutions row,
+      a use this screen never places, and never a dwelling row. It is printed as note 7 of Table
+      4.1413 (Pleasant Valley residential), whose Quadplex and Townhouse rows are a bare P, and as
+      note 6 of Table 4.1507 (Springwater residential), whose Quadplex and Townhouse rows carry no
+      marker
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L225"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L94"
     digest: "ff2282b7a564"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Solar Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      points to Section 4.1434's solar energy system standards and marks only the Solar Energy
+      Systems row, never a dwelling row. It is printed as note 9 of Table 4.1413 (Pleasant Valley
+      residential), whose Quadplex and Townhouse rows are a bare P, and as note 3 of Table 4.1431
+      (Pleasant Valley public land), whose Quadplex and Townhouse rows read NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L226"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L95"
     digest: "70f6e27e10d0"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Wind Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      points to Section 4.1435's wind energy system standards and marks only the Wind Energy
+      Systems row, never a dwelling row. It is printed as note 10 of Table 4.1413 (Pleasant Valley
+      residential), whose Quadplex and Townhouse rows are a bare P, and as note 4 of Table 4.1431
+      (Pleasant Valley public land), whose Quadplex and Townhouse rows read NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L227"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L96"
     digest: "4198f58b5d5d"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Biomass Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      points to Section 4.1436's biomass energy system standards and marks only the Biomass Energy
+      Systems row, never a dwelling row. It is printed as note 11 of Table 4.1413 (Pleasant Valley
+      residential), whose Quadplex and Townhouse rows are a bare P, and as note 5 of Table 4.1431
+      (Pleasant Valley public land), whose Quadplex and Townhouse rows read NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L228"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L97"
     digest: "61315d7fbf7a"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Geothermal Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      points to Section 4.1437's geothermal energy system standards and marks only the Geothermal
+      Energy Systems row, never a dwelling row. It is printed as note 12 of Table 4.1413 (Pleasant
+      Valley residential), whose Quadplex and Townhouse rows are a bare P, and as note 6 of Table
+      4.1431 (Pleasant Valley public land), whose Quadplex and Townhouse rows read NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L229"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L98"
     digest: "89d10af9ac58"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Micro-Hydro Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      points to Section 4.1438's micro-hydro energy system standards and marks only the
+      Micro-Hydro Energy Systems row, never a dwelling row. It is printed as note 13 of Table
+      4.1413 (Pleasant Valley residential), whose Quadplex and Townhouse rows are a bare P, and as
+      note 7 of Table 4.1431 (Pleasant Valley public land), whose Quadplex and Townhouse rows read
+      NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L230"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L99"
     digest: "fc534ae8e97c"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and prohibits electrical generating facilities and wastewater treatment plants; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L231"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L100"
     digest: "8fd7257d18fc"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Heliports row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      permits a heliport as an accessory to a medical or civic use; it marks the Heliports row, a
+      use this screen never places, and never a dwelling row. It is printed as note 15 of Table
+      4.1413 (Pleasant Valley residential), whose Quadplex and Townhouse rows are a bare P, and as
+      note 14 of Table 4.1507 (Springwater residential), whose Quadplex and Townhouse rows carry
+      no marker
 
   # Rewritten 2026-09-08, both entries to the same words, for the same reason
   # as the transitional-housing note above.
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L232"
+  - quote: "or/multnomah/gresham/4/4.1413.txt#L101"
     digest: "e5b316f0e3f9"
     state: dismissed
     reason: >-
@@ -1191,13 +1260,13 @@ notes:
       court; the pod is one attached building, and it reads the Quadplex and
       Townhouse rows
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L352"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L95-L96"
     digest: "5495e9a14edb"
     state: dismissed
     reason: >-
       Table 4.1415A note 1 switches off the minimum net density for affordable housing; a relaxation resting on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L354"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L99"
     digest: "2226719577db"
     state: dismissed
     reason: >-
@@ -1209,14 +1278,14 @@ notes:
       was read as the start of a new section, which is also what cost notes 4
       through 7
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L418"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L161"
     digest: "85e42eca5b42"
     state: dismissed
     reason: >-
       Table 4.1415B note 1 lets the garage setback drop to 5 feet where the garage is flush with the front wall or the design standards of Section 7.0400 are met; a relaxation, and 20 feet is the number that binds without it
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L423"
-    digest: "5e5e5ec3e079"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L163"
+    digest: "29120745ffba"
     state: dismissed
     reason: >-
       note 2 raises the MAXIMUM front and street side setback to 30 feet on an arterial and lets it be exceeded for pedestrian amenities; this layer encodes no maximum setback in Pleasant Valley, and a maximum cannot stop a pod fitting
@@ -1233,91 +1302,91 @@ notes:
   # ground: this note is a standard for the commercial use that has to occupy
   # the frontage, and the Quadplex row is NP in all three columns before the
   # note is reached.
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L585"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L81"
     digest: "09d46bd89b63"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 1 governs the ground-floor street-facing facade on three named streets, which is a standard for the commercial or institutional use that has to occupy it
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L589"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L83"
     digest: "7f0480d87a35"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 2 permits residential use as part of a MIXED-USE building above the ground floor -- it is the content of the L2 on Multi-Family and Residential Facility in ME-PV, and a four-unit attached townhome on its own lot is neither mixed-use nor above a ground floor
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L592"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L88"
     digest: "234b816515a9"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 5 caps the footprint of a building occupied ENTIRELY by commercial use at 15,000 sq ft; not our building
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L594"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L90"
     digest: "ddb44d45575f"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 6 caps retail gross leasable area at 60,000 sq ft; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L600"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L93"
     digest: "352f41f0598a"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 7 governs the commercial half of a live-work unit; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L604"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L97-L98"
     digest: "913a0093256f"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 9 limits a cell to mixed-use buildings and caps retail at half the floor area; it is a limitation ON a commercial permission, not a residential one, and the Quadplex cell it would have to reach is NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L606"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L99-L100"
     digest: "ab56fce81826"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 10 caps an Outdoor Commercial Use site at two acres; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L607"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L101"
     digest: "dc773b55822f"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 11 requires industrial activity and storage to be indoors or screened; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L609"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L102"
     digest: "6738bbb71346"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 12 lists which industrial functions the table permits; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L611"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L103-L104"
     digest: "e28821a7b13e"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 13 governs golf courses, plazas and public parks in ME-PV; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L623"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L112"
     digest: "79faa8be2837"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Solar Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L624"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L113"
     digest: "1c1bc72a9581"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Wind Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L625"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L114"
     digest: "d8bbe8257d22"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Biomass Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L626"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L115"
     digest: "1c8163cbd845"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Geothermal Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L627"
+  - quote: "or/multnomah/gresham/4/4.1423.txt#L116"
     digest: "1db949d67c3b"
     state: dismissed
     reason: >-
@@ -1331,7 +1400,7 @@ notes:
   # "4.1432" and the block now stops where it always should have. Worth
   # recording because it is the shape a digest cannot tell apart from an
   # amendment: same words, different extent, and only reading it says which.
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L853"
+  - quote: "or/multnomah/gresham/4/4.1431.txt#L82"
     digest: "b6d3a93639a8"
     state: dismissed
     reason: >-
@@ -1341,13 +1410,13 @@ notes:
 
 
   # --- 4.0200, Neighborhood Commercial ---
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L123"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L68-L69"
     digest: "f44d9f636c57"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; note 1 marks the RESIDENTIAL heading and permits home occupations and a temporary health hardship dwelling alongside a PRE-EXISTING dwelling; it creates no dwelling and reaches nothing new
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L125"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L70-L71"
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
@@ -1359,67 +1428,67 @@ notes:
       about the lot, and it rests on an election nobody has made: this product is market rate. A
       pod that qualified would gain a permission, never lose one
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L139"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L82"
     digest: "030f791cd975"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Solar Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L140"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L83"
     digest: "4cb0509b4eeb"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Wind Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L141"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L84"
     digest: "69a548626262"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Biomass Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L142"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L85"
     digest: "7fd6b3ae12e0"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Geothermal Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L143"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L86"
     digest: "8e3a459b31a3"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Micro-Hydro Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L144"
+  - quote: "or/multnomah/gresham/4/4.0220.txt#L87"
     digest: "b43e5d371b94"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; sends marijuana businesses to GRC 9.63.090; not our use
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L180"
+  - quote: "or/multnomah/gresham/4/4.0230.txt#L28"
     digest: "5631f3e8e047"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table exempting the Springwater Plan District from a requirement; this layer reads no dimensional standard for NC, because the use flag settles it
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L181"
+  - quote: "or/multnomah/gresham/4/4.0230.txt#L29-L30"
     digest: "ecdc8eddea48"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table pointing at the buffering and screening chapter; no dimensional standard is read for NC
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L183"
+  - quote: "or/multnomah/gresham/4/4.0230.txt#L31"
     digest: "77633365c99e"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table letting the street-side setback drop to 5 feet along half the side yard; a relaxation of a setback this layer does not read for NC
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L185"
+  - quote: "or/multnomah/gresham/4/4.0230.txt#L32"
     digest: "dc668df94b70"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table pointing at Section 9.0600 height transition; no height is read for NC
 
-  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L186"
+  - quote: "or/multnomah/gresham/4/4.0230.txt#L33"
     digest: "7f5756c2e3e9"
     state: dismissed
     reason: >-
@@ -1427,85 +1496,85 @@ notes:
 
 
   # --- 4.0300, Heavy and General Industrial ---
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L130"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L70"
     digest: "1694321848a3"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; an affordable housing note, and one gated on public-body ownership or a 2009 title; a permission resting on an election nobody has made and a fact nobody holds
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L134"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L74-L75"
     digest: "b54d7c2c0e9c"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; defines which retail and professional services the Business and Retail Service and Trade row covers; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L151"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L81"
     digest: "341473397e32"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; limits administrative offices in HI to 20 percent of floor area; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L154"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L84-L85"
     digest: "388b09b229a5"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; prohibits auto and truck salvaging in GI and sets a 100-foot separation for miscellaneous industrial uses; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L157"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L86"
     digest: "5f98246c7b0e"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; governs waste management uses and their separation from residentially designated land; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L160"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L88"
     digest: "3ebbfd033340"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; lists the Community Service uses the two districts refuse; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L162"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L89"
     digest: "352bfcd10442"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; governs parks, plazas and golf courses; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L167"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L91"
     digest: "4a3b88fa3b6b"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; permits religious institutions and schools on a 2009 title; not our use
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L171"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L93"
     digest: "8e0573ded089"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Solar Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L172"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L94"
     digest: "bdd5ba2a7d51"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Wind Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L176"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L96"
     digest: "986fc0a1a3b7"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Biomass Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L177"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L97"
     digest: "72ade6f374ca"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Geothermal Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L178"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L98"
     digest: "1a6bfa19af91"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Micro-Hydro Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L179"
+  - quote: "or/multnomah/gresham/4/4.0320.txt#L99"
     digest: "f1e0ad3f4d48"
     state: dismissed
     reason: >-
@@ -1513,8 +1582,8 @@ notes:
 
 
   # --- 4.1200, Civic Neighborhood ---
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L2888"
-    digest: "2f28156d84b4"
+  - quote: "or/multnomah/gresham/4/4.1252.txt#L1663"
+    digest: "8ebc619be08d"
     state: dismissed
     reason: >-
       the only footnote the census finds in Section 4.1200, and it is a
@@ -1524,48 +1593,48 @@ notes:
       reached
 
   # --- 4.1300, Gresham Butte ------------------------------------------
-  - quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L57"
+  - quote: "or/multnomah/gresham/4/4.1311.txt#L10"
     digest: "5e3d926b4b81"
     state: dismissed
     reason: >-
       Table 4.1311 note 1 credits a small vacant property with one dwelling unit under the plan district's 1 unit per acre density cap; a density credit cannot make a use the district prohibits outright permitted, and Gresham Butte prohibits quadplexes by name
 
-  - quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L58"
+  - quote: "or/multnomah/gresham/4/4.1311.txt#L11"
     digest: "e7cf1b58a442"
     state: dismissed
     reason: >-
       note 2 requires separate open space to sit in a commonly owned tract with approved deeds; a land-division condition in a district where the use is prohibited by name
 
   # --- 7.0450, building form variety ----------------------------------
-  - quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L829"
+  - quote: "or/multnomah/gresham/7/7.0450.txt#L19"
     digest: "c848a68ec6e2"
     state: dismissed
     reason: >-
       states which acreage counts as the development area for the building form variety standards. Section 7.0450 applies only where the development site is at least 1.5 gross acres and the proposal is a Type II or Type III partition or subdivision of it, and what it then requires is a MIX of building forms across the lots created. The screen places one building on one lot; the four unit lots under a middle housing land division are that same building
 
-  - quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L832"
+  - quote: "or/multnomah/gresham/7/7.0450.txt#L21"
     digest: "710e0c601dfb"
     state: dismissed
     reason: >-
       lists the building form categories those standards sort lots into. Section 7.0450 applies only where the development site is at least 1.5 gross acres and the proposal is a Type II or Type III partition or subdivision of it, and what it then requires is a MIX of building forms across the lots created. The screen places one building on one lot; the four unit lots under a middle housing land division are that same building
 
-  - quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L850"
-    digest: "c4d36e4c92dd"
+  - quote: "or/multnomah/gresham/7/7.0450.txt#L36"
+    digest: "6da968df0bb8"
     state: dismissed
     reason: >-
       states how an applicant demonstrates compliance with them. Section 7.0450 applies only where the development site is at least 1.5 gross acres and the proposal is a Type II or Type III partition or subdivision of it, and what it then requires is a MIX of building forms across the lots created. The screen places one building on one lot; the four unit lots under a middle housing land division are that same building
 
 
   # --- 9.0825A, parking lot aisle widths ------------------------------
-  - quote: "or/multnomah/gresham/9.0800.parking.txt#L346"
-    digest: "2a2b93e07b83"
+  - quote: "or/multnomah/gresham/9/9.0825.txt#L40-L41"
+    digest: "2002380d2f3d"
     state: dismissed
     reason: >-
       Table 9.0825A note 1 sets the minimum aisle width inside a parking lot -- 24 feet for two-way traffic and emergency vehicle operations, 20 feet one-way. It is the only note in the document, and it governs the layer's parking default only because the default's citation and the note share a document. It qualifies how wide an aisle must be in a lot somebody builds, not whether a lot must be built, and no reading of an aisle width can restore a minimum 9.0802(A) waives for every land use type. It does not reach this building twice over: 9.0802(F) states that the parking lot design standards of Sections 9.0822 to 9.0840, which is where this table sits, do not apply to quadplexes on a unit-by-unit basis
 
   # --- 4.1100, the Downtown use table's other notes -------------------
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L312"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L83-L85"
     digest: "7918cdea3776"
     state: dismissed
     reason: >-
@@ -1577,7 +1646,7 @@ notes:
       row, which is a bare P in all six sub-districts, and Gresham's
       multi-family category is five or more units
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L314"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L86-L87"
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
@@ -1589,7 +1658,7 @@ notes:
       about the lot, and it rests on an election nobody has made: this product is market rate. A
       pod that qualified would gain a permission, never lose one
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L315"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L88"
     digest: "74caa76eb35b"
     state: dismissed
     reason: >-
@@ -1598,7 +1667,7 @@ notes:
       which carries only the L1 in DCC and DTM, and the Townhouse row,
       which is a bare P in all six sub-districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L316"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L89"
     digest: "fad3fba914ea"
     state: dismissed
     reason: >-
@@ -1608,7 +1677,7 @@ notes:
       Quadplex row, which carries only the L1 in DCC and DTM, and the
       Townhouse row, which is a bare P in all six sub-districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L319"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L92"
     digest: "0ea85b9b2c96"
     state: dismissed
     reason: >-
@@ -1617,7 +1686,7 @@ notes:
       only the L1 in DCC and DTM, and the Townhouse row, which is a bare
       P in all six sub-districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L322"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L94"
     digest: "513209f239b7"
     state: dismissed
     reason: >-
@@ -1628,7 +1697,7 @@ notes:
       carries only the L1 in DCC and DTM, and the Townhouse row, which
       is a bare P in all six sub-districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L323"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L95"
     digest: "6c911e7f8bcd"
     state: dismissed
     reason: >-
@@ -1637,7 +1706,7 @@ notes:
       DCC and DTM, and the Townhouse row, which is a bare P in all six
       sub-districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L337"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L104"
     digest: "dd7ce6c2302a"
     state: dismissed
     reason: >-
@@ -1647,7 +1716,7 @@ notes:
       reads the Quadplex row, which carries only the L1 in DCC and DTM,
       and the Townhouse row, which is a bare P in all six sub-districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L346"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L112"
     digest: "fea18a7e6cbe"
     state: dismissed
     reason: >-
@@ -1657,13 +1726,13 @@ notes:
       DTM, and the Townhouse row, which is a bare P in all six sub-
       districts
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L350"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L114"
     digest: "e75e1455635c"
     state: dismissed
     reason: >-
       golf courses are not permitted
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L351"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L115-L116"
     digest: "17d116396228"
     state: dismissed
     reason: >-
@@ -1671,7 +1740,7 @@ notes:
       construction, marked on the Schools row in all five of this city's use
       tables that print it. Not a use this building has
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L353"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L117"
     digest: "02ebbf6b70f0"
     state: dismissed
     reason: >-
@@ -1679,7 +1748,7 @@ notes:
       not available through Special Use Review. Marked on the Parks,
       Open Spaces and Trails row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L354"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L118"
     digest: "a7436d8e1828"
     state: dismissed
     reason: >-
@@ -1687,7 +1756,7 @@ notes:
       Special Use Review, marked on the Helicopter Landing Facilities
       row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L355"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L119"
     digest: "11c7e602ee7a"
     state: dismissed
     reason: >-
@@ -1696,42 +1765,42 @@ notes:
       and in every one of them the marker is on the Renewable Energy (Uses)
       category heading
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L356"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L120"
     digest: "3e4b9a93f19b"
     state: dismissed
     reason: >-
       a cross-reference to the Solar Energy System standards, marked on
       that row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L357"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L121"
     digest: "adb0bed51f46"
     state: dismissed
     reason: >-
       a cross-reference to the Wind Energy System standards, marked on
       that row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L358"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L122"
     digest: "b8680d92b56c"
     state: dismissed
     reason: >-
       a cross-reference to the Biomass Energy System standards, marked
       on that row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L359"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L123"
     digest: "94c4769f0d41"
     state: dismissed
     reason: >-
       a cross-reference to the Geothermal Energy System standards,
       marked on that row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L360"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L124"
     digest: "b3f8c8d0f825"
     state: dismissed
     reason: >-
       a cross-reference to the Micro-Hydro Energy System standards,
       marked on that row
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L361"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L125"
     digest: "0c6f5742a9c1"
     state: dismissed
     reason: >-
@@ -1743,7 +1812,7 @@ notes:
       of its own. The pod is neither a shared housing facility nor transitional
       housing; it reads the Quadplex and Townhouse rows
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L362"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L126-L127"
     digest: "cbac09ec8847"
     state: dismissed
     reason: >-
@@ -1757,7 +1826,7 @@ notes:
       a use category, so it is worth re-reading if a DCC lot on N Main
       Avenue or E Powell Boulevard ever screens GREEN
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L363"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L128-L129"
     digest: "9d04139cdbbb"
     state: dismissed
     reason: >-
@@ -1765,7 +1834,7 @@ notes:
       limits, marked on the Business and Retail Service and Trade row
       label
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L364"
+  - quote: "or/multnomah/gresham/4/4.1120.txt#L130"
     digest: "e5b316f0e3f9"
     state: dismissed
     reason: >-
@@ -1782,7 +1851,7 @@ notes:
   # affordable housing height bonus and is already ruled by its digest in
   # Chapter 4.0100. These are the other three.
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L357"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L103-L104"
     digest: "ad36aeea6ced"
     state: dismissed
     reason: >-
@@ -1796,7 +1865,7 @@ notes:
       rather than using Section 9.0600, which 9.0602 excludes this plan
       district from by name
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L358"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L105-L106"
     digest: "0fd57b8b26e8"
     state: dismissed
     reason: >-
@@ -1808,7 +1877,7 @@ notes:
       qualifies does not reach it. Row K itself is unencoded and has no
       field
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L360"
+  - quote: "or/multnomah/gresham/4/4.1415.txt#L107"
     digest: "2637ff346ac4"
     state: dismissed
     reason: >-
@@ -1835,7 +1904,7 @@ notes:
   # come back to if that ever changes: it defines side setback as the interior
   # side and not the common wall.
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L210"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L28"
     digest: "f6dbec7ae66b"
     state: dismissed
     reason: >-
@@ -1845,16 +1914,18 @@ notes:
       this layer encodes is quadplex_allowed, read off Table 4.1220(A)'s
       Quadplex row, which reads NP
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L211"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L29-L30"
     digest: "7480057fec11"
     state: dismissed
     reason: >-
       permits converting an existing hotel or motel to an emergency shelter or to affordable
       housing: a use and a building this screen never places, so it cannot reach the Quadplex or
-      Townhouse row the pod reads. Where it is printed under Springwater's Table 4.1520, those
-      rows read NP in every column in any case
+      Townhouse row the pod reads. It marks the Multi-Family/Shared Housing Facility row wherever
+      it is printed: as note 2 of Table 4.1220(A) (Civic Neighborhood residential), as note 3 of
+      Table 4.1423 (Pleasant Valley mixed-use and employment), and as note 2 of Table 4.1520
+      (Springwater mixed-use, employment and industrial)
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L212"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L31-L32"
     digest: "142ef4064dda"
     state: dismissed
     reason: >-
@@ -1862,7 +1933,7 @@ notes:
       A permission rather than a limit, resting on an election nobody has made; at most it would
       widen the Quadplex row, never narrow it
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L226"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L46"
     digest: "e4334284e7ba"
     state: dismissed
     reason: >-
@@ -1871,7 +1942,7 @@ notes:
       Neighborhood field this layer encodes is quadplex_allowed, read
       off Table 4.1220(A)'s Quadplex row
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L227"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L47"
     digest: "e8f961f08f98"
     state: dismissed
     reason: >-
@@ -1881,7 +1952,7 @@ notes:
       field this layer encodes is quadplex_allowed, read off Table
       4.1220(A)'s Quadplex row
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L247"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L65"
     digest: "d00c41fb8f30"
     state: dismissed
     reason: >-
@@ -1889,49 +1960,49 @@ notes:
       it must accompany an allowed Business and Retail Service and Trade
       use, and is capped in floor area. Not the use being placed
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L266"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L83"
     digest: "5fe42bd0f0cb"
     state: dismissed
     reason: >-
       golf courses are not permitted in the Civic Neighborhood Plan
       District
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L283"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L98"
     digest: "946083736e54"
     state: dismissed
     reason: >-
       a cross-reference to Section 4.1234, the Solar Energy System
       standards for these districts
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L284"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L99"
     digest: "5822b88910c8"
     state: dismissed
     reason: >-
       a cross-reference to Section 4.1235, the Wind Energy System
       standards for these districts
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L285"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L100"
     digest: "d871fe06a20d"
     state: dismissed
     reason: >-
       a cross-reference to Section 4.1236, the Biomass Energy System
       standards for these districts
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L286"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L101"
     digest: "97f420f99a67"
     state: dismissed
     reason: >-
       a cross-reference to Section 4.1237, the Geothermal Energy System
       standards for these districts
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L287"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L102"
     digest: "2669e0a3ef26"
     state: dismissed
     reason: >-
       a cross-reference to Section 4.1238, the Micro-Hydro Energy System
       standards for these districts
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L299"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L114"
     digest: "4ac79c9b137f"
     state: dismissed
     reason: >-
@@ -1939,14 +2010,14 @@ notes:
       not permitted in the Civic Neighborhood Plan District. Marked on
       the civic use table
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L300"
-    digest: "b96b69236783"
+  - quote: "or/multnomah/gresham/4/4.1220.txt#L115"
+    digest: "79fa9fe1a0f8"
     state: dismissed
     reason: >-
       a cross-reference to Gresham Revised Code 9.63.090 for limitations
       on a civic use
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L333"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L27"
     digest: "b4c0c89244a7"
     state: dismissed
     reason: >-
@@ -1957,7 +2028,7 @@ notes:
       only Civic Neighborhood field this layer encodes is
       quadplex_allowed, read off Table 4.1220(A)'s Quadplex row
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L341"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L35-L36"
     digest: "0e877268993a"
     state: dismissed
     reason: >-
@@ -1965,7 +2036,7 @@ notes:
       housing development. A relaxation on an election nobody has made,
       and no density field is encoded in these districts
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L383"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L78"
     digest: "29e07ae4bede"
     state: dismissed
     reason: >-
@@ -1974,7 +2045,7 @@ notes:
       field this layer encodes is quadplex_allowed, read off Table
       4.1220(A)'s Quadplex row; no Civic Neighborhood setback is read
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L384"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L79"
     digest: "24655473da22"
     state: dismissed
     reason: >-
@@ -1986,7 +2057,7 @@ notes:
       setback is read, and if one is ever added this note is the
       definition it has to be read under
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L385"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L80"
     digest: "130602c355d5"
     state: dismissed
     reason: >-
@@ -1996,7 +2067,7 @@ notes:
       Neighborhood field this layer encodes is quadplex_allowed, read
       off Table 4.1220(A)'s Quadplex row
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L386"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L81-L82"
     digest: "b1b8bc42e4c8"
     state: dismissed
     reason: >-
@@ -2004,7 +2075,7 @@ notes:
       type's minimum building frontage is satisfied. A relaxation of a
       maximum, and no Civic Neighborhood setback is encoded
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L389"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L83"
     digest: "ed7f4cc8cc66"
     state: dismissed
     reason: >-
@@ -2013,7 +2084,7 @@ notes:
       facilities and wireless communication facilities. Neither field is
       encoded in these districts and neither use is the pod
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L397"
+  - quote: "or/multnomah/gresham/4/4.1230.txt#L91"
     digest: "b1ad9362b185"
     state: dismissed
     reason: >-
@@ -2023,7 +2094,7 @@ notes:
       Neighborhood field this layer encodes is quadplex_allowed, read
       off Table 4.1220(A)'s Quadplex row
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4497"
+  - quote: "or/multnomah/gresham/4/4.1252.txt#L3051"
     digest: "0c696c513d9f"
     state: dismissed
     reason: >-
@@ -2032,7 +2103,7 @@ notes:
       wall plane. A material specification, not a dimension this screen
       measures
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4500"
+  - quote: "or/multnomah/gresham/4/4.1252.txt#L3052"
     digest: "8c28452a47ab"
     state: dismissed
     reason: >-
@@ -2040,14 +2111,14 @@ notes:
       same sentence appears in the Downtown and Rockwood material tables
       and this ruling covers all three. A material specification
 
-  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4501"
+  - quote: "or/multnomah/gresham/4/4.1252.txt#L3053"
     digest: "ad8cb5b49d3e"
     state: dismissed
     reason: >-
       a facade material standard: metal siding shall be free of oil
       canning and no thinner than 24 gauge. A material specification
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L4474"
+  - quote: "or/multnomah/gresham/4/4.1152.txt#L2673"
     digest: "367ca32e68dd"
     state: dismissed
     reason: >-
@@ -2055,14 +2126,14 @@ notes:
       and in proportion to the height of its application. A material
       specification, not a dimension this screen measures
 
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L4476"
+  - quote: "or/multnomah/gresham/4/4.1152.txt#L2675"
     digest: "ff5c206c5285"
     state: dismissed
     reason: >-
       the Downtown material table's metal standard: free of oil canning,
       no thinner than 24 gauge. A material specification
 
-  - quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L3666"
+  - quote: "or/multnomah/gresham/7/7.0512.txt#L2793"
     digest: "d5f576b74943"
     state: dismissed
     reason: >-
@@ -2070,14 +2141,14 @@ notes:
       panelized, and deep enough to project beyond the wall plane. A
       material specification
 
-  - quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L3669"
+  - quote: "or/multnomah/gresham/7/7.0512.txt#L2795"
     digest: "7534a87912bc"
     state: dismissed
     reason: >-
       the Rockwood material table's metal standard: free of oil canning,
       no thinner than 24 gauge. A material specification
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L360"
+  - quote: "or/multnomah/gresham/4/4.1508.txt#L117"
     digest: "e787b4bf74df"
     state: dismissed
     reason: >-
@@ -2123,7 +2194,7 @@ notes:
   # because a reader who finds a ceiling column and no encoded ceiling should
   # find the reasoning rather than an absence.
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L691"
+  - quote: "or/multnomah/gresham/4/4.1424.txt#L47"
     digest: "4c323672c6cd"
     state: dismissed
     reason: >-
@@ -2139,7 +2210,7 @@ notes:
       nothing levering it, and TC-PV and ME-PV carry no lot in the parcel
       layer
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L695"
+  - quote: "or/multnomah/gresham/4/4.1424.txt#L52-L53"
     digest: "c16169f51e75"
     state: dismissed
     reason: >-
@@ -2150,7 +2221,7 @@ notes:
       TC-PV nor ME-PV. The transition itself is a plane starting at a figure
       well above the pod's 26 feet wherever this corpus has read one
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L696"
+  - quote: "or/multnomah/gresham/4/4.1424.txt#L54"
     digest: "a2469fae2a4b"
     state: dismissed
     reason: >-
@@ -2164,7 +2235,7 @@ notes:
   # digest is over the note's exact text and cannot rank a typographic fix
   # below an amendment, which is correct -- it is why a stale digest sends a
   # human to read the sentence rather than deciding for them.
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L878"
+  - quote: "or/multnomah/gresham/4/4.1432.txt#L21"
     digest: "2a2577784209"
     state: dismissed
     reason: >-
@@ -2176,7 +2247,7 @@ notes:
       starts at 35 feet where the pod stands 26, so it would not bind the
       building even at the minimum setback
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L668"
+  - quote: "or/multnomah/gresham/4/4.1521.txt#L61"
     digest: "a4cf8299005e"
     state: dismissed
     reason: >-
@@ -2187,7 +2258,7 @@ notes:
       zone this layer holds, and appears in no zone_missing row, so no
       observed lot claims it. NC itself is held, and its quadplex row reads NP
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L669"
+  - quote: "or/multnomah/gresham/4/4.1521.txt#L62"
     digest: "7fb2a479c0d8"
     state: dismissed
     reason: >-
@@ -2197,7 +2268,7 @@ notes:
       lots this screen places a pod on, and it constrains the size of what the
       division leaves behind rather than what may be built on it
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L671"
+  - quote: "or/multnomah/gresham/4/4.1521.txt#L63"
     digest: "38dc7fa61620"
     state: dismissed
     reason: >-
@@ -2208,7 +2279,7 @@ notes:
       Table 4.1521's columns are VC-SW, RTI-SW and IND-SW; the two this layer
       holds are settled prohibitions and VC-SW carries no lot
 
-  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L673"
+  - quote: "or/multnomah/gresham/4/4.1521.txt#L64"
     digest: "54a3038ad651"
     state: dismissed
     reason: >-
@@ -2217,7 +2288,7 @@ notes:
       parapet. Another use, and a floor under a building this screen does not
       place
 
-  - quote: "or/multnomah/gresham/9.0800.parking.txt#L944"
+  - quote: "or/multnomah/gresham/9/9.0851.txt#L214"
     digest: "6fc35e60ebad"
     state: dismissed
     reason: >-
@@ -2230,8 +2301,8 @@ notes:
       satisfiable inside the dwelling, which is the reading this layer already
       recorded and the reason no ground is owed to it
 
-  - quote: "or/multnomah/gresham/9.0800.parking.txt#L946"
-    digest: "aafdb5923806"
+  - quote: "or/multnomah/gresham/9/9.0851.txt#L215"
+    digest: "2ce52d976c12"
     state: dismissed
     reason: >-
       note 2 removes the auto parking MAXIMUM where the lot has no area within

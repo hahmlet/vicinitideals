@@ -320,6 +320,21 @@ def _doc_ids(paths: Iterable[str]) -> set[str]:
     return ids
 
 
+def _held_ids(store: ProvenanceStore, layer_id: str, paths: Iterable[str]) -> set[str]:
+    """The section numbers this layer's documents claim, its cut chapters included.
+
+    A cut proof copy is not listed among the documents (its words are listed
+    once, in their sections), but the chapter it was is still held: every
+    line of it is in the store. Most codes number a section under its chapter
+    (40.300 under Chapter 40), so the sections answer for the chapter by
+    prefix. Gresham does not: 10.1711 is a section of 10.1700, and once
+    10.1700 was cut its 39 mentions of "Section 10.1700" reported as a chapter
+    nobody had fetched (FOLLOWUPS 73, batch 5).
+    """
+    proofs = [p for p in store.proofs() if store.layer_of(p) == layer_id]
+    return _doc_ids(paths) | _doc_ids(proofs)
+
+
 def _spanned(head: str) -> set[str]:
     """The sections a hyphenated name covers, in whichever group it is in.
 
@@ -543,7 +558,7 @@ def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str],
     # queue on 2026-09-04; both left a comment saying the other was its
     # twin, and neither of them looked here. Fixed 2026-09-08.
     paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
-    ids = _doc_ids(paths)
+    ids = _held_ids(store, layer.layer, paths)
     headings: set[str] = set()
     for path in paths:
         text = store.text_path(path).read_text(encoding="utf-8")
@@ -567,7 +582,7 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
         return []
 
     texts = {p: store.text_path(p).read_text(encoding="utf-8") for p in paths}
-    ids = _doc_ids(paths)
+    ids = _held_ids(store, layer.layer, paths)
     headings: set[str] = set()
     for path, text in texts.items():
         own = _doc_ids([path])

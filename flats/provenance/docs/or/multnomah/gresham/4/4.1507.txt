@@ -1,0 +1,100 @@
+4.1507  PERMITTED USES
+Table 4.1507 lists those uses that are permitted in the Springwater Residential Sub-districts.
+• P = Permitted use
+• L = Use is permitted, but is limited in the extent to which it may be permitted
+• NP = Use not permitted
+• SUR = Use permitted subject to a Special Use Review
+Each of these uses must comply with the land use district standards in Section 4.1500 and all other applicable requirements of the Community Development Code.
+
+Table 4.1507: Permitted Uses in the Springwater District – Residential
+USES VLDR-SW LDR-SW THR-SW
+Residential
+Single Detached Dwelling P P NP
+Duplex P P NP
+Triplex P P NP
+Quadplex P P NP
+Townhouse P P P
+Cottage Cluster15 P P P
+Multi-Family/Shared Housing Facility1 NP NP NP
+Elderly Housing NP NP SUR
+Manufactured Dwelling Park NP NP NP
+Residential Facility P P P
+Residential Home P P P
+Affordable Housing P/L2 P/L2 P3
+Commercial
+Auto-Dependent Use NP NP NP
+Business and Retail Service and Trade NP NP NP
+Clinics NP NP NP
+Commercial Parking NP SUR SUR
+Daycare Facilities SUR SUR SUR
+Live-Work NP NP L4
+Major Event Entertainment NP NP NP
+Mini-Storage Facilities NP NP NP
+Outdoor Commercial NP NP NP
+Industrial
+Construction NP NP NP
+Exclusive Heavy Industrial NP NP NP
+Industrial Office NP NP NP
+Information Services NP NP NP
+Manufacturing NP NP NP
+Miscellaneous Industrial NP NP NP
+Trade Schools NP NP NP
+Transportation/Distribution NP NP NP
+Warehousing/Storage NP NP NP
+Waste Management NP NP NP
+Wholesale Trade NP NP NP
+Institutional Uses
+Civic Uses L/SUR SUR SUR
+Community Services SUR SUR SUR
+
+USES VLDR-SW LDR-SW THR-SW
+Medical NP NP NP
+Parks, Open Spaces, Paths, and Trails SUR SUR SUR
+Religious Institutions L/SUR3 SUR SUR
+Schools SUR SUR SUR
+Renewable Energy8
+Solar Energy Systems L9 L9 L9
+Wind Energy Systems L10 L10 L10
+Biomass Energy Systems L/SUR11 L/SUR11 L/SUR11
+Geothermal Energy Systems L12 L12 L12
+Micro-Hydro Energy Systems L13 L13 L13
+Other
+Basic Utilities
+Minor Basic Utilities
+Major Basic Utilities
+
+P
+L/SUR6
+
+P
+L/SUR
+6
+
+P
+L/SUR
+6
+Helliports14 NP NP NP
+Wireless Communication Facilities  SUR SUR SUR
+Temporary, Intermittent & Interim Uses P P P
+Marijuana Businesses NP NP NP
+Table 4.1507 Notes:
+1. Transitional housing for individuals transitioning form incarceration facilities are  subject to a Special Use Review.
+2. Affordable housing that meets the development standards of the land use district is permitted.
+When the proposed affordable housing is only permitted in the land use district under the affordable housing provisions  of Section 10.1700, the standards and criteria in that section shall apply.
+3. Affordable housing development is permitted.
+See Section 10.1700.
+4. The commercial portion of the structure shall face the street front, is limited to the first floor, and garage access must be from the alley.
+5. A fascia, awning, or painted wall sign limited to 32 square feet is permitted per each unit.
+Live -work units are permitted only for buildings fronting on a collector within 300 feet of a VC -SW zone.
+6. Limited to facilities used for religious worship with seating for 300 or fewer persons within the principal place of assembly.
+7. Electrical generating facilities are not permitted.
+8. See Section 10.0900 for additional standards that apply.
+9. For limitations, see Section 4.1595 Solar Energy System Standards for Springwater Districts.
+10. For limitations, see Section 4.1596 Wind Energy System Standards for Springwater Districts.
+11. For limitations, see Section 4.1597 Biomass Energy System Standards for Springwater Districts.
+12. For limitations, see Section 4.1598 Geothermal Energy System Standards for Springwater Districts.
+13. For limitations, see Section 4.1599 Micro-Hydro Energy System Standards for Springwater Districts.
+14. Permitted as an accessory use to Medical and Civic Use through the Special Use Review process.
+15. No more than one cottage cluster shall be permitted per parent parcel.
+
+STANDARDS

@@ -1,0 +1,16 @@
+4.0443                              WIND ENERGY STANDARDS FOR CORRIDOR DISTRICTS
+
+Wind energy systems are limited in all Corridor districts as follows:
+A.                        Scale. Small and medium scale wind energy systems are permitted in these districts.
+Large scale systems are permitted with a Special Use Review.
+B.                          Type. Roof-top and ground-mounted wind energy systems are permitted.
+C.                            Height. The following limitations on maximum height apply to all wind energy systems:
+1.                             Roof-top. Wind energy system height shall not exceed a value equal to the building height when the building height is 45 feet or less.
+For example, a 20 foot tall building could have a 20 foot tall wind energy system installed on its roof for a total height of 40 feet from the ground to top of the wind energy system.
+For buildings which exceed 45 feet in height, the wind energy system shall not exceed 45 feet maximum.
+For example, a 60-foot tall building could have a 45-foot tall wind energy system installed on its roof for a total height of 105 feet from the ground to the top of the wind energy system.
+2.                             Ground-mounted. Ground-mounted wind energy systems shall not exceed 45 feet in height.
+The height limit of 45 feet can be exceeded up to 110 feet with a Special Use  Review.
+D.                       Setbacks and Yards.
+Wind energy systems are not allowed in required front, street-side, side or rear setbacks, and are not allowed in the front or street-side yards between the building and the street.
+

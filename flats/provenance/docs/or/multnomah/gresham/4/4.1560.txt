@@ -1,0 +1,4 @@
+4.1560  OVERLAY SUB -DISTRICTS IN GENERAL
+Overlay sub-districts apply land use designations and standards that combine with the underlying zone.
+Where a conflict exists between the overlay and the underlying zone, the overlay zone applies.
+The Neighborhood Park Overlay and Community Park Overlay are intended to indicate the general location of parks, consistent with the Plan Map and Comprehensive Plan.

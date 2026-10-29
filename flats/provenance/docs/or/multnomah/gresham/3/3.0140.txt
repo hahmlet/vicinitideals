@@ -1,0 +1,36 @@
+3.0140                             RENEWABLE ENERGY RELATED TERMS AND DEFINITIONS
+
+The following definitions apply to the application of Section 10.0900, Renewable Energy and sustainability sections within design district standards.
+Battery Charging Station. See Electric Vehicle Charging Station.
+Battery Charging Unit. See Electric Vehicle Charging Unit.
+
+Battery Exchange Station. A facility that will enable an electric vehicle with a swappable battery to enter a drive lane and exchange the depleted battery with a fully charged battery.
+Biogas. A combustible gaseous fuel produced by the breakdown of organic          materials used to produce heat, steam, or electricity.
+Blade. The extensions from the hub of the wind energy turbine which are designed to catch the wind and turn the rotor to generate electricity.
+Electric Vehicle.              Any vehicle that operates, either partially or exclusively, on electrical energy either from the
+grid or an off-                             board source.
+Electric vehicle examples include vehicles such as a battery electric vehicle and a plug-                      in hybrid electric vehicle.
+Electric Vehicle Charging Station. A cluster of multiple electrical component equipment assemblies or units designed specifically to charge batteries for multiple electric vehicles on a site as a for-               profit fueling station.
+See also Battery Exchange Station.
+Electric Vehicle Charging Unit. A parking space that is served by battery charging equipment whose primary purpose is to charge batteries within electric vehicles via the transfer of electric energy (by conductive or inductive means) to a battery or other energy storage device in an electric vehicle.
+Emissivity or Emittance. Infrared emissivity (or emittance) is a measure of the ability of a surface to shed some of its heat (in the form of infrared radiation) away from the surface (i.e., roofing membrane).
+High infrared emissivity helps keep surfaces cool.
+Metallic surfaces have a low infrared emissivity.
+Photovoltaic Panel. A device used for the production of electric power through the conversion of light to electric power by semiconductor devices.
+Renewable Energy Systems. Systems which produce energy from sources that do not use up finite natural resources.
+Examples include solar, wind, biomass, geothermal, and micro-hydro.
+Solar Energy System. Equipment and devices that convert and store or transfer energy from the sun to produce electricity that is distributed to the building via an electrical panel or to the grid, offsetting electric energy that would otherwise be purchased from the utility.
+I t typically consists of two primary components:
+•                                            Photovoltaic panels or cells, which are commonly installed on the roof or the building walls or windows; and
+•                                            One or more inverters, which convert the direct current electricity produced by the panels into alternating current electricity that can be used by the building or stored in batteries.
+Solar Reflective Index. A measure of the constructed surface’s ability to reject or reflect solar heat (e.g. a roof) as shown by a small temperature rise.
+It is defined so that a standard black surface (reflectance 0.05, emittance 0.90) is 0 and a standard white surface (reflectance 0.80, emittance 0.90) is 100.
+The standard reflective index combines reflectance and emittance into one number.
+Once the maximum temperature rise of a given material has been computed, the index can be computed by interpolating between the values for white and black.
+Materials with the highest values are the coolest choices for roofing.
+Solar Water Heating System. Equipment and devices that have the primary purpose of collecting solar energy by preheating water so that the water heater or boiler reduces energy consumption.
+The system typically consists of two primary components:
+
+•                                            Solar collectors, which are commonly installed on the roof or the building walls or windows; and
+•                                            A storage tank, which is typically co-located with the water heater and in which potable water is preheated by the solar collectors via a heat exchanger.
+

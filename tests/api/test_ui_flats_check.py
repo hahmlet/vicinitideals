@@ -518,10 +518,12 @@ def test_a_number_read_off_another_table_shows_the_passage_that_sends_us_there()
         r for r in check._rows(layer, set())
         if r["zone"] == "CMF" and r["field"] == "setback_front_ft" and r["when"] == "civic_corridor"
     )
-    assert row["via"] == "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
+    # 4.0400.corridor.txt L485-L488 until Gresham was cut into sections
+    # (FOLLOWUPS 73, batch 5): note 14 is one sentence on one line of 4.0430.
+    assert row["via"] == "or/multnomah/gresham/4/4.0430.txt#L162"
     first = check._card(layer, check._Ask(row, "value"))["sheets"][0]
     assert first.get("via") and first["boxes"]
-    assert first["src"].startswith("/flats/sheet/or/multnomah/gresham/4.0400.corridor.txt")
+    assert first["src"].startswith("/flats/sheet/or/multnomah/gresham/4/4.0430.txt")
 
 
 def _hidden(text: str, name: str) -> str:

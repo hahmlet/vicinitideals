@@ -557,7 +557,10 @@ def test_a_reference_says_which_standard_it_is_standing_beside(
     """
     rows = {d.ref: d for d in dangling(layers[GRESHAM])}
 
-    beside = rows["7.0221"]
+    # Was 7.0221 until Gresham was cut into sections (FOLLOWUPS 73, batch 5):
+    # the rear-setback citation it stood beside spans two sections, so it
+    # stays on the proof copy and 7/7.0410.txt holds no value near it.
+    beside = rows["9.0901"]
     assert beside.fields == ("setback_rear_ft",)
     assert beside.slack_fields == ("setback_rear_ft",)
 
@@ -602,9 +605,12 @@ def test_the_fields_are_carried_into_the_ledger(
     with write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8") as fh:
         back = list(csv.DictReader(fh))
 
-    row = next(r for r in back if r["ref"] == "7.0221")
-    assert row["fields"] == "setback_rear_ft"
-    assert row["slack_fields"] == "setback_rear_ft"
+    # Was 7.0221 until Gresham was cut into sections (FOLLOWUPS 73, batch 5):
+    # the rear-setback citation it stood beside spans two sections, so it
+    # stays on the proof copy and 7/7.0410.txt holds no value near it.
+    row = next(r for r in back if r["ref"] == "10.0420")
+    assert row["fields"] == "quadplex_allowed min_frontage_ft min_lot_width_ft"
+    assert row["slack_fields"] == "min_frontage_ft min_lot_width_ft"
     assert row["outcome"] == "other_building"
 
 
@@ -1002,3 +1008,18 @@ def test_the_reference_that_found_it(layers: dict[str, Layer]) -> None:
     assert row.sources[0] == "zdo.316.txt"
     assert "subject to Section 843" in row.sample
     assert "1850 and 1945" not in row.sample
+
+
+def test_a_cut_chapter_is_still_held_when_its_sections_are_not_numbered_under_it() -> None:
+    """Gresham's 10.1700 holds 10.1711, 10.1733 ... -- not 10.1700.x.
+
+    Cut into section files, the proof copy leaves the document list and no
+    section number has 10.1700 as a prefix, so its 39 mentions reported as a
+    chapter nobody had fetched (FOLLOWUPS 73, batch 5).
+    """
+    from flats.encode.crossrefs import opens
+
+    layer = load_rules()["or/multnomah/gresham"]
+    held = opens(layer)
+    assert held("10.1700") and held("7.0400") and held("4.1500")
+    assert "10.1700" not in {d.ref for d in dangling(layer)}

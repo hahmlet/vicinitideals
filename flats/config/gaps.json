@@ -1,5 +1,5 @@
 {
-  "digest": "21e7404fafd739923b4544fc45f21b30508720c35049e718748f0c82fec40ea2",
+  "digest": "be7d79b0ebb95cd5e5895c421b5f40eadcf52f7a2237921f611b111247c4f33d",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -194,7 +194,7 @@
       ]
     },
     "or/multnomah/gresham": {
-      "section_unread": 395,
+      "section_unread": 95,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -203,6 +203,46 @@
           "found": "9.0802 9.0825",
           "quote": "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343,L355-L357",
           "kind": "header_or_xref"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "front_lot_line_corner",
+          "claimed": "3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L597-L602",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "front_lot_line_through",
+          "claimed": "3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L602-L606,L610-L612",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "building_frontage_corner",
+          "claimed": "3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L762-L766",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "CMF",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
+          "kind": "heading_other_file"
         },
         {
           "zone": "CMF",
@@ -217,7 +257,7 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
         },
         {
@@ -230,6 +270,22 @@
         },
         {
           "zone": "CMU",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMU",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMU",
           "field": "building_frontage_min_pct [unit_lots]",
           "claimed": "7.0420",
           "found": "7.0431",
@@ -241,7 +297,7 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
         },
         {
@@ -257,24 +313,40 @@
           "field": "review_discretion",
           "claimed": "4.1100 4.1120 4.1130",
           "found": "4.1142",
-          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957",
-          "kind": "heading_same_file"
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DEM",
           "field": "review_discretion",
           "claimed": "4.1100 4.1120 4.1130",
           "found": "4.1142",
-          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957",
-          "kind": "heading_same_file"
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DMU",
           "field": "review_discretion",
           "claimed": "4.1100 4.1120 4.1130",
           "found": "4.1142",
-          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L936-L937,L955-L957",
-          "kind": "heading_same_file"
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "building_frontage_corner",
+          "claimed": "3.0100 4.1140",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L762-L766",
+          "kind": "header_or_xref"
         },
         {
           "zone": "DRL-1",
@@ -294,6 +366,22 @@
         },
         {
           "zone": "DRL-2",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "building_frontage_corner",
+          "claimed": "3.0100 4.1140",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L762-L766",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "DRL-2",
           "field": "building_frontage_min_pct [unit_lots]",
           "claimed": "7.0420",
           "found": "7.0431",
@@ -310,6 +398,22 @@
         },
         {
           "zone": "MDR-12",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MDR-12",
           "field": "building_frontage_min_pct [unit_lots]",
           "claimed": "7.0420",
           "found": "7.0431",
@@ -321,7 +425,7 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
         },
         {
@@ -337,7 +441,23 @@
           "field": "orientation_constraint [rockwood_design_district+unit_lots]",
           "claimed": "4.0120 4.0130 4.0131 7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
           "kind": "heading_other_file"
         },
         {
@@ -353,7 +473,15 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "orientation_constraint",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "7.0420",
+          "quote": "or/multnomah/gresham/7/7.0420.txt#L165-L170",
           "kind": "heading_other_file"
         },
         {
@@ -369,7 +497,23 @@
           "field": "orientation_constraint [rockwood_design_district+unit_lots]",
           "claimed": "4.0120 4.0130 4.0131 3.0103",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "OFR",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "OFR",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
           "kind": "heading_other_file"
         },
         {
@@ -385,7 +529,7 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
         },
         {
@@ -401,7 +545,23 @@
           "field": "orientation_constraint [rockwood_design_district+unit_lots]",
           "claimed": "4.0120 4.0130 4.0131 7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "RTC",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "RTC",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
           "kind": "heading_other_file"
         },
         {
@@ -417,7 +577,7 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
         },
         {
@@ -430,10 +590,42 @@
         },
         {
           "zone": "SC",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SC",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SC",
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SC-RJ",
+          "field": "building_frontage_basis",
+          "claimed": "7.0420 7.0512 3.0100",
+          "found": "3.0103",
+          "quote": "or/multnomah/gresham/3/3.0103.txt#L1049-L1050",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SC-RJ",
+          "field": "building_frontage_less_drive [rockwood_design_district+unit_lots]",
+          "claimed": "7.0420",
+          "found": "7.0512",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L323-L330",
           "kind": "heading_other_file"
         },
         {
@@ -441,7 +633,7 @@
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
-          "quote": "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627",
+          "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
         },
         {

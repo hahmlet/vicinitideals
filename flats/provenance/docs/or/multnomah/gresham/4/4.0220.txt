@@ -1,0 +1,90 @@
+4.0220                              PERMITTED USES
+
+Table 4.0220 lists those uses that are permitted in the             Commercial                                                Land Use Districts.
+•                                            P = Permitted use
+•                                            L = Use is permitted, but is limited in the extent to which it may be permitted
+•                                            NP = Use not permitted
+•                                            SUR = Use permitted subject to a Special Use Review
+
+Each of these uses must comply with the site development requirements of Section 4.0230-                                                               4.0231 and all other applicable requirements of the Community Development Code.
+Table 4.0220: Permitted Uses in the Commercial Land Use Districts
+USES                                                                                                                                                                                                                                        NC
+RESIDENTIAL1
+Single Detached Dwelling                                                                                                                                                                                                     NP
+Duplex                                                                                                                                                                                                                       NP Triplex                                                                                                                                                                                                                      NP Quadplex                                                                                                                                                                                                                     NP Townhouse                                                                                                                                                                                                                    NP
+Cottage Cluster                                                                                                                                                                                                              NP
+Multi-Family/Shared Housing Facility                                                                                                                                                                                         NP
+Elderly Housing                                                                                                                                                                                                              NP
+Manufactured Dwelling Park                                                                                                                                                                                                   NP
+Residential Facility                                                                                                                                                                                                         NP
+Residential Home                                                                                                                                                                                                             NP
+Affordable Housing                                                                                                                                                                                                           P2
+COMMERCIAL
+Auto-Dependent Use                                                                                                                                                                                                           L3
+Business and Retail Service and Trade                                                                                                                                                                                        L4
+Clinics                                                                                                                                                                                                                      NP
+Commercial Parking                                                                                                                                                                                                           SUR
+Daycare Facilities                                                                                                                                                                                                           SUR
+Live-Work                                                                                                                                                                                                                    NP
+Major Event Entertainment                                                                                                                                                                                                    SUR
+
+USES                                                                                                                                                                                                                                              NC
+Mini-Storage Facilities                                                                                                                                                                                                           NP
+Outdoor Commercial                                                                                                                                                                                                                NP
+INDUSTRIAL
+Construction                                                                                                                                                                                                                      NP
+Exclusive Heavy Industrial Uses                                                                                                                                                                                                   NP
+Industrial Office                                                                                                                                                                                                                 NP
+Information Services                                                                                                                                                                                                              NP
+Manufacturing                                                                                                                                                                                                                     NP
+Miscellaneous Industrial                                                                                                                                                                                                          NP
+Trade Schools                                                                                                                                                                                                                     NP
+Transportation/Distribution                                                                                                                                                                                                       NP Warehousing/Storage                                                                                                                                                                                                               NP
+Waste Management                                                                                                                                                                                                                  NP
+Wholesale Trade                                                                                                                                                                                                                   NP
+INSTITUTIONAL USES
+Civic Use                                                                                                                                                                                                                         SUR
+Community Services                                                                                                                                                                                                                SUR
+Medical                                                                                                                                                                                                                           SUR
+Parks, Open Spaces, Paths, and Trails                                                                                                                                                                                             SUR
+Religious Institutions                                                                                                                                                                                                            SUR
+Schools                                                                                                                                                                                                                           SUR
+RENEWABLE ENERGY6
+Solar Energy Systems                                                                                                                                                                                                              L/SUR7
+Wind Energy Systems                                                                                                                                                                                                               L8
+Biomass Energy Systems                                                                                                                                                                                                            L9
+Geothermal Energy Systems                                                                                                                                                                                                         L/SUR10
+Micro-Hydro Energy Systems                                                                                                                                                                                                        L11
+OTHER
+Basic Utilities
+Minor basic utilities                                                                                                                                                                                                             P
+Major basic utilities                                                                                                                                                                                                             SUR
+Heliports5                                                                                                                                                                                                                        NP
+Wireless Communication Facilities                                                                                                                                                                                                 SUR
+Temporary, Intermittent & Interim Uses                                                                                                                                                                                            P
+Marijuana Businesses                                                                                                                                                                                                              L12
+
+Table 4.0220 Notes:
+1.                                    Home occupations may be permitted with a pre   -existing dwelling in the NC district.
+Temporary health hardship dwellings may be permitted with a pre  -existing single detached dwelling home in the NC district.
+2.                                    Affordable Housing Development is permitted.
+See Section 10.1700.
+
+3.                           Limited to gas stations and similar retail uses with a maximum gross floor area of 10,000 square feet.
+4.                                    Business and Retail Service and Trade are limited to the following:
+•                                               Eating and drinking establishments with a maximum gross floor area of 3,500 square feet
+•                                               Insurance, real estate, and other similar offices with a maximum gross floor area of 5,000 square feet
+•                                               Laundries, dry cleaners, barber salons, and other similar personal services with a maximum gross floor area of 5,000 square feet
+•                                               Clothing, drug stores, and similar retail trade uses with a maximum gross floor area of 10,000 square feet
+•                                               Grocery store with a maximum gross floor area of 35,000 square feet
+5.                           Permitted as an accessory use to Medical and Civic Uses through the Special Use Review process.
+6.                            See Section 10.0900                      for additional standards that apply.
+7.                           For limitations, see Section 4.0232                                                                                                  Solar Energy System Standards for Commercial Districts    .
+8.                           For limitations, see Section 4.0233                                                                                                  Wind Energy System Standards for Commercial Districts   .
+9.                           For limitations, see Section 4.0234                                                                                                  Biomass Energy System Standards for Commercial Districts    .
+10.     For limitations, see Section 4.0235                                                                                                  Geothermal Energy System Standards for Commercial Districts    .
+11.     For limitations, see Section 4.0236                                                                                                    Micro-Hydro Energy System Standards for Commercial Districts    .
+12.     For limitations, see GRC 9.63.090.
+
+COMMERCIAL LAND USE DISTRICT STANDARDS
+

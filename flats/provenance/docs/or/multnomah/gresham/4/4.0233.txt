@@ -1,0 +1,13 @@
+4.0233                             WIND ENERGY STANDARDS FOR COMMERCIAL DISTRICTS
+
+Wind energy systems are limited in all commercial districts as follows:
+A.                          Scale. Small and medium           -scale wind energy systems are permitted.
+B.                             Type. Roof-top and ground-mounted wind energy systems are permitted.
+C.                              Height. The following limitations on maximum height apply to all wind energy systems:
+1.                               Roof-top. Wind energy system height shall not exceed a value equal to the building height when the building height is 35 feet or less.
+For example, a 30-                                                 foot-tall                                              building could have a 30-foot-tall wind energy system installed on its roof for a total height of 60 feet from the ground to top of the wind energy system.
+In no case can the wind energy system exceed 35 feet in height.
+2.                               Ground-mounted. Ground-mounted wind energy systems shall not exceed 45 feet in height.
+D.                                                         Setbacks and Yards.
+Wind energy systems are not allowed in required front, street-side, side or rear setbacks and are not allowed in the front or street-side yards between the building and the street.
+

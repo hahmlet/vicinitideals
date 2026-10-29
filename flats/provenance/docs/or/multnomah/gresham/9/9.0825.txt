@@ -1,0 +1,51 @@
+9.0825                             SPACE AND AISLE STANDARDS FOR SURFACE PARKING LOTS
+
+A.                        Parking Lot Design.
+All surface parking lots shall be designed in accordance with City standards for stalls and aisles as set forth in Figure 9.0825A         .
+B.                           Type of Spaces.
+A minimum of 50  percent of vehicle parking stalls shall be of standard size, and a maximum of 50 percent of vehicle parking stalls shall be compact spaces.
+All compact spaces shall be labeled as such.
+
+C.                             Parallel Parking Space Markings.
+All parallel parking spaces used in a surface parking lot will be marked with white lines or designated as accessible parking spaces with blue lines and International Symbol of Accessibility Parking Space marking and sign, as required with current ADA regulations.
+D.                        Parallel Parking Space Dimensions.
+All parallel parking spaces will have a minimum measurement of 8 feet in width and 24 feet in length whether marked or unmarked.
+The Manager may reduce parallel parking spaces to 20 feet in length when at least 4 feet of adjacent length of maneuvering area   is available for backing or pulling into the parallel parking space (i.e., shared safety zone).
+Ta   b   l    e  9.0825A                           : Off- Street Surface Parking Matrix
+OFF-STREET SURFACE PARKING MATRIX
+REQUIRED SPACE AND AISLE DIMENTIONS IN FEET Compact                                                                                              Standard
+Parking                W                D                A1               A2                   O                  W                 D               A1                A2                   O
+Angle               Stall            Stall            One-             Two-           Overhang                 Stall             Stall           One-              Two-           Overhang
+Width            Depth              Way              Way                                    Width            Depth              Way              Way
+Aisle            Aisle                                                                     Aisle             Aisle
+Width1           Width1                                                                    Width1            Width1
+7.50             15.50             13.00            24.00            2.00                   8.50             17.50            13.00             24.00            2.00
+45°           7.75             15.50             12.00            24.00            2.00                   9.00             17.50            12.00             24.00            2.00
+7.75             15.50             11.00            24.00            2.00                   9.50             17.50            11.00             24.00            2.00
+8.00             15.50             11.00            24.00            2.00                   10.00            17.50            11.00             24.00            2.00
+7.50             17.00             18.00            24.00            2.50                   8.50             19.00            18.00             24.00            2.50
+60°           7.75             17.00             16.00            24.00            2.50                   9.00             19.00            16.00             24.00            2.50
+7.75             17.00             15.00            24.00            2.50                   9.50             19.00            15.00             24.00            2.50
+8.00             17.00             14.00            24.00            2.50                   10.00            19.00            14.00             24.00            2.50
+7.50             17.50             19.00            24.00            2.50                   8.50             19.50            19.00             24.00            2.50
+75°           7.75             17.50             19.00            24.00            2.50                   9.00             19.50            19.00             24.00            2.50
+8.00             17.50             19.00            24.00            2.50                   9.50             19.50            19.00             24.00            2.50
+10.00            19.50            19.00             24.00            2.50
+7.50             16.50             23.00            24.00            3.00                   8.50             18.50            23.00             24.00            3.00
+90°           7.75             16.50             23.00            24.00            3.00                   9.00             18.50            23.00             24.00            3.00
+8.00             16.50             23.00            24.00            3.00                   9.50             18.50            23.00             24.00            3.00
+10.00            18.50            23.00             24.00            3.00
+
+Table 9.0825A Notes:
+1.                               The minimum aisle width may vary to accommodate emergency vehicle access.
+The minimum aisle width for two-way traffic and for emergency vehicle operations area is 24 feet.
+The minimum aisle width for one-way traffic and for emergency vehicle access is 20 feet.
+
+Figure 9.0825A: Off-Street Parking Diagram
+
+Figure 9.0825A Notes:
+For one (1) row of stalls use stall depth (D) plus aisle width (A1 or A2) as minimum width.
+Public alley width may be included as part of aisle width (A1 or A2) dimension, but all stalls must be on private property, off the public right-of-way.
+For estimating available parking area, use 350 square feet per vehicle for stall, aisle, and access areas.
+Where appropriate bumper overhang area (extruded curbs) is provided, overhang (O) can be subtracted from (D) to determine stall depth.
+

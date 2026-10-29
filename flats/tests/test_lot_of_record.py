@@ -158,7 +158,8 @@ def test_note_13_is_dismissed_and_its_reasons_are_still_in_the_text() -> None:
     leaves townhouses out, so the pod takes Table 4.0430's setbacks."""
     entries = yaml.safe_load(FOOTNOTES.read_text(encoding="utf-8"))
     flat = entries if isinstance(entries, list) else [e for v in entries.values() if isinstance(v, list) for e in v]
-    (note,) = [e for e in flat if e.get("quote") == "or/multnomah/gresham/4.0400.corridor.txt#L480"]
+    # Proof copy 4.0400.corridor.txt L480 until the cut (FOLLOWUPS 73, batch 5).
+    (note,) = [e for e in flat if e.get("quote") == "or/multnomah/gresham/4/4.0430.txt#L157"]
     assert note["state"] == "dismissed"
     assert "fact" not in note
 

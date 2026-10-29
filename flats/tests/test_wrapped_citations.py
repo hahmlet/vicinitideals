@@ -27,6 +27,10 @@ pytestmark = pytest.mark.unit
 
 GRESHAM = "or/multnomah/gresham"
 DOC = f"{GRESHAM}/4.1400.pleasant-valley.txt"
+#: Table 4.1415 and its notes, cut out of DOC (FOLLOWUPS 73, batch 5); the
+#: rulings are matched there. Proof-copy lines 354, 357, 358 and 360 are
+#: section lines 99, 103, 105 and 107.
+NOTES = f"{GRESHAM}/4/4.1415.txt"
 
 
 @pytest.fixture(scope="module")
@@ -98,12 +102,12 @@ def test_the_height_transition_note_is_readable_at_last(pleasant_valley) -> None
     assert "Building height transition standards apply" in fifth.text
     assert "LDR -PV sub-district" in fifth.text
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
-    assert ruled[f"{DOC}#L357"].state == "dismissed"
+    assert ruled[f"{NOTES}#L103"].state == "dismissed"
 
 
 def test_every_new_note_is_ruled_and_none_blocks() -> None:
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
     # 350, 353, 354 and 356 until the 2026-08-27 republication moved them.
-    for line in (354, 357, 358, 360):
-        assert ruled[f"{DOC}#L{line}"].state == "dismissed"
+    for line in (99, 103, 105, 107):
+        assert ruled[f"{NOTES}#L{line}"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

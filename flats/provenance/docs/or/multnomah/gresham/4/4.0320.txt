@@ -1,0 +1,102 @@
+4.0320                              PERMITTED USES
+
+Table 4.0320 lists those uses that are permitted in each Industrial District.
+•                                            P = Permitted use
+•                                            L = Use is permitted, but is limited in the extent to which it may be permitted
+•                                            NP = Use not permitted
+•                                            SUR = Use permitted subject to a Special Use Review Each of these uses must comply with the land use district standards of this section and all other applicable requirements of the Community Development Code.
+Table 4.0320: Permitted Uses in the Industrial Land Use Districts
+USES                                                                                                                                                                    HI                                           GI
+Residential
+Single Detached Dwelling                                                                                                                             NP                                              NP
+Duplex                                                                                                                                               NP                                              NP
+Triplex                                                                                                                                              NP                                              NP
+Quadplex                                                                                                                                             NP                                              NP
+Townhouse                                                                                                                                            NP                                              NP
+Cottage Cluster                                                                                                                                      NP                                              NP
+Multi-Family/Shared Housing Facility                                                                                                                 NP                                              NP
+Elderly Housing                                                                                                                                      NP                                              NP
+Manufactured Dwelling Park                                                                                                                           NP                                              NP
+Residential Facility                                                                                                                                 NP                                              NP
+Residential Home                                                                                                                                     NP                                              NP
+Affordable Housing                                                                                                                                   NP                                              P1
+Commercial
+Auto-Dependent Use                                                                                                                                   NP                                              NP
+Business and Retail Service and Trade                                                                                                                L2                                              L2
+Clinics                                                                                                                                              L2                                              L2
+Commercial Parking                                                                                                                                   NP                                              NP
+
+USES                                                                                                                                                                                HI                                              GI
+Daycare Facilities                                                                                                                                              SUR                                                SUR
+Live-Work                                                                                                                                                       NP                                                 NP
+Major Event Entertainment                                                                                                                                       SUR                                                SUR
+Mini-Storage Facilities                                                                                                                                         NP                                                 NP
+Outdoor Commercial                                                                                                                                              NP                                                 NP
+Industrial
+Construction                                                                                                                                                    P                                                  P
+Exclusive Heavy Industrial Uses                                                                                                                                 P                                                  NP
+Industrial Office                                                                                                                                               L3                                                 P
+Information Services                                                                                                                                            NP                                                 P
+Manufacturing                                                                                                                                                   P                                                  P
+Miscellaneous Industrial                                                                                                                                        P                                                  L4
+Trade Schools                                                                                                                                                   NP                                                 P
+Transportation/Distribution                                                                                                                                     P                                                  P
+Warehousing/Storage                                                                                                                                             P                                                  P
+Waste Management                                                                                                                                                P/SUR5                                             P/SUR5
+Wholesale Trade                                                                                                                                                 NP                                                 P
+Institutional Uses
+Civic Uses                                                                                                                                                      SUR                                                SUR
+Community Services                                                                                                                                              L/SUR6                                             L/SUR6
+Medical                                                                                                                                                         NP                                                 NP
+Parks, Open Spaces, Paths, and Trails                                                                                                                           L/SUR7                                             L/SUR7
+Religious Institutions                                                                                                                                          L/SUR8                                             L/SUR8
+Schools                                                                                                                                                         L/SUR8                                             L/SUR8
+Renewable Energy9
+Solar Energy Systems                                                                                                                                            P10                                                P10
+Wind Energy Systems                                                                                                                                             L/SUR11                                            L/SUR11
+Biomass Energy Systems                                                                                                                                          L/SUR12                                            L/SUR12
+Geothermal Energy Systems                                                                                                                                       P13                                                P13
+Hydro-Micro Energy Systems                                                                                                                                      L14                                                L14
+Other
+Basic Utilities
+Minor Basic Utilities                                                                                                                                           P                                                  P
+Major Basic Utilities                                                                                                                                           SUR                                                SUR
+Heliports                                                                                                                                                       SUR                                                SUR
+Wireless Communication Facilities                                                                                                                               SUR                                                SUR
+Temporary, Intermittent & Interim Uses                                                                                                                          P                                                  P
+Marijuana Businesses                                                                                                                                            L15                                                L15
+
+Table 4.0320                                             Notes:
+1.                                  Affordable housing development is permitted:
+a.                                   On property owned by a public body, and adjacent to property where residential or school uses are permitted, or
+b.                                 When an applicant demonstrates that the title for the parcel(s) where the facility is to be developed was held by the governing body for the applicant as of April 2, 2009.
+See Section 10.1700         .
+2.                                  This includes the sale of goods and materials and of professional services to the general public      .
+Examples include restaurants, stores, mini -marts, factory outlet stores and office supplies.
+Examples of professional services that cater to daily general public customers include bank branches, financial, insurance, real estate, legal, medical and dental offices.
+In order to ensure that these uses are primarily intended to serve the needs of workers in the immediate area the following standards apply:
+The total gross leasable square footage shall not exceed 3,000 square feet per use and shall not exceed 5,000 square feet cumulative gross leasable square footage within the same development project.
+For the purposes of this section, a development project is:         a) a single building with less than 50,000 square feet of gross floor area that does not share common development features (such as access, parking, or utilities) with another building that has less than 50,000 square feet of gross floor area, whether or not the second building is located on the same or a different parcel or lot; or b) more than one building with less than 50,000 square feet of gross floor area that shares common development features (such as access, parking, or utilities) with another building that has less than 50,000 square feet of gross floor area, whether or not the buildings are located on the same or a different parcel or lot; or c) a single building with 50,000 square feet or more of gross floor area.
+Shall not be permitted in a stand-                                                alone building and instead be included within a building whose primary purpose is for an industrial use.
+3.                                  Only administrative offices which are related to the operation of the industrial use of the property are permitted in the HI.
+Up to 20 percent of the total floor area may consist of these administrative offices.
+Multiple tenant office buildings are prohibited.
+4.                                  Auto and track salvaging and wrecking are not permitted in GI.
+All other miscellaneous industrial uses located adjacent to properties that are residentially designated land shall be located at least 100 feet from the residential property.
+5.                                  Waste Management uses are permitted uses, except for solid waste transfer station, composting facilities, and landfills, which are subject to a Special Use Review.
+When located in the GI, waste management uses adjacent to residentially designated land shal  l be located at least 100 feet from the residential property.
+6.                                  The following Community Service Uses are not permitted in the HI and GI districts: adult or senior centers, drug and alcohol treatment facilities, cemeteries, and mausoleums.
+7.                                  The following Parks, Open Spaces, Paths,         and Trails are not permitted in the HI and GI districts: public urban plazas, public neighborhood parks, public community parks, and golf courses.
+However, public urban plazas, public neighborhood parks, and public community parks are permitted in the HI a      nd GI districts when an applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing body for the applicant as of April 2, 2009.
+8.                                  Religious institutions, elementary schools, middle schools and high schools are permitted in the HI and GI districts when an applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing body for the applicant as of April 2, 2009.
+9.                                  See Section 10.0900                       for additional standards that apply.
+10.           For limitations, see Section 4.0332                                                                                                  Solar Energy System Standards for Industrial Districts.
+11.           For limitations, see Section 4.0333                                                                                                  Wind Energy System Standards for Industrial Districts.
+
+12.           For limitations, see Section 4.0334                                                                                                  Biomass Energy System Standards for Industrial Districts.
+13.           For limitations, see Section 4.0335                                                                                                  Geothermal Energy System Standards for Industrial Districts.
+14.           For limitations, see Section 4.0336                                                                                                    Micro-Hydro Energy System Standards for Industrial Districts.
+15.           For limitations, see GRC 9.63.090.
+
+DEVELOPMENT STANDARDS
+

@@ -1,0 +1,117 @@
+4.1508  DEVELOPMENT STANDARDS TABLE
+The development standards listed in Table 4.1508 are applicable to all development within the Springwater Residential Sub-districts.
+Development within these Sub-districts shall also be consistent with all other applicable requirements of the Community Development Code, including but not limited to the Section 7.0400 Residential Design Standards.
+Table 4.1508: Development Standards in Springwater Residential Sub -Districts
+VLDR-SW LDR-SW THR-SW
+A. Minimum Buildable Lot Size (square feet)
+Townhouse None None 1,800 sq. ft.
+All Other Uses 10,000 sq. ft. 5,000 sq. ft. None
+B. Minimum Net Density1 (See definition of Net Density in Article 3)
+Cottage Cluster 4 units per acre 5.8 units per acre 12.0 units per acre
+All Uses None 5.8 units per acre 12.0 units per acre
+C. Maximum Net Density2 (See definition of Net Density in Article 3)
+Duplex, Triplex,
+Quadplex
+None None N/A
+Townhouses 14.4 units per acre 25 units per acre 17.4 units per acre
+Cottage Cluster None None 17.4 units per acre
+All Other Uses 3.6 units per acre 7.3 units per acre 17.4 units per acre
+D. Minimum Lot Width
+1. Width at building line: Interior lot
+Townhouse 16 ft. 16 ft. 20 ft.
+All Other Uses 75 ft. 45 ft.  20 ft.
+2. Width at building line: Corner lot
+Townhouse 20 ft. 20 ft. 25 ft.
+All Other Uses 100 ft. 45 ft. 25 ft.
+E. Minimum Lot Depth (Interior or Corner Lot)
+All Uses 100 ft. 80 ft. 65 ft.
+F. Minimum Street Frontage
+1. Interior lot
+Townhouse None None 20 ft.
+All Other Uses 50 ft. 35 ft. 20 ft.
+2. Corner lot
+Townhouse None None 20 ft.
+All Other Uses 75 ft. 40 ft. 20 ft.
+
+VLDR-SW LDR-SW THR-SW
+G. Maximum Building Height3
+All Uses 40 ft. 35 ft. 45 ft.
+H. Modifications to Maximum Height Standards
+1. Section 7.0400 Rear Height Limits
+Single Detached,
+Duplex, Triplex,
+Quadplex
+See Section 7.0400 for applicability
+See Section 7.0400 for applicability
+N/A
+All Other Uses N/A N/A N/A
+I. Maximum Floor Area Ratio (See definition in Article 3)
+Single Detached,
+Duplex, Triplex,
+Quadplex
+0.7 1.0 N/A
+All Other uses N/A N/A N/A
+J. Maximum Number of Attached Townhouses
+Townhouse 4 units 4 units  N/A
+All Other uses N/A N/A N/A
+K. Minimum and Maximum Off-Street Parking Required
+All Uses As provided in Section 9.0851
+L. Alley Access Required for Garage Entrances
+Townhouse No No Yes
+All Other uses N/A N/A N/A
+M. Buffering Required (Section 4.1535)
+All Uses No No Yes4
+N. Clear Vision Area Required (Section 9.0200)
+All Uses Yes Yes Yes
+O. Master Plan Requirements (Section 4.1531-4.1534)
+No No Yes4
+Table 4.1508 Notes
+1. Minimum net density does not apply to affordable housing development.
+See Section 10.1700.
+2. A density bonus applies to affordable housing development.
+See Section 10.1700.
+3. A height bonus applies to affordable housing development.
+See Section 10.1700.
+4. Required only in the THR-SW area adjacent to the east edge Village Center.
+
+Table 4.1508 (continued) : Minimum Setbacks
+
+FRONT SIDE REAR
+Front
+Façade/Wall
+Front Porch
+Garage
+Interior Side
+Common Wall
+Zero Lot Line
+Option
+
+Street Side
+Wall
+Street Side
+Porch
+Street Side
+Garage Access
+Rear No Alley
+Rear With
+Alley
+Townhouse
+VLDR-SW 20 ft. 8 ft. 25 ft. 5 ft. 0 ft. N/A 8 ft. 8 ft. 20 ft. 20 ft. 8 ft.
+LDR-SW 10 ft. 8 ft. 20 ft. 5 ft. 0 ft. N/A 8 ft. 8 ft. 20 ft. 15 ft. 8 ft.
+THR-SW 6 ft. 1 ft.  N/A 5 ft. 0 ft. N/A 8 ft. 8 ft. 20 ft. N/A 8 in.
+Cottage Cluster
+VLDR-SW 10 ft. 8 ft. 20 ft. 5 ft. N/A N/A 10 ft. 8 ft. 20 ft. 10 ft. 8 ft.
+LDR-SW 10 ft. 8 ft. 20 ft. 5 ft. N/A N/A 10 ft. 8 ft. 20 ft. 10 ft. 8 ft.
+THR-SW 10 ft. 8 ft. N/A 5 ft. N/A N/A 10 ft. 8 ft. 20 ft. 10 ft. 8 ft.
+All Other Uses
+VLDR-SW 20 ft. 8 ft. 25 ft. 5 ft. N/A N/A 20 ft. 8 ft. 25 ft. 20 ft. 8 ft.
+LDR-SW 10 ft. 8 ft. 20 ft. 5 ft. N/A 6 in. on zero /
+6 ft.
+other
+10 ft. 8 ft. 20 ft. 15 ft. 8 ft.
+THR-SW 8 ft. 8 ft. N/A 5 ft. N/A 6 in. on zero /
+6 ft.
+other
+8 ft. 8 ft. 10 ft.5 N/A 8 ft.
+Table 4.1508 (continued) Notes:
+5. Permitted only on side frontage more than 70 ft. in length.

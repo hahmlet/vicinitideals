@@ -1,0 +1,118 @@
+4.1423  PERMITTED USES
+Table 4.1423 lists those uses that are permitted in the mixed-use and employment sub-districts of Pleasant Valley.
+• P = Permitted use
+• L = Use is permitted, but is limited in the extent to which it may be permitted
+• NP = Use not permitted
+• SUR = Use permitted subject to a Special Use Review
+Each of these uses must comply with the land use district standards of this section and all other applicable requirements of the Community Development Code.
+Table 4.1423: Permitted Uses in the Pleasant Valley District Mixed -Use and Employment
+USES TC-PV NC-PV ME-PV
+Residential
+Single Detached Dwelling NP NP NP
+Duplex NP NP NP
+Triplex NP NP NP
+Quadplex NP NP NP
+Townhouse L1 L1 NP
+Cottage Cluster NP NP NP
+Multi-Family/Shared Housing Facility L1,3 L1,3 L2,3
+Elderly Housing SUR SUR SUR
+Manufactured Dwelling Park NP NP NP
+Residential Facility L1 L1 L2
+
+USES TC-PV NC-PV ME-PV
+Residential Home NP NP NP
+Affordable Housing P4 P4 P4
+Commercial
+Auto-Dependent Use NP NP P
+Business and Retail Service and Trade P L5 L6
+Clinics P L5 P
+Commercial Parking SUR SUR SUR
+Daycare Facilities P P P
+Live-Work7 P P P
+Major Event Entertainment L/SUR8 L/SUR8 SUR
+Mini-Storage Facilities NP NP P
+Outdoor Commercial L9 P L10
+Industrial
+Construction NP NP L11
+Exclusive Heavy Industrial Uses NP NP NP
+Industrial Office NP NP P
+Information Services NP NP P
+Manufacturing NP NP L12
+Miscellaneous Industrial NP NP NP
+Trade Schools NP NP L11
+Transportation/Distribution NP NP NP
+Warehousing/Storage NP NP NP
+Waste Management NP NP SUR
+Wholesale Trade NP NP NP
+Institutional Uses
+Civic Uses SUR SUR SUR
+Community Services SUR SUR SUR
+Medical SUR SUR SUR
+Parks, Open Spaces, Paths, and Trails L/SUR13 L/SUR13 L/SUR13
+Religious Institutions P L/SUR5 L/SUR
+Schools P/SUR15 SUR L/SUR15
+Renewable Energy16
+Solar Energy Systems L/SUR17 L/SUR17 L/SUR17
+Wind Energy Systems L/SUR18 L/SUR18 L/SUR18
+Biomass Energy Systems L19 L19 L19
+
+USES TC-PV NC-PV ME-PV
+Geothermal Energy Systems L/SUR20 L/SUR20 L/SUR20
+Micro-Hydro Energy Systems L21 L21 L21
+Other
+Basic Utilities
+Minor basic utilities
+Major basic utilities
+
+P
+L/SUR14
+
+P
+L/SUR
+14
+
+P
+SUR
+Heliports SUR SUR SUR
+Wireless Communications Facilities SUR SUR SUR
+Temporary, Intermittent & Interim Uses P P P
+Marijuana Businesses NP L22 L22
+Table 4.1423 Notes
+1. In TC-PV and NC-PV on SE Giese Road, SE 172nd Avenue, or SE 190th Avenue, 100 percent of ground floor, street-facing facades within 40 feet of the street shall be occupied by commercial or institutional uses, except that a portion of the façade area may be occupied by a residential lobby.
+Further reductions to meet building code requirements shall be permitted.
+2. Residential uses shall be permitted as part of a mixed-use building when they are not located on the ground floor.
+3. Conversion of a hotel or motel to an emergency shelter or to affordable housing is permitted.
+See Section 10.0420.
+4. Affordable housing development is permitted.
+See Section 10.1700.
+5. The maximum building footprint for any building occupied entirely by a commercial use or uses shall be 15,000 square feet.
+Larger religious institutions shall be subject to a Special Use Review.
+6. Retail uses which include the sale, lease or rent of new or used products to the general public, or the provision of product repair or services for consumer and business goods, are limited to a maximum of 60,000 square feet of gross leasable area in a single building or a single lot or parcel, or on contiguous lots or parcels, including those separated only be transportation right-of-way.
+A variance from this size limitation is prohibited.
+Where this size limitation conflicts with the commercial service and retail total floor area allowances of this table, the more restrictive size limitation shall govern.
+7. The commercial portion of the structure shall occupy the street-facing façade and commercial use is limited to the first floor.
+Where a live-work unit has an individual garage, vehicle access to the garage must be from an alley.
+A fascia, awning, or painted wall sign limited to 32 square feet is permitted per each unit.
+8. Theme parks are not permitted.
+9. Limited to mixed-use buildings (retail and non-retail or residential uses).
+Retail may be no more than 50 percent of the total floor area of the building.
+10. The maximum site size for an Outdoor Commercial Use is two acres.
+See also Section 4.142 9.
+11. Industrial uses are allowed only if the activities and storage are indoors or screened from view by a sight -obscuring fence or wall.
+12. For purposes of this table, the following uses are permitted: a ny combination of administrative, research and development, production, assembly, and testing functions.
+13. Golf courses are not permitted.
+The following additional parks, open spaces, paths, and trails are not permitted in the ME-PV district: public urban plazas, public neighborhood parks, and public community parks.
+However, public urban plazas, public neighborhood parks, and public community parks are permitted in the ME -PV district when an applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing
+
+body for the applicant as of April 2, 2009.
+14. Electrical generating facilities are not permitted.
+15. Schools are permitted without a Special Use Review if they are occupying an existing commercial space.
+Schools must pursue a Special Use Review if they are proposing new construction.
+16. See Section 10.0900 for additional standards that apply.
+17. For limitations, see Section 4.1434, Solar Energy System Standards for Pleasant Valley Districts.
+18. For limitations, see Section 4.1435, Wind Energy System Standards for Pleasant Valley Districts.
+19. For limitations, see Sections 4.1436, Biomass Energy System Standards for Pleasant Valley Districts.
+20. For limitations, see Section 4.1437, Geothermal Energy System Standards for Pleasant Valley Districts.
+21. For limitations, see Section 4.1438, Micro-Hydro Energy System Standards for Pleasant Valley Districts.
+22. For limitations, see GRC 9.63.090.
+STANDARDS

@@ -1,0 +1,43 @@
+4.0330                              DEVELOPMENT STANDARDS TABLE
+
+Table 4.0330 summarizes development standards which apply within the Industrial Land Use Districts.
+The standards contained in this table are supplemented by the referenced subsections and footnotes, which provide additional clarification and guidance.
+Table 4.0330: Development Standards for the Heavy Industrial and General Industrial Districts
+HI                                                            GI
+A. Minimum Lot Size                                                                         None: See Section 4.0331(A)                                   None: See Section 4.0331(A)
+B. Minimum Floor Area Ratio (FAR)                                                           None                                                          None
+C. Minimum Building Setbacks                                                                20 feet front & street side; 0                                20 feet front & street side; 0
+feet for interior side and rear                               feet for interior side and rear
+D. Minimum Building Height                                                                  None                                                          None
+E. Maximum Building Height                                                                  None                                                          None
+F. Height Transition Standards                                                              See Section 9.0600                                            See Section 9.0600
+G. Minimum Bicycle Parking Required                                                         See Section 9.0851                                            See Section 9.0851
+H. Maximum Off-Street Parking                                                               See Section 9.0851                                            See Section 9.0851
+I. Pedestrian Circulation and Standards                                                     See Section 7.0320                                            See Section 7.0320
+J. Screening & Buffering                                                                    See Section 9.0100                                            See Section 9.0100
+K. Landscaping                                                                              See Section 7.0320                                            See Section 7.0320
+L. Outdoor Uses and Outdoor Storage Uses                                                    Yes; 100% of the site area                                    Yes; 100% of the site area
+may include outdoor uses                                      may include outdoor uses
+and outdoor storage                                           and outdoor storage
+associated with industrial                                    associated with industrial
+uses. Screening required, see                                 uses.
+Screening required, see
+Sections 4.0331(B) and                                        Sections 4.0331(B) and
+9.0100                                                        9.0100
+M. Parking, Loading and Unloading Area                                                      See Section 4.0331(C) and                                     See Section 4.0331(C) and
+Standards                                                                                   9.0800                                                        9.0800
+N. External Effects                                                                         See Section 4.0331(D)                                         See Section 4.0331(D)
+O. Mechanical Equipment Screening                                                           See Section 4.0331(E)                                         See Section 4.0331(E)
+P. Exterior Building Treatment                                                              See Section 4.0331(F)                                         See Section 4.0331(F)
+
+HI                                                           GI
+Q. Well Field Protection                                                                   See Section 4.0331(G)                                        See Section 4.0331(G)
+R. Public Facility Site and Supplementary                                                  See Section 4.0331(H)                                                                                                                                                                                           See Section 4.0331(H)
+Requirements
+S. Stormwater Management                                                                   See Section 4.0341                                           See Section 4.0341
+T. Transit Design Criteria and Standards                                                   Yes; Development along                                       Yes; Development along
+designated Design Streets as                                 designated Design Streets as
+shown on Figure 7.0210 and                                   shown on Figure 7.0210 and
+are not exempted per                                         are not exempted per
+7.0210(C).                                                   7.0210(C).
+

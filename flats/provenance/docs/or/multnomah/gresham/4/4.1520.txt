@@ -1,0 +1,135 @@
+4.1520  PERMITTED USES
+Table 4.1520 lists those uses that are permitted in the Springwater Mixed-Use, Employment and Industrial districts.
+• P = Permitted use
+• L = Use is permitted, but is limited in the extent to which it may be permitted
+• NP = Use not permitted
+• SUR = Use permitted subject to a Special Use Review
+Each of these uses must comply with the land use district standards of this section and all other applicable requirements of the Community Development Code.
+Table 4.1520: Permitted Uses in the Springwater District Mixed- Use, Employment and Industrial
+USES VC-SW RTI-SW IND-SW20 NC-SW
+Residential
+Single Detached Dwelling NP NP NP NP
+Duplex NP NP NP NP
+Triplex NP NP NP NP
+Quadplex NP NP NP NP
+Townhouse NP NP NP NP
+Cottage Cluster NP NP NP NP
+Multi-Family/Shared Housing Facility L1,2 L2 L2 NP
+Elderly Housing SUR NP NP NP
+Manufactured Dwelling Park NP NP NP NP
+Residential Facility L1 NP NP NP
+
+USES VC-SW RTI-SW IND-SW20 NC-SW
+Residential Home NP NP NP NP
+Affordable Housing P3 P3 L4 P3
+Commercial
+Auto-Dependent Use NP NP NP L5
+Business and Retail Service and Trade L6 L7,8 L9 L10
+Clinics L11 L7 L9 NP
+Commercial Parking SUR NP NP SUR
+Daycare Facilities P SUR SUR SUR
+Live-Work P NP NP NP
+Major Event Entertainment L/SUR12 SUR SUR SUR
+Mini-Storage Facilities NP NP NP NP
+Outdoor Commercial L13 NP NP NP
+Industrial
+Construction NP NP P NP
+Exclusive Heavy Industrial Uses NP NP NP NP
+Industrial Office NP P P NP
+Information Services NP P P NP
+Manufacturing NP L21 L14 NP
+Miscellaneous Industrial NP L15 L15 NP
+Trade Schools NP P P NP
+Transportation/Distribution NP L16 L16 NP
+Warehousing/Storage NP L16 L16 NP
+Waste Management NP SUR SUR NP
+Wholesale Trade NP NP L16 NP
+Institutional Uses
+Civic Uses SUR SUR SUR SUR
+Community Services SUR L/SUR17 L/SUR17 SUR
+Medical SUR SUR NP SUR
+Parks, Open Spaces, Paths, and Trails L/SUR18 L/SUR18 L/SUR18 SUR
+Religious Institutions SUR L/SUR19 L/SUR19 SUR
+Schools P/SUR23 L/SUR19 L/SUR19 SUR
+Renewable Energy24
+Solar Energy Systems L/SUR25 P25 P25 L/SUR25
+Wind Energy Systems L/SUR26 L/SUR26 L/SUR26 L/SUR26
+Biomass Energy Systems L27 L/SUR27 L/SUR27 L27
+
+USES VC-SW RTI-SW IND-SW20 NC-SW
+Geothermal Energy Systems L/SUR28 P28 P28 L/SUR28
+Micro-Hydro Energy Systems L29 L29 L29 L29
+Other
+Basic Utilities
+Minor basic utilities
+Major basic utilities
+
+P
+SUR22
+
+P
+SUR
+
+P
+SUR
+
+P
+SUR
+Heliports SUR SUR SUR NP
+Wireless Communications Facilities SUR SUR SUR SUR
+Temporary, Intermittent & Interim Uses P P P P
+Marijuana Businesses NP L30 L30 L30
+Table 4.1520 Notes:
+1. Residential uses permitted only as part of a mixed-use building and are not permitted on ground floor.
+2. Conversion of a hotel or motel to an emergency shelter or to affordable housing is permitted.
+See Section 10.0420.
+3. Affordable housing development is permitted.
+See Section 10.1700.
+4. Affordable housing shall be owned by a public body (ORS 174.109) or a nonprofit corporation that is owned by a religious corporation, when the proposed residential use is only permitted in the land use district under the affordable housing provisions.
+See Section 10.1700.
+
+5. Limited to gas stations and similar retail uses with a maximum gross floor area of 10,000 square feet.
+6. The maximum building ground floor footprint size permitted for any building shall be 35,000 square feet, except as permitted by an approved master plan, and except for building occupied entirely by an office, in which case the maximum building ground floor footprint is 10,000 square feet, except as permitted by an approved master plan.
+
+7. Buildings for restaurants, stores, branches, agencies or other outlets for these retail uses and professional services that depend on selling goods or services to the general public shall not occupy more than 5,000 square feet of sales or services are in a single outlet, or multiple outlets that occupy more than 20,000 square feet of sales or service area in a single building or in multiple buildings that are part of the same development project.
+
+8. Casino hotels are not permitted.
+9. Buildings for Clinics, restaurants, stores, branches, agencies or other outlets for retail uses and professional services that depend on selling goods or services to the general public shall not occupy more than 3,000 square feet of sales or service area in a single outlet, or multiple outlets that occupy more than 20,000 square feet of sales or service area in a single building or in multiple buildings that are part of the same development project.
+
+10. Business and Retail Service and Trade are limited to the following:
+• Eating and drinking establishments with a maximum gross floor area of 3,500 square feet
+• Insurance, real estate, and other similar offices with a maximum gross floor area of 5,000 square feet
+• Laundries, dry cleaners, barber salons, and other similar personal services with a maximum gross floor area of 5,000 square feet
+• Clothing, drug stores, and similar retail trade uses with a maximum gross floor area of 10,000 square feet
+• Grocery store with a maximum gross floor area of 35,000 square feet
+11. The maximum building footprint for any building occupied entirely by a Clinic use or uses shall be 10,000 square feet, except as permitted by an approved master plan.
+12. Theme parks are not permitted.
+
+13. See Section 4.1527.
+14. The following types of Manufacturing are not permitted: animal slaughtering and processing, leather and hide tanning, sawmills and wood preservation, paper manufacturing, petroleum and coal products manufacturing, chemical manufacturing (except pharmaceutical and medicine manufacturing is permitted) cement manufacturing, lime manufacturing, and primary metals manufacturing.
+15. Limited to electrical and precision equipment repair, and commercial/industrial machine repair.
+16. Permitted as an ancillary use to a permitted use.
+No more than 20  percent of the building floor area may be devoted to these uses.
+17. The following Community Service uses are not permitted in the RTI-SW and IND-SW districts: adult or senior centers, drug or alcohol treatment facilities, cemeteries, and mausoleums.
+18. Golf courses are not permitted in the VC-SW, RTI-SW, or IND-SW districts.
+The following additional Parks, Open Spaces, Paths, and Trails are not permitted in the RTI-SW or IND-SW districts: public urban plazas, public neighborhood parks, and public community parks.
+However, public urban plazas, public neighborhood parks, and public community parks are permitted in the RTI-SW and IND-SW districts when an applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing body for the applicant as of April 2, 2009.
+19. Religious institutions, elementary schools, middle schools, and high schools are permitted in the RTI -SW and IND-SW districts when an applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing body for the applicant as of April 2, 2009.
+Elementary schools, middle schools, and high schools are permitted in the RTI-SW pending city approval of a report that specifically addresses 1) t he lack of available non-employment designated land in the vicinity; and 2) specifically addresses need and location of multi -modal connections (such as trails and local streets) between the proposed school site and adjacent Springwater residential neighborhoods.
+20. For those legally existing parcels currently designated in the Multnomah County West of Sandy River Rural Area Plan as Orient Commercial-Industrial (OCI), those uses allowed under Section 36.3525 of the adopted West of Sandy River Plan are adopted as permitted uses in the Springwater Industrial District (IND-SW).
+For purposes of this Section, only those parcels  and allowed uses in effect as part of Section 36.3525, West of Sandy Plan, effective as of the date of the Springwater Plan Adoption would be permitted uses.
+All other applicable standards of the Springwater Plan would apply.
+Permitted uses are not required to meet approval criteria of West of Sandy Plan Section 36.3527.
+21. Permitted as an accessory use.
+22. Electrical Generating Facilities are not permitted.
+23. Schools are permitted without a Special Use Review if they are occupying an existing commercial space.
+Schools must pursue a Special Use Review if they are proposing new construction.
+24. See Section 10.0900 for additional standards that apply.
+25. For limitations, see Section 4.1595 Solar Energy System Standards for Springwater Districts.
+26. For limitations, see Section 4.1596 Wind Energy System Standards for Springwater Districts.
+27. For limitations, see Section 4.1597 Biomass Energy System Standards for Springwater Districts.
+28. For limitations, see Section 4.1598 Geothermal Energy System Standards for Springwater Districts.
+29. For limitations, see Section 4.1599 Micro-Hydro Energy System Standards for Springwater Districts.
+30. For limitations, see GRC 9.63.090.
+
+STANDARDS

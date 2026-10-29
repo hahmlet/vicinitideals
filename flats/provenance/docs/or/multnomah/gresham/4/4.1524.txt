@@ -1,0 +1,7 @@
+4.1524  BUILDING HEIGHT
+A. Minimum and maximum building heights are specified in Table 4.1521.
+Any required building story must contain a habitable floor.
+B. The minimum building height standard applies, with the following exceptions, to new commercial, residential, and mixed-use buildings.
+It does not apply to institutional buildings, accessory structures, or to buildings with less than 1,000 square feet of floor area.
+C. In the VC zone, in addition to conforming to the Ground Floor Windows requirements of Section 7.0210
+(5), for any new commercial or mixed-use building subject to a two-story height minimum, at least 20 percent of the upper façade area shall be made up of display areas or windows for all facades facing a street.

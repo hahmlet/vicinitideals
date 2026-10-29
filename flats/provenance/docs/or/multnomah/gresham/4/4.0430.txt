@@ -1,0 +1,174 @@
+4.0430                              DEVELOPMENT STANDARDS
+
+Table 4.0430, below, summarizes development standards which apply in the Corridors Districts.
+The standards contained in this table are supplemented by referenced subsections which provide additional clarification or guidance.
+Furthermore, the regulations of Section 7.0100 Corridor Design District Design Guidelines and Standards, Section 7.0400 Residential Design Standards, and Section 7.0500  Rockwood Design District Design Guidelines and Standards may also apply.
+
+Table 4.0430: Development Requirements for Corridor Districts
+RTC                                         SC                                        SC-RJ                                    CMF14                                   CMU                                       CC                             MC
+A. Minimum Lot                             10,000 sq. ft. for                        10,000 sq. ft. for                        10,000 sq. ft. for                               10,000 sq.                        10,000 sq. ft. for                          None                               None
+Size (Section                        residential, none                         residential, none                         residential, none for                            ft.6, 7                           residential; none
+4.0431)                              for commercial,                           for commercial,                           commercial,                                                                        for commercial,
+institutional and                         institutional and                         institutional, mixed-                                                              institutional and
+mixed-use6                                mixed-use6, 7                             use, & industrial6, 7                                                              mixed-use6, 7
+B. Minimum                                 100 ft. for                               100 ft. for                               100 ft. for                                      100 ft. for                       100 ft. for                                 None                               None
+Street                               residential; none                         residential; none                         residential; none for                            residential8, 11                  residential; none
+Frontage                             for commercial,                           for commercial,                           commercial,                                                                        for commercial,
+(Section                             institutional                                   and institutional and               institutional, mixed-                                                              institutional and
+4.0431)                              mixed-use11                               mixed-use8, 11                            use & industrial8, 11                                                              mixed-use8,11
+C.    Minimum Lot                          0.5 : 1 for                               0.5 : 1 for                               0.5 : 1 for                                      0.5 : 1 for                       0.5 : 1 for                                 None                               None
+Width/ Depth                         residential; none                         residential; none                         residential; none for                            residential6                      residential; none
+Ratio (Section                       for commercial,                           for commercial,                           commercial,                                                                        for commercial,
+4.0431)                              institutional and                         institutional and                         institutional, mixed-                                                              institutional and
+mixed-use6                                mixed-use6                                use & industrial6                                                                  mixed-use6
+D. Minimum                                 0.5 : 1                                   0.6 : 1                                   0.6 : 1 for                                      None                              None, except 0.4 :                          None, except                       None,
+Floor Area                                                                                                               commercial,                                                                        1 in Central                                0.4 : 1 in                         except 0.4 :
+Ratio (FAR)                                                                                                              institutional and                                                                  Rockwood Plan                               Central                            1 in Central
+(Section                                                                                                                 mixed-use uses;                                                                    Area10                                      Rockwood                           Rockwood
+4.0432)                                                                                                                  none for industrial                                                                                                            Plan Area10                        Plan Area10
+E.    Minimum                              18 units per acre                         18 units per acre                         18 units per acre for                            12 units per                      12 units per acre                           12 units per                       12 units per
+Residential                          for Townhouses;                           for Townhouses;                           Townhouses; 24                                   acre                                                                          acre                               acre
+Net Density15                        20 units per acre                         24 units per acre                         units per acre for
+(See definition                      for multi-          family                for multi-          family                multi-family
+of Net Density in Article 3)
+
+RTC                                              SC                                             SC-RJ                                         CMF14                                        CMU                                            CC                                 MC
+F.     Maximum                                  Unlimited inside                               60 units per acre                              60 units per acre                                      24 units per                          24 units per acre                                 40 units per                          40 units per
+Residential                              Stark/Burnside/                                                                                                                                      acre                                                                                    acre                                  acre
+Net Density16                            181st Ave.
+(See definition                          Triangle; 40 units
+of Net Density                           per net acre
+in Article 3)                            elsewhere
+G. Minimum                                      Setbacks at                                    Setbacks at                                    Setbacks at Street                                     5 feet front                          5 feet front and                                  0 feet front                          0 feet front
+Building                                 Street: See                                    Street: See                                    (Not including                                         and street-                           street-                side; 15                   and street-                           and street-
+Setbacks                                 Section                                        Section                                        industrial): See                                       side; 15 feet                         feet rear; 0 feet                                 side, interior                        side,
+(Sections                                7.0512.A.2                                     7.0512.A.2                                     Section 7.0512.A.2                                     rear; 0 feet                          interior side.1                                   side, and                             interior
+4.0433 and                                                                                                                                                                                    interior side.1                                                                         rear.                                         side, and
+7.0512.A.2)                              Commercial,                                    Commercial,                                    Commercial, Mixed-                                                                                                                                                                   rear.
+Mixed-Use, and                                 Mixed-Use, and                                 Use, and
+Institutional:                                 institutional:                                 Institutional:
+0 feet front, side,                            0 feet front, side,                            0 feet front, side
+and rear                                       and rear                                       and rear
+
+Residential:                                   Residential:                                   Residential:
+5 feet front and                               5 feet front and                               5 feet front and
+street-                 side, 0                street-                 side, 0 feet           street-                 side, 0 feet
+feet interior side,                            interior side, 15                              interior side, 15 feet
+15 feet rear.1, 13                             feet rear.1, 13                                rear1, 13
+
+Industrial Uses: See
+Table 4.0330
+H. Maximum                                      Setbacks at                                    Setbacks at                                    Setbacks at Street                                     20 feet front                         20 feet front and                                 10 feet front                         10 feet
+Building                                 Street: See                                    Street: See                                    (not including                                         and street-                           street-                side3a;                    and street-                           front and
+Setbacks                                 Section                                        Section                                        Industrial): See                                       side3a; None                          None for rear and                                 side3b, 3c;                           street-
+(Sections                                7.0512.A.2                                     7.0512.A.2                                     Section 7.0512.A.2                                     for rear and                          interior side.
+None for rear                         side3b, 3c;
+4.0433                                                   and                                                                                                                                  interior side.                                                                          and interior                          None for
+7.0512.A.2)                                                                                                                                                                                                                                                                           side.                                 rear and
+RTC                                                           SC                                                           SC-RJ                                                     CMF14                                                     CMU                                                         CC                                           MC
+Commercial,                                                All Development:                                             Residential,                                                                                                                                                                                                                           interior
+Mixed-Use, and                                             20 feet front and                                            Commercial, Mixed-                                                                                                                                                                                                                     side.
+Institutional:                                             street-                side3a;                               Use, and
+10 feet front and                                          None for rear                                                Institutional:
+street-                side.2                              and interior side.                                           20 feet front and
+None for interior                                                                                                       street-                side3a; none
+side and rear.                                                                                                          for read and interior side.
+Residential:
+20 feet front and                                                                                                       Industrial:
+street-                side3a;                                                                                          No maximum.
+None for interior side and rear.
+I.       Maximum                                              Inside the                                                 10 stories12, 18                                             10 stories12, 18                                                      45 feet18                                       45 feet18                                                       45 feet                                          45 feet
+Building                                             Triangle Area:
+Height17                                             Commercial and
+(Section                                             Institutional: 6
+4.0434)                                              stories; Buildings that include other uses: 4 stories;
+Outside the
+Triangle: 10 stories for all uses12, 18
+J.       Maximum                                              As provided in                                             As provided in                                               As provided in                                                        8                                               6                                                               NA                                               NA
+Number of                                            Section                                                    Section                                                      Section 7.0512.B.1
+Attached                                             7.0512.B.1                                                 7.0512.B.1
+Townhouses
+
+RTC                                                   SC                                                   SC-RJ                                             CMF14                                             CMU                                                 CC                                     MC
+K.     Minimum Off-                                   None                                               None                                                 None                                                        None                                      None                                                   None                                       None
+Street Parking
+Required
+L.     Maximum Off-                                   2 spaces/unit for                                  1.5 spaces/unit                                      1.5 spaces/unit for                                         As provided                               As provided in                                         As provided                                As provided
+Street Parking                                 residential4, 5; all                               for residential4, 5;                                 residential4, 5; all                                        in Section                                Section 9.08514, 5                                     in Section                                 in Section
+Permitted                                      other uses see                                     all other uses see                                   other uses see                                              9.08514                                                                                          9.08515                                    9.08515
+Section 9.0851                                     Section 9.0851                                       Section 9.0851
+M. Screening and                                      No except where                                    No except where                                      No, except where                                            Yes9                                      Yes9                                                   Yes                                        Yes
+Buffering                                      abutting LDR-5,                                    abutting LDR-5,                                      abutting CMF.
+In
+Required                                       LDR-7, TR, TLDR,                                   LDR-7, TR, TLDR,                                     addition, auto-
+(Section                                       CMF or CMU9                                        CMF or CMU9                                          dependent
+9.0100)                                                                                                                                                commercial, outdoor commercial and industrial uses shall provide a buffer per Table 9.0111(A)9
+N. Clear Vision                                       Yes                                                Yes                                                  Yes                                                         Yes                                       Yes                                                    Yes                                        Yes
+Area Required
+(Section
+9.0200)
+
+Table 4.0430 Notes
+1.                                   Minimum setbacks for Townhouses (except in those areas of CMF along the NE Glisan Street and NE 162       nd Avenue corridors (see table note 16) are:
+(a)                    Front Yard:
+(i)                              Front façade = 5 feet
+(ii)                    Front Porch = 3 feet
+(iii)          Garage = 20 feet
+(b)                  Side Yard:
+(i)                              Interior = 5 feet for any side of a dwelling structure that is not a common wall with another dwelling structure;
+(ii)                     Interior – Common: 0 feet
+
+(iii)          Street side (corner lot): Façade = 5 feet’ Porch = 5 feet; Garage with access from street side = 20 feet.
+(c)                      Rear Yard = 10 feet if there is no alley; 5 feet if there is an alley.
+2.                                  A maximum front or streetside setback of up to twenty (20) feet may be permitted when enhanced pedestrian spaces and amenities are provided that comply with                           Section 7.0112.A.5.S1 and S2.
+3.                                  The following setback standards apply:
+a.                                   When abutting a Major Arterial, a Minor Arterial , or Boulevard street, the maximum front or streetside setback for a building containing dwelling units is thirty (30) feet.
+The maximum front or streetside setback may be exceeded when enhanced pedestrian spaces and amenities are provided that comply with Section 7                                        .0112.A.5.S1 and S2.
+b.                                 When abutting a Major Arterial, a Minor Arterial , or Boulevard street, the                     maximum front or streetside setback for a building containing commercial uses is ten (10) feet.
+The maximum front or streetside setback may be exceeded when enhanced pedestrian spaces    and amenities are provided per Section 7.01        12.A.5.S1                       and S2.
+c.                                      When abutting a Collector, Community or Local streets, the maximum front or streetside                  setback is five (5) feet.
+The maximum front or streetside setback may be exceeded when enhanced pedestrian spaces and amenities are provided that comply with Section 7.01                                   12.A.5.S1 and S2.
+4.                                  There is no maximum parking limitation for Townhouses.
+5.                                  For commercial uses, when included in a mixed-use development, the maximum amount of off-                        street parking shall
+be as provided in Section 9.0850                                                                                                                           for each commercial use.
+6.                                  Minimum lot size and lot width/depth ratio standards do not apply to lots or parcels created for Townhouses.
+Minimum lot dimensions for Townhouse lots (except in those areas of CMF along the NE Glisan Street and NE 162nd Avenue corridors see table note 18) are as follows:
+Width at building line
+Interior Lot 16 feet (lots of less than 22 feet in width shall take access from an alley or from a shared access) Corner Lot 16 feet where it abuts an alley 25 feet where there is no alley or shared access
+Depth 0 feet -          all developments that include townhouses shall receive both land division approval      to create lots
+for the townhouses as required in Section 6.0001, and design review approval                                                                                                                                as required in Section 7.0001.
+7.                                  There is no minimum lot size requirement for duplexes in the SC, CMF and CMU districts.
+8.                                  Minimum street frontage for duplex in the SC, CMF (except in those areas along the NE Glisan Street and NE 162nd Avenue corridors see table note 14) and CMU districts is 35 feet, except corner lots shall be 40 feet as measured from the corner radius end point to the property corner.
+9.                                  Screening and buffering are not required for townhouses abutting the LDR     -5, LDR-                                                  7, TLDR, or TR District.
+10.           The Central Rockwood Plan Area is the area shown as Central Rockwood Plan Land Use Districts on Figure 1 of Appendix 39, Volume 1 of the Gresham Community Development Plan.
+11.           Minimum street frontage for townhouses shall be 16 feet, except corner lots shall be 25 feet as measured from the corner radius end point to the property corner if there is an alley or shared access, and 32 feet from the corner radius end point to the property corner if there is no alley or shared access.
+A reduction in the minimum street frontage may be approved when the applicant can document compliance with                             Section 10.1520                      of the Community Development
+Code.
+12.           Within the Rockwood Design District:
+a.                                   Triangle Area.
+For lands in the Triangle Area as described in Section 7.05         10                                             buildings shall not exceed six stories for buildings with exclusively commercial and/or institutional uses and four stories in height for buildings that include other uses.
+b.                                 Outside Triangle Area.
+For lands in the Outside Triangle Area as described in Section 7.0510                                             buildings shall not exceed ten (10) stories in height.
+See Section 7.0512.B.6                                             Gateways for additional building height requirements for properties at the three gateway street intersections of:
+a.                                   181st and Burnside
+b.                                 181st and Stark
+
+c.                                      Burnside and Stark
+13.           Within the Rockwood Design District:
+a.                                   Triangle Area.
+See Section 7.05                               12.A.2 Building Frontage and Placement for minimum and maximum front building setbacks.
+b.                                 Outside Triangle Area.
+See Section 7.0                              512.A.2                       Building Frontage and Placement for minimum and maximum front building setbacks.
+14.           Single detached dwellings and middle housing in the areas of CMF along the NE Glisan Street and NE 162nd Avenue corridors shall conform with development standards of Tables 4.0130                                                                                                       and 4.0131                                                                   for the TLDR district, except minimum net density for middle housing shall be 12 units per acre and maximum density shall be 25 units per acre for townhouses and 24 units per acre for all other middle housing uses.
+15.           Minimum residential net density does not apply to affordable housing development.
+See        Section 10.1700.
+16.           A density bonus applies to affordable housing development.
+See Section 10.1700.
+17.           A height bonus applies to affordable housing development.
+See Section 10.1700.
+18.           Height limitations for Townhouses (except in the areas of CMF along the NE Glisan Street and NE 162nd Avenue corridors, see table note 14) shall be as follows:
+(i)                              Minimum Building Height:
+CMU and CMF districts: 1 Story
+All other districts: 2 Stories
+(ii)                    Maximum Building Height: 45 feet
+

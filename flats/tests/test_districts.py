@@ -629,6 +629,37 @@ RULINGS: dict[str, dict[str, str]] = {
             "the allowed-use column beside 'P'."
         ),
         "L/SUR": "not-a-zone: the same legend cell in GRC 4.1400's use table.",
+        # 2026-10-28, surfaced when Gresham was cut into readable sections
+        # (FOLLOWUPS 73, batch 5): one sentence to a line, so a parenthesis
+        # wrapped away from the words it abbreviates now sits beside them.
+        "FAR": "not-a-zone: floor area ratio, a measure (4.1130, 'floor area ratio (FAR)').",
+        "FHBM": (
+            "not-a-zone: the Flood Hazard Boundary Map, a federal map (3.0103, "
+            "'Zone A on the Flood Hazard Boundary Map (FHBM)')."
+        ),
+        "GRC": (
+            "not-a-zone: the Gresham Revised Code, the city's general code "
+            "(4.1220 note 2, 'see Gresham Revised Code (GRC) 9.63.090')."
+        ),
+        "OCI": (
+            "not-a-zone: Orient Commercial-Industrial, a designation of "
+            "Multnomah County's West of Sandy River Rural Area Plan that "
+            "4.1520 note 20 names for legally existing parcels; it is the "
+            "county plan's, not a Gresham zoning district."
+        ),
+        "PD": (
+            "not-a-zone: a Planned Development, a type of land division "
+            "(3.0103, 'Planned Development (PD). A type of residential land "
+            "division')."
+        ),
+        "S2": "not-a-zone: a standard number, 4.1152(A)(1)(S2), not a district.",
+        "S4": "not-a-zone: a standard number, 7.0512(A)(5)(S2)-(S4), not a district.",
+        "S5": "not-a-zone: a standard number, 7.0512(A)(5)(S2)-(S5), not a district.",
+        "S9": "not-a-zone: a standard number, 7.0512(A)(1)(S9), not a district.",
+        "USGS": (
+            "not-a-zone: the United States Geological Survey, named in the "
+            "3.0120 definition of Hydrologic Unit Codes."
+        ),
     },
     "or/multnomah/portland": {
         "IC": (

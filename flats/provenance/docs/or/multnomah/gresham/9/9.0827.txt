@@ -1,0 +1,29 @@
+9.0827                             ELECTRIC VEHICLE CHARGING UNITS
+
+A.                        Electric Charging Readiness.
+Newly constructed multi-          family residential buildings with five or more residential dwelling units, and newly constructed mixed-use buildings consisting of privately owned commercial space and five or more residential dwelling units, shall provide sufficient electrical service capacity, as defined in ORS 455.417, to accommodate no less than 40 percent of all vehicle parking spaces serving the residential dwelling units.
+Dwelling units in townhouses are not included for                the purpose of determining the applicability of this regulation.
+1.                              Per ORS 455.417 the affected parking spaces must have:
+a.                             Building electrical service, sized for the anticipated load of electric vehicle charging stations, that has overcurrent devices necessary for electric vehicle charging stations or has adequate space to add the overcurrent devices; or
+b.                           Designated space within a building to add electrical service with capacity for electric vehicle charging stations; or
+c.                                 A designated location on building property, in or adjacent to a landscaped area, for installing remote service for electric vehicle charging stations; and
+d.                           A conduit system installed from building electrical service, or from the dedicated location, to parking spaces that can support, at a minimum, electrical wiring for installation of level 2 electric vehicle charging stations, and if the conduit is for future installation of electric vehicle charging stations, that labels both ends of the conduit to mark the conduit as provided for future electrical vehicle charging stations.
+2.                             Installed electric vehicle charging units count towards the requirements listed in 9.0827(A)1.
+3.                             Newly constructed commercial buildings should reference the building code and ORS 455.417(3)(a)(A) for required electrical service capacity and the percentage                                   of parking spaces affected.
+B.                          Electric vehicle charging units, either public or restricted, shall comply with the following requirements:
+1.                             Electric Vehicle Charging Unit Placement. The first electric vehicle charging unit in a public parking lot shall be accessible for all potential users and shall provide access for people using mobility devices at the unit itself.
+
+2.                             Parking Space Size. A standard size parking space or an ADA accessible compliant accessible parking space shall be used for an electric vehicle charging unit where such a unit is planned.
+3.                             Signage.
+a.                             Each electric vehicle charging unit space shall be posted with signage indicating the space is for electric vehicle charging purposes.
+b.                           Necessary safety information, directions and identification of voltage/amperage levels and ADA accessibility signs, if an ADA exclusive space, shall also be included.
+c.                                 Time limits may be placed on the number of hours that an electric vehicle is allowed to charge.
+Days and hours of operations shall be included if time limits or tow-away provisions are to be enforced.
+d.                           Any other signage, such as advertising signage, is subject to the standards of Appendix 6.
+4.                             Charging Unit Equipment.
+a.                             Electric vehicle charging unit outlets and operable parts shall be no less than 18 inches off the ground if indoors and 24 inches off the ground if outdoors and no higher than 48 inches off the ground to ensure easy access.
+b.                           Electric vehicle charging units shall contain a retraction device, a place to hang permanent cords and connectors sufficiently above the ground, or some other mechanism to ensure that the equipment does not become a safety liability.
+c.                                 Electric vehicle charging units are not required to be screened as mechanical units.
+
+BICYCLE PARKING
+

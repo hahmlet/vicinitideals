@@ -109,7 +109,9 @@ def test_a_variant_quoting_its_own_text_does_not_inherit_the_base_cross_referenc
     front = gresham.zones["CMF"].values["setback_front_ft"]
     assert front.prov.via is None
     corridor = next(v for v in front.variants if v.when == ("civic_corridor",))
-    assert corridor.prov.via == "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
+    # Proof copy 4.0400.corridor.txt L485-L488 until Gresham was cut into
+    # sections (FOLLOWUPS 73, batch 5); note 14 is one sentence, one line.
+    assert corridor.prov.via == "or/multnomah/gresham/4/4.0430.txt#L162"
 
 
 def test_a_split_table_cell_carries_the_passage_that_splits_it() -> None:

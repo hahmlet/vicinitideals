@@ -1,0 +1,21 @@
+4.14 35  WIND ENERGY STANDARDS FOR PLEASANT VALLEY  DISTRICTS
+Wind energy systems are limited in Pleasant Valley districts as follows (these standards may be restricted by 5.0700 Natural Resource Overlay):
+A. Scale.
+1. LDR-PV: Small scale wind energy systems are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Small and medium scale wind energy systems are permitted in these districts.
+Large scale systems are permitted with a Special Use Review.
+B. Type.
+1. LDR-PV: Roof-top wind energy systems are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Roof-top and ground-mounted wind energy systems are permitted in these districts.
+C. Height.
+1. LDR-PV: The following limitations on maximum height apply to all wind energy systems in these districts:
+a. Roof-top. Wind energy systems shall not exceed the district height limit in which they are located and shall not exceed 10 feet above the height of the roof on which the system is installed.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: The following limitations on maximum height apply to all wind energy systems in these districts:
+a. Roof-top. The height of roof-top wind energy systems shall not exceed a value equal  to the building height when the building height is 45 feet or less.
+For buildings which exceed 45 feet in height, the wind energy system shall not exceed 45 feet maximum.
+
+b. Ground-mounted. The height of ground-mounted wind energy systems shall not exceed 45 feet as measured from the grade at the base of the equipment to the top of the system.
+The height limit of 45 feet can be exceeded up to 110 feet with a Special Use Review.
+D. Setbacks and Yards.
+1. LDR-PV: Wind energy systems are not allowed in the required front, street-side, side or rear setbacks or in any yards in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Wind energy systems are not allowed in the required front, street-side, side or rear setbacks and are not allowed in the front or street-side yard between the building and the street in these districts.

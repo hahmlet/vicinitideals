@@ -1,0 +1,83 @@
+4.1431 PERMITTED USES
+Table 4.1431 lists the types of land uses that are permitted in the Public Land sub-district of Pleasant Valley.
+• P = Permitted Use
+• L = Use is permitted, but is limited in the extent to which it may be permitted
+• NP = Use not permitted
+• SUR = Use permitted subject to a Special Use Review
+Each of these uses must comply with the land use district standards of this section and all other applicable requirements of the Community Development Code.
+Table 4.143 1: Permitted Uses in the Pleasant Valley District Public Land Sub- District
+USES PL-PV
+Residential
+Single Detached Dwelling NP
+Duplex NP
+Triplex NP
+Quadplex NP
+Townhouse NP
+Cottage Cluster NP
+Multi-Family NP
+Elderly Housing NP
+Manufactured Dwelling Park NP
+
+USES PL-PV
+Residential Facility NP
+Residential Home NP
+Affordable Housing P1
+Commercial
+Auto-Dependent Use NP
+Business and Retail Service and Trade NP
+Clinics NP
+Commercial Parking NP
+Daycare Facilities NP
+Live-Work NP
+Major Event Entertainment NP
+Mini-Storage Facilities NP
+Outdoor Commercial NP
+Industrial
+Construction NP
+Exclusive Heavy Industrial Uses NP
+Industrial Office NP
+Information Services NP
+Manufacturing NP
+Miscellaneous Industrial NP
+Trade Schools NP
+Transportation/Distribution NP
+Warehousing/Storage NP
+Waste Management NP
+Wholesale Trade NP
+Institutional Uses
+Civic Uses SUR
+Community Services SUR
+Medical NP
+Parks and Open Spaces SUR
+Religious Institutions  NP
+Schools P
+Renewable Energy2
+Solar Energy Systems L/SUR3
+
+USES PL-PV
+Wind Energy Systems L/SUR4
+Biomass Energy Systems L5
+Geothermal Energy Systems L/SUR6
+Micro-Hydro Energy Systems L7
+Other
+Basic Utilities
+Minor Basic Utilities
+Major Basic Utilities
+
+P
+L/SUR8
+Heliports NP
+Wireless Communications Facilities SUR
+Temporary, Intermittent and Interim Uses P
+Marijuana Businesses NP
+Table 4.1431 Notes
+1. Affordable housing development is permitted.
+See Section 10.1700.
+2. See Section 10.0900 for additional standards that apply.
+3. For limitations, see Section 4.1434 Solar Energy System Standards for Pleasant Valley Districts.
+4. For limitations, see Section 4.1435 Wind Energy System Standards for Pleasant Valley Districts.
+5. For limitations, see Section 4.1436 Biomass Energy System Standards for Pleasant Valley Districts.
+6. For limitations, see Section 4.1437 Geothermal Energy System Standards for Pleasant Valley Districts.
+7. For limitations, see Section 4.1438 Micro-Hydro Energy System Standards for Pleasant Valley Districts.
+8. Electrical generating facilities are not permitted.
+STANDARDS

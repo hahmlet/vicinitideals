@@ -1,0 +1,24 @@
+4.14 34  SOLAR ENERGY STANDARDS FOR PLEASANT VALLEY  DISTRICTS
+Solar energy systems are limited in Pleasant Valley districts as follows (these standards may be restricted by
+Section 5.0700 Natural Resource Overlay):
+A. Scale.
+1. LDR-PV: Small scale solar energy systems are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Small and medium scale solar energy systems are permitted in these districts.
+Large scale systems are permitted with a Special Use Review.
+B. Type.
+1. LDR-PV: Roof-top, flat-roof, integrated and ground-mounted solar energy systems are permitted in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: Roof-top, flat-roof, integrated and ground-mounted solar energy systems are permitted in these districts.
+C. Height.
+1. LDR-PV: The following limitations on maximum heigh apply to all solar energy systems in these districts.
+
+a. Roof-top, Flat-roof, and Integrated.
+Solar energy systems shall not exceed the district height limit in which they are located and shall not exceed the roof height on which the system is installed.
+b. Ground-mounted. Ground-mounted solar energy systems shall not exceed 6 feet in height.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV, and PL-PV: The following limitations on maximum height apply to solar energy systems in these districts:
+a. Roof-top, Flat-roof and Integrated.
+i. For roofs that are flat or the horizontal portion of mansard roofs, the solar energy systems on frames shall not exceed 10 feet above the roof height on which the system is installed.
+ii. For pitched, hipped or gambrel roofs, the solar energy system panels shall not exceed 18 inches in height from the surface of the roof on which the system is installed.
+b. Ground-mounted. Ground-mounted solar energy systems shall not exceed 20 feet in height.
+D. Setbacks and Yards.
+1. LDR-PV: Solar energy systems are not allowed in the required front, street-side or side setbacks and are not allowed in the front yard between the building and the street in these districts.
+2. MDR-PV, HDR-PV, TC-PV, NC-PV, ME-PV and PL-PV: Solar energy systems are not allowed in the required front or street-side setbacks.

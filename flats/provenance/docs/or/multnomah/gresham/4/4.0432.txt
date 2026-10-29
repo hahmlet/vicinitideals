@@ -1,0 +1,15 @@
+4.0432                             FLOOR AREA RATIO
+
+A.                         The minimum floor area ratios contained in Table 4.0430 apply to non-residential and mixed-use development.
+Alterations to existing development are exempt from the minimum FAR standard.
+For mixed-use developments in areas with a minimum commercial FAR and a minimum residential density requirement, minimum FAR and residential density requirements are satisfied when consistent with the following formula:
+
+Number of Proposed Dwelling Units                                                                                                                                                      +                                                                                                                           Proposed Commercial Floor Area                                                                                                                                                                                                          ≥ 1
+Minimum Number of Units Required                                                                                                                                                                                                                                                                                                  Minimum Required Commercial Floor Area
+
+B.                          Sites that have all the following characteristics shall calculate their minimum required floor area using a site area equal to 100 feet times the site width:
+
+1.                             The site width is less than 150 feet; and
+2.                             The site depth is more than three times the site width; and
+3.                             The site has street frontage on only one street, and that street is on the site’s shorter dimension, which is its width.
+

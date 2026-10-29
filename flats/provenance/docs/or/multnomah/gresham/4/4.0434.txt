@@ -1,0 +1,7 @@
+4.0434                             BUILDING HEIGHT
+
+Maximum building heights are specified in Table 4.0430.
+A.                        The maximum building height shall be reduced when located adjacent to an LDR-5, LDR-7, TLDR, or TR District, as provided in Section 9.0600.
+B.                          Heights of townhouses are identified in Table 4.0430         , Footnote 18, except for those areas of CMF along
+the NE Glisan Street                                         and NE 162nd Avenue corridors see Table 4.0430 Footnote 14.
+

@@ -1,0 +1,24 @@
+4.1568  GREEN BUILDING STANDARDS
+A. Purpose and Scope.
+These standards are based on the U.S. Green Building Council’s Leadership in Energy and Environmental Design (LEED) Green Building Rating System.
+The standards aim to improve occupant well-being, environmental performance and economic returns of buildings using established an innovative practices, standards and technologies.
+B. Green Building Standards.
+For mixed-use, industrial and office buildings, a total of 3 points shall be earned by implementing two or more of the following green building standards:
+1. Provide secure bicycle storage with convenient changing/shower facilities (within 200 yards of the building) for five percent or more of regular building occupants. (1 point)
+2. Provide alternative fuel vehicles for three percent of building occupants and provide preferred parking for these vehicles or install alternative-fuel refueling stations for three percent of the total vehicle parking capacity of the site.
+Liquid or gaseous fueling facilities must be separately ventilated or located outdoors. (2 points)
+3. Install a “green” (vegetated) roof for at least 50 percent of the roof area. (2 points)
+
+4. Based on the US Energy Policy Act fixture performance requirements, reduce the use of municipally provided potable water for building sewage conveyance by a minimum of 50 percent, or treat 100 percent of wastewater on site to tertiary standards. (2 points)
+5. Employ strategies that in aggregate use 20 percent less water than the water use baseline calculated for the building (not including irrigation). (1 point)
+6. Supply at least five percent of the building’s total energy use (as expressed as a fraction of annual energy cost) through the use of on-site renewable energy systems. (2 points)
+7. Install base building level HVAC and refrigeration equipment and fire suppression systems that do not contain HCFCs or Halons. (1 point)
+8. Provide at least 50 percent of the building’s electricity from renewable sources by engaging in at least a two-year renewable energy contract. (2 points)
+9. Provide an easily accessible area that serves the entire building and is dedicated to the separation, collection and storage of materials for recycling including (at a minimum) paper, corrugated cardboard, glass, plastics and metals. (1 point)
+10. Use salvaged, refurbished or reused materials, products and furnishings for at least five percent of building materials. (1 point)
+11. Use rapidly renewable building materials and products (made from plants that are typically harvested within a ten-year cycle or shorter) for five percent of the total value of all building materials and products used in the project. (1 point)
+12. Use a minimum of 50 percent of wood-based materials and products, certified in accordance with the Forest Stewardship Council’s Principles and Criteria, for wood building components including, but not limited to, structural framing and general dimensional framing, flooring, finishes, furnishings, and non-rented temporary construction applications such as bracing, concrete form work and pedestrian barriers. (2 points)
+13. Prohibit smoking in the building and locating any exterior designated smoking areas away from entries and operable windows. (1 point)
+14. Provide at least an average of one operable window and one lighting control zone per 200 square feet for all regularly occupied areas within 15 feet of the perimeter wall. (1 point)
+15. Achieve a minimum Daylight Factor of 2 percent (excluding all direct sunlight penetration) in 75 percent of all space occupied for critical visual tasks.
+Spaces excluded from this requirement include copy rooms, storage areas, mechanical plan rooms, laundry and other low occupancy support areas. (2 points)

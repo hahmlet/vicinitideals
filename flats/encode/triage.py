@@ -54,6 +54,7 @@ from flats.encode.crossrefs import (
     BINDING_WINDOW,
     _REF,
     _doc_ids,
+    _held_ids,
     _headings,
     _resolves,
 )
@@ -785,7 +786,9 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
         return []
 
     texts = {p: store.text_path(p).read_text(encoding="utf-8") for p in paths}
-    ids = _doc_ids(paths)
+    # A cut chapter is held though no section file is numbered under it
+    # (FOLLOWUPS 73, batch 5): the same answer the fetch queue gives.
+    ids = _held_ids(store, layer.layer, paths)
     headings: set[str] = set()
     for path, text in texts.items():
         own = _doc_ids([path])

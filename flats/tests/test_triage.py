@@ -63,12 +63,16 @@ def test_a_card_names_the_standards_it_stands_beside() -> None:
     sentence that moves a 26 ft building five feet back -- and the ledger's own
     row for it says only "1 mention, 1 binding".
     """
-    card = next(c for c in cards(load_rules()[GRESHAM]) if c.ref == "7.0221")
+    # Was 7.0221 until Gresham was cut into sections (FOLLOWUPS 73, batch 5):
+    # the rear-setback citation it stood beside spans two sections, so it
+    # stays on the proof copy and 7/7.0410.txt holds no value near it. 9.0901
+    # is the same shape: "See Section 9.0901(B)" beside the rear setback.
+    card = next(c for c in cards(load_rules()[GRESHAM]) if c.ref == "9.0901")
 
     assert card.fields == ("setback_rear_ft",)
     assert card.lots > 20_000
     assert card.binding == 1
-    assert any("additional requirements" in m.text for m in card.mentions)
+    assert any("See Section 9.0901(B)" in m.text for m in card.mentions)
 
 
 def test_neighbours_group_by_figure_rather_than_repeating_per_zone() -> None:

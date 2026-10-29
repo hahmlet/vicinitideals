@@ -82,7 +82,9 @@ def test_a_width_depth_ratio_is_refused_where_it_cannot_mean_anything(tmp_path: 
 def test_gresham_corridor_zones_hold_row_c(zone: str) -> None:
     held = load_rules()[GRESHAM].zones[zone].values["max_lot_depth_ratio"]
     assert held.width_to_depth == 0.5 and held.value == 2.0
-    assert held.prov.quote.endswith("#L295,L306-L310")
+    # Proof copy 4.0400.corridor.txt L295,L306-L310 until Gresham was cut into
+    # sections (FOLLOWUPS 73, batch 5).
+    assert held.prov.quote == f"{GRESHAM}/4/4.0430.txt#L8,L19-L23"
     # One lot: twice as deep as wide at most. Townhouse lots: note 6 lifts it.
     assert held.under().value == 2.0
     assert held.under({"unit_lots"}).exempt is True
@@ -117,7 +119,8 @@ def test_the_rockwood_gateways_do_not_reach_the_pod() -> None:
 
 def test_note_12_stays_dismissed_on_applicability() -> None:
     notes = yaml.safe_load(FOOTNOTES.read_text(encoding="utf-8"))
-    entries = [n for n in notes["notes"] if n["quote"] == f"{GRESHAM}/4.0400.corridor.txt#L465"]
+    # Proof copy 4.0400.corridor.txt L465 until the cut (FOLLOWUPS 73, batch 5).
+    entries = [n for n in notes["notes"] if n["quote"] == f"{GRESHAM}/4/4.0430.txt#L147"]
     assert len(entries) == 1
     (note,) = entries
     assert note["state"] == "dismissed"
