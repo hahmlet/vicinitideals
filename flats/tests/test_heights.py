@@ -64,7 +64,9 @@ def test_every_cell_of_that_row_cites_the_header_that_names_its_column(
 
     for zone in ("RF", "R20", "R10", "R7", "R5", "R2.5"):
         quote = zones[zone].values["max_height_ft"].prov.quote
-        assert quote == "or/multnomah/portland/33.110.txt#L435,L454", zone
+        # Proof copy 33.110.txt L435,L454 until Portland was cut into
+        # sections (FOLLOWUPS 73, batch 6).
+        assert quote == "or/multnomah/portland/33.110/33.110.205.txt#L14,L31", zone
 
 
 def test_the_portland_administered_pockets_take_portlands_ceiling(
