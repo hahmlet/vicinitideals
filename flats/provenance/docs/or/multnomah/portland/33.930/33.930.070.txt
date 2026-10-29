@@ -1,0 +1,11 @@
+33.930.070 Determining                                                                                                                                           the Area of the Facade of a Building
+The area of a specific facade of a building is determined by adding the square footage of surface area of each section                          of wall visible from that perspective.
+For buildings with more than one wall along one facade (for  example, rooms jutting out from the main building or a building where each floor is set back from the floor below),             all of the walls are included in the tot                     al area.
+The total area
+does not include any roof area.
+See Figure 930-10.
+
+Figure 930-9 Calculating Average Slope
+
+Figure 930-10 Facade of a Building
+

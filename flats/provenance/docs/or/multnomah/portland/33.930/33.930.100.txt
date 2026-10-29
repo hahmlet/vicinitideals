@@ -1,0 +1,24 @@
+33.930.100 Measuring Lot Widths
+A.                                              Single-Dwelling zones.
+In the single-dwelling zones, lot width is measured by placing a rectangle along the minimum front building setback line.
+Where the setback line is curved, the rectangle is placed on the line between the intersection points of the setback line with the side lot lines.
+See Figure 930-20.
+
+The rectangle must have a minimum width equal to the minimum lot width specified for the zone in Chapter           33.610.
+The rectangle must have a minimum depth of 40 feet, or extend to the rear property line, whichever is less.
+The rectangle must fit entirely within the lot.
+See Figure 930-20.
+B.                                                  All other zones.
+In all other zones, lot widths are measured from the midpoints of opposite lot lines.
+See Figure 930-15.
+
+Figure 930-                         13
+Garage Wall Area
+
+
+Figure 930-                         14
+Garage Wall Area (Carport)
+
+Figure 930-                         20
+Measuring Lot Width in Single-Dwelling Zones
+

@@ -1,0 +1,67 @@
+33.120.210 Floor Area Ratio
+A.                                  Purpose. Floor area ratios (FARs) regulate the amount of use (the intensity) allowed on a site.
+FARs provide a means to match the potential amount of uses with the desired character of the area and the provision of public services.
+FARs also work with the height, setback, and building coverage standards to control the overall bulk of development.
+B.                                   FAR standard.
+The maximum floor area ratios are stated in Table 120         -4 and apply to all uses and development.
+In the RM4 zone the maximum FAR is 4 to 1, except in Historic Districts and Conservation Districts, where the maximum FAR is 3 to 1.
+Floor area ratio is not applicable in the RMP zone.
+There is no maximum limit on the number of dwelling units within the allowable floor area, but the units must comply with all building and housing code requirements.
+Additional floor area may be allowed through bonus options described in Section 33.120.211, or transferred as described in Subsection D. Maximum FAR does not apply to one alteration or addition of up to 250 square feet when the alteration or addition is to a primary structure that received final inspection at least 5 years ago.
+This exception is allowed once every 5 years.
+Adjustments to the maximum floor area ratios are prohibited.
+Floor area does not include the following:
+1.                                                   Floor area for structured parking when at least 50 percent, or 6, of the parking spaces in the structure, whichever is greater, have at least a Level 2 charger adjacent to the space, up to a maximum of 0.5 to 1;
+2.                                                   Floor area for required long term bicycle parking that is not located in a dwelling unit, up to a maximum of 0.5 to 1; and
+3.                                                   Floor area for indoor common area used to meet the requirements of Section 33.120.240.
+C.                                     Maximum increase in FAR.
+An increase in FAR using bonuses and transfers of more than is stated in Table 120-5 is prohibited.
+This total FAR includes FAR transferred from another site, and any additional FAR allowed from bonus options.
+D.                                Transfer of FAR.
+FAR may be transferred from one site to another subject to the following:
+1.                                                   Sending site.
+FAR may be transferred from:
+a.                                                    A site where all existing dwelling units are affordable to those earning no more than 60 percent of the area median family income.
+In order to qualify for this transfer, the applicant must provide a letter from the Portland Housing Bureau certifying that this affordability standard and any administrative requirements have been met.
+The letter must be submitted before a building permit can be issued for the development, but is not required in order to apply for a land use review;
+b.                                                  A site where trees that are at least 12 inches in diameter are preserved.
+The maximum amount of floor area that may be transferred for each preserved tree is indicated in Table 120-5, however the maximum amount of FAR that can be transferred may not exceed the total amount of unused FAR on the site.
+This transfer provision does not apply to dead, dying or dangerous, or nuisance trees.
+To qualify for this transfer, a report is required from the City Forester or a
+
+
+certified arborist documenting that the trees to be preserved are not nuisance trees and are not dead, dying or dangerous; or
+c.                                                       A site that contains a Historic or Conservation Landmark or a contributing resource in a Historic or Conservation District.
+Sites that are eligible to send floor area through this transfer are allowed to transfer:
+(1)                                  Unused FAR up to the maximum FAR allowed by the zone; and
+(2)                                  An additional amount equivalent to 50 percent of the maximum FAR for the zone.
+To qualify to transfer this additional amount of FAR, Portland
+Permitting & Development                 must verify that the landmark or contributing resource on the site meets one of the following:
+•                                           If the building is classified as Risk category I or II, as defined in the Oregon Structural Specialty Code, it has been shown to meet or exceed the American Society of Civil Engineers (ASCE) 41- BPOE improvement standard as defined in City of Portland Title 24.85;
+•                                           If the building is classified as Risk category III or IV, as defined in the Oregon Structural Specialty Code, it has been shown to meet or exceed the ASCE41- BPON improvement standard as defined in City of Portland Title 24.85; or
+•                                           The owner of the landmark or contributing resource has entered into a phased seismic agreement with the City of Portland as described in
+Section 24.85.
+2.                                                   Receiving site.
+The transfer must be to a site zoned RM1, RM2, RM3, RM4, RX, CM1, CM2, CM3, or CE outside of the Central City plan district.
+Transferring to a site zoned RMP is prohibited.
+Transferring to a site where a Historic or Conservation Landmark or a contributing structure in a Historic or Conservation District has been demolished within the past ten years is prohibited unless the landmark or contributing structure was destroyed by fire or other causes beyond the control of the owner, the only structure on the site that was demolished was an accessory structure, or the demolition was approved through demolition review.
+3.                                                   Maximum increase in FAR.
+An increase in FAR on the receiving site of more than 1 to 1 from a transfer is prohibited.
+In addition, the total FAR on the receiving site, including FAR from transfers and bonuses, may not exceed the overall maximum FAR with other bonuses stated in Table 120-56.
+4.                                                   Covenants. The property owner must execute a covenant with the City that meets the requirements of Section 33.700.060 and is attached to, and recorded with, the deeds of both the site transferring and the site receiving the density.
+The covenant must reflect the respective increase and decrease of potential FAR.
+In addition                          , the covenant for the site where trees will be preserved must:
+(a)                                   Require that all trees be preserved for at least 50 years; and
+(b)                                 Require that any tree covered by the covenant that is dead, dying or dangerous be removed and replaced within a 12-month period.
+The trees must be determined to be dead, dying, or dangerous by the City Forester or a certified arborist.
+If a tree covered by the covenant is removed in violation of the
+
+
+requirements of this Section, or is dead, dying, or dangerous as the result of a violation, Tree Review is required.
+
+Table 120-                                                      5
+Transferable Floor Area for Tree Preservation in Multi  -Dwelling Zones Transferable Floor Area for Each Tree (by zone)
+Diameter of Tree Preserved                                                                RM1                                                RM2                                               RM3                                                RM4 & RX
+12 to 19 inches                                                                           1,000 sq. ft.                                      1,500 sq. ft.                                     2,000 sq. ft.                                      4,000 sq. ft.
+20 to 35 inches                                                                           2,000 sq. ft.                                      3,000 sq. ft.                                     4,000 sq. ft.                                      8,000 sq. ft.
+36 inches or greater                                                                      4,000 sq. ft.                                      6,000 sq. ft.                                     8,000 sq. ft.                                      16,000 sq. ft.

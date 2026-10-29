@@ -1,0 +1,8 @@
+33.930.103 Measuring Lot Depths
+Lot depths are measured from the midpoints of opposite lot lines.
+See Figure 930-16.
+
+
+Figure 930-15                                                                                                                                Figure                                   930-                       16
+Measuring Lot Width                                                             Measuring Lot Depth
+

@@ -1,0 +1,74 @@
+33.120.206 Minimum Required Site Frontage for Development
+A.                                  Purpose. The purpose of the minimum required site frontage standard is to ensure that sites in and around certain centers in Eastern Portland have sufficient street frontage and site area to:
+•                                           Accommodate new streets where pedestrian, bicycle and vehicular connectivity is lacking;
+•                                           Foster efficient site design;
+•                                           Allow for buildings with an orientation to the street; and
+•                                           Provide opportunities to create outdoor space and preserve trees.
+B.                                   Where the standard applies.
+The minimum required site frontage standard applies in the multi-dwelling zones to sites shown on Map 120-2.
+C.                                     Minimum required site frontage standard.
+1.                                                   Standard. If the site is more than 160 feet deep, new dwelling units are prohibited unless the site has at least 90 feet of frontage on a street.
+Adjustments to reduce the required amount of frontage by up to 10 percent may be requested prior to January 2, 2032.
+Beginning January 2, 2032, adjustments are prohibited.
+2.                                                   Exceptions. The following exceptions apply:
+a.                                                    Adding an accessory dwelling unit to a lot with an existing house, existing attached house, existing manufactured home, or existing duplex is allowed;
+b.                                                  Development is allowed on a site when all of the lots that share a side lot line with the development site meets at least one of the following:
+(1)                                  The lot is zoned multi-dwelling and meets the minimum density standard for the base zone;
+(2)                                  The lot is zoned multi-dwelling and has at least three primary dwelling units on the lot; or
+(3)                                  The lot is not zoned multi-dwelling.
+c.                                                       Development approved through a Planned Development Review is allowed.
+See
+Chapter 33.270, Planned Development.
+
+
+Table 120-                                                      4
+Summary of Development Standards in Multi-Dwelling Zones
+Standard                                                                     RM1                                                         RM2                                                     RM3                                                  RM4                                              RX                                            RMP
+
+Maximum FAR                                                                  FAR of 1 to 1                                               FAR of 1.5 to 1                                         FAR of 2 to 1                                        FAR of 4 to 1                                    FAR of                                        NA
+(See 33.120.210)                                                                                                                                                                                                                                      or 3 to 1                                        4 to 1
+Maximum Density                                                              none                                                        none                                                    none                                                 none                                             none                                          1 unit per
+(See 33.120.212)                                                                                                                                                                                                                                                                                                                                     1,500 sq. ft.
+of site area
+Maximum Density                                                              NA                                                          NA                                                      NA                                                   NA                                               NA                                            1 unit per
+with Affordable                                                                                                                                                                                                                                                                                                                                      1,000 sq. ft.
+Housing Bonus (See                                                                                                                                                                                                                                                                                                                                   of site area
+33.120.212.C)
+Minimum Density                                                              1 unit per 2,500                                            1 unit per                                              1 unit per                                           1 unit per                                       1 unit per                                    1 unit per
+(See 33.120.213                      )                                       sq. ft. of site                                             1,450 sq. ft. of                                        1,000 sq. ft. of                                     1,000 sq. ft.                                    500 sq. ft.                                   1,875 sq. ft.
+area                                                        site area                                               site area                                            of site area                                     of site area                                  of site area
+Base Height                                                                  35 ft.                                                      45 ft.                                                  65 ft.                                               75/100 ft.                                       100 ft.                                       35 ft.
+(See 33.120.215)
+
+Step-down Height
+(see 33.120.215.B.2
+- Within 25 ft. of lot                                                       35 ft.                                                      35 ft.                                                  35 ft.                                               35 ft.                                           35 ft.                                        35 ft.
+line abutting RF-                                                                          R2.5 zones
+- Within 15 ft. of lot                                                       35 ft.                                                      45 ft.                                                  45 ft.                                               45 ft.                                           45 ft.                                        35 ft.
+line across a local service street from RF
+– R2.5 Zones
+Minimum Setbacks
+- Front building                                                             10 ft.                                                      10 ft.                                                  10                                             ft.   5 ft.                                            0 ft.                                         10 ft.
+setback
+- Side and rear                                                              5 ft. [1]                                                   5 ft. [1]                                               5/10                                             ft. [1] 5/10                                             ft. [1]  0 ft.                            10 ft.
+building setback.
+- Garage entrance                                                            18 ft.                                                      5/18 ft.                                                5/18 ft.                                             5/18 ft.                                         5/18 ft.                                      18 ft.
+setback
+(See 33.120.220)
+Maximum Setbacks
+(See 33.120.220)
+Transit Street or                                                           20 ft.                                                      20 ft.                                                  20 ft.                                               10 ft.                                           10 ft.                                        NA
+Pedestrian District
+Max. Building                                                                50% of site area                                            60/70% of site                                          85% of site                                          85% of site                                      100% of site                                  50% of site
+Coverage                                                                                                                                 area                                                    area                                                 area                                             area                                          area
+(See 33.120.225)
+Max. Building Length                                                         Yes                                                         Yes                                                     No                                                   No                                               No                                            Yes
+(See 33.120 230)
+Min. Landscaped Area                                                         30% of site area                                            20% of site                                             15% of site                                          15% of site                                      none                                          30% of site
+(See 33.120.235)                                                                                                                         area                                                    area                                                 area                                                                                           area
+Required Outdoor
+Areas                                                                        Yes                                                         Yes                                                     Yes                                                  Yes                                              No                                            See 33.251
+(See 33.120.240)
+Notes: [1] See 33.120.220.B.2 for Eastern Pattern Area special rear building setback.
+
+

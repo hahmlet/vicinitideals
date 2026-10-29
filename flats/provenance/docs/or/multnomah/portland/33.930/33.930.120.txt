@@ -1,0 +1,16 @@
+33.930.120 Setback Averaging
+Certain regulations allow for setbacks to be averaged.
+In these situations the required setback may be reduced to the average of the existing setbacks of the lots that are on both sides of the site.
+See
+Figure 930-18. The following rules apply in calculating the average:
+
+
+A.                                             The setbacks used for the calculations must be for the same type of structure that is being averaged.
+For example, only garage entrance setbacks may be used to average a garage entrance setback, and only deck setbacks may be used to average a deck setback.
+B.                                               Only the setbacks on the lots that abut each side of the site and are on the same street may be used.
+Setbacks across the street or along a different street may not be used.
+C.                                                 When one abutting lot is vacant or if the lot is a corner lot, then the average is of the setback of the nonvacant lot and the required setback for the zone.
+
+Figure 930-                         18
+Setback Averaging
+

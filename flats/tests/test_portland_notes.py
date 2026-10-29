@@ -54,7 +54,9 @@ def test_the_grandfathering_notes_are_dismissed_as_relief() -> None:
     ruled = {
         n.line: n
         for n in notes()
-        if n.layer == LAYER and n.doc.endswith("33.110.txt") and 390 < n.line < 420
+        # Proof copy 33.110.txt L396-L413 until Portland was cut into
+        # sections (FOLLOWUPS 73, batch 6).
+        if n.layer == LAYER and n.doc.endswith("33.110/33.110.202.txt") and 44 < n.line < 52
     }
 
     assert len(ruled) == 5

@@ -1,0 +1,14 @@
+33.110.225 Building Coverage
+A.                                                           Purpose. The building coverage standards limit the footprint of buildings and work together with the height, setback, and floor area ratio standards to control the overall bulk of structures.
+They are intended to ensure that taller buildings will not have such a large footprint that their total bulk will overwhelm adjacent houses.
+Additionally, the standards help define the character of the different zones by limiting the amount of buildings allowed on a site.
+B.                                                Building coverage standards.
+The maximum combined building coverage allowed on a site for all covered structures is stated in Table 110-5              .
+
+
+Table 110-5 Maximum Building Coverage Allowed in the RF through R2.5 Zones
+Lot Size                                                                                                                                        Maximum Building Coverage
+Less than 3,000 sq. ft.                                                                                                                         50% of lot area
+3,000 sq. ft or more but less than 5,000 sq. ft.                                                                                                1,500 sq. ft. + 37.5% of lot area over 3,000 sq. ft.
+5,000 sq. ft. or more but less than 20,000 sq. ft.                                                                                              2,250 sq. ft + 15% of lot area over 5,000 sq. ft.
+20,000 sq. ft. or more                                                                                                                          4,500 sq. ft. + 7.5% of lot area over 20,000 sq. ft.

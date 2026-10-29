@@ -128,6 +128,8 @@ def test_and_one_of_them_now_runs_on_into_a_caption(store: ProvenanceStore) -> N
 
 def test_every_note_the_frame_was_hiding_is_ruled_and_none_blocks() -> None:
     ruled = {row.quote: row for row in dispositions(PORTLAND)}
-    assert ruled[f"{PORTLAND}/33.120.txt#L1951"].state == "dismissed"
-    assert ruled[f"{PORTLAND}/33.266.txt#L540"].state == "dismissed"
+    # Proof copy 33.120.txt L1951 and 33.266.txt L540 until Portland was cut
+    # into sections (FOLLOWUPS 73, batch 6).
+    assert ruled[f"{PORTLAND}/33.120/33.120.275.txt#L62"].state == "dismissed"
+    assert ruled[f"{PORTLAND}/33.266/33.266.130.txt#L140"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

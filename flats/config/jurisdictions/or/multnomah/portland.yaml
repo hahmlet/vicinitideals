@@ -200,7 +200,7 @@ readings:
       is about how a walkway is routed once the building is placed. Nothing here can move a
       dimension the screen tests.
     fingerprint: 2b96452a1c7fa78c
-  "33.120.txt#33.120.030":
+  "33.120.030.txt#33.120.030":
     queue: missed
     outcome: not_here
     note: >-
@@ -208,7 +208,7 @@ readings:
       manufactured dwelling parks. RMP is encoded here as refusing this use, and the sentence
       names the housing type in its own second clause. A density ceiling for a manufactured
       dwelling park is not a ceiling on anything this screen places.
-    fingerprint: 15166b24c78517f0
+    fingerprint: e09b06f66b3127d9
   "33.120.txt#33.120.210":
     queue: missed
     outcome: not_here
@@ -502,7 +502,7 @@ readings:
       slope, which is the third place in this layer the flag lot has surfaced this week without
       anything measuring one.
     fingerprint: 78030bbeead2421b
-  "11.50.txt#11.50.050":
+  "11.50.050.txt#11.50.050":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -531,7 +531,7 @@ readings:
       is airports, industrial-zone private trees and permit types, none of them us; and the
       street-tree standard at 11.50.060, whose cost is capped at ten percent of project value and
       which sits in the right-of-way rather than on the lot.
-    fingerprint: 81336132efa0b546
+    fingerprint: c81b0b5f00c37a9e
   "33.910.definitions.txt#33.910":
     queue: chapter
     outcome: nothing_here
@@ -584,7 +584,7 @@ readings:
       ruled separately today, and projections up to twelve feet that are left out of building
       coverage.
     fingerprint: 9fc81d6d87b02685
-  "11.50.txt#11.50.040":
+  "11.50.040.txt#11.50.040":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -599,7 +599,7 @@ readings:
       backwards at a glance: 85 percent building coverage is not a standard this pod could meet or
       fail, it is a threshold above which the city stops asking for trees because there is nowhere
       to put them.
-    fingerprint: 6b26937f16413c08
+    fingerprint: 4e01306561c2a011
   "33.910.definitions.txt#33.930.150":
     queue: chapter
     outcome: nothing_here
@@ -1591,7 +1591,7 @@ definitions:
     # own. Steph's coordinator ruled total-turn. The per-bend reading is a
     # one-line config change and would keep 44 lots as corners.
     curve_by: tangent
-    quote: "or/multnomah/portland/33.910.definitions.txt#L701-L705"
+    quote: "or/multnomah/portland/33.910/33.910.030.txt#L482-L486"
     cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
 
 crossrefs:
@@ -1819,7 +1819,7 @@ defaults:
     cite: PCC 33.266.115; Tables 266-1 and 266-2
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: 2026-08-21
-    quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159"
+    quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
   parking_min_per_unit:
     # Not a minimum of zero -- there is no minimum. The quote is the chapter's
     # own list of its motor vehicle parking sections, which runs General
@@ -1879,7 +1879,7 @@ defaults:
     cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: '2026-09-01'
-    quote: "or/multnomah/portland/33.266.txt#L268,L271-L275,L317-L318"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L7,L35-L36"
     variants:
       # The other branch, kept because it is real and one plat decision away.
       # Four attached houses on their own lots sharing a court put the parking
@@ -1896,7 +1896,7 @@ defaults:
     cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: '2026-09-01'
-    quote: "or/multnomah/portland/33.266.txt#L268,L271-L275,L317-L318"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L7,L35-L36"
     variants:
       - value: 16
         when: [unit_lots]
@@ -1926,13 +1926,13 @@ defaults:
     cite: PCC Table 266-4 (33.266.130), 90 degrees, 2-way aisle; adopted for the fourplex by Steph 2026-09-30 (33.266.120 states no aisle)
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: '2026-09-01'
-    quote: "or/multnomah/portland/33.266.txt#L385-L386,L516-L525"
+    quote: "or/multnomah/portland/33.266/33.266.130.txt#L24-L25,L120-L128"
   parking_aisle_one_way_ft:
     value: 20
     cite: PCC Table 266-4 (33.266.130), 90 degrees, 1-way aisle; adopted for the fourplex by Steph 2026-09-30 (33.266.120 states no aisle)
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: '2026-09-01'
-    quote: "or/multnomah/portland/33.266.txt#L385-L386,L516-L525"
+    quote: "or/multnomah/portland/33.266/33.266.130.txt#L24-L25,L120-L128"
   # (or/multnomah/portland/33.266.txt#L268,L317-L326,L349,L385-L386,L516-L525)
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27. All of it is Section
   # 33.266.120, and 33.266.120.B is why it is in `defaults` rather than in the
@@ -1956,13 +1956,13 @@ defaults:
     cite: PCC 33.266.120.D.2, minimum driveway width on private property
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L268,L271-L274,L317-L319"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L6,L35-L37"
   driveway_min_width_two_way_ft:
     value: 9
     cite: PCC 33.266.120.D.2, minimum driveway width on private property
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L268,L271-L274,L317-L319"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L6,L35-L37"
   # 33.266.120.C.1.a: "Vehicle area is prohibited between the primary
   # structure and the street except as follows. This standard does not apply
   # to houses on lots that are at least 32 feet wide: (1) Parking spaces
@@ -1983,7 +1983,7 @@ defaults:
     cite: PCC 33.266.120.C.1.a, vehicle area prohibited between the primary structure and the street
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L280-L284,L290-L293"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L10-L14,L17-L18"
   # 33.266.120.C.1.b: "No more than 40 percent of the land area between the
   # front lot line and the front building line may be paved or used for
   # vehicle areas." The driveway allowed through by C.1.a is what this
@@ -2001,7 +2001,7 @@ defaults:
     cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L294-L301"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L19-L23"
   # 33.266.120.C.2.a: "Generally, parking spaces are not allowed within the
   # first 10 feet from a front lot line, and on corner lots, parking spaces
   # are not allowed within the side street setback." Stated of SPACES, where
@@ -2017,7 +2017,7 @@ defaults:
     cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L302-L305"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L24-L26"
   # 33.266.120.C.3: "Vehicle area access. If the lot abuts an alley, all
   # parking and vehicle access to the site must be from the alley." Held as
   # a refusal from 2026-08-27 to 2026-09-13 because no parcel record knew
@@ -2031,7 +2031,7 @@ defaults:
     cite: PCC 33.266.120.C.3, all parking and vehicle access from the alley where the lot abuts one
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L313-L314"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L31-L32"
   # THE ALLEY AS THE AISLE. On a lot C.3 sends to the alley, the cars in the
   # row of stalls along it back straight out into it, so the court is a stall
   # depth plus whatever the alley's MEASURED width leaves short of the room a
@@ -2049,7 +2049,7 @@ defaults:
     cite: PCC 33.266.130.F.1.b(2), 20 ft of maneuvering from the end of each space to the opposite side of the alley, applied to the fourplex by Steph's ruling 2026-09-13
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L485-L488"
+    quote: "or/multnomah/portland/33.266/33.266.130.txt#L97-L99"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -2073,7 +2073,7 @@ defaults:
     cite: PCC 33.266.120.C.1.a(1), parking spaces behind the front and side street building lines allowed, which leaves the interior side yard open
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L290-L293"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L17-L18"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -2089,7 +2089,7 @@ defaults:
     cite: PCC 33.266.120.C.3, access from the alley where the lot abuts one, and no street named otherwise
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.266.txt#L313-L314"
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L31-L32"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -2106,7 +2106,7 @@ defaults:
     cite: PCC 33.910, Front Lot Line, the shortest street lot line on a corner lot
     url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.910.definitions.txt#L754-L758"
+    quote: "or/multnomah/portland/33.910/33.910.030.txt#L526-L531"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -2119,7 +2119,7 @@ defaults:
     cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
     url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
     retrieved: '2026-08-27'
-    quote: "or/multnomah/portland/33.910.definitions.txt#L757-L758"
+    quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
   #
   # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
   # of the base zone. `setback_garage_entrance_ft` already carries that figure
@@ -2168,7 +2168,7 @@ zones:
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/portland/33.110.txt#L302-L313"
+      quote: "or/multnomah/portland/33.110/33.110.200.txt#L9-L20"
       variants:
         # State law over the city's table (Steph 2026-09-30, FOLLOWUPS 21(b)):
         # ORS 197A.420(2) has a city over 1,000 inside Metro allow every
@@ -2194,13 +2194,13 @@ zones:
       cite: PCC 33.110 Table 110-3; 33.610 Table 610-2 (All other lots, RF)
       url: https://www.portland.gov/sites/default/files/code/610-rf-r2.5-lots_0.pdf
       retrieved: '2026-09-30'
-      quote: "or/multnomah/portland/33.610.txt#L162-L168"
+      quote: "or/multnomah/portland/33.610/33.610.200.txt#L20-L25"
     max_height_ft:
       value: 30
-      quote: "or/multnomah/portland/33.110.txt#L435,L454"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
     setback_front_ft:
       value: 20
-      quote: or/multnomah/portland/33.110.txt#L458
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L35
     setback_garage_entrance_ft:
       # 33.110.220.D.9 (D, "Exceptions to the required setbacks"; the note of
       # 2026-09-07 said C, which is the extensions subsection), one sentence
@@ -2209,14 +2209,14 @@ zones:
       # all this file held.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: or/multnomah/portland/33.110.txt#L464
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L41
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_rear_ft:
       value: 10
-      quote: or/multnomah/portland/33.110.txt#L462
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L39
       variants:
         # 33.110.220.D.9, the sentence the garage-entrance exemption on this
         # zone already quotes: "Alley. No side, rear, or garage entrance
@@ -2232,7 +2232,7 @@ zones:
         # because `setback_side_ft` is one number for both side lines.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of 33.110.220.D.9, held since 2026-09-15 on the line it
       # is about. "No side, rear, or garage entrance setback is required from
@@ -2252,10 +2252,10 @@ zones:
       # 2026-09-12 (s4 class A takes `setback_alley_ft`, whichever way the
       # line runs); this brings the corpus level with it.
       exempt: true
-      quote: "or/multnomah/portland/33.110.txt#L746-L747"
+      quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_side_ft:
       value: 10
-      quote: or/multnomah/portland/33.110.txt#L460
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L37
   R20:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2279,8 +2279,8 @@ zones:
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.110.txt#L313"
-      via: "or/multnomah/portland/33.110.txt#L1534-L1541"
+      quote: "or/multnomah/portland/33.110/33.110.200.txt#L20"
+      via: "or/multnomah/portland/33.110/33.110.265.txt#L50-L54"
       variants:
         # The Constrained Sites overlay (the "z" on the zoning map) takes the
         # allowance away again on any lot it touches in any portion: 33.418.040.B
@@ -2302,7 +2302,7 @@ zones:
         - value: true
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
-          quote: "or/multnomah/portland/33.110.txt#L305-L306"
+          quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2314,43 +2314,43 @@ zones:
       # -- a relaxation, and it can only raise the ceiling.
       value: 30
       cite: PCC 33.110 Table 110-4; 33.110.215
-      quote: "or/multnomah/portland/33.110.txt#L435,L454"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
     setback_front_ft:
       value: 20
-      quote: "or/multnomah/portland/33.110.txt#L458"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L35"
     setback_side_ft:
       value: 10
-      quote: "or/multnomah/portland/33.110.txt#L460"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L37"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/portland/33.110.txt#L462"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L39"
       variants:
         # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
         # and the side-half refusal are on RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.110.txt#L746-L747"
+      quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     min_lot_sqft:
       value: 12000
-      quote: "or/multnomah/portland/33.110.txt#L1550"
+      quote: "or/multnomah/portland/33.110/33.110.265.txt#L60"
       variants:
         - reduce_pct: 10
           when: [adjustment]
-          quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
+          quote: "or/multnomah/portland/33.110/33.110.265.txt#L57-L59"
     coverage_curve:
       value:
       - [0, 0, 50]
       - [3000, 1500, 37.5]
       - [5000, 2250, 15]
       - [20000, 4500, 7.5]
-      quote: "or/multnomah/portland/33.110.txt#L780-L786"
+      quote: "or/multnomah/portland/33.110/33.110.225.txt#L9-L14"
     notes: 'quadfit confidence: verified | Fourplex min lot 12,000 sf (Table 110-7; -10% adjustment allowed until
       2032). No FAR cap on conforming lots (FAR applies only <10,000 sf in R20). Height 30 ft.'
     setback_garage_entrance_ft:
@@ -2361,11 +2361,11 @@ zones:
       # all this file held.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: or/multnomah/portland/33.110.txt#L464
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L41
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
   R10:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2389,8 +2389,8 @@ zones:
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.110.txt#L313"
-      via: "or/multnomah/portland/33.110.txt#L1534-L1541"
+      quote: "or/multnomah/portland/33.110/33.110.200.txt#L20"
+      via: "or/multnomah/portland/33.110/33.110.265.txt#L50-L54"
       variants:
         # The Constrained Sites overlay (the "z" on the zoning map) takes the
         # allowance away again on any lot it touches in any portion: 33.418.040.B
@@ -2412,7 +2412,7 @@ zones:
         - value: true
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
-          quote: "or/multnomah/portland/33.110.txt#L305-L306"
+          quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2424,43 +2424,43 @@ zones:
       # -- a relaxation, and it can only raise the ceiling.
       value: 30
       cite: PCC 33.110 Table 110-4; 33.110.215
-      quote: "or/multnomah/portland/33.110.txt#L435,L454"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
     setback_front_ft:
       value: 20
-      quote: "or/multnomah/portland/33.110.txt#L458"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L35"
     setback_side_ft:
       value: 10
-      quote: "or/multnomah/portland/33.110.txt#L460"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L37"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/portland/33.110.txt#L462"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L39"
       variants:
         # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
         # and the side-half refusal are on RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.110.txt#L746-L747"
+      quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     min_lot_sqft:
       value: 6000
-      quote: "or/multnomah/portland/33.110.txt#L1551"
+      quote: "or/multnomah/portland/33.110/33.110.265.txt#L61"
       variants:
         - reduce_pct: 10
           when: [adjustment]
-          quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
+          quote: "or/multnomah/portland/33.110/33.110.265.txt#L57-L59"
     coverage_curve:
       value:
       - [0, 0, 50]
       - [3000, 1500, 37.5]
       - [5000, 2250, 15]
       - [20000, 4500, 7.5]
-      quote: "or/multnomah/portland/33.110.txt#L780-L786"
+      quote: "or/multnomah/portland/33.110/33.110.225.txt#L9-L14"
     notes: 'quadfit confidence: verified | Fourplex min lot 6,000 sf. FAR 0.7 on lots 6,000-9,999 sf (never binds
       a 2-story 500 sf/floor plate). Height 30 ft.'
     setback_garage_entrance_ft:
@@ -2471,11 +2471,11 @@ zones:
       # all this file held.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: or/multnomah/portland/33.110.txt#L464
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L41
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
   R7:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2499,8 +2499,8 @@ zones:
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.110.txt#L313"
-      via: "or/multnomah/portland/33.110.txt#L1534-L1541"
+      quote: "or/multnomah/portland/33.110/33.110.200.txt#L20"
+      via: "or/multnomah/portland/33.110/33.110.265.txt#L50-L54"
       variants:
         # The Constrained Sites overlay (the "z" on the zoning map) takes the
         # allowance away again on any lot it touches in any portion: 33.418.040.B
@@ -2522,7 +2522,7 @@ zones:
         - value: true
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
-          quote: "or/multnomah/portland/33.110.txt#L305-L306"
+          quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2534,7 +2534,7 @@ zones:
       # -- a relaxation, and it can only raise the ceiling.
       value: 30
       cite: PCC 33.110 Table 110-4; 33.110.215
-      quote: "or/multnomah/portland/33.110.txt#L435,L454"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.1, one sentence: "In the R7 zone, a minimum of two
       # dwelling units are required on sites that are 14,000 square feet or
@@ -2554,47 +2554,47 @@ zones:
       # count are printed on one, the trigger on the next.
       value: 14000
       cite: PCC 33.110.205.C.1
-      quote: "or/multnomah/portland/33.110.txt#L421,L422"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L7"
     min_units_at_trigger:
       value: 2
       cite: PCC 33.110.205.C.1
-      quote: "or/multnomah/portland/33.110.txt#L421,L422"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L7"
     setback_front_ft:
       value: 15
-      quote: "or/multnomah/portland/33.110.txt#L458"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L35"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.110.txt#L460"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L37"
     setback_rear_ft:
       value: 5
-      quote: "or/multnomah/portland/33.110.txt#L462"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L39"
       variants:
         # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
         # and the side-half refusal are on RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.110.txt#L746-L747"
+      quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     min_lot_sqft:
       value: 4200
-      quote: "or/multnomah/portland/33.110.txt#L1552"
+      quote: "or/multnomah/portland/33.110/33.110.265.txt#L62"
       variants:
         - reduce_pct: 10
           when: [adjustment]
-          quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
+          quote: "or/multnomah/portland/33.110/33.110.265.txt#L57-L59"
     coverage_curve:
       value:
       - [0, 0, 50]
       - [3000, 1500, 37.5]
       - [5000, 2250, 15]
       - [20000, 4500, 7.5]
-      quote: "or/multnomah/portland/33.110.txt#L780-L786"
+      quote: "or/multnomah/portland/33.110/33.110.225.txt#L9-L14"
     notes: 'quadfit confidence: verified | Fourplex min lot 4,200 sf. FAR 0.7 for 4+ units. Height 30 ft.'
     setback_garage_entrance_ft:
       # 33.110.220.D.9 (D, "Exceptions to the required setbacks"; the note of
@@ -2604,11 +2604,11 @@ zones:
       # all this file held.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: or/multnomah/portland/33.110.txt#L464
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L41
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
   R5:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2632,8 +2632,8 @@ zones:
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.110.txt#L313"
-      via: "or/multnomah/portland/33.110.txt#L1534-L1541"
+      quote: "or/multnomah/portland/33.110/33.110.200.txt#L20"
+      via: "or/multnomah/portland/33.110/33.110.265.txt#L50-L54"
       variants:
         # The Constrained Sites overlay (the "z" on the zoning map) takes the
         # allowance away again on any lot it touches in any portion: 33.418.040.B
@@ -2655,7 +2655,7 @@ zones:
         - value: true
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
-          quote: "or/multnomah/portland/33.110.txt#L305-L306"
+          quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2667,7 +2667,7 @@ zones:
       # -- a relaxation, and it can only raise the ceiling.
       value: 30
       cite: PCC 33.110 Table 110-4; 33.110.215
-      quote: "or/multnomah/portland/33.110.txt#L435,L454"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.2, one sentence: "In the R5 zone, a minimum of two
       # dwelling units are required on sites that are 10,000 square feet or
@@ -2687,47 +2687,47 @@ zones:
       # count are printed on one, the trigger on the next.
       value: 10000
       cite: PCC 33.110.205.C.2
-      quote: "or/multnomah/portland/33.110.txt#L423,L424"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L8"
     min_units_at_trigger:
       value: 2
       cite: PCC 33.110.205.C.2
-      quote: "or/multnomah/portland/33.110.txt#L423,L424"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L8"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/portland/33.110.txt#L458"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L35"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.110.txt#L460"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L37"
     setback_rear_ft:
       value: 5
-      quote: "or/multnomah/portland/33.110.txt#L462"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L39"
       variants:
         # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
         # and the side-half refusal are on RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.110.txt#L746-L747"
+      quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     min_lot_sqft:
       value: 3000
-      quote: "or/multnomah/portland/33.110.txt#L1553"
+      quote: "or/multnomah/portland/33.110/33.110.265.txt#L63"
       variants:
         - reduce_pct: 10
           when: [adjustment]
-          quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
+          quote: "or/multnomah/portland/33.110/33.110.265.txt#L57-L59"
     coverage_curve:
       value:
       - [0, 0, 50]
       - [3000, 1500, 37.5]
       - [5000, 2250, 15]
       - [20000, 4500, 7.5]
-      quote: "or/multnomah/portland/33.110.txt#L780-L786"
+      quote: "or/multnomah/portland/33.110/33.110.225.txt#L9-L14"
     notes: 'quadfit confidence: verified | Fourplex min lot 3,000 sf. FAR 0.8 for 4+ units. Height 30 ft.'
     setback_garage_entrance_ft:
       # 33.110.220.D.9 (D, "Exceptions to the required setbacks"; the note of
@@ -2737,11 +2737,11 @@ zones:
       # all this file held.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: or/multnomah/portland/33.110.txt#L464
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L41
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
   R2.5:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2767,8 +2767,8 @@ zones:
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.110.txt#L313"
-      via: "or/multnomah/portland/33.110.txt#L1534-L1541"
+      quote: "or/multnomah/portland/33.110/33.110.200.txt#L20"
+      via: "or/multnomah/portland/33.110/33.110.265.txt#L50-L54"
       variants:
         # The Constrained Sites overlay (the "z" on the zoning map) takes the
         # allowance away again on any lot it touches in any portion: 33.418.040.B
@@ -2790,7 +2790,7 @@ zones:
         - value: true
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
-          quote: "or/multnomah/portland/33.110.txt#L305-L306"
+          quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.3, one sentence: "In the R2.5 zone, a minimum of two
@@ -2811,52 +2811,52 @@ zones:
       # count are printed on one, the trigger on the next.
       value: 5000
       cite: PCC 33.110.205.C.3
-      quote: "or/multnomah/portland/33.110.txt#L425,L426"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L9"
     min_units_at_trigger:
       value: 2
       cite: PCC 33.110.205.C.3
-      quote: "or/multnomah/portland/33.110.txt#L425,L426"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L9"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/portland/33.110.txt#L458"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L35"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.110.txt#L460"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L37"
     setback_rear_ft:
       value: 5
-      quote: "or/multnomah/portland/33.110.txt#L462"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L39"
       variants:
         # 33.110.220.D.9, the rear half, keyed to the line -- the reasoning
         # and the side-half refusal are on RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.110.txt#L746-L747"
+      quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     min_lot_sqft:
       value: 1500
-      quote: "or/multnomah/portland/33.110.txt#L1554"
+      quote: "or/multnomah/portland/33.110/33.110.265.txt#L64"
       variants:
         - reduce_pct: 10
           when: [adjustment]
-          quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
+          quote: "or/multnomah/portland/33.110/33.110.265.txt#L57-L59"
     coverage_curve:
       value:
       - [0, 0, 50]
       - [3000, 1500, 37.5]
       - [5000, 2250, 15]
       - [20000, 4500, 7.5]
-      quote: "or/multnomah/portland/33.110.txt#L780-L786"
+      quote: "or/multnomah/portland/33.110/33.110.225.txt#L9-L14"
     notes: 'quadfit confidence: verified | Fourplex min lot 1,500 sf. FAR 1.0 for 4+ units. Height 35 ft. Narrow-lot
       standards <32 ft wide.'
     max_height_ft:
       value: 35
-      quote: "or/multnomah/portland/33.110.txt#L435,L454"
+      quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
     setback_garage_entrance_ft:
       # 33.110.220.D.9 (D, "Exceptions to the required setbacks"; the note of
       # 2026-09-07 said C, which is the extensions subsection), one sentence
@@ -2865,11 +2865,11 @@ zones:
       # all this file held.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: or/multnomah/portland/33.110.txt#L464
+      quote: or/multnomah/portland/33.110/33.110.205.txt#L41
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.110.txt#L746-L747"
+          quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
   RM1:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -2891,7 +2891,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -2899,7 +2899,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     # 33.120.240.B.1 states the multi-dwelling zones' outdoor area per DWELLING
     # UNIT rather than per lot, so a fourplex owes four of them. RM1 and RM2
     # ask 48 sq ft each. RM3 and RM4 ask 36 on sites of 20,000 sq ft or less
@@ -2945,30 +2945,30 @@ zones:
       cite: PCC 33.120.240.B.1.a, required outdoor area per dwelling unit
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
+      quote: "or/multnomah/portland/33.120/33.120.240.txt#L7-L10,L13-L21"
       variants:
         - per_dwelling: 200
           band: {measure: lot_sqft, more_than: 20000}
           cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
-          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
+          quote: "or/multnomah/portland/33.120/33.120.240.txt#L22-L30"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+      quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
     min_lot_sqft:
       value: 4000
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     min_lot_width_ft:
       value: 33
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_rear_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         # 33.120.220.B.3.g: "Alley. No side or rear building setback is
         # required from a lot line abutting an alley." The multi-dwelling
@@ -2978,40 +2978,40 @@ zones:
         # half is refused there too.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_garage_entrance_ft:
       # 33.120.283.E.1.b: "No setback is required from a lot line abutting an
       # alley." Unconditional, and this file held only Table 120-4's flat 18.
       # The bureau may still ask for turning radius, which is a review, not a
       # dimension. Found 2026-09-07 by the reading queue.
       value: 18
-      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L54-L55"
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.120.txt#L1228-L1230"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L173-L174"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/portland/33.120.txt#L529"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L40"
     max_far:
       value: 1.0
-      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L28-L29"
     max_coverage_pct:
       value: 50
-      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
     min_landscaped_pct:
       value: 30
-      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L67-L68"
     min_density_du_per_acre:
       sqft_per_unit: 2500
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L526-L528"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39"
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
@@ -3037,7 +3037,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3045,48 +3045,48 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.120.240.B.1.a, required outdoor area per dwelling unit
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
+      quote: "or/multnomah/portland/33.120/33.120.240.txt#L7-L10,L13-L21"
       variants:
         - per_dwelling: 200
           band: {measure: lot_sqft, more_than: 20000}
           cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
-          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
+          quote: "or/multnomah/portland/33.120/33.120.240.txt#L22-L30"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+      quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
     min_lot_sqft:
       value: 4000
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     min_lot_width_ft:
       value: 33
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_rear_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_garage_entrance_ft:
       # NOT ENCODED: the either/or. 33.120.283.E.1.a states this standard as a
       # forbidden BAND rather than a floor -- "In the RM2, RM3, RM4, and RX
@@ -3110,33 +3110,33 @@ zones:
       # be settled before the field is ever wired to a verdict.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: "or/multnomah/portland/33.120.txt#L545-L546"
-      via: "or/multnomah/portland/33.120.txt#L1224-L1227"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L54-L55"
+      via: "or/multnomah/portland/33.120/33.120.220.txt#L171-L172"
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.120.txt#L1228-L1230"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L173-L174"
     max_height_ft:
       value: 45
-      quote: "or/multnomah/portland/33.120.txt#L529"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L40"
     max_far:
       value: 1.5
-      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L28-L29"
     max_coverage_pct:
       value: 60
-      quote: "or/multnomah/portland/33.120.txt#L553-L554"
-      via: "or/multnomah/portland/33.120.txt#L1240-L1243"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
+      via: "or/multnomah/portland/33.120/33.120.225.txt#L5-L8"
       variants:
         - value: 70
           when: [civic_corridor]
-          quote: "or/multnomah/portland/33.120.txt#L1240-L1243"
-          via: "or/multnomah/portland/33.120.txt#L553-L554"
+          quote: "or/multnomah/portland/33.120/33.120.225.txt#L5-L8"
+          via: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
     min_landscaped_pct:
       value: 20
-      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L67-L68"
     min_density_du_per_acre:
       sqft_per_unit: 1450
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L526-L528"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39"
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
@@ -3162,7 +3162,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3170,13 +3170,13 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.120.240.B.1.b, required outdoor area per dwelling unit, sites over 20,000 sq ft
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
+      quote: "or/multnomah/portland/33.120/33.120.240.txt#L7-L10,L13-L21"
       variants:
         # The requirement is BANDED on total site area and this file held only
         # its upper half. 33.120.240.B.1.b's own cite line already said 'sites over 20,000 sq ft': 36 square feet per unit applies at
@@ -3186,61 +3186,61 @@ zones:
         # Found 2026-09-07 by the blind second reading.
         - per_dwelling: 36
           band: {measure: lot_sqft, at_most: 20000}
-          quote: "or/multnomah/portland/33.120.txt#L1504-L1506"
+          quote: "or/multnomah/portland/33.120/33.120.240.txt#L19-L21"
         - per_dwelling: 200
           band: {measure: lot_sqft, more_than: 20000}
           cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
-          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
+          quote: "or/multnomah/portland/33.120/33.120.240.txt#L22-L30"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+      quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
     min_lot_sqft:
       value: 4000
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     min_lot_width_ft:
       value: 33
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
     setback_side_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L990-L997"
-      via: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         - value: 5
           when: [low_rise]
-          quote: "or/multnomah/portland/33.120.txt#L990-L997"
-          via: "or/multnomah/portland/33.120.txt#L543-L544"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L990-L997"
-      via: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         - value: 5
           when: [low_rise]
-          quote: "or/multnomah/portland/33.120.txt#L990-L997"
-          via: "or/multnomah/portland/33.120.txt#L543-L544"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
         # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
         # Spelled out against `low_rise` as well: B.3.g states no height step,
         # and two one-condition matches would tie and send the lot to UNKNOWN.
         - exempt: true
           when: [low_rise, alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_street_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L994-L997"
-      via: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L19-L20"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_garage_entrance_ft:
       # NOT ENCODED: the either/or. 33.120.283.E.1.a states this standard as a
       # forbidden BAND rather than a floor -- "In the RM2, RM3, RM4, and RX
@@ -3264,27 +3264,27 @@ zones:
       # be settled before the field is ever wired to a verdict.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: "or/multnomah/portland/33.120.txt#L545-L546"
-      via: "or/multnomah/portland/33.120.txt#L1224-L1227"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L54-L55"
+      via: "or/multnomah/portland/33.120/33.120.220.txt#L171-L172"
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.120.txt#L1228-L1230"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L173-L174"
     max_height_ft:
       value: 65
-      quote: "or/multnomah/portland/33.120.txt#L529"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L40"
     max_far:
       value: 2.0
-      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L28-L29"
     max_coverage_pct:
       value: 85
-      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
     min_landscaped_pct:
       value: 15
-      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L67-L68"
     min_density_du_per_acre:
       sqft_per_unit: 1000
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L526-L528"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39"
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
@@ -3310,7 +3310,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3318,13 +3318,13 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.120.240.B.1.b, required outdoor area per dwelling unit, sites over 20,000 sq ft
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
+      quote: "or/multnomah/portland/33.120/33.120.240.txt#L7-L10,L13-L21"
       variants:
         # The requirement is BANDED on total site area and this file held only
         # its upper half. 33.120.240.B.1.b's own cite line already said 'sites over 20,000 sq ft': 36 square feet per unit applies at
@@ -3334,61 +3334,61 @@ zones:
         # Found 2026-09-07 by the blind second reading.
         - per_dwelling: 36
           band: {measure: lot_sqft, at_most: 20000}
-          quote: "or/multnomah/portland/33.120.txt#L1504-L1506"
+          quote: "or/multnomah/portland/33.120/33.120.240.txt#L19-L21"
         - per_dwelling: 200
           band: {measure: lot_sqft, more_than: 20000}
           cite: PCC 33.120.240.B.2.b(3), individual outdoor area under the common-area exemption
-          quote: "or/multnomah/portland/33.120.txt#L1509-L1523"
+          quote: "or/multnomah/portland/33.120/33.120.240.txt#L22-L30"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+      quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
     min_lot_sqft:
       value: 4000
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     min_lot_width_ft:
       value: 33
-      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
     setback_front_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
     setback_side_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L990-L997"
-      via: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         - value: 5
           when: [low_rise]
-          quote: "or/multnomah/portland/33.120.txt#L990-L997"
-          via: "or/multnomah/portland/33.120.txt#L543-L544"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L990-L997"
-      via: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         - value: 5
           when: [low_rise]
-          quote: "or/multnomah/portland/33.120.txt#L990-L997"
-          via: "or/multnomah/portland/33.120.txt#L543-L544"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
         # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
         # Spelled out against `low_rise` as well: B.3.g states no height step,
         # and two one-condition matches would tie and send the lot to UNKNOWN.
         - exempt: true
           when: [low_rise, alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_street_side_ft:
       value: 5
-      quote: "or/multnomah/portland/33.120.txt#L994-L997"
-      via: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L19-L20"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_garage_entrance_ft:
       # NOT ENCODED: the either/or. 33.120.283.E.1.a states this standard as a
       # forbidden BAND rather than a floor -- "In the RM2, RM3, RM4, and RX
@@ -3412,16 +3412,16 @@ zones:
       # be settled before the field is ever wired to a verdict.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: "or/multnomah/portland/33.120.txt#L545-L546"
-      via: "or/multnomah/portland/33.120.txt#L1224-L1227"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L54-L55"
+      via: "or/multnomah/portland/33.120/33.120.220.txt#L171-L172"
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.120.txt#L1228-L1230"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L173-L174"
     max_height_ft:
       value: 75
-      quote: "or/multnomah/portland/33.120.txt#L529"
-      via: "or/multnomah/portland/33.120.txt#L902-L907"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L40"
+      via: "or/multnomah/portland/33.120/33.120.215.txt#L11-L13"
     max_far:
       # The tighter half of a split cell, on purpose. Table 120-4's RM4 column
       # prints "FAR of 4 to 1 or 3 to 1" (L515-L516) and 33.120.210.B says
@@ -3440,17 +3440,17 @@ zones:
       # sentence, reported 4, and was right about the sentence: the value
       # carried no note and looked like a misread rather than a choice.
       value: 3.0
-      quote: "or/multnomah/portland/33.120.txt#L574-L576"
-      via: "or/multnomah/portland/33.120.txt#L517-L518"
+      quote: "or/multnomah/portland/33.120/33.120.210.txt#L5-L8"
+      via: "or/multnomah/portland/33.120/33.120.206.txt#L28-L29"
     max_coverage_pct:
       value: 85
-      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
     min_landscaped_pct:
       value: 15
-      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L67-L68"
     min_density_du_per_acre:
       sqft_per_unit: 1000
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L526-L528"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39"
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
@@ -3476,7 +3476,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3484,7 +3484,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     # 33.120.240.B, last sentence: "The standards of this section do not apply
     # in the RX and RMP zones." Read, and states none.
     open_space_min_sqft:
@@ -3492,40 +3492,40 @@ zones:
       cite: PCC 33.120.240.B, outdoor and common area requirements do not apply in the RX and RMP zones
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.120.txt#L1487-L1491"
+      quote: "or/multnomah/portland/33.120/33.120.240.txt#L7-L10"
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+      quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
     min_lot_sqft:
       # Table 120-3 states one dimension for the RX zone and it is a 10-foot
       # front lot line. No area, which is not the same as an area of zero: the
       # test does not exist rather than being one every lot passes.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L463-L467"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L28-L31"
     min_frontage_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L463-L467"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L28-L31"
     setback_front_ft:
       value: 0
-      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
     setback_side_ft:
       value: 0
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_rear_ft:
       value: 0
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_garage_entrance_ft:
       # NOT ENCODED: the either/or. 33.120.283.E.1.a states this standard as a
       # forbidden BAND rather than a floor -- "In the RM2, RM3, RM4, and RX
@@ -3549,27 +3549,27 @@ zones:
       # be settled before the field is ever wired to a verdict.
       # Found 2026-09-07 by the reading queue.
       value: 18
-      quote: "or/multnomah/portland/33.120.txt#L545-L546"
-      via: "or/multnomah/portland/33.120.txt#L1224-L1227"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L54-L55"
+      via: "or/multnomah/portland/33.120/33.120.220.txt#L171-L172"
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.120.txt#L1228-L1230"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L173-L174"
     max_height_ft:
       value: 100
-      quote: "or/multnomah/portland/33.120.txt#L529"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L40"
     max_far:
       value: 4.0
-      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L28-L29"
     max_coverage_pct:
       value: 100
-      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
     min_landscaped_pct:
       value: 0
-      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L67-L68"
     min_density_du_per_acre:
       sqft_per_unit: 500
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L526-L528"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39"
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
@@ -3595,7 +3595,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3603,7 +3603,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     # 33.120.240.B, last sentence: "The standards of this section do not apply
     # in the RX and RMP zones." Read, and states none.
     open_space_min_sqft:
@@ -3611,63 +3611,63 @@ zones:
       cite: PCC 33.120.240.B, outdoor and common area requirements do not apply in the RX and RMP zones
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.120.txt#L1487-L1491"
+      quote: "or/multnomah/portland/33.120/33.120.240.txt#L7-L10"
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+      quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
     min_lot_sqft:
       value: 10000
-      quote: "or/multnomah/portland/33.120.txt#L468-L470"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L32-L34"
     min_lot_width_ft:
       value: 70
-      quote: "or/multnomah/portland/33.120.txt#L468-L470"
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L32-L34"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
     setback_side_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
       variants:
         # 33.120.220.B.3.g, the rear half, keyed to the line -- see RM1 and RF.
         - exempt: true
           when: [alley_at_rear]
-          quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
       # abutting an alley. Its own field because `setback_side_ft` is one
       # number for both side lines; the far side yard keeps that number.
       exempt: true
-      quote: "or/multnomah/portland/33.120.txt#L1053-L1054"
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
     setback_garage_entrance_ft:
       # 33.120.283.E.1.b: "No setback is required from a lot line abutting an
       # alley." Unconditional, and this file held only Table 120-4's flat 18.
       # The bureau may still ask for turning radius, which is a review, not a
       # dimension. Found 2026-09-07 by the reading queue.
       value: 18
-      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L54-L55"
       variants:
         - exempt: true
           when: [abuts_alley]
-          quote: "or/multnomah/portland/33.120.txt#L1228-L1230"
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L173-L174"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/portland/33.120.txt#L529"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L40"
     max_coverage_pct:
       value: 50
-      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L62-L63"
     min_landscaped_pct:
       value: 30
-      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L67-L68"
     min_density_du_per_acre:
       sqft_per_unit: 1875
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L526-L528"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39"
     max_density_du_per_acre:
       sqft_per_unit: 1500
-      quote: "or/multnomah/portland/33.120.txt#L513-L515,L519-L521"
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L30-L32"
     notes: 'Manufactured Dwelling Park. Table 120-2 is the whole answer here: fourplex is the one "No" in the row, so the pod is barred whatever the lot looks like. The dimensional standards are encoded anyway, so the zone reads as decided rather than as unread and a future product that is not a fourplex already has them. No FAR: 33.120.210.B states floor area ratio is not applicable in RMP. RMP is also the one multi-dwelling zone carrying a MAXIMUM density -- 1 unit per 1,500 sq ft, #L519-L521. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
   CR:
     cite_default:
@@ -3690,7 +3690,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3698,7 +3698,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     # Table 130-2 carries a row "Required Residential Outdoor Area (see
     # 33.130.228)" reading Yes for CR, CM1, CM2, CM3 and CE, and No for CX.
     # Where it is Yes, 33.130.228.B.1 states the amount the same way the
@@ -3819,7 +3819,7 @@ zones:
     # NO `setback_alley_side_ft` in the six commercial zones, on purpose
     # (FOLLOWUPS 12(c), read 2026-09-28). The residential chapters waive the
     # setback from an alley line in so many words (33.110.220.D.9
-    # 33.110.txt#L746-L747, 33.120.220.B.3.g 33.120.txt#L1053-L1054) and hold
+    # 33.110.220.txt#L102, 33.120.220.B.3.g 33.120.220.txt#L54) and hold
     # it on that field. This chapter has no such sentence: "alley" appears in
     # 33.130 only in the step-down height across a street or alley from a
     # residential zone (33.130.txt#L552-L556), a height rule. 33.140 (EX),
@@ -3827,7 +3827,7 @@ zones:
     # whole-document grep of every Portland chapter in the store; the plan
     # districts were not part of that grep and could still say more. What
     # governs the line instead: a street lot line "does not include lot lines
-    # that abut an alley" (33.910.definitions.txt#L766-L767) and a street
+    # that abut an alley" (33.910.030.txt#L544-L547) and a street
     # "does not include alleys" (#L1374-L1375), so an alley line is "a lot
     # line that is not a street lot line", and 33.130.215.B.2 sets its
     # setback by the zone it abuts -- the side/rear pair above, one number
@@ -3899,7 +3899,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -3907,7 +3907,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
@@ -4070,7 +4070,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -4078,7 +4078,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
@@ -4277,7 +4277,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -4285,7 +4285,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
@@ -4484,7 +4484,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -4492,7 +4492,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     open_space_min_sqft:
       per_dwelling: 48
       cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
@@ -4682,7 +4682,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45"
       variants:
         # "Houses, attached houses and duplexes are exempt." Four townhouses
         # on four unit lots are four attached houses. The same building on one
@@ -4690,7 +4690,7 @@ zones:
         # decides whether the ceiling exists.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+          quote: "or/multnomah/portland/33.266/33.266.115.txt#L45-L46"
     # The one No in the Table 130-2 row. Read, and states none.
     open_space_min_sqft:
       exempt: true
@@ -4871,7 +4871,7 @@ zones:
       cite: PCC 33.266.115; Tables 266-1 and 266-2
       url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
       retrieved: 2026-08-21
-      quote: "or/multnomah/portland/33.266.txt#L141-L142,L153-L155,L157,L159"
+      quote: "or/multnomah/portland/33.266/33.266.115.txt#L29,L39-L41,L43,L45"
     quadplex_allowed:
       # Table 140-1, "Household Living": Y in EX, with no bracketed
       # limitation, in a chapter whose other five zones either bar it or
@@ -4986,7 +4986,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/portland/33.100.txt#L57,L59"
+      quote: "or/multnomah/portland/33.100/33.100.040.txt#L8,L10"
     notes: 'Open Space. Table 100-1 gives Household Living a bare N in the zone''s single column -- prohibited, with no bracketed limitation and no conditional-use path. Parks, cemeteries and golf courses are what this zone is for. The 2,717 lots carrying it were reading as unknown for want of a chapter nobody had fetched.'
   CI1:
     cite_default:
@@ -5351,7 +5351,7 @@ neighbours:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/multnomah/portland/33.910.definitions.txt#L1157-L1160"
+  quote: "or/multnomah/portland/33.910/33.910.030.txt#L833-L836"
   says: "or it may be privately owned"
   cite: "PCC 33.910 (Right-of-Way; Street Types: Street; Tract)"
   note: >-

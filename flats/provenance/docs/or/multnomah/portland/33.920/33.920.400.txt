@@ -1,0 +1,17 @@
+33.920.400 Basic Utilities
+A.                                              Characteristics. Basic Utilities are infrastructure services which need to be located in or near the area where the service is provided.
+Basic Utility uses generally do not have regular employees at the site.
+Services may be public or privately provided.
+All public safety facilities are Basic Utilities.
+B.                                               Accessory uses.
+Accessory uses may include food membership distribution, parking; control, monitoring, data or transmission equipment; and holding cells within a police station.
+C.                                                 Examples. Examples include water and sewer pump stations; sewage disposal and conveyance systems; electrical substations; water towers and reservoirs; Small Scale Energy Production, water quality and flow control facilities; water conveyance systems; water harvesting and re-use conveyance systems and pump stations; stormwater facilities and conveyance systems; telephone exchanges; mass transit stops or turn arounds, light rail stations, suspended cable transportation systems, transit centers; and public safety facilities, including fire and police stations, and emergency communication broadcast facilities.
+
+
+D.                                             Exceptions.
+1.                                                   Services where people are generally present, other than mass transit stops or turn arounds, light rail stations, transit centers, and public safety facilities, are classified as Community Services or Offices.
+2.                                                   Utility offices where employees or customers are generally present are classified as Offices.
+3.                                                   Bus and light rail barns are classified as Warehouse And Freight Movement.
+4.                                                   Public or private passageways, including easements, for the express purpose of transmitting or transporting electricity, gas, oil, water, sewage, communication signals, or other similar services on a regional level are classified as Rail Lines And Utility Corridors.
+5.                                                   Utility Scale Energy Production is considered Manufacturing and Production.
+6.                                                   Solid waste incinerators that generate energy but are not Small Scale Energy Production are considered Waste Related Uses.

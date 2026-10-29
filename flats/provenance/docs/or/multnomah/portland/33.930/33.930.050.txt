@@ -1,0 +1,70 @@
+33.930.050 Measuring Height
+A.                                                           Measuring building height.
+The height of a building is the vertical distance between the base reference point and the highest           roof-type reference point.
+The methods for establishing the base reference point are described in Paragraph A.1.
+Methods to establish the roof-type reference point are described in Paragraph A.2.
+
+1.                                                   Base reference point.
+a.                                                     In commercial/mixed use and multi-dwelling zones.
+In the commercial/mixed              -us               e zones, when any portion of a building is within 25 feet of an existing or proposed sidewalk, the base reference point is determined using the method described in Subsubparagraphs A.1.a(1) and A.1.a(2).
+See Figure 930-25 and 930-26.
+If no
+
+
+portion of a building is within 25 feet of an existing or proposed sidewalk, the base reference point is determined using the method described in Subparagraph
+A.1.b. In addition, in the multi-dwelling zones, when the structure                is a multi-dwelling structure, and some portion of the building is within 25 feet of an existing or proposed sidewalk, the applicant may choose to use the following method for determining base reference point:
+
+(1)                                  Identify the lowest and highest grade of the sidewalk located                                 within 25 feet of the building.
+
+(2)                                  Determine the base reference point:
+•                                             When the lowest grade of the existing or proposed sidewalk located within 25 feet of the building is not more than 10 feet below the highest grade of the sidewalk adjacent to the site within 25 feet of the bu                                ilding, the base reference point is the highest grade of the sidewalk.
+•                                             When the lowest grade of the existing or proposed sidewalk located within 25 feet of the building is more than 10 feet below the highest grade of the sidewalk adjacent to the site within                                                               25 feet of the building, the base reference point is the lowest grade of the sidewalk plus 10 feet.
+b.                                                  In all other situations, the base reference point is determined using the method described in Subparagraphs A.1.b(1) and A.1.b(2).
+See Figure 930-6              :
+(1)                                  Identify the lowest and highest grade exactly 5 feet from the building.
+To establish lowest and highest grade, draw a line exactly 5 feet from all sides of the building and identify the lowest and the highest grade along the line.
+Exclude from the identification of lowest grade pedestrian-only               paths that are no more than 5 feet wide that provide access from the street to an entrance into the building.
+If the property line is less than 5 feet from any side of the building, the line must follow the property line for the segment where the property line is less than 5 feet from the building.
+(2)                                  Determine the base reference point:
+•                                             When the lowest grade is not more than 10 feet below the highest grade exactly 5 feet from the building, the lowest grade is the                          base reference point.
+•                                             When the lowest grade is more than 10 feet below the highest grade exactly 5 feet from the building, the base reference point is the lowest grade plus 10 feet.
+2.                                                   Roof-type reference point.
+The methods to determine the roof              -type re              ference point
+are described below and are shown in Figure 930          -5.
+There may be multiple roof              -type
+reference points on a building:
+
+a.                                                     Flat roof (pitch is 2 in 12 or less): Measure to the highest point of the roof except in the single-dwelling zones where the measurement is to the top of the parapet, or if there is no parapet, to the highest point of the roof.
+b.                                                  Mansard roof: Measure to the deck line.
+
+
+c.                                                        Gabled, hipped, gambrel, or pyramidal roof: Measure to the average height of the gable.
+d.                                                  Other roof types                         such as domed, shed, or vaulted shapes: Measure to the highest point.
+e.                                                    Stepped or terraced building: Measure to the highest point of any segment of the building.
+
+Figure 930-5 Measuring Height – Roof Types
+
+Figure 930-6 Measuring Height – Determining Base Reference Point
+
+
+Figure 930-25 Measuring Height – Commercial/Mixed Use Zones
+
+Figure 930-26 Measuring Height – Sidewalk Area Used for Height Measurement in Commercial/Mixed Use Zones
+
+B.                                                Measuring height of other structures.
+The height of other structures such as flag poles and fences is the vertical distance from the ground level immediately under the                          structure to the
+top of a structure, excluding exempted portions.
+When chimneys and other objects are allowed to exceed the base height of the zone by a set amount, that set amount is measured to the top of these objects.
+Special measurement provisions are also provided below.
+
+
+1.                                                    Measuring height of retaining walls and fences.
+Retaining walls and fences on top of retaining walls are measured from the ground level on the higher side of the retaining wall.
+See Figure 930-8.
+
+Figure 930-8 Measuring Height – Retaining Walls
+
+2.                                                    Measuring height of decks.
+Deck height is determined by measuring from the ground to the top of the floor of the deck             if there is no rail or if the rail walls are more than 50
+percent open, and from the ground to the top of the rails f          or all other situations.
+

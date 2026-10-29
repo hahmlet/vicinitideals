@@ -1,0 +1,51 @@
+33.930.150 Measuring Top of Bank
+See Section 33.910.030, Environmental-Related Definitions, Top of Bank
+
+A.                                                Using Percent Slope.
+Percent slope is determined by dividing the vertical rise by the horizontal run, and converting that decimal to a percentage.
+For example, a slope section that rises 1 foot over a distance of 4 feet is a 25 percent slope.
+B.                                                  Identifying a Decrease in Slope.
+A decrease in slope is a change in percent slope from a steeper to a less steep grade.
+For example, a change from 40 percent slope to 30 percent slope is a decrease in slope of 10 percent.
+A change from 35 percent slope to 15 percent slope is a decrease in slope of 20 percent.
+To identify the decrease in slope the slope must be sampled every 3 feet between the ordinary high water mark and a point 50 feet from the ordinary high water mark.
+See Figure 930-27.
+
+Figure 930-                         27a
+Example 1: Identifying a Decrease in Slope
+
+Figure 930-                         27b
+Example 2: Identifying a Decrease in Slope
+
+C.                                                   Relationship to Other Structures.
+See Figure 930-28.
+1.                                                   Where a structure straddles the top of bank, the top of bank line is drawn as a straight line through the structure, connecting the top of bank line on either side.
+2.                                                   Where there is a vertical bulkhead or seawall, the top of bank is the point at the top of the bulkhead that is closest to the river.
+
+
+3.                                                   Docks, pilings, slips, wharves and other similar structures built over the water are not factored into the determination of top of bank.
+Where there is a dock, wharf or other structure on the bank, measurements of slope are taken on the underlying dry land.
+4.                                                   Where the bank itself is a structure, such as a rip-rap slope at the edge of reclaimed land, the top of bank line is based on the predominant slope of that structure, rather than the slope of individual boulders or structural elements.
+
+Figure 930-                         28
+Top of Bank in Relation to Other Structures
+
+D.                                            Default Top of Bank.
+If no slope decrease of 10 percent or more is found within 50 feet (measured horizontally) of the ordinary high water mark, then the top of bank will be one of the following default locations, see Figure 930-29.
+The Willamette River Reaches are shown on Map 440-1 and 475-1:
+1.                                                   For the Willamette River Central Reach and Willamette River South Reach, the default top of bank is 50 feet (measured horizontally) from the ordinary high water mark.
+2.                                                   For the Willamette River North Reach and the Columbia River, the default top of bank is 2 feet (measured vertically) from the ordinary high water mark.
+3.                                                   For perennial streams, seeps and wetlands the default top of bank is 15 feet (measured horizontally) from the ordinary high water mark.
+4.                                                   For intermittent and ephemeral streams, the default top of bank is 15 feet (measured horizontally) from the centerline of the stream.
+
+
+Figure 930-29 Measuring Default Top of Bank
+
+(Amended by: Ord. No.168698, effective 4/17/95; Ord. No. 173533, effective 8/2/99; Ord. No. 174263, effective 4/15/00; Ord. No. 175837, effective 9/7/01; Ord. No. 176443, effective 5/30/02;
+Ord. Nos. 175965 and 176333, effective 7/1/02; Ord. No. 176469, effective 7/1/02; Ord. No. 177028, effective 12/14/02; Ord. No. 181357, effective 11/9/07; Ord. No. 182429, effective 1/16/09; Ord. No.
+184524, effective 7/1/11; Ord. No. 187216, effective 7/24/15                       ; Ord. No. 187471                                                 , effective 1/1/16;
+Ord. No. 188259                                                 , effective 3/31/17;  Ord. No. 188177, effective 5/24/18; Ord. No. 188958, effective
+5/24/18; Ord. No. 189000                                                 , effective 7/9/18; Ord. No. 189805                                                 , effective 3/1/20; Ord. No. 190023,
+effective 8/10/20; Ord. No. 190241, effective 3/1/21                                                ; Ord. No. 190093                                                 , effective 8/1/21; Ord. No.
+191848, effective 10/1/24                                                 .)
+

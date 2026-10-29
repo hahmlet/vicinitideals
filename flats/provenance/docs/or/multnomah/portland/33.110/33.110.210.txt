@@ -1,0 +1,43 @@
+33.110.210 Floor Area Ratios
+A.                                                           Purpose. Floor area ratios (FAR) w           ork with height, setback, and building coverage requirements to control the overall bulk and placement of buildings.
+The maximum FAR allowances have been calibrated by zone to:
+
+•                                             Define the character of each zone by establishing greater FAR allowances in the higher intensity zones;
+
+•                                             Encourage the provision of additional dwelling units within existing neighborhoods by relating the allowed amount of FAR to the total number of units on a site; and
+
+•                                             Ensure that the bulk of buildings on one lot does not overwhelm development on adjacent lots.
+
+B.                                                Maximum FAR.
+Maximum floor area ratios are stated in Table 110            -4.
+Maximum FAR
+applies to all buildings on the lot                                   , however the maximum allowed is based on the total
+number of dwelling units on the lot           and whether a bonus option is chosen.
+In the R10 and
+R20 zones, the maximum FAR only applies to lots           that are less than 10,000 square feet in
+area. The maximum FAR for a lot           with a congregate housing facility is the same as shown in
+Table 110-4 for a lot                          with 1 total dwelling unit.
+The maximum FAR for institutional uses is stated in 33.110.270.
+Adjustments to the maximum FAR ratios, including bonus ratios, are prohibited.
+C.                                                                                        Exceptions.
+
+1.                                                    Maximum FAR does not apply to one alteration or addition of up to 250 square feet when the alteration or addition is to a primary structure that received final inspection at least 5 years ago.
+This exception is allowed once every 5 years.
+2.                                                    Stairwells are only counted as floor area on one level.
+D.                                             Maximum FAR with bonus.
+
+1.                                                    Affordable housing bonus option.
+The maximum FAR for           lots that provide at least one dwelling unit that is affordable to those earning no more than 60 percent of the area median family income or an affordability level established by Title 30 is stated in Table 110-4.
+To qualify for this maximum FAR with bonus:
+
+a.                                                     The applicant must provide a letter from the Portland Housing Bureau certifying that the development meets the affordability standard stated above.
+The letter is required to be submitted before a building permit can be issued but is not required in order to apply for a land use review; and
+b.                                                  The property owner must execute a covenant with the City that complies with the requirements of 33.700.060.
+The covenant must ensure that the affordable dwelling unit will remain affordable to households meeting the income restriction and any administrative requirements of the Portland Housing Bureau.
+2.                                                    Preserving existing dwelling units bonus option.
+The maximum FAR for lots that contain a primary residential structure that received final inspection at least 5 years ago is stated in Table 110-4.
+To qualify for this maximum FAR with bonus, an additional dwelling unit must be added to the site, and no more than 25 percent of
+
+
+the existing street-facing façade of the existing primary residential structure may be altered to add additional floor area.
+

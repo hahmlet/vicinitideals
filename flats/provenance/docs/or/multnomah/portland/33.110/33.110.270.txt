@@ -1,0 +1,99 @@
+33.110.270 Institutional Development Standards
+A.                                                           Purpose. The general base zone development standards are designed for residential buildings.
+Different development standards are needed for institutional uses which may be
+
+
+allowed in single-dwelling zones.
+The intent is to maintain compatibility with and limit the negative impacts on surrounding residential areas.
+
+B.                                                Use categories to which these standards apply.
+The standards of this section apply to uses in the institutional group of use categories, whether allowed by right, allowed with limitations, or subject to a conditional use review.
+The standards apply to new development, exterior alterations, and conversions to institutional uses.
+Recreational fields used for organized sports on a school, school site, or in a park, are subject to Chapter 33.279, Recreational Fields for Organized Sports.
+C.                                                                                         The standards.
+
+1.                                         The development standards are stated in Table 110-9.
+If not addressed in this section, the regular base zone development standards apply.
+
+2.                                         Setbacks on a transit street or in a Pedestrian District.
+a.                                           Purpose. The purpose of these regulations is to reduce reliance on the automobile and encourage pedestrians and transit riders by ensuring safe and convenient pedestrian access to buildings.
+b.                                         Building setbacks on a transit street or in a Pedestrian District.
+Buildings on a transit street or in a Pedestrian District must meet the provisions of 33.120.220.C.
+
+c.                                             Conflicts.
+(1)                        If the depth of the minimum building setback or buffering standards conflicts with the maximum building setback standard, the depth of the maximum building setback standard supersedes the depth of the minimum building setback and buffering standards.
+
+(2)                        If the depth of the minimum setback standard for detached accessory structures conflicts with the depth of the minimum buffering standard, the depth of the minimum buffering standard supersedes the depth of the minimum setback standard for detached accessory structures.
+
+d.                                         Exception. Development that is not subject to conditional use review under
+Section 33.815.040 is exempt from the maximum transit street setback requirement.
+
+3.                                         Exterior storage.
+Exterior storage of materials or equipment is prohibited.
+4.                                         Outdoor activity facilities.
+Except as specified in paragraph C.5. below, outdoor activity facilities, such as swimming pools, basketball courts, tennis courts, or baseball diamonds must be set back 50 feet from abutting R-zoned properties.
+Playground facilities must be set back 25 feet from abutting R-zoned properties if not illuminated, and 50 feet if illuminated.
+Where the outdoor activity facility abuts R-zoned properties in School uses, the required setback is reduced to zero.
+
+5.                                         Recreational fields for organized sports.
+Recreational fields used for organized sports on a school, school site, or in a park, are subject to Chapter 33.279, Recreational Fields for Organized Sports.
+
+
+5.                                         Recreational fields for organized sports.
+Recreational fields used for organized sports on a school, school site, or in a park, are subject to Chapter 33.279, Recreational Fields for Organized Sports.
+6.                                         Mechanical equipment.
+Mechanical equipment located on the ground, such as heating or cooling equipment, pumps, or generators must be screened from the street and any abutting residential zones by walls, fences, or vegetation.
+Screening must comply with at least the L2 or F2 standards of Chapter 33.248, Landscaping and Screening, and be tall enough to screen the equipment.
+Mechanical equipment placed on roofs must be screened in one of the following ways, if the equipment is within 50 feet of an abutting R zoned lot:
+a.                                          A parapet along facades facing the R zone that is as tall as the tallest part of the equipment;
+b.                                        A screen around the equipment that is as tall as the tallest part of the equipment; or
+c.                                             The equipment is set back from roof edges facing the R zone 3 feet for each foot of height of the equipment.
+7.                                         Electrical substations.
+In addition to the standards in Table 110-9, the entire perimeter of electrical substations, including the street lot line (except for the access point), must be landscaped to the L3 standards stated in Chapter 33.248.
+This landscaping must be planted on the outside of any security fence.
+Electrical substations that are in a fully enclosed building are exempt from this requirement.
+8.                                                   Grassy areas.
+Grassy play areas, golf courses, cemeteries, and natural areas are not subject to the L3 landscaping standard of Table 110-9 and are exempt from the setback standard of Paragraph 4, above.
+9.                                                   Garbage and recycling collection areas.
+All exterior garbage cans.
+Garbage collection areas, and recycling collection areas must be screened from the street and any adjacent properties.
+Trash receptacles for pedestrian use are exempt.
+Screening must comply with at least the L3 or F2 standards of Chapter 33.248, Landscaping and Screening.
+See Section 17.102.270, Business and Multifamily Complexes Required to Recycle, of the Portland City Code for additional requirements for recycling areas.
+10.                            Pedestrian standards.
+The on-site pedestrian circulation system must meet the standards of Section 33.120.255, Pedestrian Standards.
+
+Table 110-9 Institutional Development Standards [1]
+
+Minimum Site Area for New Uses                                                                                                           10,000 sq. ft.
+Maximum Floor Area Ratio [2]                                                                                                             0.5 to 1
+Maximum Height [3]                                                                                                                       50 ft.
+Minimum Building Setbacks [2]                                                                                                            1 ft. back for every 2 ft. of bldg. height, but in no case less than 15 ft.
+Maximum Building Setback
+Transit Street or Pedestrian District [7]                                                                                                20 ft. or per CU/IMP review
+
+
+Table 110-9 Institutional Development Standards [1]
+Maximum Building Coverage [2]                                                                                                    50% of site area
+Minimum Landscaped Area [2,4]                                                                                                    25% of site area to the L1 standard
+Buffering from Abutting Residential Zone [5]                                                                                     15 ft. to L3 standard
+Buffering Across a Street from a Residential Zone [5]                                                                            15 ft. to L1 standard
+Setbacks for All Detached Accessory Structures Except
+Fences [6]                                                                                                                       10 ft.
+Parking and Loading                                                                                                              See Chapter 33.266
+Signs                                                                                                                            See Title 32, Signs and Related Regulations
+Notes:
+[1] The standards of this table are minimums or maximums as indicated.
+Compliance with the conditional use approval criteria might preclude development to the maximum intensity permitted by these standards.
+[2] For campus-type developments, the entire campus is treated as one site.
+Setbacks are only measured from the perimeter of the site.
+The setbacks in this table only supersede the setbacks required in Table 110-4.
+The normal regulations for projections into setbacks and for detached accessory structures still apply.
+[3] Towers and spires with a footprint of 200 square feet or less may exceed the height limit, but still must meet the setback standard.
+Elevator mechanical equipment that is set back at least 15 feet from all roof edges on street facing facades may extend up to 16 feet above the height limit.
+Other mechanical equipment and stairwell enclosures that provide rooftop access when these cumulatively cover no more than 10 percent of the roof area and are set back at least 15 feet from all roof edges on street facing facades may extend up to 10 feet above the height limit.
+[4] Any required landscaping, such as for required setbacks or parking lots, applies towards the landscaped area standard.
+[5] Vehicle areas are subject to the parking lot setback and landscaping standards stated in Chapter 33.266,
+Parking, Loading And Transportation And Parking Demand Management    .
+[6] Setbacks for structures that are accessory to recreational fields for organized sports on a school, school site, or in a park, are stated in Chapter 33.279, Recreational Fields for Organized Sports.
+[7] The maximum building setbacks are described in 33.110.270.C.

@@ -1,0 +1,81 @@
+33.610.100 Density Standards
+A.                                                           Purpose. Density standards match housing density with the availability of services and with the carrying capacity of the land in order to promote efficient use of land, and maximize the benefits to the public from investment in infrastructure and services.
+These standards promote development opportunities for housing and promote urban densities in less developed areas.
+Maximum densities ensure that the number of lots created does not exceed the intensity planned for the area, given the base zone, overlay zone, and plan district regulations.
+Minimum densities ensure that enough dwelling units can be developed to accommodate the projected need for housing.
+
+B.                                                Generally.
+1.                                                    The method used to calculate density depends on whether a street is created as part of the land division.
+As used in this chapter, creation of a street means a full street on the site, creating the first stage of a partial width street on the site, or extending an existing street onto the site.
+It does not include additional stages of a partial width street, or dedicating right-of-way to widen an existing right              -of              -way.
+2.                                                    To be eligible for maximum density A, the site being divided must qualify for a primary structure in conformance with 33.110.202, When Primary Structures are Allowed.
+3.                                                    When lots will be created using more than one maximum density, maximum density is calculated separately for the area being divided under each maximum density.
+When streets are created, density is calculated separately after deducting for streets.
+
+
+C.                                                                                         No street created.
+Where no street will be created as part of the land division, the following maximum and minimum density standards apply.
+Adjustments to this subsection are prohibited:
+
+1.                                                    Maximum density.
+Maximum density is based on the zone and the size of the site.
+The following formula is used to determine the maximum number of lots allowed on the site:
+Square footage of site;
+÷ Maximum density A, B, or C from Table 610-1; = Maximum number of lots allowed.
+2.                                                    Minimum density.
+Minimum density is based on the zone and size of the site, and whether there are physical constraints.
+The following formula is used to determine the minimum number of lots required on the site.
+Exceptions to minimum density are allowed under the provisions of Subsection 33.610.100.E:
+Square footage of site;
+-               Square footage of site within an Environmental or River Environmental, or Pleasant Valley Natural Resources overlay zone, potential landslide hazard area, or combined flood hazard area;
+x 0.80;
+÷ Maximum density C from Table 610-                                                                                     1;
+= Minimum number of lots required.
+D.                                             Street created.
+Where a street will be created as part of the land division, the following maximum and minimum density standards apply.
+Pedestrian connections that are self-contained streets created solely for the use of pedestrians and bicyclists are not considered streets for the purposes of calculating density under this subsection.
+Adjustments to this subsection are prohibited:
+1.                                                    Maximum density.
+Maximum density is based on the zone, the size of the site and whether a street is being created.
+The following formula is used to determine the maximum number of lots allowed on the site:
+Square footage of site;
+x 0.85;
+÷ Maximum density A,                             B, or C from Table 610-1;
+= Maximum number of lots allowed.
+2.                                                    Minimum density.
+Minimum density is based on the zone, the size of the site, whether there are physical constraints, and whether a street is being created.
+The following formula is used to determine the minimum number of lots required on the site.
+Exceptions to minimum density are allowed under the provisions of Subsection 33.610.100.E:
+Square footage of site
+-               Square footage of site within an Environmental or River Environmental, or Pleasant Valley Natural Resources overlay zone, potential landslide hazard area, or combined flood hazard area;
+x 0.68
+÷ Maximum density C            from Table 610-                                                                                     1
+= Minimum number of lots required.
+
+
+E.                                                    Exceptions to minimum density.
+Exceptions to minimum density standards are allowed in the following situations.
+Adjustments to this subsection are prohibited:
+1.                                                    If the minimum required density is equal to the maximum allowed density, then the minimum is automatically reduced by one;
+2.                                                    If the minimum required density is larger than the maximum allowed density, then the minimum density is automatically reduced to one less than the maximum;
+
+3.                                                    The portion of the site that has a conditional use or Conditional Use Master Plan is not included in the site for calculations of minimum density.
+
+Table 610-1 Maximum Density Standards
+RF                                  R20                                  R10                                 R7                                   R5                                  R2.5
+Maximum Density A:                                                                         NA                                  1 lot per                            1 lot per                           1 lot per                            1 lot per                           1 lot per
+Maximum density for lots that                                                                                                  5,000                                2,500                               1,750                                1,500                               1,500
+•                  Will be developed with                                                                                      sq. ft.                              sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.
+attached houses;
+•                  Will be located entirely outside the Constrained
+Sites overlay zone; and
+•                  Will have frontage on a maintained street, a private street that connects to a maintained street, or a self-contained pedestrian connection created solely for pedestrians and bicycles.
+
+Maximum Density B:                                                                         NA                                  1 lot per                            1 lot per                           1 lot per                            1 lot per                           1 lot per
+Maximum density for lots that                                                                                                  10,000                               5,000                               3,500                                2,500                               2,000
+will be developed with                                                                                                         sq. ft.                              sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.
+attached houses.
+Maximum Density C:                                                                         1 lot per                           1 lot per                            1 lot per                           1 lot per                            1 lot per                           1 lot per
+Maximum density for all other                                                              87,120                              20,000                               10,000                              7,000                                5,000                               2,500
+lots                                                                                       sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.                              sq. ft.                             sq. ft.
+

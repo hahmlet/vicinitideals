@@ -94,6 +94,12 @@ def test_every_cross_reference_resolves_to_lines_the_store_holds() -> None:
     store = ProvenanceStore()
     vias = _vias()
     assert any(layer == "or/multnomah/gresham" for layer, *_ in vias)
+    # Portland's split-cell pointers (FOLLOWUPS 119a) moved with its cut
+    # (FOLLOWUPS 73, batch 6): none may still point at a cut proof copy.
+    portland = [via.split("#")[0] for layer, _z, _f, via in vias if layer == "or/multnomah/portland"]
+    assert any(path.count("/") == 4 for path in portland)
+    cut = [path for path in portland if (store.root / path.removesuffix(".txt")).is_dir()]
+    assert not cut, f"pointers left on a cut proof copy: {sorted(set(cut))}"
     broken = []
     for layer_id, zone, field, via in vias:
         try:
@@ -122,7 +128,9 @@ def test_a_split_table_cell_carries_the_passage_that_splits_it() -> None:
     portland = load_rules()["or/multnomah/portland"]
     side = portland.zones["RM3"].values["setback_side_ft"]
     low = next(v for v in side.variants if v.when == ("low_rise",))
-    assert side.prov.via == low.prov.via == "or/multnomah/portland/33.120.txt#L543-L544"
+    # Proof copy 33.120.txt L543-L544 until Portland was cut into sections
+    # (FOLLOWUPS 73, batch 6); the row now sits in the section file holding Table 120-4.
+    assert side.prov.via == low.prov.via == "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
     # A variant read off its own single page stays on the page check.
     alley = next(v for v in portland.zones["RM3"].values["setback_rear_ft"].variants if v.when == ("alley_at_rear",))
     assert alley.prov.via is None

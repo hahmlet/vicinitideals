@@ -1,0 +1,25 @@
+33.930.080 Determining the Plane of a Building Wall
+The purpose of this measurement system is to provide a way to calculate varying amounts of bulk on a particular side of a structure.
+The plane of a building wall is a plane that extends from the
+ground to the top of each wall of a structure.
+A structure with more th           an one wall along one                        facade
+
+
+(for example, rooms jutting out from the main structure or a structure where each floor is set back from the floor below) will have a different plane for each of the walls.
+The area of the plane is determined by calculating the area of the plane from the ground to the top of the wall.
+The plane does not include roof area.
+In situations where there is more than one wall along one facade, the bulk of the closer walls covers the bulk of walls that are farther back.
+In these situations, the wall is measured by extending the plane of the wall to the area that is behind a closer wall.
+See Figure 930-11.
+[There are special measurement rules for situations where the plane of the building wall is wider than portions of the wall below.
+See Figure 930-12,                                                               below.]
+
+Figure 930-                         11
+Plane of a Building Wall
+
+Where the plane of a building wall contains portions that are wider than areas of the wall that are below it, the calculation of area is made using the wider dimension and extending the plane to the open area below.
+See Figure 930-12.
+
+Figure 930-                         12
+Additions to the Plane of a Building Wall
+

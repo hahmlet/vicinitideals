@@ -114,11 +114,15 @@ def test_the_pocket_answers_the_same_way_the_city_layer_does(
     the convention this layer already follows for 33.110 -- which is exactly
     the arrangement in which a drift would go unnoticed.
     """
+    store = ProvenanceStore()
     for zone in POCKETS:
         here = layers[UNINC].zones[zone].values["quadplex_allowed"]
         there = layers[PORTLAND].zones[zone].values["quadplex_allowed"]
         assert here.value == there.value, zone
-        assert here.prov.quote.split("#")[1] == there.prov.quote.split("#")[1], zone
+        # The same words, not the same line numbers: Portland's copy is cut
+        # into section files (FOLLOWUPS 73, batch 6) and the pocket's is the
+        # chapter as fetched.
+        assert store.quote(here.prov.quote).split() == store.quote(there.prov.quote).split(), zone
 
 
 def test_the_label_this_file_assigned_is_recorded_as_assigned(uninc: Layer) -> None:

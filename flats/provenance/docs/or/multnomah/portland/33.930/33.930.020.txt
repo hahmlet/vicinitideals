@@ -1,0 +1,49 @@
+33.930.020 Fractions
+When calculations result in fractions the results will be rounded as follows:
+
+A.                                                           Minimum requirements.
+Minimum requirements other than density are calculated as described in Paragraph A.1.
+Minimum requirements for density are calculated as described in Paragraph A.2.
+1.                                                   Generally. When a regulation is expressed in terms of a minimum requirement, any fractional result will be rounded up to the next consecutive whole number.
+For example, if a minimum requirement of one tree for every 30 feet is applied to a 50 foot strip, the resulting fraction of 1.67 is rounded up to 2 required trees.
+
+2.                                                   Density. Minimum density calculations are rounded based on a fraction that is truncated to two numbers pa          st the decimal point.
+For example, 3.4289 is truncated to
+3.42. Where a minimum density calculation results in a fraction that is .50 or above, the fraction is rounded up to the next whole number.
+Where a minimum density
+calculation results in a fraction t           hat is less than .50, the fraction is rounded down to the preceding whole number.
+B.                                                Maximum limits.
+Maximum                                       limits other than density are calculated as described in
+Paragraph B.1.             Maximum limits for density are calculated as described in Paragraph B.2.
+
+
+1.                                                   Generally. When a regulation is expressed in terms of maximum limits, any fractional result will be rounded down to the preceding whole number.
+For example, if a maximum limit of one parking space for every 2,500 square feet of site area is appl ied to an 8,000 square foot site, the resulting fraction of 3.2 is rounded down to 3 allowed parking spaces.
+2.                                                   Density. Maximum density calculations are rounded as follows.
+For the purposes of this measurement, rounding is based on a fraction that is truncated to two numbers past the decimal point.
+For example, 1.7398 is truncated to 1.73.
+
+a.                                                     1.01 to 3.99.
+Where a maximum density calculation results in number that is at least 1.01 and up to 3.99:
+
+(1)                                  If the fraction is less than .90, the fraction is rounded down to the next whole number.
+For example, if a maximum limit of one dwelling unit for every 5,000 square feet of site area is applied to a 13,900 square foot site, the resulting fraction of 2.78 is rounded down to 2 allowed dwelling units.
+(2)                                  If the fraction i          s .90 or above, the fraction is rounded up to the next whole number.
+For example, if a maximum limit of one dwelling unit for every 5,000 square feet of site area is applied to a 14,600 square foot site, the resulting fraction of 2.92 is rounded up to 3 al          lowed dwelling units.
+b.                                                  4.01 to 10.99.
+Where a maximum density calculation results in a number that is at least 4.01 and up to 10.99:
+
+(1)                                  If the fraction is less than .75, the fraction is rounded down to the next whole number.
+For example, if a maximum li          mit of one dwelling unit for every 5,000 square feet of site area is applied to a 23,400 square foot site, the resulting fraction of 4.68 is rounded down to 4 allowed dwelling units.
+
+(2)                                  If the fraction is .75 or larger, the fraction is rounded  up to the next whole number.
+For example, If a maximum limit of one dwelling unit for every 5,000 square feet of site area is applied to a 23,900 square foot site, the resulting fraction of 4.78 is rounded up to 5 allowed dwelling units.
+c.                                                        11.01 or larger.
+Where a maximum density calculation results in a number that is
+11.01 or greater:
+(1)                                  If the fraction is less than .50, the fraction is rounded down to the next whole number.
+For example, if a maximum limit of one dwelling unit for every 5,000 square feet of site area is applied to a 56,200 square foot site, the resulting fraction of 11.24 is rounded down to 11 allowed dwelling units.
+(2)                                  If the fraction is .50 or larger, the fraction is rounded up to the next whole number.
+For example, If a maximum limit of one dwelling unit for every 5,000 square feet of site area is applied to a 58,200 square foot site, the resulting fraction of 11.64 is rounded up to 12 allowed dwelling units.
+
+

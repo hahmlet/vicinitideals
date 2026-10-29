@@ -116,20 +116,39 @@ STACKED = re.compile(
 #: full stop is required: a bulleted list item ("• Townhouses") is not a term.
 #: So is a capital on every word but the small ones: a bulleted sentence
 #: ("• Changes in the topography of the site.", Portland 33.910) is prose.
+#:
+#: Portland's 33.910 sets a sub-term under its parent behind an en dash
+#: ("Manufactured Dwelling." then "– Manufactured Home.", "– Light Truck.")
+#: and a hyphenated word in lower case after the hyphen ("• Off-site
+#: Mitigation."); both were read as one line with their meaning in the proof
+#: copy and went unread when it was cut (FOLLOWUPS 73, batch 6). A hyphenated
+#: word is judged by its first letter, as a title writes it. A dash before "See" is
+#: Tigard's separator ('"Story"' over '– See Oregon Residential Specialty
+#: Code.'), a pointer, not a term.
 STACKED_BULLET = re.compile(
-    r"^[•·▪◦]\s*(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})\s*\.\s*$"
+    r"^[•·▪◦–—]\s*(?!See\b)(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})\s*\.\s*$"
 )
 
 _SMALL_WORDS = frozenset({"a", "an", "and", "as", "at", "by", "for", "in", "of", "on", "or", "the", "to"})
 
 
 def _titled(term: str) -> bool:
-    words = [w.strip("()") for w in re.split(r"[\s,/\-]+", term) if w.strip("()")]
+    words = [w.strip("()") for w in re.split(r"[\s,/]+", term) if w.strip("()")]
     return all(w[0].isupper() or w[0].isdigit() or w in _SMALL_WORDS for w in words)
+
+
+#: A pointer set alone on its line: "See Figure 910-4." Capitalised and closed
+#: by a full stop, it has a stacked term's shape, and readable text gives it a
+#: line of its own inside a body -- Portland's Corner Lot ends "See Figure
+#: 910-4." over "A corner lot may also be a through lot.", and the body
+#: stopped at the pointer when 33.910 was cut (FOLLOWUPS 73, batch 6).
+_POINTER = re.compile(r"^[\"“]?See\s")
 
 
 def _stacked(line: str) -> re.Match[str] | None:
     """A term alone on its line, in either stacked form."""
+    if _POINTER.match(line):
+        return None
     plain = STACKED.match(line)
     if plain is not None:
         return plain

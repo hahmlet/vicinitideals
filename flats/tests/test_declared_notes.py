@@ -195,7 +195,12 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and thirty-nine notes, all of them ruled, none blocking.
+    """A hundred and forty notes, all of them ruled, none blocking.
+
+    The hundred and fortieth arrived when Portland was cut into sections
+    (FOLLOWUPS 73, batch 6): 33.266.130.G.6, large parking areas over 125,000
+    square feet, read as note 6 of Table 266-4 the way G.5 has been read as
+    its note 5 since 2026-08-21. Listed for a ruling, not ruled by the cut.
 
     The last seventeen came with the design overlay, design review and
     historic resource review chapters (33.420, 33.825, 33.846), stored
@@ -220,7 +225,7 @@ def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
     Household Living row starts at five units on site. See
     test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 139
+    assert len(ruled) == 140
     assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 

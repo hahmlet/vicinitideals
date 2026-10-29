@@ -502,3 +502,52 @@ or/multnomah/gresham:
   # own first lines, and the three plan districts print their running head
   # there ("4.1152          DOWNTOWN PLAN DESIGN DISTRICT", indented).
   page_head: '^\s*(?:\[\s*\d{1,2}\s*\.\s*\d{4}\s*(?:\]\s*-|-)\s*\d[\d ]*\]?|City of Gresham Development Code(?:\s*\(\d{2}/\d{2,4}\))?|\s\d{1,2}\.\d{4}\s+(?:DOWNTOWN PLAN DESIGN DISTRICT|CIVIC NEIGHBORHOOD PLAN DISTRICT|ROCKWOOD DESIGN DISTRICT)|\s+\d{1,2}\.\d{4})\s*$'
+
+or/multnomah/portland:
+  # "33.110.220 Setbacks" -- title, chapter and section, then a capitalised
+  # title. Printed twice: indented in the chapter's contents list ("
+  # 33.110.220 Setbacks", 8-18 spaces in), and over the text, mostly at the
+  # margin but indented in a few layout pages ("                  33.130.200
+  # Lot Size", 18 spaces). The layout extraction spaces some numbers apart
+  # ("33. 418.020", "33.266.21             0 Bicycle"); the spaces are not
+  # part of it. A reference wrapped into an indented paragraph sits deeper
+  # (33.415 prints "33.130.242 Transit Street Main Entrance." 28 spaces in)
+  # and one with a subsection ("33.705.020.A.") or in lower case ("33.910.030
+  # below") is not a heading. Chapter 11.50 is a web print: "11.50.010
+  # Purpose." at the margin, printed once. Measured 2026-10-29 on all 21
+  # documents: every contents entry has exactly one heading over the text,
+  # in number order, and none other cuts.
+  heading: '^\s{0,18}(?P<n>(?:33\s*\.\s*\d(?:\s*\d){2}|11\.50)\s*\.\s*\d(?:\s*\d){2})\s+[A-Z]'
+  # Each chapter opens with its running header and its title ("Title 33,
+  # Planning and Zoning / 10/1/24 / 33.110 Single-Dwelling Zones") over its
+  # contents list.
+  front: ['33.100', '33.110', '33.120', '33.266', '33.610', 33.910.definitions, '33.920',
+          '33.930']
+  # Left whole: these nine PDF chapters have no page map (fetched for one
+  # rule each, never declared), so the readable text could not take their
+  # running headers out and a moved citation could not be checked to name
+  # the same printed page.
+  #
+  # And three base-zone chapters whose cut would unhook a footnote from a
+  # value (the FOLLOWUPS 123 trap), measured 2026-10-29: 33.150, where the
+  # unmeasured PCC Sylvania note (Table 150-2 note 3) caps CI1, CI2 and IR
+  # min_lot_sqft and quadplex_allowed only while their sections are one
+  # document -- cut, those two caps fall off; 33.140, whose EG1/EG2
+  # quadplex_allowed citation takes in a page header and so stays on the
+  # proof copy, where no footnote census reads it, losing the two encoded
+  # limitations it rests on (Table 140-1 notes 1 and 2); and 33.130, whose
+  # CM/CE/CR/CX citations run from Table 130-2's zone row to text in other
+  # sections and lose encoded note 1 of Table 130-2 the same way.
+  uncut: ['33.218', '33.415', '33.418', '33.420', '33.445', '33.526', '33.700', '33.825', '33.846',
+          '33.130', '33.140', '33.150']
+  # The footer "110-12" in its spacings ("110-      2", "120-"), in the
+  # lines just above a page start. Measured 2026-10-29 on every page start of
+  # the 11 page-mapped chapters; a figure caption there ("Figure 110-8") is
+  # printed text and stays.
+  page_furniture: '^\s*\d{3}-\s*\d{0,3}\s*$'
+  # The running header on a page's own first two lines: "Chapter 33.110
+  # ... Title 33, Planning and Zoning" over "Single-Dwelling Zones ...
+  # 10/1/24", or the facing page's "Title 33, Planning and Zoning ...
+  # Chapter 33.110" over "3/1/25 ... Single-Dwelling Zones"; two pages print
+  # the footer there.
+  page_head: '^\s*(?:Chapter\s+33\.[\d ]+\s{2,}Title 33, Plann\s*ing and Zoning|Title 33, Plann\s*ing and Zoning\s{2,}Chapter\s+33\.[\d ]+|\d{1,2}/\d{1,2}/\d{2}\s{2,}\S.*|\S.*\S\s{2,}\d{1,2}/\d{1,2}/\d{2}|\d{3}-\s*\d{0,3})\s*$'

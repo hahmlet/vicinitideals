@@ -1,0 +1,4 @@
+33.930.040 Measuring Distances on Maps
+Zone boundaries that are shown crossing lots are usually based on a topographic feature or a set measurement from a property line or topographic feature, such as the top                        of slope, middle of stream, 25 feet from top of bank, or 30 feet from property line.
+When zone boundaries are shown crossing properties with no clear indication of the basis for the line, exact distances are to be determined by scaling the distances from t                                                 he Official Zoning Maps, using the center of the zoning line.
+

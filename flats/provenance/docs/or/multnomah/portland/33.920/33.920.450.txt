@@ -1,0 +1,12 @@
+33.920.450 Medical Centers
+A.                                              Characteristics. Medical Centers includes uses providing medical or surgical care to patients and offering overnight care.
+Medical centers tend to be on multiple blocks or in campus settings.
+B.                                               Accessory uses.
+Accessory uses include out-patient clinics, offices, laboratories, teaching facilities, meeting areas, cafeterias, food membership distribution, parking, maintenance facilities, and housing facilities for staff, trainees                                           , or patient families.
+C.                                                 Examples. Examples include hospitals and medical complexes that include hospitals.
+D.                                             Exceptions.
+1.                                                   Uses that provide exclusive care and planned treatment or training for psychiatric, alcohol, or drug problems, where patients are residents of the program, are classified in the Group Living category.
+
+
+2.                                                   Medical clinics that provide care where patients are generally not kept overnight are classified as Office.
+3.                                                   Urgency medical care clinics are classified as Retail Sales And Service.

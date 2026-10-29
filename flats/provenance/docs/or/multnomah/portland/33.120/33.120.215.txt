@@ -1,0 +1,47 @@
+33.120.215 Height
+A.                                  Purpose. The height standards serve several purposes:
+•                                           They promote a reasonable building scale and relationship of one residence to another;
+•                                           They promote options for privacy for neighboring properties; and
+•                                           They reflect the general building scale of multi -dwelling development in the City's neighborhoods.
+B.                                    Height standard.
+1.                                                   Base height.
+The base heights allowed in the multi-dwelling zones are stated in Table 120-4.
+The maximum height standard for institutional uses is stated in 33.120.275, Development Standards for Institutions.
+The maximum height standards for detached accessory structures are stated in 33.120.280, Detached Accessory Structures.
+In the RM4 zone the base height is 75 feet, except as follows:
+a.                                                    On sites that are not within a Historic or Conservation district but are within 500 feet of a transit street with 20 -minute peak hour service the base height is 100 feet; and
+b.                                                  On sites within 1,000 feet of a transit station the base height is 100 feet, including on sites that are within a Historic or Conservation district.
+
+
+2.                                                   Step-down height.
+In the following situations, the base height is reduced, or stepped-down:
+a.                                                    On the portion of a site within 25 feet of a lot line abutting a site zoned RF through R2.5, the step-down height is 35 feet.
+See Figure 120 -2.
+Sites with property lines that abut a single-dwelling zone for less than a 5-foot length are exempt from this standard; and
+b.                                                  On the portion of the site within 15 feet of a lot line that is across a local service street or alley from a site zoned RF through R2.5 the following step-down height limits apply.
+The limits do not apply to portions of buildings within 100 feet of a transit street.
+(1)                                  The step-down height is 45 feet for sites in the RM2, RM3, RM4, and RX zones.
+(2)                                  The step-down height is 35 feet for sites in the RM1 and RMP zones.
+
+Figure 120-                         2
+Step-Down Height Adjacent to Single-Dwelling Zones
+
+C.                                     Exceptions to the maximum height.
+1.                                                   Chimneys, vents, flag poles, satellite receiving dishes, and other similar items, with a width, depth, or diameter of 5 feet or less may extend above the height limit, as long as they are attached to a building and do not exceed 5 feet above the top of the
+
+
+highest point of the roof.
+If they are greater than 5 feet in width, depth, or diameter, they are subject to the height limit.
+2.                                                   Parapets and railings.
+Parapets and rooftop railings may extend 4 feet above the height limits.
+3.                                                   Walls and fences.
+Walls or fences located between individual rooftop decks may extend 6 feet above the height limit provided that the wall or fence is set back at least 4 feet from the edges of the roof.
+4.                                                   Rooftop mechanical equipment and stairwell enclosures that provide rooftop access may extend above the height limit as follows, provided that the equipment and enclosures are set back at least 15 feet from all roof edges on street facing facades.
+a.                                                    Elevator mechanical equipment may extend up to 16 feet above the height limit; and
+b.                                                  Other mechanical equipment and stairwell enclosures that cumulatively cover no more than 10 percent of the roof area may extend up to 10 feet above the height limit.
+5.                                                    Antennas, utility power poles, and public safety facilities are exempt from the height limit.
+6.                                                   Small wind turbines are subject to the standards of Chapter 33.299.
+7.                                                   Roof mounted solar panels are not included in height calculations, and may exceed the maximum height limit as follows:
+a.                                                       For flat roofs or the horizontal portion of mansard roofs, the roof mounted solar panel may extend up to 5 feet above the top of the highest point of the roof.
+b.                                                  For pitched, hipped, or gambrel roofs, the roof mounted solar panel must be mounted no more than 12 inches from the surface of the roof at any point, and may not extend above the ridgeline of the roof.
+The 12 inches is measured from the upper side of the solar panel.

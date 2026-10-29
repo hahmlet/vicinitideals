@@ -1,0 +1,2282 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "59a6df18d987f3953a4c0ae9a64801162b81365b649a3875259d3bf7cadddf51",
+  "new_quote": "or/multnomah/portland/33.100/33.100.040.txt#L8,L10",
+  "old_fingerprint": "972a656ae110a4b9f7de526b7558aec170d299697f3e144af7496a58ddda5421",
+  "old_quote": "or/multnomah/portland/33.100.txt#L57,L59",
+  "when_key": "",
+  "zone": "OS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "bc814d9a8ccb2cc056cb64cce4e8c7eda4f4b2605e88e68f53f89fdf52c2c56e",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L9-L20",
+  "old_fingerprint": "a9a72e7c692787baa7d31c86ac5c0cbec7323a6ebee26c19c02455b5747ccc99",
+  "old_quote": "or/multnomah/portland/33.110.txt#L302-L313",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "e75ccfae6dd09a36af57698f33308346a5e4ae5d5cc080aa3dfc385321368841",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L14,L31",
+  "old_fingerprint": "2af12bd106c0da5a621737b7ee4441a667c5e05555243ae5ccfc92051c806c51",
+  "old_quote": "or/multnomah/portland/33.110.txt#L435,L454",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "1ac1007b1b40364aee7bd894e8136f539a1ef1b2c208b4c54da8905bb57e536d",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L35",
+  "old_fingerprint": "8a73b85b10ca84434b2e7ee40fe466bd813a87b0671ea514cf70795df4d82ae2",
+  "old_quote": "or/multnomah/portland/33.110.txt#L458",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "0095160779a03521800aac8dbef08a9418e0da2c50c9a7d98daab9ddaa880861",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L41",
+  "old_fingerprint": "abe72c3c2a8ad37fbc92b7a0d79c6d9a6a099aa29fd960a963ec9dc3bff0259e",
+  "old_quote": "or/multnomah/portland/33.110.txt#L464",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "bfcf494edb1dfd0bf917da824cec9c479bfb2cba8581efbbff540550df5ea614",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "bb5af04084e2f122f0b5db8ed559118a6ccb9c452323d0e173517a884e7fbb04",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "abuts_alley",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "8a282950be00014279c7b8a3d57ef758eeb4a4b7d3fb283f173c098c6ebe90ba",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L39",
+  "old_fingerprint": "4e8242d197c751df3325e19ba5a62dd4b3994c53e3ddb15b204b2a7427e6a24c",
+  "old_quote": "or/multnomah/portland/33.110.txt#L462",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3253169c98fe61e3dca14f0504d851bc6a3d27552d4d48f52a7b70f42f5db379",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "430195683bf37eed2b37ce916bf750277ecdd1f382834c9e7abb50403945cd08",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "alley_at_rear",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "58d37e71304020da815ff56c8c8cb3811531fdb48f61601b327a28434126b309",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "946ae87668fadfffeb5db3c4d1a8021c5e25c949096a277272cea87187b0954d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "26e7dbd0013bd56140e5b880f3bb5f414c34a66bcd81be11f45d9053e0932f5d",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L37",
+  "old_fingerprint": "19d3ce16bdf09e0b29a87352033d070c90ef8968c07962f66c2c17051d4f8a63",
+  "old_quote": "or/multnomah/portland/33.110.txt#L460",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "bce48958199842e41a37b6ee7450063540c5ca59ede04be631a6ef9d3a556bd7",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L20",
+  "old_fingerprint": "9a226a7128d0af128c61dccbddb2b628515a91f3b69c0be40c6c20af60f04a26",
+  "old_quote": "or/multnomah/portland/33.110.txt#L313",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7d027a2a337618d78af2430e60f1e47d5dbc091f8f1f72a8e3e037ec7300baf2",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L12-L13",
+  "old_fingerprint": "be4d7a63b97e6cd0911e37694dadc1b57974b84d34a3e0d49d6971b1e5998033",
+  "old_quote": "or/multnomah/portland/33.110.txt#L305-L306",
+  "when_key": "attached_house_division+constrained_sites_overlay",
+  "zone": "R20"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "e859f25a62b9c489b84c3fd9e35e7cd5a72aa803a02e89a7004dad5df497245a",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L14,L31",
+  "old_fingerprint": "e24bd058b67f4fad62d09448b5e5f3f413cbd6fadd7fc4ebc984aa575d0fd6be",
+  "old_quote": "or/multnomah/portland/33.110.txt#L435,L454",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a9cb92ec5b94d7f93f81ed0b8481800e480cbc1f002e2d39cdd065b1715828cf",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L35",
+  "old_fingerprint": "1f3986f0ab46e7eefff19279d1a13ee847d16eb2eed6bda7977f5deeec991274",
+  "old_quote": "or/multnomah/portland/33.110.txt#L458",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d3e3699ea3a9d1954ad01c13d1ac65686c33507b472ffe31d25e51f49452410b",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L37",
+  "old_fingerprint": "9baabbc024fafd135bd9c6e3b06ba0c73198c0a52c82867345c790769304a65e",
+  "old_quote": "or/multnomah/portland/33.110.txt#L460",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7ee77461c06e053e72841ce3a7bd7bb8d563fa98147f2d53e194591e88597960",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L39",
+  "old_fingerprint": "05f8799df71e254135b6f410b6c53e82554b0337711af43240f9b22f5ccb650d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L462",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "861966755c5882caecac4d20afde1c844791e2b640ec8f1a6a036580778b5d07",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "467ce2a74172b655e67dfd5a36038e18c1be8fe7573597e2c7dd9176d0e76e63",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "alley_at_rear",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "578906a08ca724142774d3995311f36c388bed6f192469fb62ca4596b6432743",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "9cd278607ab2bc152ad0af736fb2c3cebccf1d1c25955641af1fbce630d3f8c5",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "bc9c991791ae1d0ef1609cb280076fe49ebb5ecccd08e633fb527efd5819c11c",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L60",
+  "old_fingerprint": "69508fedc2c2b8688742be0d961b166a9ddfc3a6688e06f13925dcbae7810c3c",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1550",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "79b33dbfa7aafc698e8801e2ade1c6b26afb95028610f40c0f547a194ffe21b6",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L57-L59",
+  "old_fingerprint": "9ab6850a00c5213dfbc22d5161bf83e85c1235af98377ae5384585b0caccaf45",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1544-L1546",
+  "when_key": "adjustment",
+  "zone": "R20"
+ },
+ {
+  "field": "coverage_curve",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "88c4b14027072d73a3e75f4b18688fa11daaf4673d8b8cdd7a1c434fb1e27389",
+  "new_quote": "or/multnomah/portland/33.110/33.110.225.txt#L9-L14",
+  "old_fingerprint": "9957092fb0514730ca29e2507bb81f4957257b60905c6b36afee666ec1203521",
+  "old_quote": "or/multnomah/portland/33.110.txt#L780-L786",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d6b1daa8f9f6722f0745bf0e9c39f7226636bd3511e3191a24dd1201ac4a4dda",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L41",
+  "old_fingerprint": "6c38b03d18fc12d3a07e1c9909c406b1ca90d141dccea65df40ca3114b968395",
+  "old_quote": "or/multnomah/portland/33.110.txt#L464",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2dedfdd0d5ae2e9c14aa256ea66d9ab45056e2ed4a3b0089412c6c76d13b76ed",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "a648d8a3f8cdc803afd91b121a18b6275c243961837e1310ae82be32647f1961",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "abuts_alley",
+  "zone": "R20"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "5f826df0ed80e374d9e7f057f266455710c6300e3612af781e0d96850469c661",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L20",
+  "old_fingerprint": "415ed606d49bab34b0f03e8ee57339af5ae9a6a5651af0c0c6bc994ad6092f5b",
+  "old_quote": "or/multnomah/portland/33.110.txt#L313",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "1083caaa15f70ea64fc3f1b3b884d0e1dc75a55d34f392e34a555609e45ca234",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L12-L13",
+  "old_fingerprint": "007c38adf5076d025ca65c3c9ab3c97cc5b59174554f65a086228ecc1912286d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L305-L306",
+  "when_key": "attached_house_division+constrained_sites_overlay",
+  "zone": "R10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4e9a17de3e35e01ef300d9f4a3b1883130b39dc5a477dd27ae46d716ab8bfaae",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L14,L31",
+  "old_fingerprint": "3cac96f5d9d35b1c465ed74e851fac1d794867869abfdbd9b72746e3311fd487",
+  "old_quote": "or/multnomah/portland/33.110.txt#L435,L454",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "94ab7ec822a3edb85e36d5be8c31dea750302d0c7481df00a5061d57de16face",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L35",
+  "old_fingerprint": "17d9bc40a6a1a796d00a15af6c267e62f45143ac17083610410ce62de5c26b5b",
+  "old_quote": "or/multnomah/portland/33.110.txt#L458",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "31f48cd11082427f7ea782b24c09ddc5149a1dbcb8c64ac07c77459478b416df",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L37",
+  "old_fingerprint": "34f8b8e6d9bd008780ef8a99afc3310e0d7fa330dea15a7bb67c950dc8bbb6d8",
+  "old_quote": "or/multnomah/portland/33.110.txt#L460",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "abe63fba0f04ae48d60d19a90c9d310ff8c425a5b73d43ba6137aa8b73ecff5d",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L39",
+  "old_fingerprint": "ca3889770b61ae3bb7b45c4536149e87145125d3316ce51be146bb2e117da150",
+  "old_quote": "or/multnomah/portland/33.110.txt#L462",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "58c80415a488a413ae0d2cf28b7588f31c53e203a34ec20e65cf3a34bf479fc2",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "ed9f96131813b92703f22bbbb01c5467ab132444faa3a77f62e6c15affd5f188",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "alley_at_rear",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2307140f770e9bf743657bf563b0e102cd04bdbe5fdcbdb973df14265e77030d",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "ab18de8508a24834098bd20eea7d254cf5cfac2ab730b47043e9278f0ccd17ea",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c61aa4c3d7d6cf8ea09f1e0ab2dfddf837267d36d88451c60e174cfdeff4069f",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L61",
+  "old_fingerprint": "8338086f39fced65fb43ce9dcbe31239c701d8cda1d5c9aeefe0a9c1334083f0",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1551",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b262428ae38614cecba0d2d94241da34c9016575db6a393a6cfdd7aa057b754e",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L57-L59",
+  "old_fingerprint": "0d5e23f6673182ca50e5f7234a1712ef874f994628ea46a3b868756ba2507242",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1544-L1546",
+  "when_key": "adjustment",
+  "zone": "R10"
+ },
+ {
+  "field": "coverage_curve",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c247346ab03917f05b9e6d91a8f176779cd8ea97ef6c3314a360ee27bc4d76a5",
+  "new_quote": "or/multnomah/portland/33.110/33.110.225.txt#L9-L14",
+  "old_fingerprint": "86397ec8bfa275a450ad965f6bacd090f8aaccad1cea5446294662f6d6780d4a",
+  "old_quote": "or/multnomah/portland/33.110.txt#L780-L786",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "389afdd00d1ae48d253fb4373e568ce986138d5c7ac980d3ba648e3f2aa80501",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L41",
+  "old_fingerprint": "a9ec824c79e9a7919db1e9ba8cbc79ce0d9df7d27b0469b11a1fb042e18e4593",
+  "old_quote": "or/multnomah/portland/33.110.txt#L464",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "156d047bfa02b2b408caa1097804ca1d13c92fce38b49075d195d8bb903df744",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "7d4902bc2c0a5fc6c9785daa736ae3a52efa8489d02709053340ec9923a5818b",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "abuts_alley",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "e20c6430243e9e50cd0e4b23d24d20d7b7d9199eb2ed34d1a9e7682f4e775321",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L20",
+  "old_fingerprint": "0d5c34d16607dda5b5d7f97a51f8d62bda1046b3f9fcd99267bbefc084b3d60c",
+  "old_quote": "or/multnomah/portland/33.110.txt#L313",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "800462a2dfa10f33f2bd5db43fff49b6092b3f50bf7ae367c2fc1dffb2469587",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L12-L13",
+  "old_fingerprint": "029409d2de1d0714c1b399b67e8d4284a892c5990013f0475d7b9c83448cc07f",
+  "old_quote": "or/multnomah/portland/33.110.txt#L305-L306",
+  "when_key": "attached_house_division+constrained_sites_overlay",
+  "zone": "R7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "59ca507ef0b45175c0b73fb9fa68cbb33c3fec0a73f9eaeea9fe28726a23bd09",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L14,L31",
+  "old_fingerprint": "4cb11291744327696b6ef48f208af3b2ff51b1332516a441cd22a4d7a79431a3",
+  "old_quote": "or/multnomah/portland/33.110.txt#L435,L454",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_density_trigger_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b84efdf0bdcada53d73493a788f9141e619c1f4ce3651874cf52c248d0fd5b9b",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L7",
+  "old_fingerprint": "a49db23b71f51bff20290867a10b47301eafe2b3b5a0d6a0332077c9b5bc7611",
+  "old_quote": "or/multnomah/portland/33.110.txt#L421,L422",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_units_at_trigger",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "18c0d24d039ad14f654096ffbe71248170d07e79de73c3b369dc7927b8eda1c8",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L7",
+  "old_fingerprint": "e71dfcee66265304da971b63053eb6265b743011ac76444e753b7d1b21cea3c4",
+  "old_quote": "or/multnomah/portland/33.110.txt#L421,L422",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "539e5c13ce1292d7e1c389e2f6ca46f26488e2ed37bcd2db9015cfbc0b009b9b",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L35",
+  "old_fingerprint": "05295f55b540cc470aab02a195ecfce8c4c02f8661ff1aca4ba89ec656b44c92",
+  "old_quote": "or/multnomah/portland/33.110.txt#L458",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "679f4ebfaaa2096935c15ec110afa79dd060581227b7524d3be912b3400162ed",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L37",
+  "old_fingerprint": "a838c1f7b02d8509d87e41211ae0dab8b408ea7ca48d0b968e93c1990c83549a",
+  "old_quote": "or/multnomah/portland/33.110.txt#L460",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7c4b476e1f3f0b4a1ad846d851a479f184d67a4ea26d2386055b046cdcd16318",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L39",
+  "old_fingerprint": "c0e8a2b39a61b2746ad3b5a5d290af4a4dbe57663ea009074c44b8c61aaf119a",
+  "old_quote": "or/multnomah/portland/33.110.txt#L462",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "309f7070b8cbb9f678b25225734e45f9f96e6ae20f24c699cbf4e63d4af3568c",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "72d2bc7d1faf3a84a0b4443bc54edade8ca8561fec14e9eba358d685241568b2",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "alley_at_rear",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "83d525a6631588911f78960efac46ef269ac318fce0cd9bdb1a4c24bef78032e",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "d35454c9b3f33c294cf1828056184374f4a66cb17896966365da1ab5839a1f38",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "5194f6775c704b432736a700a67ff4c7b9a965ac7c85f5edcc6870d2366d2545",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L62",
+  "old_fingerprint": "ec102f85c5b3049b54c8f0921c5f0d89e5ae798a129b181fbd36f37d329c823f",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1552",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "cff9c961b637639ffc18076c3617e3359a7d40cd73e96edf52d784adc51f58fd",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L57-L59",
+  "old_fingerprint": "6a8c20708eebaaad086cda7a1c0969f2f19e4e05e514baf4eb64f9e168117488",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1544-L1546",
+  "when_key": "adjustment",
+  "zone": "R7"
+ },
+ {
+  "field": "coverage_curve",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "05538201616469b00246e33205b91cbcc80b1d07e282ea1aef717a09989185c7",
+  "new_quote": "or/multnomah/portland/33.110/33.110.225.txt#L9-L14",
+  "old_fingerprint": "66daf31bfde1fbd4567656e8c4ef70ee9ca26af66d6b2f42f2394025f8e79488",
+  "old_quote": "or/multnomah/portland/33.110.txt#L780-L786",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "10fbce17b2ca8006e03294e0cd6e56781d3b5281e4705816e093af1a23f547b9",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L41",
+  "old_fingerprint": "2d2a1418941d8b38af2a4531f6396f28a1001a0429dc4e584e19b207f4726a0c",
+  "old_quote": "or/multnomah/portland/33.110.txt#L464",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "56f039a11fc3027c170aecd053fa49dad59204c6e9b29f774c344b1e2ffb5824",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "889a7e0df9b513b56143e9bc7158d4fbd17f9dfb9698f5218021a92f3144a7fa",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "abuts_alley",
+  "zone": "R7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "495f4f1bd7300f208fa90570734189624b8037ad2f4dc486eb8a27c2b3e8d800",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L20",
+  "old_fingerprint": "f362aa7d7f542bfdddc5d947e33b7a3e6deb4788cd95d79036b7ece3e0d3024b",
+  "old_quote": "or/multnomah/portland/33.110.txt#L313",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "95a4dad58a36bd125be71616edddeaa4064017da3d539d3e5975f89516b680aa",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L12-L13",
+  "old_fingerprint": "5eeebfd01b9aecffaa57d3f0c82a66ea32bd07addf57b5c526d2d4845d33ac2f",
+  "old_quote": "or/multnomah/portland/33.110.txt#L305-L306",
+  "when_key": "attached_house_division+constrained_sites_overlay",
+  "zone": "R5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c44960b91441c6fbceb1d2c52a180c9dc31d5ffb4fe5532d1e60cc676c1ec757",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L14,L31",
+  "old_fingerprint": "df49eb5f7509f09e1f94e05aa02369dbfbe2e0553e3399019f8b55e66f292a1b",
+  "old_quote": "or/multnomah/portland/33.110.txt#L435,L454",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_density_trigger_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9f66f0dabadd6a3ba70fe09c309372a4a35cf98fb192b27e58b5ee7e52187b16",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L8",
+  "old_fingerprint": "846fbc29654af530291f704a4c136bf68486dc2ada8c69c544dd22f94ff4948f",
+  "old_quote": "or/multnomah/portland/33.110.txt#L423,L424",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_units_at_trigger",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a9daaf24c3d5f158f3deb3b60500fe68955f95f887bcc4dce0fa224e407f9923",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L8",
+  "old_fingerprint": "bafc0c510c16ac21dfd0075491bdc7dde547d8270afcb469c9d89f2e66b81eb0",
+  "old_quote": "or/multnomah/portland/33.110.txt#L423,L424",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "39da0fe23499693051bc8a5edd825660b1bf339f84f53485cadc46bd8da13b19",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L35",
+  "old_fingerprint": "e731aa2f3ce30636bc68ccea84aadfdeca98e0cbc66523d777389ff774354690",
+  "old_quote": "or/multnomah/portland/33.110.txt#L458",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "affc11d383d1bbb26823a054f60e2ca174ea1800e8e792e5fc8958ad862a0067",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L37",
+  "old_fingerprint": "21cddac7a6f319dcc5be0755d8c3a00b9c49bb061faa3a3d76948a6e2f8017af",
+  "old_quote": "or/multnomah/portland/33.110.txt#L460",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6b56081eb025f8c4d842875ee40e49654f49b4d013064453da5d0357a1bed6f2",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L39",
+  "old_fingerprint": "3d1fce73ca37ca90c2926938ae0d829aa21890cb74db1690c0db5655c53871a9",
+  "old_quote": "or/multnomah/portland/33.110.txt#L462",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a20195d8f77f44ea974ac267eb8554832d916e88385e43130c0c36542d1a8ec4",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "ad3fcbd56d18dee59e430aeeed9421293c53ea471371793634c8b8f516a3047a",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "alley_at_rear",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "63ecbc337f539ed950d48d3d0570059caeaaeaa81ed3512dfd5d270c0ac748ac",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "6c975e2efda77ec60e820a84fc20c28d3b3eeb84f9d56057571918faa6c60146",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ba7a31dfb16099202c43a603e4681a3ebdaa2d5e551adde725d0ead07b4dfc08",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L63",
+  "old_fingerprint": "4c99227432da021dd3eb76a6413ce0e293e5d3e898dfec8d85e298ece94f8a04",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1553",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "eb5eeeb0a4b3fcdc128a5361419d3b8f67fa693da8dab39e1cd05e7d3e684955",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L57-L59",
+  "old_fingerprint": "93785d6fa2f62d930f2a380ab97ed5cd1fcc1c10e8c50ad063ae60f882be808a",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1544-L1546",
+  "when_key": "adjustment",
+  "zone": "R5"
+ },
+ {
+  "field": "coverage_curve",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9af03fbe76d8691821c7c01ff8fcf2be9c3214c94b3b91c1307ef81a3cfc02dc",
+  "new_quote": "or/multnomah/portland/33.110/33.110.225.txt#L9-L14",
+  "old_fingerprint": "f2fd7a9bcc98b90e8e31cbc0338349b41a5d0b38dfca689b189c94cbc46e0412",
+  "old_quote": "or/multnomah/portland/33.110.txt#L780-L786",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "123c7640803a7608bbebacb5243f3dba800a2e6715daf7b86f08d6707b7defa2",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L41",
+  "old_fingerprint": "fa26c15128d6cb2d27d10d111db672dd15898e74f9c0a535298065afdc6b921d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L464",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "8aec0780e3588711628540a1e00f1218f6f3742a736fad4908b4bf10bb9470cd",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "bb55a9a0bfe09bf9807ef41153f4ea6c61e423ca0903403006b4e2846be6c0a1",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "abuts_alley",
+  "zone": "R5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6335ff3af09e87476730e459d6c4526e1c7d01face6b8132b7d7767b8501db1f",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L20",
+  "old_fingerprint": "5d2c5dc99718a32d30f7f1fd351a75214f99e2545c91a5151a50685603222fc2",
+  "old_quote": "or/multnomah/portland/33.110.txt#L313",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c4365a97b3a680802aa06efc1113182bdbe4d4b082be1fde9b5451569b3f0280",
+  "new_quote": "or/multnomah/portland/33.110/33.110.200.txt#L12-L13",
+  "old_fingerprint": "243c0dc8922949637e037e7cfc78be6b920716a019e80e71bb526b115dd90293",
+  "old_quote": "or/multnomah/portland/33.110.txt#L305-L306",
+  "when_key": "attached_house_division+constrained_sites_overlay",
+  "zone": "R2.5"
+ },
+ {
+  "field": "min_density_trigger_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "538edc2b167cc8d59865d9732b524ae0537771bfd2603b99d77ef725d10fd292",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L9",
+  "old_fingerprint": "37bd9d1b4dbac9c9ce90941f5bdb374a86a91b0da4cc3b943f74891333a8e732",
+  "old_quote": "or/multnomah/portland/33.110.txt#L425,L426",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "min_units_at_trigger",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "dfb5cf84bd6f001b19d8f98a59360bda52777ca00586371d86cafd01ae2735b0",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L9",
+  "old_fingerprint": "5b10a2d029a8ad4cdfd28a6c8ee01a1a8747c858cff84186d6260d5d63f46ed8",
+  "old_quote": "or/multnomah/portland/33.110.txt#L425,L426",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ba96f2719cc11a4d3b06bb9db71ba7bf4432ef41209f8bca458b69a7610780de",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L35",
+  "old_fingerprint": "60730e53cbcdb2a2697705d1aab85e2a82b09263f9510d3c138a246e5718a083",
+  "old_quote": "or/multnomah/portland/33.110.txt#L458",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a8313ac21c495fc426093f4b84e1b7a7d8ae4114918426385997d50005722b76",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L37",
+  "old_fingerprint": "b63c9a4ca8b3f574bfae630b70901cb454583dfe17048a6657af2644255202c6",
+  "old_quote": "or/multnomah/portland/33.110.txt#L460",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "064edaf97170365bab43baad426f28a245f26e18f5216e57320877bb7789f33a",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L39",
+  "old_fingerprint": "69b7a2515fcd831d16887f6f7b42c05270af93abc66237f7ceb8341a767f6920",
+  "old_quote": "or/multnomah/portland/33.110.txt#L462",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c8bd827a2dcbe874d6b0af6bea19687f653accfa882a7404a7edcc912d6296db",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "a894ad8e80fff4e376f0109a91a988de34b161a810ed333542fcc152900a7d7d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "alley_at_rear",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b24de35f6f8f322034617da047f59deb8d2f13b40b345370ff16205c8b738d57",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "0adf2e62475a63412bb8ce7804bb8849dfce1247a2c246db28756e8542769d83",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3d43d307609a86a0782ac6fa08fe05d2c29f50314feb0b4600de1a734bdcd101",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L64",
+  "old_fingerprint": "a3d3241361831421b974d089eb74d64fa7887df6167a43c066c597e199283327",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1554",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "155c1966c89aadd6dfe94c1f8f9320b999f186b0d6b678f60077adbe83440370",
+  "new_quote": "or/multnomah/portland/33.110/33.110.265.txt#L57-L59",
+  "old_fingerprint": "f2ab188a44a7c2aeff0742ad58e711799d16b5f553e3125826be811a26603ca8",
+  "old_quote": "or/multnomah/portland/33.110.txt#L1544-L1546",
+  "when_key": "adjustment",
+  "zone": "R2.5"
+ },
+ {
+  "field": "coverage_curve",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "23eca0da17e3aa35fe2b046a10b3322f125d420a66eb70713f68e6f633dc74b5",
+  "new_quote": "or/multnomah/portland/33.110/33.110.225.txt#L9-L14",
+  "old_fingerprint": "e8dd5eb14a564bfda34208282103af4d0c430850e6887cd2b70465d567a12f43",
+  "old_quote": "or/multnomah/portland/33.110.txt#L780-L786",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "5fe8364368d192f14b773c8c58a152783e6a98bdb89f4c60d6c24827fb1bd63f",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L14,L31",
+  "old_fingerprint": "cf283ef819f81ec74ab7811eab767831ee836078b53383d104f5088c93caae8d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L435,L454",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d5c8a89f6c68ae8621711c1a1d5a602b845c36f176f919dfcc9884d73fa6e191",
+  "new_quote": "or/multnomah/portland/33.110/33.110.205.txt#L41",
+  "old_fingerprint": "01b56f4d43a426c22e047489c7ea7c4555e808ab9ce736ed741d0516de9c27d8",
+  "old_quote": "or/multnomah/portland/33.110.txt#L464",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "103481df60a238714b0e7eb88637c71f7e61bfdb3b9f5002cf44671b11048171",
+  "new_quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
+  "old_fingerprint": "7e61cec7059b066818ab5c112fbd63adc5ff4581198c3e0c53e8f152184e3b7d",
+  "old_quote": "or/multnomah/portland/33.110.txt#L746-L747",
+  "when_key": "abuts_alley",
+  "zone": "R2.5"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d439df9966614be6ed85bda660f06d6c305fe1ab85d199f6eb84203191343f1b",
+  "new_quote": "or/multnomah/portland/33.120/33.120.240.txt#L22-L30",
+  "old_fingerprint": "4e41153fa31ff920dbea5a0d14e88451454184a2bc3c5f3a7c5645e9cddd9ee7",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1509-L1523",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3a1530f566cedab9bfa362d26022e062f516f75f408e1c68d1eaa36aa941a9d8",
+  "new_quote": "or/multnomah/portland/33.120/33.120.200.txt#L8-L18",
+  "old_fingerprint": "b3a5ab106685958365297ffaf152f7fdfd8f2c35e5e0ea4c45d5401105d9d951",
+  "old_quote": "or/multnomah/portland/33.120.txt#L394-L404",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c74fe3d3d01118dda98320d47267a506a27149f5794f9f34d9890f91a9659e87",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "f88512bfd9d30e6045e1522ef75523760ff7837db917372e3c4cc4f8f1b90c0a",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "645b82527c5cf40357d5409ba64e22e7be2f5a511a73d80532da7dd9761de521",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "476c549b53484861a2131a44f49a9735501b672f73d8baa0319657cb9c315714",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "50ef8c1dd5be8d67ae54bdfdb4be350b9cf61e11fdee848fb4d376643377eb28",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L50-L51",
+  "old_fingerprint": "dc471b8356f6d14b688d91da3083e47306520cbb51ecaacbf0ddb3a3dcec7f0b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L541-L542",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a224219bb9f92d17d15f4bd8ed0c770daa566b8185c6e92de5482701bb8fd5f4",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "8200bd8a4a5a18a56e8183829bf84d0e5e347daa3a19ace4ea9877e70b99bb10",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "05148ae9a84a84c881ad3a78ddf5ca6e4a1de8c6a3ea0c1f28557d2db0689d53",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "884df80190d11173d7325d65dc9d1c720cd706f229cb2f69feb0f4f5bca684d5",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ba4d14baaeb773096bbd21ec473233ecaf96f6e67986f2a03497f006ceb27bea",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "24ad230e6b14018c83bf7c615ed300f4219e135ad103ee46e43dab1d30df42c2",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ccb4be796f06f0f54a3096456d5af738303845e24db63f4b237c3030f535697c",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "1bc1dbf2b825569322947a30f90a334d4b5557aa670e44154315affb76c74b0d",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "8ba2911e553d8eb720985f7e345e8f6a4b4bb29e27a0267f46643332666e3b7e",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L54-L55",
+  "old_fingerprint": "eeea6a7c2d44891a3a50a7dc53a12e455e0f9985c3023c3d44921201a3ee5fe3",
+  "old_quote": "or/multnomah/portland/33.120.txt#L545-L546",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "393a392fffed1ebe1360929d4ae253bbf75b5213ae46fa684599da0206b07ee3",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L173-L174",
+  "old_fingerprint": "954f8fd69a70b259a1e3c09bd10b5cf2a121784447d7af8f05a8fea4d8cd7440",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1228-L1230",
+  "when_key": "abuts_alley",
+  "zone": "RM1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b4008e719dc7d72313aa0a7194e3bb94ffc50537952d090fbd38399cb04c58d3",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L40",
+  "old_fingerprint": "3883c569fcef873c4ee531d749f23dbce7b851bd88daa4091468007fe3560c1e",
+  "old_quote": "or/multnomah/portland/33.120.txt#L529",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "20196757f1524b29106eb5c923b555a0cb48df08fb959193fdf7a95fb4e16f13",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L28-L29",
+  "old_fingerprint": "d4678755ff1db9c5bda8ad8b3e73b63f069c75d6bac33510d89f5b48b3569ac7",
+  "old_quote": "or/multnomah/portland/33.120.txt#L517-L518",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "43d35ec0842b1c3116125ff9fa5f1228d02ffad57881b7042ee63d210b0cc5a9",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L62-L63",
+  "old_fingerprint": "895b7b387a7eb4fec8764f4063c0b93a77b34fdc882c445cccb9c625f169425e",
+  "old_quote": "or/multnomah/portland/33.120.txt#L553-L554",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "e8a0f2a900428ea7628382e0b7b4a6b4c35265ddf1923a3cfc5c36560ea5b8e3",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L67-L68",
+  "old_fingerprint": "24b007c6fa2e5baadfefd750a4ed0a98e5812cf1db052f6c161ff69463622a54",
+  "old_quote": "or/multnomah/portland/33.120.txt#L558-L559",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a23fc356e4101ae9939afeeab6e56d20c7e57f8227c3b78f42b0fc9f2aae7046",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39",
+  "old_fingerprint": "c9d561a777e5cd6ade3a3fa8289628110ed287e44de37e472c090e686faec0e5",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L526-L528",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "82fe7a9177cf40ca2bbd35d3a0feb4017c51f90df26630aa22485de3ad83a110",
+  "new_quote": "or/multnomah/portland/33.120/33.120.240.txt#L22-L30",
+  "old_fingerprint": "9161add84fdd8fefa4e9e7e8d2417a59025891f672d30c54c74ea6cb8373840f",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1509-L1523",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "deded94d97803af8e725280adad34c60feccc71888816d08b97ef6aaf1566769",
+  "new_quote": "or/multnomah/portland/33.120/33.120.200.txt#L8-L18",
+  "old_fingerprint": "2621fe2e92039198e9e657f88d5ffa229da49ac054bb07dbe0198ad0e895628c",
+  "old_quote": "or/multnomah/portland/33.120.txt#L394-L404",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "5efb8173d2202b7ebf1745df8444eea356d537cecd9587c27d0336521e74ad02",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "c824170b50372517f8347a703c2b9e68478053ceeb8322a6ce32f52dfed1a33b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "77ba3d691eb2e3e38719c835aec561328763e4e4f7a4a798f9f809affaf3deb8",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "3480ba4c1352ab3d1a84a1790bb4124f1e7a05f0712bee911168b6e8d76a2e1b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2155b6c92cda2de24799cc6e0e422de9693f80497323446386f9126835252693",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L50-L51",
+  "old_fingerprint": "95efeeff3162480609141a22c34e7c707278ffa5e93ddf0f99f61ae42917c62a",
+  "old_quote": "or/multnomah/portland/33.120.txt#L541-L542",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4da0e04c42dfd6fe6c551def75f2a31d91746abc6256aa65ef79a8ad737cc730",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "a6a694947e667a8d49f6f4e35bcc2bb26118ce34e8e4eaa4c0158949142ed6c9",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9f890c4f80549d50a27bbfdf20f147a806dd94a4676923d97915558fa009ba69",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "4570760d331accb7c4f103657e51d45e9372d4ea19fa24d01793d3fc46363aaf",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "25730422fb8366f02ebb35ae8b0303e7d191acc49c822d1c2215ecc9380e1ef3",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "58f556b157af17434b5081488a910f8d52b434cd87348a8c3bc8930883f460ac",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9230bf8467c2b0c197fb1fcccbb5d155bd1598e614b63eff6aaae57088478655",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "7abc378416d18a318f9c50cd1e5b8f7c8078f2a3d7c618998cafc34f2d991de5",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "f1d8f2a593e00ed24e80891bb331998a2b50b4fddde360adc336ec8d926af2a3",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L54-L55",
+  "old_fingerprint": "c478495b8ea831c765c54475550f0bab37899b8b7d39fca83edffd1986a379c5",
+  "old_quote": "or/multnomah/portland/33.120.txt#L545-L546",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "406331808fa7dc5f3827030132b1fc2ee552a92497045c3271180b48f1664c69",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L173-L174",
+  "old_fingerprint": "ab783951619b3526fb016ed72202bd13041aba13d3d550b30957c1b2acac4b6b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1228-L1230",
+  "when_key": "abuts_alley",
+  "zone": "RM2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c0cde1f66fd4104cd638ce3657177ed2dd578a84bd100f1d7957574dbdd461c4",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L40",
+  "old_fingerprint": "d73f64fe18c8f4e10dc887c61b075521441bdb94f186da1c83bc7dd2c7c01212",
+  "old_quote": "or/multnomah/portland/33.120.txt#L529",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "bebeb74d67cfdd79775736e83815955bb265f4fbdbde2496589c06452bb63564",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L28-L29",
+  "old_fingerprint": "0f2200c1a483b120185d1381b5af9adcdbf437ea82db3e2b7c775cd79e7dda4b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L517-L518",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "dcf6e16d9c96b37072977c8a702998c8426d2cae7867fbb002f560e97a1a421e",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L62-L63",
+  "old_fingerprint": "9eb1716b53376f43101fd3d232b13df81791ec9317c2af1e9705c201e245c0bd",
+  "old_quote": "or/multnomah/portland/33.120.txt#L553-L554",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3f3a6595c61607c5e9fa8d4ae8d75cd450f2435b4ea11fdc635774e96a6bbaff",
+  "new_quote": "or/multnomah/portland/33.120/33.120.225.txt#L5-L8",
+  "old_fingerprint": "acd3468a7f6a2cd10e396a654a951cb179dc59e78831a8245326961d147663e0",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1240-L1243",
+  "when_key": "civic_corridor",
+  "zone": "RM2"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "f852e1a418dc4f22771e26c1609f61928bf71fb9db697fc8b03c3cc63992b4bc",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L67-L68",
+  "old_fingerprint": "c7413678bb81068a9430ec703dfa002718ba072fe4ab4a3801d3947af3c527cd",
+  "old_quote": "or/multnomah/portland/33.120.txt#L558-L559",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4336f740b6a98d102fc91b25415e48dfd46435a6e392bac62a84894266c638bb",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39",
+  "old_fingerprint": "87355fac704dac4004b9c56c2dc2caa87ab66c7c3a718546671dcda7971d2a75",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L526-L528",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c48a1df3dcd809e85851f55d20355c5b94d1b328c09f26d7a0e21f6c2ab9d4f5",
+  "new_quote": "or/multnomah/portland/33.120/33.120.240.txt#L22-L30",
+  "old_fingerprint": "c0a190d608712344091eae86aa001ffaf8002ea4adc16d9828c7293b8a97e5aa",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1509-L1523",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "279c01812fae8ee9524ec9557351628db529131c85a179c0d55a6f5bb7b7d14c",
+  "new_quote": "or/multnomah/portland/33.120/33.120.200.txt#L8-L18",
+  "old_fingerprint": "bfd16ec327bc13f9f80fe1e2d31484bca250cf4e5b01cf0b39dbd5fdec35f960",
+  "old_quote": "or/multnomah/portland/33.120.txt#L394-L404",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "e62e6e3a590594d6134f674e16c2cd94dae4609e617cc55ec90060104e52a9ae",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "efbd640b2c151a3a5ebe7a5f4e89025e0b78bf1fa492ace9421b52a385abac2d",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "0ebeedeafb9c619ca35cbc54cc4e4d433d343a6a236d86aadec7f09050d92ebe",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "e75ab36793dce8698ee77dd92b3d6265c8a39da9b8354475fb0fa89b28742716",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "28f7f7987a7cbaa78e2825b1c628d5a242f95a3b70deceb2564b1087a14bd803",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L50-L51",
+  "old_fingerprint": "b0216492f443821f910a95bff4c4662303938760be31175e681024b0b178e31a",
+  "old_quote": "or/multnomah/portland/33.120.txt#L541-L542",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "61c03d5262c37ba722a3859a237f6047fc450c76d2de25d7c4208aec41f08ee2",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "abdec73240b88dbb83ee5a47e8969107200b7dfe4ae0bb08f756e26c9ab89c8c",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "db269ae4e0ecd2d2029b1f036f641a0cbd13737c81e8a5dd5c1f163d4d9ba3a2",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "c62c5c387c68b2662be5ec06241a0b2cf20c81fa9545b422194b24784091f3a0",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "low_rise",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2badf85a620adb99bcb9fe47ab19d86e8b9d4828de7b507162b563a18087e274",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "8fe97d88608cfd84b2c93c40c2a4e83af4bc54451b873fb5b3fcf35322ceb2fd",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d30e6bc001842631b6b9afe7380d412c64ca2a7f1946a849d79e6c68a22ebf7f",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "c302d2d1ea1b1897e318c737674356282a7dbede2ddad677de5f83d2aa21bccc",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "low_rise",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "f9bc4c5f08ed1f0297d2c89648cf000aae33f00b6c7f8b3a614305c618d883e5",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "cd2aa6147bb4c2ac659847cfa093ba224212e3fa1cf20734a22df93b7768d752",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "73805dcf56057a0c577a58092f2f9e77cad131ccccf3a9c53435448fbbcc0ddc",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "1425d1ee9d4d3b088a0df658ef1d77e1a3a280d99876387ae6cbd38dd8843642",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear+low_rise",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "fa31fd2f2b3ed5d6b28f91f9abf839edac3376dc0e460abc4e6dea44672abdf5",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "93cf2493b1b37bbc14c5e6a33ebaf1a83ce19a9fb8fd1ed7d1cb725b66c6ff71",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6683fb811b0861349a171f04fc4485af3db9abd67645898e80905edccc2aeb12",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L19-L20",
+  "old_fingerprint": "05f0ca099ca779bfeeefe79b417a1e7f095baa518d4f95d040f635abb19af730",
+  "old_quote": "or/multnomah/portland/33.120.txt#L994-L997",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4f1fed9f7deab19da518c50672ec9593ee8dbfc80ffdcba4839b7568a818fcba",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L54-L55",
+  "old_fingerprint": "be31f97adc1e65332220ae04272fd25364fa2bd7035a56f6a827b7f7b12496e7",
+  "old_quote": "or/multnomah/portland/33.120.txt#L545-L546",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "5e4a10baf629e247a4bfb83f857f77f5680dba83889567474b264a6ad8d6771b",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L173-L174",
+  "old_fingerprint": "5d6e2db9eafac9a50811e6007e9f8419abbd7713b4365a29fb1634ed66f84a31",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1228-L1230",
+  "when_key": "abuts_alley",
+  "zone": "RM3"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "593cde7e7b66f4d7722b2bc78e10806973b425dfcf30e3e25157cf88a09b5660",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L40",
+  "old_fingerprint": "5cd57a2312facadded53f400da7735ff29e9ac4b016f9d3a9225b1be221ea513",
+  "old_quote": "or/multnomah/portland/33.120.txt#L529",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3084acd17744ccf26ae51757b803386b7330b0bf27580ed828dca5a91f58a48c",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L28-L29",
+  "old_fingerprint": "cc5856111766509794a92334d680cf5da4a91b2a828f577622752a97c1bc1ee4",
+  "old_quote": "or/multnomah/portland/33.120.txt#L517-L518",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2a52729b9abd587d378f9280be7e244583f0736f865827c6fafab0c9c43a9ca7",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L62-L63",
+  "old_fingerprint": "cdce4bee0ed0e26f77fc151f6fb9618482bb438d722fac0cb6f81116a60e6a8b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L553-L554",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "8e01540af3cd203bb7e904fa2a4fe529db589b32464ac25b9a5a65c8ebc61234",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L67-L68",
+  "old_fingerprint": "a7be3a269017032f49eb7a9d8ce3b2e6bb73da72d12324c3b90a3d92c60e612e",
+  "old_quote": "or/multnomah/portland/33.120.txt#L558-L559",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ee302bac1b23daa4c25a0c948080f99180ba07191b23a6e69afbe4ac96f3dca4",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39",
+  "old_fingerprint": "6f40d3e9d562957b44766119838f2f8697927fb3fd2022ff3d4bc18163acc30e",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L526-L528",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6a8e74bbe85bc5e92736dd3e0a1c3a46ffdda223f0188d10b6f7a0af2a6940e4",
+  "new_quote": "or/multnomah/portland/33.120/33.120.240.txt#L22-L30",
+  "old_fingerprint": "30b56621a86edb449d4d7a0d493253c20acca642ff5674ad23b03f82bdc8de7f",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1509-L1523",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4db9ae1cb714e889a275b73f7ba9b3db9e6d51c0b9772c838607681812d84334",
+  "new_quote": "or/multnomah/portland/33.120/33.120.200.txt#L8-L18",
+  "old_fingerprint": "61231dc3be793138b82b052fa4009727ec7615dc02b7ccebdb209f809a72dbfc",
+  "old_quote": "or/multnomah/portland/33.120.txt#L394-L404",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6ce0b80bcd169e9ae20234d398a1ac0f1743cbea376ba65e3fa41625b29542a6",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "3f84255ec9d6f003217cd690b7e63f54196979b08e499599fa31f6c2f234750f",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6de7849fe1e044cf6be70eee0ed31f77169342d321ca63bd7e8a9b9ce760ed2c",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L23-L25",
+  "old_fingerprint": "8fec6439dceae62613115d18c8b361a03dd054c602d39bc9e7d1063cd3cecc78",
+  "old_quote": "or/multnomah/portland/33.120.txt#L458-L460",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ec8842270432ca0d4829047486277009cf373ee13da7e67556106df3b857d76f",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L50-L51",
+  "old_fingerprint": "4b2da1ccb77723670749c5e0e6f81a01c3ec8ff33a918f051a15a60257b533ab",
+  "old_quote": "or/multnomah/portland/33.120.txt#L541-L542",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "05e991a59c632f64bd01b83536d92660e6b8e534a4a0bde04defddb9df57ec33",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "7b539c579753a23127a9ef48060603781d9d0d52ab17d132ca244fafb4ae4fc3",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "cac0f7ee94e4b39c7a02c392bc98b7a6ece9e7dfd438c2d22add5ec6d7684787",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "8aacb33ab79f67358441a8dad9386a5c59a0f8b5a8a2976c386ed822c9a3a73b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "low_rise",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "fb11051b63d897f1365807f9a8d32096a69cf0eb819738de2a179759ca29f2ac",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "8a1161d4793fc06c548f43567f040779e59ebd8460b7344b7b4b699f9875324a",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "0db144f256c94e024aa6bce1ecbeae3da0b04fad87e33702a06af3744d141ac5",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L16-L20",
+  "old_fingerprint": "af2c2e2b15c1e8ac1609645dbb719de58f90962eca04c415eb5044605cd24591",
+  "old_quote": "or/multnomah/portland/33.120.txt#L990-L997",
+  "when_key": "low_rise",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2e5e1f4e57a5371309dee962384ff6adb8819a8bfdf2cc5f00ad0bb817e92274",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "70b8510feb432c9f4a4b7b412b6468b43697bfe9d6523068961bca412846a956",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "84d4fb9ad87786586ae5d744863d188f2718983f3aff30378cd56167a74bf1ef",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "d79ea73d28f8c2ef96a62acfd0731612468c85cf2e372f9a75b20767a3aaf662",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear+low_rise",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "490fae2827c626b149edbaf74005ef3165e566f483cbf04a32034835190c261f",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "478ce235f00e6da30873a32f2ef1aa00b98f66cd4c3a9806bcfe11a6e9dee433",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a96e22938922de8b62e79666cd133a2b181def4380575db05862c9f970b0651b",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L19-L20",
+  "old_fingerprint": "8af2388a96696b2325c6f6e10a712ce96f1ba3ea403bdcc55ba8fd88a272626b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L994-L997",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "463d6a118332d89fe46556cd249ae19513a69b3baefa2f21e5791385a637aa72",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L54-L55",
+  "old_fingerprint": "cbcc6bbe049e0a7667a5b84dfeda3e92ef49989415cbf5776e7faa3746b24259",
+  "old_quote": "or/multnomah/portland/33.120.txt#L545-L546",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7fef11ff9abd382a05cb8afc182e2fa16454e5a70a05cf7a950e68914309cde4",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L173-L174",
+  "old_fingerprint": "e15a56044551f17e307c2d6df4a74f6f8054ab49113dca2c86adb6a56f71eaa5",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1228-L1230",
+  "when_key": "abuts_alley",
+  "zone": "RM4"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "025b232e502a1af46ca865b00fb7f0fec15a5132c6743d062356684ace96e71f",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L40",
+  "old_fingerprint": "03f306f0736dfb6635b7701a48ab4ef61eb09d22045a62f3f25c4ae040db74a7",
+  "old_quote": "or/multnomah/portland/33.120.txt#L529",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "1902ec879bcfbf30cc207c91740493afd5ada291b4e0c184e866c5d5bc01710c",
+  "new_quote": "or/multnomah/portland/33.120/33.120.210.txt#L5-L8",
+  "old_fingerprint": "c063a8bec3fb2aa09947ff1d52997ca1ea847b30aa9d8ae4f6ef8f558e4d7eeb",
+  "old_quote": "or/multnomah/portland/33.120.txt#L574-L576",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c0b53e56f9db204bd5e7344ddcc679d0e6e174c185ecf3e5f9bf4ef11382884a",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L62-L63",
+  "old_fingerprint": "2e6443faef80d9772e8af438d4d1a715ec18054c3a7f7ce57bca838590fa9f65",
+  "old_quote": "or/multnomah/portland/33.120.txt#L553-L554",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d6bb946d5879dcaa2666a633eae236360ebcd4708110a17f84069a2c7cbd1108",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L67-L68",
+  "old_fingerprint": "cb46f716e285c06a1b8cf0451d93974a6826badd589baa8590b11fa2a82eed0d",
+  "old_quote": "or/multnomah/portland/33.120.txt#L558-L559",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "99ec1be189a54f7a25015d575457787aa44e84819b706178b94dbbde5f1a184a",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39",
+  "old_fingerprint": "606d19f280f62b3d3a3670a91fc55630957311c129073515c3d3b834878068d1",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L526-L528",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3ba5b227e2d5bb7c9e6308ba794f2f24370f64d027dff694e4f089e6ee997d53",
+  "new_quote": "or/multnomah/portland/33.120/33.120.240.txt#L7-L10",
+  "old_fingerprint": "022caf7d606caf81608062a91be0fccad38b5a3515a64ba28ddaf2e04993097e",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1487-L1491",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "08ee14c1dde821756417e53e694cfec96f75e63317ecdd2e6e3f4ccdede48a96",
+  "new_quote": "or/multnomah/portland/33.120/33.120.200.txt#L8-L18",
+  "old_fingerprint": "23a561304661a9f321626deaa60381426efd4ee984715c1720defe0d8c8af2d3",
+  "old_quote": "or/multnomah/portland/33.120.txt#L394-L404",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ef5f8edb915455c53b9d3ac5cfd346126d30ae60c7566d870d9622ae71720dac",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L28-L31",
+  "old_fingerprint": "acb4ca57e576503e260d23696a0f05a671f99953b880f367ece9ae5b42e6fd28",
+  "old_quote": "or/multnomah/portland/33.120.txt#L463-L467",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "1c371b5ed07b4652c37d7b2ecae3278eadc4f23b4541a8f2456c1389e105c8b5",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L28-L31",
+  "old_fingerprint": "973e6e75d50d202f12fc5dcdf1c4f1a57ee45f9c772ff789817d6e24fd9d5b31",
+  "old_quote": "or/multnomah/portland/33.120.txt#L463-L467",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d11751562e093332bef741719c067a9b0bd28052eb6ee92fbf1bcb0602480f27",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L50-L51",
+  "old_fingerprint": "839e752339acbf5a8cd1000c4db41296e276175685f7267bdf360194ba12c441",
+  "old_quote": "or/multnomah/portland/33.120.txt#L541-L542",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7211f6a8b524f24af04158d2171fcef4f825281fc371cabb17b78dd9ba177957",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "55a29fda3519d9d8906b72a67485058d7a1815ec87c736b43ca30861676026aa",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "cdbe96aa592c817c450d8133d8a99f83cf9c7d604a2f4bd7ba959c8a04479f87",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "54b641b5867090ec5f2b63e4141d800038656f9e5b73cd424781e6b3f362d2fb",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "296309715937b4949d4634a00841b72c2b144b84e61d9ef8aef1a0104ae464e3",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "4880dc567e6bb93e34efdccc6dcffc742e00622c47d81eb1d4438ad71a15779e",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "46da39530c28567631028dbd394d2632b91dd3675615e8380c78b68a84030c61",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "fcb7643da2688076da0ccbc0634eb4aa5bb3686f31f52e6ec676d1b1e478a7cc",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6561b8981dfdaa80deea71b02f4ae96641f7c0b04d89541192ab534a5eae4fce",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L54-L55",
+  "old_fingerprint": "23f5f257f15a77c36404af7516807952cf350292620beffb12183f18da2da9ba",
+  "old_quote": "or/multnomah/portland/33.120.txt#L545-L546",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "cca87ee5647233b047ae380cff9a25d8eeda2afd41fe7e3d93095210cdca1525",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L173-L174",
+  "old_fingerprint": "b0acb667cdc5a99546871d8f2bfed85ff2e71071ea7b7a5808c09ad1a5fa06ef",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1228-L1230",
+  "when_key": "abuts_alley",
+  "zone": "RX"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "68c116f00d583177495e8240991c146d9514bfd145a2255e12660cc928c648b8",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L40",
+  "old_fingerprint": "bb7e3929e82facd90664f2c9ca64c2c4911659a26220bc50fe6820fbaa8f950a",
+  "old_quote": "or/multnomah/portland/33.120.txt#L529",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "f6b5ea6ba0c02666f6b45e8cb5e9a4f79b8cfced7d962e299908372f4a2ea42e",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L28-L29",
+  "old_fingerprint": "0b11a4ae8be3bca334d84c036521a45df300395b69cb3bfb44d9b6ef82bc003f",
+  "old_quote": "or/multnomah/portland/33.120.txt#L517-L518",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a142dbdb1d4e3ba5cce407adef2c99ede17e17226c5a53098c8261fa728f37e4",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L62-L63",
+  "old_fingerprint": "7d9edf66e63402472bfb23834837e173827ec56b9a31bf8d30e077f89782dbbc",
+  "old_quote": "or/multnomah/portland/33.120.txt#L553-L554",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "388ee014a617c69f565d38fae3ff0a1c0f768ca07ce6b0fa303205a6f961b0f7",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L67-L68",
+  "old_fingerprint": "59c7e8b9fa1793d5586e843f60de3cf39ab0f2220397376668fe9ab583a13192",
+  "old_quote": "or/multnomah/portland/33.120.txt#L558-L559",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "f6388a893e197c64c0ee2e9d3d47846f57d55fb1c1f0fc80b72145c717486d70",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39",
+  "old_fingerprint": "434971e81aa4d23144f878b030c35a7250b07bb8c955af272b059659f91638e0",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L526-L528",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "87e20825891285f4661d42b6445942207b6076070b72b9725a7bbdd8e92fe973",
+  "new_quote": "or/multnomah/portland/33.120/33.120.240.txt#L7-L10",
+  "old_fingerprint": "aca2fbb684caaae154ae8800a96edb514e4940328e0a0d21e41181c1df8fb8d0",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1487-L1491",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7468c557383c1c1a726386562738519249ba4fce6f7a104d2da09d5754a0a5c0",
+  "new_quote": "or/multnomah/portland/33.120/33.120.200.txt#L8-L18",
+  "old_fingerprint": "4cee4555af2db7943d51e1ff3b84201cd881ab13b4202b74a0943c2df5e6c21c",
+  "old_quote": "or/multnomah/portland/33.120.txt#L394-L404",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "287662fa7f80210a04564169bc374dd10a35bb0633245d24ba75ea03d483fc62",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L32-L34",
+  "old_fingerprint": "4a1253f6c61faae2c0061f20de6cd1b34b7f567a4d5c9476be770d486a42be9f",
+  "old_quote": "or/multnomah/portland/33.120.txt#L468-L470",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "43e610b5516401f9550a251194c811ba85498cfa5b409c9b21bd96e7db90eb68",
+  "new_quote": "or/multnomah/portland/33.120/33.120.205.txt#L32-L34",
+  "old_fingerprint": "0c2e27a10e268092a2ecd65f0e8aa0e89f52b5dc2ddfd82605c2e3a4d7e88bb4",
+  "old_quote": "or/multnomah/portland/33.120.txt#L468-L470",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ffbdd3d2e1f6170a5d21a42655dab67094bfc4686aa9f23c5c27583b9625bfe5",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L50-L51",
+  "old_fingerprint": "bb1c199f97bbb259ac1f3a78b6a92995de15e77462a7a8af07e211c3c84b71e9",
+  "old_quote": "or/multnomah/portland/33.120.txt#L541-L542",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "7519a0860cba652f841bbdb34f3bc731ea6c32c4fccd06955eb9ca16f992aa7f",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "258139a4ec02d68d7537b532d258a2a7800a76531b1603d9187d5d9423ae93a7",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "67ed7fb91fd97f23376a31607eaa4006579fdb4107332b3fca74920279501a9c",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L52-L53",
+  "old_fingerprint": "ec0651569e85256adae23512c217dd374b1a8acd2d7e82299e26820ee09435a1",
+  "old_quote": "or/multnomah/portland/33.120.txt#L543-L544",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c3aa6ac367878b2c8f492739271ec1cb3c009e9d66705b923d6679ed0526d3d8",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "8d5a6e5140777f1d2d1eba9de899670d008520391319348546015443159b2636",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "alley_at_rear",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_alley_side_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "49a8fa8751f471020b22d119565ae00a20d1c2d1f1d065bc8bec4837ff708d39",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L54",
+  "old_fingerprint": "3020bc5e9744c7f38735c7db8c0b17c95397a9922fb6b62db66ec5deaad2f1c2",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1053-L1054",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d3576733f221450b84665591a940acb134ba339463996e96fd543f4c7aaf62ed",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L54-L55",
+  "old_fingerprint": "b7d64755fa4f15112428f2fbbd0db7c9d078fe66280801e6ab831a1f32128988",
+  "old_quote": "or/multnomah/portland/33.120.txt#L545-L546",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "0b8ef99a02d2d7532dd49f998846ac89dcf6ae3b398f35829cde62fd561e6302",
+  "new_quote": "or/multnomah/portland/33.120/33.120.220.txt#L173-L174",
+  "old_fingerprint": "f8c6c9fb89296bc9e9a5196c2622f337c52fcfca71c40408e5dafef7401b30be",
+  "old_quote": "or/multnomah/portland/33.120.txt#L1228-L1230",
+  "when_key": "abuts_alley",
+  "zone": "RMP"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b20d9477d7d2e49f8d9260121ddbea84975907e70d05aefa9195c12026f70e59",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L40",
+  "old_fingerprint": "128809ff5c4f804dd22e715e86c91707d0cdd0ff8375bb424904f9fa8984921f",
+  "old_quote": "or/multnomah/portland/33.120.txt#L529",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "1ee34e37d33ab79461537fc4a59bef864e41698873eb1856176c880305ee1c2e",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L62-L63",
+  "old_fingerprint": "46cdb002f21ed8c7c15059a26730b7a72b9ed1d578695943d63ed8b393c1c05c",
+  "old_quote": "or/multnomah/portland/33.120.txt#L553-L554",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9d79ee415c7c72b34cc416a9ede662bd2ad4e759550264b5339b89d7cace5917",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L67-L68",
+  "old_fingerprint": "5503087ef62a79283d426fd18e690d61e306b7a097896df17ea021392600b55b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L558-L559",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "46af15c6dce8c732cb7f9e8157a7a3253c76ab7be22345317f594574446ccd6f",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L37-L39",
+  "old_fingerprint": "1b2407846eb43a44dfe0771fcb55ba704b865e035795f809a791083760ddcb7b",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L526-L528",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4056fb65fd15ff63a903f675667ba35c2a5d9d6d4b1382a5eff7e65c62b22a11",
+  "new_quote": "or/multnomah/portland/33.120/33.120.206.txt#L24-L26,L30-L32",
+  "old_fingerprint": "9c1ff3053d9bdc1033d44ea877dc62d3198f32918027efdce1cc0a417d9b7fd9",
+  "old_quote": "or/multnomah/portland/33.120.txt#L513-L515,L519-L521",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "cf60df5301b99a86724cc2de70127661d50797b455f157c45ca8bc23353d267e",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "42c7e90c33f8a871d102ac816df21106cac30054283abb00def99e87c0ca8398",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "76410fca68b9fb04d934fc44321794ef43fca0f9993f98fa0a37ddca817ab188",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L7,L35-L36",
+  "old_fingerprint": "ac3b3f61056eff4b08064d470f4c257eee8736c2e49dd04bcee341e63ae0f08b",
+  "old_quote": "or/multnomah/portland/33.266.txt#L268,L271-L275,L317-L318",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "337196f48a7bea7810c26ce7f44bdb9c7622871d4ae65e0118c4ff0dcaf53ad6",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L7,L35-L36",
+  "old_fingerprint": "a01a239711e124714fc4083d76cedf460aea046999d8972d846a35a800103a23",
+  "old_quote": "or/multnomah/portland/33.266.txt#L268,L271-L275,L317-L318",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "09a2410f5a9649fd64d3817e12afbaedbe41bc79fc7b73a77119d2ed43415005",
+  "new_quote": "or/multnomah/portland/33.266/33.266.130.txt#L24-L25,L120-L128",
+  "old_fingerprint": "8bbe648bde7ea4da048275e24aeb2ac688c97daec310e540b0e860dbcdbe30c7",
+  "old_quote": "or/multnomah/portland/33.266.txt#L385-L386,L516-L525",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "626a5778112f1281a61f750974516f3503e771742ce476d176f5c650345f8b95",
+  "new_quote": "or/multnomah/portland/33.266/33.266.130.txt#L24-L25,L120-L128",
+  "old_fingerprint": "89d81d5220f37be2cb978f261a5a03cd61c9813577a4e2ffb5825f89b964d6a7",
+  "old_quote": "or/multnomah/portland/33.266.txt#L385-L386,L516-L525",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b4f913df2e83adc494f88a6b27e457ae22fbaeb3acf77601f68155b64dd6bac3",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L6,L35-L37",
+  "old_fingerprint": "ba0cf92e3e1b858bae1752f88f9760c2e79b6b5aa927e0f69ac21d0ca97a4bd7",
+  "old_quote": "or/multnomah/portland/33.266.txt#L268,L271-L274,L317-L319",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ee32d50fc568c9991ed21384da80786a8382dd6a9a8ecdf73485ba8ecaff4d20",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L6,L35-L37",
+  "old_fingerprint": "26a6591fd89aa7ac719eb9318a7819e26f6129e7c10f64f28c74a403c7c0da53",
+  "old_quote": "or/multnomah/portland/33.266.txt#L268,L271-L274,L317-L319",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "45f07d66fdb3eec8a32c4789489481a95408a232a3daeae1ec13f5912685eb2c",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L10-L14,L17-L18",
+  "old_fingerprint": "cff72033c6d7ef2c7c5b64e1caf77bd44c7bf5c52465c2a1c92093001382785b",
+  "old_quote": "or/multnomah/portland/33.266.txt#L280-L284,L290-L293",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_yard_max_pct",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4d49ac3875dfef53eadd4d7a82c9d779f8ee933f8a109703984f57d6bf7c9a0b",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L19-L23",
+  "old_fingerprint": "c9cf636ef015fa5b248059e9beb2b860e9e33019ff05464caae62d507a0c8363",
+  "old_quote": "or/multnomah/portland/33.266.txt#L294-L301",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6ba724f0e7d1b9d4986bd3ff8cd32646b798ff1586cf64ae01499e3ef84b9c35",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L24-L26",
+  "old_fingerprint": "d5d3852fd1c7b628091f12ca7cefe412e7cdc363dc1a7fac31c05620eea9c6b7",
+  "old_quote": "or/multnomah/portland/33.266.txt#L302-L305",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_alley_access_required",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "744789e395ad61e83435f2efce6e15b8d5f3ccd62e576d7e43ed2bd87f76e5a8",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L31-L32",
+  "old_fingerprint": "2275e1c3e89fb263570170986f207dad92d0e7c2025628011edff0631702bb42",
+  "old_quote": "or/multnomah/portland/33.266.txt#L313-L314",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_alley_backout_ft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "13633fc17a57180a866dadfba0d8390b7ce2a4c978af2f8b4271062d668dc9be",
+  "new_quote": "or/multnomah/portland/33.266/33.266.130.txt#L97-L99",
+  "old_fingerprint": "01a57472d494a7a8e986f34ab348f816642454900d99bf13a74d057112500f59",
+  "old_quote": "or/multnomah/portland/33.266.txt#L485-L488",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "57bc836a4d8edbe84d362bd32064bceef89babd0494bf0067627bfa118c50ac0",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L17-L18",
+  "old_fingerprint": "5daeeb3b6b624b3195e3ba8b5ebee5110be8fc654841f7e5cced2872fa397994",
+  "old_quote": "or/multnomah/portland/33.266.txt#L290-L293",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a31b1b41cfac1262862de22824aa9cb82801cba8c5d361351373b5b09805db62",
+  "new_quote": "or/multnomah/portland/33.266/33.266.120.txt#L31-L32",
+  "old_fingerprint": "304c366cef49e215d31b520a6951c041c333d9aa8e72ab85b792118fe25da3d0",
+  "old_quote": "or/multnomah/portland/33.266.txt#L313-L314",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "6c788f718cda14b47d272fe6fd569ea71acc72988c499a0319b250ab0282290d",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "78ec47d2c82f48e15135abc7e378757ab4786391ddb9ff141c0fb0410f724a43",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "RM1"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "601927207fe6d71b92cf60dfcd8c58da21d530fc54692580430c30e0779ac43d",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "4aa114b87c8cb249cc51b37ba671505f0224ddab643c7fa08ac05871f5711d43",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "RM1"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "54dd1786fd70b90a2f2fee5fe81a4b881d0033ee358f5127406ea42a7e227758",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "45564cb896f219d2508be21f230f772ec9f5d7d98bc0bb9a75e3f3fec22cf3c2",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "RM2"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "26da8aa3d4363a73a6ca9961fb16d6925a415b236f0090323dd5d0e52611ccd0",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "54273aef5d29da6f185076df466b1dad55f8f54c32c08e0e37ba5e5b6d2e93cf",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "RM2"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "1f316a957b3e769d4dd9e0b15614c074fa68541ae7ef4196fefffd11e9a5b576",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "fac284abc743c8f890bdfd1fe6eb72f6dc7af3d66b0c6003607a31e35bba8942",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "RM3"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "d82174ea51d97154c1027edf0945911955c870671e85973e910227b3f57541c0",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "7d311735240e74687b0252e171f652bd755c12802ae8fd409596a6e5ece150b8",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "RM3"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ed4826f70b0fcc47edc309748c21342d8aa89e67cef28f87ea06d1a5662ab211",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "dbbb770e255801d57170e029504064ddb17b9db7556a9593552f9eb9e92bfc45",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "RM4"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "c38c3b4dd255a97f1fd9980b6e2b3d5829dc9fb728454c81d27f44480463672a",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "74d71349b60d6f78ca6889761c5ae3a939de4f5284aa205627f88ccd0bed98b6",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "RM4"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "b4a9c49fff2293b87fa899414ecd9d16197f5d41a5b4d6649f8ac8e0c81fe6de",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "74cf08a88b8a7347b2ba4166e80e8f67c65f3f3acc1618f7f0599636ac90b8c2",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "RX"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "2bbc75b722ad3a35407b415c4346ab62a17f6d17077cc65be1f1552f20bcae6a",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "cf2bf8a5ca955fa5f54bfbe18aa7c278f9964ba967a19ae1fa666aa7345e89e6",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "RX"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "e8719746bc2dd665ce1b270b9117a9695c9093ba8a462573c883906f3a09f4e7",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "59992e8b929476930cf8347a01722cbe0f0be23b87323d1606baf5fa09cfbf6c",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "RMP"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ab27e848b26ccc78085bc300c544f9841b417415dcce0c8cbe36c575a673cfe9",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "3e1bbd83028dc21dd6532446972c9ba83ad855aac8dc9feebb44b7fb9af0835a",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "RMP"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "27f8abf850c5c2c2bff42f4a3a903b4fe7f38a910fc7ad863e4519082e11cea0",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "040470393ec4066342beca055c38079324327280fb1c4871b0e478d56a39448a",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "614b29c4fe74b965e37de235788b82e88c805bd958f8ab8eb56ac262ede7b655",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "04accb160b178fd63ef0d9da55fda77922d89077dcd42896160498011b2e9542",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "CR"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ea1e76ad62bd8ebb761a60ea163deb902eacbd51cebee1eb5e77216f78740fad",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "2db3c7297a1096578e95f0fa992725404297f79248bb93c888628d5eb0abc6f0",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "CM1"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9454b8b5fe1dfe747a05384391c0403f5f02c3357601b47800b73840df9fdf00",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "93361a8cd4c8f342d255ccd0c3ac13ffb9f967de2d2b2c43203c544a60a52481",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "CM1"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "20a24a0c0904158bbd2281c9bad3581094608040ca30d5424e7dfad07baf5419",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "76c64dff59d8b7cc26705591246295f1f7b0f826572e70d306f9176c347dab2c",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "CM2"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "9fe5b57833b60e627ff728ff23193479d6dcedb5703a0a44932cf2d8466b5653",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "35848e35ae17b91144ade9743101d0ad3c5da1670c1628dc924274e62b77624a",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "CM2"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "76dac50469715b91a47dffa69e65bc1e87ac091c15dc73c72bd392a69ad0499e",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "925d51c0668cc9f9f41245d02511f7e460671879f9008cb399057568b52fb79f",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "CM3"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4e7fae440aa28b32811c66f6b6c06ae8d1d4822896141f14e56012a9cfcfd4b1",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "3dbaecbfb38629fbc55978974fde6542f2e5dcf43b0df9d442bd123c78496d3f",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "CM3"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "498d09586084c7e49c18f8e0c527b2f0869bed2e91558fa6e7d6baaa4e057ce9",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "8f95861551cbecc7573620f1245f74877fae0c914bca14c88bd3ee9c0f017fdc",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "CE"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "0a881d004771832d854c322d4b815d7ba594147f3ac58393474b14f82915fc72",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "daf47bd13b71a3713e897c7ed6af1c9095d2799e0c942fa75f08dbf7b1b355b1",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "CE"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "4d1a0a73ded643b32383c42667827ae6ff91357b54a7e758facf9abf9507cc6e",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L27,L39-L41,L43,L45",
+  "old_fingerprint": "89947c2ef93328ba2ab7be951f74f0c31352d68ff36e7c51b48383e8f159b1f2",
+  "old_quote": "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162",
+  "when_key": "",
+  "zone": "CX"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "8ae53afa756d090ac0878332ab1c00aa5443714ba471e1585bf30cd04e0a8748",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L45-L46",
+  "old_fingerprint": "8ca5066795ecf127830ce8753415875f7a9f04e6d26496aabd109cc027a4cda2",
+  "old_quote": "or/multnomah/portland/33.266.txt#L159,L163-L164",
+  "when_key": "unit_lots",
+  "zone": "CX"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "a0d15a43fc9cf4d15651de2d65eb49911d330a50de2c0faf5809f850ba93615b",
+  "new_quote": "or/multnomah/portland/33.266/33.266.115.txt#L29,L39-L41,L43,L45",
+  "old_fingerprint": "0dc97ea45e900dff951fb77ed1519a4646b1724b89293eeeba87ba1105dee682",
+  "old_quote": "or/multnomah/portland/33.266.txt#L141-L142,L153-L155,L157,L159",
+  "when_key": "",
+  "zone": "EX"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "ae8c2453421b504e560db8f18d59fe5aa923f6779f59d5712b7cbae9da4e45db",
+  "new_quote": "or/multnomah/portland/33.610/33.610.200.txt#L20-L25",
+  "old_fingerprint": "8fdd84cde4817fb465fdf0ffc9ed814259f48ead759efb269573be63cb77529b",
+  "old_quote": "or/multnomah/portland/33.610.txt#L162-L168",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "3e6137493f5ee45de244061ed4af12342e90bd8a6c8a7efeb1148a96ba851ed3",
+  "new_quote": "or/multnomah/portland/33.910/33.910.030.txt#L526-L531",
+  "old_fingerprint": "6cec5ef3302ef115a841fea08880d19695bf515f26ab1c7eb37926f2a20e1c14",
+  "old_quote": "or/multnomah/portland/33.910.definitions.txt#L754-L758",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/multnomah/portland",
+  "new_fingerprint": "bb997f3d4f769fbb8267d02ba193241ebd3f5a97d0dc056bacdbe30b5b3e2f40",
+  "new_quote": "or/multnomah/portland/33.910/33.910.030.txt#L529-L531",
+  "old_fingerprint": "b09550ab2dfa73f36ad1cf61751c03b786920d188acaa6fa9656bad93f7ec71e",
+  "old_quote": "or/multnomah/portland/33.910.definitions.txt#L757-L758",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

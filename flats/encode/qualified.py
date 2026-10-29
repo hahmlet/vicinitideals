@@ -137,15 +137,23 @@ def _cited_lines(quote: str) -> tuple[str, tuple[int, ...]]:
 def _governing(
     census: Census, lines: Sequence[int], per_doc: dict[str, list[Note]]
 ) -> tuple[Note, ...]:
-    """The notes of every block whose region contains one of these lines."""
-    bodies: set[int] = set()
+    """The notes of every block whose region contains one of these lines.
+
+    A block's bodies are usually this document's; a declared block borrowed
+    from a neighbouring section (:func:`flats.encode.footnotes._borrowed`)
+    keeps the document its paragraphs are printed in.
+    """
+    bodies: set[tuple[str, int]] = set()
     for block in census.blocks:
         low, high = block.region
         if any(low <= line - 1 < high for line in lines):
-            bodies |= {body.line for body in block.bodies}
+            bodies |= {(body.doc, body.line) for body in block.bodies}
     if not bodies:
         return ()
-    return tuple(note for note in per_doc.get(census.doc, []) if note.line in bodies)
+    docs = [census.doc] + sorted({doc for doc, _ in bodies} - {census.doc})
+    return tuple(
+        note for doc in docs for note in per_doc.get(doc, []) if (note.doc, note.line) in bodies
+    )
 
 
 def _check_narrowings(per_doc: dict[str, list[Note]], layers: dict[str, Layer]) -> None:

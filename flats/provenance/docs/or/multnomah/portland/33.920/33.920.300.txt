@@ -1,0 +1,24 @@
+33.920.300 Bulk Fossil Fuel Terminal
+A.                                              Characteristics. Bulk Fossil Fuel Terminals are establishments primarily engaged in the transport and bulk storage of fossil fuels.
+Terminal activities may also include fuel blending, regional distribution, and wholesaling.
+Terminals have access to marine, railroad, or regional pipeline to transport fuels to or from the site, and either have transloading facilities for transferring a shipment between transport modes, or have transloading facilities and storage tank capacity exceeding 2 million gallons.
+There is minimal on-site sales activity with the customer present.
+B.                                               Accessory uses.
+Accessory uses may include retail sales of petroleum products, offices, food membership distribution, parking, storage, truck fleet parking and maintenance areas, rail spur or lead lines, and docks.
+C.                                                 Examples. Examples include crude oil terminals, petroleum products terminals, natural gas terminals, propane terminals, and coal terminals.
+D.                                             Exceptions.
+1.                                                   Truck or marine freight terminals that do not store, transport or distribute fossil fuels are classified as Warehouse And Freight Movement uses.
+2.                                                     Truck or marine freight terminals that have storage capacity of 2 million gallons or less are classified as Warehouse And Freight Movement uses.
+However, multiple fossil fuel facilities, each with 2 million gallons of fossil fuel storage capacity or less but cumulatively having a fossil fuel storage capacity in excess of 2 million gallons, located on separate parcels of land will be classified as a Bulk Fossil Fuel Terminal when two or more of the following factors are present:
+a.                                                    The facilities are located or will be located on one or more adjacent parcels of land.
+Adjacent includes separated by a shared right-of-way;
+b.                                                  The facilities share or will share operating facilities such as driveways, parking, piping, or storage facilities; or
+c.                                                       The facilities are owned or operated by a single parent partnership or corporation.
+3.                                                   Gasoline stations and other retail sales of fossil fuels are not Bulk Fossil Fuel Terminals.
+4.                                                   Distributors and wholesalers that receive and deliver fossil fuels exclusively by truck are not Bulk Fossil Fuel Terminals.
+5.                                                   Industrial, commercial, institutional, and agricultural firms that exclusively store fossil fuel for use as an input are not Bulk Fossil Fuel Terminals.
+
+
+6.                                                   Uses that involve the transfer or storage of solid or liquid wastes are classified as Waste-                                       Related uses.
+7.                                                   The storage of fossil fuels for exclusive use at an airport, surface passenger terminal, marine, truck or air freight terminal, drydock, ship or barge servicing facility, rail yard, or as part of a fleet vehicle servicing facility are not Bulk Fossil Fuel Terminals.
+8.                                         Uses that recover or reprocess used petroleum products are not Bulk Fossil Fuel Terminals.

@@ -1,0 +1,8 @@
+33.930.110 Measuring Areas with Squares of Specified Dimensions
+Required areas (for example, required usable outdoor areas in residential zones and the industrial zone lot standards) must be of a sufficient size and configuration so that a square measuring X by X can be placed totally within the required area.
+The dimensions of the square are stated in the base zone chapters.
+See Figure 930-17.
+
+Figure 930-                         17
+Using Squares With Specified Dimensions
+

@@ -1,0 +1,57 @@
+33.110.205 Minimum Dwelling Unit Density
+A.                                                       Purpose. This standard promotes additional housing opportunities in areas of the city where services are available and restricts larger sites from being utilized for a single house.
+B.                                                         When this standard applies.
+The minimum dwelling unit density standard applies to new development when at least one dwelling unit is proposed.
+Sites in the Constrained Sites overlay zone are exempt from this standard.
+C.                                                           Minimum dwelling unit density.
+1.                                                            R7. In the R7 zone, a minimum of two dwelling units are required on sites that are 14,000 square feet or larger in total site area.
+2.                                                            R5. In the R5 zone, a minimum of two dwelling units are required on sites that are 10,000 square feet or larger in total site area.
+3.                                                             R2.5. In the R2.5 zone, a minimum of two dwelling units are required on sites that are 5,000 square feet or larger in total site area.
+
+
+Table 110-4 Summary of Development Standards In Single-Dwelling Zones
+
+Standard                                                                                      RF                                           R20                                          R10                                          R7                                           R5                                                       R2.5
+
+Maximum FAR
+- 1 total dwelling unit [1]                                                                                                                0.4 to 1                                     0.4 to 1                                     0.4 to 1                                     0.5 to 1                                     0.7 to 1
+- 2 total dwelling units [2]                                                                                                               0.5 to 1                                     0.5 to 1                                     0.5 to 1                                     0.6 to 1                                     0.8 to 1
+- 3 total dwelling units [2]                                                                                                               0.6 to 1 [3]                                 0.6 to 1 [3]                                 0.6 to 1 [3]                                 0.7 to 1 [3]                                 0.9 to 1 [3]
+- 4 or more total dwelling                                                                           no limit                              0.7 to 1 [3]                                 0.7 to 1 [3]                                 0.7 to 1 [3]                                 0.8 to 1 [3]                                 1 to 1 [3] units
+(See 33.110.210 and
+33.110.265)
+
+Maximum FAR with Bonus
+- 1 total dwelling unit                                                                                                                    0.4 to 1                                     0.4 to 1                                     0.4 to 1                                     0.5 to 1                                     0.7 to 1
+- 2 total dwelling units [2]                                                                                                               0.6 to 1                                     0.6 to 1                                     0.6 to 1                                     0.7 to 1                                     0.9 to 1
+- 3 total dwelling units [2]                                                                                 NA                            0.7 to 1                                     0.7 to 1                                     0.7 to 1                                     0.8 to 1                                     1 to 1
+- 4 or more total dwelling                                                                                                                 0.8 to 1 [3]                                 0.8 to 1 [3]                                 0.8 to 1 [3]                                 0.9 to 1 [3]                                 1.1 to 1 [3] units
+(See 33.110.210 and
+33.110.265)
+Maximum Height                                                                                30 ft.                                       30 ft. [3]                                   30 ft. [3]                                   30 ft. [3]                                   30 ft. [3]                                   35 ft.
+(See 33.110.215                                                                   and
+33.110.260)
+Minimum Setbacks
+- Front building                                                                              20 ft.                                       20 ft.                                       20 ft.                                       15 ft.                                       10 ft.                                       10 ft.
+setback
+- Side building                                                                               10 ft.                                       10 ft.                                       10 ft.                                       5 ft.                                        5 ft.                                        5 ft.
+setback
+- Rear building                                                                               10 ft.                                       10 ft.                                       10 ft.                                       5 ft.                                        5 ft.                                        5 ft.
+setback
+- Garage entrance                                                                             18 ft.                                       18 ft.                                       18 ft.                                       18 ft.                                       18 ft.                                       18 ft.
+setback
+(See 33.110.220)
+Maximum Building                                                                              See Table                                    See Table                                    See Table                                    See Table                                    See Table                                    See Table
+Coverage                                                                                      110-                                                                  5 110-                                                                  5 110-                                                                  5 110-                                                                  5 110-                                                                  5 110-                                                                  5
+(See 33.110.225)
+Required Outdoor Area
+- Minimum area                                                                                250 sq. ft.                                  250 sq. ft.                                  250 sq. ft.                                  250 sq. ft.                                  250 sq. ft.                                  200 sq. ft.
+10 ft. x
+- Minimum dimension                                                                           12 ft. x                                     12 ft. x                                     12 ft. x                                     12 ft. x                                     12 ft. x                                     10 ft.
+(See 33.110.240)                                                                              12 ft.                                       12 ft.                                       12 ft.                                       12 ft.                                       12 ft.
+[1] Including any site with a congregate housing facility.
+[2] Including accessory dwelling units.
+[3] Additional FAR and height may be allowed.
+See 33.110.265.F.
+
+

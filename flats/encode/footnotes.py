@@ -803,9 +803,60 @@ DECLARES = re.compile(
 #: punctuation is what keeps a declaring sentence out: "Table 240-1 marked
 #: with a (1)" also starts a line and also names the table, and reading it as
 #: the caption would open the region at the note instead of at the table.
-TABLE_CAPTION = re.compile(
-    r"^table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s*(?:[.:]\s+\S|$)", re.I
+#:
+#: Readable text sets the caption and its title as one line -- "Table 130-1
+#: Commercial/Mixed Use Zone Primary Uses" -- with no punctuation between
+#: (FOLLOWUPS 73 batch 6, Portland). So a title is also allowed behind a
+#: space, and what keeps a sentence out is now the title's own case: a
+#: title's words are capitalised ("Uses in Manufacturing Zones"), a
+#: sentence's are not ("Table 140-1 that have a [3]", "Table 110-1. Uses that
+#: are allowed if approved ...", "Table 40-2 lists housing types").
+_CAPTION = re.compile(r"^table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})(?P<rest>.*)$", re.I)
+
+#: Words a table's title leaves in lower case.
+_TITLE_SMALL = frozenset(
+    "a an and as at by for from in into of on or per the through to with".split()
 )
+
+
+def _titled(title: str) -> bool:
+    """Whether ``title`` reads as a table's title: its opening words capitalised."""
+    seen = 0
+    for raw in title.split()[:4]:
+        word = raw.strip("()[]\"',;:.")
+        if not any(ch.isalpha() for ch in word):
+            continue
+        if word.lower() in _TITLE_SMALL and seen:
+            continue
+        if not word[0].isupper():
+            return False
+        seen += 1
+    return seen > 0
+
+
+def _caption(stripped: str) -> tuple[str, str] | None:
+    """The table number a caption line names, or None if it is not one."""
+    got = _CAPTION.match(stripped)
+    if got is None:
+        return None
+    rest = got.group("rest")
+    if not rest.strip():
+        return got.group("a", "b")
+    titled = re.match(r"\s*[.:]\s+(\S.*)$", rest) or re.match(r"\s+(\S.*)$", rest)
+    if titled is None or not _titled(titled.group(1)):
+        return None
+    return got.group("a", "b")
+
+
+class _CaptionPattern:
+    """`_caption` behind the ``match`` a compiled pattern offers."""
+
+    @staticmethod
+    def match(stripped: str) -> tuple[str, str] | None:
+        return _caption(stripped)
+
+
+TABLE_CAPTION = _CaptionPattern()
 
 #: The head of a code section: "33.120.205 When Primary Structures are
 #: Allowed". Closes a table's span where no other table follows it.
@@ -990,16 +1041,16 @@ def _table_span(
     note that claims a table we cannot find governs nothing, and its markers
     stay orphans.
     """
-    caption = re.compile(rf"^table\s+{a}\s*-\s*{b}\s*(?:[.:]\s+\S|$)", re.I)
     first = next(
-        (i for i, raw in enumerate(lines) if caption.match(raw.strip())), None
+        (i for i, raw in enumerate(lines) if _caption(raw.strip()) == (a, b)), None
     )
     if first is None:
         return None
     high = min((j for j in bar if j > first), default=len(lines))
     for j in range(first + 1, high):
         stripped = lines[j].strip()
-        if TABLE_CAPTION.match(stripped) and not caption.match(stripped):
+        named = _caption(stripped)
+        if named is not None and named != (a, b):
             return first, j
         if SECTION_HEAD.match(stripped):
             return first, j
@@ -1022,7 +1073,7 @@ def _paragraph_end(
     for j in range(i + 1, min(stop, i + DECLARED_LIMIT * 2)):
         stripped = lines[j].strip()
         if (
-            TABLE_CAPTION.match(stripped)
+            _caption(stripped) is not None
             or SECTION_HEAD.match(stripped)
             or LETTER_NOTE.match(stripped)
         ):
@@ -1054,8 +1105,14 @@ def _declared_text(lines: Sequence[str], start: int, stop: int) -> str:
     return " ".join(out)
 
 
-def _declared(lines: Sequence[str], doc: str) -> list[Block]:
-    """Runs of numbered paragraphs that name the marker each one answers.
+#: One declared paragraph: (first line, end, mark, table a, table b), 0-based.
+_Entry = tuple[int, int, str, str, str]
+
+
+def _declared_runs(lines: Sequence[str]) -> tuple[list[list[_Entry]], list[int]]:
+    """Runs of numbered paragraphs that name the marker each one answers, and
+    the first line of every declaring paragraph (the bar a table's span stops
+    at).
 
     Two paragraphs are demanded before the run is believed, and each has to
     carry its own declaration -- there is no "the next one is probably a note
@@ -1064,7 +1121,7 @@ def _declared(lines: Sequence[str], doc: str) -> list[Block]:
     sentence that merely mentions another table's footnote out.
     """
     heads = [i for i, raw in enumerate(lines) if DECLARED_HEAD.match(raw.strip())]
-    found: list[tuple[int, int, str, str, str]] = []
+    found: list[_Entry] = []
     for k, i in enumerate(heads):
         stop = heads[k + 1] if k + 1 < len(heads) else len(lines)
         stop = min(stop, i + DECLARED_LIMIT)
@@ -1078,34 +1135,62 @@ def _declared(lines: Sequence[str], doc: str) -> list[Block]:
             continue
         found.append((i, _paragraph_end(lines, i, heads, k), mark, *got.group("a", "b")))
 
-    out: list[Block] = []
-    run: list[tuple[int, int, str, str, str]] = []
+    runs: list[list[_Entry]] = []
+    run: list[_Entry] = []
     for entry in found + [None]:  # type: ignore[list-item]
         same = bool(run) and entry is not None and entry[3:] == run[0][3:]
         if same:
             run.append(entry)  # type: ignore[arg-type]
             continue
         if len(run) >= 2:
-            span = _table_span(lines, run[0][3], run[0][4], [e[0] for e in found])
-            if span is not None:
-                out.append(
-                    Block(
-                        head=run[0][0] + 1,
-                        end=run[-1][1],
-                        region=span,
-                        spans=tuple((start, stop) for start, stop, _, _, _ in run),
-                        bodies=tuple(
-                            Body(
-                                doc=doc,
-                                line=start + 1,
-                                mark=mark,
-                                text=_declared_text(lines, start, stop),
-                            )
-                            for start, stop, mark, _, _ in run
-                        ),
-                    )
-                )
+            runs.append(run)
         run = [entry] if entry is not None else []  # type: ignore[list-item]
+    return runs, [e[0] for e in found]
+
+
+def _declared_block(
+    lines: Sequence[str], doc: str, run: Sequence[_Entry], span: tuple[int, int]
+) -> Block:
+    """A run of declared paragraphs as a block over the table ``span`` names.
+
+    ``span`` is lines of whichever document holds the table; ``spans`` and the
+    bodies are always lines of ``lines``, the document the paragraphs are in.
+    """
+    return Block(
+        head=run[0][0] + 1,
+        end=run[-1][1],
+        region=span,
+        spans=tuple((start, stop) for start, stop, _, _, _ in run),
+        bodies=tuple(
+            Body(
+                doc=doc,
+                line=start + 1,
+                mark=mark,
+                text=_declared_text(lines, start, stop),
+            )
+            for start, stop, mark, _, _ in run
+        ),
+    )
+
+
+def _declared(
+    lines: Sequence[str], doc: str, *, unplaced: list[list[_Entry]] | None = None
+) -> list[Block]:
+    """Runs of declared paragraphs whose table is in this document.
+
+    A run naming a table this document does not print governs nothing here;
+    it is added to ``unplaced`` when that is given, for :func:`_borrowed` to
+    look for the table in the document's neighbouring sections.
+    """
+    runs, bar = _declared_runs(lines)
+    out: list[Block] = []
+    for run in runs:
+        span = _table_span(lines, run[0][3], run[0][4], bar)
+        if span is None:
+            if unplaced is not None:
+                unplaced.append(run)
+            continue
+        out.append(_declared_block(lines, doc, run, span))
     return out
 
 
@@ -1818,11 +1903,25 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
     return out
 
 
-def census(text: str, *, layer: str = "", doc: str = "") -> Census:
-    """The footnote census of one document."""
+def census(
+    text: str,
+    *,
+    layer: str = "",
+    doc: str = "",
+    borrowed: Sequence[Block] = (),
+    lent: Sequence[tuple[int, int]] = (),
+) -> Census:
+    """The footnote census of one document.
+
+    ``borrowed`` are declared blocks whose paragraphs another section of the
+    same chapter prints and whose table this one does (:func:`_borrowed`).
+    Their bodies keep their own document and lines; their regions are lines of
+    this one. ``lent`` is the other side: this document's paragraphs that such
+    a block took, which are declarations, not references.
+    """
     lines = text.splitlines()
     blocks = _blocks(lines) + _declared(lines, doc)
-    inside = tuple(span for b in blocks for span in b.covered)
+    inside = tuple(span for b in blocks for span in b.covered) + tuple(lent)
     markers = [
         Marker(doc=doc, line=m.line, start=m.start, end=m.end, mark=m.mark, kind=m.kind, text=m.text)
         for m in _markers(lines, inside)
@@ -1839,7 +1938,7 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
             spans=b.spans,
         )
         for b in blocks
-    )
+    ) + tuple(borrowed)
 
     # Provisional markers stand only where a note answers them. Done here
     # rather than in `_markers` because it is the blocks that decide it.
@@ -1917,15 +2016,79 @@ def _layers() -> list[str]:
     return out
 
 
+def _borrowed(
+    texts: dict[str, str], layer: str
+) -> tuple[dict[str, list[Block]], dict[str, list[tuple[int, int]]]]:
+    """Declared blocks whose table the cut put in another section file.
+
+    Portland prints a base zone's limitations in its Primary Uses section and
+    the use table they declare under the next heading, Accessory Uses. In the
+    chapter as fetched that is one document and the declaration finds its
+    table; cut into sections (FOLLOWUPS 73, batch 6) the paragraphs and the
+    table are two files, and every marker in the table would be an orphan and
+    every limitation a note nobody points at -- a value losing the footnotes
+    over it, which is the false-GREEN path.
+
+    So a run whose table is not in its own section is looked for in the other
+    sections of the same chapter folder. Exactly one of them must print the
+    table's caption; none or several and the run stays unplaced, as before.
+    A document filed at the layer's top level is a whole document and is
+    never searched this way.
+
+    Returns the blocks each document borrows, and the paragraph spans each
+    document lent -- so its own census reads "that have a [4]" as the
+    declaration it is rather than as a marker.
+    """
+    folders: dict[str, list[str]] = {}
+    for doc in texts:
+        folder = doc.rpartition("/")[0]
+        if folder != layer:
+            folders.setdefault(folder, []).append(doc)
+    out: dict[str, list[Block]] = {}
+    lent: dict[str, list[tuple[int, int]]] = {}
+    for docs in folders.values():
+        split = {doc: texts[doc].splitlines() for doc in docs}
+        bars = {doc: _declared_runs(lines)[1] for doc, lines in split.items()}
+        for doc, lines in split.items():
+            unplaced: list[list[_Entry]] = []
+            _declared(lines, doc, unplaced=unplaced)
+            for run in unplaced:
+                a, b = run[0][3], run[0][4]
+                spans = {
+                    other: span
+                    for other in docs
+                    if other != doc
+                    and (span := _table_span(split[other], a, b, bars[other])) is not None
+                }
+                if len(spans) != 1:
+                    continue
+                ((other, span),) = spans.items()
+                block = _declared_block(lines, doc, run, span)
+                out.setdefault(other, []).append(block)
+                lent.setdefault(doc, []).extend(block.covered)
+    return out, lent
+
+
 def survey(layer: str | None = None) -> list[Census]:
     """The census of every stored document, or of one layer's."""
     layers = [layer] if layer else _layers()
     out: list[Census] = []
     for layer_id in layers:
-        for path in _stored(layer_id):
-            doc = path.relative_to(DOCS).as_posix()
-            text = path.read_text(encoding="utf-8", errors="replace")
-            out.append(census(text, layer=layer_id, doc=doc))
+        texts = {
+            path.relative_to(DOCS).as_posix(): path.read_text(encoding="utf-8", errors="replace")
+            for path in _stored(layer_id)
+        }
+        borrowed, lent = _borrowed(texts, layer_id)
+        for doc, text in texts.items():
+            out.append(
+                census(
+                    text,
+                    layer=layer_id,
+                    doc=doc,
+                    borrowed=borrowed.get(doc, ()),
+                    lent=lent.get(doc, ()),
+                )
+            )
     return out
 
 

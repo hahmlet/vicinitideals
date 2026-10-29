@@ -1,0 +1,12 @@
+33.120.020 List of the Multi-Dwelling Zones
+The full and short names of the multi-dwelling residential zones and their map symbols are listed below.
+When this Title refers to the multi -dwelling zones, it is referring to the six zones listed here.
+When this Title refers to the residential zones or R zones, it is referring to both the single-                           dwelling zones in Chapter 33.110 and the multi-dwelling zones in this chapter.
+Full Name                                                                                                                  Short Name/Map Symbol
+Residential Multi-Dwelling 1                                                                                               RM1
+Residential Multi-Dwelling 2                                                                                               RM2
+Residential Multi-Dwelling 3                                                                                               RM3
+Residential Multi-Dwelling 4                                                                                               RM4
+Central Residential                                                                                                        RX
+Residential Manufactured Dwelling Park                                                                                     RMP
+
