@@ -780,7 +780,7 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
     # municipal code (``1.04.070``, ``02.16.6``) filed under the state's
     # name, none of which Oregon writes. The same fault was found and fixed
     # in the reading ledger the same day; this is its twin.
-    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
+    paths = store.documents_of(layer.layer)
     if not paths:
         return []
 

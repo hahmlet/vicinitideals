@@ -500,3 +500,13 @@ def test_a_citation_cannot_reach_outside_the_store(tmp_path) -> None:
             store.text_path(escape)
 
     assert store.text_path("or/multnomah/portland/33.110.txt").is_relative_to(tmp_path)
+
+
+@pytest.mark.parametrize("layer", ["or", "or/clackamas/tualatin", "or/multnomah/portland", "nowhere"])
+def test_a_layers_documents_are_the_ones_layer_of_files_under_it(layer: str) -> None:
+    # documents_of walks only the layer's folder (CI timeout 2026-10-29); it
+    # must list exactly what asking layer_of of every document lists: the
+    # state layer none of the cities' documents, a cut city its section files
+    # and not the proof copy they were cut from.
+    store = ProvenanceStore()
+    assert store.documents_of(layer) == [p for p in store.documents() if store.layer_of(p) == layer]
