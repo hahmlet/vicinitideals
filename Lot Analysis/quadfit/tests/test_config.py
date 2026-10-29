@@ -462,7 +462,8 @@ def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so
     Gresham states a NUMBER rather than a waiver: a "Rear With Alley" column
     on every district table, read on the quadplex row (Table 4.0131 for
     LDR-5/LDR-7/TLDR/TR, 4.1415B for the Pleasant Valley three, 4.1508's "All
-    Other Uses" row for the Springwater two, 4.1130 downtown). MDR-12, MDR-24
+    Other Uses" row for the Springwater two, 4.1130 downtown; the townhouse-only
+    downtown three DCL/DEM/DMU read 3 ft on their townhouse row, 4.1100). MDR-12, MDR-24
     and OFR print "NA" on that row, and the corridor zones' alley rear is
     Table 4.0430 note 1.c, the townhouse note -- unit lots, not this plat --
     so none of those seven states the field, and CMF's 77 alley lots keep
@@ -482,7 +483,8 @@ def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so
                                                      "LDR-PV", "MDR-PV", "LDR-SW",
                                                      "VLDR-SW")} | {
         ("gresham", "HDR-PV", 5.0), ("gresham", "DRL-1", 6.0), ("gresham", "DRL-2", 6.0),
-        ("gresham", "DCC", 6.0), ("gresham", "DTM", 6.0)}   # ported 2026-10-08 (FOLLOWUPS 52)
+        ("gresham", "DCC", 6.0), ("gresham", "DTM", 6.0)} | {  # ported 2026-10-08 (FOLLOWUPS 52)
+        ("gresham", z, 3.0) for z in ("DCL", "DEM", "DMU")}   # townhouse rows, 2026-10-28 (FOLLOWUPS 109 chunk 4)
     gr = rules.jurisdictions["gresham"]
     for zn in ("MDR-12", "MDR-24", "OFR", "CMF", "CMU", "SC", "SC-RJ"):
         z = gr.rule_for(zn)
