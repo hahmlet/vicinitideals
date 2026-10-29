@@ -376,7 +376,9 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 163, "comments": 287, "tests": 18}
+EXPECTED = {"notes": 165, "comments": 287, "tests": 18}
+# 163 -> 165 notes on 2026-10-29 (chunk 5, Gresham DCC and DTM townhouses): each note records
+# the townhouse row's maximum front setback as not encoded, as the plex row's is not.
 # 162 -> 163 notes and 286 -> 287 comments on 2026-10-29 (FOLLOWUPS 109 chunk 5): Tigard
 # MUC's comment records Bridgeport's 20 ft height floor, 50-an-acre ceiling, street-side
 # maximum and arterial frontage share as read and NOT ENCODED; Estacada D's note records the

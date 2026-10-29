@@ -2054,7 +2054,7 @@
   scope:
     county: multnomah
     city: gresham
-    zones: [DMU, DEM, DCL]
+    zones: [DCC, DTM, DMU, DEM, DCL]
   question: >-
     Gresham's Downtown street types (Map 4.1140) bar townhouses from Main
     Avenue and bar townhouse or parking access from Urban Boulevards, Beech
@@ -2065,7 +2065,8 @@
   effect: >-
     Map 4.1140 (PDF page 23) is traced onto the RLIS centrelines as a drawn
     layer (flats/config/areas/or/multnomah/gresham/downtown-street-types.geojson).
-    gresham_downtown_barred_street is measured per DMU, DEM and DCL lot:
+    gresham_downtown_barred_street is measured per DMU, DEM and DCL lot (and
+    DCC and DTM since 2026-10-29, when their townhouse path opened):
     every street line of a barring type is RED on the use; a Downtown Local
     or Cleveland line, or a rear alley, opens the townhouse path; a Main
     Avenue corner, or a street line with no traced centreline beside it

@@ -66,13 +66,16 @@ def test_a_limited_use_is_encoded_shut_and_not_open(gresham: Layer) -> None:
     """L1 is not P, and the difference is three gates.
 
     The base is what binds, so it is the refusal. A reader who wants to know
-    why can find the whole limitation on the one variant hanging off it.
+    why can find the whole limitation on the one variant hanging off it. (The
+    rest are the townhouse plat's, 2026-10-29, and all name ``unit_lots``.)
     """
     for zone in LIMITED:
         use = gresham.zones[zone].values["quadplex_allowed"]
         assert use.value is False, zone
-        assert len(use.variants) == 1, zone
-        assert use.variants[0].value is True, zone
+        one_lot = [v for v in use.variants if "unit_lots" not in v.when]
+        assert len(one_lot) == 1, zone
+        assert one_lot[0] is use.variants[0], zone
+        assert one_lot[0].value is True, zone
 
 
 def test_the_gate_that_is_measured_rides_as_a_band(gresham: Layer) -> None:
@@ -139,25 +142,33 @@ def test_a_prohibited_quadplex_opens_only_as_townhouses(rules: RuleSet) -> None:
     4.1140 cannot answer (flats.geom.street_types) does not reach GREEN.
     """
     for zone in BARRED:
-        assert rules.resolve(GRESHAM, zone).values["quadplex_allowed"].value is False, zone
+        assert rules.resolve(GRESHAM, zone).values["quadplex_allowed"].value is False, (
+            zone
+        )
         split = rules.resolve(GRESHAM, zone, ("unit_lots",))
         use = split.values["quadplex_allowed"]
         assert use.value is True, zone
         assert "gresham_downtown_barred_street" in use.levers, zone
-        barred = rules.resolve(GRESHAM, zone, ("unit_lots", "gresham_downtown_barred_street"))
+        barred = rules.resolve(
+            GRESHAM, zone, ("unit_lots", "gresham_downtown_barred_street")
+        )
         assert barred.values["quadplex_allowed"].value is False, zone
 
 
-def test_the_townhouse_path_is_opened_only_where_the_quadplex_is_barred(gresham: Layer) -> None:
+def test_the_townhouse_path_is_opened_in_the_five_townhouse_row_districts(
+    gresham: Layer,
+) -> None:
     """The unit-lot form is opened in DMU, DEM and DCL (2026-10-28), where the
-    one-lot quadplex is NP. DCC and DTM read L1 for the quadplex and are
-    encoded on that permission; their own Townhouse P is not opened here.
+    one-lot quadplex is NP, and in DCC and DTM (2026-10-29), where it is L1:
+    the five districts the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row
+    names. DRL-1 and DRL-2 permit the quadplex outright and are not opened
+    on unit lots this way.
     """
     for zone in DOWNTOWN:
         use = gresham.zones[zone].values.get("quadplex_allowed")
         assert use is not None, zone
-        opened = any("unit_lots" in v.when and v.value is True for v in use.variants)
-        assert opened is (zone in BARRED), zone
+        opened = any(v.when == ("unit_lots",) and v.value is True for v in use.variants)
+        assert opened is (zone in BARRED + LIMITED), zone
 
 
 def test_the_dimensional_row_is_the_one_headed_in_any_district(
@@ -212,7 +223,15 @@ def test_the_eight_column_rows_are_read_in_the_right_order(gresham: Layer) -> No
         for z in DOWNTOWN
         if "max_height_ft" in gresham.zones[z].values
     }
-    assert heights == {"DCC": 85, "DMU": 125, "DTM": 85, "DEM": 70, "DRL-1": 35, "DRL-2": 50, "DCL": 65}
+    assert heights == {
+        "DCC": 85,
+        "DMU": 125,
+        "DTM": 85,
+        "DEM": 70,
+        "DRL-1": 35,
+        "DRL-2": 50,
+        "DCL": 65,
+    }
     fars = {
         z: gresham.zones[z].values["max_far"].value
         for z in DOWNTOWN
@@ -234,7 +253,15 @@ def test_every_downtown_district_states_a_density_floor(gresham: Layer) -> None:
         for z in DOWNTOWN
         if "min_density_du_per_acre" in gresham.zones[z].values
     }
-    assert floors == {"DCC": 17, "DMU": 20, "DTM": 20, "DEM": 17, "DRL-1": 8.7, "DRL-2": 8.7, "DCL": 17}
+    assert floors == {
+        "DCC": 17,
+        "DMU": 20,
+        "DTM": 20,
+        "DEM": 17,
+        "DRL-1": 8.7,
+        "DRL-2": 8.7,
+        "DCL": 17,
+    }
 
 
 def test_the_one_downtown_ceiling_that_binds_this_building(gresham: Layer) -> None:

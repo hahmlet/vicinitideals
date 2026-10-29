@@ -29,7 +29,7 @@ within :data:`~flats.geom.corridor.FRONT_REACH_FT`; a line is of a type when
 at least :data:`~flats.geom.corridor.MIN_SHARE` of its points agree on it,
 and unplaced otherwise.
 
-**The answer, per lot of DMU, DEM and DCL** (``gresham_downtown_barred_street``):
+**The answer, per lot of DCC, DTM, DMU, DEM and DCL** (``gresham_downtown_barred_street``):
 
 * any street line on Main -- True when every street line is on Main (the
   townhouse is not allowed on that street type and cannot enter from it),
@@ -65,7 +65,7 @@ from flats.rules.loader import AREAS_ROOT
 CONDITION = "gresham_downtown_barred_street"
 #: The layer it serves and the zones whose townhouse permission reads it.
 SERVES = "or/multnomah/gresham"
-ZONES = frozenset({"DMU", "DEM", "DCL"})
+ZONES = frozenset({"DCC", "DTM", "DMU", "DEM", "DCL"})
 #: The traced map, under ``flats/config/areas``.
 TRACED = "or/multnomah/gresham/downtown-street-types.geojson"
 

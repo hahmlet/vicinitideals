@@ -116,7 +116,7 @@ def test_an_unknown_street_type_is_refused() -> None:
 
 def test_only_downtown_townhouse_zones_of_gresham_are_answered() -> None:
     edges = lot(FRONT, SIDE_E, REAR, SIDE_W)
-    assert observed_street_types(edges, SERVES, "DCC") == {}
+    assert observed_street_types(edges, SERVES, "DRL-1") == {}
     assert observed_street_types(edges, "or/multnomah/troutdale", "DMU") == {}
     assert observed_street_types([], SERVES, "DMU") == {}
 

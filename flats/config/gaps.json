@@ -1,5 +1,5 @@
 {
-  "digest": "ecf589e03c288b24266608b775162dd99f37d7b25c9f5f25c61fecf87366fe1f",
+  "digest": "44e5db252ca1de37cd5137066aaf16b4b5b9c33bfe9b93a8e6f661c5699ad580",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -309,6 +309,22 @@
           "kind": "heading_same_file"
         },
         {
+          "zone": "DCC",
+          "field": "orientation_constraint [unit_lots]",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "7.0431",
+          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "DCC",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
+        },
+        {
           "zone": "DCL",
           "field": "review_discretion",
           "claimed": "4.1100 4.1120 4.1130",
@@ -395,6 +411,22 @@
           "found": "7.0431",
           "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "DTM",
+          "field": "orientation_constraint [unit_lots]",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "7.0431",
+          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "DTM",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
         },
         {
           "zone": "MDR-12",
