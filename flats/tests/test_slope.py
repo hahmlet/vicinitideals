@@ -38,7 +38,7 @@ from shapely.geometry import box  # noqa: E402
 
 from flats.encode.load import load_trusted  # noqa: E402
 from flats.fit.rectangle import Fit  # noqa: E402
-from flats.fit.slope import ONE_M, TEN_M, SlopeRules, Terrain, load_rules  # noqa: E402
+from flats.fit.slope import ONE_M, TEN_M, Grade, SlopeRules, Terrain, load_rules  # noqa: E402
 from flats.ingest.quadfit import envelope_for, lot_from_row, screen_lot, with_steep  # noqa: E402
 from flats.score import flags as flag_plan, relief, slack  # noqa: E402
 from flats.score.relief import NO_ZONING_RELIEF  # noqa: E402
@@ -414,6 +414,32 @@ def test_a_pad_on_an_even_eight_percent_is_a_closer_look(tmp_path, corpus, polic
     assert s.facts.site_grade_pct == pytest.approx(8.0, abs=0.4)
     assert CLOSER_LOOK_SLOPE in s.signed.reasons
     assert any(f.code == "SLOPE-GRADE" for f in s.signed.flags)
+
+
+class _GradedAt:
+    """``t`` with every pad read at ``pct``: the plane fit's own figure,
+    before anything rounds it."""
+
+    def __init__(self, t: Terrain, pct: float) -> None:
+        self._t, self._pct = t, pct
+
+    def grade(self, ground):
+        return Grade(self._pct, ONE_M, 50)
+
+    def __getattr__(self, name):
+        return getattr(self._t, name)
+
+
+def test_a_grade_a_hair_over_the_green_line_is_not_rounded_onto_it(
+    tmp_path, corpus, policies
+) -> None:
+    """Up to 5% is GREEN (flats/config/slope.yaml). A pad at 5.004% is over
+    it; rounded to two places it would read 5.0 and pass. The band is taken
+    on the measured figure, so it stays a closer look."""
+    green = load_rules().grade_green_max_pct
+    _, s = screened(corpus, policies, _GradedAt(bridge_terrain(tmp_path, plane(2.0)), green + 0.004))
+    assert s.facts.site_grade_pct > green
+    assert CLOSER_LOOK_SLOPE in s.signed.reasons
 
 
 def test_a_tight_fit_is_graded(tmp_path, corpus, policies) -> None:

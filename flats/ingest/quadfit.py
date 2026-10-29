@@ -3800,7 +3800,9 @@ def slope_checked(
         got = terrain.grade(pads)
         facts = dataclasses.replace(
             facts,
-            site_grade_pct=None if got is None else round(got.pct, 2),
+            # Unrounded: the band is read off this figure, and 5.004 rounded
+            # to 5.0 would pass a green line it is over.
+            site_grade_pct=None if got is None else float(got.pct),
             site_grade_source=None if got is None else got.source,
             site_grade_tried=True,
         )
