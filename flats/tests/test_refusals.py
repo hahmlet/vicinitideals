@@ -376,7 +376,11 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 165, "comments": 287, "tests": 18}
+EXPECTED = {"notes": 164, "comments": 286, "tests": 18}
+# 165 -> 164 notes and 287 -> 286 comments on 2026-10-29 (chunk 5, looser rules): Troutdale
+# HDR's note no longer refuses 9.035's parking waiver and 3.235.C.5.a's ten-foot rear (both
+# encoded), and King City's Kingston Terrace comment no longer refuses the corner-lot front
+# relief to 8 (encoded as a corner_lot variant).
 # 163 -> 165 notes on 2026-10-29 (chunk 5, Gresham DCC and DTM townhouses): each note records
 # the townhouse row's maximum front setback as not encoded, as the plex row's is not.
 # 162 -> 163 notes and 286 -> 287 comments on 2026-10-29 (FOLLOWUPS 109 chunk 5): Tigard

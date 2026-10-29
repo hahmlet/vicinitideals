@@ -1,5 +1,5 @@
 {
-  "digest": "44e5db252ca1de37cd5137066aaf16b4b5b9c33bfe9b93a8e6f661c5699ad580",
+  "digest": "3e7cfadfca964dcfa2e9a1494ffe8b14ca0bf23eb8a079c63c9c1fd16799c7c7",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -752,6 +752,38 @@
           "claimed": "3.130",
           "found": "3.235",
           "quote": "or/multnomah/troutdale/3/3.235.txt#L24,L30,L35",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L26",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+multi_story+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L26",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L25,L27",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear+multi_story+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L25,L27",
           "kind": "heading_other_file"
         }
       ],

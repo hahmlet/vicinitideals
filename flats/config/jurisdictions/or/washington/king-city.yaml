@@ -554,6 +554,16 @@ zones:
       value: 12
       cite: King City KCMC 16.84.040 Table, R-9 column, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.84/16.84.040.txt#L4-L6,L12-L13"
+      variants:
+        # "Corner lot setback -- front yard/side yard, minimum": 10 in the R-9
+        # column, one figure for both yards (R-12 prints two, 10/8). Every
+        # street line of a corner lot is a front here (front_lot_line_corner),
+        # so the corner row's ten is each of them (districts chunk 5,
+        # 2026-10-29).
+        - value: 10
+          when: [corner_lot]
+          cite: King City KCMC 16.84.040 Table, R-9 column, Corner lot setback front yard/side yard, minimum (10)
+          quote: "or/washington/king-city/16.84/16.84.040.txt#L4-L6,L17-L18"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.84.040 Table, R-9 column, Front yard setback to residential building, maximum
@@ -658,12 +668,12 @@ zones:
       not the Kingston Terrace defaults: no minimum, at most 1.5 a
       townhome, 9 by 18 stalls, 24 ft aisles. Access from 16.136.030 A:
       three to six attached lots share one driveway in a 30 ft strip (24
-      ft paved). NOT ENCODED: the porch row (no porch on the pod); the
-      alley garage row (no garage); the corner-lot relief to the front
-      (10 on a corner lot, front held at 12); 16.84.050's front windows
+      ft paved). A corner lot's fronts are 10, the corner row's figure
+      (chunk 5, 2026-10-29). NOT ENCODED: the porch row (no porch on the
+      pod); the alley garage row (no garage); 16.84.050's front windows
       and garage-door shares (design, not placement) and its four-unit
       row cap (the pod is four); the common outdoor area alternative
-      (looser); 16.146.030 F's rounding and I's optional exclusions
+      (re-read 2026-10-29: 5,000 sq ft at least 40 ft every way, far more than four 300s, so it never opens a pod lot); 16.146.030 F's rounding and I's optional exclusions
       (looser). parking_front_prohibited stays the layer default
       (Kingston Terrace's): 16.132 states no placement rule, and the pod
       parks behind regardless.
@@ -831,7 +841,7 @@ zones:
       corner lot, front held at 10); 16.84.050's front windows and
       garage-door shares (design, not placement) and its four-unit row
       cap (the pod is four); the common outdoor area alternative
-      (looser); 16.146.030 F's rounding and I's optional exclusions
+      (re-read 2026-10-29: 5,000 sq ft at least 40 ft every way, far more than four 300s, so it never opens a pod lot); 16.146.030 F's rounding and I's optional exclusions
       (looser). parking_front_prohibited stays the layer default
       (Kingston Terrace's): 16.132 states no placement rule, and the pod
       parks behind regardless.
@@ -1137,7 +1147,7 @@ zones:
       corner-lot relief to the front (none printed); 16.84.050's front
       windows and garage-door shares (design, not placement) and its
       four-unit row cap (the pod is four); the common outdoor area
-      alternative (looser); 16.146.030 F's rounding and I's optional
+      alternative (re-read 2026-10-29: 5,000 sq ft at least 40 ft every way, far more than four 300s, so it never opens a pod lot); 16.146.030 F's rounding and I's optional
       exclusions (looser). parking_front_prohibited stays the layer
       default (Kingston Terrace's): 16.132 states no placement rule, and
       the pod parks behind regardless.
@@ -1306,7 +1316,7 @@ zones:
       alley garage row (no garage); the corner-lot relief to the front
       (none printed); 16.84.050's front windows and garage-door shares
       (design, not placement) and its four-unit row cap (the pod is
-      four); the common outdoor area alternative (looser); 16.146.030
+      four); the common outdoor area alternative (re-read 2026-10-29: 5,000 sq ft at least 40 ft every way, far more than four 300s, so it never opens a pod lot); 16.146.030
       F's rounding and I's optional exclusions (looser).
       parking_front_prohibited stays the layer default (Kingston
       Terrace's): 16.132 states no placement rule, and the pod parks
@@ -1389,9 +1399,9 @@ zones:
   # - CORNER. "Corner lot setback -- front yard/side yard, minimum 8" and
   #   "Side yard -- to public street, minimum 5". The 8 is held as the street
   #   side (the stricter of the two rows that reach a street side yard). It
-  #   would also let a corner lot's front come in to 8; that relief is NOT
-  #   ENCODED, and with front_lot_line_corner: both the envelope gives each
-  #   street line the stricter of the front (10) and the street side (8).
+  #   also lets a corner lot's front come in to 8, carried as a corner_lot
+  #   variant since 2026-10-29 (chunk 5); with front_lot_line_corner: both
+  #   every street line of a corner lot is then 8.
   # - INTERIOR SIDE "0 or 3" (Town Center, Beef Bend, Central). Note 18:
   #   "There is no minimum setback for zero foot setback buildings. In all
   #   cases, zero foot setback buildings shall either: (1) be attached at the
@@ -1501,6 +1511,15 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      variants:
+        # "Corner lot setback -- front yard/side yard, minimum 8": every street
+        # line of a corner lot is a front here (front_lot_line_corner), so
+        # the corner row's eight is each of them (districts chunk 5,
+        # 2026-10-29).
+        - value: 8
+          when: [corner_lot]
+          cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
+          quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
@@ -1587,6 +1606,15 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      variants:
+        # "Corner lot setback -- front yard/side yard, minimum 8": every street
+        # line of a corner lot is a front here (front_lot_line_corner), so
+        # the corner row's eight is each of them (districts chunk 5,
+        # 2026-10-29).
+        - value: 8
+          when: [corner_lot]
+          cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
+          quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
@@ -1673,6 +1701,15 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      variants:
+        # "Corner lot setback -- front yard/side yard, minimum 8": every street
+        # line of a corner lot is a front here (front_lot_line_corner), so
+        # the corner row's eight is each of them (districts chunk 5,
+        # 2026-10-29).
+        - value: 8
+          when: [corner_lot]
+          cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
+          quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
@@ -1759,6 +1796,15 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      variants:
+        # "Corner lot setback -- front yard/side yard, minimum 8": every street
+        # line of a corner lot is a front here (front_lot_line_corner), so
+        # the corner row's eight is each of them (districts chunk 5,
+        # 2026-10-29).
+        - value: 8
+          when: [corner_lot]
+          cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
+          quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum

@@ -155,7 +155,10 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 454, "numeric": 153, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 454, "numeric": 158, "marker": 0, "dash": 2, "silent": 8}
+# 153 -> 158 numeric on 2026-10-29 (chunk 5, Troutdale Town Center): TDC 9.035 waives
+# off-street parking inside the Town Center overlay -- one exempt variant on HDR's
+# parking row, and four on MDR's restated Table 1 (the plain row and each lot-size band).
 # 450 -> 454 stated and 148 -> 153 numeric on 2026-10-29 (FOLLOWUPS 109 chunk 5). Numeric:
 # Tigard MUC's density floor, maximum front setback, impervious, landscaping and front-parking
 # rows are blank in Table 18.280.1's MUC column and exempt there, with Bridgeport Village's
