@@ -1,0 +1,19 @@
+12.22.220  Housing Types.
+Table 12.22.220-1 lists housing types permitted in the MR-2 zone.
+Housing types are defined in
+Section 12.01.500.
+Table 12.22.220-1:
+Housing Types Permitted in the MR-2 Zone
+Housing Types Status Notes
+Single detached dwelling N
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster N
+Multiple-dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)

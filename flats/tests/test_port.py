@@ -256,7 +256,7 @@ def test_the_cul_de_sac_frontage_has_to_already_be_here() -> None:
             assert {float(v.value) for v in alone} == {number}, (jname, row["zone"], number)
             assert number < float(held.value), (jname, row["zone"])
             assert all("cul-de-sac" in v.prov.quote or v.prov.quote.endswith(
-                ("16.22.020.txt#L181", "16.22.030.txt#L176", "16.22.040.txt#L155", "#L4740", "#L7254")) for v in alone), (jname, row["zone"])
+                ("16.22.020.txt#L181", "16.22.030.txt#L176", "16.22.040.txt#L155", "4.124.txt#L122", "4.127.txt#L505-L506")) for v in alone), (jname, row["zone"])
             # and quadfit's own pair reads the same way: the bulb row below the interior one
             assert number < float(row["min_frontage_ft"]), (jname, row["zone"])
             stated[(jname, row["zone"])] = number

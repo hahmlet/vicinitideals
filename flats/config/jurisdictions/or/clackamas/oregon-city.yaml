@@ -463,31 +463,31 @@ defaults:
     cite: Oregon City OCMC 16.12.016, street improvements by the street classification set forth in the transportation system plan
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L291-L296"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L1-L2"
   row_to_centerline_stated_as_width:
     value: true
     cite: Oregon City OCMC Table 16.12.016 notes, the right-of-way width identified includes the total street section
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L413-L415"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L86-L87"
   row_to_centerline_major_arterial_ft:
     value: 126
     cite: Oregon City OCMC Table 16.12.016, major arterial, residential, 126 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L343"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L30-L31"
   row_to_centerline_minor_arterial_ft:
     value: 118
     cite: Oregon City OCMC Table 16.12.016, minor arterial, industrial, 118 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L350"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L34-L35"
   row_to_centerline_collector_ft:
     value: 88
     cite: Oregon City OCMC Table 16.12.016, collector, industrial, 88 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L402"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L77"
   row_to_centerline_by_designation:
     value:
       - [major arterial / commercial, 116]
@@ -505,13 +505,13 @@ defaults:
     cite: Oregon City OCMC Table 16.12.016, right-of-way width by road classification and the comprehensive plan designation of the adjacent properties (commercial = the Mixed Use, Commercial or Public/Quasi Public row)
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L327-L332,L338,L342-L343,L346,L350-L351,L398,L402-L403,L406,L410-L411"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L21-L24,L27,L29-L32,L34-L36,L74,L77-L79,L82-L85"
   row_to_centerline_local_ft:
     value: 62
     cite: Oregon City OCMC Table 16.12.016, local, mixed use/commercial/public, 62 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L406"
+    quote: "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L78-L79"
   # PARKING, read 2026-08-27 -- the whole of Chapter 17.52 plus the middle
   # housing chapter that overrides parts of it. What Oregon City has to say
   # about this building's parking splits cleanly in two, and the seam is
@@ -647,18 +647,18 @@ defaults:
     cite: OCMC Table 16.12.035.D, minimum driveway approach width, triplexes/quadplexes/cottage clusters row
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1103-L1104"
+    quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L41-L44,L47"
   driveway_approach_max_width_ft:
     value: 36
     cite: OCMC Table 16.12.035.D, maximum driveway approach width, triplexes/quadplexes/cottage clusters row
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1103-L1104"
+    quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L41-L44,L47"
     variants:
       - value: 24
         when: [unit_lots]
         cite: OCMC Table 16.12.035.D, maximum driveway approach width, Townhouses row
-        quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1102"
+        quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L41-L44,L46"
   # One approach for every two dwelling units, rounded up: two approaches for
   # the four-unit pod. Steph ruled 2026-09-30 that F is a requirement, not a
   # cap. It is a townhouse sentence, and every pod this project screens sits
@@ -675,7 +675,7 @@ defaults:
     cite: OCMC 16.12.035.F, townhouses, one driveway approach for every two dwelling units
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1066-L1068"
+    quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L32"
   # On one lot, OCMC 17.16.060.D, Triplex and quadplex development
   # requirements: "In residential zones, garages on the front facade and
   # off-street parking areas in the front yard, are permitted in compliance
@@ -794,7 +794,7 @@ defaults:
     cite: OCMC 16.12.035.H, access from and limited to the road with the lowest classification
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1072-L1077"
+    quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L34-L36"
     variants:
       - value: side
         when: [unit_lots]
@@ -904,7 +904,7 @@ defaults:
   # this is a live gap, not a dismissal. Five feet off the side line is five
   # feet of frontage the layout does not currently spend, and closing it needs
   # a field and a geometry change rather than a reading.
-  # (or/clackamas/oregon-city/16.12.streets.txt#L1020-L1021)
+  # (or/clackamas/oregon-city/16.12/16.12.035.txt#L20)
   #
   # NOT ENCODED: any private open space standard, and this is a positive
   # finding rather than a gap. The notes at the head of this file record why
@@ -2968,5 +2968,5 @@ set_aside:
     why: parking count -- the quadplex row states no unit; the state cap of four in total governs
   - quote: "or/clackamas/oregon-city/16.12.streets.txt#L984-L1017"
     why: driveway spacing -- the table excludes quadplexes and townhouses
-  - quote: "or/clackamas/oregon-city/16.12.streets.txt#L1020-L1021"
+  - quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L20"
     why: driveway five feet off the property line -- known gap, not yet encoded

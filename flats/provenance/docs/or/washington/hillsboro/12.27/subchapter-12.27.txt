@@ -1,0 +1,48 @@
+SUBCHAPTER 12.27
+OVERLAY ZONES
+12.27.010 Overlay Zones.
+12.27.020 Locational Characteristics.
+12.27.030 Organization within this Subchapter.
+12.27.100 RFO Regulatory Floodplain Overlay.
+12.27.105 Purposes.
+12.27.107 Liability.
+12.27.110 Applicability, Code Interpretation, and Floodplain Boundary/Base Flood Elevation Interpretation.
+12.27.115 Administrative and Regulatory Coordination.
+12.27.120 Exempt and Permitted Uses and Activities.
+12.27.125 Reserved.
+12.27.130 General Development Standards.
+12.27.135 Standards for Specific Development Types.
+12.27.140 Variances from RFO Standards.
+12.27.145 Reserved.
+12.27.200 SNRO Significant Natural Resources Overlay.
+12.27.205 Purposes.
+12.27.215 Administrative and Regulatory Coordination.
+12.27.220 Exempt, Permitted and Prohibited Uses and Activities.
+12.27.230 General Development Standards.
+12.27.235 Standards for Specific Development Types within a Resource Site or Impact Area. 12.27.240 Compensatory Mitigation Standards.
+12.27.245 Adjustments from Standards of Underlying Zoning.
+12.27.250 Boundary Verification and Modification.
+12.27.300 CRO Cultural Resource Overlay.
+12.27.310 Purpose.
+12.27.320 Applicability and Boundary Delineation.
+12.27.330 Addition to the CRO.
+12.27.340 Removal from the CRO and Inventory.
+12.27.350 Routine Maintenance of Cultural Resource Structures.
+12.27.360 Minor Cultural Resource Alterations Permitted with Type II Approval.
+12.27.370 Major Cultural Resource Alterations Permitted with Type III Approval.
+12.27.380 Provision for Additional Open Space on Cultural Resource Sites.
+12.27.400 ASCO Airport Safety and Compatibility Overlay.
+(Reserved)
+12.27.500 PUD Planned Unit Development Overlay.
+12.27.510 Purposes.
+12.27.520 Distinction from other Overlay Zones/Applicability.
+12.27.530 Administrative and Regulatory Coordination.
+12.27.540 Uses and Activities Permitted.
+12.27.550 Application and Process for PUD Approval.
+12.27.560 Modification of PUD Boundaries.
+12.27.600 SID Special Industrial District.
+12.27.610 Purpose.
+12.27.620 Applicability.
+12.27.630 Administration.
+12.27.640 Regulations on Permitted Uses or Activities.
+12.27.650 Establishment or Modification of Overlay Boundaries.

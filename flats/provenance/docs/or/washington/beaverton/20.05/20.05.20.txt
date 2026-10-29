@@ -1,0 +1,112 @@
+20.05.20. Land Uses
+
+The following Land Uses are classified in the following three categories: Permitted (P) including their accessory uses and structures, Conditional Uses (C), or Prohibited (N) uses as identified in the table below for Residential Zoning Districts.
+[ORD 4584; June 2012]
+
+Table 20.05.20.A
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+# CATEGORY SPECIFIC USE MR RMA RMB RMC
+1.A Residential Care Facilities P P P P
+2.A. Residential Dwellings17 - Accessory Dwelling Units P P P P
+2.B. Residential Dwellings17 - Single-Detached Dwelling12 N1 P P P
+2.C. Residential Dwellings17 - Duplex P8 P P P
+2.D. Residential Dwellings17 - Triplex and Quadplex P8 P P P
+2.E. Residential Dwellings17 - Townhouse P P P P
+2.F. Residential Dwellings17 - Cottage Cluster N P P P
+2.G. Residential Dwellings17 - Multi-Dwelling P P N N
+2.H. Residential Dwellings17 - Home Occupation P P P P
+2.I. Residential Dwellings17 - Manufactured and Mobile Homes3 N P4 P P
+2.J. Residential Dwellings17 - Manufactured Home Parks N P P N
+2.K. Residential Dwellings17 - Planned Unit Development C C C C
+2.L. Residential Dwellings17 - Home Testing of Consumer Electronic Products13 P P P P 2.M.
+Residential Dwellings17 - Single-Room Occupancies P P P P
+3.A. Commercial Hospitals C C C C
+3.B. Commercial Medical Clinics C C C C
+3.C. Commercial Child Care Centers P P P18 C P18 C
+3.D. Commercial Residential Care Facilities C C C C
+4.A. Commercial Lodging - Temporary Living Quarters C5 C5 C5 N
+5.A. Commercial Animal Care14 - Major C C C C
+5.B. Commercial Animal Care14 - Minor C C C C
+6.A. Commercial Self Storage Facilities C C N9 N
+6.B. Commercial Storage Yards6 C C C C
+7. Commercial Marijuana Dispensary, Retail Marijuana Sales, Wholesale Marijuana Sales, Marijuana Processing
+N N N N
+8. Civic15 Cemetery C C C C
+9.A. Civic15 Educational Institutions C C C C
+9.B. Civic15 Commercial Schools N N N N
+10. Civic15 Places of Worship C C C C
+11.A. Civic15 Public Buildings and Uses - Non-Profit Public Services in Public Buildings P7 N N N 11.B.
+Civic15 Public Buildings and Uses - Public Buildings C C C C
+11.C. Civic15 Public Buildings and Uses - Public Sewer and Water and Utility
+Transmission Lines
+P P P P
+11.D. Civic15 Public Buildings and Uses - Public Sewer, Water Supply, Water
+Conservation and Flood Control Facilities Other than Transmission Lines
+C C C C
+12.A. Civic15 Public Park C C C C
+12.B. Civic15 Public Dog Parks or Dog Runs C C C C
+12.C. Civic15 Public Recreational Facilities C C C C
+12.D. Civic15 Community Gardens P P P P
+13.A. Civic15 Domestic Violence Shelters P P P P
+13.B. Civic15 Emergency Shelters P2 P2 P2 P2
+13.C. Civic15 Mass Shelters P P P P
+14.A. Civic15 Utilities - Utility Substations and Related Facilities other than
+Transmission Lines
+C C C C
+15. Civic15 Vehicle Camping16 P P P P
+16. Civic15 Wireless Communications Facilities P P P P
+Footnotes:
+1. Existing single-detached dwellings as of June 30, 2022 and their accessory uses and structures, are Permitted uses in the MR zone and can be expanded or can be rebuilt if destroyed.
+New single-detached dwellings are Prohibited.
+[ORD 4822; June 2022] [ORD 4857; October 2024]
+2. Emergency Shelters may occur where allowed pursuant to Section 10.70.10.
+[ORD 4838; March 2023]
+3. The placement of a manufactured home is subject to the design and placement criteria found in Section 60.20.20.
+4. [Footnote repealed and reserved.]
+[ORD 4822; June 2022]
+5. Limited to uses of Boarding, Rooming, and Lodging House.
+6. Storage yards for recreational vehicles, boats, and trailers owned by residents in a residential development or planned unit development.
+7. Only when abutting or directly across the street from Regional Center zones.
+8. In the MR zone, all units of a duplex, triplex, or quadplex must be attached.
+[ORD 4822; June 2022]
+9. Existing self-storage facilities as of June 30, 2022 are Conditional uses in the RMB zone.
+New self-storage facilities are Prohibited.
+[ORD 4822; June 2022]
+10. [Footnote repealed and reserved.]
+[ORD 4804; August 2021]
+11. [Footnote repealed and reserved.]
+[ORD 4822; June 2022]
+12. Compact Detached Dwellings on lots fronting common greens, shared courts, or public streets may be permitted on sites that are two acres or greater in size through the Conditional Use-Planned Unit Development process.
+[ORD 4654; March 2015]
+13. Home Testing of Consumer Electronic Products uses shall: [ORD 4786; July 2020]
+a. be limited to the hours of 7:00 AM and 7:00 PM, Monday through Saturday, in which technicians are allowed to occupy the residence;
+b. have at least two off-street parking spaces for technicians, so no on-street parking would occur with the use;
+c. be limited to two vehicles on-site at any one time;
+d. have a 24-hour on-site security system;
+e. have a contract for landscape and maintenance services to ensure that the home testing properties are well maintained for the neighborhood;
+f. be limited to no more than three home testing dwelling units within a quarter mile radius at any time;
+g. be limited to single-detached dwelling units; and [ORD 4822; June 2022]
+h. comply with the noise and odor limits contained in the City Code.
+14. Animal Care uses provided as a private amenity to residents in multi-dwellings or on a common area serving multiple households.
+[ORD 4782; April 2020] [ORD 4822; June 2022]
+15. Public Art shall be permitted pursuant to Section 60.50.25.13.
+[ORD 4782; April 2020]
+16. Vehicle Camping may occur only where allowed through a program established by Council resolution and administered by the Mayor.
+The use is subject to the special requirements found in Section 60.50.25.14.
+Vehicle Camping uses do not require Conditional Use for extended hours of operation.
+[ORD 4779; March 2020]
+17. Residential developments in the SCMCP area shall provide a variety of housing types consistent with the permitted and conditional uses of the applicable zone(s).
+The variety of housing shall be provided for sites: [ORD 4822; June 2022]
+a. Up to 15-acres (gross), a minimum of one (1) housing type;
+b. Greater than 15-acres and up to 30-acres (gross), a minimum of two (2) housing types;
+c. Greater than 30-acres (gross), a minimum of three (3) housing types
+d. For bullets a-c above, a minimum of 10 percent of each housing type shall be provided.
+18. Permitted when collocated with a legally established institutional use, including public buildings, public recreation facilities, public parks, places of worship, and educational institutions.
+[ORD 4876; January 2026] [ORD 3166, 04/30/1980; ORD 3184, 08/06/1980; ORD 3236, 01/28/1982; ORD 3293, 11/25/1982; ORD 3899, 06/02/1994; ORD 4036, 04/02/1999; ORD 4048, 07/08/1999; ORD 4079, 12/09/1999; ORD 4102, 05/04/2000; ORD 4107, 05/02/2000; ORD 4111, 07/14/2000; ORD 4112, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003;
+ORD 4332, 01/01/2005; ORD 4365, 10/20/2005; ORD 4397, 08/10/2006; ORD 4487, 08/21/2008; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4595, 02/08/2013; ORD 4654, 03/25/2015; ORD 4659, 07/10/2015; ORD 4674, 02/10/2016; ORD 4702, 01/04/2017; ORD 4779, 03/06/2020; ORD 4782, 04/17/2020; ORD 4786, 07/03/2020;
+ORD 4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026

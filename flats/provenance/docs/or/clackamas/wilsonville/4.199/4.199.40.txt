@@ -1,0 +1,51 @@
+Section 4.199.40. Lighting Systems Standards for Approval.
+(.01) Non-Residential Uses and Common Residential Areas.
+A. All outdoor lighting shall comply with either the Prescriptive Option or the Performance Option below .
+B. Prescriptive Option.
+If the lighting is to comply with this Prescriptive Option, the installed lighting shall meet all of the following requirements according to the designated Lighting Zone.
+1. The maximum luminaire lamp wattage and shielding shall comply with Table 7.
+2. Except for those exemptions listed in Section 4.199.20(.02), the exterior lighting for the site shall comply with the Oregon Energy Efficiency Specialty Code, Exterior Lighting.
+3. The maximum pole or mounting height shall be consistent with Table 8.
+4. Each luminaire shall be set back from all property lines at least three times the mounting height of the luminaire:
+a. Exception 1: If the subject property abuts a property with the same base and lighting zone, no setback from the common lot lines is required.
+b. Exception 2: If the subject property abuts a property which is zoned (base and lighting) other than the subject parcel, the luminaire shall be setback three times the mounting height of the luminaire, measured from the abutting parcel's setback line.
+(Any variance or waiver to the abutting property's setback shall not be considered in the distance calculation).
+c. Exception 3: If the luminaire is used for the purpose of street, parking lot or public utility easement illumination and is located less than three mounting heights from the property line, the luminaire shall include a house side shield to protect adjoining property .
+d. Exception 4: If the subject property includes an exterior column, wall or abutment within 25 feet of the property line, a luminaire partly shielded or better and not exceeding 60 lamp watts may be mounted onto the exterior column, wall or abutment or under or within an overhang or canopy attached thereto.
+e. Exception 5: Lighting adjacent to SROZ areas shall be set back three times the mounting height of the luminaire, or shall employ a house side shield to protect the natural resource area.
+C. Performance Option.
+If the lighting is to comply with the Performance Option, the proposed lighting design shall be submitted by the applicant for approval by the City meeting all of the following:
+1. The weighted average percentage of direct uplight lumens shall be less than the allowed amount per Table 9.
+2. The maximum light level at any property line shall be less than the values in Table 9, as evidenced by a complete photometric analysis including horizontal illuminance of the site and vertical illuminance on the plane facing the site up to the mounting height of
+the luminaire mounted highest above grade.
+The Building Official or designee may accept a photometric test report, demonstration or sample, or other satisfactory confirmation that the luminaire meets the shielding requirements of Table 7.
+Luminaires shall not be mounted so as to permit aiming or use in any way other than the manner maintaining the shielding classification required herein:
+a. Exception 1.
+If the property line abuts a public right-of-way, including a sidewalk or street, the analysis may be performed across the street at the adjacent property line to the right-of-way .
+b. Exception 2.
+If, in the opinion of the Building Official or designee, compliance is impractical due to unique site circumstances such as lot size or shape, topography, or size or shape of building, which are circumstances not typical of the general conditions of the surrounding area.
+The Building Official may impose conditions of approval to avoid light trespass to the maximum extent possible and minimize any additional negative impacts resulting to abutting and adjacent parcels, as well as public rights-of-way, based on best lighting practices and available lighting technology .
+3. The maximum pole or mounting height shall comply with Table 8.
+D. Curfew.All prescriptive or performance based exterior lighting systems shall be controlled by automatic device(s) or system(s) that:
+1. Initiate operation at dusk and either extinguish lighting one hour after close or at the curfew times according to Table 10; or
+2. Reduce lighting intensity one hour after close or at the curfew time to not more than 50 percent of the requirements set forth in the Oregon Energy Efficiency Specialty Code unless waived by the DRB due to special circumstances; and
+3. Extinguish or reduce lighting consistent with 1. and 2. above on Holidays.
+The following are exceptions to curfew:
+a. Exception 1: Building Code required lighting.
+b. Exception 2: Lighting for pedestrian ramps, steps and stairs.
+c. Exception 3: Businesses that operate continuously or periodically after curfew .
+(.02) Special Permit for Specific Lighting Fixtures and Systems and When Exceeding Lighting Requirements.
+A. This section is intended to apply to situations where more than normal foot candles are required due to a unique circumstance or use or where it is absolutely essential to perform the proposed activities after dark.
+All special permits shall be reviewed by the DRB.
+B. Upon issuance of a special permit by the Development Review Board (DRB), lighting systems not complying with the technical requirements of this Ordinance may be installed, maintained, and replaced for lighting that exceeds the maximums permitted by this Ordinance.
+This section is intended to be applied to uses such as sports lighting systems including but not limited to, sport fields and stadiums, such as baseball and football field lighting,
+tennis court lighting, swimming pool area lighting and prisons; other very intense lighting defined as having a light source exceeding 200,000 lumens or an intensity in any direction of more than 2,000,000 candelas; building façade lighting of portions of buildings over two stories high; and public monuments.
+C. To obtain such a permit, applicants shall demonstrate that the proposed lighting installation:
+1. Is within Lighting Zone 3 or above.
+2. Has been designed to minimize obtrusive light and artificial sky glow, supported by a signed statement from a registered civil or electrical engineer describing the mitigation measures.
+Such statement shall be accompanied by calculations indicating the light trespass levels (horizontal and vertical at ground level) at the property line.
+3. Will not create excessive glare, sky glow, or light trespass beyond that which can be reasonably expected by application of best lighting practices, and available technology .
+4. Provides appropriate lighting curfew hours based on the use and the surrounding areas.
+D. The DRB may impose conditions of approval to mitigate any negative impacts resulting to the abutting parcel, based on best lighting practices and available lighting technology .
+E. The City may charge a review fee and may, at the Building Official's option, employ the services of a qualified professional civil or electrical engineer to review such submittals and the cost thereof shall be an additional fee charged to the applicant.
+(Ord. No. 688, 11-15-2010)

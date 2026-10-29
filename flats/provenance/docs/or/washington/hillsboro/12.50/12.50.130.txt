@@ -1,0 +1,165 @@
+12.50.130  Setbacks.
+A. Definition and Purpose.
+Setbacks (also known as "yards") are defined in Section 12.01.500.
+Minimum setback standards are intended to provide light and air between buildings and protection to neighboring properties.
+Maximum setback standards are intended to complement applicable standards for building height, floor area ratio, and design to promote an attractive streetscape and pleasant pedestrian environment in higher density neighborhoods.
+Maximum setbacks are not applicable in all zones.
+Minimum and maximum setback standards apply to all structures and portions of structures more than 24 inches above grade.
+B. Measurement Methodology: Minimum Setbacks.
+Figures 12.50.130-A, 12.50.130-B, and 12.50.130-C illustrate the methods to measure minimum front, interior, side and rear setbacks on interior lots, corner lots, irregular lots and flag lots.
+
+Figure 12.50.130-A:
+Examples of Measuring Minimum Setbacks on Various Lot Types
+Figure 12.50.130-B:
+Measuring Minimum Front, Interior, Side and Rear Setbacks on Irregular Lots
+Figure 12.50.130-C:
+Measuring Minimum Setbacks on Flag Lots
+C. Measurement Methodology: Maximum Setbacks.
+1. Figure 12.50.130-D illustrates the methods to measure maximum front setbacks for residential and non-residential buildings.
+
+2. Garage and Carport Setbacks.
+a. In General.
+Setbacks measured to a garage door shall also be applicable to the entrance of a carport.
+The setback distance shall be measured to the support posts of the carport closest to the driveway, or to the edge of the carport roof if there are no posts.
+b. In Light Rail Zones.
+Figure 12.50.130-E illustrates the methods to measure garage setbacks in light rail zones, where a residential garage or carport is accessed from a street or a public alley, the setback to the garage door or carport opening shall be either equal to the dwelling unit setback (if that setback is 5 feet or less) or 19 feet or greater, except:
+i. If the dwelling unit setback is more than 19 feet, the setback to the garage/ carport shall equal or exceed the dwelling unit setback; or
+Figure 12.50.130-D:
+Measuring Maximum Front Setbacks
+Single Detached Dwellings and Middle Housing
+Commercial, Industrial, Institutional, Multi-Dwelling or Mixed-Use Buildings
+ii. If the garage door or carport opening is perpendicular to the front property line, then the garage/carport setback shall be equal to or greater than the dwelling.
+
+3. Maximum Setback Compliance. In zones where maximum setbacks apply, the maximum setback standard is considered met under the following circumstances:
+a. For single detached dwellings and middle housing, where at least 1 façade, including a porch, is located no farther from the property line than the setback specified for the zone; or
+Figure 12.50.130-E:
+Measuring Garage Setbacks in Light Rail Zones
+b. For commercial, industrial, institutional, multi-dwelling, or Mixed-Use buildings, where at least 75% of the front building façade is located no farther from the property line or future right-of-way line than the maximum setback specified for the zone.
+4. Build-To Zone. In the urban center zones, maximum front setbacks may be expressed as build-to zones.
+D. Standards.
+1. Structures built on lots after September 4, 2014 must meet the minimum and maximum (if applicable) setback standards of the applicable base zone, unless a variation is approved by the Review Authority pursuant to subsection E below or unless a Variance or Adjustment has been granted by the Review Authority pursuant to Section 12.80.150.
+In the case of middle housing land divisions, setback standards apply to the parent lot, but not the child lot.
+2. Where public or private utility easements are present on a lot, the setback may include the easement.
+However, setbacks are subordinate to such easements if the easement is wider than the required setback.
+Setbacks may be increased by the Review Authority above either the minimum or maximum standards of the base zone to accommodate such easements, and to provide necessary angles of repose as required by the Building Code.
+3. Setbacks measured to a garage door shall also be applicable to the entrance of a carport.
+The setback distance shall be measured to the support posts of the carport closest to the driveway, or to the edge of the carport roof if there are no support posts.
+E. Front Yard Setback Variations.
+1. Purpose. Front yard setback variation provisions are intended to provide opportunity for a wider range of structural design, setbacks, and housing choices within new development, and provide developers with flexibility in response to varying site conditions.
+2. Applicability.
+a. These standards may be applied to single detached and middle housing residential subdivisions or single detached and middle housing residential PUDs with 8 or more lots.
+b. Front yard setback variations may not be applied if a Minor or Major Adjustment for front yard setback variations has also been requested or approved.
+c. Pursuant to Section 12.50.020, the standards of this section are subordinate to more specific standards of any applicable plan district.
+3. Standards.
+a. Up to 20% of the houses in the subdivision or PUD may have front yard setbacks greater or less than the applicable base zone standard, by at least 1-foot variation.
+Setback variations may not be reduced below 80%, or increased above 120%, of the required minimum setback.
+Application of this reduction is further restricted as follows:
+i. The varied setback applies only to the residence portion of the structure;
+ii. Front setbacks on corner lots where reduced setbacks are already allowed on
+1 street cannot be further reduced;
+b. Front yard setbacks shall not be reduced if the setback contains a public utility easement wider than the proposed reduced setback and the necessary angle of repose as required by the Building Code.
+F. Exemptions.
+1. First-Story Decks. For purposes of this Code, first-story decks may be located within required side, rear, and interior setbacks if such decks meet the following standards:
+a. The outside edge of the deck is at least 3 feet from the side, rear, and interior property lines;
+b. The deck does not exceed the height of the first-story finished floor of the associated building, or 24 inches, whichever is less, as measured from the natural grade to the finished deck surface; and
+c. The deck surfaces and ground surfaces beneath the deck are both permeable.
+2. Soundwalls and Ramps. For purposes of this Code the following are not considered structures for the purposes of determining setbacks:
+a. Sound walls installed according to a plan approved by the City as part of a land use application;
+b. Accessibility ramps.
+3. Publicly-Owned Parks. In publicly-owned parks, expansion of existing accessory structures or recreational facilities and construction of new accessory structures or recreational facilities are exempt from the minimum and maximum setback standards of the applicable base zone.
+Accessory structures in public parks and recreational facilities may include, but are not limited to: restrooms, weather shelters, equipment storage buildings, and similar structures.
+4. Basement Window Egress Wells. For the purposes of this Code, basement window egress wells may be located within required side, rear, and interior setbacks.
+G. Exceptions for non-conforming Structures.
+Pursuant to Section 12.30.600, existing structures with non-conforming setbacks may be altered if the alteration does not increase the deviation from the setback standard of the applicable base zone.
+Setbacks for additions to non-conforming structures in light rail zones are subject to the provisions of Section 12.30.600.
+H. Exceptions to Minimum Setbacks.
+The Review Authority may approve exceptions to a minimum setback standard under any of the following circumstances without a Variance or an Adjustment:
+1. Side Yard Setback Reductions for Structural Building Elements. Side yard setbacks in all zones may be reduced to allow structural building elements not containing usable or habitable floor area.
+Such elements may include, but are not limited to, bay windows, alcoves, or cantilevered closets.
+Structural building elements may extend up to 4 feet into the required setback, provided that:
+a. A minimum 3-foot setback is provided from the projection to the property line;
+b. Structural building elements on adjacent structures are not aligned opposite one another;
+c. The total length of any structural building element(s) is/are not more than 25% of the length of the wall from which they project;
+d. Side yard setbacks shall not be reduced if the setback contains a public utility easement wider than the proposed reduced setback and the necessary angle of repose.
+2. Accessory Structures. In a residential zone, side and rear setbacks may be reduced to 3 feet for an accessory structure which meets the standards of Subsection 12.40.104.B.
+3. Accessory Dwelling Units. Side and rear setbacks may be reduced for detached accessory dwelling units that meet the standards of Subsection 12.40.100.D.7.
+4. Townhouse Divisions. In a residential zone, side setbacks may be reduced to zero feet for the interior lots of approved duplex or townhouse partitions, subdivisions, or middle housing land divisions.
+5. Non-Structural Architectural Features Projecting into Setbacks.
+Except as provided in paragraphs a and b below, non-structural architectural features can project up to 2 feet into a required setback.
+Examples of such features include, but are not limited to, cornices, eaves, canopies, sunshades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, and lintels.
+a. Non-structural architectural features on a dwelling unit cannot project more than 4 feet into a required front or rear setback in single detached and middle housing residential zones, or 3 feet into required side yards.
+b. Non-structural architectural features on accessory structures having reduced setbacks under paragraph 1 above may not extend closer than 3 feet from any property line.
+c. Non-structural architectural features may not project more than 2 feet into the required yards in any non-residential zone.
+6. Front or Rear Yard Setback Reductions for Structural Building Elements.
+In Mixed-Use zones only, structural building elements such as porches, decks, pergolas, balconies,
+and stoops may encroach by no more than 4 feet into a required front or rear setback, subject to compliance with applicable standards of the Oregon Structural Specialty Code and Oregon Fire Code and accommodation of public utility easements.
+7. Projections into Public Right-of-Way.
+Second story bay windows, balconies, awnings, and canopies may extend into public right-of-way upon approval by the City Engineer, Building Official, and Fire Marshal.
+I. Exceptions to Maximum Setbacks.
+The Review Authority may approve exceptions to a maximum setback standard without a Variance or an Adjustment under any of the following circumstances:
+1. Where a Public Utility Easement (PUE) is wider than the maximum setback of the applicable base zone, the structure shall be set back to accommodate the PUE and the necessary angle of repose.
+2. In mixed-use or non-residential developments, maximum front setbacks may be exceeded by up to 10 additional feet if the Review Authority finds that all of the additional setback would be used to provide enhanced pedestrian amenities such as plazas, arcades, courtyards, or other such usable pedestrian space.
+3. In residential development in light rail zones, on irregular lots on curvilinear streets or culs-de-sac, increases in maximum setbacks may be granted subject to the following standards:
+a. For dwellings, the front setback is the minimum necessary to achieve either of the following at the front building plane: a 25-foot lot width for a townhouse; or a 48-foot lot width for a detached dwelling;
+b. The increased setback is applied to 5 or fewer individual lots in a land division subject to a Type II procedure or 10 or fewer lots in a land division subject to a Type III procedure;
+c. The residential density required by the base zone is met; and
+d. The increased setback meets the standards in paragraph 6 below.
+4. To allow location of a structure where the site is located:
+a. In an existing development where the required maximum setback would be inconsistent with previous development on the surrounding properties; or
+b. In an existing development where private legal restrictions require a setback greater than the maximum standard of the base zone; or
+c. At the entry of a development, where planned entry features would be precluded by conformance with the maximum setback standard; and
+d. The increased setback meets the standards in Section 12.80.158.
+5. To accommodate placement of surface parking, maneuvering or loading areas or service docks on corner lots, if the parking, maneuvering or loading areas meet the standards in
+Sections 12.50.350 and 12.50.360.
+J. Increased Setbacks Adjacent to Substandard Right-of-Way.
+1. Setbacks Adjacent to Substandard Alleys. Adjacent to an alley right-of-way less than 20 feet in width, the setback from the centerline of the alley shall be a minimum of 10 feet, to maintain a 20-foot wide emergency fire access corridor free of obstructions.
+An additional setback from an alley may be required by the Fire Marshal if necessary to accommodate larger firefighting equipment.
+2. Additional Setbacks to Accommodate Street Widening. To accommodate street improvements and right-of-way dedications in compliance with the Transportation System Plan
+(TSP), additional setbacks beyond the minimum standards in the base zones shall be required on the streets identified in Table 12.50.130-1.
+On streets identified in Table 12.50.130-1, the front setback shall be increased by the distance specified, measured from the center of the street right-of-way.
+This distance represents the eventual right-of-way width as specified in the TSP.
+Table 12.50.130-1:
+Special Street-Facing Setback Requirements
+Street  Feet
+SE 11th Ave: SE Walnut St to 90 feet south of SE Alder St 27
+SE 11th Pl: SE Maple St to SE Walnut St 27
+SE 12th Ave from SE Maple St to E Main St and from SE Elm St to SE Alder St 27
+SE 15th Ave from 400 feet north of SE Oak St to SE Walnut St, and from 50 feet south of SE Alder St north 510 feet 27
+SE 16th Ave from SE Oak St to SE Walnut St and from 50 feet south of SE Alder St north 510 feet 27
+SE 26th Ave from E Main St south to terminus 27
+SE 40th Ave from SE Bentley St to SE Ash St 27
+SE Alder St from SE 11th Ave to SE 21st Ave 27
+SE Ash St from 350 feet west of SE 40th Ave eastward to city boundary 27
+SE Bentley St from SE 32nd Ave east to city boundary 30
+SE Cedar St from SE 32nd Ave east to city boundary 30
+SE Currin Dr from SE River Rd to city boundary 27
+SE Currin Ln from SE River Rd to city boundary 27
+SE Elm St from SE 12th Ave west 225 feet 27
+SE Maple Ct from SE 18th Ave west 465 feet 27
+SE Walnut St from 50 feet east of S.E. 15th Ave eastward to end of street 27
+NW Brookwood Ave from LRT alignment north to US 26 49
+NW and SW Brookwood Ave from LRT alignment south to UGB 37
+Table 12.50.130-1:
+Special Street-Facing Setback Requirements
+Street  Feet
+NE 8th Ave from N Arrington Rd to 120 feet south of NE Queens Ln 27
+NE 9th Ave from 130 feet north of NE Arrington Rd to 120 feet south of NE Queens Ln 27
+NE 25th Ave from E Main St to end of road 27
+NE 28th Ave from E Main St to NE Cornell Rd 37
+NE Arrington Rd from NE Jackson School Rd to NE Cornell Rd 27
+NE Birchwood Ln from NE Grant St north 160 feet 27
+NE Birchwood Ter from NE Grant St to NE Donelson Rd 27
+NE Cornell Rd from E Main St to city boundary 49
+NE Lincoln St from NE Cornell Rd to NE 12th Ave 27
+NE Queens Ln from NE 8th Ave to NE Delsey Rd 27
+NW Brogden St within city 30
+NW Forest St from NW Connell Ave to city boundary 27
+NW Hyde St from NW 273rd Ave to NW 269th Ave (NE 28th Ave) 27
+E Main St from the east line of 10th Ave easterly to the City boundary 35
+N Dennis Ave from NW Garibaldi St to NW Forest St 27
+NE 11th Dr from E Main St to NE 12th Ave 27
+NW Padgett Rd (NW 10th Ave and NW Donelson St) 27
+E Main St from the east line of 5th Ave easterly to 10th Ave 35
+SE 10th Ave from SE Maple St north to SE Walnut St 49
+SE 10th Ave from SE Walnut St to SE Oak St 61
+(Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6120 § 1, 2015)

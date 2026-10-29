@@ -1,0 +1,59 @@
+12.25.260  Development Standards.
+Base zone development standards in the I-P zone are listed in Table 12.25.260-1.
+Certain standards are illustrated in Figure 12.25.260-A.
+Table 12.25.260-1:
+Development Standards in the I-P Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions
+• Width (at front building plane) None
+• Depth None
+• Frontage 25 feet
+Minimum Setbacks*
+See also Subsection 12.25.280.B.1. regarding increased setbacks for off-street parking and loading.
+• Buildings up to 45 feet high
+
+%
+Front 35 feet
+
+%
+Side 10 or 25 feet 10-foot setback applicable abutting non-residential zones;
+25-foot setback applicable abutting residential zones.
+%
+Rear 10 or 25 feet
+• Buildings >45 feet in height
+
+%
+Front 35+ feet Minimum setbacks increase:
+Abutting non-residential zones:
+1 additional foot for each foot of structural height over 45 feet
+Abutting residential zones: 1 additional foot for each foot of structural height.
+See also Subsection 12.25.280.B.1. regarding increased setbacks for off-street parking and loading.
+
+% Side 10+ or 25+ feet
+
+%
+Rear 10+ or 25+ feet
+Maximum Setbacks None
+Minimum Building Height* None
+Table 12.25.260-1:
+Development Standards in the I-P Zone
+Standard Requirement Clarifications
+Maximum Building Height
+45 feet and 150 feet heights applicable abutting non-residential zones;
+Within 100 feet of a residential zone: maximum height 45 feet minus 1 feet for every 2 feet less than the 100-foot setback.
+• High Profile Industrial
+Buildings 150 feet or less
+• All other buildings 45 feet or less
+Maximum Building Coverage 50%
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.25.260-A
+(Ord. 6401 § 1, 2022)
+Figure 12.25.260-A:
+Minimum Lot Dimensions, Setbacks and Height Requirements in the I-P Zone

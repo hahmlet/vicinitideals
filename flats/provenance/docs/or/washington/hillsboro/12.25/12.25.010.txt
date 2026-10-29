@@ -1,0 +1,11 @@
+12.25.010  Industrial Zones.
+There are 8 industrial zones in the City:
+A. I-G Industrial General;
+B. I-P Industrial Park;
+C. I-S Industrial Sanctuary;
+D. SCBP Station Community Business Park;
+E. SCI Station Community Industrial;
+F. SSID Shute Road Special Industrial District;
+G. ESID Evergreen Area Special Industrial District; and
+H. HSID Helvetia Area Special Industrial District.
+(Ord. 6401 § 1, 2022)

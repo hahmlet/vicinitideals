@@ -1,0 +1,55 @@
+10.25. Classification of Zoning Districts and Overlay Zones.
+
+The City is divided into the following zoning districts, each of which shall include a suffix letter designator with its map symbol to indicate its classification.
+Each zone provides a set of regulations governing the uses, lot size, building setbacks, height, and other development standards.
+Property may also be subject to an overlay.
+An overlay zone establishes additional regulations beyond the base zone to address specific community objectives.
+In some cases, an overlay zone may provide exceptions to or supersede the regulations of the base zone.
+[ORD 4859; January 2025]
+
+Classification of Zoning Districts
+
+Residential Districts
+
+[ORD 4822; June 2022]
+Zoning District Abbreviation
+Multi-Unit Residential MR
+Cooper Mountain - Multi-Unit Residential CM-MR
+Residential Mixed A RMA
+Residential Mixed B RMB
+Residential Mixed C RMC
+Cooper Mountain - Residential Mixed CM-RM
+Commercial Districts
+
+[ORD 3352; January 1984]
+Zoning District Abbreviation
+Neighborhood Service NS
+Community Service CS
+Cooper Mountain - Community Service CM-CS
+Corridor Commercial CC
+General Commercial GC
+Industrial Districts
+
+Zoning District Abbreviation
+Office Industrial OI
+Office Industrial - Nike Campus OI-NC
+Industrial IND
+Multiple Use Districts
+
+Zoning District Abbreviation
+Regional Center - Mixed Use RC-MU
+Regional Center - Beaverton Central RC-BC
+Regional Center - Old Town RC-OT
+Regional Center - Downtown Transition RC-DT
+Regional Center - East RC-E
+Office Industrial - Washington Square OI-WS
+Commercial - Washington Square C-WS
+Town Center - Multiple Use TC-MU
+Town Center - High Density Residential TC-HDR
+Cooper Mountain - High Density Residential CM-HDR
+Station Community - Multiple Use SC-MU
+Station Community - High Density Residential SC-HDR
+Station Community - Sunset SC-S
+Station Community - Employment Sub Area 1 & 3 SC-E1 & 3
+[ORD 4005; February 1998] [ORD 4058; September 1999] [ORD 4075; December 1999] [ORD 4224; August 2002] [ORD 4265; October 2003] [ORD 4542; June 2010] [ORD 4799; January 2021] [ORD 4822; June 2022][ORD 4859; January 2025] [ORD 3352, 01/19/1984; ORD 3739, 09/08/1990; ORD 4005, 02/05/1998; ORD 4058, 09/16/1999; ORD 4075, 12/09/1999; ORD 4224, 09/19/2002; ORD 4365, 10/20/2005; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4799, 01/08/2021; ORD 4822, 06/30/2022; ORD 4859, 01/02/2025]
+Effective on: 8/10/2026

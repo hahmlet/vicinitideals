@@ -1,0 +1,74 @@
+Section 4.122.  Residential Zone.
+(.01) Purpose. The purpose of this zone is to provide for standards and a simplified review process for small-scale urban low and medium density residential development.
+Developments in the 'R' zone are not intended to be Planned Developments.
+(.02) Residential Densities.
+Residential densities shall be determined using Table 1 of this section based on the Comprehensive Plan Map Density Range District.
+Table 1. R. Zone Density Calculations
+Comprehensive Plan Map
+Density Range District a Max Density Per Acre b, c Min. Density per Acred
+2—3 3 2.4
+4—5 5 4
+6—7 7.5 6
+10—12 12 9.6
+a. Accessory Dwelling Units are not included in density calculations.
+b. Middle housing units, except townhouses, are not included in calculating maximum density beyond 1 unit per lot or parcel.
+c. For Townhouses, the maximum density is the less of: (1) four times the maximum net density listed in Table 1; or (2) net density of 25 units per acre.
+If applying a maximum density for townhouses of four times the density listed in Table 1, the minimum density remains 80 percent of the maximum density listed in Table 1.
+d. For Cottage Clusters, the minimum net density shall be no less than four units per acre.
+(.03) Lot Size Qualifications:
+A. The owner or the owner's authorized agent shall not hold or cause to be held any interest in any adjacent property with the intent to avoid PDR regulations.
+B. The lot or any part thereof shall not be an identified area of special concern as defined in the Comprehensive Plan.
+C. The development area must be two acres or less in size.
+Development of larger properties shall be reviewed through planned development procedures.
+(.04) Principal Uses Permitted:
+A. Single-Family Dwelling Units.
+B. Middle Housing.
+C. Multiple-Family Dwelling Units.
+D. Public parks, playgrounds, recreational and community buildings and grounds, tennis courts, and similar recreational uses, all of a non-commercial nature.
+Any principal building or public swimming pool shall be located not less than 45 feet from any other lot in a residential or RA-H zone.
+E. Manufactured homes.
+[Note: Section 4.115 Standards Applying to Manufactured Housing in All Zones Where Manufactured Housing is Permitted deleted per by Ord. No. 538, 2-21-2002.]
+(.05) Accessory Uses Permitted:
+A. Accessory uses, buildings and structures customarily incidental to any of the aforesaid principal permitted uses, including accessory dwelling units allowed pursuant to Subsection 4.113(.10), located on the same lot therewith.
+B. Home occupations.
+C. A private garage or parking area.
+D. Temporary real estate signs, small announcement or professional signs, and subdivision signs, as provided in Sections 4.156.05, 4.156.07, 4.156.09, and 4.156.10.
+E. Temporary buildings for uses incidental to construction work, which buildings shall be removed immediately upon completion or abandonment of the construction work.
+In no case shall such buildings remain on the premises longer than ten days after the receipt of a Certificate of Occupancy or the expiration of construction permits.
+F . Accessory buildings and uses shall conform to front and side yard setback requirements.
+If the accessory buildings and uses are detached and located behind the rear most line of the main buildings, at least one-half of the side yard setback is required.
+In no case shall a setback less than three feet be permitted unless a Reduced Setback Agreement has been approved and properly recorded, as provided in Section 4.113.
+G. Livestock and farm animals shall be permitted subject to the provisions of Section 4.162.
+(.06) Other Standards:
+A. Minimum lot width at building line:
+1. For Townhouses: 20 feet.
+2. For all other housing types: 60 feet.
+B. Minimum street frontage of lot:
+1. For Townhouses: 20 feet, except as provided in 3. below.
+2. For all other housing types: 30 feet, except as provided in 3. below.
+3. No street frontage is required when the lot fronts on an approved, platted private drive.
+
+C. Minimum lot size:
+1. For single-family dwelling units, duplexes, and triplexes and two or three unit cluster housing: 5,000 square feet.
+2. For quadplexes, four-unit cluster housing, and cottage clusters: 7000 square feet.
+3. For development with multi-family dwelling units: 10,000 square feet.
+4. For townhouses: 1,250 square feet.
+D. Minimum lot depth: 70 feet.
+E. Maximum building or structure height: 35 feet.
+F . Maximum lot coverage:
+Lot Size
+Maximum Lot Coverage (percent of lot area) of Largest Building/All Buildings
+A, B
+20,000 sf or more 20/25
+More than 12,000 sf and less than 20,000 sf 25/30
+More than 8,000 sf up to 12,000 sf 40/50
+More than 7,000 sf up to 8,000 sf 45/55
+7,000 square feet or less 50/60
+A. A building must be completely detached from the largest building to be considered a separate building for the purpose of lot coverage calculations.
+B. Cottage clusters are exempt from maximum lot coverage standards.
+G. Block and access standards:
+1. Maximum block perimeter in new land divisions: 1,800 feet.
+2. Maximum spacing between streets or private drives for local access: 530 feet, unless waived by the Development Review Board upon finding that barriers such as railroads, freeways, existing buildings, topographic variations, or designated Significant Resource Overlay Zone areas will prevent street extensions meeting this standard.
+3. Maximum block length without pedestrian and bicycle crossing: 330 feet, unless waived by the Development Review Board upon finding that barriers such as railroads, freeways, existing buildings, topographic variations, or designated Significant Resource Overlay Zone areas will prevent pedestrian and bicycle facility extensions meeting this standard.
+(Ord. No. 538, 2-21-2002; Ord No. 682, 9-9-2010; Ord. No. 704, 6-18-2012; Ord. No. 825, 10-15-2018;
+Ord. No. 841, eff. 6-4-2020)

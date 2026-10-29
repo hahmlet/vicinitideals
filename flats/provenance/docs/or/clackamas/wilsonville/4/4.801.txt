@@ -1,0 +1,96 @@
+Section 4.801.  Application Requirements.
+In preparing the Application, the applicant should review all provisions of this Code Section, particularly the portion attached to the Development Review Standards.
+The WCF Application process shall include all of the following:
+(.01) Cable and telecommunication providers that occupy any portion of the City's right-of-way are required to enter into a Franchise Agreement with the City.
+Other utilities, including Competitive Local Exchange Competitor carriers are subject to the terms of the City's Privilege Tax Ordinance No. 616.
+In order to be permitted, an applicant must complete:
+A. A Site Development Permit Application;
+B. A Public Works Permit;
+C. A Building Permit; and
+D. Enter into a Lease Agreement with the City for use of the public Right-of-Way.
+(.02) Required for all WCF , including SWF applications:
+A. Property Owner Signature.
+The signature of the property owner(s) on City of Wilsonville application forms or a written signed statement from the property owner(s) granting authorization to proceed with the land use application and building permits, pursuant to WC Section 4.009.
+B. Speculation. No Application for a WCF shall be approved from an applicant that constructs WCF and leases tower space to service providers that is not itself a wireless service provider, unless the applicant submits a binding written commitment or executed lease from a service provider to utilize or lease space on the WCF .
+C. Geographical Survey.
+The applicant shall identify the geographic service area for the proposed WCF , including a map showing all of the applicant's existing sites in the local service network.
+The applicant shall identify technically feasible alternative site locations within the geographic service area.
+1. Prior to the issuance of any building permits, applicants for WCF shall provide a copy of the corresponding FCC Construction Permit or license for the facility being built or relocated, if required.
+2. The applicant shall include a vicinity map clearly depicting where, within a one-half mile radius, any portion of the proposed WCF could be visible, and a graphic simulation showing the appearance of the proposed WCF and all accessory and ancillary structures from two separate points within the impacted vicinity, accompanied by an assessment of potential mitigation and screening measures.
+Such points are to be mutually agreed upon by the Planning Director or the Planning Director's designee and the applicant.
+D. Visual Impact, Technological Design Options, and Alternative Site Analysis.
+The applicant shall provide a visual impact analysis showing the maximum silhouette, viewshed analysis, color and finish palette, and proposed screening for all components of the facility.
+The analysis shall include photo simulations and other information as necessary to determine visual impact of the facility as seen from multiple directions.
+The applicant shall include a map showing where the photos were taken.
+The applicant shall include an analysis of alternative sites that would meet City design and locational standards and alternative technological design options for the WCF , within and outside of the City, which are capable of meeting the same service objectives as the preferred site with an equivalent or lesser visual impact.
+If a new tower or pole is proposed as a part of the proposed WCF , the applicant must demonstrate the need for a new tower and pole and why existing locations or design alternatives, such as the use of microcell technology, cannot be used to meet the identified service objectives.
+Documentation and depiction of all steps that will be taken to screen or camouflage the WCF to minimize the visual impact of the proposed facility must be submitted.
+E. Application Narrative.
+The Application shall include a detailed narrative of all of the equipment and components to be included with the WCF , including, but not limited to, antennas and arrays; equipment cabinets; back-up generators; air conditioning units; poles; towers; lighting; fencing; wiring, housing; and screening.
+The applicant must provide the number of proposed WCF at each location and include renderings of what the WCF will look like when screened.
+The Application must contain a list of all equipment and cable systems to be installed, including the maximum and minimum dimensions of all proposed equipment.
+Wilsonville is an Undergrounding District, meaning that the City will require any utility that can be fully or partially located underground to the maximum extent possible to help preserve the aesthetic appearance of the right-of-way and community and to prevent aboveground safety hazards.
+Therefore, all components of the WCF must be undergrounded to the extent reasonably feasible.
+Those components of the WCF that must be above ground must be
+identified by type of facility, dimension of facility, with proposed screening to reduce to the maximum extent possible the visual impact of aboveground facilities and equipment.
+A written narrative of why any portion of the WCF must be above ground is required.
+F . Safety Hazards.
+Any and all known or expected safety hazards for any of the WCF facilities must be identified and the applicant who must demonstrate how all such hazards will be addressed and minimized to comply with all applicable safety codes.
+G. Landscaping. The Application shall provide a landscape plan, drawn to scale, that is consistent with the need for screening at the site, showing all proposed landscaping, screening and proposed irrigation (if applicable), with a discussion of how proposed landscaping, at maturity, will screen the site.
+Existing vegetation that is proposed to be removed must be clearly indicated and provisions for mitigation included.
+H. Height. The Application shall provide an engineer's diagram, drawn to scale, showing the height of the WCF and all of its above-ground components.
+Applicants must provide sufficient evidence that establishes that the proposed WCF is designed to the minimum height required to meet the carrier's coverage objectives.
+If a tower or pole height will exceed the base height restrictions of the applicable zone, this narrative shall include a discussion of the physical constraints (topographical features, etc.) making the additional height necessary.
+The narrative shall include consideration of design alternatives, including the use of multiple sites or designs that would avoid the need for the new WCF or over zone height WCF .
+Except as noted in (a) and (b) below, the maximum height allowed in the right-of-way is 50 feet.
+1. The maximum height for a freestanding SWF in the public right-of-way is no more than ten percent taller than other adjacent structures in the right-of-way.
+2. When collocated on an existing structure in the public right-of-way, the SWF and the existing structure (including the antenna and any equipment enclosures contained within the structure) shall not exceed 50 feet or more than ten percent of the existing structure or nearby structures, whichever is greater.
+I. Construction. The Application shall describe the anticipated construction techniques and time frame for construction or installation of the WCF .
+This narrative must include all temporary staging, site access, and the types of vehicles and equipment to be used.
+J. Maintenance. The Application shall describe the anticipated maintenance and monitoring program for the WCF , including antennas, back-up equipment, poles, paint, and landscaping; and a description of anticipated maintenance needs, including frequency of service, personnel needs, equipment needs and potential safety impacts of such maintenance.
+K. Noise/Acoustical Information.
+The Application shall provide manufacturer's specifications for all noise-generating equipment, such as air conditioning units and back-up generators, and a depiction of the equipment location in relation to adjoining proper-
+ties. The applicant shall provide a noise study prepared and sealed by a qualified Oregon-license Professional Engineer that demonstrates that the WCF will comply with intent and goals of Section 6.204 et seq. of this Code.
+L. Lease. The site plan shall show the lease area of the proposed WCF .
+M. FCC License and Radio Frequency Safety Compliance.
+The Application shall provide a copy of the applicant's FCC license and/or construction permit, if an FCC license and/or construction permit is required for the proposed facility.
+The applicant shall provide documentation showing that the party responsible for radio frequency trans-missions is in planned or actual compliance with all FCC RF emissions safety standards and guidelines at 47 C.F .R. § 1.1307 et seq. and FCC Office of Engineering Technology Bulletin 65.
+N. Lighting and Marking.
+The Application shall describe any proposed lighting and marking of the WCF , including any required by the FAA.
+O. Co-Location Feasibility.
+A feasibility study for the co-location of any WCF as an alternative to new structures must be presented and certified by an Oregon-licensed Professional Engineer.
+Co-location will be required when determined to be feasible.
+The feasibility study shall include:
+1. An inventory, including the location, ownership, height, and design of existing WCF within one-half mile of the proposed location of a new WCF .
+The planning director may share such information with other applicants seeking permits for
+WCF , but shall not, by sharing such information, in any way represent or warrant that such sites are available or suitable.
+2. Documentation of the efforts that have been made to co-locate on existing or previously approved towers, poles, or structures.
+The applicant shall make a good faith effort to contact the owner(s) of all existing or approved towers, poles, or structures and shall provide a list of all owners contacted in the area, including the date, form, and content of such contact.
+3. Documentation as to why co-location on existing or proposed towers, poles, or commercial structures within 1,000 feet of the proposed site is not practical or feasible.
+Co-location shall not be precluded simply because a reasonable fee for shared use is charged or because of reasonable costs necessary to adapt the existing and proposed uses to a shared tower.
+The Planning Director and/or
+Development Review Board may consider expert testimony to determine whether the fee and costs are reasonable when balanced against the market and the important aesthetic considerations of the community.
+P . Engineering Report.
+An Application for a new WCF , whether co-located or new, shall include, as applicable, a report from an Oregon licensed Professional Engineer documenting the following:
+1. A description of the proposed WCF height and design, including technical, engineering, and other pertinent factors governing selection of the proposed
+design. A cross-section of the proposed WCF structure shall be included.
+The engineer shall document whether the structure is at its maximum structural capacity and, if not, the additional weight the structure could support.
+2. Documentation that the proposed WCF will have sufficient structural integrity for the proposed uses at the proposed location, in conformance with the minimum safety requirements of the State Structural Specialty Code and EIA/TIA
+222 (Structural Standards for Communication and Small Wind Turbine Support
+Structures), latest edition at the time of the application.
+3. A description of mitigation methods which will be employed to avoid ice hazards, including increased setbacks, and/or de-icing equipment, if required by any safety law, regulation, or code.
+4. Evidence that the proposed WCF will comply with all applicable requirements of the Federal Aviation Administration, the Aeronautics Section of the Oregon
+Department of Transportation, and the Federal Communications Commission.
+Q. All SWF applications must demonstrate compliance with all requirements in Section 2 "Design Elements" of the "City of Wilsonville Small Wireless Facility Infrastructure Design Standards".
+R. The Planning Director may request any other information deemed necessary to fully evaluate and review the information provided in the application.
+(.03) Additional Application Requirements for new Macro WCF applications.
+A. Parking. The Application shall provide a site plan showing the designated parking areas for maintenance vehicles and equipment, if any.
+No parking of maintenance vehicles and equipment parking shall be permitted in any red curb zone, handicap parking zone, or loading zone.
+B. Co-Location. In the case of new multi-user towers, poles, or similar support structures, the applicant shall submit engineering feasibility data and a letter stating the applicant's willingness to allow other carriers to co-locate on the proposed WCF .
+C. Recordation Requirements.
+If a new WCF is approved, the owner shall be required, as a condition of approval, to:
+1. Record the conditions of approval specified by the City with the Deeds Records Office in the Office of the County Recorder of the county in which the WCF is located;
+2. Respond in a timely, comprehensive manner to a request for information from a potential shared use applicant;
+3. Negotiate in good faith for shared use by others; and
+4. Such conditions shall run with the land and be binding on subsequent purchasers of the WCF .
+(Ord. No. 831, 1-24-2019; Ord. No. 882, § 2(Exh. A), 10-2-2023)

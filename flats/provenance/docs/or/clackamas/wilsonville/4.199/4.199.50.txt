@@ -1,0 +1,30 @@
+Section 4.199.50. Submittal Requirements.
+(.01) Applicants shall submit the following information as part of DRB review or administrative review of new commercial, industrial, multi-family or public facility projects:
+A. A statement regarding which of the lighting methods will be utilized, prescriptive or performance, and a map depicting the lighting zone(s) for the property .
+B. A site lighting plan that clearly indicates intended lighting by type and location.
+For adjustable luminaires, the aiming angles or coordinates shall be shown.
+C. For each luminaire type, drawings, cut sheets or other documents containing specifications for the intended lighting including but not limited to, luminaire description, mounting, mounting height, lamp type and manufacturer, lamp watts, ba llast, optical system/ distribution, and accessories such as shields.
+D. Calculations demonstrating compliance with Oregon Energy Efficiency Specialty Code, Exterior Lighting, as modified by Section 4.199.40(.01)(B.)(2.)
+E. Lighting plans shall be coordinated with landscaping plans so that pole lights and trees are not placed in conflict with one another.
+The location of lights shall be shown on the landscape plan.
+Generally, pole lights should not be placed within one pole length of landscape and parking lot trees.
+F . Applicants shall identify the hours of lighting curfew .
+(.02) In addition to the above submittal requirements, Applicants using the Prescriptive Method shall submit the following information as part of the permit set plan review:
+A. A site lighting plan (items 1.A—F , above) which indicates for each luminaire the three mounting height line to demonstrate compliance with the setback requirements.
+For luminaires mounted within three mounting heights of the property line the compliance exception or special shielding requirements shall be clearly indicated.
+(.03) In addition to the above submittal requirements, Applicants using the Performance Method shall submit the following information as part of the permit set plan review:
+A. Site plan showing horizontal isocandle lines, or the output of a point-by-point computer calculation of the horizontal illumination of the site, showing property lines and light levels immediately off of the subject property .
+B. For each side of the property, the output of a point-by-point vertical footcandle calculation showing illumination in the vertical plane at the property line from grade to at least ten feet higher than the height of the tallest pole.
+C. Lighting plans shall be prepared by a qualified licensed engineer.
+(.04) In addition to the above applicable submittal requirements, Applicants for Special Permits shall submit the following to the DRB for review:
+A. Tabulation of International Engineering Society of North America (IESNA) lighting recommendations for each task including area illuminated, recommended illumination level, actual maintained illumination level, and luminaires used specifically to achieve the indicated criteria.
+B. Lighting plans shall be prepared by a qualified licensed engineer.
+(.05) For all calculations, the following light loss factors shall be used unless an alternative is specifically approved by the City:
+Metal halide 0.6
+High pressure sodium 0.8
+Compact fluorescent 0.7
+Full size fluorescent 0.75
+Incandescent 0.9
+Halogen 0.95
+Other As approved
+(Ord. No. 688, 11-15-2010)

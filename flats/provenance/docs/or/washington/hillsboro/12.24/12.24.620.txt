@@ -1,0 +1,19 @@
+12.24.620  Housing Types.
+Table 12.24.620-1 lists the housing types permitted in the UC-MU zone.
+Housing types are defined in Section 12.01.500.
+Table 12.24.620-1:
+Housing Types Permitted in the UC-MU Zone
+Housing Type Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex P
+Quadplex P
+Townhouse P/N Three dwelling (or more) townhouses permitted.
+Two-dwelling townhouses not permitted.
+Cottage cluster N
+Multiple dwelling structure P
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)

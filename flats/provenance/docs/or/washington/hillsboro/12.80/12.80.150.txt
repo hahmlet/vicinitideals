@@ -1,0 +1,95 @@
+12.80.150  Variances and Adjustments.
+A. Purpose. Variance applications and Adjustment processes allow flexibility in applying the standards in this Code if a proposed development meets the intended purpose of those standards.
+As part of a discretionary review process, Variances and Adjustments may provide opportunities for provision of public benefits (pursuant to Section 12.50.900) to mitigate impacts of the Variances and Adjustments.
+B. Applicability of Provisions; Exemptions.
+1. The Variance application (VAR) shall be used if pre-existing conditions on a lot or parcel create a hardship in developing the lot or parcel consistent with the standards of this Code.
+2. The Minor Adjustment process shall be used only under the following circumstances:
+a. As part of a Type II Development Review, Partition, or Subdivision application; or
+b. As part of a Type III Development Review, or Planned Unit Development application.
+3. The Major Adjustment process shall be used only as part of a Type III Development Review application or a Type III Planned Unit Development application.
+4. With the exception of the standards listed in subsection C. below, Minor Adjustments, and Major Adjustments may be submitted to request flexibility in the application of standards as shown in Table 12.80.150-1.
+5. The lot dimension variations specified in Section 12.50.110 are permitted without the approval of a Variance or Adjustment, subject to compliance with the standards of that section.
+6. Applications for land divisions to divide duplexes or townhouses into separate lots are exempt from the variance and adjustment processes, provided that the parent parcel meets the minimum lot dimension standards of the applicable underlying zone.
+Table 12.80.150-1:
+MaximumApplicability of Variance and Adjustment Processes
+Standard from which flexibility is requested:  Variance
+Minor
+Adjustment w/Type II
+Application
+Major
+Adjustment w/Type III
+Application
+To reduce lot size or dimensions below the base zone minimum standards (adjustments not available beyond optional variations in Section 12.50.110 unless approved as part of a PUD)
+X X X
+To reduce residential density less than 10% below the base zone minimum standard X X
+To reduce residential density more than 10% below the base zone minimum standard X
+To increase residential density above the base zone maximum standard* X
+To reduce minimum Floor Area Ratio less than 10% below the minimum base zone standard X X
+To reduce setbacks below the base zone minimum standards* X X X
+To increase setbacks above the base zone maximum standards X X
+To increase building heights above the base zone maximum standard* (adjustment not available in
+Residential Compatibility Areas)
+X X
+To increase lot coverage above the base zone maximum standard X X
+To decrease Usable Open Space areas below the minimum standard for the use type* X
+To decrease landscaping coverage below the minimum standard for the use type X X
+Table 12.80.150-1:
+MaximumApplicability of Variance and Adjustment Processes
+Standard from which flexibility is requested:  Variance
+Minor
+Adjustment w/Type II
+Application
+Major
+Adjustment w/Type III
+Application
+To increase the number of parking spaces above the maximum standard for the use type* X X
+To adjust requirements for undergrounding overhead utilities* X X
+To adjust bicycle/pedestrian access way requirements* X X
+To adjust building entrance requirements* X X
+To adjust ground floor window transparency requirements* X X
+To adjust other numeric design standards X X
+To adjust non-numeric design standards X X
+* Indicates certain criteria applicable as specified in Section 12.80.158.
+C. Limitations on Cumulative Adjustments.
+1. The cumulative number of requests for Minor Adjustments in a Partition application shall not affect more than 1 parcel.
+The cumulative number of requests for Minor Adjustments in a Subdivision application shall not affect more than 25% of the lots.
+If requests for adjustments are proposed on a larger number of lots, the application shall be processed as a Planned Unit Development pursuant to Section 12.80.120.
+2. Requests for Minor Adjustments in a Development Review, Partition, or Subdivision, application may be submitted for not more than 4 of the following 7 categories:
+a. Lot dimensions (area, width, or height);
+b. Setbacks;
+c. Building height;
+d. Lot coverage;
+e. Parking;
+f. Usable open space;
+g. Landscaping; or
+h. Building design standards.
+3. Not more than 3 Minor Adjustment requests shall be submitted per lot or building.
+In calculating the number of Minor Adjustments under this provision, each adjustment on each lot shall be counted as one request.
+For example, a front yard and side yard adjustment on one lot equals 2 requests; requests for adjustments in front yard setback, building height, and parking equals 3 requests.
+4. If requests for more than 3 Minor Adjustments are proposed on a single lot or building, the requests shall be processed as a Major Adjustment with a PUD or Type III Development Review application.
+D. Standards not Subject to Variance or Adjustment.
+1. Variance or Adjustment applications may address any regulation in this Code except the following:
+a. To change a definition or use category classification;
+b. To allow a use or development type cited as "prohibited" or "not permitted";
+c. To modify or remove a threshold for review, such as a standard which requires a particular application for review of a certain project;
+d. To change the steps of a procedure type or to change assigned procedures;
+e. To modify the numeric standards in Section 12.40.194, Marijuana Facilities; or
+f. To modify the numeric standards in Section 12.40.215, Psilocybin Facilities.
+2. Adjustment applications may address any regulation in this Code regarding light rail zones except the following:
+a. To reduce residential density below 90% of the base zone minimum standard;
+b. To increase residential density above the base zone maximum standard;
+c. To reduce floor area ratio below 90% of the base zone minimum standard;
+d. To reduce Usable Open Space below 85% of the base zone minimum standard;
+e. To reduce lot frontage below the base zone minimum standard;
+f. To adjust street or alley performance standards in Section 12.50.530;
+g. To allow surface parking or loading between a building and a major pedestrian route;
+h. To allow parking cater-cornered from a Light Rail Station site at an intersection;
+i. To requirements for pedestrian-oriented commercial uses wrapping the ground floor of a parking structure; or
+j. To increase building height in residential compatibility areas in the SCC-DT Station Community Commercial - Downtown zone, as shown in Figure 12.61.400-D.
+E. SB 1537 Mandatory Adjustments.
+Residential projects which qualify for mandatory adjustments under Senate Bill 1537 (2024) can request allowable adjustments in conjunction with a housing development application.
+The adjustment decision is a limited land use decision and will be processed consolidated with a Type II application or concurrently with a Type III application.
+The public notice shall clearly state what adjustments are being requested through SB 1537.
+The Notice of Decision shall state that the SB 1537 adjustment decision is only appealable by the applicant and shall provide findings of fact on how the request meets the criteria outlined in SB 1537.
+This section of SB 1537 is set to sunset on January 2, 2032.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6417 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. 6110 § 12, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

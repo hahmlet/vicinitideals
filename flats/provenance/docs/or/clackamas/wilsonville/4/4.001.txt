@@ -1,0 +1,715 @@
+Section 4.001.  Definitions.
+In addition to the definitions set forth in Section 4.001, below, for the purpose of this Chapter, the following terms are hereby defined.
+The word "occupy" includes premises designed or intended to be occupied.
+The word "shall" is always mandatory.
+All other words shall have the following respective meanings, unless the context otherwise requires:
+1. Abutting: See Adjoining.
+2. Access, Vehicular: The designed location of ingress and egress, where vehicles enter or leave property.
+3. Access, Pedestrian: The designed location of ingress and egress, where pedestrians enter or leave property.
+4. Access Control Restriction: A type of access restriction that involves establishing a reserve area adjacent to and paralleling a half street improvement, or across the end of a street that is to be extended in the future, to ensure proper participation by adjoining properties in completion of the required street improvements.
+See Street, Half.
+5. Access Drive: A private travel lane primarily used as a means of approach for vehicles.
+6. Accessory Building or Use: A subordinate building or use, the function of which is clearly incidental to that of the main building or use on the same lot.
+For non-residential uses, an accessory use may be located on a lot adjoining that of the main use if approved for this purpose through the Administrative Review procedures of Section 4.030.
+7. Accessory Dwelling Unit: A dwelling unit of not more than 800 square feet of habitable floor area subordinate to another dwelling unit on the same lot.
+8. Address Overlay Zone: Distinct areas within the Villebois Village Center where additional information is provided for the definition of architectural character and community elements.
+9. Addressing street: A major existing or planned street within the Coffee Creek Industrial Design Overlay District as defined in Section 4.134.
+10. Adjacent: See adjoining.
+11. Adjoining: Contiguous or abutting exclusive of street width.
+It shall include the terms adjacent, abutting or contiguous.
+12. Agriculture: The use of land larger than one acre for the primary purpose of deriving income from growing plants on land including, but not limited to, land used principally for the production of crops, land used for orchards or production of fruit, but not including land used primarily for another use and incidentally for growing plants, crops, or fruit.
+13. Alley: A public or private way which includes a roadway used to provide vehicular ingress and egress to the back or side of properties otherwise abutting on a street, private drive, or shared common area.
+An alley typically has a width of no more than 20 feet.
+14. Alteration, Structural: Any change or repair which would tend to prolong the life of the supporting members of a building or structure, such as bearing walls, columns, beams or girders.
+15. Ancillary Telecommunication Facilities: The structures and equipment required for operation of the telecommunication equipment, including but not limited to antennae, repeaters, equipment housing structure, footings and foundations, and ventilation or other electrical or mechanical equipment.
+16. Antenna(e): Any exterior, apparatus, electrical conductor or group of electrical conductors, the surface of which is designed for telephonic, radio or television communications by sending and/or receiving radio-frequency or electromagnetic waves, including those sent and/or received by wireless communication facilities.
+Antennae include the following types:
+A. Directional or Parabolic ("panel" or "disk") antenna, which receives and transmits signals in a directional pattern typically encompassing an arc of 120 degrees.
+B. Omni-direction ("whip") antenna, which receives and transmits signals in a 360-degree pattern.
+C. Other, which means all other transmitting or receiving equipment not specifically described herein.
+Other antennae shall be regulated in conformity with the type of antenna described herein which most closely resembles such equipment.
+For purposes of this ordinance, the term antenna shall not include ancillary antennae, which are antennae less than 12 inches in their largest dimension and are not directly used to provide personal wireless communication services.
+D. Satellite Dish antenna, which receives signals from satellites.
+17. Apartment: A type of attached multi-family dwelling unit in a building that contains five or more dwelling units.
+18. Appeal: Means a request for a review of any land use decision or interpretation of any provision of this ordinance.
+19. Appropriate Potential Tree Height: The Appropriate Potential Tree Height (APTH) is used to delineate certain areas adjacent to the riparian corridor.
+The APTH is the mature average height of the appropriate tree species that does or could potentially grow on the site.
+The term "appropriate" is meant to limit the potential tree species to those species that provide critical
+riparian functions, and are appropriate and acceptable on the specific site based on such factors as public safety, property protection, zoning and other factors.
+The minimum APTH is 50 feet.
+20. Arborist: An arborist who is a member of the American Society of Consulting Arborists
+(ASCA) or is certified by the International Society of Arboriculture, or an ornamental horticulturist or urban forester who possesses equivalent credentials and experience, and who is approved by the City Planning Director.
+21. Architectural Character: The distinctive qualities of the form, features, details, color and ornamentation that comprise a style of building.
+22. Area of Limited Conflicting Uses: See Section 4.139.00
+23. Area of Shallow Flooding: Means a designated AO or AH Zone on the Flood Insurance Rate
+Map (FIRM). The base flood depths range from one to three feet; a clearly defined channel does not exist; the path of flooding is unpredictable and indeterminate; and, velocity flow may be evident.
+AO is characterized as sheet flow and AH indicates ponding.
+24. Area of Special Flood Hazard: Means the land in the flood plain within a community subject to a one percent or greater chance of flooding in any given year.
+This is the area subject to a base flood event.
+Designation on FIRM maps always includes the letters A or V .
+25. Artificial Sky Glow: The brightening of the night sky attributable to human made sources of light.
+26. Attached Wireless Communication Facility: A wireless communication facility that is affixed to an existing structure, (e.g., an existing building wall or roof, mechanical equipment, or alternative tower structure).
+27. Attachment: An antenna or other piece of related equipment affixed to a transmission tower.
+28. Base Flood: Means the flood having a one percent chance of being equaled or exceeded in any given year.
+Also referred to as the "l00-year flood".
+Designation on FIRM maps always includes the letters A or V .
+29. Basement: A portion of a building which has less than one-half of its height measured from finished floor to finished ceiling above the average elevation of the adjoining grade.
+For areas located in a Special Flood Hazard Area, the definition of basement is any area of the building having its floor subgrade (below ground level) on all sides.
+30. Bed and Breakfast Home or Boarding House: A building or premises used for the provision of lodging and meals, where not more than five rooms are available for rent.
+Does not include short-term rentals.
+31. Bikeway: Bikeway is a general term used to describe any type of transportation facility that is designated for use by bicycles in conformance with City standards.
+Bikeways may or may not be within a public right-of-way and include the following:
+A. Bike Lane: A bike lane facility is a type of bikeway where a section of the roadway is designated for exclusive bicycle use.
+B. Recreational Trail: A recreation trail is a type of pedestrian, bicycle, or equestrian facility that is entirely separate from roadways and has unimproved, gravel, or bark dust surface.
+C. Shared Roadway: A shared roadway facility is a type of bikeway where motorists and cyclists occupy the same roadway area.
+D. Shoulder Bikeway: A shoulder bikeway facility is a type of bikeway where cyclists occupy the paved roadway shoulder.
+Shoulder bikeways are common in rural areas.
+E. Cycle Track: A cycle track is a bike lane with a physical barrier between the bike and motor vehicle travel lanes, such as a curb or parking lanes.
+Cycle tracks must "rejoin" the motor vehicle travel lanes at signalized intersections.
+Cycle tracks may require a two stage left turn for bicyclists.
+F . See also: Multipurpose Pathway or Path.
+32. Block: A tract of land bounded by streets, or bounded by such features as the City limits or barriers such as bodies of water or steep slopes.
+33. Block Complex: An assemblage of buildings bounded entirely by intersecting streets so as to form a single, comprehensive group.
+34. Block Perimeter: The outer boundary of a block.
+35. Board: The Development Review Board established pursuant to Chapter 2 of the Wilsonville Code.
+36. Buffers or Buffering: Distance, landscaping, walls, berms, or other measures used to separate one land use from another, and to mitigate or minimize the adverse effects of one land use on another.
+37. Build-To Line: A line shown on a final plat or other development plan indicating that buildings are required to be built to it, rather than set back from it.
+38. Building: Any structure built for the support, shelter or enclosure of any persons, animals, chattels, or property of any kind which requires location on the ground or is attached to something having a location on the ground.
+39. Building Façade: The exterior elevation(s) of a building; usually set parallel to the front lot line, often distinguished by elaboration of architectural characteristics.
+40. Building Façade, Primary: The main exterior elevation of a building; usually associated with its primary entrance and/or street address.
+41. Building Frontage Width, Minimum: A Development Standard that controls the degree of spatial definition of public open space.
+Described as a percentage, the Minimum Building Frontage Width is calculated as the ratio of the length of the primary building façade(s) to its corresponding lot line length, exclusive of required setbacks.
+42. Building Line: A line that is adjacent to the front side of a main building parallel to the front lot line.
+43. Building Official. The person holding the position of Building Official of the City of Wilsonville.
+44. Building or Structure Height: The term 'height of building or structure' shall be deemed to mean the perpendicular distance from the average elevation of the adjoining ground to the highest point of the coping of a flat roof or to the deck line of a mansard roof or to the middle height gable between the eaves and ridge of a pitch or hip roof.
+If a building is divided into units by means of masonry division walls, each unit shall be considered separately in calculation for height of building.
+45. Business-Integrated Dwelling Unit(s) (BIDU): A dwelling unit integrated with a non-residential use where (1) the dwelling unit is the secondary use to the non-residential use, (2) the dwelling unit consists of a ground floor footprint less than or equal to 40 percent of the ground floor non-residential use, (3) the dwelling unit is separated from the non-residential use by a demising wall, and (4) the dwelling unit has direct interior entry from the non-residential use.
+This is differentiated from a Live-Work Dwelling Unit in that the dwelling unit must be fully divided from the non-residential use and that the space designed to be non-residential cannot be used for residential.
+46. Candela. The unit of luminous intensity of a lighting source emitted in a given direction.
+47. Canopy. A roof-like covering over an area, in or under which a lighting fixture is mounted.
+48. Category of Use: Type of use.
+See Mixed Use.
+49. Change of Use: Within the Willamette River Greenway means making a different use of the land or water than that which existed on December 6, 1975.
+It includes a change which requires construction, alterations of the land, water or other areas outside of the existing buildings or structures and which substantially alters or affects the land or water.
+It does not include a change of use of a building or other structure which does not substantially alter or affect the land or water upon which it is situated.
+The sale of property is not in itself considered to be a change of use.
+An existing open storage area shall be considered to be the same as a building.
+Landscaping, construction of driveways, modifications of existing structures, or the construction or placement of such subsidiary structures or facilities as are usual and necessary to the use and enjoyment of existing improvements shall not be considered a change of use for the purposes of Sections 4.500.
+49.1. Charging Station: a device or facility for delivering electricity for motor vehicles that use electricity for propulsion that is accessible to a vehicle parked in a nearby space.
+50. Civic: Relating to, or derived from, a city or citizen.
+51. Civic Building or Place: A building or place that functions communally, such as religious, cultural, environmental or educational institutions.
+52. Clear Vision Area: A standard for sight lines at intersections of streets, railways, and driveways.
+See section 4.125.09, Street Improvement Standards.
+53. Cluster Housing: Detached dwelling units on a single lot meeting one of the sub-definitions A.—D. below.
+A type of middle housing.
+A. Cottage Cluster: Cluster housing of four or more units in which each unit has a footprint of 900 square feet or less and units have a common courtyard(s) containing shared green space.
+B. Two-Unit Cluster Housing: Cluster housing containing two units where neither unit is an Accessory Dwelling Unit.
+C. Three-Unit Cluster Housing: Cluster housing containing three units.
+D. Four-Unit Cluster Housing: Cluster housing containing four units but not meeting the definition of cottage cluster.
+54. Cluster Housing (Frog Pond West Master Plan): A type of detached dwelling unit development arranged in groups, each unit on its own lot, with a courtyard(s) containing shared green space and a public access sidewalk easement.
+Cluster Housing, as used in the Frog Pond West Master Plan, is not considered a type of middle housing.
+55. Cohousing: Cohousing is an intentional community of private homes clustered around a shared space, with design features to promote frequent interaction and close relationships.
+Cohousing can be comprised of a single housing type or a variety of housing types, as permitted by the base zone.
+Applicable regulations are determined by the base zone, specific housing types involved, and applicable regulations such as master plans.
+56. Commercial: Development having to do with retail, service, commercial recreation, and/or office uses.
+57. Common courtyard: A common area for use by residents of a cottage cluster or other type of residential development.
+A common courtyard may function as a community yard.
+Hard and soft landscape features may be included in a common courtyard, such as pedestrian paths, lawn, groundcover, trees, shrubs, patios, benches, or gazebos.
+58. Common Residential Areas.
+• Areas shared in common by residents of buildings with three or more dwelling units, (i.e. common open space, play areas, trash receptacle areas, "common property" under a subdivision or partition declaration); and
+• Three or more open off-street stripped parking spaces, either abutting or within 10 feet of each other and not separated by a wall or other physical barrier between the two parking spaces, designated or set aside for use by the three or more dwelling units, regardless of whether the parking space is assigned for exclusive use of each dwelling unit or non-exclusively used by three or more dwelling units, and are either commonly owned or were developed for the purpose of serving the parking needs of "multiple dwellings" or multiple attached single-family dwellings, as defined in the Development Code.
+59. Community Center: A structure for the social, cultural, and educational activities of an entire neighborhood or group of people having common rights, privileges, or interests, or living in the same place under the same laws and regulations.
+60. Community Elements Book: A plan which is used to establish the type and location of community elements within the Village zone.
+Community elements may include lighting, site
+
+furniture, bollards, trash receptacles, recycling receptacles, benches, bicycle racks, and playground equipment.
+The Community Elements Book also includes a Street Tree Master Plan and Lighting Master Plan.
+61. Community Housing: Dwellings developed as defined by ORS 426.502(2).
+62. Collocation: The use or placement of two or more antenna systems or platforms by separate FCC license holders on a single support structure, transmission tower or building.
+63. Commercial Nursery or Tree Farm. A plant or tree nursery or tree farm where trees are planted and grown on the premises for sale in the ordinary course of business, but not including commercial woodlots, or land that is designated or assessed as forest land for tax deferral purposes or managed for timber production.
+64. Commercial Recreation: A planned development commercial center or complex of recreational and complimentary uses.
+Typical uses include miniature golf courses, bowling alleys, theaters, tennis and racquetball clubs, health spas, swim centers, pool halls and sports complexes.
+Appropriate complimentary uses would include restaurants and sporting goods stores.
+65. Commercial Woodlot. A site of at least 30,000 square feet on which trees are grown for the purpose of harvesting, and which is assessed as forest land for tax deferral purposes, and which is not a part of the approved open space or landscaping of a previously approved development.
+66. Commission: The Planning Commission of the City established in Chapter 2 of the Wilsonville Code.
+67. Comprehensive Plan: The City of Wilsonville Comprehensive Plan (effective date June 7, 2000).
+68. Conditional Use: A use allowable if processed in accordance with the procedures listed in
+Section 4.512 and 4.184.
+69. Conference Center: A facility where the primary function is the formal gathering of large groups of people.
+70. Contiguous: See Adjoining.
+71. Convenience Store: A retail business that provides for the purchase of limited food and household sundries.
+72. Cottage cluster project: A development site with one or more cottage clusters.
+73. Critical Facility: Facilities for which even a slight chance of flooding might be too great.
+Critical facilities include, but are not limited to schools, nursing homes, hospitals, police, fire and emergency response installations, installations which produce, use or store hazardous materials or hazardous waste.
+74. Crown Cover: The area within the drip line or perimeter of the foliage of a tree.
+75. Curb Line: The line indicating the edge of the roadway within the overall right-of-way.
+76. Curfew. A time each night after which certain electric illumination must be turned off or reduced in intensity.
+77. DATELUP: An acronym for the Dammasch Area Transportation-Efficient Land Use Plan, which is the City of Wilsonville's 1997 adopted land-use plan within the Comprehensive Plan Area of Special Concern "B".
+78. Design: The conceptualization of the built environment in response to specific sets of human needs and desires.
+79. Design Standards, Village Center: Criteria applicable to the design and construction of development within the Village Center, to guide the selection and arrangement of building elements to achieve a minimum level of quality and consistency in the finished product.
+80. Design Principles, Village Zone: The fundamental concepts that support the objectives of the Master Plan and guide the intrinsic qualities of the built environment within the Residential Village Plan District.
+Design Principles are implemented through conformance with the Design Standards.
+81. Design Standards, Village Zone: Criteria applicable to the design and construction of development within the Village zone, to guide the selection and arrangement of building elements to achieve a minimum level of quality and consistency in the finished product.
+82. Density: The number of dwelling units per acre of land.
+83. Development: Any human-caused change to improved or unimproved real estate, including, but not limited to, buildings or other structures, mining, dredging, filling, grading, paving, excavation or drilling operations located or storage of equipment or materials located within the area of special flood hazard.
+84. Development Area, Gross: The total or entire area of a Stage I Master Plan, or if no Stage I Master Plan is required a Tentative Plat, after subtracting out (1) land area within the City's Significant Resource Overlay Zone and (2) land area encumbered by a Bonneville Power Administration power line easement.
+85. Development Area, Net: The portion of Gross Development Area that is not required for open space in tracts, stormwater facilities in tracts, other similar common-use tracts, or public right-of-way.
+Net Development Area includes areas used for off-street parking, alleyways and off-street circulation areas, areas covered by primary and accessory structures, private and semi-private yard space on individual lots, and landscaping and hardscape not otherwise excluded by this definition.
+86. Development Standards: Criteria established for initial planning of any change to improved or unimproved real estate that determines the relative size and arrangement of common building elements in order to achieve a certain level of quality and consistency in the built environment.
+87. Diameter Breast Height (d.b.h.): A tree's diameter in inches measured by diameter tape at four and one-half feet above grade.
+On multi-stem trees, the largest diameter stem shall be measured.
+88. Director: The Planning Director as established in Section 2.190 of the Wilsonville Code.
+As used in this Chapter, the term "Planning Director" also applies to other staff persons or consultants specifically assigned to act on behalf of the Director.
+89. Drip Line: An imaginary vertical line extending downward from the outermost tips of the tree branches to the ground; when delineating the drip line on the ground, it will appear as an irregularly shaped circle defining the canopy's perimeter.
+90. Driveway Approach: A driveway connection to a public street or highway where it meets a public right-of-way.
+91. Duplex: Two attached dwelling units on a single lot, neither of which meets the definition of an accessory dwelling unit.
+92. Dwelling: A building, mobile home, or manufactured home, designed for residential occupancy, but not a house trailer or recreational vehicle.
+93. Dwelling Unit: A building or portion thereof providing living and sleeping space as well as sanitary, bathing, and food preparation facilities for one household, but not a trailer house or other recreational vehicle.
+94. Dwelling Unit, Attached: A dwelling unit which (1) shares one or more common or abutting wall, floor, or ceiling with one or more dwelling units and/or (2) has a shared roof structure with or a roof without a spatial gap between one or more dwelling units.
+The common or abutting walls, floors, ceilings, and roofs includes those of attached garages, storage areas, or other accessory uses.
+When a dwelling unit is attached only to an accessory dwelling unit and the accessory dwelling unit is not attached to any other dwelling unit, the dwelling unit is not "Attached" under this definition while the accessory dwelling unit is "Attached" under this definition.
+95. Dwelling Unit, Detached: A Dwelling Unit not meeting the definition of Dwelling Unit, Attached.
+96. Dwelling Unit, Multiple-Family: Multiple dwelling units located on a single lot where units are not an accessory dwelling unit and the dwelling units are not middle housing.
+Multiple-family dwelling units may be detached or attached.
+97. Dwelling Unit, Single-Family: A single detached dwelling unit located on its own lot.
+98. Encroachment Area: See Section 4.139.00
+99. Equipment Enclosures: A small structure, shelter, cabinet or vault used to house and protect the electronic equipment necessary for processing wireless communication signals.
+Associated equipment may include air conditioning and emergency generators.
+100. Essential Government Services.
+Services and facilities provided by a governmental unit, that are basis and inherent to the public health and welfare including, but not limited to, fire, police, water, sewer, transportation, emergency communication, and education, and governmental services and facilities in support thereof.
+101. Exempt tree or vegetation: As used in the solar access provisions of this Code, the terms "exempt tree or exempt vegetation" refer to the full height and breadth of vegetation that has been identified by the City as "solar friendly," and any vegetation listed as exempt on a plat, a document recorded with the plat, or a solar access permit.
+102. Existing Manufactured Home Park or Subdivision: A manufactured home park subdivision for which the construction of facilities for servicing the lots on which the manufactured homes are to be affixed (including, at a minimum, the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads) is completed before the effective date of the adopted floodplain management regulations.
+103. Exterior Display: The outdoor exhibit of merchandise by a retail merchant.
+104. Façade. The exterior wall or elevation of a building.
+105. Feasible: Able to be accomplished, considering all aspects of preservation and proposed site development, including the cost of mitigation and relocation.
+106. Fill: Any act by which earth, sand, gravel, rock, structures or any similar material is deposited, erected, placed, pulled or transported, including the conditions resulting there-from, whether within the limits of the l00-year flood plain or not.
+107. Final Development Plan: A plan that includes a final map and other writing containing all the descriptions, locations, specifications, dedications, provisions and information concerning a land development, in the form required by Section 4.125(.18).
+108. Flag Lot: A flag-shaped lot located behind another lot where the frontage on the street is only wide enough for its vehicular and pedestrian access; often found at the end of a street or adjacent to the outside corner of an L-shaped block.
+109. Flood or Flooding: General and temporary condition of partial or complete inundation of normally dry land areas from the overflow of inland waters, and/or the unusual and rapid accumulation of runoff of surface waters from any source.
+110. Flood Insurance Rate Map (FIRM): The official map prepared for the City of Wilsonville on which the Federal Insurance Administration has delineated both the flood plain and the risk premium zones applicable to the community.
+111. Flood Insurance Study: The official report prepared for the City of Wilsonville by the Federal Insurance Administration that includes flood profiles, the Flood Boundary-Floodway Map, and the water surface elevation of the base flood.
+112. Flood Plain: Flood-prone areas as identified on the FIRM.
+113. l00-Year Flood Plain: Land adjacent to a floodway that has a one percent chance of flooding in any given year, and as identified within the "A" zones of the FIRM.
+114. Floodway: The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than one foot.
+115. Floodway Fringe: That portion of the flood plain not contained in the floodway.
+116. Floor Area: The area of the building, exclusive of porches and exterior stairs which shall extend to the exterior faces of all walls.
+Floor area shall include all levels within a structure, including mezzanines and additional stories above the first floor.
+Within a residential structure, floor area does not include garages or carports.
+117. Foot Candle.
+The unit of density of luminous flux (lumens) incident at a point on a surface having an area of one square foot.
+118. Frog Pond West Neighborhood: The geographic area covered by the Frog Pond West Master Plan.
+The area is bounded on the south by SW Boeckman Road, on the west by Boeckman Creek, on the north by a line extending directly west from the intersection of SW Stafford Road and SW Kahle Road, and on the east by SW Stafford Road.
+119. Frog Pond East Neighborhood: The portion of the geographic area covered by the Frog Pond East and South Master Plan north of SW Advance Road.
+The area is bounded on the south by SW Advance Road, on the west by SW Stafford Road, on the north by east-west portion SW Kahle Road and a line extending directly east from the point where SW Kahle road turns to the north, and on the east by the eastern boundary of the Urban Growth Boundary established by Metro Ordinance No. 18-1427.
+120. Frog Pond South Neighborhood : The portion of the geographic area covered by the Frog Pond East and South Master Plan south of SW Advance Road, including park land owned by the City of Wilsonville south of Advance Road between SW 63rd Avenue and SW 60th Avenue and Meridian Creek Middle School and surrounding land owned by the West
+Linn-Wilsonville School District. The area is bounded on the north by SW Advance Road, on the west by a line extending directly south of the intersection of SW Stafford Road and SW Advance Road, excluding land that is part of the 1995 Landover Subdivision Plat, on the south by SW Kruse Road east of SW 60th Avenue and west of SW 60th Avenue by an east-west property line approximately 314 feet south of SW Kruse Road, and on the east by property lines paralleling SW 60th Avenue approximately 863 feet to the east (also, the southern and eastern boundaries of the Urban Growth Boundary established by Metro Ordinance No. 18-1427).
+121. Front lot line: For purposes of the solar access regulations, a lot line abutting a street.
+For corner lots the front lot line is that with the narrowest frontage.
+When the lot line abutting a street is curved, the front lot line is the chord or straight line connecting the ends of the curve.
+For a flag lot, the front lot line is the shortest lot line adjoining the pole portion of the lot, excluding the unbuildable portion of the pole (see Figure 2: Front Line Lot in Section 4.137).
+122. Garage: Enclosure for storage with sufficient space and access to store a vehicle.
+May be detached from other structures, attached, or portion of a structure.
+123. Glare. Light that causes visual discomfort or disability, and the wattage and/or light distribution is excessive for the purposes for which the illumination is necessary.
+124. Grocery Store: A retail business that sells food and household sundries.
+125. Grocery Store, Specialty: A retail business that sells specialty food and specialty household sundries.
+126. Habitable floor: Any floor usable for living purposes, which includes working, sleeping, eating, cooking or recreation, or a combination thereof.
+A floor used only for storage purposes is not a "habitable floor".
+127. Habitable floor area: For the purpose of calculating the area of a dwelling unit, the area of a dwelling unit usable for living purposes, which includes areas for sleeping, eating, cooking, bathing, sanitation, recreation., and similar activities.
+Storage areas with floor-level interior access from other habitable areas are included in habitable floor area.
+Storage areas without interior floor-level access from other habitable areas are not included in habitable floor area.
+A garage is not considered a storage area for the purpose of this definition and is not considered part of the habitable floor area.
+128. Habitat-Friendly Development: A method of developing property that protects our natural resources as we grow and focuses on land development and site design that mimic natural processes.
+Examples include clustering development to avoid habitat, minimizing tree removal and root disturbance, managing storm water on-site to help filter rainwater and recharge groundwater sources, and, where feasible, reducing the amount of impervious surface created by development.
+129. Hardscape. Permanent improvements to a site, including but not limited to, parking lots, driveways, streets, plazas, sidewalks, walkways, bikeways, abutments, stairs, ramps, and architectural features, such as fountains and sculptures.
+130. Hearing Body: The City Council, the Development Review Board, or the Planning Commission having the authority to review an application assigned by Section 4.031, Section 4.032, and Section 4.033.
+131. Heritage Tree: A tree that, due to age, size, species, quality or historic association, is considered of landmark importance to the community and has been designated as such by the City Council.
+132. Home Business: A business operating from a dwelling unit that does not meet the definition of a "Home Occupation" listed below.
+Short-term rental of a dwelling unit or portion thereof where the operator does not live on the same lot is a home business.
+A home business requires a conditional use permit.
+133. Home Occupation: An occupation, profession, or craft, which is customarily incidental to or carried on in a dwelling unit or premises and not one in which the use of the premises as a dwelling unit is largely incidental to the business use.
+A home occupation is carried on by a member of the household residing within the dwelling unit.
+A home occupation shall require no structural alteration or changes to the exterior of the dwelling unit, and shall include no display of merchandise on the premises which can be seen from the exterior of the dwelling unit.
+Any instruction shall be limited to one pupil at a time.
+Noise, odor, smoke, gases, fallout, vibration, heat or glare resulting from the use shall not be of the intensity as to be detected outside of the containing structure.
+Traffic and parking are to be such as to give no outward
+appearance that a business is being conducted on the premise.
+Short-term rental of a dwelling unit or portion thereof where the operator of the short-term rental lives on the same lot is a home occupation.
+134. Hospital: A building or premises providing in-patient services that is used for human medical or surgical treatment.
+135. Hospital, Animal: A building or premises for the medical or surgical treatment of domestic animals or pets, including dog, cat and veterinary hospitals.
+136. Hotel, Motel, or Overnight Lodging Facility: A building which is designed or used to offer six or more rooms for lodging, with or without meals, for compensation.
+137. Household. A group of individuals comprising a single house-keeping unit sharing such facilities as bathrooms and kitchens.
+No more than five unrelated individuals paying rent or otherwise having financial obligations towards the dwelling unit may comprise a single household.
+Every group of five, or portion thereof, shall be considered a separate household..
+For housing developed to implement ORS 426.508 or under the Fair Housing Amendments Act of 1988, household shall mean all persons living in a dwelling unit, regardless of relationship.
+138. House Side Shield.
+For fully shielded luminaires only, an internal shield designed and installed by the luminaire manufacturer that significantly attenuates candlepower in the back photometric hemisphere at all angles greater than 30 degrees relative to nadir.
+139. Human Occupancy: For purposes of Section 4.172(.02)(C.)(4.), any structure usable for living purposes, which includes working, sleeping, eating, cooking or recreation, or a combination thereof, is considered to be for human occupancy.
+A structure used only for storage purposes is not for "human occupancy."
+140. IESNA. The Illuminating Engineering Society of North America (see www.iesna.com).
+141. Impact Area: See Section 4.139.00
+142. Impervious Area: An area with minimal infiltration of surface water into the underlying soil and shall include pavement (including but not limited to concrete or asphaltic concrete surfaces), gravel roads, structures, roadways, and roofs.
+143. Intensification of Use: Within the Willamette River Greenway means any additions which increase or expand the area or amount of an existing use, or the level of activity.
+Remodeling of the exterior of a structure not excluded below is an intensification when it will substantially alter the appearance of the structure.
+Maintenance and repair usual and necessary for the continuance of an existing use is not an intensification of use.
+Reasonable emergency procedures necessary for the safety or the protection of property are not an intensification of use.
+Residential use of land within the Greenway includes the practices and activities customarily related to the use and enjoyment of one's home.
+Landscaping, construction of driveways, modification of existing structures or construction or placement of such subsidiary structures or facilities, including accessory dwelling units, adjacent to the residence as are
+usual and necessary to such use and enjoyment shall not be considered an intensification for the purposes of this Code.
+Seasonal increases in gravel operations shall not be considered an intensification of use.
+144. Kennel: Any lot or premises on which four or more dogs, more than four months of age, are kept for boarding, breeding or sales.
+145. Landscaping: The term "landscaping" includes trees, grass, shrubs, flowers, water features, and garden areas, and the arrangement of paths, walkways, fountains, patios, decks, fencing, street furniture and ornamental concrete or stonework areas, earth forms such as grading, mounding and contours.
+The use of pervious materials is encouraged.
+Both native and non-native vegetation may constitute landscaping materials.
+This definition pertains to complete site modifications rather than just buildings.
+146. Landscape Lighting.
+Luminaires attached to structures, mounted on poles or otherwise, or at grade (luminaire not to exceed three feet above grade) and used solely for landscape rather than area lighting.
+147. Legislative process: A process that leads to the adoption of rules or policies that have broad implications for a large geographic area or for the community overall.
+148. Light Manufacturing: Low- to moderate-impact industrial, manufacturing, processing, and assembly uses that exhibit benign external characteristics compatible with the character and overall design of a Residential Village environment.
+149. Light Source (or Lamp): The actual bulb or lamp that emits the light.
+150. Light Trespass.
+Spill light that because of quantitative, directional, or spectral content causes light level at the property line that is greater than as provided on Table 4 of this Code.
+151. Lighting Master Plan: A plan that indicates the criteria for, and general location of exterior lighting within the Village zone.
+See also Community Elements Book.
+152. Lighting System.
+One or more luminaires, together with associated wires, conduits and poles that constitute the illumination system on the parcel.
+153. Lighting Zones.
+Specific allowances and limitations for lighting systems and fixtures as specified in this Ordinance.
+154. Live-Work Dwelling Unit (LWDU): A dwelling unit where (1) the ground-level front façade has a commercial-type store front determined by having at least 60 percent glazing and a permanent architectural cover over the entry (2) the interior along the building frontage is designed for workspace and no kitchen, bathroom, bedroom, closet, or storage is adjacent to the front façade and (3) all or a portion of the dwelling unit meets the commercial building code to support an accessory commercial or light industrial use.
+This is differentiated from a home occupation or home business in that the dwelling unit is specifically designed to accommodate a commercial or light industrial use, whereas a home occupation or home business takes place in a residential structure without such specific design.
+This is differentiated from a Business-Integrated Dwelling Unit in that in a Live-Work Dwelling Unit the residential and commercial uses are not required to be fully divided physically.
+155. Lot: A unit of land owned by or under the lawful control and in the lawful possession of one distinct ownership, or separated from other land by a drawing on a recorded subdivision or partition plat.
+However, does not include a unit of land created through a middle housing land division.
+156. Lot Area: The total horizontal area within the lot lines of a lot, excluding the driveway portion of a flag lot.
+157. Lot, Corner: A lot either (1) where two intersecting lot lines each abut a street or private drive or (2) where the shortest lot line abuts a tract with a non-vehicular pathway and an intersecting lot line abuts a street or private drive.
+Private drives which are bounded on two opposite sides by a single lot shall not be considered in determining if a lot is a corner lot.
+158. Lot Coverage: The area of a lot covered by buildings on that lot, expressed as a percentage of the total lot area.
+159. Lot Depth: The lot depth is the mean average distance between the front lot line and rear lot line of a lot measured within the lot boundaries.
+160. Lot, Key: A lot, the side line of which abuts the rear line of one or more adjoining lots.
+161. Lot Line, Front: Except for Corner Lots and Through Lots, the boundary line of a lot abutting a street or private drive.
+If no boundary lines of a lot abut a street or private drive, but do abut a tract with a non-vehicular pathway with vehicle access to the lot provided via an alley, then the boundary line abutting the tract with a pathway is the Front Lot Line.
+In the case of a Corner Lot, the shortest lot line along a tract with a pathway, street, or private drive is the front lot line.
+In the case of a Through Lot, the narrowest boundary line abutting a street or private drive, and if multiple boundary lines abutting a street or private drive are of the same length, the boundary line on the lower classification street, and if both of equal length and on the same street classification, the boundary line indicated as the front on a final plat.
+A private drive bounded on two sides by a single lot shall not be considered in determining lot lines.
+162. Lot Line, Rear: Any boundary line opposite and most distant from a front line and not intersecting a front lot line, except in the case of a corner lot.
+163. Lot Line, Side: Any boundary line not a front or rear lot line.
+164. Lot, Through: A lot where multiple non-intersecting lot lines abut a street, other than a freeway, or private drive.
+Private drives which are bounded on two sides by a single lot shall not be considered in determining if a lot is a through lot.
+165. Lot, Width: The 'lot width' is the mean horizontal distance between the side lot lines of a lot measured within the lot boundaries.
+166. Lowest floor: Means the lowest floor of the lowest enclosed area (including basement).
+An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage, in an area other than a basement area, is not considered a building's lowest floor, provided that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements of this ordinance.
+167. Lumen. The unit of luminous flux: a measure of the amount of light emitted by a lamp.
+168. Luminaire (or "Light Fixture").
+A complete lighting unit consisting of one or more electric lamps, the lamp holder, reflector, lens, ballast, and/or other components and accessories.
+169. Luminance. The amount of light emitted in a given direction from a surface by the light source or by reflection from a surface.
+The unit is candela per square meter.
+170. Luminous Flux.
+A measure of the total light output from a source, the unit being the lumen.
+171. Major Alteration: Any change, enlargement or modification to existing site improvements or structures, or use thereof or any which substantially alters the exterior appearance or function of the site or building or increases the previous floor area by an amount equal to or greater than one-third.
+172. Major Transit Stop: Transit stops that are located where two or more existing or planned routes intersect or where there are existing or planned transfer locations between transit systems, Park & Ride lots, and shopping centers and other major destinations.
+173. Major Transit Street: A primary corridor for transit, receiving half-hour or better service during peak traffic hours.
+Typically, these streets are also arterials or major collectors.
+174. Manufactured Dwelling: Includes residential trailer, mobile home, mobile house, trailer and manufactured home.
+This definition does not include any building or structure subject to the structural specialty code adopted pursuant to ORS 455.100 to 455.450 or any unit identified as a recreational vehicle by the manufacturer.
+175. Manufactured Home: A structure built on a permanent chassis and designed for use with or without a permanent foundation when attached to the required utilities, for movement on the public highways, that has sleeping, cooking and plumbing facilities, that is intended for human occupancy, and was constructed in accordance with Federal Manufactured Housing Construction and Safety Standards regulations in effect at the time of construction.
+For flood plain management purposes, the term "manufactured home" also includes park trailers, travel trailers, and other similar vehicles placed on a site for greater than 180 consecutive days.
+For flood insurance purposes, and City zoning standards, the term "manufactured home" does not include park trailers, travel trailers and other similar vehicles.
+176. Manufactured Home or Mobile Home Park: Means a parcel (or contiguous parcels) of land divided into two or more spaces that are rented or leased for the placement of manufactured or mobile homes.
+177. Manufactured Home or Mobile Home Subdivision: Means a group of three or more separate lots intended for the location of manufactured or mobile homes, and which lots may be rented or sold.
+178. Master Plan: A plan with a series of detailed components covering one or more distinct areas.
+• See Villebois Village Master Plan.
+• See Coffee Creek Design Overlay District.
+179. Master Planner: A professional team selected by the City of Wilsonville and the State of Oregon in accordance with ORS 426.508 to master plan the area prescribed in DATELUP .
+180. Master Signage and Wayfinding Plan: A plan that describes the design principles and standards of public and private signage and wayfinding elements within the Village zone.
+181. Middle Housing: A class of dwelling units comprising duplexes, triplexes, quadplexes, cluster housing (including cottage clusters), and townhouses.
+182. Middle Housing, Higher: All middle housing dwelling units besides duplexes and Two-Unit Cluster Housing.
+183. Middle Housing Land Division: The replat of a lot to create separate units of land for each dwelling unit in a Middle Housing development that could otherwise be built on the lot without a land division or to create a separate unit of land for an Accessory Dwelling Unit.
+Following the land division, the units of land resulting from a Middle Housing Land Division shall collectively be considered a single lot along with the parent lot for all but platting and property transfer purposes under City code and state rules and statutes, including, but not limited to, the following purposes:
+• Lot standards such as size, setback, lot coverage, and lot width and depth;
+• Definition of unit types (e.g., a Two-Unit Cluster Housing development where each unit is on its own lot through a Middle Housing Land Division would still be considered Two-Unit Cluster Housing rather than single-family units; a duplex would still be considered a duplex rather than townhouses);
+• Allowance of number of Middle Housing units and Accessory Dwelling Units;
+• Compliance with Middle Housing rules and statutes in ORS 197 and OAR 660-046.
+184. Middle Housing Land Division Unit: A unit of land resulting from a Middle Housing Land Division.
+Not considered a lot except for platting and property transfer purposes.
+Each Middle Housing Land Division Unit is considered part of a parent lot and are not further divisible.
+Each Middle Housing Land Division Unit has one dwelling unit.
+185. Mixed Solid Waste: Solid Waste that contains recoverable or recyclable materials and materials that are not capable of being recycled or recovered for further use.
+Mixed Use: A development in which a site or building provides more than one type of use, such as commercial and residential
+186. Mobile Home: A structure constructed for movement on the public highways that has sleeping, cooking, and plumbing facilities, that is intended for human occupancy, and that was constructed between January 1, 1962, and June 15, 1976, and met the construction requirements of the Oregon mobile home law in effect at the time of construction.
+187. Mobility-Ready Unit: A dwelling unit with living and sleeping space as well as sanitary, bathing, and food preparation facilities on one level and that level is accessible from a parking space or public sidewalk without the use of stairs or with up to two stairs with space to add a wheelchair accessible ramp.
+188. Modular Home: A structure intended for residential use that has sleeping, cooking and plumbing facilities and is constructed off-site in compliance with the Uniform Building Code (Oregon State Structural Specialty Code) and designed to be transported to a site for installation and/or assembly of modular components to form a permanent structure.
+189. Mounting Height.
+The vertical distance between the lowest part of the luminaire and the ground surface directly below the luminaire.
+190. Multiuse Pathway or Path: A path that is separate from the roadway either in the roadway right-of-way or in an independent right-of-way.
+It is designed and constructed to allow for safe walking, biking, and other human-powered travel modes.
+191. Multi-family housing.
+Buildings or structures that contain three or more dwelling units used, intended, or designed to be built, used, rented, leased, let or hired out to be occupied, or that are occupied for living purposes, apartment houses, condominiums, congregate residences, townhouses and similar non-transient dwellings.
+192. Native: As applied to any tree or plant, this term means indigenous to the northern Willamette Valley.
+193. Neighborhood: An urban sector of residential or multiple uses served by a network of pedestrian-friendly streets and alleys within approximately ¼ mile in radius.
+Neighborhoods are generally defined by arterial or collector streets and/or open space at their edges and include a Neighborhood Commons or park or civic use at or near their center.
+194. Nadir. The downward direction; exactly vertical, directly below a luminaire.
+195. Neighborhood Center: An area of mixed-use buildings at or near the center of a neighborhood, providing nearby residents with convenient access to goods and services.
+196. Neighborhood Commons: A site within a neighborhood, for use by local residents, which may include a transit shelter and waiting place for transit riders, and public space, providing a social gathering place.
+197. Neighborhood Commercial: A planned development commercial center or complex of commercial uses to provide for the daily convenience, goods and services of nearby residential areas.
+Typical uses include grocery, hardware, and drug stores; barber and beauty stores; banks; laundry and dry cleaning; and professional offices, but exclude service stations.
+198. New Construction: For purposes of flood plain management, structures for which the "start of construction" commenced on or after June 17, 2008.
+199. New Facility: The installation of a new transmission tower.
+New attachments are not new facilities.
+200. Non-Conforming Lot: A legally created lot or parcel that does not conform in terms of area, width, depth, or other dimensions with the standards of the zone in which it is located.
+201. Non-Conforming Site Conditions: A legally established site that does not conform with the landscaping, parking or other site development standards of the zone in which it is located.
+A site may be rendered non-conforming to development standards through a change in
+zoning requirements or through the acquisition of some portion of the property by a public agency.
+For purposes of this Code, a site for which Stage II Planned Development approval has been granted by the City, and which approval remains in effect, shall not be deemed non-conforming, except as provided in Subsection 4.140(.10)C.
+202. Non-Conforming Structure: A legally established building or other structure that does not conform with the height, setback, area, lot coverage, or other standards for structures of the zone in which it is located.
+A structure may be rendered non-conforming through a change in zoning requirements or through the acquisition of some portion of the property by a public agency.
+For purposes of this Code, a structure for which Stage II Planned Development approval has been granted by the City, and which approval remains in effect, shall not be deemed non-conforming, except as provided in Subsection 4.140(.10)C.
+203. Non-Conforming Use: A legally established use, which was established prior to the adoption of the zoning use requirements for the site with which it does not conform.
+For purposes of this Code, a use for which or Stage II Planned Development approval has been granted by the City, and which approval remains in effect, shall not be deemed non-conforming, except as provided in Subsection 4.140(.10)C.
+204. Northern lot line: The lot line that is the smallest angle from a line drawn east-west and intersecting the northernmost point of the lot, excluding the pole portion of a flag lot.
+If the north line adjoins an undevelopable area other than a required yard area, the northern lot line shall be at the northern edge of such undevelopable area.
+If two lot lines have an identical angle relative to a line drawn east-west, or if the northern lot lines is less than 35 feet, then the northern lot line shall be a line 35 feet in length within the lot parallel with and at a maximum distance from the front lot line (see Figure 3: Northern Lot Line in Section 4.137). 205 North-south dimension: The length of a line beginning at the mid-point of the northern lot line and extending in a southerly direction perpendicular to the northern lot line until it reaches a property boundary (see Figure 4: North-South Dimension of the Lot in Section 4.137).
+206. Office: A use category designating buildings commonly used as a workplace for professional or government functions.
+207. Office Complex: A planned development commercial center or complex of administrative, professional and general office uses.
+Typical uses include governmental, financial, architectural, medical, dental, legal, real estate, accounting, insurance and general business offices.
+208. Obtrusive Light.
+Glare and light trespass.
+209. Office Complex—Technology.
+Applies to office uses in an industrial, typically high-technology, setting, including research and development, software or hardware development, telecommunication or data manipulation operations.
+Typically in an industrial campus setting, Technology-Office Complexes are expected to generate less traffic than general office uses.
+Technology-Office Complex is not intended to apply to general office uses such as medical offices, real estate sales offices, or similar operations that are more appropriately the predom-inate uses in non-industrial areas.
+210. Official Map: The map established by the City Council on which the plan locations, particularly of streets, are indicated with detail and exactness so as to furnish the basis for property acquisition, building restrictions, building permits, zoning or other uses, the original of which is on file in the office of the City Recorder.
+211. Open Space: Land that is not covered by buildings, paving, or other hard surfaces, unless such hard surfaces are part of an approved landscape plan.
+212. Open Space Area: A specific measurement.
+See Section 4.125(.08), Open Space.
+213. Usable Open Space: Open Space that serves a planned recreational, active transportation, environmental education or relaxation purpose and is of sufficient size and shape for the intended purpose.
+Usable open space does not include land that is an apparently remnant tract or otherwise unusable or oddly shaped area.
+214. Ornamentation: The details of shape, texture, and color that are deliberately added to a structure for decorative effect.
+215. Outdoor Dining Area: A space designated for commercial dining, partially bounded by building walls, screening or property lines, but open to the sky, and open on at least one side to a street or public space.
+216. Outdoor Living Area: Outdoor recreational area intended for the use of the residents of the development.
+In order to be considered "outdoor living area" it must be usable and accessible by the residents of the development.
+217. Ornamental or Accent Lighting.
+Outdoor lighting that is installed mainly or entirely for its decorative effect or to accent an object or a feature, rather than as an aid to visibility.
+218. Parcel: (1) A unit of land resulting from a partition and (2) Within the Coffee Creek Industrial Design Overlay District, areas bounded by addressing streets, supporting streets and/or through connections are defined as a parcel.
+219. Parking Facility, Commercial: A surface lot or parking structure that is operated as a business and is not integral to a specific use or uses within Villebois.
+220. Parking Space: A permanently surfaced and marked area not less than nine feet wide and 18 feet long, excluding paved area necessary for access, for the parking of a motor vehicle.
+221. Parking Space, Accessible: A permanently surfaced and marked area meeting the standards established by ORS 447.233.
+Such spaces shall be appropriately reserved and signed for use by the disabled and shall be subject to any additional standards of the Americans with Disabilities Act (ADA) or other applicable provisions of local, state or federal law.
+222. Parking Space, Compact: A permanently surfaced and marked area not less than seven feet, six inches wide and 15 feet long, excluding paved area necessary for access, for the parking of a compact motor vehicle.
+In order to be considered a compact parking space, it must be clearly labeled as such.
+223. Parking Space, Handicapped: Be designed for safe and convenient access that meets ADA and ODOT standards.
+All parking areas which contain ten or more parking spaces, shall for every 50 standard spaces, provide one ADA-accessible parking space that is constructed to building code standards, Wilsonville Code 9.000.
+224. Parking Space, Motorcycle: A permanently surfaced and marked area not less than four feet wide and eight feet long, excluding paved area necessary for access, for the parking of a compact motor vehicle.
+In order to be considered a motorcycle parking space, it must be clearly labeled as such.
+225. Partition:
+A. "Partition" means either an act of partitioning land or an area or tract of land partitioned under the provisions of Section 4.200.
+As used in this Code, a land partition may be either a "major" or "minor" partition, as those terms are commonly used.
+B. "Partition land" means to divide an area or tract of land into two or three parcels when such area or tract of land exists as a unit or contiguous units of land under single ownership.
+"Partition land" does not include divisions of land resulting from lien foreclosures, and divisions of land made pursuant to a court order, including but not limited to court orders in proceedings involving testate or intestate succession; and "partition land" does not include any adjustment of a lot line by the relocation of a common boundary where an additional parcel is not created and where the existing parcel reduced in size by the adjustment is not reduced below the minimum lot size established by any applicable zoning ordinance.
+226. Pathway: A pathway is a pedestrian facility that is entirely separate from the roadway and generally serves as an on-site pedestrian system for multi-family, commercial and industrial developments.
+The Americans with Disabilities Act defines a pathway as an "Exterior Accessible Route."
+227. Pattern Book: An illustrative document that depicts the site development, landscaped design, and/ or architectural character of a proposed development.
+• See Section 4.125.15, Pattern Book for projects in Villebois.
+• See Section 4.134(.06) F , Pattern Book for projects in the Coffee Creek Design Overlay District.
+228. Pedestrian Access: A path of travel to approach and enter a building, or open space on foot.
+229. Permit (Tree cutting): Approval to remove trees according to the following categories:
+A. Type A—Permits removal of one to three trees within a 12 month period on any property.
+B. Type B—Permits removal of four or more trees on any property (a) not subject to site development review, or b) previously approved for site development, and is c) not in a commercial woodlot.
+C. Type C—Permits removal of trees on property under a site development application.
+D. Type D—Permits removal of trees on a commercial woodlot.
+230. Permit Grantee: Any person, including the person's successors-in-interest, whose application for a Permit has been approved, or who is acting on the permit grantee's behalf with the grantee's consent.
+231. Person: Any individual or legal entity.
+232. Phasing: To plan and then carry out development in stages over time.
+The length of time will be determined by several factors, including response to market conditions, availability and capacity of existing utilities and infrastructure, and timing of road improvement approval and funding.
+233. Planning Commission: The Planning Commission of the City of Wilsonville established in
+Chapter 2 of the Wilsonville Code.
+234. Planning Director: The Planning Director as established in Section 2.190 of the Wilsonville Code.
+As used in this Chapter, the term "Planning Director" also applies to other staff persons or consultants specifically assigned to act on behalf of the Planning Director.
+235. Photometric Test Report.
+A report by an independent testing laboratory or one certified by the National Institute of Standards and Technology (NIST) describing the candela distribution, shielding type, luminance, and other characteristics of a specific luminaire.
+236. Plat: A map, diagram, drawing, replat or other writing containing all of the descriptions, locations, specifications, dedications, provisions and information concerning a subdivision, condominium division or land partition.
+A tentative plat is one that is prepared for review and consideration by the City.
+A final plat is one that is prepared for recordation with the County after the City has approved the tentative plat.
+237. Plaza: A public space at the intersection of important streets, as illustrated and described in the Villebois Village Master Plan, for civic purposes and commercial activity.
+238. Porch: An open-air room appended to the mass of a building, with floor and roof.
+239. Pre-existing Towers and Pre-existing Antennae: Any tower or antennae for which a building permit has been properly issued prior to the effective date of this ordinance.
+240. Preliminary Development Plan: A conceptual and quantitatively accurate representation of a defined area within an approved Specific Area Plan, in the form required by Section 4.125(.18).
+241. Premises: A site with or without buildings.
+242. Private Drive: A private way, other than an alley, that includes a roadway.
+A. Private Access/Circulation Drive—Industrial/Commercial/Multi-family/Mixed Use:
+A private drive in an industrial, commercial, multi-family (including mobile home parks), or mixed-use development providing vehicular ingress and egress to the development and/or internal circulation.
+B. Residential Private Access Drive: A private drive in a non-multi-family residential development providing primary vehicle access to no more than four lots on which dwelling units can be developed.
+A residential private access drive provides for no through vehicle access and is not extendable.
+This definition does not include private alleys
+C. Residential Private Drive—Pre-existing: A private drive in a non-multi-family residential development approved prior to (effective date of ordinance) including those that provides vehicular access to more than four lots.
+243. Private Way: A private area dedicated to circulation, including roadways, bikeways, paths, or utilities.
+244. Professional—Type Services: A "professional-type service" shall include activities such as those offered by a physician, surgeon, dentist, lawyer, architect, engineer, accountant, artist, teacher, real estate and insurance sales.
+245. Protected solar building line: A line on a plat or map recorded with the plat that identifies the location on a lot where a point two feet above may not be shaded by structures or non-exempt trees (see Figure 11: Soar Lot Option 2: Protected Solar Building Line in Section 4.137).
+246. Protected Outdoor Space: An outdoor space that is partially protected from direct exposure to the weather by a roof, building walls, and/or other enclosures.
+247. Private Way: A private area dedicated to circulation, including the roadway for private streets, bikeways, paths or utilities.
+248. Public-facing Façade.
+A building façade that faces a public or private street, public space, or public pedestrian connections (includes parks and open spaces with public pedestrian access) without an intervening building that blocks its view from the public area it faces.
+249. Public Space: An area without buildings, reserved for public use, whether owned and maintained by a public or private organization, including but not limited to, plazas, parks, natural preserves, and trails.
+250. Public Way: A public area dedicated to circulation, including the roadway or street, bikeways, paths and public utilities.
+251. Quadplex: Four attached dwelling units on a single lot.
+252. Quasi-judicial process: A process that leads to a decision on a land use or development application involving a single property or small group of properties.
+(Please see the definition of Legislative Process, above.)
+253. Rainwater Management Program: Infrastructure and procedures for the collection, filtration, and conveyance of rainwater.
+254. Rainwater Management System: The physical components of the Rainwater Management Program.
+255. Rainwater Path: The route of movement of rainwater from building roofs and paved surfaces to the Rainwater Management System.
+256. Recreational Vehicle: Means a vehicle which is:
+A. Built on a single chassis;
+B. Four hundred square feet or less, when measured at the largest horizontal projection;
+C. Designed to be self-propelled or permanently towable by a light-duty truck; and
+D. Designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+257. Regulating Plan: A plan that organizes the system of existing and future streets and multi-use paths within the Coffee Creek Industrial Design Overlay District.
+258. Religious Institution: A building or structure, or groups of buildings or structures, such as a church, synagogue, temple or mosque, that is used for conducting organized religious services, including ceremonies, rituals, and education pertaining to a particular system of beliefs.
+259. Remove or Removal: The act of removing a tree by topping, digging up or cutting down, effecting removal through damage, or causing to be removed, transplanted or destroyed.
+260. Replacement Area: the mitigation area required to compensate for an encroachment into the SROZ when allowed in accordance within Section 4.139.00
+261. Research and Development: Commercial and non-profit establishments primarily engaged in performing laboratory or other physical or biological, primary, basic, or applied research, development and testing.
+Does not include Light Manufacturing.
+262. Residential Facility: As used in ORS 197, a residential facility is a residential treatment or training facility, licensed by the State of Oregon, which provides care, treatment or training for six to 15 individuals, and which may also provide housing for staff persons who provide services to those individuals.
+For the purposes of this Code, unless inhabited by a single family, a residential facility is considered to be a form of multiple family residential development.
+263. Residential Home: As used in ORS 197, a residential home is a residential treatment or training home, or adult foster home, licensed by the State of Oregon, which provides care, treatment or training for five or fewer individuals, and which may also provide housing for staff persons who provide services to those individuals.
+For the purposes of this Code, a residential home is considered to be a form of single-family dwelling unit.
+264. Residential Trailer: A structure constructed for movement on the public highways, that has sleeping, cooking and plumbing facilities, that is intended for human occupancy, is being used for residential purposes and was constructed before January l, 1962.
+265. Residential Village Comprehensive Plan Designation: The area within which the Village zone applies, as illustrated on the Comprehensive Plan Map.
+266. Row House: In the Village Zone one of a series of houses, often of similar or identical design, situated side by side, and on their own lots.
+Within the Villebois Village Center Boundary, row houses may be attached or detached in accordance with the Village Center Architectural Standards.
+Attached row houses also meet the definition of townhouse.
+Detached row houses also meet the definition of single-family dwelling unit.
+267. Right-of-way: The area between boundary lines of a public way.
+268. Riparian Corridor: See Section 4.139.00.
+269. Riparian Corridor Cross Sections: See Section 4.139.00.
+270. Riparian Impact Area: See Section 4.139.00.
+271. Road: Same as "Street".
+272. Roadway: The portion of a public way or street or private way developed for use by vehicular traffic.
+273. Roadway, Shared: a roadway that is designed to be shared by additional users besides motor vehicles, especially bicycles.
+274. School: An educational facility.
+275. School, Commercial: A school operated as a commercial enterprise.
+See Section 4.125(.04), Conditional Uses.
+276. School, Private: Schools, including kindergartens, nurseries, children's or adult day care facilities, play schools, and other such facilities, operated primarily through private funding sources.
+See Section 4.125(.04), Conditional Uses.
+277. School, Public: A school endowed and/or supported by taxation.
+See Section 4.125(.04), Conditional Uses.
+278. Screening: Any construction whose essential function is to visually conceal, as in sight-obscuring fencing or sight-obscuring planting.
+See Section 4.176.
+279. Setback: The distance between a reference line (usually a property line) and the nearest point of a building, or portion thereof.
+In the Village Zone, see Section 4.125.06, Standards Applying to all Developments.
+280. Service Center: A planned development commercial center or complex of uses related to serve the motoring public and located at or near the freeway interchanges.
+Typical uses include restaurants, motels, automobile and truck service stations and centers.
+281. Shade point: The part of a structure or non-exempt tree that casts the longest shadow onto the adjacent northern lot(s) when the sun is at an altitude of 21.3 degrees and an azimuth
+ranging from 22.7 degrees east and west of true south; except a shadow caused by a narrow object such as a mast or whip antenna, a dish antenna with a diameter of three feet or less, a chimney, utility pole, or wire.
+The height of the shade point shall be measured from the shade point to either the average elevation at the front lot line or the elevation at the midpoint of the front lot line.
+If the shade point is located at the northern end of a ridgeline of a structure oriented within 45 degrees of a true north-south line, the shade point height computed according to the preceding sentence may be reduced by three feet.
+If a structure has a roof oriented within 45 degrees of a true east-west line with a pitch that is flatter than five feet (vertical) in 12 feet (horizontal) the shade point will be the eave of the roof.
+If such a roof has a pitch that is five feet in 12 feet or steeper, the shade point will be the peak of the roof (see Figures 5: Height of the Shade Point of the Structure and Figure 6: Shade Point Height in
+Section 4.137).
+282. Shade reduction line: A line drawn parallel to the northern lot line that intersects the shade point (see Figure 7: Shade Reduction Line in Section 4.137).
+283. Shade: As used in the solar access provisions of this Code, a shadow cast by the shade point of a structure or vegetation when the sun is at an altitude of 21.3 degrees and an azimuth ranging from 22.7 degrees east and west of true south.
+284. Shadow pattern: A graphic representation of an area that would be shaded by the shade point of a structure or vegetation when the sun in [is] at an altitude of 21.3 degrees and an azimuth ranging between 22.7 degrees east and west of true south (see Figure 13: Shadow Pattern in
+Section 4.137).
+285. Shielding.
+• Directional. A luminaire designed to be aimed or pointed.
+• Fully Shielded.
+A luminaire emitting no more than 0.5 percent of its luminous flux above the horizontal plane, including any luminaire rated "full cut off" according to IESNA RP-8-01.
+• Partly Shielded.
+A luminaire emitting no more than ten percent of its total luminous flux above the horizontal plane, including any luminaire rated "semi-cutoff" according to IESNA RP-8-01.
+• Shielded. A luminaire emitting no more than two percent of its total luminous flux above the horizontal plane, including any luminaire rated "cutoff" according to IESNA RP-8-01.
+• Unshielded. A luminaire that may emit its flux in any direction.
+286. Short-Term Rental: A dwelling unit or portion thereof subject to a lease term, rental agreement, or similar agreement, either directly or through a professional vacation rental-company or similar, less than monthly, generally daily or weekly.
+Involves rental to only one party at a time.
+A dwelling unit with rental of different rooms during the same period to different parties is not considered a short-term rental, but may meet the definition of a bed and breakfast home or boarding house or hotel, motel, or overnight lodging facility.
+287. Sidewalk: A walkway, within or adjacent to a street right-of-way, paved to City standards.
+288. Sight-Obscuring Planting: A dense perennial evergreen planting with sufficient foliage to obscure vision as specified in Section 4.176 and which will reach a height of at least six feet within 30 months after planting.
+289. Sign: A device or display used or intended to be used for advertising purposes or used or intended to be used to inform or attract the attention of the public.
+"Sign" includes, where applicable, the structure, display surface, or other component parts of the device or display.
+Examples include, but are not limited to, advertising sign, banner, outdoor advertising sign, on-premises sign, temporary sign, window sign, message, light (other than a device used primarily to illuminate a building and/or premise), emblem, figure, painting, mural, drawing, placard, or poster.
+The display of merchandise that is offered on the premises shall not be considered to be a sign unless it is attached to any exterior surface or structure of the building including, but not limited to, roofs, walls, marquees, monuments, or poles.
+The scope of the term "sign" does not depend on the content of the message or image conveyed.
+A sign does not include architectural or landscape features that may attract attention but do not convey a message or image considered speech, or trademark, protected under federal or state law.
+A. Addressing Signs: Signs indicating, at a minimum, the numerical address of the building.
+B. Baseline: The invisible line on which text or other characters sit, the bottom extent of the cap height of a typeface.
+C. Bowl: In a font or typeface, an open or closed circular line that creates an interior space, such as in the letters "d" and "c."
+D. Cap Height: In a font or typeface, the distance from the baseline to the top of uppercase letters like "H" and "J."
+E. Changing image sign.
+Any sign which, through the use of moving structural elements, flashing or sequential lights, lighting elements, prisms, or other method, results in movement, the appearance of movement, or change of sign image or text except changeable copy signs defined below.
+F . Changeable copy sign.
+Any sign, digital or manual, which is designed to have the copy changed routinely and where the frequency of copy change does not exceed once every 15 minutes, except in emergency situations as requested by the City Manager or designee.
+G. Descender: In a font or typeface, the part of a letter extending below the baseline including lower portion of the lowercase letters "g," "j," "p," "q," and "y."
+H. Directional signs: Signs on private property that provide directions for the traveling public and are deemed necessary for the safe traverse of the public.
+I. Flashing Sign: Any illuminated sign on which the artificial light is not maintained stationary or constant in intensity or color at all times when such sign is in use.
+For the purpose of this Code, any moving illuminated sign shall be considered a flashing sign.
+J. Freestanding Sign: A sign erected and maintained on a freestanding frame, mast, or pole not attached to any building, and not including ground-mounted signs.
+K. Ground-mounted Sign: A non-temporary sign which extends from the ground, or has support which places the bottom of the sign less than two feet from the ground, including monument signs.
+L. Inflatable Sign: Any device that depends on a differential between internal and external air pressure to maintain its size, form or shape regardless of whether it is tied, tethered, mounted or connected to a pole, building, or ground.
+M. Institutional Signs: Signs that identify public buildings, churches, public and private schools and other such structures used for public gathering or to serve the general public.
+The Planning Director shall determine the nature of such signs if there is a question.
+Institutional signage shall comply with all applicable provisions of this Code.
+N. Integral Sign: A sign carved into stone, concrete or similar material or made of bronze, aluminum or other permanent type construction indicating names of buildings, date of erection, monumental citations, commemorative tablets and the like when made an integral part of the structures.
+O. Lawn Sign.
+A temporary freestanding sign commonly made of corrugated plastic, greyboard, or similar type of material, constructed and maintained to prevent being moved or heavily damaged by typical exposure to natural elements.
+Lawn signs in the rights-of-way under W .C. 4.156.10 may be constructed to be portable.
+P . Marquee Sign: A canopy or covering structure bearing a signboard or graphics projecting from, and attached to, a building.
+Q. Permanent Sign: Any sign that does not meet the definition of a temporary sign, below.
+R. Portable Sign: A sign that is not permanently affixed to a building, structure, or the ground; a sign designed to be moved from place to place.
+These signs include, but are not limited to movable A-frame signs, sandwich board signs, signs on vehicles or trailers, and signs attached to wood or metal frames designed to be self-supporting and movable, including trailer reader boards.
+S. Projecting Sign: A sign, other than a wall sign which projects from and is supported by a wall of a building or structure.
+Projecting Signs are differentiated from Wall Flat Signs as defined below.
+1. Blade Sign: A sign hanging, perpendicular to a building façade, from a canopy, building projection, or mounting bracket intended to aid pedestrians in wayfinding.
+T. Rigid Sign: A temporary freestanding sign designed and constructed with materials of a grade and quality to withstand strong winds, rains, and harsh weather conditions, and maintained as a potentially year-long temporary sign to ensure that degradation or weathering does not present aesthetic and public safety concerns and the sign retains substantially the same quality throughout the year.
+Such signs may not be constructed of cardboard, poster board, or other similar lightweight paper products.
+U. Roof Sign: A sign located on or above the roof of any building, not including a false mansard roof, canopy or other fascia.
+V . Selling Slogans: A brief striking phrase used in advertising or promotion.
+The hours of operation of a business shall be considered to be a selling slogan.
+W . Serif: In fonts and typefaces, the extra stroke at the end of a letter or character.
+X. Shoulder: In fonts and typefaces, the curve at the beginning of a leg of a character such as the upper curved portion of the lowercase letters "m" and "n."
+Y . Sign Area: The display surface or face of the sign calculated as prescribed in Section 4.156.04
+Z. Temporary Sign: A sign not permanently affixed to a building, structure, or the ground, intended to be displayed for a limited period of time.
+AA. Video Sign: Moving visual messages projected on any surface.
+BB. Wall Flat Sign: A sign affixed directly to or painted on or otherwise inscribed on an exterior wall and confined within the limits of any building and which projects from that surface not more than 12 inches at all points.
+CC. Wayfinding Sign: The term way finding sign has two different contextual meanings.
+First, it is used as a general description of one of the basic purposes or functions of signs, which is to assist in directing the general public to specific destinations within the community, so that they find their way.
+In this context almost all signs provide some degree of way finding information.
+Second, the term is used to describe a specific type of sign, such as local directional signs and district wayfinding signs, that provides specific identity and/or direction to particular businesses, facilities, or places of interest, such as parks, tourist attractions, public buildings, schools, special districts, or other locations to which the public commonly asks for directions.
+290. Significant Resource Impact Report (SRIR): See Section 4.139.00
+291. Significant Resource Overlay Zone (SROZ): See Section 4.139.00
+292. Site Area, Net: The area of a development site, excepting all areas in streets or private drives, driveways, and parking spaces.
+293. Site Development: Any human-caused change to improved or unimproved property, including, but not limited to, land surface mining, grading, filling, excavation, tree cutting, clearing, construction, installation or alteration of a building or other structure, establishment or termination of an access or outdoor storage on the land.
+294. Solar access height limit: A series of contour lines establishing the maximum permitted height for non-exempt vegetation on lots affected by a Solar Access Permit (see Figure 12:
+Solar Access Height Limit in Section 4.137).
+295. Solar access permit: A document issued by the city that describes the maximum height that non-exempt vegetation is allowed to grow on lots to which a solar access permit applies.
+296. Solar feature: A device or combination of devices or elements that does or will use direct sunlight as a source of energy for such purposes as heating or cooling of a structure, heating or pumping of water, and generating electricity.
+Examples of a solar feature include a window or windows that contain(s) at least 20 square feet of glazing oriented within 45 degrees east and west of true south, a solar greenhouse, or a solar hot water heater.
+A solar feature may be used for purposes in addition to collecting solar energy, including but not limited to serving as a structural member or part of a roof, wall, or window.
+A south-facing wall without windows and without other features that use solar energy is not a solar feature for purposes of this Section.
+297. Solar gain line: A line parallel to the northern property line(s) of the lot(s) south of and adjoining a given lot, including lots separated only by a street, that intersects the solar feature on that lot (see Figure 8: Solar Gain Line in Section 4.137).
+298. Source Separated Recyclables: Recyclable materials designated "principle recyclable materials" by the Oregon Environmental Quality Commission under ORS 495A.025 with the exception of yard debris, as well as other source-separated recyclables that may be designated by local ordinance or regulation.
+299. South or South facing: True south, or 20 degrees east of magnetic south.
+300. Special Flood Hazard Area: Means an area having special flood, mudslide (i.e., mudflow), and/or flood-related erosion hazards, and shown on an FHBM or FIRM as zone A, AO, AE, AH, VE, or V .
+301. Specific Area Plan (SAP): A plan with a series of detailed components covering one of the five distinct areas of the Villebois Village Master Plan.
+These plans provide a higher level of analysis and detail than the Villebois Village Master Plan.
+302. Stacked Flats: Two or more single-level dwelling units, the second arranged above the first, etc.
+303. Start of Construction: Includes substantial improvement, and means the date the building permit was issued provided the actual start of construction, repair, reconstruction, placement or other improvement was within 180 days of the permit date.
+The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation.
+Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure.
+For a substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+304. Stoop: A small uncovered platform or porch at the entrance to a dwelling, usually up several steps from the sidewalk.
+305. Storage Area for Solid Waste or Recyclables: The space necessary to store mixed solid waste and source separated recyclables that accumulate between collection days.
+306. Story: That portion of a building included between a floor and the ceiling next above it, exclusive of a basement.
+307. Street: The entire right-of-way of a dedicated public way, which provides vehicular and pedestrian access to adjacent properties.
+Except in the Village zone, a right-of-way less than 20 feet in width shall not be recognized as a street.
+308. Street, Arterial: A street used primarily for through traffic.
+309. Street, Collector: A street used to some extent for through traffic and to some extent for access to abutting properties.
+310. Street, Frontage: A minor street parallel to and adjacent to a major street providing access to abutting properties and protection from through traffic.
+311. Street, Half: A portion of the width of a street, usually along the edge of a development where the remaining portion of the street could be provided in another adjacent development.
+In the Village Zone, see Section 4.125(.09), Street Improvement Standards.
+312. Street, Private: Same as Private Drive.
+313. Street Tree Master Plan: A plan that denotes the species, spacing, minimum size and location of all street trees.
+314. Street, Local: A street used exclusively for access to abutting properties.
+315. Structure: Anything built which requires location on the ground or is attached to something having a location on the ground.
+For floodplain management purposes a structure is a walled and roofed building including a gas or liquid storage tank that is principally above ground.
+316. Structured Parking: Enclosure for the storage of four or more vehicles.
+317. Subdivide: To effect a subdivision of land, as defined below.
+318. Subdivider: Any owner commencing proceedings under Sections 4.200 to 4.290 to effect a subdivision of land.
+319. Subdivision: Either an act of subdividing land, or an area or tract of land subdivided as defined in this Code.
+A subdivision means the division of land into more than three lots.
+320. Substantial Damage: Damage of any origin sustained by a structure whereby the cost of restoring the structure to it's before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+321. Substantial Development: Receipt of a valid public works permit or building permit for construction activities, other than a grading permit, is deemed to constitute "substantial development."
+322. Substantial Improvement: Means any repair, reconstruction, or improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure, as determined by the City's Building Official, either:
+A. Before the improvement or repair is started, or
+B. If the structure has been damaged and is being restored, before the damage occurred.
+For the purposes of this definition "substantial improvement" is considered to occur when the first alteration of any wall, ceiling, floor, or other structural part of the building commences, whether or not that alteration affects the external dimensions of the structure.
+The term is not used in the same manner as the term "substantial development" and does not include either:
+(1) Any project for improvement of a structure to comply with existing state or local health, sanitary, or safety code specifications which are solely necessary to assure safe living conditions, or
+(2) Any alteration of a structure listed on the National Register of Historic Places or a State Inventory of Historic Places.
+323. Sunchart: One or more photographs that plot the position of the sun between 10:30 am and 1:30 pm on January 21, prepared pursuant to guidelines issued by the Planning Director.
+The sunchart shall show the southern skyline through a transparent grid on which is imposed solar altitude for a 45-degree and 30-minute northern latitude in ten-degree increments and solar azimuth from true south in 15-degree increments.
+324. Support Structure (Telecommunication): The structure to which wireless communication antennae and other necessary hardware are mounted.
+For purposes of this ordinance the terms "support structure," "tower," and "transmission tower" shall be interchangeable.
+Support structures include, but are not limited to:
+A. Guyed Tower: A tower which is supported, in whole or in part, by the use of cables (guy wires) and ground anchors.
+B. Lattice tower: A freestanding support structure which consists of an open framework of crossed metal braces on three or four sides which stabilize the tower and which is built without guy wires and ground anchors.
+C. Monopole: A freestanding support structure consisting of a single upright pole sunk into the ground and/or attached to a foundation and engineered to be self-supporting without guy wires or ground anchors.
+325. Supporting streets: New streets within the Coffee Creek Industrial Design Overlay District, which may be located within public rights-of-way or public easements.
+326. Terrace: A raised space or platform adjoining a building, paved or planted, especially one used for leisure enjoyment.
+327. Temporary Lighting.
+Lighting installed with temporary wiring and operated for less than 120 days in any calendar year.
+328. Theater: A building or outdoor structure providing facilities for the presentation of perfor-mances.
+329. Through connections: New streets, multi-use paths, or streets that combine characteristics of local streets and multi-use paths.
+They are located within the Coffee Creek Industrial Design Overlay District and may be located within public rights-of-way or public easements.
+330. Through Zone: The width of unobstructed space on a sidewalk or pedestrian pathway.
+331. Tower Footprint: The area described at the base of a transmission tower as the perimeter of the transmission tower including the transmission tower foundation and any attached or overhanging equipment, attachments or structural members but excluding ancillary facilities and guy wires and anchors.
+332. Tower Height: The distance measured vertically from the highest point when positioned for operation to the lowest point, which is defined as the bottom of the base of the structure being measured at either roof level for a roof-mounted structure or at ground level for a freestanding structure.
+The height of a tower shall include the height of any antennae positioned for operation attached or which may be attached to the highest point on the tower.
+333. Tower Pad: The area encompassing the tower footprint, ancillary facilities, fencing and screening.
+334. Town Center: That part of the community that is generally bounded by, or adjoining, Town Center Loop Road.
+335. Townhouse: A dwelling unit constructed in a row of two or more attached units, where each dwelling unit is located on an individual lot.
+336. Townhouse project: One or more townhouse structures constructed, or proposed to be constructed, together with the development site where the land has been divided, or is proposed to be divided, to reflect the townhouse property lines and any commonly owned property.
+337. Trailers, Travel Trailers, Mobile Coaches: A vehicle or structure constructed for movement on the public highways, that has sleeping, cooking or plumbing facilities and is intended for temporary residential and/or recreational uses.
+Trailers, travel trailers, and mobile coaches do not meet the standards to be considered mobile homes or manufactured dwellings noted above.
+338. Transit Stop: A designated location along or near a transit street for pick-up and drop-off of transit users.
+339. Transit Station: A facility at a major transit stop accommodating multiple types of transportation, including the seating, sheltering, pick-up, and drop-off of transit users; bicycle storage; automobile drop-off lanes; and other uses compatible with transit use.
+340. Transit Street: A designated transit route with one or more transit stops serving TRI-MET or South Metro Area Rapid Transit (SMART) riders.
+341. Tree: Any living, standing woody plant having a trunk six inches or more d.b.h. at four and one-half feet above grade.
+342. Tree Cutting: The falling or removal of a tree, or any procedure the natural result of which is to cause the death or substantial destruction of a tree, including topping and severe cutting back of limbs to such a degree as to destroy or adversely affect the normal growth pattern of the tree.
+Cutting does not include routine pruning or trimming.
+343. Tree Preservation and Protection Plan: A plan that indicates the locations of existing trees to be preserved and the methods to be employed to do so.
+See the City of Wilsonville Tree Preservation Code, Section 4.600 for additional information.
+344. Tree Pruning: Reduction of a tree to achieve a better shape and more fruitful growth, using common practices of the arboriculture industry, including the International Society of Arboriculture, the Oregon Department of Forestry (Urban Forestry), or other professional arboriculture industry organizations.
+345. Tree Survey: Information provided by an arborist which describes size, species, health, and condition, and an accurate map that locates the trees on the property and descriptive text.
+Tree surveys shall be provided in keeping with WC 4.610.30 and 4.610.40.
+346. Tree Topping: The severe cutting of the top or limbs within the tree's crown to such a degree so as to remove the natural canopy or disfigure the tree.
+347. Triplex: Three attached dwelling units on a single lot.
+348. TRP: Tree Removal Permit.
+349. Undevelopable area: As used in the solar access provisions of this Code, an area that cannot be used practicably for a habitable structure, because of natural conditions, such as slopes exceeding 20 percent in a direction greater than 45 degrees east or west of true south, severe topographic relief, water bodies, or conditions that isolate one portion of a property from another portion so that access is not practicable to the unbuildable portion; or man-made conditions, such as existing development which isolates a portion of the site and prevents its further development; setbacks or development restrictions that prohibit development of a given area of a lot by law or private agreement; or existence or absence of easements or access rights that prevent development of a given area.
+349.1 Urban Form: The physical characteristics of an area determined by the bulk, placement, and spacing of buildings and related site improvements.
+349.2 Urban Form Type: A categorization between different planned Urban Forms with Type 1 having the most urban look and feel and Type 3 having the least urban look and feel. 349.3 Urban Form Type Designation: A designation applied to land that determines Urban Form Type and what lot and structure standards apply to guide Urban Form.
+350. Urban Growth Management Function Plan (UGMFP): Regulatory requirements imposed on local governments by Metro.
+351. Use: The purpose for which land or a building is arranged, designed or intended, or for which either land or a building is or may be occupied.
+352. Utilities: Any water, gas, sewer, storm drainage, electrical, telephone, or communication service and all persons, companies, and agencies supplying the same.
+353. Value: Current market value or replacement cost as determined by a licensed or certified professional in the tree, nursery, or landscape field.
+354. Variance: Means a grant of relief from the requirements of this ordinance which permits construction in a manner that would otherwise be prohibited by this ordinance.
+A Variance does not allow a use that is prohibited by this Chapter.
+355. View Corridor: As located and defined in the Master Plan, a view corridor is a panorama or line-of-site that, for aesthetic or cultural reasons, is to remain free of noncontributing elements.
+356. Village Center: An area illustrated and described in the Villebois Village Master Plan, providing a mixture of residential and commercial uses, at the intersection of three neighborhoods.
+The Village Center is the focal point of civic and commercial activity.
+357. Village Center Architectural Standards: A document that includes standards for all buildings within the Village Center.
+358. Village Zone: The zoning district that is applied to areas designated Residential Village on the Wilsonville Comprehensive Plan Map.
+The Village zone implements the Residential-Village designation and the Villebois Village Master Plan.
+Also known as the V zone.
+359. Villebois Village Master Plan: The approved document depicting the general organizational structure of the Villebois Village Concept Plan, implemented by the Residential-Village Comprehensive Plan designation, and the Village (V) zone, including but not limited to the form and location of public open spaces, types and alignment of the utilities and various thoroughfares, and land use types and locations.
+360. Violation: The division or use of land or structures, or the construction of, addition to, or alteration of, structures in a manner that does not fully comply with the provisions of
+Chapter 4. Structures located in flood hazard areas without adequate elevation certificates or other satisfactory proof of compliance with the provisions of Section 4.172 will be presumed to be in violation until such time as the necessary information has been provided to the Community Development Director.
+361. Wall: An upright construction having a length greater than the thickness and presenting a continuous surface except where pierced by doors, windows, etc., used for shelter, protection, or privacy.
+362. Water-Dependent: A use or activity which can be carried out only on, in, or adjacent to water areas because the use requires access to the water body for water-borne transportation, recreation, energy production or source of water.
+363. Water-Related: Uses which are not directly dependent upon access to a water body, but which provide goods or services that are directly associated with water-dependent land or
+waterway use, and which, if not located adjacent to water, would result in a public loss of quality in the goods or services offered.
+Except as necessary for water-dependent or water-related uses or facilities, residences, parking lots, spoil and dump sites, roads and highways, restaurants, businesses, factories; and trailer parks are not generally considered dependent on or related to water location needs.
+364. Wayfinding Plan: See Master Signage and Wayfinding Plan.
+365. Wetlands: Existing wetlands include jurisdictional wetlands as determined by the Division of State Lands (DSL) and/or the US Army Corps of Engineers (COE).
+"Wetlands" are those areas that are inundated or saturated by surface or ground water at a frequency and duration sufficient to support, and that under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions.
+Created wetlands are mitigation wetlands as defined by the Division of State Lands or US Army Corps of Engineers.
+For the purpose of this ordinance, wetlands shall not include these constructed facilities:
+A. Stormwater treatment ponds or swales;
+B. Stormwater treatment wetlands;
+C. Detention ponds;
+D. A 25-foot buffer adjacent to the wetland;
+E. An off-stream recreational lake, lagoon, fire pond or reservoir; and
+F . Ditches that are not mapped within the Significant Resources Overlay Zone and are constructed solely for the purpose of draining roads, lots, and outfalls of storm drains.
+366. Wildlife Habitat: A Goal 5 resource defined as an area upon which wildlife depend in order to meet their requirements for food, water, shelter and reproduction.
+Wildlife habitat in the City of Wilsonville Natural Resource Inventory and Goal 5, Title 3, Endangered Species Act Compliance and Protection Plan refers to upland, forested areas of at least one-acre size.
+Hazelnut orchards, small clumps of trees and areas with only a few scattered trees are not included as wildlife habitat.
+367. Wireless Communication Facilities (WCF): An unstaffed facility for the transmission and reception of radio or microwave signals used for commercial communications.
+WCFs are composed of two or more of the following components: (1) antenna: (2) support structure:
+(3) equipment enclosures; and (4) security barrier.
+368. Yard: The open space, other than a court, on a lot, unoccupied and unobstructed other than by landscaping or permitted fences from the ground upward, between a structure or structures and any lot line.
+The minimum horizontal distance between any point on a lot line and the nearest part of any structure or building is the yard depth.
+369. Yard, Front: Any yard abutting a street or private drive, unless one side is determined to meet the definition of a side yard, below.
+Private drives which are bounded on two sides by a single lot shall not be considered in determining if a yard is a front yard.
+370. Yard, Rear: Any yard abutting a rear lot line.
+371. Yard, Side: Any yard abutting a side lot line and, for corner lots, the side with the longest frontage along a street or private drive.
+Where a corner lot has an existing building with a primary entrance, the side along a street or private drive without the entrance shall be deemed the side yard.
+Where a corner lot has the same amount of frontage on both streets or private drives, and no primary building entrance facing either street or private drive, the Planning Director may designate the side yard in order to determine required setbacks.
+Private drives which are bounded on two sides by a single lot shall not be considered in determining if a yard is a side yard.
+(Ord. No. 317, 11-4-1987; Ord. No. 426, 4-4-1994; Ord. No. 479, 5-19-1997; Ord. No. 538, 2-21-2002;
+Ord. No. 545, 8-19-2002; Ord. No. 557, 9-5-2003; Ord. No. 595, 12-5-2005; Ord. No. 647, 4-21-2008; Ord.
+No. 649, 6-2-2008; Ord. No. 674, 11-16-2009; Ord. No. 667, 8-17-2009; Ord. No. 675, 3-1-2010; Ord. No. 682, 9-9-2010; Ord. No. 686, 11-1-2010; Ord. No. 688, 11-15-2010; Ord. No. 704, 6-18-2012; Ord. No. 719, 6-17-2013; Ord. No. 806, 07-17-2017; Ord. No. 812, 2-22-2018; Ord. No. 825, 10-15-2018; Ord. No. 892, § 2(Exh. A), 12-2-2024; Ord. No. 899, § 2(Exh. A), 8-4-2025)

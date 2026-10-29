@@ -1,0 +1,75 @@
+12.21.650  Development Standards.
+Base zone development standards in the SCR-LD zone are listed in Table 12.21.650-1.
+Certain standards are illustrated in Figure 12.21.650-A.
+Table 12.21.650-1:
+Development Standards in the SCR-LD Zone
+Standard Requirement Clarifications
+Minimum Lot Size
+• Single Detached Dwelling or
+Duplex 3,600 sq. ft.
+• Triplex 5,000 sq. ft.
+• Quadplex or Cottage Cluster 7,000 sq. ft.
+• Townhouse 1,500 sq. ft. (average)
+Maximum Lot Size
+• Detached Single-Dwelling
+Structure 7,199 sq. ft.
+• Other housing types None
+Minimum Density 9.0 du/na
+Maximum Density 14.0 du/na
+Within 100 feet of a developed non-SCPA neighborhood, maximum density for single detached dwellings is limited as follows: either
+7.0 du/na; or the density of the adjacent area, whichever is greater.
+Maximum density does not apply to duplexes, triplexes, quadplexes, or cottage clusters.
+Maximum density for townhouses is 25 du/na.
+Minimum FAR Not applicable
+Table 12.21.650-1:
+Development Standards in the SCR-LD Zone
+Standard Requirement Clarifications
+Minimum Lot Dimensions*
+For townhouse lots, minimum lot width and frontage are 20 feet.
+
+No minimum lot depth required for lots or parcels created by subdivision or partition.
+
+Exception to minimum frontage provided for child lots/parcels in middle housing land divisions under Section 12.80.099.
+• Width (at front building plane) 30 feet
+• Depth None
+• Frontage 30 feet
+Minimum Setbacks*
+
+Side yard setbacks on the common wall shall be waived for townhouses permitted under
+Table 12.21.620-1.
+
+Minimum front yard setback subordinate to public utility easements.
+• Front Yard
+
+% to dwelling 10 feet
+
+% to garage door 20 feet
+• Side Yard 5 feet
+• Rear Yard
+
+% to dwelling 10 feet
+
+% to garage door Either 5 feet or less;
+or 19 feet or more
+Maximum Setbacks
+
+Applicable to dwelling; not to garage door.
+• Front Yard 13 feet
+• Side Yard
+
+% interior lot line None
+
+% along Street or Alley 5 feet
+• Rear (including alley) None
+Minimum Building Height* None
+Maximum Building Height 2½ stories or 35 feet, whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Maximum height for cottage clusters is in
+Subsection 12.50.715.E.4.
+Maximum Lot Coverage None
+Minimum Usable Open Space Variable See Section 12.50.210.
+Minimum Landscaping Not applicable
+* Standards illustrated in Figure 12.21.650-A
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6323 § 1, 2019; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)

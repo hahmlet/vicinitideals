@@ -1,0 +1,14 @@
+Section 4.802.  Co-Location.
+In order to encourage shared use of towers, poles, or other facilities for the attachment of WCF , pursuant to the provisions of 47 U.S.C. 1455(a), no conditional use permit shall be required for the addition of equipment, provided that:
+(.01) There is no change to the type of tower or pole.
+(.02) All co-located WCF shall be designed in such a way as to be visually compatible with the structures on which they are placed.
+(.03) All co-located WCF must comply with the conditions and concealment elements of the original tower, pole, or other facility upon which it is co-locating.
+(.04) Shall not disturb, or will mitigate any disturbed, existing landscaping elements.
+(.05) Does not entail excavation or deployment outside site of current facility where co-location is proposed.
+(.06) All co-located WCF , and additions to existing towers, poles, or other structures, shall meet all requirements of the State of Oregon Structural Specialty Code and EIA/TIA 222 (Structural Standards for Communication and Small Wind Turbine Support Structures), latest edition at the time of the application.
+A building permit shall be required for such alterations or additions.
+Documentation shall be provided by an Oregon-licensed Professional Engineer verifying that changes or additions to the tower structure will not adversely affect the structural integrity of the tower.
+(.07) Additional Application Requirements for Co-Location:
+A. A copy of the site plan approved for the original tower, pole, or other base station facility to which the co-location is proposed.
+B. A site survey delineating development on-the-ground is consistent with the approved site plan.
+(Ord. No. 882, § 2(Exh. A), 10-2-2023)

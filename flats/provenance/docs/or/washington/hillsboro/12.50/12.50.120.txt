@@ -1,0 +1,31 @@
+12.50.120  Residential Density.
+A. Definition and Purpose.
+Residential density is defined in Section 12.01.500.
+Establishing minimum and maximum densities creates consistency within neighborhoods, achieves planned intensities of residential development and encourages development parameters within which the market will operate to provide particular housing types.
+Establishing maximum densities also ensure that the intensity of residential development will match the availability of public services.
+B. Standards and Calculation Methodology.
+1. Unless specified otherwise in paragraph 2 or 3 below, residential density in development projects containing residential dwellings submitted after September 4, 2014 must be between the minimum and the maximum residential density of the applicable zone, unless a Variance or Adjustment has been granted by the Review Authority pursuant to
+Section 12.80.120 or 12.80.150.
+2. Unless specified otherwise in the base zone standards, the minimum residential density is 80% of the maximum density permitted by the base zone applicable on a site.
+The minimum or maximum number of dwellings permitted for a project is calculated by multiplying the minimum or maximum density standard by the net residential acres within the development site.
+3. Residential density in group living, residential service uses is calculated at 4 residents equivalent to 1 dwelling unit.
+4. In multi-dwelling residential developments, dwelling units with 4 or more bedrooms may be calculated as 2 dwelling units at the applicant's discretion.
+If provided, dwelling units with 4 or more bedrooms shall be limited to a maximum of 20% of the total dwelling units.
+5. Unless otherwise specified in the applicable zone, minimum and maximum density calculations do not include accessory dwelling units.
+C. Exceptions to Minimum Density.
+1. On lots larger than 12,000 square feet designated Medium, High, or Mid-Rise Density Residential on the Comprehensive Plan Map, building permit applications for a single detached dwelling shall be approved only upon demonstration by the applicant that the dwelling is sited to allow further development of the remainder of the lot at the minimum density permitted under the implementing zone of the Comprehensive Plan designation.
+2. One or more dwellings may be constructed on an existing lot of record in a light rail residential zone if the dwelling(s) is/are sited to allow future development of the remainder of the lot to at least the minimum applicable density without demolishing the new dwelling(s).
+3. On a site containing existing mature or specimen trees as defined in Section 12.50.230, net acreage on a development site may be reduced by subtracting the area within the drip line of the trees, up to a maximum reduction of 35% of the original net acreage.
+Applications proposing net acreage reductions to preserve existing trees shall include a
+certified arborist's report and tree preservation plan.
+The approval of the development may be conditioned by the Review Authority on implementation of the recommended tree preservation measures.
+4. Pursuant to Section 12.27.230, on sites within or partially within a Significant Natural Resource (SNR) area, the Review Authority may limit residential density on portions of the SNR area below the minimum density specified in the base zone and may allow transfer of such density to the portion of the site outside the SNR area.
+D. Exceptions to Maximum Density.
+1. Pursuant to Section 12.80.156, increased residential density above the specified maximum of the base zone may be approved as a Major Adjustment in conjunction with a Planned Unit Development Concept Plan application.
+Such density increases shall be limited to 120% of the maximum of the underlying base zone density.
+2. Pursuant to Section 12.27.200, on sites within or partially within the Significant Natural Resource Overlay (SNRO) zone containing otherwise developable land, overall residential density on the site may be limited by the Review Authority to 50% of the maximum permitted by the base zone, to protect the SNRO area.
+The Review Authority may approve transfer of a portion of the otherwise allowable density to the remainder of the site outside the SNRO area.
+Such density transfer shall be limited as follows:
+a. Not more than 30% of the maximum number of units allowed in the SNRO area may be transferred; and
+b. The resulting density on the remainder of the site shall not exceed 80% of the allowed maximum number of units.
+(Ord. 6401 § 1, 2022; Ord. 6323 § 1, 2019; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6120 § 1, 2015)

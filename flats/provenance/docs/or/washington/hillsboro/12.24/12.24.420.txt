@@ -1,0 +1,23 @@
+12.24.420  Housing Types.
+Table 12.24.420-1 lists Housing Types permitted in the SCR-V zone.
+Housing Types are defined in
+Section 12.01.500.
+Table 12.24.420-1:
+Housing Types Permitted in the SCR-V Zone
+Housing Type Status Clarifications
+Single detached dwelling P
+Duplex P
+Triplex P
+Quadplex P
+Townhouse P
+Cottage Cluster P
+Multiple-dwelling structure P
+Table 12.24.420-1:
+Housing Types Permitted in the SCR-V Zone
+Housing Type Status Clarifications
+Manufactured dwelling L Subject to Special Use provisions in
+Section 12.40.190.
+Manufactured dwelling project N
+Live-work dwelling P
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022)

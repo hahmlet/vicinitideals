@@ -1,0 +1,56 @@
+12.23.160  Development Standards.
+Base zone development standards in the C-N zone are listed in Table 12.23.160-1.
+Certain standards are illustrated in Figure 12.23.160-A.
+Table 12.23.160-1:
+Development Standards in the C-N Zone
+Standard Requirement Clarifications
+Minimum Lot Size 7,000 sq. ft.
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density 24 du/na
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions*
+• Width (at front building plane) 60 feet
+• Depth 90 feet
+Minimum Lot Frontage 25 feet Flag lots not permitted.
+Minimum Setbacks*
+
+Minimum setbacks for buildings with second floor commercial uses located on property not designated MU Mixed-Use on the
+Comprehensive Plan Map shall be at least one-half the height of the principal structure.
+
+Setbacks subordinate to public utility easements and OSSC requirements.
+• Front Yard
+Same as front yard setback of the least restrictive adjacent zone
+
+% Adjacent to non-residential
+
+%
+Adjacent to residential
+• Side Yard
+
+%
+Adjacent to non-residential 10 feet
+
+% Adjacent to residential 10 feet
+• Rear Yard
+
+% Adjacent to non-residential 10 feet
+
+%
+Adjacent to residential 10 feet
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height* 35 feet or 2½ stories, whichever is less
+See measurement and illustration in Section
+12.50.140; see also definition of half-story in
+Section 12.01.500.
+Table 12.23.160-1:
+Development Standards in the C-N Zone
+Standard Requirement Clarifications
+Maximum Lot Coverage 50%
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15%
+* Standards illustrated in Figure 12.23.160-A
+
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

@@ -1,0 +1,122 @@
+[
+ {
+  "field": "row_to_centerline_class_by",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "a476265e73311ed79f9e11b54be3cfaaedbc74dcafe51c05126fda465f0e5877",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L1-L2",
+  "old_fingerprint": "1b2385e096c22fcd09e12366056d38769e276d907c4800dbd13e1f180d7920a1",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L291-L296",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_stated_as_width",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "45f55e8bbdfad646ef41d559730e26e7ae303456fffc3961cf62a5a60748e47b",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L86-L87",
+  "old_fingerprint": "9c937f0c0e1966ffd493b3811551b292ca24dc4fad2961a510a8a02375ddb8de",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L413-L415",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_major_arterial_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "da8b77f014408f76bbfd059bffc9b2f6ad17b640703473b369f59ee0ef835e4a",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L30-L31",
+  "old_fingerprint": "b10139576813dc7f5079c94843348fe18b78616ab54c0f16ecbbd0f45c9bbb6b",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L343",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_minor_arterial_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "3d3b9e12387cc35dbdc8c12e3d655c4248ac489f1645aa1061e11db143f31031",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L34-L35",
+  "old_fingerprint": "7d5c24dab40cb2d822269df34ac6cc1510aba03dfd905a5c816c3416e08d3369",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L350",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "29afdc9c377ddcce1914e783de4594eab1de8142f633ef70d783003f4238cad1",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L77",
+  "old_fingerprint": "b3ea0a5a885689f306387c7007187da4336c4ec4ec943129659a907bca4f3272",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L402",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_by_designation",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "257458d3e8a91c6f88d164bbc052104163b6b3b84640ebab4f61c3e95507126a",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L21-L24,L27,L29-L32,L34-L36,L74,L77-L79,L82-L85",
+  "old_fingerprint": "14891c86bf7b36dfe049187ee857bc419f6732b006e9db81a8b1cc7e1ab33b73",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L327-L332,L338,L342-L343,L346,L350-L351,L398,L402-L403,L406,L410-L411",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "e69bfae5f8a9d490370a799cc9fb2ab1d1527a4ea2bbab6acf62fcf779a2d5b9",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.016.txt#L23-L24,L78-L79",
+  "old_fingerprint": "c86ff82d41f9bbda767f6cb570fee5fd7b94cea9b9697841c9f824ff6dca82be",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L406",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_min_width_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "4c483b69dcaa93b359e97fc05fb9a89790efd4fafcf841644cf98a188a726142",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.035.txt#L41-L44,L47",
+  "old_fingerprint": "91cb6da4c3845457a0bf053cdee1b89cad831875762850fa084cee94624d944c",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1103-L1104",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "89ac55e8273b1755a778247676d81349c103eaef28a349528c4bc8e8d74f318d",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.035.txt#L41-L44,L47",
+  "old_fingerprint": "90d71589acc10a2a9c706f0e7315addfa2db6923b3b674c6ac646dfda434ad1d",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1103-L1104",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "910d7f0ed2c62307e9ec139b26d8391881c9c3e806306860a994df4f823c3ca6",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.035.txt#L41-L44,L46",
+  "old_fingerprint": "35f937471e88541d14813fd1d9624c741b47b732ebf679ea8c57c27479424fec",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1102",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_units_per_approach",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "4a495102324af15fdc1f549485d27aa9f31352b378bd7bc7cb74ca93ff6cf318",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.035.txt#L32",
+  "old_fingerprint": "0aa9fc3dd3cf432e70cc6a687fd38f3bdebff5ff341ef00f473133de8023c4d6",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L1066-L1068",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/oregon-city",
+  "new_fingerprint": "fc64d065470d890bbea0fc06292b4801c2747da539561397b18d18abf5db7e6f",
+  "new_quote": "or/clackamas/oregon-city/16.12/16.12.035.txt#L34-L36",
+  "old_fingerprint": "a186dc74c1097e76ce15ce5d3dac2255322f9865643188a145dccef978f6eaaf",
+  "old_quote": "or/clackamas/oregon-city/16.12.streets.txt#L1072-L1077",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

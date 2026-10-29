@@ -1,0 +1,69 @@
+12.27.250  Boundary Verification and Modification.
+A. Boundary Verification—Impact Areas.
+As depicted on the Significant Natural Resources Overlay map, Impact Areas are measured adjacent to SNR sites as shown on Table 12.27.250-1.
+Applicants can choose to verify the boundary by either accepting the boundary location shown on the Significant Natural Resources Overlay map or updating the location based on Significant Natural Resource Impact Areas widths in Table 12.27.250-1 and the map correction criteria in Table 12.27.250-2.
+In all cases, when delineating the boundary of the impact area in the field, the edge of the impact area shall include the outer drip line of those trees where the tree trunk is wholly or partially within the boundary.
+Table 12.27.250-1:
+Significant Natural Resource Impact Areas Widths
+Resource Type/Location Impact Area Width
+Impact Area Width —
+Starting Point of
+Measurement
+Significant Wetlands related to streams with or without Associated Upland
+Wildlife Habitat:
+• Rock Creek Tributary 2 65 feet
+From the edge of the delineated wetland boundary
+• Glencoe Swale Tributary 1
+120 feet • Orenco Creek
+• Rock Creek Tributary 3
+All other streams 75 feet
+Isolated Significant Wetlands 50 feet
+Significant Upland Wildlife Habitat 25 feet From the edge of the tree canopy for the protection of the root-zone
+Riparian Corridor and Associated
+Upland Wildlife Habitat 25 feet
+NOTE: Where a CWS Vegetated Corridor is required, the Vegetated Corridor is subtracted from the overall SNRO Impact Area width (i.e., SNRO Impact Area = Impact Area Width - CWS VC where present).
+B. Boundary Maintenance.
+1. SNR Site and Impact Area boundaries or resource level information shall be based on information obtained as part of site-specific studies, annexations to the City and other changes allowed by this Subchapter.
+Site specific delineation good for 5 years.
+2. Properties not previously inventoried by the City that may contain natural resources shall be inventoried by the City or the applicant/property owner prior to annexation and a significance determination made using the methodologies described in the adopted City
+of Hillsboro Goal 5 Natural Resources Inventory and Assessment Report.
+Natural resources determined to be significant and their Impact Areas shall be added to the SNRO as part of the rezoning process concurrent with annexation.
+An Economic, Social, Environmental and Energy (ESEE) Consequences Analysis shall be conducted for SNR Sites added to the SNRO using the methodology described in the adopted City of
+Hillsboro Economic, Social, Environmental and Energy Consequences Analyses Report to determine the SNRO level that will apply to the site: Level 1, 2, or 3; or Impact Area.
+C. Modification of Resource Site or Impact Area Boundaries.
+1. The boundaries or level of a SNR site or Impact Area may be modified as part of a SNRP approval to reflect new information from the site-specific study or to include new proposed mitigation areas.
+Modifications to boundaries of locally significant wetlands shall be based on a delineation subject to review and approval by the Department of State Lands.
+2. Map Corrections. All property owners who believe that the SNRO map is inaccurate in terms of either the boundary or level of SNR Site may file a correction request consistent with this subsection.
+Correction requests will be processed under the Type I or Type II permit procedure as specified in Table 12.27.250-1.
+The reasons for map corrections and correction criteria are specified in Table 12.27.265-2.
+Table 12.27.250-2:
+Map Correction Criteria
+Disputed Issue
+Review
+Type Correction Criteria
+Wetland location incorrectly identified
+Type I An accurate wetland boundary has been delineated using methods currently accepted by the Oregon Department of State Lands and the
+U.S. Army Corps of Engineers, and the applicant has complied with the revision requirements in
+OAR 141-086-0230(5).
+Stream location incorrectly identified
+Type I An accurate location of the stream centerline based on the midpoint between Ordinary High
+Water Marks has been identified and surveyed.
+Other regulated waterbody location incorrectly identified
+Type I An accurate location of the feature's Ordinary High
+Water Mark has been identified and surveyed.
+Wildlife Habitat boundary is incorrectly identified
+Type II Applicants shall use the methodologies described in the adopted City of Hillsboro Goal 5 Natural
+Resources Inventory and Assessment Report to establish the revised SNRO wildlife habitat boundary.
+Table 12.27.250-2:
+Map Correction Criteria
+Disputed Issue
+Review
+Type Correction Criteria
+SNR Site Level is incorrectly identified
+Type II An Economic, Social, Environmental and Energy
+(ESEE) Consequences Analysis shall be conducted using the methodology described in the adopted City of Hillsboro Economic, Social,
+Environmental and Energy Consequences
+Analyses Report to determine the SNRO level that will apply to the site: Level 1, 2, or 3; or Impact
+Area.
+(Ord. No. 6473, §§ 1, 2(Exh. A), 6-18-2024)
+Editor’s note—See editor's note to Sec. 12.27.200.

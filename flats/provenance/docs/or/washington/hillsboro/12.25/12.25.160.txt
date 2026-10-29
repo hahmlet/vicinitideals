@@ -1,0 +1,29 @@
+12.25.160  Development Standards.
+Base zone development standards in the I-G zone are listed in Table 12.25.160-1.
+Certain standards are illustrated in Figure 12.25.160-A.
+Table 12.25.160-1:
+Development Standards in the I-G Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions
+• Width (at front building plane) None
+• Depth None
+• Frontage 25 feet
+Minimum Setbacks*
+Minimum setbacks subordinate to public utility easements and OSSC requirements.
+• Front 1 foot
+• Side None
+• Rear None
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height 45 feet
+Maximum Lot Coverage None
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.25.160-A
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

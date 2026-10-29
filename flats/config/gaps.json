@@ -1,5 +1,5 @@
 {
-  "digest": "7288ca81e5dffb230f61c5410e20211f5e97de9720d65b60f6f14e7b80b53d20",
+  "digest": "21e7404fafd739923b4544fc45f21b30508720c35049e718748f0c82fec40ea2",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -101,7 +101,7 @@
       "gaps": []
     },
     "or/clackamas/oregon-city": {
-      "section_unread": 1,
+      "section_unread": 0,
       "misattributed": [],
       "label": "Oregon City",
       "counts": {},
@@ -145,7 +145,7 @@
       "gaps": []
     },
     "or/clackamas/wilsonville": {
-      "section_unread": 1,
+      "section_unread": 0,
       "misattributed": [],
       "label": "Wilsonville",
       "counts": {},
@@ -550,7 +550,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 299,
+      "section_unread": 121,
       "misattributed": [
         {
           "zone": "CC",
@@ -646,48 +646,7 @@
     },
     "or/washington/hillsboro": {
       "section_unread": 0,
-      "misattributed": [
-        {
-          "zone": "(defaults)",
-          "field": "parking_area_max_frontage_pct",
-          "claimed": "12.50.715",
-          "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "(defaults)",
-          "field": "parking_area_frontage_any_street",
-          "claimed": "12.50.715",
-          "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "(defaults)",
-          "field": "driveway_approach_max_width_ft",
-          "claimed": "12.50.715",
-          "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L179-L182",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "(defaults)",
-          "field": "corner_access_street",
-          "claimed": "12.50.715",
-          "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L188",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "(defaults)",
-          "field": "parking_alley_access_required",
-          "claimed": "12.50.715",
-          "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L190",
-          "kind": "header_or_xref"
-        }
-      ],
+      "misattributed": [],
       "label": "Hillsboro",
       "counts": {},
       "gaps": []

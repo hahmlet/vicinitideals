@@ -1,0 +1,59 @@
+20.22.40. CM-RM Housing Variety and Integration Requirements
+
+[ORD 4859; January 2025]
+Development in the CM-RM zoning district shall be subject to the housing variety and integration requirements of this Subsection.
+1.Applicability.
+A. Minimum requirements for housing variety and integration apply when the net acreage of a Parent Parcel is 3 acres or larger, unless exempted by Section 20.22.40.1.B below.
+If the net acreage of a Parent Parcel is less than 3 acres, Section 20.22.40 does not apply.
+For the purposes of Section 20.22.40, areas designated as “Cooper Landslide Hazard” on Figure 8.6.1 of Comprehensive Plan Volume 1, Chapter 8, may be subtracted from gross acreage for the purposes of determining net acreage.
+[ORD 4876; January 2026]
+B. Development applications for a Public Facilities Preliminary Partition (Section 40.45.15.12) and a Large Lot Land Division (Partition or Subdivision) (Section 40.45.15.13) are not subject to the housing variety and integration requirements of this Section.
+[ORD 4876; January 2026]
+2.General Provisions.
+A. Minimum requirements for housing variety and integration in Section 20.22.40 provide a clear and objective standard.
+Deviations from the standards of this Subsection shall be subject to review through a Planned Unit Development application.
+B. If the minimum percentage of units required at any development phase does not result in a whole number of units, then the value shall be rounded as follows: If the value ends with a decimal that is equal to or greater than 0.5, then the value is rounded up to the nearest whole number.
+If the value ends with a decimal that is less than 0.5, then the value is rounded down to the nearest whole number.
+C. For the purposes of this Subsection, sites designated for small-scale commercial consistent with Section 20.22.35 with no existing or proposed residential use on a property shall not count toward the minimum housing variety or minimum housing integration requirements.
+D.Multi-phase Development. If an application to develop a Parent Parcel that is greater than 3 net acres proposes to do so over multiple phases, then that development shall meet the housing variety requirements of Section 20.22.40.3 using one of the two methods below.
+Each phase shall meet the housing integration requirements of Section 20.22.40.4.
+1. Each phase of the development shall independently comply with the requirements of Section 20.22.40.3.
+The minimum required number of dwelling categories for each phase shall be based on the size of the Parent Parcel pursuant to Section 20.22.40.3.A; or
+2. The development shall provide in each phase of development:
+a. At least one of the dwelling categories in Section 20.22.40.3.A until the minimum number of categories required is reached for the Parent Parcel; and
+b. At least 30 percent of the total units in the phase shall be from one of the dwelling categories in
+Section 20.22.40.3.A consistent with Section 20.22.40.3.
+3.Minimum Requirements for Housing Variety.
+At least 30 percent of housing units in each development shall be one or more of the following dwelling types: Duplex, Triplex, Quadplex, Townhouse, Cottage Cluster, or Multi-dwelling with five or six units.
+A.Categories: In meeting the 30 percent standard, developments 3 to 15 net acres shall provide dwelling types from at least two of the categories below, and developments larger than 15 net acres shall provide dwelling types from at least three of the categories below.
+1. Triplex or Quadplex
+2. Duplex or Townhouse
+3. Cottage Cluster
+4. Multi-dwelling with five or six units
+B.Amount from each category: For each category selected to meet this standard, at least 5 percent of the total housing units in that development must be from that category.
+C.Visitability Option: A development may count visitable units that are consistent with Section 60.50.25.16 toward the 30 percent minimum requirement in Section 20.22.40.3, up to a maximum of 5 percent of total units.
+1. Visitable single-detached homes shall count as 1 unit in the 30 percent calculation and when determining the 5 percent of total units.
+2. Visitable duplexes, townhomes, cottage cluster units, detached triplex units, and detached quadplex units shall count as 0.5 units in the 30 percent calculation and when determining the 5 percent of total units.
+The 0.5 unit is in addition to the 1 unit already counting toward the 30 percent calculation because these dwelling types are in the categories in Section 20.22.40.3.A.
+4.Minimum Requirements for Housing Integration.
+A development shall provide integrated housing types by meeting the requirements of this Subsection.
+A. For the purposes of this Subsection, the term “Housing Variety Grouping” means at least three abutting lots designated for a Duplex, Triplex, Quadplex, Townhouse, Cottage Cluster, or Multi-dwelling with five or six units.
+The three abutting lots may be designated for any combination of those housing types.
+B. Applications shall designate which groups of abutting housing types are considered a Housing Variety Grouping to meet this standard.
+1. Housing Variety Groupings designated to meet this standard shall be separated from each other by least 50 feet as measured by the shortest distance between the perimeter lot lines of the two groupings.
+2. Housing Variety Groupings shall be located such that 75 percent of lots designated for Single-Detached Dwellings and Manufactured and Mobile Homes are within 300 feet of the Housing Variety Groupings within the site or, in the case of multi-phase development, within the boundaries of each phase.
+Lots designated for Single-Detached Dwellings or Manufactured or Mobile Homes are considered within 300 feet of a Housing Variety Grouping if any part of the lot is within 300 feet.
+3. Units from the housing categories in Section 20.22.40.3.A that exceed the required percentages in
+Section 20.22.40.3 are allowed outside Housing Variety Groupings.
+There is no limit on the number of
+Housing Variety Groupings in an application.
+In addition, additional abutting groupings of the housing types in Section 20.22.40.3.A as well as other permitted housing types not within a Housing Variety Grouping are allowed.
+Figure 20.22.40.1 Example of how to meet the housing integration standards
+
+Four Housing Variety Groupings are shown with lots filled in with black.
+Four buffers are shown with a thin black line to indicate 300 feet from the outer edges of the Housing Variety Groupings.
+Lots within 300 feet of those groupings in the proposed development are filled in with gray.
+Other lots remain filled in with white.
+This graphic is intended to be illustrative to explain the Development Code standards and is not regulatory.
+[ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 1/20/2026

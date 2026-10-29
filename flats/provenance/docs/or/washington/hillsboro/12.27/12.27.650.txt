@@ -1,0 +1,3 @@
+12.27.650  Establishment or Modification of Overlay Boundaries.
+The boundaries of the SID overlay zone as described in Section 12.27.620 are not subject to modification.
+(Ord. 6401 § 1, 2022)

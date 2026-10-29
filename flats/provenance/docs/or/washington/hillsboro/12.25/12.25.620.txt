@@ -1,0 +1,26 @@
+12.25.620  Housing Types.
+Table 12.25.620-1 lists housing types permitted in the SSID zone.
+Housing types are defined in
+Section 12.01.500.
+Table 12.25.620-1:
+Housing Types Permitted in the SSID Zone
+Housing Type Status Clarifications
+Single detached dwelling L/N On-site dwelling for caretaker only;
+expansion of existing dwellings subject to
+Subchapter 12.30; all other uses not permitted.
+Duplex N
+Triplex N
+Figure 12.25.610-A:
+Shute Road Special Industrial District Boundaries
+Table 12.25.620-1:
+Housing Types Permitted in the SSID Zone
+Housing Type Status Clarifications
+Quadplex N
+Townhouse N
+Cottage Cluster N
+Multiple-dwelling structure N
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)

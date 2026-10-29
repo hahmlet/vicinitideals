@@ -108,6 +108,18 @@ def test_a_contents_entry_with_no_heading_below_it_refuses() -> None:
         split(lines, RULE, "40.res")
 
 
+def test_a_number_a_scan_spaced_apart_is_one_number() -> None:
+    """Oregon City's scan prints "16.12 .01 5 Street design--Generally.": the
+    spaces are not the number's, and its contents entry names the same one."""
+    rule = Rule(layer=LAYER, heading=re.compile(r"^(?P<n>16\s?\.\s?12\s?\.\s?\d(?:\s?\d)*)\s+[A-Z]"))
+    lines = ["16.12.014 Fees.", "16.12.015 Design.", "16.12.014 Fees.", "x",
+             "16.12 .01 5 Design.", "y"]
+    got = split(lines, rule, "16.12.streets")
+    assert [s.number for s in got] == ["16.12.014", "16.12.015"]
+    assert got[1].first == 5
+    assert got[1].file == "16.12/16.12.015.txt"
+
+
 def test_headings_out_of_number_order_refuse() -> None:
     lines = ["TDC 40.200. Uses.", "x", "TDC 40.100. Purpose.", "y"]
     with pytest.raises(ProvenanceError, match="out of number order"):

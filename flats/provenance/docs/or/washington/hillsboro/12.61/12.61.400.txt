@@ -1,0 +1,92 @@
+12.61.400  Standards Specific to the SCC-DT Zone.
+The following standards apply in addition to, but supersede, the requirements of Section 12.23.300.
+A. Setbacks to Streets and Alleys.
+1. Setback requirements in the SCC-DT zone are shown on Figure 12.61.400-A.
+2. The setback requirement is met when, at a minimum, the percentage of street frontage occupied by the ground level façade of a building(s) meets the standards in Table 12.61.400-1 and Figure 12.61.400-B.
+Table 12.61.400-1:
+Minimum Building Width Required Along Street Frontages
+Property Location (from Figure 12.61.400-B) Minimum Street Frontage*
+Fronting on Active Use Street 1 100%
+Fronting on Active Use Street 2 75%
+All other properties 50%
+* Minimum street frontage is the ratio (expressed as a percentage) of the length of the ground level façade to the lot width at the front property line.
+Figure 12.61.400-A:
+Front Yard Setbacks in the SCC-DT Zone
+Figure 12.61.400-B:
+Lot Frontage Requirements and Active Use Streets in the SCC-DT Zone
+3. Exceptions required for pedestrian and vehicular access, emergency services, and utility easements shall be granted in conjunction with a Development Review application upon determination that the exception is the minimum necessary to accommodate the required access, emergency services, or utility easements.
+In no case shall parking or vehicular circulation be located between the building and the street.
+4. Exceptions to provide additional setback adjacent to a public street shall be granted in conjunction with a Development Review application upon determination that 100% of the additional setback would be used to provide enhanced pedestrian amenities such as plazas, arcades, courtyards, or other such usable pedestrian space as a feature of the development.
+B. Interior Setbacks.
+New structures shall have a 10-foot minimum setback from any property line shared with lots zoned SCR-HD, SCR-MD, or SCR-DNC.
+C. Floor Area Ratios.
+Floor area ratios for new construction may be reduced from the ultimate standard for the first phase, as provided in Table 12.23.360-1, upon demonstration by the applicant that the following criteria are met:
+1. The structure built in the first phase can be expanded vertically and/or horizontally to achieve the required minimum FAR.
+Demonstration of compliance shall include either construction to specifications sufficient to support vertical expansion, or design of floor plans and parking to accommodate horizontal expansion, as applicable; and
+2. The structure built in the first phase complies with all applicable standards for maximum setbacks, minimum building width, and minimum building height as shown in Figures 12.61.400-A, 12.61.400-B, and 12.61.400-C.
+D. Building Height Requirements.
+1. Minimum Building Height. The minimum height of new buildings shall meet the requirements on Figure 12.61.400-C. Exceptions to the required 2-story minimum building height may be granted through a Type III discretionary review upon determination by the Planning Commission that a proposed single story building meets the applicable purpose statements in Section 12.23.310 and all of the applicable design guidelines in Sections 12.50.800 and 12.50.920.
+2. Maximum Building Height. Except as described in paragraph 3 below, the maximum height of new buildings shall meet the requirements on Figure 12.61.400-D. No exceptions shall be granted to the maximum building height standard in the Residential Compatibility area as shown on Figure 12.61.400-D.
+3. Additional Building Height in Planned Unit Developments. Additional building height up to a maximum of 100 feet may be approved as part of a Planned Unit Development or a previous Concept Development Plan.
+Additional building height above the maximum heights shown in Figure 12.61.400-D shall not be approved in Residential Compatibility Zones.
+Figure 12.61.400-C:
+Minimum Building Height in the SCC-DT Zone
+Figure 12.61.400-D:
+Maximum Building Height in the SCC-DT Zone
+E. Minimum Usable Open Space Requirements.
+1. Non-residential development projects on less than ½ gross acre (21,780 square feet) are not subject to the Usable Open Space requirements of the SCC-DT zone as specified in
+Section 12.50.210. However, if such a development project is or becomes a portion of a larger development; the area of the original project shall be combined with all other portions to calculate the required Usable Open Space for the larger development.
+2. For purposes of this section, Mixed-Use projects with 4 or fewer dwelling units are considered non-residential projects.
+3. Non-residential projects ½ gross acre or larger, Mixed-Use projects with more than 4 dwelling units, and all residential projects shall provide minimum Usable Open Space equal to 5% of the project gross acreage.
+4. Usable Open Space may include any combination of the following:
+a. Private outdoor space accessible only to an individual resident or tenant (such as private porches, decks, balconies, patios, atriums, or other private outdoor areas);
+b. Shared private outdoor recreation space accessible to customers, employees or residents but not to the public (such as outdoor seating and dining areas, roof decks or gardens, play areas, outdoor recreation facilities, or similar space); or
+c. Public outdoor space (e.g., public parks, play areas, courtyards, landscaped pedestrian walkways, enhanced extensions to sidewalk depth, or similar space).
+5. The Review Authority may approve alternative approaches to the provision of Usable Open Space and recreation facilities (e.g., indoor recreation rooms, fee-in-lieu contribu-tions, etc.) under a Type III process pursuant to Section 12.70.050.
+F. Building Entries and Orientation.
+1. Development on Active Use Streets (Types 1 and 2) designated on Figure 12.61.400-B shall comply with the standards of Subsection 12.50.820 regarding building entry orientation.
+2. Development on lots fronting an Active Use Street designated on Figure 12.61.400-B and a non-designated street shall provide either a main building entrance oriented to the Active Use Street or to the corner where the streets intersect.
+Development on lots fronting on 2 Active Use Streets designated on Figure 12.61.400-B shall have a main entrance at the street intersection or within 30 feet of the intersection.
+3. Building façades over 200 feet in length facing any street shall provide 2 or more main building entrances oriented toward the street.
+4. Building entrances shall be covered, recessed, or treated with a permanent architectural feature in such a way that weather protection is provided.
+G. Ground Floor Windows and Building Façades.
+1. On building façades facing an Active Use Street, all ground floor windows shall have a Visible Transmittance (VT) of 60% or higher, with the exception of medical/dental offices which may have tinted windows.
+2. Building façades greater than 75 feet in length facing a public street shall include architectural elements such as bay windows, recessed entrances or other features so as to provide pedestrian scale.
+Within the Residential Compatibility Areas designated on
+Figure 12.61.400-D, this standard shall apply on building façades greater than 50 feet in length.
+3. Building façades facing an Active Use Street shall have windows, display areas or doorways for at least 70% of the length and 50% of the ground level wall area.
+In the SCC-DT zone, ground level wall area is the wall area above 3 feet and below 12 feet as measured from finished grade.
+4. Building façades facing a street other than an Active Use Street, a public open space, pedestrian walkway and/or transit station shall have windows, display areas or doorways for at least 50% of the length and 25% of the ground level wall area.
+In the SCC-DT zone, the ground level wall area is the wall area above 3 feet and below 12 feet as measured from finished grade.
+5. On building façades facing an Active Use Street, weather protection for pedestrians may be provided along the façade.
+Weather protection may be an awning, canopy, arcade, colonnade, recessed entry, and/or some combination of these elements.
+Where provided, weather protection shall meet the following standards:
+a. Be constructed of glass, metal, exterior-grade fabric or a combination of these materials;
+b. Project at least 5 feet from the building façade;
+c. Have at least 10 feet clearance to the sidewalk;
+d. Match the width of the storefront or the window opening(s); and
+e. Not obscure any existing or proposed transom windows.
+H. Step-Back Requirements.
+The standards of Section 12.50.845 do not apply in the SCC-DT zone.
+I. Location and Design of Off-Street Parking.
+1. On-site vehicular circulation (including surface parking, maneuvering areas, service docks and loading areas) are allowed only beside or behind new buildings.
+If located on the side, the on-site vehicular circulation area shall meet the following standards:
+a. Vehicular circulation shall not occupy more than 50% of the site frontage; and
+b. The circulation area shall be screened by a planting strip at least 6 feet wide, behind the sidewalk.
+Improvements shall be installed in the planting strip consistent with
+Section 12.50.360.
+2. To accommodate transit-supportive development and provide adequate off-street parking for Mixed-Use development, parking may be located up to 800 feet from the development.
+J. Streetscape Design Standards and Guidelines.
+The following standards apply to new multi-dwelling residential, commercial, Mixed-Use and institutional buildings.
+1. The ground floor of all new buildings facing the street shall be distinguished through façade design into a "base," "middle," and "top."
+The "base"' extends from the finished sidewalk to the bottom of the window sill, and shall be defined by a masonry or concrete plinth and projecting window sills.
+The "middle" shall be defined by storefront windows, transom windows, canopies, and/or pilasters.
+The "top" shall be defined by a projecting cornice.
+2. The front façade of all new buildings 2 stories or more in height shall have tripartite façades, with distinct ground bases, middles, and tops.
+The ground floor base shall be defined by plinths, projected windowsills, large display windows, and/or the use of masonry or concrete.
+The middle shall be defined by vertically-oriented windows, changes in materials, and/or horizontal bands (such as string courses or soldier courses).
+The top shall be defined by detailed cornices and/or projecting parapets.
+3. The Review Authority may approve architectural features or materials in addition to those cited in paragraphs 1 and 2 above where such features or materials also divide the façade into design into a base, middle, and top.
+K. Architectural Standards on NE Washington St. Development north of NE Washington St from NE 5th Ave to NE 10th Ave shall be subject to the Architectural Conservation Standards in
+Section 12.61.800.
+(Ord. No. 6488, §§ 1, 2(Exh. A), 12-3-2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019)

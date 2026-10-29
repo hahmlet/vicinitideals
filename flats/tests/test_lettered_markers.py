@@ -156,6 +156,6 @@ def test_every_wilsonville_note_that_governs_a_value_is_ruled() -> None:
     gate is a ratchet: nothing in the corpus may be blocked when the suite
     runs."""
     ruled = {row.quote for row in dispositions(WILSONVILLE) if row.state != "unread"}
-    assert f"{DOC}#L5290" in ruled
-    assert f"{DOC}#L5291" in ruled
+    assert f"{WILSONVILLE}/4/4.125.txt#L377" in ruled  # 4.planning.txt L5290, cut
+    assert f"{WILSONVILLE}/4/4.125.txt#L378" in ruled  # 4.planning.txt L5291
     assert not [row for row in qualified() if row.blocking]

@@ -1,0 +1,62 @@
+12.25.360  Development Standards.
+Base zone development standards in the I-S zone are listed in Table 12.25.360-1.
+Certain standards are illustrated in Figure 12.25.360-A.
+Table 12.25.360-1:
+Development Standards in the I-S Zone
+Standard Requirement Clarifications
+Minimum Lot Size Varies See Section 12.25.380.
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Table 12.25.360-1:
+Development Standards in the I-S Zone
+Standard Requirement Clarifications
+Minimum Lot Dimensions
+• Width (at front building plane) 300 feet
+• Depth 600 feet
+• Frontage 25 feet
+Minimum Lot Dimensions in
+Jackson East-North Sub-Area
+• Width (at front building plane) None
+• Depth None
+• Frontage 25 feet
+Minimum Setbacks*
+• Buildings up to 45 feet high
+
+% Front 35 feet Parking permitted in front setback only if a
+20-foot minimum landscaped buffer provided at the front property line.
+10-foot setback applicable abutting non-residential zones; 25-foot setback applicable abutting residential zones.
+
+%
+Side 10 or 25 feet
+
+%
+Rear 10 or 25 feet
+• Buildings > 45 feet in height Minimum setbacks increase one additional foot for each foot of structural height over 45 feet.
+
+Parking permitted in front setback only if a
+20-foot minimum landscaped buffer provided at the front property line.
+
+%
+Front 35+ feet
+% Side 10+ feet
+
+%
+Rear 10+ feet
+Maximum Setbacks None
+Minimum Building Height* None
+Maximum Building Height
+• High Profile Industrial
+Buildings 150 feet or less
+All other buildings 45 feet or less
+All non-high profile buildings 46 feet or above shall provide one additional foot of setback for each foot of structural height over 45 feet.
+Maximum Building Coverage 50%
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220
+* Standards illustrated in Figure 12.25.360-A
+*Minimum lot width and depth standards do not apply in the Jackson East-North Sub-Area.
+(Ord. 6451 § 1, 2023; Ord. 6410 § 1, 2022; Ord. 6401 § 1, 2022)
+Figure 12.25.360-A:
+Minimum Lot Dimensions, Setbacks and Height Requirements in the I-S Zone*

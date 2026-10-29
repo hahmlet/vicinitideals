@@ -536,6 +536,28 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: extractor debris from a tax-lot schedule in WC 4, "
             "where it sits between 'S2 TL 500' and a street address."
         ),
+        # 2026-10-28, surfaced when WC 4 was cut into readable sections (one
+        # sentence to a line, so a parenthesis wrapped from a zone word above
+        # now sits beside it).
+        "C-MU": (
+            "not-a-zone: Commercial-Mixed Use, a sub-district of the Town "
+            "Center zone (4.132, 'A. Commercial-Mixed Use (C-MU):'); the map "
+            "zones the lot TC, which the layer holds."
+        ),
+        "MU": (
+            "not-a-zone: Mixed Use, a Town Center sub-district (4.132, 'D. "
+            "Mixed Use (MU):'); the map zones the lot TC."
+        ),
+        "PDR": (
+            "not-a-zone: the Planned Development Residential family named as "
+            "a whole (4.008, '(PDR, PDC, TC, PDI, RN etc.)'); its members "
+            "PDR-1 to PDR-7 are ruled one by one."
+        ),
+        "B-H": "not-a-zone: a subsection range, 4.139.05(.04) B-H, not a district.",
+        "FDP": "not-a-zone: a Final Development Plan, a Villebois application (4.125).",
+        "SAP": "not-a-zone: a Specific Area Plan of the Villebois Village Master Plan (4.001 def. 301).",
+        "SR": "overlay: a significant resource under the SROZ, 4.139.00 ('the significant resource (SR)').",
+        "SRIR": "not-a-zone: a Significant Resource Impact Report (4.001 def. 290), an application document.",
     },
     "or/multnomah/troutdale": {
         # 2026-10-24, surfaced when the TDC was cut into readable sections.
@@ -691,6 +713,24 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: a Zone Change application, 12.80 (12.80.applications "
             "L2541), a procedure."
         ),
+        # 2026-10-28, surfaced when the CDC was cut into readable sections.
+        "A.3": "not-a-zone: a subsection reference in 12.27.235 ('Subsections B-G and A.3').",
+        "CMU": "not-a-zone: concrete masonry unit, a building material (12.40.194, '(CMU) construction').",
+        "HCT": "not-a-zone: High Capacity Transit, a station type (12.64.120).",
+        "LRT": "not-a-zone: Light Rail Transit, a station type (12.64.120).",
+        "MU": (
+            "not-a-zone: the Comprehensive Plan's Mixed-Use designation, named "
+            "in the plan-amendment criteria (12.80.162); zones are mapped "
+            "under it."
+        ),
+        "PUE": "not-a-zone: a Public Utility Easement (12.50.130), not a district.",
+        "RL": (
+            "not-a-zone: the Comprehensive Plan's Low Density Residential "
+            "designation; 12.68.020 lists the zones under it (R-10, R-8.5, "
+            "R-7, R-6)."
+        ),
+        "SNR": "overlay: a Significant Natural Resource area, governed by 12.27.230.",
+        "SNRP": "not-a-zone: a Significant Natural Resources Permit (12.01.500), an approval.",
     },
     "or/washington/beaverton": {
         # Every district Chapter 20 and Chapter 70 print standards for is

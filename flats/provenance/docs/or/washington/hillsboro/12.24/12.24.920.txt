@@ -1,0 +1,18 @@
+12.24.920  Housing Types.
+Table 12.24.920-1 lists the Housing Types permitted in the UC-OR zone.
+Housing Types are defined in Section 12.01.500.
+Table 12.24.920-1:
+Housing Types Permitted in the UC-OR Zone
+Housing Type Status Clarifications
+Single detached dwelling N
+Duplex N
+Triplex P/L Triplexes and quadplexes permitted; however dwelling units Not Permitted on the ground floor of any primary street frontage entirely or partly within a Retail Focus Frontage Area illustrated in Figure 12.64.640-A. Quadplex P/L
+Townhouse N
+Cottage Cluster N
+Multiple dwelling structure P/L
+Multiple Dwelling Structures permitted; however dwelling units Not Permitted on the ground floor of any primary street frontage entirely or partly within a Retail Focus Frontage Area illustrated in Figure 12.64.640-A.
+Manufactured dwelling N
+Manufactured dwelling project N
+Live-work dwelling N
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6149 § 1, 2015)

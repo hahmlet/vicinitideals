@@ -1,0 +1,115 @@
+Section 4.139.06. Significant Resource Impact Report (SRIR) and Review Criteria.
+A Significant Resource Impact Report (SRIR) is a report that delineates specific resource boundaries and analyzes the impacts of development within mapped significant resource areas based upon the requirements of this Section.
+An SRIR is only required for non-exempt development that is located within the Significant Resource Overlay Zone and/or its associated 25 foot Impact Area.
+The Significant Resource Overlay Zone Map identifies areas that have been classified as significant natural resources.
+The preparation of the Significant Resource Overlay Zone Map did not include specific field observations of every individual property .
+These maps are designed to be specific enough to determine whether further environmental review of a development proposal is necessary .
+If any portion
+of the development or alteration of the land (except those exempted by this Section) is located within the Significant Resource Overlay Zone boundary or the identified Impact Area, then an SRIR is required before any development permit can be issued.
+Where it can be clearly determined by the Planning Director that development is only in the Impact Area and there is no impact to the Significant Resource, development may be permitted without SRIR review .
+The Planning Director may consult with a professional with appropriate expertise to evaluate an applicant's SRIR prepared under this Section or may rely on appropriate staff expertise, in order to properly evaluate the report's conclusions.
+(.01) Abbreviated SRIR Requirements.
+It is the intent of this subsection to provide a user-friendly process for the applicant.
+Only the materials necessary for the application review are required.
+At the discretion of the Planning Director, an abbreviated SRIR may be submitted for certain small-scale developments such as single family dwellings, additions to single family dwellings, minor additions and accessory structures.
+The following requirements shall be prepared and submitted as part of the abbreviated SRIR evaluation:
+A. A Site Development Permit Application must be submitted in compliance with the Planning and Land Development Ordinance;
+B. Outline of any existing features including, but not limited to, structures, decks, areas previously disturbed and existing utility locations*;
+C. Location of any wetlands or water bodies on the site and the location of the stream centerline and top-of-bank;
+D. Within the area proposed to be disturbed, the location, size and species of all trees that are more than six inches in diameter at breast height (DBH).
+Trees outside the area proposed to be disturbed may be individually shown or shown as drip line with an indication of species type or types;
+E. The location of the SROZ and Impact Area boundaries*;
+F . A minimum of three slope cross-section measurements transecting the site, equally spaced at no more than 100-foot increments.
+The measurements should be made perpendicular to the stream*;
+G. A map that delineates the Metro UGMFP Title 3 Water Quality Resource Area boundary (using Metro Title 3 field observed standards)*;
+H. Current photos of site conditions shall be provided to supplement the above information*; and
+I. A narrative describing the possible and probable impacts to natural resources and a plan to mitigate for such impacts*.
+*Indicates information that City Staff may have readily available to assist an applicant.
+(.02) Application Requirements for a Standard SRIR.
+The following requirements must be prepared and submitted as part of the SRIR evaluation for any development not included in paragraph A above:
+A. A Site Development Permit Application must be submitted in compliance with the Planning and Land Development Ordinance.
+B. The SRIR shall be conducted and prepared by a natural resource professional knowl-edgeable and qualified to complete such a report.
+C. The qualifications of the person or persons preparing each element of the analysis shall be included with the SRIR.
+D. The SRIR shall include the following:
+1. Physical Analysis. The analysis shall include, at a minimum:
+a. Soil types;
+b. Geology;
+c. Hydrology of the site;
+d. Outline of any existing features including, but not limited to, structures, decks, areas previously disturbed, and existing utility locations;
+e. Location of any wetlands or water bodies on the site and the location of the stream centerline and top-of-bank;
+f. Within the area proposed to be disturbed, the location, size and species of all trees that are more than six inches DBH.
+Trees outside the area proposed to be disturbed may be individually shown or shown as drip line with an indication of species type or types;
+g. A property survey together with topography shown by contour lines prepared at two-foot vertical intervals.
+Five-foot vertical intervals may be allowed for steep sloped areas.
+The survey shall be prepared by an Oregon
+Registered Land Surveyor or Civil Engineer;
+h. The location of the SROZ and Impact Area boundaries;
+i. A minimum of three slope cross-section measurements transecting the site, equally spaced at no more than 100-foot increments.
+The measurements should be made perpendicular to the stream;
+j. A map that delineates the Metro UGMFP Title 3 Water Quality Resource
+Area boundary (using Metro Title 3 field observed standards);
+k. A map that delineates the Goal 5 safe harbor boundary (using the standards found within the Oregon Administrative Rule OAR 660-23(1996));
+l. The existing site significant resource conditions shall be determined and identified by a natural resource professional; and
+m. Current photos of site conditions shall be provided to supplement the above information.
+2. The analysis shall include development recommendations including grading procedures, soil erosion control measures, slope stabilization measures, and methods of mitigating hydrologic impacts.
+For projects that affect possible wetlands, a copy of the Local Wetland Inventory (L WI) map pertaining to the site shall be provided.
+Notice of the proposal shall be given to the Oregon Division of State Lands and the Army Corp of Engineers.
+3. Ecological Analysis. The Ecological Analysis shall include a map, using the
+Physical Analysis map as a base, showing the delineated boundaries and coverage of wetlands, riparian corridors, and wildlife habitat resources identified on the site.
+a. Wetland boundaries shall be delineated using the method currently accepted by the Oregon Division of State Lands and the US Army Corps of
+Engineers. Riparian boundaries shall be delineated using the riparian corridor descriptions in this ordinance.
+Boundaries of mapped Goal 5 wildlife habitat shall be verified by field observation.
+b. The analysis shall include an inventory that lists and describes the native and ornamental dominant and sub-dominant groundcover, shrub and tree species occurring on the site and wildlife observed during at least one site visit (specify date).
+The report shall also include recommended measures for minimizing the adverse impacts of the proposed development on unique and/or significant features of the ecosystem.
+The analysis shall include a report that discusses the ecological functions and values of the SROZ area, discussing each parameter listed below .
+The discussion shall be based on actual field observations and data obtained by a natural resource professional.
+c. Wetlands (based on evaluation criteria in the Oregon Freshwater Wetlands
+Assessment Methodology (OFW AM), Oregon Division of State Lands):
+i. Wildlife habitat diversity
+ii. Fish habitat
+iii. Water quality protection
+iv. Hydrologic control
+d. Wildlife Habitat (includes riparian corridors and upland forested areas)
+1:
+i. Wildlife habitat diversity
+ii. Water quality protection
+iii. Ecological integrity
+iv. Connectivity
+v. Uniqueness
+1 Based on criteria developed for the City of Wilsonville by Fisherman Environmental Services, in the Natural Resources Inventory and Goal 5/Title 3/ESA Compliance and Protection Plan: Inventory Update, 1999-2000
+e. Riparian Corridors 1.
+Stream-riparian ecosystems:
+i. Presence and abundance of Large W oody Debris (L WD) in and adjacent to stream.
+ii. Tree/shrub canopy stream shade production (water temperature and aquatic plant growth control).
+iii. Erosion and sediment control by riparian vegetation.
+iv. Water quality protection by riparian vegetation.
+v. River-floodplain ecosystem (Willamette River).
+vi. Presence of functional floodplain (inundated annually).
+vii. Type and condition of functional floodplain vegetation.
+viii. Use of river-floodplain by ESA-listed species.
+ix. Role as wildlife corridor connecting significant wildlife habitat areas.
+4. Mitigation and Enhancement Proposal. The applicant must propose a Significant Resource mitigation and enhancement plan as part of the SRIR.
+The mitigation and enhancement shall increase the natural values and quality of the remaining Significant Resource lands located on the site or other location as approved by the City .
+The mitigation and enhancement proposal shall conform to the mitigation standards identified in this Section.
+5. Waiver of Documentation: The Planning Director may waive the requirement that an SRIR be prepared where the required information has already been made available to the City, or may waive certain provisions where the Director determines that the information is not necessary to review the application.
+Such waivers may be appropriate for small-scale developments and shall be processed under Administrative Review .
+Where such waivers are granted by the Planning
+Director, the Director shall clearly indicate the reasons for doing so in the record, citing the relevant information relied upon in reaching the decision.
+(.03) SRIR Review Criteria.
+In addition to the normal Site Development Permit Application requirements as stated in the Planning and Land Development Ordinance, the following standards shall apply to the issuance of permits requiring an SRIR.
+The SRIR must demonstrate how these standards are met in a manner that meets the purposes of this
+Section.
+A. Except as specifically authorized by this Code, development shall be permitted only within the Area of Limited Conflicting Use (see definition) found within the SROZ;
+B. Except as specifically authorized by this Code, no development is permitted within Metro's Urban Growth Management Functional Plan Title 3 Water Quality Resource
+Areas boundary;
+C. No more than five percent of the Area of Limited Conflicting Use (see definition) located on a property may be impacted by a development proposal.
+On properties that are large enough to include Areas of Limited Conflicting Use on both sides of a waterway, no more than five percent of the Area of Limited Conflicting Use on each
+side of the riparian corridor may be impacted by a development proposal.
+This condition is cumulative to any successive development proposals on the subject property such that the total impact on the property shall not exceed five percent;
+D. Mitigation of the area to be impacted shall be consistent with Section 4.139.06 of this Code and shall occur in accordance with the provisions of this Section;
+E. The impact on the Significant Resource is minimized by limiting the degree or magni-tude of the action, by using appropriate technology or by taking affirmative steps to avoid, reduce or mitigate impacts;
+F . The impacts to the Significant Resources will be rectified by restoring, rehabilitating, or creating enhanced resource values within the "replacement area" (see definitions) on the site or, where mitigation is not practical on-site, mitigation may occur in another location approved by the City;
+G. Non-structural fill used within the SROZ area shall primarily consist of natural materials similar to the soil types found on the site;
+H. The amount of fill used shall be the minimum required to practically achieve the project purpose;
+I. Other than measures taken to minimize turbidity during construction, stream turbidity shall not be significantly increased by any proposed development or alteration of the site; and
+J . Appropriate federal and state permits shall be obtained prior to the initiation of any activities regulated by the U.S. Army Corps of Engineers and the Oregon Division of State Lands in any jurisdictional wetlands or water of the United States or State of Oregon, respectively .

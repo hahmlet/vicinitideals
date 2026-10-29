@@ -1,0 +1,38 @@
+12.25.630  Uses.
+Table 12.25.630-1 lists uses permitted, conditionally permitted, limited, or not permitted in the SSID zone.
+Table 12.25.630-1:
+Use Categories in the SSID Zone
+Use Status Clarifications
+Residential Use Categories
+Household Living L/N See Housing Types Table 12.25.620-1.
+Group Living N
+Residential Service N
+Residential Business N
+Commercial Use Categories
+Commercial Lodging N
+Commercial Recreation N
+Commercial Parking N
+Durable Goods Sales N
+Eating and Drinking
+Establishments N
+Educational Services N
+Office L Subject to limitations in Section 12.25.650.
+Retail Products and Services N
+Self-Service Storage N
+Vehicle Service and Repair N
+Table 12.25.630-1:
+Use Categories in the SSID Zone
+Use Status Clarifications
+Industrial Use Categories
+Industrial Service L/N Subject to limitations in Section 12.25.650.
+Manufacturing and Production L/N Subject to limitations in Section 12.25.650.
+Solid Waste Treatment and
+Recycling N
+Vehicle Storage N
+Warehouse And Freight
+Movement N
+Wholesale Sales N
+Institutional Use Categories — Not Permitted
+Infrastructure and Utilities Use Categories — Not Permitted
+(P) Permitted (C) Conditional (L) Limited (N) Not Permitted
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019)

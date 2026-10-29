@@ -1,0 +1,2 @@
+Section 4.310  Exceptions.
+Section 4.300 of this Code shall not apply to surface-mounted transformers, surface-mounted connection boxes, wireless communication facilities, and meter cabinets and other appurtenances which are reasonably necessary to be placed above ground, or to temporary utility service facilities during construction, or to high capacity electric and communication feeder lines, or to utility transmission lines operating at 50,000 volts or more.

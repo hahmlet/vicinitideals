@@ -212,6 +212,12 @@ def _is_heading(rule: Rule, line: str) -> re.Match[str] | None:
     return found
 
 
+def _number(found: re.Match[str]) -> str:
+    """The section number a heading prints, with any spaces a scan put inside
+    it taken out: Oregon City's "16.12 .01 5" is 16.12.015."""
+    return re.sub(r"\s+", "", found.group("n"))
+
+
 def split(lines: Sequence[str], rule: Rule, doc_id: str) -> list[Section]:
     """The sections of one document, in order.
 
@@ -224,7 +230,7 @@ def split(lines: Sequence[str], rule: Rule, doc_id: str) -> list[Section]:
     for n, line in enumerate(lines, start=1):
         found = _is_heading(rule, line)
         if found:
-            seen.setdefault(found.group("n"), []).append(n)
+            seen.setdefault(_number(found), []).append(n)
     if not seen:
         return []
     for number, where in seen.items():
@@ -266,9 +272,9 @@ def split(lines: Sequence[str], rule: Rule, doc_id: str) -> list[Section]:
         # the list must have its later printing over the text.
         for line in text:
             found = _is_heading(rule, line)
-            if found and len(seen[found.group("n")]) != 2:
+            if found and len(seen[_number(found)]) != 2:
                 raise ProvenanceError(
-                    f"{doc_id}: contents entry {found.group('n')} has no heading below it"
+                    f"{doc_id}: contents entry {_number(found)} has no heading below it"
                 )
     return _paged(lines, rule, doc_id, out, front=0 if named else opening)
 

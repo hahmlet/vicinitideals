@@ -17,7 +17,7 @@
 # - 12.65.south-hillsboro L1874-L1947: street cross-section labels ("L3",
 #   "C5") in the South Hillsboro figure list.
 notes:
-  - quote: "or/washington/hillsboro/cdc.12.40.special-uses.txt#L690"
+  - quote: "or/washington/hillsboro/12.40/12.40.160.txt#L31"
     digest: "75e87c1e1879"
     state: dismissed
     reason: >-
@@ -27,7 +27,7 @@ notes:
       pavement, a 12-foot easement. The row begins with the number of lots,
       which the census reads as a note number. The table's quadplex row is
       read in the layer (the flag_lot frontage variants, 25 feet).
-  - quote: "or/washington/hillsboro/cdc.12.40.special-uses.txt#L691"
+  - quote: "or/washington/hillsboro/12.40/12.40.160.txt#L32"
     digest: "14944a9667a0"
     state: dismissed
     reason: >-
@@ -35,7 +35,7 @@ notes:
       flag lots with adjacent flags. A row of the table beginning with its
       lot count, read by the census as note 2. Single detached dwellings are
       not the pod.
-  - quote: "or/washington/hillsboro/cdc.12.40.special-uses.txt#L692"
+  - quote: "or/washington/hillsboro/12.40/12.40.160.txt#L33"
     digest: "68579762c115"
     state: dismissed
     reason: >-

@@ -1,0 +1,57 @@
+12.25.660  Development Standards.
+Base zone development standards in the SSID zone are listed in Table 12.25.660-1.
+Certain standards are illustrated in Figure 12.25.660-A.
+Table 12.25.660-1:
+Development Standards in the SSID Zone
+Standard Requirement Clarifications
+Minimum Lot Size Varies
+See Section 12.25.680 for limitations.
+Maximum Lot Size Varies
+Minimum Density Not applicable
+Maximum Density Not applicable
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions
+• Width (at front building plane) None
+• Depth None
+• Frontage 25 feet
+Minimum Setbacks*
+See also Subsection 12.25.680.B.1. regarding increased setbacks for off-street parking and loading.
+• Buildings up to 45 feet high
+10-foot setback applicable abutting non-residential zones;
+25-foot setback applicable abutting residential zones.
+
+%
+Front 35 feet
+
+%
+Side 10 feet
+% Rear 10 feet
+• Buildings > 45 feet in height
+Minimum setbacks increase 1 additional foot for each foot of structural height over 45 feet.
+
+% Front 35+ feet
+
+%
+Side 10+ feet
+
+%
+Rear 10+ feet
+Maximum Setbacks None
+Minimum Building Height* None
+Maximum Building Height
+45 feet and 150 feet heights applicable adjacent to non-residential zones.
+
+Within 100 feet of a residential zone: maximum height 45 feet minus 1 foot for every 2 feet less than the 100-foot setback.
+• High Profile Industrial
+Buildings 150 feet or less
+• All other buildings 45 feet or less
+Table 12.25.660-1:
+Development Standards in the SSID Zone
+Standard Requirement Clarifications
+Maximum Building Coverage 50%
+Minimum Useable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.25.660-A
+
+(Ord. 6401 § 1, 2022)

@@ -1,0 +1,32 @@
+12.23.260  Development Standards.
+Base zone development standards in the C-G zone are listed in Table 12.23.260-1.
+Certain standards are illustrated in Figure 12.23.260-A.
+Table 12.23.260-1:
+Development Standards in the C-G Zone
+Standard Requirement Clarifications
+Minimum Lot Size None
+Maximum Lot Size None
+Minimum Density Not applicable
+Maximum Density 24 du/na
+Minimum FAR Not applicable
+Maximum FAR Not applicable
+Minimum Lot Dimensions*
+• Width (at front building plane) 50 feet
+• Depth None
+Minimum Lot Frontage 25 feet
+Minimum Setbacks*
+
+Minimum setbacks subordinate to public utility easements and OSSC requirements.
+• Front Yard 1 foot
+• Side Yard 1 foot on alleys;
+otherwise none
+• Rear Yard 1 foot on alleys;
+otherwise none
+Maximum Setbacks None
+Minimum Building Height None
+Maximum Building Height 35 feet
+Maximum Lot Coverage 60%
+Minimum Usable Open Space Not applicable
+Minimum Landscaping 15% See Section 12.50.220.
+* Standards illustrated in Figure 12.23.260-A
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)

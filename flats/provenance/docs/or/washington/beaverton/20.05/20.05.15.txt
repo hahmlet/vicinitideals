@@ -1,0 +1,323 @@
+20.05.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district.
+All superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+[ORD 4584; June 2012] [ORD 4652; March 2015] [ORD 4697; December 2016]
+
+20.05.15 Residential Site Development Standards
+
+Superscript Refers to Footnotes
+# Standard MR RMA RMB RMC Unit of
+Measurement
+A. Minimum Land Area N/A N/A N/A N/A Square Feet
+B.1. Minimum Lot Area2, 3 - Single-
+Detached and Duplex
+N/A 1,500 3,000 5,000 Square Feet
+B.2. Minimum Lot Area2, 3 - Triplex and
+Quadplex
+N/A 3,000 4,000 5,000 Square Feet
+B.3. Minimum Lot Area2, 3 - Townhouse N/A 1,100 1,300 1,500 Square Feet
+B.4 Minimum Lot Area2, 3 - Cottage Cluster N/A 7,000 7,000 7,000 Square Feet
+B.5. Minimum Lot Area2, 3 - Single-Room
+Occupancies
+1,000 1,500 3,000 5,000 Square Feet
+C. Maximum Residential Density22 N/A 22 for multi-dwellings only
+N/A N/A Units Per Acre
+D. Minimum Residential Density4, 22, 23 34 17 10 7 Units Per Acre
+E. Minimum Lot Width3, 6 14 14 20 20 Feet
+F.1.a. Setbacks3, 18 - Front Yard Minimum 10 10 10 10 Feet
+F.1.b. Setbacks3, 18 - Front Yard Maximum 2018 None None None Feet
+F.2.a. Setbacks3, 18 - Side Yard
+Minimum7: Townhouse
+0 internal, 5 external
+0 internal, 5 external
+0 internal, 5 external
+0 internal, 5 external
+Feet
+F.2.b. Setbacks3, 18 - Side Yard
+Minimum7: Land Divisions
+(Perimeter7)
+N/A 5 5 5 Feet
+F.2.c. Setbacks3, 18 - Side Yard
+Minimum7: Land Divisions (Internal7)
+N/A 3 3 3 Feet
+F.3. Setbacks3, 18 - Rear Yard Minimum 15 158 158 158 Feet
+# Standard MR RMA RMB RMC Unit of
+Measurement
+F.4.a. Setbacks3, 18 -
+Garage Minimum9: Townhouse
+No more than 5 or no less than
+18.5
+No more than 5 or no less than
+18.5
+18.5 18.5 Feet
+F.4.b. Setbacks3, 18 - Garage Minimum9:  All other development
+20 No more than 5 or no less than
+18.5
+18.5 18.5 Feet
+F.5. Setbacks3, 18 - Garage Door to Rear
+Minimum11
+22 22 22 22 Feet
+F.6.a. Setbacks3, 18 - Minimum Between
+Buildings12
+65 1018 6 6 6 Feet
+G.1. Building Height - Maximum13 N/A 40 3514 3514 Feet
+G.2. Building Height - Height Transition
+Standards of 60.05.15.7 Apply
+Yes No No No N/A
+H.1. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Single-Detached Dwelling
+N/A,
+Refer to
+20.05.16
+1.40,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.80,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.60,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+H.2. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Duplex
+N/A,
+Refer to
+20.05.16
+1.60,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.90,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.65,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+H.3. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Triplex and Quadplex
+N/A,
+Refer to
+20.05.16
+1.60,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+1.20,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.90,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+H.4. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Townhouse
+N/A, Refer to
+20.05.16
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+# Standard MR RMA RMB RMC Unit of
+Measurement
+H.5. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Cottage Cluster
+N/A,
+Refer to
+20.05.16
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+H.6. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Single-Room Occupancies
+N/A,
+Refer to
+20.05.16
+1.40,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.80,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+0.60,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+H.7. Maximum Floor Area Ratio (FAR) 3, 15,
+16, 17 - Non-Residential Uses and
+Conditional uses
+Refer to
+20.05.16
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A,
+Refer to
+Sections
+20.25.10 and
+20.25.15
+N/A
+20.05.15 Residential Site Development Standards - Wireless Communication Facilities Superscript Refers to Footnotes
+# Standard MR RMA RMB RMC Unit of
+Measurement
+I.1. Maximum
+Height - WCF19
+80 80 80 80 Feet
+I.2. Maximum
+Height -
+Equipment
+Shelters20
+12 12 12 12 Feet
+I.3. Maximum
+Height - Roof
+Mounted
+Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+N/A
+J.1. Yard
+Setbacks21 -
+Requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+N/A
+# Standard MR RMA RMB RMC Unit of
+Measurement
+J.2. Yard
+Setbacks21 -
+Other
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+N/A
+[ORD 4652; March 2015] [ORD 4654; March 2015] [ORD 4659; July 2015] [ORD 4697; December 2016] [ORD 4702;
+January 2017] [ORD 4804; August 2021] [ORD 4822; June 2022] [ORD 4857; October 2024] [ORD 4879; April 2026]
+Footnotes:
+1. [Footnote repealed and reserved.]
+[ORD 4584; June 2012] [ORD 4822; June 022] [ORD 4879; April 2026]
+2. Minimum land area per lot in the RMA, RMB, and RMC zones.
+Minimum lot area standards apply to land divisions, except middle housing land divisions.
+For middle housing, the standards also determine the minimum lot size needed for each middle housing type to be built on an existing lot.
+[ORD 4822; June 2022] [ORD 4879;
+April 2026]
+3. If a duplex, triplex, quadplex, or cottage cluster has been divided by a middle housing land division, the development standards that are applicable to the lot shall apply to the middle housing parent lot, not to the middle housing child lots.
+[ORD 4822; June 2022]
+4. Refer to Section 20.25.05.D for exceptions to minimum density standards in the RMA, RMB, and RMC districts.
+[ORD 4822; June 2022]
+5. Applies to townhouse development.
+[ORD 4822; June 2022] [ORD 4879; April 2026]
+6. Corner lots may need to provide a greater minimum lot width to accommodate the sight clearance areas specified in the Engineering Design Manual.
+[ORD 4822; June 2022]
+7. Perimeter setbacks are those from lot lines external to the land division.
+Internal setbacks are those from lot lines within the land division.
+In no case shall a building encroach into a Public Utility Easement (PUE).
+[ORD 4822; June 2022] [ORD 4879; April 2026]
+8. The minimum rear setback to cottage cluster dwellings is 10 feet.
+[ORD 4822; June 2022]
+9. Carports shall meet the same yard setbacks as the dwelling.
+Garage setbacks shall be measured from the elevation containing the garage door and vehicle entrance of carports to the property line.
+For all other garage elevations, the building setback applies.
+10. [Footnote repealed and reserved.]
+[ORD 4879; April 2026]
+11. Measured from garage door elevation to opposite side of the alley right-of-way, common accessway, or access easement line.
+[ORD 4857; October 2024]
+12. Minimum spacing between buildings on the same lot or in the same development.
+[ORD 4822; June 2022]
+13. Maximum building height for all structures in a cottage cluster development is 25 feet.
+[ORD 4822; June 2022]
+14. Also subject to additional height limitations in Section 20.30.
+[ORD 4822; June 2022]
+15. Additional FAR may be available if existing trees are preserved, per Table 60.05.60.2.S4.c.2.
+If footnote 16 and 17 apply to a site, then the combined additional FAR from both scenarios shall not exceed 600 square feet.
+Cottage clusters are not subject to any FAR standards or FAR incentives.
+[ORD 4822; June 2022]
+16. Single-detached, duplex, triplex, or quadplex structures in existence as of June 30, 2022 that exceed the applicable maximum FAR standard are allowed to expand up to 500 square feet in floor area above the maximum FAR permitted in the zone.
+If such existing structures are unintentionally destroyed, they may be rebuilt to exceed the maximum FAR by 500 square feet.
+If footnote 16 and 17 apply to a site, then the combined additional FAR from both scenarios shall not exceed 600 square feet.
+[ORD 4822; June 2022]
+17. Accessory dwelling units added to an existing single-detached dwelling as of June 30, 2022 are excluded from the maximum FAR limitations.
+[ORD 4822; June 2022]
+18. Applies to all development other than townhouses.
+Maximum setbacks apply to the portion(s) of the site subject to the frontage requirement of 60.05.15.6.
+[ORD 4822; June 2022] [ORD 4857; October 2024] [ORD 4879; April 2026]
+19. Inclusive of antenna.
+20. At-grade equipment shelters.
+21. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+22. Up to 6 single-room occupancy units on each lot or parcel are permitted except for in the MR zone where minimum and maximum density requirements are subject to Section 20.25.05.
+This is not intended to exempt single-room occupancies from minimum density requirements of the underlying zone.
+[ORD 4857; October 2024]
+23. Single-room occupancies shall have a minimum of 4 attached units, regardless of lot size.
+This is not intended to exempt single-room occupancies from minimum density requirements of the underlying zone.
+[ORD 4857;
+October 2024]
+[ORD 3184, 08/06/1980; ORD 3236, 01/28/1982; ORD 3293, 11/25/1982; ORD 3899, 06/02/1994; ORD 4036, 04/02/1999; ORD 4048, 07/08/1999; ORD 4079, 12/09/1999; ORD 4102, 05/04/2000; ORD 4107, 05/02/2000; ORD 4111, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4365, 10/20/2005;
+ORD 4397, 08/10/2006; ORD 4487, 08/21/2008; ORD 4542, 06/17/2010; ORD 4584, 06/01/2012; ORD 4652, 03/06/2015; ORD 4654, 03/25/2015; ORD 4659, 07/10/2015; ORD 4697, 12/02/2016; ORD 4702, 01/04/2017; ORD 4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024; ORD 4879, 04/02/2026] Effective on: 9/14/2026
