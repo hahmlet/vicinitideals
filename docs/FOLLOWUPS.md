@@ -48,7 +48,8 @@ read when the weekly full re-screen lands.
    (main-street ruling 4bdfeb29 + CMF corridor) and ~12 CMF y->r (pod80 no longer fits the main street),
    Durham 21 g->y (item 118 flag), King City KTTC 3 r->y (f1057e1f), Sherwood 2 r->y, Happy Valley 3 y->r
    (one suspect, item 120). Portland 4,830 if-signed yellow->red (PDX_DESIGN_REVIEW) -- shown colour was
-   already red, no map move. NEXT full weekly ~2026-11-02; splices in between.
+   already red, no map move. NEXT full re-screen ~2026-11-10 (every two weeks, Steph 2026-10-29; the chain's
+   last step now audits the splices it replaces, 072590de); splices in between.
 
 67. [Claude] [READ at run 78 2026-10-20: moves at the bound; only (b) open] [MERGED to main (d3b6db52, a212b7f5, cities 7cbc3346 = item 77), rides the weekly ~2026-10-19]
    **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1), 303-306,
@@ -1620,8 +1621,6 @@ read when the weekly full re-screen lands.
    (item 24, 2026-10-10), so the pod needs one approach there.
 
 123. [Claude] [BACKLOG] [scan: YES -- may move colours in already-cut cities] **Footnotes are not linked to rules cited on a whole-chapter copy.** Found by sections rollout batch 4 (2026-10-28): a citation left on a chapter's proof copy (it spans two sections or crosses a page footer) is never matched to its footnotes, so ~150 citations in already-cut cities (Troutdale, Milwaukie, Tigard, Fairview, Cornelius, ...) show no notes on the footnote reviews and reading cards. Colours unaffected today (the caps check is separate). Fix the footnote-to-rule matching to follow a chapter-copy citation into its sections; then cut Beaverton 20.10/20.20/60.30/70 (38 footnotes waiting on this). Bound the cut cities before it ships.
-
-124. [Claude] [Steph: cadence] [scan: NO] **Full re-screen every two weeks instead of weekly? (Steph 2026-10-29: "if we moved them to twice monthly, would we be building a tangled list of errors?")** What the 10-27 weekly (run 87) moved on the map, ~330 lots: ~70% PLANNED (changes merged to ride it: Sandy/OC/WashCo rulings, Gresham main street, Durham flag, King City, Sherwood); ~30% CAUGHT: Gladstone Ord. 1545 merged 10-15 but never spliced (~85 lots stale for 2 weeks, mostly gains), Gresham CMF ~12 yellow->red (side effect beyond its bound), Happy Valley 3 (1 suspected false red, item 120). 0 unexplained, 0 false greens found on the map. Twice monthly would roughly double each batch (~6-8 groups to read, still traced by drift) and delay planned gains up to 2 weeks; the runbook's 'full due after 5 partials' would trigger first at the current pace (6 partials 10-19..10-27) unless raised (~10). Gap found: the `splice audit --spliced --full` step (runbook 4c) has NOT run at the last weeklies -- it is what measures how often splices were wrong; add it to scripts/flats_weekly_chain.py either way.
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
