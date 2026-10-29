@@ -12,7 +12,11 @@ three of the types take the townhouse back:
 * 4.1142(E)(4) allows no parking access from **Stanley**.
 
 Downtown Local and Cleveland bar nothing, and 4.1140 makes "any
-unclassified or future street" inside the map's frame Downtown Local.
+unclassified or future street" inside the map's frame Downtown Local. The
+Urban Boulevard is the frame itself: where Burnside, Powell, Division, Hogan
+or Eastman runs on past it, that stretch is not drawn, and 4.1140 sends an
+unclassified street outside the frame to the Downtown Local standards, so
+the tracing types it Downtown Local.
 
 The city publishes the map only as a picture (PDF page 23, [4.1100]-23), so
 the layer traces it: ``flats/config/areas/or/multnomah/gresham/

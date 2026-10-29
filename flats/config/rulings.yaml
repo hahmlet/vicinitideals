@@ -2070,7 +2070,10 @@
     or Cleveland line, or a rear alley, opens the townhouse path; a Main
     Avenue corner, or a street line with no traced centreline beside it
     (Stanley, Beech outside NE 4th-5th, which RLIS does not carry), stays
-    unanswered and out of GREEN.
+    unanswered and out of GREEN. The Urban Boulevard is only the drawn
+    frame: where Burnside, Powell, Division, Hogan or Eastman runs on past
+    it, that stretch is Downtown Local (4.1140: an unclassified street
+    outside the frame meets the Downtown Local standards).
   source: Steph 2026-10-28 (chat, via the coordinator), docs/FOLLOWUPS.md item 109 chunk 4
   encoded_in:
     - flats/config/areas/or/multnomah/gresham/downtown-street-types.geojson

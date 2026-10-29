@@ -141,13 +141,26 @@ def _typed(name: str) -> set[str]:
 
 
 def test_the_frame_is_urban_boulevard_and_main_stops_at_fourth() -> None:
-    for frame in ("NE BURNSIDE RD", "NE DIVISION ST", "W POWELL BLVD", "E POWELL BLVD",
-                  "NW EASTMAN PKWY", "NE HOGAN DR"):
-        assert _typed(frame) == {"urban_boulevard"}, frame
+    for frame in ("NE BURNSIDE RD", "NW BURNSIDE RD", "NE DIVISION ST", "NW DIVISION ST",
+                  "W POWELL BLVD", "E POWELL BLVD", "NE HOGAN DR"):
+        # On the frame Urban Boulevard; the stretch running on past it is not
+        # drawn, and 4.1140 sends it to the Downtown Local standards.
+        assert _typed(frame) == {"urban_boulevard", "downtown_local"}, frame
+    assert _typed("NW EASTMAN PKWY") == {"urban_boulevard"}
+    for off in ("SW EASTMAN PKWY", "SE HOGAN RD"):
+        assert _typed(off) == {"downtown_local"}, off
     # 4.1142(D): Main Avenue from Powell to 4th; north of 4th it is local.
     assert _typed("N MAIN AVE") == {"main", "downtown_local"}
     assert _typed("NE BEECH AVE") == {"beech"}
     assert _typed("NE CLEVELAND AVE") == {"cleveland"}
+
+
+def test_a_frame_street_past_the_frame_reads_downtown_local() -> None:
+    m = load_street_types()
+    # 30 ft north of NE Division St on the frame, then east of where the
+    # frame turns away from it.
+    assert m.edge_type([7709700.0, 676005.0, 7709820.0, 676005.0, "F"]) == "urban_boulevard"
+    assert m.edge_type([7710700.0, 676007.0, 7710820.0, 676007.0, "F"]) == "downtown_local"
 
 
 def test_real_lot_lines_read_their_street_type() -> None:
