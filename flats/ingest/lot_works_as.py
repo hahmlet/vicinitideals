@@ -4,11 +4,11 @@ The Lots page's "Works as" filter used to group every result of a run and read
 two colours out of each ``checks`` JSON per request (10-14 s on production, past
 the page's clock; FOLLOWUPS 121). The answer is worked out once per run here:
 one row per result the screen recorded a ``forms`` entry on. A colour the screen
-left out is stored NULL, which the old JSON grouping also treated as matching no choice. A result without a
-``forms`` entry gets no row, so a lot nothing measured matches no choice.
+left out is stored NULL, which the JSON grouping also skipped. A result without
+a ``forms`` entry gets no row, so a lot nothing measured matches no choice.
 
-The loader calls :func:`refresh` right after ``lot_prices`` and
-``scripts/flats_backfill_works_as.py`` fills runs loaded earlier.
+The loader calls :func:`refresh` once the run's results are in (they are what
+it reads), and ``scripts/flats_backfill_works_as.py`` fills runs loaded earlier.
 """
 
 from __future__ import annotations
