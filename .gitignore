@@ -28,6 +28,7 @@ data/gis_cache/
 !.claude/settings.json
 !.claude/hooks/
 !.claude/skills/
+!.claude/agents/
 .claude/settings.local.json
 .claude/state/
 .claude/worktrees/

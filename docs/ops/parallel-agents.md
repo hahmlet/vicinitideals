@@ -28,11 +28,23 @@ These rules come from 2026-10-14. Three lanes rebased three times between them, 
    echo '<your session name>|<done-marker>|<failed-glob>' > /root/watch/<name>.want
    ```
    Then END YOUR TURN, with no timers and no sleep loops. The coordinator's `scripts/agent_watch.py` loop wakes you. See "Waiting on 137 without polling" below.
-6. **Model per role.** The coordinator picks the model in the instructions:
-   - top model, high effort: reading code text, encoding rules, and reading moved lots;
-   - mid model, medium effort: ops, merges, re-runs, tooling and mechanical fixes.
+6. **Worker profiles (2026-10-30, FOLLOWUPS 127(f)).** Spawn workers from the saved profiles in
+   `.claude/agents/`, not general-purpose. Each profile carries its model, effort, standing rules
+   and check list, so the brief holds only the job.
+   - `flats-encoder` (Opus high): reads code, encodes, runs targeted tests, writes
+     `../vicinitideals-worktrees/<slug>.handoff.md`, stops before 137.
+   - `flats-bound-runner` (Sonnet low): the 137 bound + splice from `/root/recipes/bound_splice/`;
+     hands back moves.csv + a fingerprint.
+   - `flats-move-reader` (Opus high): reads the moved lots one by one.
+   - `flats-section-cutter` (Sonnet medium): code-library cuts with every truth check; judgement
+     calls are listed, not made.
+   - `flats-batch-reader` (Opus high, read-only): small fixed reading batches.
+   - `flats-source-scout` (Sonnet medium): finds data sources and documents; interprets nothing.
+   - `flats-release-runner` (Sonnet low): merge, tests, deploy, load, drift, fingerprint, promote
+     on an exact match only, carry, E2E, CI.
 
-   Reports stay under ~300 words.
+   Each phase starts fresh, with the hand-off file in between: long-lived big contexts were 75% of
+   the build workers' spend (FOLLOWUPS 127). Reports stay under ~300 words.
 
 ## Lanes
 
