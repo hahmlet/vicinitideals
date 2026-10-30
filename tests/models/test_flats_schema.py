@@ -115,6 +115,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # sort on price per home without reading the wide lot row.
         "lot_prices",
         "lot_results",
+        # Per run, whether each result is green as an apartment / as townhomes
+        # (0147), so the "Works as" filter does not group the results' JSON.
+        "lot_works_as",
         "rules",
         "clauses",
         "review_decisions",
