@@ -51,7 +51,7 @@ notes:
   #
   # One reason, said fifteen times on purpose: it is a class, and deleting the
   # reason returns all fifteen to unread at once.
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L194"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L75-L76"
     digest: "bb47368a020a"
     state: dismissed
     reason: >-
@@ -59,7 +59,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L196"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L78"
     digest: "c86d1c70c1d0"
     state: dismissed
     reason: >-
@@ -67,7 +67,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L198"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L80"
     digest: "c55f8cf86f1f"
     state: dismissed
     reason: >-
@@ -75,7 +75,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L199"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L81-L82"
     digest: "5a31790fee8f"
     state: dismissed
     reason: >-
@@ -83,7 +83,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L202"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L84"
     digest: "52103c413b16"
     state: dismissed
     reason: >-
@@ -91,7 +91,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L203"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L85"
     digest: "76ba7fecb7f4"
     state: dismissed
     reason: >-
@@ -99,7 +99,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L205"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L86"
     digest: "11c7e602ee7a"
     state: dismissed
     reason: >-
@@ -108,7 +108,7 @@ notes:
       and in every one of them the marker is on the Renewable Energy (Uses)
       category heading
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L206"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L87"
     digest: "4f2281f317e0"
     state: dismissed
     reason: >-
@@ -116,7 +116,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L207"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L88"
     digest: "f7ac81f0c27c"
     state: dismissed
     reason: >-
@@ -124,7 +124,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L208"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L89"
     digest: "5624230b5dfe"
     state: dismissed
     reason: >-
@@ -132,7 +132,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L209"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L90"
     digest: "e33fd67b18f9"
     state: dismissed
     reason: >-
@@ -140,7 +140,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L213"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L92"
     digest: "97edc871fe97"
     state: dismissed
     reason: >-
@@ -148,7 +148,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L214"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L93"
     digest: "b67191a64f63"
     state: dismissed
     reason: >-
@@ -156,7 +156,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L215"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L94"
     digest: "95b34b73f0b5"
     state: dismissed
     reason: >-
@@ -164,7 +164,7 @@ notes:
       are a bare P in all seven districts, so no note of this table reaches the
       use this layer encodes
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L216"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L95"
     digest: "59d496aa4a03"
     state: dismissed
     reason: >-
@@ -173,14 +173,14 @@ notes:
       use this layer encodes
 
   # --- Table 4.0130, the dimensions ----------------------------------
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L373"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L130"
     digest: "22aaf7bd0b1e"
     state: dismissed
     reason: >-
       note 1, and it is about when a manufactured dwelling park must meet the
       site minimum; the pod is neither
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L374"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L131"
     digest: "be0e306681cb"
     state: encoded
     encoded_as: >-
@@ -193,14 +193,14 @@ notes:
       one-lot path is let off row B's minimum lot size. The unit-lots plat
       makes new lots and is not
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L376"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L132-L133"
     digest: "3aad28e9d598"
     state: dismissed
     reason: >-
       note 3 switches off the minimum density for affordable housing -- a
       relaxation, and one that turns on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L377"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L134"
     digest: "27621538e5ed"
     state: dismissed
     reason: >-
@@ -229,7 +229,7 @@ notes:
   # of the note line, under MDR-24's "12.1 units per" at 237 and not under
   # TR's "6.22" at 124 -- and now that the row is encoded, the sentence is a
   # standard rather than a shrug.
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L379"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L135"
     digest: "c94bfb390c6e"
     state: encoded
     encoded_as: >-
@@ -241,7 +241,7 @@ notes:
       the standard does not reach the lot, which is a different sentence from
       one every lot clears
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L383"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L140"
     digest: "2914b8813131"
     state: dismissed
     reason: >-
@@ -253,7 +253,7 @@ notes:
   # driveway to a rear court by construction -- that is the typology, not an
   # aspiration -- so a townhouse lot narrower than 22 feet has the shared
   # access this note requires. Nothing dimensional follows from it.
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L381"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L138"
     digest: "c76b9f715dd4"
     state: dismissed
     reason: >-
@@ -266,7 +266,7 @@ notes:
   #
   # Both were the only place MDR-24 states a corner number, and both were read
   # while encoding Table 4.0130 E.2 and G.2 across the residential zones.
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L382"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L139"
     digest: "f9d282159d16"
     state: encoded
     encoded_as: "MDR-24 min_lot_width_ft variants, when [unit_lots, corner_lot] 25 ft and with abuts_alley 16 ft"
@@ -277,7 +277,7 @@ notes:
       court is a shared access (the reading note 7 is dismissed on). It was
       42, the no-access number, until Steph's page check 2026-10-20
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L385"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L142"
     digest: "c39eff4953c2"
     state: encoded
     encoded_as: "MDR-24 min_frontage_ft variants, when [unit_lots, corner_lot] 25 ft and with abuts_alley 25 ft"
@@ -291,7 +291,7 @@ notes:
   # --- the rest of Table 4.0120, and the bonuses ----------------------
   # Rewritten 2026-09-08, both entries to the same words: this sentence is in
   # three of the city's use tables and the two rulings each argued about one.
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L195"
+  - quote: "or/multnomah/gresham/4/4.0120.txt#L77"
     digest: "0c6f5742a9c1"
     state: dismissed
     reason: >-
@@ -303,14 +303,14 @@ notes:
       of its own. The pod is neither a shared housing facility nor transitional
       housing; it reads the Quadplex and Townhouse rows
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L380"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L136-L137"
     digest: "ff7e17c3cf31"
     state: dismissed
     reason: >-
       offers a density bonus to affordable housing development; a relaxation, and one that turns
       on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L387"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L143-L144"
     digest: "707aaab76b9b"
     state: dismissed
     reason: >-
@@ -318,7 +318,7 @@ notes:
       an election nobody has made
 
   # --- Table 4.0131, the setbacks -------------------------------------
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L426"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L176-L177"
     digest: "c624796e294a"
     state: dismissed
     reason: >-
@@ -326,14 +326,14 @@ notes:
       designated as one; the pod is screened against the ordinary side yards,
       which is a compliance path that needs no designation
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L427"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L178"
     digest: "4a5ccc448df6"
     state: dismissed
     reason: >-
       points at Section 10.0200 for detached accessory structures and patio
       covers; the pod is neither
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L430"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L181"
     digest: "597723548ac8"
     state: dismissed
     reason: >-
@@ -349,7 +349,7 @@ notes:
   # has no note ten to rule.
 
   # --- read, and resting on a fact nobody holds ------------------------
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L419"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L173"
     digest: "dd93fa507971"
     state: unmeasured
     fact: sidewalk_easement
@@ -358,8 +358,8 @@ notes:
       from the easement line rather than the property line, and no easement
       layer is held for Gresham
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L421"
-    digest: "bfc8f2b4c1fb"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L174"
+    digest: "3410c41143ce"
     state: unmeasured
     fact: through_lot
     reason: >-
@@ -367,7 +367,7 @@ notes:
       turns the rear setback into a second front one; nothing yet decides
       whether a parcel has street on two opposite sides
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L428"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L179-L180"
     digest: "f733ca818d64"
     state: unmeasured
     fact: at_street_end
@@ -380,8 +380,8 @@ notes:
       `at_street_end` False there (flats.geom.street_end). Never True, so a
       lot near an end keeps the cap
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L388"
-    digest: "705b5032c7a2"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L145"
+    digest: "69581d2a6fa6"
     state: unmeasured
     fact: north_of_marine_drive
     reason: >-
@@ -2159,7 +2159,7 @@ notes:
 
   # --- the note the wrap cost --------------------------------------------
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L433"
+  - quote: "or/multnomah/gresham/4/4.0130.txt#L185"
     digest: "6f6012657f8d"
     state: dismissed
     reason: >-

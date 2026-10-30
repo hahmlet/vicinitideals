@@ -1,0 +1,98 @@
+4.0120                              PERMITTED USES
+
+Table 4.0120 lists those uses that are permitted in each Residential Land Use District.
+•                                            P = Permitted use
+•                                            L = Use is permitted, but is limited in the extent to which it may be permitted
+•                                            NP = Use not permitted
+•                                            SUR = Use permitted subject to a Special Use Review
+Each of these uses must comply with the land use district standards of Section 4.0130-                                                  4.0137                         and all other
+applicable requirements of the Community Development Code.
+
+Table 4.0120: Permitted Uses in the Residential Land Use Districts
+USES                                                                       LDR-5                LDR-7                   TR                TLDR              MDR-12              MDR-24                   OFR
+RESIDENTIAL
+Single Detached Dwelling                                                P                   P                    P                    P                    L1                  NP                   L1
+Duplex                                                                  P                   P                    P                    P                    P                   P                    P
+Triplex                                                                 P                   P                    P                    P                    P                   P                    P
+Quadplex                                                                P                   P                    P                    P                    P                   P                    P
+Townhouse                                                               P                   P                    P                    P                    P                   P                    P
+Cottage Cluster16                                                       P                   P                    P                    P                    P                   P                    P
+Multi-family/Shared Housing Facility                                    NP                  NP                   NP                   NP                   P2                  P2                   P2, 3
+Elderly Housing4                                                        NP                  NP                   NP                   NP                   SUR                 SUR                  SUR
+Manufactured Dwelling Park                                              NP                  NP                   NP                   P                    P                   NP                   NP
+Residential Facility                                                    NP                  NP                   NP                   NP                   P                   P                    P
+Residential Home                                                        P                   P                    P                    P                    P                   P                    P
+Affordable Housing                                                      P/L5                P/L5                 P/L5                 P/L5                 P/L5                P/L5                 P6
+COMMERCIAL
+Auto-Dependent Use                                                      NP                  NP                   NP                   NP                   NP                  NP                   NP
+Business and Retail Service and                                         NP                  NP                   NP                   NP                   NP                  NP                   L7
+Trade
+Clinics                                                                 NP                  NP                   NP                   NP                   NP                  NP                   P
+Commercial Parking                                                      NP                  NP                   NP                   NP                   NP                  SUR                  SUR
+Daycare Facilities                                                      SUR                 SUR                  SUR                  SUR                  SUR                 SUR                  SUR
+Live-Work                                                               NP                  NP                   NP                   NP                   NP                  NP                   NP
+Major Event Entertainment                                               NP                  NP                   NP                   NP                   NP                  NP                   SUR
+Mini-Storage Facilities                                                 NP                  NP                   NP                   NP                   NP                  NP                   NP
+Outdoor Commercial                                                      NP                  NP                   NP                   NP                   NP                  NP                   NP
+INDUSTRIAL
+Construction                                                            NP                  NP                   NP                   NP                   NP                  NP                   NP
+Exclusive Heavy Industrial Uses                                         NP                  NP                   NP                   NP                   NP                  NP                   NP
+Industrial Office                                                       NP                  NP                   NP                   NP                   NP                  NP                   NP
+Information Services                                                    NP                  NP                   NP                   NP                   NP                  NP                   NP
+Manufacturing                                                           NP                  NP                   NP                   NP                   NP                  NP                   NP
+Miscellaneous Industrial                                                NP                  NP                   NP                   NP                   NP                  NP                   NP
+Trade Schools                                                           NP                  NP                   NP                   NP                   NP                  NP                   NP
+Transportation/Distribution                                             NP                  NP                   NP                   NP                   NP                  NP                   NP
+Warehousing/Storage                                                     NP                  NP                   NP                   NP                   NP                  NP                   NP
+Waste Management                                                        NP                  NP                   NP                   NP                   NP                  NP                   NP
+Wholesale Trade                                                         NP                  NP                   NP                   NP                   NP                  NP                   NP
+
+USES                                                                                  LDR-5                  LDR-7                       TR                   TLDR                MDR-12                  MDR-24                      OFR
+INSTITUTIONAL USES
+Civic Uses                                                                        SUR                     SUR                    SUR                     SUR                     SUR                    SUR                     SUR
+Community Services                                                                SUR                     SUR                    SUR                     SUR                     SUR                    SUR                     SUR
+Medical                                                                           NP                      NP                     SUR                     SUR                     SUR                    SUR                     SUR
+Parks, Open Spaces, and Trails                                                    SUR                     SUR                    SUR                     SUR                     SUR                    SUR                     SUR
+Religious Institutions                                                            SUR                     SUR                    SUR                     SUR                     SUR                    SUR                     SUR
+Schools                                                                           SUR                     SUR                    SUR                     SUR                     SUR                    SUR                     SUR
+RENEWABLE ENERGY8
+Solar Energy Systems                                                              L9                      L9                     L9                      L9                      L/SUR9                 L/SUR9                  L/SUR9
+Wind Energy Systems                                                               L10                     L10                    L10                     L10                     L10                    L10                     L10
+Biomass Energy Systems                                                            L/SUR11                 L/SUR11                L/SUR11                 L/SUR11                 L11                    L11                     L11
+Geothermal Energy Systems                                                         L12                     L12                    L12                     L12                     L/SUR12                L/SUR12                 L/SUR12
+Micro-Hydro Energy Systems                                                        L13                     L13                    L13                     L13                     L13                    L13                     L13
+OTHER
+Basic Utilities
+Minor basic utilities                                                             P                       P                      P                       P                       P                      P                       P
+Major basic utilities                                                             L/SUR14                 L/SUR14                L/SUR14                 L/SUR14                 L/SUR14                L/SUR14                 L/SUR14
+Heliports15                                                                       NP                      NP                     NP                      NP                      NP                     NP                      NP
+
+Wireless Communications Facilities                                                SUR                     SUR                    SUR                     SUR                     SUR                    SUR                     SUR
+Temporary, Intermittent & Interim                                                 P                       P                      P                       P                       P                      P                       P
+Uses
+Marijuana Businesses                                                              NP                      NP                     NP                      NP                      NP                     NP                      NP
+Table 4.0120 Table Notes:
+1.    Permitted on a lot of record only.
+Creation of new lots for single detached dwellings is not permitted.
+2.    Transitional housing for individuals transitioning from incarceration facilities are subject to a Special Use Review.
+3.                           Conversion of a hotel or motel to an emergency shelter or to affordable housing is subject to the provisions in              Section
+10.0420.
+4.    May have locational limitations, see Section 8.0114.
+5.                           Affordable housing that meets the development standards of the land use district is permitted.
+When the proposed affordable housing  is only permitted in the land use district under the affordable housing provisions       of Section
+10.1700, the standards and criteria in that section shall apply.
+6.                                    Affordable housing development is subject to the provisions in Section                                       10.1700.
+7.                                        Limited Business and Retail Service and Trade when found to be consistent with the requirements of Section 4.0133(B).
+8.                                         See Section 10.0900                      for additional standards that apply.
+9.                                       For limitations, see Section 4.0140                                                                                                  Solar Energy System Standards for Residential Districts.
+10.   For limitations, see Section 4.0141                                                                                                  Wind Energy System Standards for Residential Districts.
+11.   For limitations, see Section 4.0142                                                                                                  Biomass Energy System Standards for Residential Districts.
+12.   For limitations, see Section 4.0143                                                                                                  Geothermal Energy System Standards for Residential Districts.
+
+13.                 For limitations, see Section 4.0144                                                                                                    Micro-Hydro Energy System Standards for Residential Districts.
+14.  Electrical Generating Facilities are not permitted on residentially designated land.
+15.  Permitted as an accessory use to Medical and Civic Uses through the Special Use Review process
+16.              No more than one cottage cluster shall be permitted per parent parcel.
+
+LAND USE DISTRICT STANDARDS
+

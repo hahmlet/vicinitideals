@@ -1,0 +1,23 @@
+4.0144                                       MICRO         -   HYDRO ENERGY STANDARDS FOR RESIDENTIAL DISTRICTS
+
+Micro-hydro energy systems are limited in residential districts as follows:
+A.                           Scale.
+1.                             LDR-5, LDR-7, TLDR and TR: Small scale micro-hydro energy systems are permitted in these districts.
+2.                             MDR-12, MDR-24 and OFR: Small scale micro-hydro energy systems are permitted in these districts .
+B.                             Type.
+1.                             LDR-5, LDR-7, TLDR and TR: In-pipe micro-hydro energy systems in water, stormwater or wastewater pipes are permitted in these districts.
+2.                             MDR-12, MDR-24 and OFR: In-pipe micro-hydro energy systems in water, stormwater or wastewater pipes are permitted in these districts.
+C.                               Height.
+1.                             LDR-5, LDR-7, TLDR and TR: Generally,             the district height limits apply in these districts.
+However, in-pipe systems may exceed the district height limit as allowed for mechanical equipment.
+If supplemental equipment structures accompany the in-pipe systems, then the district height limit would apply.
+
+2.                             MDR-12, MDR-24 and OFR: Generally,             the district height limits apply in these districts.
+However, in-pipe systems may exceed the district height limit as allowed for mechanical equipment.
+If supplemental equipment structures accompany the in-pipe systems, then the district height limit would apply.
+D.                                                         Setbacks and Yards.
+1.                             LDR-5, LDR-7, TLDR and TR: Micro-hydro energy systems contained within piping are allowed and pipe can run within the setbacks in these districts.
+However, if supplemental equipment structures accompany the in-pipe systems, then the district setback limits  apply.
+2.                             MDR-12, MDR-24 and OFR: Micro-hydro energy systems contained within piping are allowed and pipe can run within the required setbacks in these districts.
+However, if supplemental equipment structures accompany the in-pipe systems, then the district setback limits apply.
+

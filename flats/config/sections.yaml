@@ -483,12 +483,11 @@ or/multnomah/gresham:
           4.1400.pleasant-valley, 4.1500.springwater, 7.0400.middle-housing-design,
           7.0500.rockwood-design, 9.0200.clear-vision, 9.0600.height-transition,
           9.0800.parking, 10.1100.shoreline-height, 10.1700.affordable]
-  # 4.0100 stays whole. Note 6 of Table 4.0131 wraps onto a line that
-  # starts "10 feet in between major structures", and once cut, the section
-  # text reads that line as a note 10 of its own: note 6 loses its second
-  # half and an unread note appears over the residential dimension table
-  # (measured 2026-10-29). Where the note ends is a reading, not a cut.
-  uncut: [4.0100.residential]
+  # 4.0100 was left whole until FOLLOWUPS 123: note 6 of Table 4.0131 wraps
+  # onto a line that starts "10 feet in between major structures", which the
+  # cut section text read as a note 10 of its own. The census now reads a
+  # jump out of a note that stops mid-sentence as the same wrap, so it is cut
+  # (2026-10-29).
   # The footer "[4.1100]- 39" in all its spacings ("[4.0100] -12",
   # "[3.0100- 12]", "[10. 1700 ]-3", "[4.1100]- 12 3") and the header "City
   # of Gresham Development Code (06/26)" (its date on a line of its own on

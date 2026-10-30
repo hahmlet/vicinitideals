@@ -1,0 +1,1842 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "71401b43755c422944416ac7f898ee817a8a927645c33c4fd82461210e62bb31",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L17",
+  "old_fingerprint": "9fcaad3620341784b591138f4180b9c50171f40d2c25710eef4369ef8c62511f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L134",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "a2923d1f48a7177b2583b220f17a7ac336f4ca530e59dc2b579cd612852575a8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L90,L92",
+  "old_fingerprint": "43dc9232c9d9b56bd7b32a7633d0a717a1232cb18877845fcf3d6aa56e27ee7b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L330,L332",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "6d3afb6f9260290ea126cb2642e1522f749e04b76cb48580e7208ea4e81c5512",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "8f843be1dd7a430c45da2038033ab3b4fcf8fcc5d1b2fd3f3913b61ea672e2a2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "23a37c07d3297c19c4bf76886f510407be1bdadcb3749dc6ecd281112a62f78f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "addc0942b01c62baa4755b95175aad326b8f83363e611e5df5aeb6dbb8dba4d9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2d9b4e5ef393ddb601a2723116ebb5efcff6c32f6bc1fea2322807dab8171d7e",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "162667700135e50c67887345525df09a9513ed7a9a554dfa82adf4568caa1647",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "cd4b0daa099fc750805255c659a079b7ce347ca559ab92442d952f3450b2f915",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "b33a0b459f3dfe8118efb628020fd5b983a46abe0ac67a1fe73387fb2c9eb53b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f654061ea33675bfbd58563b3efb89e9d5d106b5e24cf866e78b4df07813c29f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155",
+  "old_fingerprint": "453ae5fc2f02c3fc86ea302cca39c6970d6d83fc2d9a418dd9280452886c4bb7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400",
+  "when_key": "alley_at_rear",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "a4236ee84105abeea684009c48f26698b7f3c09e936c3ceced6aefe99f77ca65",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "338ed0ddb98a26ee3673aa48ee3e2247ccf381d4d05a25e3a9dc5e4b7cae5b0c",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "lot_of_record_relief",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2526e62a355f097751ad4f35de149a5ab5738918afbc32e4cb1651df455b57bf",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L16,L131",
+  "old_fingerprint": "7e551243114d179eb721f3b2ecf4ac18baef5bdff43e979400048739a540aadc",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "711799e0adeede01910a73d4311e6686463c7e655793cb7ea96fb7dd2e79fbc8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L19",
+  "old_fingerprint": "89291a829929b6bcb6b38e0008734fc2f80e082808418326a5d31d14f17bebe5",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L243",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e0bdf1d23523bc58ea8fe18c10644508624fe506ebdc744a1d71fecc5ce6a8fa",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L18",
+  "old_fingerprint": "754c683066847f21c946983536917705cfafabf79fea2bb4e0efa4e0e5971ac1",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L242",
+  "when_key": "unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7d961aa859e99cfd9619889c8bf88c581192e34d41959c5ff46a63e06d0d7944",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "55e4e41ea97e1dd231290bdcdfdced91901e048fa88256267ebfd3ee8fae7347",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f16f358e58b5663dc7a603fa3bcb1ec967f748ba5eb61359897f0c8a6db8f934",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "6d470e05660c745783da3ca59558977addae2e9cfeed559b2a69463a47b91411",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f9c5bbf3b3698d3ec76c2a4423fa87123ef4fa6228ac9477b525207503d4cf77",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "2d3a48edca8046f89f255a77c8cb0cfc12d20e4a763b13c30ae665ef0cc8e4b9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "671d543b02b85e6a5d8ee20e82f481a2fa43f005d962421d4d2e487dd352c703",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L80",
+  "old_fingerprint": "02201919d4749c21a5b1b6d1af5cdab2fac694b1e0c88f3b0f9f728f1a271251",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L314",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "dc3f0bc4c403441017f293c95df6f2753473c0223f2540daf1dba35afbc43ee8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L79",
+  "old_fingerprint": "0b460801b338648257f161493aeb90808ee6d4201e561e61b7e24640f23b1908",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L313",
+  "when_key": "unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9d670e986810ace21aa1b9a6b3ac8ea4d3a6dc2d03bd09ce5c6e9926b3dbb8eb",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81,L83",
+  "old_fingerprint": "af2cc96186a3360f557a2c95b089b054643c7add67defe3e7c00d5b0ea34017e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L319",
+  "when_key": "corner_lot",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2807e861fb6df6cf8bc30727935a96676c96159b2d36d113a2b265faee364f7f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82",
+  "old_fingerprint": "aaafa087946536984e1b398e33b05fa6335eb739386927d6f9afe55964dfa323",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "39aaf4d68997858f79b0cf2d501d9501c27b421eb3918563791d76be6fd8fce7",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L42",
+  "old_fingerprint": "4ec678f2adae9b42aa3ae8dec83b9b4492d9db86e949eab9f575db0b7b33fda5",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L274",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "22a73a62e688a00a2416fc03e475b7748af68f7ad3fa271a690db3fc62068c39",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L45",
+  "old_fingerprint": "352a96bb457604b0e62cfa34451171a3c7e02e496c19de31bfc3afba9e2a686e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L277",
+  "when_key": "unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "03100457377c1977d6fe17ca04ded13a7e078b76bf6c9c620dceffa8d5c4ab8c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "9210b263e9d8182c550761f8ad5b20a999006294f3a6620c58a728b210d228f8",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "0fa18a317bc0949b73a9e919c9cb999559c4ab0d0b8444f839c48909a319342c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54",
+  "old_fingerprint": "6021f13aaafc338f2dddf3ad15e82239a621ba1ed4817b6686f96415d7132e7a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9e781c61aad8bd5019be53afc8a202ba91ae6a4eb0be525119cce0852a49b0fe",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66",
+  "old_fingerprint": "7763f4702e5ae4c5242f3ea15126017cbd3fbf63b2e635d98c93df7cdf5c6461",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300",
+  "when_key": "",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "194fad656209f1b2d2c6b02100e1351aaa7059944ffa92c61da32a7e7611a813",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67",
+  "old_fingerprint": "a1dc31430deb1b113ce30cdda6c69d66cc6047d5c89c7df063ed676398ea8f59",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301",
+  "when_key": "unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "dfdbb9837a8547ca0dcf1bea7be78da1b2418353fc75d7b3c5ecc2929c5ceaae",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74",
+  "old_fingerprint": "a1ecc2817c29b466354321e6d405db252d70a3ec3ee12e7e9d50de68f4a286b4",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308",
+  "when_key": "corner_lot",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "6facd8e4933f235b65c06726524bb0cfb7107014f3a3633cf7fb427bdf64c9bc",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L75",
+  "old_fingerprint": "3dfa93686401956e8f0a1d387347ab56179cf88d93f871e3d00c6a5c51c34610",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L309",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "LDR-5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d5e4b98daab773b146d4dd40cf0751c8654bf0d9e171daaaf515a9f99625ecea",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L17",
+  "old_fingerprint": "9752c37fb436bdbd83ec694d475fcf73017248dc5493c706b4edd93f05d1d1b6",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L134",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "050bfd49c975a1974e0ee6473f1d55554ffaa786a89ef3fbd7fec8983cd9fbc8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "e04fe7ab802cb5db10d62e3a98211f6b28d92365edb0a04c87a157a76f02697b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "cb1dd88577a2090852f33e43cc2efdf005ec77110f25c1200979259addae19be",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "d1a0faeb6b811c948e0a4f2ed031038f8ff5e9826800d51cfd3971dcd7f7cf0f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "75216c0d697a4d09dc476a6d1d21b0a7cde764507bee01cf5022104df5938159",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "c61596d8264cf936967ba89b882e4c80e1f0a1a6d536dc2f2adf81950a8605f5",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e943fba6c85f5e5c3ecc6c4fce3680ab6bf98a727546c6dfb2ba33d9e51e0956",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "ab24ed4cad7562f23e681d7b81fa833c6cfa36cd6a21455794553acdc052e681",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "4b28be226acf35f73dfa9ef8da1138205e143d669326c88dc02aca6c3f2e05c0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155",
+  "old_fingerprint": "19bcc63a3a8877b78cc06f1df0f83117c5362535a570643e41e930012d0867e9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400",
+  "when_key": "alley_at_rear",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "01ed74932e3c4802f41296bcb649d82b544cbd2d28e0bd24f4bcb36b1d846519",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "c087666fc6cbabb8785ff813c62e987469b37dc52f309f7156f6eab200b96f32",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "lot_of_record_relief",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1b5eaafd9b579635cf94f2c8d94ad0024b3815ed9b171916f6d0511d50830728",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L16,L131",
+  "old_fingerprint": "1b114ea57c959272e3940464a1006a017d5b431cee73b9044d1bc35fd0915533",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5b3257461ea47556731a753a48e40b7138b658e1160b04573bbb3aac0b3b1941",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L19",
+  "old_fingerprint": "044f4c30f5e4b31b46c774acc7c67259b0de6d63420852f1960d74707014ba84",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L243",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "28a49b71aca94cfcaa4562beb51463187904b11a32fe731abd815ce98cfddf6b",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L18",
+  "old_fingerprint": "f4f4961d460f57aa469905cace6e55a79f700aec8dad07f5e780071622975175",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L242",
+  "when_key": "unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "37c0244ed42128b19c6a82d5c302cb7cd9334927a6e3a0e08632387808046b8e",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "171d95ab06809d679c760edf2d34b0c3575f6e6dee71af68d80a9f8a62cb46c2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "48bf176b63d5c7a60bcdaf4bcee400c7b82cc9c3a597ad33c8cd4653affac2f0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "e186e34e264167bed16894c427481e1df1ed90150f51fae861889e4e5edaf114",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "c7633b0ae7f7aa035cfff53c15c376331ec458f0c25e4640d1d71bd9dbb856a4",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "639f1a22d2f30aa80de2c3b531a749dec4e16ed5ef2ddea1597d73091c0e6cf0",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1408358633eac904c2fd8ef75feef9ecb52ffc97130c6b07e1f7cf79ff6be5ba",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L92",
+  "old_fingerprint": "dd7e4320577775f40271c12966da88f882c175bf8e8a1883530761c957885850",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L332",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "0cdcfca621162acefc36c7394b690680e7b248fb381e970fadd8e1fcafc71c74",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L80",
+  "old_fingerprint": "fb5405882e75143e836d124096bf6eb96d433c340d086a79af56ab6392a02d26",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L314",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "c1a4f841263d6d82092d9b66b5310bb94f8a913d9de9e0ead2e46892b0d38197",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L79",
+  "old_fingerprint": "be76a1c735a99f1cdfdba295d22497ebde3b93153207ba707cc794ce6c07b58f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L313",
+  "when_key": "unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "a44e86d34ff452a99074829c92e3240ba0f886d32b006659f81a7c2b0be845fb",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81,L83",
+  "old_fingerprint": "6b410bd36c84fb48db632a960afc212bd6db8c34f06dee607711ad712b5972bc",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L319",
+  "when_key": "corner_lot",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "ed2a3bb60397d9d664edd9e8dbb7aa9d3c5b366da58d4498d190f50e455b20ac",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82",
+  "old_fingerprint": "f37d5126685adfaf89489a00108be8716911213cdde5dac8e699d390d48db1ed",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f0bdd04e1f34ccab89e9824bceed680eab8aebf4941595d8418bcfbd42c6e4cf",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L42",
+  "old_fingerprint": "b1e33fd34ca6cf8b811050b552a67f14b6224b107a95f3c1c12dbded0566cca5",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L274",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "bb18802bb538a966bfe3ba07c95aeba68269309e5fd7f21e70e714b362887867",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L45",
+  "old_fingerprint": "e79f0af4fb83db188d395bf383caff464977602a6abf0e887faf497fe26d121f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L277",
+  "when_key": "unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "efe4802a0ee04cbde2ec406eadf71e167889e34df795e13d802327b86fd7694e",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "07313c7b81d46042b30e28b1662c13151eb7522ff3896156cd040912205d964c",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "786a70f4a4bc75525b282f6ae5db86263f5c15c48e84f2cae30a6ed52a78d380",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54",
+  "old_fingerprint": "ee342439779a571d31f9ac216b8736331dcc22a9f870b4336bc5a8c8f1712ac0",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "cff8a18fed6ed0f3bc3531f6332c2379093df529d3880d94e67a9217984b5780",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66",
+  "old_fingerprint": "990036959abece676d2f97d071c18122a1e626839ab6cfdfacf7e7bf5710c436",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300",
+  "when_key": "",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "26504b449f1289b8964d9c51ac4937620640953407c2ff985b31c595a2f1db4f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67",
+  "old_fingerprint": "d5a471e07b2bb869bb5b64bfe06875312997dcc0616468312993643f077aeb4f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301",
+  "when_key": "unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "471766b3685cd3077eeb278ab6803bef414de2733ea3352445fcb4dd49970f32",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74",
+  "old_fingerprint": "3420aab1567657d2e1561a27d592e760b76244dab13cb6c65fed81ef367bf497",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308",
+  "when_key": "corner_lot",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7675b4de87a808fda61a9acbd9ecda7195fd02929f74d1b3dfbb2deb3f4ff961",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L75",
+  "old_fingerprint": "3ebccee66100623b5a458733a7f6378034cb7422198af51bfea14dd675d1965b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L309",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "LDR-7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9ec0e7c9cf16d340d9541f2069dc9f0449a70d62071a6c533ce8daa171365e26",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L17",
+  "old_fingerprint": "622ce9722cd1d841599d2461b0218173d1de7909e29e9e3e1b63e41e2a295a2a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L134",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "842092390071a7149a0863b06ac110ef32d9d3c0e42a9716cf653cf45ba8f4ac",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "20e42aa2c5ffe409f0de73c7787e78ee102f6db9a895ad83fceb0beec9354f05",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "45ad991ef98b4a10a970bbd49383ab499faefb0275549a1011a99454efb15f89",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "ddf0533dbd65dd0f583e3d6e32b92b9f9a49d242c3feb8a7f00f9865d170d9c0",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "159962be757448944979977a99e2f028be37454390f2455f9dc48cb2355837b8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "f5b0492f5b4751b563a95ae84fcd0a1e789cadb46a75c5a303f96414836d0cd8",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5b5ad2a93af14e0e099b078f67af9472713dbd91ad9c377ff484001a27122743",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "d6ad3716893bbd90a779a9e6050940215185046fc283bda1bd6a6f5c5641a490",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "443c4528379d19b348b85f1a78895fec78f56ff83b038e2831e2ee9485b22c66",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155",
+  "old_fingerprint": "66f97a34719c6d3580e6f0dca8cfb871a05218c09fb39e7bf362754579c46ceb",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400",
+  "when_key": "alley_at_rear",
+  "zone": "TLDR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "92c5c58f0a43909a6ca2d3b19c8f1b9546b4ee679c9dded638068df883ef0a24",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "f3110eaad383460bd2731a91d0daddb3851f8568aa0a6cd9d572f502f3df37e7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e48f2772313aa9dd144af1f1e2241038487eb07b8bf5b5468d1c97026d838f50",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "8e54db3f7d093fbd9a21b08b9e34c51c3426d8eb3096c402b5cba01da8eb33be",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f715705b7edaa2b078f7b3047373b6a6ccdfaf0c6b720fb5de49ae2a98e17843",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "23c9db3168800db7c1d7af04cedd25d448ea875c8426d9d641b5e1677a58a593",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1e6de3374752c1d8c4a48ad692e739bdb3d28d24f955ed92fcae2457bb839f11",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "ae374b8c47f15af1fa55765f182d8afc641c82348878f02be4fea0fe7a890175",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "TLDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1a86ce4f9261c08ee6a9bfcf42b59c1eeae843fe1fffe7c89f7b6739852553f8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L92",
+  "old_fingerprint": "c3842b4ea675057fd397dc07a57d665cf5d3e23deac54a3241b49222b658ffce",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L332",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "4c5f099c39edb9f63b1e816aa8f7d32592c4e47d4431d55b7a74969ce7a951d0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L80",
+  "old_fingerprint": "23c23b252b2280b0ee8bff9ca22948f9269875d40cefe37429635cec8bd30c35",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L314",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d3b3658f125a4dd9b34fceb44b4b8b914c77eae78945f241288225b21b6a16a3",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L79",
+  "old_fingerprint": "0e85c9c8f76c45535d4ddb546d14cbd5d6f7843becf44ee74c5baa8e6f21c8f2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L313",
+  "when_key": "unit_lots",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "65be0cfc0662b184309ba3f331e5de6a5a6d0ebacaf74a5fff8478c66888cd8f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81,L83",
+  "old_fingerprint": "7d517baa0a644c81bf9f9c88d4507a9899dddc46801ac54a1f3e77b2362f4213",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L319",
+  "when_key": "corner_lot",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "bc4bc9bee8ca5d28f4dc42486b7aa855c13a9f2ba523653c83f333d53ee3b4a6",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82",
+  "old_fingerprint": "7fe7cec5d558559041b40683bc374d1b28523604052b029a5e0d3c8f04f1a747",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "TLDR"
+ },
+ {
+  "field": "lot_of_record_relief",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "ed1963c6c326353dcdf8500d7a9d395b30bae606aea57d2388532546209b665a",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L16,L131",
+  "old_fingerprint": "f18dfd8701154b6d8584099b3a2a1f8edd71c3c186daa8b522d9a3b91dbf5754",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "0340228c3877c5d8c88fc7735cfdb8b4fb012bf8411a0e9e0a7b007535c23c7d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L15,L19",
+  "old_fingerprint": "0836c658bcc5386c319811f2488f952131134162fdda7decdeeaada47815fa71",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L239,L243",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "16a5fff8d697b3089b6121c2bda396f4035103cd5b8249bc51802cf041232fbe",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L18",
+  "old_fingerprint": "87e03c4001541631d739546294d882933dcb8e6d222df6e96d198e42d4723e99",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L242",
+  "when_key": "unit_lots",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "bb479d9ae98740de3a6b4e24a3ca6c9677677a43cb2e877914b968fd845f1fd6",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L42",
+  "old_fingerprint": "f5d678e1812539bfbeb8f56d2485a8b290c20628c064c445caffa38348997c20",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L274",
+  "when_key": "",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5435d8cd7bf67c996673196e36b3524c4a839b1be571f6a135056ed57e05db8a",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L45",
+  "old_fingerprint": "e6ee80b1f63ef6dfe55e3b697c65c765abbb12bb9f5184d906fd59906437cb8b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L277",
+  "when_key": "unit_lots",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "476c2dd11afe73af70d0391818d57b3b6c84275c057f1b247679f9ae6e3be311",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "45644d8cf67653df5c787aed9ed075d322ae2e270a8edf7237a9e6c347b2dd9d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "TLDR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d8d430d3e9faf782d470e23dab6c284bf4999379155abb814ab049ee40dca350",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54",
+  "old_fingerprint": "b802087050cef1d1e489210340f1095241dea0de8b57225c1a48ca74d7d3925b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "TLDR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "80f1059eb4bd82fa02420e8525b0526fdbc8368644bf77b99abb5515d7483d19",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L17",
+  "old_fingerprint": "12c303f5ae2b51a9372a8c8a5d1430f403ef2c7312d5cb244c845d73b42a0e98",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L134",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5e63b9bf0f94ee7a561b3aa44847b1ba2c9e8062b329d09fb3a23028c23a27a3",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "7c99dfe96730a9efcf40a2662aa9fa485604d2aa55b886dc1f18174e16d67d11",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "b1726699a9358799d87c67e7eb3a1e3e63c5c08fe2c32f9c0ffbdd56f5f4ce32",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "b130f28b6ff1c82b1ac334ccb22040b020084fe04f82e1d920d86a9831e05d65",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "3de6d72fdc813dfa126091519c70d9ae1b851be06b99a5cd16b584c5bbb3ac77",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "057a7efc73d5aef891ca0655b41fb27a72af82ebc7eb5f1ee3f4153f5a793e54",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9a670f953f1d362e73192bb4644aadc9acbe6dc778a6dccc69c9cf03059db6f9",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "3aba3667192ada22e2f8f94db6e407e38f1dc5e6fa99c23de95f1fa95b14e495",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "b4458751272f1641cce432ec9309bb245c9655bf0f37a6a9d98a2ed6cff6ab1d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155",
+  "old_fingerprint": "62b75f6a1c2a8b2f77120723cd4a88bbb46a6ac0291c406b8886d0f0b3a65318",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400",
+  "when_key": "alley_at_rear",
+  "zone": "TR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "ea88634c0101085508eb5bfb92a909db8cfe9259980a1827ad4713bc09b9d994",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L155",
+  "old_fingerprint": "c891f475bd5ee554aa5f1ca82b766f6a69a6a9c3c05127c6998807ddf9afc545",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L400",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "lot_of_record_relief",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "621cc305004c63125e27069a1e6d59327821f1adec45135f393318ae89cd4229",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L16,L131",
+  "old_fingerprint": "7b0f1282fc7faa7a4eb20c7c9abc74ebf560f298c0fcafac74e061cfdedd3de1",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "bc115d1a21e2c451f0bdb31e81a8c0ee6997523878990aac18974455aff76816",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L19",
+  "old_fingerprint": "c6861642acb4ba4ef3e2245b1edd6b25eb0d1cfff64fe37fa623706e0b73cb79",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L243",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2a63d451687a1b960ac2cd279068075d238a7db8b9a0c2349bdb3a77fb476c93",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L18",
+  "old_fingerprint": "2e84dab54102fc27c8fedc363a46c538c91d073c02aabac629489d9a743e0743",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L242",
+  "when_key": "unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "97c47286b311ae4c743a44579132ea855032cceebeb8557f6f6ea22b31e7733c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "ed97205bbdf4056422baee029c43f570f058f9402f731b9f336ea1a2c43329d0",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "8d495a2e6e5359c5df090b38d0f27ec428e4b6ef8697a004d57540156c57f0af",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "deac866c6bf006d4af8186bc1c79abe01fd80f56b00ee70eddc64a544ac585a9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9727d46f830c6bbe26b9226fe38fff3f85b9fd3bdf1b3a2cc3d6b6c19c5fc9ca",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "2a796bd6c0e62f1ce9453463bacf667a1c00def7f60b1c03da555d63ca12cfa8",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5994028b91db6337b511dbcb4c088a893df4707086a1f3cb3739f2703ccc6ec8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L92",
+  "old_fingerprint": "bd5aa33e881f68cf5e2c288638361a173cc6c3429c998db308422bcabad15a95",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L332",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "0f1c0582b38c4cb50bc8dca8cbbd7d56d48fd01027cd33a81a56027228db8c0a",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L80",
+  "old_fingerprint": "34fcaf76395cf0baba245557ef8abdf888722e0be960f660d68594eacca53371",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L314",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d668a105dca5e3ded413119c6b95bb8371116eedb7a840ac8339a08b58f19160",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L79",
+  "old_fingerprint": "c21b86a0a5b4d68367e1b7bd5ba4947e81b73224b7e483e0b2712407a4fc2ffc",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L313",
+  "when_key": "unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e2d494639676d6568f7b95821dc7c52f11789be33546a07a312573cfb3b9179d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81,L83",
+  "old_fingerprint": "0ba8045153119def4d38372c45582f6a86d641eeed7a53a491b95425037c55d7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L319",
+  "when_key": "corner_lot",
+  "zone": "TR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "59abee5783d16990a00fcf2c9b336cd21e2facc86bdbae3b6aba60e13ba2c466",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82",
+  "old_fingerprint": "e5e15e17e8a1247dd75dc663c4bd9f02f7e223d7a4c1961aece432f9710abb6c",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5f84918287e84aedbf40a19d6d38b0b89877e6e7b19bc0cc3208c023025f62c0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L42",
+  "old_fingerprint": "f0d6e92acb3da44584177cd81e6930d261eac340e968e720e9137ff7f416c2cf",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L274",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "69a9a8a09a04cbb88ea6a88d639d721342435cf0aa132b97d42db08988a7151c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L45",
+  "old_fingerprint": "d61aad9db734b9c80f7080183f3027d2999d0a79633f04adc106bb2e27b69950",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L277",
+  "when_key": "unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "86c4c3ea01b024f14b50985814bf2954fc115c5bc050feff134db507fb35f7c3",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "ffc531c20f1278b31966d7794e2c7531afd8f70c31a61362d6e6ad2e96d3a59a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9dcf7f68e6d192f25819cd94d0c73f5b46fb937451a83afec2cf9af531ceee7b",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54",
+  "old_fingerprint": "149341e55e3455b8ad3c12d26043572bd15db4037d39377cbc765323cb31cf50",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "70468d6cdcffe8ffddd0d50f55d3b61a8dff060d0643c543ab70eb0548c04da2",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66",
+  "old_fingerprint": "4c635cd94808e9f6ff4352af6900c1f75f7ccd4f8e25aa0b9220be243a5455bc",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300",
+  "when_key": "",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "44e3be9902a49ea951b5d772dd843f1a23a97d354b7ab92f5d42333e3fd314d6",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67",
+  "old_fingerprint": "9704e5d6229dbec9a7700919d6db0499cd44f4871c164c56588993a5307a02a7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301",
+  "when_key": "unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "0de6cce4759903f6ea57dd3aefbcf1d3e8c161880c654be6e6864f63b44fa859",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74",
+  "old_fingerprint": "de06bd2586e809ce79d7f8967bdb9c77f9dc8491d3c9fa2a3571dcffb1f19d07",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308",
+  "when_key": "corner_lot",
+  "zone": "TR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e4b59d22676c1e28a23cab78e81c7fdb0c8a85431da84928a10275a9f1819d27",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L75",
+  "old_fingerprint": "302fe8dec8ad3a299bc19127e090c782c97eefe4a6d9e8a53083ab29c7d25686",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L309",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "TR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "65308fe0a9e62c34eda348d0dd3d27a9dc2d1a3a3b795f9656cd37551d78d18b",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L17",
+  "old_fingerprint": "412b87735d2958181aec0588dd00708f34d0326c75d357cd0dd10a7266a859e7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L134",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "83aed02098baed5f5d3bcbbc449e725dd1b655262b0f3943a264ceb853cf2f11",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "9d3734487e864bc051b43aee8c7996146614f119fb20017850a7f681ad9dfa00",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "4386f432c317f6fbc26d7c02ce4bafc760a86d08dd54733f8ccc41654c659dd2",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "b6a5acd0c8b2e3e56765aaac6117ea847fe70b4351044c516baefffdbaeef346",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "22ae8af69d6e3e5b4f4a957d1103bea1e775cf89e5c1fa59be777ba726c61126",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "06d9d93ee2cd9f9d73540934bd50fe725f4c0ae2d8a86c382efa4e5e0eacf89d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "24b50ee41bbc92514a58dd39c87966a4a0326d3d0fe3f8c0b9fe33dc7e7c5c63",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "21a134eb2c7787a4b12df1f438a220dedfb5b0e8cb30f4b94c8710a33c86dba7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "4d9868a4594a46c11d4479252ffbec175f10a2008c76746b9e9196e264b2000d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "8186f9763f43f50884d7bdf30b9797966a3b5ded7a7462ba17c6f502ee389e50",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "57bf02a11860491088f528cb2b593d832850739e4019ab64ab086a05b1a9e1f9",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "d64f5ee85573878b35532255371c781350de91f8dcd2df6c50a32574d2204207",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f88e316a535c84a98ec60fdfc766b4813eb16a97365b9d2115b9487cc11d1926",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "1ea2b4ccfd33bb77d9650abe1cf32209c4aed09b3e43dd928318a868afd75f13",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "alley_at_rear+unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "ce7ce241ee7721da22feea5aa5d6171d381c59eec2c8adcf3b3a5f2fb68d31f2",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "335c9d1dd7c22d5bab9ef35ec2522963cb557dfb5e936804bba22f8d289952eb",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5f14625c078fbfaaa9f2b12dc5d72b6138d1b802b40e1fe69d8a34b2423c0ebb",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "b597599bd25bd01f3c02fb567ef0f05c5e1a3cc64b1fc06c0737f091384967f6",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "lot_of_record_relief",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "afb97618b5d5d16a08f77f4ee5dee37265e2fb3f273f037f5fa41de788732045",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L16,L131",
+  "old_fingerprint": "d0c461f871c073dd65cf561028ebfc20da4b2232902ac86b305f40fe0407b852",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "10ca93506b343d4140ed2f4d58f4339be951827c8a93c83cf00b8ac13dc1d883",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L19",
+  "old_fingerprint": "b197b20cd625891fcc7d8e40641896e47e24f028288e1247659282fda5e944d0",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L243",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1709fad98e9a1fc718c901869947b106fdc43bb4f50fc378d3b8f43c9af5dcca",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L18",
+  "old_fingerprint": "1abb359f689e6f75ea3cde0450134dd144c1b5d465b9ab95ae6d17d71e50d0da",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L242",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "23f9f77ce397abbb49deca24389cf4663aec609c1f3738e10bbfdefa5321e6bf",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "279339e5efc66f0071736a2a204104fa28586cc74d0f1257ace67411c01e2659",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "aefaf6a0106d7845c9f1c56210102be5631d987af543317a33fdb837c04d1195",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "b3d6807f92889077b8304aaf0ab7e6f67ec9b6434d0102315e799867fecd584e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9aa537ed1ff24aefcdef463c234bbc7590e355a3c666c750f5ff398965002ae3",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "d2f955b60b62f0e374c87a47da1d258b5f8327fed96887325b041d89d3f0e922",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "f046a8b9659f8c3c29dcacca70ee1b27cd1bb44969394db5a8a2f980f1e2922c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L92",
+  "old_fingerprint": "352a8d6841c76cc4de502fa7235b29455843aa29fd1202f4a3507e7b7fe32f30",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L332",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2a129b2e9b93747dde39476160c071d2f524afb75420f7f178e29be42ae20336",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L80",
+  "old_fingerprint": "e4148556e9e601fce5d4df16abf2eeb6b7a8f395c701a4657121abb2de84394d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L314",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "45ecf98a2fe33f10c5019e83ef90809b05d01111f81958623799d18a97ccd606",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L79",
+  "old_fingerprint": "1b661d3b8f31f712849f931837ce073a30ce259c1d8d3d52eff599c726bf52de",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L313",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "a19d0fdd7ccbd30813d40f05860a5cb3e1c3407121e399da944393ae2e93e77d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81,L83",
+  "old_fingerprint": "5c7f68c58a1e8b265d83756da6157f6d9783ff4a13e3d56778fff95f09c5c833",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L319",
+  "when_key": "corner_lot",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "369a1c6b5478336b47a85bdca9f176fba3855df232ecec880b9271bb0072d3c7",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82",
+  "old_fingerprint": "523d2bed138e217a5f89956e8ba614cc5f7866f378658334928ff009c24d783a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d9056d559012e4f8b882c55039106dfb2f5b15f4fcbbc1a3a27e397cb026aed0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L42",
+  "old_fingerprint": "1385cef4a39e224a8ac2639d703a007f310a80f5fdd9d96d0114fe9e96ddade0",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L274",
+  "when_key": "",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "8d2851ddf8d8085b10d4696a14277e6d1706c6c459b2845d48e2db3e62a12715",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L45",
+  "old_fingerprint": "3652868b02a0d844874b2bc7c6bc4ac2379a46f1ca769782875018ae06b83b16",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L277",
+  "when_key": "unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d9f928353a15340312e1d826b7f50d577d258605b25f12e767504692fabaf411",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "953f4a0c88b426bc5df28833c03918b539cfb24acc44fb8b2898e8449d399a49",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "482a22de115b4caf843b72de3916ce563e9ab65bf080c1a8e685178be37b1108",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54",
+  "old_fingerprint": "cc09766598ba2dd23772c71dbb4d2f178c3b47428d098fa5d6345fe10caabebd",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "MDR-12"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7f9c9578217f4d436aa028e6918ce6c6bb10908657e15585c5168a90ddbbdd07",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L17",
+  "old_fingerprint": "f1469c245389b1af0ff35f7b99ff92955ba936deae87170f99bb05a21eee8414",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L134",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d481dc4389b38a4c9dd764a54bb72dae5560c47b68dd51a020340fc37ebac7dc",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "cc7b75b88f9388187ff30b2c7158cc1075a25055f71cbcef3e1d1efe9d115568",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "987472d4bcdd4a7c1bcc708f7da0acc29d9c9675f563d71e5a5cff182a8eb81c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "6923163581c6cfb60a7069faaae595d71ebcb8e442ff8e1f2743236e7639f1a6",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "4d96c956217ee103378959396289d9f8b3344a16c3bce84cb50c851dea1cf94f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "65dd8b454c68652fe2a1055f930ed858b9214cb88c76ef7a95dc2cb236c7e48b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "659ff49dbb0bbc1a221a262f594645232f3bf121ea2293a6bc9e98d78aaac4c7",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "9766128a8deb93f6206882bb8b184194ffcb45f7b8f7f5a886fdae9d19e5cbbd",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "93e44d382f32c6481d7079619351404d55c6db12c5349ba473d0d5c272f84f1d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "2d19f4c7641af739009b10bf429bf77d19356146062ebac95cb3d046ec192c9a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "49a061372d58b5cd1ced2302f310964e8b80f8cc954f8220c4f2af7aabd78096",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "6bb388d4cd1fa9f4f6b3b447ab8985dcd4d9e66f1d8974f2ea6cc462e0403973",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "cad220fd3c2ad236fc84af95f83dfbb58152b919dc5c81cceb620e0f5f0eebc3",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "6badbef06c8f01aca2060a68081ca74655dd9812b30ba2565882eb00f421b93e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "alley_at_rear+unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2e9c47796af6bbae9ebc97a1234b95955d79f84dba02e8f0c07587533e848bd7",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L157",
+  "old_fingerprint": "5e236f8430f948b47a4c58a6ba0403704334c66429d9372636084632b5411caa",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L403",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2566fd1244f6b2d57346e2d03089335eb1cfa9fe50d0763bee8bbf65d21fb17f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "fb6788ea1f18f57d41f522dc7614524ff237b24caef65609c1cc5ebef6b1a547",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "3a1625f077fcdcf018514ad7779a5db7ac9d9c13322ed7a2c6ad081f5fb3ff70",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L15",
+  "old_fingerprint": "8f5a010157493fedaf47d73b98eb33eb9b4487bbc47891eb356d71db732f5a81",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L239",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "ad42fd891511f53dff3f66d9cd925d3d03e1814ca3061b8c214e2400ee522b60",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "6f4943655a62173eb0565778a9af3141b9b8a22648a614b26b95441d231062d9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "dbe5dc9ab6aa243c473febc974bdb2b44f97cd99ef4d73923870db5190152d13",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "a8753a3de634cf9729fbf43164ebc81905306fc91dca345427a32de8a297b3fb",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e02507e4a351a3e473eb439b58a3d886a67092fc057f192f6232607b86cc7925",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "83110677da276ed469d1c77caa8cb21cec7f5716812e551629026812d64ef54a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "fdd27f33a04b25e743b89528694e70e1561264210c56f421dd7ae67d3f29d32c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L92",
+  "old_fingerprint": "c687e2f968d9a9b727d60d701080c3c4b2ec325cf1c2abdba560c4e6cb33229d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L332",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1799519e0a76918e092d6f56fab53f11839b757677ac6792ea5013f95b555b5c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L42",
+  "old_fingerprint": "d6848cfd7b530d6bcc4549cf9413493115976d8c37a582d9c977e601288f329d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L274",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1cf0247f1c61968a81b363fc87060a4c5f7e544ca79af479ea2f9e7356e1038c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "e85ea984fe47311ea1ba75306970716fc92fa53f3f2d8a1489ac45b099e94af3",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e0b4e07c6ddc23fdad1b4cedd0333c9002971e8e8c147c982d7a3144a6e43536",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L45",
+  "old_fingerprint": "cdd482b9328d4ea519c28feb691a4378b20b349487e006d4fa813caff8fa1aea",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L277",
+  "when_key": "unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2802b026abced88682e00d1ab760a9f38bd53ad0a5cc800dd7dab50a946a9c04",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139",
+  "old_fingerprint": "7f0dc73ff91e90880d08d5331f439bfe7becd8aa9685283e7837babcec8887b9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7f99f207fed2b46e7a7a5fee25509f87b4736f1ac81f90446285ba28ea96e1e0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139",
+  "old_fingerprint": "7c4cb3e8afbe1e7ce1f6c2e11f3a7311b6902bc91f5367ecb5c71004d4d40c5a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382",
+  "when_key": "abuts_alley+corner_lot+unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "bcc08dbed91f9e72f6fcac7b00a95c70c6e3f74974bfe501032b14c92a490b15",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L80",
+  "old_fingerprint": "633ab65b789c3a109519ef824bf9b36bf17aa5ae47a7f76fb483adfdd14906f1",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L314",
+  "when_key": "",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5bf81a50af4c17a8fd4c1f08763219a50ee56e6924761cb660a143854c2535c6",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81,L83",
+  "old_fingerprint": "da98396137e9321bc07f30a6f0d261d5bdf95c6f79cfabcac2bb46cdf77e94d2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L319",
+  "when_key": "corner_lot",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "2676b434c7f31626cb9b3faa53d681269e21fe24caf938e761bece785f582844",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L79",
+  "old_fingerprint": "a3c7b679bf5a98a228001c140ed16898bb2123d144946b9ee2fbe57a9890becc",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L313",
+  "when_key": "unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "8f6257b2b96dcc17017c23dc01d5ab07816f5016df6774b4dd315a9d57067b4c",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82,L142",
+  "old_fingerprint": "ef65315a41fb8deea47e08c3b9debe402e2a93151b058ff3e26a583d84be5565",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "fe7e3fed43153600258fbf6586a4a0787d3715d53f450fc9df55e68e1caaa766",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L81-L82,L142",
+  "old_fingerprint": "03f8a904c8b8f0c66fdd361c5a92e3758592ca868708ed71e31b15e72dad5a89",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385",
+  "when_key": "abuts_alley+corner_lot+unit_lots",
+  "zone": "MDR-24"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "4c3be776b181d850be564efedcfdb70e47a41562cd95805d40b1f987967614cd",
+  "new_quote": "or/multnomah/gresham/4/4.0120.txt#L12,L17",
+  "old_fingerprint": "5e7c2d93b1e6d9bf93fa50e82ded0260d76c36c81f542e0a817685292477c3b7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L129,L134",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "be1227dca50b36bd632fdb89d15aad44fe6aae08f6f723147029e46ce6f86702",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L15",
+  "old_fingerprint": "ac8134ab14c999e0d3a1c1d962adbf5663dcf88d1a9d5d264706fa8f19b14406",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L239",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "eb2c18c754c35ba5d29d57fd3c7c85808e272badc13b9c8c18633b17133037f3",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22",
+  "old_fingerprint": "96d80465374b83db9f3fe08d0b0c290eaaf36b2ae8cb68a4a1c22485fcb0e3f9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e46d11a9bd59b7cb3cb12994961791256137eafba6b14af9bbdab2d5049d8d2f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30",
+  "old_fingerprint": "743c77630785434a537a1de981f68b5db14d6d37e2704d90640752ea5795d8f3",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1458a5edc382ef303c722fe7926d49097f7ab4fed0b8d89becefb0f36855f518",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32",
+  "old_fingerprint": "d09c0946ead9be141adba88dec54bd99554da80df85cb0e3356fa34928d5fc71",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257",
+  "when_key": "unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "6c71f50b7c734913cfdcff3d6746c5b63e1ba5e38531eeb4f929586bea08add4",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L39-L42",
+  "old_fingerprint": "3ab2b2838ae06b22b39951dd4f9b0d9c6e1143ba7626031f50e02b43ed879f4b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L271-L274",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "3c979a9931eafb2351a57a64d5b2e4098e5030a1d178b92b140766db56833885",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L39-L40,L45",
+  "old_fingerprint": "79dcf2e69dc6c9e35c2d5ba7e405654a3bd0221d0c98aeb2cce642ad4071a98f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L271-L272,L277",
+  "when_key": "unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "c3f3ce7c6e035cc08ed2ac5eb96a173a09c6054c9d16d876fc5e1e01ecedf81e",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53",
+  "old_fingerprint": "48992cfdfe104ead8533bc7b047cfc49502f91ee859dd948c7de7c78b76a1ef2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285",
+  "when_key": "corner_lot",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "8b302484729a8efe0139e49f7777804e7e4799474e514d46ba3d2cbe349c90e8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L47,L54",
+  "old_fingerprint": "4930948867ae7954bd3986869f75eb7f4ef8053fc52b8e427adcde63a7e04d7f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L279,L286",
+  "when_key": "corner_lot+unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "3ae794feefb17d28cd1a11af042f0e74a9c1c03d9e7a87b745f73b240ef7f15a",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66",
+  "old_fingerprint": "0f702c889d4de5196f6b805cdc8e182873f2c7acf3b80bb043fe40c8358a0b02",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "345211763cf21586033c1e6cc857b91bc2eebbd7353e6d5a00e712fdba6a9d37",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67",
+  "old_fingerprint": "b3efb97e8ab3d41ad642c62ff2673bfa6748af393985937af122c5d43e0617c7",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301",
+  "when_key": "unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "9123e079328336ee363fca1d6841fcd5b672aefe4d6254c04153a9c85bce541b",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74",
+  "old_fingerprint": "2b4d26f805a0dbea31352b9f1cb788a198a4b7d0fb9f5cb13831b062ff8932d2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308",
+  "when_key": "corner_lot",
+  "zone": "OFR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "e41054a37320463c4667aa8f81c4fdefe254a6d8d6c1e84ef58e07054135fba1",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L77-L80",
+  "old_fingerprint": "aa91a1041d8e3d7c427a4507ccb5927d0c87419c794033313db3bd88d3e2f055",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L311-L314",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "5454e9dd9a96f0d5de6d160a3e6be3abcba039ca28cefee98cc9d56eb8eb1c2d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L91,L93",
+  "old_fingerprint": "e8c60dd06802ed196330d4077f1dac5bcbd25849084ab7910055a5edecdca541",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L331,L333",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "3c09d098634e605fff91e00375948414651832ab2ab08325406b75170dbdc247",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L106-L107",
+  "old_fingerprint": "f6b12db6b318de8547d9eacfa96b6923a5b93ade51a570b5180039e14b3c96f2",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L347-L348",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "ad5eb26a6feeb5da13e4e3fc305a613296f506c65297594ff4740912f18fedf9",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158",
+  "old_fingerprint": "67d262686ab26ff277f4cee8b502d3278dbe0a3fd1e67da8a1a53824b87713e9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7618aaba02b477aa258a3f6134f80f28d621f78339b4f4cc98dc09b7ba1764e4",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158",
+  "old_fingerprint": "dc68dc73182baa32c966fd2d7922b4100203e1e9e302634a14e3a9c171132f7f",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "b1eb156d80836d0ea06d11730e331c25c6573d1b5ed6678ca63506a62ce7f7ed",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "7f9e76e845a74364b7160922ec076e71d93bbb748c240e37094d163467a37c1e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "bbbf6607b272adb2a8c4ef3bf838f4018ac67b3879ca6ec2f895c96c62b4c2c0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158",
+  "old_fingerprint": "a8bc5324bcb7c7663f724654a964970d0672217390a28be9ae5d719346eb4b1d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "912f8285904e5976ba23e3424709ccc3cdb20f7674bccfc6b390b706ca3523c8",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "6c17b4913bd6f9433399931316683fc30681084da36b9f1e9393da74c25bb777",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "149b08dbf429dbcf1801c78406cc247c3371c7e652b01cf67042a77c884855e0",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "6865807a00b3f389ab1d2de3e6b1ce5dca3e47b06cac2a2e43a1623876a519e9",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "alley_at_rear+unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "fd6bd6e02bc8e6256a28ee9217666d046947c49df6fa9a6e1e77523ee1b96852",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158",
+  "old_fingerprint": "c2fe740af2d86c21cc36365406af81c91565823fe81b26b97e9920a4469b067d",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7353bbdf23df6ad512c90c35743895037d6dd2117c08f49bffacf53751848d9d",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163",
+  "old_fingerprint": "3e37b7364dac34f62e804e82081cc986aa9c18fc148e24a1000a104f4a007080",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409",
+  "when_key": "unit_lots",
+  "zone": "OFR"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "d34287b548802626954e9977bed73b00fc2e65180614453c5de0f98c112de7a2",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158",
+  "old_fingerprint": "7ea478be9069be4480ec04399b3bb3b459ce200ce068690fb647d92a056ff07b",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404",
+  "when_key": "",
+  "zone": "OFR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "6fbd406891102c145581eff2644915096e590d2346becc0c67fcc8eabcd7444a",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L90,L92",
+  "old_fingerprint": "9af03cbc27f09c478e39b9191add869bf7c621cc56db457a05d210186a9b4890",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L330,L332",
+  "when_key": "civic_corridor",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "fdaa4444ae858559f6a0bebc1d43dae246840ea7a45b82befbdac618c03203be",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+  "old_fingerprint": "e640cad1497971d71be9b43ce23ce34a39db771aaa871941db97cd98cafb7881",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L400",
+  "when_key": "civic_corridor",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "1dd54b3f3b5c907e03dbd0aee49e405dbab74f6f1e759462f3d4090b23255872",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+  "old_fingerprint": "198aae5469b5038383c912415a8a1b85ad44db896232e258dd3c9e5a99a56fca",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L400",
+  "when_key": "civic_corridor",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "6f055ad75a40c85908056b766c7b934c296e6e5776f4529c7b7cc8b855cff04f",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+  "old_fingerprint": "622ac1196aed166c306a1929fd2d99ece2f04f68a1267918a97de218e718937e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406",
+  "when_key": "civic_corridor+unit_lots",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "78bc894488872abf10c9dd9911a729307cacb4ef32ad84eb981714928b9ba8fa",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+  "old_fingerprint": "af46d7b03d83da27b2e157f922cf2f93dba23c4c889d37c20ecfea3e3fbcc97e",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406",
+  "when_key": "attached_wall+civic_corridor+unit_lots",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "83267405e4bda840429062aabd32331f6ec371936a0942262bcae0ebb0744354",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+  "old_fingerprint": "3793ab0665e4989f2ec7e3cbad1a8dc9a1489d4f6333d611404153197d50e459",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L400",
+  "when_key": "civic_corridor",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "54b96107160eab4eb90c56f8ef2da12ea8bc6cc2b97be17ae49e7663bfa29cca",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+  "old_fingerprint": "eb1c3c45ed7420746798922533603284453870a5db8384129c037aa64f18b331",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L400",
+  "when_key": "alley_at_rear+civic_corridor",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "7ff925aa444aeaaa5fe9d9da732a20edbf944867dd0d078299025d5b47dab194",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+  "old_fingerprint": "b94b468b2bdb218ef6979f3eb9deb70fd808662b07f622a8140924a669c05cd5",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406",
+  "when_key": "civic_corridor+unit_lots",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "819bfc050a6ed0b4344e9c32ae78b753c1d0693a374376a1f31c9b536fd1e750",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+  "old_fingerprint": "77390ed7be6eba8e93b457e88d4c0a789cadefc1dc0803a3329b7fb5398cfe0a",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406",
+  "when_key": "alley_at_rear+civic_corridor+unit_lots",
+  "zone": "CMF"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/gresham",
+  "new_fingerprint": "c2bf9d389a1b189d8b385b37510a2855953fedca86e055f81fe7d2dd7cd45a79",
+  "new_quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+  "old_fingerprint": "85e5ecc3ac93e5d3abead5fcb878771eae9fe2cc25ab41770bc1358446847fa5",
+  "old_quote": "or/multnomah/gresham/4.0100.residential.txt#L392-L400",
+  "when_key": "civic_corridor",
+  "zone": "CMF"
+ }
+]

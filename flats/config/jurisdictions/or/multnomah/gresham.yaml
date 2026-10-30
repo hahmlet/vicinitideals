@@ -2184,7 +2184,7 @@ defaults:
   # case of a double frontage lot, each street has a front lot line except
   # when an access control strip has been required", and Table 4.0131 note 2
   # agrees for setbacks ("each street frontage shall be considered a front
-  # yard", 4.0100.residential.txt#L421-L422).
+  # yard", 4.0130.txt#L174).
   #
   # `manager`: the lot is screened as `both` -- each street line a front,
   # the reading the Rear Lot Line definition and the yard table give and the
@@ -2276,7 +2276,7 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L17"
     max_height_ft:
       # Table 4.0130 H, "Maximum Building Height": 35 ft. in the LDR-5 column,
       # on both the Townhouse row and the All-other-uses row, so the pod takes
@@ -2291,19 +2291,19 @@ zones:
       # back GREEN on this number.
       value: 35
       cite: Gresham Development Code Table 4.0130 H; 4.0133
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L90,L92"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
       variants:
         # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
         # The alley column has been printed in this table the whole time and
@@ -2312,7 +2312,7 @@ zones:
         # then imported.
         - value: 8
           when: [alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155"
       step_back:
         height_ft: 21
         rise_per_ft: 1
@@ -2320,7 +2320,7 @@ zones:
         quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L132-L134"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2330,10 +2330,10 @@ zones:
       # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
       # (minimum site size) and the density rows carry no such note.
       value: lot_area
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L16,L131"
     min_lot_sqft:
       value: 5000
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L19"
       variants:
         # Table 4.0130 B, the Townhouse row, prints None in all seven of its
         # columns: no minimum lot size at all on a unit lot. A zero is a
@@ -2343,12 +2343,12 @@ zones:
         # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L18"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
       value: 6.22
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2374,13 +2374,13 @@ zones:
       # Cottage Cluster". The pod on one lot has no ceiling here --
       # exempt, not a large number.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         # The same building split onto four lots is townhouses, which
         # row D holds separately.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2424,39 +2424,39 @@ zones:
       nobody can answer.
     min_frontage_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L80"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L79"
         # Table 4.0130 G.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83"
         # The townhouse row prints None on a corner -- no standard, rather than
         # the interior number carried over. Stated so a corner unit-lots lot
         # resolves one variant rather than two.
         - exempt: true
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82"
     min_lot_width_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L42"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L45"
         # Table 4.0130 E.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54"
     min_lot_depth_ft:
       # Table 4.0130 F.1, "Depth: Interior lot", on the "Triplex, Quadplex, and
       # Cottage Cluster" row. OFR takes 100 ft. from the far end of the same
@@ -2468,17 +2468,17 @@ zones:
       # whether it is platted as one lot or four.
       value: 70
       cite: Gresham Development Code Table 4.0130 F
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66"
       variants:
         - value: 70
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67"
         - value: 70
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74"
         - value: 70
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L309"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L75"
   LDR-7:
     section: ["4.01", "7.042"]
     cite_default:
@@ -2487,19 +2487,19 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L17"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
       variants:
         # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
         # The alley column has been printed in this table the whole time and
@@ -2508,7 +2508,7 @@ zones:
         # then imported.
         - value: 8
           when: [alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155"
       step_back:
         height_ft: 21
         rise_per_ft: 1
@@ -2516,7 +2516,7 @@ zones:
         quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L132-L134"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2526,10 +2526,10 @@ zones:
       # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
       # (minimum site size) and the density rows carry no such note.
       value: lot_area
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L16,L131"
     min_lot_sqft:
       value: 7000
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L19"
       variants:
         # Table 4.0130 B, the Townhouse row, prints None in all seven of its
         # columns: no minimum lot size at all on a unit lot. A zero is a
@@ -2539,12 +2539,12 @@ zones:
         # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L18"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
       value: 4.35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2570,13 +2570,13 @@ zones:
       # Cottage Cluster". The pod on one lot has no ceiling here --
       # exempt, not a large number.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         # The same building split onto four lots is townhouses, which
         # row D holds separately.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2620,42 +2620,42 @@ zones:
       nobody can answer.
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L92"
     min_frontage_ft:
       value: 40
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L80"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L79"
         # Table 4.0130 G.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83"
         # The townhouse row prints None on a corner -- no standard, rather than
         # the interior number carried over. Stated so a corner unit-lots lot
         # resolves one variant rather than two.
         - exempt: true
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82"
     min_lot_width_ft:
       value: 40
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L42"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L45"
         # Table 4.0130 E.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54"
     min_lot_depth_ft:
       # Table 4.0130 F.1, "Depth: Interior lot", on the "Triplex, Quadplex, and
       # Cottage Cluster" row. OFR takes 100 ft. from the far end of the same
@@ -2667,17 +2667,17 @@ zones:
       # whether it is platted as one lot or four.
       value: 70
       cite: Gresham Development Code Table 4.0130 F
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66"
       variants:
         - value: 70
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67"
         - value: 70
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74"
         - value: 70
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L309"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L75"
   TLDR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -2687,19 +2687,19 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L17"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
       variants:
         # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
         # The alley column has been printed in this table the whole time and
@@ -2708,15 +2708,15 @@ zones:
         # then imported.
         - value: 8
           when: [alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2742,13 +2742,13 @@ zones:
       # Cottage Cluster". The pod on one lot has no ceiling here --
       # exempt, not a large number.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         # The same building split onto four lots is townhouses, which
         # row D holds separately.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2775,10 +2775,10 @@ zones:
       NOT stepped back, and the absence is the point: 7.0420(G)(1) lists VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR, and this district is the one LDR-family zone missing from that list even though 7.0420 reaches it for every other design standard. So the 15 ft here is the whole rear yard, where the same 15 ft in LDR-5 is 20.
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L92"
     min_frontage_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L80"
       variants:
         # Table 4.0130 G.1 prints None in this district's townhouse cell,
         # not the 16 ft its neighbours carry. Read cell by cell 2026-09-02:
@@ -2790,19 +2790,19 @@ zones:
         # interior row was not.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L79"
         # Table 4.0130 G.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83"
         # The townhouse row prints None on a corner -- no standard, rather than
         # the interior number carried over. Stated so a corner unit-lots lot
         # resolves one variant rather than two.
         - exempt: true
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2812,7 +2812,7 @@ zones:
       # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
       # (minimum site size) and the density rows carry no such note.
       value: lot_area
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L16,L131"
     min_lot_sqft:
       # Table 4.0130, TLDR column, prints None in BOTH rows that could hold a
       # minimum: A, Minimum Site Size, "All other uses" (L239), and B, Minimum
@@ -2832,7 +2832,7 @@ zones:
       # blind re-read did not catch it because it re-reads the cited line,
       # and the cited line does say 8,000.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L239,L243"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L15,L19"
       variants:
         # Table 4.0130 B, the Townhouse row, prints None in all seven of its
         # columns: no minimum lot size at all on a unit lot. A zero is a
@@ -2842,23 +2842,23 @@ zones:
         # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L18"
     min_lot_width_ft:
       value: 16
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L42"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L45"
         # Table 4.0130 E.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 20
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54"
   TR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -2867,19 +2867,19 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L17"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
       variants:
         # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
         # The alley column has been printed in this table the whole time and
@@ -2888,7 +2888,7 @@ zones:
         # then imported.
         - value: 8
           when: [alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L148-L152,L154-L155"
       step_back:
         height_ft: 21
         rise_per_ft: 1
@@ -2896,7 +2896,7 @@ zones:
         quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L132-L134"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L155"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2906,10 +2906,10 @@ zones:
       # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
       # (minimum site size) and the density rows carry no such note.
       value: lot_area
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L16,L131"
     min_lot_sqft:
       value: 4000
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L19"
       variants:
         # Table 4.0130 B, the Townhouse row, prints None in all seven of its
         # columns: no minimum lot size at all on a unit lot. A zero is a
@@ -2919,12 +2919,12 @@ zones:
         # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L18"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
       value: 6.22
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -2950,13 +2950,13 @@ zones:
       # Cottage Cluster". The pod on one lot has no ceiling here --
       # exempt, not a large number.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         # The same building split onto four lots is townhouses, which
         # row D holds separately.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -3000,42 +3000,42 @@ zones:
       nobody can answer.
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L92"
     min_frontage_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L80"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L79"
         # Table 4.0130 G.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83"
         # The townhouse row prints None on a corner -- no standard, rather than
         # the interior number carried over. Stated so a corner unit-lots lot
         # resolves one variant rather than two.
         - exempt: true
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82"
     min_lot_width_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L42"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L45"
         # Table 4.0130 E.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54"
     min_lot_depth_ft:
       # Table 4.0130 F.1, "Depth: Interior lot", on the "Triplex, Quadplex, and
       # Cottage Cluster" row. OFR takes 100 ft. from the far end of the same
@@ -3050,17 +3050,17 @@ zones:
       # out would apply the 70 ft. quadplex figure to a path the city exempts.
       value: 70
       cite: Gresham Development Code Table 4.0130 F
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66"
       variants:
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67"
         - value: 70
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74"
         - value: 0
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L309"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L75"
   LDR-PV:
     section: ["4.14", "7.042"]
     cite_default:
@@ -3899,7 +3899,7 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L17"
     setback_front_max_ft:
       # Note 7 of Table 4.0131: "Maximum front and street-side setbacks apply
       # in MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family
@@ -3918,10 +3918,10 @@ zones:
       quote: "or/multnomah/gresham/4/4.0430.txt#L61-L67"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
     setback_side_ft:
       # Table 4.0131's Townhouse block names this zone in the same breath as
       # OFR -- "MDR-12, OFR, and MDR-24" at L408-L409 -- and prints a looser
@@ -3930,28 +3930,28 @@ zones:
       # Found 2026-09-07 by the blind second reading, which could not see the
       # column headers from the cited line and went looking for them.
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
       variants:
         - value: 5
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
       variants:
         - value: 10
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
         - value: 8
           when: [unit_lots, alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_street_side_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
       variants:
         - value: 8
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -3961,10 +3961,10 @@ zones:
       # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
       # (minimum site size) and the density rows carry no such note.
       value: lot_area
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L16,L131"
     min_lot_sqft:
       value: 3600
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L19"
       variants:
         # Table 4.0130 B, the Townhouse row, prints None in all seven of its
         # columns: no minimum lot size at all on a unit lot. A zero is a
@@ -3974,12 +3974,12 @@ zones:
         # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L18"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
       value: 8.71
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -4005,13 +4005,13 @@ zones:
       # Cottage Cluster". The pod on one lot has no ceiling here --
       # exempt, not a large number.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         # The same building split onto four lots is townhouses, which
         # row D holds separately.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -4035,7 +4035,7 @@ zones:
       at max(F, street-side)).'
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L92"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured
@@ -4115,7 +4115,7 @@ zones:
       quote: "or/multnomah/gresham/3/3.0103.txt#L1049-L1050"
     min_frontage_ft:
       value: 45
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L80"
       variants:
         # Table 4.0130 G.1 prints None in this district's townhouse cell,
         # not the 16 ft its neighbours carry. Read cell by cell 2026-09-02:
@@ -4127,35 +4127,35 @@ zones:
         # interior row was not.
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L79"
         # Table 4.0130 G.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 45
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83"
         # The townhouse row prints None on a corner -- no standard, rather than
         # the interior number carried over. Stated so a corner unit-lots lot
         # resolves one variant rather than two.
         - exempt: true
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82"
     min_lot_width_ft:
       value: 16
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L42"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L45"
         # Table 4.0130 E.2, the corner-lot row. The interior number above
         # it is not the standard for a corner, so encoding only the interior one
         # measured corner lots against a number the code does not state for them.
         - value: 70
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54"
   MDR-24:
     section: ["4.01", "7.042"]
     cite_default:
@@ -4164,7 +4164,7 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L17"
     setback_front_max_ft:
       # Note 7 of Table 4.0131: "Maximum front and street-side setbacks apply
       # in MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family
@@ -4183,10 +4183,10 @@ zones:
       quote: "or/multnomah/gresham/4/4.0430.txt#L61-L67"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
     setback_side_ft:
       # Table 4.0131's Townhouse block names this zone in the same breath as
       # OFR -- "MDR-12, OFR, and MDR-24" at L408-L409 -- and prints a looser
@@ -4195,40 +4195,40 @@ zones:
       # Found 2026-09-07 by the blind second reading, which could not see the
       # column headers from the cited line and went looking for them.
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
       variants:
         - value: 5
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
       variants:
         - value: 10
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
         - value: 8
           when: [unit_lots, alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_street_side_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L157"
       variants:
         - value: 8
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     min_lot_sqft:
       # Table 4.0130 section A, Minimum Site Size, all other uses: 11,000 sq
       # ft in MDR-24. Seven district columns and seven values in the row, so
       # the column reads positionally, and the multi-family row above it
       # prints the same 11,000 under the same column.
       value: 11000
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L239"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L15"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
       value: 12.1
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       variants:
         # Note 5: "this does not apply to lots of record less than
         # 11,000 square feet in size". Exempt rather than zero -- the
@@ -4246,7 +4246,7 @@ zones:
         # against the encoding.
         - exempt: true
           band: {measure: lot_sqft, less_than: 11000}
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -4271,13 +4271,13 @@ zones:
       # Row D, "Duplex, Triplex, Quadplex, Cottage Cluster". The one
       # district that prints a figure against the pod's own row.
       value: 24.2
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         # The same building split onto four lots is townhouses, which
         # row D holds separately.
         - value: 24.2
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
@@ -4315,20 +4315,20 @@ zones:
       existing taxlots are lots of record).'
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L92"
     min_lot_width_ft:
       # Table 4.0130 E.1, interior lot, the Duplex/Triplex/Quadplex row: 16 ft,
       # carrying note 7. Missing before, which meant no width test ran in
       # MDR-24 at all -- a lot too narrow for the pod read as unconstrained.
       value: 16
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L42"
       variants:
         - value: 70
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L45"
         # Note 8 is the only place MDR-24 states a corner townhouse width, and
         # it states three: 16 ft with an alley, 25 with a shared access, 42
         # with neither. 25, because the townhouse plat always has a shared
@@ -4338,10 +4338,10 @@ zones:
         # where the shared-access number went (2026-10-20, check 372).
         - value: 25
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139"
         - value: 16
           when: [unit_lots, corner_lot, abuts_alley]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured
@@ -4421,24 +4421,24 @@ zones:
       quote: "or/multnomah/gresham/3/3.0103.txt#L1049-L1050"
     min_frontage_ft:
       value: 45
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L80"
       variants:
         - value: 45
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83"
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L79"
         # The cell reads "Varies depending on access" and hands the number to
         # note 10: 25 ft measured from the corner radius end point where there
         # is an alley or a shared access, 32 without. 25: the townhouse plat's
         # one drive to the rear court is a shared access (see note 8 above).
         - value: 25
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82,L142"
         - value: 25
           when: [unit_lots, corner_lot, abuts_alley]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82,L142"
   OFR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -4450,7 +4450,7 @@ zones:
       # office/residential district permits a single detached dwelling only
       # under a limitation and a quadplex outright.
       value: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L129,L134"
+      quote: "or/multnomah/gresham/4/4.0120.txt#L12,L17"
     min_lot_sqft:
       # Two rows state a size here and the SITE row is the larger: 7,200 sq ft
       # under A, Minimum Site Size, against 3,600 under B, Minimum Lot Size. A
@@ -4459,14 +4459,14 @@ zones:
       # escape: splitting the plat sets each lot's minimum to None but leaves
       # the development site the size it was.
       value: 7200
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L239"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L15"
     min_density_du_per_acre:
       # Row C, "All uses except Manufactured Dwelling Parks": 8.71 to the
       # acre. Four units meet that up to about 20,000 sq ft of net area, which
       # read against the 7,200 above it makes this district a window rather
       # than a floor.
       value: 8.71
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L20-L22"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
@@ -4481,11 +4481,11 @@ zones:
       # Cluster", and Article 3 names OFR in the list of districts where
       # middle housing does not count toward maximum density.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L30"
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9-L10,L26,L32"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
@@ -4498,30 +4498,30 @@ zones:
       # feet at the building line, the widest of the seven columns, and 70 on
       # a corner.
       value: 60
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L271-L274"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L39-L42"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L271-L272,L277"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L39-L40,L45"
         - value: 70
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L51-L53"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54"
     min_lot_depth_ft:
       # F: 100 feet, interior or corner, and the only column of the seven that
       # states a depth at all for this building -- five of the others read
       # None.
       value: 100
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L64-L66"
       variants:
         - value: 100
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L57-L58,L67"
         - value: 100
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L69,L72-L74"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured
@@ -4604,14 +4604,14 @@ zones:
       # and None on the townhouse line. Read, and no frontage standard
       # applies -- which is not the same as nobody having looked.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L311-L314"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L77-L80"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L331,L333"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L91,L93"
     max_far:
       # Row J states a ratio for LDR-5, LDR-7 and TR and NA for this column.
       exempt: true
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L347-L348"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L106-L107"
     setback_front_max_ft:
       # Note 7 of Table 4.0131: "Maximum front and street-side setbacks apply
       # in MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family
@@ -4630,42 +4630,42 @@ zones:
       quote: "or/multnomah/gresham/4/4.0430.txt#L61-L67"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158"
     setback_side_ft:
       # 10 feet, twice what the LDR group asks, and the Common Wall column
       # reads NA on this row -- so the party-wall relief the low-density
       # districts give a quadplex is not stated here.
       value: 10
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158"
       variants:
         - value: 5
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_rear_ft:
       # 15 feet, and the Rear With Alley column reads NA -- an alley buys
       # nothing here unless the plat is split, where the same table drops the
       # rear to 10 and to 8 with an alley.
       value: 15
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158"
       variants:
         - value: 10
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
         - value: 8
           when: [unit_lots, alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_street_side_ft:
       # 20 feet, the deepest street side in the chapter, against 8 for a
       # townhouse on the row below.
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158"
       variants:
         - value: 8
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L159,L162-L163"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      quote: "or/multnomah/gresham/4/4.0130.txt#L154,L157-L158"
     notes: >-
       Office/Residential, the seventh column of the residential tables and the
       only one that was never read. Off-street parking is Table 4.0130 row L,
@@ -6539,7 +6539,7 @@ zones:
           # residential chapter -- and the corridor note lives in the cite,
           # which is where the reader needs it to know why this column.
           cite: Gresham Development Code Table 4.0430, note 14, adopting Table 4.0130 H (TLDR)
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L90,L92"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_front_ft:
       value: 5
@@ -6555,7 +6555,7 @@ zones:
         # stays out of GREEN.
         - value: 10
           when: [civic_corridor]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_side_ft:
       value: 0
@@ -6573,15 +6573,15 @@ zones:
         # Note 14: TLDR's side yards on the corridor (see setback_front_ft).
         - value: 5
           when: [civic_corridor]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 5
           when: [civic_corridor, unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 0
           when: [civic_corridor, unit_lots, attached_wall]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_rear_ft:
       value: 15
@@ -6596,19 +6596,19 @@ zones:
         # Note 14: TLDR's rear yards on the corridor (see setback_front_ft).
         - value: 15
           when: [civic_corridor]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 8
           when: [civic_corridor, alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 15
           when: [civic_corridor, unit_lots]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 8
           when: [civic_corridor, unit_lots, alley_at_rear]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_street_side_ft:
       value: 5
@@ -6617,7 +6617,7 @@ zones:
         # Note 14: TLDR's street-side wall on the corridor (see setback_front_ft).
         - value: 10
           when: [civic_corridor]
-          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_front_max_ft:
       value: 20

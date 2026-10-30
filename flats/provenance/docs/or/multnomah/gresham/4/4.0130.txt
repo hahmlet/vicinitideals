@@ -1,0 +1,186 @@
+4.0130                              RESIDENTIAL LAND USE DISTRICT STANDARDS
+
+The development standards listed in Table 4.0130 and Table 4.0131 are applicable to all development within the Residential Land Use Districts.
+Development within these districts shall also be consistent with all other applicable requirements of the Community Development Code, including but not limited to the Section 7.0400
+Residential Design Standards. The Corridor Design District standards in Section 7.0112          shall apply to new multi-family and shared housing facilities, elderly housing, and residential facilities in Residential Land Use Districts.
+For purposes of Table 4.0130          and Table 4.0131, Residential Homes are treated like                                                   Single Detached Dwellings;
+Residential Facilities and Elderly Housing are treated like Multi-family.
+
+Table 4.0130: Development Requirements for Residential Land Use Districts
+LDR-5                                 LDR-7                                    TR                                 TLDR                              MDR-12                               MDR-24                                    OFR
+A. Minimum Site Size
+Manufactured                              NA                                   NA                                    NA                                    20,000 sq. ft.1                      20,000 sq. ft.                        11,000 sq. ft.                       NA
+Dwelling Parks
+Multi-family                              NA                                   NA                                    NA                                    NA                                   7,200 sq. ft.                         11,000 sq. ft.                       7,200 sq. ft.
+All other uses                            None                                 None                                  None                                  None                                 None                                  11,000 sq. ft.                       7,200 sq. ft.
+B. Minimum Lot Size2
+Duplex                                    5,000 sq. ft.                        7,000 sq. ft.                         4,000 sq. ft.                         None                                 3,600 sq. ft.                         3,600 sq. ft.                        3,600 sq. ft.
+Townhouse                                 None                                 None                                  None                                  None                                 None                                  None                                 None
+All other uses                            5,000 sq. ft.                        7,000 sq. ft.                         4,000 sq. ft.                         None                                 3,600 sq. ft.                         None                                 3,600 sq. ft.
+C. Minimum Net Density3 (See definition of Net Density in Article 3)
+All uses except                           6.22 units per                       4.35 units per                        6.22 units per                        10 units per                         8.71 units per                        12.1 units per                       8.71 units per
+Manufactured                              acre4                                acre4                                 acre4                                 acre 4                               acre                                  acre5                                acre
+Dwelling Parks
+Manufactured                              NA                                   NA                                    NA                                    7 units per acre                     3.78 units per                        12.1 units per                       NA
+Dwelling Parks                                                                                                                                                                                  acre                                  acre5
+D. Maximum Net Density6 (See definition of Net Density in Article 3)
+Manufactured                              NA                                   NA                                    NA                                    14 units per net                     8.71 units per                        24.2 units per                       NA
+dwelling parks                                                                                                                                             acre                                 acre                                  acre
+
+Duplex, Triplex,                          None                                 None                                  None                                  None                                 None                                  24.2 units per                       None
+Quadplex,                                                                                                                                                                                                                             acre Cottage Cluster
+Townhouse                                 25 units per                         25 units per                          25 units per                          25 units per                         25 units per                          24.2 units per                       25 units per
+acre                                 acre                                  acre                                  acre                                 acre                                  acre                                 acre
+
+Table 4.0130: Development Requirements for Residential Land Use Districts
+LDR-5                                    LDR-7                                        TR                                     TLDR                                 MDR-12                                    MDR-24                                       OFR
+All other uses                                8.71 units per                           6.22 units per                           Sites less than                           20 units per                             12.1 units per                           24.2 units per                           12.1 units per
+acre                                     acre                                     1.5 acres: 18.15                          acre                                     acre                                     acre                                     acre units per acre Sites 1.5 acres or greater: 14.52 units per acre
+E. Minimum Lot Width:
+1. Width at building line: Interior lot
+Single Detached                               35 ft.                                   40 ft.                                   35 ft.                                    16 ft.                                   16 ft.                                   NA                                       60 ft.
+Duplex, Triplex,                              35 ft.                                   40 ft.                                   35 ft.                                    16 ft.                                   16 ft.                                   16 ft.7                                  60 ft.
+Quadplex, and
+Cottage Cluster
+Townhouse                                     16 ft.                                   16 ft.                                   16 ft.                                    16 ft.                                   16 ft.                                   16 ft.7                                  16 ft.
+All other uses                                35 ft.                                   40 ft.                                   35 ft.                                    None                                     65 ft.                                   60 ft.                                   60 ft.
+2. Width at building line: Corner lot
+Single Detached                               40 ft.                                   40 ft.                                   40 ft.                                    20 ft.                                   70 ft.                                   70 ft.                                   70 ft.
+Duplex                                        40 ft.                                   40 ft.                                   40 ft.                                    20 ft.                                   70 ft.                                   See table note                           70 ft.
+8
+Triplex,                                      40 ft.                                   40 ft.                                   40 ft.                                    20 ft.                                   70 ft.                                   70 ft.                                   70 ft.
+Quadplex, and
+Cottage Cluster
+Townhouse                                     20 ft.                                   20 ft.                                   20 ft.                                    20 ft.                                   20 ft.                                   See table note                           20 ft.
+8
+All other uses                                40 ft.                                   40 ft.                                   40 ft.                                    None                                     70 ft.                                   70 ft.                                   70 ft.
+F.  Minimum Lot Depth
+1. Depth: Interior lot
+Single Detached                               70 ft.                                   70 ft.                                   70 ft.                                    None                                     None                                     NA                                       100 ft.
+Duplex                                        70 ft.                                   70 ft.                                   70 ft.                                    None                                     None                                     None                                     100 ft.
+
+Table 4.0130: Development Requirements for Residential Land Use Districts
+LDR-5                                    LDR-7                                        TR                                    TLDR                                  MDR-12                                   MDR-24                                       OFR
+Triplex,                                     70 ft.                                   70 ft.                                   70 ft.                                   None                                     None                                     None                                     100 ft.
+Quadplex, and
+Cottage Cluster
+Townhouse                                    70 ft.                                   70 ft.                                   None                                     None                                     None                                     None                                     100 ft.
+All other uses                               70 ft.                                   70 ft.                                   70 ft.                                   None                                     90 ft.                                   100 ft.                                  100 ft.
+2. Depth: Corner lot
+Single Detached                              70 ft.                                   70 ft.                                   70 ft.                                   None                                     0 ft.                                    NA                                       100 ft.
+Duplex                                       70 ft.                                   70 ft.                                   70 ft.                                   None                                     0 ft.                                    0 ft.                                    100 ft.
+Triplex,                                     70 ft.                                   70 ft.                                   70 ft.                                   None                                     0 ft.                                    0 ft.                                    100 ft.
+Quadplex, and
+Cottage Cluster
+Townhouse                                    70 ft.                                   70 ft.                                   0 ft.                                    None                                     0 ft.                                    0 ft.                                    100 ft.
+All other uses                               70 ft.                                   70 ft.                                   None                                     None                                     100 ft.                                  100 ft.                                  100 ft.
+G. Minimum Street Frontage9
+1. Minimum Street Frontage: Interior lots
+Townhouse                                    16 ft.                                   16 ft.                                   16 ft.                                   None                                     None                                     16 ft.                                   None
+All other uses                               35 ft.                                   40 ft.                                   35 ft.                                   35 ft.                                   45 ft.                                   45 ft.                                   NA
+2. Minimum Street Frontage: Corner lots
+Townhouse                                    None                                     None                                     None                                     None                                     None                                     Varies                                   None depending on access10
+All other uses                               40 ft.10                                 40 ft.                                   40 ft. as                                40 ft. as                                45 ft.                                   45 ft.                                   NA
+measured from                            measured from
+the corner                               the corner
+radius end                               radius end
+point to the                             point to the property                                 property corner.                                  corner.
+
+Table 4.0130: Development Requirements for Residential Land Use Districts
+LDR-5                                      LDR-7                                         TR                                      TLDR                                   MDR-12                                    MDR-24                                         OFR
+H. Maximum Building Height11
+Townhouse                                     35 ft.12                                   35 ft.                                     35 ft.                                    35 ft.                                     35 ft.                                     35 ft.                                    35 ft.
+All other uses                                35 ft.12                                   35 ft.                                     35 ft.                                    35 ft.                                     35 ft.                                     3 stories or                              35 ft.
+40 ft. Also see
+Section 4.0133(A).
+I. Modifications to Maximum Height Standards
+1. 9.0600 Height Transition
+All uses                                         NA                                         NA                                         NA                                        NA                                         See Section                                See Section                               See Section
+9.0600                                                   for 9.0600                                                   for 9.0600                                                   for
+applicability.                             applicability.                            applicability.
+2. Section 7.0400 Rear Height Limits
+Single Detached,                                 See Section                                See Section                                See Section                               NA                                         NA                                         NA                                        NA
+Duplex, Triplex,                                 7.0400                                                   for 7.0400                                                   for 7.0400                                                   for
+Quadplex                                         applicability                              applicability                              applicability
+All other uses                                   NA                                         NA                                         NA                                        NA                                         NA                                         NA                                        NA
+J. Maximum Floor Area Ratio (See definition in Article 3)
+Single Detached,                                 1.0                                        0.7                                        1.0                                       NA                                         NA                                         NA                                        NA
+Duplex, Triplex,
+Quadplex
+All other uses                                   NA                                         NA                                         NA                                        NA                                         NA                                         NA                                        NA
+K. Maximum Number of Attached Townhouses
+Townhouse                                        4 units                                    4 units                                    4 units                                   8 units                                    6 units                                    NA                                        8 units
+All other uses                                   NA                                         NA                                         NA                                        NA                                         NA                                         NA                                        NA
+L. Off Street Parking
+Manufactured                                  NA                                         NA                                         NA                                        See Section                                See Section                                NA                                        NA
+dwelling parks                                                                                                                                                                7.0410                                     7.0410
+All other uses                                See Section                                See Section                                See Section                               See Section                                See Section                                See Section                               See Section
+9.0800                                     9.0800                                     9.0800                                    9.0800                                     9.0800                                     9.0800                                    9.0800
+
+Table 4.0130: Development Requirements for Residential Land Use Districts
+LDR-5                                      LDR-7                                          TR                                      TLDR                                   MDR-12                                     MDR-24                                          OFR
+M. Buffers
+Manufactured                                          NA                                         NA                                         NA                                         NA                                         NA                                         NA                                         NA
+dwelling parks
+All other uses                                        See Section                                See Section                                See Section                                See Section                                See Section                                See Section                                See Section
+9.0100                                     9.0100                                     9.0100                                     9.0100                                     9.0100                                     9.0100                                     9.0100
+N. Housing Variety (Section 7.0450)
+All residential uses                                  Yes                                        Yes                                        Yes                                        Yes                                        NA                                         NA                                         NA
+Table 4.0130 Notes:
+1.                                  The minimum site size standard of Table 4.0130 shall be satisfied prior to issuance of a development permit for manufactured dwelling parks.
+2.                                  Development of a Lot of Record which is less than the required minimum lot size may be developed for all uses permitted in the district when in compliance with the other requirements of the district.
+3.                                  Minimum density does not apply to affordable housing development.
+See Section 10.1700.
+4.                                  The minimum density standards do not apply to the partition of parent parcels of 20,000 net square feet or less in LDR         -5, LDR-                                                 7 and TR Districts and the partition of parent parcels of 13,000 net square feet or less in the TLDR District.
+5.                                  This does not apply to lots of record less than 11,000 square feet in size.
+6.                                  A density bonus applies to affordable housing development.
+See Section 10.1700.
+7.                                  Townhouse lots of less than 22 feet width shall take access from an alley or from a shared access.
+8.                                  Abuts an alley: 16 feet; shared access: 25 feet; no alley or shared access: 42 feet
+9.                                  In the LDR-7, LDR-5, TR, and TLDR districts a reduction in the minimum street frontage may be approved when the applicant can document complian          ce
+with Section 10.1520                                            of the Community Development Code.
+10.           As measured from the corner radius end point to the property corner 25 feet if there is an alley or shared access and 32 feet if there is no alley or shared access.
+11.           A height bonus applies to affordable housing development.
+See Section 10.1700.
+12.           Also see Section 10.1100 for shoreline height standards.
+
+Table 4.0131 - Minimum Setbacks in Residential Districts1
+FRONT2                                                                                                                                 SIDE                                                                                                                                                                                              REAR
+Front                        Front                      Garage                      Interior                   Common                        Zero Lot                        Street                       Street                       Street                     Rear No                          Rear
+Façade/                        Porch                                                       Side                         Wall                         Line                   Side Wall                          Side                         Side                        Alley                         With
+Wall                                                                                                                                         Option3                                                      Porch                      Garage                                                      Alley
+Access
+
+Single Detached Dwelling,                                     Duplex, Triplex, and Quadplex:
+LDR-54, LDR-74,                             10 ft.5                      8 ft.                        20 ft.                       5 ft.                        NA                           6 in. on                     10 ft.                       8 ft.                        20 ft.                       15 ft.                       8 ft.
+TLDR4, and TR4                                                                                                                                                                               zero / 6 ft. other
+MDR-12, OFR                                 10 ft.                       10 ft.                       20 ft.                       10 ft.                       NA                           NA                           20 ft.                       20 ft.                       20 ft.                       15 ft.                       NA
+and MDR-24
+Townhouse
+LDR-54, LDR-74,                             10 ft.5                      8 ft.                        20 ft.                       5 ft.                        NA                           NA                           10 ft.                       8 ft.                        20 ft.                       15 ft.                       8 ft.
+TLDR4, and TR4
+MDR-12, OFR,                                10 ft.                       8 ft.                        20 ft.                       5 ft.                        NA                           NA                           8 ft.                        8 ft.                        20 ft.                       10 ft.                       8 ft.
+and MDR-24
+Cottage Cluster
+All zones                                   10 ft.5                      8 feet                       20 ft.                       5 ft.                        NA                           NA                           10 ft.                       8 ft.                        20 ft.                       10 ft.                       10 ft.
+Multi-family6, 7
+
+MDR-12, MDR-                                10 ft.                       8 ft.                        20 ft.                       10 ft.                       NA                           NA                           8 ft.                        8 ft.                        20 ft.                       15 ft.                       15 ft.
+24, OFR
+All Other Uses
+All Districts                               10 ft.                       8 ft.                        20 ft.                       10 ft.                       NA                           NA                           8 ft.                        8 ft.                        20 ft.                       15 ft.                       15 ft.
+Table 4.0131 Notes:
+1.                                    In cases where sidewalk access is provided by easement, the setback shall be measured from the easement line closest to the house or garage per Table 4.0131.
+2.                                    For double frontage                      lots, each street frontage shall be considered a front yard in terms of setback requirements (except when one of the frontages is an alley or private accessway, in which case that yard will be the rear).
+
+3.                                    The Zero Lot Line option may only be employed on a lot designated as a zero                -lot line lot through a land division approval   .
+See Section 4.0132(A).
+4.                                     See Section 10.0200                      for setbacks of detached accessory structures and for setbacks of attached and detached patio covers in LDR       -5, LDR-                                                  7, TR, and TLDR.
+5.                                    For townhouses,            single detached dwellings, and plexes, the maximum setback from the end of a Minor Access Street is 25 feet.
+For cottage clusters, townhouses, single detached dwellings, and plexes, the minimum setback from the end of a Minor Access Street is 5 feet.
+6.                                     20-                                            foot minimum distance between major structures on same lot, except for townhouse style multi-family dwellings on the same lot where a minimum of
+10 feet in between major structures (side to side) will be required.
+Detached carports and detached garages are not major str        uctures.
+See Section 10.0200 for accessory structure setback standards .
+7.                                   Maximum front and street-side setbacks apply in MDR-                                                  12, MDR-                                                                                              24, OFR, as provided for the Corridor Multi-family (CMF) District in Table 4.0430.
+
