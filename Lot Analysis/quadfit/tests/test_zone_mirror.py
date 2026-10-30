@@ -178,6 +178,10 @@ PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
     "king_city/R-15",
     "king_city/R-24",
     "king_city/AT",
+    # 2026-10-29 (FOLLOWUPS 109 chunk 5): Estacada Downtown on its back streets and Canby
+    # C-1's Transitional Commercial, each by-right only inside a traced area FLATS reads per lot.
+    "estacada/D",
+    "canby/C-1",
 })
 
 
@@ -1039,8 +1043,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
     "setback_garage_entrance_ft": 125,
-    "min_landscaped_pct": 59,
-    "setback_front_max_ft": 103,
+    "min_landscaped_pct": 60,
+    "setback_front_max_ft": 105,
     "max_density_du_per_acre": 63,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
@@ -1052,17 +1056,17 @@ UNEXPRESSIBLE: dict[str, int] = {
     "max_units": 14,
     "max_height_stories": 25,
     "setback_side_total_ft": 3,
-    "min_building_height_ft": 16,
+    "min_building_height_ft": 17,
     "front_lot_line_through": 1,
     "parking_lot_line_buffer_ft": 3,
     "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
-    "parking_area_max_frontage_pct": 5,
+    "parking_area_max_frontage_pct": 6,
     "parking_aisle_two_way_ft": 17,
     "parking_aisle_one_way_ft": 17,
     "driveway_approach_max_width_ft": 10,
     "corner_access_street": 4,
-    "max_impervious_pct": 19,
+    "max_impervious_pct": 20,
     "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
@@ -1096,7 +1100,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the parking cap read on every street frontage, measured on FLATS's
     #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
     #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
-    "review_discretion": 44,
+    "review_discretion": 47,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
@@ -1114,9 +1118,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
     #: blocks, Washington County NMU and CCMU; quadfit draws no building.
-    "building_frontage_min_pct": 29,
+    "building_frontage_min_pct": 30,
     "building_frontage_min_pct_least": 5,
-    "building_frontage_other_pct": 18,
+    "building_frontage_other_pct": 19,
     "building_frontage_through_one": 2,
     "building_frontage_less_drive": 27,
     "building_frontage_plaza_pct": 12,
@@ -1136,6 +1140,13 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: 16.84.040's garage and maximum-front rows, note 3's 24 ft average width and the
     #: coverage of buildings and paving -- counted on the keys above.
     "private_open_space_min_dimension_ft": 5,
+    #: FOLLOWUPS 109 chunk 5 (2026-10-29): Estacada D and Canby C-1 measured at last
+    #: (ported from a variant). Canby's Downtown Overlay brings the floor-area minimum
+    #: and the share counted at the minimum setback; with Estacada's Downtown rows they
+    #: add landscaping, maximum fronts, impervious, frontage shares, review tiers,
+    #: a parking frontage cap and a height floor -- counted on the keys above.
+    "building_frontage_band_ft": 1,
+    "min_far": 1,
 }
 
 

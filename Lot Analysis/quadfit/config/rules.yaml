@@ -905,7 +905,9 @@ jurisdictions:
       - zone: "DCC"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 5
+        # 10, not 5: the townhouse row's side beside a lower-density zone
+        # (districts chunk 5, 2026-10-29) -- the larger limb, as s5 carves.
+        setback_side_ft: 10
         setback_rear_ft: 10
         setback_alley_ft: 6
         setback_street_side_ft: 10
@@ -921,7 +923,9 @@ jurisdictions:
       - zone: "DTM"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 5
+        # 10, not 5: the townhouse row's side beside a lower-density zone
+        # (districts chunk 5, 2026-10-29) -- the larger limb, as s5 carves.
+        setback_side_ft: 10
         setback_rear_ft: 10
         setback_alley_ft: 6
         setback_street_side_ft: 10
