@@ -438,6 +438,33 @@ class FlatsLotPrice(Base):
     net_area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
 
 
+class FlatsLotWorksAs(Base):
+    """For one lot, one design, one run: whether the pod comes out GREEN as an
+    apartment and as townhomes. The Lots page's "Works as" filter reads this
+    instead of grouping the run's ``checks`` JSON on every request (FOLLOWUPS 121).
+
+    Filled by ``flats.ingest.lot_works_as`` (the loader, and the backfill script
+    for a run loaded earlier). Only results the screen recorded both forms on
+    get a row, so a lot with no row matches no choice.
+    """
+
+    __tablename__ = "lot_works_as"
+    __table_args__ = (
+        Index("ix_flats_lot_works_as_run_design", "run_id", "design_key"),
+        {"schema": SCHEMA},
+    )
+
+    run_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="CASCADE"), primary_key=True
+    )
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), primary_key=True
+    )
+    design_key: Mapped[str] = mapped_column(String(80), primary_key=True)
+    apartment_green: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    townhomes_green: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+
+
 class FlatsLotResult(Base):
     """The screening verdict for one lot, one design, one run.
 

@@ -104,6 +104,7 @@ from flats.designs.model import Design, load_catalog  # noqa: E402
 from flats.encode.port_quadfit import COUNTY, layer_id_for  # noqa: E402
 from flats.geom.alley import ALLEY_CLASS, _lines, cover_stretches, decode_cover  # noqa: E402
 from flats.ingest import lot_prices  # noqa: E402
+from flats.ingest import lot_works_as  # noqa: E402
 from flats.ingest.checks import blocking, snapshot_checks, warnings  # noqa: E402
 from flats.rules.loader import CONFIG_ROOT as RULES_ROOT  # noqa: E402
 
@@ -1179,6 +1180,9 @@ async def load(
                 after = await conn.fetchval("SELECT count(*) FROM flats.lot_results WHERE run_id = $1", run_id)
                 report["results_inserted"] = after - before
                 report["results_updated"] = n_results - (after - before)
+                # The Lots page's "Works as" filter reads this, not the results' JSON.
+                # (After the results, which it is worked out from; lot_prices runs earlier.)
+                report["lot_works_as_written"] = await lot_works_as.refresh(conn, run_id)
 
                 # Verify against what the export counted, before anything commits.
                 tiers = dict(

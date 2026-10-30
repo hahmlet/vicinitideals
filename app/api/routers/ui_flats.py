@@ -61,6 +61,7 @@ from app.models.flats import (
     FlatsLot,
     FlatsLotPrice,
     FlatsLotResult,
+    FlatsLotWorksAs,
     FlatsReadingRuling,
     FlatsReviewDecision,
     FlatsRuleSignature,
@@ -3350,12 +3351,24 @@ def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None)
     return stmt.group_by(result.lot_id).subquery("best")
 
 
-def _works_as(run_id: int, design: str | None, form: str) -> Any:
+def _works_as(run_id: int, design: str | None, form: str, *, stored: bool = False) -> Any:
     """The lots of a run on which the pod works as ``form`` (one of
     ``_FORM_CHOICES``), across its designs or the one asked for: a form
     works on the lot where any design comes out GREEN in it. Only rows the
     screen recorded both forms on are read -- a run screened before both
-    were, or a lot nothing measured, matches no choice."""
+    were, or a lot nothing measured, matches no choice.
+
+    ``stored`` reads ``flats.lot_works_as`` (worked out at load, FOLLOWUPS 121);
+    otherwise the results' ``checks`` JSON is grouped, which is the same answer
+    but slow on a whole run -- the fallback for a run not yet backfilled."""
+    if stored:
+        table = FlatsLotWorksAs
+        apartment = func.bool_or(table.apartment_green)
+        townhomes = func.bool_or(table.townhomes_green)
+        stmt = select(table.lot_id).where(table.run_id == run_id)
+        if design:
+            stmt = stmt.where(table.design_key == design)
+        return stmt.group_by(table.lot_id).having(_works_as_want(form, apartment, townhomes))
     result = FlatsLotResult
     forms = result.checks["forms"]
     apartment = func.bool_or(forms["apartment"]["colour"].astext == "green")
@@ -3363,13 +3376,16 @@ def _works_as(run_id: int, design: str | None, form: str) -> Any:
     stmt = select(result.lot_id).where(result.run_id == run_id, result.checks.has_key("forms"))
     if design:
         stmt = stmt.where(result.design_key == design)
-    want = {
+    return stmt.group_by(result.lot_id).having(_works_as_want(form, apartment, townhomes))
+
+
+def _works_as_want(form: str, apartment: Any, townhomes: Any) -> Any:
+    return {
         "both": and_(apartment, townhomes),
         "apartment": and_(apartment, not_(townhomes)),
         "townhomes": and_(not_(apartment), townhomes),
         "neither": and_(not_(apartment), not_(townhomes)),
     }[form]
-    return stmt.group_by(result.lot_id).having(want)
 
 
 def _no_nul(value: str) -> str:
@@ -4093,7 +4109,10 @@ async def flats_lots(
             flagged = flagged.where(FlatsLotResult.design_key == picked)
         conditions.append(FlatsLot.id.in_(flagged))
     if form in _FORM_CHOICES:
-        conditions.append(FlatsLot.id.in_(_works_as(chosen.id, picked, form)))
+        has_rows = (
+            await session.execute(select(FlatsLotWorksAs.lot_id).where(FlatsLotWorksAs.run_id == chosen.id).limit(1))
+        ).first() is not None
+        conditions.append(FlatsLot.id.in_(_works_as(chosen.id, picked, form, stored=has_rows)))
     if await _ruled_run(session, chosen.id):
         ctx["colour_words"] = _RULE_COLOUR_WORDS
         ctx["ruled"] = True
