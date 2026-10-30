@@ -17,3 +17,5 @@ Offered, all in ci.yml, none touching what a test checks:
 5. Separately (test code, not CI): the FLATS census hotspot (~63% of that suite; docs/TESTING.md) and the quadfit suite's 16-28 min.
 
 Expected: a bookkeeping push about 0 min; a FLATS push about 30-45 min; app-only about 30 min. Must not change: no test is deleted or skipped on a code change that could reach it. The weekly/full runs keep everything.
+
+2026-10-30 Steph: "I don't see a reason to not just crank it out local." Proposed shape: the full check (unit, FLATS -n auto, quadfit, ruff, firewall, integration) runs on the PC BEFORE every push; GitHub drops to a once-a-day clean-checkout run (catches files that exist only on the PC) plus items 1-2. NOT a GitHub self-hosted runner on the PC: the repo is public, so outside pull requests could run code on Steph's machine, and the PC must be on. Local timing being measured: the quadfit suite runs serially and took >10 min on the PC too, so it needs -n like FLATS.
