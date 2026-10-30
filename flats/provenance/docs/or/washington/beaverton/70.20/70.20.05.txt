@@ -1,0 +1,630 @@
+70.20.05 Site Design
+
+Contents:
+70.20.05.1 Purpose
+70.20.05.2 Topics
+70.20.05.3 Block Design
+70.20.05.4 Building Frontage and Placement
+70.20.05.5 Setback Design
+70.20.05.6 Pedestrian Circulation
+70.20.05.7 Parking, Loading and Service Areas
+70.20.05.8 Landscaping
+70.20.05.9 Lighting
+[ORD 4799, 01/08/2021]
+70.20.05.1 Purpose
+
+The Site Design Guidelines and Standards along with the Development Standards set the location of buildings, frontage character, and landscaping.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.05.2 Topics
+
+A. Block Design (70.20.05.3)
+B. Building Frontage and Placement (70.20.05.4)
+C. Setback Design (70.20.05.5)
+D. Pedestrian Circulation (70.20.05.6)
+E. Parking, Loading and Service Areas (70.20.05.7)
+F. Landscaping (70.20.05.8)
+G. Lighting (70.20.05.9)
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.05.3 Block Design
+
+A. Intent. To ensure walkability, connectivity, and appropriately scaled buildings through creating pedestrian-scaled blocks with streets, paths, and open spaces for people to gather and connect throughout the district.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+C. Design Guideline and Standards
+
+Table 70.20.05.3.A Design Guidelines and Standards: Block Design
+
+Block Size
+
+Block Size - Design Standard Block Size - Design Guideline
+S1. Streets or public paths shall be constructed consistent with Figure 70.20.05.3.1 Future Connections.
+G1. Streets or public paths shall be constructed consistent with Figure 70.20.05.3.1 unless the decision-making authority determines that an applicant has demonstrated that walkability, connectivity and pedestrian-scaled blocks on identified blocks has been achieved through existing connections or that the proposed project achieves connectivity goals in another manner that meets the intent of this section.
+S2. Public streets and multi-use paths shall be dedicated as right of way.
+G2. Design Standard S2 must be met.
+S3. New public streets shall be classified as local streets unless otherwise determined by the Transportation
+System Plan, and the design shall be consistent with the
+Engineering Design Manual, unless an Engineering Design
+Manual Exception is granted by the City Engineer.
+G3. Design Standard S3 must be met
+Figure 70.20.05.3 .1 Future Connections
+Table 70.20.05.3.A Design Guidelines and Standards: Block Design
+
+Block Size (Cont.)
+
+Block Size - Design Standard Block Size - Design Guideline
+S4. New multi-use paths shall be a minimum of 14 feet wide unobstructed, located within a minimum 20-foot-wide right of way
+G4. New multi-use paths shall provide generous, unobstructed space for active transportation through the site, provide clear indication that the facility allows passage through the block and have sufficient room for landscaping and/or pedestrian amenities along its length.
+S5. New public streets and multi-use paths shall be aligned with existing or planned intersections.
+Where there is no planned or existing intersection to align with, the connection shall be within 25 feet of the location identified on the map.
+G5. The Design Standard must be met.
+S6. Where new connections follow property lines, the new connection shall have the full width constructed abutting the property line.
+Exceptions include:
+a. Where development is proposed on only one side of the property line, the applicant shall dedicate and construct:
+I. For public streets, half-street improvements, plus sufficient width for opposite direction vehicle travel.
+II. Multi-use paths shall be constructed at the width described in S4.
+III. For both connection types, more or all of the connection width may be located on the abutting property if authorized by the abutting property owner.
+In this case, the full width must be dedicated and improved with development.
+G6. The Design Standard must be met.
+S7. Where a new connection follows a stream corridor, buried or daylit, the new connection may be located on either side of the stream corridor.
+Additionally:
+a. If the stream is daylit, the stream-side edge of path shall be no greater than 50 feet horizontal from the path side two year ordinary high water mark.
+b. If the stream is underground, the path centerline shall be no greater than 25 feet from the stream centerline.
+G7. The Design Standard must be met.
+S8. The location of the Millikan Way extension shall be consistent with Transportation System Plan.
+G8. The Design Standard must be met.
+S9. The location, design and classification of new connections in the area bounded by SW Center, SW Hall, SW
+Lombard, and Beaverton Creek shall be regulated by the applicable policies of the Transportation System Plan and the Engineering Design Manual.
+G9. The Design Standard must be met.
+
+[ORD 4799, 01/08/2021]
+Effective on: 8/21/2026
+70.20.05.4 Building Frontage and Placement
+
+A. Intent. To promote quality site design that reinforces the urban character of Downtown by making buildings more prominent by siting buildings near streets and ensuring attractive, comfortable and convenient areas for pedestrians to wait near Major Street intersections.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.05.4.A Design Guidelines and Standards: Building Frontage and Placement
+
+Minimum Building Frontage Along Streets
+
+Minimum Building Frontage Along Streets - Design
+Standard
+Minimum Building Frontage Along Streets -
+Design Guideline
+Minimum Building Frontage Along Streets - Design
+Standard
+Minimum Building Frontage Along Streets -
+Design Guideline
+S1. Buildings shall occupy a minimum percentage of the site frontage between the minimum setback and the maximum setback.
+Minimums are based on street typology as identified in
+Figure 70.15.15.1 and as described below (accessory structures, non-habitable buildings and structures of up to and including
+1,000 square feet in floor area, not considered buildings shall not be used to satisfy this standard): [ORD 4857; October 2024]
+a. Loop Streets:
+I. Hall and Watson North of Canyon: 75 percent; and
+II. Hall and Watson between Canyon and Fourth Street:
+90 percent; and
+III. Hall and Watson south of Fourth Street: 75 percent;
+and
+IV. Fourth Street and Fifth Streets: 75 percent;
+b. Commercial Streets: 90 percent
+c. Major streets:
+I. Canyon between Rose Biggi and East: 70 percent; and
+II. Farmington between Main and Tucker: 70 percent:
+and
+III. Cedar Hills between Beaverton Creek and Millikan: 60 percent; and
+IV. All other Major Street frontages: 50 percent.
+d. Connector Streets:
+I. Millikan between Cedar Hills and East: 75 percent; and
+II. All other Connector Street frontages: 60 percent.
+e. Local Streets: 75 percent.
+f. In addition to the amount of building facade between the minimum and maximum setback, the following features also can be applied toward the minimum building frontage requirement:
+I. The linear frontage of recesses incorporated to comply with facade articulation requirements in Sections
+70.20.10.3 and 70.20.10.4 if the recesses do not exceed 2 feet beyond the maximum setback; and
+II. On all streets types except Major Streets, publicly accessible paths with widths satisfying Section
+70.20.05.3 Block Size requirements and required
+Publicly Accessible Open Space (PAOS) may count toward a combined maximum 10 percent of the frontage requirement.
+Publicly Accessible Open Spaces shall only be eligible to count toward the building frontage requirement if they are between the right of way and a building facade, as long as the building facade is not more than 40 feet from the right of way.
+g. The following shall be subtracted from the calculation of total street frontage:
+I. The width of driveways occupying the frontage (except for attached units with separate garage entries for each unit); and [ORD 4857; October 2024]
+II. Areas determined to be unbuildable due to sight clearance and sight distance requirements in the
+Engineering Design Manual; and
+III. Areas determined to be unbuildable due to required easements.
+[ORD 4857; October 2024]
+G1. and G2.
+Sufficient building facades shall be present near each street frontage to promote a continuous street wall and limit gaps in pedestrian interest while allowing necessary site access.
+The amount of building frontage shall be greatest on the highest level streets as identified in Figure
+70.15.15.1 Street Typology Diagram.
+Buildings may be set back to accommodate plazas, outdoor dining, entry forecourts or similar spaces provided that pedestrian interest along the frontage is incorporated into the design of these spaces.
+Minimum Building Frontage Along Streets - Design
+Standard
+Minimum Building Frontage Along Streets -
+Design Guideline
+S2. If the development has multiple frontages, the minimum percentage of street frontage required to be occupied by a building facade shall be met on the primary frontage but may be reduced by 25 percent on one non-primary street frontage, except if the non-primary frontage is a Major Street.
+For example, a requirement that 75 percent of the frontage shall be occupied by a building facade could be reduced to 50 percent of the frontage on one non-primary street frontage.
+G1. and G2.
+Sufficient building facades shall be present near each street frontage to promote a continuous street wall and limit gaps in pedestrian interest while allowing necessary site access.
+The amount of building frontage shall be greatest on the highest level streets as identified in Figure
+70.15.15.1 Street Typology Diagram.
+Buildings may be set back to accommodate plazas, outdoor dining, entry forecourts or similar spaces provided that pedestrian interest along the frontage is incorporated into the design of these spaces.
+Figure 70.20.05.4 .1 Street Wall Diagram
+Table 70.20.05.4.A Design Guidelines and Standards: Building Frontage and Placement
+
+Minimum Building Separation for Residential-only Buildings
+
+Minimum Building Separation for Residential-only Buildings - Design Standard
+Minimum Building Separation for Residential-only
+Buildings - Design Guideline
+S3. New buildings containing ground-floor dwelling units shall be set back 10 feet from other buildings on the site that contain ground-floor dwelling units.
+G3. Adequate separation shall be provided between buildings where ground floor residential units have exterior entries to provide usable space between the buildings and avoid narrow, dark passageways.
+Table 70.20.05.4.A Design Guidelines and Standards: Building Frontage and Placement
+
+Pedestrian Enhancements Adjacent to Major Intersections
+
+Pedestrian Enhancements Adjacent to Major Intersections - Design
+Standard
+Pedestrian Enhancements Adjacent to Major Intersections - Design
+Guideline
+S4. Pedestrian enhancements shall be integrated into the site and building design at key pedestrian connections across major streets.
+The pedestrian enhancements shall front Watson, Hall, Millikan and Westgate and provide areas of refuge for pedestrians as they wait to cross major streets.
+Pedestrian enhancements shall be provided at the following intersections:
+●Canyon and Watson
+●Canyon and Hall
+●Farmington and Watson (south side only)
+●Farmington and Hall (south side only)
+●Cedar Hills and Canyon
+●Cedar Hills and Millikan
+●Cedar Hills and Westgate/Dawson
+●Cedar Hills and Hall
+Pedestrian enhancements shall include at least one of the following:
+a. A hardscaped area, excluding asphalt, at the intersection, no smaller than 10 feet by 10 feet measured from the property corner, and a footprint of 400 square feet including the immediately abutting sidewalk in the right of way.
+b. Publicly Accessible Open Space (PAOS) that meets the
+Standards in 70.20.10.7 placed at the intersection corner.
+c. A setback, chamfer, ground-floor cutout or other method that ensures a 20-foot distance between any building and the curb at the intersection corner.
+The on-site area shall be hardscaped, excluding asphalt, and accessible to the public.
+G4. Pedestrian enhancements that provide refuge while waiting to cross
+Major Streets shall be integrated into the site design at key intersections identified in the S3 standard.
+Figure 70.20.05.4.2 Pedestrian Enhancement Locations
+[ORD 4799, 01/08/2021; ORD 4857, 10/03/2024]
+Effective on: 8/21/2026
+70.20.05.5 Setback Design
+
+A. Intent. To promote setback areas designed to add pedestrian interest; create safe, attractive and varied areas between buildings and sidewalks; and ensure setback areas are appropriate for and supportive of the adjacent ground-floor building uses.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.05.5.A Design Guidelines and Standards: Setback Design
+
+Setback Design
+
+Setback Design - Design Standard Setback Design - Design Guideline
+Setback Design - Design Standard Setback Design - Design Guideline
+S1. Where the building facade is between the minimum and maximum setback from the right of way, the area between the building facade and the property line shall be designed in the following manner:
+a. For ground-floor building facades designed for non-residential occupancy with an entry or entries that face the street:
+I. The setback area between any entry doors and public rights of way shall be paved; and
+II. If the area between the building facade and right of way is less than 24 inches, the setback area shall be paved; or
+III. If the area between the building facade and lot line is greater than 24 inches, at least 50 percent of the setback area shall be paved.
+Any areas not paved in the setback area shall be landscaped with:
+1. A combination of shrubs, ground cover and perennials.
+A minimum of one 3-gallon shrub for every 3 lineal feet of plant bed must be provided.
+Ground cover must fully cover the remainder of the landscaped area; or
+2. Raised landscape planters a minimum of 18 inches in height and a maximum of 30 inches in height with a minimum horizontal depth of
+2 feet that contain living plant material.
+Raised planters shall not reduce the pedestrian way to narrower than 5 feet and shall not obstruct Americans with Disabilities
+Act access; or
+3. Some combination of 1 and 2.
+IV. One of the following pedestrian amenities must be provided for each 100 sq ft of hardscape between the building and the street - Bench, tree, planter, drinking fountain
+b. For ground-floor building facades designed for non- residential occupancy with no entries facing the street, setback areas greater than 24 inches in depth shall have a minimum of 20 percent landscaping.
+Landscaping shall include:
+I. A combination of shrubs, ground cover and perennials.
+A minimum of one 3- gallon shrub for every 3 lineal feet of plant bed must be provided.
+Ground cover must fully cover the remainder of the landscaped area; or
+II. Raised landscape planters a minimum of
+18 inches in height and a maximum of 30 inches in height with a minimum horizontal depth of 2 feet that contain living plant material.
+Raised planters shall not reduce the pedestrian way to narrower than 5 feet and shall not obstruct Americans with Disabilities Act access; or
+III. Some combination of i and ii.
+c. For ground-floor building facades designed for residential uses that have individual unit entries facing the street not subject to
+Section 70.20.10.6 Active Ground-floor
+Design Regulations, the setback area shall have a minimum of 60 percent landscaping.
+Landscaping shall include:
+I. A combination of shrubs, ground cover and perennials.
+A minimum of one 3- gallon shrub for every 3 lineal feet of plant bed must be provided.
+Ground cover must fully cover the remainder of the landscaped area; or
+II. Raised landscape planters a minimum of
+18 inches in height and a maximum of 30 inches in height with a minimum horizontal depth of 2 feet that contain living plant material.
+Raised planters shall not reduce the pedestrian way to narrower than 5 feet and shall not obstruct Americans with Disabilities Act access; or
+III. Some combination of i and ii.
+d. For building facades designed for ground-floor residential uses that have individual unit entries facing the street that are subject to the rules of Section 70.20.10.6 Active
+Ground-floor Design, those provisions shall be met.
+e. For building facades designed for ground-floor residential uses that do not have individual unit entries, a minimum of 60 percent of the setback area shall be landscaped consistent with Section
+70.20.05.8.S1 Site Landscaping.
+G1. Where there is space between the building facade and the right of way, the space shall be designed with paving, landscaping, and other design elements appropriate for the ground-floor building use.
+Setback spaces shall incorporate one or more of the following to provide quality connections from the building to the street while providing an appropriate transition between the public realm and the private realm:
+●Provide an extension of the sidewalk for use by pedestrians;
+●Provide additional space for building entries;
+●Increase frontage activity with outdoor seating or terraces;
+●Provide opportunities for landscaping.
+Extension of Public Realm (Walnut Creek, CA)
+Deeper building setbacks along a commercial storefront facade allows for wider sidewalks and pedestrian amenities.
+Residential Setback Character (Portland, OR)
+A transition between the public sidewalk and private residential units is created with landscape plantings, stoop entries and terraced planters.
+
+Table 70.20.05.5.A Design Guidelines and Standards: Setback Design
+
+Setback Area (Allowed Encroachments)
+
+Setback Area (Allowed Encroachments) - Design Standard Setback Area (Allowed Encroachments) - Design Guideline
+S2. The following elements are allowed to encroach within the setback areas between building facades and right of way:
+a. Architectural projections, building modulations, occupiable projections, or other similar features approved by the decision-making authority.
+The bottom of the architectural feature shall be no lower than eight feet above on-site pedestrian walkways to allow for pedestrian clearance.
+No more than 50% of the facade may have these elements project into the setback;
+b. Weather protection structures such as canopies, sunshades or other similar features approved by the decision-making authority.
+The bottom of the architectural feature shall be no lower than eight feet above sidewalk grade to allow for pedestrian clearance;
+c. Terraces, porches, or balconies;
+d. Stoops and/or stairs to building entrances;
+e. Handrails;
+f. Fences or railings meeting the requirements of 70.20.05.5.S3
+g. Landscape planters and low walls not exceeding 30 inches in height from sidewalk grade;
+h. Bicycle parking;
+i. Permanent seating;
+j. Public art;
+k. Other elements as approved by the decision-making authority.
+G2. Buildings and landscape elements may encroach within setback areas between the building facade and right of way to enhance the pedestrian experience and increase activity along building frontages.
+Table 70.20.05.5.A Design Guidelines and Standards: Setback Design
+
+Fences Adjacent to Streets
+
+Fences Adjacent to Streets - Design Standard Fences Adjacent to Streets - Design Guideline
+S3. Fences within 10 feet of any right of way shall be no taller than 42 inches and shall be at least 40% transparent.
+Retaining walls, as well as fencing utilized to satisfy screening requirements in Section 70.20.05.7
+Parking, Loading, and Service Areas are exempt.
+G3. Fencing along public streets shall allow for views into the site and shall not detract from the pedestrian experience along site frontages.
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.05.6 Pedestrian Circulation
+
+A. Intent. To create a safe, comfortable, well-connected pedestrian circulation network that links private development, open spaces and the public realm.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High Quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+C. Design Guideline and Standards
+
+Table 70.20.05.6.A Design Guidelines and Standards: Pedestrian Circulation
+
+Pedestrian Connections
+
+Pedestrian Connections - Design Standard Pedestrian Connections - Design Guideline S1.
+At least one pedestrian connection to the public street network shall be provided for every 300 feet of street frontage.
+On-site pedestrian connections shall link to abutting streets, planned accessways in the Comprehensive Plan Transportation Element;
+multi-use paths on or adjacent to the site, including those required to meet Block Design standards identified in Figure 70.20.05.3.1 Future
+Connections; transit stops; building entries;
+automobile and bicycle parking; loading areas, solid waste facilities and similar improvements; and outdoor open spaces.
+Connections that are not feasible because of topographic features; buildings or other man-made structures; natural areas; or similar obstacles may be waived as approved by the decision- making authority.
+G1. On-site pedestrian connections shall provide sufficient and high- quality connections among important destinations on a site and to off-site transportation routes and facilities.
+Pedestrian Connections - Design Standard Pedestrian Connections - Design Guideline S2.
+On-site pedestrian walkways shall be at least 5 feet in width with 5 feet of unobstructed clearance, shall be paved with scored concrete, modular paving material, or other high quality hard surfaced material approved by the decision-making authority, and be compliant with Americans with
+Disabilities Act standards.
+In addition, development shall incorporate one of the following sustainability features:
+a. At least 30 percent of paving material shall be permeable pavement; or
+b. At least 30 percent of the paving material shall be made from recycled content; or
+c. At least 50 percent of the pedestrian walkway pavement shall have a solar reflective index rating of a least 29; or
+d. Provide shading for at least 50 percent of the total pedestrian walkway surfaces on the site.
+Shade can be provided by current or proposed buildings that shade the paving material at 3 p.m.
+June 21 and current or proposed trees, with the amount of shade included for each planted tree to be measured by the diameter of the Mature Tree
+Canopy stated for the species of the tree.
+[ORD 485; January 2025]
+e. Walkways or other pedestrian connections within 25 feet of a creek as measured from top of bank shall meet Section
+70.20.05.6.S2.d and one of the sustainability features in 70.20.05.6.S2.a through c. [ORD
+4876; January 2026]
+G2. On-site pedestrian walkways shall be of adequate width and design to provide unobstructed walking areas that accommodate the anticipated amount of pedestrian traffic, be Americans with Disabilities Act compliant, and incorporate high- quality and attractive materials that promote sustainability and reduce heat island effect.
+On-site Pedestrian Walkways Shaded by Tree Canopy (Portland,
+OR)
+S3. Pedestrian walkways that abut the head of vehicle parking spaces shall be 7 feet wide unless wheel stops or curbs are used to ensure a minimum unobstructed width of 5 feet.
+G3. Pedestrian walkways abutting parking areas shall be of adequate width and design to provide unobstructed walking areas and accommodate the anticipated amount of pedestrian traffic.
+S4. Where a pedestrian walkway crosses driveways or vehicular access aisles, a continuous 5-foot walkway shall be provided and shall be composed of a different paving material that utilizes texture, color, or both, to contrast visually from the adjoining driving/parking surface.
+Paint may not be used to satisfy this requirement.
+G4. Pedestrian walkways that cross driveways or vehicular access aisles shall meet standards S4.
+
+Pedestrian Connections - Design Standard Pedestrian Connections - Design Guideline S5.
+Pedestrian connections through parking lots shall be physically separated from adjacent vehicle parking and parallel vehicle traffic through the use of curbs, landscaping, trees and lighting, if not otherwise provided in the parking lot design.
+Parking lots with six or fewer spaces are not required to physically separate connections from vehicle parking and circulation but they must comply with the rules of Section 70.20.05.6.S4.
+G5. Pedestrian connections through parking lots shall be evenly spaced and separated from vehicles.
+Parking lots with six or fewer spaces are exempt.
+S6. Fences between buildings and creeks shall not be taller than 4 feet in height and shall be at least
+70 percent transparent to allow views of creeks and natural areas from building fenestration and pedestrian circulation areas between the building and the creek.
+G6. Fences between buildings and creeks shall be designed and installed to allow views of the creeks and/or creekside natural areas from ground-floor viewpoints on buildings (including doors and windows) and allow views from pedestrian circulation areas between buildings and the creek.
+[ORD 4799, 01/08/2021; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.05.7 Parking, Loading and Service Areas
+
+A. Intent. To minimize the visual impact of parking, loading and service areas, support pedestrian interest along public rights of way and other pedestrian ways, and minimize conflicts between pedestrians and vehicles along key streets.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High Quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+C. Design Guideline and Standards
+
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Vehicle and Parking Access
+
+Vehicle and Parking Access - Design Standard Vehicle and Parking Access - Design Guideline
+S1. Curb cuts permitted under this section are subject to the applicable minimum standards within the adopted Engineering Design Manual.
+G1. Curb cuts shall meet S1.
+S2. No additional driveways accessed from public streets shall be permitted, except where the Development Code requires the development to provide on-site loading, or where structured parking or on-site parking is provided.
+[ORD 4844; August 2023]
+G2. Driveways accessed from public streets shall be minimized in order to promote pedestrian safety and walkability, ensure safe vehicle maneuvering, and maximize on-street parking.
+Vehicle and Parking Access - Design Standard Vehicle and Parking Access - Design Guideline
+S3. Sites with multiple frontages shall construct driveways on the lower hierarchy street, based on the street typology identified in Figure
+70.15.15.1 Street Typology.
+Hierarchy is determined by the list of streets below, with streets listed first higher in the hierarchy:
+●Major Street
+●Loop Street
+●Commercial Street
+●Connector Street
+●Local Street
+Where frontages are of equal hierarchy, the applicant may select the single frontage to take access from.
+Sites with frontage directly adjacent to both streets at the below intersections are exempt from complying with this standard:
+●SW Lombard and SW 1st; and
+●SW Lombard and SW Broadway
+Additionally, where the Engineering Design Manual requirements conflict with this Standard, the requirements of the Engineering Design Manual will supersede this Standard.
+In this scenario, complying with the
+Engineering Design Manual will be regarded as meeting this
+Standard. [ORD 4876; January 2026]
+G3. Sites with multiple frontages shall construct driveways in locations that result in significant lengths of site frontage occupied by buildings and other active uses along key streets.
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Sight Clearance
+
+Sight Clearance - Design Standard Sight Clearance -
+Design Guideline
+S4. To ensure visibility at intersections and driveways, all improvements adjacent to public streets, accessways, and driveways shall comply with BDC 60.55.35.3 Intersection Standards.
+G4. S4 shall be met.
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Surface Parking
+
+Surface Parking - Design Standard Surface Parking - Design Guideline
+S5. Surface parking shall be located as follows:
+a. Surface parking shall not be located along the primary frontage between the building facade and the street.
+b. Surface parking shall not be located within any front minimum setback area.
+c. Surface parking shall be set back a minimum 5 feet from all property lines.
+d. Alley frontages are exempt from Section 70.20.05.7.S5.a through 70.20.05.7.S5.c above.
+G5. The visual impact of surface parking and vehicles on the pedestrian experience shall be minimized by locating parking in less prominent locations on site.
+S6. Surface parking shall be screened from view of the right of way as follows:
+a. Evergreen shrubs that will grow to a minimum height of 30 inches within two years and form continuous screening.
+Areas within the vision clearance triangle shall include plantings that do not exceed 3 feet; and
+b. One tree for every 30 linear feet; and
+c. Evergreen ground cover shall cover the remaining landscape area.
+d. A minimum 30 inch tall architecturally treated wall may be substituted for the evergreen shrubs required by
+70.20.05.7.S6.a. Trees and ground cover required in
+70.20.05.7.S6.b and 70.20.05.7.S6.c must be provided.
+e. Alley frontages are exempt from Section 70.20.05.7.S6.a through 70.20.05.7.S6.d above.
+G6. Surface parking shall be screened and landscaped to reduce the impact on the pedestrian experience.
+S7. Surface parking along creekside paths shall be screened as follows:
+a. One tree for every 30 linear feet between the path and the parking lot, spaced evenly, and
+b. Evergreen shrubs that will grow to a minimum height of 30 inches within two years and form continuous screening, planted between the path and the parking lot, and
+c. Evergreen ground cover planted at a density that will cover the entire area within two years of planting, and
+d. Where the parking lot is designed so parked cars face the creek, an architecturally treated wall between 30 and 36 inches in height.
+Required landscaping shall be located on the side of the wall closest to the creekside path.
+G7. Surface parking along creekside paths shall be landscaped with a minimum width and density of landscape materials to minimize the visual impacts to users of the creekside path.
+Table 70.20.05.7.A Design Guidelines and Standards: Parking, Loading and Service Areas
+
+Utility, Loading and Service Areas
+
+Utility, Loading and Service Areas - Design Standard Utility, Loading and Service Areas - Design Guideline
+S8. Utilities and service areas shall be designed to minimize impact on the pedestrian experience by following the standards below:
+a. All on-site service areas, outdoor storage areas, waste storage, disposal facilities, recycling containers, transformer and utility vaults and similar activities shall be located in an area not visible from a public street, or shall be fully screened from view from a public street.
+b. Screening from public view for service areas, loading docks, loading zones and outdoor storage areas, waste storage, disposal facilities, recycling containers, transformer and utility vaults and similar activities shall be fully sight-obscuring, shall be constructed a minimum of one foot higher than the feature to be screened, and shall be accomplished by one or more of the following methods:
+I. Solid screen wall constructed of primary exterior finish materials utilized on primary buildings,
+II. Evergreen hedge wall that will grow one foot taller that the feature to be screened and reach 95 percent opacity within two years.
+III. Solid wood fence
+c. All loading docks and loading zones shall be located in an area not visible from a public street, or shall be fully screened from view from a public street.
+Screening of loading zones may be waived in if the applicant demonstrates the type and size of loading vehicles will not detract from the project’s aesthetic appearance and the timing of loading will not conflict with the operations of the expected businesses during business hours.
+G8. Utilities, loading, and service areas shall be screened, integrated into building and landscape design and/or located in less prominent locations to minimize the visual impact on the pedestrian experience.
+S9. Ramps constructed in the right of way to accommodate solid waste container access shall be allowed if all of the following thresholds are met:
+a. The proposed ramp is no wider than 5-feet; and
+b. The site does not have off-street parking or off-street loading facilities (whether required in BDC 60.25 Off Street Loading and
+60.30 Off Street Parking, or not); and
+c. The site does not have direct and reasonably access to an alley;
+and
+d. The solid waste containers needed to serve the proposed developed are 1-cubic yard or larger; and
+e. There are no existing ramps or driveways with 150-feet along the same block face.
+For the purposes of this threshold, pedestrian ramps at cross-walks or intersections are not considered existing ramps.
+G9. Ramps constructed in the right of way for purposes of solid waste container access shall minimize impacts to the pedestrian environment by promoting pedestrian safety and walkability, and ensure there are limited impacts to on-street parking.
+[ORD 4799, 01/08/2021; ORD 4844, 08/18/2023; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.05.8 Landscaping
+
+A. Intent. To use landscape design to create character and identity; enhance the appearance and function of outdoor spaces; encourage pedestrian activity; promote social interaction; enhance or integrate new natural systems; add shade to the urban environment; and provide stormwater management.
+Landscaping should feasibly further sustainability goals and incorporate solutions that are appropriate to the climate, region and local conditions.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Site Landscaping
+
+Site Landscaping - Design Standard Site Landscaping - Design Guideline
+S1. Sites one acre and larger shall have landscaped areas with live plantings equal to 10 percent of the site area.
+Up to 50 percent of the landscaping required by this provision may be met by areas with live plantings provided to satisfy the requirements of 70.20.10.7 Usable Open Space and
+70.20.10.8 Roof Elements.
+Landscaping with plantings that is provided to meet other requirements of this code, including, but not limited to, screening requirements, buffering requirements, parking lot island requirements, and setback design requirements, may be used to meet up to 100 percent of the landscaping required by this provision.
+Sites under one acre do not have minimum landscaping requirement, but must still meet all other applicable provisions of this code.
+G1. Sites shall be landscaped with live plantings to soften the edges of buildings and paved areas, add visual interest, and increase the attractiveness of the development.
+Landscaped areas may be at-grade or integrated with structures. and shall provide options for storm water management and/or provide shade to on-site hardscaped areas.
+Sites one acre and larger in particular shall ensure a balance of hardscape and landscape features where structures are not present.
+S2. All site areas not planted with trees, shrubs or other vegetated landscaping and also not occupied by structures, hardscaped areas (including paved areas), and sensitive natural areas shall be planted with live ground cover plants or other plants identified 70.20.05.8.S4 Plant
+Specifications, subsection e-f, as well as turf grasses.
+Mulch, as a ground cover, shall be composed of a naturally occurring material, have a natural color, and confined to areas underneath plants and within areas expected to be underneath plants at maturity.
+Mulch is not a substitute for ground cover plants.
+G2. Landscaped areas shall be fully planted or hardscaped to create sustainable, attractive developments that are consistent with the uses on site, prevent erosion and preserve and enhance nature.
+Mulch shall be used sparingly, and shall have a material and color that is appropriate for the uses on site and contributes to site aesthetics.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Establishment
+
+Establishment - Design Standard Establishment - Design Guideline
+S3. Irrigation shall be provided to ensure plants will survive their establishment period.
+Applications shall provide establishment period irrigation through one of the following options or a combination of options as long as the options cover all site plantings:
+a. A permanent, in-ground irrigation system with an automatic controller.
+b. An irrigation system designed and certified by a licensed landscape architect this is part of a landscape plan that provides sufficient water to ensure that the plants will become established.
+The system does not have to be permanent if a licensed landscape architect certifies that the plants chosen can survive.
+c. Irrigation by hand for a maximum of 500 square feet per site.
+G3. Irrigation shall be provided as appropriate, based on plant species and site conditions, to ensure proper establishment of plantings in all landscaped areas.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Plant Specifications
+
+Plant Specifications - Design Standard Plant Specifications -
+Design Guideline
+S4. Unless specified elsewhere in CHAPTER 70, all landscaping shall be planted at sizes no less than the following (measures shall be taken based on the American Standard for Nursery Stock ANSI standards).
+In the case of a code conflict, the higher requirement shall be met.
+a. Deciduous canopy trees shall be a minimum of 2-inch caliper size, balled and burlapped; and
+b. Deciduous ornamental trees shall be a minimum of 2-inch caliper size, balled and burlapped; and
+c. Evergreen trees shall be a minimum of 8 feet in height, balled and burlapped; and
+d. Evergreen and deciduous shrubs shall be a minimum of 24 inches high from finished grade and a minimum of 1 gallon in size, except dwarf shrubs such as boxwood, which have no minimum size; and
+e. Ferns and perennials shall be at least 1 gallon in size; and
+f. Ground-covers plants including ornamental grasses shall be at least 4-inch pot size.
+g. Areas subject to Clean Water Services regulations including stormwater facilities, vegetated corridors, and sensitive natural areas shall be planted consistent with Clean Water Services requirements.
+G4. Standard S4 shall be met.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Plant Variety and Density
+
+Plant Variety and Density - Design Standard Plant Variety and Density - Design
+Guideline
+S5. Unless specified by other requirements in this Code, landscaped areas will be planted based on the following specifications:
+a. Landscaped areas will include plants from the following categories at the specified densities:
+I. Deciduous or evergreen trees that are able to reach a height of 20 feet and a canopy width of 20 feet at maturity.
+If 25 square feet of surface soil area is not available for each tree, or if an existing or proposed structure would prevent full Mature Tree Canopy, ornamental, dwarf, columnar and similar species are permitted as determined by the decision- making authority.
+[ORD 4859; January 2025]
+1. Sites under one acre shall provide one tree per 1,000 square feet of site area not occupied by a structure.
+2. Sites one acre and greater shall provide one tree per
+3,000 square feet of total site area.
+3. All trees planted or preserved on-site to meet any provisions of this code may count toward the density requirements of this sub-section, providing that they meet the size requirements of this subsection.
+II. Shrubs and perennials.
+III. Ground cover, including ornamental grasses, shall be planted at a density such that the plants will cover the entire area within two years of planting.
+Applicants shall provide an objective source of information about the plant’s spacing requirements.
+b. Plant diversity:
+I. If more than 10 trees are provided on a site, no more than
+40 percent of the trees can be of one species; and
+II. If more than 25 shrubs are provided on a site, no more than
+75 percent can be of one species.
+G5. Site landscaping shall be planted with a variety that provides visual interest, including in color, seasonal color and scale, and shall be planted at a density that provides sufficient opportunities for shade and fully cover areas not occupied by structures, paving or hardscaped areas.
+S6. A minimum of 25 percent of landscape plantings shall be drought-resistant species.
+G6. Drought-resistant landscaping shall be incorporated where possible to reduce the need for irrigated water.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Tree Planting and Preservation
+
+Tree Planting and Preservation - Design Standard
+Tree Planting and
+Preservation - Design
+Guideline
+S7. Existing Surveyed Trees that are preserved in the proposal may be counted as two required site trees when calculating required trees in 70.20.05.8.S5.a.I.
+For Surveyed Trees to counted toward the site tree requirement, they shall be confirmed as healthy as determined by a certified arborist or city arborist.
+G7. Existing trees on-site that provide shade or visual interest shall be preserved where possible.
+S8. New trees shall be supported (by use of stakes, wires or similar material) for at least one year.
+Trees may be staked for less than one year if based on the recommendation of a certified arborist.
+G8. Standard S8 shall be met.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Residential Zone Buffers
+
+Residential Zone Buffers - Design Standard Residential Zone Buffers - Design
+Guideline
+S9. Development on sites that abut a residentially zoned property located outside of the Regional Center shall provide a 10 foot landscape buffer, measured from the shared property line.
+Only landscaping shall be allowed in the landscape buffer area.
+The buffer areas shall extend the length of the shared property line.
+a. The buffer shall consist of the following:
+I. Live ground cover consisting of low-height plants, or shrubs, ornamental grasses, or turf; and
+II. 1 evergreen tree having a minimum planting height of 8 feet, and that will reach 20 feet in height and a canopy width of 20 feet at maturity, for every 30 lineal feet of buffer width; and
+III. Evergreen shrubs which reach a minimum height of 4 feet within 2 years of planting, planted evenly between the required evergreen trees.
+IV. Ground cover and shrubs shall be spaced and located dependent on the mature spread of the selected vegetation to create a fully vegetated screen at maturity.
+Bare gravel, rock, bark or other similar materials may be used, as a ground cover, but shall be confined to areas underneath plants and within areas expected to be underneath plants at maturity, and is not a substitute for ground cover plants.
+b. The buffer standards shall not apply to the following:
+I. Single-detached dwellings on individual parcels.
+[ORD
+4822; June 2022]
+II. Areas where emergency access is required.
+III. Areas where a public utility easement exists.
+This exemption only applies to trees and does not exempt the requirement of shrubs and ground cover.
+IV. Areas required for visual access purposes as determined by the City Traffic Engineer or City Police.
+This exemption only applies to trees and shrubs and does not exempt the requirement of ground cover.
+G9. Development on sites that abut a residentially zoned property located outside of the Regional Center shall provide a landscape buffer consisting of trees, shrubs, and ground cover along the shared property line to provide screening and horizontal separation.
+Table 70.20.05.8.A Design Guidelines and Standards: Landscaping
+
+Surface Parking Landscaping
+
+Surface Parking Landscaping - Design Standard Surface Parking Landscaping -
+Design Guideline
+S10. Surface parking shall be landscaped according to the following provisions.
+a. Landscape islands shall be provided at a rate of one for every 10 contiguous parking spaces and at the end of each parking row.
+b. The island shall have a minimum area of 70 square feet, shall be curbed, and a minimum width of 6 feet, measured from the interior curb face.
+Curbs separating landscaped areas from parking areas may allow stormwater runoff to pass through them.
+The landscaped island shall be planted with a tree having a minimum mature height of 20 feet.
+If a pole-mounted light is proposed to be installed within a landscaped planter island, and an applicant demonstrates that there is a physical conflict for siting the tree and the pole-mounted light together, the decision-making authority may waive the planting of the tree, provided that at least seventy-five (75) percent of the required islands contain trees.
+c. Raised pedestrian walkways within the parking area connecting the parking spaces and on-site building(s) may be counted towards the total required number of landscaped islands, provided that the following is met:
+I. Trees are spaced a maximum of 30 feet on center on a minimum of one side of the walkway.
+[ORD 4876; January 2026]
+II. The minimum unobstructed walkway width is five feet.
+[ORD 4876;
+January 2026]
+III. The walkway is separated from the parking area by curbs, bollards, or other means on both sides.
+[ORD 4876; January 2026]
+IV. Trees are located in planting area with ground cover or planted in covered tree wells.
+V. Trees within the linear walkway area shall constitute no more than
+50 percent of the total number of trees within required landscaped islands.
+All remaining required trees shall be located within landscaped islands.
+[ORD 4876; January 2026]
+d. Trees planted within required landscaped islands or the linear walkway shall be of a type and species identified by the City of Beaverton Tree
+List or an alternative approved by the City Arborist.
+[ORD 4859; January
+2025] [ORD 4876; January 2026]
+e. Areas of parking and vehicle circulation covered by upper-floor structures are exempt from these requirements.
+G10. Surface parking areas shall be landscaped to provide shade, afford permeable areas for water runoff management, and reduce continuous areas of parking.
+[ORD 4799, 01/08/2021; ORD 4822, 06/30/2022; ORD 4859, 01/02/2025; ORD 4876, 01/20/2026] Effective on: 9/14/2026
+70.20.05.9 Lighting
+
+1. Intent. To create safe, welcoming, well-lighted areas, including building entries, pedestrian pathways and plazas, parking lots and vehicle maneuvering areas; and to minimize excessive illumination on adjoining properties.
+2. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+3. Design Guideline and Standards
+
+Table 70.20.05.9.A Design Guidelines and Standards: Lighting
+
+Lighting - Design Standard Lighting - Design Guideline
+S1. On-site lighting shall meet the standards of
+Development Code Section 60.05.30.
+G1. On-site lighting shall meet the Guidelines of
+Development Code Section 60.05.50.
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026

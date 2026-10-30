@@ -367,14 +367,11 @@ or/washington/beaverton:
   # except for the ..." (Chapter 70, a third printing).
   furniture: '^(?:40\.97\.|60\.20\.20\.\s+In Cooper|70\.20\.10\.\s+Building Design guidelines)'
   front: [bdc.10.general-provisions, bdc.70.downtown]
-  # Four chapters stay whole. Each holds a value whose one citation names two
-  # of its sections (a use-table row and the dimension table, or a stall
-  # table and its notes), so the citation must stay on the proof copy -- and
-  # a value cited to a proof copy is joined to no footnote at all once its
-  # chapter is cut. Cutting these would unhook 38 encoded or unmeasured notes
-  # from CC/CS/GC FAR, the RC/SC/TC multiple-use FAR, the RC downtown lot
-  # minimum and the default stall size (measured 2026-10-28).
-  uncut: [bdc.20.10.commercial, bdc.20.20.multiple-use, bdc.60.30.parking, bdc.70.downtown]
+  # 20.10, 20.20, 60.30 and 70 were left whole until FOLLOWUPS 123: each holds
+  # a value whose one citation names two of its sections, which stays on the
+  # proof copy, and a proof-copy citation was joined to no footnote. The join
+  # now follows such a citation into its sections (qualified.over), so they
+  # are cut (2026-10-29).
   page_head: '^(?:Beaverton Development Code|Date Printed: \w+ \d+, \d{4} Chapter \d+, [A-Z]+-\d+)\s*$'
   page_furniture: '^(?:Beaverton Development Code|Date Printed: \w+ \d+, \d{4} Chapter \d+, [A-Z]+-\d+)\s*$'
 

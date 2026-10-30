@@ -1,0 +1,43 @@
+70.15.25. Active Ground-floor Land Use Regulations
+
+Buildings fronting on streets identified in Figure 70.15.25.1 shall have uses occupying ground-floor spaces consistent with the designated frontage type.
+Only tenant spaces fronting the designated streets shall be subject to these rules.
+For a tenant space to be considered fronting a street, the facade must be located within the minimum and maximum setback as defined by the underlying zone.
+Ground-floor spaces not fronting on streets designated in Figure 70.15.25.1, as well as all upper-floor and below-grade uses, shall be regulated by the underlying zone.
+Buildings subject to the Active Ground-floor Land Use Regulations shall comply with the following provisions:
+1. Ground floor uses in buildings with facades within the maximum setback of frontages identified in Figure 70.15.25.1 shall be consistent with the land uses listed per each frontage type.
+2. Active ground floor uses shall occupy the minimum percentage of the building frontage for each frontage type identified.
+3. Active ground floor uses shall have a minimum depth of 25 feet measured from the street-facing facade.
+4. Buildings with facades within the maximum setback of frontages identified in Figure 70.15.25.1 shall meet all applicable regulations of Section 70.20.10.6 Active Ground Floor Design.
+5. Tax lots 1S110CC00400, 1S110CC01300, and 1S110CC01303 are designated Area D and shall be subject to the rules of Table 70.15.25.A Active Frontages Table.
+6. Tax lots 1S110CD00900, 1S110CD01300, 1S110CD00790, 1S110CD01301, 1S115BB00203, and 1S115BB00200 are designated Area E and shall be subject to the rules of Table 70.15.25.A Active Frontages Table.
+7. Mixed-use buildings with multiple frontages designated as Type A, Type B, or Type C streets, in any combination, as identified in Figure 70.15.25.1 Active Frontage Use Map, shall be permitted to have residential units on the ground floor on all except one frontage that is within 20 feet of the street.
+All other frontages shall provide ground floor uses consistent with Table 70.15.25.A Active Frontages Table.
+The ground floor residential units within mixed-use buildings with multiple frontages along Type A, Type B, or Type C streets shall be located along the least active street designation, with Type A being the most active street designation and Type C being the least active.
+For example, if a mixed-use building has frontage on a Type B street and Type C street, the ground floor residential units shall face the Type C street.
+[ORD 4857; October 2024]
+Active Residential Frontage (Portland, OR)
+Ground floor residential units create an active ground floor.
+Units are elevated from the sidewalk grade and include individual entries, landscaping to create privacy and a transition from the street and weather protected front porches.
+
+Active Restaurant Frontage (Seattle, WA)
+Non-Residential buildings can create active ground floors through using transparent glazing and locating uses that provide visual interest to enhance the pedestrian experience through visual connections between inside and outside spaces.
+Figure 70.15.25.1 Active Frontage Use Map
+Table 70.15.25.A Active Frontages Table
+
+Street Type
+Minimum
+Active Use
+Frontage
+Allowed Ground Floor Uses
+Type A 80%
+Eating and drinking establishments, retail trade, personal service businesses, food cart pods, brewery/distillery/winery with tasting room, and primary lobby access to other parts of the building.
+Type B 60%
+Type A allowed ground floor uses, commercial amusements, medical clinics, office, meeting facilities, places of worship, service business/professional services, financial institutions, public services and uses, residential amenity spaces, hotels/temporary living quarters, recreational facilities, and commercial schools.
+Type C 60%
+Uses allowed under Type A and Type B allowed ground floor uses and ground floor residential uses with primary access facing the right of way, served by a porch, stoop, patio, terrace, forecourt, or similar design element, elevated or at grade.
+Area D N/A
+At the time of development, a Type B frontage must be assigned along a public right of way or other publicly accessible space on the site that is equal in length to 1/2 of the longest diagonal measurement of the site.
+Area E N/A When dedicated, the future extension of SW Millikan Way shall be designated a Type B frontage.
+[ORD 4800, 01/08/2021; ORD 4857, 10/03/2024]
+Effective on: 8/10/2026

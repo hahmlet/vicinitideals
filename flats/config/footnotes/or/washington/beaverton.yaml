@@ -394,7 +394,7 @@ notes:
       note is not on it (in the Office Industrial and Industrial districts
       there is no dwelling row at all, and the layer refuses the pod there).
   # --- bdc.20.10.commercial.txt ---
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L156"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L78"
     digest: "87074cce1338"
     state: dismissed
     reason: >-
@@ -404,7 +404,7 @@ notes:
       net acres, rounding a layer-wide comment); 20.25.10.4 concerns a
       multiple use development, which a pod on its own lot is not, and minimum
       FAR is a layer-wide NOT ENCODED comment.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L158"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L80"
     digest: "0e61a00889c6"
     state: encoded
     encoded_as: "CS, CC and GC setback_front_max_ft 16, held on every lot"
@@ -414,7 +414,7 @@ notes:
       threshold. The layer holds it on every lot, the stricter reading; a
       doubt in the handoff. A deviation through Design Review is a relief not
       taken.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L162"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L83"
     digest: "a37d43e4cd45"
     state: encoded
     encoded_as: "NS setback_side_ft 0, with 10 when abuts_residential_zone"
@@ -423,7 +423,7 @@ notes:
       residential use in a residential zone. The layer takes the zone boundary
       for the use (abuts_residential_zone), the nearer fact it holds. The
       zero-side-yard application of 40.30 is a relief not taken.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L166"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L86"
     digest: "4b87fc54d981"
     state: encoded
     encoded_as: >-
@@ -433,7 +433,7 @@ notes:
       abutting RMA, RMB or RMC land. The layer holds the 15 feet whenever the
       site abuts a residential zone, slightly wider than the three zones
       named, the stricter reading.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L169"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L89"
     digest: "91bbbe616e7a"
     state: dismissed
     reason: >-
@@ -442,14 +442,14 @@ notes:
       in the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L172"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L93-L94"
     digest: "5288973d7227"
     state: dismissed
     reason: >-
       A repealed or reserved note: the number is kept and the text is gone.
       Nothing to apply.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L178"
-    digest: "98d1110b4c98"
+  - quote: "or/washington/beaverton/20.10/20.10.15.txt#L98-L99"
+    digest: "d4e0b1f6279e"
     state: dismissed
     reason: >-
       The note points at 20.25.10.4 for intensity (FAR) in a multiple use
@@ -457,7 +457,7 @@ notes:
       own lot is not; minimum FAR is a layer-wide NOT ENCODED comment. The
       body also carries the section's ordinance history, which sets no
       standard.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L293"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L85"
     digest: "513d1508ba79"
     state: unmeasured
     fact: site_specific_limitation
@@ -472,7 +472,7 @@ notes:
       from outside its zone's own figures) is the nearest, and it leaves the
       lot UNKNOWN rather than GREEN, which is the direction this note must
       fail in. A registry fact is owed locally (handoff).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L296"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L88"
     digest: "08b2c59c6a39"
     state: dismissed
     reason: >-
@@ -481,7 +481,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L297"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L89"
     digest: "bb6daaae2ece"
     state: dismissed
     reason: >-
@@ -490,14 +490,14 @@ notes:
       and this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L298"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L90"
     digest: "3b7b24e8841b"
     state: dismissed
     # Also printed at bdc.20.15.employment-industrial#L259.
     reason: >-
       A repealed or reserved note: the number is kept and the text is gone.
       Nothing to apply.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L299"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L91-L92"
     digest: "b7c39dfb47fc"
     state: dismissed
     reason: >-
@@ -506,7 +506,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L301"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L93"
     digest: "0871c47592dd"
     state: dismissed
     reason: >-
@@ -515,7 +515,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L305"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L95-L96"
     digest: "60c7828efb74"
     state: dismissed
     reason: >-
@@ -524,7 +524,7 @@ notes:
       and Quadplex, read in the layer, and this note is not on it (in the
       Office Industrial and Industrial districts there is no dwelling row at
       all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L309"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L98"
     digest: "377aa5f09619"
     state: dismissed
     reason: >-
@@ -533,7 +533,7 @@ notes:
       and Quadplex, read in the layer, and this note is not on it (in the
       Office Industrial and Industrial districts there is no dwelling row at
       all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L311"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L100"
     digest: "df87eb5a7c8d"
     state: dismissed
     # Also printed at bdc.20.20.multiple-use#L860.
@@ -543,14 +543,14 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L313"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L102"
     digest: "dd3308ed95cc"
     state: dismissed
     reason: >-
       The note qualifies a dwelling type that is not the pod: existing
       single-detached dwellings, kept or rebuilt. The pod is screened as a new
       quadplex on one lot under the Triplex and Quadplex row.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L316"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L106"
     digest: "f22dc353b8aa"
     state: encoded
     # Also printed at bdc.20.22.cooper-mountain#L478.
@@ -561,7 +561,7 @@ notes:
       The note requires every unit of a duplex, triplex or quadplex to be
       attached, which the pod is. It is note 11 of the commercial use table
       and note 7 of the Cooper Mountain use table.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L318"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L109"
     digest: "a3c8dae216a1"
     state: dismissed
     reason: >-
@@ -569,7 +569,7 @@ notes:
       The pod's own row is Triplex and Quadplex, read in the layer, and this
       note is not on it (in the Office Industrial and Industrial districts
       there is no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L322"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L114"
     digest: "ec36dd6d6f91"
     state: dismissed
     reason: >-
@@ -577,7 +577,7 @@ notes:
       pod's own row is Triplex and Quadplex, read in the layer, and this note
       is not on it (in the Office Industrial and Industrial districts there is
       no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L325"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L116-L117"
     digest: "85aec7de0573"
     state: dismissed
     reason: >-
@@ -586,7 +586,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L326"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L118"
     digest: "c95d96170645"
     state: dismissed
     reason: >-
@@ -594,7 +594,7 @@ notes:
       The pod's own row is Triplex and Quadplex, read in the layer, and this
       note is not on it (in the Office Industrial and Industrial districts
       there is no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L334"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L126"
     digest: "c182e7b46da2"
     state: dismissed
     reason: >-
@@ -603,7 +603,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L337"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L129"
     digest: "0b0988ebd441"
     state: dismissed
     reason: >-
@@ -616,8 +616,8 @@ notes:
       them, four units need no more than 0.57 net acres), so the note cannot
       pass a lot the layer would otherwise refuse, unless nearly all of a
       15-acre site is undevelopable.
-  - quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L343"
-    digest: "6a6f164606b9"
+  - quote: "or/washington/beaverton/20.10/20.10.20.txt#L134"
+    digest: "41707a42672c"
     state: dismissed
     reason: >-
       The note qualifies a use that is not a dwelling: open-air sales, display
@@ -792,7 +792,7 @@ notes:
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
   # --- bdc.20.20.multiple-use.txt ---
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L197"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L102"
     digest: "4d193b7aa9c1"
     state: dismissed
     reason: >-
@@ -802,7 +802,7 @@ notes:
       net acres, rounding a layer-wide comment); 20.25.10.4 concerns a
       multiple use development, which a pod on its own lot is not, and minimum
       FAR is a layer-wide NOT ENCODED comment.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L199"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L104"
     digest: "8c772a6f7126"
     state: encoded
     encoded_as: >-
@@ -811,14 +811,14 @@ notes:
       Note 2 prints 30 units an acre within 400 feet of a light rail platform
       and 24 beyond. No measured transit-distance fact is held, so the layer
       holds 30 everywhere, the stricter floor; a doubt in the handoff.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L200"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L105"
     digest: "4045fcf007db"
     state: dismissed
     reason: >-
       The note points the FAR rows at 20.25.10. The maximum FAR is read in the
       layer; minimum FAR (row B.1) is a layer-wide NOT ENCODED comment and a
       doubt.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L201"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L106"
     digest: "5ba9a7014578"
     state: dismissed
     reason: >-
@@ -827,7 +827,7 @@ notes:
       where the pod is permitted (RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR, SC-S);
       the figures it qualifies are in OI-WS, SC-E1 and SC-E3, where the layer
       refuses the pod.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L203"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L107"
     digest: "e02a4a9b79c8"
     state: dismissed
     reason: >-
@@ -835,8 +835,8 @@ notes:
       75 or 20 feet; the layer refuses the pod in OI-WS. The WCF height row of
       the next table carries the same marker, apparently misnumbered for note
       6 ("Inclusive of antenna"); a WCF is not the pod.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L207"
-    digest: "c9acbe4af780"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L111"
+    digest: "70b179d6c8f0"
     state: dismissed
     reason: >-
       The note limits the side setback of row C.3 to lot lines on streets and
@@ -845,22 +845,22 @@ notes:
       pod in OI-WS. The census ran the note on into the chapter's ordinance
       history and the header and first row of the WCF table that follows
       (80-foot tower heights), none of which reaches the pod.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L221"
+  - quote: "or/washington/beaverton/20.20/20.20.15.txt#L121"
     digest: "3203d7f291fd"
     state: dismissed
     reason: >-
       Not a note: the WCF table's tower height row ("80 80 80 ... Feet") and
       the label of the next row, read by the census as a note numbered 80
       because the row begins with its first figure. A WCF is not the pod.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L703"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L223-L224"
     digest: "eeee0b77b3c5"
     state: dismissed
     reason: >-
       The note qualifies a dwelling type that is not the pod: duplexes in
       RC-E. The pod is screened as a new quadplex on one lot under the Triplex
       and Quadplex row.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L707"
-    digest: "ebe505ba511f"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L225"
+    digest: "17fa889219d0"
     state: encoded
     encoded_as: "OI-WS quadplex_allowed false"
     reason: >-
@@ -868,8 +868,8 @@ notes:
       above a non-residential use, saying "Multi-dwelling" there means "one or
       more units above a non-residential use". The pod has nothing under it,
       and row 1.C (N) refuses four units outright.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L711"
-    digest: "fc9c0e2a8f36"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L228"
+    digest: "bd28b3a50dc4"
     state: encoded
     encoded_as: "C-WS quadplex_allowed false"
     reason: >-
@@ -878,28 +878,28 @@ notes:
       is commercial or civic and 75 percent of the street footage is fronted
       by it. An all-residential pod is neither, and row 1.C (N) refuses four
       units outright.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L716"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L232-L233"
     digest: "9b62096f80e4"
     state: dismissed
     reason: >-
       The note qualifies a dwelling type that is not the pod: existing
       duplexes and townhouses in SC-MU and SC-HDR. The pod is screened as a
       new quadplex on one lot under the Triplex and Quadplex row.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L718"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L235"
     digest: "216f34f9e3d4"
     state: dismissed
     reason: >-
       The note qualifies a dwelling type that is not the pod: existing
       single-detached dwellings, kept or rebuilt. The pod is screened as a new
       quadplex on one lot under the Triplex and Quadplex row.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L720"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L237"
     digest: "e810fd607737"
     state: dismissed
     reason: >-
       The note qualifies a dwelling type that is not the pod: existing
       single-detached dwellings, kept or rebuilt. The pod is screened as a new
       quadplex on one lot under the Triplex and Quadplex row.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L724"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L241"
     digest: "33cda1cf6456"
     state: dismissed
     reason: >-
@@ -908,13 +908,13 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L725"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L242-L243"
     digest: "71bf802361e4"
     state: dismissed
     reason: >-
       A repealed or reserved note: the number is kept and the text is gone.
       Nothing to apply.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L726"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L244-L245"
     digest: "9c7576d51bdf"
     state: dismissed
     reason: >-
@@ -923,13 +923,13 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L729"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L247-L248"
     digest: "b35b32b8428a"
     state: dismissed
     reason: >-
       A repealed or reserved note: the number is kept and the text is gone.
       Nothing to apply.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L730"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L249"
     digest: "4b5aac26a778"
     state: dismissed
     reason: >-
@@ -938,7 +938,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L732"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L250"
     digest: "942844aca724"
     state: dismissed
     reason: >-
@@ -947,7 +947,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L733"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L251"
     digest: "d408a8c65404"
     state: dismissed
     reason: >-
@@ -956,7 +956,7 @@ notes:
       Triplex and Quadplex, read in the layer, and this note is not on it (in
       the Office Industrial and Industrial districts there is no dwelling row
       at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L736"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L255"
     digest: "be6334913d61"
     state: dismissed
     reason: >-
@@ -965,7 +965,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L739"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L259"
     digest: "645c3f40873a"
     state: dismissed
     reason: >-
@@ -974,7 +974,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L745"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L266-L267"
     digest: "daec44dbca00"
     state: dismissed
     reason: >-
@@ -983,7 +983,7 @@ notes:
       in the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L747"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L269-L270"
     digest: "d3442470a86d"
     state: dismissed
     reason: >-
@@ -992,7 +992,7 @@ notes:
       in the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L749"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L272"
     digest: "e4107e43c10f"
     state: dismissed
     reason: >-
@@ -1001,7 +1001,7 @@ notes:
       Triplex and Quadplex, read in the layer, and this note is not on it (in
       the Office Industrial and Industrial districts there is no dwelling row
       at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L753"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L273"
     digest: "2c5038312620"
     state: dismissed
     reason: >-
@@ -1010,7 +1010,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L756"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L274"
     digest: "4dcac3eb8633"
     state: dismissed
     reason: >-
@@ -1019,7 +1019,7 @@ notes:
       this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L758"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L276-L277"
     digest: "45d61ba93427"
     state: dismissed
     reason: >-
@@ -1028,7 +1028,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L760"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L279-L280"
     digest: "285bb2172eba"
     state: dismissed
     reason: >-
@@ -1037,7 +1037,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L765"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L283"
     digest: "df89f88d60f4"
     state: dismissed
     reason: >-
@@ -1046,13 +1046,13 @@ notes:
       Triplex and Quadplex, read in the layer, and this note is not on it (in
       the Office Industrial and Industrial districts there is no dwelling row
       at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L767"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L284"
     digest: "2e49e7681ea1"
     state: dismissed
     reason: >-
       A repealed or reserved note: the number is kept and the text is gone.
       Nothing to apply.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L768"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L285"
     digest: "d41585e4b4d8"
     state: dismissed
     reason: >-
@@ -1061,7 +1061,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L769"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L286"
     digest: "1ef9d0d0b78b"
     state: dismissed
     reason: >-
@@ -1070,7 +1070,7 @@ notes:
       in the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L771"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L287"
     digest: "c202be7c98b9"
     state: dismissed
     reason: >-
@@ -1079,7 +1079,7 @@ notes:
       and this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L772"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L288"
     digest: "147b8457c2a2"
     state: dismissed
     reason: >-
@@ -1088,7 +1088,7 @@ notes:
       and this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L777"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L293"
     digest: "08bb726e226c"
     state: dismissed
     reason: >-
@@ -1097,7 +1097,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L779"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L294"
     digest: "83b203ec52d3"
     state: dismissed
     reason: >-
@@ -1106,7 +1106,7 @@ notes:
       and Quadplex, read in the layer, and this note is not on it (in the
       Office Industrial and Industrial districts there is no dwelling row at
       all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L781"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L295-L296"
     digest: "5ea26e56e531"
     state: dismissed
     reason: >-
@@ -1115,7 +1115,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L783"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L297"
     digest: "8b60585ae164"
     state: dismissed
     reason: >-
@@ -1124,7 +1124,7 @@ notes:
       and this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L784"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L298-L299"
     digest: "643c0e4efdf0"
     state: dismissed
     reason: >-
@@ -1133,7 +1133,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L786"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L300"
     digest: "dbc864e16eb4"
     state: dismissed
     reason: >-
@@ -1142,7 +1142,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L787"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L301"
     digest: "8b83dc6a98e1"
     state: dismissed
     reason: >-
@@ -1151,7 +1151,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L810"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L314"
     digest: "eaf3c8444ade"
     state: dismissed
     reason: >-
@@ -1160,7 +1160,7 @@ notes:
       is Triplex and Quadplex, read in the layer, and this note is not on it
       (in the Office Industrial and Industrial districts there is no dwelling
       row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L812"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L315"
     digest: "2c7a7e5ddb80"
     state: dismissed
     reason: >-
@@ -1168,7 +1168,7 @@ notes:
       row is Triplex and Quadplex, read in the layer, and this note is not on
       it (in the Office Industrial and Industrial districts there is no
       dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L813"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L316"
     digest: "4abfa5bc691c"
     state: dismissed
     reason: >-
@@ -1176,7 +1176,7 @@ notes:
       row is Triplex and Quadplex, read in the layer, and this note is not on
       it (in the Office Industrial and Industrial districts there is no
       dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L814"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L317"
     digest: "e0f904d8988f"
     state: dismissed
     reason: >-
@@ -1185,7 +1185,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L816"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L318"
     digest: "c72bb0c763c8"
     state: dismissed
     reason: >-
@@ -1193,7 +1193,7 @@ notes:
       multi-dwelling, allowed in the zone. It marks the Multi-Dwelling row.
       The pod is permitted in these columns by its own Triplex and Quadplex
       row (P), read in the layer, and needs nothing from this one.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L818"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L320-L321"
     digest: "2df1fb3a1754"
     state: dismissed
     reason: >-
@@ -1202,7 +1202,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L821"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L322"
     digest: "883a89fa8bc1"
     state: dismissed
     reason: >-
@@ -1211,7 +1211,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L826"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L324"
     digest: "2042cffac209"
     state: dismissed
     reason: >-
@@ -1220,7 +1220,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L827"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L325"
     digest: "793620a1159c"
     state: dismissed
     # Also printed at bdc.70.downtown#L615.
@@ -1230,7 +1230,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L828"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L326"
     digest: "f055be9f5d6e"
     state: dismissed
     reason: >-
@@ -1239,7 +1239,7 @@ notes:
       in the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L829"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L327"
     digest: "940b075031e6"
     state: dismissed
     reason: >-
@@ -1247,7 +1247,7 @@ notes:
       pod's own row is Triplex and Quadplex, read in the layer, and this note
       is not on it (in the Office Industrial and Industrial districts there is
       no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L830"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L328"
     digest: "5bc756bde5e1"
     state: dismissed
     reason: >-
@@ -1256,7 +1256,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L831"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L329"
     digest: "ff702466c1dd"
     state: dismissed
     reason: >-
@@ -1265,7 +1265,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L832"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L330"
     digest: "f754e273491e"
     state: dismissed
     reason: >-
@@ -1274,7 +1274,7 @@ notes:
       and this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L833"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L331"
     digest: "0d8cda4f6fb3"
     state: dismissed
     reason: >-
@@ -1283,7 +1283,7 @@ notes:
       in the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L835"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L333"
     digest: "7b8d444fe2a2"
     state: dismissed
     reason: >-
@@ -1292,7 +1292,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L836"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L334"
     digest: "ae2658d91b72"
     state: dismissed
     reason: >-
@@ -1301,7 +1301,7 @@ notes:
       and Quadplex, read in the layer, and this note is not on it (in the
       Office Industrial and Industrial districts there is no dwelling row at
       all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L854"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L345"
     digest: "ea1e5e1efcef"
     state: dismissed
     reason: >-
@@ -1310,7 +1310,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L855"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L346"
     digest: "a85acf89fe93"
     state: dismissed
     reason: >-
@@ -1319,7 +1319,7 @@ notes:
       this note is not on it (in the Office Industrial and Industrial
       districts there is no dwelling row at all, and the layer refuses the pod
       there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L857"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L347"
     digest: "a4ca49e47cf1"
     state: dismissed
     reason: >-
@@ -1328,7 +1328,7 @@ notes:
       and Quadplex, read in the layer, and this note is not on it (in the
       Office Industrial and Industrial districts there is no dwelling row at
       all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L865"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L357-L358"
     digest: "0c5449657abe"
     state: dismissed
     reason: >-
@@ -1336,7 +1336,7 @@ notes:
       Nothing to apply. It still marks SC-S's residential cells (P66); a
       repealed note adds nothing to the P, and the layer reads SC-S as
       permitting the pod.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L866"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L359"
     digest: "c79edcaef5aa"
     state: dismissed
     reason: >-
@@ -1345,7 +1345,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L868"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L360"
     digest: "2662e0443d5b"
     state: dismissed
     reason: >-
@@ -1353,7 +1353,7 @@ notes:
       pod's own row is Triplex and Quadplex, read in the layer, and this note
       is not on it (in the Office Industrial and Industrial districts there is
       no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L871"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L362"
     digest: "7dc2d6fae72e"
     state: dismissed
     reason: >-
@@ -1362,7 +1362,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L874"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L365"
     digest: "cc8e373fc29c"
     state: dismissed
     reason: >-
@@ -1375,8 +1375,8 @@ notes:
       them, four units need no more than 0.57 net acres), so the note cannot
       pass a lot the layer would otherwise refuse, unless nearly all of a
       15-acre site is undevelopable.
-  - quote: "or/washington/beaverton/bdc.20.20.multiple-use.txt#L881"
-    digest: "d0b8d14efd96"
+  - quote: "or/washington/beaverton/20.20/20.20.20.txt#L371-L372"
+    digest: "afdf328f0c6e"
     state: dismissed
     reason: >-
       The note qualifies a use that is not a dwelling: a use exempt from
@@ -1854,7 +1854,7 @@ notes:
       and Orientation GUIDELINES, which carry no figures (the
       standards-or-guidelines choice is a layer-wide comment).
   # --- bdc.60.30.parking.txt ---
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L272"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L197"
     digest: "829312fbbb95"
     state: dismissed
     # Also printed at bdc.60.30.parking#L566.
@@ -1862,19 +1862,19 @@ notes:
       The note says the parking ratios are per 1,000 square feet unless
       otherwise noted. The residential rows the layer reads are stated per
       unit, which is the "otherwise noted".
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L273"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L198"
     digest: "15dcd5cf0ba3"
     state: dismissed
     reason: >-
       The note points at 60.30.10.4 for uses not listed. Dwellings are listed;
       the layer reads their rows.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L274"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L199"
     digest: "2977b3e72e4c"
     state: dismissed
     reason: >-
       The note points at 60.30.10.11 for exceptions (reductions and
       adjustments). A relief from a requirement the layer holds.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L275"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L200"
     digest: "a77b479dc37f"
     state: encoded
     encoded_as: "parking_max_per_unit 1.8, the layer default"
@@ -1882,7 +1882,7 @@ notes:
       Note 4 rounds the maximum parking count: 0.5 and above up, below down.
       Four units at 1.8 is 7.2, so 7 stalls, which is what the default gives
       the pod.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L278"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L203"
     digest: "8b042540ab1a"
     state: dismissed
     reason: >-
@@ -1891,25 +1891,25 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L567"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L372"
     digest: "5971766058e6"
     state: dismissed
     reason: >-
       The note points at 60.30.10.4 for uses not listed. Dwellings are listed;
       the layer reads their rows.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L568"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L373"
     digest: "0543da1c1f88"
     state: dismissed
     reason: >-
       The note rounds the bicycle parking count. Bicycle parking is not in the
       screen.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L570"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L375"
     digest: "bc803b0d1d7d"
     state: dismissed
     reason: >-
       The note picks the greater of two bicycle parking options. Bicycle
       parking is not in the screen.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L573"
+  - quote: "or/washington/beaverton/60.30/60.30.10.txt#L377"
     digest: "b169abf698d4"
     state: dismissed
     reason: >-
@@ -1918,25 +1918,25 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L666"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L14"
     digest: "d94517d14bff"
     state: dismissed
     reason: >-
       The note says one row of stalls needs a bay of stall depth plus aisle (C
       plus D). That is how the screen already sizes a single-loaded bay from
       the stall and aisle defaults.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L667"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L15"
     digest: "356b703b5437"
     state: dismissed
     reason: >-
       The note lets a public alley count toward the aisle width. A relief: the
       layer holds the full aisle on the lot.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L669"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L16"
     digest: "194b84d05958"
     state: dismissed
     reason: >-
       An estimating aid (350 square feet a vehicle), not a standard.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L672"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L17"
     digest: "4a6f155e10b8"
     state: encoded
     encoded_as: >-
@@ -1945,7 +1945,7 @@ notes:
       Note 4 gives 8.5 feet for long-duration self-parking, 9.0 for higher
       turnover and 9.5 to 10 for supermarkets. Residents' parking is
       long-duration.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L674"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L18-L19"
     digest: "6685c5b6c1cf"
     state: encoded
     encoded_as: >-
@@ -1954,20 +1954,20 @@ notes:
       Note 5 sets the two-way aisle at 24 feet and the one-way at 20, except
       as note 8(c) allows (22 feet two-way in RMA, RMB, RMC and CM-RM, encoded
       in those zones).
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L677"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L22"
     digest: "d6f66a207fe3"
     state: dismissed
     reason: >-
       The note lets a bumper overhang come off the stall depth and sizes
       recreational vehicle spaces. The overhang is a relief; the pod needs no
       RV space.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L679"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L24"
     digest: "ee7db875c7de"
     state: dismissed
     reason: >-
       The note requires accessible parking for government and public buildings
       under the building code. The pod is neither.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L682"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L26"
     digest: "5a08d0f375d0"
     state: encoded
     encoded_as: >-
@@ -1981,25 +1981,25 @@ notes:
       driveways to the Engineering Design Manual, which was not fetched; a
       doubt in the handoff. The body also runs into the column letters of the
       dimension table ("A B C ... I"), which set no standard.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L690"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L34"
     digest: "4e8a9fd30d24"
     state: dismissed
     reason: >-
       Not a note: the 45-degree row of the stall dimension table, read as note
       45 because it begins with the angle. The pod parks at 90 degrees.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L691"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L35"
     digest: "9ead561ad970"
     state: dismissed
     reason: >-
       Not a note: the 60-degree row of the stall dimension table, read as note
       60. The pod parks at 90 degrees.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L692"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L36"
     digest: "0ceb4b7ebaa1"
     state: dismissed
     reason: >-
       Not a note: the 75-degree row of the stall dimension table, read as note
       75. The pod parks at 90 degrees.
-  - quote: "or/washington/beaverton/bdc.60.30.parking.txt#L693"
+  - quote: "or/washington/beaverton/60.30/60.30.15.txt#L37"
     digest: "5a5cfb48ddb8"
     state: dismissed
     reason: >-
@@ -2007,13 +2007,13 @@ notes:
       stall, 18.5 deep, 24-foot aisle), read as note 90. It is the row the
       layer's stall and aisle defaults come from.
   # --- bdc.70.downtown.txt ---
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L228"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L15"
     digest: "b0e69fb8933e"
     state: dismissed
     reason: >-
       The note lets RC-BC buildings go over 120 feet through discretionary
       review. A relief above the maximum the layer holds.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L229"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L16"
     digest: "824e29099e36"
     state: dismissed
     # Also printed at bdc.70.downtown#L296, bdc.70.downtown#L362,
@@ -2024,7 +2024,7 @@ notes:
       December 9, 1999. A relief from a floor: the layer holds the base
       minimum density, the stricter reading, and no field holds a lot's
       configuration date.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L232"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L18"
     digest: "8ee6bf10f4a8"
     state: encoded
     # Also printed at bdc.70.downtown#L299, bdc.70.downtown#L365,
@@ -2034,7 +2034,7 @@ notes:
     reason: >-
       The minimum density applies only to 100 percent residential development,
       which the pod is.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L233"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L19-L20"
     digest: "0ee43d5d2425"
     state: dismissed
     # Also printed at bdc.70.downtown#L301, bdc.70.downtown#L366,
@@ -2045,7 +2045,7 @@ notes:
       quadplex on one lot under the Triplex and Quadplex row. The census ran
       it on into the next heading ("C.Setbacks"), which sets no standard; the
       setback table under it is read in the layer.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L256"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L40-L41"
     digest: "b651608942df"
     state: dismissed
     reason: >-
@@ -2054,7 +2054,7 @@ notes:
       figure captions that follow it and the next heading ("D.Wireless
       Communications Facilities Standards"); captions and a heading set no
       standard.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L280"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L58"
     digest: "6fe05ae59ea0"
     state: dismissed
     reason: >-
@@ -2064,13 +2064,13 @@ notes:
       "B.Building Height & Density" heading. The WCF part governs towers, not
       the pod; a purpose statement sets no standard; the table under that
       heading is read in the layer.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L295"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L71"
     digest: "d554fc9c7a92"
     state: dismissed
     reason: >-
       The note lets RC-OT buildings reach 75 feet through discretionary
       review. A relief above the 65 feet the layer holds.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L300"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L75"
     digest: "e95bc9be42b1"
     state: encoded
     encoded_as: "RC-OT min_density_du_per_acre 24"
@@ -2079,7 +2079,7 @@ notes:
       a map nothing here reads (its own caption says it is "for informational
       purposes only"). The layer holds 24 everywhere, the stricter floor; a
       doubt in the handoff.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L316"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L88"
     digest: "b507c9a44c94"
     state: dismissed
     reason: >-
@@ -2089,7 +2089,7 @@ notes:
       Communications Facilities Standards"); captions and a heading set no
       standard. In RC-OT the run-on also takes in Figure 70.15.10.2.3's
       caption and its disclaimer (ruled with note 4).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L346"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L111"
     digest: "cfd3549481fb"
     state: dismissed
     reason: >-
@@ -2099,13 +2099,13 @@ notes:
       "B.Building Height & Density" heading. The WCF part governs towers, not
       the pod; a purpose statement sets no standard; the table under that
       heading is read in the layer.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L361"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L125"
     digest: "c8adf3696485"
     state: dismissed
     reason: >-
       The note lets RC-MU buildings reach 120 feet through discretionary
       review. A relief above the 75 feet the layer holds.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L384"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L142-L143"
     digest: "7ea112a0348f"
     state: dismissed
     reason: >-
@@ -2114,7 +2114,7 @@ notes:
       figure captions that follow it and the next heading ("D.Wireless
       Communications Facilities Standards"); captions and a heading set no
       standard.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L407"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L162"
     digest: "b10a8b5d93b8"
     state: dismissed
     reason: >-
@@ -2124,7 +2124,7 @@ notes:
       "B.Building Height & Density" heading. The WCF part governs towers, not
       the pod; a purpose statement sets no standard; the table under that
       heading is read in the layer.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L441"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L192-L193"
     digest: "0e30e86c49d7"
     state: dismissed
     reason: >-
@@ -2133,7 +2133,7 @@ notes:
       figure captions that follow it and the next heading ("D.Wireless
       Communications Facilities Standards"); captions and a heading set no
       standard.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L465"
+  - quote: "or/washington/beaverton/70.15/70.15.10.txt#L211"
     digest: "4e5ebb8cf8aa"
     state: dismissed
     reason: >-
@@ -2143,7 +2143,7 @@ notes:
       December 9, 1999 by their dimensions. The WCF part is not the pod; the
       supplement is a relief from a floor, and the layer holds the base
       minimum density, the stricter reading.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L613"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L85-L86"
     digest: "58bfd9c8628f"
     state: dismissed
     reason: >-
@@ -2151,7 +2151,7 @@ notes:
       dwellings in existence in 2002, and their replacements. The pod is
       screened as a new quadplex on one lot under the Triplex and Quadplex
       row.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L616"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L88"
     digest: "2e1b3ee0bc28"
     state: dismissed
     reason: >-
@@ -2160,7 +2160,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L618"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L90"
     digest: "a98c7f4c8dcf"
     state: dismissed
     reason: >-
@@ -2168,7 +2168,7 @@ notes:
       pod's own row is Triplex and Quadplex, read in the layer, and this note
       is not on it (in the Office Industrial and Industrial districts there is
       no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L620"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L91-L92"
     digest: "870de52633ad"
     state: dismissed
     reason: >-
@@ -2177,7 +2177,7 @@ notes:
       the layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L622"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L93"
     digest: "a1765dc380ca"
     state: dismissed
     reason: >-
@@ -2186,7 +2186,7 @@ notes:
       layer, and this note is not on it (in the Office Industrial and
       Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L624"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L95-L96"
     digest: "1f3e3d3b1475"
     state: dismissed
     reason: >-
@@ -2195,7 +2195,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L631"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L100"
     digest: "b7dd8c5057cd"
     state: dismissed
     reason: >-
@@ -2204,7 +2204,7 @@ notes:
       Quadplex, read in the layer, and this note is not on it (in the Office
       Industrial and Industrial districts there is no dwelling row at all, and
       the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L632"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L101"
     digest: "a132e86d3242"
     state: dismissed
     reason: >-
@@ -2213,7 +2213,7 @@ notes:
       read in the layer, and this note is not on it (in the Office Industrial
       and Industrial districts there is no dwelling row at all, and the layer
       refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L633"
+  - quote: "or/washington/beaverton/70.15/70.15.20.txt#L102"
     digest: "c894549ee19d"
     state: dismissed
     reason: >-
@@ -2222,14 +2222,14 @@ notes:
       pod's own row is Triplex and Quadplex, read in the layer, and this note
       is not on it (in the Office Industrial and Industrial districts there is
       no dwelling row at all, and the layer refuses the pod there).
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L3295"
+  - quote: "or/washington/beaverton/70.20/70.20.10.txt#L785-L786"
     digest: "ac952685b166"
     state: dismissed
     reason: >-
       A note to the building materials table: smaller buildings may use a
       material as primary. Materials are design review, which nothing
       measures.
-  - quote: "or/washington/beaverton/bdc.70.downtown.txt#L3296"
+  - quote: "or/washington/beaverton/70.20/70.20.10.txt#L787"
     digest: "417b7b3fd46e"
     state: dismissed
     reason: >-

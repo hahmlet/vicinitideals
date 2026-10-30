@@ -1,0 +1,9 @@
+20.20.16. Floor Area Ratio in RC-E, C-WS, TC-MU, TC-HDR, SC-MU and SC-
+HDR
+
+Development shall have a maximum Floor Area Ratio as follows:
+1. Maximum 6.0 when any portion of the site is within one-half mile of Frequent Transit Service.
+2. Maximum 4.0 when no portion of the site is within one-half mile of Frequent Transit Service.
+3. Distance from Frequent Transit Service shall be measured from the edge of right of way of streets with Frequent Transit Service or the center of tracks with Frequent Transit Service.
+[ORD 4879, 04/02/2026]
+Effective on: 4/2/2026

@@ -1,0 +1,116 @@
+70.15.20. Downtown Use Regulations
+
+The following Land Uses are classified in the following three categories: Permitted (P) including their accessory uses and structures, Conditional Uses (C), or Prohibited (N) uses as identified in the table below for all four Zoning Districts.
+All superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+
+Table 70.15.20.A Commercial
+
+●P: Permitted
+●C: Conditional
+●N: Prohibited
+Superscript Refers to Use Restrictions
+# Category Specific Use RC-BC RC-OT RC-MU RC-DT
+1.A Residential Dwellings - Single-Detached Dwelling N1 N1 N1 N1
+1.B Residential Dwellings - Duplex P P P P
+1.C Residential Dwellings - Triplex and Quadplex P P P P
+1.D Residential Dwellings - Townhouse P P P P
+1.E Residential Dwellings - Cottage Cluster N N N N
+1.F Residential Dwellings - Multi-Dwelling P P P P
+1.G Residential Dwellings - Home Occupation P P P P
+1.H Residential Dwellings - Planned Unit Development C C C C
+1.I Residential Dwellings - Single-Room Occupancies P P P P
+1.J Residential Dwellings - Accessory Dwelling Units P16 P16 P16 P16
+2.A Commercial Animal Care, Major N N N N
+2.B Commercial Animal Care, Minor P P P P3
+3.A Commercial Hospitals C C C C
+3.B Commercial Medical Clinics P P P C
+3.C Commercial Child Care Centers P P P P
+3.D Commercial Residential Care Facilities P P P C
+4. Commercial Commercial Amusement P P P N
+5. Commercial Drive-Up Window Facilities N8 N8 N8 N8
+6. Commercial Eating and Drinking Establishment P P P P3
+7. Commercial Financial Institutions P P P N
+8. Commercial Live / Work Units P P P C
+9. Commercial Meeting Facilities P P C2 P N
+10. Commercial Office P P P P3
+11. Commercial Parking as the Principal Use C C C N
+12. Commercial Rental Business P P P P3
+13. Commercial Rental of Equipment Only N N N N
+14. Commercial Retail P9 P9 P9 P3,9
+15. Commercial Personal Service Business P P P P3
+16. Commercial Service Business / Professional Services P10 P10 P10 P10
+# Category Specific Use RC-BC RC-OT RC-MU RC-DT
+17. Commercial Marijuana Dispensary N N N N
+18. Commercial Retail and Wholesale Marijuana Sales N N N N
+19.A Commercial Self-Storage Facilities N N N N
+19.B Commercial Storage Yards N N N N
+20. Commercial Temporary Living Quarters P P P C4
+21.A Commercial Vehicles - Automotive Service, Major N N N N
+21.B Commercial Vehicles - Automotive Service, Minor N N N N
+21.C Commercial Vehicles - Bulk Fuel Dealerships N N N N
+21.D Commercial Vehicles - Sales or Lease N N N N
+21.E Commercial Vehicles - Rental C7 C7 C7 N
+22. Commercial Food Cart Pods5 P P P N
+23.A Civic Commercial Schools P P P N
+23.B Civic Educational Institutions P P P C
+24. Civic Places of Worship P P P P
+25. Civic Public Buildings, Services and Uses P P P P
+26.A Civic Railroad Tracks and Facilities - Passenger P P P P
+26.A Civic Railroad Tracks and Facilities - Freight P P P N
+27.A Civic Public Parks, Parkways, Playgrounds, and
+Related Facilities15 P P P P
+27.B Civic Public Dog Parks or Dog Runs15 P P P P
+27.C Civic Recreational Facilities P P P P12
+27.D Civic Community Gardens15 P P P P
+28.A Civic Domestic Violence Shelter P P P P
+28.B Civic Emergency Shelter P14 P14 P14 P14
+28.C Civic Mass Shelter P P P P
+29. Civic Social Organizations P2 P2 P2 N
+30. Civic Transit Centers15 P P P N
+31.A Civic
+Utilities - Utility Substations and
+Related Facilities other than Transmission
+Lines15
+C C C C
+31.B Civic Utilities - Transmission Lines15 P P P P
+32. Civic Wireless Communications Facilities15 P P P P
+33. Industrial Manufacturing, Fabricating, Assembly,
+Processing, and Packing13 P C6 P C6 P C6 N
+34. Industrial Marijuana Processing N N N N
+35. Industrial Warehousing11 P P P N
+36. Industrial Laboratory13 P P3 P N
+[ORD 4804; August 2021] [ORD 4822; June 2022] [ORD 4838; March 2023] [ORD 4857; October 2024] [ORD 4876;
+January 2026]
+Footnotes:
+1. Detached dwellings in existence as of September 19, 2002, are Permitted.
+Replacement of detached dwelling permitted.
+2. Buildings larger than 10,000 square feet are subject to approval of a Conditional Use.
+3. Uses limited to 10,000 square feet per site.
+4. Limited to uses of Boarding, Rooming, and Lodging House.
+5. Food Cart Pods are exempt from the Site Development Standards of 70.15 but are subject to regulations in 60.11 of the Development Code.
+6. Uses up to 10,000 square feet are permitted.
+Uses larger than 10,000 square feet are subject to a Conditional Use Permit.
+7. Only as an accessory uses with no on-site storage of vehicle inventory.
+8. Drive-through uses are Prohibited; walk-ups Permitted.
+9. This activity is conducted wholly within an enclosed structure.
+Accessory open air sales or display related to the principal use may be permitted, provided that the outdoor space devoted to these uses does not occupy an area greater than the equivalent of 15 percent of the gross floor area.
+No outdoor sales or outdoor storage of animals or livestock are allowed with this use.
+10. The maximum building footprint size for a building involving a single use shall be 10,000 square feet.
+In addition, the maximum square footage for these uses within a multiple use development shall be 25 percent of the total square footage of the development.
+11. As an accessory use, not to exceed 25 percent of the primary use.
+12. Indoor uses are limited to 10,000 square feet per site.
+13. Uses subject to additional restrictions below.
+A. Outdoor manufacturing activity, including but not limited to testing of products or processes, is prohibited.
+B. Outdoor storage is prohibited, including both raw materials and finished products.
+C. Movement of heavy equipment on and off the site, except truck deliveries, is prohibited.
+D. Exterior display or storage of industrial equipment, such as tools, equipment, vehicles, products, materials, or other objects that are part of or used for the business operation is prohibited.
+E. Processes involving live animals or the waste or by product of dead animals is prohibited.
+F. Electrical disturbances that interfere with the normal operation of equipment or instruments on adjacent properties are prohibited.
+G. Processes involving highly combustible, explosive or hazardous materials or waste is prohibited.
+H. Potential nuisances are subject to Beaverton Code Chapter 5.05.IV Nuisances Affecting Public Health.
+14. Emergency Shelters may occur where allowed pursuant to Section 10.70.10.
+[ORD 4838; March 2023]
+15. Exempt from minimum Floor Area Ratio requirements.
+[ORD 4857; October 2024]
+[ORD 4799, 01/08/2021; ORD 4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4838, 03/09/2023; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 8/21/2026

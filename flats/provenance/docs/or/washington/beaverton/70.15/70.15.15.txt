@@ -1,0 +1,20 @@
+70.15.15. Street Typology
+
+The Street Typology Diagram identifies street hierarchies in the Downtown Design District.
+Guidelines and Standards throughout the code may refer to the Street Typology Diagram regulating items including primary frontages and locating parking, loading and new curb cuts.
+These Typologies do not replace or supersede the Functional Classifications as described in the Transportation System Plan.
+New streets dedicated after establishment of this code shall be designated Local Streets, or as determined by the Director.
+
+Figure 70.15.15.1 Street Typology Diagram
+1.Determining Primary Frontage.
+For provisions of this code referring to Primary Frontages, the Primary Frontage shall be determined as follows:
+A. Sites with one frontage: The primary frontage shall be the street facing lot line.
+B. Sites with multiple frontages: The primary frontage shall be the street facing lot line with the highest level typology ranked in the following order:
+1. Loop Street
+2. Commercial Street
+3. Connector Street
+4. Major Street
+5. Local Street
+C. If abutting streets are designated as the same Downtown Street Type, the primary street may be determined by the applicant.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021

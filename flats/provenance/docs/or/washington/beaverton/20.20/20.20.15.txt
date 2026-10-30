@@ -1,0 +1,181 @@
+20.20.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district.
+All superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+[ORD 4584; June 2012] [ORD 4706; May 2017] [ORD 4774; January 2020] [ORD 4789; August 2020]
+
+20.20.15 Multiple Use Development Standards
+
+Superscript Refers to Footnotes
+
+20.20.15 Multiple Use Development Standards - Wireless Communication Facilities
+
+Superscript Refers to Footnotes
+# Standard RC-E OI-
+WS C-WS TC-MU TC-HDR SC-MU SC-HDR SC-S SC-E1 SC-E3 Unit of
+Measurement
+A.1. Residential Density1 -
+Minimum for residential only project
+12 N/A N/A 24 24 302 24 302 24 302 N/A N/A Units Per Acre
+B.1. Floor Area Ratio (FAR)3 -
+Minimum
+0.30 0.40 0.30 0.50 0.30 0.40 0.40 0.60 0.35 None N/A
+B.2. Floor Area Ratio (FAR)3 -
+Minimum with a PUD or
+DRBCP
+0.20 0.30 0.20 0.35 0.20 0.30 0.30 0.0 0.25 0.0 N/A
+B.3. Floor Area Ratio (FAR)3 -
+Maximum
+See
+20.20.16
+None See
+20.20.16
+See
+20.20.16
+See
+20.20.16
+See
+20.20.16
+See
+20.20.16
+7.0 2.00 0.50 N/A
+B.4. Floor Area Ratio (FAR)3 -
+Maximum with a PUD
+No increase available
+N/A No increase available
+No increase available
+No increase available
+See Section
+60.35.10
+See Section
+60.35.10
+See Section
+60.35.10
+No increase available
+No increase available
+N/A
+C.1. Yard Setbacks - Front
+Minimum
+None 10 None None None None None None None None Feet
+C.2. Yard Setbacks - Front Yard
+Maximum
+See
+60.05.15
+.6
+None See
+60.05.15
+.6
+See
+60.05.15
+.6
+See
+60.05.15
+.6
+See
+60.05.15
+.6
+See
+60.05.15
+.6
+See
+60.05.15
+.6
+None None Feet
+C.3. Yard Setbacks - Side
+Minimum9
+None 10 None None None None None None None None Feet
+C.4. Yard Setbacks - Rear
+Minimum Not Abutting
+Property Zoned Residential
+None 20 None None None None None None 20 20 Feet
+C.5. Yard Setbacks - Minimum
+Side or Rear Yards Abutting
+Property Zoned Residential4
+None 755 None None None None None None 75 75 Feet
+D.1.Building Height - Maximum None None None None None None None None 100 40 Feet D.2.Building Height - Height
+Transition standards of
+60.05.15.7 Apply
+Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes N/A
+[ORD 4702; January 2017] [ORD 4706; May 2017] [ORD 4758; March 2019] [ORD 4774; January 2020] [ORD 4799;
+January 2021] [ORD 4804; August 2021] [ORD 4879; April 2026]
+Footnotes:
+1. Refer to 20.25.05 for information about calculating density and 20.25.10.4 for calculating intensity in multiple use development with single-use residential buildings.
+[ORD 4879; April 2026]
+2. 30 units within 400 feet of LRT station platform, 24 beyond 400 feet
+3. Refer to 20.25.10 [ORD 4879; April 2026]
+4. Rear yard setback is applicable to only the portion of the rear yard which abuts a residential zone; otherwise the minimum rear yard setback is 0 feet.
+5. 75 feet if abutting a residentially developed property, otherwise 20 feet.
+6. Inclusive of antenna.
+7. At-grade equipment shelters.
+8. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+9. Applies to lot lines abutting public right of way or private streets or tracts providing vehicular, bicycle, mobility device, or pedestrian access.
+[ORD 4879; April 2026]
+[ORD 4005, 02/05/1998; ORD 4036, 04/01/1999; ORD 4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4111, 07/14/2000; ORD 4121, 09/28/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4354, 07/14/2005; ORD 4542, 06/17/2010; ORD 4547, 07/20/2010; ORD 4584, 06/01/2012; ORD 4702, 01/04/2017;
+ORD 4706, 05/19/2017; ORD 4758, 03/22/2019; ORD 4774, 01/03/2020; ORD 4789, 08/14/2020; ORD 4799, 01/08/2021; ORD 4804, 08/13/2021; ORD 4879, 04/02/2026]
+# Standard RC-E OI-WS C-WS TC-MU TC-HDR SC-MU SC-HDR SC-S SC-E1 SC-E3
+Unit of
+Measurement
+E.1.Maximum
+Height -
+WCF5
+80 80 80 80 80 80 80 80 80 80 Feet
+E.2.Maximum
+Height -
+Equipment
+Shelter7
+12 12 12 12 12 12 12 12 12 12 Feet
+E.3.Maximum
+Height -
+Roof
+Mounted
+Antenna
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+N/A
+F.1. Yard
+Setbacks8 -
+Requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+N/A
+F.2. Yard
+Setbacks8 -
+Other
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+Refer to
+60.70.35.14.A and B
+N/A
+Effective on: 8/10/2026

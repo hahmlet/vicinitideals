@@ -1,0 +1,938 @@
+70.20.10. Building Design
+
+Contents:
+70.20.10.1 Purpose
+70.20.10.2 Topics
+70.20.10.3 Massing and Articulation
+70.20.10.4 Facade Design
+70.20.10.5 Gateways
+70.20.10.6 Active Ground Floor Design
+70.20.10.7 Usable Open Space
+70.20.10.8 Roof Elements
+70.20.10.9 Structured Parking
+70.20.10.10 Materials
+70.20.10.11 Historic Overlay Design
+[ORD 4799, 01/08/2021]
+70.20.10.1 Purpose
+
+1.Purpose. The Building Design Guidelines and Standards along with the Development Standards set the building massing, facade articulation, usable open space requirements, and design details that are required.
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.10.2 Topics
+
+A. Massing and Articulation (70.20.10.3)
+B. Facade Design (70.20.10.4)
+C. Gateways (70.20.10.5)
+D. Active Ground Floor Design (70.20.10.6)
+E. Usable Open Space (70.20.10.7)
+F. Roof Elements (70.20.10.8)
+G. Structured Parking (70.20.10.9)
+H. Materials (70.20.10.10)
+I. Historic Overlay Design (70.20.10.11)
+[ORD 4799, 01/08/2021]
+Effective on: 1/8/2021
+70.20.10.3 Massing and Articulation
+
+A. Intent. To guide building massing to respond to the scale of people and the building’s context; avoid overly massive or monolithic structures; and encourage variation on large facades to promote pedestrian interest.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2) ●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+C. Design Guideline and Standards
+
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Break for Long Facades
+
+Break for Long Facades - Design Standard Break for Long Facades -
+Design Guideline
+S1. All building facades longer than 200 feet facing the right of way, any internal drive or any internal accessway shall have at least one major break for every 200 feet in facade length.
+A major break shall be a vertical recess with a horizontal width of no less than fifteen feet and a footprint of 400 square feet.
+The recess shall extend from the roofline to grade or to an open space / landscaped area no greater than 5 feet above grade.
+If upper floors are set back a minimum of 6 feet from the primary facade plane, the major break does not have to extend through those upper floors.
+Major breaks shall not be within 20 feet of the horizontal facade edge.
+Figure 70.20.10.3.1 Break for Long Facades
+G1. Building facades longer than 200 feet facing the right of way, any internal drive or any internal accessway shall include massing breaks and/ or facade modulation to reduce the perceived length of building, reduce the bulk of the building, provide pedestrian interest, introduce architectural variety and include high quality materials.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Facade Modulation
+
+Facade Modulation - Design Standard Facade Modulation -
+Design Guideline
+S2. For buildings taller than 30 feet, measured from grade plane to eave or top of parapet, whichever is higher, facades greater than 100 feet facing the right of way, any internal drive or any internal accessway shall be modulated to provide visual interest and break up facade planes by using at least one of the following facade modulation elements:
+a. One or more vertical and/or horizontal recess(es) and/ or projection(s) with a minimum average depth of 12 inches that changes the primary plane of the facade for a minimum of 20 percent of the facade.
+Ground-floor and upper-floor step backs, as well as major breaks used to satisfy other Design Standards, may not be used to satisfy this requirement.
+b. A step back of upper-floor facades with a minimum depth of 6 feet from the primary plane of the facade for a minimum of 70 percent of the facade length.
+Buildings providing an upper-floor step back to satisfy 70.20.10.3.
+Design Standards S3-S9 may not use upper floor step backs to satisfy 70.20.10.3.S2.
+c. A step back of the ground-floor facade with a minimum depth of 2 feet from the primary plane of the facade for a minimum 70 percent of the length of the facade.
+Ground- floor step backs that exceed the maximum setback of the zone do not satisfy this standard.
+d. Angular sloped or faceted surfaces that extends at least two-thirds of the height of the facade plane along a facade with a minimum average depth of 12 inches and a maximum 40 feet in length before a shift in the plane.
+G2. Building facades that are taller than 30 feet, measured from grade plane to eave or top of parapet, whichever is higher, and longer than
+100 feet facing the right of way, any internal drive or any internal accessway shall have facade modulations that create a distinct change in facade plane to create visual interest.
+Variation can be achieved through a combination of vertical shifts, horizontal shifts, upper-floor step backs, ground-floor step backs, angular shifts, exposed or emphasized structural elements, or other similar approach.
+Figure 70.20.10.3.2 Facade Modulation Diagrams
+Vertical Shifts Horizontal Shifts
+Upper-floor Stepbacks Ground-floor Stepbacks
+
+Figure 70.20.10.3.2 Facade Modulation Diagrams
+Angular Shifts
+Facade Modulation Diagrams are illustrative only
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Regional Center - Beaverton Central (RC-BC)
+
+Regional Center - Beaverton Central (RC-BC) - Design Standard Regional Center - Beaverton Central (RC-BC) - Design Guideline
+S3. In RC-BC, buildings with a building footprint greater than 20,000 square feet with a street-facing facade longer than 150 feet shall:
+a. Provide a 6-foot building stepback on all street-facing facades within the maximum setback on all floors entirely above 75 feet; and
+b. Reduce the building bulk for all floors entirely above 75 so that no street-facing facade within the maximum setback is longer than 150 feet for buildings with any portion of the facade within the maximum setback.
+Massing Reductions in RC-BC
+One approach to satisfying 70.20.10.3.S3
+G3. In RC-BC, buildings with a footprint greater than 20,000 square feet shall reduce the overall scale and bulk of the building by reducing the floor area for portions of the building between 75 and 120 feet in height.
+
+Regional Center - Beaverton Central (RC-BC) - Design Standard Regional Center - Beaverton Central (RC-BC) - Design Guideline
+S4. In RC-BC, buildings exceeding the 120-foot height limit can only respond to the G4 Guideline.
+There is no Design Standard.
+G4. In RC-BC, buildings may exceed the 120-foot height limit by reducing the building mass of upper floors to minimize impacts on surrounding streets and buildings, and by providing at-grade pedestrian improvements.
+The building mass of upper floors shall be reduced by stepping back facades, shortening facade lengths, or other methods that reduces the massing compared to lower floors which results in:
+a. Reduce the sense of enclosure for pedestrians along at least one street;
+b. Increase access to light or sky views for people on abutting streets; and
+c. Increase access to light for people inside current or future buildings across the street from the proposed development.
+Development applying for this Design
+Guideline shall also provide at-grade publicly accessible open space or on-site creek access and enhancements to improve the pedestrian experience.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Regional Center - Old Town (RC-OT)
+
+Regional Center - Old Town (RC-OT) - Design Standard Regional Center - Old Town (RC- OT) - Design Guideline
+S5. In RC-OT, buildings greater than 45 feet in height shall reduce the overall scale and bulk of buildings and provide variety in building heights by reducing mass of upper floors over certain heights by meeting the following standards:
+a. All building floors entirely above 45 feet in height shall have a floor area less than 75 percent of the average floor area of the floors below 45 feet;
+and
+b. Street-facing facades of floors above 45 feet that are within the maximum setback shall be a maximum of 66 percent of the average facade length of the floors below 45 feet; or
+c. Floors above 45 feet in height shall be stepped back by a minimum of 6 feet on the facade facing the primary frontage.
+Massing Reductions in RC-OT
+One approach to satisfying 70.20.10.3.S5
+G5. In RC-OT, buildings greater than
+45 feet in height shall reduce the overall scale and bulk of buildings and provide variety in building heights by reducing mass of upper floors.
+
+Regional Center - Old Town (RC-OT) - Design Standard Regional Center - Old Town (RC- OT) - Design Guideline
+S6. In RC-OT, buildings exceeding the 65-foot height limit can only respond to the G6 Guideline.
+There is no Design Standard.
+G6. In RC-OT, buildings may exceed the 65-foot height limit, up to 75 feet, reducing the building mass of upper floors to minimize impacts on surrounding streets and buildings.
+The building mass of upper floors shall be reduced by stepping back facades, shortening facade lengths, or other methods that reduces the massing compared to lower floors which results in:
+a. Reduce the sense of enclosure for pedestrians along at least one street; and
+b. Increase access to light or sky views for people on abutting streets.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Building Height and Massing (RC-MU)
+
+Building Height and Massing (RC-MU) - Design Standard Building Height and Massing (RC- MU) - Design Guideline
+S7. In RC-MU, buildings greater than 55 feet in height shall reduce the overall scale and bulk of buildings and provide variety in building heights by reducing mass of upper floors over certain heights by meeting the following standards:
+a. All building floors entirely above 55 feet in height shall have a floor area less than 75 percent of the average floor area of the floors below 55 feet;
+and.
+b. Street-facing facades of floors entirely above 55 feet that are within the maximum setback shall be a maximum of 66 percent of the average facade length of the floors below 55 feet; or
+c. Floors entirely above 55 feet in height shall be stepped back by a minimum of 6 feet on the facade facing the primary frontage.
+Massing Reductions in RC-MU
+One approach to satisfying 70.20.10.3.S7
+G7. In RC-MU, buildings greater than
+55 feet in height shall reduce the overall scale and bulk of buildings and provide variety in building heights by reducing mass of upper floors.
+
+Building Height and Massing (RC-MU) - Design Standard Building Height and Massing (RC- MU) - Design Guideline
+S8. In RC-MU, buildings exceeding the 75-foot height limit can only respond to the G8 Guideline.
+There is no Design Standard.
+G8. In RC-MU, buildings may exceed the 75-foot height limit, up to 120 feet, by reducing the building mass of upper floors to minimize impacts on surrounding streets and buildings, and by providing at-grade pedestrian improvements.
+The building mass of upper floors shall be reduced by stepping back facades, shortening facade lengths, or other methods that reduces the massing compared to lower floors which results in:
+a. Reduce the sense of enclosure for pedestrians along at least one street;
+b. Increase access to light or sky views for people on abutting streets; and
+c. Increase access to light for people inside current or future buildings across the street from the proposed development or, if the property abuts a creek, provide on-site creek access and enhancements that improve the pedestrian experience.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Building Height and Massing (RC-DT)
+
+Building Height and Massing (RC-DT) - Design Standard
+Building Height and
+Massing (RC-DT) - Design
+Guideline
+S9. Buildings greater than 45 feet in height shall reduce the overall scale and bulk of buildings and provide variety in building heights by reducing mass of upper floors over certain heights by meeting the following standards:
+a. All building floors entirely above 45 feet in height shall have a floor area less than 75 percent of the average floor area of the floors below 45 feet; and.
+b. Street-facing facades of floors above 45 feet that are within the maximum setback shall be a maximum of 66 percent of the average facade length of the floors below 45 feet; or
+c. Floors above 45 feet in height shall be stepped back by a minimum of 6 feet on the facade facing the primary frontage.
+Massing Reductions in RC-DT
+One approach to satisfying 70.20.10.3.S9
+G9. Buildings greater than 45 feet in height shall reduce the overall scale and bulk of buildings and provide variety in building heights by reducing mass of upper floors.
+Table 70.20.10.3A. Design Guidelines and Standards: Massing and Articulation
+
+Height Transitions (All Zones)
+
+Height Transitions (All Zones) - Design Standard Height Transitions (All Zones) - Design Guideline S10.
+On the portion of a site less than or equal to 30 feet from a property line shared with a lot outside of the Regional
+Center zoned RMA, RMB or RMC or a comparable
+Washington County zone, the maximum building height shall be the same height of that abutting zone.
+[ORD 4857;
+October 2024]
+G10. Development on lots abutting outside of the
+Regional Center zoned RMA, RMB or RMC or a comparable Washington County zone, shall be stepped back to reduce the visual and solar impact on neighboring residentially zoned lots.
+[ORD 4857;
+October 2024]
+[ORD 4799, 01/08/2021; ORD 4857, 10/03/2024]
+
+Effective on: 9/14/2026
+70.20.10.4 Facade Design
+
+A. Intent. To create cohesive and well-crafted building facades with human-scaled details that provide visual interest to pedestrians, incorporate passive green design elements, and promote high-quality design.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+C. Design Guideline and Standards
+
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+General
+
+General - Design Standard General - Design Guideline
+S1. All facades facing a public right of way, publicly accessible open space, or publicly accessible pathway shall meet all Standards in sections Section 70.20.10.4 Facade
+Design. Site identified in Figure 70.20.10.6.1 Active
+Frontages Map shall also be subject to facade design and rules in 70.20.10.6 Active Ground Floor Design.
+Building facades built at shared property lines are exempt.
+[ORD
+4857; October 2024]
+G1. All facades facing a public right of way, publicly accessible open space, or publicly accessible pathway shall meet all Guidelines in sections Section 70.20.10.4 Facade
+Design. Sites identified in Figure 70.20.10.6.1 Active
+Frontages Map shall also be subject to facade design rules in 70.20.10.6 Active Ground Floor Design.
+Building facades built at shared property lines are exempt.
+[ORD 4857;
+October 2024]
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Facade Articulation
+
+Facade Articulation - Design Standard Facade Articulation - Design Guideline
+S2. Building facades facing the right of way, any internal drive or any internal accessway shall utilize at least one of the following facade articulation strategies to create visual interest.
+a. Recesses and/or projections that are a minimum depth of four inches that changes the primary plane of the facade for a minimum of 30 percent of the facade; or
+b. Datum lines that continue the length of the facades, including one at the top of the building and, if the building has more than one story, a datum line between the first and second floor.
+Datum lines shall have a minimum 4 inches in depth and height or a minimum 2 inches in depth and height with a change in material.
+Alternative datum line locations may be approved by the decision-making authority; or
+c. Balconies projected and/or recessed, large enough to fit a 5- foot by 6-foot rectangle inside of them on every floor above the ground-floor level for at least 50% of the units or tenant spaces on that facade, or a minimum of one balcony for every
+50 linear feet of building on each floor, whichever is greater.
+Each balcony shall have direct access via a door from at least one dwelling unit or tenant space on that floor.
+G2. Building facades facing the right of way, any internal drive or any internal accessway shall be articulated using recesses, projections, balconies, or similar strategies to provide visual interest, surface relief, depth, and shadows to the facade.
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Defined Base and Top
+
+Defined Base and Top - Design Standard Defined Base and Top - Design Guideline
+S3. For buildings taller than 30 feet, measured from grade plane to eave or top of parapet, with ground-floor commercial and upper-floor residential or office, building facades facing the right of way, any internal drive or any internal accessway shall be designed to have a defined base and a defined top, as described below.
+a. A building will meet the requirement of a defined base by meeting one of the following strategies:
+I. Floor-to-floor height of the ground floor is a minimum of 3 feet taller than the average of the remainder of the floor-to-floor heights.
+II. Ground-floor level is set back a minimum of 2 feet from the primary building facade for 70 percent of the street facing facade.
+III. All floors above the ground-floor level are set back a minimum of 2 feet from the ground floor level for 70 percent of the street facing facade.
+IV. A datum line that is provided between the ground floor and second floor.
+The datum line may project or be recessed.
+The datum line shall be a minimum of 4 inches in depth and height.
+The datum line shall be a minimum of 2 inches and depth and height if the predominant exterior building material, excluding windows, changes between the first and second floor.
+b. A building will meet the requirement of a defined top by meeting one of the following strategies:
+I. A cornice that projects between 1 foot and 2 feet from the primary facade plane with a height of no less than
+2 feet; or
+II. The top is set back a minimum of 2 feet from the primary building facade for 70 percent of the street-facing facade for a minimum height of 2 feet.
+At least
+50% of the top element must be visible from a viewpoint of five feet above grade plane at a distance of 50 feet away, measured from the primary facade plane; or
+III. A change in material with a minimum height of 2 feet, located at or above the top floor; or
+IV. A sloped roof with a slope of 4:12 or greater with eaves that project at least 12 inches.
+G3. For buildings taller than 30 feet, measured from grade plane to eave or top of parapet, with ground-floor commercial uses, building facades facing the right of way, any internal drive or any internal accessway shall be designed with a top and base that establish depth and visual interest, are visually distinctive, are proportional to the scale of the building, and are integrated into the building design.
+A clearly defined ground-floor “base” and corniced top (Portland, OR)
+Photo Credit: Dan Carter/DJC
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Fenestration
+
+Fenestration - Design Standard Fenestration - Design Guideline
+S4. All fenestration shall meet the following standards:
+a. Windows shall be recessed a minimum of 2 inches.
+Facades or portions of facades utilizing a curtain wall are exempt from this standard.
+b. Windows that are flat or “flush” with the facade are prohibited unless applied to a portion of a building that is part of a recessed facade modulation with a minimum 4 inches in depth.
+Facades or portions of facades utilizing curtain walls are exempt from this standard.
+G4. Windows shall be appropriately recessed or trimmed to created shadow and highlight fenestration.
+S5. Facades visible from a public street or primary internal drive shall meet the minimum glazing requirements below.
+Building facades built at shared property lines are exempt.
+a. Non-residential uses:
+I. Ground-floor: Unless another standard requires greater glazing, a minimum of 40% of the ground- floor facade shall be glazed; and
+II. Upper-floors: Unless another standard requires greater glazing, minimum of 25% of the upper-floor facade area shall be glazed, excluding roof shapes and a parapets.
+b. Residential uses:
+I. Unless another standard requires greater glazing, a minimum of 25% of the ground floor facade and 25% of the total facade shall be glazed, excluding roof shapes and parapets.
+G5. Facades visible from a right of way, primary internal drive, or primary accessway shall provide adequate levels of clear glazing to ensure articulation on the facade, daylighting of interior spaces, and visibility into the street.
+Street-level glazing shall be inviting and enhance the pedestrian experience.
+Buildings abutting pedestrian walkways shall provide views of the walkway to promote pedestrian safety.
+Building facades built at shared property lines are exempt.
+S6. For all facades not visible from a public street or primary internal drive, a minimum of 20% of the total facade area shall be glazed.
+Building facades built at shared property lines are exempt.
+G6. Facades not visible from a street or internal drive or internal accessway shall provide sufficient transparency to ensure daylighting of interior spaces and visual interest on the facade, but may provide lower levels of transparency than street-facing facades.
+S7. Unless another standard requires greater glazing, facades within 15 feet of an on-site pedestrian connection shall a minimum of 20% of the ground floor facade and 20% of the total facade area shall be glazed, excluding roof shapes and parapets.
+G7. Buildings abutting pedestrian walkways shall provide views of the walkway to promote pedestrian safety.
+S8. Windows up to 60 feet above the ground floor shall be treated with one of the following bird-safe design techniques:
+a. Fritted glass
+b. Etched glass
+c. UV coated glass
+d. Permanent stencil or frosting
+e. Exterior apparatus
+G8. Window treatments shall be incorporated to reduce the likelihood of bird collisions.
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Building Entries
+
+Building Entries - Design Standard Building Entries - Design Guideline
+S9. Buildings entries shall be provided as follows:
+a. At least one primary building entrance shall face the primary frontage.
+Primary frontage is determined by the following hierarchy using Figure 70.15.15.1 Street Typology, with the streets listed first being higher priority than the streets listed after:
+I. Loop Street
+II. Commercial Street
+III. Connector Street
+IV. Major Street
+V. Local Street
+If all abutting streets are of the same typology, the primary street may be determined by the applicant.
+G9. Primary building entries shall be placed in a prominent location toward a public street or other pedestrian way.
+S10. Primary building entrances shall be at or above the back of sidewalk or walkway grade.
+Building entries shall be located on a public right of way, open space, internal drive, or internal accessway.
+Building entries inclusive of doorway, framing, and accompanying fenestration shall meet the following minimum dimensions: [ORD 4876; January 2026]
+a. Individual residential entries: 5 feet in width
+b. Shared residential entries: 10 feet in width
+c. Individual non-residential entries serving tenants spaces less than
+5,000 square feet: 6 feet in width
+d. Shared non-residential entries and Individual non-residential entries serving tenants spaces greater than 5,000 square feet: 20 feet in width
+G10. Building entries shall be easily identifiable, scaled proportionally to the number of people served (amount of floor-area or number of units accessed), and integrated into the overall facade composition.
+Table 70.20.10.4.A Design Guidelines and Standards: Facade Design
+
+Blank Walls
+
+Blank Walls - Design Standard Blank Walls - Design Guideline
+S11. Where ground floor facades have gaps between doors and/or windows greater than 40 feet in horizontal length, a minimum of one of the following shall be incorporated throughout the length of the blank wall.
+Building facades built at shared property lines are exempt from this standard.
+a. A trellis or trellises that covers the blank wall with vines planted that will grow vertically of sufficient density, height and width so that they provide coverage of 40 percent of the blank wall within two years.
+The plantings shall be at least 4 feet tall or cover at least 50 percent of each trellis at time of planting.
+b. Landscape screening incorporating the following:
+I. Ornamental or other short trees every 10 feet along the blank wall section.
+II. Evergreen shrubs planted 3 feet on center between the trees with a minimum of 2 feet in height at time of planting.
+This option shall only be available if there is 4 feet of space to plant the trees between the building facade and the sidewalk or other hardscaped area or sufficient width as determined by a licensed landscape architect to ensure that the plantings will not encroach into the abutting pedestrian walkways.
+c. Decorative tile work, composed of ceramic, stone, or similar material that covers at least 40 percent of the blank wall of the ground floor story.
+d. Decorative metal work or metal panels that covers at least 40 percent of the blank wall of the ground floor story.
+e. Decorative brickwork that projects or is recessed at least one inch, which covers at least 25 percent of the blank wall of the ground floor story.
+f. A green living wall that covers 40 percent of the blank wall of the ground floor story.
+The green living wall shall be fully planted at construction.
+G11. Where ground floor facades have gaps between doors and/ or windows greater than 40 feet in horizontal length, articulation methods shall be included to enhance the blank wall, including trellises, landscape screening, living green walls, decorative tile work, metal work, wood work, or concrete work, or other similar methods as approved by the decision-making authority.
+Building facades built at shared property lines are exempt.
+[ORD 4799, 01/08/2021; ORD 4857, 10/03/2024; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.10.5 Gateways
+
+A. Intent. To create a sense of arrival in Downtown at key intersections with site or building design elements to help identify the intersection as an entry to the Downtown Core.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.5.A Design Guidelines and Standards: Gateways
+
+Gateway/Design Elements
+
+Gateway/Design Elements - Design Standard Gateway/Design Elements - Design
+Guideline
+S1. Sites located at the corners of each intersection described below shall incorporate design elements into site and building design that signify the importance of the intersection as a gateway to Downtown:
+●Millikan and Rose Biggi
+●Millikan and Lombard
+●Canyon and Rose Biggi
+●Canyon and Lombard
+Site subject to this standard shall:
+a. Locate building massing at the corner or within 30 feet of the corner along either street frontage with one double- door entry entirely within the first 20 feet of the building’s facade as measured from the point closest to the intersection; and
+b. New buildings shall include at least two of the following:
+I. Provide overhang canopy or awning above the main double-door entry or provide a recessed entry;
+II. Provide a minimum building height of at least 45 feet with occupiable building floor area for at least 20 feet along each street frontage within 50 feet of the intersection;
+III. Provide windows within 30 feet of the corner of the building closest to the intersection that are at least one-third larger pane than the rest of the ground level-facade windows;
+IV. Provide Publicly Accessible Open Space (PAOS) at the corner that meets the Standards in Section 70.20.10.7.S4.
+G1. A design element or strategy that signifies a gateway to Downtown shall be integrated with the site and building design at the intersections specified in S1.
+Figure 70.20.10.5.1 Gateways
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10.6 Active Ground Floor Design
+
+A. Intent. To create inviting and interesting ground floors that enhance the pedestrian realm and to create places for people to gather and spend time outdoors.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2) ●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Provide Safe and Comfortable Connectivity (Section 70.10.5)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.6.A Design Guidelines and Standards: Active Ground Floor Design
+
+Non-Residential Active Ground Floor Design
+
+Non-Residential Active Ground Floor Design - Design
+Standard
+Non-Residential Active Ground Floor Design -
+Design Guideline
+S1. Buildings subject to the Active Ground-floor Design rules as identified in Figure 70.20.10.6.2 Active Frontages Map shall be designed to activate the public realm, create interesting and inviting ground-floor spaces, increase transparency into ground-floor spaces, and provide weather protection for ground-floor entrances, and shall meet the following requirements:
+a. Floor Height: The minimum floor-to-floor height of the ground floor shall be 16 feet.
+b. Transparency: Active frontage areas shall include a minimum 60 percent transparent glazing between 2 and 10 feet in height from sidewalk, walkway or terrace grade, providing unobstructed views into the commercial space.
+Transparent glazing shall have minimum Visible Transmittance (VT) value of 0.60.
+A lighted display zone 4 feet in depth from the windows may qualify as unobstructed views into the commercial space for up to 50 percent of the combined storefront window width on each storefront on primary frontages and on the entirety of secondary frontages.
+[ORD 4876;
+January 2026]
+c. Entrances: Primary ground-floor entrances serving active uses shall include weather protection that is a minimum 6 feet wide and 4 feet deep by recessing the entry, providing an awning or other projecting element, or using a combination of those methods.
+d. Blank Walls: Walls without fenestration or doors shall not exceed 15 feet in length.
+e. Awnings, canopies and weather protection, where provided:
+I. When transom windows are above display windows, awnings, canopies and similar weather protection elements shall be installed between transom windows and display windows to allow for light to enter the storefront through the transom windows and allow the weather protection feature to shade the display window.
+II. Awnings may be fixed or retractable.
+G1. Buildings subject to the Active Ground-floor Design rules as identified in Figure 70.20.10.6.2 Active
+Frontages Map shall be designed to create an interesting and inviting environment for people.
+a. Floor heights shall be adequate to accommodate multiple allowed non-residential uses
+b. Window transparency shall be adequate to create visibility between the building and publicly accessible paths, streets and open spaces.
+c. Ground-floor designs shall provide clear and comfortable entrances for pedestrians.
+d. Ground-floor designs shall incorporate elements to avoid large blank wall areas, such as incorporating vegetation, trellis structures, artwork, architectural detailing, reveals, contrasting materials or other elements to provide visual interest.
+The elements shall be used in a manner consistent with the building’s design and other facade composition elements.
+e. Awnings shall be integrated into the building design and provide regularly spaced shade and weather protection.
+Figure 70.20.10.6.1 Active ground floor design
+
+Table 70.20.10.6.A Design Guidelines and Standards: Active Ground Floor Design
+
+Active Ground-floor Residential Design
+
+Active Ground-floor Residential Design - Design
+Standard
+Active Ground-floor Residential Design - Design
+Guideline
+S2. Ground floor residential units subject to the Active
+Ground- floor Use rules as identified in Figure 70.20.10.6.2
+Active Frontages Map shall be designed to provide an adequate level of privacy to the unit while providing pedestrian interest and the opportunity for interaction between the public and private realms by complying with the following requirements:
+a. Ground-floor units, shall provide one of the Active
+Ground Floor Residential Unit Entry Types consistent with Section 70.20.10.6.S3.
+b. Ground floor height shall be a maximum four feet floor height above sidewalk or walkway grade.
+[ORD
+4876; January 2026]
+c. The ground floor shall have a minimum floor-to-floor height of 12 feet.
+G2. Buildings subject to the Active Ground-floor Use rules as identified in Figure 70.20.10.6.2 Active
+Frontages Map with ground floor residential uses shall enhance the pedestrian experience; give individual identity to ground-floor units; define the transition between public and private space; provide spaces for people to gather and spend time outdoors; and provide adequate level of resident privacy.
+Table 70.20.10.6.A Design Guidelines and Standards: Active Ground Floor Design
+
+Active Ground-floor Residential Unit Entry Types
+
+Active Ground-floor Residential Unit Entry Types - Design
+Standard
+Active Ground-floor Residential Unit
+Entry Types - Design Guideline
+S3. Where Active Ground Floor Residential Private Entry Types are required, one or more of the following entry types shall be provided.
+G3. Private entries into ground- floor residential units shall be designed to provide human-scaled detailing; enhance the pedestrian experience; define the transition between public and private space; provide spaces for residents to gather and spend time outdoors; and provide adequate level of resident privacy.
+a. Stoop:
+I. Stoops shall provide entry access for a maximum of two units; and
+II. Stoop entry landings shall be large enough so a four-foot by four-foot square can fit inside of the stoop for each unit served; and
+III. Stoop entry landings shall be a minimum of twenty-five square feet for each unit served
+IV. The minimum stoop height from the back of sidewalk or walkway grade shall be two feet; and [ORD 4876; January
+206]
+V. The maximum stoop height from the back of sidewalk or walkway grade shall be four feet.
+[ORD 4876; January 2026]
+Diagram of Stoop
+b. Porch:
+I. Porches shall provide entry access for a maximum of one unit; and
+II. Porches shall be large enough so a six-foot by six-foot square can fit inside of a porch for each unit; and
+III. The minimum porch height from the back of sidewalk or walkway grade shall be two feet; and [ORD 4876; January
+2026]
+IV. The maximum porch floor height from the back of sidewalk or walkway grade shall be four feet.
+[ORD 4876; January
+2026] Diagram of Porch
+
+Active Ground-floor Residential Unit Entry Types - Design
+Standard
+Active Ground-floor Residential Unit
+Entry Types - Design Guideline
+c. Patio:
+I. Patios shall provide entry access for a maximum of one unit;
+and
+II. Patios shall provide accessible access between the street or pedestrian path and the unit’s front door via a route that does not have any stairs between it and the street lot line.
+The slope of the route shall not exceed 1:8; and
+III. The Patio shall include at least one of the following features to define the transition between public and private space:
+1. A row of shrubs not exceeding 30 inches in height located between the sidewalk or walkway and the patio that assists with defining the edge between public and private space.
+Shrubs shall be at least one gallon in size and be planted a maximum of three feet on center; or
+[ORD 4876; January 2026]
+2. A fence not to exceed 30 inches in height located between the sidewalk or walkway and the patio that assists with defining the edge between public and private space, with a gate or fence opening to provide access to the pedestrian route between the pedestrian way and the front door; or [ORD 4876; January 2026]
+3. A metal, wood or stone wall not to exceed 30 inches in height located between the sidewalk or walkway and the patio that assists with defining the edge between public and private space with a gate or wall opening to provide access to the pedestrian route between the pedestrian way and the front door.
+A minimum 18-inch landscape strip shall be located between the wall and the abutting pedestrian way and entirely landscaped with ground cover, shrubs or other landscape living plant material;
+[ORD 4876; January 2026]
+IV. The Patio shall have a different paving material, paving color, paving pattern and/or paving texture from the paving used in the adjacent or abutting pedestrian way (street, private street or required pedestrian path);and
+V. Shall be large enough to fit a 6-foot wide by 8-foot deep rectangle inside of it, including the screening required in subsection S3.c.iii above.
+Diagram of Patio
+
+Active Ground-floor Residential Unit Entry Types - Design
+Standard
+Active Ground-floor Residential Unit
+Entry Types - Design Guideline
+d. Terrace:
+I. A Terrace may serve multiple unit entries; and
+II. The maximum Terrace height shall be 30 inches above the grade of the back of the adjacent sidewalk or accessway; and
+III. Walls, fences and hedges on Terraces shall be a maximum of
+42 inches tall and have a minimum transparency of 40 percent; and
+Diagram of Terrace
+e. Frontage Court:
+I. A Frontage Court may serve multiple unit entries; and
+II. The minimum Frontage Court width along a primary frontage shall be 25 feet; and
+III. The maximum Frontage Court width along a primary frontage shall be 50 percent of the facade length or 80 feet, whichever is less; and
+IV. The minimum Frontage Court depth shall be 20 feet; and
+V. The maximum Frontage Court depth shall be 50 feet; and;
+VI. The maximum Frontage Court height shall be 30 inches above the grade of the back of the adjacent sidewalk or accessway.
+Diagram of Frontage Court
+D. Applicability of Active Ground Floor Design Regulations
+1. Building facades fronting on streets identified in Figure 70.20.10.6.2 shall meet the design rules of 70.20.10.6.
+Only building facades fronting the designated streets shall be subject to these rules.
+For a building to be considered fronting a street, the facade must be located within the minimum and maximum setback as defined by the underlying zone.
+Building facades not fronting on streets designated in Figure 70.20.10.6.2, are exempt for these rules.
+2. Frontages identified as Type A must comply with the Non-residential Active Ground Floor Design regulations specified in 70.20.10.6 G1/S1.
+3. Frontages identified as Type B may either comply with the Non-residential Active Ground Floor Design specified in 70.20.10.6 G1/S1, or the Residential Active Ground Floor Design regulations specified in 70.20.10.6 G2/S2 and G3/S3.
+4. Sites lacking internal street networks, identified as Areas C and D in Figure 70.20.10.6.2, shall comply with the following Active Ground Floor Design rules:
+a. Area C: Tax lots 1S110CC00400, 1S110CC01300, and 1S110CC01303.
+At the time of development, a Type A frontage must be assigned along a public right of way or other publicly accessible space visible from the right of way on the site that is equal in length to 1/2 of the longest diagonal measurement of the site.
+b. Area D: Tax lots 1S110CD00900, 1S110CD01300, 1S110CD00790, 1S110CD01301, 1S115BB00203, and 1S115BB00200.
+When dedicated, the future extension of SW Millikan Way shall be designated a Type A frontage.
+
+Figure 70.20.10.6.2 Active Frontage Design Map
+[ORD 4799, 01/08/2021; ORD 4876, 01/20/2026]
+Effective on: 9/14/2026
+70.20.10.7 Usable Open Space
+
+A. Intent. To ensure that employees, visitors, and residents have adequate access to usable open space and common facilities that enhances the experience of living, working, and visiting in Downtown Beaverton.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2) ●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Usable Open Space
+
+Usable Open Space - Design Standard Usable Open Space - Design Guideline
+S1. Non-residential buildings shall provide a minimum of 5 percent of the site area as Usable Open Space that may be met through any combination of the following open space types.
+a. Publicly Accessible Open Spaces (PAOS).
+Each square foot of a PAOS counts as 1.33 square per toward the total requirement.
+b. Shared Open Space.
+G1. Non-residential buildings shall give users access to high-quality Usable Open Space appropriate for the size, density of uses and tenants on the site.
+S2. All residential-only buildings shall provide a minimum area of
+Usable Open Space equal to 48 square feet per residential unit.
+a. For sites with 11 units or fewer, the minimum requirement shall be met by complying with one of the following:
+I. Shared Open Space; or
+II. Private Open Space; or
+III. Some combination of Shared Open Space and Private
+Open Space.
+b. For sites with 12 units or more, the minimum requirement shall be met by complying with one of the following:
+I. Publicly Accessible Open Spaces (PAOS).
+Each square foot of a PAOS counts as 1.33 square per toward the total requirement; or
+II. Shared Open Space; or
+III. Common Community Room that abuts and is accessible from a Shared Open Space, PAOS, or public street (a Common Community Room cannot be counted for more than 20 percent of the required
+Usable Open Space); or
+IV. Private Open Space; or
+V. Some combination of b1 through b4.
+G2. Residential-only buildings shall provide residents access to high- quality, usable open spaces that provides areas to gather, and may include a combination of PAOS, Shared Open Spaces, Private
+Open Spaces, and Common Community Room.
+S3. Mixed-use buildings that contain residential uses shall provide a minimum area of Usable Open Space equal to 10 percent of parcel area or 48 square feet per residential unit, whichever is greater.
+The minimum Usable Open Space area shall be met by complying with one of the following:
+a. Publicly Accessible Open Spaces (PAOS).
+Each square foot of a PAOS counts as 1.33 square per toward the total requirement; or
+b. Shared Open Space; or
+c. Common Community Room that abuts and is accessible from a Shared Open Space, PAOS, or public street (a
+Common Community Room cannot be counted for more than 20 percent of the required Usable Open Space); or
+d. Private Open Space; or
+e. Some combination of a through d.
+G3. Mixed use buildings that contain residential uses shall provide tenants and residents access to high-quality, usable open spaces that provides areas to gather, and may include a combination of PAOS,
+Shared Open Spaces, Private Open Spaces, and
+Common Community Room.
+Figure 70.20.10.7.1 Usable Open Space: Non-Residential Uses
+
+Figure 70.20.10.7.2 Usable Open Space: Residential Uses
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Publicly Accessible Open Spaces (PAOS)
+
+Publicly Accessible Open Spaces (PAOS) - Design
+Standard
+Publicly Accessible Open Spaces (PAOS) - Design
+Guideline
+S4. Publicly Accessible Open Spaces (PAOS) shall be designed to create usable open space for public use.
+PAOS shall:
+a. Be large enough to fit a 20-foot by 20-foot square inside of it; and
+b. If located between a building and public sidewalk, be bordered on two sides by building facades with some combination of commercial uses, primary residential entrances or primary office entrances with at least one door and windows facing the PAOS and providing the ability to view the PAOS from inside the building; and
+c. Provide at least 60 percent of the total PAOS area as open to the sky free of permanent weather protection; and
+d. Include at least one bench or ledge at seating height per 200 square feet that can seat two people side by side; and
+e. Include landscaping on at least 20 percent of its area.
+Spaces 800 square feet or larger shall provide one tree per 800 square feet of open space; and
+f. Be directly accessible from a public right of way; and
+g. Be publicly accessible for a minimum of 12 consecutive hours per day.
+G4. Publicly Accessible Open Spaces (PAOS) shall be designed to create usable open space for public use.
+PAOS may include pedestrian paths, pedestrian refuge area, landscaped gardens, places to rest and relax, places to play, and places to gather and socialize.
+S5. Shared Open Spaces, such as courtyards, rooftop open spaces, terraces and frontage Courts, shall:
+a. Be large enough to fit a 20-foot by 20-foot square inside of it if enclosed on three sides or fewer and be large enough to fit a 40-foot by 40-foot square inside of it if enclosed on four sides.
+If enclosed on all four sides, the space does not qualify as a Shared Open
+Space if all walls bordering the open space have a building height more than 1.5 times the Shared Open
+Space perpendicular to that wall; and
+b. Provide at least 60 percent of the total Shared Open
+Space area as open to the sky free of permanent weather protection; and
+c. Include at least one bench or ledge at seating height per 200 square feet that can seat two people side by side; and
+d. Include landscaping on at least 20 percent of its area.
+Spaces at grade that are 500 square feet or larger shall provide one tree per 500 square feet of open space.
+G5. Shared Open Spaces shall be open to the sky and be designed to be usable for tenants for a variety of communal activities and uses.
+Shared Open Spaces may include pedestrian paths, landscaped gardens, places to rest and relax, places to play, and places to gather and socialize.
+Shared Open Spaces shall be open to the sky and be designed to be usable for residents for a variety of communal activities and uses.
+Shared Open Spaces may include pedestrian paths, landscaped gardens, places to rest and relax, places to play, and places to gather and socialize.
+PAOS Example (Hillsboro, OR)
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Common Community Room
+
+Common Community Room - Design Standard Common Community Room - Design Guideline S6.
+Common Community Rooms shall be accessible to building occupants and designed to serve as gathering places.
+Common Community Rooms may include lounges, fitness rooms, shared kitchens, dining areas, co-working spaces, game rooms, or other spaces that provide opportunities for shared experiences.
+Common Community
+Rooms shall meet the following standards:
+a. Common Community Rooms shall be large enough so a 15-foot by 15-foot square will fit inside it; and
+b. The Common Community Room shall have a minimum floor-to-floor height of 12 feet; and
+c. The Common Community Room shall have one wall along an exterior facade of the building and shall have
+30% glazing measured from the interior: or
+d. Common Community Rooms shall have direct access to a shared open space or PAOS.
+G6. Common Community Rooms shall be easily accessible by building occupants and designed to serve as gathering places and accessory spaces to Shared Open
+Spaces or PAOS. Common Community Rooms may include lounges, fitness rooms, shared kitchens, dining areas, co-working spaces, game rooms, or other spaces that provide opportunities for shared experiences.
+Table 70.20.10.7.A Design Guidelines and Standards: Usable Open Space
+
+Private Open Spaces
+
+Private Open Spaces - Design Standard Private Open Spaces - Design Guideline
+S7. Private Open Spaces shall meet the following design standards:
+a. Shall be attached to and directly accessible from an individual residential unit; and
+b. Shall be large enough to fit a 5-foot by 6-foot rectangle inside of it; and
+c. Shall be screened a minimum 50% from abutting units to provide privacy; and
+d. Shall have a minimum clear height dimension of 8 feet 6 inches.
+G7. Private Open Spaces shall be designed to create usable outdoor space for residents to spend time outdoors.
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10.8 Roof Elements
+
+A. Intent. To create rooftops that integrate sustainability features and, screen mechanical equipment.
+B. Applicable Design Principles
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Preserve, Enhance and Engage Nature (Section 70.10.6)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+●Integrate Places to Gather and Spend Time Outdoors (Section 70.10.8)
+C. Design Guideline and Standards
+
+Table 70.20.10.8.A Design Guidelines and Standards: Roof Elements
+
+Rooftop Equipment and Screening
+
+Rooftop Equipment and Screening - Design Standard Rooftop Equipment and Screening - Design Guideline
+S1. On new buildings larger than 20,000 square feet of total floor area, roof areas with less than or equal to a 2:12 slope shall incorporate at least one of the following:
+a. A roofing material with a Solar Reflectance Index of 78 or higher on 90 percent of the roof, except for space dedicated to mechanical systems, vents, elevator enclosures, Eco-Roof, solar energy systems, skylights, tenant amenity areas (such as patios or recreational activity areas).
+b. An Eco-Roof or Rooftop Garden surface comprising a minimum of 30 percent of the total roof area.
+c. Solar energy panels comprising an area equivalent to a minimum of 30 percent of the total roof area.
+d. A system that collects rainwater for reuse from a minimum of 50 percent of the total roof area.
+G1. Roofs on new buildings larger than 20,000 square feet in total floor area shall include sustainability features while allowing other rooftop uses essential to the building function and tenant needs.
+S2. Rooftop mechanical, electrical and communications equipment and components shall be screened and/or located so it is not visible from the ground-level public rights of way that are within 100 feet of the site.
+a. Screening shall be made of a primary exterior finish material allowed in Section 70.20.10.10 and used on other portions of the building; architectural grade wood or masonry; or metal.
+b. Other rooftop elements, including solar panels, wind generators, roof access and elevator or green roof features are exempt from rooftop screening requirements.
+c. Roof access, weather protection for rooftop open spaces, and elevator equipment shall not exceed 16 feet in height above the roof structure.
+d. Wireless telecommunications facilities are exempt from this standard and shall meet applicable requirements of
+Section 60.70: Wireless Communications
+G2. Views of roof-mounted mechanical, electrical and communications equipment, except wireless communications facilities, and components shall be located and screened to minimize views from public rights of way near the building.
+Rooftop Garden Example (Portland, OR)
+
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+70.20.10.9 Structured Parking
+
+A. Intent. To ensure parking structures are efficient in design and integrated into the urban fabric of Downtown Beaverton, add visual interest into the pedestrian experience, include human-scaled details, and minimize the impact of vehicles on the public right of way and adjacent buildings.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Support an Intensely Developed, Mixed-income, Mixed-use Downtown (Section 70.10.2) ●Promote High-quality Design (Section 70.10.3)
+C. Design Guideline and Standards
+
+Table 70.20.10.9 Design Guidelines and Standards: Structured Parking
+
+Structured Parking
+
+Structured Parking - Design Standard Structured Parking - Design Guideline
+S1. The location of structured parking shall be limited to the following:
+a. Parking structures subject to the Active Ground-floor
+Design rules as identified in Figure 70.20.10.6.1 Active
+Frontages Map shall:
+I. Be constructed with a finished ceiling entirely underground or have the parking area’s lowest floor 12 feet or more above grade; or
+II. Provide ground-floor facades on the street facing elevations that comply with the provisions of 70.20.10.6
+Active Ground Floor Design for at least 50% of the width of the facade.
+b. On other streets, structured parking shall:
+I. Provide ground-floor facades on the street facing elevations that comply with the provisions of 70.20.10.6
+Active Ground Floor Design for at least 50% of the width of the facade; or
+II. Provide a building a minimum 5-foot building setback from all street-facing property lines and provide the following landscaping within that setback:
+1. One 1.5-inch caliper tree for every 15 linear feet from the City of Beaverton Tree List, with trees of different sizes being acceptable; and [ORD 4859;
+January 2025]
+2. Evergreen shrubs a maximum of 30 inches high from finished grade and a minimum 1 gallon in size planted next to each other to form a screen.
+Additional shrubs in excess of those necessary to form a screen are allowed; and
+3. Ground cover plants shall fully cover the remainder of the landscaped areas.
+G1. Structured parking facing rights of way and multi-use paths way are discouraged.
+Below grade and structured parking spaces above ground level are encouraged.
+Parking facilities shall be placed toward the rear or interior of the property.
+Where structured parking is located adjacent to street, the street facing facades shall provide ground-floor active uses, whether residential or commercial, especially at corners, or be sufficiently screened to minimize visual impacts to pedestrians.
+S2. Screening shall be designed to minimize light trespass on adjacent public rights-of-way and buildings:
+a. Solid screening and/or building walls shall extend a minimum 3 feet from top of parking slab so vehicle headlights do not trespass beyond the building facade.
+b. Interior building lighting shall be screened and directed away from exterior walls to reduce light trespass and glare.
+G2. Parking structures shall be designed to minimize light trespass from vehicle headlights and interior lighting when viewed from public rights-of-way and adjacent buildings.
+Structured Parking - Design Standard Structured Parking - Design Guideline
+S3. Structured parking on upper floors facing the right of way, any internal drive or any internal accessway are exempt from Section
+70.20.10. Building Design guidelines and standards except for the following standards.
+a. Section 70.20.10.4.
+S10; and
+b. Section 70.20.10.4 S11; and
+c. Section 70.20.10.5 S1 through S3; and
+d. Section 70.20.10.7 S2; and
+e. Section 70.20.10.9 standards; and
+f. Section 70.20.10.10 standards.
+g. In addition, parking structures shall provide facade modulation and architectural interest through:
+I. Vertical and/or horizontal recess(es) and/or projection(s) with a minimum average depth of 12 inches that changes the primary plane of the facade at a minimum of one recess or projection every 50 feet distributed in a consistent pattern along the facade; and
+II. One of the following:
+1. Prominent emphasis of vertical stairwells or elevator columns that incorporate at least two of the following features:
+(A) Change of material from the primary material used on the facade; or
+(B) The entire elevator column or stairwell projects at least 2 feet from the rest of the facade.
+(C) Windows or openings provide at least 60 percent transparency; or
+2. Parking garage decorative metal screening that cover at least 40 percent of the facade and does not obscure more than 50 percent of any opening that allows visibility into areas where cars will be parked.
+G3. Parking structures facades facing the right of way, any internal drive or any internal accessway shall provide facade modulations and articulation that create visual interest, surface relief, depth, and shadows to the facade.
+Upper floors facing streets shall meet the guidelines corresponding to the standards required in S3 a through f:
+a. Section 70.20.10.4.
+G10; and
+b. Section 70.20.10.4 G11; and
+c. Section 70.20.10.5 G1 through G3; and
+d. Section 70.20.10.7 G2; and
+e. Section 70.20.10.9 guidelines; and
+f. Section 70.20.10.10 guidelines.
+[ORD 4799, 01/08/2021; ORD 4859, 01/02/2025]
+Effective on: 9/14/2026
+70.20.10.10 Materials
+
+A. Intent. To promote the use of high quality, durable, and attractive materials that exhibit a sense of permanence and contribute to the aesthetic quality of the development and to the urban design fabric of the community.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+●Incorporate Sustainability and Resiliency (Section 70.10.7)
+C. Design Guideline and Standards
+
+Table 70.20.10.10.A Design Guidelines and Standards: Materials
+
+Materials
+
+Materials - Design Standard Materials - Design Guideline
+S1. Refer to Table 70.20.10.10.B Materials:
+a. Buildings shall utilize primary materials for no less than 65 percent of each building facade.
+b. Secondary materials are prohibited as primary cladding on building facades and shall not be allowed on more than
+35 percent of each building facade.
+c. Accent materials are permitted on no greater than 5 percent of each facade as trims or accents (e.g. flashing, projecting features, ornamentation, etc.).
+d. Buildings 30 feet and shorter, measured from grade plane to eave or top of parapet, whichever is higher, with elevations 50 feet or narrower may utilize any secondary material as a primary material.
+G1. Refer to Table 70.20.10.10.B Materials:
+a. The predominant building material(s) shall be high quality, durable, and attractive.
+b. The predominant building material(s) may be complemented with other secondary materials that may not be appropriate on large areas of the facade.
+c. Accent materials that would generally not be acceptable on large areas of the facade may be used in limited areas of the facade to highlight architectural features.
+S2. Materials identified as prohibited in Table
+70.20.10.10.B
+G2. Standard S2 shall be met, except for residential-only buildings or mixed-use residential buildings where at least 75 percent of the floor area will be used for residential uses, up to 10 percent of the non-street-facing elevations may apply materials identified as prohibited in
+Table 70.20.10.10.B or other materials not listed in Table
+70.20.10.10.B. [ORD 4857; October 2024]
+
+Table 70.20.10.10.B Materials
+
+●P: Primary Material
+●S: Secondary Material
+●A: Accent Material
+●N: Prohibited Material or Fencing Type
+Material Commercial, Industrial,
+Institutional, or Mixed-Use
+Multi-Dwelling and Middle
+Housing
+Brick (full dimensional) P P
+Stone/masonry P P
+Stucco S1 P
+Glass (transparent, spandrel) P P
+Material Commercial, Industrial,
+Institutional, or Mixed-Use
+Multi-Dwelling and Middle
+Housing
+Finished wood, wood veneers, and wood siding P P
+Factory or naturally finished flat, profiled, fluted, or ribbed metal panels P P
+Fiber reinforced cement siding and panels S1 P
+Concrete blocks with integral color (ground, polished, or glazed finishes) S1 S1
+Concrete (poured in place or precast) P P
+Concrete blocks with integral color (split face finish) S1 S1
+Ceramic tile S1 S1
+Standing seam metal S1 S1
+Other material as approved by the Planning
+Commission P/S P/S
+Glass block A A
+Corrugated metal A A
+Vegetated wall panels or trellises A A
+Vinyl siding N N
+T-111 Plywood N N
+Exterior Insulation Finishing System (EIFS) N N
+Plastic or vinyl fencing N N
+Chain link fencing2 N N
+[ORD 4822; June 2022]
+Footnotes:
+1. Smaller scale buildings may use this as a primary material.
+See 70.20.10.10.S1.d
+2. Existing chain link fencing may be replaced on sites 10,000 square feet and smaller [ORD 4799, 01/08/2021; ORD 4822, 06/30/2022; ORD 4857, 10/03/2024]
+Effective on: 9/14/2026
+70.20.10.11 Historic Overlay Design
+
+A. Intent. To encourage new development that is compatible with existing historic resources in the Downtown Beaverton Historic District that have identified historic architectural elements.
+B. Applicable Design Principles
+●Design Places for People (Section 70.10.1)
+●Promote High-quality Design (Section 70.10.3)
+●Consider Development Context (Section 70.10.4)
+C. Context. Beaverton’s Downtown Historic District contains historic resources designated by the 1984 Historic Resources Inventory.
+Several of these buildings have been identified as being appropriate precedents for informing building design.
+Buildings developed adjacent to these historic structures shall respond to specific design elements in these buildings.
+The identified buildings include:
+●Rossi Building, 12505 SW Broadway
+●Fisher Building, 12440 - 12580 SW Broadway
+●Thrifty Market, 12408 SW Broadway
+●Keils & Holbrook, 12400 SW Broadway
+●Cady Building, 12610 SW Broadway
+●Beaverton Post Office, 4545 SW Watson
+●Dr. Mason Building, 4590 SW Watson
+D. Applicability
+Subsection 70.20.10.11 shall apply to construction of new buildings on properties identified in Figure 70.20.10.11.1 where any portion of the building is within 20 feet of the historic building identified in this section and the buildings share a street frontage.
+The design standards and guidelines in Section 70.20.10.11 shall only apply to facades on new buildings that share the same street frontage as the historic building.
+If a new building is subject to design rules of two historic landmarks as described above, the applicant shall choose which historic landmark to respond to.
+In that case, the standards and guidelines related to the historic landmark not chosen would not be applicable to that new building.
+Modifications of Historic Landmark, Demolition of Historic Landmarks, and Emergency Demolition of Historic Landmarks shall be subject to the provisions of in Chapter 40.35 Historic Review.
+Figure 70.20.10.11.1 Applicable Historic Resources and Lots Where Overlay Standards for New Construction Standards May Apply
+E. Rossi Building (12505 SW Broadway)
+New construction west of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.A Historic Design Guidelines and Standards: Rossi Building (12505 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline S1.
+New buildings shall use facade articulation and modulation strategies consistent with the Broadway facade of the Rossi Building as follows:
+a. Column placement.
+Columns shall be expressed on the building facade; and
+b. Column spacing.
+Columns shall be spaced 25 to 35 feet on center in a consistent fashion for the length of the facade; and
+c. Horizontal datum.
+A horizontal datum shall be incorporated on the new structure to line up with the Rossi Building’s canopy using one of the following methods:
+I. The horizontal line of a canopy; or
+II. The top of transom windows; or
+III. The bottom of an awning; or
+IV. Other horizontal datum as approved by the decision-making authority.
+G1. New buildings shall architecturally respond to the
+Rossi Building through architectural facade rhythm and pattern, including through architectural expressions that address the Rossi Building’s column expression and spacing on the Broadway facade and by acknowledging the horizontal datum of the Rossi Building’s canopy.
+Figure 70.20.10.11.2 Rossi Building
+F. Fisher Building (12440 - 12580 SW Broadway)
+New construction east and west of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.F Historic Design Guidelines and Standards: Fisher Building (12440 - 12580 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline S1.
+New buildings along Southwest Broadway shall be placed in line with the Fisher Building facade along
+Southwest Broadway.
+G1. New buildings along Southwest Broadway shall be placed to contribute to and extend the street wall established by the
+Fisher Building along SW Broadway.
+S2. New buildings shall establish one horizontal datum to line up with the Fisher Building’s metal cornice and one horizontal datum to line up with the top of the Fisher Building’s transom windows.
+G2. Buildings shall use facade articulation and modulation strategies consistent with the Fisher Building and acknowledge the horizontal datum established by the tops of the transom windows or metal cornice of the Fisher Building.
+Figure 70.20.10.11.3 Fisher Building
+G. Thrifty Market (12408 SW Broadway)
+New construction east and west of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.G Historic Design Guidelines and Standards: Thrifty Market (12408 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline S1.
+New buildings shall be placed to line up with the
+Thrifty Market building facade along Southwest Broadway.
+G1. New buildings shall be placed to contribute to and extend the street wall established by the Thrifty Market building along Southwest Broadway.
+S2. New buildings shall use facade articulation and modulation strategies consistent with the Thrifty Market building by incorporating a horizontal datum on a new structure to line up with the Thrifty Market building’s sign band using one of the following methods:
+a. A sign band; or
+b. A cornice; or
+c. The top of transom windows; or
+d. Other horizontal datum as approved by the decision-making authority.
+G2. Buildings shall use facade articulation and modulation strategies consistent with the Thrifty Market building and acknowledge the horizontal datum established by the
+Thrifty Market building’s sign band.
+Buildings shall ensure that the also design of ground-floor facades to acknowledges the rhythm of recessed entries and storefront windows on the Thrifty Market building.
+Figure 70.20.10.11.4 Thrifty Market Building
+H. Keils & Holbrook Building (12400 SW Broadway)
+New construction west of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.H Historic Design Guidelines and Standards: Keils & Holbrook Building (12400 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline S1.
+New buildings shall use facade articulation and modulation strategies on Southwest Broadway facades consistent with the Keils & Holbrook building’s as follows:
+a. Display windows on new buildings shall line up with both the bottom and the top of the Keils &
+Holbrook Building’s display windows.
+Once this standard is satisfied, additional windows, such as transom windows, are allowed above the display windows; and
+b. A horizontal datum shall be established to line up with the top of the Kiel & Holbrook Building’s curved parapet wall.
+G1. New buildings shall use facade articulation and modulation strategies consistent with the Keils & Holbrook building by lining up with a horizontal line or lines established by the Keils
+& Holbrook building’s display windows and including a horizontal datum that acknowledges important horizontal features of the historic building.
+Figure 70.20.10.11.5 Keils & Holbrook Building
+I. Cady Building (12610 SW Broadway)
+New construction south of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.I Historic Design Guidelines and Standards: Cady Building (12610 SW Broadway)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline S1.
+New buildings shall use facade articulation and modulation strategies consistent with the Cady Building by establishing horizontal data that line up with a minimum of two of the following features on the Cady Building: upper cornice, upper edge of transom windows, datum line separating the first floor from the second floor.
+Each datum shall be established using one of the following features:
+a. For the top of the transom window or datum line separating the first floor from the second floor: a sign band, a datum line between floors, the top of transom windows; or other horizontal datum as approved by the decision-making authority; or
+b. For the upper cornice on top of the Cady building, a cornice, a datum line between floors, the top of a parapet wall, or other horizontal datum as approved by the decision-making authority.
+G1. New buildings shall use facade articulation and modulation strategies consistent with the Cady Building that acknowledge a horizontal element or elements of the building, such as the upper cornice, the upper edge of the transom windows, or the datum line separating the first floor from the second floor.
+Figure 70.20.10.11.6 Cady Building
+J. Beaverton Post Office (4545 SW Watson)
+
+New construction north or south of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.J Historic Design Guidelines and Standards: Beaverton Post Office (4545 SW Watson)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design Guideline S1.
+New buildings shall use facade articulation and modulation strategies consistent with the Beaverton Post Office building by establishing horizontal data that line up with a minimum of one of the following features on the Beaverton Post Office
+Buildings: roof cornice, upper edge of transom window line, upper edge of the display windows.
+Each datum shall be established using one of the following features:
+a. For the top of the transom window or top of the display windows: a sign band, a horizontal datum line between floors, the top of transom windows; or other horizontal datum as approved by the decision-making authority; or
+b. For the upper cornice, a cornice, a datum line between floors, or other horizontal datum as approved by the decision-making authority.
+G1. New buildings shall use facade articulation and modulation strategies consistent with the Beaverton
+Post Office building that acknowledge a horizontal element or elements of the building, such as the roof cornice, upper edge of the transom window line or upper edge of the display windows.
+Figure 70.20.10.11.7 Beaverton Post Office
+K. Dr. Mason Building (4590 SW Watson)
+New construction north and east of this building shall be subject to the design guidelines and standards in this section.
+
+Table 70.20.10.11.K Historic Design Guidelines and Standards: Dr. Mason Building (4590 SW Watson)
+
+Facade Rhythm and Pattern
+
+Facade Rhythm and Pattern - Design Standard Facade Rhythm and Pattern - Design
+Guideline
+S1. New buildings shall use facade articulation and modulation strategies consistent with the Dr. Mason Building by incorporating a horizontal datum on a new structure to line up with curved roof cornice using one of the following methods:
+a. A cornice; or
+b. A datum line between two floors of a new building; or
+c. The top of transom windows; or
+d. Other horizontal datum as approved by the decision-making authority.
+G1. Buildings shall use facade articulation and modulation strategies to acknowledge the curved parapet of the Dr. Mason building.
+
+Figure 70.20.10.11.8 Dr. Mason Building
+[ORD 4799, 01/08/2021]
+Effective on: 9/14/2026
+
+Date Printed: September 28, 2026

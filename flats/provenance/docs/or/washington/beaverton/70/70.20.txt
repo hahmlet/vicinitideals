@@ -1,0 +1,11 @@
+70.20 Downtown Design Guidelines and Standards
+
+The Design Guidelines and Standards provide a framework for the implementation of the Downtown Design Principles.
+Design Guidelines and Standards are organized under two main categories - Site Design and Building Design - which further address relevant topics and sub-topics.
+For each topic, an Intent Statement and list of applicable Design Principles are provided, along with one or more Guideline and Standard for each sub-topic.
+Each Design Guideline is a discretionary criterion that describes a design concept and/or design goal.
+The corresponding Design Standard is a clear and objective criterion that provides a measurable path to meet the design concept and/or design goal.
+Contents:
+70.20.05. Site Design
+70.20.10. Building Design
+[ORD 4799, 01/08/2021]

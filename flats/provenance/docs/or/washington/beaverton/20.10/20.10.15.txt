@@ -1,0 +1,102 @@
+20.10.15. Site Development Standards
+
+Site Development Standards support implementing development consistent with the corresponding zoning district.
+All superscript notations refer to applicable regulations or clarifications as noted in footnotes below.
+[ORD 4584; June 2012] [ORD 4782; April 2020]
+
+20.10.15 Commercial Site Development Standards
+
+Superscript Numbers Refer to Footnote
+# Standard NS CS CC GC Unit of
+Measurement
+A. Minimum Density1 34 34 34 34 Units Per Acre
+B. Maximum Floor Area Ratio10 3.0 See
+20.10.16
+See
+20.10.16
+See
+20.10.16
+N/A
+C.1. Lot Dimensions - Minimum Width 70 None None None Feet
+C.2. Lot Dimensions - Minimum Depth 100 None None None Feet
+D. Maximum Yard Setback2 None 16 16 16 Feet
+E.1. Minimum Yard Setbacks - Front None None None None Feet
+E.2. Minimum Yard Setbacks - Side Abutting Lot3 10 None None None Feet
+E.3. Minimum Yard Setbacks - Open Air Display 155 155 None 15 Feet
+E.4. Minimum Yard Setbacks - Rear4 15 15 None 15 Feet
+F.1. Building Height - Maximum 40 None None None Feet
+F.2. Building Height - Height Transition Standards of
+60.05.15.7 Apply
+No Yes Yes Yes N/A
+20.10.15 Commercial Site Development Standards - Wireless Communication Facilities
+
+Superscript Numbers Refer to Footnote
+# Standards NS CS CC GC Unit of
+Measurement
+G.1. Maximum
+Height - WCF7
+80 80 80 80 Feet
+G.2. Maximum
+Height -
+Equipment
+Shelters8
+12 12 12 12 Feet
+G.3. Maximum
+Height - Roof
+Mounted
+Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+N/A
+H.1. Yard
+Setbacks9 -
+Requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+Shall comply with underlying zoning district requirements
+N/A
+H.2. Yard Setbacks9
+- Other
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+Refer to
+60.70.35.14.A and
+B
+N/A
+[ORD 4702; January 2017] [ORD 4782; April 2020] [ORD 4804; August 2021] [ORD 4822; June 2022] [ORD 4879; April 2026]
+Footnotes:
+1. Refer to 20.25.05 for information about calculating density and 20.25.10.4 for calculating intensity in multiple use development with single-use residential buildings.
+[ORD 4822; June 2022] [ORD 4879; April 2026]
+2. Maximum front and side yard setback applies to buildings in commercial zones located on parcels that exceed 60,000 square feet pursuant to Section 60.05.15.6.
+Any deviation from that standard shall be reviewed through the appropriate Design Review application process and the corresponding Design Review Design Guideline.
+[ORD 4879; April 2026]
+3. For buildings in commercial zones not abutting a residential use in a residential zone, minimum setback does not apply.
+Under the thresholds outlined in Section 40.30., application may be made for zero side yard setbacks on parcels abutting residential use in a residential zone in conjunction with a land division application.
+[ORD 4879; April 2026]
+4. For buildings in commercial zones not abutting a residential use in a residential zone, minimum setback does not apply.
+Rear yard setback is applicable to only the portion of the rear yard which abuts land designated RMA, RMB or RMC; otherwise the minimum rear yard setback is 0 feet.
+[ORD 4879; April 2026]
+5. Where permitted, open air sales / display / storage of vehicles for sale or lease shall be setback at least 20 feet from the front property line.
+The area shall be designated and subject to Decision Maker approval.
+[ORD 4879;
+April 2026]
+6. Repealed and reserved.
+[ORD 4879; April 2026]
+7. Inclusive of antenna.
+8. At-grade equipment shelters.
+9. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+10. See 20.25.10.4 for calculating intensity in multiple use development with single-use residential buildings.
+[ORD 4879; April 2026]
+[ORD 3277, 09/08/1982; ORD 3290, 10/05/1982; ORD 3352, 01/19/1984; ORD 3739, 09/08/1990; ORD 3975, 03/07/1997; ORD 4036, 04/02/1999; ORD 4048, 07/08/1999; ORD 4071, 11/25/1999; ORD 4111, 07/14/2000; ORD 4224, 09/19/2002; ORD 4248, 05/08/2003; ORD 4332, 01/01/2005; ORD 4354, 07/14/2005; ORD 4542, 06/17/2010;
+ORD 4584, 06/01/2012; ORD 4702, 01/04/2017; ORD 4782, 04/17/2020; ORD 4804, 08/13/2021; ORD 4822, 06/30/2022; ORD 4879, 04/02/2026]
+Effective on: 9/14/2026

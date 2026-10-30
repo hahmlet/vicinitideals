@@ -1,0 +1,97 @@
+60.30.15. Off-Street Parking Lot Design.
+
+All off-street parking lots shall be designed in accordance with City Standards for stalls and aisles as set forth in the following drawings and tables:
+A = Parking Angle
+B = Stall Width
+C = Stall Depth (no bumper overhang)
+D = Aisle Width
+E = Stall Width (parallel to aisle)
+F = Module Width (no bumper overhang)
+G = Bumper Overhang
+H = Backing Area
+I = Module Intermesh
+NOTE:
+1) For one (1) row of stalls use "C" plus "D" as minimum bay width.
+2) Public alley width may be included as part of dimension "D", but all parking stalls must be on private property, off the public right-of-way.
+3) For estimating available parking area, use 350 sq. ft. per vehicle for stall, aisle and access areas.
+4) The stall width for self-parking of long duration is 8.5 feet; for higher turnover self-parking is 9.0 feet; and for supermarkets and similar facilities (shoppers and packages) is 9.5-10 feet.
+5) The minimum aisle width for two-way traffic and for emergency vehicle operations area is 24 feet.
+The minimum aisle width for emergency vehicle access (one way traffic) is 20 feet.
+Except as permitted in Section 60.30.15.
+Note 8(c). [ORD 4822; June 2022]
+6) Where appropriate, bumper overhang area is provided (extruded curbs), "G" can be subtracted from "C" to determine stall depth.
+Dimensions of required recreational vehicle spaces are 10 feet by 25 feet.
+7) Parking lots in conjunction with government and public buildings, as defined by Chapter 11 of the International Building Code, are to include parking for the handicapped as required in that chapter.
+[ORD 3494; March 1986] [ORD 4365; October 2005] [ORD 4697; December 2016] [ORD 4844; August 2023]
+8) Single Detached, Middle Housing, and Multi-dwelling with five or six units in RMA, RMB, RMC, and CM-RM zones: [ORD 4822; June 2022] [ORD 4859; January 2025]
+a. Parallel parking spaces shall be a minimum of 8 feet wide and 20 feet long.
+For parallel parking spaces located within the driveway, the driveway width shall conform to drive aisle widths, outlined in Section 60.30.15.
+Note 8(c). Parallel parking spaces count towards parking maximums.
+[ORD 4844; August 2023]
+b. Driveways shall meet the minimum driveway standards in the Engineering Design Manual.
+c. Drive aisles shall have a minimum width of 22 feet for two-way traffic or 20 feet for one-way traffic.
+A B C D E F G H I
+45 degrees 8.5 18.7 12.0 12.0 49.4 2.0 5.0 43.4
+60 degrees 8.5 19.8 14.5 9.8 54.1 2.5 5.0 49.9
+75 degrees 8.5 19.6 23.0 8.8 62.2 2.5 5.0 60.0
+90 degrees 8.5 18.5 24.0 8.5 61.0 3.0 5.0 61.0
+90 degrees* 7.5 15.0 24.0 7.5 58.0 2.0 5.0 58.0
+* "Compact" Car (Section 60.30.10.11.)
+
+[ORD 4584; June 2012]
+
+ANGLE TWO-WAY
+90° DEAD END TWO-WAY
+
+9) Newly constructed multi-dwelling residential buildings with five or more residential dwelling units and newly constructed multiple-use buildings consisting of privately owned commercial space and five or more residential dwelling units shall provide sufficient electrical service capacity, as defined in ORS 455.417, to accommodate no less than 40 percent of all vehicle parking spaces serving the residential units.
+For the purposes of calculating which spaces serve residential units, applicants shall provide sufficient electrical capacity to 40 percent of parking spaces on the entire site or designate which vehicle parking spaces will be dedicated for residential use, install signage indicating that those spaces are for residential use only, and provide sufficient electrical capacity to 40 percent of the parking spaces designated for residential use.
+Townhouses are not included for purposes of determining the applicability of this regulation.
+[ORD 4844; August 2023]
+10) A new development that adds more than one-half acre of new surface parking (newly constructed parking and/or paved parking area that was removed and replaced) to a lot or parcel shall provide one of the features in a through c below.
+Surface parking area to determine the one-half acre threshold shall be measured around the perimeter of all parking spaces, vehicle maneuvering areas, and interior parking lot landscaping.
+The parking area calculation shall be a cumulative calculation for all parking areas on the lot or parcel:
+
+a. Installation of solar panels with a generation capacity of at least 0.5 kilowatt per new parking space.
+Existing solar panels present on the site that will be retained on the site after development may count toward this requirement if they meet this standard.
+Panels may be located anywhere on the site.
+In lieu of installing solar panels on site, the developers may pay $1,500 per new parking space in the development into a previously established city or county fund dedicated to equitable solar or wind energy development or a fund at the Oregon Department of Energy designated for such purpose if such a fund exists;
+b. Actions to comply with OAR 330-135-0010; or
+c. Tree Canopy covering at least 40 percent of the additional parking lot area at maturity but no more than 15 years after planting.
+For the purposes of this Tree Canopy standard, the parking lot area shall include the area of parking stalls and vehicle maneuvering areas (including but not limited to all drive aisles and drive-through lanes) and shall not include loading areas, areas designated for outdoor storage (except outdoor storage of vehicles related to Vehicle Sales, Lease or Rental uses), and parking lot area covered with solar panels).
+The following standards apply: [ORD 4859; January 2025]
+i. Tree Canopy coverage shall be calculated based on the total Tree Canopy of existing trees to remain on the site after development plus proposed trees to be planted within the parking area.
+For existing trees that will remain on the site after development, the calculation may use the actual Tree Canopy of any existing trees or the anticipated Mature Tree Canopy of any existing trees but no more than 15 years after planting.
+For proposed trees, the calculation shall use the anticipated Mature Tree Canopy of proposed trees but no more than 15 years after planting.
+For the purposes of the calculation, Tree Canopy that covers fully enclosed buildings shall not count toward the canopy coverage.
+Tree Canopy over the parking lot area defined above, interior parking lot landscaping, perimeter parking lot landscaping, and carports shall count toward canopy coverage.
+For the purposes of the calculation, when expected and/or existing canopies overlap they can be counted twice when the overlap is 5 feet or less.
+The measurement is the length of the line segment within the overlap area between Tree Canopy centers.
+For areas that overlap more than 5 feet, applicants may count toward the Tree Canopy total the overlap that would exist if the two tree canopies for those two trees had an overlap length of exactly 5 feet.
+In no case, including if more than two trees are overlapping, can any part of overlapping Tree Canopy be counted three times when calculating the total Tree Canopy coverage area (see Figure 60.30.15.10, Tree Canopy Overlap Measurement).
+[ORD 4859; January 2025]
+ii. Development of a Tree Canopy plan under this section shall be done in coordination with the local electric utility, including pre-design, design, building and maintenance phases.
+[ORD 4859; January 2025]
+iii. Trees planted to meet this standard shall be planted and maintained consistent with the American National Standards Institute (ANSI) A300 Tree Care Standards (2023).
+[ORD 4859; January 2025]
+iv. Trees planted to meet this standard within the Cooper Mountain Community Plan area shall be selected from trees designated as appropriate for parking lot trees or street trees in the City of Beaverton Tree List.
+[ORD 4859; January 2025]
+[ORD 4844; August 2023]
+Figure 60.30.15.10 Tree Canopy Overlap Measurement
+Step 1:
+Establish a straight line between the two center points of trees of overlapping tree canopies.
+
+Step 2:
+Measure the distance of the overlapped canopies along the previously established straight line to find the overlap length.
+Step 3:
+If the overlap length established in Step 2 is 5 feet or less, the Tree Canopy counted toward the canopy coverage requirement shall be the sum of the entire Tree Canopy of each individual tree.
+If the overlap length is longer than 5 feet, continue to Step 4.
+
+Figure 60.30.15.10 Tree Canopy Overlap Measurement
+The graphic above shows that the actual overlap length is more than 5 feet in length.
+Step 4:
+If the overlap length is greater than 5 feet for any two trees, applicants may count toward the Tree Canopy total the overlap that would exist if the two tree canopies for those two trees had an overlap length of exactly 5 feet.
+In no case, including if more than two trees are overlapping, can any part of overlapping Tree Canopy be counted three times when calculating the total Tree Canopy coverage area.
+Applicants may calculate the overlap area that would exist if the Tree Canopy areas had a 5-foot overlap, as shown in the hatched area above.
+This calculation may be counted toward the Tree Canopy coverage total.
+[ORD 3228, 12/10/1981; ORD 3494, 03/27/1986; ORD 4079, 12/09/1999; ORD 4107, 05/02/2000; ORD 4224, 09/19/2002; ORD 4365, 10/20/2005; ORD 4498, 01/15/2009; ORD 4584, 06/01/2012; ORD 4697, 12/02/2016; ORD 4822, 06/30/2022; ORD 4844, 08/18/2023; ORD 4859, 01/02/2025]
+Effective on: 8/21/2026

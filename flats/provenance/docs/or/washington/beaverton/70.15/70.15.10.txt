@@ -1,0 +1,231 @@
+70.15.10. District Purpose and Development Standards
+
+1.Beaverton Central (RC-BC)
+A.Purpose. The Beaverton Central (RC-BC) District is intended to create a pedestrian-oriented, high-density, mixed-use district around rail stations, with opportunities for new development to define the Downtown skyline.
+B.Building Height & Density.
+
+Table 70.15.10.1.A RC-BC Building Height & Density
+
+Development Standards Minimum Maximum
+Height N/A 120 ft1
+Intensity (Floor Area Ratio) 1.52 None
+Density (Units/Acre)3,4  602 None
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Buildings over 120 feet in height shall be considered through a discretionary review process (refer to 70.20.10.3.G4)
+2. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to December 9, 1999, shall be subject to reduced minimum density and intensity standards.
+See Section 70.15.10.5 Supplemental Density and Intensity Standards.
+3. Minimum density only applies to 100% residential development.
+4. Existing single-detached dwellings, and their replacements, are exempt from the minimum density standard.
+[ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.1.B   RC-BC Setbacks1
+
+Setback Requirements Side
+Minimum
+Rear
+Minimum
+Front
+Minimum
+Front
+Maximum
+Front setback with ground floor residential units N/A N/A 6 ft 12 ft
+Front setback without ground floor residential units N/A N/A 0 ft 10 ft
+Interior side or rear setback N/A N/A 0 ft N/A
+Street facing side or rear setback with ground floor residential units N/A N/A 6ft 12 ft Street facing side or rear setback without ground floor residential units N/A N/A 0 ft 10 ft
+Setback abutting property zoned residential and/or Downtown
+Transition (DT) 10 ft 20 ft N/A N/A
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards.
+[ORD 4857; October 2024]
+Figure 70.15.10.1.1 RC-BC Setbacks – Without Ground-floor Residential
+Figure 70.15.10.1.2 RC-BC Setbacks - With Ground-floor Residential
+
+D.Wireless Communications Facilities Standards
+Table 70.15.10.1.C RC-BC   Wireless Communications Facilities Standards
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Yard Setbacks3 - Requirements Shall comply with underlying zoning district requirements Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+1. Inclusive of antenna.
+
+2. At-grade equipment shelters.
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+2.Old Town (RC-OT).
+A.Purpose. The Old Town (RC-OT) District encompasses Beaverton’s original Downtown and is intended to provide a mix of housing, jobs, and services at a scale that acknowledges and complements historic development patterns.
+B.Building Height & Density.
+Table 70.15.10.2.A RC-OT   Building Height & Density
+
+Development Standards Minimum Maximum
+Height N/A 65 ft 1
+Intensity (Floor Area Ratio) 0.5 or 0.7 2,4 None
+Density (Units/Acre)3,5 18 or 24 2,4 None
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Buildings can be built to 75 feet in height through a discretionary review process (refer to 70.20.10.3.G6)
+2. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to December 9, 1999, shall be subject to reduced minimum density and intensity standards.
+See Section 70.15.10.5 Supplemental Density and Intensity Standards.
+3. Minimum density only applies to 100% residential development.
+4. Refer to Figure 70.15.10.2.3
+5. Existing single-detached dwellings, and their replacements, are exempt from the minimum density standard.
+[ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.2.B   RC-OT Setbacks1
+
+Setback Requirements Minimum Maximum
+Front setback with ground floor residential units 6 ft 16 ft
+Front setback without ground floor residential units 0 ft 10 ft
+Interior side or rear setback 0 ft N/A
+Street facing side or rear setback with ground floor residential units 6 ft 16 ft Street facing side or rear setback without ground floor residential units 0 ft 10 ft Setback abutting property zoned residential and/or Downtown Transition (DT) - Side 10 ft N/A Setback abutting property zoned residential and/or Downtown Transition (DT) - Rear 10 ft N/A
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards.
+Figure 70.15.10.2.1 RC-OT Setbacks - Without Ground-floor Residential
+Figure 70.15.10.2.2 RC-OT Setbacks - With Ground-floor Residential
+
+Figure 70.15.10.2.3   RC-OT Minimum Density / Intensity
+Disclaimer: The above map is intended for informational purposes only.
+It is not intended for legal, engineering, or surveying purposes.
+Please consult with Beaverton Planning staff for interpretation.
+
+D.Wireless Communications Facilities Standards
+Table 70.15.10.2.C RC-OT Wireless Communications Facilities Standard
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Yard Setbacks3 - Requirements  Shall comply with underlying zoning district requirements.
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+1. Inclusive of antenna.
+
+2. At-grade equipment shelters.
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+3.Mixed Use (RC-MU)
+A.Purpose. The Mixed Use (RC-MU) District is intended to create a high-density neighborhood with a mix of uses in close proximity to Beaverton Central.
+B.Building Height & Density
+
+Table 70.15.10.3.A RC-MU Building Height & Density
+
+Development Standards Minimum Maximum
+Height  N/A 75 ft 1
+Intensity (Floor Area Ratio) 1.0 2 None
+Density (Units/Acre)3,5 43 2 None
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Buildings can be built to 120 feet in height through a discretionary review process (refer to 70.20.10.3.G8)
+2. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to December 9, 1999, shall be subject to reduced minimum density and intensity standards.
+See Section 70.15.10.5 Supplemental Density and Intensity Standards.
+3. Minimum density only applies to 100% residential development.
+4. Existing single-detached dwellings, and their replacements, are exempt from the minimum density standard.
+[ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.3.B RC-MU Setbacks1
+
+Setback Requirements Minimum Maximum
+Front setback with ground floor residential units 6 ft 16 ft
+Front setback without ground floor residential units 0 ft 16 ft
+Interior side or rear setback 0 ft N/A
+Street facing side or rear setback with ground floor residential units 6 ft 16 ft Street facing side or rear setback without ground floor residential units 0 ft 15 ft Setback abutting property zoned residential and Downtown Transition (DT) - Side 10 ft N/A Setback abutting property zoned residential and Downtown Transition (DT) - Rear 20 ft N/A
+
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards.
+[ORD 4857; October 2024]
+
+Figure 70.15.10.3.1 RC-MU Setbacks – Without Ground-floor Residential
+Figure 70.15.10.3.2 RC-MU Setbacks - With Ground-floor Residential
+D.Wireless Communications Facilities Standards
+
+Table 70.15.10.3.C RC-MU Wireless Communications Facilities Standards
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Yard Setbacks3 - Requirements Shall comply with underlying zoning district requirements.
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+
+1. Inclusive of antenna.
+2. At-grade equipment shelters.
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+4.Downtown Transition (RC-DT) [ORD 4857; October 2024]
+A.Purpose Statement. The Downtown Transition (RC-DT) District is intended to create a transitional area in scale and use between the Beaverton Central and adjacent residential neighborhoods.
+[ORD 4857; October 2024]
+B.Building Height & Density
+Table 70.15.10.4.A RC-DT Building Height & Density
+
+Development Standards Minimum Maximum
+Height N/A 60 ft
+Intensity (Floor Area Ratio) 1.0 1 None
+Density (Units/Acre)2,3 30 1 60
+Additional Massing Regulations Refer to Section 70.20.10.3 Refer to Section 70.20.10.3
+Footnotes:
+1. Sites with average depth or width measurements less than 50 feet whose configuration existed prior to December 9, 1999, shall be subject to reduced minimum density and intensity standards.
+See Section 70.15.10.5 Supplemental Density and Intensity Standards.
+2. Minimum density only applies to 100% residential development.
+3. Existing single-detached dwellings, and their replacements, are exempt from the minimum density standard.
+[ORD 4857; October 2024]
+
+C.Setbacks
+Table 70.15.10.4.b RC-DT Setbacks1
+
+Setback Requirements Minimum Maximum
+Front setback with ground floor residential units 10 ft 20 ft
+Front setback without ground floor residential units 0 ft 15 ft
+Interior side or rear setback 0 ft N/A
+Street facing side or rear setback with ground floor residential units 10 ft 20 ft Street facing side or rear setback without ground floor residential units 0 ft 15 ft Setback abutting property zoned Residential - Side 10 ft N/A
+Setback abutting property zoned Residential - Rear 20 ft N/A
+Footnotes:
+1. Existing single-detached dwellings are exempt from setback standards.
+[ORD 4857; October 2024]
+
+Figure 70.15.10.4.1 RC-DT Setbacks – Without Ground-floor Residential
+Figure 70.15.10.4.2 RC-DT Setbacks - With Ground-floor Residential
+D.Wireless Communications Facilities Standards
+Table 70.15.10.4.C RC-DT Wireless Communications Facilities Standards
+
+Standard Type Requirement
+Maximum Height - WCF1 80 ft.1
+Maximum Height - Equipment Shelters2 12 ft.1
+Maximum Height - Roof Mounted Antennas
+Shall not extend above maximum height of underlying zone or increase the height of any building which is nonconforming due to height.
+Yard Setbacks3 - Requirements  Shall comply with underlying zoning district requirements.
+Yard Setbacks3 - Other Refer to 60.70.35.14.A and B
+Footnotes:
+1. Inclusive of antenna.
+2. At-grade equipment shelters.
+
+3. Applicable to all WCF towers, antenna arrays, and ground and/or roof-mounted equipment shelters.
+
+5.Supplemental Density and Intensity Standards
+To accommodate smaller lot sizes in the Downtown Design District that existed prior to December 9, 1999, the required minimum floor area ratio for multiple use or non-residential developments, and minimum density for residential only developments, found in Sections 70.15.10.1-4 may be further modified based upon lot dimensions, as follows:
+Table 70.15.10.5 Density And Intensity Modifications
+
+Minimum Side Width Minimum Side Depth Modification
+Less than 50 feet Less than 50 feet 50% of minimum requirement
+Less than 50 feet 50 feet or greater 75% of minimum requirement
+50 feet or greater Less than 50 feet 75% of minimum requirement
+50 feet or greater 50 feet or greater 100% of minimum requirement
+7.Historic Overlay
+A.Purpose Statement. The Historic Overlay is intended to preserve, enhance, and perpetuate landmarks within the Downtown Historic District that represent or reflect elements of the City’s cultural, social, economic, and architectural history and to promote new construction that complements existing landmarks.
+The following activities within the Historic Overlay are regulated by CHAPTER 40 of the Development Code: Alteration of Landmark, Emergency Demolition of a Landmark, and Demolition of a Landmark.
+New Construction within the Historic Overlay shall be regulated by Section 70.20.10.11, and is intended to provide additional design guidelines and standards to ensure that new buildings are compatible with select abutting historic landmarks.
+Figure 70.15.10.6 Historic Overlay
+Disclaimer: The above map is intended for informational purposes only.
+It is not intended for legal, engineering, or surveying purposes.
+Please consult with Beaverton Planning staff for interpretation.
+[There are no ordinances associated with this section.]
+Effective on: 8/21/2026

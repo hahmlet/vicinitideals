@@ -1,0 +1,7 @@
+70.05 Administration
+
+Contents:
+70.05.05. Purpose
+70.05.10. Design Review Process
+70.05.15. How to Use the Code
+[ORD 4799, 01/08/2021]
