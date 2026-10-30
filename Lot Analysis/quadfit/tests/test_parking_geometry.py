@@ -625,9 +625,11 @@ def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in():
 #: building setback, so "never looser than the building" does not apply. Tualatin CC:
 #: Table 53-2 says 5 ft for parking, while the ported building setbacks are the tops of
 #: 0-20 ranges. Tualatin RMH/RH/RH-HR: Tables 42-3/43-3/44-3 print 10 ft for parking against
-#: a 15 ft building front.
+#: a 15 ft building front. Tualatin CO: Table 50-2 says 5 ft for parking against a 20 ft
+#: building front.
 STATES_ITS_OWN_FIGURE = {
     ("tualatin", "CC"),
+    ("tualatin", "CO"),
     ("tualatin", "RMH"),
     ("tualatin", "RH"),
     ("tualatin", "RH/HR"),
