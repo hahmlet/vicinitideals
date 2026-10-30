@@ -181,6 +181,21 @@ def _library() -> dict[str, Shelf]:
     return dict(sorted(out.items()))
 
 
+
+def warm() -> None:
+    """Build the library's per-process caches ahead of the first reader.
+
+    Cold, the contents (~45 s), the cited-line index and the checked tables
+    (~20 s, every table in the store at once) made the first section page
+    after a start take longer than a browser waits -- on a fresh CI app the
+    reader walk timed out on its first click. One thread, in order, so the
+    pieces do not fight over the interpreter.
+    """
+    _library()
+    _readers()
+    tables(_store())
+
+
 @lru_cache(maxsize=1)
 def _readers() -> dict[str, dict[int, tuple[dict[str, str], ...]]]:
     """For every stored document, which encoded values cite each of its lines.
