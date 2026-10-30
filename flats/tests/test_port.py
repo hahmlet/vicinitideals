@@ -462,7 +462,10 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     #
     # 214 on 2026-10-28 (districts chunk 4): Gresham's seven townhouse-only
     # districts opened as unit lots -- CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC.
-    assert dry["stats"]["zones"] == 214
+    #
+    # 215 on 2026-10-30 (districts chunk 6): Tualatin CO, ported so its
+    # Block 1 townhouse lots are measured rather than left "not measured".
+    assert dry["stats"]["zones"] == 215
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {

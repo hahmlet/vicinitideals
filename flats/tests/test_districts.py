@@ -676,6 +676,15 @@ RULINGS: dict[str, dict[str, str]] = {
             "of the North Bethany Subarea Plan, named by CDC 390 for the "
             "yards along Kaiser Road; a community-plan area, not a district."
         ),
+        "P17": (
+            "not-a-zone: a street label. The North Bethany plan numbers its "
+            "streets, 'Primary Street (P17) follows the northern boundary of "
+            "the future Beaverton School District' (north-bethany#L2898)."
+        ),
+        "P18": (
+            "not-a-zone: a street label, 'Primary Street (P18) follows the "
+            "southern boundary' of the same school site (north-bethany#L2900)."
+        ),
         "RPZ": (
             "not-a-zone: the runway protection zone of an airport, defined "
             "at CDC 106-10.19 among the airport terms."

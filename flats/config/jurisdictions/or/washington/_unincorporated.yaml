@@ -564,7 +564,8 @@ defaults:
 # encodes (access, transit and mixed-use frontage); a rule in a zone the pod
 # is refused in; an area-wide or built-out planned-development condition;
 # or a design detail the screen does not check (2026-10-14). The plans are
-# in pending/ and the seven smaller ones are owed to later chunks.
+# in pending/. The seven smaller plans are not read and NOT ENCODED; owed
+# to later chunks.
 #
 # NOT ENCODED: the Bonny Slope West Subarea Overlay District (Section 391).
 # It reaches only the Bonny Slope West Subarea of the Cedar Hills - Cedar
