@@ -284,16 +284,19 @@ def run_suites(root: Path, base: str, need: set[str], head: str) -> int:
     logs = stamp_dir() / "logs"
     print(f"ci_local: {head[:8]} vs {base[:12]} -- running {', '.join(sorted(cmds))}", flush=True)
 
-    # The app suite is DB-bound and serial; the FLATS suites are CPU-bound and
-    # sharded. Run the app suite alongside the rest instead of after it.
+    # Serial, the app suite is DB-bound and the FLATS suites CPU-bound and
+    # sharded: run it alongside the rest instead of after it. Sharded (the
+    # runner) it is CPU-bound too, and alongside them its slowest tests passed
+    # the 120 s timeout -- so there it runs after them, on the whole machine.
     results: dict[str, dict] = {}
     procs: dict[str, tuple[subprocess.Popen, float, Path]] = {}
-    for name in ("app_all", "app_flats"):
-        if name in cmds:
-            log = logs / f"{head[:8]}-{name}.log"
-            procs[name] = (subprocess.Popen(cmds[name], stdout=log.open("w", encoding="utf-8"),
-                                            stderr=subprocess.STDOUT), time.time(), log)
-    for name in ("ruff", "firewall", "flats", "quadfit"):
+    app = [n for n in ("app_all", "app_flats") if n in cmds]
+    sharded = bool(os.environ.get("CI_LOCAL_APP_WORKERS"))
+    for name in [] if sharded else app:
+        log = logs / f"{head[:8]}-{name}.log"
+        procs[name] = (subprocess.Popen(cmds[name], stdout=log.open("w", encoding="utf-8"),
+                                        stderr=subprocess.STDOUT), time.time(), log)
+    for name in ("ruff", "firewall", "flats", "quadfit", *(app if sharded else [])):
         if name not in cmds:
             continue
         log = logs / f"{head[:8]}-{name}.log"
