@@ -522,6 +522,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_MIN_DENSITY]
+  FAR-MIN:
+    description: "The four homes are less building than the code's minimum floor area ratio asks of a lot this size (Canby Downtown Overlay 16.41.050 Table 3); a bigger building could meet it"
+    kind: parametric
+    risk: possible
+    severity: 3
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A bigger building, or a planner's word that the pod's floor area is enough"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_MIN_FAR]
   SLOPE-GRADE:
     description: "The ground under the building and its parking falls between 5% and 15% (or past 15% on the coarse elevation map only): a stepped foundation or retaining walls to price (Steph 2026-10-04)"
     kind: parametric
@@ -1310,6 +1325,51 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Our own measure from the city Town Center layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-TROUTDALE-CFEC-PARKING-AREA:
+    description: "Whether the lot lies inside Troutdale's Town Center or within a quarter mile of it, where no off-street parking is required (TDC 9.035)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's CFEC Parking Delineated Area Map, or our own measure from the Town Center layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-GLADSTONE-TOWN-CENTER:
+    description: "Town Center edge unconfirmed: whether the lot lies inside the Gladstone Town Center (Ordinance 1539 map, traced); the line cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A city map of the Town Center boundary, or a planner's word on which side of it the lot falls"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-GLADSTONE-PARKING-EXCEPTION-AREA:
+    description: "Whether the lot lies inside the Gladstone Town Center or within a quarter mile of it, where no off-street parking is required (GMC 17.48.010(1))"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's Parking Mandate Exception Map, or a planner's word"
     priority: later
     status: pending
     approved_by: null

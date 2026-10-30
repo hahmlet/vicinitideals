@@ -218,15 +218,19 @@ def test_an_hdr_lot_opens_inside_the_town_center_and_stays_red_outside(
 
 @pytest.mark.parametrize("zone", ["MDR", "HDR"])
 def test_the_town_center_waives_off_street_parking(corpus, zone) -> None:
-    """9.035: no off-street parking inside the Town Center Overlay District;
-    outside it the zone's own minimum stands."""
+    """9.035: no off-street parking inside the Town Center Overlay District
+    "including lands within one-quarter (1/4) mile from the district boundary
+    line"; outside it the zone's own minimum stands. The waiver is drawn as
+    one area, the Town Center grown a quarter mile, which holds every Town
+    Center lot (test_troutdale_cfec_ring)."""
     field = corpus[TROUTDALE].zones[zone].values["parking_min_per_unit"]
+    ring = "troutdale_cfec_parking_area"
     for sqft in SIZES:
-        inside = field.under((TC,), {"lot_sqft": sqft})
+        inside = field.under((TC, ring), {"lot_sqft": sqft})
         outside = field.under((), {"lot_sqft": sqft})
         assert inside.exempt and not inside.ambiguous, (zone, sqft)
         assert not outside.exempt and outside.value, (zone, sqft)
-        assert field.under((TC, "unit_lots"), {"lot_sqft": sqft}).exempt, (zone, sqft)
+        assert field.under((TC, ring, "unit_lots"), {"lot_sqft": sqft}).exempt, (zone, sqft)
 
 
 def test_mdr_restates_table_1_unchanged(corpus) -> None:

@@ -1,5 +1,5 @@
 {
-  "digest": "3e7cfadfca964dcfa2e9a1494ffe8b14ca0bf23eb8a079c63c9c1fd16799c7c7",
+  "digest": "9d0d0ac6c27cf650c91685dddd43147986b0b0156aad3611cbeda46ef7b67528",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -31,7 +31,16 @@
     },
     "or/clackamas/gladstone": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "C2",
+          "field": "building_frontage_other_pct [gladstone_town_center]",
+          "claimed": "17.21.060",
+          "found": "17.21.010 17.21.060",
+          "quote": "or/clackamas/gladstone/17.21.dco.txt#L25,L83",
+          "kind": "heading_same_file"
+        }
+      ],
       "label": "Gladstone",
       "counts": {},
       "gaps": []

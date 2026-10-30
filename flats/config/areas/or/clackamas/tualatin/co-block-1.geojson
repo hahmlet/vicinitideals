@@ -1,0 +1,145 @@
+{
+ "type": "FeatureCollection",
+ "name": "tualatin_co_block_1",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Tualatin Comprehensive Plan Map 10-3, Central Tualatin Overlay Zone (flats/config/areas/or/clackamas/tualatin/central-tualatin-overlay-map-10-3.map-only.pdf, page 1 EXISTING); TDC 58.110 sends the reader to it, and 58.400(2) makes Block 1 the only sub-district of the CO zone in the overlay",
+  "quote": "or/clackamas/tualatin/58/58.400.txt#L6-L7",
+  "inputs": {
+   "zoning": "the city zoning map's CO polygon (quadfit s1_zoning_zoning_tualatin, data/quadfit_2026-10-28_c4)",
+   "taxlots": "normalized lots 2026-10-27_weekly, 2S124A003100 (7665 SW Nyberg St)"
+  },
+  "traced_by": "Claude (districts chunk 5 worker)",
+  "traced_on": "2026-10-29",
+  "drawn": true,
+  "how": "Map 10-3 colours Block 1 CO and draws it between Block 4, Block 2 and the overlay's north and east line. The only CO ground in the overlay is the north part of 2S124A003100, a lot the zoning map splits CO (453,566 sq ft) and CC (535,390 sq ft); the block line between Blocks 1 and 2 runs on that zone line. Block 1 is drawn as the lot clipped to the CO polygon, checked by laying the lot over Map 10-3 registered on the block labels (residuals 19-208 ft). CO ground of the same zoning polygon north of the lot belongs to no taxlot the screen holds and is not drawn.",
+  "counts": {
+   "CO_lots_inside": 0,
+   "lots_with_CO_ground_inside": 1
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "block": 1,
+    "taxlots": [
+     "2S124A003100"
+    ],
+    "part": "the lot's CO ground only"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7622707.9,
+       634708.8
+      ],
+      [
+       7622777.3,
+       634698.1
+      ],
+      [
+       7622896.1,
+       634692.7
+      ],
+      [
+       7622943.3,
+       634701.0
+      ],
+      [
+       7623035.7,
+       634744.3
+      ],
+      [
+       7623136.8,
+       634795.9
+      ],
+      [
+       7623189.6,
+       634847.1
+      ],
+      [
+       7623318.3,
+       635014.7
+      ],
+      [
+       7623391.0,
+       635104.3
+      ],
+      [
+       7623469.0,
+       635216.5
+      ],
+      [
+       7623556.2,
+       635290.5
+      ],
+      [
+       7623668.2,
+       635342.1
+      ],
+      [
+       7623734.9,
+       635363.5
+      ],
+      [
+       7623808.4,
+       635375.6
+      ],
+      [
+       7623757.1,
+       635214.5
+      ],
+      [
+       7623669.7,
+       634875.0
+      ],
+      [
+       7623618.0,
+       634712.8
+      ],
+      [
+       7623529.5,
+       634508.9
+      ],
+      [
+       7623088.0,
+       634507.4
+      ],
+      [
+       7623088.7,
+       634422.6
+      ],
+      [
+       7623029.7,
+       634421.9
+      ],
+      [
+       7622671.2,
+       634430.7
+      ],
+      [
+       7622671.6,
+       634434.9
+      ],
+      [
+       7622672.1,
+       634434.9
+      ],
+      [
+       7622707.9,
+       634708.8
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

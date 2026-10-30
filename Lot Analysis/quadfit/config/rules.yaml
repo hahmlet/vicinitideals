@@ -5174,7 +5174,13 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/canby R-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "C-1"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 26
+        setback_rear_ft: 26
+        setback_street_side_ft: 0
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 14
         source: "Canby CMC 16.22.010 (A), residential uses permitted only when part of a mixed use development"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38712"
         confidence: "needs_verification"
@@ -5389,7 +5395,12 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/estacada NCR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "D"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 5
+        min_density_du_per_acre: 16
         source: "Estacada EMC 16.26.020 (D), a fourplex is outright only if no ground floor residential fronts Broadway, Main or OR 224, none sits south of OR 224, and density is at least sixteen units an acre"
         source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
         confidence: "needs_verification"
@@ -5532,6 +5543,7 @@ jurisdictions:
       - zone: "MUC"
         quadplex_allowed: true
         min_frontage_ft: 15
+        min_density_du_per_acre: 25
         setback_front_ft: 0
         setback_side_ft: 0
         setback_rear_ft: 0

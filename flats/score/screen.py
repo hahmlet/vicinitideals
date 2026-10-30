@@ -143,6 +143,15 @@ USE_PROHIBITED = "USE_PROHIBITED"
 CLOSER_LOOK_MIN_DENSITY = "CLOSER_LOOK_MIN_DENSITY"
 #: The checks a minimum density is measured by.
 MIN_DENSITY_CHECKS: frozenset[str] = frozenset({"min_density_du_per_acre", "min_units"})
+#: The lot misses a MINIMUM floor area ratio (Canby DCO 16.41.050 Table 3):
+#: the four homes are less building than the code asks of a lot this size.
+#: A bigger building could meet it, so it is never a wall; unlike a density
+#: floor it holds the lot at YELLOW (coordinator, districts chunk 5,
+#: 2026-10-29: "lots that fall short go YELLOW with a plain flag").
+CLOSER_LOOK_MIN_FAR = "CLOSER_LOOK_MIN_FAR"
+#: Floors on the AMOUNT of building a lot carries: missed, a closer look,
+#: never a bind.
+SOFT_FLOOR_CHECKS: frozenset[str] = MIN_DENSITY_CHECKS | {"min_far"}
 
 #: The lot standards each `lot_of_record_relief` lets an existing lot of
 #: record off, by check name. `lot_dimensions` also lifts the minimum density
@@ -333,6 +342,7 @@ CHECK_FIELD: dict[str, str] = {
     "coverage_pct": "max_coverage_pct",
     "impervious_pct": "max_impervious_pct",
     "far": "max_far",
+    "min_far": "min_far",
     "height_ft": "max_height_ft",
     "stories": "max_height_stories",
     "min_height_ft": "min_building_height_ft",
@@ -1248,6 +1258,17 @@ def _checks(
         1.0,
         "max_far",
         is_maximum=True,
+    )
+    # And the floor (Canby DCO 16.41.050 Table 3, "Minimum floor area
+    # ratio"): the pod's floor area over the lot -- the whole lot, so the
+    # lowest ratio the development could be scored at; a net denominator the
+    # code names comes through `measured_on` like any other rate.
+    rate(
+        "min_far",
+        design.ground_sqft * design.stories,
+        1.0,
+        "min_far",
+        is_maximum=False,
     )
     check("height_ft", design.height_ft, rules.get("max_height_ft"), is_maximum=True)
     # The same ceiling counted the other way, where the code counts that way.
@@ -2535,8 +2556,10 @@ def screen(
     # offers around it (Steph, 2026-10-02): the lot is big enough that the
     # city wants more homes on it than four, which is a closer look -- a
     # bigger plan, or a split (FOLLOWUPS 31) -- and not a lot to throw away.
-    walls = [o for o in outcomes if o.check not in MIN_DENSITY_CHECKS]
-    closer = (CLOSER_LOOK_MIN_DENSITY,) if len(walls) < len(outcomes) else ()
+    walls = [o for o in outcomes if o.check not in SOFT_FLOOR_CHECKS]
+    closer = (CLOSER_LOOK_MIN_DENSITY,) if any(o.check in MIN_DENSITY_CHECKS for o in outcomes) else ()
+    if any(o.check == "min_far" for o in outcomes):
+        closer = (*closer, CLOSER_LOOK_MIN_FAR)
     # A pad on a grade between Steph's two lines: buildable, at a price.
     if _slope_closer(lot):
         closer = (*closer, CLOSER_LOOK_SLOPE)
@@ -3117,7 +3140,7 @@ def _account(
     # from the fire marshal would lift it -- so only where the hose is the
     # one bind (a minimum density missed is a flag, never a bind).
     curb_route = lot.fire_route_curb_ft
-    walls = [c for c in checks if c.verdict is Verdict.fails and c.check not in MIN_DENSITY_CHECKS]
+    walls = [c for c in checks if c.verdict is Verdict.fails and c.check not in SOFT_FLOOR_CHECKS]
     if curb_route is not None and use_path is None and [c.check for c in walls] == ["fire_access_ft"]:
         (c,) = walls
         if curb_route <= c.threshold:
@@ -3128,6 +3151,9 @@ def _account(
         if c.check in MIN_DENSITY_CHECKS and c.verdict is Verdict.fails:
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
             flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
+        if c.check == "min_far" and c.verdict is Verdict.fails:
+            span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
+            flag("FAR-MIN", CLOSER_LOOK_MIN_FAR, bounds=span, source=_cite(rules, "min_far"))
     if _slope_closer(lot):
         ruling = slope_rules()
         flag(
@@ -3174,7 +3200,7 @@ def _account(
     if rules.trusted:
         paths = {o.check: o for o in outcomes}
         for c in checks:
-            if c.verdict is not Verdict.fails or c.check in MIN_DENSITY_CHECKS:
+            if c.verdict is not Verdict.fails or c.check in SOFT_FLOOR_CHECKS:
                 continue
             o = paths.get(c.check)
             binds.append(
@@ -3251,6 +3277,7 @@ __all__ = [
     "CURVE_ON_THE_LINE",
     "THROUGH_FRONT_GUESSED",
     "CLOSER_LOOK_MIN_DENSITY",
+    "CLOSER_LOOK_MIN_FAR",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_SECOND_APPROACH",
@@ -3258,6 +3285,7 @@ __all__ = [
     "CLOSER_LOOK_REVIEW_CONDITIONS",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",
+    "SOFT_FLOOR_CHECKS",
     "NO_FRONTAGE",
     "OPTIMISTIC_CHECKS",
     "PARKING_STRIP_UNCONFIRMED",

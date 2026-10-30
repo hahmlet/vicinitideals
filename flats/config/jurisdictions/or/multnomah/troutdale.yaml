@@ -624,6 +624,33 @@ defaults:
         url: https://api.municode.com/PublicationPdfDownload/1813
         retrieved: '2026-08-29'
         quote: "or/multnomah/troutdale/9/9.010.txt#L18,L21-L22"
+      # 9.035 (districts chunk 5, 2026-10-29): the Town Center and a quarter
+      # mile beyond its line owe no off-street parking (`drawn_areas`
+      # cfec_parking_area). Spelled out per band so a band and the waiver
+      # never tie.
+      - exempt: true
+        when: [troutdale_cfec_parking_area]
+        cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
+        retrieved: '2026-10-29'
+        quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+      - exempt: true
+        when: [troutdale_cfec_parking_area]
+        band: {measure: lot_sqft, less_than: 3000}
+        cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
+        retrieved: '2026-10-29'
+        quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+      - exempt: true
+        when: [troutdale_cfec_parking_area]
+        band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
+        cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
+        retrieved: '2026-10-29'
+        quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+      - exempt: true
+        when: [troutdale_cfec_parking_area]
+        band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
+        cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
+        retrieved: '2026-10-29'
+        quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
   # And no ceiling. Every bullet of the Triplex and Quadplex row prints "No
   # maximum" in the right-hand column, and the column is a real ceiling
   # elsewhere in the same table -- 6.2 spaces per 1,000 sq ft for general
@@ -893,17 +920,19 @@ defaults:
   # 16.43.030.E.3 and Portland's commercial front setback are the others.
   # (or/multnomah/troutdale/9/9.095.txt#L1,L3)
   #
-  # NOT ENCODED: the CFEC waiver, and it is the largest thing in this chapter
-  # left on the table. 9.005 and 9.035 both say it: "no off-street parking is
-  # required for developments on a lot or parcel that includes lands within
-  # one-half (1/2) mile of a frequent transit corridor", nor within the Town
-  # Center Overlay District or a quarter mile of its boundary. A lot inside
-  # either owes ZERO stalls and Table 1 does not reach it. Both are read off
-  # a map -- the City of Troutdale CFEC Parking Delineated Area Map -- that
-  # no parcel record in this corpus carries, so every Troutdale lot is
-  # screened against the non-CFEC table. That is the conservative direction
-  # and it is also, on the lots it is wrong about, four stalls of site the
-  # pod does not owe.
+  # NOT ENCODED: the CFEC waiver's frequent-transit half. 9.005 and 9.035
+  # both say it: "no off-street parking is required for developments on a
+  # lot or parcel that includes lands within one-half (1/2) mile of a
+  # frequent transit corridor". The corridors are read off a map -- the City
+  # of Troutdale CFEC Parking Delineated Area Map -- that no parcel record in
+  # this corpus carries, so a lot near a corridor is screened against the
+  # non-CFEC table. That is the conservative direction and it is also, on the
+  # lots it is wrong about, four stalls of site the pod does not owe.
+  # The waiver's other half IS encoded (2026-10-29, districts chunk 5): "within
+  # the Town Center Overlay District, including lands within one-quarter (1/4)
+  # mile from the district boundary line" is drawn as the Town Center grown
+  # 1,320 ft (`drawn_areas` cfec_parking_area), and a lot inside owes no
+  # stall (the exempt variants below).
   # (or/multnomah/troutdale/9.parking.txt#L45-L51,L186,L188-L192)
   #
   # NOT ENCODED: 9.040's reductions and 8.120.B.3.b's on-street credit. Ten
@@ -1096,6 +1125,12 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-10-15'
       quote: "or/multnomah/troutdale/8/8.130.txt#L1,L25,L27-L29"
+      variants:
+        - exempt: true
+          when: [troutdale_cfec_parking_area]
+          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
+          retrieved: '2026-10-29'
+          quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
     notes: >-
       3.220's Quadplex row reads N in MU-1 and P in MU-2 and MU-3, so the one of the three mixed-use districts that refuses this building is the one named first. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
 
@@ -2071,10 +2106,11 @@ zones:
     # 9.010 Table 1, restated from `defaults:` so the Town Center waiver can
     # ride on it (districts chunk 5, 2026-10-29). 9.035: "no off-street
     # parking is required for developments on a lot or parcel within the
-    # Town Center Overlay District". The drawn Town Center is the city's
-    # overlay layer; the quarter mile beyond its line is not drawn, so a lot
-    # there keeps Table 1. Each band is spelled out against the Town Center
-    # so a banded variant and the waiver never tie.
+    # Town Center Overlay District, including lands within one-quarter (1/4)
+    # mile from the district boundary line" -- drawn as the city's Town
+    # Center layer grown by 1,320 ft (`drawn_areas` cfec_parking_area). Each
+    # band is spelled out against that area so a banded variant and the
+    # waiver never tie.
     parking_min_per_unit:
       spaces_total: 4
       cite: TDC 9.010, Table 1, Triplex and Quadplex row, lot of 7,000 sq. ft. or greater
@@ -2095,26 +2131,26 @@ zones:
           cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size between 5,000 and 6,999 sq. ft.
           quote: "or/multnomah/troutdale/9/9.010.txt#L18,L21-L22"
         - exempt: true
-          when: [troutdale_town_center]
-          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District (OAR 660-012-0435, Climate Friendly Areas)
+          when: [troutdale_cfec_parking_area]
+          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
         - exempt: true
-          when: [troutdale_town_center]
+          when: [troutdale_cfec_parking_area]
           band: {measure: lot_sqft, less_than: 3000}
-          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District (OAR 660-012-0435, Climate Friendly Areas)
+          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
         - exempt: true
-          when: [troutdale_town_center]
+          when: [troutdale_cfec_parking_area]
           band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
-          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District (OAR 660-012-0435, Climate Friendly Areas)
+          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
         - exempt: true
-          when: [troutdale_town_center]
+          when: [troutdale_cfec_parking_area]
           band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
-          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District (OAR 660-012-0435, Climate Friendly Areas)
+          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
     max_height_ft:
@@ -2236,8 +2272,9 @@ zones:
       lot inside the Town Center owes no off-street parking (9.035), and its
       rear is ten feet (five on an alley) where every line it shares abuts a
       non-residential district (3.235.C.5.a). The quarter mile beyond the
-      Town Center line that 9.035 also waives is not drawn, so a lot there
-      keeps its one space per unit.
+      Town Center line that 9.035 also waives is drawn too (cfec_parking_area,
+      the Town Center grown 1,320 ft, straight line), so an HDR lot there
+      owes no stall either.
 
 
       OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
@@ -2502,12 +2539,11 @@ zones:
       variants:
         # 9.035 (districts chunk 5, 2026-10-29): "no off-street parking is
         # required for developments on a lot or parcel within the Town Center
-        # Overlay District". The drawn Town Center is the city's overlay layer
-        # (MapServer 78). The quarter mile beyond its line, which 9.035 also
-        # waives, is not drawn, so a lot there keeps its stalls.
+        # Overlay District, including lands within one-quarter (1/4) mile from
+        # the district boundary line" (`drawn_areas` cfec_parking_area).
         - exempt: true
-          when: [troutdale_town_center]
-          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District (OAR 660-012-0435, Climate Friendly Areas)
+          when: [troutdale_cfec_parking_area]
+          cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           url: https://api.municode.com/PublicationPdfDownload/1813
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
@@ -2653,6 +2689,26 @@ drawn_areas:
       yard to a lot with a front driveway (3.130.B note 1, 3.130.C note 2).
       A lot at least 90 percent inside is in, at most 10 percent is out,
       and one the line cuts is unanswered and screens unknown on the fact.
+
+  cfec_parking_area:
+    condition: troutdale_cfec_parking_area
+    zones: [LDR-1, LDR-2, MDR, HDR, MU-1, MU-2, MU-3]
+    file: or/multnomah/troutdale/cfec-parking-area.geojson
+    source: >-
+      The Town Center layer (town-center.geojson, City_GIS MapServer layer
+      78) grown by 1,320 ft, straight line, drawn 2026-10-29. 9.035 measures
+      "from the district boundary line" and names no walking route; the City
+      of Troutdale CFEC Parking Delineated Area Map it cites is in none of
+      the city's public GIS services (checked 2026-10-29). Drawn provenance in
+      the file's source block.
+    quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+    cite: TDC 9.035 (OAR 660-012-0435)
+    note: >-
+      Asked of every zone that admits the pod. A lot at least 90 percent
+      inside owes no off-street parking -- the stricter reading of "a lot or
+      parcel ... including lands within", which could also be read as any
+      part of the lot; a lot the line cuts is unanswered and the screen
+      bounds it both ways.
 
   no_minimum_depth:
     condition: inside_mapped_use_area

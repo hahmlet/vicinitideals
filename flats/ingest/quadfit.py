@@ -781,12 +781,32 @@ def _drawn_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[st
     import shapely
 
     lot_geom = shapely.from_wkb(lot_wkb)
+    own = _own_ground(row, lot_geom)
     out: dict[str, bool] = {}
     for area in areas:
-        got = observed_drawn(lot_geom, load_area(area.file))
+        # A use area is a part of the zone the code maps (Tualatin's
+        # Residential Sub-District is blocks of CC, 58.200(2)(a)): only the
+        # zone's own ground can lie in it, so a lot in two districts is
+        # asked about that ground. An overlay drawn across districts (a
+        # historic district) is asked about the whole lot, as before.
+        ground = own if area.condition == "inside_mapped_use_area" else lot_geom
+        got = observed_drawn(ground, load_area(area.file))
         if got is not None:
             out[area.condition] = got
     return out
+
+
+def _own_ground(row: Mapping[str, Any], lot_geom: Any) -> Any:
+    """The lot less the pieces the zoning maps put in other districts
+    (:func:`with_split_zones`); the whole lot where it lies in one, or where
+    its own district's ground could not be found (``unresolved``)."""
+    split = split_zones.decode(row.get(split_zones.ROW_KEY))
+    if not split.pieces or split.unresolved:
+        return lot_geom
+    import shapely
+
+    rest = lot_geom.difference(shapely.union_all([p.geom for p in split.pieces]))
+    return lot_geom if rest.is_empty else rest
 
 
 def screened_zone(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> str:
@@ -4146,6 +4166,19 @@ def parking_frontage(
     )
 
 
+def share_band(got: ZoneResolution) -> float | None:
+    """How far from the street line the building counts toward its share of
+    the frontage: the maximum front setback, or nearer where the code counts
+    only the building "built at the minimum setback" (Canby DCO 16.41.050
+    A.1.b, ``building_frontage_band_ft``). None without a maximum: the band
+    is unbounded and the share is not measured."""
+    band = _yard(got, "setback_front_max_ft")
+    if band is None:
+        return None
+    nearer = _yard(got, "building_frontage_band_ft")
+    return band if nearer is None else min(band, nearer)
+
+
 def building_frontage(
     here: QuadfitLot,
     streets: LotEdges | None,
@@ -4167,7 +4200,7 @@ def building_frontage(
     """
     if here.lot_geom is None or streets is None or here.edges is None:
         return None
-    band = _yard(got, "setback_front_max_ft")
+    band = share_band(got)
     if band is None:
         return None
     street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))

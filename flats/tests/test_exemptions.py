@@ -155,7 +155,15 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 454, "numeric": 158, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 455, "numeric": 168, "marker": 0, "dash": 2, "silent": 8}
+# 454 -> 455 stated and 158 -> 168 numeric on 2026-10-29 (chunk 5, Steph's go on Tualatin,
+# Gladstone, Troutdale). Stated: Gladstone's parking waiver inside the Town Center and its
+# quarter mile (17.48.010(1)(a)-(b), "not required"). Numeric: Troutdale's 9.035 waiver
+# re-keyed to the quarter-mile ring and asked of every zone (four on the layer default's
+# parking row, one on MU-1's); Gladstone C-2's three frontage-share
+# fields, exempt outside the Downtown Core Overlay (17.21.010); Tualatin CO's coverage (Table
+# 50-2 prints none for a residential use); Canby C-1's lot size, which 16.20.030 bounds only
+# by its floor-area minimum.
 # 153 -> 158 numeric on 2026-10-29 (chunk 5, Troutdale Town Center): TDC 9.035 waives
 # off-street parking inside the Town Center overlay -- one exempt variant on HDR's
 # parking row, and four on MDR's restated Table 1 (the plain row and each lot-size band).
