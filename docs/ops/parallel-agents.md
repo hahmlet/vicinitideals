@@ -172,14 +172,19 @@ explicit path.
 8. **CI.** Read CI after every push (`gh run list --workflow "vicinitideals CI"`).
    If another lane's commit turned CI red, tell Steph and that lane's
    session. Fix it yourself only if the fix is one obvious line.
-9. **FOLLOWUPS.** Edit only your own item, through the index trick:
+9. **FOLLOWUPS.** `docs/FOLLOWUPS.md` is only an index (one line per item);
+   each item's full text is its own file, `docs/followups/N-short-slug.md`.
+   Edit only your own item's file, plus its one index line when its status
+   changes. The item files are not shared, so they need no trick; the index
+   is shared, so change its line through the index trick:
    - `git show origin/main:docs/FOLLOWUPS.md` to a file, then edit it;
    - `git hash-object -w --no-filters` that file;
    - `git update-index --cacheinfo 100644,<sha>,docs/FOLLOWUPS.md`;
    - `git commit` with no pathspec.
 
    Never `git checkout` the working copy. A new item takes the next number
-   after re-reading `origin/main`.
+   after re-reading `origin/main`, gets a file and an index line. A DONE item
+   has its file and index line deleted.
 10. **Memory.** Write your own new memory files. In `MEMORY.md`, re-read it,
     then add or change only your own line.
 11. **Steph.** Plain English, no jargon. Each lane asks its own questions.

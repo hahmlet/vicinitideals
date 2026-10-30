@@ -91,13 +91,19 @@ worktree. Setup and cleanup commands: [docs/ops/worktrees.md](docs/ops/worktrees
 ### Follow-up queue
 
 [docs/FOLLOWUPS.md](docs/FOLLOWUPS.md) is the standing list of follow-ups
-offered but not yet done. **Write to it at the moment you offer options**
-("want me to do B or C next?") — not at wrap-up, because a session can end
-without warning. One numbered line per item, with enough context to start
-cold: what, where, why, and any decision still pending. Remove an item when it
-is done (git records the work) or the user declines it. Read it at the start of
-every session before proposing work; "do the next thing" means the top of the
-list. Keep it under a screen — it is a queue, not a log.
+offered but not yet done, kept as a short INDEX (one line per item: number,
+tags, title, current status, link). Each item's full text is its own file,
+`docs/followups/N-short-slug.md`; a worker given one item reads only that file.
+Read the index at the start of every session before proposing work; "do the
+next thing" means the top of section 1. **Write to it at the moment you offer
+options** ("want me to do B or C next?") — not at wrap-up, because a session can
+end without warning: a new item takes the next unused number, gets a file with
+enough context to start cold (what, where, why, any decision still pending) and
+one index line. Update the index line whenever the item file's status changes.
+Remove an item (file and index line) when it is done (git records the work) or
+the user declines it; whoever next works an item trims its finished history to
+one line with the commit SHAs. Keep the index short — it is a
+queue, not a log.
 Tag every new item at birth: `[Copilot]` only for build work a test can prove
 that needs no Steph decision, no judgement reading and nothing waiting on it;
 everything else `[Claude]` (plus `[Steph]` if it waits on Steph). Copilot items go
