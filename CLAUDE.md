@@ -68,7 +68,9 @@ Docker service names and the deploy pipeline diagram are in
 100% of deploys. Unless told otherwise, always deploy after commit+push — no
 permission needed. "Done" means live on `viciniti.deals`, not committed locally.
 
-**Deploy steps** (all three required):
+**Deploy steps** (all required):
+0. `uv run python scripts/ci_local.py` — the local test gate. The pre-push hook
+   refuses a push to main without its pass (bookkeeping-only pushes need none).
 1. `git push origin main`
 2. `mcp__proxmox-mcp__ssh_exec container_id=114 command="bash /root/deploy-vicinitideals.sh"`
 3. Verify smoke checks pass in the deploy output
@@ -185,8 +187,9 @@ caught it. Then run only the E2E file(s) covering the change against
 The stop hook runs `pytest tests/ --ignore=tests/e2e` when `app/` changed (3
 attempts, then escalates). Bypass mid-refactor: `New-Item .claude/state/skip_verify.json`.
 
-CI is behind production: a red CI is the only thing between a bad push and an
-outage. Read CI before calling a commit clean.
+Pushes are gated on this PC by `scripts/ci_local.py` (pre-push hook). GitHub CI
+runs once a day from a clean checkout; its result prints at every session start.
+**A red daily CI is fixed before any other work.** See [docs/TESTING.md](docs/TESTING.md).
 
 ---
 

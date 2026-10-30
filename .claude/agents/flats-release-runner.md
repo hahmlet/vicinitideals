@@ -17,11 +17,8 @@ it; never work around it.
 1. **Merge.** In the branch's worktree: `git fetch; git merge origin/main`. If
    flats/config/gaps.json conflicts, take main's copy and regenerate it with
    `uv run python -m flats.encode.gaps`. Report any other conflict and stop.
-2. **Tests, all must pass:**
-   - `uv run pytest flats/tests -q -n 6` (not `-n auto`);
-   - `uv run pytest tests/ -q -m unit --ignore=tests/e2e`;
-   - `uv run ruff check app/ tests/ flats/ scripts/`;
-   - `uv run python scripts/check_flats_firewall.py --base origin/main`.
+2. **Tests.** `uv run python scripts/ci_local.py` (in the background: it can pass 10 min) must print PASSED (it picks the suites from what
+   changed and stamps HEAD; the pre-push hook refuses main without it). Never `--no-verify`.
 3. **Push.** Check `git merge-base --is-ancestor origin/main HEAD`, then `git push origin HEAD:main`.
 4. **Deploy.** Use the deploy command in CLAUDE.md "Deploy Workflow". Write its output to
    /root/deploy_last.log and read the tail; it must print SMOKE PASSED.
@@ -44,8 +41,7 @@ it; never work around it.
    files are append-only.
 10. **Production E2E.** The files named in the brief, with `E2E_BASE_URL=https://viciniti.deals`, must
     pass.
-11. **CI.** `gh run list --branch main`. Report the state for your merge SHA. If it is red, report the
-    failing test name.
+11. **Daily CI.** `python scripts/ci_local.py daily`. If the daily GitHub run is red, report it.
 
 ## Report (under 25 lines)
 - Each step with its pass/fail and key number: SHA, run id, drift counts, fingerprint match,

@@ -145,12 +145,43 @@ instance:
 $env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b_debt.py -m e2e -v
 ```
 
-## CI pipeline (`.github/workflows/ci.yml`)
+## Local gate (`scripts/ci_local.py`) — every push to main
 
-- **Scope detection**: skips heavy gates for docs/templates-only changes
-- **Light gate**: Ruff lint + unit tests (every push/PR)
-- **Full gate**: integration tests + E2E (Playwright) + Phase B regression + Trivy
-  image scan + Semgrep SAST
+Since 2026-10-30 (FOLLOWUPS 128) pushes are tested on the PC, not on GitHub: the
+same suites took ~1.5 h on a shared runner.
+
+- `uv run python scripts/ci_local.py` tests HEAD against `origin/main` and writes a
+  pass stamp to `.git/ci_local/`, which every worktree shares. It refuses to run
+  with uncommitted code changes. Logs are in `.git/ci_local/logs/`.
+- What runs is chosen by FOLDER, never per test:
+  - bookkeeping only (`docs/` apart from the files tests read, `.claude/`, top-level
+    `*.md`) runs nothing;
+  - the FLATS side runs ruff, the firewall, the FLATS + quadfit suites (`-n auto`)
+    and every `tests/` file that mentions flats;
+  - the app side runs the FLATS suite (two of its files import `app`) and the whole
+    `tests/` suite;
+  - anything else runs everything. `--all` forces everything.
+- The integration tests use the VM 114 test database, alongside the FLATS suites.
+- The `pre-push` hook (`python scripts/ci_local.py install-hook`, in `.git/hooks`)
+  blocks a push to `main` unless a stamp covers it. Commits after the stamp may only
+  be bookkeeping. Never bypass it with `--no-verify`.
+- E2E is not run locally: each change runs its E2E files against production after
+  deploy, and the daily GitHub run covers the full E2E suite.
+
+## CI pipeline (`.github/workflows/ci.yml`) — once a day
+
+- **When**: daily at 13:00 UTC from a clean checkout, by hand with
+  `gh workflow run ci.yml`, and on PRs. It does NOT run on push. A newer run
+  cancels an older one.
+- **Who reads it**: `python scripts/ci_local.py daily`. It is wired to every Claude
+  session start (`.claude/settings.local.json`) and runs on every push to main. It
+  is loud when the newest daily run is red, or more than 30 h old. **A red daily
+  run is fixed before other work**, then re-run by hand. GitHub also emails the
+  account owner when a scheduled run fails.
+- **Firewall**: on the daily run it checks each commit of the last 26 h on its own.
+- **Light gate**: Ruff lint, firewall, unit, FLATS and quadfit suites.
+- **Full gate**: runs side by side with the light gate. Integration tests + E2E
+  (Playwright) + Phase B regression + Trivy image scan + Semgrep SAST.
 - **Excel-export parity** (`tests/exporters/*parity*`, the recalc harness, the
   no-Excel-errors sweep — 19 tests) needs a formula engine to recalc the exported
   workbook: Excel COM on Windows, else headless LibreOffice (`soffice`). Locally
@@ -165,8 +196,9 @@ $env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b
   locally-hosted Ollama model — neither exists on a runner. Run it deliberately
   against an environment that has them: `pytest tests/e2e/test_proforma_cache.py
   -m "e2e and slow"`.
-- CI is behind production: a red CI is the only thing between a bad push and an
-  outage. Run the whole suite and read CI before calling a commit clean.
+- The local gate is the line between a bad push and production. The daily run is the
+  clean-machine check behind it. A red daily run means something passed on the PC
+  that fails on a clean checkout: treat it as an outage in waiting.
 
 ## When an E2E test fails
 

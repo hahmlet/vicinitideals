@@ -1,12 +1,22 @@
 name: vicinitideals CI
 
+# Pushes are gated on the PC by scripts/ci_local.py (pre-push hook) since
+# 2026-10-30, FOLLOWUPS 128: the same suites take minutes there and ~1.5 h on a
+# shared runner. GitHub runs everything once a day from a clean checkout, which
+# catches what only works on the PC. The result is read at every Claude session
+# start and on every push to main (ci_local.py daily); a red run is fixed first.
 on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 13 * * *"   # 06:00 Pacific, after the night's pushes
+  workflow_dispatch:
+
+# A newer run on the same ref makes an older one moot.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # ---------------------------------------------------------------------------
@@ -29,12 +39,13 @@ jobs:
         id: detect
         run: |
           # On PRs, compare against the target branch base.
-          # On push to main, compare against the previous commit.
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE="${{ github.event.pull_request.base.sha }}"
-          else
-            BASE="${{ github.event.before }}"
+          # The daily and manual runs test everything.
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "skip_heavy=false" >> "$GITHUB_OUTPUT"
+            echo "Daily/manual run -- running all gates"
+            exit 0
           fi
+          BASE="${{ github.event.pull_request.base.sha }}"
 
           CHANGED=$(git diff --name-only "$BASE"...HEAD 2>/dev/null || echo "")
 
@@ -54,7 +65,7 @@ jobs:
           fi
 
   # ---------------------------------------------------------------------------
-  # Light gate — runs on every push/PR (fast: <2 min)
+  # Light gate — lint, firewall, unit, FLATS and quadfit suites
   # ---------------------------------------------------------------------------
   light-gate:
     name: Light gate (lint + unit tests)
@@ -117,13 +128,22 @@ jobs:
       # must not share a blast radius. This fails a commit that edits both, and
       # any import of app.engines from flats/. See scripts/check_flats_firewall.py.
       - name: FLATS firewall
+        # A PR is checked as one change. The daily run checks each commit of the
+        # last 26 hours on its own: the rule is per commit, and a day of
+        # separate FLATS and finance commits is allowed.
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE="${{ github.event.pull_request.base.sha }}"
-          else
-            BASE="${{ github.event.before }}"
+            uv run python scripts/check_flats_firewall.py --base "${{ github.event.pull_request.base.sha }}"
+            exit 0
           fi
-          uv run python scripts/check_flats_firewall.py --base "$BASE"
+          rc=0
+          for c in $(git rev-list --no-merges --since="26 hours ago" HEAD); do
+            files=$(git diff-tree --no-commit-id --name-only -r "$c")
+            [ -z "$files" ] && continue
+            echo "== $c"
+            git diff-tree --no-commit-id --name-only -r -z "$c" | xargs -0 uv run python scripts/check_flats_firewall.py --files || rc=1
+          done
+          exit $rc
 
       - name: Unit tests
         # Markers are auto-assigned at collection (tests/conftest.py):
@@ -162,13 +182,14 @@ jobs:
         run: uv run pytest "Lot Analysis/quadfit/tests" -q
 
   # ---------------------------------------------------------------------------
-  # Full gate — runs on PRs to main and pushes to main
+  # Full gate — integration + E2E + scans, on PRs and the daily run
   # Skipped when only docs/templates changed.
   # ---------------------------------------------------------------------------
   full-gate:
     name: Full gate (integration + E2E + security scans)
     runs-on: ubuntu-24.04
-    needs: [scope-detect, light-gate]
+    # Side by side with the light gate, not after it.
+    needs: scope-detect
     if: needs.scope-detect.outputs.skip_heavy != 'true'
 
     services:
