@@ -725,6 +725,10 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # organised by architectural style and numbers no section of the
         # code (design-districts chunk 3, 2026-10-22).
         "or/clackamas/wilsonville/old-town-residential-design-standards.txt",
+        # Washington County's North Bethany Subarea Plan, Chapter 2 of the
+        # Bethany Community Plan (design districts chunk 6, 2026-10-30):
+        # design elements and ASCs, no section numbers.
+        "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

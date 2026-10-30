@@ -273,6 +273,15 @@ code:
   # numbers: the CDC writes "302-7.1", and fetch._SECTION_NO counts only
   # dotted forms like "19.30.010". Every thin refusal here was that.
   allow_thin: true
+- id: "community-plan.north-bethany-subarea"
+  url: https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-text-11-2024/download
+  title: "Washington County Community Plan - North Bethany Subarea"
+  extraction: plain
+  # Chapter 2 of the Bethany Community Plan, which CDC 390-3 makes control
+  # where it and Section 390 conflict (design districts chunk 6, 2026-10-30).
+  # A plan, not a codified chapter: it numbers design elements and ASCs, not
+  # sections.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC Section 106, which is on disk whole
   # (cdc.106.definitions.txt runs from 106-1 to the Section 107 heading).
@@ -539,14 +548,23 @@ defaults:
 # toward one end of a big lot; it states no dimension of its own, and
 # 430-37 is not stored.
 #
-# NOT ENCODED: the Community Plans. 300-1 makes "all development" comply
-# with the applicable Community Plan's subarea provisions, "including the
-# Design Elements and Area of Special Concern" (cdc.300.introduction.txt
-# #L7-L14). The county has eleven community plans; none is stored or read,
-# and nothing maps an Area of Special Concern to a lot. A per-area standard
-# would be a variant behind a condition nothing measures; which standards
-# they change is unknown until the plans are read. Owed locally, and a
-# question for Steph.
+# THE COMMUNITY PLANS. 300-1 makes "all development" comply with the
+# applicable Community Plan's subarea provisions, "including the Design
+# Elements and Area of Special Concern" (cdc.300.introduction.txt #L7-L14),
+# and nothing maps an Area of Special Concern to a lot. FOLLOWUPS 109 chunk
+# 6 read the four plans with the most unincorporated lots (Aloha - Reedville
+# - Cooper Mountain, Cedar Hills - Cedar Mill, Bethany with its North
+# Bethany Subarea, Sunset West). Only North Bethany binds the pod in a way
+# the screen can hold: its Special Setbacks, Park Blocks (ASC 5) and Kaiser
+# Main Street rules, encoded on R-15 NB and R-24 NB behind facts nothing
+# measures. Everything else read in the four is one of: a review or master
+# plan gate (GREEN with a flag inside the UGB, 2026-10-15); a Significant
+# Natural Resource provision, which the plans themselves say is not an
+# approval criterion and which CDC 422 carries; a rule the CDC already
+# encodes (access, transit and mixed-use frontage); a rule in a zone the pod
+# is refused in; an area-wide or built-out planned-development condition;
+# or a design detail the screen does not check (2026-10-14). The plans are
+# in pending/ and the seven smaller ones are owed to later chunks.
 #
 # NOT ENCODED: the Bonny Slope West Subarea Overlay District (Section 391).
 # It reaches only the Bonny Slope West Subarea of the Cedar Hills - Cedar
@@ -1362,8 +1380,11 @@ zones:
   # --- North Bethany (Section 390) ---------------------------------------
   #
   # 390-3 makes the North Bethany Subarea Plan (Chapter 2 of the Bethany
-  # Community Plan) control where it and Section 390 conflict, and the plan
-  # is not stored; see the Community Plans refusal above the zones. 390-6.1
+  # Community Plan) control where it and Section 390 conflict. The plan is
+  # held (community-plan.north-bethany-subarea.txt, FOLLOWUPS 109 chunk 6);
+  # its map-drawn Special Setbacks, Park Blocks ASC 5 and Kaiser Main Street
+  # rules are encoded on R-15 NB and R-24 NB as facts nothing measures, and
+  # the rest is read in the Community Plans note above the zones. 390-6.1
   # repeats the airport-approach prohibition for every residential NB
   # district (cdc.390.north-bethany.txt#L83-L86), refused above with 30X-5.6.
   # Parking is Section 413 (390-7), which the layer defaults hold.
@@ -1585,6 +1606,41 @@ zones:
       exempt: true
       cite: Washington County CDC 390-10.5 A(1) (plexes) and A(3)(b) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L797-L799,L816,L819"
+    # FOLLOWUPS 109 chunk 6. The North Bethany Subarea Plan (now held) governs
+    # over Section 390 (390-3). Two of its map-drawn areas reach R-15 NB: the
+    # Special Setbacks Map segments along the Park Blocks and the Northeast
+    # Neighborhood Linear Park (General Design Element 7, a 5 to 15 ft
+    # build-to front; its street side 8 and rear 12 equal R-15's own), and
+    # the Park Blocks ASC 5 (no vehicle access from the Park Blocks, no
+    # parking lot in front of the building). Neither map is held, so both are
+    # facts nothing measures and every R-15 NB lot is held off GREEN with the
+    # fact named until the maps are traced.
+    setback_front_ft:
+      value: 10
+      cite: Washington County CDC 305-7.1 B(1) (by 390-10.6), front yard to front building wall
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
+      variants:
+        - value: 5
+          when: [north_bethany_special_setbacks]
+          cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to front yard is 5 to 15 ft in R-15 NB and controls over the district's setback
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L739-L743,L746-L750"
+    setback_front_max_ft:
+      exempt: true
+      cite: Washington County CDC 305-7.1 B (by 390-10.6) states a minimum front yard and no maximum; Sections 305 and 390 print no maximum yard for this district
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
+      variants:
+        - value: 15
+          when: [north_bethany_special_setbacks]
+          cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to front yard is 5 to 15 ft in R-15 NB
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L739-L743,L746-L750"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Washington County CDC 305-7.1 B(2)(a) (by 390-10.6), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L321-L322"
+      qualified_by:
+        fact: north_bethany_park_blocks
+        cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access to residential property adjacent to the Park Blocks from the Park Blocks, and no parking lot between the street and the building
+        quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1988-L1989,L2044-L2048"
     notes: >-
       DRAFT. North Bethany R-15: the Middle Housing uses and density of
       390-10, the dimensions of R-15 (305-7) by 390-10.6.
@@ -1627,20 +1683,65 @@ zones:
     #
     # The Main Street area of Area of Special Concern Road Corridor 2 takes
     # its Kaiser Road setbacks from ASC 2 of the North Bethany Subarea Plan
-    # (390-11.6 A, cdc.390.north-bethany.txt#L933-L938). Neither the plan nor
-    # a map of the area is held; see the Community Plans refusal.
+    # (390-11.6 A, cdc.390.north-bethany.txt#L933-L938). The plan is held
+    # (FOLLOWUPS 109 chunk 6): a Kaiser-facing R-24 NB building stands 5 to
+    # 10 ft back over at least 75% of the frontage. The Main Street area, the
+    # Special Setbacks Map and the Park Blocks ASC 5 are drawn only on plan
+    # maps that are not held, so each is a fact nothing measures and every
+    # R-24 NB lot is held off GREEN with all three named until the maps are
+    # traced.
     setback_front_ft:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(a) (by 390-11.6), front yard 20 feet except 10 feet in North Bethany
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L383-L385,L498-L501"
+      variants:
+        - value: 5
+          when: [north_bethany_special_setbacks]
+          cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to front yard is 5 to 15 ft in R-24 NB and controls over the district's setback
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L739-L743,L746-L750"
+        - value: 5
+          when: [north_bethany_kaiser_main_street]
+          cite: North Bethany Subarea Plan ASC Road Corridor 2, Setback and Frontage Occupancy, R-24 NB on Kaiser Road, setback minimum 5 feet (CDC 390-11.6 A)
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1058,L1217-L1221,L1223,L1267-L1270,L1294-L1300"
+    setback_front_max_ft:
+      exempt: true
+      cite: Washington County CDC 306-7.2 B(4) (by 390-11.6) states minimum yards and no maximum; Sections 306 and 390 print no maximum yard for this district outside ASC 2
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L501"
+      variants:
+        - value: 15
+          when: [north_bethany_special_setbacks]
+          cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to front yard is 5 to 15 ft in R-24 NB
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L739-L743,L746-L750"
+        - value: 10
+          when: [north_bethany_kaiser_main_street]
+          cite: North Bethany Subarea Plan ASC Road Corridor 2, Setback and Frontage Occupancy, R-24 NB on Kaiser Road, setback maximum 10 feet (CDC 390-11.6 A)
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1058,L1217-L1221,L1223,L1267-L1270,L1294-L1300"
+    building_frontage_min_pct:
+      exempt: true
+      cite: Washington County CDC 306-7.2 and 390-11 state no building share of the frontage; ASC 2 sets one only for Kaiser-facing sites in the Main Street area
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L933-L938"
+      variants:
+        - value: 75
+          when: [north_bethany_kaiser_main_street]
+          cite: North Bethany Subarea Plan ASC Road Corridor 2, R-24 NB on Kaiser Road, at least 75% of a site frontage occupied by a building that meets the maximum setback
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1058,L1217-L1221,L1223,L1267-L1270,L1294-L1300"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 306-7.2 B(4)(b) (by 390-11.6), yard to garage vehicle entrance
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L503"
+      qualified_by:
+        fact: north_bethany_park_blocks
+        cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access to residential property adjacent to the Park Blocks from the Park Blocks, and no parking lot between the street and the building
+        quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1988-L1989,L2044-L2048"
     setback_rear_ft:
       value: 20
       cite: Washington County CDC 306-7.2 B(4)(c) (by 390-11.6), rear yard
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L504"
+      variants:
+        - value: 12
+          when: [north_bethany_special_setbacks]
+          cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to rear yard is 12 ft in R-24 NB
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L739-L743,L746-L750"
     setback_side_ft:
       # Seven feet for two stories, "or 10-foot when adjacent to lower
       # density district", and (vii) ten feet on every yard when the site
@@ -1655,6 +1756,11 @@ zones:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(d)(vi) (by 390-11.6), street side yard
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L512-L513"
+      variants:
+        - value: 8
+          when: [north_bethany_special_setbacks]
+          cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to street side yard is 8 ft in R-24 NB
+          quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L739-L743,L746-L750"
     max_height_ft:
       value: 50
       cite: Washington County CDC 306-7.2 C(3) (by 390-11.6), all other structures

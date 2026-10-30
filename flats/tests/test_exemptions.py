@@ -155,7 +155,12 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 455, "numeric": 168, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 455, "numeric": 171, "marker": 0, "dash": 2, "silent": 8}
+# 168 -> 171 numeric on 2026-10-30 (FOLLOWUPS 109 chunk 6, North Bethany Subarea Plan): the
+# maximum front yard of R-15 NB and R-24 NB and R-24 NB's building share of the frontage are
+# exempt off the plan's map-drawn areas -- Sections 305, 306 and 390 print minimum yards and
+# no maximum (whole-document grep) -- with the build-to and Kaiser Main Street figures as
+# variants behind facts nothing measures, so no lot is opened by them.
 # 454 -> 455 stated and 158 -> 168 numeric on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale). Stated: Gladstone's parking waiver inside the Town Center and its
 # quarter mile (17.48.010(1)(a)-(b), "not required"). Numeric: Troutdale's 9.035 waiver
