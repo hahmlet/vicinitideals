@@ -30,3 +30,5 @@ Your session offers an `advisor` tool backed by Opus. If it is not loaded, load 
 (b) after the same error twice;
 (c) before reporting done on anything that touches code text, rules or lot answers.
 Never consult it for routine steps. Say in your report how many times you consulted it.
+If ToolSearch finds no advisor, do not search again: write "advisor: not available" in your report,
+and at points (a) and (b) stop and report to the coordinator instead of guessing.
