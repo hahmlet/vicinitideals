@@ -33,3 +33,8 @@
    since changed" -- the 2026-09-27/28 re-fetches (Fairview to eCode360 46, Clackamas ZDO-293 12,
    Portland pypdf 5, 11 others). Left for after this restructure, which moves every fingerprint again;
    carry each ruling where its words match, re-queue the rest (`python -m flats.encode.worklist --audit`).
+   ITEM 123 DONE 2026-10-30 (main 32f205c2, LIVE, prod carry Beaverton 165 / Gresham 184+394 / Portland
+   100+14): citations left on a proof copy now follow into the section files and take their footnotes
+   (82 of 206 gained notes); cut Beaverton 20.10/20.20/60.30/70, Gresham 4.0100, Portland 33.130/33.140.
+   LEFT: Portland 33.150 stays whole -- cutting it drops the unmeasured PCC Sylvania note that caps
+   CI1/CI2/IR; Beaverton tables 30 held.

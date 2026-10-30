@@ -133,7 +133,7 @@ the full one.)
 125. [Claude] [Steph] [scan: NO -- a label] **What stands on the lot now: vacant / small house / bigger building** -- OFFERED 2026-10-29; waits on Steph's go. [file](followups/125-lot-occupancy.md)
 115. [Claude] **Tables, superscripts and footnotes in the readable text (readable/3), Tualatin pilot** -- GO 2026-10-24; tables BUILT + LIVE (8bc86bdc). [file](followups/115-readable-tables-footnotes.md)
 114. [Claude] **Batch-fix the logged text corrections** -- no checker; "Suggest a correction" box BUILT 145c1f46; batch when notes accumulate. [file](followups/114-text-corrections.md)
-73. [Claude] [scan: NO] **The code library as a public, structured repository** -- rollout under way; BATCH 6 (Portland) DONE 2026-10-29, main d1700685 LIVE. [file](followups/73-code-library.md)
+73. [Claude] [scan: NO] **The code library as a public, structured repository** -- rollout under way; BATCH 6 (Portland) LIVE d1700685; item 123 chapters LIVE 32f205c2 (Portland 33.150 still whole). [file](followups/73-code-library.md)
 54. [Steph] [scan: NO] **Code-change reader on the Claude API credit ($100/month)** -- Steph picked it 2026-10-07 and declined the other two offered. [file](followups/54-code-change-reader.md)
 55. [Steph] [scan: NO] **Expansion scouting on the credit item 54 leaves** -- background scouting; waits until we choose a place to encode. [file](followups/55-expansion-scouting.md)
 22. [Steph] [scan: YES if Milwaukie 22 ft aisle adopted] **Portland aisle 20 ft** -- DONE bacea669, run 44 PROMOTED 2026-09-30; Milwaukie 22 ft question. [file](followups/22-portland-aisle.md)
@@ -143,7 +143,6 @@ the full one.)
 40. [Steph] [scan: YES if started] **Easements from maps** -- odds answered 2026-10-04; not started. [file](followups/40-easements-from-maps.md)
 72. [Steph] [scan: NO] **Oregon Explorer statewide map** -- PARKED. [file](followups/72-oregon-explorer.md)
 92. [Steph] [scan: YES (parked)] **Parking layout generator (was the second item 27)** -- PARKED by Steph 2026-10-04; scoping only, nothing built. [file](followups/92-parking-layout-generator.md)
-123. [Claude] [scan: YES] **Footnotes are not linked to rules cited on a whole-chapter copy** -- OFFERED 2026-10-29 as the next code-library chunk; waits on Steph's go. [file](followups/123-footnotes-whole-chapter.md)
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
