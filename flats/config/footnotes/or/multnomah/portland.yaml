@@ -529,13 +529,14 @@ notes:
       table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L34-L35"
-    digest: "f0255bcbf872"
+    digest: "ae45d4cf52a5"
     state: dismissed
     reason: >-
       note 3 sends Self-Service Storage to the special regulations in
       Chapter 33.284. a limitation on a use this screen does not place.
       It is governed here because Table 130-1's cells are quoted for the
       permission, and the note sits on another row of the same table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words name Chapter 33.284, Self-Service Storage; still that use only.
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L38-L39"
     digest: "1e44764605fa"
@@ -611,7 +612,7 @@ notes:
       table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L74-L75"
-    digest: "65b5973f8546"
+    digest: "3f24d3ba0562"
     state: dismissed
     reason: >-
       note 11 makes outdoor Agriculture a conditional use in CM3 and CE
@@ -619,6 +620,7 @@ notes:
       this screen does not place. It is governed here because Table
       130-1's cells are quoted for the permission, and the note sits on
       another row of the same table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words are the indoor Agriculture area limits for CM3 and CE (site area; 40,000 sq ft); still Agriculture only.
 
 
   # --- 33.140, the employment and industrial table, answered in prose ---
@@ -696,13 +698,14 @@ notes:
       same table
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L83-L84"
-    digest: "86642b11bbb8"
+    digest: "b120be263ba1"
     state: dismissed
     reason: >-
       note 7 sends Self-Service Storage to its special regulations. a
       limitation on a use this screen does not place. It is governed
       here because Table 140-1's cells are quoted for the permission,
       and the note sits on another row of the same table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words name Chapter 33.284, Self-Service Storage; still that use only.
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L87-L88"
     digest: "ad4ea777fa0d"
@@ -726,7 +729,7 @@ notes:
       row of the same table
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L163-L164"
-    digest: "3743f80bd47b"
+    digest: "057df714bf5d"
     state: dismissed
     reason: >-
       note 10 prohibits short term and mass shelters in the I zones and
@@ -734,6 +737,7 @@ notes:
       conditional use. a limitation on a use this screen does not place.
       It is governed here because Table 140-1's cells are quoted for the
       permission, and the note sits on another row of the same table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words send outdoor shelters to Chapter 33.285 and allow Daycare and Community Service up to 3,000 sq ft; still those uses only.
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L171-L172"
     digest: "59753b578b50"
@@ -830,7 +834,7 @@ notes:
       row of the same table
 
   - quote: "or/multnomah/portland/33.150.txt#L205"
-    digest: "09512af2a395"
+    digest: "fac0f7293e93"
     state: dismissed
     reason: >-
       note 4 sends most Community Service uses to conditional use review
@@ -838,6 +842,7 @@ notes:
       on a use this screen does not place. It is governed here because
       Table 150-1's cells are quoted for the permission, and the note
       sits on another row of the same table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words allow most Community Service by right in CI2 and send shelters to Chapter 33.285; still Community Service only.
 
   - quote: "or/multnomah/portland/33.150.txt#L213"
     digest: "1b688cae01de"
@@ -1059,7 +1064,7 @@ notes:
       is what this layer quotes rather than from this table
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L34"
-    digest: "d7f038d7c24a"
+    digest: "fd53b30524dd"
     state: dismissed
     reason: >-
       note 2 makes Commercial Parking in structures a conditional use in
@@ -1069,6 +1074,7 @@ notes:
       layer holds, and the permission for a four-unit building is read
       from Table 120-2, the housing types table, which is what this
       layer quotes rather than from this table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words point Commercial Parking to Chapter 33.510 inside the Central City and keep ground-floor retail rules on that use; still nothing on Household Living.
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L39"
     digest: "24d89d6f33ea"
@@ -1084,7 +1090,7 @@ notes:
       table
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L52-L53"
-    digest: "7e36733bf0cd"
+    digest: "3435a0581088"
     state: dismissed
     reason: >-
       note 4 is note 3 for RM1 through RM4 and RMP. a limitation on a
@@ -1093,6 +1099,7 @@ notes:
       permission for a four-unit building is read from Table 120-2, the
       housing types table, which is what this layer quotes rather than
       from this table
+      Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words send shelters to Chapter 33.285; still Community Service only.
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L58"
     digest: "2b225d2cb75d"

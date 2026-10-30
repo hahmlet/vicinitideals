@@ -6715,6 +6715,7 @@ zones:
         # stays out of GREEN.
         - value: 10
           when: [civic_corridor]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_side_ft:
@@ -6733,14 +6734,17 @@ zones:
         # Note 14: TLDR's side yards on the corridor (see setback_front_ft).
         - value: 5
           when: [civic_corridor]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 5
           when: [civic_corridor, unit_lots]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 0
           when: [civic_corridor, unit_lots, attached_wall]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_rear_ft:
@@ -6756,18 +6760,22 @@ zones:
         # Note 14: TLDR's rear yards on the corridor (see setback_front_ft).
         - value: 15
           when: [civic_corridor]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 8
           when: [civic_corridor, alley_at_rear]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 15
           when: [civic_corridor, unit_lots]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
         - value: 8
           when: [civic_corridor, unit_lots, alley_at_rear]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_street_side_ft:
@@ -6777,6 +6785,7 @@ zones:
         # Note 14: TLDR's street-side wall on the corridor (see setback_front_ft).
         - value: 10
           when: [civic_corridor]
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Tables 4.0130 and 4.0131 (TLDR)
           quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155"
           via: "or/multnomah/gresham/4/4.0430.txt#L162"
     setback_front_max_ft:
