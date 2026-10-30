@@ -1034,11 +1034,13 @@ _C: tuple[ConditionDef, ...] = (
         "Park. General Design Element 7 of the North Bethany Subarea Plan "
         "then sets a build-to line -- a front yard of 5 to 15 ft, street side "
         "8 ft, rear 12 ft in R-15 NB and R-24 NB -- which controls over the "
-        "district's own yards (CDC 390-3 makes the plan govern). Assumed "
-        "unknown, because the map is not held and the build-to moves the fit.",
+        "district's own yards (CDC 390-3 makes the plan govern). Answered "
+        "from the map, traced as Washington County's drawn_areas (FOLLOWUPS "
+        "129); a lot a mapped future street runs through, or at a segment's "
+        "end, stays unknown.",
         evidence=(
-            "The Special Setbacks Map of the North Bethany Subarea Plan "
-            "(Washington County) -- not held"
+            "The Special Setbacks Map (Map 8) of the North Bethany Subarea "
+            "Plan (Washington County), traced 2026-10-30"
         ),
         assume=None,
     ),
@@ -1046,13 +1048,15 @@ _C: tuple[ConditionDef, ...] = (
         "north_bethany_park_blocks",
         "site_fact",
         "The parcel lies in North Bethany's Park Blocks Area of Special "
-        "Concern (ASC 5) and fronts the Park Blocks. ASC 5 bars vehicle "
-        "access to it from the Park Blocks and any parking lot between the "
-        "street and the building. Assumed unknown, because the ASC is drawn "
-        "only on a plan map that is not held.",
+        "Concern (ASC 5), the Park Blocks and the developable land north and "
+        "south of them. ASC 5 bars vehicle access from the Park Blocks to "
+        "the residential property beside them and any parking lot between "
+        "the street and the building. Answered from the ASC 5 outline, "
+        "traced as Washington County's drawn_areas (FOLLOWUPS 129); a lot "
+        "the outline cuts stays unknown.",
         evidence=(
-            "The Areas of Special Concern map of the North Bethany Subarea "
-            "Plan (Washington County) -- not held"
+            "The Areas of Special Concern map (Map 17) of the North Bethany "
+            "Subarea Plan (Washington County), traced 2026-10-30"
         ),
         assume=None,
     ),
@@ -1063,12 +1067,14 @@ _C: tuple[ConditionDef, ...] = (
         "Bethany Main Street area of ASC Road Corridor 2. The plan's Main "
         "Street standards then hold the Kaiser-facing building between 5 and "
         "10 ft of the street over at least 75% of the frontage (CDC "
-        "390-11.6 A sends the Kaiser setbacks there). Assumed unknown, "
-        "because the Main Street area is drawn only on a plan map that is "
-        "not held.",
+        "390-11.6 A sends the Kaiser setbacks there). Answered from the ASC "
+        "2 outline on the Areas of Special Concern map and the county's "
+        "Kaiser Road centreline, traced as Washington County's drawn_areas "
+        "(FOLLOWUPS 129); a lot the outline cuts stays unknown.",
         evidence=(
-            "The North Bethany Main Street area of ASC Road Corridor 2 "
-            "(North Bethany Subarea Plan, Washington County) -- not held"
+            "The North Bethany Main Street area of ASC Road Corridor 2 on the "
+            "Areas of Special Concern map (Map 17) of the North Bethany "
+            "Subarea Plan (Washington County), traced 2026-10-30"
         ),
         assume=None,
     ),
@@ -1390,6 +1396,9 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "inside_mapped_use_area",
+    "north_bethany_kaiser_main_street",
+    "north_bethany_park_blocks",
+    "north_bethany_special_setbacks",
     "north_of_marine_drive",
     "oregon_city_historic_overlay",
     "oregon_city_park_place",

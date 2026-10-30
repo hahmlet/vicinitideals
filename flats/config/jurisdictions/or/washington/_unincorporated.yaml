@@ -1454,6 +1454,17 @@ zones:
       exempt: true
       cite: Washington County CDC 390-8.5 A(1) (plexes) and A(3)(b) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L319-L321,L330,L333"
+    setback_garage_entrance_ft:
+      # FOLLOWUPS 129: restated from R-6 so the Park Blocks ASC 5 can qualify
+      # it. Map 17's ASC 5 outline cuts five R-6 NB lots and holds none whole
+      # (drawn_areas north_bethany_park_blocks_asc_5 below).
+      value: 20
+      cite: Washington County CDC 303-7.1 B(2)(a) (by 390-8.7), garage vehicle entrance from front or street side yard
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L365-L366"
+      qualified_by:
+        fact: north_bethany_park_blocks
+        cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access to residential property adjacent to the Park Blocks from the Park Blocks, and no parking lot between the street and the building
+        quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1988-L1989,L2044-L2048"
     notes: >-
       DRAFT. North Bethany R-6: the Middle Housing uses and density of
       390-8, the dimensions of R-6 (303-7) by 390-8.7.
@@ -1530,6 +1541,10 @@ zones:
       value: 20
       cite: Washington County CDC 304-7.2 B(2) (by 390-9.6), front or street side yard to garage vehicle entrance
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L414-L415"
+      qualified_by:
+        fact: north_bethany_park_blocks
+        cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access to residential property adjacent to the Park Blocks from the Park Blocks, and no parking lot between the street and the building
+        quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1988-L1989,L2044-L2048"
     setback_street_side_ft:
       value: 10
       cite: Washington County CDC 304-7.2 B(3) (by 390-9.6), street side yard
@@ -1613,9 +1628,11 @@ zones:
     # Neighborhood Linear Park (General Design Element 7, a 5 to 15 ft
     # build-to front; its street side 8 and rear 12 equal R-15's own), and
     # the Park Blocks ASC 5 (no vehicle access from the Park Blocks, no
-    # parking lot in front of the building). Neither map is held, so both are
-    # facts nothing measures and every R-15 NB lot is held off GREEN with the
-    # fact named until the maps are traced.
+    # parking lot in front of the building). FOLLOWUPS 129 traced both maps
+    # (drawn_areas at the end of this file): a lot the map does not reach
+    # reads the district's own numbers, a lot on a mapped segment reads the
+    # build-to variants, a lot in ASC 5 stays held, and a lot a line cuts
+    # stays unanswered.
     setback_front_ft:
       value: 10
       cite: Washington County CDC 305-7.1 B(1) (by 390-10.6), front yard to front building wall
@@ -2892,3 +2909,58 @@ zones:
     notes: >-
       DRAFT. Rural land-extensive industrial: one dwelling with a permitted
       use.
+# FOLLOWUPS 129. The North Bethany Subarea Plan's maps (Chapter 2 maps,
+# 11-2024 edition, printed 04/20/2021), traced 2026-10-30 from the GeoPDF's
+# own registered vector strokes. Each file's source block says how.
+drawn_areas:
+  north_bethany_special_setbacks:
+    condition: north_bethany_special_setbacks
+    zones: [R-15 NB, R-24 NB]
+    file: or/washington/_unincorporated/north-bethany-special-setbacks.geojson
+    source: >-
+      North Bethany Subarea Plan Map 8, Special Setbacks (Chapter 2 maps
+      11-2024, page 8, retrieved 2026-10-30). The map marks street segments;
+      the file holds the R-15 NB and R-24 NB lots that front a marked segment
+      (whole lot) and, as half-lot markers, the lots a mapped future street
+      runs through or that sit too near a segment end to call. Drawn
+      provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L552-L557,L739-L743"
+    cite: North Bethany Subarea Plan General Design Element 7 and the Special Setbacks Map (CDC 390-3)
+    note: >-
+      Inside means the lot fronts a Park Blocks or Linear Park segment of
+      the Special Setbacks Map, so the build-to front yard of Design Element
+      7 governs; outside means the map reaches no frontage of the lot and
+      the district's own yards govern; a cut lot is left unanswered.
+  north_bethany_park_blocks_asc_5:
+    condition: north_bethany_park_blocks
+    zones: [R-6 NB, R-9 NB, R-15 NB, R-24 NB]
+    file: or/washington/_unincorporated/north-bethany-park-blocks-asc-5.geojson
+    source: >-
+      North Bethany Subarea Plan Map 17, Areas of Special Concern (Chapter 2
+      maps 11-2024, page 17, retrieved 2026-10-30), the ASC 5 outline as
+      drawn, 55.2 acres. Drawn provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1006-L1007,L1988-L1989,L1995"
+    cite: North Bethany Subarea Plan ASC 5, Park Blocks (CDC 390-3)
+    note: >-
+      The whole ASC 5 outline is the area, because the plan applies the
+      ASC 5 requirements throughout the ASC, which includes the developable
+      land north and south of the Park Blocks, not only the lots facing
+      them. A lot inside stays held on the garage and access standards.
+  north_bethany_kaiser_main_street:
+    condition: north_bethany_kaiser_main_street
+    zones: [R-24 NB]
+    file: or/washington/_unincorporated/north-bethany-kaiser-main-street.geojson
+    source: >-
+      North Bethany Subarea Plan Map 17, Areas of Special Concern (Chapter 2
+      maps 11-2024, page 17, retrieved 2026-10-30), the ASC 2 Main Street
+      outline either side of Kaiser Road, read with the county's Kaiser Road
+      centreline. No R-24 NB lot lies wholly inside and fronts Kaiser; the
+      file holds the two the outline cuts. Drawn provenance in the file's
+      source block.
+    quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1089-L1096,L1217-L1221"
+    cite: North Bethany Subarea Plan ASC Road Corridor 2, North Bethany Main Street (CDC 390-3)
+    note: >-
+      Inside means an R-24 NB lot in the Main Street ASC with Kaiser Road
+      frontage, whose Kaiser-facing elevation the corridor standards bind;
+      outside means a lot outside ASC 2 or with no Kaiser frontage; the two
+      lots the ASC 2 line cuts are unanswered.

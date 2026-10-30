@@ -1687,14 +1687,14 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "The North Bethany Subarea Plan's Special Setbacks Map, or a county planner's word on the lot"
+    path: "The Special Setbacks Map is traced (FOLLOWUPS 129); a lot it leaves unanswered (a mapped future street through it, or a segment's end) needs a county planner's word on which frontage the build-to line reaches"
     priority: later
     status: pending
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-NORTH-BETHANY-PARK-BLOCKS:
-    description: "Whether the lot fronts the Park Blocks in North Bethany ASC 5, where no vehicle access from the Park Blocks and no parking lot in front of the building are allowed"
+    description: "Whether the lot lies in North Bethany ASC 5 (the Park Blocks and the land north and south of them), where no vehicle access from the Park Blocks and no parking lot in front of the building are allowed"
     kind: categorical
     risk: possible
     severity: 5
@@ -1702,7 +1702,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "The North Bethany Subarea Plan's Areas of Special Concern map, or a county planner's word on the lot"
+    path: "The ASC 5 outline is traced (FOLLOWUPS 129); a lot inside needs a county planner's word that its garage and parking plan meet ASC 5, and a lot the outline cuts needs the line placed"
     priority: later
     status: pending
     approved_by: null
@@ -1717,7 +1717,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "The North Bethany Subarea Plan's Main Street area map (ASC Road Corridor 2), or a county planner's word on the lot"
+    path: "The ASC 2 Main Street outline is traced (FOLLOWUPS 129); a lot the outline cuts needs a county planner's word on whether its Kaiser frontage is in the Main Street area"
     priority: later
     status: pending
     approved_by: null

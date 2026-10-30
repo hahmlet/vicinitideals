@@ -130,11 +130,14 @@ def test_nothing_in_the_draft_is_verified(washington: Layer) -> None:
                 assert variant.status is not Status.verified, (zone, field)
 
 
-# FOLLOWUPS 109 chunk 6: the North Bethany Subarea Plan's map-drawn rules. No
-# map of the Special Setbacks segments, the Park Blocks ASC 5 or the Kaiser
-# Main Street area is held, so each is a fact nothing measures, and every lot
-# in a zone that carries one is held off GREEN with the fact named.
+# FOLLOWUPS 109 chunk 6 and 129: the North Bethany Subarea Plan's map-drawn
+# rules. Each is a site fact no default answers; FOLLOWUPS 129 traced the
+# Special Setbacks Map segments, the Park Blocks ASC 5 and the Kaiser Main
+# Street area (ASC 2), so the bridge answers each from the lot's share inside
+# the tracing, and a lot a line cuts stays unknown and held off GREEN.
 NORTH_BETHANY_FACTS = {
+    "R-6 NB": {"north_bethany_park_blocks"},
+    "R-9 NB": {"north_bethany_park_blocks"},
     "R-15 NB": {"north_bethany_special_setbacks", "north_bethany_park_blocks"},
     "R-24 NB": {
         "north_bethany_special_setbacks",
@@ -142,22 +145,99 @@ NORTH_BETHANY_FACTS = {
         "north_bethany_kaiser_main_street",
     },
 }
+NB_AREAS = {
+    "north_bethany_special_setbacks": "or/washington/_unincorporated/north-bethany-special-setbacks.geojson",
+    "north_bethany_park_blocks": "or/washington/_unincorporated/north-bethany-park-blocks-asc-5.geojson",
+    "north_bethany_kaiser_main_street": "or/washington/_unincorporated/north-bethany-kaiser-main-street.geojson",
+}
 
 
 @pytest.mark.parametrize("zone", sorted(NORTH_BETHANY_FACTS))
-def test_north_bethany_plan_map_areas_hold_the_lot_open(washington: Layer, zone: str) -> None:
+def test_north_bethany_plan_map_areas_are_drawn_facts(washington: Layer, zone: str) -> None:
     from flats.rules.conditions import DRAWN_CONDITIONS, condition
 
     rules = washington.zones[zone]
     levers = set().union(*(v.levers for v in rules.values.values()))
     want = NORTH_BETHANY_FACTS[zone]
     assert want <= levers
+    drawn = {a.condition: a for a in washington.drawn_areas.values()}
     for name in want:
         fact = condition(name)
-        # Unassumed and undrawn: nothing answers it, so the screen reads it
-        # as unknown and the lot cannot be certified (FACT_UNOBSERVED).
+        # Unassumed: only the tracing answers it, and a lot it leaves
+        # unanswered is read as unknown (FACT_UNOBSERVED).
         assert fact.kind == "site_fact" and fact.assume is None
-        assert name not in DRAWN_CONDITIONS
+        assert name in DRAWN_CONDITIONS
+        assert drawn[name].file == NB_AREAS[name]
+        assert zone in drawn[name].zones
+
+
+def _nb_features(name: str) -> list[dict]:
+    import json
+
+    from flats.rules import loader
+
+    data = json.loads((loader.AREAS_ROOT / NB_AREAS[name]).read_text(encoding="utf-8"))
+    assert data["source"]["drawn"] is True
+    return data["features"]
+
+
+def _nb_facts(zone: str, lot) -> dict:
+    import shapely
+
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import observed_facts
+    from flats.tests.test_quadfit_bridge import row
+
+    layers = load_trusted(strict=False).rules.layers
+    return observed_facts(
+        row(jurisdiction="washington_unincorporated", zone=zone, lot_wkb=shapely.to_wkb(lot)), layers
+    )
+
+
+@pytest.mark.parametrize("name", ["north_bethany_special_setbacks", "north_bethany_kaiser_main_street"])
+def test_a_traced_lot_is_drawn_whole_and_a_cut_lot_by_half(name: str) -> None:
+    from shapely.geometry import shape
+
+    from flats.geom.drawn import INSIDE_SHARE, OUTSIDE_SHARE
+
+    feats = _nb_features(name)
+    assert feats
+    for f in feats:
+        props = f["properties"]
+        if props["answer"] == "inside":
+            assert props["drawn_share_of_lot"] == 1
+        else:
+            assert props["answer"] == "unanswered"
+            assert OUTSIDE_SHARE < props["drawn_share_of_lot"] < INSIDE_SHARE
+        assert shape(f["geometry"]).is_valid
+
+
+def test_a_lot_fronting_a_setback_segment_is_inside_and_one_off_the_map_is_not() -> None:
+    from shapely.geometry import box, shape
+
+    inside = next(f for f in _nb_features("north_bethany_special_setbacks") if f["properties"]["answer"] == "inside")
+    lot = shape(inside["geometry"])
+    zone = inside["properties"]["zone"]
+    assert _nb_facts(zone, lot)["north_bethany_special_setbacks"] is True
+    minx, miny, _, _ = lot.bounds
+    far = box(minx - 3000, miny - 3000, minx - 2900, miny - 2900)
+    got = _nb_facts("R-15 NB", far)
+    assert got["north_bethany_special_setbacks"] is False
+    assert got["north_bethany_park_blocks"] is False
+
+
+def test_the_park_blocks_are_the_asc_5_outline_and_a_lot_it_cuts_is_unanswered() -> None:
+    from shapely.geometry import Point, shape
+
+    (f,) = _nb_features("north_bethany_park_blocks")
+    area = shape(f["geometry"])
+    assert 54 < area.area / 43_560 < 57  # Map 17's ASC 5, about 55 acres
+    assert _nb_facts("R-9 NB", area.representative_point().buffer(5))["north_bethany_park_blocks"] is True
+    ring = (max(area.geoms, key=lambda g: g.area) if area.geom_type == "MultiPolygon" else area).exterior
+    coords = list(ring.coords)
+    a, b = max(zip(coords, coords[1:]), key=lambda ab: Point(ab[0]).distance(Point(ab[1])))
+    edge = Point((a[0] + b[0]) / 2, (a[1] + b[1]) / 2).buffer(10)
+    assert "north_bethany_park_blocks" not in _nb_facts("R-6 NB", edge)
 
 
 def test_north_bethany_kaiser_main_street_figures(washington: Layer) -> None:
