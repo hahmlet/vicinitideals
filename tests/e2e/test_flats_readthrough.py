@@ -19,9 +19,13 @@ def test_readthrough_keyboard_draft_and_submission(logged_in_page: Page) -> None
         if int(row.get_attribute("data-page-count") or "0") >= 2
     ]
     chosen = None
-    for href in hrefs[:5]:
+    # The shelf is alphabetical, and its head is amendments and street chapters
+    # with no encoded rule on them (2026-10-30: the first five all had none, so
+    # the test skipped). Walk far enough down to reach a zone chapter. The first
+    # page may build the sheet caches cold, hence the long first wait.
+    for href in hrefs[:40]:
         page.goto(href)
-        page.locator("[data-read-page]").first.wait_for()
+        page.locator("[data-read-page]").first.wait_for(timeout=90_000)
         try:
             page.wait_for_function(
                 "() => { const img = document.querySelector('.readthrough-image img'); return img && img.complete && img.naturalWidth > 0; }",
