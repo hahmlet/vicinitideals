@@ -33,6 +33,10 @@ lane, the FOLLOWUPS item file (docs/followups/<N>-*.md) and the scope. Read only
 - If you changed what quadfit mirrors, re-port in the worktree and run its mirror tests, but do not
   commit the port.
 - `uv run pytest tests/api/test_ui_flats.py -q -k reason` if you added a reason code.
+- The corpus ledgers, which a new document, comment or ported zone moves (~1 min):
+  `uv run pytest flats/tests/test_districts.py flats/tests/test_refusals.py flats/tests/test_port.py -q -n auto`,
+  and, if quadfit's rules.yaml gained a row, `"Lot Analysis/quadfit/tests/test_parking_geometry.py"`.
+  Fix what is yours; list in the hand-off any count left for the coordinator (rule 2).
 - `uv run ruff check` on the files you touched, plus
   `uv run python scripts/check_flats_firewall.py --base origin/main`.
 - Do NOT run the full suites or a bound. The coordinator and the bound runner do those.
