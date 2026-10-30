@@ -128,7 +128,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
-127. [Claude] [Steph] [scan: NO] **Cut token spend** -- (a)(b)(e) done; (f) worker profiles + advisor OFFERED 10-30; open: Copilot 11-01, reading pilot, local pre-sort. [file](followups/127-token-spend.md)
+127. [Claude] [Steph] [scan: NO] **Cut token spend** -- (a)(b)(e)(f) done (7 profiles d387fd7c, 2849fa9a; first real use next session); open: Copilot 11-01, reading pilot, local pre-sort. [file](followups/127-token-spend.md)
 126. [Claude] [Steph] [scan: NO -- display only] **A fast map of every lot, and a live 3D lot view** -- IDEA 2026-10-29; major feature, check in before any design. [file](followups/126-lot-map-3d.md)
 125. [Claude] [Steph] [scan: NO -- a label] **What stands on the lot now: vacant / small house / bigger building** -- OFFERED 2026-10-29; waits on Steph's go. [file](followups/125-lot-occupancy.md)
 115. [Claude] **Tables, superscripts and footnotes in the readable text (readable/3), Tualatin pilot** -- GO 2026-10-24; tables BUILT + LIVE (8bc86bdc). [file](followups/115-readable-tables-footnotes.md)
