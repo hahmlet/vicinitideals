@@ -149,7 +149,8 @@ def test_the_cmf_corridor_is_the_one_place_gresham_gets_tighter_off_base(
     # The variant's number is printed in the residential chapter, not in the
     # note that reaches for it -- note 14 states a reference and no height.
     variant = load_rules()[GRESHAM].zones["CMF"].values["max_height_ft"].variants[0]
-    assert variant.prov.quote == "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
+    # 4.0100.residential.txt#L330,L332 until the cut (FOLLOWUPS 123).
+    assert variant.prov.quote == "or/multnomah/gresham/4/4.0130.txt#L90,L92"
 
 
 def test_gresham_butte_is_ldr_5_by_reference_and_not_by_copy(rules: RuleSet) -> None:

@@ -25,6 +25,8 @@ pytestmark = pytest.mark.unit
 
 GRESHAM = "or/multnomah/gresham"
 DOC = f"{GRESHAM}/4.0100.residential.txt"
+#: Table 4.0131 and its notes, in the section file cut from DOC.
+SECTION = f"{GRESHAM}/4/4.0130.txt"
 
 
 @pytest.fixture(scope="module")
@@ -121,8 +123,10 @@ def test_the_maximum_setback_note_is_readable_at_last(residential) -> None:
     seventh = next(b for b in residential.bodies if b.line == 433)
     assert "Maximum front and street-side setbacks" in seventh.text
     assert "4.0430" in seventh.text
+    # The ruling stands on the section file since the cut (FOLLOWUPS 123),
+    # where note 7 is line 185 of 4.0130.
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
-    assert ruled[f"{DOC}#L433"].state == "dismissed"
+    assert ruled[f"{SECTION}#L185"].state == "dismissed"
 
 
 def test_no_ruling_is_left_pointing_at_a_body_that_is_gone() -> None:
@@ -130,4 +134,6 @@ def test_no_ruling_is_left_pointing_at_a_body_that_is_gone() -> None:
     It was right, and there is nothing left to rule."""
     ruled = {row.quote for row in dispositions(GRESHAM)}
     assert f"{DOC}#L431" not in ruled
+    # Nor on the section file, where the continuation is line 182.
+    assert f"{SECTION}#L182" not in ruled
     assert not [row for row in qualified() if row.blocking]

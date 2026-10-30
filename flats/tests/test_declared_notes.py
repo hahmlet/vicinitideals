@@ -189,7 +189,9 @@ def test_the_use_table_limitation_that_decides_two_zones(
     assert "are prohibited" in first.text
 
     ruled = {(n.doc, n.line): n for n in dispositions(PORTLAND)}
-    ruling = ruled[(f"{PORTLAND}/33.140.txt", 181)]
+    # Ruled on the section file since the cut (FOLLOWUPS 123): 33.140.txt
+    # line 181 is line 12 of 33.140.100.
+    ruling = ruled[(f"{PORTLAND}/33.140/33.140.100.txt", 12)]
     assert ruling.state == "encoded"
     assert "EG1 and EG2" in ruling.encoded_as
 

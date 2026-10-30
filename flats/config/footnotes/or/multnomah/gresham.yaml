@@ -79,9 +79,10 @@ notes:
     digest: "5a31790fee8f"
     state: dismissed
     reason: >-
-      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
-      are a bare P in all seven districts, so no note of this table reaches the
-      use this layer encodes
+      Tables 4.0120, 4.1413 and 4.1507 each print this sentence as a note on
+      their Affordable Housing row and mark the cells it limits; their Quadplex
+      and Townhouse rows carry no mark in any district (a bare P, or NP), so it
+      does not reach the use this layer encodes
 
   - quote: "or/multnomah/gresham/4/4.0120.txt#L84"
     digest: "52103c413b16"

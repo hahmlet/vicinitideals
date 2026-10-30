@@ -308,6 +308,9 @@ OPEN = {
     "or/washington/beaverton 60.05.60 -> 60.05.60.2",
     "or/washington/beaverton 60.05.60 -> 60.05.60.3",
     "or/washington/beaverton 60.05.60 -> 60.05.60.4",
+    # Visible since Chapter 70 was cut (FOLLOWUPS 123): a downtown facade
+    # design rule pointing at the active ground floor rules. Listed open.
+    "or/washington/beaverton 70.20.05 -> 70.20.10.6",
     "or/washington/hillsboro 12.50.140 -> 12.80.150",
     "or/washington/hillsboro 12.80.040 -> 12.80.170",
     # 2026-10-08: was FOLLOWED while EFU's farm-labor-housing variant was
@@ -531,19 +534,11 @@ FOLLOWED = {
     "or/washington/beaverton 20.15.20 -> 20.15.15",
     "or/washington/beaverton 20.20.20 -> 20.20.15",
     "or/washington/beaverton 20.22.20 -> 20.22.15",
-    # A FALSE CLOSE, pinned so it is seen. The row is RC-BC's Table
-    # 70.15.10.1.A note 2 (L230). RC-OT's Table 70.15.10.2.A prints the same
-    # note, and there "See Section" / "70.15.10.5 Supplemental Density and
-    # Intensity Standards" wraps across two lines; the second
-    # (bdc.70.downtown.txt L298) reads as a heading, because a number under
-    # the document's own chapter skips the wrapped-line guard. Every line
-    # quoted below it in 70.15.10 -- RC-OT's setbacks onward -- then counts
-    # as read from 70.15.10.5, which nobody opened: the layer's Chapter 70
-    # comment says the reduced minimums for small pre-1999 sites are not
-    # encoded. It is a relief from the
-    # minimum density, so the pod's answer does not move; the reader fix is
-    # proposed in the Washington handoff rather than made here.
-    "or/washington/beaverton 70.15.10 -> 70.15.10.5",
+    # "beaverton 70.15.10 -> 70.15.10.5" stood here until Chapter 70 was cut
+    # (FOLLOWUPS 123): a FALSE CLOSE, the wrapped "70.15.10.5 Supplemental
+    # Density and Intensity Standards" read as a heading. Readable text joins
+    # the wrap, and 70.15.10.5 is a subsection of the section that points at
+    # it, so there is no row left to follow.
     # 2026-10-01, Cornelius GMU (a worktree draft). 065 stands "In lieu of"
     # 050, and 050 was read to know what it replaces: lot size, setbacks,
     # height, landscaping. The citation that lands there is 050 (A)'s "No

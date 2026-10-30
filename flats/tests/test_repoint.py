@@ -56,8 +56,9 @@ pytestmark = pytest.mark.unit
 PORTLAND = "or/multnomah/portland/33.110.txt"
 # Was 4.1400.pleasant-valley.txt until Gresham was cut into sections
 # (FOLLOWUPS 73, batch 5): a cut chapter's proof copy is quoted by nothing, so
-# these tests would pass by counting nothing. 4.0100 is kept whole.
-GRESHAM_PV = "or/multnomah/gresham/4.0100.residential.txt"
+# these tests would pass by counting nothing. 4.0100 was kept whole until
+# FOLLOWUPS 123 cut it too; Portland 33.150 is kept whole now.
+GRESHAM_PV = "or/multnomah/portland/33.150.txt"
 RETRIEVED = date(2026, 8, 27)
 OLD = [f"line {n}" for n in range(1, 21)]
 
@@ -446,7 +447,8 @@ def test_the_gresham_chapter_that_started_this_survives_its_own_drift() -> None:
     in the chapter — which is the whole reason this module exists.
 
     4.1400 is now cut into sections and nothing quotes its proof copy, so the
-    same drift is replayed on 4.0100, the chapter Gresham keeps whole, at 400."""
+    same drift is replayed on a chapter still kept whole (Portland 33.150,
+    since 4.0100 was cut for FOLLOWUPS 123), at 400."""
     stored = ProvenanceStore().load(GRESHAM_PV).text.splitlines()
     mapping = line_map(stored, stored[:399] + ["an inserted sentence"] + stored[399:])
 

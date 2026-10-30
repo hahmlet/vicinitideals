@@ -1,5 +1,5 @@
 {
-  "digest": "782ef16d34d884de7a92dbff386af1e8fa16869ef0bd9c3fc966456e47562e74",
+  "digest": "08fc04552dfa97bf774cabf0a7701c03f13b27757adb6b40a14914adc62ee378",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -194,7 +194,7 @@
       ]
     },
     "or/multnomah/gresham": {
-      "section_unread": 95,
+      "section_unread": 0,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -267,6 +267,78 @@
           "found": "7.0431",
           "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_front_ft [civic_corridor]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_rear_ft [civic_corridor]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_rear_ft [alley_at_rear+civic_corridor]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_rear_ft [civic_corridor+unit_lots]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_rear_ft [alley_at_rear+civic_corridor+unit_lots]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_side_ft [civic_corridor]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_side_ft [civic_corridor+unit_lots]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_side_ft [attached_wall+civic_corridor+unit_lots]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_street_side_ft [civic_corridor]",
+          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
+          "kind": "heading_other_file"
         },
         {
           "zone": "CMU",
@@ -657,7 +729,7 @@
       "gaps": []
     },
     "or/multnomah/portland": {
-      "section_unread": 77,
+      "section_unread": 8,
       "misattributed": [],
       "label": "Portland",
       "counts": {},
@@ -742,7 +814,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 121,
+      "section_unread": 36,
       "misattributed": [
         {
           "zone": "CC",

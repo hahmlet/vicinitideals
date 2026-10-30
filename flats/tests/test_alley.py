@@ -620,4 +620,5 @@ def test_the_portland_side_alley_ruling_quotes_lines_that_say_what_it_says() -> 
     ).read_text(encoding="utf-8")
     # 33.910.definitions.txt#L766-L767 until the cut (FOLLOWUPS 73, batch 6).
     assert "33.910.030.txt#L544-L547" in yaml_text
-    assert "33.130.txt#L552-L556" in yaml_text
+    # 33.130.txt#L552-L556 until the cut (FOLLOWUPS 123).
+    assert "33.130.210.txt#L35-L39" in yaml_text
