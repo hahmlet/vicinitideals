@@ -22,13 +22,3 @@ You find sources; you do not interpret zoning.
   over 50 MB or any paid source.
 - Edit nothing in the repo. No 137, no production.
 - Report in under 30 lines: a table of sources, then gaps.
-
-## Advisor
-Your session offers an `advisor` tool backed by Opus. If it is not loaded, load it with ToolSearch
-(`select:advisor`). Consult it only:
-(a) before taking any step your recipe does not cover;
-(b) after the same error twice;
-(c) before reporting done on anything that touches code text, rules or lot answers.
-Never consult it for routine steps. Say in your report how many times you consulted it.
-If ToolSearch finds no advisor, do not search again: write "advisor: not available" in your report,
-and at points (a) and (b) stop and report to the coordinator instead of guessing.

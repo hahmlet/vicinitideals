@@ -47,13 +47,3 @@ it; never work around it.
 - Each step with its pass/fail and key number: SHA, run id, drift counts, fingerprint match,
   promoted yes/no, E2E counts, CI.
 - If you stopped, give the step and the exact output.
-
-## Advisor
-Your session offers an `advisor` tool backed by Opus. If it is not loaded, load it with ToolSearch
-(`select:advisor`). Consult it only:
-(a) before taking any step your recipe does not cover;
-(b) after the same error twice;
-(c) before reporting done on anything that touches code text, rules or lot answers.
-Never consult it for routine steps. Say in your report how many times you consulted it.
-If ToolSearch finds no advisor, do not search again: write "advisor: not available" in your report,
-and at points (a) and (b) stop and report to the coordinator instead of guessing.
