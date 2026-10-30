@@ -1,0 +1,11 @@
+33.140.020 List of the Employment and Industrial Zones
+The full and short names of the employment and industrial zones and their map symbols are listed below.
+When this Title refers to the employment or E zones it is referring to the first three listed.
+When this Title refers to the industrial or I zones, it is referring to the last three listed.
+Full Name                                                                                                                     Short Name/Map Symbol
+General Employment 1                                                                                                          EG1
+General Employment 2                                                                                                          EG2
+Central Employment                                                                                                            EX
+General Industrial 1                                                                                                          IG1
+General Industrial 2                                                                                                          IG2
+Heavy Industrial                                                                                                              IH

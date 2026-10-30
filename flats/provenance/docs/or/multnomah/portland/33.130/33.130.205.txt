@@ -1,0 +1,62 @@
+33.130.205 Floor Area Ratio
+A.                                                           Purpose. Floor area ratios (FARs) regulate the amount of use (the intensity) allowed on a site.
+FARs provide a means to match the potential amount of uses with the desired character of the area and the provision of public services.
+FARs also work with the height, setback, and building coverage standards to control the overall bulk of development.
+The bonus FAR options allow additional floor area as an incentive for providing affordable housing.
+B.                                                FAR standard.
+The maximum floor area ratios are stated in Table 130-2 and apply to all uses and development.
+Additional floor area may be allowed through bonus options, as described in Section 33.130.212, or transferred from historic resources per Subsection C.
+Adjustments to the maximum floor area ratios are prohibited.
+Except in the CR zone, floor area does not include the following:
+1.                                                    Floor area for structured parking when at least 50 percent, or 6, of the parking spaces in the structure, whichever is greater, have at least a Level 2 charger adjacent to the space, up to a maximum of 0.5 to 1;
+
+2.                                                    Floor area for required long term bicycle parking that is not located in a dwelling unit, up to a maximum of 0.5 to 1; and
+
+
+3.                                                    Floor area for indoor common area used to meet the requirements of Section 33.130.228.
+
+C.                                                                                         Transfer of floor area from historic resources.
+Floor area ratios may be transferred from a site that contains a historic resource as follows:
+
+1.                                                    Sending sites.
+FAR may be transferred from a site that contains a Historic or Conservation Landmark or a contributing resource in a Historic or Conservation District.
+Sites that are eligible to send floor area through this transfer are allowed to transfer:
+a.                                                     Unused FAR up to the maximum FAR allowed by the zone; and
+
+b.                                                  An additional amount equivalent to 50 percent of the maximum FAR for the zone.
+To qualify to transfer this additional amount of FAR, Portland Permitting & Development must verify that the landmark or contributing resource on the site meets one of the following:
+
+(1)                                  If the building is classified as Risk category I or II, as defined in the Oregon Structural Specialty Code, it has been shown to meet or exceed the
+American Society of Civil Engineers (ASCE) 41-               BPOE improvement standard as defined in City of Portland Title 24.85;
+(2)                                  If the building is classified as Risk category III or IV, as defined in the Oregon Structural Specialty Code, it has been shown to meet or exceed the ASCE41- BPON improvement standard as defined in City of Portland Title 24.85; or
+
+(3)                                  The owner of the landmark or contributing resource has entered into a phased seismic agreement with the City of Portland as described in Section 24.85.
+
+2.                                                    Receiving site.
+The transfer must be to a site that is zoned CM1, CM2, CM3, CE, CX, RM1, RM2, RM3, RM4, or RX outside of the Central City plan district.
+Transferring to a site that is zoned CR is prohibited.
+Transferring to a site where a Historic or
+Conservation Landmark or a contributing structure in a Historic or Conservation District has been demolished within the past ten years is prohibited unless the landmark or contributing structure was destroyed by fire or other causes beyond the control of the owner, the only structure on the site that was demolished was an accessory structure, or the demolition was approved through demolition review.
+3.                                         Maximum increase in FAR in the CM1, CM2, CM3, and CE zones.
+In the CM1, CM2, CM3, and CE zones, the total FAR on the receiving site may not exceed the maximum FAR with bonuses identified on Table 130-3.
+This total FAR includes FAR transferred from historic resources, and any additional FAR allowed at the receiving site from bonus options, or from other transfers.
+In addition, an increase on the receiving site of more than the following due to a historic resource transfer is prohibited:
+
+a.                                                     0.5 to 1 in the CM1 zone;
+b.                                                  0.75 to 1 in the CM2 zone;
+
+c.                                                        1 to 1 in the CM3 zone;
+
+
+d.                                                  0.5 to 1 in the CE zone.
+
+4.                                                    Maximum increase in FAR in the CX zone.
+In the CX zone, a           n increase in FAR on the receiving site of more than 3 to 1 is prohibited.
+The total increased FAR includes FAR transferred from historic resources, and additional FAR allowed at the receiving site from bonus provisions, or from other transfers;
+5.                                                    Development standards.
+The building on the receiving site must meet the development standards of the base zone, overlay zone, and plan district except floor area ratio, which is regulated by P           aragraphs C.2 and C.3 above;
+
+6.                                                    The property owner must execute a covenant with the City that is attached to and recorded with the deed of both the site transferring and the site receiving the density.
+The covenant must reflect the respective increase and decrease of potential FAR                     .
+The covenants for both sites must meet the requirements of Section 33.700.060, Covenants with the City.
+

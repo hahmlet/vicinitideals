@@ -1,0 +1,69 @@
+33.140.245 Exterior Display, Storage, and Work Activities
+A.                                              Purpose. The exterior development standards of this section are intended to assure that exterior display, storage, and work activities:
+•                                            Will be consistent with the desired character of the zone;
+•                                            Will not be a detriment to the overall appearance of an employment or industrial area, and exterior activities in the EG1 zone will be limited to a similar level as exterior activities in the Commercial Employment zone;
+•                                            Will not have adverse impacts on adjacent properties, especially those zoned residential; and
+•                                            Will not have an adverse impact on the environment.
+B.                                               Exterior display.
+1.                                                   Employment zones.
+Exterior display of goods is allowed as follows.
+The setback and landscaping standards for exterior display areas are stated in Table 140-4:
+a.                                                    Exterior display of goods is allowed in the EG1 zone except for uses in the Industrial categories.
+Exterior display of goods is not allowed for uses in the Industrial categories in the EG1 zone.
+b.                                                  Exterior display of goods is allowed in the EG2 zone.
+c.                                                       Exterior display of goods is allowed in the EX zone except for the display of motor vehicles, recreational vehicles, motor vehicle parts and supplies, building materials, and goods associated with an industrial use.
+
+
+2.                                                   Industrial zones.
+Exterior display of goods is allowed in the I zones.
+The setback and landscaping standards for exterior display areas are stated in Table 140-4.
+C.                                                 Exterior storage.
+1.                                                   Employment zones.
+Exterior storage is allowed in the EG1 zones but is limited to 20 percent of the site area for all uses except lumber yards and other building material stores.
+Exterior storage is allowed in the EG2 zones.
+Exterior storage is not allowed in the EX zones.
+The setback and landscaping standards for exterior storage areas are stated in Table 140-4.
+2.                                                   Industrial zones.
+Exterior storage is allowed in the I zones.
+The setback and landscaping standards for exterior storage areas area stated in Table 140          -4.
+D.                                            Exterior work activities.
+Exterior work activities are allowed in the industrial zones but not the employment zones.
+The setback and landscaping standards for exterior activity areas are stated in Table 140-4.
+E.                                                   Other exterior activities.
+Outdoor eating areas are allowed as an exterior activity in the employment and industrial zones.
+F.                                                     Paving. All exterior development areas in the EG1, EX, and IG1 zones must be paved.
+
+
+Table 140-4 Exterior Development Setbacks and Landscaping [1]
+
+EG1, IG1                                       EG2, IG2                                           EX                            IH
+Exterior Display
+Abutting a street                                                       5 ft. / L1                                     10 ft. / L1                                        0                             5 ft. / L1
+Abutting a C, E, I, CI or IR                                            0                                              0                                                  0                             0
+zone lot
+Abutting an R or OS zone                                                5 ft. / L3                                     10 ft. / L3                                        5 ft. / L3                    10 ft. / L3 lot
+Exterior Storage
+Abutting a street [2, 3]                                                5 ft. / L3, or                                 25 ft. / L3, or                                    Not                           5 ft. / L3, or
+5 ft./ F2 + L2                                 25 ft. / F2 + L2                                   Allowed                       5 ft./ F2 + L2
+Abutting a C, E, I, CI or IR                                            0 / F1                                         0 / F1                                             Not                           0
+zone lot                                                                                                                                                                  Allowed
+Abutting an R or OS zone                                                5 ft. / L4, or                                 10 ft. / L4, or                                    Not                           10 ft. / L4, or
+lot                                                                     10 ft. / L3                                    25 ft. / L3                                        Allowed                       25 ft. / L3
+Exterior Work Activities
+Abutting a street [2, 3]                                                Not allowed in                                 Not allowed in                                     Not                           5 ft. / L3, or
+EG1;                                           EG2;                                               Allowed                       5 ft./ F2 + L2
+5 ft. / L3, or                                 25 ft. / L3, or
+5 ft./ F2 + L2 in                              25 ft. / F2 + L2 in
+IG1                                            IG2
+Abutting a C, E, I, CI or IR                                            Not allowed in                                 Not allowed in                                     Not                           0
+zone lot                                                                EG1;                                           EG2;                                               Allowed
+0 / F1 in IG1                                  0 / F1 in IG2
+Abutting an R zone lot                                                  Not allowed in                                 Not allowed in                                     Not                           25 ft. / L3
+EG1;                                           EG2;                                               Allowed
+5 ft. / L4, or 10                              25 ft. / L3 or
+ft. / L3 in IG1                                25 ft. / F2 + L2 in
+IG2
+Notes:
+[1] The development standards first state the required setback, then the required landscaping standard.
+[2] If parking areas are placed between exterior storage areas and the street, an F2 screen only is required on the edge of the storage area.
+[3] When the F2 + L2 option is used, the fence must be placed along the interior side of the landscaped area.

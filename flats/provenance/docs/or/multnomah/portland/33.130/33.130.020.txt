@@ -1,0 +1,9 @@
+33.130.020                                                                                                                                                                                                                             List of the Commercial/Mixed Use Zones The full and short names of the commercial/mixed use zones and their map symbols are listed below.
+When this Title refers to the commercial/mixed use zones, it is referring to the zones listed here.
+Full Name                                                                                                            Short Name / Map Symbol
+Commercial Residential                                                                                               CR
+Commercial/Mixed Use 1                                                                                               CM1
+Commercial/Mixed Use 2                                                                                               CM2
+Commercial/Mixed Use 3                                                                                               CM3
+Commercial Employment                                                                                                CE
+Central Commercial                                                                                                   CX

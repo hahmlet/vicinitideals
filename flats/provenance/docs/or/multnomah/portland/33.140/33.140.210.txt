@@ -1,0 +1,71 @@
+33.140.210 Height
+A.                                              Purpose. The height standards work with the FAR, building setback, and building coverage standards to control the overall bulk and intensity of an area.
+The EG1 zone height limit is the same as the General Commercial zone because the EG1 zone often functions as a transition zone between industrial and residential or commercial zones.
+The EX zone height limit reflects its use in intense urban areas and the range of uses that are allowed.
+The other zones do not have height limits because tall buildings in these areas have traditionally not been a problem.
+B.                                               The height standard.
+The height limits for all structures, except detached accessory structures, are stated in Table 140-2.
+The height standards for detached accessory structures are stated in 33.140.270.
+Exceptions to the maximum height standard are stated below.
+1.                                                   Projections allowed.
+Chimneys, flag poles, satellite receiving dishes, and other                 similar
+items attached to a building,                                   with a width, depth, or diameter of 5 feet or less may rise
+10 feet above the height limit, or 5 feet above the highest point of the roof, whichever is greater.
+If they are greater than 5 feet in width, depth, or diameter, they are subject to the height limit.
+2.                                                   Parapets and rooftop railings may extend 4 feet above the height limit.
+3.                                           Rooftop mechanical equipment and stairwell enclosures that provide rooftop access may extend above the height limit as follows, provided that the equipment and enclosures are set back at least 15 feet from all roof edges on street facing facades:
+a.                                                    Elevator mechanical equipment may extend up to 16 feet above the height limit; and
+b.                                                  Other mechanical equipment and stairwell enclosures that cumulatively cover no more than 10 percent of the roof area may extend up to 10 feet above the height limit.
+4.                                                   Antennas, utility power poles, and public safety facilities are exempt from the height limit.
+5.                                                   Small wind turbines are subject to the standards of Chapter 33.299.
+6.                                                   Roof mounted solar panels are not included in height calculations, and may exceed the maximum height limit if the following are met:
+a.                                                       For flat roofs or the horizontal portion of mansard roofs, they may extend up to 5 feet above the top of the highest point of the roof.
+b.                                                  For pitched, hipped, or gambrel roofs, they must be mounted no more than 12 inches from the surface of the roof at any point, and may not extend above the ridgeline of the roof.
+The 12 inches is measured from the upper side of the solar panel.
+
+
+Table 140-2 Development Standards
+
+Standard                                                                         EG1                                       EG2                                    EX                                     IG1                                    IG2                                    IH
+Maximum FAR                                                                      3 to 1                                    3 to 1                                 3 to 1                                 no limit                               no limit                               no limit
+(see 33.140.205)
+Maximum FAR with                                                                 NA                                        NA                                     5 to 1                                 NA                                     NA                                     NA
+Inclusionary Housing
+Bonus
+(see 33.140.205.C)
+Maximum Height                                                                   45 ft.                                    no limit                               65 ft                                  no limit                               no limit                               no limit
+(see 33.140.210)
+Min. Building Setbacks
+Street Lot Line                                                                 5 ft.                                     25 ft.                                 0                                      0                                      25 ft.                                 5 ft.
+(see 33.140.215)
+- Lot line abutting an OS,
+C, E, or I zoned lot                                                             0                                         0                                      0                                      0                                      0                                      0
+- Lot line abutting an R                                                         See Table                                 15 ft.                                 See Table                              See Table                              15 ft.                                 15 ft.
+zoned lot                                                                        140-3                                                                            140-3                                  140-3
+Max. Building Stbks
+(see 33.140.215)
+Transit Street or                                                               10 ft.                                    None                                   10 ft.                                 None                                   None                                   None
+Pedestrian District
+Maximum Building                                                                 85% of site                               85% of site                            100% of                                100% of                                85% of site                            100% of
+Coverage                                                                         area                                      area                                   site area                              site area                              area                                   site area
+(see 33.140.220)
+Min. Landscaped Area                                                             15% of site                               15% of site                            None                                   None                                   15% of site                            None
+(see 140.225)                                                                    area                                      area                                                                                                                 area
+Ground Floor Window
+Standards apply                                                                  No                                        No                                     Yes                                    No                                     No                                     No
+(see 33.140.230)
+Pedestrian Standards
+Apply (see 33.140.240)                                                           Yes                                       Yes                                    Yes                                    No                                     No                                     No
+
+Table 140-3 Minimum Building Setbacks and Minimum Landscape Buffer From Residential Zone Lot Lines [1]
+
+Zone                                                                              Height of the                                                                              Lots abutting a side lot line                                                              Lots abutting a rear lot line
+building wall                                                                              of an R zoned lot                                                                          of an R zoned lot
+EG1, EX, IG1                                                                      15 ft. or less                                                                             5 ft. / 5 ft. @ L3                                                                         0 / none
+16 or more                                                                                 10 ft. / 5 ft. @ L3                                                                        10 ft. / 5 ft. @ L3
+EG2, IG2, IH                                                                      Any height                                                                                 15 ft. / 10 ft. @ L3                                                                       15 ft. / 10 ft. @ L3
+Notes:
+[1] Does not apply to lot lines that abut lots in the RX zone.
+See 33.140.215.B.
+
+

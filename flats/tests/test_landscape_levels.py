@@ -115,6 +115,19 @@ def test_a_page_date_ends_a_line_of_note_text() -> None:
     assert not RUNNING_HEADER.match("3/1/25the rest of a sentence")
 
 
+def test_a_cross_reference_opening_a_line_is_not_the_chapter_header() -> None:
+    """FOLLOWUPS 123: "Chapter 33.237, Food Production and Distribution, the
+    applicant may ..." was read as the running header, and it and the line
+    after it were dropped from Table 130-1 note 11. The header is the chapter
+    number alone, or the number and a wide gap."""
+    assert RUNNING_HEADER.match("Chapter 33.130")
+    assert RUNNING_HEADER.match("Chapter 33.130        Title 33, Planning and Zoning")
+    assert not RUNNING_HEADER.match(
+        "Chapter 33.237, Food Production and Distribution, the applicant may choose"
+    )
+    assert not RUNNING_HEADER.match("Chapter 33.285, Short Term, Mass, and Outdoor Shelters .")
+
+
 def test_the_limitation_that_had_a_page_stamp_in_the_middle_of_it(
     store: ProvenanceStore,
 ) -> None:

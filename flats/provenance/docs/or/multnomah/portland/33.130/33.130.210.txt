@@ -1,0 +1,132 @@
+33.130.210 Height
+A.                                                           Purpose. The height limits are intended to control the overall scale of buildings.
+The height limits in the CR and CM1 zones allow buildings that are in scale with low rise residential areas.
+The height limits in the CM2 and CE zones allow for a greater building height at a scale that can accommodate the growth intended for centers and corridors, while relating to the low-                to mid-rise scale of neighborhood residential areas.
+The CM3 zone allows the tallest buildings outside the Central City and Gateway plan districts, consistent with its intended role in accommodating higher-density development in areas well served by transit and other services.
+The CX zone allows the tallest buildings in the commercial/mixed use zones, consistent with its intended role in accommodating high-density development in the Central City and the Gateway plan districts.
+In some situations, step downs in maximum height provide a transition in scale to adjacent lower-scale residential areas, and preserve opportunities for light, air and privacy.
+Exceptions to height limit standards accommodate minor projections that do not significantly increase the visual scale of buildings; provide flexibility in the height of parapets and railings to facilitate rooftop outdoor spaces and equipment screening; and accommodate ground-floor spaces with high ceilings to encourage ground              -floor commercial uses, mechanical parking, and other uses that benefit from high ceilings.
+
+
+B.                                                Height standard.
+1.                                                    Base height.
+The base height standards for all structures, except detached accessory structures, are stated in Table 130 -2.
+The height standards for detached accessory structures are stated in 33.130.265, Detached Accessory Structures.
+
+2.                                                   Step-                         down height.
+In the following situations, the base height is reduced, or stepped-down.
+Stepped-down height is not required in the CR zone:
+
+a.                                                    Step-                         down adjacent to residential zones.
+The following step-down height limits apply within 25 feet of sites zoned residential.
+Sites with property lines that abut residential zones for less than a 5-foot length are exempt from these standards:
+
+(1)                                  On the portion of the                                    site within 25 feet of a site zoned RF through R2.5, the
+step-down height limit is 35 feet.
+See Figure 130               -1.
+
+(2)                                  On the portion of the                                    site within 25 feet of a site zoned RM1 or RMP, the
+step-down height limit is 45 feet.
+See Figure 130               -1.
+
+
+Figure 130-1 Step-                          Down Height Adjacent to Residential Zones
+
+b.                                                  Step-                         down across a local service street  or alley from                                  a residential zone.
+In the
+CM2, CM3, CX, and CE zones the following step -down height limit appl              ies.
+The limit does not apply to portions of buildings within 100 feet of a transit street.
+On the portion of the site within 15 feet of a lot line that is across a local service street or alley from a site zoned RF through R2.5 or RM1 or RMP, the step-down height limit is 45 feet.
+See Figure 130-2.
+3.                                                    Bonus height.
+The base height limits can be increased through options described in
+Section 33.130.212. When a bonus option allowed by 33.130.212 is used to increase the base height, the step-down height limits do not increase.
+C.                                                                                        Exceptions. Exceptions to the base height, step-down height, and bonus height limits are stated below:
+1.                                                    Projections allowed.
+Chimneys, vents, flag poles, satellite receiving dishes, and other similar items that are attached to a building and have a width, depth, or diameter of 5 feet or less may extend 10 feet above the height limits, or 5 feet above the highest point of the roof, whichever is greater.
+Items that are greater than 5 feet in width, depth, or diameter are not allowed to project above the base, step-down, or bonus height limits.
+
+
+2.                                                    Parapets and railings.
+In the CM1, CM2, CM3, CE and CX zones, parapets an  d rooftop railings may extend 4           feet above the height limits.
+
+3.                                                    Walls and fences.
+In the CM1, CM2, CM3, CE and CX zones, walls or fences located between individual rooftop decks may extend 6 feet above the height limits if the visual screen is set back at least 4 feet from the edges of the roof.
+4.                                                    Rooftop equipment.
+In the CM1, CM2, CM3, CE and CX zones, rooftop mechanical equipment and stairwell enclosures that provide rooftop access may extend above the height limits as follows, provided that the equipment and enclosures are set back at least 15 feet from all roof edges on street facing facades:
+
+a.                                                     Elevator mechanical equipment and stairwell enclosures may extend up to 16 feet above the height limits; and
+
+b.                                                  Other mechanical equipment that cumulatively cover no more than 10 percent of the roof area may extend up to 10 feet above the height limits.
+
+5.                                                    Antennas and mounting devices, utility power poles, and public safety facilities are exempt from the height limits.
+6.                                                    Small wind turbines are subject to the standards of Chapter 33.299.
+
+7.                                                    Roof mounted solar panels are not included in height calculations and may exceed the maximum height limits if the following are met:
+
+a.                                                     For flat roofs or the horizontal portion of mansard roofs, the solar panel may extend up to 5 feet above the top of the highest point of the roof; and
+
+b.                                                  For pitched, shed, hipped, or gambrel roofs, the solar panel must be mounted no more than 12 inches from the surface of the roof at any point, and may not extend above the ridgeline of the roof.
+The 12 inches is measured from the upper side of the solar panel.
+8.                                                    High ceilings.
+In the CM1, CM2, CM3, CE and CX zones outside the Central City plan district, base height, step-down height, and bonus height may be increased by 5 feet when at least 75 percent of the ground floor has at least 15 feet between the floor and the bottom of the structure above.
+The bottom of the structure above includes supporting beams.
+This exception does not apply if any portion of the ground floor is more than 2 feet above the existing or proposed sidewalk.
+
+
+Table 130-2 Summary of Development Standards in Commercial/Mixed Use Zones
+Standards                                                                                                               CR                              CM1                                CM2                                            CM3                                          CE                             CX
+Maximum FAR (see 33.130.205 and                                                                                         1 to 1 [1]                      1.5 to 1                           2.5 to 1                                       3 to 1                                       2.5 to 1                       4 to 1
+33.130.212)
+- Bonus FAR (see 33.130.212)                                                                                            NA                              See Table                          See Table                                      See Table                                    See                            See
+130-                                                            3 130-                                                            3 130-                                                            3 Table Table
+130-3                          130-3
+Minimum Density (see 33.130.207)                                                                                        NA                              NA                                 1 unit per                                     1 unit per                                   NA                             NA
+1,450 sq. ft. of                               1,000 sq. ft.
+site area                                      of site area
+Base Height (see 33.130.210.B.1)                                                                                        30 ft.                          35 ft.                             45 ft.                                         65 ft.                                       45 ft.                         75 ft.
+Step-down Height (see 33.130.210.B.2)
+- Within 25 ft. of lot line abutting RF-                  R2.5                                                          NA                              NA                                                  35 ft.                        35 ft.                                       35 ft.                         35 ft.
+zones
+- Within 25 ft. of lot line abutting RM1 and                                                                            NA                              NA                                 45 ft.                                         45 ft.                                       45 ft.                         45 ft.
+RMP Zones
+- Within 15 ft. of lot line across a local                                                                              NA                              NA                                 45 ft.                                         45 ft.                                       45 ft.                         45 ft.
+service street from RF – R2.5 zones                                    and
+RM1 and RMP zones
+- Bonus Height (see 33.130.212)                                                                                         NA                              NA                                 See Table                                      See Table                                    See                            See
+130-                                                            3 130-                                                            3 Table Table
+130-3                          130-3 Min. Building Setbacks (see 33.130.215.B)
+- Street Lot Line                                                                                                       none                            none                               none                                           none                                         none                           none
+- Street Lot Line abutting selected Civic                                                                               10 ft.                          10 ft.                             10 ft.                                         10 ft.                                       10 ft.                         10 ft.
+Corridors
+- Street Lot Line across a local street from                                                                            none                            none                               5 or 10 ft.                                    5 or 10 ft.                                  5 or 10                        5 or 10
+an RF –                            RM2 or RMP Zone.                                                                                                                                                                                                                                    ft.                            ft.
+
+Min. Building Setbacks (see 33.130.215.B)
+- Lot Line Abutting OS, RX, C, E, or I Zoned                                                                            none                            none                               none                                           none                                         none                           none
+Lot
+- Lot Line Abutting RF –                            RM4,          RMP, or IR                                            10 ft.                          10 ft.                             10 ft.                                         10 ft.                                       10 ft.                         10 ft.
+zoned Lot
+Max. Building Setbacks (see 33.130.215.C)
+- Street Lot Line                                                                                                       10 ft.                          10 ft.                             10 ft.                                         10 ft.                                       10 ft.                         10 ft.
+- Street Lot Line Abutting Selected Civic                                                                               20 ft.                          20 ft.                             20 ft.                                         20 ft.                                       20 ft.                         20 ft.
+Corridors
+Max. Building Coverage (% of site area)
+- Inner Pattern Area                                                                                                    85%                             85%                                100%                                           100%                                         85%                            100%
+- Eastern, Western, and River Pattern Areas                                                                             75%                             75%                                85%                                            85%                                          75%                            100%
+(see 33.130.220)
+Min. Landscaped Area (% of site area) (see                                                                              15%                             15%                                15%                                            15%                                          15%                            None
+33.130.225)
+Landscape Buffer Abutting an RF – RM4 or                                                                                10 ft. @                        10 ft. @                           10 ft. @ L3                                    10 ft. @ L3                                  10 ft. @                       10 ft. @
+RMP Zoned Lot (see 33.130.215.B)                                                                                        L3                              L3                                                                                                                             L3                             L3
+Required Residential Outdoor Area                                                                                       Yes                             Yes                                Yes                                            Yes                                          Yes                            No
+(see 33.130.228)
+Ground Floor Window Standards                                                                                           Yes                             Yes                                Yes                                            Yes                                          Yes                            Yes
+(see 33.130.230.B)
+Notes:
+[1] On sites that do not have a Retail Sales And Service or Office use, maximum density for Household Living is 1 unit per 2,500 square feet of site area.
+
+
+Example Illustration:
+Some building form and setback development standards
+

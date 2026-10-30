@@ -517,25 +517,21 @@ or/multnomah/portland:
   # Each chapter opens with its running header and its title ("Title 33,
   # Planning and Zoning / 10/1/24 / 33.110 Single-Dwelling Zones") over its
   # contents list.
-  front: ['33.100', '33.110', '33.120', '33.266', '33.610', 33.910.definitions, '33.920',
-          '33.930']
+  front: ['33.100', '33.110', '33.120', '33.130', '33.140', '33.150', '33.266', '33.610',
+          33.910.definitions, '33.920', '33.930']
   # Left whole: these nine PDF chapters have no page map (fetched for one
   # rule each, never declared), so the readable text could not take their
   # running headers out and a moved citation could not be checked to name
   # the same printed page.
   #
-  # And three base-zone chapters whose cut would unhook a footnote from a
-  # value (the FOLLOWUPS 123 trap), measured 2026-10-29: 33.150, where the
-  # unmeasured PCC Sylvania note (Table 150-2 note 3) caps CI1, CI2 and IR
-  # min_lot_sqft and quadplex_allowed only while their sections are one
-  # document -- cut, those two caps fall off; 33.140, whose EG1/EG2
-  # quadplex_allowed citation takes in a page header and so stays on the
-  # proof copy, where no footnote census reads it, losing the two encoded
-  # limitations it rests on (Table 140-1 notes 1 and 2); and 33.130, whose
-  # CM/CE/CR/CX citations run from Table 130-2's zone row to text in other
-  # sections and lose encoded note 1 of Table 130-2 the same way.
+  # And 33.150, whose cut would unhook a footnote from a value (measured
+  # 2026-10-29): the unmeasured PCC Sylvania note (Table 150-2 note 3) caps
+  # CI1, CI2 and IR min_lot_sqft and quadplex_allowed only while their
+  # sections are one document -- cut, those two caps fall off. 33.130 and
+  # 33.140 were held for FOLLOWUPS 123 too and are cut now that a citation
+  # left on the proof copy is followed into its sections' notes.
   uncut: ['33.218', '33.415', '33.418', '33.420', '33.445', '33.526', '33.700', '33.825', '33.846',
-          '33.130', '33.140', '33.150']
+          '33.150']
   # The footer "110-12" in its spacings ("110-      2", "120-"), in the
   # lines just above a page start. Measured 2026-10-29 on every page start of
   # the 11 page-mapped chapters; a figure caption there ("Figure 110-8") is
