@@ -1,5 +1,5 @@
 {
-  "digest": "9d0d0ac6c27cf650c91685dddd43147986b0b0156aad3611cbeda46ef7b67528",
+  "digest": "cfa74807c64af65938d6c9bb0eb73be191ea70c5ef1fbd5830957d7799355812",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -698,7 +698,7 @@
       "gaps": []
     },
     "or/multnomah/portland": {
-      "section_unread": 104,
+      "section_unread": 77,
       "misattributed": [],
       "label": "Portland",
       "counts": {},

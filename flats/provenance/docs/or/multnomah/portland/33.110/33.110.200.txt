@@ -1,0 +1,39 @@
+33.110.200 Housing Types Allowed
+A.                                              Purpose. Housing types are limited in the single-dwelling zones to maintain the overall image and character of the City's single-dwelling neighborhoods.
+However, the regulations allow options to increase housing variety and opportunities, and to promote affordable and energy-efficient housing.
+B.                                               Housing types.
+The kinds of housing types allowed in the single-dwelling zones are stated in Table 110-2.
+
+
+Table 110-2 Housing Types Allowed In The Single-Dwelling Zones
+Housing Type                                                                       RF                                   R20                                   R10                                  R7                                    R5                                   R2.5
+House                                                                              Yes                                  Yes                                   Yes                                  Yes                                   Yes                                  Yes
+
+Attached house
+(See 33.110.260.C and                                                              No                                   Yes                                   Yes                                  Yes                                   Yes                                  Yes
+33.110.265.C)
+Accessory dwelling unit
+(See Chapter 33.205)                                                               Yes                                  Yes                                   Yes                                  Yes                                   Yes                                  Yes
+Duplex                                                                             No                                   Yes                                   Yes                                  Yes                                   Yes                                  Yes
+Triplex                                                                            No                                   Yes                                   Yes                                  Yes                                   Yes                                  Yes
+(See 33.110.265.E)
+Fourplex                                                                           No                                   Yes                                   Yes                                  Yes                                   Yes                                  Yes
+(See 33.110.265.E)
+Multi-dwelling Structure                                                           No                                   Yes                                   Yes                                  Yes                                   Yes                                  Yes
+(See 33.110.265.F)
+Cottage Cluster                                                                    No                                   No                                    Yes                                  Yes                                   Yes                                  Yes
+(See 33.110.265.G)
+Manufactured home
+(See Chapter 33.251)                                                               Yes                                  Yes                                   Yes                                  Yes                                   Yes                                  Yes
+Manufactured Dwelling                                                              No                                   No                                    No                                   No                                    No                                   No
+park
+Houseboat
+(See Chapter 33.236)                                                               Yes                                  Yes                                   Yes                                  Yes                                   Yes                                  Yes
+Congregate Housing
+Facility (See                                                                      Yes                                  Yes                                   Yes                                  Yes                                   Yes                                  Yes
+33.110.100.B.1)
+Attached Duplex                                                                    Only in Planned Developments, See Chapter 33.270.
+Multi-dwelling                                                                     Only in Planned Developments, See Chapter 33.270.
+Development
+Yes = allowed; No = prohibited.
+

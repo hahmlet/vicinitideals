@@ -87,7 +87,14 @@ def test_and_the_gate_would_still_close_if_a_register_went_missing(
 def test_every_governed_value_names_the_notes_over_it(rows: list[Qualified]) -> None:
     for row in rows:
         assert row.governing
-        assert all(note.doc == row.quote.split("#", 1)[0] for note in row.governing)
+        doc = row.quote.split("#", 1)[0]
+        # A note is printed in the document it governs, or -- a use table's
+        # limitations cut away from their table (FOLLOWUPS 73, batch 6) -- in
+        # another section of the same chapter folder.
+        assert all(
+            note.doc == doc or note.doc.rpartition("/")[0] == doc.rpartition("/")[0] != row.layer
+            for note in row.governing
+        )
         assert row.clear == (not row.blocking)
 
 

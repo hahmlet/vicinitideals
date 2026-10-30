@@ -1,0 +1,266 @@
+33.266.130 Development Standards for All Other Development
+A.                                              Purpose. The development standards promote vehicle areas that are safe and attractive for motorists and pedestrians.
+Vehicle area locations are restricted in some zones to promote the desired character of those zones.
+Together with the transit street building setback standards in the base zone chapters, the vehicle area location regulations          :
+
+
+•                                            Provide pedestrian access that is protected from auto traffic;
+•                                            Create an environment that is inviting to pedestrians and transit users, especially on transit streets and in Pedestrian Districts;
+•                                            Limit the prominence of vehicle areas along street frontages and create a strong relationship between buildings and the sidewalk;
+•                                            Create a sense of enclosure on transit and pedestrian street frontages; and
+•                                            Limit the size of paved parking area and the type of paving material allowed in order to limit increases in temperature associated with asphalt and reduce impacts from urban heat islands.
+The parking area layout, setback, and landscaping                       standards are intended to promote safe circulation within the parking area, provide for the effective management of stormwater runoff from vehicle areas, and provide for convenient entry and exit of vehicles.
+The layout, setback, and landscaping standards:
+•                                            Improve and soften the appearance of parking areas;
+•                                            Reduce the visual impact of parking areas from sidewalks, streets, and especially from adjacent residential zones;
+•                                            Provide flexibility to reduce the visual impacts of small residential parking lots;
+•                                            Direct traffic in parking areas;
+•                                            Shade and cool parking areas;
+•                                            Reduce the amount and rate of stormwater runoff from vehicle areas;
+•                                            Reduce pollution and temperature of stormwater runoff from vehicle areas;
+•                                            Decrease airborne and waterborne pollution          ;
+•                                            Provide flexibility for locating electric vehicle chargers and equipment while limiting their impact on adjacent streets and lots; and
+•                                            Generate solar power to offset the impacts of surface parking areas.
+B.                                               Where these standards apply.
+The standards of this section apply to all vehicle areas, except for residential vehicle                                                         areas subject to the standards of 33.266.120.
+C.                                                 On-site locations and size           of vehicle areas.
+1.                                                     Location of vehicle areas.
+The allowed on-site location of all vehicle areas is stated in
+Table 266-3. Additionally, on sites in single dwelling zones or multi-dwelling zones that abut an alley and are 10,000 square feet or less in total site area, vehicle area may only be accessed from the alley.
+2.                                                   Building setbacks for structures that contain vehicle areas.
+a.                                                    Structures that contain vehicle areas are subject to the building setbacks of the base zone, where exiting in a forward motion is provided.
+b.                                                  Structured parking that does not allow exiting in a forward motion in R Zones is subject to the garage entrance setback standard of the base zone.
+c.                                                       Structured parking that does not allow exiting  in a forward motion in C, E, I, CI, or IR zones must be set back 18 feet from the street lot line.
+
+
+3.                                                   Frontage limitation.
+a.                                                       The standard of this Subparagraph applies outside the Central City plan district in the R20 through R2.5, RM1, RM                                      2,             RM3, RM4, and RMP zones.
+No more than 40 percent of the frontage on a street may be used for vehicle areas.
+On sites with more than one street frontage, this standard applies to the street with the highest transit designation.
+If two streets have the same highest transit classification, the applicant may choose on which street to meet the standard.
+Sites where there is less than 100 square feet of net building area are exempt from this standard.
+b.                                                     The standard of this Paragraph applies outside the Central City plan district in the RX, CR, CM1, CM2, CM3, CE, CX, EG1, EX, CI, and IR zones.
+Where vehicle areas are adjacent to a transit street or a street in a Pedestrian District, no more than 50 percent of the frontage on the transit street or street in a Pedestrian District may be used for vehicle areas.
+Sites where there is less than 100 square feet of net building area are exempt from this standard.
+4.                                                   Surface parking and driveway paving limitations.
+a.                                                     In the RM1 through RM4 zones, the following parking area and driveway size and paving material limitations apply:
+(1)                                  No more than 30 percent of total site area may be paved or used for surface parking and driveways; and
+(2)                                  Asphalt paving for surface parking and driveways may not cover more than 15 percent of total site area.
+b.                                                  On sites with more than 65,000 square feet of net building area, surface parking is limited to an amount equal to the total net building area on site.
+D.                                             Improvements.
+1.                                                   Paving. In order to control dust and mud, all vehicle areas must be paved.
+However, some portions of individual parking spaces may be landscaped per the standards of Paragraph F.4, below.
+2.                                                   Striping. All parking areas, except for stacked parking, must be striped in conformance with the parking dimension standards of Subsection F. below.
+3.                                                   Protective curbs around landscaping.
+All perimeter and interior landscaped areas must have protective curbs along the edges.
+Curbs separating landscaped areas from parking areas may allow stormwater runoff to pass through them.
+Tire stops, bollards, or other protective barriers may be used at the front ends of parking spaces.
+Curbs may be perforated or have gaps or breaks.
+Trees must have adequate protection from car doors as well as car bumpers.
+
+
+Table 266-3 Location of Vehicle Areas [1], [2]
+Zone                                                      General Standard                                          Exception for Through                                     Exception for Full-Block
+Lots and Sites with Three                                 Sites
+Frontages
+
+OS, RF, EG2, I                                            No restrictions.
+
+RMP, IR, CE, EG1, CI; sites                               Vehicle areas not allowed                                 May have vehicle areas                                    May have vehicle areas
+in RM1, RM2, and RM3                                      between the portion of                                    between the portion of                                    between the portion of
+that are more than                                        the building that complies                                the building that complies                                the building that complies
+10,000 square feet in                                     with the maximum street                                   with the maximum street                                   with the maximum street
+total area; sites in CM1,                                 setback and the transit                                   setback and one Local                                     setback and two Local
+CM2, and CM3 that are                                     street or streets in a                                    Service Transit Street.
+Service Transit Streets.
+more than 2 acres in total                                Pedestrian District.
+area
+R20-R2.5, RM4, RX, CX,                                    Not allowed between a                                     May have vehicle areas                                    May have vehicle areas
+CR, EX;, sites in RM1,                                    building and any street.                                  between the building and                                  between the building and
+RM2, and RM3 that are                                                                                               one Local Service Transit                                 two Local Service Transit
+10,000 square feet or less                                                                                          Street.
+Streets.
+in total area; sites in CM1,
+CM2, and CM3 that are 2 acres or less in total area
+Notes:
+[1] Driveways that provide a straight-line connection between the street and a parking area inside a building are not subject to these regulations.
+[2] Vehicle areas that are separated from a street by a building are not subject to these regulations.
+
+E.                                                   Stormwater management.
+Stormwater runoff from parking lots is regulated by the Bureau of Environmental Services.
+See Chapter 17.38, Drainage and Water Quality, and the City’s Stormwater Management Manual, which contain requirements for managing stormwater in parking lot landscaping.
+F.                                                    Parking area layouts.
+1.                                                   Access to parking spaces.
+a.                                                    All parking areas, except stacked parking areas, must be designed so that a vehicle may enter or exit without having to move another vehicle.
+b.                                                  All parking areas must be designed to allow vehicles to enter and exit the roadway in a forward motion, except:
+(1)                                  Parking areas with one or two spaces whose only access is on a local service street;
+(2)                                  Parking areas may be designed so that vehicles back out into an alley.
+However, there must be a maneuvering area of at least 20 feet between the end of each parking space and the opposite side of the alley.
+If the alley is less than 20 feet wide, some of this maneuvering area will be on-site.
+2.                                                   Parking space and aisle dimensions.
+Parking spaces and aisles must meet the minimum dimensions contained in Table 266-4.
+For stacked parking areas, see
+
+
+Section 33.266.140 below.
+Mechanical parking systems are exempt from the parking space dimensions in Table 266-4.
+3.                                                   Parking for disabled persons.
+Portland Permitting & Development                   regulates the following disabled person parking standards and access standards through the Oregon Structural Specialty Code.
+•                                                                                                                                                      Dimensions of disabled person parking spaces and access aisles;
+•                                                                                                                                                      The minimum number of disabled person parking spaces required;
+•                                                                                                                                                      Location of disabled person parking spaces and circulation routes,
+•                                                                                                                                                      Curb cuts and ramps including slope, width and location;
+•                                                                                                                                                      Signage and pavement markings.
+4.                                                   A portion of a standard parking space may be landscaped instead of paved, as follows:
+a.                                                    As shown in Figure 266-3, up to 2 feet of the front of the space as measured from a line parallel to the direction of the bumper of a vehicle using the space may be landscaped area;
+b.                                                  Landscaping must be ground cover plants; and
+c.                                                          The portion of the 2-foot wide area described in 4.a that is landscaped counts toward parking lot interior landscaping requirements and toward any overall site landscaping requirements.
+However, the landscaped area does not count toward perimeter landscaping requirements.
+
+Table 266-4 Minimum Parking Space and Aisle Dimensions [1,2]
+Angle                                            Width                                 Curb                                 1 Way Aisle                           2 Way Aisle                           Stall
+(A)                                              (B)                                   Length                               Width                                 Width                                 Depth
+(C)                                  (D)                                   (D)                                   (E)
+0° (Parallel)                                    8 ft.                                 22 ft. 6 in.                         12 ft.                                20 ft.                                8 ft.
+30°                                              8 ft. 6 in.                           17 ft.                               12 ft.                                20 ft.                                15 ft.
+45°                                              8 ft. 6 in.                           12 ft.                               12 ft.                                20 ft.                                17 ft.
+60°                                              8 ft. 6 in.                           9 ft. 9 in.                          16 ft.                                20 ft.                                17 ft. 6 in.
+90°                                              8 ft. 6 in.                           8 ft. 6 in.                          20 ft.                                20 ft.                                16 ft.
+Notes:
+[1] See Figure 266-4.
+[2] See Section 33.266.130.F.3 for information on parking spaces for the disabled.
+
+
+Figure 266-                         3
+Landscaped area at front of parking space.
+
+Figure 266-                         4
+Parking Dimension Factors
+
+5.                                                   Driveway and parking area green features.
+The following standards apply to new driveways and new parking areas in all zones when the new parking area is at least 21,780                          square feet in total area.
+Structured parking is not included in the total.
+a.                                                    The site must include one of the following features:
+(1)                                  Tree canopy.
+Tree canopy must shade at least 4          0 percent of the parking area.
+The amount of shade is determined by the diameter of the mature crown spread stated for the species of the tree.
+Trees used to meet this standard can also be used to meet the P1 Parking Lot Landscaping requirement.
+
+
+(2)    Solar panels.
+The site must include solar panels that generate at least 0.5 kilowatts per parking space.
+The solar panels may be placed anywhere on the site.
+(3)    Green energy.
+If the parking is provided for a public building as defined in ORS 270c.527, the site complies with OAR 330-135-0010.
+b.                                                  Driveways and internal accessways that are not parking aisles must include the following.
+Parking areas greater than 125,000 square feet on sites in R, C, E, IR, and CI zones are exempt from this standard:
+(1)    Curbs on both sides and an unobstructed sidewalk on at least one side that is part of the pedestrian system and meets the requirements of the pedestrian standards of the base zone, overlay zone or plan district;
+(2)    One large tree is required per 30 lineal feet of required sidewalk, one medium tree per 22 lineal feet of required sidewalk, or one small tree per 15 lineal feet of required sidewalk.
+Trees of different sizes may be combined to meet the standard.
+The acces s ways are excluded from the portion of the parking and loading area used to calculate required interior landscaping.
+6.                                                   Large parking areas in R, C, E, IR          , and CI zo nes.
+In the R, C, E, IR, and CI zones, where a parking area on the site is more than 125,000 square feet, the parking area must contain the following elements.
+Parking areas in structures are not included in this total:
+a.                                                    Internal access ways must divide the parking area into smaller areas that are no greater than 55,000 square feet;
+b.                                                  These accessways must connect to the adjacent street at least every 250 feet; and
+c.                                                       Each internal accessway must have at least one auto travel lane, curbs, and unobstructed sidewalks on both sides.
+One of the following must be met:
+•                                            The sidewalks must be at least 10 feet wide and planted with trees.
+One large tree is required per 30 lineal feet of sidewalk, one medium tree per 22 lineal feet of sidewalk, or one small tree per 15 lineal feet of sidewalk.
+Trees of different sizes may be combined to meet the standard;
+•                                            Trees must be planted in the center of unpaved tree wells that must be at least 18 square feet in area, with a minimum dimension of 3 feet.
+The unpaved area may be covered with a tree grate.
+Tree wells must be adjacent to the curb, and must be located so there is at least 6 feet of unobstructed sidewalk; or
+•                                            The sidewalks must be at least 6 feet wide.
+There must be a planting strip at least 4 feet wide.
+The planting strip must be between the curb and the sidewalk, and be landscaped to at least the L1 standard except that trees cannot be grouped.
+d.                                                  The internal accessways are excluded from the portion of the parking and loading area used to calculate required interior landscaping.
+
+
+G.                                            Parking area setbacks and landscaping.
+1.                                                   All landscaping must comply with the standards of Chapter 33.248, Landscaping and Screening.
+Trees and shrubs must be fully protected from potential damage by vehicles.
+2.                                                   Setbacks and perimeter landscaping.
+a.                                                    Where these regulations apply.
+The regulations of this paragraph apply to:
+(1)                                  Surface parking areas abutting a lot line;
+(2)                                  Any portion of structured parking areas where the parking area is within 4 feet of adjacent grade and there is no roof over it;
+(3)                                  Driveways.
+b.                                                   Exceptions.
+(1)                                  Shared driveways and parking aisles that straddle a lot line do not need to meet setback and perimeter landscaping requirements;
+(2)                                  Sites containing 5 or fewer parking spaces and developed only with residential development may provide a 3-foot-high fence meeting the F2 standards as an alternative to the perimeter setback and landscaping requirements on any lot line not abutting a street;
+(3)                                  Stacked parking areas must meet the requirements of Section 33.266.140, below.
+c.                                                       Setbacks. The minimum required setbacks for surface parking areas are stated in
+Table 266-5. Unless allowed under 33.266.130.H, p            rotective                         curbs, tire stops,
+bollards or other protective barriers are not allowed within the minimum required setbacks.
+
+Table 266-5 Minimum Parking Area Setbacks and Landscaping
+Location                                                                    All zones except EG2                                      EG2, IG2 and IG2
+Lot line abutting street                                                    5 ft. of L2                                               10 ft. of L2
+Lot line abutting a C, E, I, or CI
+zone lot line                                                               5 ft. of L2                                               5 ft. of L2
+Lot line abutting a OS, R, or IR
+zone lot line                                                               5 ft. of L3                                               10 ft. of L3
+
+d.                                                  Perimeter landscaping.
+The minimum setbacks and landscaping standards required are provided in Table 266-5.
+(1)                                  Surface parking abutting streets, and C, E, I, and CI zones.
+Where a surface
+parking area abuts a street lot line, or a C, E,           I, or CI zone lot line, only the minimum required setbacks must be landscaped.
+The landscaping must meet the L2 standard of Chapter 33.248, and must be adjacent to the parking area and driveway.
+Where a setback is provided that is greater than the required minimum, the landscaping must be placed within 25 feet of the
+
+
+edge of the parking area and driveway.
+To provide connectivity between sites, a single driveway up to 20 feet wide may interrupt the landscaping that abuts a C, E, or I zone lot line.
+(2)                                  Surface parking abutting OS,             R, and IR                           zones.
+Where a surface parking area
+abuts an OS,             R,            or IR zone lot line, only the minimum required setbacks must be landscaped.
+The landscaping must meet the L3 standard of Chapter 33.248, and must be adjacent to the parking area and driveway.
+Where a setback is provided that is greater than the required minimum, the landscaping must be placed within 25 feet of the edge of the parking area and driveway.
+3.                                                   Interior landscaping.
+The regulations of this paragraph apply to all surface parking areas except stacked parking areas.
+For stacked parking areas, see Section 33.266.140 below.
+a.                                                    Amount of interior landscaping required.
+In all zones, interior landscaping must be provided for sites where there are more than 10 parking spaces on the entire site.
+At least 45 square feet of interior landscaped area must be provided for each parking space.
+b.                                                  The landscape materials must comply with the P1 standard of Chapter 33.248.
+c.                                                       The landscaping must be dispersed throughout the parking area.
+All of the required landscape area may be in the parking area, or some may be in the loading area.
+d.                                                  Perimeter landscaping may not substitute for interior landscaping.
+However, interior landscaping may join perimeter landscaping as long as it extends at least four feet into the parking area from the perimeter landscape line.
+e.                                                   Exception for existing parking lots.
+Where compliance with Subparagraph G.3.a, above, would result in the loss of existing required parking spaces, the amount of parking required is reduced by the amount needed to accommodate the minimum landscaping required.
+f.                                                             Layout of interior landscaped areas.
+The layout of the interior landscaped areas must meet either one or a combination of the standards of this subparagraph:
+(1)                                   Option 1: Landscape strips.
+See Figure 266-5.
+•                                            Interior landscaping must be arranged in landscape strips at least four feet wide between rows of parking stalls            .
+•                                            Where the front portions of parking stalls are landscaped as allowed by Paragraph F.4, the landscaped portion of the parking stall must be adjacent to the four-foot landscape strip.
+
+
+Figure 266-                         5
+Landscape Strips
+
+(2)                                   Option 2: Other landscape patterns.
+See Figure 266-6.
+•                                            Interior landscaping must be arranged in areas at the ends of rows of parking or between parking spaces within rows of parking.
+•                                            Interior landscaping may join perimeter landscaping as long as the interior landscape area extends at least 4 feet into the parking area from the perimeter landscape line.
+•                                            Landscaping that abuts, but does not extend into, the parking area may be included as interior landscaping if all of the following are met: −                                        The abutting landscaped area must be in addition to required perimeter landscaping; −                                        Only the first 10 feet of the abutting landscaped area, measured from the edge of the parking area, may be included as interior landscaping; and −                                        The landscaped area is not abutting and parallel to required perimeter landscaping.
+g.                                                     Individual tree-planting spaces.
+Where an individual tree is planted in a space surrounded by pavement, the planting area must have a minimum interior dimension of five feet.
+See Figure 266-7.
+
+
+Figure 266-                         6
+Other Landscape Patterns
+
+Figure 266-                         7
+Individual Tree-Planting Spaces
+
+
+H.                                              Electric vehicle chargers in parking areas.
+Electric vehicle chargers, accessory equipment, and protective curbs, tire stops, bollards or other barriers needed to protect the charger or accessory equipment, may be located within parking areas, or adjacent to parking areas, subject to the following:
+1.                                                   The chargers, accessory equipment, and protective barriers cannot be located more than 2 feet into required perimeter landscaping areas; and
+2.                                                   The accessory equipment may be located anywhere on site but must be screened from the street and adjacent residential zones by walls, fences, or vegetation.
+Screening must comply with at least the L2 or F2 standards of Chapter 33.248, Landscaping and Screening, and be tall enough to screen the equipment.

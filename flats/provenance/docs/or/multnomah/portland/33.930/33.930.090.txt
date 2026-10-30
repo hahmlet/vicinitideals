@@ -1,0 +1,8 @@
+33.930.090 Determining the Garage Wall Area
+The garage wall area is determined by calculating the area of the specific side of a structure that is backed by garage space.
+The garage wall area is not limited to the area of the garage door; it includes all the area on the specified side of a structure between the ceiling, floor, and walls of the garage (see Figure 930-13).
+For carports, the garage wall area is determined by calculating the area of a vertical plane extending from the outer edges of the roof to the nearest grade.
+The area within a gable is not included in the calculation.
+See Figure 930-14.
+
+

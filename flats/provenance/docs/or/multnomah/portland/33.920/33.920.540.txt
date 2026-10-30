@@ -1,0 +1,12 @@
+33.920.540 Radio Frequency Transmission Facilities
+A.                                              Characteristics. Radio Frequency Transmission Facilities includes all devices, equipment, machinery, structures or supporting elements necessary to produce nonionizing electromagnetic radiation within the range of frequencies from 100 KHz to 300 GHz and operating as a discrete unit to produce a signal or message.
+Towers may be self supporting, guyed, or mounted on poles or buildings.
+B.                                                  Accessory Uses.
+Accessory use may include transmitter facility buildings.
+C.                                                 Examples. Examples include Personal Wireless Service Facilities, Radio or Television Broadcast Facilities, broadcast towers, communication towers, point to point microwave towers, accessory equipment, antennas, and transmitter radios.
+D.                                             Exceptions.
+1.                                                   Receive-only antenna are not included in this category.
+2.                                                   Radio and television studios are classified in the Office category.
+3.                                                   Radio Frequency Transmission Facilities that are public safety facilities are classified as Basic Utilities.
+
+

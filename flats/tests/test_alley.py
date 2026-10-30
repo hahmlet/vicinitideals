@@ -462,8 +462,12 @@ def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> Non
             side_line = zone.values.get("setback_alley_side_ft")
             if side_line is not None:
                 assert side_line.exempt and side_line.value is None, (lid, zname)
+                # Portland's alley sentence, in its section files since the cut
+                # (FOLLOWUPS 73, batch 6; proof copy L746 / L1053 before). The county
+                # pockets keep their own copy of 33.110 as fetched.
                 assert "abutting an" in side_line.prov.quote or any(
-                    tag in side_line.prov.quote for tag in ("#L746", "#L1053")
+                    tag in side_line.prov.quote
+                    for tag in ("33.110.220.txt#L102", "33.120.220.txt#L54", "33.110.txt#L746")
                 ), (lid, zname, side_line.prov.quote)
                 held_on_the_line.add((lid, zname))
             # The garage half is Portland's sentence only in the two layers
@@ -620,5 +624,6 @@ def test_the_portland_side_alley_ruling_quotes_lines_that_say_what_it_says() -> 
     yaml_text = (
         Path(__file__).resolve().parents[1] / "config/jurisdictions/or/multnomah/portland.yaml"
     ).read_text(encoding="utf-8")
-    assert "33.910.definitions.txt#L766-L767" in yaml_text
+    # 33.910.definitions.txt#L766-L767 until the cut (FOLLOWUPS 73, batch 6).
+    assert "33.910.030.txt#L544-L547" in yaml_text
     assert "33.130.txt#L552-L556" in yaml_text

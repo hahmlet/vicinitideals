@@ -34,6 +34,14 @@ pytestmark = pytest.mark.unit
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CONFIG = REPO_ROOT / "flats" / "config" / "jurisdictions"
+#: Portland's alley sentence ("No side, rear, or garage entrance setback is
+#: required from a lot line abutting an alley"), 33.110.220.B.9 and
+#: 33.120.220.B.3.g, at their section-file addresses -- and at L746 of the
+#: county pockets' own copy of 33.110 as fetched.
+ALLEY_LINES = ("33.110.220.txt#L102", "33.120.220.txt#L54", "33.110.txt#L746")
+#: ... and the multi-dwelling garage entrance sentence, 33.120.220 (proof copy
+#: 33.120.txt L1228 until the cut).
+GARAGE_ALLEY_LINES = ("33.120.220.txt#L173-L174",)
 
 
 @pytest.fixture(scope="module")
@@ -136,8 +144,12 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                     f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
                     f"holds no {condition} exemption on {field} -- a number nobody read"
                 )
-                assert all("abutting an" in v.prov.quote or "#L746" in v.prov.quote
-                           or "#L1228" in v.prov.quote for v in alley), (jname, row["zone"])
+                # Portland's alley sentence: 33.110.220.B.9 and 33.120.220.B.3.g,
+                # proof copy 33.110.txt L746 and 33.120.txt L1053/L1228 until
+                # Portland was cut into sections (FOLLOWUPS 73, batch 6).
+                assert all("abutting an" in v.prov.quote
+                           or any(tag in v.prov.quote for tag in ALLEY_LINES + GARAGE_ALLEY_LINES)
+                           for v in alley), (jname, row["zone"])
                 # ... and the rear half, on the line that names the line.
                 rear = zone.values.get("setback_rear_ft")
                 assert rear is not None, f"{jname}/{row['zone']} holds no setback_rear_ft"
@@ -146,7 +158,7 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                     f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
                     f"holds no alley_at_rear exemption on setback_rear_ft"
                 )
-                assert all("#L746" in v.prov.quote or "#L1053" in v.prov.quote
+                assert all(any(tag in v.prov.quote for tag in ALLEY_LINES)
                            for v in rear_alley), (jname, row["zone"])
                 assert not any("abuts_alley" in (v.when or ()) for v in rear.variants), (
                     f"{jname}/{row['zone']}: a rear waiver keyed to the lot, not the line"
@@ -157,7 +169,7 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                     f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
                     f"holds no setback_alley_side_ft exemption -- the side half unread"
                 )
-                assert "#L746" in side_line.prov.quote or "#L1053" in side_line.prov.quote, (
+                assert any(tag in side_line.prov.quote for tag in ALLEY_LINES), (
                     jname, row["zone"],
                 )
                 side = zone.values["setback_side_ft"]

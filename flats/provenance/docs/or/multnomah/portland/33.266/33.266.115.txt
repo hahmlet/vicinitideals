@@ -1,0 +1,136 @@
+33.266.115 Maximum Allowed Parking Spaces
+A.                                              Purpose. Limiting the number of spaces allowed promotes efficient use of land, enhances urban form, encourages use of alternative modes of transportation, provides for better pedestrian movement, and protects air and water quality.
+B.                                               Maximum number of parking spaces allowed.
+Regulations in a plan district or overlay zone may supersede the regulations in this S         ubsection.
+Park and ride facilities are exempt from parking maximums.
+1.                                                   Surface parking.
+Where more than 25 percent of the parking accessory to a use is on surface parking lots, the maximum number of parking spaces allowed is stated in
+Tables 266-1 and 266-2 and apply to both the structured and surface parking.
+Parking accessory to a use includes accessory parking that is on- and off-site.
+2.                                                   Structured parking.
+Where 75 percent or more of the parking accessory to a use is in structured parking, both the structured and surface parking are regulated as follows.
+Parking accessory to a use includes accessory parking that is on- and off-site:
+a.                                                     Generally. The maximum number of parking spaces allowed is 125 percent of the amount stated                                          in Tables 266-1 and 266-2, except as provided in Subparagraph
+B.2.b;
+b.                                                  Parking accessory to Medical Centers and Colleges.
+The maximum parking allowed that is accessory to Medical Centers and Colleges is stated in Tables 266-1 and 266-2.
+3.                                                   Exception in the EG and I zones.
+In the EG and I zones, there is no maximum number of accessory parking spaces for either structured or surface parking where both
+Subparagraphs B.3.a. and b. are met, and either Subparagraph            B.3.c. or d. is met:
+a.                                                    The site is at least eight acres in area;
+b.                                                  The site is located more than 1/2 mile from a transit stop or station with 20- minute peak-                      hour light rail or streetcar service; and
+c.                                                       At least 700 of the accessory parking spaces are in a structure; or
+d.                                                  The structured parking is in a structure with at least three floors, and parking is on at least three floors of the structure.
+
+
+Table 266-1 Maximum Allowed Parking Spaces By Zone [1], [2] Zone                                                                               Requirement
+OS, R, C, CI, EG, I, IR                                                            Maximum is Standard B in Table 266-2.
+
+EX                                                                                 Maximum is Standard A in Table 266-2, except for the following, where the maximum is Standard B:
+
+1) Retail, personal service-oriented, repair-oriented
+2) Restaurants and bars
+3) General office
+4) Medical/Dental office
+
+[1] Regulations in a plan district or overlay zone may supersede the standards of this table.
+[2] Uses subject to a Conditional Use, Impact Mitigation Plan, or Transportation Impact  review may establish different parking requirements through the review.
+
+Table 266-2
+Maximum Allowed Parking Spaces by Use            [1]
+(Refer to Table 266-1 to determine which standard applies.)
+
+Use Categories                                                   Specific Uses                                                          Standard A                                                             Standard B
+Residential Categories
+Household Living                                                                                                                        1 per 2 units                                                          No maximum, except 1.35 per unit on sites that are in a commercial/mixed use or multi-dwelling                     zone.
+Houses, attached houses and duplexes are exempt.
+Group Living                                                                                                                            1 per 4 bedrooms                                                       No maximum
+Commercial Categories
+Retail Sales And Service                                         Retail, personal service,                                              1 per 500 sq. ft. of net                                               1 per 200 sq. ft. of net
+repair oriented                                                        building area                                                          building area
+Restaurants and bars                                                   1 per 250 sq. ft. of net                                               1 per 75 sq. ft. of net
+building area                                                          building area
+Health clubs, gyms,                                                    1 per 330 sq. ft. of net                                               1 per 200 sq. ft. of net
+lodges, meeting rooms,                                                 building   area                                                        building area
+and similar. Continuous entertainment such as arcades and bowling alleys
+Temporary lodging                                                      1 per rentable room; for                                               1.5 per rentable room; for
+associated uses such as                                                associated uses such as
+restaurants, see above                                                 restaurants, see above
+Theaters                                                               1 per 4 seats or 1 per 6                                               1 per 3 seats or 1 per 4 feet
+feet of bench area                                                     of bench area
+
+
+Table 266-2
+Maximum Allowed Parking Spaces by Use            [1]
+(Refer to Table 266-1 to determine which standard applies.)
+Commercial Categories
+Office                                                         General office                                                       1 per 500 sq. ft. of net                                              1 per 300 sq. ft. of net
+building area                                                         building area
+Medical/Dental office                                                1 per 500 sq. ft. of net                                              1 per 200 sq. ft. of net
+building area                                                         building area
+Quick Vehicle Servicing                                                                                                             1 per 500 sq. ft. of net                                              1 per 200 sq. ft. of net
+building area                                                         building area
+Vehicle Repair                                                                                                                      1 per 750 sq. ft. of net                                              1 per 500 sq. ft. of net
+building area                                                         building area
+Commercial Parking                                                                                                                  None                                                                  None
+Self-Service Storage                                                                                                                1 per resident manager’s                                              2 per resident manager’s
+facility, plus 3 per leasing                                          facility, plus 5 per leasing
+office, plus 1 per 100                                                office, plus 1 per 70
+leasable storage spaces in                                            leasable storage spaces in
+multi-story buildings.                                                multi-story buildings.
+Commercial Outdoor                                                                                                                  20 per acre of site                                                   30 per acre of site
+Recreation
+Major Event                                                                                                                         1 per 8 seats                                                         1 per 5 seats
+Entertainment
+Industrial Categories
+Manufacturing And                                                                                                                   1 per 750 sq. ft. of net                                              1 per 500 sq. ft. of net
+Production                                                                                                                          building area [1]                                                     building area
+Warehouse And Freight                                                                                                               1 per 750 sq. ft. of net                                              1 per 500 sq. ft. of net
+Movement                                                                                                                            building area for the first                                           building area for the first
+3,000 sq. ft. of net                                                  3,000 sq. ft. of net building
+building area and then 1                                              area and then 1 per 2,500
+per 3,500 sq. ft. of net                                              sq. ft. of net building                        area
+building area thereafter                                              thereafter
+Wholesale Sales,                                                                                                                    1 per 750 sq. ft. of net                                              1 per 500 sq. ft. of net
+Industrial Service,                                                                                                                 building area                                                         building area
+Railroad Yards
+
+Waste-Related                                                                                                                       See note [1]                                                          See note [1]
+Institutional Categories
+Basic Utilities                                                                                                                     None                                                                  None
+Community Service                                                                                                                   1 per 500 sq. ft. of net                                              1 per 200 sq. ft. of net
+building area                                                         building area
+Parks And Open Areas                                                                                                                Per CU review for active                                              Per CU review for active areas                                                                 areas
+Schools                                                        Grade, elementary,                                                   1 per classroom                                                       1.5 per classroom middle, junior high
+High school                                                          7 per classroom                                                       10.5 per classroom
+Medical Centers                                                                                                                     1 per 500 sq. ft. of net                                              1 per 200 sq. ft. of net
+building area                                                         building area
+
+
+Table 266-2
+Maximum Allowed Parking Spaces by Use            [1]
+(Refer to Table 266-1 to determine which standard applies.)
+
+Use Categories                                         Specific Uses                                               Standard A                                                   Standard B
+Colleges                                                                                                           1 per 600 sq. ft. of net                                     1 per 400 sq. ft. of net
+building area exclusive of                                   building area exclusive of
+dormitories, plus 1 per 4                                    dormitories, plus 1 per 2.6
+dorm rooms                                                   dorm rooms
+Religious Institutions                                                                                             1 per 100 sq. ft. of main                                    1 per 70 sq. ft. of main
+assembly area                                                assembly area
+Daycare                                                                                                            1 per 500 sq. ft. of net                                     1 per 330 sq. ft. of net
+building area                                                building area
+Other Categories
+Agriculture                                                                                                        None                                                         None
+Aviation                                                                                                           See note [1]                                                 See note [1]
+Detention Facilities                                                                                               See note [1]                                                 See note [1]
+Mining                                                                                                             See note [1]                                                 See note [1]
+Radio Frequency                                        Personal wireless service                                   None                                                         None
+Transmission Facilities                                and other non-                        broadcast facilities
+Radio or television                                         2 per site                                                   None
+broadcast facilities
+Rail Lines & Utility                                                                                               None                                                         None
+Corridors
+Notes:
+[1] Uses subject to a Conditional Use,  Impact Mitigation Plan, or Transportation Impact  review may establish parking requirements through the review   .
+

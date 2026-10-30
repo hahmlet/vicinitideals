@@ -348,6 +348,12 @@ OPEN = {
     "or/multnomah/gresham 4.1508 -> 10.1700",
     "or/multnomah/portland 33.130.215 -> 33.120.280",
     "or/multnomah/portland 33.140.210 -> 33.140.215",
+    # 2026-10-29 (FOLLOWUPS 73 batch 6): newly visible when Portland was cut into
+    # sections, listed and not yet read -- RM max FAR's bonus options (33.120.210
+    # L10 -> 33.120.211) and the garage walls sentence under the multi-dwelling
+    # setbacks (33.120.220 L170 -> 33.120.283).
+    "or/multnomah/portland 33.120.210 -> 33.120.211",
+    "or/multnomah/portland 33.120.220 -> 33.120.283",
     "or/washington/hillsboro 12.61.400 -> 12.23.300",
     "or/washington/hillsboro 12.61.400 -> 12.50.845",
     "or/washington/beaverton 20.05.15 -> 20.25.05",

@@ -1,0 +1,9 @@
+33.930.140 Measuring the Root Protection Zone
+The root protection zone is a circular area around a tree that is based on the diameter of the tree.
+Each 1 inch diameter of tree equals 1 foot radius for the root protection zone.
+See Figure 930-24.
+
+Figure 930-                         24
+Measuring the Root Protection Zone
+
+

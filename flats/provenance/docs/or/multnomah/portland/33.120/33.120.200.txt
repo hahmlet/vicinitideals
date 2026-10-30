@@ -1,0 +1,32 @@
+33.120.200 Housing Types Allowed
+A.                                  Purpose. A broad range of housing types are allowed in the multi-dwelling zones.
+This range allows for efficient use of land, provides options to increase housing variety and housing opportunities, and promotes affordable and energy-efficient housing.
+B.                                   Housing types.
+The types of housing allowed in the multi-dwelling zones are stated in Table 120-2.
+Table 120-                                                      2
+Housing Types Allowed In The Multi -Dwelling Zones
+Housing Type                                                                                       RM1                                   RM2                              RM3                                      RM4                          RX                                       RMP
+House                                                                                              Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+Attached House                                                                                     Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+(See 33.120.270 C.)
+Accessory dwelling unit                                                                            Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+(See 33.205)
+Duplex                                                                                             Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+Attached Duplex                                                                                    Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+(See 33.120.270.F)
+Triplex                                                                                            Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+Fourplex                                                                                           Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+Multi-Dwelling Structure                                                                           Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+Cottage Cluster                                                                                    Yes                                   No                               No                                       No                           No                                       No
+Multi-Dwelling Development                                                                         Yes                                   Yes                              Yes                                      Yes                          Yes                                      Yes [1]
+Manufactured Dwelling                                                                              Yes                                   Yes                              Yes                                      Yes                          Yes                                      Yes [2]
+(See Chapter 33.251)
+Manufactured Dwelling Park                                                                         Yes                                   No                               No                                       No                           No                                       Yes
+(See Chapter 33.251)
+Houseboat                                                                                          Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+(See Chapter 33.236)
+Congregate Housing Facility                                                                        Yes                                   Yes                              Yes                                      Yes                          Yes                                      No
+Yes = allowed; No = prohibited.
+Notes:
+[1] The only type of multi -dwelling development allowed in the RMP zone is manufactured dwellings in a manufactured dwelling park.
+[2] Except on individual lots created under the provisions of 33.642, Land Divisions of Manufactured Dwelling Parks, manufactured dwellings are only allowed in manufactured dwelling parks.

@@ -1,0 +1,77 @@
+33.610.200 Lot Dimension Regulations
+Lots in the RF through R2.5 zones must meet the lot dimension regulations           of this section.
+
+A.                                                           Purpose. The lot dimension regulations           ensure that:
+•                                             Each lot has enough room for a reasonably-sized house;
+•                                             Lots are of a size and shape that development on each lot can meet the development standards of the zoning code;
+•                                             Lots are not so large that they seem to be able to be further divided to exceed the maximum allowed density of the site in the future;
+•                                             Lots that can be divided in the future without exceeding the maximum allowed density for the original land division site are of a size and shape to reasonably be divided;
+
+
+•                                             Each lot has room for at least a small, private outdoor area;
+•                                             Lots are compatible with the planned intensity of the zone;
+•                                             Lots are wide enough to allow development to orient toward the street;
+•                                             Lots don’t narrow to an unbuildable width close to the street
+•                                             Each lot has adequate access from the street;
+•                                             Each lot has access for utilities and services;
+•                                             Lots are not landlocked; and
+•                                             Lots are regularly shaped.
+
+Table 610-2 Lot Dimension Standards
+RF                                  R20                                  R10                                  R7                                   R5                                   R2.5
+Minimum Lot Area
+Attached house lots [1]                                             NA                                  1,500                                1,500                                1,500                                1,500                                1,500
+sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+All other lots                                                      52,000                              12,000                               6,000                                4,200                                3,000                                1,500
+sq. ft.                             sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+Maximum Lot Area
+Cottage cluster lots [2]                                            NA                                  43,560                               43,560                               43,560                               43,560                               43,560
+sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+All other lots                                                      151,000                             34,500                               17,000                               12,000                               8,500                                NA
+sq. ft.                             sq. ft.                              sq. ft.                              sq. ft.                              sq. ft.
+Minimum Lot Width [3]
+Attached house lots [1]                                             NA                                  15 ft.                               15 ft.                               15 ft.                               15 ft.                               15 ft.
+All other lots                                                      60 ft.                              60 ft.                               50 ft.                               40 ft.                               36 ft.                               25 ft.
+Minimum Front Lot Line
+Attached house lots [1]                                             NA                                  15 ft.                               15 ft.                               15 ft.                               15 ft.                               15 ft.
+All other lots                                                      30 ft.                              30 ft.                               30 ft.                               30 ft.                               30 ft.                               20 ft.
+Minimum Lot Depth                                                       60 ft.                              60 ft.                               60 ft.                               55 ft.                               50 ft.                               40 ft.
+Notes:
+[1] This dimensional standard is only allowed for lots that will be developed with attached houses.
+[2] This dimensional standard is only allowed for lots that are located entirely outside the Constrained Sites overlay zone, have frontage on a maintained street or a private street that connects to a maintained street or a self-contained pedestrian connection created solely for pedestrians and bicycles, and will be developed with cottage clusters.
+[3] See 33.930.100.A for how lot width is measured.
+
+B.                                                Minimum lot area.
+Each lot must meet the minimum lot area standard stated in Table 610-
+2. Lots that do not meet the minimum lot area standard may be requested through Planned Development Review or, when the site is in an environmental overlay zone, as a modification through environmental review.
+Until January 2, 2032, adjustments to reduce the minimum lot area standard by up to 10 percent may be requested.
+Other than as specified in this Subsection, adjustments are prohibited.
+C.                                                                                         Maximum lot area.
+Lots larger than the maximum lot area standards stated in Table 610-2 are not allowed.
+Lots with a conditional use or Conditional Use Master Plan are exempt from the maximum lot area standard.
+
+
+D.                                             Minimum lot width.
+Each lot must meet the minimum lot width standard stated in Table 610-2                                                                                         .
+Lots that do not meet the standard may be requested through Planned Development Review or, when the site is in an environmental overlay zone, as a modification through environmental review.
+Until January 2, 2032, adjustments to reduce the minimum lot width standard by up to 10 percent may be requested.
+Other than as specified in this Subsection, adjustments are prohibited.
+
+E.                                                    Minimum front lot line.
+Each lot must have a front lot line that meets the minimum front lot line standard stated in Table 610-2.
+Lots that do not meet the minimum front lot line standard may be requested through Planned Development Review or, when the site is in an environmental overlay zone, as a modification through environmental review.
+Until January 2, 2032, adjustments to reduce the minimum front lot line standard by up to 10 percent may be requested.
+Other than as specified in this Subsection, a                                    djustments to this standard are prohibited.
+
+F.                                                     Minimum lot depth.
+Each lot must meet the minimum lot depth standard stated in Table 610-2.
+Lots that do not meet the minimum lot depth standard may be requested through Planned Development Review or, when the site is in an environmental overlay zone, as a modification through environmental review.
+Until January 2, 2032, adjustments to reduce the minimum lot depth standard by up to 10 percent may be requested.
+Other than as specified in this Subsection, adjustments                                   to this standard are prohibited.
+G.                                             Regular lot lines.
+Proposed lot lines in the R10 through R2.5 zones must meet one of the following regulations.
+Adjustments are prohibited.
+1.                                                                                         Standard. All lot lines must be straight and traverse in a single uniform direction except for lot lines that follow a zoning line, right of way, or boundary of a tract.
+2.                                                                                         Approval criterion.
+As far as is practical, all lot lines must be straight and traverse in a uniform direction taking into consideration topography and other natural features, existing development, zoning, or other clearly identifiable boundary markers such as fences or hedgerows.
+

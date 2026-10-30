@@ -69,6 +69,7 @@ _OPENS = re.compile(
       | [a-zA-Z][.)]\s                  # a.  A)
       | (?:ii|iii|iv|vi|vii|viii|ix|xi|xii)[.)]\s  # ii.  iv. -- a lower-case roman item
       | \[\s*[0-9A-Za-z]{1,3}\s*\]\s*$  # [2] -- a web print's note marker, alone
+      | \[\s*[0-9]{1,2}\s*\]\s+[A-Z]    # [2] For ... -- a table note opening its line
       | [•●▪◦–—*-]\s   # bullets and dashes
       | (?:Table|Figure|Map|Exhibit|Chapter|Section|Sections)\b
       | (?:Footnotes?|Notes?):?\s*$     # a table's notes heading, alone

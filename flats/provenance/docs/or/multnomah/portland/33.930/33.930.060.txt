@@ -1,0 +1,8 @@
+33.930.060 Determining Average Slope
+When calculating the slope of a lot an average slope is used based on the elevations at the corners of the lot.
+The average sl           ope of a lot is calculated by subtracti                         ng the average elevation of the uphill
+lot line and the average elevation of the downhill lot line a           nd dividing the sum by the average distance between the two lot lines.
+The average elevation of the uphill or downhill lot line is calculated by adding the e                                   levations at the ends of the lot line and dividing by two.
+See Figure 930-9.
+
+

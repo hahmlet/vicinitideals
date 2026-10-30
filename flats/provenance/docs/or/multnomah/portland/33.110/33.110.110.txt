@@ -1,0 +1,59 @@
+33.110.110 Accessory Uses
+Accessory uses to a primary use are allowed if they comply with all development standards.
+Accessory home occupations, accessory dwelling units, and accessory short-term rentals have specific regulations in Chapters 33.203, 33.205, and 33.207 respectively.
+
+Table 110-1 Single-Dwelling Zone Primary Uses
+
+Use Categories                                                                           RF                          R20                         R10                          R7                          R5                          R2.5
+Residential Categories
+Household Living                                                                         Y                           Y                           Y                            Y                           Y                           Y
+Group Living                                                                             L/CU [1]                    L/CU [1]                    L/CU [1]                     L/CU [1]                    L/CU [1]                    L/CU [1]
+Commercial Categories
+Retail Sales And Service                                                                 CU [2]                      CU [2]                      CU [2]                       CU [2]                      CU [2]                      CU [2]
+Office                                                                                   N                           N                           N                            N                           N                           N
+Quick Vehicle Servicing                                                                  N                           N                           N                            N                           N                           N
+Vehicle Repair                                                                           N                           N                           N                            N                           N                           N
+Commercial Parking                                                                       N                           N                           N                            N                           N                           N
+Self-Service Storage                                                                     N                           N                           N                            N                           N                           N
+Commercial Outdoor Recreation                                                            N                           N                           N                            N                           N                           N
+Major Event Entertainment                                                                N                           N                           N                            N                           N                           N
+Industrial Categories
+Manufacturing And Production                                                             CU [3]                      N                           N                            N                           N                           N
+Warehouse And Freight                                                                    N                           N                           N                            N                           N                           N
+Movement
+Wholesale Sales                                                                          N                           N                           N                            N                           N                           N
+Industrial Service                                                                       N                           N                           N                            N                           N                           N
+
+
+Table 110-1 Single-Dwelling Zone Primary Uses Industrial Categories
+Bulk Fossil Fuel Terminal                                                                               N                                N                                N                                N                                N                                N
+Railroad Yards                                                                                          N                                N                                N                                N                                N                                N
+Waste-Related                                                                                           N                                N                                N                                N                                N                                N
+Institutional Categories
+Basic Utilities                                                                                         L/CU [4]                         L/CU [4]                         L/CU [4]                         L/CU [4]                         L/CU [4]                         L/CU [4]
+Community Service                                                                                       L/CU [5]                         L/CU [5]                         L/CU [5]                         L/CU [5]                         L/CU [5]                         L/CU [5]
+Parks And Open Areas                                                                                    L/CU [6]                         L/CU [6]                         L/CU [6]                         L/CU [6]                         L/CU [6]                         L/CU [6]
+Schools                                                                                                 CU                               CU                               CU                               CU                               CU                               CU
+Colleges                                                                                                CU                               CU                               CU                               CU                               CU                               CU
+Medical Centers                                                                                         CU                               CU                               CU                               CU                               CU                               CU
+Religious Institutions                                                                                  CU                               CU                               CU                               CU                               CU                               CU
+Daycare                                                                                                 L/CU [7]                         L/CU [7]                         L/CU [7]                         L/CU [7]                         L/CU [7]                         L/CU [7]
+Other Categories
+Agriculture                                                                                             L [8]                            L [8]                            L/CU [9]                         L/CU [9]                         L [10]                           L [10]
+Aviation And Surface Passenger
+Terminals                                                                                               CU                               N                                N                                N                                N                                N
+Detention Facilities                                                                                    N                                N                                N                                N                                N                                N
+Mining                                                                                                  CU                               N                                N                                N                                N                                N
+Radio Frequency Transmission                                                                            L/CU [11]                        L/CU [11]                        L/CU [11]                        L/CU [11]                        L/CU [11]                        L/CU [11]
+Facilities
+Railroad Lines And Utility                                                                              CU                               CU                               CU                               CU                               CU                               CU
+Corridors
+Y = Yes, Allowed                                                                                                                                        L = Allowed, But Special Limitations
+CU = Conditional Use Review Required                                                                                                                    N = No, Prohibited
+Notes:
+•                                               The use categories are described in Chapter 33.920.
+•                                               Regulations that correspond to the bracketed numbers [ ] are stated in 33.110.100.B.
+•                                               Specific uses and developments may also be subject to regulations in the 200s series of chapters.
+
+Development Standards
+
