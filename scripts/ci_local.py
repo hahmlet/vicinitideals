@@ -176,10 +176,15 @@ def commands(root: Path, base: str, need: set[str]) -> dict[str, list[str]]:
     return {k: v for k, v in cmds.items() if k in need}
 
 
+def porcelain_paths(text: str) -> list[str]:
+    """Paths from `git status --porcelain` output. Unstripped: the first column may be a space."""
+    return [_norm(line[3:].split(" -> ")[-1]) for line in text.splitlines() if len(line) > 3]
+
+
 def dirty_code(root: Path) -> list[str]:
-    out = git("status", "--porcelain", "--untracked-files=no", check=False)
-    files = [_norm(line[3:].split(" -> ")[-1]) for line in out.splitlines() if line.strip()]
-    return [f for f in files if side(f) != "book"]
+    out = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"],
+                         capture_output=True, text=True).stdout
+    return [f for f in porcelain_paths(out) if side(f) != "book"]
 
 
 def run_gate(args: argparse.Namespace) -> int:

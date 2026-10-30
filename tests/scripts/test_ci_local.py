@@ -59,3 +59,8 @@ def test_whole_app_suite_covers_the_flats_subset():
                      {"ruff", "firewall", "flats", "quadfit", "app_flats"})
     assert not ci.covers({"ruff", "firewall", "flats", "app_all"},
                          {"ruff", "firewall", "flats", "quadfit", "app_flats"})
+
+
+def test_porcelain_keeps_the_first_character_of_the_first_path():
+    out = " M .claude/settings.json\nM  flats/a.py\nR  old.py -> app/new.py\n"
+    assert ci.porcelain_paths(out) == [".claude/settings.json", "flats/a.py", "app/new.py"]
