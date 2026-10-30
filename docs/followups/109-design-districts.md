@@ -1,30 +1,35 @@
 # 109. Design districts (Steph 2026-10-21: "we do need to incorporate Rockwood (and other) design districts").
 
-109. [Claude] [Steph 2026-10-29 '1 and 2': CHUNK 5 RELEASED for the week of 11-02 = the chunk-4 leftovers (plan rule: an overrun is the next chunk) -- trace the item-4 district maps (Tigard Washington Square, Estacada Downtown, Canby, Tualatin CO Block 1, Gladstone TC), Gresham DCC + DTM townhouse rows, the looser Troutdale TC / King City rules; WashCo community plans move to chunks 6-8] [chunk 4 LIVE run 89 2026-10-28 (main 6dbc54fd; Gresham CN*/Downtown (Map 4.1140 traced)/RTC/THR-SW, Troutdale TC, King City townhouses = old item 117; 56 to green, 41 red->yellow, 15 Troutdale losses on the 20 ft TC driveway front; lots = combined bound exactly; rulings 2026-10-28 King City average width per lot, Springwater no-alley yellow). Chunk-4 leftovers: item-4 districts (Tigard Washington Square, Estacada Downtown, Canby, Tualatin CO Block 1, Gladstone TC -- maps to trace), Gresham DCC (300) + DTM (222) townhouse rows, looser rules not encoded (Troutdale TC parking waiver / 10 ft rear by non-residential / depth exemption; King City corner front relief, shared outdoor area). Splice base now 137 /root/bridge_spliced_1028_c4 (quadfit data/quadfit_2026-10-28_c4)] [chunk 3 + 4bdfeb29 + cr_bound LIVE run 87 2026-10-28, moves at the bounds] [Steph 2026-10-23: chunk 4 RELEASED for the week of 10-26, after the full weekly, alongside 73's rollout chunk 1] [chunk 1 of 7 LIVE run 84 2026-10-22 (greens 48,185 -> 46,932, 0 unexplained); chunk 2 INGEST LIVE 75afe352 2026-10-22 (docs/flats/ingest_c2_2026-10-22.md: 18 outlines, 5 map-only PDFs to trace, 37 texts in flats/provenance/pending/ with declarations.yaml; NOT FOUND Clackamas CRC X-CRC-1/3/7a, Sunnyside X-SV-1, Gladstone parking map); chunk 3 LIVE run 85 2026-10-22 (main 69382e2f; drift 3,065 answers, 0 unexplained; 860 lots, no gains to green; splice base now /root/bridge_spliced_1022_c3; THE NEXT WEEKLY ~10-26 MUST BE A FULL RE-SCREEN -- splice said FULL RE-SCREEN DUE, 6 partials since 10-19; 24 WashCo TO:BUS lots held yellow not red because frontage is unmeasured there); frontage-c3 DONE eacc698b (Beaverton 216 + WashCo 29 red->yellow, Gresham 170 green->yellow as the plex share is now measured; Beaverton Downtown street types NOT traced) [(iv) ANSWERED 2026-10-22 "Main street only" (rulings.yaml 2026-10-22-gresham-corner-frontage-main-street; main = busier street by class, equal/unranked stays yellow); MERGED 4bdfeb29 2026-10-22, rides the FULL weekly ~10-26 (bound read: 46 yellow->green CMU 20/SC 15/SC-RJ 1 (+10 more lots in the 46), 1 yellow->red 800 SE Hogan Rd; adds Gresham street-class layer to pipeline.yaml -- the weekly MUST acquire it or every Gresham street stays unranked; Downtown DRL corners stay yellow (no street-type map); through lots and 5-27 ft corner-fragment streets still hold; Rockwood S3.b NOT ENCODED -- 7.0502(B) exempts quadplexes, S3 excludes townhouses)]; newdata-c3 DONE flats/newdata-c3 95f478d9 (bound 6,964 lots read, 0 unexplained; greens 178 -> 38, no gains; deferred: Hillsboro Downtown/Orenco roofs, WashCo 431-6.1 B(3)/431-8.2, Clackamas VTH, Wood Village frontage by street type) [ANSWERED 2026-10-22, encoded f9020160 + 0d30ea23, rulings.yaml 2026-10-22-oregon-city-residence-per-unit / -sandy-row-houses-not-multi-family (roof AND parking share off the townhouse path) / -washco-open-space-off-site; bound /root/cr_bound READ 2026-10-23 (base = splice c3 exactly; 64 lots to green -- Oregon City R-8/R-10 21 per-unit massing, Sandy R-1/2/3 32 on the townhouse path, WashCo TO:R24-40 11 open space; 88 red->yellow, Sandy 85 + OC 3; 0 losses), rides the FULL weekly ~10-26. Were: (i) Oregon City South End 1,200 sq ft under one roof -- per townhome or whole building? 21 lots; OCMC 17.04.1021 Residence = 'a structure or part of a structure' and names townhomes AND quadplexes, so townhomes on own lots read per unit, a one-lot quadplex as the whole building; over 1,200 is not a ban, it needs secondary masses <=600 sq ft under separate roofs; (ii) Sandy pitched roof (17.90.160, multi-family) -- covers 4 townhomes on own lots? 32 greens; SDC 17.10 lists 'row house' (own lots) and 'multi-family dwelling' (3+ on a lot or development site) as separate building types, so the definitions lean NOT covered, but 'development site' can span lots; (iii) WashCo transit-district 400 sq ft shared open space off the lot? 11 yellows; definitions don't settle it, 431-7.1 B(1) itself allows off-site within 1,300 ft walk without crossing an arterial; 431-3.4 also allows it on a flat roof designed for safe use; Middle Housing districts already exempt via 431-2]; PLAN docs/flats/design_districts_plan.md] [Steph 2026-10-21: all go, ingest first, flat roof = RED, read WashCo plans, max 2 chunks/week] **Design districts (Steph
-   2026-10-21: "we do need to incorporate Rockwood (and other) design districts").** Inventory DONE:
-   docs/flats/design_districts_2026-10-21.md -- 84 districts, 62 reach the pod, 32 non-zone districts
-   lack a boundary. TIER 1 false-GREEN fixes (no ask): (a) building-frontage share -- Beaverton Downtown
-   50-90% (~150 greens), Beaverton mixed-use 60% (1,504 lots), WashCo NMU/CCMU 50%, King City Kingston
-   Terrace entrance -- BUILDING flats/frontage-share; (b) Portland main street "m" townhouse ban within
-   100 ft of a transit street + 70% build-to + vehicle cap; historic/conservation district vacant lots;
-   "d" overlay yellow claim nothing implements -- BUILDING flats/pdx-overlays-2; (c) Oregon City Park
-   Place/South End concept plans (1,200 sf footprint rule) + historic districts -- needs boundaries;
-   smaller: Sunnyside Village, WashCo transit townhouses, Wood Village TC, Sandy Bornstedt, Wilsonville
-   Old Town. TIER 2 false-RED openings: Gresham townhouse-only zones (~832), Troutdale HDR Town Center
-   (~350), Tigard Washington Square map, Estacada, Canby, Tualatin CO Block 1, Gladstone TC. TIER 3
-   boundaries: Oregon City, Portland plan districts + 33.420/33.5xx text, Troutdale, Tigard, Sandy,
-   Wilsonville Old Town. QUESTIONS: is the pod roof flat (Fairview Village + West Linn ban flat roofs)?
-   WashCo's eleven community plans (68,777 lots) are unread -- read them?
-   CHUNK 1 BUILT 2026-10-21 (merged; joint splice next): pdx-overlays-2 01a5d05d (Portland 925 greens
-   lost: Historic Districts red 197g/16y, Central City d RX/CX red 501g/217y -- both ORS 197A.400
-   exceptions; Conservation Districts yellow ~102; main street "m" yellow ~164, every street taken as a
-   transit street until the map is ingested) + frontage-share 45d8f5a7 (Beaverton 60.05 38r/94y lost +140
-   y->r; Downtown 16r/134y + 22 y->r; WashCo NMU/CCMU 26r/20y; King City 3 y->r). QUESTIONS for Steph:
-   (q1) a wide lot one pod cannot fill to the share -- RED (as built) or YELLOW (more buildings could)?
-   (q2) King City: must every one of the four front doors face the street (as built), or one per
-   building? Answers ride the next chunk's splice.
-   STEPH 2026-10-21 (on q1, a gap found): the share is measured on the ORIGINAL lot for both forms --
-   "We should measure it based on what they base it on": per lot -> townhouse form on each unit lot;
-   site/development -> original lot (rulings.yaml 2026-10-21-frontage-share-measured-as-coded; chunk 3).
-   q1 ANSWERED: room for enough pods side by side (rough) -> YELLOW, else RED (rulings.yaml
-   2026-10-21-wide-lot-frontage-more-pods; chunk 3). q2 ANSWERED: all four doors face the street, as built -- no change (rulings.yaml 2026-10-21-king-city-all-four-doors).
+[Claude] Plan: docs/flats/design_districts_plan.md. Inventory: docs/flats/design_districts_2026-10-21.md
+(84 districts, 62 reach the pod). Steph 2026-10-21: all go, ingest first, flat roof = RED, read the
+WashCo plans, max 2 chunks a week. Rulings made along the way are in flats/config/rulings.yaml
+(2026-10-21 frontage share as coded / wide lot more pods / King City all four doors; 2026-10-22
+Gresham corner main street, Oregon City residence per unit, Sandy row houses not multi-family,
+WashCo open space off site; 2026-10-28 King City average width per lot, Springwater no-alley yellow).
+
+## Done (history in git)
+- Chunk 1 LIVE run 84 (pdx-overlays-2 01a5d05d + frontage-share 45d8f5a7).
+- Chunk 2 ingest 75afe352 (docs/flats/ingest_c2_2026-10-22.md).
+- Chunk 3 LIVE run 85 (69382e2f), frontage-c3 eacc698b, 4bdfeb29 and the cr_bound rode run 87.
+- Chunk 4 LIVE run 89 (6dbc54fd): Gresham CN*/Downtown/RTC/THR-SW, Troutdale TC, King City
+  townhouses.
+- Chunk 5 LIVE run 91 2026-10-30 (merge b9c87776, words fix 964cc28b). Tigard Washington Square
+  (WSRC outline from city GIS, MUR traced from CDC Map 18.670.A), Estacada Downtown, Canby C-1
+  floor-area minimum (short -> YELLOW + flag, never GREEN unchecked), Tualatin CO Block 1, Gladstone
+  Town Center (traced from Ordinance 1539's adopted map, 2025-06-10 packet p149), Gresham DCC/DTM
+  townhouse rows, Troutdale quarter-mile ring, King City corner fronts. Lot moves = the bound
+  exactly (292): 152 to green (Gresham DCC 50 / DTM 53, Estacada D 16, Gladstone R5 14, Tigard
+  MUC 9 / MUR 10 outside WSRC), 74 red->yellow (Tualatin CO 33, Gresham 22, Canby C-1 14, others),
+  10 green->yellow (Gladstone C2 building-frontage rule), 56 yellow->red (Tigard MUC 50 / MUR 6
+  inside WSRC). Drift 89->91 439 answers / 0 unexplained. Every GREEN checked against the traced
+  lines: Tigard greens >= 297 ft outside, Gladstone R5 greens 88-100% inside.
+
+## Left
+- Tualatin CO: quadfit has no CO entry, so its 33 lots are yellow "not measured" -- add the entry.
+- Gladstone Portland Ave C-2 strip: rear edge of the Town Center line unconfirmed; 20 cut lots stay
+  yellow until a better map turns up.
+- Chunks 6-8: WashCo's eleven community plans (68,777 lots), unread.
+- Smaller tier-1 districts still open: Oregon City Park Place/South End concept plans + historic
+  districts (boundaries), Sunnyside Village, Wood Village TC, Sandy Bornstedt, Wilsonville Old Town;
+  Portland plan districts (33.5xx) boundaries.
+- Splice base now 137 /root/bridge_spliced_1029_c5, quadfit data/quadfit_2026-10-29_c5.
