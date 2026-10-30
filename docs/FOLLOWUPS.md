@@ -147,7 +147,6 @@ the full one.)
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
-121. [Copilot] [scan: NO] **The lots list's "Works as" filter gives up on production** -- found 2026-10-28, run 87. [file](followups/121-works-as-filter.md)
 101. [Copilot] [scan: NO (quadfit mirror only)] **Port Gladstone Ord. 1545 to quadfit's rules.yaml** -- cold-start brief. [file](followups/101-gladstone-1545-quadfit.md)
 91. [Copilot] [scan: no] **Copilot cleanup batch 10** -- QUEUED for 2026-11-01. [file](followups/91-copilot-batch-10.md)
 23. [Copilot] [scan: NO] **Page check** -- SHIPPED 2026-09-30 (a203e9f1). [file](followups/23-page-check.md)
