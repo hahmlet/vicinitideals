@@ -21,9 +21,17 @@ E2E is not run here: the app is not served locally, each change already runs its
 E2E files against production after deploy, and the daily GitHub run covers the
 full E2E suite.
 
+Where: on the ci-runner container (LXC 138, ``ssh ci-runner``) when it answers
+-- the commit is pushed to its clone and that commit's scripts/ci_runner.sh runs
+the suites beside a throwaway Postgres, app suite 8 workers wide, about 4
+minutes -- else on this PC (the app suite serial against VM 114's test database,
+over an hour).
+
 Usage::
 
     python scripts/ci_local.py              # gate HEAD vs origin/main, stamp on pass
+    python scripts/ci_local.py --local      # this PC even if the runner is up
+    python scripts/ci_local.py --remote     # the runner or fail
     python scripts/ci_local.py --all        # every suite regardless of scope
     python scripts/ci_local.py daily        # last daily GitHub run, red is loud
     python scripts/ci_local.py check-push   # git pre-push hook (reads stdin)
@@ -76,6 +84,10 @@ APP_SIDE: tuple[str, ...] = (
 ) + DOCS_READ_BY_TESTS
 
 SUITES = ("ruff", "firewall", "flats", "quadfit", "app_flats", "app_all")
+
+#: The ci-runner container's clone (LXC 138, reached by the ssh alias in CI_RUNNER,
+#: default "ci-runner"). Commits under test are pushed to its refs/ci/<sha>.
+RUNNER_REPO = "/root/ci/repo"
 
 
 def git(*args: str, check: bool = True) -> str:
@@ -173,6 +185,14 @@ def commands(root: Path, base: str, need: set[str]) -> dict[str, list[str]]:
     if "app_flats" in need:
         cmds["app_flats"] = uv + ["pytest", "-q", "-rs", "--timeout=120",
                                   "-p", "no:cacheprovider", *flats_test_files(root)]
+    # Each pytest process makes its own throwaway database (tests/conftest.py,
+    # uuid-named), so the app suite can be sharded where the database sits beside
+    # the tests (the ci-runner). Over the network to VM 114 it stays serial.
+    workers = os.environ.get("CI_LOCAL_APP_WORKERS")
+    if workers:
+        for name in ("app_all", "app_flats"):
+            if name in cmds:
+                cmds[name] += ["-n", workers]
     return {k: v for k, v in cmds.items() if k in need}
 
 
@@ -187,9 +207,35 @@ def dirty_code(root: Path) -> list[str]:
     return [f for f in porcelain_paths(out) if side(f) != "book"]
 
 
+def runner_reachable(runner: str) -> bool:
+    try:
+        return subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=5", runner, "true"],
+                              capture_output=True, timeout=15).returncode == 0
+    except (subprocess.TimeoutExpired, OSError):
+        return False
+
+
+def run_remote(runner: str, head: str, base_sha: str, need: set[str]) -> int:
+    """Test HEAD on the ci-runner container: push the commit there, run
+    scripts/ci_runner.sh from that commit, stream its output back."""
+    push = subprocess.run(["git", "push", "-q", "--no-verify", f"{runner}:{RUNNER_REPO}",
+                           f"+{head}:refs/ci/{head}"], capture_output=True, text=True)
+    # --no-verify is safe here: it skips this script's own pre-push check, which
+    # only guards refs/heads/main, for a push to the runner's private refs/ci/.
+    if push.returncode != 0:
+        print(f"ci_local: could not push to {runner}: {push.stderr.strip()[:300]}")
+        return 3
+    remote = (f"git -C {RUNNER_REPO} show {head}:scripts/ci_runner.sh | "
+              f"bash -s {head} {base_sha} {','.join(sorted(need))}")
+    return subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ServerAliveInterval=30",
+                           runner, remote]).returncode
+
+
 def run_gate(args: argparse.Namespace) -> int:
     root = repo_root()
     os.chdir(root)
+    if args.here:
+        return run_suites(root, args.base, set(args.suites.split(",")) - {""}, "HEAD")
     dirty = dirty_code(root)
     if dirty:
         print("ci_local: uncommitted code changes -- commit them first, the stamp is for HEAD:")
@@ -204,9 +250,39 @@ def run_gate(args: argparse.Namespace) -> int:
         print(f"ci_local: {len(files)} changed file(s) vs {base}, all bookkeeping -- nothing to run.")
         write_stamp(head, need, {}, base, files)
         return 0
+    runner = os.environ.get("CI_RUNNER", "ci-runner")
+    if not args.local and runner_reachable(runner):
+        print(f"ci_local: {head[:8]} vs {base} -- {len(files)} file(s); testing on {runner}: "
+              f"{', '.join(sorted(need))}")
+        t0 = time.time()
+        rc = run_remote(runner, head, git("rev-parse", base), need)
+        if rc != 0:
+            print(f"ci_local: FAILED on {runner} (exit {rc}) -- no stamp written; do not push.")
+            return 1
+        write_stamp(head, need, {"total": round(time.time() - t0)}, base, files, where=runner)
+        print(f"ci_local: PASSED on {runner} in {time.time() - t0:.0f}s -- stamp written for "
+              f"{head[:8]}; safe to push.")
+        return 0
+    if args.remote:
+        print(f"ci_local: {runner} is not reachable and --remote was given.")
+        return 3
+    print(f"ci_local: {runner} not reachable -- testing on this PC.")
+    rc = run_suites(root, base, need, head)
+    if rc == 0:
+        write_stamp(head, need, LAST_SECS, base, files)
+        print(f"ci_local: PASSED -- stamp written for {head[:8]}; safe to push.")
+    return rc
+
+
+LAST_SECS: dict = {}
+
+
+def run_suites(root: Path, base: str, need: set[str], head: str) -> int:
+    """Run the named suites here and print a summary. 0 = all passed."""
+    head = git("rev-parse", head)
     cmds = commands(root, base, need)
     logs = stamp_dir() / "logs"
-    print(f"ci_local: {head[:8]} vs {base} -- {len(files)} file(s); running {', '.join(sorted(cmds))}")
+    print(f"ci_local: {head[:8]} vs {base[:12]} -- running {', '.join(sorted(cmds))}", flush=True)
 
     # The app suite is DB-bound and serial; the FLATS suites are CPU-bound and
     # sharded. Run the app suite alongside the rest instead of after it.
@@ -237,8 +313,7 @@ def run_gate(args: argparse.Namespace) -> int:
             print(f"--- {n} (last 30 lines of {results[n]['log']}) ---")
             print("\n".join(tail))
         return 1
-    write_stamp(head, need, {n: round(r["secs"]) for n, r in results.items()}, base, files)
-    print(f"ci_local: PASSED -- stamp written for {head[:8]}; safe to push.")
+    LAST_SECS.update({n: round(r["secs"]) for n, r in results.items()})
     return 0
 
 
@@ -251,9 +326,11 @@ def report(name: str, rc: int, secs: float, log: Path) -> dict:
     return {"rc": rc, "secs": secs, "log": log}
 
 
-def write_stamp(head: str, suites: set[str], secs: dict, base: str, files: list[str]) -> None:
+def write_stamp(head: str, suites: set[str], secs: dict, base: str, files: list[str],
+                where: str = "pc") -> None:
     rec = {
         "sha": head,
+        "where": where,
         "suites": sorted(suites),
         "seconds": secs,
         "base": base,
@@ -381,16 +458,27 @@ def install_hook(_: argparse.Namespace) -> int:
     return 0
 
 
-def main() -> int:
+def parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--base", default="origin/main", help="What the push is compared against.")
     ap.add_argument("--all", action="store_true", help="Run every suite regardless of scope.")
+    ap.add_argument("--local", action="store_true", help="Test on this PC even if the runner is up.")
+    ap.add_argument("--remote", action="store_true", help="Test on the runner or fail.")
+    ap.add_argument("--here", action="store_true",
+                    help="(runner side) run --suites in this checkout; no stamp.")
+    ap.add_argument("--suites", default="", help="(with --here) comma-separated suites.")
     sub = ap.add_subparsers(dest="cmd")
-    sub.add_parser("check-push")
+    hook = sub.add_parser("check-push")
+    # git hands a pre-push hook the remote's name and URL; the refs come on stdin.
+    hook.add_argument("remote", nargs="*")
     d = sub.add_parser("daily")
     d.add_argument("--session", action="store_true")
     sub.add_parser("install-hook")
-    args = ap.parse_args()
+    return ap
+
+
+def main() -> int:
+    args = parser().parse_args()
     if args.cmd == "check-push":
         return check_push(args)
     if args.cmd == "daily":

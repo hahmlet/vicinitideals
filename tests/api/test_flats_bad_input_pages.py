@@ -22,7 +22,9 @@ BIG = "99999999999999999999"
 ODD = [BIG, "%00", "-3", "abc", "0", "1e999", "nan"]
 OK_STATUS = (200, 404, 422)
 LAYER = next(iter(ui_flats._layers()))
-DOC = next(iter(ui_flats._known_documents()))
+# min(), not next(iter()): a frozenset's order changes between processes, and
+# pytest-xdist refuses a run whose workers collect different test ids.
+DOC = min(ui_flats._known_documents())
 
 
 def _urls() -> list[str]:

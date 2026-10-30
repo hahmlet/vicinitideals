@@ -64,3 +64,8 @@ def test_whole_app_suite_covers_the_flats_subset():
 def test_porcelain_keeps_the_first_character_of_the_first_path():
     out = " M .claude/settings.json\nM  flats/a.py\nR  old.py -> app/new.py\n"
     assert ci.porcelain_paths(out) == [".claude/settings.json", "flats/a.py", "app/new.py"]
+
+
+def test_the_hook_accepts_the_remote_git_passes():
+    args = ci.parser().parse_args(["check-push", "origin", "https://github.com/x/y.git"])
+    assert args.cmd == "check-push"

@@ -152,7 +152,11 @@ def _make_run(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
 def _read(path: Path) -> list[dict]:
     import csv
     import gzip
+    import sys
 
+    # The loader raises this limit when it runs; a test that reads a bundle
+    # before any load (first on its xdist worker) must raise it itself.
+    csv.field_size_limit(sys.maxsize)
     with gzip.open(path, "rt", newline="", encoding="utf-8") as fh:
         return list(csv.DictReader(fh))
 
