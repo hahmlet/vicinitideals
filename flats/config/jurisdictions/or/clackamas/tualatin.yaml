@@ -1370,17 +1370,25 @@ zones:
           when: [inside_mapped_use_area, unit_lots]
           cite: TDC 58.400(2) and Table 58-4, Block 1, Household Living P (L), Townhouse
           quote: "or/clackamas/tualatin/58/58.400.txt#L6-L13"
-    # Table 58-7's CO rows and Table 50-2. They are read for Block 1, the one
-    # place the zone admits a home; outside it the use gate refuses first.
+    # Table 50-2 is the base; Table 58-7's CO rows govern only inside the
+    # Central Tualatin Overlay (58.800(1): "Where no standard is listed, the
+    # standards of the base zone apply"), and the only CO ground inside it is
+    # Block 1 (`co_block_1`, inside_mapped_use_area). FOLLOWUPS 131: these
+    # were stored as the base until 2026-10-30. No colour turns on it today:
+    # outside Block 1 the use gate refuses first.
     min_lot_sqft:
-      value: 25000
-      cite: TDC 58.800 Table 58-7, Commercial Office (CO), Minimum Lot Size 25,000 square feet
-      quote: "or/clackamas/tualatin/58/58.800.txt#L1-L3,L34,L36"
+      value: 10000
+      cite: TDC 50.300 Table 50-2, Minimum Lot Size, All Uses 10,000 square feet
+      quote: "or/clackamas/tualatin/50/50.300.txt#L7-L8"
       variants:
+        - value: 25000
+          when: [inside_mapped_use_area]
+          cite: TDC 58.800 Table 58-7, Commercial Office (CO), Minimum Lot Size 25,000 square feet
+          quote: "or/clackamas/tualatin/58/58.800.txt#L1-L3,L34,L36"
         # Table 58-7 hands the townhouse lot size to RH
         # (58/58.800.txt#L34,L36); the figure is printed in RH's table.
         - value: 1400
-          when: [unit_lots]
+          when: [inside_mapped_use_area, unit_lots]
           cite: TDC 58.800 Table 58-7, CO, "Lot sizes for townhouses must conform to the lot size standards of the RH District"; TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
           quote: "or/clackamas/tualatin/43/43.300.txt#L22-L23"
     # Table 58-7 sends only the townhouse LOT SIZE to RH. The width stays
@@ -1418,14 +1426,26 @@ zones:
       exempt: true
       cite: TDC 50.300 Table 50-2 prints no lot coverage standard
       quote: "or/clackamas/tualatin/50/50.300.txt#L4-L35"
+    # Table 50-2 prints no density, floor or ceiling (L4-L35, the whole
+    # table); a density reaches CO only through Table 58-7, in Block 1.
     max_density_du_per_acre:
-      value: 25
-      cite: TDC 58.800 Table 58-7, Commercial Office (CO), Density 16-25 dwelling unit per acre
-      quote: "or/clackamas/tualatin/58/58.800.txt#L34-L35"
+      exempt: true
+      cite: TDC 50.300 Table 50-2 prints no density standard
+      quote: "or/clackamas/tualatin/50/50.300.txt#L4-L35"
+      variants:
+        - value: 25
+          when: [inside_mapped_use_area]
+          cite: TDC 58.800 Table 58-7, Commercial Office (CO), Density 16-25 dwelling unit per acre
+          quote: "or/clackamas/tualatin/58/58.800.txt#L34-L35"
     min_density_du_per_acre:
-      value: 16
-      cite: TDC 58.800 Table 58-7, Commercial Office (CO), Density 16-25 dwelling unit per acre
-      quote: "or/clackamas/tualatin/58/58.800.txt#L34-L35"
+      exempt: true
+      cite: TDC 50.300 Table 50-2 prints no density standard
+      quote: "or/clackamas/tualatin/50/50.300.txt#L4-L35"
+      variants:
+        - value: 16
+          when: [inside_mapped_use_area]
+          cite: TDC 58.800 Table 58-7, Commercial Office (CO), Density 16-25 dwelling unit per acre
+          quote: "or/clackamas/tualatin/58/58.800.txt#L34-L35"
     notes: >-
       Encoded 2026-09-20 from Table 50-1. A zone "intended to provide for
       office development" and the table says so: the only residential row
