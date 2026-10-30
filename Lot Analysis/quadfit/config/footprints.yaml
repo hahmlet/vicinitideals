@@ -1130,6 +1130,11 @@ siteplan:
         # areas 5 feet (53.cc.txt#L181-L184). The zone's own figure, not a borrowed
         # one; the row's 20 ft building setbacks are the top of Table 53-2's 0-20 ranges.
         CC: 5
+        # 2026-10-30, with the CO row (FOLLOWUPS 109 chunk 6): Table 50-2, parking and
+        # vehicle circulation areas 5 feet (50.co.txt#L167-L169). The Central Tualatin
+        # overlay that admits townhouses in Block 1 (58.400) modifies uses only, so the
+        # base zone's figure stands.
+        CO: 5
         # 2026-10-08, the unit-lots zones: Tables 42-3, 43-3 and 44-3 each print
         # "Parking and Vehicle Circulation Areas 10 feet" (townhouses, by Architectural
         # Review, held at 10 in the corpus). MUC prints none, so it takes the building
