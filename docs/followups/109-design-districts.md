@@ -25,11 +25,16 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   lines: Tigard greens >= 297 ft outside, Gladstone R5 greens 88-100% inside.
 
 ## Left
-- Tualatin CO: quadfit has no CO entry, so its 33 lots are yellow "not measured" -- add the entry.
 - Gladstone Portland Ave C-2 strip: rear edge of the Town Center line unconfirmed; 20 cut lots stay
   yellow until a better map turns up.
-- Chunks 6-8: WashCo's eleven community plans (68,777 lots), unread.
+- Chunk 6 LIVE run 94 2026-10-30 (main af509800; 32cf3a0e encoding, 550899fa + 12a3b298 Tualatin CO quadfit row):
+  the 4 largest WashCo plans read; only North Bethany binds (special setbacks, Park Blocks, Kaiser Main
+  Street on R-15 NB / R-24 NB, held behind unmeasured facts). 34 moves, all read right: 33 Tualatin CO
+  yellow->red (use not allowed outside Block 1), 1 R-15 NB green->yellow. Follow-ups 129 (trace the
+  maps), 130 (Bethany ASC 1, Steph), 131 (CO overlay minimums).
+- Chunks 7-8: WashCo's seven smaller community plans, unread (Raleigh Hills - Garden Home 6,022 lots and
+  Bull Mountain 3,847 next).
 - Smaller tier-1 districts still open: Oregon City Park Place/South End concept plans + historic
   districts (boundaries), Sunnyside Village, Wood Village TC, Sandy Bornstedt, Wilsonville Old Town;
   Portland plan districts (33.5xx) boundaries.
-- Splice base now 137 /root/bridge_spliced_1029_c5, quadfit data/quadfit_2026-10-29_c5.
+- Splice base now 137 /root/bridge_spliced_dd_c6, quadfit data/quadfit_2026-10-30_dd_c6.
