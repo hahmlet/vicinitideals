@@ -1345,7 +1345,7 @@ zones:
   # similar-use finding is the City Manager's and this screen never
   # presumes it.
   CO:
-    section: ["50."]
+    section: ["50.", "58."]
     cite_default:
       cite: TDC 50.200(1) (use categories not listed are prohibited) and
         Table 50-1, Residential Use Categories, Office Commercial Zone
@@ -1359,11 +1359,88 @@ zones:
       # nothing. 13 lots.
       value: false
       quote: "or/clackamas/tualatin/50/50.200.txt#L3-L5,L8-L14"
+      variants:
+        # Block 1 of the Central Tualatin Overlay (TDC 58.400, Table 58-4,
+        # traced 2026-10-29 as `drawn_areas` co_block_1): Household Living
+        # P (L), "limited to: Townhouse; and Multi-Family Structure and
+        # duplex Residential Home". No Quadplex: a Multi-Family Structure is
+        # five or more units on one lot (31.060), so the pod on one lot stays
+        # refused, as in RH (Steph 2026-10-02). Four townhouses are permitted.
+        - value: true
+          when: [inside_mapped_use_area, unit_lots]
+          cite: TDC 58.400(2) and Table 58-4, Block 1, Household Living P (L), Townhouse
+          quote: "or/clackamas/tualatin/58/58.400.txt#L6-L13"
+    # Table 58-7's CO rows and Table 50-2. They are read for Block 1, the one
+    # place the zone admits a home; outside it the use gate refuses first.
+    min_lot_sqft:
+      value: 25000
+      cite: TDC 58.800 Table 58-7, Commercial Office (CO), Minimum Lot Size 25,000 square feet
+      quote: "or/clackamas/tualatin/58/58.800.txt#L1-L3,L34,L36"
+      variants:
+        # Table 58-7 hands the townhouse lot size to RH
+        # (58/58.800.txt#L34,L36); the figure is printed in RH's table.
+        - value: 1400
+          when: [unit_lots]
+          cite: TDC 58.800 Table 58-7, CO, "Lot sizes for townhouses must conform to the lot size standards of the RH District"; TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
+          quote: "or/clackamas/tualatin/43/43.300.txt#L22-L23"
+    # Table 58-7 sends only the townhouse LOT SIZE to RH. The width stays
+    # Table 50-2's, which no townhouse lot meets: the townhouse form fails
+    # here on width, measured.
+    min_lot_width_ft:
+      value: 80
+      cite: TDC 50.300 Table 50-2, Minimum Average Lot Width 80 feet (40 feet with frontage on a public street is the street width, not the average)
+      quote: "or/clackamas/tualatin/50/50.300.txt#L9-L10"
+    setback_front_ft:
+      value: 20
+      cite: TDC 50.300 Table 50-2, Minimum Setbacks, Front 20 feet
+      quote: "or/clackamas/tualatin/50/50.300.txt#L15-L16"
+    setback_street_side_ft:
+      value: 20
+      cite: TDC 50.300 Table 50-2, Corner Lots 0-20 feet along each frontage as determined through Architectural Review (top of the range)
+      quote: "or/clackamas/tualatin/50/50.300.txt#L24-L25"
+    setback_side_ft:
+      value: 15
+      cite: TDC 50.300 Table 50-2, Side and Rear 0-15 feet as determined through Architectural Review (top of the range)
+      quote: "or/clackamas/tualatin/50/50.300.txt#L17-L18"
+    setback_rear_ft:
+      value: 15
+      cite: TDC 50.300 Table 50-2, Side and Rear 0-15 feet as determined through Architectural Review (top of the range)
+      quote: "or/clackamas/tualatin/50/50.300.txt#L17-L18"
+    parking_street_setback_ft:
+      value: 5
+      cite: TDC 50.300 Table 50-2, Minimum Setbacks, Parking and Vehicle Circulation Areas 5 feet
+      quote: "or/clackamas/tualatin/50/50.300.txt#L29-L31"
+    max_height_ft:
+      value: 45
+      cite: TDC 50.300 Table 50-2, Maximum Structure Height, All Uses 45 feet
+      quote: "or/clackamas/tualatin/50/50.300.txt#L34-L35"
+    max_coverage_pct:
+      exempt: true
+      cite: TDC 50.300 Table 50-2 prints no lot coverage standard
+      quote: "or/clackamas/tualatin/50/50.300.txt#L4-L35"
+    max_density_du_per_acre:
+      value: 25
+      cite: TDC 58.800 Table 58-7, Commercial Office (CO), Density 16-25 dwelling unit per acre
+      quote: "or/clackamas/tualatin/58/58.800.txt#L34-L35"
+    min_density_du_per_acre:
+      value: 16
+      cite: TDC 58.800 Table 58-7, Commercial Office (CO), Density 16-25 dwelling unit per acre
+      quote: "or/clackamas/tualatin/58/58.800.txt#L34-L35"
     notes: >-
       Encoded 2026-09-20 from Table 50-1. A zone "intended to provide for
       office development" and the table says so: the only residential row
       is an accessory-use row for a child care home run out of a dwelling
-      that the zone does not itself permit.
+      that the zone does not itself permit. Block 1 of the Central Tualatin
+      Overlay encoded 2026-10-29 (FOLLOWUPS 109 chunk 5): Table 58-4 permits
+      townhouses there, never the pod on one lot (no Quadplex in the list),
+      and the townhouse lots then fail Table 50-2's 80 ft average width --
+      Table 58-7 moves only their lot size to RH's. So Block 1 stays RED for
+      the pod in both forms, on a measured standard. Block 1 is the CO
+      ground of one lot, 2S124A003100 (7665 SW Nyberg St), whose larger CC
+      part is Block 2 of the Residential Sub-District and screens under CC.
+      Not encoded: 50.310(2)'s greenway front-yard reduction (discretionary,
+      the decision-making authority "may provide"); the 30 ft yard beside RL
+      for buildings over 35 ft (the pod is under 35 ft).
   CG:
     section: ["54."]
     cite_default:
@@ -2230,7 +2307,31 @@ drawn_areas:
       CC block's quadplex permission turns on. Against FLATS' own lots: 155
       CC lots, 91 at least 90 percent inside, 64 at most 10 percent, none
       between. A lot split or merged since 2020 that the outline now cuts is
-      left unanswered, and screens unknown on the fact.
+      left unanswered, and screens unknown on the fact. Added 2026-10-29
+      (FOLLOWUPS 109 chunk 5): the CC ground of 2S124A003100 (7665 SW Nyberg
+      St), one of the six left out, as part of Block 2 -- the zoning map
+      splits the lot CC/CO and Map 10-3's Block 1/Block 2 line runs on that
+      zone line. A use area is asked about the zone's own ground on a lot in
+      two districts (flats.ingest.quadfit._own_ground), so that lot reads
+      inside; the ZONE-SPLIT check then holds any plan reaching its CO ground.
+
+  co_block_1:
+    condition: inside_mapped_use_area
+    zones: [CO]
+    file: or/clackamas/tualatin/co-block-1.geojson
+    source: >-
+      Comprehensive Plan Map 10-3 (central-tualatin-overlay-map-10-3, page 1
+      EXISTING, retrieved 2026-10-22). Block 1 is the only CO sub-district
+      (58.400(2)) and the only CO ground inside the overlay: the CO part of
+      2S124A003100, drawn as that lot clipped to the city zoning map's CO
+      polygon, checked against the map 2026-10-29. Drawn provenance in the
+      file's source block.
+    quote: "or/clackamas/tualatin/58/58.400.txt#L6-L7"
+    cite: TDC 58.110 and 58.400(2)
+    note: >-
+      No lot screens under CO inside it: the one lot with CO ground there is
+      mostly CC and screens under CC (Block 2). Every other CO lot reads
+      outside.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

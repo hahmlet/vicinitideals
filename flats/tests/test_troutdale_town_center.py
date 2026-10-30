@@ -27,7 +27,7 @@ from flats.encode.load import load_trusted
 from flats.geom.drawn import load_area
 from flats.ingest.quadfit import lot_from_row, observed_facts, screen_lot
 from flats.rules.conditions import DRAWN_CONDITIONS
-from flats.rules.loader import load_rules
+from flats.rules.loader import AREAS_ROOT, load_rules
 from flats.rules.resolver import RuleSet
 from flats.score import relief, slack
 from flats.score.flags import Colour
@@ -63,7 +63,7 @@ def _value(corpus, zone: str, field: str, *active: str):
 
 def test_the_town_center_is_a_drawn_area_for_mdr_and_hdr(corpus) -> None:
     assert TC in DRAWN_CONDITIONS
-    (area,) = corpus[TROUTDALE].drawn_areas.values()
+    (area,) = [a for a in corpus[TROUTDALE].drawn_areas.values() if a.condition == TC]
     assert (area.condition, area.file) == (TC, AREA)
     assert set(area.zones) == {"MDR", "HDR"}
 
@@ -72,7 +72,10 @@ def test_a_lot_inside_the_town_center_is_inside_and_one_far_off_is_not(layers) -
     inside = load_area(AREA).representative_point().buffer(5)
 
     def troutdale(lot, zone="HDR") -> dict:
-        return observed_facts(plain_row(jurisdiction="troutdale", zone=zone, lot_wkb=shapely.to_wkb(lot)), layers)
+        return observed_facts(
+            plain_row(jurisdiction="troutdale", zone=zone, lot_wkb=shapely.to_wkb(lot)),
+            layers,
+        )
 
     assert troutdale(inside)[TC] is True
     assert troutdale(inside, "MDR")[TC] is True
@@ -111,14 +114,30 @@ def test_hdr_tc_reads_the_quadplex_column(corpus) -> None:
     assert _value(corpus, "HDR", "setback_side_ft", TC, "attached_wall") == 0
     assert _value(corpus, "HDR", "setback_street_side_ft", TC) == 20
     assert _value(corpus, "HDR", "setback_rear_ft", TC, "multi_story") == 20
-    assert _value(corpus, "HDR", "setback_rear_ft", TC, "multi_story", "alley_at_rear") == 5
+    assert (
+        _value(corpus, "HDR", "setback_rear_ft", TC, "multi_story", "alley_at_rear")
+        == 5
+    )
     assert _value(corpus, "HDR", "max_height_ft", TC) == 35
     # The townhouse plat keeps the townhouse column's "none".
     assert _value(corpus, "HDR", "min_lot_width_ft", "unit_lots", TC) == "exempt"
-    assert _value(corpus, "HDR", "setback_rear_ft", "unit_lots", TC, "multi_story") == 10
+    assert (
+        _value(corpus, "HDR", "setback_rear_ft", "unit_lots", TC, "multi_story") == 10
+    )
 
 
-FACTS = (TC, "unit_lots", "multi_story", "alley_at_rear", "abuts_alley", "attached_wall", "access_easement")
+FACTS = (
+    TC,
+    "unit_lots",
+    "multi_story",
+    "alley_at_rear",
+    "abuts_alley",
+    "attached_wall",
+    "access_easement",
+    "abuts_nonresidential_zone",
+)
+#: One lot in each of Table 1's parking bands, which MDR restates (chunk 5).
+SIZES = (2500.0, 4000.0, 6000.0, 9000.0)
 
 
 @pytest.mark.parametrize("zone", ["MDR", "HDR"])
@@ -131,8 +150,9 @@ def test_no_set_of_facts_leaves_two_variants_tying(corpus, zone) -> None:
             if "alley_at_rear" in active and "abuts_alley" not in active:
                 continue  # alley_at_rear carries abuts_alley
             for field, value in block.values.items():
-                got = value.under(active)
-                assert not got.ambiguous, (field, active, got.ambiguous)
+                for sqft in SIZES:
+                    got = value.under(active, {"lot_sqft": sqft})
+                    assert not got.ambiguous, (field, active, sqft, got.ambiguous)
 
 
 # --- on a lot -------------------------------------------------------------------
@@ -148,7 +168,9 @@ def policies():
     return slack.load_policy(), relief.load_policy()
 
 
-def _row(zone: str, x0: float, y0: float, width: float = 100.0, depth: float = 140.0) -> dict:
+def _row(
+    zone: str, x0: float, y0: float, width: float = 100.0, depth: float = 140.0
+) -> dict:
     edges = [
         [x0, y0, x0 + width, y0, "F"],
         [x0 + width, y0, x0 + width, y0 + depth, "S"],
@@ -172,11 +194,15 @@ def _row(zone: str, x0: float, y0: float, width: float = 100.0, depth: float = 1
 
 def _screen(rules, policies, r: dict):
     lot = lot_from_row(r, rules.layers)
-    (got,) = screen_lot(lot, [pod()], rules=rules, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (got,) = screen_lot(
+        lot, [pod()], rules=rules, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
     return got
 
 
-def test_an_hdr_lot_opens_inside_the_town_center_and_stays_red_outside(rules, policies) -> None:
+def test_an_hdr_lot_opens_inside_the_town_center_and_stays_red_outside(
+    rules, policies
+) -> None:
     pt = load_area(AREA).representative_point()
     inside = _screen(rules, policies, _row("HDR", pt.x - 50, pt.y - 70))
     assert inside.signed.colour is Colour.green
@@ -185,3 +211,103 @@ def test_an_hdr_lot_opens_inside_the_town_center_and_stays_red_outside(rules, po
     outside = _screen(rules, policies, _row("HDR", pt.x + 50_000, pt.y + 50_000))
     assert outside.signed.colour is Colour.red
     assert "use" in {b.check for b in outside.signed.binds}
+
+
+# --- the looser rules (districts chunk 5, 2026-10-29) -----------------------------
+
+
+@pytest.mark.parametrize("zone", ["MDR", "HDR"])
+def test_the_town_center_waives_off_street_parking(corpus, zone) -> None:
+    """9.035: no off-street parking inside the Town Center Overlay District
+    "including lands within one-quarter (1/4) mile from the district boundary
+    line"; outside it the zone's own minimum stands. The waiver is drawn as
+    one area, the Town Center grown a quarter mile, which holds every Town
+    Center lot (test_troutdale_cfec_ring)."""
+    field = corpus[TROUTDALE].zones[zone].values["parking_min_per_unit"]
+    ring = "troutdale_cfec_parking_area"
+    for sqft in SIZES:
+        inside = field.under((TC, ring), {"lot_sqft": sqft})
+        outside = field.under((), {"lot_sqft": sqft})
+        assert inside.exempt and not inside.ambiguous, (zone, sqft)
+        assert not outside.exempt and outside.value, (zone, sqft)
+        assert field.under((TC, ring, "unit_lots"), {"lot_sqft": sqft}).exempt, (zone, sqft)
+
+
+def test_mdr_restates_table_1_unchanged(corpus) -> None:
+    """MDR's zone-level copy of Table 1 must say what `defaults:` says."""
+    layer = corpus[TROUTDALE]
+    mine = layer.zones["MDR"].values["parking_min_per_unit"]
+    base = layer.defaults["parking_min_per_unit"]
+    for sqft in SIZES:
+        a, b = mine.under((), {"lot_sqft": sqft}), base.under((), {"lot_sqft": sqft})
+        assert (a.value, a.exempt) == (b.value, b.exempt), sqft
+
+
+def test_hdr_tc_rear_is_ten_against_a_non_residential_district(corpus) -> None:
+    nonres = "abuts_nonresidential_zone"
+    assert _value(corpus, "HDR", "setback_rear_ft", TC, "multi_story") == 20
+    assert _value(corpus, "HDR", "setback_rear_ft", TC, "multi_story", nonres) == 10
+    assert (
+        _value(
+            corpus, "HDR", "setback_rear_ft", TC, "multi_story", "alley_at_rear", nonres
+        )
+        == 5
+    )
+    # Outside the Town Center, and on the townhouse plat, nothing moves.
+    assert _value(corpus, "HDR", "setback_rear_ft", "multi_story", nonres) == 10
+    assert (
+        _value(corpus, "HDR", "setback_rear_ft", "unit_lots", TC, "multi_story", nonres)
+        == 10
+    )
+    assert (
+        _value(
+            corpus, "HDR", "setback_rear_ft", "unit_lots", TC, "alley_at_rear", nonres
+        )
+        == 0
+    )
+
+
+DEPTH_AREA = "or/multnomah/troutdale/no-minimum-depth.geojson"
+
+
+def test_the_no_minimum_depth_area_answers_mu1_and_mu2(corpus) -> None:
+    got = {
+        name: (a.condition, a.file, set(a.zones))
+        for name, a in corpus[TROUTDALE].drawn_areas.items()
+    }
+    assert got["no_minimum_depth"] == (
+        "inside_mapped_use_area",
+        DEPTH_AREA,
+        {"MU-1", "MU-2"},
+    )
+    data = json.loads((AREAS_ROOT / DEPTH_AREA).read_text(encoding="utf-8"))
+    assert data["source"]["drawn"] is True
+    for street in ("Historic Columbia River Highway", "2nd Street", "257th Avenue"):
+        assert street in data["source"]["how"], street
+    for zone in ("MU-1", "MU-2"):
+        assert _value(corpus, zone, "min_lot_depth_ft") == 70
+        assert (
+            _value(corpus, zone, "min_lot_depth_ft", "inside_mapped_use_area")
+            == "exempt"
+        )
+
+
+def test_a_downtown_lot_is_inside_the_depth_area_and_one_far_off_is_not(layers) -> None:
+    def mu1(lot) -> dict:
+        return observed_facts(
+            plain_row(
+                jurisdiction="troutdale", zone="MU-1", lot_wkb=shapely.to_wkb(lot)
+            ),
+            layers,
+        )
+
+    assert (
+        mu1(load_area(DEPTH_AREA).representative_point().buffer(5))[
+            "inside_mapped_use_area"
+        ]
+        is True
+    )
+    assert (
+        mu1(box(7_760_000, 700_000, 7_760_100, 700_100))["inside_mapped_use_area"]
+        is False
+    )

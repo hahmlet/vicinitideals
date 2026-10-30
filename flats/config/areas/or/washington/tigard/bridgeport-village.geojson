@@ -1,0 +1,151 @@
+{
+ "type": "FeatureCollection",
+ "name": "tigard_bridgeport_village",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "url": "https://svr.tigardmaps.com/arcgis/rest/services/Framework/Tigard_Planning/MapServer/1",
+  "where": "OVERLAY_NAME = 'Bridgeport Village'",
+  "fields": "OVERLAY_NAME,SUBAREA",
+  "fetched": "2026-10-22",
+  "note": "The Bridgeport Village feature of community-plan-areas.geojson (City of Tigard GIS, Framework/Tigard_Planning MapServer layer 1, Community Plan Areas), held alone so the drawn area answers for this plan district only",
+  "count": 1
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "OVERLAY_NAME": "Bridgeport Village",
+    "SUBAREA": "N",
+    "source": "City of Tigard GIS (svr.tigardmaps.com), Framework/Tigard_Planning MapServer layer 1 (Community Plan Areas): Tigard Triangle, Bridgeport Village, Washington Square, River Terrace, Durham AWTF, Downtown Tigard, fetched 2026-10-22"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624488.65,
+       638959.59
+      ],
+      [
+       7624487.04,
+       638920.84
+      ],
+      [
+       7624462.65,
+       638921.33
+      ],
+      [
+       7624462.64,
+       638921.33
+      ],
+      [
+       7624414.24,
+       638922.31
+      ],
+      [
+       7624339.09,
+       638923.83
+      ],
+      [
+       7624334.06,
+       638923.93
+      ],
+      [
+       7624271.45,
+       638925.2
+      ],
+      [
+       7624271.44,
+       638925.2
+      ],
+      [
+       7624157.77,
+       638927.5
+      ],
+      [
+       7624157.76,
+       638927.5
+      ],
+      [
+       7624011.14,
+       638930.46
+      ],
+      [
+       7623717.01,
+       638936.39
+      ],
+      [
+       7623424.6,
+       638942.32
+      ],
+      [
+       7623277.96,
+       638945.28
+      ],
+      [
+       7623278.99,
+       639010.16
+      ],
+      [
+       7623282.37,
+       639222.23
+      ],
+      [
+       7623283.23,
+       639222.22
+      ],
+      [
+       7623575.96,
+       639216.32
+      ],
+      [
+       7623576.62,
+       639216.3
+      ],
+      [
+       7623576.82,
+       639216.3
+      ],
+      [
+       7623723.46,
+       639213.33
+      ],
+      [
+       7623870.09,
+       639210.37
+      ],
+      [
+       7624016.73,
+       639207.41
+      ],
+      [
+       7624310.0,
+       639201.48
+      ],
+      [
+       7624396.47,
+       639199.73
+      ],
+      [
+       7624478.52,
+       639197.23
+      ],
+      [
+       7624424.84,
+       639022.27
+      ],
+      [
+       7624488.65,
+       638959.59
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

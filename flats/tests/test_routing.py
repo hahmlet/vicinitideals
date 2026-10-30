@@ -258,6 +258,12 @@ OPEN = {
     "or/clackamas/estacada 16.25.050 -> 16.60.010",
     "or/clackamas/estacada 16.37.060 -> 16.60.010",
     "or/clackamas/estacada 16.42.040 -> 16.60.010",
+    # 2026-10-29 (districts chunk 5): D's fence clause points at the same
+    # clear vision rule; 16.26.050's site plans go through the 16.132.015
+    # staff review, which Steph ruled by-right (rulings.yaml
+    # 2026-10-08-estacada-staff-review-by-right).
+    "or/clackamas/estacada 16.26.040 -> 16.60.010",
+    "or/clackamas/estacada 16.26.050 -> 16.132.015",
     "or/clackamas/milwaukie 19.309.2 -> 19.509",
     "or/clackamas/milwaukie 19.310.2 -> 19.509.2",
     "or/clackamas/milwaukie 19.310.5 -> 19.509",
@@ -422,12 +428,6 @@ OPEN = {
     "or/washington/tigard 18.660.070 -> 18.930",
     "or/washington/tigard 18.660.070 -> 18.920",
     "or/washington/tigard 18.660.070 -> 18.920.030",
-    # 2026-10-01, later: MUC's exempt yards and height (Steph, "Empty means
-    # no limit") quote 18.280.020.A, which applies the rowhouse chapter in
-    # MUC; its subsection B sends Bridgeport Village rowhouses to 18.620.
-    # Bridgeport is not drawn on any map held, and its figures are recorded
-    # in the layer's Doubts, not encoded.
-    "or/washington/tigard 18.280.020 -> 18.620",
     # 2026-10-15 (FOLLOWUPS 81): 18.910 is stored for its right-of-way table,
     # which surfaces TMU's adequate-utilities sentence (tdc.18.660 L208):
     # easements, sanitary sewers and undergrounding of utilities. Read: public
@@ -475,6 +475,10 @@ FOLLOWED = {
     # 16.132.030-.050 for their parking, so Kingston Terrace's pointer into the
     # chapter is followed.
     "or/washington/king-city 16.114.130 -> 16.132",
+    # Open from 2026-10-01 (MUC's yards quote 18.280.020.A; its subsection B
+    # sends Bridgeport Village rowhouses to 18.620); followed 2026-10-29
+    # (districts chunk 5), when the Bridgeport variants were read from 18.620.
+    "or/washington/tigard 18.280.020 -> 18.620",
     # 510.03 -> 510.05 arrived with Section 510 the same day as the 510.04 row
     # above, and it is worth reading the two together because the ledger calls
     # them differently for a reason that is about our citation and not about

@@ -714,6 +714,10 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # An ordinance's adopted exhibit, cited by page, not a codified chapter.
         "or/multnomah/portland/amended/ricap11.txt",
         "or/clackamas/gladstone/amended/ord1545.txt",
+        # Ordinance 1539, which adopts the Gladstone Town Center map
+        # (districts chunk 5, 2026-10-29); cited for its Section 1 and the
+        # Appendix A title, not a codified chapter.
+        "or/clackamas/gladstone/amended/ord1539.txt",
         "or/washington/beaverton/wc.beaverton-upaa.txt",
         # ORS 197A.400, the state's clear-and-objective statute (FOLLOWUPS 85).
         "or/ors.197a.400.txt",

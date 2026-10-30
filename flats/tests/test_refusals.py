@@ -376,7 +376,23 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 162, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 165, "comments": 287, "tests": 18}
+# 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
+# Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
+# recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no
+# longer refuses the Town Center (traced and encoded); Gladstone C-2's comment refuses 17.21.040(2)'s
+# upper-floor rule along Portland Avenue (held open by the 2026-10-09 ruling). Gladstone's
+# parking exception and Troutdale's CFEC waiver each stay one refusal, narrowed to the half not drawn.
+# 165 -> 164 notes and 287 -> 286 comments on 2026-10-29 (chunk 5, looser rules): Troutdale
+# HDR's note no longer refuses 9.035's parking waiver and 3.235.C.5.a's ten-foot rear (both
+# encoded), and King City's Kingston Terrace comment no longer refuses the corner-lot front
+# relief to 8 (encoded as a corner_lot variant).
+# 163 -> 165 notes on 2026-10-29 (chunk 5, Gresham DCC and DTM townhouses): each note records
+# the townhouse row's maximum front setback as not encoded, as the plex row's is not.
+# 162 -> 163 notes and 286 -> 287 comments on 2026-10-29 (FOLLOWUPS 109 chunk 5): Tigard
+# MUC's comment records Bridgeport's 20 ft height floor, 50-an-acre ceiling, street-side
+# maximum and arterial frontage share as read and NOT ENCODED; Estacada D's note records the
+# Lakeshore Trail open space as not encoded (outside the opened area).
 # 156 -> 157 notes on 2026-10-28 (FOLLOWUPS 109 chunk 4, Troutdale Town Center): HDR's note
 # records 9.035's Town Center parking waiver and 3.235.C.5.a's ten-foot rear against a
 # non-residential district as read and not encoded (both could only loosen).

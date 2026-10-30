@@ -2250,19 +2250,177 @@ zones:
       cite: Canby CMC Chapter 16.22 (C-1 Downtown Commercial)
       url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38712
       retrieved: '2026-10-07'
+    # The Downtown Canby Overlay's Transitional Commercial sub-area (16.41.020
+    # A.2, traced 2026-10-29 as `drawn_areas` transitional_commercial) is the
+    # only place in C-1 the pod is permitted: 16.41.030 A lets it build a
+    # "Multi-family dwelling" (a fourplex, 16.04.180) "provided they meet all
+    # R-2 development standards in Chapter 16.20", with the overlay's own
+    # standards (16.41.050) over them. So every standard below is the TC
+    # sub-area's -- a lot outside it is refused at the use gate.
     quadplex_allowed:
       value: false
       cite: Canby CMC 16.22.010 (A), residential uses permitted only when part of a mixed use development
       quote: "or/clackamas/canby/cmc.16.22.010.txt#L5"
+      variants:
+        # Inside the Transitional Commercial sub-area, as in R-2: permitted
+        # outright, behind the Type III site and design review whose
+        # judgement criteria ORS 197A.400 voids inside a UGB (Steph
+        # 2026-10-15, FOLLOWUPS 85) -- CLEAR-OBJECTIVE, as R-2 reads.
+        - value: true
+          when: [inside_mapped_use_area, judgement_review]
+          cite: Canby CMC 16.41.030 (A)(3), in the Transitional Commercial (TC) sub-area a multi-family dwelling is also permitted, meeting all R-2 development standards; 16.49.030 (A)(1) and 16.49.40 (B)(2), (B)(3), (D), the site and design review's judgement criteria
+          quote: "or/clackamas/canby/cmc.16.41.030.txt#L5,L11"
+    min_lot_sqft:
+      exempt: true
+      cite: Canby CMC 16.41.030 (A) sends the TC sub-area's housing to the R-2 standards, and 16.20.030 (A)-(G) print no minimum lot area
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L5,L7,L9"
+    min_lot_width_ft:
+      value: 20
+      cite: Canby CMC 16.20.030 (C), minimum width and frontage twenty feet (R-2, by 16.41.030 (A))
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L9"
+    min_density_du_per_acre:
+      value: 14
+      cite: Canby CMC 16.20.030 (A), minimum density 14 units per acre (R-2, by 16.41.030 (A))
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L5"
+      measured_on:
+        fact: net_developable_area
+        cite: Canby CMC 16.20.030 (A), the area in acres minus the area required for street right-of-way and public park/open space areas
+        quote: "or/clackamas/canby/cmc.16.20.030.txt#L5"
+        less: []
+        assumed_none:
+          - "street right-of-way"
+          - "public park and open space areas"
+    # 16.41.050 Table 3, TC column: "Minimum floor area ratio ... 0.4". FAR
+    # is over "the lot area net of any publicly dedicated right-of-way or
+    # land" (16.04.221); the pod's own floor area over the whole lot is the
+    # lowest it can score, so a pass there is certain.
+    min_far:
+      value: 0.4
+      cite: Canby CMC 16.41.050 (A)(2) and Table 3, TC subarea, minimum floor area ratio 0.4
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L34,L38-L39"
+      measured_on:
+        fact: net_developable_area
+        cite: Canby CMC 16.04.221, y is the lot area net of any publicly dedicated right-of-way or land
+        quote: "or/clackamas/canby/cmc.16.04.221.txt#L3"
+        less: []
+        assumed_none:
+          - "publicly dedicated right-of-way or land"
+    # R-2's 35 feet, beside the overlay's 45 (Table 3, TC): both can be met,
+    # so the lower holds.
+    max_height_ft:
+      value: 35
+      cite: Canby CMC 16.20.030 (E)(1), principal building thirty-five feet (R-2, by 16.41.030 (A)); 16.41.050 Table 3's TC 45 feet is the looser of the two
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L31"
+    max_impervious_pct:
+      value: 70
+      cite: Canby CMC 16.20.030 (F), impervious surface 70 percent of the lot area (R-2, by 16.41.030 (A))
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L47"
+    # The street yards. R-2 asks twenty (fifteen on other street sides); the
+    # overlay asks a 0 ft minimum, a 15 ft maximum "from street lot lines",
+    # and 60 percent of "each lot frontage" built AT the minimum setback
+    # (16.41.050 A.1.b, Tables 1 and 2). The two cannot both stand -- no
+    # building sits twenty feet back and within fifteen -- and 16.41.050
+    # says where they conflict "the DCO development standards set forth
+    # below supersede the base zone standards". So the street yards are the
+    # overlay's.
+    setback_front_ft:
+      value: 0
+      cite: Canby CMC 16.41.050 (A)(1) Table 1, TC subarea, minimum setback 0 feet (supersedes the base standards where they conflict, 16.41.050 preamble)
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L3,L7,L19-L22"
+    setback_front_max_ft:
+      value: 15
+      cite: Canby CMC 16.41.050 (A)(1) Table 1, TC subarea, maximum setback from street lot lines 15 feet
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L7,L19-L21,L23"
+    setback_street_side_ft:
+      value: 0
+      cite: Canby CMC 16.41.050 (A)(1) Table 1, TC subarea, minimum setback 0 feet, and (A)(1)(b), each lot frontage
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L11,L19-L22"
+    building_frontage_min_pct:
+      value: 60
+      cite: Canby CMC 16.41.050 (A)(1)(b) and Table 2, TC subarea, at least 60 percent of the length of each lot frontage developed with a building built at the minimum setback
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L11,L25-L28"
+    building_frontage_other_pct:
+      value: 60
+      cite: Canby CMC 16.41.050 (A)(1)(b) and Table 2, "each lot frontage", 60 percent in the TC subarea
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L11,L25-L28"
+    # "built at the minimum setback": the share counts only where the
+    # building stands at Table 1's 0 ft line, not anywhere out to the 15 ft
+    # maximum, which governs the rest of the frontage.
+    building_frontage_band_ft:
+      value: 0
+      cite: Canby CMC 16.41.050 (A)(1)(b), a building(s) built at the minimum setback from the street lot line; Table 1, TC minimum setback 0 feet
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L11,L19-L22"
+    parking_front_prohibited:
+      value: true
+      cite: Canby CMC 16.41.050 (A)(4)(a), in the CC and TC subareas parking and vehicle maneuvering areas shall not be located between a building and the street
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L78"
+    parking_street_setback_ft:
+      value: 15
+      cite: Canby CMC 16.41.050 (A)(4)(b)(1), parking and maneuvering areas set back a minimum of 15 feet from the front lot line
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L80,L82"
+    parking_area_max_frontage_pct:
+      value: 40
+      cite: Canby CMC 16.41.050 (A)(4)(b)(3), parking and maneuvering areas, including accessways and driveways, must not exceed 40 percent of a lot frontage in the TC and CC subareas
+      quote: "or/clackamas/canby/cmc.16.41.050.txt#L80,L86"
+    setback_rear_ft:
+      value: 20
+      cite: Canby CMC 16.20.030 (D)(2), rear yard twenty feet for two-story building components (R-2, by 16.41.030 (A))
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L15"
+      variants:
+        - value: 15
+          when: [corner_lot]
+          cite: Canby CMC 16.20.030 (D)(2), corner lots fifteen feet for two-story building components
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L15"
+        - value: 15
+          when: [abuts_lower_density_zone]
+          cite: Canby CMC 16.20.030 (D)(5) and (E)(3), a 15-foot buffer beside an R-1 or R-1.5 lot, and the building no taller than one foot for each foot of distance from that lot line
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+          step_back:
+            height_ft: 15
+            rise_per_ft: 1
+            cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
+            quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+        - value: 15
+          when: [corner_lot, abuts_lower_density_zone]
+          cite: Canby CMC 16.20.030 (D)(5) and (E)(3), a 15-foot buffer beside an R-1 or R-1.5 lot, and the building no taller than one foot for each foot of distance from that lot line
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+          step_back:
+            height_ft: 15
+            rise_per_ft: 1
+            cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
+            quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+    setback_side_ft:
+      value: 7
+      cite: Canby CMC 16.20.030 (D)(3), interior yard seven feet (R-2, by 16.41.030 (A)); Table 1's 0 ft minimum is read as the street yards' and the larger interior yard is held
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L17"
+      variants:
+        - value: 15
+          when: [abuts_lower_density_zone]
+          cite: Canby CMC 16.20.030 (D)(5) and (E)(3), a 15-foot buffer beside an R-1 or R-1.5 lot, and the building no taller than one foot for each foot of distance from that lot line
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+          step_back:
+            height_ft: 15
+            rise_per_ft: 1
+            cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
+            quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
     notes: >-
-      DRAFT. Refuses: housing only as part of a mixed-use development
-      (with commercial, office or public use).
-      DOUBT: the Downtown Canby Overlay (16.41.030 A) lets the Transitional
-      Commercial sub-area -- two small nodes between 3rd and 4th, Fir to
-      Douglas and Holly to Knott (16.41.020 A.2) -- build multi-family on R-2
-      standards outright. The sub-area boundary is a figure in the code, not
-      a map layer FLATS holds, so every C-1 lot stays refused (a false RED on
-      those few lots, never a false GREEN). FOLLOWUPS carries the tracing.
+      OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) in the Transitional
+      Commercial sub-area only. Outside it: housing only as part of a
+      mixed-use development (16.22.010 A), refused. Inside: 16.41.030 A
+      permits a multi-family dwelling on the R-2 standards, with the
+      overlay's 16.41.050 standards over them -- street yards 0 to 15 ft with
+      60 percent of each frontage built at the 0 ft line, no parking between
+      the building and the street, parking and drives at most 40 percent of
+      a frontage, and a 0.4 minimum floor area ratio (a lot over about
+      10,000 sq ft is more land than the pod's 4,000 sq ft of floor
+      satisfies: YELLOW, FAR-MIN). R-2's own yards (side 7, rear 20 or 15
+      on a corner, the R-1 buffer), density floor, 35 ft and 70 percent
+      impervious hold. NOT ENCODED: 16.41.030 A's townhouse path
+      ("Single-family dwelling having common wall construction"; R-2 (B)'s
+      3,000 sq ft lot cap) -- the one-lot form only is screened; 16.41.050
+      A.4.c's on-street parking credit (looser); A.1.d's gateway corners
+      (Figure 11, no TC lot sits on one); the footprint caps (20,000 sq ft,
+      never reached).
   C-2:
     cite_default:
       cite: Canby CMC Chapter 16.28 (C-2 Highway Commercial)
@@ -2309,6 +2467,23 @@ zones:
     notes: >-
       DRAFT. Refuses: no dwelling use is listed.
 
+drawn_areas:
+  transitional_commercial:
+    condition: inside_mapped_use_area
+    zones: [C-1]
+    file: or/clackamas/canby/transitional-commercial.geojson
+    source: >-
+      Traced 2026-10-29 off the screen's street centrelines (quadfit
+      s1_streets) from 16.41.020 A.2's words -- "between 3rd and 4th and Fir
+      and Douglas on the west side of Downtown, and 3rd and 4th and Holly and
+      Knott on the east side" -- checked against Figure 11. Drawn provenance
+      in the file's source block.
+    quote: "or/clackamas/canby/cmc.16.41.020.txt#L3,L11"
+    cite: Canby CMC 16.41.020 (A)(2) and Figure 11
+    note: >-
+      Two block rows, about 5.7 and 8.1 acres, centreline to centreline: 51
+      RLIS taxlots at least 90 percent inside, all C-1; 2 cut by the line
+      (unanswered, unknown).
 zone_rulings:
   R1:
     outcome: alias

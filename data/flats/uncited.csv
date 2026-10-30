@@ -303,9 +303,6 @@ or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.21.070.txt,163,16.21.070
 or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.21.070.txt,164,16.21.070,1,One design feature within every 30 feet of longest façade.
 or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.21.070.txt,165,16.21.070,1,Two or more design features within every 30 feet of longest façade.
 or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.21.070.txt,182,16.21.070,1,At least one tree per 500 square feet of landscaping.
-or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.41.050.txt,22,16.41.050,1,Minimum setback 0 feet 0 feet 10 feet
-or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.41.050.txt,23,16.41.050,1,Maximum setback from street lot lines 10 feet 15 feet --
-or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.41.050.txt,40,16.41.050,1,"Maximum building footprint (square feet) 30,000 total 20,000 total 80,000 per use"
 or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.49.030.txt,25,16.49.030,1,4. Commercial and industrial accessory structures under 500 square feet.
 or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.49.40.txt,48,16.49.40,1,Distance of access to nearest intersection. ≤70 feet 71 - 100 feet >100 feet - -
 or/clackamas/canby,unfielded,,or/clackamas/canby/cmc.16.49.40.txt,125,16.49.40,1,">20,000 square feet"
@@ -352,7 +349,6 @@ or/clackamas/canby,unread,setback_side_ft,or/clackamas/canby/cmc.16.41.030.txt,1
 or/clackamas/canby,unread,max_height_ft,or/clackamas/canby/cmc.16.41.050.txt,42,16.41.050,1,Maximum building height (see Figure 14) 60 feet 45 feet 45 feet
 or/clackamas/canby,unread,max_height_ft,or/clackamas/canby/cmc.16.41.050.txt,66,16.41.050,1,(1) By providing parapets as tall as the tallest part of the equipment with a minimum height of 3 feet and 6 inches;
 or/clackamas/canby,unread,max_height_ft,or/clackamas/canby/cmc.16.41.050.txt,70,16.41.050,1,(3) By setting the equipment back from the building edge with a setback of at least 3 feet for every 1 foot of building height.
-or/clackamas/canby,unread,min_frontage_ft,or/clackamas/canby/cmc.16.41.050.txt,86,16.41.050,1,"(3) Parking and maneuvering areas, including accessways and driveways, must not exceed 40 percent of a lot frontage in the TC and CC subareas, or 60 percent of a lot frontage in the OHC subarea;"
 or/clackamas/canby,unread,min_lot_sqft,or/clackamas/canby/cmc.16.64.040.txt,7,16.64.040,1,1. Lot sizes shall conform with requirements of Division III unless the applicant chooses to use an alternative lot layout per subsection (3) below to accommodate interconnected and continuous open sp
 or/clackamas/canby,unread,open_space_min_pct,or/clackamas/canby/cmc.16.76.010.txt,5,16.76.010,1,"A. Open Space. A minimum of fifteen (15) percent of the gross area of the development shall be devoted to open space and shall be located in a common area or dedicated to the public, except in the cas"
 or/clackamas/canby,unread,max_units,or/clackamas/canby/cmc.16.76.010.txt,33,16.76.010,1,e. A minimum of five (5) percent of the planned unit development’s dwelling units must be single-story units that have at least one (1) entrance accessible via a route that does not have any stairs be
@@ -426,12 +422,8 @@ or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.24/16.24.040
 or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.25/16.25.050.txt,52,16.25.050,1,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
 or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.26/16.26.040.txt,12,16.26.040,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue.
 or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.26/16.26.040.txt,14,16.26.040,1,"2 Uses in the D zone but located outside the above described area are required to provide off-street parking in accordance with EMC 16.76, except that the number of required off-street parking spaces "
-or/clackamas/estacada,unread,setback_street_side_ft,or/clackamas/estacada/16.26/16.26.040.txt,24,16.26.040,1,"1 Front and Street Side setbacks: Zero (0) feet minimum and five (5) feet maximum, except five (5) feet minimum and ten (10) feet maximum for development abutting 2nd Avenue or 224."
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.26/16.26.040.txt,29,16.26.040,1,2 Side setback: Zero feet for common wall development and ten (10) feet if abutting a residential zone; otherwise setback shall conform to building code.
-or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.26/16.26.040.txt,31,16.26.040,1,3 Rear setback: Zero feet for common wall development and ten (10) feet if abutting a residential zone; otherwise setback shall conform to building code.
 or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.040.txt,40,16.26.040,1,"1 A solid fence or wall of not less than six (6) feet in height, or other screening approved by the city decision-making body, shall be required along a property line that is the district boundary wit"
 or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.040.txt,42,16.26.040,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.040.txt,47,16.26.040,1,Buildings shall exceed the minimum height of seventeen (17) feet and shall not exceed the maximum height of sixty-five (65) feet.
 or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/16.26/16.26.040.txt,84,16.26.040,1,3 An area equal to not less than ten (10) percent of the subject site shall be reserved as a common open space between the development (building and paved area) and the Lakeshore Trail.
 or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.050.txt,104,16.26.050,1,"The area of a floor's ""face,"" for the purposes of applying Table 16.26.051, shall be determined by multiplying the horizontal length of the subject building wall by either the height of that floor fro"
 or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.28/16.28.040.txt,15,16.28.040,1,1 Side setback: ten (10) feet if abutting a residential zone;
@@ -618,6 +610,14 @@ or/clackamas/gladstone,unread,setback_street_side_ft,or/clackamas/gladstone/17.2
 or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.20/17.20.050.txt,15,17.20.050,1,(6) Building Height. The maximum building height shall be 35 feet.
 or/clackamas/gladstone,unread,min_lot_sqft,or/clackamas/gladstone/17.20/17.20.050.txt,26,17.20.050,1,(a) The minimum lot area shall be 500 square feet per dwelling unit;
 or/clackamas/gladstone,unread,min_frontage_ft,or/clackamas/gladstone/17.20/17.20.050.txt,28,17.20.050,1,(b) The minimum frontage shall be 100 feet.
+or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.21.dco.txt,53,17.21.030,1,"(2) Additions or Expansion. Additions to or expansions of an existing building or structure are exempt from standards contained in this chapter that are specific to GMC Section 17.21.070, Building des"
+or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.21.dco.txt,99,17.21.060,1,"(6) Parking Areas. For parcels with a property line abutting Portland Avenue, all off-street parking must be set back at least 20 feet behind the street-facing building facade."
+or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.21.dco.txt,115,17.21.070,1,"(2) Building Height. The maximum building height shall be three stories, not to exceed 35 feet. See Figure 2: Building Design (Building Height). This restriction may be varied as follows:"
+or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.21.dco.txt,119,17.21.070,1,"(b) The maximum building height shall be increased to four stories, not to exceed 45 feet, if the minimum floor to ceiling height of the ground floor is 12 feet (measured from finished ground floor to"
+or/clackamas/gladstone,unread,min_frontage_ft,or/clackamas/gladstone/17.21.dco.txt,125,17.21.070,1,"(a) Windows are required for 60 percent of the ground-floor facade along public street frontages and 40 percent on facades facing parking areas. See Figure 3: Building Design (Transparency, Articulati"
+or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.21.dco.txt,135,17.21.070,1,"(4) Building Articulation. Each building facade adjacent to a street shall be articulated through recessing, projecting, banding, articulation of exterior materials, or change of materials, by incorpo"
+or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.21.dco.txt,177,17.21.070,1,"(C) The guardrails on decks and balconies shall not exceed the minimum height required by the building code, and the design of the guardrail shall be at least 50 percent transparent or see-through (co"
+or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.21.dco.txt,215,17.21.080,1,(b) Raised planter walls planted with a minimum 80 percent evergreen shrubs not exceeding a total combined height of three feet.
 or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.22/17.22.060.txt,36,17.22.060,1,"(A) An additional five feet of setback shall be added for each five feet, or portion thereof, of building height over 35 feet;"
 or/clackamas/gladstone,unread,min_frontage_ft,or/clackamas/gladstone/17.22/17.22.060.txt,50,17.22.060,1,"(5) Minimum Street Frontage. A site area shall have a minimum of 100 feet of frontage on a state, county, or public perimeter access road."
 or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.22/17.22.060.txt,52,17.22.060,1,(6) Building Height. The maximum building height shall be 35 feet.
@@ -1532,15 +1532,6 @@ or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.210.txt,5,50.210,1,
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.210.txt,6,50.210,1,"(3) Pharmacies. Pharmacies (as defined by TDC 31.060) are allowed with a conditional use permit when designed as an integral part of a medical office building, clinic or complex containing at least 30"
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.210.txt,7,50.210,1,(a) Maximum Floor Area. The pharmacy contains no more than 600 square feet of floor area.
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.210.txt,9,50.210,1,In no event must the total floor area of the pharmacy and any related uses exceed 1200 square feet.
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,8,50.300,1,"All Uses 10,000 square feet."
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,16,50.300,1,Front 20 feet
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,17,50.300,1,Side and Rear 0—15 feet As determined through Architectural Review
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,20,50.300,1,• 30 feet when the yard abuts a lot in the
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,22,50.300,1,"• Zero to 15 feet, as determined through the Architectural Review process, when the yard abuts a lot in a multifamily zone."
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,24,50.300,1,Corner Lots 0—20 feet along each frontage
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,31,50.300,1,5 feet Except as approved through Architectural
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,33,50.300,1,Fences 5 feet From public right-of-way.
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/50/50.300.txt,35,50.300,1,All Uses 45 feet Flagpoles may extend up to 100 feet.
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/51/51.110.txt,2,51.110,1,"(1) District Location. The boundaries of a CN District must be separated from all other CN, CC, and CG districts by at least 1,320 feet."
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/51/51.210.txt,2,51.210,1,"(1) Food Stores. Food stores must not exceed 4,000 square feet of gross floor area."
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/51/51.300.txt,8,51.300,1,"All Uses 20,000 square feet —"
@@ -1614,7 +1605,7 @@ or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.400.txt,43,58.400,1
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.510.txt,8,58.510,1,(A) Boats must not exceed 18 feet in length; and
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.510.txt,12,58.510,1,"(b) Take-out restaurants must be smaller than 1,500 square feet, seat no more than 50 people, and be located at least 200 feet away from a public street right-of-way, unless the right-of-way is separa"
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.510.txt,14,58.510,1,"(a) Home Improvement Stores. Building and home improvement materials and supplies retail sales store's that have a gross floor exceeding 50,000 square feet may have an outdoor storage, display, and sa"
-or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.800.txt,30,58.800,2,40 feet —
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.800.txt,30,58.800,1,40 feet —
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/58/58.800.txt,50,58.800,1,"40,000 square feet —"
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/60/60.200.txt,17,60.200,1,Commercial Recreation P (L) Permitted uses limited to health or fitness facility if within 60 feet of the CO district and subject to TDC
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/60/60.200.txt,41,60.200,1,• Office uses if within 60 feet of the CO zone and subject to TDC 60.210(5); and
@@ -1895,8 +1886,6 @@ or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/44/44.300.txt,17,44
 or/clackamas/tualatin,unread,setback_rear_ft,or/clackamas/tualatin/44/44.320.txt,4,44.320,1,"(2) Setback Reduction. All permitted uses may be allowed a reduction of up to 35 percent of the front, side or rear yard setbacks, as determined through the Architectural Review process, if as a resul"
 or/clackamas/tualatin,unread,min_average_lot_width_ft,or/clackamas/tualatin/49/49.300.txt,12,49.300,1,"Minimum Average Lot Width 100 feet When lot has frontage on public street, minimum lot width is 40 feet."
 or/clackamas/tualatin,unread,setback_rear_ft,or/clackamas/tualatin/49/49.320.txt,3,49.320,1,"(1) Setback Reduction. All permitted uses may be allowed a reduction of up to 35 percent of the front, side or rear yard setbacks, as determined through the Architectural Review process, if as a resul"
-or/clackamas/tualatin,unread,min_average_lot_width_ft,or/clackamas/tualatin/50/50.300.txt,10,50.300,1,"Minimum Average Lot Width 80 feet When lot has frontage on public street, minimum lot width is 40 feet."
-or/clackamas/tualatin,unread,max_height_ft,or/clackamas/tualatin/50/50.300.txt,19,50.300,1,"35 feet in height, which have the following minimum side and rear setbacks:"
 or/clackamas/tualatin,unread,setback_front_ft,or/clackamas/tualatin/50/50.310.txt,5,50.310,1,"(a) Setback Reduction. All permitted uses may be allowed a reduction of up to 35 percent of the front yard setbacks, as determined through the Architectural Review process, if as a result the building"
 or/clackamas/tualatin,unread,min_lot_width_ft,or/clackamas/tualatin/51/51.300.txt,12,51.300,1,"100 feet When lot has frontage on public street, minimum lot width is 100 feet."
 or/clackamas/tualatin,unread,max_height_ft,or/clackamas/tualatin/51/51.300.txt,33,51.300,1,"All Uses 25 feet In addition to meeting the maximum height limit, where a property line or alley separates CN land from land in a residential district, a building must not be greater than 20 feet in h"
@@ -1935,7 +1924,6 @@ or/clackamas/tualatin,unread,open_space_min_pct,or/clackamas/tualatin/58/58.510.
 or/clackamas/tualatin,unread,open_space_min_pct,or/clackamas/tualatin/58/58.510.txt,25,58.510,1,(iv) No less than 25 percent of the outdoor area must be covered by a permanent roof;
 or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/58/58.800.txt,23,58.800,1,"Minimum Lot Size 25,000 square feet —"
 or/clackamas/tualatin,unread,min_lot_width_ft,or/clackamas/tualatin/58/58.800.txt,24,58.800,1,Minimum Lot Width 100 feet —
-or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/58/58.800.txt,36,58.800,1,"Minimum Lot Size 25,000 square feet Lot sizes for townhouses must conform to the lot size standards of the RH District."
 or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/58/58.800.txt,38,58.800,1,"Minimum Lot Size, Block 28 20,000 square feet —"
 or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/58/58.800.txt,39,58.800,1,"Minimum Lot Size, Block 29 25,000 square feet —"
 or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/58/58.800.txt,41,58.800,1,"Minimum Lot Size, Block 24 25,000 square feet"
@@ -8875,7 +8863,6 @@ or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.410/18.
 or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.410/18.410.030.txt,216,18.410.030,1,"Developments with off-street parking areas less than 20,000 square feet in size, as measured using the method provided in Section 18.40.150, must provide a minimum effective tree canopy coverage of 30"
 or/washington/tigard,unread,parking_min_per_unit,or/washington/tigard/18.410/18.410.030.txt,220,18.410.030,1,"Developments with off-street parking areas of 20,000 square feet or more, as measured using the method provided in Section 18.40.150, must meet one of the following:"
 or/washington/tigard,unread,max_height_ft,or/washington/tigard/18.620/18.620.040.txt,37,18.620.040,1,"Minimum building height: Except for theaters and cinemas, which can be one story, 20 feet."
-or/washington/tigard,unread,max_height_ft,or/washington/tigard/18.620/18.620.040.txt,41,18.620.040,1,Maximum building height: 70 feet.
 or/washington/tigard,unread,max_height_ft,or/washington/tigard/18.620/18.620.050.txt,12,18.620.050,1,The maximum height limit for all signs except wall signs is 10 feet.
 or/washington/tigard,unread,max_units,or/washington/tigard/18.620/18.620.080.txt,17,18.620.080,1,First-story dwelling units must include porches that are at least 48 square feet in area with no dimension less than 6 feet.
 or/washington/tigard,unread,max_height_ft,or/washington/tigard/18.640/18.640.060.txt,119,18.640.060,1,"Rowhouse or small form residential development sites with side lot lines abutting the River Terrace Boulevard ROW may have a fence, wall, or hedge up to six feet in height and 25 feet in length along "

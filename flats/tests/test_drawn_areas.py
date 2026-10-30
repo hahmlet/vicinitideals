@@ -43,12 +43,16 @@ SUB_DISTRICT_BLOCKS = {2, 3, 15, 16, 17, 18, 19, 20, 22, 23}
 
 def test_every_drawn_condition_is_a_registered_condition() -> None:
     assert DRAWN_CONDITIONS == (
+        "gladstone_parking_exception_area",
+        "gladstone_town_center",
         "inside_mapped_use_area",
         "north_of_marine_drive",
         "oregon_city_historic_overlay",
         "oregon_city_park_place",
         "oregon_city_south_end",
         "rockwood_design_district",
+        "tigard_bridgeport_village",
+        "troutdale_cfec_parking_area",
         "troutdale_town_center",
         "willamette_historic_district",
     )
@@ -200,7 +204,7 @@ def test_the_tracing_is_the_ten_blocks_the_code_lists() -> None:
 
 def test_tualatin_cc_reads_the_tracing(corpus: dict) -> None:
     layer = corpus[TUALATIN]
-    (area,) = layer.drawn_areas.values()
+    area = layer.drawn_areas["residential_sub_district"]
     assert area.condition == "inside_mapped_use_area" and area.zones == ("CC",)
     assert area.file == TRACING
     assert "CC" in layer.zones and "CC" not in layer.zone_rulings

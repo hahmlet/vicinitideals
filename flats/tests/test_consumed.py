@@ -96,6 +96,11 @@ from flats.score import paper
 SILENTLY_UNREAD = frozenset(
     {
         "max_building_width_ft",
+        # 2026-10-29 (FOLLOWUPS 109 chunk 5): Canby's "built at the minimum
+        # setback" band is read where the share is MEASURED -- the bridge's
+        # drawn plan, `flats.ingest.quadfit.share_band`
+        # (test_canby_downtown) -- and the screen judges that measure.
+        "building_frontage_band_ft",
         # 2026-10-02: `parking_front_yard_max_pct` is checked
         # (`front_yard_vehicle_share`), and the approach widths are declared
         # in PaperFit.excluded (in the right of way; every maximum admits a

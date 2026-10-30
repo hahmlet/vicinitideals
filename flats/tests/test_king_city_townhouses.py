@@ -202,3 +202,31 @@ def test_r9_holds_every_home_lot_to_the_24_ft_average(corpus, policies) -> None:
     _, got = both(corpus, policies, row("king_city", "R-9", width=150.0, depth=200.0), design=wide())
     assert got.signed.colour is Colour.red
     assert "home_lot_average_width_ft" in {b["check"] for b in got.forms["townhomes"]["binds"]}
+
+
+# --- the corner row (districts chunk 5) ---------------------------------------
+
+#: "Corner lot setback -- front yard/side yard, minimum": the corner front
+#: where the column prints one figure; R-12's "10/8" leaves its front at 10.
+CORNER_FRONT = {"R-9": (12, 10), "KTTC": (10, 8), "KTBB": (10, 8), "KTC": (10, 8), "KTRC": (10, 8)}
+
+
+@pytest.mark.parametrize("zone", sorted(CORNER_FRONT))
+def test_a_corner_lots_fronts_take_the_corner_row(rules: RuleSet, king_city: Layer, zone: str) -> None:
+    plain, corner = CORNER_FRONT[zone]
+    for facts in ((), ("unit_lots",)):
+        assert rules.resolve(KING_CITY, zone, facts).values["setback_front_ft"].value == plain
+        got = rules.resolve(KING_CITY, zone, (*facts, "corner_lot")).values["setback_front_ft"]
+        assert got.value == corner, (zone, facts)
+    (variant,) = king_city.zones[zone].values["setback_front_ft"].variants
+    text = _text(variant.prov.quote)
+    assert "Corner lot setback" in text
+    assert quotes_the_number(text, corner)
+    # Every street line of a corner lot is a front, so the relief reaches each.
+    assert king_city.defaults["front_lot_line_corner"].value == "both"
+
+
+def test_r12_and_the_dash_columns_keep_their_front_on_a_corner(rules: RuleSet) -> None:
+    for zone, want in (("R-12", 10), ("R-15", 15), ("R-24", 15), ("AT", 10)):
+        got = rules.resolve(KING_CITY, zone, ("unit_lots", "corner_lot")).values["setback_front_ft"]
+        assert got.value == want, zone

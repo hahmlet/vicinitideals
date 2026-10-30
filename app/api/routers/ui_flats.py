@@ -2906,6 +2906,7 @@ _REASON_WORDS = {
     "SUSPECT_STACKED_UNIT": "likely a condominium unit in a larger building, not a lot the building sits on",
     "CONDO_AIR_PARCEL": "condominium air parcel, not land",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
+    "CLOSER_LOOK_MIN_FAR": "closer look: the city asks for more floor area on a lot this size than the four homes give — a bigger building could meet it",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
     "CLOSER_LOOK_SPLIT_ZONE": "closer look: the lot lies in more than one zoning district and the building or its parking stands across the line; the city's code has no rule that puts the whole lot in one, and the standards were read from the district that covers most of it",

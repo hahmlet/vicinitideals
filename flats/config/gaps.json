@@ -1,5 +1,5 @@
 {
-  "digest": "08fc04552dfa97bf774cabf0a7701c03f13b27757adb6b40a14914adc62ee378",
+  "digest": "501713d15d98293cc149862ba388bf3e3fe2a65673b5f7571133e0bc5ebfeafe",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -31,7 +31,16 @@
     },
     "or/clackamas/gladstone": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "C2",
+          "field": "building_frontage_other_pct [gladstone_town_center]",
+          "claimed": "17.21.060",
+          "found": "17.21.010 17.21.060",
+          "quote": "or/clackamas/gladstone/17.21.dco.txt#L25,L83",
+          "kind": "heading_same_file"
+        }
+      ],
       "label": "Gladstone",
       "counts": {},
       "gaps": []
@@ -269,78 +278,6 @@
           "kind": "heading_same_file"
         },
         {
-          "zone": "CMF",
-          "field": "setback_front_ft [civic_corridor]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_rear_ft [civic_corridor]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_rear_ft [alley_at_rear+civic_corridor]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_rear_ft [civic_corridor+unit_lots]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_rear_ft [alley_at_rear+civic_corridor+unit_lots]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_side_ft [civic_corridor]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_side_ft [civic_corridor+unit_lots]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_side_ft [attached_wall+civic_corridor+unit_lots]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L151,L159-L160",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_street_side_ft [civic_corridor]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "4.0130",
-          "quote": "or/multnomah/gresham/4/4.0130.txt#L147-L155",
-          "kind": "heading_other_file"
-        },
-        {
           "zone": "CMU",
           "field": "building_frontage_basis",
           "claimed": "7.0420 7.0512 3.0100",
@@ -379,6 +316,22 @@
           "found": "7.0431",
           "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "DCC",
+          "field": "orientation_constraint [unit_lots]",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "7.0431",
+          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "DCC",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DCL",
@@ -467,6 +420,22 @@
           "found": "7.0431",
           "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "DTM",
+          "field": "orientation_constraint [unit_lots]",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "7.0431",
+          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "DTM",
+          "field": "review_discretion",
+          "claimed": "4.1100 4.1120 4.1130 7.0420",
+          "found": "4.1142",
+          "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
+          "kind": "heading_other_file"
         },
         {
           "zone": "MDR-12",
@@ -792,6 +761,38 @@
           "claimed": "3.130",
           "found": "3.235",
           "quote": "or/multnomah/troutdale/3/3.235.txt#L24,L30,L35",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L26",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+multi_story+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L26",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L25,L27",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear+multi_story+troutdale_town_center]",
+          "claimed": "3.130",
+          "found": "3.235",
+          "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L25,L27",
           "kind": "heading_other_file"
         }
       ],
@@ -1335,6 +1336,38 @@
         },
         {
           "zone": "MUC",
+          "field": "max_height_ft [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L77-L79",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
+          "field": "max_impervious_pct [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L81-L83",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
+          "field": "min_density_du_per_acre [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L91,L99",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
+          "field": "min_landscaped_pct [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L85-L87",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC",
           "field": "parking_aisle_one_way_ft",
           "claimed": "18.410.2",
           "found": "18.410.030",
@@ -1356,6 +1389,14 @@
           "found": "18.410.030",
           "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
           "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUC",
+          "field": "setback_front_max_ft [tigard_bridgeport_village]",
+          "claimed": "18.620.040",
+          "found": "18.620.020 18.620.040",
+          "quote": "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L63,L71",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MUR",

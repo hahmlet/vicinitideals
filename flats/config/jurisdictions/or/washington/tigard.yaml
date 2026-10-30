@@ -975,8 +975,11 @@ zones:
   # 18.670.2 makes Rowhouses L in MUR and 18.670.060.E.2 prohibits every
   # housing type but apartments and mixed use in the Apartment Subdistrict
   # (18.670.060.txt L44,L69-L73). Subdistricts are drawn on Map
-  # 18.670.A only, "except for the subdistricts" on the zoning map (L71):
-  # `inside_mapped_use_area`, unknown on every lot. Table 18.670.4's MUR
+  # 18.670.A only, "except for the subdistricts" on the zoning map
+  # (18.670.020.txt L17-L18): `inside_mapped_use_area`, answered for MUR
+  # from a tracing of that map (`drawn_areas` below, districts chunk 5,
+  # 2026-10-29). Before the tracing it was unknown on every lot. Every MUR
+  # lot on the 2026-10-22 copy lies inside the plan district. Table 18.670.4's MUR
   # heights (12 min / 60 max) and the first-storey 12 ft rule
   # (18.670.080.B) are building design standards for nonresidential and
   # mixed-use development; residential development takes its housing type
@@ -1092,7 +1095,8 @@ zones:
     notes: >-
       DRAFT. Rowhouses Y; no minimum lot and no density floor on the lot (the 870 sq ft
       maximum bounds each rowhouse's own lot, ruled 2026-10-01), 16 ft width; the stricter of
-      Table 18.280.1's MUR-1 and MUR-2 columns. Refused inside the WSRC Apartment Subdistrict, which no map held draws.
+      Table 18.280.1's MUR-1 and MUR-2 columns. Refused inside the WSRC Apartment Subdistrict,
+      traced from Map 18.670.A (drawn_areas wsrc_apartment_subdistrict).
   # ------------------------------------------------------------------
   # MUC, Mixed-Use Commercial. Residential Use A (Table 18.120.1),
   # Rowhouses Y (Table 18.120.2), and 18.280 "appl[ies] to rowhouse
@@ -1122,7 +1126,16 @@ zones:
   # take a development design review (18.670.040.B.3.b); the Metzger
   # Business Subdistrict allows only mixed use. A two-storey pod meets
   # none of that: the variant below. Neither plan district nor subdistrict
-  # is on Metro's map.
+  # is on Metro's map; the city's own Community Plan Areas layer draws the
+  # plan district, and it answers `inside_mapped_use_area` for MUC
+  # (`drawn_areas` below, districts chunk 5, 2026-10-29). Inside it the
+  # subdistrict does not matter: no MUC lot in WSRC admits a two-storey
+  # pod, in a subdistrict or out of one. The development design review is a
+  # discretionary alternative to a clear path the pod fails, so the lot
+  # stays refused rather than flagged. Outside it MUC reads on the base
+  # chapter: the Tigard Triangle chapter does not reach MUC
+  # (18.660/18.660.020.txt L15) and River Terrace sends MUC to 18.120 and
+  # 18.320 (18.640/18.640.050.txt L3).
   # ------------------------------------------------------------------
   MUC:
     cite_default:
@@ -1170,6 +1183,75 @@ zones:
       exempt: true
       cite: Tigard CDC Table 18.280.1, maximum height, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC); Table 18.320.4 reaches only nonresidential and mixed-use development (18.320.020.A-B)
       quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L83"
+      variants:
+        - value: 70
+          when: [tigard_bridgeport_village]
+          cite: Tigard CDC 18.620.040.B.6, Bridgeport Village maximum building height 70 feet
+          quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L77-L79"
+    # BRIDGEPORT VILLAGE (18.620), `tigard_bridgeport_village` from the
+    # city's own plan district outline (`drawn_areas` below). Its standards
+    # "apply to all development located within" it and govern in a conflict
+    # (18.620.020.B, L29). Residential figures: no minimum lot, width or
+    # setback (B.1-B.3, which this block already holds exempt); a 20 ft
+    # maximum front and street side setback "Except as determined in the
+    # architectural review process" (B.4.b -- the printed figure binds, the
+    # review is the discretionary way round it); 20 ft minimum and 70 ft
+    # maximum height (B.5-B.6); 90% coverage and 10% landscape (B.7-B.8);
+    # 25 to 50 units per net acre for residential-only development
+    # (B.9.b-c); parking not between the building and the street
+    # (18.620.080.G, where 18.620.070.D sends residential-only buildings).
+    # Carried here so a Bridgeport lot is not read on the base's blanks.
+    # NOT ENCODED: the 20 ft height floor (the pod is taller), the 50-unit
+    # ceiling (it binds below 3,485 sq ft, where the pod does not fit), the
+    # 20 ft maximum street side setback (no field), and 18.620.070.C.1,
+    # buildings on half of an arterial or collector frontage (street class
+    # not held for Tigard). On the 2026-10-22 copy the district holds one
+    # MUC lot of about seven acres, which the density floor alone stops.
+    min_density_du_per_acre:
+      exempt: true
+      cite: Tigard CDC Table 18.805.1, Rowhouse rows, the MUC cells blank, and 18.40.130.B; Steph's ruling 2026-10-01 that an empty cell means no limit (the lot-level floor is not held, see THE LARGEST LOT above `zones:`)
+      quote: "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67-L74"
+      variants:
+        - value: 25
+          when: [tigard_bridgeport_village]
+          cite: Tigard CDC 18.620.040.B.9.b, Bridgeport Village minimum density for residential-only developments 25 dwelling units per net acre
+          quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L91,L99"
+    setback_front_max_ft:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, maximum front setback, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L80-L81"
+      variants:
+        - value: 20
+          when: [tigard_bridgeport_village]
+          cite: Tigard CDC 18.620.040.B.4.b, Bridgeport Village residential maximum building setback 20 feet front, except as determined in the architectural review process
+          quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L63,L71"
+    max_impervious_pct:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, maximum lot coverage, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L84"
+      variants:
+        - value: 90
+          when: [tigard_bridgeport_village]
+          cite: Tigard CDC 18.620.040.B.7, Bridgeport Village maximum lot coverage 90%
+          quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L81-L83"
+    min_landscaped_pct:
+      exempt: true
+      cite: Tigard CDC Table 18.280.1, minimum landscape area, which prints no MUC column; Steph's ruling 2026-10-01 that an empty cell means no limit (18.280.020.A applies the chapter in MUC)
+      quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L85"
+      variants:
+        - value: 10
+          when: [tigard_bridgeport_village]
+          cite: Tigard CDC 18.620.040.B.8, Bridgeport Village minimum landscape area 10%
+          quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L29,L85-L87"
+    parking_front_prohibited:
+      exempt: true
+      cite: Tigard CDC 18.280.040.D.2, which places rowhouse parking by a 20 ft setback from the street line rather than forbidding it in front (held as parking_street_setback_ft)
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L88-L90"
+      variants:
+        - value: true
+          when: [tigard_bridgeport_village]
+          cite: Tigard CDC 18.620.080.G, parking and loading areas may not be located between the primary structures and the street; 18.620.070.D sends residential-only buildings to 18.620.080
+          quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L167,L243-L255"
     parking_street_setback_ft:
       value: 20
       cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
@@ -1205,8 +1287,9 @@ zones:
     notes: >-
       DRAFT. Rowhouses Y. Table 18.280.1 prints no MUC column and Table 18.805.1's MUC
       rowhouse cells are blank, and an empty cell means no limit (Steph, 2026-10-01): lot,
-      width, yards and height exempt; 15 ft frontage. Refused inside WSRC (four storeys) and
-      the Metzger Business Subdistrict, which no map held draws.
+      width, yards and height exempt; 15 ft frontage. Refused inside WSRC (four storeys, or
+      the Metzger Business Subdistrict's mixed use only), drawn from the city's plan district
+      outline; Bridgeport Village's own figures carried under tigard_bridgeport_village.
   # ------------------------------------------------------------------
   # MU-CBD, Mixed-Use Central Business District, governed by 18.650 (18.280
   # "does not apply", 18.280.020.C). Residential Use A/R (Table 18.650.1;
@@ -1546,3 +1629,66 @@ zone_rulings:
       as Cornelius treats its county codes. Both lots are public land on the
       Washington roll (code 990) and were already RED in run 73, so this
       ruling moves no lot.
+
+# THE PLAN DISTRICTS THE ZONING LAYER DOES NOT CARRY (FOLLOWUPS 109, districts
+# chunk 5, 2026-10-29). Metro's layer prints MUR and MUC; whether a lot is in
+# the Washington Square Regional Center, its Apartment Subdistrict, or
+# Bridgeport Village is drawn elsewhere.
+drawn_areas:
+  wsrc_apartment_subdistrict:
+    condition: inside_mapped_use_area
+    zones: [MUR]
+    file: or/washington/tigard/wsrc-apartment-subdistrict.geojson
+    source: >-
+      Traced from Tigard CDC Map 18.670.A (the image attached to 18.670.020 on
+      ecode360, sha256 in the file), registered to the city's Washington
+      Square plan district outline; the hatched Apartment Subdistrict, grown
+      15 ft onto the map's boundary line. Drawn provenance in the file's
+      source block.
+    quote: "or/washington/tigard/18.670/18.670.020.txt#L13,L17-L18"
+    cite: Tigard CDC 18.670.020.A.2 and B, 18.670.060.E.2
+    note: >-
+      18.670.060.E.2 allows only apartments and mixed-use development in the
+      MUR Apartment Subdistrict, and the subdistricts are drawn on Map
+      18.670.A and nowhere else ("except for the subdistricts" on the zoning
+      map). This area answers MUR's `inside_mapped_use_area` lever: inside
+      it the pod is refused; outside it MUR reads on the rowhouse chapter.
+      On the 2026-10-22 taxlots 94 MUR lots fall inside, 254 outside, and 12
+      the line cuts, which stay unanswered and screen unknown on the fact.
+  wsrc_plan_district:
+    condition: inside_mapped_use_area
+    zones: [MUC]
+    file: or/washington/tigard/wsrc-plan-district.geojson
+    source: >-
+      City of Tigard GIS, Framework/Tigard_Planning MapServer layer 1
+      (Community Plan Areas), the Washington Square feature, fetched
+      2026-10-22 (docs/flats/ingest_c2_2026-10-22.md).
+    quote: "or/washington/tigard/18.670/18.670.060.txt#L36-L37,L44,L52-L67"
+    cite: Tigard CDC 18.670.020.B, Table 18.670.2, 18.670.060.E.1
+    note: >-
+      Inside the Washington Square Regional Center, MUC admits rowhouses only
+      in the Design Review Subdistrict, where residential development must be
+      four storeys (18.670.090.B.4), and the Metzger Business Subdistrict
+      admits mixed use only; elsewhere in WSRC's MUC rowhouses are not among
+      the limited types allowed. So for MUC the plan district alone decides,
+      and the subdistrict lines do not need tracing. The plan district is on
+      the city's zoning map (18.670.020.B) and its Community Plan Areas
+      layer. On the 2026-10-22 taxlots 88 MUC lots fall inside and 33 out.
+  bridgeport_village:
+    condition: tigard_bridgeport_village
+    zones: [MUC]
+    file: or/washington/tigard/bridgeport-village.geojson
+    source: >-
+      City of Tigard GIS, Framework/Tigard_Planning MapServer layer 1
+      (Community Plan Areas), the Bridgeport Village feature, fetched
+      2026-10-22 (docs/flats/ingest_c2_2026-10-22.md).
+    quote: "or/washington/tigard/tdc.18.620.bridgeport.txt#L17,L25,L29"
+    cite: Tigard CDC 18.620.010, 18.620.020
+    note: >-
+      Bridgeport Village is zoned MUC and its own chapter's standards apply
+      to all development in it and govern in a conflict (18.620.020.B): a
+      residential density floor of 25 units per net acre, a 20 ft maximum
+      front setback, 90% coverage, 10% landscape, 70 ft height and parking
+      off the street side, read into MUC's variants. The boundary is on the
+      official zoning map and Map 18.620.A; the city's plan-area layer draws
+      it. One MUC lot on the 2026-10-22 taxlots, about seven acres.

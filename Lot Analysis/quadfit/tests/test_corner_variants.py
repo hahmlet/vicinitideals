@@ -58,6 +58,18 @@ BY_RIGHT_GAINS = {
     # R-1.5's figures.)
     "or/clackamas/canby/R-1.5.setback_rear_ft",
     "or/clackamas/canby/R-2.setback_rear_ft",
+    # 2026-10-29 (FOLLOWUPS 109 chunk 5): Canby C-1 is measured at last (its
+    # Transitional Commercial takes R-2's figures, 16.22.030), so R-2's corner
+    # rear comes with it.
+    "or/clackamas/canby/C-1.setback_rear_ft",
+    # 2026-10-29 (chunk 5, King City looser rules, coordinator's go): a corner
+    # lot's front yard by right -- R-9 12 to 10 (16.84.040), the Kingston
+    # Terrace districts 10 to 8 (Table 16.114-4). Two feet at a corner's front.
+    "or/washington/king-city/R-9.setback_front_ft",
+    "or/washington/king-city/KTBB.setback_front_ft",
+    "or/washington/king-city/KTC.setback_front_ft",
+    "or/washington/king-city/KTRC.setback_front_ft",
+    "or/washington/king-city/KTTC.setback_front_ft",
 }
 
 
@@ -183,7 +195,9 @@ def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
     setbacky = [v for v in audit.scan()
                 if v.reachable and v.direction == "tightens"
                 and v.field.startswith("setback_")]
-    assert len(setbacky) == 16, [str(v) for v in setbacky]
+    # 16 -> 17 on 2026-10-29: Canby C-1, measured at last, carries R-2's
+    # corner-and-beside-R-1 rear (the same layer, so the set below holds).
+    assert len(setbacky) == 17, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
         "or/washington/hillsboro", "or/clackamas/tualatin",

@@ -1,0 +1,119 @@
+{
+ "type": "FeatureCollection",
+ "name": "canby_transitional_commercial",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "CMC 16.41.020 A.2 draws the sub-area in words -- \"The two Transitional Commercial nodes are tucked between 3rd and 4th and Fir and Douglas on the west side of Downtown, and 3rd and 4th and Holly and Knott on the east side\" -- and Figure 11 (Downtown Canby Framework Diagram, flats/config/areas/or/clackamas/canby/downtown-canby-overlay-figure-11.map-only.pdf) shows the same two pink nodes, Elm inside the west one and Ivy inside the east one",
+  "quote": "or/clackamas/canby/cmc.16.41.020.txt#L3,L11",
+  "inputs": {
+   "streets": "the screen's own street centrelines (quadfit s1_streets): 3RD, 4TH, DOUGLAS, FIR, HOLLY, KNOTT by name",
+   "taxlots": "Metro RLIS taxlots (https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Taxlots_(Public)/FeatureServer/3), fetched 2026-10-29, zoned off the regional zoning layer's Canby polygons"
+  },
+  "traced_by": "Claude (districts chunk 5 worker)",
+  "traced_on": "2026-10-29",
+  "drawn": true,
+  "how": "West node: the face the 3rd Avenue, 4th Avenue, Douglas Street and Fir Street centrelines enclose (polygonized, Elm Street inside it). East node: the quadrilateral on the four centreline crossings 3rd/Holly (7,637,036, 590,003), 3rd/Knott (7,638,045, 590,483), 4th/Knott (7,637,855, 590,737) and 4th/Holly (7,636,889, 590,306), Ivy Street inside it. Centreline to centreline, so a lot in either block row is wholly inside. Checked against Figure 11: the same two nodes, on the north side of the Core Commercial strip.",
+  "counts": {
+   "acres": {
+    "west": 5.71,
+    "east": 8.08
+   },
+   "lots_at_least_90pct_inside": {
+    "C1": 51
+   },
+   "lots_cut": {
+    "C1": 2
+   },
+   "C1_lots_at_or_under_10000_sqft": 39
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Transitional Commercial, west node (3rd-4th, Douglas-Fir)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7635998.686679795,
+       589515.6889763786
+      ],
+      [
+       7635655.876640424,
+       589359.1706036789
+      ],
+      [
+       7635588.23720473,
+       589504.3569553785
+      ],
+      [
+       7635524.127624679,
+       589656.7142388527
+      ],
+      [
+       7635861.985892385,
+       589813.9537401648
+      ],
+      [
+       7636210.417650921,
+       589973.3582677123
+      ],
+      [
+       7636278.972112866,
+       589825.4691601091
+      ],
+      [
+       7636350.9438976385,
+       589679.163385823
+      ],
+      [
+       7635998.686679795,
+       589515.6889763786
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Transitional Commercial, east node (3rd-4th, Holly-Knott)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7637036.0,
+       590003.0
+      ],
+      [
+       7638045.0,
+       590483.0
+      ],
+      [
+       7637855.0,
+       590737.0
+      ],
+      [
+       7636889.0,
+       590306.0
+      ],
+      [
+       7637036.0,
+       590003.0
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

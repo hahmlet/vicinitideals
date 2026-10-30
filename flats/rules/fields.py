@@ -102,6 +102,7 @@ _LABELS: dict[str, str] = {
     "max_impervious_pct": "max. coverage of buildings and paving %",
     "max_density_du_per_acre": "max. density (units/acre)",
     "max_far": "max. floor area ratio",
+    "min_far": "min. floor area ratio",
     "max_height_ft": "max. height",
     "max_height_stories": "max. height (storeys)",
     "max_lot_depth_ratio": "max. lot depth ratio",
@@ -637,6 +638,19 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
+    FieldDef(
+        "min_far",
+        "ratio",
+        "MINIMUM floor area ratio: the least building, as gross floor area "
+        "over lot area, a lot must carry. Canby's Downtown Overlay, 16.41.050 "
+        "Table 3 (0.8 Core Commercial in C-1, 0.4 Transitional Commercial, "
+        "0.15 Outer Highway). The pod's floor area is known (ground floor "
+        "times storeys), so it is measured, not assumed; a lot it falls short "
+        "on is held at YELLOW (FAR-MIN) -- a bigger building could meet it -- "
+        "and never failed on it. A net denominator the code names travels as "
+        "`measured_on`, as a density's does.",
+        False,
+    ),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
     FieldDef(
         "max_impervious_pct",
@@ -1445,6 +1459,18 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef(
+        "building_frontage_band_ft",
+        "length_ft",
+        "How far from the street line the building's share of the frontage "
+        "counts, where the code counts it nearer than the maximum front "
+        "setback: Canby DCO 16.41.050.A.1.b, \"At least x% of the length of "
+        "each lot frontage shall be developed with a building(s) built at the "
+        "minimum setback from the street lot line\" -- the minimum setback, "
+        "0 ft in Table 1, while the rest of the frontage may stand back to "
+        "the 15 ft maximum. Absent, the band is `setback_front_max_ft`.",
+        True,
+    ),
+    FieldDef(
         "building_frontage_basis",
         "enum",
         "What the code measures the building's share of the frontage on "
@@ -1604,9 +1630,12 @@ SQFT_PER_ACRE = 43_560
 #: allowable floor area ratio" — so the ratio that governs there is the
 #: building's floor area over something smaller than the lot, and the bound
 #: argument above carries over unchanged: a FAR already over the ceiling on
-#: the whole lot is over it on any part of the lot.
+#: the whole lot is over it on any part of the lot. A minimum ratio turns the
+#: same way as a minimum density: Canby's 0.4 (CMC 16.41.050 Table 3) is over
+#: "the lot area net of any publicly dedicated right-of-way or land", so a
+#: building that clears it on the whole lot clears it on any part of it.
 MEASURED_ON_FIELDS: frozenset[str] = frozenset(
-    {"min_density_du_per_acre", "max_density_du_per_acre", "max_far"}
+    {"min_density_du_per_acre", "max_density_du_per_acre", "max_far", "min_far"}
 )
 
 #: Fields a rule file may state per dwelling unit rather than outright.
@@ -1846,6 +1875,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "min_roof_pitch_in_12",
         "land_division_parent_standards",
         "max_far",
+        # A floor on the amount of building: Canby's Downtown Overlay alone.
+        "min_far",
         "max_coverage_pct",
         "max_impervious_pct",
         "coverage_curve",
@@ -1905,6 +1936,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_plaza_pct",
         "building_frontage_basis",
         "building_frontage_corner",
+        "building_frontage_band_ft",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",

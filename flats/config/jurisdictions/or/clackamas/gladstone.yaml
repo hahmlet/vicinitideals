@@ -557,6 +557,11 @@ code:
   - id: "17.20.c-3"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1720.html
     title: "Chapter 17.20 - C-3 General Commercial District"
+  # The overlay on C-2 inside the Town Center (17.21.010), read 2026-10-29
+  # for FOLLOWUPS 109 chunk 5. Whole chapter; not yet cut into sections.
+  - id: "17.21.dco"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1721.html
+    title: "Chapter 17.21 - DC Downtown Core Overlay District"
   - id: "17.22.op"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1722.html
     title: "Chapter 17.22 - OP Office Park District"
@@ -607,15 +612,20 @@ defaults:
   # reaches this building and Table 1 names it again in its own row.
   # (or/clackamas/gladstone/17.06.definitions.txt#L587,L589,L611,L613)
   #
-  # NOT ENCODED: the parking mandate exception. 17.48.010(1) waives the
-  # requirement entirely inside the Town Center boundary, within a quarter mile
-  # of it, and within half a mile of McLoughlin Boulevard, "measured using a
-  # straight line" off the Gladstone Parking Mandate Exception Map. Table 1's
-  # own Zone A column agrees -- "Min: None / Max: None" against the row this
-  # building takes. No parcel record here carries a distance to a boundary or a
-  # corridor, so every Gladstone lot is screened against the outside-Zone-A
-  # figure. Conservative, and on the lots it is wrong about it charges the pod
-  # four stalls it does not owe. Same shape as Troutdale's CFEC waiver.
+  # NOT ENCODED: the parking mandate exception's McLoughlin half. 17.48.010(1)
+  # waives the requirement entirely inside the Town Center boundary, within a
+  # quarter mile of it, and within half a mile of McLoughlin Boulevard,
+  # "measured using a straight line" off the Gladstone Parking Mandate
+  # Exception Map. Table 1's own Zone A column agrees -- "Min: None / Max:
+  # None" against the row this building takes. The first two ARE encoded
+  # (2026-10-29, FOLLOWUPS 109 chunk 5): the Town Center is traced from the
+  # Ordinance 1539 map and grown a quarter mile, straight line
+  # (`drawn_areas` parking_exception_area), and a lot at least 90 percent
+  # inside owes nothing. The McLoughlin half mile is not drawn -- where it is
+  # measured from (centreline or right-of-way edge) the code does not say and
+  # the map is not held -- so a lot only it would excuse is still screened
+  # against the outside-Zone-A figure: conservative, four stalls it may not
+  # owe.
   # (or/clackamas/gladstone/17.48.parking.txt#L23-L31,L159,L171,L174-L175)
   parking_min_per_unit:
     value: 1
@@ -623,6 +633,12 @@ defaults:
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     retrieved: '2026-08-29'
     quote: "or/clackamas/gladstone/17.48/17.48.030.txt#L122,L137,L139,L152-L154"
+    variants:
+      - exempt: true
+        when: [gladstone_parking_exception_area]
+        cite: GMC 17.48.010(1)(a)-(b), off-street parking is not required within the Gladstone Town Center boundary or one-quarter-mile of it, measured using a straight line (17.48.010(2))
+        retrieved: '2026-10-29'
+        quote: "or/clackamas/gladstone/17.48/17.48.010.txt#L5,L7,L9,L13"
   # And no ceiling. The maximum machinery in this chapter is fully built --
   # 17.48.030(2)(b) splits the city into Zone A and Zone B for the purpose,
   # (2)(c) lists five kinds of space exempt from the maxima, (2)(d) governs what
@@ -1072,7 +1088,13 @@ zones:
       quote: "or/clackamas/gladstone/17.12/17.12.020.txt#L1-L7"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L26"
+      quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L25-L26"
+      variants:
+        - value: 10
+          when: [gladstone_town_center]
+          cite: GMC 17.12.050, Front setback, 10 ft within Gladstone Town Center (Ordinance 1539)
+          retrieved: '2026-10-29'
+          quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L25,L27"
     setback_side_ft:
       # One side row here, unlike 17.10, and it is the smaller number.
       value: 5
@@ -1087,7 +1109,13 @@ zones:
       quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L49"
     setback_street_side_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L41"
+      quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L40-L41"
+      variants:
+        - value: 10
+          when: [gladstone_town_center]
+          cite: GMC 17.12.050, Street side setback, 10 ft within Gladstone Town Center (Ordinance 1539)
+          retrieved: '2026-10-29'
+          quote: "or/clackamas/gladstone/17.12/17.12.050.txt#L40,L42"
     min_lot_sqft:
       # GMC 17.12.050, Minimum Lot Area. The rows are by housing type and the
       # quadplex has one of its own — 7,000, against 5,000 for a detached
@@ -1111,13 +1139,13 @@ zones:
       dwelling, encoded as the `unit_lots` variant. Street-side read via mirror; confirm 17.12.050.
 
 
-      READ AND NOT ENCODED (1) Gladstone Town Center. 17.12.050 states a second figure inside it for
-      three rows this screen uses — front setback 10 ft (L183) and street side 10 ft (L198) against
-      20 outside it, and 2,500 sq ft of lot against 5,000 (L164), though that last row is the detached
-      house and does not reach a quadplex. It is a boundary drawn inside the zone rather than a zone
-      of its own, nothing here cuts it against a parcel, and both figures loosen — so the encoding is
-      the outside-the-district half and lots inside the Town Center screen tighter than the code
-      holds them.
+      (1) Gladstone Town Center, ENCODED 2026-10-29 (FOLLOWUPS 109 chunk 5). 17.12.050 states a
+      second figure inside it for two rows this screen uses — front setback 10 ft (L27) and street
+      side 10 ft (L42) against 20 outside it — carried as `gladstone_town_center` variants. The
+      boundary is the Ordinance 1539 map, traced (`drawn_areas` town_center); a lot the traced line
+      cuts is unanswered and held open. The third row with a Town Center figure, 2,500 sq ft of lot
+      against 5,000 (L8), is the detached house and does not reach a quadplex, whose 7,000 is the
+      same inside and out.
 
 
       (2) No maximum-units ceiling. R-7.2''s table carries "this code does not allow for the creation
@@ -1542,6 +1570,71 @@ zones:
       value: true
       cite: "Gladstone Municipal Code 17.18.070 (off-street parking standards), Community Commercial District: not within required setbacks"
       quote: "or/clackamas/gladstone/17.18/17.18.070.txt#L3"
+    # The Downtown Core Overlay, GMC 17.21 (Ord. 1517, 2023; 1535; 1539),
+    # "applies to all properties with a zoning designation of C-2 within the
+    # Gladstone Town Center" (17.21.010) and governs where it conflicts
+    # (17.21.020(2)). Its one standard the screen measures is 17.21.060(2):
+    # the street-facing facade along at least half of EACH street frontage,
+    # "at the back of a public sidewalk, public right-of-way" -- so the share
+    # counts at the street line (band 0), not anywhere out to 17.18's five
+    # foot maximum, which still governs the rest (17.21.060(4)). Outside the
+    # Town Center C-2 asks no share: `exempt`, the overlay's own applicability
+    # sentence. The Town Center is traced (`drawn_areas` town_center); a lot
+    # the line cuts is unanswered and the screen bounds it both ways.
+    #
+    # NOT ENCODED: 17.21.040(2), "For parcels along Portland Avenue, [residential
+    # uses] permitted in upper-floor stories of multistory development only.
+    # Ground-floor dwelling units are permitted along side streets." That bars
+    # the pod's ground-floor homes on a Portland Avenue parcel inside the Town
+    # Center -- but every such lot is already held YELLOW on
+    # FACT-ALONG-PORTLAND-AVENUE (ruling 2026-10-09-gladstone-portland-avenue-
+    # yellow), never GREEN, and a corner parcel's homes may front the side
+    # street, which the screen does not place. Left for Steph rather than
+    # moving lots a standing ruling put in yellow. The rest of 17.21 is
+    # building design (60 percent ground-floor glass, articulation, weather
+    # protection, entrances within 10 ft of the right-of-way) and the Portland
+    # Avenue driveway and parking rules (17.21.060(5)-(6)) on lots already
+    # held: measurable details not checked do not block GREEN (ruling
+    # 2026-10-14-unchecked-design-details).
+    # (or/clackamas/gladstone/17.21.dco.txt#L25,L43,L65,L83,L87-L99,L125)
+    building_frontage_min_pct:
+      exempt: true
+      cite: GMC 17.21.010, the Downtown Core Overlay applies to C-2 properties within the Gladstone Town Center only; 17.18 states no building share of the frontage
+      retrieved: '2026-10-29'
+      quote: "or/clackamas/gladstone/17.21.dco.txt#L25"
+      variants:
+        - value: 50
+          when: [gladstone_town_center]
+          cite: GMC 17.21.060(2), the street-facing building facade must extend along at least 50 percent of the lot's street frontage(s), at the back of a public sidewalk or right-of-way (Downtown Core Overlay, C-2 within the Gladstone Town Center, 17.21.010)
+          retrieved: '2026-10-29'
+          quote: "or/clackamas/gladstone/17.21.dco.txt#L25,L83"
+    building_frontage_other_pct:
+      exempt: true
+      cite: GMC 17.21.010, the Downtown Core Overlay applies to C-2 properties within the Gladstone Town Center only
+      retrieved: '2026-10-29'
+      quote: "or/clackamas/gladstone/17.21.dco.txt#L25"
+      variants:
+        - value: 50
+          when: [gladstone_town_center]
+          cite: GMC 17.21.060(2), if the lot has more than one street frontage, the 50 percent applies to all of the lot's street frontages
+          retrieved: '2026-10-29'
+          quote: "or/clackamas/gladstone/17.21.dco.txt#L25,L83"
+    building_frontage_band_ft:
+      exempt: true
+      cite: GMC 17.21.010, the Downtown Core Overlay applies to C-2 properties within the Gladstone Town Center only
+      retrieved: '2026-10-29'
+      quote: "or/clackamas/gladstone/17.21.dco.txt#L25"
+      variants:
+        # 17.21.060(2) (17.21.dco.txt#L83) puts the required half "at the
+        # back of a public sidewalk, public right-of-way": the street lot
+        # line, which prints no figure. The zero is 17.18.060(1)'s front
+        # minimum -- none stated -- the line the building stands on, so
+        # the quote is that line, as Canby's band quotes its 0 ft minimum.
+        - value: 0
+          when: [gladstone_town_center]
+          cite: GMC 17.21.060(2), the required 50 percent building frontage must be at the back of a public sidewalk, public right-of-way, or adjacent to an area dedicated to the public; GMC 17.18.060(1), no minimum front setback
+          retrieved: '2026-10-29'
+          quote: "or/clackamas/gladstone/17.18/17.18.060.txt#L7-L9"
     notes: >-
       Encoded 2026-10-08, 147 lots (Portland Avenue). Outright by
       17.18.020(11) and (12); lot area is R-5's by 17.18.060(5)(a) (7,000 sq ft
@@ -1685,6 +1778,53 @@ zones:
       to, with C-1's 15 ft side yard laid over it (conservative: it applies
       only against a residential zone, and no neighbour is measured). C-1's
       front 20, rear 15 and street side 20 equal R-7.2's. One lot.
+
+drawn_areas:
+  town_center:
+    condition: gladstone_town_center
+    zones: [R5, C2]
+    file: or/clackamas/gladstone/town-center.geojson
+    source: >-
+      Traced 2026-10-29 from the map that is the boundary's only statement:
+      Ordinance 1539 (adopted 2025-06-10), Exhibit A, Appendix A "Gladstone
+      Town Center Boundary", council packet https://www.ci.gladstone.or.us/media/26186
+      p. 149. Registered to the city zoning layer (97.6 percent of sampled
+      zone colours agree; scale within 1 percent of the map's scale bar).
+      The city publishes no Town Center layer: maps.orcity.org's
+      Gladstone_LandUseAndPlanning holds only Metro's 2040 center ("Not
+      Adopted"), metro-2040-town-center.geojson, which this replaces. Drawn
+      provenance in the file's source block.
+    quote: "or/clackamas/gladstone/amended/ord1539.txt#L35-L36,L475-L478"
+    cite: Gladstone Ordinance 1539 Section 1 and Exhibit A, Appendix A; GMC 17.12.050, 17.21.010
+    note: >-
+      The Portland Avenue C-2 strip from Abernethy Lane to Berkeley Street,
+      and everything south of Berkeley from McLoughlin Boulevard to 82nd
+      Drive down to the river. Inside it R-5 takes a 10 ft front and street
+      side setback against 20 (17.12.050), and C-2 inside it is the Downtown
+      Core Overlay (17.21.010: "all properties with a zoning designation of
+      C-2 within the Gladstone Town Center"). A lot at least 90 percent
+      inside is in, at most 10 percent is out, and one the traced line cuts
+      is unanswered: held open with FACT-GLADSTONE-TOWN-CENTER ("Town Center
+      edge unconfirmed"), never GREEN on the Town Center's rules.
+
+  parking_exception_area:
+    condition: gladstone_parking_exception_area
+    zones: [R7.2, R5, R10, MR, OP, OS, C1, C2, C3, LI]
+    file: or/clackamas/gladstone/parking-exception-area.geojson
+    source: >-
+      The traced Town Center (town-center.geojson) grown by 1,320 ft,
+      straight line, drawn 2026-10-29, as 17.48.010(2) says the exception
+      areas are "measured using a straight line". The Gladstone Parking
+      Mandate Exception Map it names is not published and not held. Drawn
+      provenance in the file's source block.
+    quote: "or/clackamas/gladstone/17.48/17.48.010.txt#L5,L7,L9,L13"
+    cite: GMC 17.48.010(1)(a)-(b), (2)
+    note: >-
+      Asked of every zone. A lot at least 90 percent inside owes no
+      off-street parking; a lot the line cuts is unanswered and the screen
+      bounds it both ways. The third exception area, half a mile of
+      McLoughlin Boulevard (17.48.010(1)(c)), is not drawn, so lots there
+      are still charged one space per unit.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

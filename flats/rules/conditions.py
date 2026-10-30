@@ -965,6 +965,68 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "gladstone_town_center",
+        "site_fact",
+        "The lot lies inside the Gladstone Town Center adopted by Ordinance "
+        "1539 (2025), whose boundary is a map (Exhibit A, Appendix A) and "
+        "nothing else: R-5 takes a 10 ft front and street-side setback "
+        "inside it (GMC 17.12.050), and C-2 inside it is the Downtown Core "
+        "Overlay (GMC 17.21). The city publishes no layer; the line is "
+        "traced from the ordinance map.",
+        evidence=(
+            "the Ordinance 1539 map traced and registered to the city zoning "
+            "layer -- held as Gladstone's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "gladstone_parking_exception_area",
+        "site_fact",
+        "The lot lies inside the Gladstone Town Center or within a quarter "
+        "mile of its boundary, where GMC 17.48.010(1)(a)-(b) requires no "
+        "off-street parking, 'measured using a straight line'. The city's "
+        "Parking Mandate Exception Map is not published; the area is the "
+        "traced Town Center grown by 1,320 ft. The third exception area, "
+        "half a mile of McLoughlin Boulevard, is not drawn.",
+        evidence=(
+            "the traced Town Center grown by a quarter mile -- held as "
+            "Gladstone's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "troutdale_cfec_parking_area",
+        "site_fact",
+        "The lot lies inside Troutdale's Town Center Overlay District or "
+        "within a quarter mile of its boundary line, where TDC 9.035 "
+        "(OAR 660-012-0435, Climate Friendly Areas) requires no off-street "
+        "parking. The city's CFEC Parking Delineated Area Map is not "
+        "published; the area is the Town Center layer grown by 1,320 ft, "
+        "straight line, as 9.035 words it ('from the district boundary "
+        "line').",
+        evidence=(
+            "Troutdale's Town Center layer grown by a quarter mile -- held as "
+            "Troutdale's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "tigard_bridgeport_village",
+        "site_fact",
+        "The lot lies inside Tigard's Bridgeport Village Plan District "
+        "(TDC 18.620). The district is zoned MUC, and its own chapter's "
+        "standards govern there in a conflict (18.620.020.B): a residential "
+        "density floor of 25 units per net acre, a 20 ft maximum front "
+        "setback, and parking kept off the street side of the building. "
+        "The zoning layer prints only MUC; the city's Community Plan Areas "
+        "layer draws the district.",
+        evidence=(
+            "Tigard's Community Plan Areas layer (Bridgeport Village) -- held "
+            "as Tigard's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_park_place",
         "site_fact",
         "The parcel is inside Oregon City's Park Place Concept Plan area. "
@@ -1279,12 +1341,16 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 #: inside a zone -- on a map nobody publishes as data, in a layer the city
 #: publishes apart from its zoning, or along a line the code names in words.
 DRAWN_CONDITIONS: tuple[str, ...] = (
+    "gladstone_parking_exception_area",
+    "gladstone_town_center",
     "inside_mapped_use_area",
     "north_of_marine_drive",
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
     "rockwood_design_district",
+    "tigard_bridgeport_village",
+    "troutdale_cfec_parking_area",
     "troutdale_town_center",
     "willamette_historic_district",
 )

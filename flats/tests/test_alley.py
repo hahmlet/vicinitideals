@@ -434,7 +434,13 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # + 4 on 2026-10-28 (FOLLOWUPS 109 chunk 4): Troutdale HDR inside the Town
     # Center, the 3.235.C.5.b alley rear (5 ft) and the townhouse column's (0),
     # each with and without multi_story, keyed to the rear line.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4
+    # + 4 on 2026-10-29 (FOLLOWUPS 109 chunk 5): Gresham DCC and DTM townhouse
+    # rows, alley rear 3 ft and back to 10 against a lower-density district,
+    # keyed to the rear line.
+    # + 4 on 2026-10-29 (chunk 5): Troutdale HDR Town Center, 3.235.C.5.a's alley
+    # rear against a non-residential district (5 ft) and the townhouse column's
+    # (0), each with and without multi_story, keyed to the rear line.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:

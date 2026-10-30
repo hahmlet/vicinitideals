@@ -257,6 +257,10 @@ def test_the_quantity_bands_are_the_states_and_never_exceed_its_cap(
     def bands(value: object) -> list[tuple[float | None, float | None, float]]:
         out = [(None, None, float(value.spaces_total))]
         for variant in value.variants:
+            if variant.exempt:
+                # 9.035's waiver (the Town Center and its quarter mile) is
+                # not a band; test_troutdale_cfec_ring guards it.
+                continue
             band = variant.band
             out.append((band.at_least, band.less_than, float(variant.spaces_total)))
         return sorted(out, key=lambda row: row[2])
