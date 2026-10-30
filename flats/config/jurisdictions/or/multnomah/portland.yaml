@@ -2213,6 +2213,7 @@ zones:
       variants:
         - exempt: true
           when: [abuts_alley]
+          cite: PCC 33.110.220.D.9, no side, rear, or garage entrance setback from a lot line abutting an alley
           quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_rear_ft:
       value: 10
@@ -2232,6 +2233,7 @@ zones:
         # because `setback_side_ft` is one number for both side lines.
         - exempt: true
           when: [alley_at_rear]
+          cite: PCC 33.110.220.D.9, no side, rear, or garage entrance setback from a lot line abutting an alley
           quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_alley_side_ft:
       # The SIDE half of 33.110.220.D.9, held since 2026-09-15 on the line it
@@ -2252,6 +2254,7 @@ zones:
       # 2026-09-12 (s4 class A takes `setback_alley_ft`, whichever way the
       # line runs); this brings the corpus level with it.
       exempt: true
+      cite: PCC 33.110.220.D.9, no side, rear, or garage entrance setback from a lot line abutting an alley
       quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
     setback_side_ft:
       value: 10

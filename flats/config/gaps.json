@@ -658,32 +658,7 @@
     },
     "or/multnomah/portland": {
       "section_unread": 77,
-      "misattributed": [
-        {
-          "zone": "RF",
-          "field": "setback_alley_side_ft",
-          "claimed": "33.110.200 33.110.205",
-          "found": "33.110.220",
-          "quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "RF",
-          "field": "setback_garage_entrance_ft [abuts_alley]",
-          "claimed": "33.110.200 33.110.205",
-          "found": "33.110.220",
-          "quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "RF",
-          "field": "setback_rear_ft [alley_at_rear]",
-          "claimed": "33.110.200 33.110.205",
-          "found": "33.110.220",
-          "quote": "or/multnomah/portland/33.110/33.110.220.txt#L102",
-          "kind": "heading_other_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Portland",
       "counts": {},
       "gaps": []

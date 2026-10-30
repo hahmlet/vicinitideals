@@ -153,3 +153,35 @@ def test_a_see_pointer_on_its_own_line_stays_in_the_body() -> None:
     lines = ["See Figure 910-4.", "A corner lot may also be a through lot.", "• Flag Lot."]
     body = _whole(lines, 0, "A lot that has frontage on more than one intersecting street.")
     assert body.endswith("A corner lot may also be a through lot.")
+
+
+def test_a_sentence_on_its_own_line_is_not_a_term() -> None:
+    """Readable text gives every sentence a line. "A facility which provides
+    moorings for houseboats." has a stacked term's shape, sat under Houseboat
+    Moorage, and cost it its meaning -- and three encoded I-zone values their
+    link to it -- when 33.910 was cut."""
+    text = "\n".join(
+        [
+            "• Houseboat Moorage.",
+            "A facility which provides moorings for houseboats.",
+            "Tree Grove. A group of six or more native trees standing together on a site.",
+            "Groves are generally non-linear.",
+            "Other trees within the grove are counted as part of the canopy area.",
+            "Examples of these reviews include: whether the proposed use is or is not allowed.",
+        ]
+    )
+    got = _terms(text)
+    assert "Houseboat Moorage" in got
+    assert "Tree Grove" in got
+    assert not any(t.startswith(("A facility", "Groves", "Examples")) for t in got)
+
+
+def test_a_hyphenated_word_broken_by_padding_is_one_word() -> None:
+    """ "Dead-" then column space then "End Street." filed "Dead" as a term."""
+    text = "\n".join(
+        [
+            "•                     Dead-                         End Street.",
+            "A street that connects to another street at only one end.",
+        ]
+    )
+    assert _terms(text) == ["Dead-End Street"]

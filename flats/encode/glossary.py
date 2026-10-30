@@ -145,15 +145,47 @@ def _titled(term: str) -> bool:
 _POINTER = re.compile(r"^[\"“]?See\s")
 
 
+#: Words that make a candidate a clause rather than a name. Readable section
+#: text gives every sentence its own line, so a short one closed by a full
+#: stop -- "Groves are generally non-linear.", "A facility which provides
+#: moorings for houseboats." -- has a stacked term's shape, and one opening
+#: "Examples of these reviews include:" or "Unless otherwise indicated, an
+#: unspecified setback refers to" has an inline entry's. Portland's 33.910 grew
+#: thirteen such "terms" when it was cut, and the second example sat under
+#: Houseboat Moorage and cost it its meaning (FOLLOWUPS 73, batch 6). A term
+#: is a noun phrase; none of these words belongs in one.
+_CLAUSE_WORDS = frozenset(
+    {
+        "is", "are", "was", "were", "be", "been", "include", "includes",
+        "that", "which", "who", "it", "if", "unless", "generally", "may",
+        "must", "shall", "each", "otherwise", "these", "those",
+    }
+)
+
+
+def _clause(term: str) -> bool:
+    return any(w.lower() in _CLAUSE_WORDS for w in re.split(r"[\s,]+", term))
+
+
+#: A hyphenated word the extraction broke and padded: "Dead-" then column
+#: space then "End Street." Read as it stands the hyphen is a separator, and
+#: "Dead" was filed as a term meaning "End Street. A street that connects..."
+#: (Portland 33.910, FOLLOWUPS 73, batch 6). A separator dash has a space
+#: before it; this one touches its word.
+_PADDED_HYPHEN = re.compile(r"(?<=[A-Za-z])-\s{2,}(?=[A-Za-z])")
+
+
 def _stacked(line: str) -> re.Match[str] | None:
     """A term alone on its line, in either stacked form."""
     if _POINTER.match(line):
         return None
     plain = STACKED.match(line)
     if plain is not None:
-        return plain
+        return None if _clause(plain.group("term")) else plain
     bulleted = STACKED_BULLET.match(line)
-    return bulleted if bulleted is not None and _titled(bulleted.group("term")) else None
+    if bulleted is None or not _titled(bulleted.group("term")) or _clause(bulleted.group("term")):
+        return None
+    return bulleted
 
 #: What a body has to open with to be a meaning rather than a pointer or a
 #: standard. Same rule the corner-lot matcher earned the hard way: a definition
@@ -384,7 +416,7 @@ def _words(term: str) -> tuple[str, ...]:
 
 
 def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]:
-    lines = text.splitlines()
+    lines = [_PADDED_HYPHEN.sub("-", line) for line in text.splitlines()]
     out: list[Entry] = []
     spoken_for: set[int] = set()
     for i, raw in enumerate(lines):
@@ -404,7 +436,11 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
             # body taken from beneath it is the tail of the entry above.
             continue
         inline = ENTRY.match(stripped)
-        if inline is not None and MIN_TERM <= len(inline.group("term")) <= MAX_TERM:
+        if (
+            inline is not None
+            and MIN_TERM <= len(inline.group("term")) <= MAX_TERM
+            and not _clause(inline.group("term"))
+        ):
             body = _collapse(inline.group("body"))
             whole = _whole(lines, i + 1, body)
             if (
