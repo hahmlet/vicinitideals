@@ -867,8 +867,15 @@ SECTION_HEAD = re.compile(r"^\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+[A-Z]")
 #: sees these because `ENDS_BLOCK` stops a block at "Chapter 33.100"; a
 #: declared paragraph has to read through them, since Portland breaks pages
 #: inside a single limitation and the rest of it is still the note.
+#: The chapter line is the number alone or the number and a wide gap ("Chapter
+#: 33.130        Title 33, ..."). "Chapter 33.237, Food Production and
+#: Distribution, the applicant may ..." is a sentence that wraps onto a
+#: cross-reference -- in readable section text the running headers are
+#: already gone -- and reading it as the header dropped it and the line
+#: after it as the chapter's name, cutting item a. out of Table 130-1 note 11
+#: (FOLLOWUPS 123).
 RUNNING_HEADER = re.compile(
-    r"^Chapter\s+\d|^Title\s+\d{1,2},|^\d{1,2}/\d{1,2}/\d{2,4}\b"
+    r"^Chapter\s+\d[\d.]*(?:\s{2,}|\s*$)|^Title\s+\d{1,2},|^\d{1,2}/\d{1,2}/\d{2,4}\b"
     r"|^\d{1,3}-\s*\d{0,3}$|^\d{1,3}$"
 )
 
@@ -1205,18 +1212,32 @@ def _order(mark: str) -> tuple[int, int]:
     return (0, int(mark)) if mark.isdigit() else (1, ord(mark))
 
 
-def _skipped_back(bodies: Sequence[Body], mark: str) -> bool:
+def _skipped_back(bodies: Sequence[Body], mark: str, before_text: str = "") -> bool:
     """Whether ``mark`` is the number the last note skipped: N, N+2, then N+1.
 
-    Only that exact shape. A list that restarts, or repeats a number, or goes
-    back further than one is a new table or a caption and still ends the block.
+    Only that exact shape, or a wider jump out of a note that stops
+    mid-sentence (``before_text``, the whole of the note before the jump). A
+    list that restarts, or repeats a number, or goes back further than one is
+    a new table or a caption and still ends the block.
     """
     if len(bodies) < 2 or not mark.isdigit():
         return False
     last, before = bodies[-1].mark, bodies[-2].mark
     if not (last.isdigit() and before.isdigit()):
         return False
-    return int(last) == int(before) + 2 and int(mark) == int(before) + 1
+    if int(mark) != int(before) + 1:
+        return False
+    if int(last) == int(before) + 2:
+        return True
+    # A wider jump -- 6, 10, then 7 -- is the same wrap when the note it
+    # jumped from stops mid-sentence. Readable text gives a wrapped line its
+    # own line when the line is spaced like a row: Gresham's Table 4.0131 note
+    # 6 ends "where a minimum of" and its next line opens "10 feet in between
+    # major structures", read as a note 10 that cut note 6 in half and lost
+    # note 7 behind it (FOLLOWUPS 123).
+    return int(last) > int(before) + 2 and bool(before_text.strip()) and not re.search(
+        r"[.:;)]\s*$", before_text
+    )
 
 
 def _next_content(lines: Sequence[str], i: int) -> str:
@@ -1647,7 +1668,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                     texts[-1].append(stripped)
                     i += 1
                     continue
-                if _skipped_back(bodies, mark):
+                if _skipped_back(bodies, mark, " ".join(texts[-2]) if len(texts) >= 2 else ""):
                     # The last "note" jumped one number and this line is the
                     # number it jumped: 15, 17, 16. That 17 was a numeral in
                     # note 15's sentence that wrapped to the start of a line --

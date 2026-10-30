@@ -741,3 +741,43 @@ def test_a_list_that_goes_back_further_than_one_still_ends():
     )
 
     assert [b.mark for b in census(text, doc="d.txt").bodies] == ["3", "5"]
+
+
+def test_a_wider_number_wrapped_out_of_an_unfinished_sentence_is_not_the_next_note():
+    """Gresham Table 4.0131 note 6 (FOLLOWUPS 123): "... where a minimum of /
+    10 feet in between major structures". Readable text keeps the wrapped line
+    on its own line because it is spaced like a table row, and read as note 10
+    it cut note 6 in half and ended the list before note 7. A jump wider than
+    one is the same wrap when the note it jumped from stops mid-sentence."""
+    text = "\n".join(
+        [
+            "Notes:",
+            "5. Applies at the end of a Minor Access Street.",
+            "6. 20-foot minimum distance between major structures, except where a minimum of",
+            "10 feet in between major structures (side to side) will be required.",
+            "7. Maximum front and street-side setbacks apply in MDR-12.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["5", "6", "7"]
+    assert "a minimum of 10 feet in between" in seen.bodies[1].text
+
+
+def test_a_wider_jump_out_of_a_finished_sentence_still_ends_the_list():
+    """The other side: a note that ends its sentence and is followed by a
+    bigger number, then the next one down, is not a wrap -- the conservative
+    reading (the list ends) stands."""
+    text = "\n".join(
+        [
+            "Notes:",
+            "5. First note.",
+            "6. Second note ends here.",
+            "10. Not this list's.",
+            "7. Nor this.",
+        ]
+    )
+
+    assert [b.mark for b in census(text, doc="d.txt").bodies][:3] == ["5", "6", "10"]
+    assert "7" not in [b.mark for b in census(text, doc="d.txt").bodies]
