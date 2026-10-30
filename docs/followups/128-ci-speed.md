@@ -1,6 +1,6 @@
 # 128. CI takes an hour or more per push
 
-128. [Claude] [Steph] [BUILT 2026-10-30; open: GitHub daily run to watch, MCP view of 138] [scan: NO] **CI takes an hour or more per push.**
+128. [Claude] [Steph] [BUILT 2026-10-30; open: quadfit 7 min, watch daily runs] [scan: NO] **CI takes an hour or more per push.**
 
 Measured 2026-10-30 from `gh run list` and step timings (.github/workflows/ci.yml):
 - Light gate, on EVERY push (its comment says "<2 min"): unit tests ~3 min, FLATS tests 14-26 min, quadfit tests 16-28 min, so ~35-58 min.
@@ -24,4 +24,4 @@ Expected: a bookkeeping push about 0 min; a FLATS push about 30-45 min; app-only
 OFFERED 2026-10-30 (Steph: "move it to Proxmox instead of the PC?"): a NEW dedicated test container (not 137 -- the scans and its OOM history; Steph declined tests on 137 on 10-04) with its own Postgres beside the tests, plus per-worker test databases so the app suite runs in parallel (conftest already creates a per-run DB). Push flow: push the commit to a ci/<sha> branch, the container tests it, the stamp comes back; the PC run stays as a fallback when the container is down. Facts: host CPU i5-14600KF, 20 threads, shared by every container; 137 gets 16 threads / 32 GB; the PC is an i7-11700F, 16 threads / 32 GB. So it is not much more raw power -- the win is a database next to the tests, and the PC staying free.
 
 2026-10-30 BUILT on Proxmox: LXC 138 `ci-runner` (192.168.1.182, 12 cores / 12 GB, Debian 12, Postgres 16 + PostGIS UTF-8 with fsync off; personalproxmox lxc-apps/138-ci-runner, 8eaf80b3). `ci_local.py` pushes the commit to the runner's clone and runs that commit's `scripts/ci_runner.sh` (worktree, uv venv, suites, cleanup); `--local` / `--remote`; falls back to the PC when the runner is down. App suite 8 workers wide after the FLATS suites (alongside them a word-queue test passed the 120 s timeout). Timings on the runner: ruff/firewall seconds, FLATS ~5 min, quadfit ~7 min, app ~4 min, ~16 min door to door (the PC: FLATS 15-17 min, app suite over an hour). Fixed on the way: the pre-push hook refused every push (git's remote arguments), Postgres first came up SQL_ASCII, two tests that only passed in serial order.
-Open: (a) quadfit is now the long pole (7 min, 363 tests) -- worth a look at what it spends time on; (b) the proxmox MCP cannot see 138 until infra-tools' /root/code/personalproxmox is reconciled (it has 6 local Docspell commits not on origin; not touched); (c) watch the first daily GitHub runs.
+Open: (a) quadfit is now the long pole (7 min, 363 tests) -- worth a look at what it spends time on; (b) DONE 2026-10-30: the proxmox MCP sees 138 (infra-tools' personalproxmox merged with origin, `Host 138-ci-runner` in its /root/.ssh/config); (c) watch the first daily GitHub runs.
