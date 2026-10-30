@@ -25,6 +25,15 @@ pytestmark = pytest.mark.unit
 GRESHAM = "or/multnomah/gresham"
 
 
+_STORE = ProvenanceStore()
+
+
+def _cut_from(doc: str) -> str:
+    """The proof copy a section file was cut from, or "" for any other document."""
+    part = _STORE.part_of(doc)
+    return part.proof if part is not None else ""
+
+
 @pytest.fixture(scope="module")
 def rows() -> list[Qualified]:
     return qualified()
@@ -90,9 +99,12 @@ def test_every_governed_value_names_the_notes_over_it(rows: list[Qualified]) -> 
         doc = row.quote.split("#", 1)[0]
         # A note is printed in the document it governs, or -- a use table's
         # limitations cut away from their table (FOLLOWUPS 73, batch 6) -- in
-        # another section of the same chapter folder.
+        # another section of the same chapter folder -- or, for a value cited
+        # on a chapter's proof copy (FOLLOWUPS 123), in a section cut from it.
         assert all(
-            note.doc == doc or note.doc.rpartition("/")[0] == doc.rpartition("/")[0] != row.layer
+            note.doc == doc
+            or note.doc.rpartition("/")[0] == doc.rpartition("/")[0] != row.layer
+            or _cut_from(note.doc) == doc
             for note in row.governing
         )
         assert row.clear == (not row.blocking)

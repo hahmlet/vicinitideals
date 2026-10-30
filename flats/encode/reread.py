@@ -53,7 +53,7 @@ from typing import Any
 
 from flats.encode.dispositions import notes as _rulings
 from flats.encode.footnotes import survey
-from flats.encode.qualified import _governing
+from flats.encode.qualified import over
 from flats.encode.readiness import _quoted_parts
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
@@ -204,7 +204,7 @@ ACTING = frozenset({"encoded", "unmeasured", "unread"})
 
 
 def _notes_over(
-    census, spans: list[tuple[int, int]], per_doc: dict
+    path: str, censuses: dict, spans: list[tuple[int, int]], per_doc: dict, store=None
 ) -> tuple[list[str], bool]:
     """``(the footnotes governing these lines, whether any of them acts)``.
 
@@ -215,12 +215,12 @@ def _notes_over(
     reason: "a live footnote sits over this one" is not the answer, but it is a
     nudge, and a blind reading that nudges is not blind.
     """
-    if census is None:
-        return [], False
     lines = [n for a, b in spans for n in range(a, b + 1)]
     out: list[str] = []
     acts = False
-    for note in _governing(census, lines, per_doc):
+    # Through `over`, so a card citing a chapter's proof copy carries the
+    # notes of the sections its lines were cut into (FOLLOWUPS 123).
+    for note in over(path, lines, censuses, per_doc, store):
         text = " ".join(note.text.split())
         if text:
             out.append(f"[note {note.mark}] {text}")
@@ -291,7 +291,7 @@ def work_list(
                 when = name[name.index("[") + 1 : name.index("]")]
             item_id = f"{len(cards):05d}"
             headings, caption_at = _above(whole, spans[0][0])
-            note_text, acts = _notes_over(censuses.get(path), spans, per_doc)
+            note_text, acts = _notes_over(path, censuses, spans, per_doc, store)
             cards.append(
                 {
                     "id": item_id,

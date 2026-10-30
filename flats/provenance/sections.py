@@ -711,6 +711,39 @@ def _held(store: ProvenanceStore, part: Part, known: Mapping[str, Rule] | None) 
     return tuple(tuple(part.first + k - 1 for k in src) for src in found)
 
 
+def in_sections(
+    store: ProvenanceStore,
+    proof: str,
+    lines: Iterable[int],
+    known: Mapping[str, Rule] | None = None,
+) -> dict[str, tuple[int, ...]]:
+    """Proof-copy lines as the section-file lines that hold them, per file.
+
+    :func:`in_proof` the other way round. A citation that spans two sections,
+    or takes in a page footer, stays on the proof copy (the cut cannot move
+    it), but its words are still in section files -- and what a section's
+    words are governed by, its footnotes, is read off those files. This is how
+    such a citation is followed into them (FOLLOWUPS 123). Read through
+    :func:`held`, so it is the files on disk. A line in no section (page
+    furniture, a contents list) maps nowhere. Empty for a document that was
+    not cut.
+    """
+    cut = splits(store).get(proof)
+    if cut is None:
+        return {}
+    wanted = set(lines)
+    touched = {s for n in wanted if (s := cut.at(n)) is not None}
+    out: dict[str, tuple[int, ...]] = {}
+    for section in sorted(touched, key=lambda s: s.first):
+        path = cut.path(section)
+        found = tuple(
+            k for k, src in enumerate(held(store, path, known), start=1) if wanted & set(src)
+        )
+        if found:
+            out[path] = found
+    return out
+
+
 def printed(
     store: ProvenanceStore, path: str, known: Mapping[str, Rule] | None = None
 ) -> list[tuple[str, ...]] | None:
@@ -1081,6 +1114,7 @@ __all__ = [
     "derived",
     "held",
     "in_proof",
+    "in_sections",
     "move_quote",
     "printed",
     "repage",

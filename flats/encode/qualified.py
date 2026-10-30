@@ -38,11 +38,12 @@ import json
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Iterable, Mapping, Sequence
 
 from flats.encode.dispositions import DispositionError, Note, notes
 from flats.encode.footnotes import Census, survey
-from flats.provenance.store import ProvenanceError, parse_quote
+from flats.provenance import sections
+from flats.provenance.store import ProvenanceError, ProvenanceStore, parse_quote
 from flats.rules.caps import LEDGER as CAPS
 from flats.rules.loader import load_rules
 from flats.rules.model import LIKE, Layer
@@ -156,6 +157,36 @@ def _governing(
     )
 
 
+def over(
+    doc: str,
+    lines: Sequence[int],
+    censuses: Mapping[str, Census],
+    per_doc: dict[str, list[Note]],
+    store: ProvenanceStore | None = None,
+) -> tuple[Note, ...]:
+    """The notes governing these lines of ``doc``, wherever the words now live.
+
+    A document that was cut into section files is not censused -- its words
+    are, once, in its sections (:meth:`ProvenanceStore.owned`) -- but a
+    citation that spans two sections or takes in a page footer is left on it
+    as the proof copy. Such a citation is followed into the section files its
+    lines were cut into and takes the notes over each (FOLLOWUPS 123). Before
+    this it took none: ~200 values in the cut cities stood under no footnote
+    at all, the under-scoped direction, which is the false-GREEN path.
+    """
+    census = censuses.get(doc)
+    if census is not None:
+        return _governing(census, lines, per_doc)
+    store = store or ProvenanceStore()
+    out: list[Note] = []
+    for path, local in sections.in_sections(store, doc, lines).items():
+        found = censuses.get(path)
+        if found is None:
+            continue
+        out.extend(n for n in _governing(found, local, per_doc) if n not in out)
+    return tuple(out)
+
+
 def _check_narrowings(per_doc: dict[str, list[Note]], layers: dict[str, Layer]) -> None:
     """Refuse a narrowing that names a zone its jurisdiction does not have.
 
@@ -188,16 +219,16 @@ def qualified(layer_id: str | None = None) -> list[Qualified]:
 
     layers = load_rules()
     _check_narrowings(per_doc, layers)
+    store = ProvenanceStore()
     out: list[Qualified] = []
     for identifier, layer in sorted(layers.items()):
         if layer_id and identifier != layer_id:
             continue
         for zone, field, quote in _quoted(layer):
             doc, lines = _cited_lines(quote)
-            census = censuses.get(doc)
-            if census is None or not lines:
+            if not lines:
                 continue
-            governing = _governing(census, lines, per_doc)
+            governing = over(doc, lines, censuses, per_doc, store)
             if governing:
                 out.append(
                     Qualified(

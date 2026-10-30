@@ -160,14 +160,16 @@ def test_a_ruling_found_outside_its_own_region_is_reported_not_hidden(rows) -> N
     not confirmation either, so it gets its own word.
 
     Tigard's Table 18.110.3 note 2 joined it when Tigard was cut into
-    sections (2026-10-24): the note now sits in section 18.110.040, and the
-    quadplex values it is encoded on quote lines in two sections, so their
-    citations stay on the chapter's proof copy, outside the note's region."""
+    sections (2026-10-24): the quadplex values it is encoded on quote lines in
+    two sections, so their citations stayed on the chapter's proof copy, and
+    no footnote reached a proof-copy citation. It left again with FOLLOWUPS
+    123: the join follows such a citation into its sections, where the note's
+    region holds the use-table row, so the note governs those values again."""
     elsewhere = [r for r in rows if r.state == "elsewhere"]
-    assert sorted(r.note.layer for r in elsewhere) == [
-        "or/clackamas/happy-valley",
-        "or/washington/tigard",
-    ]
+    assert sorted(r.note.layer for r in elsewhere) == ["or/clackamas/happy-valley"]
+    tigard = [r for r in rows if r.note.layer == "or/washington/tigard" and r.note.mark == "2"
+              and r.note.doc.endswith("18.110.040.txt")]
+    assert tigard and all(r.state != "elsewhere" for r in tigard)
 
 
 # --- reading a figure out of prose ------------------------------------------
