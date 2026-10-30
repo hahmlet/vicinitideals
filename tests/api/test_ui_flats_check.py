@@ -1144,7 +1144,7 @@ def test_a_number_read_off_another_zones_page_says_why_and_links_that_page():
     layer = check._layers()[LAYER]
     rows = {(r["zone"], r["field"], r["when"]): r for r in check._rows(layer, set())}
     row = rows[("CMF", "max_height_ft", "civic_corridor")]
-    assert "4.0100" in row["document"]
+    assert "4/4.0130.txt" in row["document"]  # the 4.0100 chapter, cut by section
 
     card = check._card(layer, check._Ask(row, "value"))
 

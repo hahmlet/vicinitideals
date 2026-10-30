@@ -91,7 +91,7 @@ async def test_a_layer_page_shows_a_standard_and_its_citation(
     assert "not yet reviewed" in response.text
     # The quote is the whole point of the page: a number with no line behind it
     # is the thing this system exists to stop shipping.
-    assert "4.0100.residential.txt#L400" in response.text
+    assert "4/4.0130.txt#L155" in response.text
 
 
 async def test_an_unknown_layer_falls_back_to_the_index(
