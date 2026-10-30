@@ -1027,6 +1027,52 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "north_bethany_special_setbacks",
+        "site_fact",
+        "The parcel fronts a street segment the North Bethany Special Setbacks "
+        "Map marks along the Park Blocks or the Northeast Neighborhood Linear "
+        "Park. General Design Element 7 of the North Bethany Subarea Plan "
+        "then sets a build-to line -- a front yard of 5 to 15 ft, street side "
+        "8 ft, rear 12 ft in R-15 NB and R-24 NB -- which controls over the "
+        "district's own yards (CDC 390-3 makes the plan govern). Assumed "
+        "unknown, because the map is not held and the build-to moves the fit.",
+        evidence=(
+            "The Special Setbacks Map of the North Bethany Subarea Plan "
+            "(Washington County) -- not held"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "north_bethany_park_blocks",
+        "site_fact",
+        "The parcel lies in North Bethany's Park Blocks Area of Special "
+        "Concern (ASC 5) and fronts the Park Blocks. ASC 5 bars vehicle "
+        "access to it from the Park Blocks and any parking lot between the "
+        "street and the building. Assumed unknown, because the ASC is drawn "
+        "only on a plan map that is not held.",
+        evidence=(
+            "The Areas of Special Concern map of the North Bethany Subarea "
+            "Plan (Washington County) -- not held"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "north_bethany_kaiser_main_street",
+        "site_fact",
+        "The parcel is an R-24 NB lot facing Kaiser Road inside the North "
+        "Bethany Main Street area of ASC Road Corridor 2. The plan's Main "
+        "Street standards then hold the Kaiser-facing building between 5 and "
+        "10 ft of the street over at least 75% of the frontage (CDC "
+        "390-11.6 A sends the Kaiser setbacks there). Assumed unknown, "
+        "because the Main Street area is drawn only on a plan map that is "
+        "not held.",
+        evidence=(
+            "The North Bethany Main Street area of ASC Road Corridor 2 "
+            "(North Bethany Subarea Plan, Washington County) -- not held"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_park_place",
         "site_fact",
         "The parcel is inside Oregon City's Park Place Concept Plan area. "

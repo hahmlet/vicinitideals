@@ -3287,6 +3287,20 @@ jurisdictions:
         source_url: "https://api.municode.com/PublicationPdfDownload/1818"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/tualatin MUC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      # ported 2026-10-30 (FOLLOWUPS 109 chunk 6) by port_from_flats.zone_row: Tualatin CO admits the pod only as townhouses in Block 1 (58.400(2), traced in chunk 5); ported so the pod is measured. The Block 1 and unit-lots paths are FLATS variants and unanswered here.
+      - zone: "CO"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 15
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 25000
+        min_lot_width_ft: 80
+        min_density_du_per_acre: 16
+        source: "TDC 50.200(1) (use categories not listed are prohibited) and Table 50-1, Residential Use Categories, Office Commercial Zone"
+        source_url: "https://api.municode.com/PublicationPdfDownload/1818"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/tualatin CO) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
 
   wilsonville:
     eligible: true

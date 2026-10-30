@@ -128,3 +128,43 @@ def test_nothing_in_the_draft_is_verified(washington: Layer) -> None:
             assert value.status is not Status.verified, (zone, field)
             for variant in value.variants:
                 assert variant.status is not Status.verified, (zone, field)
+
+
+# FOLLOWUPS 109 chunk 6: the North Bethany Subarea Plan's map-drawn rules. No
+# map of the Special Setbacks segments, the Park Blocks ASC 5 or the Kaiser
+# Main Street area is held, so each is a fact nothing measures, and every lot
+# in a zone that carries one is held off GREEN with the fact named.
+NORTH_BETHANY_FACTS = {
+    "R-15 NB": {"north_bethany_special_setbacks", "north_bethany_park_blocks"},
+    "R-24 NB": {
+        "north_bethany_special_setbacks",
+        "north_bethany_park_blocks",
+        "north_bethany_kaiser_main_street",
+    },
+}
+
+
+@pytest.mark.parametrize("zone", sorted(NORTH_BETHANY_FACTS))
+def test_north_bethany_plan_map_areas_hold_the_lot_open(washington: Layer, zone: str) -> None:
+    from flats.rules.conditions import DRAWN_CONDITIONS, condition
+
+    rules = washington.zones[zone]
+    levers = set().union(*(v.levers for v in rules.values.values()))
+    want = NORTH_BETHANY_FACTS[zone]
+    assert want <= levers
+    for name in want:
+        fact = condition(name)
+        # Unassumed and undrawn: nothing answers it, so the screen reads it
+        # as unknown and the lot cannot be certified (FACT_UNOBSERVED).
+        assert fact.kind == "site_fact" and fact.assume is None
+        assert name not in DRAWN_CONDITIONS
+
+
+def test_north_bethany_kaiser_main_street_figures(washington: Layer) -> None:
+    rules = washington.zones["R-24 NB"].values
+    kaiser = ("north_bethany_kaiser_main_street",)
+
+    def at(field: str):
+        return {tuple(v.when): v.value for v in rules[field].variants}[kaiser]
+
+    assert (at("setback_front_ft"), at("setback_front_max_ft"), at("building_frontage_min_pct")) == (5, 10, 75)

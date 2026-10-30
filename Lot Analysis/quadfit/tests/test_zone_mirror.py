@@ -123,6 +123,8 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "gladstone/LI",
     "fairview/VMU",
     "fairview/VA",
+    # 2026-10-30 (FOLLOWUPS 109 chunk 6): Tualatin CO, townhouses in Block 1 only.
+    "tualatin/CO",
 })
 
 #: Washington County rows written FROM the corpus (port_from_flats.py,
@@ -1045,7 +1047,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 125,
     "min_landscaped_pct": 60,
     "setback_front_max_ft": 105,
-    "max_density_du_per_acre": 63,
+    "max_density_du_per_acre": 64,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,

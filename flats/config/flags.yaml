@@ -1678,6 +1678,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NORTH-BETHANY-SPECIAL-SETBACKS:
+    description: "Whether the lot fronts a North Bethany Special Setbacks Map segment (Park Blocks or Northeast Neighborhood Linear Park), where a 5 to 15 ft build-to line governs"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The North Bethany Subarea Plan's Special Setbacks Map, or a county planner's word on the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NORTH-BETHANY-PARK-BLOCKS:
+    description: "Whether the lot fronts the Park Blocks in North Bethany ASC 5, where no vehicle access from the Park Blocks and no parking lot in front of the building are allowed"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The North Bethany Subarea Plan's Areas of Special Concern map, or a county planner's word on the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NORTH-BETHANY-KAISER-MAIN-STREET:
+    description: "Whether the R-24 NB lot faces Kaiser Road in the North Bethany Main Street area, where the building must stand 5 to 10 ft back along 75% of the frontage"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The North Bethany Subarea Plan's Main Street area map (ASC Road Corridor 2), or a county planner's word on the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-OREGON-CITY-SOUTH-END:
     description: "Whether the lot lies inside the Oregon City South End Concept Plan area"
     kind: categorical
