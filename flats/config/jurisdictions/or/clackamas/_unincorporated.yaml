@@ -199,7 +199,7 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   transit, corner, alley and sewer conditions, and the same shape as the 1005.09 chapter card
   already open in the reading queue. Twenty feet is inert for a twenty-six-foot pod either way, and
   the number is written here so that whoever answers that card does not have to find it twice.
-  (or/clackamas/_unincorporated/zdo.1005.txt#L492,L518.)'
+  (or/clackamas/_unincorporated/1005/1005.09.txt#L3-L5,L35.)'
 ingest:
   geoid: null
   juris_city_codes:
@@ -226,7 +226,7 @@ readings:
       the boundary in any case.
     fingerprint: 6cac6559d4cb7925
 
-  "zdo.1012.txt#1012.07":
+  "1012.07.txt#1012.07":
     queue: missed
     outcome: not_here
     note: >-
@@ -235,8 +235,8 @@ readings:
       duplex approved as a conditional use in RA-1 is measured against. Wrong building, wrong
       district and wrong approval path all at once. It reached a minimum-lot-size field only
       because the sentence spells out a square footage per dwelling unit.
-    fingerprint: 462b55b7fa3566c1
-  "zdo.1012.txt#1012.05":
+    fingerprint: dae5ece0c0340944
+  "1012.05.txt#1012.05":
     queue: condition
     outcome: never
     note: >-
@@ -252,7 +252,7 @@ readings:
       absent, which can only hold the floor higher.) Verified against the loaded corpus rather than assumed:
       thirteen quadplex-permitting zones, none with a density number of either kind left standing.
       Subtracting acreage from a denominator that feeds no numerator changes nothing.
-    fingerprint: 06d414ac372fd07f
+    fingerprint: 3c468d2b8ab0f5dc
   "zdo.1012.txt#1012.08":
     queue: condition
     outcome: never
@@ -265,7 +265,7 @@ readings:
       preemption strikes it, and none states a minimum. A bonus on a standard that does not apply
       is a number with nothing to modify.
     fingerprint: 86bd9c953e2c10f7
-  "zdo.845.txt#845.04":
+  "845.04.txt#845.04":
     queue: condition
     outcome: never
     note: >-
@@ -280,7 +280,7 @@ readings:
       dwelling's facade -- because a rule of that shape would take real area out of a small lot.
       It governs cottage clusters. The quadplex's own standards are in 845.02, a different
       subsection with a different card.
-    fingerprint: 6b0bc42a6d70b10c
+    fingerprint: fb86893d69e4b2dd
   "zdo.510.txt#510.05":
     queue: condition
     outcome: applies
@@ -532,7 +532,7 @@ readings:
       this: the multifamily row is counted in DWELLING UNITS and every other row in floor area, so
       a residential threshold cannot be reached by a building's size.
     fingerprint: 36abe0a323d225db
-  "zdo.845.txt#845.02":
+  "845.02.txt#845.02":
     queue: nofield
     outcome: design
     note: >-
@@ -545,7 +545,7 @@ readings:
       because ZDO 845 is the chapter this project still owes a full read for a different reason,
       the ZDO 1005.02(E) question over 31,451 lots, and a card that closes here should not be
       mistaken for that chapter being finished.
-    fingerprint: e4252d8b3c451084
+    fingerprint: b52241822f35253a
 crossrefs:
   # --- eight references standing beside a standard, ruled 2026-08-27 -------
   # They were the last eight at the time. Section 316 added four more on
@@ -1043,7 +1043,7 @@ defaults:
     cite: Clackamas ZDO 845.02, Driveway Entries, total width of all driveway entries
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
-    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L43-L49"
+    quote: "or/clackamas/_unincorporated/845/845.02.txt#L1,L27-L35"
   # 845.02, Garages and Off-Street Parking Areas: they "shall not be located
   # between a building and a public street (other than an improved alley...),
   # except in compliance with Subsections 845.02(1) and (2)", and (2) is "the
@@ -1056,7 +1056,7 @@ defaults:
     cite: Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
-    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
+    quote: "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41"
   parking_area_frontage_any_street:
     # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
     # A court behind the building on a lot with no street behind it is not reached.
@@ -1064,7 +1064,7 @@ defaults:
     cite: "Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street (any street frontage: front, side and rear streets)"
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
-    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
+    quote: "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41"
   # Exempt rather than true, and READ THE APPLICABILITY BEFORE COPYING THIS.
   # Section 845 states a flat prohibition -- "Off-street motor vehicle parking
   # spaces and motor vehicle maneuvering areas, except driveways, shall not be
@@ -1118,7 +1118,7 @@ defaults:
     cite: Clackamas ZDO 845.02(C)(3), access only from the street with the lowest functional classification
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-09-08'
-    quote: "or/clackamas/_unincorporated/zdo.845.txt#L49"
+    quote: "or/clackamas/_unincorporated/845/845.02.txt#L34-L35"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -1168,12 +1168,12 @@ defaults:
     cite: Clackamas ZDO 845.02, which caps a share of the street frontage and states no maneuvering-area width
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
-    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
+    quote: "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41"
     variants:
       - value: 12
         when: [unit_lots]
         cite: Clackamas ZDO 845.03(E)(1)(c), driveways and off-street parking areas on a townhouse lot
-        quote: "or/clackamas/_unincorporated/zdo.845.txt#L57,L99-L109"
+        quote: "or/clackamas/_unincorporated/845/845.03.txt#L1,L46-L56"
   #
   # PARKING, read 2026-08-27, RE-READ 2026-09-27 after Ord. ZDO-293.
   #
@@ -1215,7 +1215,7 @@ defaults:
     cite: Clackamas ZDO 1015.02(B)(1) and Table 1015-2, Quadplex row, All Urban Zoning Districts within the Portland Metropolitan Urban Growth Boundary column
     url: https://www.clackamas.us/planning/zdo1015
     retrieved: '2026-09-27'
-    quote: "or/clackamas/_unincorporated/zdo.1015.txt#L52,L225,L227,L238,L241,L243"
+    quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L40,L214,L216,L227,L230-L231,L233"
   # The state layer caps a quadplex at four spaces in total under OAR
   # 660-046-0220(2)(e)(B), `preempts: cap`, and on a small lot its band drops
   # to two or one. A cap above a requirement of zero binds nothing; it is
@@ -1300,7 +1300,7 @@ defaults:
   # and 16,888 review lots graded with no parking laid out, those 16,888 being
   # HALF the corpus's entire 33,626-lot review queue. No other open question in
   # this project was worth as many lots.
-  # (or/clackamas/_unincorporated/zdo.1015.txt#L29,
+  # (or/clackamas/_unincorporated/1015/1015.02.txt#L14,
   #  or/clackamas/_unincorporated/roadway.320.txt#L18,L23,L40,L42-L43)
   parking_aisle_two_way_ft:
     value: 24
@@ -1334,7 +1334,7 @@ defaults:
   # writing down because unlike most conditions this corpus refuses, it is
   # genuinely reachable -- unincorporated Clackamas runs from the Willamette up
   # to Mount Hood, and the county has residential districts above the line.
-  # (or/clackamas/_unincorporated/zdo.1015.txt#L247)
+  # (or/clackamas/_unincorporated/1015/1015.02.txt#L237)
   #
   # NOT ENCODED: parking maximums, and deliberately left to inherit rather than
   # marked exempt. Table 1015-1's Dwellings row states no number and defers to
@@ -1347,7 +1347,7 @@ defaults:
   # quadplex -- but the state does, under OAR 660-046-0220, and writing
   # `exempt: true` here would resolve over the state layer and delete a cap
   # that binds. Absence inherits; exempt overrides.
-  # (or/clackamas/_unincorporated/zdo.1015.txt#L64,L66,L76,L78-L81,L103,L225,L245,L249)
+  # (or/clackamas/_unincorporated/1015/1015.02.txt#L52,L54,L64,L66-L69,L91,L214,L235,L239)
   #
   # NOT ENCODED: 845.04's ten-foot setbacks -- parking and maneuvering out of
   # the first ten feet from a front lot line, and parking spaces (though not
@@ -1356,7 +1356,7 @@ defaults:
   # this corpus a lot-line setback is stated of a STALL rather than a
   # building. It is not encoded because it is stated of cottage clusters, in
   # the subsection this file's `parking_front_prohibited` note is about, and
-  # 845.02 states no equivalent for a quadplex. (or/clackamas/_unincorporated/zdo.845.txt#L121,L193-L199)
+  # 845.02 states no equivalent for a quadplex. (or/clackamas/_unincorporated/845/845.04.txt#L1,L83-L90)
   #
   # READ AND DOES NOT REACH: Section 903, Setback Exceptions, fetched 2026-09-02
   # because the sentence citing it sits directly under the tables this layer's
@@ -1391,7 +1391,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1405,7 +1405,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1424,7 +1424,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1439,22 +1439,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1201"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1179"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1216"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1194"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1216"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1194"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1234"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1212"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1225"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1203"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1190"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1168"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2 (amended 9/9/2024). Base SFD min
       lot 5,000 sf, but middle-housing land division waives min lot (Section 845). Coverage computed on
       the parent lot.'
@@ -1468,7 +1468,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1482,7 +1482,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1501,7 +1501,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1516,22 +1516,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1203"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1181"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1217"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1195"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1217"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1195"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1235"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1213"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1226"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1204"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1191"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1169"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2. Base SFD min lot 7,000 sf; waived
       for middle-housing land division (Section 845).'
   R8.5:
@@ -1544,7 +1544,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1558,7 +1558,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1577,7 +1577,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1592,22 +1592,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1205"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1183"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1218"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1196"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1218"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1196"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1236"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1214"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1227"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1205"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1192"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1170"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2. Base SFD min lot 8,500 sf; waived
       for middle-housing land division (Section 845).'
   R10:
@@ -1620,7 +1620,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1634,7 +1634,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1653,7 +1653,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1668,22 +1668,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1207"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1185"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1219"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1197"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1219"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1197"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1237"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1215"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1228"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1206"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1193"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1171"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2. Base SFD min lot 10,000 sf; waived
       for middle-housing land division (Section 845).'
   R15:
@@ -1696,7 +1696,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1710,7 +1710,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1729,7 +1729,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1744,22 +1744,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1209"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1187"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1220"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1198"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1220"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1198"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1238"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1216"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1229"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1207"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1194"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1172"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2. Base SFD min lot 15,000 sf; waived
       for middle-housing land division (Section 845).'
   R20:
@@ -1772,7 +1772,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1786,7 +1786,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1805,7 +1805,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1820,22 +1820,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1211"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1189"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1221"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1199"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1221"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1199"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1239"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1217"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1230"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1208"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1195"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1173"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2. Base SFD min lot 20,000 sf; waived
       for middle-housing land division (Section 845).'
   R30:
@@ -1848,7 +1848,7 @@ zones:
       # permitted, subject to note 7 (a lot of record may hold only one of the
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1862,7 +1862,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1881,7 +1881,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-2, the "Maximum Building Height" row. It prints two cells per
       # district, not one: an accessory-building line capped at 20 feet or the
@@ -1896,22 +1896,22 @@ zones:
       # districts print the same sentence. The row carries no footnote marker
       # in either sub-line.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1213"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1191"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1222"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1200"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1222"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1200"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1240"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1218"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1231"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1209"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1196"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1174"
     notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-2. Base SFD min lot 30,000 sf; waived
       for middle-housing land division (Section 845). Only 1 polygon in the layer.'
   VR57:
@@ -1925,7 +1925,7 @@ zones:
       # P7,8, the same as the low-density zones. One table, one row, both
       # village zones in the same cell.
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Table 315-3, Building Design Standards, in
       # every column: "Hipped, gambrel, or gabled roofs are required. Flat
@@ -1936,7 +1936,7 @@ zones:
       # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
       value: 1
       cite: Clackamas ZDO Table 315-3, Building Design Standards (notes 23 and 24)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1389,L1392,L1526,L1528"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1310,L1390,L1395-L1396,L1546,L1548"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -1950,7 +1950,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -1969,7 +1969,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-3, "Standards for Primary Dwellings", the Maximum Building
       # Height row: "35 feet" under all three columns. A three-value row under
@@ -1989,13 +1989,13 @@ zones:
       # stands unconditionally. Read by hand because the footnote gate cannot
       # ask: see the HEIGHT note on this layer.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1363-L1368"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1364-L1369"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1369-L1373"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1370-L1374"
     setback_front_max_ft:
       value: 18
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1374-L1378"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1375-L1379"
     setback_garage_entrance_ft:
       # The VR-5/7 cell is two standards in one sentence: 10 ft to a dwelling
       # with a recessed garage or none, 19.5 ft to the garage door where the
@@ -2003,16 +2003,16 @@ zones:
       # the second, so a pod with a street-facing garage is measured against
       # what the code actually asks rather than against the shorter half.
       value: 19.5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1369-L1373"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1370-L1374"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1384-L1388"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1385-L1389"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1379-L1383"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1380-L1384"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1330-L1332"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1329-L1331"
     notes: 'Adopted ZDO 315 Table 315-3 (layer literal ''VR57'' = ZDO ''VR-5/7''). Quoted 2026-08-16 per
       row, each quote spanning the row label and every value printed under it so a reviewer can count
       values against the three column headers. Front, maximum front and side are three-value rows and
@@ -2039,7 +2039,7 @@ zones:
       # P7,8, the same as the low-density zones. One table, one row, both
       # village zones in the same cell.
       value: true
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Table 315-3, Building Design Standards, in
       # every column: "Hipped, gambrel, or gabled roofs are required. Flat
@@ -2050,7 +2050,7 @@ zones:
       # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
       value: 1
       cite: Clackamas ZDO Table 315-3, Building Design Standards (notes 23 and 24)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1389,L1392,L1526,L1528"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1310,L1390,L1395-L1396,L1546,L1548"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -2064,7 +2064,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_density_du_per_acre:
       # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
       # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
@@ -2083,7 +2083,7 @@ zones:
       cite: "Clackamas ZDO 1012.04 (general density provisions)"
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+      quote: "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     max_height_ft:
       # Table 315-3, "Standards for Primary Dwellings", the Maximum Building
       # Height row: "35 feet" under all three columns. A three-value row under
@@ -2103,22 +2103,22 @@ zones:
       # stands unconditionally. Read by hand because the footnote gate cannot
       # ask: see the HEIGHT note on this layer.
       value: 35
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1363-L1368"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1364-L1369"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1369-L1373"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1370-L1374"
     setback_front_max_ft:
       value: 18
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1374-L1378"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1375-L1379"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1384-L1388"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1385-L1389"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1379-L1383"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1380-L1384"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1330-L1332"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1329-L1331"
     notes: 'Adopted ZDO 315 Table 315-3 (layer literal ''VR45'' = ZDO ''VR-4/5''). Quoted 2026-08-16 the
       same way as VR57 — row label plus every value under it, so the count of values can be checked
       against the three column headers. VR-4/5 carries no garage-door setback: unlike the VR-5/7 cell,
@@ -2181,7 +2181,7 @@ zones:
       # village columns carry 7 and 8; the X carries nothing, so there is no
       # note to read and nothing to relieve it.
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
       variants:
         # The Townhouses row of the same table reads a bare P in the R-2.5
         # column -- no note 8, no note 9 -- and the ZDO 202 definition puts a
@@ -2192,7 +2192,7 @@ zones:
         - value: true
           when: [unit_lots]
           cite: "Clackamas ZDO Table 315-1, Townhouses row, R-2.5 column (P); ZDO 202 \"Townhouse\", a separate lot of record (Steph 2026-10-15, townhomes have separate lots)"
-          quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L331-L342"
+          quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L299-L310"
     # Table 315-2, the R-2.5 column (its first), read for the townhouse door
     # above: each figure is a standard for ONE unit lot, and the screen reads
     # area and width four times over on the parent lot (paper.lot_standard).
@@ -2209,23 +2209,23 @@ zones:
     min_lot_sqft:
       value: 2500
       cite: "Clackamas ZDO Table 315-2, DLA/Minimum Lot Size row, R-2.5 column; ZDO 1012.04(A), 1012.05"
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1168,L1170-L1171,L1179-L1180"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1146,L1148-L1149,L1157-L1158"
     max_height_ft:
       value: 35
       cite: Clackamas ZDO Table 315-2, Maximum Building Height row, R-2.5 column
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1199"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1177"
     max_coverage_pct:
       value: 50
       cite: Clackamas ZDO Table 315-2, Maximum Lot Coverage row, R-2.5 column
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1188-L1189"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1166-L1167"
     setback_front_ft:
       value: 15
       cite: Clackamas ZDO Table 315-2, Minimum Front Setback row, R-2.5 column
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1214-L1215"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1192-L1193"
     setback_garage_entrance_ft:
       value: 20
       cite: Clackamas ZDO Table 315-2, Minimum Front Setback row, R-2.5 column
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1214-L1215"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1192-L1193"
     # Five feet on the parent lot's outer sides. Section 845's zero at the
     # common wall is reached through note 9 of Table 315-1, which the R-2.5
     # townhouse cell does not carry; the screen never draws the interior unit
@@ -2233,11 +2233,11 @@ zones:
     setback_side_ft:
       value: 5
       cite: Clackamas ZDO Table 315-2, Minimum Side Setback row, R-2.5 column
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1232-L1233"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1210-L1211"
     setback_rear_ft:
       value: 20
       cite: Clackamas ZDO Table 315-2, Minimum Rear Setback row, R-2.5 column
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1223-L1224"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1201-L1202"
     notes: >-
       OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
       lots"). On one lot the pod is a quadplex and the X below refuses it; on
@@ -2340,7 +2340,7 @@ zones:
       sqft_per_unit: 3630
       percent_of_it: 80
       cite: Clackamas ZDO Table 315-4, District Land Area 3,630 square feet (PMD column), and 1012.08(C), 80 percent
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1549,L1556"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1568-L1569,L1576"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -2351,7 +2351,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -2376,7 +2376,7 @@ zones:
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, fifth column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -2384,7 +2384,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     min_lot_sqft:
       # Table 315-4 prints "None" and Section 845.01 prints 7,000, and 7,000
       # is the one that binds. 845.01 states "the subject lot shall be a
@@ -2397,7 +2397,7 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_height_ft:
       # "None". Not a number we failed to find -- the cell is printed and it
       # is empty of any ceiling, in a table whose other rows print numbers
@@ -2406,10 +2406,10 @@ zones:
       # create one, and Section 845 states no height for a quadplex.
       exempt: true
       cite: Clackamas ZDO Table 315-4, Maximum Building Height row, PMD column ("None"); Section 845 states no height for a quadplex
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2463,7 +2463,7 @@ zones:
       cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
     setback_garage_entrance_ft:
       # The same cell, second clause: "15 feet, except 20 feet to garage and
       # carport motor vehicle entries". Encoded although the 2026-09-08 ruling
@@ -2471,20 +2471,20 @@ zones:
       # it: the standard is real and the field is what declares that we read
       # it and decided it does not reach us.
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     setback_rear_ft:
       # Thirty feet, and PMD is the only district in this table that asks it.
       value: 30
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615"
     setback_side_ft:
       # Thirty feet on each side as well, which is the whole reason PMD is
       # nine lots of interest rather than nine lots of opportunity: sixty feet
       # of side yard on a district whose name is "medium density".
       value: 30
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625"
     min_building_separation_ft:
       value: 10
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -2494,12 +2494,12 @@ zones:
       its reasons.
       Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
-      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      bare P, 315.04.txt#L9,L11-L22,L263-L274) but development here
       goes through design review, which is not by right. ZDO
       1102.01(A)(1)(c): "Design review is required for: Development,
       redevelopment, expansions, and improvements in: ... HDR, MR-1,
       MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
-      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      (1102.01.txt#L5,L7,L13), and 1102.03 makes it "a Type II
       application" (L131). Neither exception reaches a quadplex.
       1102.01(B) (L21) lifts design review for detached single-family
       dwellings, manufactured dwellings and prefabricated structures,
@@ -2519,7 +2519,7 @@ zones:
 
       NOT ENCODED, with reasons. DENSITY: Table 315-4 gives PMD a district
       land area of 3,630 square feet per dwelling unit
-      (zdo.315.txt#L1548-L1555), which ZDO 1012.04(A) does not waive for a
+      (315.04.txt#L1568-L1575), which ZDO 1012.04(A) does not waive for a
       quadplex in this district, so four units want 14,520 square feet of net
       site area. Held out because this model has no field for a lot area per
       dwelling unit and converting it to 12 units per acre would put a number
@@ -2554,7 +2554,7 @@ zones:
       sqft_per_unit: 3630
       percent_of_it: 80
       cite: Clackamas ZDO Table 315-4, District Land Area 3,630 square feet (MR-1 column), and 1012.08(C), 80 percent
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1550,L1556"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1570,L1576"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -2565,7 +2565,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -2586,7 +2586,7 @@ zones:
       # YELLOW (review_discretion, Steph 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, sixth column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -2594,7 +2594,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     min_lot_sqft:
       # 845.01, as in every district in this county. Table 315-4 prints
       # "None[1]" here and note 1 is about a nonconforming detached
@@ -2603,14 +2603,14 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Maximum Building Height row, MR-1 column ("None"); Section 845 states no height for a quadplex
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2664,13 +2664,13 @@ zones:
       cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615"
     setback_side_ft:
       # SEVEN, and the seven is a storey count, not a district figure. The
       # cell reads "One story: five feet; two stories: seven feet; three
@@ -2693,15 +2693,15 @@ zones:
       # GREEN. A lot whose lines nobody could read stays UNKNOWN on the fact
       # exactly as before.
       value: 7
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625"
       variants:
         - value: 10
           when: [abuts_lower_density_zone]
-          quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1597,L1653"
+          quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1617,L1677"
     min_building_separation_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-1 column ("None")
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -2711,12 +2711,12 @@ zones:
       its reasons.
       Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
-      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      bare P, 315.04.txt#L9,L11-L22,L263-L274) but development here
       goes through design review, which is not by right. ZDO
       1102.01(A)(1)(c): "Design review is required for: Development,
       redevelopment, expansions, and improvements in: ... HDR, MR-1,
       MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
-      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      (1102.01.txt#L5,L7,L13), and 1102.03 makes it "a Type II
       application" (L131). Neither exception reaches a quadplex.
       1102.01(B) (L21) lifts design review for detached single-family
       dwellings, manufactured dwellings and prefabricated structures,
@@ -2744,7 +2744,7 @@ zones:
       like.
 
       NOT ENCODED, with reasons. DENSITY: 3,630 square feet of district land
-      area per dwelling unit (zdo.315.txt#L1548-L1555), not waived here by ZDO
+      area per dwelling unit (315.04.txt#L1568-L1575), not waived here by ZDO
       1012.04(A), so four units want 14,520 square feet of net site area
       against the 7,000 Section 845 asks. Twice the lot size standard on 839
       lots, and held out of the corpus for the two reasons written at the head
@@ -2774,7 +2774,7 @@ zones:
       sqft_per_unit: 2420
       percent_of_it: 90
       cite: Clackamas ZDO Table 315-4, District Land Area 2,420 square feet (MR-2 column), and 1012.08(C), 90 percent
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1551,L1556"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1571,L1576"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -2785,7 +2785,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -2806,7 +2806,7 @@ zones:
       # YELLOW (review_discretion, Steph 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, seventh column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -2814,20 +2814,20 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     min_lot_sqft:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Maximum Building Height row, MR-2 column ("None"); Section 845 states no height for a quadplex
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2881,27 +2881,27 @@ zones:
       cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615"
     setback_side_ft:
       # The same storey ladder as MR-1 and the same note 14, read the same
       # way: ten against an Urban Low Density Residential, VR-5/7 or VR-4/5
       # neighbour, seven otherwise.
       value: 7
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625"
       variants:
         - value: 10
           when: [abuts_lower_density_zone]
-          quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1597,L1653"
+          quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1617,L1677"
     min_building_separation_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-2 column ("None")
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -2911,12 +2911,12 @@ zones:
       its reasons.
       Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
-      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      bare P, 315.04.txt#L9,L11-L22,L263-L274) but development here
       goes through design review, which is not by right. ZDO
       1102.01(A)(1)(c): "Design review is required for: Development,
       redevelopment, expansions, and improvements in: ... HDR, MR-1,
       MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
-      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      (1102.01.txt#L5,L7,L13), and 1102.03 makes it "a Type II
       application" (L131). Neither exception reaches a quadplex.
       1102.01(B) (L21) lifts design review for detached single-family
       dwellings, manufactured dwellings and prefabricated structures,
@@ -2936,7 +2936,7 @@ zones:
       MR-1's cell is marked 5, 10, 11 and 12 and MR-2's is marked 5 and 10.
 
       NOT ENCODED, with reasons: density (2,420 square feet of district land
-      area per dwelling unit, zdo.315.txt#L1548-L1555, so 9,680 square feet of
+      area per dwelling unit, 315.04.txt#L1568-L1575, so 9,680 square feet of
       net site area for four units -- held out for the two reasons at the head
       of this block), maximum front setback ("See Subsections 1005.02(E) and
       (H)" -- read 2026-09-09 and now carried as `orientation_constraint:
@@ -2953,7 +2953,7 @@ zones:
       sqft_per_unit: 1500
       percent_of_it: 50
       cite: Clackamas ZDO Table 315-4, District Land Area 1,500 square feet (VA column), and 1012.08(C), 50 percent
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1553,L1556"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1573,L1576"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -2964,7 +2964,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -2988,7 +2988,7 @@ zones:
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, ninth column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Sunnyside Village, 1005.11 ("applies in
       # Sunnyside Village"; the VA district is mapped nowhere else): "In the
@@ -2998,7 +2998,7 @@ zones:
       # 12. The pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
       value: 1
       cite: Clackamas ZDO 1005.11, Sunnyside Village standards, roofs in the VA District
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L889,L891,L935"
+      quote: "or/clackamas/_unincorporated/1005/1005.11.txt#L1,L3-L4,L59-L60"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -3006,35 +3006,35 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     min_lot_sqft:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       retrieved: '2026-09-08'
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_height_ft:
       # The one district in this table that states a height, and it states a
       # generous one.
       value: 45
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     setback_front_max_ft:
       # A MAXIMUM front setback, which is the standard shape that catches a
       # pod pushed back off the street to make room for parking, and the only
       # one in this table stated as a number rather than a cross-reference.
       value: 18
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1580-L1587"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1600-L1607"
     setback_rear_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Rear Setback row, VA column ("None")
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615"
     setback_side_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Side Setback row, VA column ("None")
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625"
     min_building_separation_ft:
       # Twenty feet between multifamily dwellings, which is a standard about
       # two buildings and not about this one. Encoded anyway, at the number
@@ -3042,7 +3042,7 @@ zones:
       # will eventually be asked about and the figure should not have to be
       # found twice.
       value: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -3052,12 +3052,12 @@ zones:
       its reasons.
       Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
-      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      bare P, 315.04.txt#L9,L11-L22,L263-L274) but development here
       goes through design review, which is not by right. ZDO
       1102.01(A)(1)(c): "Design review is required for: Development,
       redevelopment, expansions, and improvements in: ... HDR, MR-1,
       MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
-      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      (1102.01.txt#L5,L7,L13), and 1102.03 makes it "a Type II
       application" (L131). Neither exception reaches a quadplex.
       1102.01(B) (L21) lifts design review for detached single-family
       dwellings, manufactured dwellings and prefabricated structures,
@@ -3089,7 +3089,7 @@ zones:
       it is left unclaimed.
 
       NOT ENCODED: density (1,500 square feet of district land area per
-      dwelling unit, zdo.315.txt#L1548-L1555, so 6,000 square feet of net site
+      dwelling unit, 315.04.txt#L1568-L1575, so 6,000 square feet of net site
       area for four units -- which is below the 7,000 Section 845 asks, so
       this is the one district of the four where the county's density standard
       would not have bound anyway) and minimum density ("See Section 1012").
@@ -3105,7 +3105,7 @@ zones:
       sqft_per_unit: 1742
       percent_of_it: 90
       cite: Clackamas ZDO Table 315-4, District Land Area 1,742 square feet (HDR column), and 1012.08(C), 90 percent
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1552,L1556"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1572,L1576"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -3116,7 +3116,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -3137,7 +3137,7 @@ zones:
       # YELLOW (review_discretion, Steph 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, eighth column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -3145,32 +3145,32 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     min_lot_sqft:
       # Table 315-4 prints "None"; 845.01's 7,000 binds, the same reading as
       # PMD and the R zones.
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     max_height_ft:
       # "None", printed, as in PMD. 1005.02(L) is what limits a tall
       # building here: every foot of it pushes the building further off the
       # north line.
       exempt: true
       cite: Clackamas ZDO Table 315-4, Maximum Building Height row, HDR column ("None"); Section 845 states no height for a quadplex
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1608"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626,L1630"
     setback_front_ft:
       # "15 feet[5]"; note 5 is about nonconforming detached houses.
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1576"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1596"
     orientation_constraint:
       # The Maximum Front Setback cell reads "See Subsections 1005.02(E) and
       # (H)", as PMD's does; encoded as PMD's is (see the note there).
       value: axis_required
       cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
     setback_north_ft:
       # 1005.02(L)(1): "drawing a 60-degree angle line from the top of the
       # structure to the natural ground elevation north of the structure".
@@ -3182,7 +3182,7 @@ zones:
       from_top_degrees: 60
       cite: Clackamas ZDO 1005.02(L)(1), north-south separation in the HDR, RCHDR and SHD Districts (Table 315-4 sends this district's rear and side setbacks here)
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L143,L145"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L124,L126-L129"
     setback_north_street_credit_ft:
       # (L)(1)(a): "Intervening streets and 15 feet of setback into the
       # property on the north side of said street may be included". The
@@ -3190,14 +3190,14 @@ zones:
       value: 15
       cite: Clackamas ZDO 1005.02(L)(1)(a), intervening streets and 15 feet on the north side of the street count toward the north-south separation
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L145,L147"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L126-L129,L131"
     setback_east_west_ft:
       # 1005.02(L)(3): a 15-degree line, "Separation = b x .267 (tan 15
       # degrees)": 6.97 ft for the pod, owed by no line on a public road.
       from_top_degrees: 15
       cite: Clackamas ZDO 1005.02(L)(3), east-west separation in the HDR, RCHDR and SHD Districts, except when abutting a public, County or state road
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L161,L162,L164"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L146-L148,L150"
     setback_rear_ft:
       # "See Subsection 1005.02(L)[5]". The cell's whole answer is the
       # bearing separation, so it is stated EQUAL TO the north one: a reader
@@ -3205,10 +3205,10 @@ zones:
       # bridge cuts each line by its bearing instead and keeps nothing of
       # this number but its floor, and there is none here.
       same_as: setback_north_ft
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588,L1592"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1608,L1612"
     setback_side_ft:
       same_as: setback_north_ft
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596,L1600"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616,L1622"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -3218,12 +3218,12 @@ zones:
       its reasons.
       Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
-      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      bare P, 315.04.txt#L9,L11-L22,L263-L274) but development here
       goes through design review, which is not by right. ZDO
       1102.01(A)(1)(c): "Design review is required for: Development,
       redevelopment, expansions, and improvements in: ... HDR, MR-1,
       MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
-      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      (1102.01.txt#L5,L7,L13), and 1102.03 makes it "a Type II
       application" (L131). Neither exception reaches a quadplex.
       1102.01(B) (L21) lifts design review for detached single-family
       dwellings, manufactured dwellings and prefabricated structures,
@@ -3269,7 +3269,7 @@ zones:
       sqft_per_unit: 726
       percent_of_it: 90
       cite: Clackamas ZDO Table 315-4, District Land Area 726 square feet (SHD column), and 1012.08(C), 90 percent
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1554,L1556"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1574,L1576"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -3280,7 +3280,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -3298,14 +3298,14 @@ zones:
     like:
       zone: HDR
       cite: Clackamas ZDO Table 315-4 prints SHD's rear and side setbacks and building separation as "See Subsection 1005.02(L)" and its maximum front setback as "See Subsections 1005.02(E) and (H)", as HDR's, and 1005.02(L) applies "in the HDR, RCHDR, and SHD Districts"; the cells that differ are stated below
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1538,L1546,L1586,L1594,L1602"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1558,L1566,L1606,L1614,L1624"
     quadplex_allowed:
       # Table 315-1, Quadplexes row: P. The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, SHD column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -3313,14 +3313,14 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1578"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1598"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Maximum Building Height row, SHD column ("None"); Section 845 states no height for a quadplex
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1610"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626,L1632"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -3328,7 +3328,7 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, the same 1102.01(A)(1)(c) sentence as HDR. The use-table
-      answer is a P (Table 315-1, zdo.315.txt#L41,L43-L54,L295-L306).
+      answer is a P (Table 315-1, 315.04.txt#L9,L11-L22,L263-L274).
       Special High Density, one lot (4400 SE Naef Rd). Dimensions are
       HDR's by the same cells (like: HDR): 1005.02(L)'s bearing
       separations for rear and side, 1005.02(E) for the maximum front
@@ -3344,7 +3344,7 @@ zones:
       # 2026-10-19 weekly turned these lots green with no floor read).
       value: 30
       cite: Clackamas ZDO 1012.08(C), in the RCHDR District the minimum density is 30 dwelling units per net acre
-      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L216,L218,L240"
+      quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L1,L3-L4,L27-L28"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -3355,7 +3355,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -3374,14 +3374,14 @@ zones:
       zone: HDR
       cite: 1005.02(L) applies "in the HDR, RCHDR, and SHD Districts", and Table 315-4 sends RCHDR's rear and side setbacks and building separation to it as it sends HDR's; the cells that differ are stated below
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L143"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L124"
     quadplex_allowed:
       # Table 315-1, Quadplexes row: P. The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, RCHDR column (P)
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -3389,7 +3389,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     setback_front_ft:
       # "5 feet[8]", and note 8: "For dwellings and structures accessory to
       # dwellings, the minimum front setback shall be 15 feet, and there
@@ -3398,11 +3398,11 @@ zones:
       # 1005.02 applies to development generally, not the table's maximum
       # depth that note 8 removes (the stricter reading).
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1579,L1635"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1599,L1657-L1658"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Maximum Building Height row, RCHDR column ("None"); Section 845 states no height for a quadplex
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1611"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1626,L1633"
     setback_north_ft:
       # 1005.02(L) restated here, not borrowed: a borrowed standard is only
       # as readable as the row it borrows from, and the rear and side below
@@ -3410,7 +3410,7 @@ zones:
       from_top_degrees: 60
       cite: Clackamas ZDO 1005.02(L)(1), north-south separation in the HDR, RCHDR and SHD Districts (Table 315-4 sends this district's rear and side setbacks here)
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L143,L145"
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L124,L126-L129"
     setback_rear_ft:
       # "See Subsection 1005.02(L)[13]", and note 13: "If the rear lot line
       # abuts a residential zoning district other than HDR, SHD, or RCHDR,
@@ -3419,14 +3419,14 @@ zones:
       # fact this layer reads is per lot and names a different list.
       same_as: setback_north_ft
       floor_ft: 20
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588,L1595,L1651"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1608,L1615,L1675"
     setback_side_ft:
       # "See Subsection 1005.02(L)[16]", and note 16: 15 feet where the side
       # line abuts a residential district other than HDR, SHD or RCHDR.
       # Charged on every lot, as the rear's 20.
       same_as: setback_north_ft
       floor_ft: 15
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596,L1603,L1657"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1616,L1625,L1681"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -3434,7 +3434,7 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, the same 1102.01(A)(1)(c) sentence as HDR. The use-table
-      answer is a P (Table 315-1, zdo.315.txt#L41,L43-L54,L295-L306).
+      answer is a P (Table 315-1, 315.04.txt#L9,L11-L22,L263-L274).
       Regional Center High Density Residential, 29 lots. Encoded
       2026-10-14 (FOLLOWUPS 61); was a zone_rulings entry, unencodable on
       the bearing. 1005.02(L)'s east-west separation and north street
@@ -3476,7 +3476,7 @@ zones:
   # housing relief and which names the districts it reaches twice over:
   # 1012.02(H) waives minimum lot size for a middle housing land division "In
   # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District"
-  # (zdo.1012.txt#L57), and 1012.04(A) exempts "a duplex, triplex, quadplex,
+  # (1012.02.txt#L50), and 1012.04(A) exempts "a duplex, triplex, quadplex,
   # or cottage cluster" from DLA in that identical list (L73). Nine urban
   # districts, named the same way in both places, and not one of these five
   # among them. The county is not silent about where middle housing goes; it
@@ -3502,7 +3502,7 @@ zones:
   # lots are: some of this land IS inside the Portland Metropolitan Urban
   # Growth Boundary -- ZDO 1012.02(A) sets a 20-acre minimum lot size "inside
   # the Portland Metropolitan Urban Growth Boundary ... in the FF-10, RA-1,
-  # RA-2, RC, RI, and RRFF-5 Districts" (zdo.1012.txt#L19), and Table 316-2
+  # RA-2, RC, RI, and RRFF-5 Districts" (1012.02.txt#L5), and Table 316-2
   # note [3] says the same. Inside a UGB is not the test the division states,
   # but it is close enough to it that resting the whole refusal on "rural"
   # would have been resting it on the wrong word.
@@ -4008,7 +4008,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, SCMU cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1512,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1489,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4019,7 +4019,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4041,7 +4041,7 @@ zones:
       # YELLOW (review_discretion, Steph 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, SCMU column (P)
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L85,L281,L289"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L53,L249,L257"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4049,7 +4049,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     min_lot_sqft:
       # Table 510-2 gives SCMU "1/2 acre[2,4]" and note 2 limits that to
       # subdivisions, partitions and property line adjustments, so it is not
@@ -4057,7 +4057,7 @@ zones:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     setback_side_ft:
       # 1005.09(C): "Five feet, except a zero setback is allowed for attached
       # structures." Read as 5: the zero is for a structure attached to a
@@ -4065,21 +4065,21 @@ zones:
       value: 5
       cite: Clackamas ZDO 1005.09 Minimum Side and Rear Setbacks (Table 510-2 sends the SCMU cell here)
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L490,L520"
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L37-L38"
     setback_rear_ft:
       value: 5
       cite: Clackamas ZDO 1005.09 Minimum Side and Rear Setbacks (Table 510-2 sends the SCMU cell here)
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L490,L520"
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L37-L38"
     min_building_height_ft:
       value: 20
       cite: Clackamas ZDO 1005.09 Minimum Building Height ("20 feet, measured to top of parapet or roof")
       url: https://www.clackamas.us/planning/zdo1005
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L490,L518"
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L35"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, SCMU cell ("None"); 1005.09 states no maximum
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1476"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1453"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -4091,7 +4091,7 @@ zones:
       development in this district goes through design review, which is
       not by right. ZDO 1102.01(A)(1)(a) requires design review for
       "Development, redevelopment, expansions, and improvements in ...
-      Commercial zoning districts" (zdo.1102.txt#L5,L7,L9); ZDO 202
+      Commercial zoning districts" (1102.01.txt#L5,L7,L9); ZDO 202
       makes a commercial zoning district one "regulated by Section 500,
       Commercial Districts" (zdo.202.definitions.txt#L661), and 510.02
       names SCMU among them. 1102.03 makes it "a Type II application"
@@ -4149,7 +4149,7 @@ zones:
       # Table 510-1, Quadplexes row, PMU column (L288): a bare P. RED by
       # process, see the note.
       # The value is the ruling's, so it cites design review and the master
-      # plan, not the cell (which says P; zdo.510.txt#L84,L281,L288).
+      # plan, not the cell (which says P; 510.05.txt#L52,L249,L256).
       value: false
       cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (510.02 names PMU), as a Type II application (1102.03), with a master plan where Table 510-3 is not met for the entire site (1102.03(B))
       quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L131,L135"
@@ -4159,32 +4159,32 @@ zones:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
-      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+      quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     setback_front_ft:
       value: 0
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1432,L1439"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1409,L1416"
     setback_side_ft:
       # Table 510-2 PMU side cell is "0[8,15]". Note 15: "If the side lot line
       # abuts a residential zoning district, the minimum shall be 15 feet."
       # This layer declares no abuts_residential_zone fact, so the 15 is held
       # on every lot, the stricter reading.
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1456,L1463,L1559"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1433,L1440,L1551"
     setback_rear_ft:
       # "0[8,10]"; note 10: 15 feet if the rear lot line abuts a residential
       # zoning district. Held at 15 for the same reason as the side.
       value: 15
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1444,L1451,L1549"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1421,L1428,L1537"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, PMU cell ("None")
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1475"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1452"
     notes: >-
       RED, RE-RULED 2026-10-14 under Steph's review rule (replacing the
       by-right-only ruling of 2026-10-08): the pod misses the measured site
       program of Table 510-3 below, and the only way past it is a master
       plan that must "demonstrate that it is feasible to achieve full
-      compliance with a future phase" (1102.03(B), zdo.1102.txt#L135), a
+      compliance with a future phase" (1102.03(B), 1102.03.txt#L7-L8), a
       one-off judgement no single lot can carry. The 2026-10-08 reading
       follows: a PMU site is built only through design review and a master
       plan. Table 510-3 sets the
@@ -4214,24 +4214,24 @@ zones:
     like:
       zone: PMU1
       cite: ZDO 510 Table 510-2 prints one PMU column for all Planned Mixed Use sites (PMU1 to PMU6), so the setbacks printed under it are PMU1's and this site's alike
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L28-L32,L1364"
     quadplex_allowed:
       # The value is the ruling's, so it cites design review and the master
-      # plan, not the cell (which says P; zdo.510.txt#L84,L281,L288).
+      # plan, not the cell (which says P; 510.05.txt#L52,L249,L256).
       value: false
       cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (510.02 names PMU), as a Type II application (1102.03), with a master plan where Table 510-3 is not met for the entire site (1102.03(B))
       quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L131,L135"
     min_lot_sqft:
       # Table 510-2: "PMU2: 2 acres" = 87,120 square feet.
       acres: 2
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1399"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1376"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as PMU1). Table 510-3 for
       PMU2 to PMU5 requires 50 percent of the site in office or residential
       use, an office floor area ratio of 0.5 (lots of 2.5 acres or less) or 1.0,
       a retail and service FAR of 0.3 and 30 dwelling units per net acre; a
       four-unit building meets none of the site totals, so a master plan
-      through design review (ZDO 1102.03(B), zdo.1102.txt#L135) is
+      through design review (ZDO 1102.03(B), 1102.03.txt#L7-L8) is
       the only path. Setbacks and height come from the same single PMU column
       of Table 510-2 as PMU1. Not encoded: the 30 du per net acre minimum
       (Table 510-3, L1604-L1605); net acreage is defined by 1012.08(A) and (B)
@@ -4244,17 +4244,17 @@ zones:
     like:
       zone: PMU1
       cite: ZDO 510 Table 510-2 prints one PMU column for all Planned Mixed Use sites (PMU1 to PMU6), so the setbacks printed under it are PMU1's and this site's alike
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L28-L32,L1364"
     quadplex_allowed:
       # The value is the ruling's, so it cites design review and the master
-      # plan, not the cell (which says P; zdo.510.txt#L84,L281,L288).
+      # plan, not the cell (which says P; 510.05.txt#L52,L249,L256).
       value: false
       cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (510.02 names PMU), as a Type II application (1102.03), with a master plan where Table 510-3 is not met for the entire site (1102.03(B))
       quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L131,L135"
     min_lot_sqft:
       # Table 510-2: "PMU3: 3 acres" = 130,680 square feet.
       acres: 3
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1400"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1377"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as PMU1), and the same Table 510-3
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
@@ -4271,7 +4271,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RTL cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1508,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1485,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4282,7 +4282,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4300,14 +4300,14 @@ zones:
     like:
       zone: HDR
       cite: Clackamas ZDO Table 510-1, Quadplexes row, RTL column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L81,L281,L285,L1274"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L49,L249,L253,L1247"
     quadplex_allowed:
       # Table 510-1, Quadplexes row, RTL column: "P[15]". The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, RTL column (P[15])
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L81,L281,L285"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L49,L249,L253"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4315,7 +4315,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L9,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -4323,12 +4323,12 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, 1102.01(A)(1)(a), commercial districts. The use-table answer is P[15]
-      (Table 510-1, Quadplexes row, zdo.510.txt#L81,L281,L285). Retail Commercial,
+      (Table 510-1, Quadplexes row, 510.05.txt#L49,L249,L253). Retail Commercial,
       59 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
       entry, unencodable while HDR was. Note 15 sends a freestanding
       quadplex to the HDR District for its development and dimensional
       standards (like: HDR): 1005.02(L)'s bearing separations, the
-      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   CC:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -4341,7 +4341,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, CC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1509,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1486,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4352,7 +4352,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4370,14 +4370,14 @@ zones:
     like:
       zone: HDR
       cite: Clackamas ZDO Table 510-1, Quadplexes row, CC column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L82,L281,L286,L1274"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L50,L249,L254,L1247"
     quadplex_allowed:
       # Table 510-1, Quadplexes row, CC column: "P[15]". The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, CC column (P[15])
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L82,L281,L286"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L50,L249,L254"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4385,7 +4385,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L9,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -4393,12 +4393,12 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, 1102.01(A)(1)(a), commercial districts. The use-table answer is P[15]
-      (Table 510-1, Quadplexes row, zdo.510.txt#L82,L281,L286). Corridor Commercial,
+      (Table 510-1, Quadplexes row, 510.05.txt#L50,L249,L254). Corridor Commercial,
       128 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
       entry, unencodable while HDR was. Note 15 sends a freestanding
       quadplex to the HDR District for its development and dimensional
       standards (like: HDR): 1005.02(L)'s bearing separations, the
-      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   C3:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -4411,7 +4411,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, C-3 cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1510,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1487,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4422,7 +4422,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4440,14 +4440,14 @@ zones:
     like:
       zone: HDR
       cite: Clackamas ZDO Table 510-1, Quadplexes row, C-3 column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L83,L281,L287,L1274"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L51,L249,L255,L1247"
     quadplex_allowed:
       # Table 510-1, Quadplexes row, C-3 column: "P[15]". The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, C-3 column (P[15])
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L83,L281,L287"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L51,L249,L255"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4455,7 +4455,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L9,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -4463,12 +4463,12 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, 1102.01(A)(1)(a), commercial districts. The use-table answer is P[15]
-      (Table 510-1, Quadplexes row, zdo.510.txt#L83,L281,L287). General Commercial,
+      (Table 510-1, Quadplexes row, 510.05.txt#L51,L249,L255). General Commercial,
       447 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
       entry, unencodable while HDR was. Note 15 sends a freestanding
       quadplex to the HDR District for its development and dimensional
       standards (like: HDR): 1005.02(L)'s bearing separations, the
-      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   OC:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -4481,7 +4481,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, OC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1514,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1491,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4492,7 +4492,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4510,14 +4510,14 @@ zones:
     like:
       zone: HDR
       cite: Clackamas ZDO Table 510-1, Quadplexes row, OC column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L87,L281,L291,L1274"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L55,L249,L259,L1247"
     quadplex_allowed:
       # Table 510-1, Quadplexes row, OC column: "P[15]". The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, OC column (P[15])
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L87,L281,L291"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L55,L249,L259"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4525,7 +4525,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L9,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -4533,12 +4533,12 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, 1102.01(A)(1)(a), commercial districts. The use-table answer is P[15]
-      (Table 510-1, Quadplexes row, zdo.510.txt#L87,L281,L291). Office Commercial,
+      (Table 510-1, Quadplexes row, 510.05.txt#L55,L249,L259). Office Commercial,
       82 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
       entry, unencodable while HDR was. Note 15 sends a freestanding
       quadplex to the HDR District for its development and dimensional
       standards (like: HDR): 1005.02(L)'s bearing separations, the
-      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   RCC:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -4554,7 +4554,7 @@ zones:
       # definitions are read (conservative default).
       value: 30
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1507,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1484,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4565,7 +4565,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4583,14 +4583,14 @@ zones:
     like:
       zone: RCHDR
       cite: Clackamas ZDO Table 510-1, Quadplexes row, RCC column "P[13]", and note 13, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the RCHDR District"
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L80,L281,L284,L1270"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L48,L249,L252,L1243"
     quadplex_allowed:
       # Table 510-1, Quadplexes row, RCC column: "P[13]". The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, RCC column (P[13])
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L80,L281,L284"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L48,L249,L252"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4598,7 +4598,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L9,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -4606,12 +4606,12 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, 1102.01(A)(1)(a), commercial districts. The use-table answer is P[13]
-      (Table 510-1, Quadplexes row, zdo.510.txt#L80,L281,L284). Regional Center Commercial,
+      (Table 510-1, Quadplexes row, 510.05.txt#L48,L249,L252). Regional Center Commercial,
       103 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
       entry, unencodable while RCHDR was. Note 13 sends a freestanding
       quadplex to the RCHDR District for its development and dimensional
       standards (like: RCHDR): 1005.02(L)'s bearing separations, the
-      15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (zdo.510.txt#L1533).
+      15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (510.05.txt#L1511-L1512).
   RCO:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -4627,7 +4627,7 @@ zones:
       # definitions are read (conservative default).
       value: 30
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCO cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1515,L1577"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1492,L1571"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4638,7 +4638,7 @@ zones:
         # (one-half or more rounds up) is not taken either; a pod short of
         # the floor by less than half a home is held to it.
         cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
-        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        quote: "or/clackamas/_unincorporated/1012/1012.08.txt#L6-L7,L9,L11,L13,L15,L17,L19,L21,L23,L25"
         less: []
         assumed_none:
           - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
@@ -4656,14 +4656,14 @@ zones:
     like:
       zone: RCHDR
       cite: Clackamas ZDO Table 510-1, Quadplexes row, RCO column "P[13]", and note 13, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the RCHDR District"
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L88,L281,L292,L1270"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L56,L249,L260,L1243"
     quadplex_allowed:
       # Table 510-1, Quadplexes row, RCO column: "P[13]". The use is permitted. Design review weighs judgement
       # words, so the district is YELLOW (review_discretion, Steph
       # 2026-10-14).
       value: true
       cite: Clackamas ZDO Table 510-1, Quadplexes row, RCO column (P[13])
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L88,L281,L292"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L56,L249,L260"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist
@@ -4671,7 +4671,7 @@ zones:
       # words do. 1307 (procedures, the conditions power) is not stored.
       value: judgement
       cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L9,L131,L133,L155)
-      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08), the same reading as HDR and SCMU:
@@ -4679,12 +4679,12 @@ zones:
       standards (`review_discretion` cites them), so the lot is screened
       on the standards below and flagged REVIEW-CONDITIONS. Was red by
       ruling for design review, 1102.01(A)(1)(a), commercial districts. The use-table answer is P[13]
-      (Table 510-1, Quadplexes row, zdo.510.txt#L88,L281,L292). Regional Center Office,
+      (Table 510-1, Quadplexes row, 510.05.txt#L56,L249,L260). Regional Center Office,
       37 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
       entry, unencodable while RCHDR was. Note 13 sends a freestanding
       quadplex to the RCHDR District for its development and dimensional
       standards (like: RCHDR): 1005.02(L)'s bearing separations, the
-      15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (zdo.510.txt#L1533). 1102.03(B)(2) asks a master plan as part of design review in RCO only where the development misses the minimum floor area ratio (zdo.1102.txt#L135), a measurable standard; note 13 keeps no Table 510-2 standard for a freestanding quadplex, so it does not reach the building.
+      15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (510.05.txt#L1511-L1512). 1102.03(B)(2) asks a master plan as part of design review in RCO only where the development misses the minimum floor area ratio (1102.03.txt#L7-L8), a measurable standard; note 13 keeps no Table 510-2 standard for a freestanding quadplex, so it does not reach the building.
 
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
@@ -4771,7 +4771,7 @@ zone_rulings:
       are a reading (HUMAN_TODO 15). That dropped-cell column read is the
       whole block. 1005.02(L)'s bearing separations do not reach VTH: (L)
       applies "in the HDR, RCHDR, and SHD Districts" only
-      (zdo.1005.txt#L143), and HDR, SHD and RCHDR are encoded with them
+      (1005.02.txt#L124), and HDR, SHD and RCHDR are encoded with them
       since 2026-10-14 (FOLLOWUPS 61). Corrected 2026-10-14; the note of
       2026-10-08 named (L) as a second block, which it never was.
   # --- six pockets: a city's zoning that Metro's regional fabric carries on

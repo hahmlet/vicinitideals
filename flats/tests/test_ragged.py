@@ -55,7 +55,7 @@ def test_the_tables_we_do_encode_from_are_whole() -> None:
     widths of Tables 315-1 and 315-4 -- and none is short.
     """
     zdo = next(
-        d for d in scan() if d.name.endswith("_unincorporated/zdo.315.txt")
+        d for d in scan() if d.name.endswith("_unincorporated/315/315.04.txt")
     )
     assert zdo.short == 0, sorted(set(zdo.runs))
     assert set(zdo.runs) <= {7, 11}, sorted(set(zdo.runs))
@@ -96,6 +96,6 @@ def test_the_commercial_use_table_is_whole() -> None:
     against eleven column heads. This is the table the ``S`` blindness was
     hiding, so it is pinned by name rather than left to the corpus-wide count.
     """
-    zdo = next(d for d in scan() if d.name.endswith("_unincorporated/zdo.510.txt"))
+    zdo = next(d for d in scan() if d.name.endswith("_unincorporated/510/510.05.txt"))
     assert zdo.widest == 11
     assert zdo.short == 0, sorted(set(zdo.runs))

@@ -1021,7 +1021,7 @@ def test_the_reference_that_found_it(layers: dict[str, Layer]) -> None:
     rows = {d.ref: d for d in dangling(layers["or/clackamas/_unincorporated"])}
     row = rows["843"]
 
-    assert row.sources[0] == "zdo.316.txt"
+    assert row.sources[0] == "316/316.04.txt"
     assert "subject to Section 843" in row.sample
     assert "1850 and 1945" not in row.sample
 

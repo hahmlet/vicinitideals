@@ -1,0 +1,3 @@
+39.4748 UF-20 ZONE.
+This base zone is defined as an Urban Future base zone with a minimum lot size of 20 acres.
+For purposes of this base zone, the Urban Future base zones General Provisions apply.

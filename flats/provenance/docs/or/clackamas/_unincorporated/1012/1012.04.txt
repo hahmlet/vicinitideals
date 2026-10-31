@@ -1,0 +1,27 @@
+1012.04 General Density Provisions
+
+1 Density is a measurement of the number of dwelling units in relationship to a specified amount of land.
+In the context of a partition, subdivision, replat, or manufactured home park, density typically relates to potential dwelling units in the form of lots, parcels, or manufactured home park spaces.
+Density often is expressed as dwelling units per acre; however, this Ordinance implements density standards in many zoning districts by assigning a district land area (DLA), which is the starting point for determining the maximum number of dwelling units allowed on a particular site.
+In general, the DLA is the minimum lot area required per dwelling unit; however, the DLA is subject to adjustment for density bonuses, restricted area development limitations, and limits on the extent of new road area that must be subtracted.
+In addition, for a duplex, triplex, quadplex, or cottage cluster in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, and for accessory dwelling units, DLA is not the minimum lot area required per dwelling unit.
+
+2 The DLA and the minimum lot size standard applicable to a particular zoning district are seldom the same.
+Often this is because the maximum density derived from the DLA standard is calculated over the entire site prior to any platting of new lots or parcels.
+The minimum lot size standard then typically permits flexibility in determining where on the site the allowed dwelling units will be developed.
+For example, some lots may be relatively large while others are smaller, or open space tracts may be platted while all lot sizes are relatively small.
+Regardless of allowed flexible sizing of individual lots or parcels, however, the maximum density allowed for the entire site remains the same.
+
+3 Except for middle housing land divisions approved pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats, if the subject property is currently developed with one or more dwelling units that will be retained, such dwelling units shall be included in demonstrating compliance with the maximum and minimum density standards of Section 1012.
+Notwithstanding this provision, accessory dwelling units and temporary dwellings approved pursuant to Section 1204, Temporary Permits, are not included in demonstrating compliance with the density standards, provided that these dwellings will continue to comply with the requirements for accessory dwelling units or temporary dwellings, respectively.
+
+4 If a subdivision, partition, or replat is proposed on property currently developed with duplexes, triplexes, quadplexes, or multifamily dwellings (or with a current design review approval for such development), maximum and minimum density shall be calculated separately for each proposed lot or parcel, except:
+
+1 In a planned unit development or a development of duplexes approved pursuant to Subsection 1012.07, maximum and minimum density shall be calculated for the entire property proposed for development prior to the creation of new lots or parcels.
+
+2 Middle housing land divisions approved pursuant to Section 1105 are exempt.
+
+5 In a zoning district that does not allow new detached single-family dwellings, a lot created for a nonconforming detached single-family dwelling shall not be included in the gross site area used to calculate minimum and maximum density for the remaining lot(s).
+
+6 Except in Urban Low Density Residential, VR-4/5, and VR-5/7 Districts, each unit in a single room occupancy is considered a dwelling unit for the purposes of calculating minimum and maximum density.
+

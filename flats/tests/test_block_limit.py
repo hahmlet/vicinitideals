@@ -105,6 +105,6 @@ def test_a_height_rule_that_used_to_stop_mid_sentence(store) -> None:
 
 def test_every_new_note_is_ruled_and_none_blocks() -> None:
     ruled = {row.quote: row for row in dispositions(CLACKAMAS)}
-    for line in (1148, 1150, 1152, 1154, 1162, 1164, 1166):
-        assert ruled[f"{ZDO}#L{line}"].state == "dismissed"
+    for line in (1126, 1128, 1130, 1132, 1140, 1142, 1144):
+        assert ruled[f"{CLACKAMAS}/315/315.04.txt#L{line}"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

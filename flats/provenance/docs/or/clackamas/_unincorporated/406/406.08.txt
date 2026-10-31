@@ -1,0 +1,100 @@
+406.08 Development Standards
+
+1 Fire-Siting Standards for New Structures: Fuel-free break standards shall be provided surrounding any new structure, as follows:
+
+1 A primary fuel-free break area shall be maintained surrounding any new structure, including any new dwelling.
+
+1 The primary safety zone is a fire fuel break extending a minimum distance around structures.
+The minimum distance is established by Table 406-2, Minimum Primary Safety Zone and Figure 406-1, Example of Primary Safety Zone.
+The goal within the primary safety zone is to remove fuels that will produce flame lengths in excess of one foot.
+Vegetation within the primary safety zone may include green lawns and shrubs less than 24 inches in height.
+Trees shall be spaced with greater than 15 feet between the crowns and pruned to remove dead and low (less than eight feet) branches.
+Accumulated leaves, needles, limbs and other dead vegetation shall be removed from beneath trees.
+Nonflammable materials (i.e., rock) instead of flammable materials (i.e., bark mulch) shall be placed next to the structure.
+As slope increases, the primary safety zone shall increase away from the structure and down the slope at a 45-degree angle from the structure, in accordance with Table 406-2 and Figure 406-1:
+
+Table 406-2: Minimum Primary Safety Zone
+
+Slope  Feet of Primary Safety Zone  Feet of Additional Primary Safety Zone Down Slope
+0%     30                           0
+10%    30                           50
+20%    30                           75
+25%    30                           100
+40%    30                           150
+
+Figure 406-1: Example of Primary Safety Zone
+
+1 For any new dwelling, a secondary fuel-free break area shall be cleared and maintained on land surrounding the dwelling that is owned or controlled by the owner.
+
+1 The secondary fuel-free break extends around the primary safety zone required pursuant to Subsection 406.08(A)(1).
+The goal of the secondary fuel-free break shall be to reduce fuels so that the overall intensity of any wildfire would be lessened and the likelihood of crown fires and crowning is reduced.
+Vegetation within the secondary fuel-free break shall be pruned and spaced so that fire will not spread between crowns of trees.
+Small trees and brush growing underneath larger trees shall be removed to prevent spread of fire up into the crowns of the larger trees.
+Dead fuels shall be removed.
+The minimum width of the secondary fuel-free break shall be the lesser of:
+
+1 100 feet; or
+
+2 The distance from the dwelling to the edge of land surrounding the dwelling that is owned or controlled by the owner.
+
+2 Structures within a River and Stream Conservation Area or the Willamette River Greenway shall be sited consistent with the requirements of Sections 704, River and Stream Conservation Area (RSCA) and 705, Willamette River Greenway (WRG), respectively.
+Structures shall be sited so that a primary safety zone can be completed around the structure outside of the river or stream corridor setback/buffer area.
+The area within the river or stream setback/buffer area shall be exempt from the secondary fuel-free break area requirements.
+
+3 The fuel-free break standards shall be completed and approved prior to issuance of any septic, building, or manufactured dwelling permits.
+Maintenance of the fuel-free breaks shall be the continuing responsibility of the property owner.
+
+B. Additional Fire-Siting Standards for New Dwellings: The following fire-siting standards shall apply to any new dwelling:
+
+1 The dwelling shall be located upon a parcel within a fire protection district or shall be provided with residential fire protection by contract.
+If the dwelling is not within a fire protection district, the applicant shall provide evidence that the applicant has asked to be included within the nearest such district.
+If inclusion within a fire protection district or contracting for residential fire protection is impracticable, an alternative means for protecting the dwelling from fire hazards shall be provided.
+The means selected may include a fire sprinkling system, onsite equipment and water storage, or other methods that are reasonable, given the site conditions.
+If a water supply is required for fire protection, it shall be a swimming pool, pond, lake, or similar body of water that at all times contains at least 4,000 gallons or a stream that has a continuous year round flow of at least one cubic foot per second.
+The applicant shall provide verification from the Oregon Water Resources Department that any permits or registrations required for water diversion or storage have been obtained or that permits or registrations are not required for the use.
+Road access shall be provided to within 15 feet of the water's edge for firefighting pumping units.
+The road access shall accommodate the turnaround of firefighting equipment during the fires season.
+Permanent signs shall be posted along the access route to indicate the location of the emergency water source.
+
+2 The dwelling shall have a fire retardant roof.
+
+3 The dwelling shall not be sited on a slope of greater than 40 percent.
+
+4 If the dwelling has a chimney or chimneys, each chimney shall have a spark arrester.
+
+C. Compatibility Siting Standards: The following compatibility siting standards shall apply to any new structure, including any new dwelling:
+
+1 Structures shall be sited on the subject property so that:
+
+1 They have the least impact on nearby or adjoining forest or agricultural lands;
+
+2 The siting ensures that adverse impacts on forest operations and accepted farming practices on the tract will be minimized;
+
+3 The amount of forest lands used to site access roads, service corridors, and structures is minimized; and
+
+4 The risks associated with wildfire are minimized.
+
+2 Siting criteria satisfying Subsection 406.08(C)(1) may include setbacks from adjoining properties, clustering near or among existing structures, siting close to existing roads, and siting on that portion of the subject property least suited for growing trees.
+
+D. The applicant shall provide evidence that the domestic water supply is from a source authorized in accordance with the Oregon Water Resources Department's (OWRD) administrative rules for the appropriation of ground water or surface water and not from a Class II stream as defined in the Oregon Forest Practices Rules (OAR chapter 629).
+Evidence of a domestic water supply means:
+
+1 Verification from a water purveyor that the use described in the application will be served by the purveyor under the purveyor's rights to appropriate water;
+
+2 A water use permit issued by the OWRD for the use described in the application; or
+
+3 Verification from the OWRD that a water use permit is not required for the use described in the application.
+If the proposed water supply is from a well and is exempt from permitting requirements under Oregon Revised Statutes 537.545, the applicant shall submit the well constructor's report to the County upon completion of the well.
+
+E. Approval of a dwelling shall be subject to the following requirements:
+
+1 The owner of the tract shall plant a sufficient number of trees on the tract to demonstrate that the tract is reasonably expected to meet Department of Forestry stocking requirements at the time specified in Department of Forestry administrative rules.
+
+2 The Planning Director shall notify the County Assessor of the above condition at the time the dwelling is approved.
+
+3 If the lot or parcel is more than 10 acres, the property owner shall submit a stocking survey report to the County Assessor and the Assessor will verify that the minimum stocking requirements have been met by the time required by Department of Forestry administrative rules.
+
+4 Upon notification by the County Assessor, the Department of Forestry will determine whether the tract meets minimum stocking requirements of the Forest Practices Act.
+If the Department of Forestry determines that the tract does not meet those requirements, that department will notify the owner and the County Assessor that the land is not being managed as forest land.
+The County Assessor will then remove the forest land designation pursuant to ORS 321.359 and impose the additional tax.
+

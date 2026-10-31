@@ -128,7 +128,7 @@ readings:
       cemeteries and natural areas the zone exists for, on land where this product cannot be
       placed at all.
     fingerprint: 1aa863e00137df18
-  "39.cfu.txt#39.4105":
+  "39.4105.txt#39.4105":
     queue: missed
     outcome: not_here
     note: >-
@@ -140,7 +140,7 @@ readings:
       acreage dwelling wants eighty acres in one ownership -- so nothing about this land is a
       place a factory-built four-unit pod goes. The height is recorded in the zone's own notes; it
       is not in a field because a refused zone is never asked for one.
-    fingerprint: 620d612193313c70
+    fingerprint: ed38c3f39623d035
   "39.cfu.txt#39.4110":
     queue: missed
     outcome: not_here
@@ -1775,7 +1775,7 @@ defaults:
     cite: MCC 39.6590(A)(3), Apartment
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L474-L478,L483-L484"
+    quote: "or/multnomah/_unincorporated/39/39.6590.txt#L1-L3,L6"
   # 39.6565(A)(1): "At least 70% of the required off-street parking spaces shall
   # have a minimum width of nine feet, a minimum length of 18 feet". The 70
   # percent is the other end of the compact allowance below it, not a
@@ -1787,13 +1787,13 @@ defaults:
     cite: MCC 39.6565(A)(1), minimum width of nine feet
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L240-L247"
+    quote: "or/multnomah/_unincorporated/39/39.6565.txt#L1-L3"
   parking_stall_depth_ft:
     value: 18
     cite: MCC 39.6565(A)(1), minimum length of 18 feet
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L240-L247"
+    quote: "or/multnomah/_unincorporated/39/39.6565.txt#L1-L3"
   # 39.6565(B)(1), "25 feet for 90 degree parking". One figure, not split by
   # direction, so a one-way rear court is dimensioned off it exactly as
   # Troutdale's and Gladstone's are -- and it TIES Troutdale for the widest
@@ -1804,13 +1804,13 @@ defaults:
     cite: MCC 39.6565(B)(1), aisle width at ninety degrees
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L240,L260-L261"
+    quote: "or/multnomah/_unincorporated/39/39.6565.txt#L1,L7-L8"
   parking_aisle_two_way_ft:
     value: 25
     cite: MCC 39.6565(B)(1), aisle width at ninety degrees
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L240,L260-L261"
+    quote: "or/multnomah/_unincorporated/39/39.6565.txt#L1,L7-L8"
   # 39.6560(A), and it is written for exactly the case this pod is: "Where a
   # parking or loading area does not abut directly on a public street or private
   # street approved under Part 9 of this Chapter, there shall be provided an
@@ -1828,7 +1828,7 @@ defaults:
     cite: MCC 39.6560(A), unobstructed driveway not less than 20 feet for two-way traffic
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L191-L199"
+    quote: "or/multnomah/_unincorporated/39/39.6560.txt#L1-L3"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -1848,7 +1848,7 @@ defaults:
     cite: MCC 39.6580(A), no required street yard used for parking, and no side yard named
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L433-L437"
+    quote: "or/multnomah/_unincorporated/39/39.6580.txt#L3"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1862,7 +1862,7 @@ defaults:
     cite: MCC 39.6580(A), the placement rule, which names no street a corner lot must take access from
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.parking.txt#L433-L437"
+    quote: "or/multnomah/_unincorporated/39/39.6580.txt#L3"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -1945,7 +1945,7 @@ defaults:
     cite: MCC 39.8045(C)(3)(b) via 39.6585(A), landscaped strip at least 5 ft between parking and any lot line not on a street
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
-    quote: "or/multnomah/_unincorporated/39.design-review.txt#L288-L293"
+    quote: "or/multnomah/_unincorporated/39/39.8045.txt#L23"
   #
   # NOT ENCODED: 39.6555(B), forward access, and it binds on every space rather
   # than on a group of five. "After July 26, 1979 it shall be unlawful to locate
@@ -2072,7 +2072,7 @@ defaults:
   # measures the abutting right-of-way width against the TSP classification it
   # is meant to have. The sentence does not even say how much -- "increased to
   # provide for street widening" is the whole of it.
-  # (or/multnomah/_unincorporated/39.urban-ldr-general.txt#L61-L66)
+  # (or/multnomah/_unincorporated/39/39.4782.txt#L13)
 zones:
   EG2:
     section: ["33.140"]
@@ -2225,7 +2225,7 @@ zones:
       # dwellings the site may hold.
       acres: 1
       cite: MCC 39.4625(A)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L420-L422"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L5-L7"
       variants:
         # Four dwellings, one acre each, four acres of site -- and four acres
         # is a figure neither article prints. 39.5340(A) computes the units a
@@ -2238,34 +2238,34 @@ zones:
         - acres_per_dwelling: 1
           when: [planned_development]
           cite: MCC 39.4625(A) with MCC 39.5340(A)
-          quote: "or/multnomah/_unincorporated/39.or.txt#L420-L422"
+          quote: "or/multnomah/_unincorporated/39/39.4625.txt#L5-L7"
     max_height_ft:
       value: 35
       cite: MCC 39.4625(B)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L423,L427"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L8,L12"
     setback_front_ft:
       # One printed row again -- "Front Side Street Side Rear / 30 10 30 30" --
       # and the same row EFU, MUA-20 and RR print. Four columns off one line,
       # read across.
       value: 30
       cite: MCC 39.4625(B)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10"
     setback_side_ft:
       value: 10
       cite: MCC 39.4625(B)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10"
     setback_street_side_ft:
       value: 30
       cite: MCC 39.4625(B)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10"
     setback_rear_ft:
       value: 30
       cite: MCC 39.4625(B)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10"
     min_frontage_ft:
       value: 50
       cite: MCC 39.4625(B)
-      quote: "or/multnomah/_unincorporated/39.or.txt#L423,L428"
+      quote: "or/multnomah/_unincorporated/39/39.4625.txt#L8,L13"
     notes: >-
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Planned Development criteria are judgement throughout -- "superior living or development arrangements", "harmonious ways", "warranted by the design", "compatible with the natural environment" (or/multnomah/_unincorporated/39.pd.txt#L9,L17,L73,L125) -- a one-off decision. The 2026-10-08 ruling read: the only way to a housing building of this kind is a Planned Development,
       a Planning Commission hearing; a review is not by-right, so this zone is refused.
@@ -2332,7 +2332,7 @@ zones:
       zone: CFU
       wins: local
       cite: MCC 39.4050(C) (the CFU base zones and their common standards)
-      quote: "or/multnomah/_unincorporated/39.cfu.txt#L24-L30"
+      quote: "or/multnomah/_unincorporated/39/39.4050.txt#L9-L12"
     notes: >-
       Not a separate article. 39.4050(C) names six zones -- CFU, CFU-1 through
       CFU-5 -- and says they "may be referred to collectively as the CFU
@@ -2375,11 +2375,11 @@ zones:
       # and 16,000 appears in the article nowhere.
       per_dwelling: 4000
       cite: MCC 39.4990(C)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L155-L157"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L6"
     max_height_ft:
       value: 35
       cite: MCC 39.4990(J)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173,L179"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L13,L19"
     setback_front_ft:
       # Two printed rows this time, not one -- "Interior Lot 20 5 N/A 15" and
       # "Corner Lot 20 5 10 15" under "Front Side Street Side Rear". Both are
@@ -2387,7 +2387,7 @@ zones:
       # street side one and a reader has to be able to see that.
       value: 20
       cite: MCC 39.4990(J)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18"
     # 39.6580(A), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the sentence carries no figure of its own for anything to be typed from.
@@ -2396,36 +2396,36 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 5
       cite: MCC 39.4990(J)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18"
     setback_street_side_ft:
       value: 10
       cite: MCC 39.4990(J)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18"
     setback_rear_ft:
       value: 15
       cite: MCC 39.4990(J)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18"
     max_coverage_pct:
       value: 40
       cite: MCC 39.4990(I)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L171-L172"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L12"
     min_lot_width_ft:
       value: 45
       cite: MCC 39.4990(H)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L168-L170"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L11"
       variants:
         - value: 50
           when: [corner_lot]
           cite: MCC 39.4990(H)
-          quote: "or/multnomah/_unincorporated/39.mr-4.txt#L168-L170"
+          quote: "or/multnomah/_unincorporated/39/39.4990.txt#L11"
     min_frontage_ft:
       value: 20
       cite: MCC 39.4990(G)
-      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L166-L167"
+      quote: "or/multnomah/_unincorporated/39/39.4990.txt#L10"
     notes: >-
       WHAT "MULTIPLEX" MEANS HERE, and it is not obvious. MCC 39.2000 defines a
       Multi-Plex Dwelling Structure as "a row house or town house apartment
@@ -2539,7 +2539,7 @@ zones:
       # the product appears in the article nowhere.
       per_dwelling: 4500
       cite: MCC 39.4830(C)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L312-L314"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L8"
     max_height_ft:
       # 39.4830(H): "Maximum Structure Height - 35 feet", and then exception
       # (4), which is the one height rule in this corpus a 26 ft pod actually
@@ -2560,18 +2560,18 @@ zones:
       # about this lot, and it is not encoded.
       value: 35
       cite: MCC 39.4830(H)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325,L329"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L13,L17"
       variants:
         - value: 25
           when: [flag_lot]
           cite: MCC 39.4830(H), exception (4)
-          quote: "or/multnomah/_unincorporated/39.lr-5.txt#L348-L352"
+          quote: "or/multnomah/_unincorporated/39/39.4830.txt#L22"
     setback_front_ft:
       # One printed row -- "Front Side Street Side Rear / 20 5 10 15" -- and
       # all four columns come off it together.
       value: 20
       cite: MCC 39.4830(H)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15"
     # 39.6580(A), stated as equal to the building setback -- see the note in
     # `defaults:`. Added 2026-09-30 when the state middle housing path opened
     # this zone and the pipeline began laying out a court here.
@@ -2580,23 +2580,23 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 5
       cite: MCC 39.4830(H)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15"
     setback_street_side_ft:
       value: 10
       cite: MCC 39.4830(H)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15"
     setback_rear_ft:
       value: 15
       cite: MCC 39.4830(H)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15"
     max_coverage_pct:
       value: 50
       cite: MCC 39.4830(G)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L323-L324"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L12"
     min_lot_width_ft:
       # 45 for an interior lot and 50 for a corner lot, and the pod's only
       # unconditional door into this zone is the corner lot -- so the variant
@@ -2604,16 +2604,16 @@ zones:
       # that almost never can.
       value: 45
       cite: MCC 39.4830(F)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L320-L322"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L11"
       variants:
         - value: 50
           when: [corner_lot]
           cite: MCC 39.4830(F)
-          quote: "or/multnomah/_unincorporated/39.lr-5.txt#L320-L322"
+          quote: "or/multnomah/_unincorporated/39/39.4830.txt#L11"
     min_frontage_ft:
       value: 20
       cite: MCC 39.4830(E)
-      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L318-L319"
+      quote: "or/multnomah/_unincorporated/39/39.4830.txt#L10"
     notes: >-
       WHAT "MULTIPLEX" MEANS HERE, and it is not obvious. MCC 39.2000 defines a
       Multi-Plex Dwelling Structure as "a row house or town house apartment
@@ -2710,49 +2710,49 @@ zones:
       # followed: conservative.
       value: 10000
       cite: MCC 39.4878(A)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L259-L264"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L1-L4"
     max_height_ft:
       value: 35
       cite: MCC 39.4878(F)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L277"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L13"
     setback_front_ft:
       # (F)(1) averages down to the neighbours' established yards on an
       # interior lot: not followed (nothing measures them), conservative.
       value: 30
       cite: MCC 39.4878(F)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11"
     parking_street_setback_ft:
       same_as: setback_front_ft
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 10
       cite: MCC 39.4878(F)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11"
     setback_street_side_ft:
       value: 10
       cite: MCC 39.4878(F)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11"
     setback_rear_ft:
       # (F)(2) lets a corner lot's rear yard drop to 10 ft only when the
       # front is 30 and BOTH side yards are 20: a trade, not followed.
       value: 20
       cite: MCC 39.4878(F)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11"
     max_coverage_pct:
       value: 35
       cite: MCC 39.4878(E)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L271-L272"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L8"
     min_lot_width_ft:
       value: 70
       cite: MCC 39.4878(D)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L269-L270"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L7"
     min_frontage_ft:
       value: 30
       cite: MCC 39.4878(C)
-      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L267-L268"
+      quote: "or/multnomah/_unincorporated/39/39.4878.txt#L6"
     notes: >-
       39.4878(B), 12,000 square feet for a two-unit dwelling, is not the
       quadplex's minimum: the state path caps a quadplex at the detached
@@ -2904,30 +2904,30 @@ zones:
       # same sentence.
       value: 35
       cite: MCC 39.4245(C)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352,L1356"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7,L11"
     setback_front_ft:
       # One printed row -- "Front Side Street Side Rear / 30 10 30 30" -- and
       # all four columns come off it together, because a row read one column
       # at a time is how a setback gets attributed to the wrong lot line.
       value: 30
       cite: MCC 39.4245(C)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9"
     setback_side_ft:
       value: 10
       cite: MCC 39.4245(C)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9"
     setback_street_side_ft:
       value: 30
       cite: MCC 39.4245(C)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9"
     setback_rear_ft:
       value: 30
       cite: MCC 39.4245(C)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9"
     min_frontage_ft:
       value: 50
       cite: MCC 39.4245(C)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352,L1358"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7,L13"
     min_lot_sqft:
       # 80 acres, from 39.4245(A). The file states the acreage and the loader
       # multiplies, because 3,484,800 square feet appears in this article
@@ -2947,7 +2947,7 @@ zones:
       # somebody to underwrite farm labor housing as market housing.
       acres: 80
       cite: MCC 39.4245(A)
-      quote: "or/multnomah/_unincorporated/39.efu.txt#L1339-L1345"
+      quote: "or/multnomah/_unincorporated/39/39.4245.txt#L1-L5"
     notes: >-
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: red on the use, not on the review: farm labor housing is for farm workers on a working farm (39.4265(C)(2)(d)), not housing for sale or rent. The 2026-10-08 ruling read: the only way to a multi-unit building here is farm labor housing as a review
       use, decided on criteria by the approval authority; a review is not by-right, so this
@@ -3047,7 +3047,7 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3163,7 +3163,7 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3254,7 +3254,7 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_garage_entrance_ft:
       # 33.110.220.D.9 in the county's copy of the chapter, the same sentence
       # at the same lines as Portland's: "Alley. No side, rear, or garage
@@ -3344,7 +3344,7 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3502,7 +3502,7 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3569,11 +3569,11 @@ zones:
       # hearing, and the traffic light can only say that if the code's own
       # distinction between permitted and conditional survives the encoding.
       value: false
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336"
+      quote: "or/multnomah/_unincorporated/39/39.4856.txt#L1-L10"
       variants:
         - value: true
           when: [conditional_use]
-          quote: "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336"
+          quote: "or/multnomah/_unincorporated/39/39.4856.txt#L1-L10"
     max_height_ft:
       # MCC 39.4862(H): "Maximum Structure Height - 35 feet." The county's own
       # article, five feet looser than the Portland-administered pockets in
@@ -3599,15 +3599,15 @@ zones:
       # lot, and the strict reading is the one that keeps a false GREEN out.
       value: 35
       cite: MCC 39.4862 Dimensional Requirements and Development Standards, (H)
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L412"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L15"
       variants:
         - value: 25
           when: [flag_lot]
           cite: MCC 39.4862, exception (4)
-          quote: "or/multnomah/_unincorporated/39.lr-7.txt#L429-L434"
+          quote: "or/multnomah/_unincorporated/39/39.4862.txt#L19"
     setback_front_ft:
       value: 20
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14"
     # 39.6580(A), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the sentence carries no figure of its own for anything to be typed from.
@@ -3616,7 +3616,7 @@ zones:
       cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
     # THE ONE ZONE IN THIS LAYER WHERE DESIGN REVIEW REACHES THE POD, and the
     # chain is four links with no judgement in any of them. 39.4856(C) makes a
     # multiplex a CONDITIONAL use in LR-7 -- which is why `quadplex_allowed`
@@ -3645,25 +3645,25 @@ zones:
       cite: MCC 39.8045(A)(2)(b) via 39.8020(A) and (C), shared outdoor recreation space
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39.design-review.txt#L235-L236,L250-L254,L257-L258"
+      quote: "or/multnomah/_unincorporated/39/39.8045.txt#L1-L2,L8,L10-L11"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14"
     max_coverage_pct:
       value: 40
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L407-L408"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L11"
     min_lot_width_ft:
       value: 60
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L405-L406"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L10"
     min_frontage_ft:
       value: 30
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L403-L404"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L9"
     min_lot_sqft:
       # MCC 39.4862(C): 5,000 square feet for EACH dwelling unit in a multiplex
       # dwelling structure. The article states its lot sizes by housing type --
@@ -3676,7 +3676,7 @@ zones:
       # carried 20,000 until 2026-08-19, which is the right requirement and a
       # number the article never prints; the multiplication is done at load.
       per_dwelling: 5000
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L397-L399"
+      quote: "or/multnomah/_unincorporated/39/39.4862.txt#L7"
     notes: 'County plan areas (Interlachen). CORRECTED: the yards were encoded front 10 / rear 10 from
       the state Model Code Exhibit B, which is not a stored document, while side 5 and street-side 10
       were quoted from MCC 39.4862(H) — two columns read off a row and two overridden from an uncited
@@ -3755,7 +3755,7 @@ zones:
       # pod and no variant carries it.
       value: 35
       cite: MCC 39.4375 Dimensional Requirements
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L454"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10,L14"
     min_lot_sqft:
       # 39.4375(A) states two minimums in one sentence and a distance decides
       # which: five acres for new parcels, or, "for properties within one mile
@@ -3770,12 +3770,12 @@ zones:
       # the lot somebody would want to build four units on.
       acres: 20
       cite: MCC 39.4375(A)
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L440-L445"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L5-L8"
       variants:
         - acres: 5
           when: [beyond_ugb_mile]
           cite: MCC 39.4375(A)
-          quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L437-L440"
+          quote: "or/multnomah/_unincorporated/39/39.4375.txt#L4-L6"
         # Under a Planned Development the minimum becomes the divisor rather
         # than the floor: 39.5340(A) sets the units a site may hold by dividing
         # it by "the minimum lot area per dwelling unit required by the
@@ -3784,33 +3784,33 @@ zones:
         - acres_per_dwelling: 20
           when: [planned_development]
           cite: MCC 39.4375(A) with MCC 39.5340(A)
-          quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L440-L445"
+          quote: "or/multnomah/_unincorporated/39/39.4375.txt#L5-L8"
         - acres_per_dwelling: 5
           when: [planned_development, beyond_ugb_mile]
           cite: MCC 39.4375(A) with MCC 39.5340(A)
-          quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L437-L440"
+          quote: "or/multnomah/_unincorporated/39/39.4375.txt#L4-L6"
     setback_front_ft:
       # "Front Side Street Side Rear / 30 10 30 30" -- the row EFU, MUA-20, OR
       # and this zone all print, read across rather than down.
       value: 30
       cite: MCC 39.4375(C)
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12"
     setback_side_ft:
       value: 10
       cite: MCC 39.4375(C)
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12"
     setback_street_side_ft:
       value: 30
       cite: MCC 39.4375(C)
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12"
     setback_rear_ft:
       value: 30
       cite: MCC 39.4375(C)
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12"
     min_frontage_ft:
       value: 50
       cite: MCC 39.4375(C)
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L455"
+      quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10,L15"
     notes: >-
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Planned Development criteria are judgement throughout -- "superior living or development arrangements", "harmonious ways", "warranted by the design", "compatible with the natural environment" (or/multnomah/_unincorporated/39.pd.txt#L9,L17,L73,L125) -- a one-off decision. The 2026-10-08 ruling read: the only way to a housing building of this kind is a Planned Development,
       a Planning Commission hearing on a preliminary and a final plan; a review is not

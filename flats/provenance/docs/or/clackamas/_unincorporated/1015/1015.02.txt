@@ -1,0 +1,284 @@
+1015.02 Motor Vehicle Parking Area Standards
+
+1 Off-street parking areas shall be designed to meet the following requirements:
+
+1 Off-street motor vehicle parking areas shall be provided in defined areas of the subject property.
+No area shall be considered a parking space unless it can be shown that the area is accessible and usable for that purpose and has required maneuvering area for vehicles.
+Required backing and maneuvering areas shall be located entirely onsite.
+
+2 Automobile parking spaces shall be a minimum of 8.5 feet wide and 16 feet long, except that parallel spaces shall be a minimum of 8.5 feet wide and 22 feet long.
+
+3 A minimum of 25 percent of required parking spaces shall be no larger than 8.5 feet wide and 16 feet long.
+If no parking spaces are required but parking spaces are provided, a minimum of 25 percent of provided parking spaces shall meet this standard.
+
+4 Parking areas shall comply with minimum dimensions for curb length, stall depth, and aisle width established by the Clackamas County Roadway Standards; these dimensions are based on the orientation (e.g., 45-degree, 90-degree), length, and width of the spaces.
+
+5 Double-loaded, 90-degree angle parking bays shall be utilized where possible.
+
+6 A minimum of one parking space or five percent of the required spaces, whichever is greater, shall be marked and signed for use as carpool/vanpool spaces.
+These spaces shall be the closest employee automobile parking spaces to the building entrances normally used by employees but shall not take priority over any spaces required for individuals with disabilities.
+If no parking spaces are required but parking spaces are provided, a minimum of one parking space or five percent of the provided parking spaces, whichever is greater, shall comply with these standards.
+
+7 In parking lots greater than one acre, internal streets, including those that cross to adjacent developments, shall not provide direct access to parking spaces.
+
+8 Where feasible, shared driveway entrances, shared parking and maneuvering areas, and interior driveways between adjacent parking lots shall be required.
+
+9 Except for parallel spaces, parking spaces heading into landscaped areas or along the perimeter of a parking lot shall be provided with a sturdy tire stop at least four inches high and located two feet within the space to prevent any portion of a car within the lot from extending over the property line.
+
+10 For parking spaces heading into a landscaped area, the area in front of the tire stop that is included in the parking space dimension may be landscaped instead of paved or graveled according to the following standards:
+
+1 Landscaping shall be ground cover plants only;
+
+2 The area in front of the tire stop that is included in the parking space dimension shall be in addition to the required minimum dimension for a landscape planter; and
+
+3 The landscaped area in front of the tire stop may count toward overall site landscaping requirements established in Table 1009-1, Minimum Landscaped Area.
+However, it may not count toward perimeter landscaping requirements established in Section 1009.03(B)(1).
+
+2 Parking Minimums:
+The minimum number of parking spaces listed in Tables 1015-1, Automobile Parking Space Requirements, and 1015-2, Minimum Automobile Parking Space Requirements for Dwellings, applies unless modified in Subsection 1015.02(D).
+
+1 Within the Portland Metropolitan Urban Growth Boundary (UGB), no minimum off-street parking spaces are required for any development in any zoning district that is regulated by Section 315, Urban Low Density Residential (R-2.5, R-5, R-7, R-8.5, R-10, R-15, R-20, and R-30), Village Standard Lot Residential (VR-5/7), Village Small Lot Residential (VR-4/5), Village Townhouse (VTH), Planned Medium Density Residential (PMD), Medium Density Residential (MR-1), Medium High Density Residential (MR-2), High Density Residential (HDR), Village Apartment (VA), Special High Density Residential (SHD), and Regional Center High Density Residential (RCHDR) Districts; Section 510, Neighborhood Commercial (NC),Community Commercial (C-2), Regional Center Commercial (RCC), Retail Commercial (RTL), Corridor Commercial (CC), General Commercial (C-3), Planned Mixed Use (PMU), Station Community Mixed Use (SCMU), Office Apartment (OA), Office Commercial (OC), and Regional Center Office (RCO) Districts; Section 511, Village Community Service District (VCS);Section 512, Village Office District (VO);Section 602, Business Park (BP), Light Industrial (LI), and General Industrial (GI) Districts; or Section 702, Open Space Management District (OSM).
+
+2 In all other zoning districts, the minimum number of parking spaces listed in Tables 1015-1, Automobile Parking Space Requirements, and 1015-2, Minimum Automobile Parking Space Requirements for Dwellings, applies unless modified in Subsection 1015.02(D).
+
+1 In case of expansion of a building or use that, prior to the expansion, does not meet the minimum parking space requirements in Table 1015-1 or 1015-2, the following provisions shall apply:
+
+1 The minimum number of additional parking spaces required shall be based only on the floor area or capacity added and not the area or capacity existing prior to the expansion.
+
+2 If the enlargement covers any of the pre-expansion parking spaces, lost parking spaces shall be replaced, in addition to any required additional spaces.
+
+2 In the event more than one use occupies a single structure or parcel, the total minimum requirement for parking shall be the sum of the minimum requirements of the several uses computed separately.
+
+3 Parking Maximums:
+
+1 Within the UGB, the parking maximums listed for Urban Zone A in Table 1015-1 and Note 4 of Table 1015-2 apply within the Clackamas Regional Center and to properties within three-quarters of a mile walking distance of a light rail stop or within one-half of a mile walking distance of a corridor with transit service arriving with a scheduled frequency of at least four times an hour during peak service.
+
+2 Within the UGB, areas not meeting the requirements of Subsection 1015.02(C)(1) are subject to the parking maximums listed in Table 1015-1, Urban Zone B.
+
+3 In case of expansion of a building or use with more parking spaces than the maximumallowed by Table1015-1
+
+1 Existing parking spaces may be retained, replaced, or eliminated, provided that after the expansion, the total number of remaining spaces complies with the minimum parking space requirement of Table 1015-1 for the entire development; and
+
+2 Additional parking spaces are allowed only if required to comply with the minimum parking space requirement of Table 1015-1 for the entire development after the expansion.
+
+Table 1015-1: Automobile Parking Space Requirements[1]
+
+Land Use Category
+Minimum Parking Spaces[2]
+Maximum Parking Spaces (Urban Zone A)
+Maximum Parking Spaces (Urban Zone B)
+Amusement Parks, Riding Academies, and Camps (per 1000 square feet of serving area)
+0.8
+None
+None
+Bank with Drive-in
+4.3
+5.40
+6.5
+Bed and Breakfast Residences and Inns
+1 for each guest room and 1 for the operator
+None
+None
+Bowling Alleys (per alley)
+3
+None
+None
+Child Care Centers
+0.5
+In addition, a passenger-loading area shall be provided on the site.
+None
+None
+Dwellings (see Table 1015-2)
+Home Occupations for Canine Skills Training
+1 per canine handler, based on the maximum number of handlers permitted for any single training session.
+An additional space shall be provided for each employee.
+None
+None
+Home Occupations to Host Events
+1 space per 3 guests based on the maximum number of guests permitted for any single event.
+An additional space shall be provided for each employee.
+None
+None
+Hospitals
+0.5
+None
+None
+Hotels and Motels (per unit)
+1
+None
+None
+Industrial, Manufacturing, and Processing Facilities
+Zero to 24,999 square feet
+1.5
+None
+None
+25,000 to 49,999 square feet
+1.42
+None
+None
+50,000 to 79,999 square feet
+1.25
+None
+None
+80,000 square feet and greater
+1
+None
+None
+Medical and Dental Clinics
+3.5
+4.9
+5.9
+Movie Theaters (per seat)
+0.3
+0.4
+0.5
+Nursing Homes, Welfare or Correctional Institutions, and Institutions for Children (per bed)
+0.2
+None
+None
+Office Uses (includes Office Park, "Flex-Space", Government Office and Miscellaneous Services)
+2.7
+3.4
+4.1
+Places of Worship (per seat located in main assembly room, or 1 per 100 sq. ft. in main assembly room, exclusive of chancel or stage).
+If a school, child care facility, or similar facility is proposed in conjunction with primary use, it shall have separate parking requirement.
+0.25
+0.6
+0.8
+Produce Stands (per stand)
+4
+None
+None
+Recreational Vehicle Camping Facilities
+1 per campsite (in addition to the space required for parking the recreational vehicle) and 1 per employee at peak employment period
+None
+None
+Restaurants: Fast Food with drive-thru window service
+9.0
+12.4
+14.9
+Restaurants: With no drive-thru window service, Taverns
+15.0
+19.1
+23
+Retail/Commercial, including shopping centers
+4.1, except in the Clackamas Regional Center Area, 3.0
+5.0
+6.2
+Retail stores with bulky merchandise, such as furniture, appliances, automobiles, service/repair shops
+2
+5.0
+6.2
+Schools: Colleges, Universities, and High Schools (per student or staff member)
+0.2
+0.3
+0.3
+Schools: Elementary and Junior High Schools (per school)
+15, or 2 per classroom, whichever is less
+None
+None
+Service Stations (per employee at peak employment period)
+1
+None
+None
+Sports Clubs/Recreation Facilities
+4.3
+5.4
+6.5
+Surface Mining
+On-site vehicular parking for employees, customers and visitors, determined through Conditional Use process.
+None
+None
+Tennis and Racquetball Courts
+1
+1.3
+1.5
+Theaters, Dance Halls, Community Clubs, Skating Rinks, Public Meeting Places (per seat, or 1 per 100 sq. ft. exclusive of stage)
+0.25
+None
+None
+Warehouse and Storage Distribution, and Terminals (air, rail, truck, water, etc.) **Maximum parking requirements apply only to warehouses 150,000 gross square feet or greater.
+Zero to 49,999 square feet
+0.3
+None
+None
+50,000 square feet and over
+0.2
+0.4**
+0.5**
+
+[1]Parking requirements are expressed as number of spaces per 1,000 square feet of gross leasable area, unless otherwise stated.
+
+[2]No minimum off-street parking is required for any development in any zoning district within the UGB that is regulated by Section 315, 510, 511, 512, 602, or 702.
+
+Table 1015-2: Minimum Automobile Parking Space Requirements for Dwellings[1]
+
+Dwelling Type                                                                            All Urban Zoning Districts within the Portland Metropolitan Urban Growth Boundary[2,3]  HR[2]                                                                                         MRR                                                 RA-1 & RA-2                               All Other Zoning Districts
+Accessory Dwelling Unit                                                                  0                                                                                       1                                                                                             1                                                   0                                         0
+Accessory Historic Dwelling                                                              0                                                                                       N/A                                                                                           N/A                                                 0                                         0
+Congregate Housing Facility (per resident)                                               0                                                                                       N/A                                                                                           0.25                                                N/A                                       0.25
+Cottage Cluster                                                                          0                                                                                       N/A                                                                                           N/A                                                 N/A                                       0
+Detached Single-Family Dwelling or Manufactured Dwelling (located on an individual lot)  0                                                                                       1 per dwelling unit 800 square feet or less 2 per dwelling unit greater than 800 square feet  1 per 600 square feet of residential building area  1, located behind the front setback line  0
+Duplex or Triplex                                                                        0                                                                                       N/A                                                                                           1 per 600 square feet of residential building area  Duplex in RA-1: 1.5 All others: N/A       1.5
+Manufactured Dwelling (located in a manufactured dwelling park)                          0                                                                                       N/A                                                                                           2                                                   N/A                                       2
+Multifamily Dwelling: Per studio/zero-bedroom or one-bedroom dwelling unit               0                                                                                       N/A                                                                                           1                                                   N/A                                       1
+Per two-bedroom dwelling unit                                                            0                                                                                       N/A                                                                                           1.25                                                N/A                                       1.25
+Per three-bedroom dwelling unit                                                          0                                                                                       N/A                                                                                           1.5                                                 N/A                                       1.5
+Quadplex                                                                                 0                                                                                       N/A                                                                                           Same as multifamily dwelling                        N/A                                       Same as multifamily dwelling
+Townhouse                                                                                0[5]                                                                                    1 per dwelling unit 800 square feet or less 2 per dwelling unit greater than 800 square feet  1 per 600 square feet of residential building area  N/A                                       1[5]
+
+[1]Minimum parking requirement is expressed as number of spaces per dwelling unit, unless otherwise stated.
+N/A means the dwelling type is not allowed in the applicable zoning district.
+
+[2]Urban zoning districts are those regulated by Sections 315, 510, 511, 512, 602, and 702.
+
+[3]Maximum parking for multifamily dwellings in the Clackamas Regional Center is 1.2 off-street spaces per studio unit and two off-street parking spaces per non-studio dwelling unit.
+
+[4]On land above 3,500 feet in elevation, covered parking shall be provided for structures containing three or more dwelling units.
+
+[5]Maximum parking for townhouses in Urban Zone A is two spaces per townhouse.
+
+1 Exceptions to Parking Requirements:
+
+1 Parking maximums in Table 1015-1 and Note 4 to Table 1015-2 may be increased for the following:
+
+1 Parking spaces in parking structures;
+
+2 Fleet parking spaces;
+
+3 Designated employee carpool spaces;
+
+4 User-paid spaces; and
+
+5 Parking spaces for vehicles for sale, lease, or rent.
+
+2 Parking minimums in Tables 1015-1 and 1015-2 may be reduced for the following:
+
+1 The total minimum requirement for parking spaces may be reduced up to 20 percent per use when shared parking is utilized.
+
+2 In commercial and industrial zoning districts, available permitted on-street parking spaces on a development's street frontage may be counted toward required parking.
+To count as an on-street parking space, the space must comply with the minimum dimensions for a parking space established by Subsections 1015.02(A)(2) and (4).
+
+3 Motorcycle parking may substitute for required automobile parking spaces as follows:
+
+1 Up to five spaces or five percent of required automobile parking, whichever is less, may be utilized.
+
+2 For every four motorcycle parking spaces provided, the automobile parking requirement is reduced by one space.
+
+3 Each motorcycle space must be at least four feet wide and eight feet deep.
+
+4 Electric vehicle charging stations may be installed according to the following standards:
+
+1 Two spaces or five percent of the minimum required parking spaces, whichever is greater, may be utilized for electric vehicle charging stations and identified exclusively for such use.
+
+2 Additional parking spaces of the minimum required parking may be utilized for electric vehicle charging stations, provided they are not identified exclusively for such use.
+
+3 Any portion of parking spaces provided that are beyond the required minimum number of parking spaces may be utilized for electric vehicle charging stations, regardless of whether they are identified exclusively for such use.
+
+3 A parking cap applies in the SCMU District.
+The total number of parking spaces provided for nonresidential development (either onsite or offsite) shall not exceed the parking cap, regardless of the number of pre-existing parking spaces.
+Parking maximums and minimums established by Tables 1015-1 and 1015-2 shall be adjusted to the extent necessary to comply with the parking cap.
+The parking cap shall be calculated by the following formula:
+
+Parking Cap = Gross Acres of the Development Site x 67 Parking Spaces
+

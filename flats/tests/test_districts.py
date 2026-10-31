@@ -197,14 +197,12 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: Low Value Farmland, the second column head of ZDO "
             "Table 401-1 (401.04(A)(10)); the other half of the same pair."
         ),
-        "RSCA": (
-            "overlay: River and Stream Conservation Area, ZDO Section 704, "
-            "named in 406.08(B)(2) as a siting constraint on TBR structures."
-        ),
-        "WRG": (
-            "overlay: Willamette River Greenway, ZDO Section 705, named in "
-            "the same 406.08(B)(2) sentence beside RSCA."
-        ),
+        # RSCA and WRG (overlays, ZDO 704 and 705) stood here until
+        # 2026-10-31. Their one sighting, 406.08(B)(2), only counted because
+        # the whole-document print ran the next sentence ("a primary safety
+        # zone") onto the same line; the section file (406/406.08.txt#L40)
+        # prints a sentence to a line, the ledger stopped asking, and the
+        # rulings went with it (FOLLOWUPS 73 batch 7).
         "WQRAD": (
             "overlay: Water Quality Resource Area District, ZDO Section 709."
         ),
@@ -558,6 +556,26 @@ RULINGS: dict[str, dict[str, str]] = {
         "SAP": "not-a-zone: a Specific Area Plan of the Villebois Village Master Plan (4.001 def. 301).",
         "SR": "overlay: a significant resource under the SROZ, 4.139.00 ('the significant resource (SR)').",
         "SRIR": "not-a-zone: a Significant Resource Impact Report (4.001 def. 290), an application document.",
+    },
+    "or/multnomah/_unincorporated": {
+        # Three designations surfaced 2026-10-31 when FOLLOWUPS 73 batch 7 cut
+        # the county code into section files.
+        "AA": (
+            "not-a-zone: the list letter of an accessory-use item, '(AA) "
+            "Solar, photovoltaic and wind turbine alternative energy "
+            "production facilities' in MCC 39.4220 (39/39.4220.txt#L118)."
+        ),
+        "MUF": (
+            "aliased: the family name of the Multiple Use Forest zone ('the "
+            "MUF base zone', 39.muf.txt#L464); the one district printed is "
+            "MUF-19, encoded as MUF19."
+        ),
+        "RC": (
+            "fetch: Rural Center, a base zone whose heading is printed at "
+            "the end of 39/39.4395.txt#L6 ('4.C.1 - RURAL CENTER (RC)'); "
+            "its own sections are not in the store. Its 14 lots lie outside "
+            "the urban growth boundary and are RED in run 99."
+        ),
     },
     "or/multnomah/troutdale": {
         # 2026-10-24, surfaced when the TDC was cut into readable sections.
@@ -1256,6 +1274,10 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     Nine on 2026-10-14 (FOLLOWUPS 61): Clackamas SHD, RCHDR and the six commercial
     districts that borrow their standards (RTL, CC, C-3, OC, RCC, RCO) are zone
     blocks now, 1005.02(L) encoded by lot-line bearing.
+
+    One more fetch on 2026-10-31 (FOLLOWUPS 73 batch 7): Multnomah County's
+    Rural Center (RC), whose heading the cut code now shows; its 14 lots are
+    outside the UGB and RED, so fetching it moves no colour.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -1266,5 +1288,5 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
     assert len(owed["encode"]) == 9, sorted(owed["encode"])
-    assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
+    assert len(owed["fetch"]) == 3, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

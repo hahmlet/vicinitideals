@@ -1,0 +1,2142 @@
+[
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a9ee6c656dd62affd8f79ca398b099ab02407221b18ba319ff777a55e6a94ee2",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "69836052d76ef66c0a7c58681f9641f0fed074eff8b222cb5b104aa063506258",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "599c03028ab9b934caaf6fbdf2c6709b1b996ddec2461f6cdd5536314dbad7c4",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44",
+  "old_fingerprint": "6fd995ef265e3fc63eb349c633ffa435b62629a393d90461095ecdb03cee2497",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4a536dcbf2a03c37df85bf8a9079af9e0ae1b6a01ddb1f98720264cc4c9153a2",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "e1f983f4368493675c4e7deb4cafd9cdbe98bba2624c3369ce335cfd72b77269",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ea0ccdbb06f7ceb2f65c14512574c2e5e5c5416164325476e61bac5f9a3b4bbf",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44",
+  "old_fingerprint": "8005df1b6566573dafb6885b482d6d6e1f1192737f5a877ac5fca411c05c3861",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "040bc0535a9d75cf4b6114a2f5dcfb7e622d389e7d1b2480c9782ad8afe80113",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "4d8cbce0127419869744de52bcc7a8ad00f4b9c1d835dabf7875b6569d080b47",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "39cd6c72b70bc02cce26f3470ce809fe5ef7179dec5be037f6236f3305a01fd9",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44",
+  "old_fingerprint": "b11486a779f9aeb8804a98957803187955fa43b1f8e1a80c69f2415448d73f7f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8f8dbd637b079573db5c597f9b9f03cb4a83a6073f4050de689d426fd6da58f0",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.11.txt#L1,L3-L4,L59-L60",
+  "old_fingerprint": "ad599573834584e87c023528e67d2a16c310de1b4548cafdb0a1ddaa35b2a0ac",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L889,L891,L935",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6216010499d1b417389e110b7806c2b47af37a304c6c26c7d4ae49e604a015dd",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "65d83bcff9763bf41e199536a4dd7e360dbe06f347a4cdc86d248083455ccb1d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5f460f06ffdeaf9e8f1ce7c8a7d1d9a080d3f1ad4c7032088d9b41724105a992",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "6d38ef118ecdebf3d3ea4bb836f35744c96df0b38773e14653e9100309d67ec9",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "80091df1b44f98b285d0beafb62e5ee3095fbf5e610d261b79f552b3ce16528b",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44",
+  "old_fingerprint": "bb5bf9618da3fc4b06ef969b19924488b4e0bdf0afda9e328d90874f564e2d3c",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_north_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "cd40cb2e5179d4b069eaaebc804cf1091db748c04cd13c09f3ce757de0640b89",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L124,L126-L129",
+  "old_fingerprint": "cf6d7ba04d5984b7e9eb3db8c4f6dbed0d252e877b08cecd21d7d26816ad052e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L143,L145",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_north_street_credit_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5820241b6e7f6e1c96eb7dd584ccef1cd8ca5c99cb49a3b0967de4567485f40a",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L126-L129,L131",
+  "old_fingerprint": "781a06e300502609856207000b777144e052b1f0d9251f616e39937c116a04dd",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L145,L147",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_east_west_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "42217ebf15e1a73cb05f3e9d040907149070e00c0adb7058f10ef96e875c0824",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L146-L148,L150",
+  "old_fingerprint": "e0ea22410d6708f43be9728119eb8b3086524f7e5e7575bd34b58d0dd69dfa2a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L161,L162,L164",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a031cd3051ab9760c6f49803d29bb53963c5bde8ba1bb62ae70030d97faefd06",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "f5184df2e27ef539efd41ef4391d2a4f59a375b1beef5ad48ea0dedb139b1090",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "SHD"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "888a62924295ae3c1be363b08f5cb78dad5df83ac269cdf765fcbb2b12e38936",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "f83214f869d8a06ed2a4e61d0aa49e80c48e218ccf194b44e790a025f3d08323",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "setback_north_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5742143d75df7c1addf9160b46765ce46a4cc7e5d1b1db18c9419ddc008f02d3",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L124,L126-L129",
+  "old_fingerprint": "c0c4cfb45508c41bc8308b4093fd0e5d10b759c8c9cf63e380537df62addf081",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L143,L145",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "38b97e513bf260c39f521882d13c9a760ed384c280813f8e0a2173669e0a9987",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "de7ad8164dd8fa91d841825bf129294ee63e7fc9ae1a03a195933404c0cbfd71",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9e0f09518d537b42ab339651bcf615a65e2ef26be0f8ca79f75ee0627d73a2b5",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L37-L38",
+  "old_fingerprint": "79a8ddf4717ffc6a82878a05ceb53496ae963884d5c7d342fdfbfaf291972b3c",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L490,L520",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "02787500d07ec398dd7b2c6957397ef22fcf57231fa7261bda5b7057cf1ca4a0",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L37-L38",
+  "old_fingerprint": "a3d9b1fabe7410d3edf3bae541dede76f061eeed1bfe18b0c5a04a2ddd56a135",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L490,L520",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "min_building_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "22d15aab85cf802976c2e1d9d607df6ccffc1cc9e1be2503117a6e39385556fe",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L35",
+  "old_fingerprint": "84a4191d08a9fdf0f6b1ec2f0cde7c43b845f0efde85a1a6369a6897d94f0d65",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L490,L518",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8290a149b7c8417724a81a7a1c2dd04296ac28338736ee63cb37f3e743452272",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "eba29077f42843ec6a81888f3de1e187b50e327c926930f02d7e845224e8b8b0",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "RTL"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "76de6ba8d10b25e2dd960b71e430501efda5236986b1f10bbdc4e92aa82e451a",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "dde5529c10f6260ed08cda3eb15ebe219ea59f44061847bd7c4c758b7a748895",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "bf881d6abf6bd331d6db8fce572a3c68c6318cde1fefd6e76133a9ae0c1a7b42",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "202e234c7fe95ea65e9510f07263be0fb5556eb0e4c256e99a0b0d40de17b2a4",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "C3"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "d173f17ee3b8b03f5e054d388f0dec4022a2102fa0ac6254a4aa249cafea9287",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "be75fa52cf86660d8f63af7eda0453ec46593438c1eb375716a6be4cc5b7755e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "OC"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "7726364896ca9f73b13d6573a6bc175c43298107c92cd6dcb86304a6b989642d",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "5bc1c447857800f0c96c310227e38145b43560e18db3255f13c606ed1b738141",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "RCC"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "3c1e71efcec543fe5edae2f036d4c73470c37625158b27b84573b429f16421e6",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.03.txt#L3,L5-L6,L10,L46",
+  "old_fingerprint": "4218369ea283907514a7c493aec4ec7f2af1a8d97366d93445fcbf0c0300467a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214",
+  "when_key": "",
+  "zone": "RCO"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "acdeed6a7bea4af846be21f45ff0f526d22f776e34b12b00b4ec57136b652a3e",
+  "new_quote": "or/clackamas/_unincorporated/1005/1005.02.txt#L124",
+  "old_fingerprint": "b064565000b58783ee42bc16c5f769004e180a0008b4db7795b2aa6da3b91b3e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1005.txt#L143",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "3c30390b1cd0c08fd69150387f989c2b7e01accd5ae7af78992baaf545c77873",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "843fabc0530a027c6739e68481930559895d16712dcd64e6fbd3a80ababc3211",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "912ebc835575747d0891fb08740b810e77eec1e4c67ed82c67d9fe08596ca48b",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "a79ced0053e38317b3d9ff34f161888cec4636e204d4ddfba1206a3e718307e9",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b39a20ac2a748f6e5bc2fa626d7470be8ed72bbc80e585e7eb2e4e2ce2d2a4c0",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "411585ddb62d21d8e799d26f7732aaa049c2bd1af45a612232b5e8a97c31137f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ff7b2f96365fa4a0da6d88ee5c3f0c66df21a9f7b6b3a4b8ea6879bb45c1a9e4",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "41289477288c4bcf6f2286699866985535fe04ce6fb399665cb6b6e7adc59ac4",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2e8b97cd001b0511d05b5cff2e261e363a58dcd7efa646696f1fde305f02d76e",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "72bebb5851833e46e79ae8b6c91012833fc7881a06affb2112ea2d85884af043",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a439b45abdaddb01f720395710d71b355629ce0acede63f9326009287fe8e61d",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "7d81f121bfd37cfc79fbb0833d097dcf4ff07b69a36e7a75735bc829af5dce16",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e7fbd3828b42865754a9b05407467c9162a3ce176b57ec4c1199a3dd86264350",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "68e779c9322d7688a50556c1d1c47d875c01f8f57e2a683622386411a26bbd85",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e6a3c8e22409ae235f045e58ff023a23e8518699e7243dbd066ac8826b6f746a",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "7e9e0d220a35d67547f0620d5d00ed7fc2f5f22712c5fd1a094eed715eb49767",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b20a87ed569c3d0ed722ca80c5b6f7b7f592e1206b8b6d69e2725de36f33c214",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7",
+  "old_fingerprint": "f33a702ffb056c62cca19e3b702e432bdc1aa7a4de0feb0f417e3f54f06d1d33",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L73",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f27f1c1a7e410a1f799aa4746a2a9b64800f09627d9d7e22ddf7fa94bada1cf1",
+  "new_quote": "or/clackamas/_unincorporated/1012/1012.08.txt#L1,L3-L4,L27-L28",
+  "old_fingerprint": "e6950ac029acd01b8fa346d7039db9ccdd70354144f2601c33955742b27c1470",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1012.txt#L216,L218,L240",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "365293c7b9556ffc9c5239aba76e4f4a001d815d12c5026e8f042940c1197a10",
+  "new_quote": "or/clackamas/_unincorporated/1015/1015.02.txt#L40,L214,L216,L227,L230-L231,L233",
+  "old_fingerprint": "504298554b755906d5b8f9c1654a5c91feb260e87803ae18e55085c65bb1d39f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.1015.txt#L52,L225,L227,L238,L241,L243",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4fb9774c80d7955d3b3188bf52356e121c5bf54eee2ad9f706de6001bcebd6e0",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "d034ef78c6cb4d8fa37711625e714867ff12948fe96a6f6b0ced7411dfd56364",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "81f7dc41c7a40e2dd50a773434a0df28cddcb3da27c1f6ae7fc72148ab4a473a",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1179",
+  "old_fingerprint": "80cd2d12813f89fdb6539191fc63f4183b2e73964e1982be59e985f0d201c276",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1201",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "bd9ae037975a15624729fbd30151ae557f1589caa6fc79fedee96b204f62dd56",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1194",
+  "old_fingerprint": "af99fecedf2caf0845d6eae001aa395bc372cf7f713287a335c646ee0b9c4df7",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1216",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "1515118ac36f4c37a2e40ef243d731b658fdacec574accaa644c3e43e2cb3228",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1194",
+  "old_fingerprint": "5d3727c0419c507551a05df1eda0c229f43997d14276430b1274118fc68def41",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1216",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c7a25142f57f36638b195ec43eebc168c45e1578a5190b4a87c2bbd052ff0f9c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1212",
+  "old_fingerprint": "692fe01bb18a2601b960e583d127e754cb7ba2fe31038c89c45a10caefb94eab",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1234",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "eae71b7efe6b750e581e02b90e72e747b0874964c365cccb71ae6361adeb7f38",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1203",
+  "old_fingerprint": "8107edbe835ad41e517a6d850ac6898333d6b8108acd43fdea2ae02a4b8cfb05",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1225",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b58a09ef430b29385de0e17e4f6f12f2ae172ab944f9e168815e0e2295625a8c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1168",
+  "old_fingerprint": "4c7b2474b4ce91f77f4e8db5625d627f5337d8169acfd5443f59a78477e8e5c1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1190",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e558b9032b921260d40dc20f8b1af790e979873d5bd766ff467b071eb8e88612",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "db3b6e23b45e57aad4e5e1ceaa209d9c6da57f4b050edcad5f0fcc0c98c5bd44",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0c93574d9183b4712c3074eb80b80a565bc2f5a6703a3b2459804c23e737eaaa",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1181",
+  "old_fingerprint": "c839adacf7b04200811a349751eb975f0b35da703157691c2db3b99b2de10532",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1203",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2fdac64ed449e43cc2efb6fc12c3357a8b4e8852a781866c102cb658ea4bc9be",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1195",
+  "old_fingerprint": "99689c8fd7400d0741f8fc301e296fde9f3a7cc972e02d6129bd2ee6fcff2b04",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1217",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "91262270ec12e3de9d384ab819b5d5405ee3f3e9d9ef8e4ef6d330bb9074540f",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1195",
+  "old_fingerprint": "3b1661faadb9ca81ffaf00d8a90936cf69759ebc279f3c5b1d9d4327839198b4",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1217",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b6dedda16d290eb32675b20686144040860bfa44ed1c31693d544883ffc637a0",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1213",
+  "old_fingerprint": "6a5966e7d3dbcce7c33d7a77ab5fa5140b5308ca9b57efc7d9a85949666a800e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1235",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9df5d9e4b8f2511d14613f11a859b75a5db87913af0e7ab65db2731e12fdc510",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1204",
+  "old_fingerprint": "90955ecd302fe57eb67bcaee0bc293904edbaeb77a53972e82925f96bccb30d6",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1226",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f27985dbc4381423b9aa89d795430d994d30322c3bbe277a405f4ad5ee11b9fa",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1169",
+  "old_fingerprint": "7069e164e1104529f5de977f2927c22d7d8b4e68a052f7ec46ca2e25617e3501",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1191",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "09d55bcb80cf51af0e9f4eb5e170d72cf88e9108485a9616a52757f343db5729",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "46f460146034139c766649541bee1963cf317cd9632bee84f1fee7bab31c28a4",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "37142378233c320d38b0b669ab9ade7c8a4826798f97de492ce221f5fbd0949a",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1183",
+  "old_fingerprint": "29ecd1acad5139c9e2cab6d03865cb1741f32ec0d33c785384a3b133a7f0936b",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1205",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "48b1a3785d682a641222079fb4fcf8358eb950885af11227044eda5dcfda216c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1196",
+  "old_fingerprint": "e9e30fcc42f26c6abfdf522b041f1cba92bad70a1028e137b9776656f1d6dfad",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1218",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "298ff5af5edec54424e9c087f116da0072a67936c5702fc86207b88069671336",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1196",
+  "old_fingerprint": "119a89099d633e8d07ed66c1be6983bce25c8e9a273e94a9a25582c801117a8f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1218",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "daf146f6edd9c8ba2ee5773d19346fd947023ae20d2cbc2ac8164a49bab0951e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1214",
+  "old_fingerprint": "95bfda127419b925c82e9a8bef8224345b93d347a2eb7dcdbb501b256492665e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1236",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "00fed5d49a3e003aec2a350ce51085193a7ee093b23ed88c8c8bf36805377101",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1205",
+  "old_fingerprint": "11a02b08825293739037af08941cd473c4d921d938dbe1a1bdcaf5eaa240c88d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1227",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0fc53b5fefe55c2ae566c7ad7e5fb90c880ecb17f001b90ca14cc4e63485989f",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1170",
+  "old_fingerprint": "8d5485aab92b91a9b17a8a5aa9ac6552780640afd50ed6f9fe96bc65a5da3b10",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1192",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "39b09e1bfef8a0cc56c74fed3c6a3ad9350ff6e3827b525af151e89ff7bcdc2b",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "374f59b9a3f3a621cdbdb73248670bc8ea00d7cdd95f06515eb05a14530e373a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "7907b3c8575648f737afbc7552dbb430716a71adbe3d51909197c1ad860de634",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1185",
+  "old_fingerprint": "a9e5e11a3e2d8a1154319ec18ac709efc324cfcc302039ab52ac1024a3fabfc2",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1207",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b2f858701c1ef5cff3e4f74671575e59188c63ab0d96ef44f9e1743ef7d78ee2",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1197",
+  "old_fingerprint": "4052ff481c868e2fcb4f0eb715a15b41c52cb0277b5b27313ed52a3c1d1c1a85",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1219",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5f9afd05ef69e7774baaba58de62e656c3a8e38e7d920fa73ea34c94dc5ff168",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1197",
+  "old_fingerprint": "f76b47b9bbd2d431350313033ea00d4fe48da5f1f7108f76f5d4c2b17c215737",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1219",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "02675ad631a8a490aede2491b87d20f8a238d1bcb069532740fa282fbbb44883",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1215",
+  "old_fingerprint": "23e3a95ff4d06323f291c33bd075ce68884ef21c67dea2a6f045c570f4f61a15",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1237",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b1547448257ca6e06b7ea6153df0195c12f895f76fc4842abe451ac23da67997",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1206",
+  "old_fingerprint": "ae711d54b39a0ec91e1e96d16a49afe3d7eedd045cb19a197995d07e4344f7b9",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1228",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6626dff2e00a9b9a423e9823d0246702f20bb4253331628935b544e3eded5a14",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1171",
+  "old_fingerprint": "0415afb2299cbad71e66e7d8cf776aaf381b9e592f9b3e086388a7763d6a416a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1193",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "78fdf5f0147a26f406a070440ab722f4496d648f0e3ae97900b0bb0da04265cc",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "5e535f21e3c15d4c2bde283e5044838e8a4a7e4f4e79259f6a6ee3b48fe5db75",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5bad8974a86e7d01f26a3685df0ddb27ec7b6e8908227886fdd08488a7a20a9c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1187",
+  "old_fingerprint": "5d336d952e412f79ba2a9a19acc52821f371ca472558c18991851d4188d5fa61",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1209",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8165a006ee551f0d9415214190b2371f26791cea9540660bb760f5608bc23555",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1198",
+  "old_fingerprint": "2e8d922981e109bd574ecb3859563929ee86c6879cf55378b69423505e21a8c8",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1220",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "38ebdbc6e703e9085f6c5c8767427116861560f793ac188aba8e4d07c892fca9",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1198",
+  "old_fingerprint": "1330d4f7b4e88b1893f8afb15797da1402901dfaebcbdb2bf4eb7f95ce035a81",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1220",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8737137bb2085c0283229cf6c9d4466c8a43c82f8aa7f86712450175ab0324a5",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1216",
+  "old_fingerprint": "d1202926da06d1e47cf280bd1899511ea4a4bc7132a7fa4547654cdcec0b019d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1238",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "eda531744e89e5cc888e54813c81597278e0d43683d52fd764033dc1f94505bb",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1207",
+  "old_fingerprint": "bcd4fa71aa98d58aa8beae517cb82c4c07314a9418d17994651c27e547f13e15",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1229",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "fd1bda3dd65f73e054c6b9c1555a3dd4da040ddd7fd6593aa585de5f7bf81c4e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1172",
+  "old_fingerprint": "0ab2fd53f6ae656fc93fde824e1d2abe3ccc7618a203dec390f32cf12ec43a8e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1194",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "896e7cef04f87fd0b25aa395a5cd237a4b61bd3882df77731b4b290dbd488331",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "d9dd6f37d97d34b446291a67ec5e7e8dde0779f330516720b2dadcb786b20456",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4ebe0191951ed0b01e1e75c955096f3a15726db9de553cd0eba82681b4ec1254",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1189",
+  "old_fingerprint": "8b2ea902df75b89792d175d771d227752c3d200ac5893a23eff738506505cf79",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1211",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6b0d96cf89148538153d137508a9bfaf34258ec93a6a13b54e91dfd99b5a8cd5",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1199",
+  "old_fingerprint": "b959864c58bf532dad2494d7667ef0b8cb2fd42de98a1caed0f43623377be16b",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1221",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "1618c3c7aff804f1006ce9a9508f1e50d5667d7cd33205472c9ef8cb289652bd",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1199",
+  "old_fingerprint": "07dc064e96d2517e2f93a00dffbfd07284a8bd7d3e4a28ee02f0910b863cb149",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1221",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f4669ec94e62eedc6242687c729c2d2e33c740d25176bee340ec5c3d1562fb9a",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1217",
+  "old_fingerprint": "cc082d1048c7f29b2dab4315fdc5288de6a8a17d7ef5613b668b8065306a9fca",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1239",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "aa906c1b4063e68d91843945b3aa89fc8a2104f76ed06fc4274cd80761a2c590",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1208",
+  "old_fingerprint": "f09d4728e56159398b32fa7374d4940ec3d70b40c9685cf4ae24f0112e9505a2",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1230",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ea56f0c07d7fc3bcf6512bcb05a7af241bfbab0ff096172d0fe0089b0fff704e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1173",
+  "old_fingerprint": "1a65fb4539a9afe97d3b76b28276c5f8d74b4726bea1c0a7447e109720a72742",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1195",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "06232d2f5c46d51d72e7591eb167c9f2308413bf486fa3afbef3fccd08253164",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "6a44c0a1888d9aca73b2307e68212d0c229c066dda4d7874d2a3cdf6181c5c6b",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "60921b7f14b25ed24881838899ca990f59d37a46b724b1d19e99512d04f54e7c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1191",
+  "old_fingerprint": "8a8f42a09375b01e05e46700455efa6769843e639ce97169b721bcf0a0f60bc1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1213",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2ab01d2b4796dcf28014f72565b42e05f9b7a8ac9bfa09e5c1cc12087f11c3f3",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1200",
+  "old_fingerprint": "943d9fce2c51573563f5eaf97320a3aabf529d5c2522e179a8841ceb5b58c868",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1222",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2449566e8b7ce1ef33b3acd301d44b80fd38014e23563620c7429ff28c7de4ab",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1200",
+  "old_fingerprint": "c4fc7ddca2ce23b883fc0f601b32ee1729363bb99732df3cd3a063d8e6659976",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1222",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "15a64b2ed8b6c1e483df1ff91a5df3c5303a551eb22d36dbbd8a9698f3404334",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1218",
+  "old_fingerprint": "4210c5c0afc3911945f4b2fd73fb8a5d59ee97a31a18a44298025c0710590b5f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1240",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "cbf5574e2edf038364a89638236d668ec7b4b0d371142188cfb1f11f1a420b9d",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1209",
+  "old_fingerprint": "7cd868c57672725d3386f7bbc96804e1e735176c80ce9d3e1ec3f59ff05e8a23",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1231",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "db96b0efd03e8ff826099f792588c97872959c761591ede2df507f3b1de6c456",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1174",
+  "old_fingerprint": "3eb64c2756dc7577277e97ca0abd9e69ef52b9bee268d25f8f03ede85a7245ee",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1196",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "db20b9a926bc6d9c403ade1134f30cc0138c8a01fc385745ea2ea159a1640189",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "324e0bb30fda9575e74e3f4f93133adc7a9096797663cc1fa170e975243d002f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0d166ecbf98db4136a9e8f4763834ece4578b888ea3511cda60c46d417387fb6",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1310,L1390,L1395-L1396,L1546,L1548",
+  "old_fingerprint": "2f4e1062b462007da04ef7a18450f7e04d4f317c71a428ecb57567367cf101e4",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1389,L1392,L1526,L1528",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4033a447fedd8e39cbb8a359dc9be028bfa5129e9b7c862bd3c5b515aa4e32a3",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1364-L1369",
+  "old_fingerprint": "1cf239468fce4e6e3d49333b1ac60cc6592aeeba2fa8149459f10c0ba6354f9b",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1363-L1368",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b53d4a8b363c720708fddfc9f72361a73bc1524f4a6f9387ad3ca9dcdee4aec5",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1370-L1374",
+  "old_fingerprint": "23634f61166d4d355adaca2bd5a09ba8505df1b01fdd9ff8dbaf6d78fa768884",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1369-L1373",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9d7c6feee246a68af90a479d2ed5a9e56aef308c5fff8ba764f312ad95fd7171",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1375-L1379",
+  "old_fingerprint": "fef3f24e3183b42952b5b34268c8ad24946d6ee2614a3a3c0157f9c154588993",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1374-L1378",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "19bf110d20f138723e4faa121b7cb198c643293be540c7613926951bcf0b1842",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1370-L1374",
+  "old_fingerprint": "60e77f8d59636f6ec06c830612ba890264733da9533c201ce3dc1c850c5aa42d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1369-L1373",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "70f209c22aabcdecc18f690653db22031a76b2e08deaef5925a24fdf6b4ead39",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1385-L1389",
+  "old_fingerprint": "28b20f5f53b499f72806b9b9d77eef68e0cf786849e6d3df41fa8a0e7704a036",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1384-L1388",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "cde7750f71f59a5e2a3659d2dfaed7e6c01002cda1f9af0e9652d75d35325e93",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1380-L1384",
+  "old_fingerprint": "44e88a24a329c7bcbfd35fe03b663599ce35a969e438685190e64680191228ad",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1379-L1383",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "d6fe911beba9ee17e2282b37603e02b3f4df54d26deb2217f7bc688cc6a12cc0",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1329-L1331",
+  "old_fingerprint": "f716c4f06a80c5be371ed0c98c743da19ec091be671ee3ca574d845e449ebe29",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1330-L1332",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a7cd1b803213f10160b7b4e86a5ba9c95b835ae5c19cb5b28231040d2ceeeba9",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274,L1074,L1076",
+  "old_fingerprint": "0b5cf88311be5fb784db254bf2e2d73be1a0bba94ed8e34f00b2b12731904903",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4579bad155463e00e78b696647f4a60ab132263ecc40b1fdac676ee0a8a2531e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1310,L1390,L1395-L1396,L1546,L1548",
+  "old_fingerprint": "6222b4d71f89d0c4114c168b9cb704dca4f4ed623b6f0426efe0d846ce112a08",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1389,L1392,L1526,L1528",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2d70a99bbbf83abc01f9012b98cc0535b7aa42f7045967aa6852af61b1ddf735",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1364-L1369",
+  "old_fingerprint": "c82ae1cd4afeea6dd7f8b2b4080fded2a105f2dd931716d34701134daa38cbca",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1363-L1368",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8b236577d6116fef2a9f22757fc81bcdf812fed788b97036f2d0fc16e67d295d",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1370-L1374",
+  "old_fingerprint": "f7b1ddc9e6eb1b091ca580551e20682434f39ee1b458d838f5b6ae4a21c7c613",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1369-L1373",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "3b654231d7ea09852fe0a9c041ee47efa95a92b91ac4d47ade3a2bbc390f1968",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1375-L1379",
+  "old_fingerprint": "ae21ab1347f33acceea67017224c64915cc3063ddc3199002bd60a443d11f9d3",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1374-L1378",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "033699d002c9d6ef848ac28521599f4d62997b3e789fa5be209968e041d4d6de",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1385-L1389",
+  "old_fingerprint": "a4acc33c9932d068d5d773586dab75a0aacf3eee0aba1c7ba0340540be0023e6",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1384-L1388",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6a453a5306cbbbd71bee792922ff2388bb03791355fe10a8d60b4dd06d8aff28",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1380-L1384",
+  "old_fingerprint": "304a257664c6bf9741832d7331eac0383f6f945f0a7bb1dc0b8d2289ba9a59da",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1379-L1383",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "1d525fbfec13ee13fe58e28ff66b3b2b83bd1e7efeb157f4d76b10bd3ff93e20",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1329-L1331",
+  "old_fingerprint": "4e9ff8925050c268fc597fd2b936b2e6bcd0bf02bbcc0b1d4de724304a37f51f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1330-L1332",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "7a57fd6be39450f568173a69c7d93f5345b2265cb81c55149eee98727dde32c7",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "ab2ca8da118c540b32dad19810fdb4d047f3bedea7741705e354c3fc4e824f35",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8b786005876dc7f48507281ad548a8ff3c1e8c858505e0eea4dfcb9f5cd65bd2",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L299-L310",
+  "old_fingerprint": "bdfaaf188711be368085cbc7bda4bcc35560ada9eba13edd76e05a48b38cfcfc",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L331-L342",
+  "when_key": "unit_lots",
+  "zone": "R2.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e04b00b7efdbd147d98b0664537f6a5cc50a2facdf000dd8d2577c94f553c532",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1146,L1148-L1149,L1157-L1158",
+  "old_fingerprint": "9bc0f32008ba9e2a257adb3e3f35d80f9116f434e943949b7fc04ff280f4dc3e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1168,L1170-L1171,L1179-L1180",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "44570a0429f118f95677e5793284d247fd0cb5e6f43cdf4ded32d56550f9f902",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1175,L1177",
+  "old_fingerprint": "724865c7995b1d194d86f504d64ff3960a8b3026588f9b39d159865bd3299fa6",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1199",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "09d585991bf2b81691895f83669e233f8be81ba3e7c9712ea8d1ab9eda2754d3",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1166-L1167",
+  "old_fingerprint": "df08473a6fc9cc724f8217445d5c75c547b4a14ecbfa9b8f4a250a2623e00b30",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1188-L1189",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "bce382a7c4493646686694b8a0d6c4219eb7971b00baa9057781e5a9b02d7c73",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1192-L1193",
+  "old_fingerprint": "212c223e0c5be5b6e00bcc83d99bbaa7273567f7f3f3fd661f0229fef05c7b65",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1214-L1215",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "850c939e8d689fd89e90225b342ab768cf649a113fb53a30958df039aea7eaa3",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1192-L1193",
+  "old_fingerprint": "b5f003b93cdb7cf554c46d6f21b00dd0f2a561a3e22fe84220da971041d17e94",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1214-L1215",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "931cf946a6dc2c3956b30f91c32d1e4d21af56fb53a9c80d3200e517031a2650",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1210-L1211",
+  "old_fingerprint": "9257d126ab56ed5dc9297e18a3729610babc7d32fd3ec4234fcd7f9ee093bc81",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1232-L1233",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ed74227fb64476dd0ac5c6900cdfb08511ce71c6516ad4e8d4b8e7a109441c0b",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1201-L1202",
+  "old_fingerprint": "2da922fa2e39fade6075293f9d3610850cbef3948483b758472869b5372b4c0f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1223-L1224",
+  "when_key": "",
+  "zone": "R2.5"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a16b1bc667150c2ef8aeaf2e961c6f7d1a252319deb11a30d64357771b919d07",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1568-L1569,L1576",
+  "old_fingerprint": "2ec191d10685a903ec249e54f48a532f4689b2c1eba17220785860b966903603",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1549,L1556",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "230167ae3aae5cd7d18a80a17c7e6bfa341f7b2410850a25f70a039fe65a1c06",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "c2339f0685c6da9ff4c288af90eda2f62699c617abd5e57a4f6d134635eafbfe",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c08ac104e4164b2aefd3ae990b10be424d59aec90ee07fcf4b21a9bbdeaaea33",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633",
+  "old_fingerprint": "6cf2766bb071716769db7826d513c02b5caf0d358cceffd3ac3c3bd2dd19f2c8",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9e630aab7308fe15eef2b4920cd0d29c8cd15ac23279d80d3b3b16c5a64d881c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "83f7f55184705cb2318ea871c8e4399d85210a521ac3d7d3cc4b1bf0daa43103",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ab258c16e566232c59db32c18629d37a96d79e62cd4388b15482ec8ecbb66e0e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "a6202c128d2057da868abbe91c28608671c8c1cc97a9381263b51b4f1f2e165a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "1eba28a389019c9a374f98b8c4dfac405cb832f02885f99faaa97d995012f710",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615",
+  "old_fingerprint": "febe284e347850b3aa05f092b217141ca486ae4353a3f8096c0ba4ac95b5c02c",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b34ca528a7c59d6afd22eb454d32f4cc5cd78c85fb3cfcbe3f007a1e8fda3b04",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625",
+  "old_fingerprint": "d22678473978a2cb89ffdb925f8dbe058374bcf44802dda328c0dfda4eafc4b2",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "325b64ebaae66f3386ec2abc964bcf9366680470d9a97a0ff74ac4f93eb67be7",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641",
+  "old_fingerprint": "1ee8dc9a426572a9ffac57280aca9653c58fe931f3c191b781313cfb7b928fd5",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "41090d152b3190155836be52f847837ce6585df9b3e16669cf7c7bf3ff218778",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1570,L1576",
+  "old_fingerprint": "1160049e325d5f17a0593f02848b64a8b067ec3f6b509668f9599989c170c2cb",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1550,L1556",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c5719ad8b743c45bb7b81da5fca1d35c531ce10c03dc2626189d04ef136c8e01",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "d3cfd19fa0e3849bd5c7c963e284c39a6804a64b0ff2d50b36e7979e971c75f9",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "3eda051cee369e7cdee1f900e0dec552b26a517852afcc8dd8ef28db32796f38",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633",
+  "old_fingerprint": "f19b97e2f711bacfd1907eea03ba605c803722c368b95c6f04a7fb9dd4a80fc7",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "cadd5b8067b01da1fd67a05a71dc8951eab237219c589a80d91effb3ea56a3ad",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "9e433ce658cf1e665c55ce59aeead15f6406582759ec1125919033181c80ea1e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "72b8856128c6b2ac0ed6308a943ed2d9b03267018c16f3474bc604ca36c46f6a",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "fc91a7af036bb1a38b724290bf9bfb71cd5f50fcba7ed94969aba1e4e5d98ce1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "32955ccc1a8597c15dd461d62c3eee5267c790ecdfdb296c0a7d9d14a6327695",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615",
+  "old_fingerprint": "9a970fe6a8cff43f9191bf87a6a10e8748d46c3b6d5b434855d26b32578582ed",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "35a7d7cf74ec6b755683b9a80d44caa7d9d99d0a186df52a8705c99edb3a4c4c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625",
+  "old_fingerprint": "ed424b125eee7e96d072301c700df5cd0ffcd7489929af163f5bd4e315c591c3",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "34a666a83c075c47b9c73ca86838506daa1911e612b670a6804d70f0a896196e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1617,L1677",
+  "old_fingerprint": "36cba53e006d9de2f5ce539b88d7bce23db283d94c431dca031f141db8d20bf1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1597,L1653",
+  "when_key": "abuts_lower_density_zone",
+  "zone": "MR1"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c7442755625ba24fc3def563f03b00c0708a5e2e51a4d56b50601ff07df0e7f6",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641",
+  "old_fingerprint": "03f3b109c317cc4962b0f3afe85461a666dd3e193a6a78affa3f37099bc2c24e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "7ffc88d05a6df2b16e48e9d962bc1d489b6e1a8dc4118a278c2c902a7b4db0f8",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1571,L1576",
+  "old_fingerprint": "696c75abe78e8173f465c7beb225c052f1efb0cbb4d9a4899c67332e799fdbd1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1551,L1556",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a1058ebcde0ee9c76a155c8dc09e9e91e252eeca002724d7d8690ea1a9852edd",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "79c6d9354015383540c7eb9357c76b0380500d8c99e4b088043f25fb214e2952",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0822c7b6dc5e30a567ed2b6a5f2a0a93aa8e6f285e2033406721fb0ee373ee0f",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633",
+  "old_fingerprint": "8564a4f4b8e376f355c096de06c566725c2e0477e2216f9061316fd233cd766b",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9d1200e9d984a851a66c5af6edf39a6615634db0ce74ebabba8d9ca8cce42a88",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "7ac2cd18c83522245a41290710c8a6c83f95836fefb3895ab8928217260c2473",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "59dd9abe05189e20249f3aeb24273e07ff3a02fd9df1c851443a0985b94d2ad7",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "8df12c3998ad83851bf944be80f8035d98d290cb28ee05e1b68c40422d9e492f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4e76baa613cacfebd007349f4926deb6b82a05c017b948827a31d0461d485cde",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615",
+  "old_fingerprint": "6ee45cd64fbb9808ef47d169cd50dcca3051de9e09cac4a0a83e78b4130ad823",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "add23d0f0c10a63155f0ac48bbfa710e3b7594fe0b97a0f6687b56ac7805069e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625",
+  "old_fingerprint": "a3fca2c6e1ab149e2c57408d473cba1db286ac6b5b7f3d98b319d4d2173a8282",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6e806f20dea86fe8601e06e10d71801b16f85d1e2b2f534fedd349a698aeb4bb",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1617,L1677",
+  "old_fingerprint": "90f15a599343f84e2d204eff38e3669027719c6a42390c747759045b261de3ae",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1597,L1653",
+  "when_key": "abuts_lower_density_zone",
+  "zone": "MR2"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a19aea3a4ab33ed68f9ee796731576eff6951f4f20641561cd0f57ba0027bb8f",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641",
+  "old_fingerprint": "ad7d1d62bae53f15b172a736492ad9f0ab68789edfdc6a14c69e971634c1da7d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "db886d36c9d02fb7e979876f95f5526ac916d6e54ab5bcb8da5caa7c69a109a6",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1573,L1576",
+  "old_fingerprint": "168ed6c4bfa69fabedddcbda5e8507e87ac8e5c8b349e20321fe66c5a33714c7",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1553,L1556",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2ac05ec802ddbf7b3144314792b407d3b3696c6a6ee01d5d7911a5a55f943d9c",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "8f555fda3c3df3261835d05557bd8610117579c1669e0ffa357c45558b3e7456",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "160098aac8f57214e754aa1897ff27a54425ab10812e0dcc74f7851012a3f76e",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626-L1633",
+  "old_fingerprint": "5c577eae583d2dd18d7b1f26bbc5c94951eb6a197542f8868d4d6ea8b258d3c0",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604-L1611",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "229a7756fdcec702fdb15bd5ab53a2e6d459462408ab91e55e76efbf49ebfda5",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599",
+  "old_fingerprint": "580092f105e58bba72e0b9270741cb7ae19a56711b04d1ca876b2c3acd1d38a8",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572-L1579",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0bd3f6aa35a69c0b16bdd17071e39c0276aa4820b7ca6af4d3be342c080cab5a",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1600-L1607",
+  "old_fingerprint": "cc113a1df2d1d3915bb5b7fff038ee9971692d38ce433d9a49f250c0170e77cb",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1580-L1587",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "72d55cb7a45e0409512bee0672e9360cb13ce9d5b5dde315ce63e9e8db59e696",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1608-L1615",
+  "old_fingerprint": "83b82d01a30b99e0521eabb4d50182e2762f2a569c90df3a79b41aa5649e8d16",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1588-L1595",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f852bdfb9e973b4efb96e2ead8b1ccdd92f86b828ecd239df6ccc31458d69322",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616-L1625",
+  "old_fingerprint": "0cbb3d035948e91db5393731f360c8bb5b0978769da2794f92fb953944a87de0",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596-L1603",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "69cc4fa45023dcbf8a0c27531ffcd4f1ee880d9e65c4b51b96030b8c21b2a7fc",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1634-L1641",
+  "old_fingerprint": "c1fd3335d95a478afd61743a7d8fb249998234a7ee04bd4bba399ab63e74e3fb",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9bf1a27306db3af719f94c4cd34bac8521767bf0ac69364dd0c04543e634fcdb",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1572,L1576",
+  "old_fingerprint": "fcd1f7f1bd7115cad2f65d28c44c954f6f1a2ae9bdd3f7c4fd897d009575f2d3",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1552,L1556",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "81c50a9d2274fad2b5068839f83a5f3a6225d99dfe7a7dc203b025d20a9510e0",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "12af6f67d340eda7902dbcb51063aa0e966017e114c0e6630a29f067a0203500",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "17a5261acb624ff38b8e136bd8af6ed3e5411886e01d7d17af2380535b671b87",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626,L1630",
+  "old_fingerprint": "3ad057d81ba44bbf62df833382f0b9ce0da186c944a647e87ff8958501635020",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1608",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "409a555cb9a7e1684209a488d795793b9e9ca42133f1c7db23173f07ce19cd32",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1596",
+  "old_fingerprint": "1d46349232f934a1edfdefcde55c93168ba47de5c626f4fae5c8a8aab9d03729",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1576",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8198d8d1208f78606e14c55cbb4f5aa1a2e398521f7776fc8dfce1e24d21ad7f",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1608,L1612",
+  "old_fingerprint": "ada4cbd686b182531be5fbe982086bc4eb58c0bdce248854317c4059772fd7f1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1588,L1592",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c4cde10ebfac54a4af156ecf10b0754be8460239fa556412e986e20f6dbc0ba9",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616,L1622",
+  "old_fingerprint": "ceec219b46d9bd0b78af05c6e34edd22c1ad9710947efc29b581d51e31471c44",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596,L1600",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4a3f16255c08d5307795b06e56fb5eef9699f003aaf359318a3adc2fdfa99db4",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1568,L1574,L1576",
+  "old_fingerprint": "85e63c4f3eb4f00a93c681dd9db57412c5cd923d8d471fbbc40b0ff2e8d0ec37",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1554,L1556",
+  "when_key": "",
+  "zone": "SHD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "8f07e3d5812299cef6d10c8f756a98f4b9dab8e107700eda44f68adac6cd6953",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "da5eb15eedbcfecb7a18de75d31be211639fb6ad0fc9824417e9dc86be070f8d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "SHD"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b2ee8f948691f0ff3dc3993d3496a30698bd2f0ce7edda326e34a73456dd0a48",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1598",
+  "old_fingerprint": "1597047ef12ac2abd26d90d9ac6f04c44c82f2598cc8b1beca0afa23e620c621",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1578",
+  "when_key": "",
+  "zone": "SHD"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "70cb3c86f938fea593b14a214a01b299a0fa1ff36d9d5b739e53b1f3147869cc",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626,L1632",
+  "old_fingerprint": "174c3c3abecbe287fe166eb706b10833172d5c2cffff4154d71bf8605e5ddc8f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1610",
+  "when_key": "",
+  "zone": "SHD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "1cbe3d1dcade0ce74e7a45cd1a17e2a2a2aada247ce799eab20aeb92bc4bbc24",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274",
+  "old_fingerprint": "8a0ea5bf6ac4ffc5820a8bd35ead53a2ba0c071bd4ec412a91c57f03103ec07f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "bdecf39556892b36c5c7d36efe8add43d6833bbc8de5dbf7770366cf093281b1",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1599,L1657-L1658",
+  "old_fingerprint": "8b75cb1c36db11f2ecdf37fb6ad504659c0403dce557d6d445a56c404639dae4",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1579,L1635",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b502c6ebdb388694714be0b24a7ea2d2fe68d6db63d8f7381d022ef90d35cc9f",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1626,L1633",
+  "old_fingerprint": "3fac9f21df6e3f1f9b79f606b186fe4d7744c1f93a62e33c4cb67852873ff067",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1611",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ef3291958878253dbc02218893bf47b60efe254d2ac945cfa0d42dd9107a4388",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1608,L1615,L1675",
+  "old_fingerprint": "f670e8614c98a7722453d0bf43c9a285474652ec7803dcbbe8c6800b13a5088b",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1588,L1595,L1651",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2995d32ce3d4ef578daf7d0ddaeadd47dc13dd4434567eac27c2a05de94d1394",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1616,L1625,L1681",
+  "old_fingerprint": "7ef5fea66326d2090dcc1e0356cee68452ecb023495dbab9993ec7875c1b145e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1596,L1603,L1657",
+  "when_key": "",
+  "zone": "RCHDR"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "d721d2cfc607c313ed82b768975672af7f6ae13a97f3cde03df97d4df2e1e5f3",
+  "new_quote": "or/clackamas/_unincorporated/315/315.04.txt#L1558,L1566,L1606,L1614,L1624",
+  "old_fingerprint": "f04baaca84659f26ed5a3b0b420a06c669c9602fbfcdc548ddb73f33ced9b1dd",
+  "old_quote": "or/clackamas/_unincorporated/zdo.315.txt#L1538,L1546,L1586,L1594,L1602",
+  "when_key": "",
+  "zone": "SHD"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "d3d75ac8deef5618b4854d9f32ce1cc390b9eb24c1ab5237b155e4d7fd3092c3",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1489,L1571",
+  "old_fingerprint": "47c0516f32af18b679c460c6c650a3ae1dc2130fce6506fbc0f1df9516fbab37",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1512,L1577",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "bb5584829dfc076b416f92238b4a23d9fb1a96ec3cc429ff25763b810f0c6e4f",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L53,L249,L257",
+  "old_fingerprint": "44bc1b765774c606f8591c970d3a8ccb0178e3adb7cfe901b3875adb589953a0",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L85,L281,L289",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f422b3b48990d0f6ae5ac46a59b28b42e24349f8a7adf845051f7c89f3144e6a",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1453",
+  "old_fingerprint": "62f4ecf9580bf79b15f9679cf743ce5e33b36b93280d1c34eb1b2c57170dcb68",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1476",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c5265213722f25caa44f5ff48e41ef3d4e086134f8ea87200028eb8d4f7aba91",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1409,L1416",
+  "old_fingerprint": "27fe372c806132da30c08fb0afb30c0ada4411063736bd0e05269b6f03538254",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1432,L1439",
+  "when_key": "",
+  "zone": "PMU1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0410fb2978dc7813e1e22c42815f8136da8482effc7fc2edce7f373a4631a067",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1433,L1440,L1551",
+  "old_fingerprint": "535853da29aac4f4f18029eac4b0d83faee737fc8417e749d237fd1cb9330329",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1456,L1463,L1559",
+  "when_key": "",
+  "zone": "PMU1"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "3d85c9d5646113c4b821e122579e8221b757ecebb73ad3b55779a002054c74a2",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1421,L1428,L1537",
+  "old_fingerprint": "3d9df2ab04426ce4b27823d35ab909b5be3571b0ed2214227489577f9785ec54",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1444,L1451,L1549",
+  "when_key": "",
+  "zone": "PMU1"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5523201f6ae2e6201dd27b8c9aa0952adf98e2e44f5c3bf443572a6b0a58390c",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1452",
+  "old_fingerprint": "79f79def78af4290d169624d5098f49d4a0733e200bd2a291e07e65d5c1e15ab",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1475",
+  "when_key": "",
+  "zone": "PMU1"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "5fcb0cb261dfbccb3b1f63009ed6fbf811a683961517bf136a189b921305ca83",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1376",
+  "old_fingerprint": "366146cb2a923ed082d24d783615792251e760afd767eb7b6bada5ec048b2228",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1399",
+  "when_key": "",
+  "zone": "PMU2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6e894247fc432ecbe3d9c7dc242f4ca93fa6f4a6312f69b5a31c63cdd93b9a46",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1377",
+  "old_fingerprint": "3951216243b19cea06a6058398808190b18da79c35a16c6871ce49a05cb88f01",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1400",
+  "when_key": "",
+  "zone": "PMU3"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9077012f45bcc6849ca31a82db4c3abaed90ad499a999d65c966e8408b159256",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1485,L1571",
+  "old_fingerprint": "1831fff0a0e97b2fc1bb8ae4650a9575a2866655a168ed198c6a7bedbf0e5080",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1508,L1577",
+  "when_key": "",
+  "zone": "RTL"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "b017c464e3d3cbcef406e74ae2aa4c59011722d49955e013831efa18d99c503e",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L49,L249,L253",
+  "old_fingerprint": "a355b2734ea944a1f8eb9b0c425ea89f77ae80d06d756dec2256467b1e9f3646",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L81,L281,L285",
+  "when_key": "",
+  "zone": "RTL"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9a664267930759dbab05c9490bdb2faeb7134ca9af432b6c436ffa7a88c6551d",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1486,L1571",
+  "old_fingerprint": "82f1f3f20419a0907666d0596473754bba59c5b7d57ee764d4a0e5f2930f1f4c",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1509,L1577",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "674d1abb891a8f6c5a1d0579e590c05f1a18ec1093020a914eb41e78347b885b",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L50,L249,L254",
+  "old_fingerprint": "e008e322760169e15c9ce8d0d6b037b22ce1d85b2ecb9bba4280d58c47aaf50d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L82,L281,L286",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "1a5dc93455e082d7df5176aeb9ba52792d1a8d72a77caa545148360a5735c274",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1487,L1571",
+  "old_fingerprint": "a26d252f559c8a342505f3c7107e6d0edea03584af7662f03b4154d23a77df57",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1510,L1577",
+  "when_key": "",
+  "zone": "C3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "226d36db16a778c96b2e356933af5913b277ec5e4bce921d6b5d846674284df9",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L51,L249,L255",
+  "old_fingerprint": "bc5a39ac4e4a78f1c8ea4b6567facc640e4c051d4f1b54c0ef287e5aa09436ab",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L83,L281,L287",
+  "when_key": "",
+  "zone": "C3"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a6fdf62fc931b1253d13dacc7cb1b3d7c7745e4a4e5c62892d833b7bce67c5d9",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1491,L1571",
+  "old_fingerprint": "621dfeba5e458f1af0250ccdb17bc19bff3c7349ab72ffb0aff8e232cb30aff1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1514,L1577",
+  "when_key": "",
+  "zone": "OC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "69708f45720dc84a728849c6f0273cfca3f641c15269683fad68c7ab637281cb",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L55,L249,L259",
+  "old_fingerprint": "39eb5f053502a1cedb56fa0da1446ddacea894d38742641547abe2be904eeabe",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L87,L281,L291",
+  "when_key": "",
+  "zone": "OC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "271d24485f0fe10fefa86cd0e7033a7caa52cdcb3b1c53d71fba506a915ea4a2",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1484,L1571",
+  "old_fingerprint": "3ff004bae4b8d246cdf9cfbf73b0cc690e09f88c52aebd1e374dc5c92bda7887",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1507,L1577",
+  "when_key": "",
+  "zone": "RCC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "16f4b25d24620c31e5cd0d111f12d4124e0fa3c29efeeb05b62ac4479aef6fe1",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L48,L249,L252",
+  "old_fingerprint": "3913023cc4531cdf49f463104202143ed5837bf213cf200c87ed95c008d4bafe",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L80,L281,L284",
+  "when_key": "",
+  "zone": "RCC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0f8e254bfd8bd97be9e574d14086cc1e47ebc4cd3cc4b81fef2e929cb40ca221",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1492,L1571",
+  "old_fingerprint": "aa7593bb0ea84f200b9e6581a6b6484565ed7e10240f537e54ab31493b5f3ce9",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1515,L1577",
+  "when_key": "",
+  "zone": "RCO"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "a9b8c8246d60596ef3eee7c8ee6bbef25b386fe868aa033aca53c1f247089bac",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L56,L249,L260",
+  "old_fingerprint": "c1ee9b839927755cde10a29bac644b980510d091658663641ba58b12ecc1f8aa",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L88,L281,L292",
+  "when_key": "",
+  "zone": "RCO"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2e2bb190ecdb6955f7f00dac2e4eb5b11be7f4a6ae9c3d0eca1676887869c76b",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L28-L32,L1364",
+  "old_fingerprint": "f0c04cba41c7288b5e0b1e07d113954e5c5fca4ce58aecdfd7ffc348fa751e2d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387",
+  "when_key": "",
+  "zone": "PMU2"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "965d4003d3025b28ada486aa7dfa56c4d6a740de53b37b4687aba8d7b56c8614",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L28-L32,L1364",
+  "old_fingerprint": "dbc7672ce14e253ae6b7e899db001515e0f068d34c50711c8780d6e22f4b7b7d",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387",
+  "when_key": "",
+  "zone": "PMU3"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "2a2e196b81eb118a9a0bb004ebc3ee77b6d6279979426de254124e31a3959af7",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L49,L249,L253,L1247",
+  "old_fingerprint": "893f81506e48602b8e8afdd70512bae820a0be568a0691f585d21ca0b64f7016",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L81,L281,L285,L1274",
+  "when_key": "",
+  "zone": "RTL"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "982c91d41104cffb156843a3377c95eaede933999e778b8bfc43b4834a784667",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L50,L249,L254,L1247",
+  "old_fingerprint": "012070ba2ad5b638335b1011f68c4768ae6aadb935d798a568a688f5b93a549c",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L82,L281,L286,L1274",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f6cf83dd62c390bdd87cc8605b3f809814bde6ee3f0ced13d7acdf2e028f75d8",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L51,L249,L255,L1247",
+  "old_fingerprint": "2ecf0bc37d83548698b9aa8ff8191f107aaa1966274d4e57e537e5716b5faf17",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L83,L281,L287,L1274",
+  "when_key": "",
+  "zone": "C3"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "def758bb62e00d882e7d1ca818e69cf51693802a8904e69f38e9f653414c84e4",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L55,L249,L259,L1247",
+  "old_fingerprint": "ce07723e8a4922c18d3ebd9db05fd42f7c42f52e0b71ccf80f2e3898ef391fd2",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L87,L281,L291,L1274",
+  "when_key": "",
+  "zone": "OC"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "7377ad19ff0ce53948bca44168fb76eb60e3a19d878a827d7aef65bb309658e9",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L48,L249,L252,L1243",
+  "old_fingerprint": "ec61ed92122dc9568c24079b5029c94d35cb80290145df65e23d6c94ca15158a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L80,L281,L284,L1270",
+  "when_key": "",
+  "zone": "RCC"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "0e4d18ef82f88c1bf01898acf5e6e0bca939f1491725856cae406a6df7052ac0",
+  "new_quote": "or/clackamas/_unincorporated/510/510.05.txt#L56,L249,L260,L1243",
+  "old_fingerprint": "068dfcd67b62b21bc3752d504bbd73f8fdc0addeb51c876d47f30f530e51e9a6",
+  "old_quote": "or/clackamas/_unincorporated/zdo.510.txt#L88,L281,L292,L1270",
+  "when_key": "",
+  "zone": "RCO"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4e5064aaada48c957bb8ba4ea159591d0afebad232b4ed5add42c8c2195e377b",
+  "new_quote": "or/clackamas/_unincorporated/845/845.02.txt#L1,L27-L35",
+  "old_fingerprint": "7ed7adcc9e72d1516e8085e9729128a1d3181a40b52fc9f4fd07514ffe3bf527",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L19,L43-L49",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "43a7cc46c5ed3726a802ef44d8945e2dc80f8d0f5a8783de2dfdc7c0b8eb5b22",
+  "new_quote": "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41",
+  "old_fingerprint": "521754fd50a4f75e0f3e62c275c9fb822383262487c1b52aaba6ab6464b15a12",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "251b64576c0af5a7575d582306aea545ba9d545445a692b660a76c7c23dc3bae",
+  "new_quote": "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41",
+  "old_fingerprint": "79ed7c81335b6c0441ffddc3b2b5289d71ea064b9a5935b606441d1dcf940103",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "318a4f38001cd208faedb1f6d276b2a1b2204529275c7c67bee7160d36991be1",
+  "new_quote": "or/clackamas/_unincorporated/845/845.02.txt#L34-L35",
+  "old_fingerprint": "877c20c2ef3fec0a9eb1bc5b6cf5559759f5e812baabd19dc15ad3e2ca9187ea",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L49",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "6064e88553032894cb5bb5a37d1ce165aa0c3f4defdc110762678b68864ddada",
+  "new_quote": "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41",
+  "old_fingerprint": "de68bbad39297f96ca3d8a892450fedc8a35fff6d5b23aed4655cbecdf2a4ca3",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e0fea6f81fda58f0bf780d3d5cd7c21def549e1a751d970dad1468f49d853f4f",
+  "new_quote": "or/clackamas/_unincorporated/845/845.03.txt#L1,L46-L56",
+  "old_fingerprint": "5aa39d6e3859877586572676dc7bbe63963b22d15ea048717fb0c1fe59d68c87",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L57,L99-L109",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "d9807055559232be390252ccf190356abdde4ae53d489dc74db9ea6a0417023d",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "5706a1613fa298e1c241e076461a486b55f7c2092e173dfe8a595a59b3eb190e",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "7801c9b28af89f6c39a06cdadfe96be67053236058941e85b79d128e882437b3",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "c9676e32b4f3e38a8c972e47d41e4e8405253ab0a63f7c64aa15353dc28ac035",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "d254f6261d6eb1295e681d69616e2f47e970b283333b24bac6412bd436966a57",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "206fc33c76ea97ab34a6e017d44391c7b12e5bd627bc58fc24f174672c87c20f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "14f480d73cb8ffe6df11bb981df559c28903ae29a234b0f8a552d3260076e7d9",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "93a25d939a3c3d1615049a05c35350feb77590679944024cb85e83c114939e5f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "f21767ca169744d902a165d00a5022e7cdd8a3c74d7af7d447096d1622315aa6",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "45a76e11fc8eac309fd09f059c8be1cb2195db0059b3820a92cb1dd5005bf2c1",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4440d7d5920fed560320c648ff697b5bd7bbec27b4c3e3742a2804df445bc5dd",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "04f86ee3ce6d852cc2021992f837646c77847da06b346e95444422660ad28b2a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "fd676a099e79e8b3706e34050522a2b0222a85f719e0d8a5bb03ac547f3dc766",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "518493fdea16669c9fa2a7d11c74881ef0d4eb96c7243d641c3a9610de572220",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "R30"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "ac2acd67721eb830f3c64994f3cb7a1d42719038d0bae376a1754fb7ead9641c",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "8d91248580036ead990e6d14722ac194a602d04aaac86f52c1c8cd9456a02716",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "VR57"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "9ca984231a3062104cedaa22bdaa44673c9f35f8c9b40cb769304f75668990c4",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "33298132258c33d53f09919af32466d224891dcd2a561f62b334e03af9ea44ff",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "VR45"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e7674303b64d2ec46564fc2e6fed4a823e317ef395240bdbfdbbfd89d622f78c",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "099d816a0fdc6bb208bf8bdfd9b36a0a084c3d46cdd204b5715fb92c60eff16a",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "PMD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "25305a744d487e74e3e809d27f0f1a0a430452ff30abc8f786873c976fed4739",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "cd6f2284d74403ac784bb1cf536526c6d97b40568a8efd6acdd6d83b9aa7482f",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "MR1"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "cb80d662a0319ff87af99cbd8b2000b5b9f7787ee6eb8fecb0d7fceab1e25c7e",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "f111f729b3198c31ba899715b0d385fc3072c603d2ee20bcf5f16fb605445c14",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "MR2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "4920ba836cc421fca8ba5fbb009dc31a160913a47bc471fcc603505a75449e85",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "8f4f7c7cb26f5e4bf3ec88bc6fc2b2661d86981d0c13f477929326e6c8f1cc31",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "e7e2ce44f4fa73a9bc200c5785091fecc532382ff248bd9a560771b13a711d6d",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "d1607318eb201864ba41077abcf22913d278e5a5ab5e0cf380c1858f1ffc7fcd",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "c6bd7ca3d7c4f3ffb697c26de29a41c6ceb34f9721f632dac0186da03e44b788",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "85eadef618d3a3c8f1a805ce00cf123e76c22bee1b74631a37e1717b65db63e9",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "SCMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/_unincorporated",
+  "new_fingerprint": "65f81651946ff5b97143967b81e619094425fd74e8d0c56b8940d610fa164ba3",
+  "new_quote": "or/clackamas/_unincorporated/845/845.01.txt#L3,L7",
+  "old_fingerprint": "71071d00b483fa67421eea0baa1d2d58d69607b7cd70b7f441529df3cc2d4806",
+  "old_quote": "or/clackamas/_unincorporated/zdo.845.txt#L3,L7",
+  "when_key": "",
+  "zone": "PMU1"
+ }
+]

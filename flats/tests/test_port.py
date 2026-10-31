@@ -865,7 +865,7 @@ def test_lr7_yards_all_come_from_the_row_the_zone_already_quoted() -> None:
     for name, expected in yards.items():
         got = res.values[name]
         assert got.value == expected, f"{name} is not the {expected} the row prints"
-        assert got.prov.quote and got.prov.quote.endswith("#L409-L411"), (
+        assert got.prov.quote and got.prov.quote.endswith("39.4862.txt#L12-L14"), (
             f"{name} must quote the header and the row together — four bare "
             f"numbers under four headers is how two of them got invented"
         )
@@ -1004,7 +1004,7 @@ def test_clackamas_vr_rows_are_read_by_counting_their_values() -> None:
         res = rules.resolve("or/clackamas/_unincorporated", zone)
         held = res.values["min_lot_sqft"]
         assert held.value == 7000
-        assert held.prov.quote.startswith("or/clackamas/_unincorporated/zdo.845.txt")
+        assert held.prov.quote.startswith("or/clackamas/_unincorporated/845/845.01.txt")
 
 
 def test_the_three_derived_numbers_now_come_from_documents() -> None:

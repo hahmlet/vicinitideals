@@ -1,0 +1,44 @@
+§ 39.4804 ANALYSIS OF ALLOWED
+SHADE ON SOLAR FEATURE.
+(A) The applicant is exempt from MCC
+39.4804 if the lot(s) south of and adjoining the applicant's property is exempt from MCC
+39.4801.
+
+(B) Applicants shall be encouraged to design and site a proposed habitable structure so that the lowest height of the solar feature(s) will not be shaded by buildings or nonexempt trees on lot(s) to the south.
+The applicant shall complete the following calculation procedure to determine if the solar feature(s) of the proposed structure will be shaded.
+To start, the applicant shall choose which of the following sources of shade originating from adjacent lot(s) to the south to use to calculate the maximum shade height at the north property line:
+(1) Existing structure(s) or non-exempt trees; or
+(2) The maximum shade that can be cast from future buildings or non-exempt trees, based on Table C. If the lot(s) to the south can be further divided, then the north-south dimension shall be assumed to be the minimum lot width required for a new lot in that zone.
+(C) The height of the lowest point of any solar feature of the proposed structure shall be calculated with respect to either the average elevation or the elevation at the midpoint of the front lot line of the lot to the south.
+(D) The applicant shall determine the height of the shadow that may be cast upon the applicant's solar feature by the source of shade selected in Subsection (B) by using the following formula or Table B.
+SFSH = SH (SGL/2.5)
+Where:
+SFSH = the allowed shadow height on the solar feature (see MCC 39.4813 Figure 8).
+SH = the height of the shade at the northern lot line of lot(s) to the south as determined in
+Section Table C.
+SGL = the solar gain line (the distance from the solar feature to the northern lot line of adjacent lot(s) to the south, see MCC 39.4813
+Figure 7).
+
+Table C may be used to determine (SH) in the above formula.
+Table C
+North-South Lot Dimension of Adjacent Lot(s) to the South 100 95 90 85 80 75 70 65 60 55 50 45 40
+Allowed Shade Height at the North Property
+Line of Adjacent Lot(s) to the South 12 12 12 13 14 15 16 17 18 19 20 21 22
+(E) If the allowed shade height on the solar feature calculated in Subsection (D) is higher than the lowest height of the solar feature calculated in Subsection (C) the applicant shall be encouraged to consider any changes to the house design or location which would make it practical to locate the solar feature so that it will not be shaded in the future.
+Table B. Maximum Permitted Height of Shadow at Solar Feature (In Feet)
+Distance from Solar Gain
+Line to Lot Line (In Feet)
+Allowed Shade Height at Northern Lot Line of Adjacent
+Lot(s) to the South (In Feet)
+
+22 21 20 19 18 17 16 15 14 13 12
+50  2 1
+45  4 3 2 1
+40  6 5 4 3 2 1
+35  8 7 6 5 4 3 2 1
+30  10 9 8 7 6 5 4 3 2 1
+25  12 11 10 9 8 7 6 5 4 3 2
+20  14 13 12 11 10 9 8 7 6 5 4
+15  16 15 14 13 12 11 10 9 8 7 6
+10  18 17 16 15 14 13 12 11 10 9 8
+5  20 19 18 17 16 15 14 13 12 11 10

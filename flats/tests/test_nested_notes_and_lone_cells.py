@@ -323,11 +323,11 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     # which is the property the old `not unread` assertion had and a bare
     # number would lose.
     assert unread == (
-        [("zdo.510.txt", n) for n in (1609, 1611)]
-        + [("zdo.513.txt", n) for n in (334, 338, 340, 342, 344, 346, 348, 350)]
-        + [("zdo.513.txt", n) for n in range(365, 380, 2)]
-        + [("zdo.602.txt", n) for n in range(396, 409, 2)]
-        + [("zdo.604.txt", n) for n in range(193, 204, 2)]
+        [("510.05.txt", n) for n in (1606, 1608)]
+        + [("513.04.txt", n) for n in (313, 318, 321, 323, 325, 327, 329, 331)]
+        + [("513.04.txt", n) for n in (346, 349, 352, 355, 357, 359, 361, 363)]
+        + [("602.05.txt", n) for n in (415, 418, 420, 422, 424, 426, 430)]
+        + [("604.04.txt", n) for n in (177, 180, 187, 189, 191, 193)]
     )
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
     # 74 until 2026-09-08, when Table 315-4's four districts were encoded and

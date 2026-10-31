@@ -133,8 +133,8 @@ def test_every_bonus_note_is_ruled_and_nine_densities_come_unblocked() -> None:
     affordability covenants, mixed use, park dedication or habitat protection.
     A bonus can only add, so a pod that fits without one still fits."""
     ruled = {row.quote: row for row in dispositions(CLACKAMAS)}
-    for line in (186, 187, 188, 189, 190):
-        row = ruled[f"{CLACKAMAS}/zdo.1012.txt#L{line}"]
+    for line in (109, 110, 111, 112, 113):
+        row = ruled[f"{CLACKAMAS}/1012/1012.05.txt#L{line}"]
         assert row.state == "dismissed"
         assert "Bonus Density" in row.reason
     assert not [row for row in qualified() if row.blocking]

@@ -96,7 +96,7 @@
 # values under seventy-seven notes, and not one encoded number moved.
 notes:
   # --- Table 315-1, limited-use conditions ---------------------------
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1064"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1034"
     digest: "2e0890ab79bf"
     state: dismissed
     reason: >-
@@ -108,7 +108,7 @@ notes:
       rule being conservative rather than a claim that the note is about a
       quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1074"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1044"
     digest: "45714fcf1e08"
     state: dismissed
     reason: >-
@@ -120,7 +120,7 @@ notes:
       rule being conservative rather than a claim that the note is about a
       quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1076"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1046"
     digest: "bb6f17b4ba2e"
     state: dismissed
     reason: >-
@@ -132,7 +132,7 @@ notes:
       rule being conservative rather than a claim that the note is about a
       quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1084"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1054"
     digest: "e7f5b0ecf894"
     state: dismissed
     reason: >-
@@ -144,7 +144,7 @@ notes:
       rule being conservative rather than a claim that the note is about a
       quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1098"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1069-L1070"
     digest: "8e6280905f68"
     state: dismissed
     reason: >-
@@ -156,7 +156,7 @@ notes:
       rule being conservative rather than a claim that the note is about a
       quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1268"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1241"
     digest: "11f6c6281d46"
     state: dismissed
     reason: >-
@@ -179,7 +179,7 @@ notes:
       only way back in. A digest match carries a reason into a table the
       reason was never about, so a reason has to be about the sentence
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1100"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1072"
     digest: "26401c04626a"
     state: dismissed
     reason: >-
@@ -193,7 +193,7 @@ notes:
       The only Table 315-1 district whose Quadplexes cell is X is R-2.5,
       which is not encoded
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1102"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1074"
     digest: "c49ae229b409"
     state: dismissed
     reason: >-
@@ -216,7 +216,7 @@ notes:
       facilities and homes. Still one primary type per lot, and the pod
       is one quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1082"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1052"
     digest: "24cc92c10cd9"
     state: dismissed
     reason: >-
@@ -225,7 +225,7 @@ notes:
       legally established institutional use. A different use and a
       restriction on it; printed on no dwelling row
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1134"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1110-L1111"
     digest: "6fb55542bad1"
     state: dismissed
     reason: >-
@@ -235,7 +235,7 @@ notes:
       permits. A use row this building is not, and the relief it grants
       is to a use inside a dwelling, not to the dwelling
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1104"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1076"
     digest: "3a9ebc198e0b"
     state: dismissed
     reason: >-
@@ -248,7 +248,7 @@ notes:
       layer holds and reads, which is the only reason it can be called
       read
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1106"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1078-L1079"
     digest: "73ab4c9d0d92"
     state: dismissed
     reason: >-
@@ -256,14 +256,14 @@ notes:
       also qualifies as a cottage cluster, and a conditional use
       otherwise. Another use entirely
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1108"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1081-L1082"
     digest: "e05111589381"
     state: dismissed
     reason: >-
       note 11 is note 10 with prohibition in place of conditional use in
       the remaining districts. Another use entirely
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1110"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1084"
     digest: "8c414067f3c7"
     state: dismissed
     reason: >-
@@ -272,7 +272,7 @@ notes:
       quadplex permission is quoted from a line in this block's region,
       and the Quadplexes cell carries notes 8 and 9 and nothing else
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1112"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1086-L1087"
     digest: "1e09d8393712"
     state: dismissed
     reason: >-
@@ -280,7 +280,7 @@ notes:
       MR-1 and 2,420 in MR-2. A different housing type in two districts
       this layer does not hold
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1114"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1089"
     digest: "b7786b5b8711"
     state: dismissed
     reason: >-
@@ -290,14 +290,14 @@ notes:
       block's region, and in neither of the two use tables this sentence
       appears in is the marker printed on a dwelling row
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1116"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1091"
     digest: "2f142aa74ef7"
     state: dismissed
     reason: >-
       note 15 lets the county authorise a similar use under Section 106. A
       procedure for a use not listed, and a quadplex is listed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1118"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1093"
     digest: "b6cea6578eb2"
     state: dismissed
     reason: >-
@@ -305,14 +305,14 @@ notes:
       822. An occupancy question about what happens inside a dwelling, not
       a standard the building is measured against
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1120"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1095"
     digest: "6d042bc9a5a3"
     state: dismissed
     reason: >-
       note 17 caps hotels in the SHD District at 80 units per gross acre.
       Another use, and a district this layer does not hold
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1122"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1097-L1098"
     digest: "580c5d3f9ac5"
     state: dismissed
     reason: >-
@@ -322,7 +322,7 @@ notes:
       one -- a rule about what is inside a dwelling unit, which no
       dimension this layer encodes can express and no lot can fail
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1124"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1100"
     digest: "63ae7c367462"
     state: dismissed
     reason: >-
@@ -331,7 +331,7 @@ notes:
       tables this sentence appears in, the marker is printed on the
       communication tower rows and on no dwelling row
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1126"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1102"
     digest: "3d5db75d9ccd"
     state: dismissed
     reason: >-
@@ -340,7 +340,7 @@ notes:
       quadplex permission is quoted from a line in this block's region,
       and the Quadplexes cell carries notes 8 and 9 and nothing else
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1128"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1104"
     digest: "00435788ff87"
     state: dismissed
     reason: >-
@@ -352,13 +352,13 @@ notes:
       standby setback read onto a quadplex would fail nearly every lot in
       the county
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1130"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1106"
     digest: "86423bc1aca0"
     state: dismissed
     reason: >-
       note 22 is note 21 at 30 feet. Same rows, same reason
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1132"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1108"
     digest: "90110df1ca1a"
     state: dismissed
     reason: >-
@@ -369,7 +369,7 @@ notes:
       of the two use tables this sentence appears in is the marker printed
       on a dwelling row
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1136"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1113"
     digest: "976f9f0a4710"
     state: dismissed
     reason: >-
@@ -380,7 +380,7 @@ notes:
       and the Quadplexes cell carries notes 8 and 9 and nothing else
 
   # --- Table 315-2, the eight low-density districts -------------------
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1277"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1271-L1272"
     digest: "b3163e8fb64f"
     state: dismissed
     # Rewritten 2026-09-08. The reason used to name Table 315-2 alone, and this
@@ -395,7 +395,7 @@ notes:
       this layer holds for a quadplex comes from Section 845.01, 7,000 square
       feet, which neither dimensional table touches
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1279"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1274-L1275"
     digest: "96b0141d95e6"
     state: dismissed
     reason: >-
@@ -404,7 +404,7 @@ notes:
       by-right lot is measured against, and it is looser than what is encoded
       either way
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1281"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1277"
     digest: "ed75256d354d"
     state: dismissed
     reason: >-
@@ -414,14 +414,14 @@ notes:
       than as a standard on the parent lot. Printed twice in this section, once
       under each of the two dimensional tables
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1283"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1279"
     digest: "5b64244d9473"
     state: dismissed
     reason: >-
       note 4 is note 3 at one-quarter of the DLA. Same path, same lever, same
       reason
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1285"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1281"
     digest: "5db2b66c057b"
     state: dismissed
     reason: >-
@@ -429,7 +429,7 @@ notes:
       development. Looser than the encoded 50, and a PUD is a different
       application rather than a by-right standard
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1287"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1283"
     digest: "e26109f776ae"
     state: dismissed
     reason: >-
@@ -439,14 +439,14 @@ notes:
       the parent lot. Printed twice in this section, once under each of the two
       dimensional tables, which is why the note numbers differ
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1289"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1285"
     digest: "88f1b6e93c2c"
     state: dismissed
     reason: >-
       note 7 gives a swimming pool accessory to a dwelling its own setbacks. A
       different structure
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1291"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1287-L1289"
     digest: "78ce92f882aa"
     state: dismissed
     reason: >-
@@ -456,7 +456,7 @@ notes:
       and single room occupancies. Four attached dwellings are none of those,
       and both regimes are looser than the encoded 5 and 20
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1293"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1291"
     digest: "5b676117a183"
     state: dismissed
     reason: >-
@@ -464,7 +464,7 @@ notes:
       housing lot, except for townhouses. A measurement rule for a split plat;
       this layer screens the parent lot
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1295"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1293"
     digest: "044462c483a8"
     state: dismissed
     reason: >-
@@ -479,7 +479,7 @@ notes:
       republished the chapter: the list inside the note is now lettered
       a. and b. instead of numbered; no word changed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1301"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1299"
     digest: "1c23ed43a42d"
     state: dismissed
     reason: >-
@@ -496,7 +496,7 @@ notes:
       republished the chapter: the grid's column headings are laid out
       in a different order; no number changed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1310"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1308"
     digest: "8bd57e261c44"
     state: dismissed
     reason: >-
@@ -510,7 +510,7 @@ notes:
       list, so nothing is relaxed for it either
 
   # --- Table 315-3, VR-5/7 and VR-4/5 ---------------------------------
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1482"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1499-L1500"
     digest: "f23e9c93bc7f"
     state: dismissed
     reason: >-
@@ -518,7 +518,7 @@ notes:
       Minimum lot size here comes from Section 845.01, and maximum lot size is
       not encoded
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1484"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1502"
     digest: "ed75256d354d"
     state: dismissed
     reason: >-
@@ -528,39 +528,39 @@ notes:
       than as a standard on the parent lot. Printed twice in this section, once
       under each of the two dimensional tables
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1486"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1504"
     digest: "3bfb3f0b8b36"
     state: dismissed
     reason: >-
       note 3 confines the minimum and maximum lot size standards to lots for
       townhouses. Neither is encoded from this table
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1488"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1506"
     digest: "7293fefcf19e"
     state: dismissed
     reason: >-
       note 4 confines the maximum lot size standard, which is not encoded
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1490"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1508"
     digest: "3385a2b1d079"
     state: dismissed
     reason: >-
       note 5 offers an average-lot-size alternative in a subdivision. A
       lot-size standard, and this layer takes lot size from Section 845
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1492"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1510"
     digest: "2fd129b8d35b"
     state: dismissed
     reason: >-
       note 6 is note 5 at 5,000 square feet. Same reason
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1494"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1512"
     digest: "63059334807c"
     state: dismissed
     reason: >-
       note 7 is note 5 at 2,500 square feet. Same reason
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1496"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1514"
     digest: "e26109f776ae"
     state: dismissed
     reason: >-
@@ -570,7 +570,7 @@ notes:
       the parent lot. Printed twice in this section, once under each of the two
       dimensional tables, which is why the note numbers differ
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1498"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1516"
     digest: "b5991bc086a7"
     state: dismissed
     reason: >-
@@ -580,7 +580,7 @@ notes:
       that, so on the height cells this note reads in the direction that keeps
       the 35 feet. It cannot loosen anything here
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1500"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1518"
     digest: "736add88455b"
     state: dismissed
     reason: >-
@@ -589,13 +589,13 @@ notes:
       already encodes both halves of the cell it defines -- 10 feet to a
       recessed or absent garage, 19.5 to a non-recessed one
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1502"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1520"
     digest: "bc6e21f7d3e4"
     state: dismissed
     reason: >-
       note 11 defines a non-recessed garage. The other half of note 10
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1504"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1522-L1523"
     digest: "82298db45ec0"
     state: dismissed
     reason: >-
@@ -615,7 +615,7 @@ notes:
       cottage cluster, so the encoded 18 foot maximum front setback binds this
       pod in full and no value moves
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1506"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1525"
     digest: "74d7b505ab19"
     state: dismissed
     reason: >-
@@ -623,7 +623,7 @@ notes:
       plat perimeter and against a road. The split-plat regime, looser, and
       this layer screens the parent lot
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1508"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1527"
     digest: "e5aac3f422d5"
     state: dismissed
     reason: >-
@@ -631,7 +631,7 @@ notes:
       yard. A projection allowance for a feature the pod does not have, and
       looser than the setback encoded
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1510"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1529"
     digest: "9add6dbbdb66"
     state: unmeasured
     fact: abuts_accessway
@@ -641,7 +641,7 @@ notes:
       pod is measured against, and nothing here holds a lot's accessways. It
       can only add a front line, so it is the direction that tightens
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1512"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1531"
     digest: "f27e86f0edb8"
     state: dismissed
     reason: >-
@@ -651,14 +651,14 @@ notes:
       one that only ever loosens, so declining it keeps the encoded 10 feet,
       which is the safe direction
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1514"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1533"
     digest: "eb8ff75c4145"
     state: dismissed
     reason: >-
       note 17 lets awnings, porches, bays and overhangs project four feet into
       the minimum front setback. A projection allowance, looser
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1516"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1535"
     digest: "19199f481184"
     state: dismissed
     reason: >-
@@ -667,7 +667,7 @@ notes:
       building (see note 12), turning on an easement no layer here holds, and
       declining a relief is the safe direction
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1518"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1537"
     digest: "bdb1953624c8"
     state: dismissed
     reason: >-
@@ -675,7 +675,7 @@ notes:
       frontage from that same maximum. A relief again, and on a lot too narrow
       to hold a 56 foot building across its frontage in any case
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1520"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1539"
     digest: "44d241bbf4f0"
     state: dismissed
     reason: >-
@@ -683,7 +683,7 @@ notes:
       front lot lines, which is a corner lot being asked for less. A relief
       again
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1522"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1541-L1542"
     digest: "8a24ae670fb1"
     state: dismissed
     reason: >-
@@ -691,7 +691,7 @@ notes:
       development except at the plat perimeter. A different application path,
       and looser than the encoded 15 and 5
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1524"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1544"
     digest: "8ec28c857dde"
     state: dismissed
     reason: >-
@@ -701,7 +701,7 @@ notes:
       foot front one, so the note can only ever loosen. Declining it keeps the
       front setback on that face, which is the safe reading
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1526"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1546"
     digest: "1a5578c49dfc"
     state: dismissed
     reason: >-
@@ -710,7 +710,7 @@ notes:
       7,000 square foot minimum lot size comes from; 845 states no height,
       setback or coverage of its own to add here
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1528"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1548"
     digest: "f5be2dbc7a61"
     state: dismissed
     reason: >-
@@ -720,7 +720,7 @@ notes:
       or prefabricated structures. An exemption from design standards
       this screen does not encode, for building types the pod is not
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1530"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1550"
     digest: "e76ff403aae3"
     state: dismissed
     reason: >-
@@ -729,7 +729,7 @@ notes:
       reads: the Standards for Primary Dwellings height row is marked 9, and
       24 belongs to the accessory-building table below it
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1532"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1552"
     digest: "59b7f4212530"
     state: dismissed
     reason: >-
@@ -738,7 +738,7 @@ notes:
       this layer already measures against the non-recessed figure of 19.5
       feet, which is the stricter of the two
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1534"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1554"
     digest: "cce7b76698f3"
     state: dismissed
     reason: >-
@@ -747,7 +747,7 @@ notes:
       is exactly the side setback already encoded, so the note cannot move the
       value under any reading of which face it lands on
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1536"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1556"
     digest: "32b61c84b873"
     state: dismissed
     reason: >-
@@ -772,7 +772,7 @@ notes:
   # Every one is re-read against the building. Fourteen are dismissed again on
   # a reason about the note rather than about us, and two are not dismissals at
   # all: note 6 and note 14 both tighten a value we now carry.
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1621"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1643"
     digest: "79986fec9889"
     state: dismissed
     reason: >-
@@ -782,14 +782,14 @@ notes:
       ones, and the number it states is smaller than the 7,000 Section 845.01
       asks of a quadplex, so it could only ever relax
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1623"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1645"
     digest: "f241cefcdb55"
     state: dismissed
     reason: >-
       note 2 is note 1 for MR-2 at 2,420 square feet, and is dismissed for the
       same two reasons: a different building, and a looser number
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1625"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1647"
     digest: "809fce9a70b9"
     state: dismissed
     reason: >-
@@ -797,7 +797,7 @@ notes:
       setback instead of 15. An accessory structure we are not placing, and a
       relaxation of a standard we hold at the stricter figure
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1627"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1649"
     digest: "da23e47852bb"
     state: dismissed
     reason: >-
@@ -806,7 +806,7 @@ notes:
       townhouse, and Table 315-1 refuses townhouses in PMD and VA outright,
       so this reaches MR-1 and MR-2 only in a form we do not build
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1629"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1651"
     digest: "ef7be25e802e"
     state: dismissed
     reason: >-
@@ -814,7 +814,7 @@ notes:
       uses, and structures accessory to them, back to Table 315-2's setbacks.
       Neither describes this building
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1631"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1653"
     digest: "75dd43e1bdcd"
     state: unmeasured
     fact: site_specific_limitation
@@ -831,7 +831,7 @@ notes:
       dismissed: this can only withhold a GREEN, which is the right direction
       for a standard we can neither apply nor rule out
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1633"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1655"
     digest: "d6d21825d34e"
     state: dismissed
     reason: >-
@@ -839,7 +839,7 @@ notes:
       setback in VA. A projection allowance, which relaxes, and is left
       unclaimed the way every projection allowance in this layer is
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1635"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1657-L1658"
     digest: "0733dad8df78"
     state: dismissed
     reason: >-
@@ -850,7 +850,7 @@ notes:
       governs no value here. Recorded as scope, not as relevance: if RCHDR is
       ever encoded this note has to be read again, and it TIGHTENS the minimum
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1637"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1660"
     digest: "692e7300cf2c"
     state: dismissed
     reason: >-
@@ -858,7 +858,7 @@ notes:
       plazas on a Comprehensive Plan map. RCHDR is not encoded, and the note
       relaxes a maximum
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1639"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1662-L1663"
     digest: "2194504c3358"
     state: dismissed
     reason: >-
@@ -868,7 +868,7 @@ notes:
       ruling this layer already gives the identical sentence at Table 315-2
       note 8 and Table 315-3 note 21
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1641"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1665"
     digest: "14a01da44c72"
     state: dismissed
     reason: >-
@@ -876,7 +876,7 @@ notes:
       rear setbacks, or fifteen where the lot line abuts a low density or
       village district. An accessory structure we are not placing
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1643"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1667"
     digest: "a3af2a724fc2"
     state: dismissed
     reason: >-
@@ -889,7 +889,7 @@ notes:
       republished the chapter: the grid's column headings are laid out
       in a different order; no number changed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1651"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1675"
     digest: "e787a80395b8"
     state: dismissed
     reason: >-
@@ -898,7 +898,7 @@ notes:
       encoded. Recorded as scope: this TIGHTENS, and has to be read again
       before RCHDR is written
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1653"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1677"
     digest: "9e115ceea8df"
     state: encoded
     encoded_as: >-
@@ -917,7 +917,7 @@ notes:
       sits on the MR-1 and MR-2 cells alone -- PMD's side cell is a bare 30
       and VA's is a bare None -- so those are the two zones the variant is in
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1655"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1679"
     digest: "8de4641ed247"
     state: dismissed
     reason: >-
@@ -925,7 +925,7 @@ notes:
       townhouses do not share a common wall. A different building, and the
       plat form Table 315-1 refuses in two of the four districts encoded here
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1657"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1681"
     digest: "5251dc1d4a2c"
     state: dismissed
     reason: >-
@@ -945,14 +945,14 @@ notes:
   # heading rather than eighty from its last note. Note 23 alone carries
   # five lettered criteria and ate the remaining budget. All seven are use
   # permissions for things this screen does not place.
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1148"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1126"
     digest: "6315ce932f17"
     state: dismissed
     reason: >-
       note 26 permits only commercial schools, and exempts them from Section
       805. Not the use being placed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1150"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1128"
     digest: "cb8e3c726d32"
     state: dismissed
     reason: >-
@@ -960,14 +960,14 @@ notes:
       second dwelling under Section 847, and in the primary dwelling on the
       same lot as one. The pod is neither an RV nor a lot carrying one
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1152"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1130"
     digest: "5c7c81f190f3"
     state: dismissed
     reason: >-
       note 28 makes temporary signs regulated under Subsection 1010.13(A) a
       primary use. Signage is not a standard this screen reads
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1154"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1132"
     digest: "007da889bfe5"
     state: dismissed
     reason: >-
@@ -975,7 +975,7 @@ notes:
       are underground, vegetated, or approved alongside another land use
       permit. It classifies a facility, and imposes nothing on a dwelling
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1162"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1140"
     digest: "bad37a40addd"
     state: dismissed
     reason: >-
@@ -983,14 +983,14 @@ notes:
       Section 830 or sits inside a road right-of-way. Not the use being
       placed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1164"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1142"
     digest: "0268a5612847"
     state: dismissed
     reason: >-
       note 31 excludes shops, garages and administrative offices from the
       utility facility category. Not the use being placed
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1166"
+  - quote: "or/clackamas/_unincorporated/315/315.04.txt#L1144"
     digest: "c110135a8526"
     state: dismissed
     reason: >-
@@ -1002,7 +1002,7 @@ notes:
   # word of each. They are the document's first block, so their region reaches
   # back over the general density paragraph every max-density value quotes.
 
-  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L186"
+  - quote: "or/clackamas/_unincorporated/1012/1012.05.txt#L109"
     digest: "3999f97b14a1"
     state: dismissed
     reason: >-
@@ -1015,7 +1015,7 @@ notes:
       VR-4/5, VR-5/7 and VTH Districts, which is a bonus not offered
       rather than a base density reduced
 
-  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L187"
+  - quote: "or/clackamas/_unincorporated/1012/1012.05.txt#L110"
     digest: "07b4ddd3a717"
     state: dismissed
     reason: >-
@@ -1028,7 +1028,7 @@ notes:
       building or on one site. It defines a term inside an election
       nobody has made
 
-  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L188"
+  - quote: "or/clackamas/_unincorporated/1012/1012.05.txt#L111"
     digest: "f4ced53156ca"
     state: dismissed
     reason: >-
@@ -1040,7 +1040,7 @@ notes:
       the mixed-use bonus to the C-3, CC, OC and RTL Districts, none of
       which this layer encodes a density for
 
-  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L189"
+  - quote: "or/clackamas/_unincorporated/1012/1012.05.txt#L112"
     digest: "5852edb1fce7"
     state: dismissed
     reason: >-
@@ -1052,7 +1052,7 @@ notes:
       the habitat conservation area bonus in the VR-4/5, VR-5/7 and VTH
       Districts. A bonus not offered
 
-  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L190"
+  - quote: "or/clackamas/_unincorporated/1012/1012.05.txt#L113"
     digest: "8f253fdd74ca"
     state: dismissed
     reason: >-
@@ -1073,7 +1073,7 @@ notes:
   # Boundary", prints 0 on every dwelling row, Quadplex included, and
   # 1015.02(B)(1) says the same in prose. The conversion note and the R-2.5
   # placement note were repealed with the columns they sat on.
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L241"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L230-L231"
     digest: "33f4c3b9a582"
     state: encoded
     encoded_as: parking_min_per_unit
@@ -1086,7 +1086,7 @@ notes:
       allowed in the applicable zoning district" -- which is not reached
       here, because the column this layer reads states a number
 
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L243"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L233"
     digest: "eb79bfd5754c"
     state: encoded
     encoded_as: parking_min_per_unit
@@ -1097,7 +1097,7 @@ notes:
       Section 315 or 510 district inside the UGB, so this is the note
       that puts them in the column that reads 0
 
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L245"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L235"
     digest: "837a1fcdb288"
     state: dismissed
     reason: >-
@@ -1109,7 +1109,7 @@ notes:
       never charges a stall above the floor of one a unit, so it cannot
       bind
 
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L247"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L237"
     digest: "57a21ed791b4"
     state: dismissed
     reason: >-
@@ -1129,7 +1129,7 @@ notes:
       county's own cross-reference went stale; the maximum it meant is
       note 5
 
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L249"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L239"
     digest: "63c6d8191c45"
     state: dismissed
     reason: >-
@@ -1142,7 +1142,7 @@ notes:
 
 
   # --- ZDO 1015's other two note blocks -------------------------------
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L221"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L210"
     digest: "11dedcc1b473"
     state: dismissed
     reason: >-
@@ -1153,7 +1153,7 @@ notes:
       1015-1's Dwellings row states no figure and says "see Table 1015-2"
       instead. This note governs the shops and the bowling alleys
 
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L223"
+  - quote: "or/clackamas/_unincorporated/1015/1015.02.txt#L212"
     digest: "10948af7319a"
     state: dismissed
     reason: >-
@@ -1164,8 +1164,8 @@ notes:
       sends the question to Table 1015-2. The dwelling value is read
       there, where the urban column says 0 and agrees with this note
 
-  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L351"
-    digest: "4d0cc33649f8"
+  - quote: "or/clackamas/_unincorporated/1015/1015.03.txt#L63"
+    digest: "28004aa4c3fc"
     state: dismissed
     reason: >-
       Table 1015-3 is bicycle parking, and this note discounts it to a fifth
@@ -1213,7 +1213,7 @@ notes:
   # no setback, so they qualify nothing; ruling them would mean writing
   # reasons about numbers we do not have.
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L616"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L586"
     digest: "01c5d2a325ef"
     state: dismissed
     reason: >-
@@ -1221,7 +1221,7 @@ notes:
       that conditional use to emergency aircraft. An airstrip is not a
       dwelling and this note only makes it smaller
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L620"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L590"
     digest: "0832e55f54d9"
     state: dismissed
     reason: >-
@@ -1233,7 +1233,7 @@ notes:
       republished the chapter: renumbered from 2 to 3, and it now points
       at the new note 2
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L618"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L588"
     digest: "666deeed3aad"
     state: dismissed
     reason: >-
@@ -1242,7 +1242,7 @@ notes:
       legally established institutional use. The Child Care Centers row,
       a different use
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L622"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L592-L593"
     digest: "9f5cf7663c25"
     state: dismissed
     reason: >-
@@ -1252,7 +1252,7 @@ notes:
       and retailing, each of which has its own row. It sorts crops from
       cannabis; neither side of that sorting is a dwelling
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L624"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L595"
     digest: "03fdbb513129"
     state: dismissed
     reason: >-
@@ -1261,7 +1261,7 @@ notes:
       category. It moves a public building between two rows of this table.
       Neither row is a dwelling, and no reading of it reaches one
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L626"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L597"
     digest: "8bb72b90ebd3"
     state: dismissed
     reason: >-
@@ -1269,7 +1269,7 @@ notes:
       alteration or expansion of a service that lawfully exists. The same
       shape as note 2 on child care, and the same answer
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L628"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L599-L600"
     digest: "66d90b0d1534"
     state: dismissed
     reason: >-
@@ -1280,7 +1280,7 @@ notes:
       this note only ever subtracts. It is one of the three sections note 8
       excepts, which is why it was followed rather than skimmed
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L630"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L602"
     digest: "d113f786c26d"
     state: dismissed
     reason: >-
@@ -1290,7 +1290,7 @@ notes:
       existing historic house into a second dwelling and cannot produce a new
       four-unit building. A restriction on it reaches this pod even less
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L632"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L604"
     digest: "a0096903b8af"
     state: encoded
     encoded_as: >-
@@ -1306,7 +1306,7 @@ notes:
       multifamily row anywhere in the table to print it on. 316.03(A)(1)
       supplies the other half -- "Uses not listed are prohibited"
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L634"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L606"
     digest: "4b0e2593b004"
     state: dismissed
     reason: >-
@@ -1317,7 +1317,7 @@ notes:
       self-contained dwellings, and note 8 is on the same cells saying a lot
       gets one of the five listed things
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L636"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L608"
     digest: "92a3940c0f69"
     state: dismissed
     reason: >-
@@ -1326,7 +1326,7 @@ notes:
       Christmas trees -- and it confines those to lots larger than five acres.
       A farm-size floor on farming
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L638"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L610"
     digest: "54eb716c8ca9"
     state: dismissed
     reason: >-
@@ -1339,7 +1339,7 @@ notes:
       sentence is gone -- livestock in RA-2, RRFF-5, FF-10 and FU-10 is
       now exempt from Section 821. Still about animals
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L640"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L612"
     digest: "bedffcf61394"
     state: dismissed
     reason: >-
@@ -1354,7 +1354,7 @@ notes:
       closed here, because the restriction itself may well bite an urban
       district that does permit this pod
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L642"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L614"
     digest: "ff76a7523aec"
     state: dismissed
     reason: >-
@@ -1368,7 +1368,7 @@ notes:
       is not similar to a lodge, a broadcast tower or a campground, so
       Section 106 is not a path to it here
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L644"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L616"
     digest: "3174ffbdb69a"
     state: dismissed
     reason: >-
@@ -1377,7 +1377,7 @@ notes:
       elsewhere in the table -- a business run out of a dwelling somebody
       already has, not a permission to build one
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L646"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L618"
     digest: "5560ea8e0705"
     state: dismissed
     reason: >-
@@ -1385,7 +1385,7 @@ notes:
       from all property lines. A setback, but on a kennel, and read off the
       kennel's own cells. It moves dog runs
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L648"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L620-L621"
     digest: "61b5e84bf30d"
     state: dismissed
     reason: >-
@@ -1396,7 +1396,7 @@ notes:
       chapter where the county lists the dwellings it has in mind and an
       attached four-unit building is not among them
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L650"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L623"
     digest: "c2f4e64b1496"
     state: dismissed
     reason: >-
@@ -1404,7 +1404,7 @@ notes:
       parking. This layer reads its parking numbers from 1015 directly and a
       produce stand's requirement is not a dwelling's
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L652"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L625"
     digest: "ec828323724e"
     state: dismissed
     reason: >-
@@ -1412,7 +1412,7 @@ notes:
       grown on site plus agricultural products from the surrounding community.
       A rule about produce
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L658"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L631"
     digest: "264b507ae393"
     state: dismissed
     reason: >-
@@ -1421,7 +1421,7 @@ notes:
       One horse per acre or five in total is not a standard a building is
       measured against
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L664"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L639"
     digest: "516882ba0102"
     state: dismissed
     reason: >-
@@ -1432,7 +1432,7 @@ notes:
       residential land rather than onto it, and read off those rows' cells.
       It moves the neighbour, not the pod
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L668"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L643"
     digest: "9976f1abd0cc"
     state: dismissed
     reason: >-
@@ -1443,7 +1443,7 @@ notes:
       use. It is the corner store in somebody else's PUD, and a PUD is a
       different application path from the by-right lot this screen measures
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L682"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L658"
     digest: "8ee81048d73f"
     state: dismissed
     reason: >-
@@ -1451,7 +1451,7 @@ notes:
       Industrial and Regionally Significant Industrial areas of Metro's 2040
       Growth Concept Map. A geography that subtracts a use we are not placing
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L684"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L660"
     digest: "72666ea7a16c"
     state: dismissed
     reason: >-
@@ -1459,7 +1459,7 @@ notes:
       or expansion of a school that lawfully exists. The same shape as notes 2
       and 5, on a third use
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L686"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L662-L663"
     digest: "3e0d7f0e9a3f"
     state: dismissed
     reason: >-
@@ -1468,7 +1468,7 @@ notes:
       second dwelling. A rule about letting a dwelling out by the night, which
       is downstream of the dwelling existing at all
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L688"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L665"
     digest: "d87d5b37166d"
     state: dismissed
     reason: >-
@@ -1477,7 +1477,7 @@ notes:
       note 27 and the same answer, narrowed by geography instead of by
       building
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L692"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L669"
     digest: "43502bb4548f"
     state: dismissed
     reason: >-
@@ -1485,7 +1485,7 @@ notes:
       growth boundary: components serving land outside one are prohibited.
       Infrastructure, and a prohibition on it
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L694"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L671"
     digest: "01c1f7c22406"
     state: dismissed
     reason: >-
@@ -1494,7 +1494,7 @@ notes:
       for the area described at OAR 660-011-0060(4)(b)(B). A sizing rule for
       a pipe
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L696"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L673"
     digest: "327dcafc9826"
     state: dismissed
     reason: >-
@@ -1519,7 +1519,7 @@ notes:
   # for: another application path, another building, a rule about creating
   # lots rather than building on one, or a relaxation.
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L722"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L700-L702"
     digest: "004e1b70a9ac"
     state: dismissed
     reason: >-
@@ -1530,7 +1530,7 @@ notes:
       three separate accommodations for the RA-1 duplex, every one of which
       says duplex and stops
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L724"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L704-L706"
     digest: "12f25c1ae2f4"
     state: dismissed
     reason: >-
@@ -1540,7 +1540,7 @@ notes:
       line adjustments." A rule about creating lots, not about building on one
       that exists, and it raises a minimum rather than lowering it
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L726"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L708"
     digest: "c33790abc8bf"
     state: dismissed
     reason: >-
@@ -1550,7 +1550,7 @@ notes:
       is about how lot area is counted for one standard. Nothing in it speaks
       to which uses are permitted
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L728"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L710"
     digest: "aa895e8a6308"
     state: dismissed
     reason: >-
@@ -1558,7 +1558,7 @@ notes:
       Estacada, Molalla and Sandy. Four cities named, a minimum stated, and a
       minimum lot size cannot admit a use the use table refuses
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L730"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L712"
     digest: "fed86b7e2bb1"
     state: dismissed
     reason: >-
@@ -1566,7 +1566,7 @@ notes:
       subdivision, partition or replat by the number of lots. A land division
       calculation, and the sentence names the three land divisions it is for
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L732"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L714-L716"
     digest: "22cefa4d591e"
     state: dismissed
     reason: >-
@@ -1574,7 +1574,7 @@ notes:
       development the individual minimum is two acres, five inside four named
       city UGBs, and the average is ten. A different application path
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L734"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L718"
     digest: "9a3e3b792364"
     state: dismissed
     reason: >-
@@ -1583,7 +1583,7 @@ notes:
       the table says 30. A rule that makes a setback smaller cannot make a
       building fail to fit
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L736"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L720"
     digest: "79e17afb9a04"
     state: dismissed
     reason: >-
@@ -1592,7 +1592,7 @@ notes:
       only ever gives ground back, so leaving it unencoded is the conservative
       reading, which is the direction that cannot produce a false GREEN
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L738"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L722-L723"
     digest: "c3fa09a59d7b"
     state: dismissed
     reason: >-
@@ -1600,7 +1600,7 @@ notes:
       except at the perimeter of the final plat. A different application path
       and a relaxation inside it, the same pair as note 8
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L740"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L725"
     digest: "6aefe0d9f4a4"
     state: dismissed
     reason: >-
@@ -1608,7 +1608,7 @@ notes:
       principal building on the lot, and this note is written for the shed
       behind it
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L742"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L727"
     digest: "5c664e26de95"
     state: dismissed
     reason: >-
@@ -1616,7 +1616,7 @@ notes:
       answer: an accessory building's rear setback is not the principal
       building's
 
-  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L744"
+  - quote: "or/clackamas/_unincorporated/316/316.04.txt#L729"
     digest: "ef64ce1e45ca"
     state: dismissed
     reason: >-
@@ -1665,7 +1665,7 @@ notes:
   # those today would be an amnesty collected by whoever encodes a dimension
   # here tomorrow. Left unread, they block, which is what unread is for.
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1242"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1214"
     digest: "fa10293dc0c2"
     state: dismissed
     reason: >-
@@ -1674,7 +1674,7 @@ notes:
       on the PMU column head in the table header, states no dimension, and
       grants and withholds nothing
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1244"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1216"
     digest: "49a9f1356696"
     state: encoded
     encoded_as: >-
@@ -1687,7 +1687,7 @@ notes:
       says a quadplex in OA is a minority share of somebody else's building.
       A freestanding pod on its own lot cannot be 40 percent of anything
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1246"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1218"
     digest: "f07c61492401"
     state: encoded
     encoded_as: >-
@@ -1697,14 +1697,14 @@ notes:
       of 40 percent of the total building floor area on a site may be limited
       use(s)." The quadplex is the limited use
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1248"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1220"
     digest: "e5f19b67917c"
     state: dismissed
     reason: >-
       note 4 makes a large assembly facility a conditional use. Printed on the
       Assembly Facilities row and on no other
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1252"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1224"
     digest: "713f812aff8f"
     state: dismissed
     reason: >-
@@ -1713,7 +1713,7 @@ notes:
       adult daycare, hotels, motels, retailing, food and beverage services,
       personal and convenience services -- and on no dwelling row
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1254"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1226"
     digest: "011e7e32a752"
     state: dismissed
     reason: >-
@@ -1727,7 +1727,7 @@ notes:
       are the same, with the inner list now numbered 1 and 2 instead of
       lettered
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1260"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1232-L1233"
     digest: "4e6f534fe770"
     state: dismissed
     reason: >-
@@ -1741,7 +1741,7 @@ notes:
       and, further down, new notes 23 and 38 were inserted); the words
       are the same
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1262"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1235"
     digest: "8359ebe6d4b6"
     state: dismissed
     reason: >-
@@ -1755,14 +1755,14 @@ notes:
       and, further down, new notes 23 and 38 were inserted); the words
       are the same
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1264"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1237"
     digest: "7f957a40168e"
     state: dismissed
     reason: >-
       note 10 prohibits drive-thru window service on designated Main Streets.
       Printed on the Drive-Thru Window Services row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1266"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1239"
     digest: "1ef80309cd23"
     state: dismissed
     reason: >-
@@ -1770,7 +1770,7 @@ notes:
       financial institution off a Main Street. Same row as note 10, and the
       pod has no window
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1270"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1243"
     digest: "84569d12a3d9"
     state: dismissed
     reason: >-
@@ -1792,7 +1792,7 @@ notes:
       are the same, except that single room occupancies were added to
       both lists. The reading does not change
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1272"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1245"
     digest: "3fde1ab50bed"
     state: dismissed
     reason: >-
@@ -1800,7 +1800,7 @@ notes:
       facility. Printed on the Congregate Housing Facilities row alone, which
       the county lists as a use distinct from a quadplex in the same group
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1274"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1247"
     digest: "6c42af4f5356"
     state: dismissed
     reason: >-
@@ -1816,7 +1816,7 @@ notes:
       are the same, except that single room occupancies were added to
       both lists
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1276"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1249"
     digest: "7fa589360646"
     state: encoded
     encoded_as: >-
@@ -1838,7 +1838,7 @@ notes:
       are the same, except that single room occupancies joined the list.
       Still only inside another primary use's building
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1278"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1251"
     digest: "ff0bbcc39732"
     state: dismissed
     reason: >-
@@ -1848,14 +1848,14 @@ notes:
       pod against the Quadplexes row throughout -- one building, four attached
       units, one lot
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1280"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1253"
     digest: "14d1a832d37d"
     state: dismissed
     reason: >-
       note 18 requires employee amenities to sit in the same structure as the
       use they are accessory to. Printed on the Employee Amenities row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1284"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1257-L1258"
     digest: "24a903e0d5ed"
     state: dismissed
     reason: >-
@@ -1868,7 +1868,7 @@ notes:
       and, further down, new notes 23 and 38 were inserted); the words
       are the same
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1286"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1260"
     digest: "5050462e9a72"
     state: dismissed
     reason: >-
@@ -1877,21 +1877,21 @@ notes:
       arithmetic and build order. Printed on the Fitness Facilities and
       Recreational Sports Facilities rows
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1298"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1272"
     digest: "c9371c234d85"
     state: dismissed
     reason: >-
       note 22 permits a use only in conjunction with a primary or another
       conditional use. Printed on the Heliports and Helistops rows
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1302"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1276"
     digest: "325b15a901e2"
     state: dismissed
     reason: >-
       note 24 lets a hotel keep a gift shop, newsstand and eating and drinking
       establishment in the same building. Printed on the Hotels row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1304"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1278"
     digest: "f6a9b230457e"
     state: dismissed
     reason: >-
@@ -1899,14 +1899,14 @@ notes:
       Manufacturing row, and it is about what may be manufactured there rather
       than about signage on a dwelling
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1306"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1280"
     digest: "0f70c44ec9c2"
     state: dismissed
     reason: >-
       note 26 is note 25 for C-2, where sign production is permitted outright.
       Same row
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1308"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1282"
     digest: "d5c47b63bd10"
     state: dismissed
     reason: >-
@@ -1919,7 +1919,7 @@ notes:
       and, further down, new notes 23 and 38 were inserted); the words
       are the same
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1310"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1284"
     digest: "8d55ffb85a0b"
     state: dismissed
     reason: >-
@@ -1927,7 +1927,7 @@ notes:
       devices and renewable fuel resources. Printed on the two manufacturing
       rows
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1312"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1286"
     digest: "8e5f05d9ac94"
     state: dismissed
     reason: >-
@@ -1935,27 +1935,27 @@ notes:
       requirements are similar to other primary uses in the district. Printed
       on the manufacturing, marijuana processing and research laboratory rows
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1314"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1288-L1289"
     digest: "70bce2924fdc"
     state: dismissed
     reason: >-
       note 30 requires marijuana processing to be wholly enclosed and bars
       cannabinoid extraction. Printed on the Marijuana Processing row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1316"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1291"
     digest: "00ee41ee9cc5"
     state: dismissed
     reason: >-
       note 31 permits only level one mobile vending units. Printed on the
       Mobile Vending Units row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1318"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1293"
     digest: "f18c2685dade"
     state: dismissed
     reason: >-
       note 32 is note 24 for motels. Printed on the Motels row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1320"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1295"
     digest: "34555483197f"
     state: dismissed
     reason: >-
@@ -1965,7 +1965,7 @@ notes:
       stalls are accessory parking, which this table lists separately in the
       customarily-permitted accessory row
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1322"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1297"
     digest: "8d1d21f6d6f6"
     state: dismissed
     reason: >-
@@ -1973,14 +1973,14 @@ notes:
       Structures row alone, and no structure this screen places has an
       understructure
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1328"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1303"
     digest: "61a1d6becb15"
     state: dismissed
     reason: >-
       note 37 bars operations that create hazards or noxious conditions.
       Printed on the Research Facilities and Laboratories row alone
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1332"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1308-L1309"
     digest: "4ea92348ec22"
     state: dismissed
     reason: >-
@@ -1995,20 +1995,20 @@ notes:
       and, further down, new notes 23 and 38 were inserted); the words
       are the same
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1334"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1311"
     digest: "fd171ab626ab"
     state: dismissed
     reason: >-
       note 40 permits commercial schools only. Printed on the Schools row
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1336"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1313"
     digest: "437c42ef7015"
     state: dismissed
     reason: >-
       note 41 limits schools to 30 percent of a site's total building floor
       area. Same row as note 40
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1338"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1315"
     digest: "252b335af7ce"
     state: dismissed
     reason: >-
@@ -2017,7 +2017,7 @@ notes:
       entertainment, decor, a liquor licence and its chefs. Printed on the
       food and beverage services row
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1354"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1331"
     digest: "12dfde94c588"
     state: dismissed
     reason: >-
@@ -2033,7 +2033,7 @@ notes:
       and, further down, new notes 23 and 38 were inserted); the words
       are the same
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1330"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1305-L1306"
     digest: "0b40c23b2572"
     state: dismissed
     reason: >-
@@ -2042,7 +2042,7 @@ notes:
       15 or fewer residents living in one dwelling unit Table 510-1
       permits. A use row this building is not
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1300"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1274"
     digest: "c25b124cd6a9"
     state: dismissed
     reason: >-
@@ -2071,19 +2071,19 @@ notes:
   # quotes cross; thirteen qualify nonresidential rows and one is the
   # dwelling row's own limitation, quoted with the refusal -------------
 
-  - quote: "or/clackamas/_unincorporated/zdo.401.txt#L351"
+  - quote: "or/clackamas/_unincorporated/401/401.04.txt#L296"
     digest: "cdebb4d66033"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.401.txt#L353"
+  - quote: "or/clackamas/_unincorporated/401/401.04.txt#L298"
     digest: "f267cf85e3a2"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.401.txt#L355"
+  - quote: "or/clackamas/_unincorporated/401/401.04.txt#L300-L301"
     digest: "1ebe8fbf58bd"
     state: dismissed
     reason: >-
@@ -2094,7 +2094,7 @@ notes:
       sales from a marijuana crop from the farm-income test. Same door,
       narrower
 
-  - quote: "or/clackamas/_unincorporated/zdo.401.txt#L357"
+  - quote: "or/clackamas/_unincorporated/401/401.04.txt#L303"
     digest: "c4144330bc58"
     state: dismissed
     reason: >-
@@ -2104,7 +2104,7 @@ notes:
       dwelling path this building is not on; the EFU refusal rests on
       Table 401-1's dwelling rows and 401.04
 
-  - quote: "or/clackamas/_unincorporated/zdo.401.txt#L361"
+  - quote: "or/clackamas/_unincorporated/401/401.04.txt#L307-L308"
     digest: "a123824c3d1b"
     state: dismissed
     reason: >-
@@ -2118,7 +2118,7 @@ notes:
       region the census reads and is meant to read -- a notes block
       governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L277"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L250"
     digest: "1e6f22345cc9"
     state: dismissed
     reason: >-
@@ -2135,7 +2135,7 @@ notes:
       letter word ("[5]A mental or psychiatric hospital"), which the
       glued-bracket shape did not take
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L281"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L255-L256"
     digest: "e5fe6e9b207d"
     state: dismissed
     reason: >-
@@ -2152,7 +2152,7 @@ notes:
       letter word ("[5]A mental or psychiatric hospital"), which the
       glued-bracket shape did not take
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L295"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L271-L272"
     digest: "3e12590b86af"
     state: dismissed
     reason: >-
@@ -2169,7 +2169,7 @@ notes:
       letter word ("[5]A mental or psychiatric hospital"), which the
       glued-bracket shape did not take
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L347"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L351"
     digest: "c1dbdf11b02b"
     state: dismissed
     reason: >-
@@ -2186,37 +2186,37 @@ notes:
       letter word ("[5]A mental or psychiatric hospital"), which the
       glued-bracket shape did not take
 
-  - quote: "or/clackamas/_unincorporated/zdo.401.txt#L359"
+  - quote: "or/clackamas/_unincorporated/401/401.04.txt#L305"
     digest: "ccea22730a0b"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.406.txt#L176"
+  - quote: "or/clackamas/_unincorporated/406/406.04.txt#L146"
     digest: "45648e7fec4b"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.511.txt#L130"
+  - quote: "or/clackamas/_unincorporated/511/511.05.txt#L96"
     digest: "1dd592cf02b1"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.511.txt#L132"
+  - quote: "or/clackamas/_unincorporated/511/511.05.txt#L98"
     digest: "43a09da4966c"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.511.txt#L134"
+  - quote: "or/clackamas/_unincorporated/511/511.05.txt#L100"
     digest: "08eb6d3eaa84"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L279"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L252-L253"
     digest: "57b58dd0e211"
     state: encoded
     encoded_as: >-
@@ -2224,31 +2224,31 @@ notes:
     reason: >-
       note 2 on Table 513-1 is the whole of housing in the RC district: one detached single-family dwelling is a primary use on a lot of record created on or before December 7, 1983, and otherwise a detached single-family dwelling is an accessory use. The row it qualifies names a detached single-family dwelling, and one of them; a four-unit attached building is neither the type nor the count, and the note only makes the row narrower. So it is quoted with the refusal rather than read against it
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L345"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L349"
     digest: "e41ed3cb5cc0"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.604.txt#L156"
+  - quote: "or/clackamas/_unincorporated/604/604.04.txt#L138"
     digest: "43c0f3503482"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.604.txt#L158"
+  - quote: "or/clackamas/_unincorporated/604/604.04.txt#L140-L141"
     digest: "43b5d2172339"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.604.txt#L176"
+  - quote: "or/clackamas/_unincorporated/604/604.04.txt#L159-L160"
     digest: "33291e45c982"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.604.txt#L178"
+  - quote: "or/clackamas/_unincorporated/604/604.04.txt#L162"
     digest: "bafa37608cc5"
     state: dismissed
     reason: >-
@@ -2264,97 +2264,97 @@ notes:
   # amnesty collected by whoever encodes a dimension there. See
   # test_nested_notes_and_lone_cells for the lines.
 
-  - quote: "or/clackamas/_unincorporated/zdo.511.txt#L152"
+  - quote: "or/clackamas/_unincorporated/511/511.05.txt#L118"
     digest: "7e97a58aec5c"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L283"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L258"
     digest: "1c0176a2e189"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L285"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L260"
     digest: "ba65c27a1721"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L287"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L262-L263"
     digest: "5ffc7caa14ff"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L289"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L265"
     digest: "39c1fb7ce3f9"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L299"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L276"
     digest: "851f491431a9"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L301"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L278"
     digest: "8f428b0184d5"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.513.txt#L309"
+  - quote: "or/clackamas/_unincorporated/513/513.04.txt#L286"
     digest: "1a120f162b5f"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L351"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L355"
     digest: "d68a3650162c"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L355"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L359-L360"
     digest: "cb4835857fc5"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L359"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L364-L365"
     digest: "e49f757600d5"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L361"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L367-L370"
     digest: "1e1dca6a3a8d"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L363"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L372-L377"
     digest: "7175de7e8d89"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L365"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L379-L382"
     digest: "fd1d4e4ec1c3"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L369"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L386"
     digest: "e14348a99f03"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/_unincorporated/zdo.602.txt#L383"
+  - quote: "or/clackamas/_unincorporated/602/602.05.txt#L400"
     digest: "57c60df31e67"
     state: dismissed
     reason: >-
@@ -2362,61 +2362,61 @@ notes:
 
 # --- ZDO 510 Table 510-2 notes, ruled 2026-10-08 with the SCMU and PMU1-3 blocks ---
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1531"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1509"
     digest: "055cbd40b11d"
     state: dismissed
     reason: >-
       governs NC land designated Low Density Residential, a column this note's marker is printed on and SCMU and PMU are not
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1533"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1511-L1512"
     digest: "e1efd08a5ffc"
     state: dismissed
     reason: >-
       limits the minimum lot size to subdivisions, partitions and line adjustments; SCMU takes its 7,000 square feet from 845.01 rather than the table's half acre, so the limit does not change the value, and an undersized lot of record is allowed anyway
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1535"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1514"
     digest: "a6b3cdbb838b"
     state: dismissed
     reason: >-
       relieves a lot developed only with a dwelling that is a nonconforming use; the pod is a new building and not that
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1537"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1516"
     digest: "6b60a95509ee"
     state: dismissed
     reason: >-
       relieves a lot developed only with a townhouse down to 2,000 square feet; relief that is not taken (the stricter 845.01 figure stands), and it can only loosen
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1539"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1518-L1521"
     digest: "859de02f76bb"
     state: dismissed
     reason: >-
       limits the minimum street frontage to land divisions; no frontage value is encoded for SCMU or PMU and the note can only loosen
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1541"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1523-L1524"
     digest: "8a91c9945d92"
     state: dismissed
     reason: >-
       makes the maximum front setback conditional on 1005.02(H); no maximum front setback is encoded for SCMU or PMU, which is the conservative direction for a ceiling the screen does not yet read
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1543"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1526-L1530"
     digest: "77c59910e266"
     state: dismissed
     reason: >-
       qualifies the maximum front setback, which is not encoded for SCMU or PMU (Main Streets of Map X-CRC-3 are not a lot fact); recorded in the PMU1 zone note
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1545"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1532-L1533"
     digest: "e87b46ce17fd"
     state: dismissed
     reason: >-
       lets a design review applicant on 25 acres or more propose its own setbacks, judged "equally effective ... in establishing a visual image, sense of place": a relaxation decided case by case (Steph 2026-10-14, a one-off decision is not a standard), so the regular setbacks hold
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1547"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1535"
     digest: "526324659ff3"
     state: dismissed
     reason: >-
       removes the minimum front setback on a Main Street frontage; PMU1 front minimum is already 0, so it cannot lower the value held
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1549"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1537"
     digest: "19581a1c2f4d"
     state: dismissed
     reason: >-
@@ -2424,31 +2424,31 @@ notes:
       this layer declares no abuts_residential_zone fact to condition it on; the note can
       only loosen the value held, so nothing is encoded under it
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1551"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1539"
     digest: "d0270af8258f"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1553"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1541-L1543"
     digest: "1944e5f7002f"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies; its step-up applies above 35 feet and the pod is 26
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1555"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1545"
     digest: "06a704e969f0"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1557"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1547-L1549"
     digest: "d29a18d3c2e1"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies; its step-up applies above 35 feet and the pod is 26
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1559"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1551"
     digest: "676d5f4495cb"
     state: dismissed
     reason: >-
@@ -2456,61 +2456,61 @@ notes:
       this layer declares no abuts_residential_zone fact to condition it on; the note can
       only loosen the value held, so nothing is encoded under it
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1561"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1553-L1555"
     digest: "7e0978759fbb"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies; its step-up applies above 35 feet and the pod is 26
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1563"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1557"
     digest: "2644d9dba9e4"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1565"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1559"
     digest: "d9ed395b46f8"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1567"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1561"
     digest: "5d90417c4d4b"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1569"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1563"
     digest: "5798907f9515"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1571"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1565"
     digest: "8ca01cef5823"
     state: dismissed
     reason: >-
       governs floor area ratio calculation; no minimum floor area ratio field exists and none is encoded for SCMU or PMU
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1573"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1567"
     digest: "c48872b2c321"
     state: dismissed
     reason: >-
       phased floor area ratio through a master plan; a master plan is the red-by-ruling path for PMU and nothing here encodes the ratio
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1575"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1569"
     digest: "8c623fba3df1"
     state: dismissed
     reason: >-
       defines office uses for the floor area ratio and the Table 510-3 site totals; neither is encoded for SCMU or PMU
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1577"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1571"
     digest: "accb4d91fdf1"
     state: dismissed
     reason: >-
       says how net acreage is figured for minimum density; the density minimums of SCMU and PMU2 and PMU3 are not encoded (no net-area definition in this layer to measure on)
 
-  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1579"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1573-L1574"
     digest: "2d1606545c4d"
     state: dismissed
     reason: >-

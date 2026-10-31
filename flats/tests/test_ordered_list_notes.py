@@ -54,6 +54,7 @@ pytestmark = pytest.mark.unit
 
 CLACKAMAS = "or/clackamas/_unincorporated"
 ZDO = f"{CLACKAMAS}/zdo.315.txt"
+SECTION = f"{CLACKAMAS}/315/315.04.txt"
 
 
 @pytest.fixture(scope="module")
@@ -280,8 +281,8 @@ def test_the_note_that_reads_as_a_relief_and_is_a_section_title(
     assert lines[1103].endswith(f"is subject to {title}.")
     assert lines[1280].startswith(f"[3] For townhouses developed pursuant to {title},")
 
-    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    note = ruled[1504]
+    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == SECTION}
+    note = ruled[1522]
     assert "maximum setback standards do not apply to cottage clusters" in note.text
     assert note.state == "dismissed"
     assert "TITLE of Section 845" in note.reason
@@ -294,8 +295,8 @@ def test_and_the_three_reliefs_that_hang_off_that_maximum_stand_on_their_own() -
     which is a reason that evaporates with the misreading. Each has to decline
     on its own merit -- a relief this screen does not take can refuse a lot the
     county would pass and can never pass one it would refuse."""
-    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    for line in (1516, 1518, 1520):
+    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == SECTION}
+    for line in (1535, 1537, 1539):
         assert ruled[line].state == "dismissed", line
         assert "relief" in ruled[line].reason.lower(), line
 
@@ -306,8 +307,8 @@ def test_and_the_one_that_rests_on_a_lot_fact_nobody_holds_is_not_dismissed() ->
     an accessway is not a street, so no layer here answers it. That is
     ``unmeasured``, against a condition registered for it -- the alternative is
     a dismissal that quietly assumes the lot has no accessway."""
-    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    note = ruled[1510]
+    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == SECTION}
+    note = ruled[1529]
     assert note.text.startswith("Frontage on an accessway shall be considered a front lot line")
     assert note.state == "unmeasured"
     assert note.fact == "abuts_accessway"
@@ -321,8 +322,8 @@ def test_the_two_that_only_ever_loosen_are_dismissed_as_such() -> None:
     five feet that is already the encoded side setback. Neither can move a
     value, so neither is unmeasured -- capping a verdict on a fact that cannot
     change the answer is how an honest signal turns into noise."""
-    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
-    for line in (1524, 1534):
+    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == SECTION}
+    for line in (1544, 1554):
         assert ruled[line].state == "dismissed", line
         assert "side lot line" in ruled[line].text, line
 

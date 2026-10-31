@@ -1,0 +1,6 @@
+§ 39.4805 SOLAR BALANCE POINT.
+If a structure does not comply with the maximum shade point height standard in MCC
+39.4801 and the allowed shade on a solar feature standard in MCC 39.4804, then the solar balance point of the lot shall be calculated (see MCC
+39.4813 Figure 8).
+The solar balance point is the point on the lot where a structure would most nearly comply with both of these standards, (i.e.
+the variation from both standards is minimized.).

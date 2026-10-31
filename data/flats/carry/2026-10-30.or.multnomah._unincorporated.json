@@ -1,0 +1,872 @@
+[
+ {
+  "field": "like",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "62ad1e10c7a9c709b53c6621066e2f15ca307b0d41f904ad334696e64452cf88",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4050.txt#L9-L12",
+  "old_fingerprint": "43f312cf1372dbc2db1187d4ad17d8aed63dc8fd5f0c0fcc4839f5f757114ebf",
+  "old_quote": "or/multnomah/_unincorporated/39.cfu.txt#L24-L30",
+  "when_key": "",
+  "zone": "CFU2"
+ },
+ {
+  "field": "parking_lot_line_buffer_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "620821cbeb64139399adea7f646caf46f7d748a5592f59cbb1df6bb2fdab017c",
+  "new_quote": "or/multnomah/_unincorporated/39/39.8045.txt#L23",
+  "old_fingerprint": "4f60f50375e7978fd6d0c9731de134eaa7a79f4aa627ed5754a72c2a7bc57807",
+  "old_quote": "or/multnomah/_unincorporated/39.design-review.txt#L288-L293",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "251a5a765bad23f53806274cd692a381e1083bc9e627901eab6c0e8eb618afaf",
+  "new_quote": "or/multnomah/_unincorporated/39/39.8045.txt#L1-L2,L8,L10-L11",
+  "old_fingerprint": "f2b5ef75a5bef0b318589f0465de9ae386fefd886eb606f43fec230d72e52a04",
+  "old_quote": "or/multnomah/_unincorporated/39.design-review.txt#L235-L236,L250-L254,L257-L258",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "2b21e421bbd6a3598a714c5cdbd99daf24d38eec19c6604265610d28e3a8f6ff",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7,L11",
+  "old_fingerprint": "64c3abb2f833820be95465cd979f53fcae369c1598b29df29dd0279f2069f75b",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1352,L1356",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "d65de386a5046c70f4e172d6f802f2e3059710dbc6d79df8be733c8f927cd030",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9",
+  "old_fingerprint": "822a2b8573a3988af066a87ad5a5315e08a195e789df6633cf1bcda785c1ccd2",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "428ded5495d5c69d4b95244b8f775a330ad38317d71b3212f6eddfcdc1415596",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9",
+  "old_fingerprint": "b120f5987373306dddd09d4f0d1443f805b465b58fd2f94486a6e8fefb5f9f35",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "03013e8ba832dafec96f8e863418fac1fcd5afb21558a52f667205c9132f5532",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9",
+  "old_fingerprint": "048a047f776ca74aed72d1738b7ccde71e18ca118ccc271d95d1c9fb1791b091",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "29f42c86494ff3aa9ebbcb556ece6d114a91c922ffb18f689d8859b080372f52",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9",
+  "old_fingerprint": "cfc288c000713b1191cd07098d85e078fb57bb28ae2185741872d2c7c15166ba",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "2299e70538aa58bdaa3ea6994b0b00374d250fe05ce3ea7b85231f4b10562506",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7,L13",
+  "old_fingerprint": "d4d6c8edb9bb7269a802ddfa60d66bfb17deb9d52d1f68eb30ef4248ac3f8b80",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1352,L1358",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "042db4c0a58068deb0707fc0460aa244c7464ff6dce3d12dc18861637df296d6",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4245.txt#L1-L5",
+  "old_fingerprint": "aafc1ec8c7f4fbbf5b60c2702a4e7bb81671c89c79380c12e3fd58d48b648427",
+  "old_quote": "or/multnomah/_unincorporated/39.efu.txt#L1339-L1345",
+  "when_key": "",
+  "zone": "EFU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "e5bb1e866c36d7fcc8a4c837226048fa32502f4b6fee8b54bca93c58105cf3c5",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L1-L4",
+  "old_fingerprint": "4ee5e996c56153d1613d6e45d585048b40baed46c4fc124c6880ad15b7797c28",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L259-L264",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "eb075ae2e0ca53cb3ef7f82be42b276968851e0cbbcd47088548d2b4cceb0efd",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L13",
+  "old_fingerprint": "85684a53e6252c37729b2cd82285c05784f1927050480c51ff72f09ee80fb240",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L277",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "0650aff964a7d0ae3459bd5197116a0496453c9ea3f9e40da163fc8624343757",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11",
+  "old_fingerprint": "871488c5e762bb60dd21c6463764fabf8e493f3fb851ecc84e69fd928dc20e9f",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "0e72f02fd4955eb029788b96be1ef1716c54f83fa621661ca98d69cba3cff50e",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11",
+  "old_fingerprint": "f91ba3d2751c276caed969865eb41871c48bedb5d525029a50ecaa4c1086524f",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "8d7d759cb469f9f1ef8085eef623ac5579f3b19f22caced92d4b6666cadb76cd",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11",
+  "old_fingerprint": "1e297130672e3588e18dc58d1159cd00769868ffc81d8487025445a876717e8f",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "976cfea113c7713238bddbf02ae81ba892de600c1d9b02e0b07c356d8ba4b2ad",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L9-L11",
+  "old_fingerprint": "96e5c1d0975d9eb65abf6f0f60fe6eb094eca81ca13207c79c8423609d3aacaf",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L273-L275",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "83770413918454eeb08a4544bd844777de7c69229ad6905b943017788a992085",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L8",
+  "old_fingerprint": "4468d1f6333ab4b86c6a5480bdeb2f1ee0b6ee46b7c26747109b406d5b8a571d",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L271-L272",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "273a5614572ea35c810b9790efc8b0c4598ae9997c2d7ecc22d567f2170c65a9",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L7",
+  "old_fingerprint": "bcc277890f50d010edd05e5d18c50f341890b5cb866246f9274ca2b4169d0170",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L269-L270",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "e58d93d9397b81c096a0102ca4b679e392fd613839073d289331e737e4f32018",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4878.txt#L6",
+  "old_fingerprint": "afead38a9e18dc358d5fe06c3cb91d87de39a88f7391300fc84a85c9022562df",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-10.txt#L267-L268",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f586ab7b2b2605b7c3843b4642078bbfbe29037363ff0a282030606ccb6e8ce2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L8",
+  "old_fingerprint": "e7f895e320896f013600b325e102a2a2ac6eab86d05975cb135a25dcc91f1bd8",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L312-L314",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "a254c47a46cc9eee3a4d2b3b8126fc967d5130c245dbe6bb312e968bc83a5707",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L13,L17",
+  "old_fingerprint": "fe287303acffbc307187df761c1a2713934187781b5d3a8132514ee7ae331d13",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L325,L329",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "bbb3695211afc668f12c899c86a05db17b73bfa4f6f72590b4f95234fe42562c",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L22",
+  "old_fingerprint": "500f07c6ff1434b907946f090d204d27c8f2a8543048c6d73db3a2f666983175",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L348-L352",
+  "when_key": "flag_lot",
+  "zone": "LR5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "bd6312cbf56eb449738fbbface539a7c355ad05f18c14dbebfa1ed71c1ec9cb9",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15",
+  "old_fingerprint": "52e10ce89d2307607bb75eec2759d228e75654a352370f0253a079173ca42536",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f918bfaa5e8b6921d145c6be163dda7b99eef8dc7267e308d0df5e925b4b41e2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15",
+  "old_fingerprint": "d5f35d7e50e1176880132173a5408bba2a4f524736ce834d9213c853572e2173",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f5bdc9196db77c2a528d9c4b7ade9e76ca0eba930348acdb3277be87406345b6",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15",
+  "old_fingerprint": "fb97d8c35df1cf8065dc5a91477e1edc1a023e7d7c9b13b125a7a8dc80387031",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "9a660d24b345491a7eb1095024387ec4ac116a7ad3592baca5476577b8de306e",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L13-L15",
+  "old_fingerprint": "bfde5548a1250487a25b8848008ba3c8cd0cdf542d921e06a1d65390b2a753e3",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "e4ea9efa662e2095fde5ad6f8ae65bb88927525c0465339bd2c6fb3a82c72185",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L12",
+  "old_fingerprint": "0cf295209b68667db9ac8c431433083f67cb26ce7853ab96741da124fca42d50",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L323-L324",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "8b68b83815d8b07c22368fc0f65d351d8edcf847392429ce02d977c0979c6b99",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L11",
+  "old_fingerprint": "b08d7bb7e3dc09c0017a6f0689dc060793e5adbc500b65008e3d818f7e03967a",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L320-L322",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "6fe8b34521b2d27c3062c6c6eebaca07852eeb8d1e8185de15aeed635aa59e54",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L11",
+  "old_fingerprint": "423d4cd9c432a6bf090e303edab31dd69ed98addf4911919e8fd82145b0d1ad9",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L320-L322",
+  "when_key": "corner_lot",
+  "zone": "LR5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "442d8550b4d63413e4390e2d77ae1c9317eac7d40a08418bff98b5f2c4327a5a",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4830.txt#L10",
+  "old_fingerprint": "2dcd87f40bc31e5db9410b0d8c28d94a21f5b454ad59f36c5140f4d54ff7192f",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-5.txt#L318-L319",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "6c36e2c4f2ec5d378a5425285e0335cc4b12ada1e616ccce8136eb914c02a833",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4856.txt#L1-L10",
+  "old_fingerprint": "d854b04dc2a582df5aa7eecb981a6dbfbd9d116175665fcc45686eea9f4a9c22",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "cf825acd8188c2877de11ca5dd7e4a1d20f65c1aab5d97bc654879de9d60752f",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4856.txt#L1-L10",
+  "old_fingerprint": "9a30209106499ec6fd61978effe2e88c7ed5807c922281ff041d21779a1f1c11",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336",
+  "when_key": "conditional_use",
+  "zone": "LR7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "a232f16857917769fd9b48678fd9e6afd5ab20bf91769601001db0969883236d",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L15",
+  "old_fingerprint": "dbb52ed15475d7d626c846b4b821a1bd8caacc8791f15bb191f4230c200ca0f6",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L412",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "a27fa3d593baf77c61e7a16836672e4d722f012e1c371c9bda0a70f946a733c2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L19",
+  "old_fingerprint": "ca78a3cdbb0d213e71cfa69539fefe8c15422efe94b9880e80aa1fdecb471a28",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L429-L434",
+  "when_key": "flag_lot",
+  "zone": "LR7"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f4ad5e4b50f6493f705171a287c085d385d8e8266a8f534c4c2589355e23af5f",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14",
+  "old_fingerprint": "b4c98522c767d8f1d3c01c5deead3822a474ebbc9f34607836d709fc7d35a29e",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f9690b4b8f89b0cd610b8d358ba283aa0e4d8e52618a61e6ced2cb41c92f5cab",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14",
+  "old_fingerprint": "6012c1f8c120d2cf57ed843a6026049af36ccb0d2d6bd706a892b4668dc16af8",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "829e941c4341cd1629bec091b5f35a53ce37f5bae06241e5c95ab7fb4a91c725",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14",
+  "old_fingerprint": "fd6d3c957aad32d3820371e23efce0ed7da04047f76f66dc56ebdee41f70b25e",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "c55ed6228386de517e79bb70dd9d7a3ca1f07b2b73d949145fb63a39d6c50c02",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L12-L14",
+  "old_fingerprint": "7429d8be1df306e2d95a513a5e94d7da292e806ecc64be33e12ef2ba5c8e2d1e",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "d1fc87dc85666b7f2bf08cfc84fa50ff0c324cc3dc884a2dac135d3d46368cc8",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L11",
+  "old_fingerprint": "52a1fcbe5705506f4d1211f385b8c07dadf0ef893840d2b376c82afb84900b27",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L407-L408",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "e402cdeadb58ba580bf66ff8578f4cbd54759f6d5eab623b850de0f7f5cb2cb2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L10",
+  "old_fingerprint": "f0e183bf2a75dd60e9e128efa79778d26ef16a5065402cdc037ad72438bc303c",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L405-L406",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "1d4d30177ee2052b693d123c93732f480b243ef05b63f0b5312975d467e57761",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L9",
+  "old_fingerprint": "8fbbdd7d3f650728940b87ad7c59882287778d090decfe0f87ced4804f27b696",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L403-L404",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f6bca34b4158abe97313b09f06ac549a4991bb781735dee26b2411789880c5d7",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4862.txt#L7",
+  "old_fingerprint": "6c4e6938a81bec275ac2583ad17ea138272ddf39cce4daeb2c0b757f5a1c1c1e",
+  "old_quote": "or/multnomah/_unincorporated/39.lr-7.txt#L397-L399",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "466c27718fc43ebf411ef02f7bf74f3d6c929a67ddd5faacfa1ad46d26222eda",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L6",
+  "old_fingerprint": "7014a81c99d94bca337fc007d68c24f350ecafc43c82687d4af36231b19170c5",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L155-L157",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "aae08204057e3fd0d9eadba48e2afbe955a9780b7228905c2e06b43932def751",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L13,L19",
+  "old_fingerprint": "52557051ad0751a62d1644d3babc92ad0797d6abd8bd8498bd4b805581fb171b",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L173,L179",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "4b7f637eba7025e9a86689e00964a754af97e5a7597a3df2449dd4889b67e810",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18",
+  "old_fingerprint": "ab45140cc409449c9593e68ead45488098ea52c5066691205b85e831c3874955",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "883b2f94348c96baec8e1b468d66fa5bea26856179c24dfe9a59711a70686a1d",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18",
+  "old_fingerprint": "f1c87b4e4f5c3e73ab0dfb763a3c5f0e7dd3e0fbbe2c1e58ff01e61b75e84222",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "dbf8e19611fbaa7c7f0e2d99c4d7c85a47ea33ef2fd6231e38abaaeffee84e78",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18",
+  "old_fingerprint": "4dd4436d97747ec61d7f026dc4117751eaa0d73fde34af47b76d5ea7f452bc74",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "0510fee687e10eefe1d8517130a6935668254bee710a4aac7bb1f713c02c6af7",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L13-L18",
+  "old_fingerprint": "016a84f0cde565b791a0ff1bea67efdb308501c3d058b463dbfe04018a76038b",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "6b680f6bf0a3145601d3a864f3d6c272f405cce9a39d50a6901acd99458db512",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L12",
+  "old_fingerprint": "e1505e581670d165b8937aa562080e48e6b4d9564bdf9eff83c9bb474e37812d",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L171-L172",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "7e2b293d32ad74aa0193d2b9895d75ec30dcce1457795801b4f306071ea1f008",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L11",
+  "old_fingerprint": "e355fe200ef4003a7918dd117dc9f37cdf30825abd253aa13ed85e512a0646bf",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L168-L170",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "940da98e8c4a91f8047a710cc68ddfdca920b880bd36978d6bc511453fe82bfc",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L11",
+  "old_fingerprint": "e0fe12b67615e50b0baa6c558da1a8470057142dc14e6d1ef2db24b070c1d0e2",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L168-L170",
+  "when_key": "corner_lot",
+  "zone": "MR4"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "ce3ba973746566887a439f54fe9ff40ed68750a88f14e905f6e71f000aea05d0",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4990.txt#L10",
+  "old_fingerprint": "d7fba4248c95dc69396bfd70dce57781e971ae9adf20c5f704f4e34f7179304e",
+  "old_quote": "or/multnomah/_unincorporated/39.mr-4.txt#L166-L167",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "d85de2d8a7d2378dc960b032cf2cc30deb77cd599b87332ebf4b6b83e9ac66a9",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L5-L7",
+  "old_fingerprint": "c86f696240aaac661722e70171d3e84495891df2da893563061a739801844814",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L420-L422",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "1a2c2be052c54d1163abbe71d500448bcde329ade7f209080bb33bf54c9c5b4d",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L5-L7",
+  "old_fingerprint": "8d5bf273cacb75a62d374d03d74fec3107f589e37495200c021c23a1119de3a3",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L420-L422",
+  "when_key": "planned_development",
+  "zone": "OR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "627b26ced72ea10ea1abbc67fb43de630a9f451a4efd15ab86919ee41e47ddeb",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L8,L12",
+  "old_fingerprint": "7bd7839c388a97c146fc8b7ed4c123b9a40d220c55513504caeba38438c98d9e",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L423,L427",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "00a04d1b2b63d8b5c0feb0440a7bdb14aea799a7586f95e86c205b704fd80dff",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10",
+  "old_fingerprint": "d9ed59ab28adb078cbfe5168e4e0b441350cfd12548a58f22df51f0a93d48739",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L424-L425",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "19e3130f6e01eb3253ce14ac357ed29bc6b6ecd20d6bf19aa4d55e567835bdb8",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10",
+  "old_fingerprint": "8189882373908d665c001e8bf665527a8ae12c27519ce3c3b6c39f87a77ec45a",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L424-L425",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "e0fd27611ee7350cb460a4c89de4fa7e4b7c61adae83c58b6ab5b14bc1f23f4c",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10",
+  "old_fingerprint": "d5d6a15ba7bd68b57744d16216350fd77b887ab154956ae071ed1fbb47c5810a",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L424-L425",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "1dbde6922d6150a8efeb5324c6fc46112ffb62a31535a832dd48f11a636181c2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10",
+  "old_fingerprint": "69c8a86376c065a005828616f128158872f4d3f18af6a9f290aa887bcc153645",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L424-L425",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "00a9afe70b68f47143d4093c249f84924080f841c25bbe8deb122d9ea3b3e27c",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4625.txt#L8,L13",
+  "old_fingerprint": "19a0013f0f0978e07050dfb8ca4f7520523877c9b441f9111c87829ebe692921",
+  "old_quote": "or/multnomah/_unincorporated/39.or.txt#L423,L428",
+  "when_key": "",
+  "zone": "OR"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "226ee7c721f54d554b953112bae1f5ebf6e7c2ebd748505728dce4f9ddd7719e",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6590.txt#L1-L3,L6",
+  "old_fingerprint": "187e7e2b5410949b5f126887d63a8f9dc7f64b81e9f94557a56bbde430f4ea62",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L474-L478,L483-L484",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "4da0f4c836a876570715704ec0ee3dbcd87351460a8c3bae76afc35353a683d5",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6565.txt#L1-L3",
+  "old_fingerprint": "ffd4a3f0ed632202936932781ca47cc24c922f2e21f4731e00534698461ef720",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L240-L247",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "c33885474a71b376a5174aa3f40cfc8a56a9736b943d1d90d327f6d9413a0990",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6565.txt#L1-L3",
+  "old_fingerprint": "20e7b21687c3ff885ea5ae1d4c754f45ddf549683876894feeb629316fd6edcc",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L240-L247",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "32bdece5fc9c2d9570fb8127057201be5a5b1cd6c6d6e0819d908e9792515f88",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6565.txt#L1,L7-L8",
+  "old_fingerprint": "8b5bcdbfa522cd720afc4250ab56ff70ff56309863855fafd8f1a87989a4f820",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L240,L260-L261",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "383794095c31032ae16bc4c2bed472ae324efd72de4558e816d987ddfc038cb8",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6565.txt#L1,L7-L8",
+  "old_fingerprint": "b8da92dc5bad6428312c45f5779a61264a033f440b02d7ea2898edf917306c1a",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L240,L260-L261",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "5b74200bf3470b002169b4169c9925636214faa9e61ce83db3212d82738b95a4",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6560.txt#L1-L3",
+  "old_fingerprint": "c2be0e8ec39652b6f9d27d2aac74e808820858858ae16ca5f9e9705884f5cf21",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L191-L199",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f0ec7ef9d1ae645d4e5558dacd8565f72556433efbbb4ee018c4063080defb93",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L3",
+  "old_fingerprint": "449db72e00f98b07657280eab8e490d7e293c5204822c5b39b891b7458fab422",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L433-L437",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "610a53f488391fbaeedf38a3acf65da1be4b1358b6b85f007e69fe50ed81cc86",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L3",
+  "old_fingerprint": "08fd4c3a8e8626e777e56b39c4de6d209dd9adeabc4a8b44a0317a5fc4f4ca6e",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L433-L437",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "01aa17ff83caf27de94223cd2c68516d5d0342430663e48eb7042f061adfbed7",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "c31300ec589bf9d25abd744ccacf54031fcc738fde7b39ccc276ba46dddde75a",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "MR4"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "f9c2c9d9c0206e0df51fb36099c2258cd77e31425f22dd8509ceb033d0db115b",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "b3c80ec487df247011c88ea1675ee28aa22e3eb9bdbbd95c0dd06b7c9a0a4fdd",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "LR5"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "59c2635f3c588ec080061fc9fd5b68941833fa77bcd2ff471c4985768455b9fe",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "3a43a8035bf57e8e6670e8fe121b9d092ce433e7044b6a8f962ff74d2ab1753e",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "LR10"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "b2cc64bc158e97bcd0a24b33f632bccb990fa8a1f1e617a86effce2487379427",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "9bf991037c139328066fe26fc3b70c17c4b402f6ef3cf486651585ce2b640376",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "00d9095ff9887833e821be789b3ed9f9868aa6d9bf30c2100f62345caac25204",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "df869e8145eaa3828a49b1b6bf79d05126ac12087a09da990e3018ef590e5146",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "d4d465f3681df68aaf1d542e39f25a1b4b1abda8523dc740f3738fd7f951092f",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "2e945afe3664906210308867e9fb98e8107f8a190519295b5715a392fe2cf841",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "RF"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "671cc004492a8208f15dd7a5ec5e5df63b264d06283910cd4b1525b7f9097cb5",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "dfd4b29b2098967d445ae0f2215e3ffeca142b5e675d6cfb506732ec9f0cbec8",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "b5f2cd3285fec7e9fb48aee7542adbc96743270cf9bcdd9089ffe6c6bb022ff2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "5f2a168e0d221e894543270194c987baf340449033ac38564eda3e36d9904ff2",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "d10c194e27fffb31497fe45ba85ea06cb42cea50624fcd383535daab30bfb5b9",
+  "new_quote": "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3",
+  "old_fingerprint": "4e6cb58b68bf094b651c1c6ba86b0b2e9132ed48fc6ba9a1692c2ee21e5ca765",
+  "old_quote": "or/multnomah/_unincorporated/39.parking.txt#L431-L437",
+  "when_key": "",
+  "zone": "LR7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "feb5902ca604ec7e7d91a87d3c73e6472bb4aa3c65761739b08a12731c6bcfdb",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10,L14",
+  "old_fingerprint": "707f0b387186ed3fc1c1e107da975ec1c4bed1ea29b4547e307e0f45ae33a157",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L454",
+  "when_key": "",
+  "zone": "RR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "b3724e342838048b36bcae88f191eca471bf524fd895ba7e0bcf2079e551d7ec",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L5-L8",
+  "old_fingerprint": "19899719db405359394ac4b2cc4c9b3e90a869818b8fb7798f59139abd36e474",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L440-L445",
+  "when_key": "",
+  "zone": "RR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "7dc35bec210e420fbcdc9e79ffc983aa855ce34c3490fd6e19ef0e50225d66eb",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L4-L6",
+  "old_fingerprint": "e8760a8037125a6f7388e821fda7098b1c623ff9cabf323b204f32455aa2f26f",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L437-L440",
+  "when_key": "beyond_ugb_mile",
+  "zone": "RR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "299892f159830a5b97ad6b244470514e8d17a7532c5477e67b080260cbda2f52",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L5-L8",
+  "old_fingerprint": "b7f8184ef773142f3891be2124646d22e0d95f88ec1c869f7dd71c5f6b2c384f",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L440-L445",
+  "when_key": "planned_development",
+  "zone": "RR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "b7c23be705fd3dd139f693f3e96befab16bcccc0e3db56d225e9b95ddbafabe2",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L4-L6",
+  "old_fingerprint": "d4545e545a64823f739710ffc004f2a547c460a4cebde89fd6eed7c63f6c0ee6",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L437-L440",
+  "when_key": "beyond_ugb_mile+planned_development",
+  "zone": "RR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "89f8f31a506fa2dff07bc5ae371e4d4c4957d5862685d33c3b04f2cf4ac0052b",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12",
+  "old_fingerprint": "816ee0a625e7ecc5bf9a643d0f30cfd08eed05271e5c4459731a572cf6d76d30",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452",
+  "when_key": "",
+  "zone": "RR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "d2ede1c34837393a5888de91013ce7a4e5f5a616acc6bdad9cee9a819275037d",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12",
+  "old_fingerprint": "4a85af4b9b084c307d4e04599d1f167b6437f4ab4e90d33e117864b7dbe2124d",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452",
+  "when_key": "",
+  "zone": "RR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "ef38e0e9bb11d787491ffd892a4a7a72b9a2ef7f5299b93b74215c89e725e2ee",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12",
+  "old_fingerprint": "2f39b72f36fcd8da6278af0630c2555dd48b3aec0363a5ec54a067ff49ae4baa",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452",
+  "when_key": "",
+  "zone": "RR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "e3cf482fd5ff3466e499c85208e6b0480b67b470d27c9d707d230807f78da3ce",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12",
+  "old_fingerprint": "66b0534e07d363e5793eb2972a1eff4ab6f844bedd69268d03b6b5a18e3b4e14",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452",
+  "when_key": "",
+  "zone": "RR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/multnomah/_unincorporated",
+  "new_fingerprint": "7f22ce680d4227f22f493b997adc54f280559c40eb1460d999ed2810693d5b77",
+  "new_quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10,L15",
+  "old_fingerprint": "e39114d65ae2f8401d0cc1d0f30f55c023cc4b830af14fb763e50b395b0efb01",
+  "old_quote": "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L455",
+  "when_key": "",
+  "zone": "RR"
+ }
+]
