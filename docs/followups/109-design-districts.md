@@ -42,3 +42,4 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
 - Splice base now 137 /root/bridge_spliced_nb_maps, quadfit data/quadfit_2026-10-30_dd_c6.
 
 - 2026-10-31: chunk 7 LIVE run 101 (16ab319d; 16 green->yellow). Chunk 6b (was FOLLOWUPS 134/135/136: WashCo local street connectivity on R-5..R-25+, plan rules / pedestrian areas / ASCs held, Bethany ASC 3 flag, Raleigh Hills ASC U flag) LIVE run 103 (8077332e; 280 green->yellow, fingerprint a7f0be94). Splice base on 137: /root/bridge_spliced_districts_c6b. Optional, offered, not asked for: narrow the connectivity hold to lots big enough to need a street (~5 lots).
+- 2026-10-31: chunk 8 + FOLLOWUPS 137 LIVE run 105 (3d0d9787; 16 green->yellow, md5 569b1902), East Hillsboro overlay LIVE run 107 (FOLLOWUPS 138). All eleven WashCo community plans now read. Splice base on 137: /root/bridge_spliced_east_hillsboro. Steph 2026-10-31: Metzger unnamed outlines stay yellow (ruling).
