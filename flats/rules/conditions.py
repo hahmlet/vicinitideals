@@ -1100,6 +1100,46 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "washington_plan_rule_unmeasured",
+        "site_fact",
+        "The lot lies where a Raleigh Hills - Garden Home or Bull Mountain "
+        "Community Plan rule binds a pod that the screen cannot measure: an "
+        "access-point cap or access bar on a named street (Raleigh Hills ASC "
+        "S, T and M; Bull Mountain ASC 1 and the Pacific Highway "
+        "frontage), the commercial-strip ASCs' Type 1 landscape buffer (CDC "
+        "411, not stored), conditions of an old case (Raleigh Hills ASC U), "
+        "an outline whose letter the map does not print, or a pedestrian "
+        "connectivity facility built with the lot's development. Answered "
+        "from the plans' Map 5.1 and Map 8.1, traced as Washington County's "
+        "drawn_areas (FOLLOWUPS 109 chunk 7); the lots it holds are True, "
+        "every other lot False.",
+        evidence=(
+            "Map 5.1 (Areas of Special Concern) and Map 8.1 (Pedestrian "
+            "Connectivity) of the Raleigh Hills - Garden Home and Bull Mountain "
+            "Community Plans (Washington County), traced 2026-10-30"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "washington_plan_review",
+        "site_fact",
+        "The lot lies where a Washington County community plan sends every "
+        "development through a review deciding on more than measured "
+        "standards: Bull Mountain ASC 8's master planning - planned "
+        "development review, or the Type III review of the R-25+ site in "
+        "Raleigh Hills - Garden Home ASC L. Inside an urban growth boundary "
+        "it is GREEN with CLEAR-OBJECTIVE (Steph 2026-10-15); where the "
+        "statute does not reach the lot it is YELLOW with REVIEW-CONDITIONS. "
+        "Answered from the plans' Map 5.1, traced as Washington County's "
+        "drawn_areas (FOLLOWUPS 109 chunk 7).",
+        evidence=(
+            "Map 5.1 (Areas of Special Concern) of the Bull Mountain and Raleigh "
+            "Hills - Garden Home Community Plans (Washington County), traced "
+            "2026-10-30"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "north_bethany_kaiser_main_street",
         "site_fact",
         "The parcel is an R-24 NB lot facing Kaiser Road inside the North "
@@ -1448,6 +1488,8 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "tigard_bridgeport_village",
     "troutdale_cfec_parking_area",
     "troutdale_town_center",
+    "washington_plan_review",
+    "washington_plan_rule_unmeasured",
     "willamette_historic_district",
 )
 

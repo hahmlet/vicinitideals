@@ -1,0 +1,7967 @@
+{
+ "type": "FeatureCollection",
+ "name": "washington-plan-rule-unmeasured-lots",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Raleigh Hills - Garden Home Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-maps-08-2026/download, retrieved 2026-10-30, sha256 68b540cffc579ea27c1fe1493571175b093d7022fbb4f6065adb1e6777cdf50d): page 9, Map 5.1 Areas of Special Concern, and page 11, Map 8.1 Pedestrian Connectivity. Bull Mountain Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-maps/download, retrieved 2026-10-30, sha256 35470f9e0026fbc4bff869b42a23777c4f75b92face5fb8360a625e8a72d9746): page 9, Map 5.1 Areas of Special Concern, and page 11, Map 8.1 Pedestrian Connectivity.",
+  "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223; or/washington/_unincorporated/community-plan.bull-mountain.txt#L773,L778-L779",
+  "inputs": {
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), each plan's boundary envelope (Base_Layers layer 39), fetched 2026-10-30: Raleigh Hills 10569 lots (sha256 6bcbdf6572c06f58...), Bull Mountain 18647 (bea1585ef3757bf2...)",
+   "zoning": "Washington County Land Use Districts (LUT_PDS/Planning_Layers/MapServer/0), same envelopes, fetched 2026-10-30; a lot takes the district covering most of it",
+   "unincorporated": "Washington County Unincorporated Area (LUT_PDS/Base_Layers/MapServer/27); a lot counts when at least half of it is unincorporated land inside the plan boundary",
+   "streets": "Washington County street centrelines (LUT_PDS/Base_Layers/MapServer/1, FDPRE FNAME FTYPE), fetched 2026-10-30"
+  },
+  "traced_by": "Claude (districts-c7 worker, FOLLOWUPS 109 chunk 7)",
+  "traced_on": "2026-10-30",
+  "drawn": true,
+  "how": "Both Map 5.1 sheets are ArcGIS Pro GeoPDFs: the Areas_of_Special_Concern frame carries a /VP viewport with its corner coordinates (NAD83 HARN geographic, projected to EPSG:2913); a page-to-ground affine was fitted to them (residual 0.57 ft Raleigh Hills, 0.09 ft Bull Mountain) and the pink-filled ASC outlines (RGB 1, 0.745, 0.745) were read out of the page as vector paths. Each outline took the red Arial-Bold letter or numeral within 50 ft of it; Raleigh Hills prints no letter near some outlines, and an outline more than 600 ft from every letter is 'unlabelled'. A lot is in an ASC when at least 90 percent of it lies inside the outline, and the lots an outline cuts (more than 10 percent inside) are carried too, whole. This file holds, whole, the residential lots (R-5 to R-25+) on which a plan rule binds a pod that the screen cannot measure: Raleigh Hills ASC S and T lots whose boundary runs at least 15 ft within 40 ft of the Mayo Street or Florence Lane centreline or 60 ft of Taylors Ferry Road's (the access-point caps bind only those streets); every ASC M lot (one access point on Raab Road for the whole ASC; ASC I's bar on permanent highway access reaches no residential lot); the residential lots inside the commercial-strip ASCs (E, H, K, L and the unlettered outlines within 600 ft of those letters) that abut Canyon Road, Beaverton - Hillsdale Highway, Scholls Ferry Road or Oleson Road (Type 1 landscape buffer, CDC 411 not stored); the ASC U lot (Case #74-96C conditions); every lot of an unlettered outline more than 600 ft from any letter (two outlines: at Walker Road and Highway 217, ASC C by the text, and one lot west of SW 103rd Avenue); the lots Map 8.1 shades in its one drawn pedestrian connectivity area (magenta fill RGB 1, 0.451, 0.875, read as vector paths; more than 10 percent of the lot) and, for area 3, which no map draws, every lot meeting a 40 ft buffer of the straight line between the nearest points of the Dogwood Lane and Raleighwood Way centrelines and of Dogwood Lane and Sharon Lane (a judgement trace: the plan places the trail in words only; area 1's Laurel Street already meets Laurelwood Avenue and Maple Drive's gap crosses no lot); Bull Mountain ASC 1, every lot inside or cut (the easterly portion is not drawn, so the traffic-study bar is held on all of it, with the three-access-point cap); the residential lot fronting Pacific Highway (within 60 ft, 15 ft of boundary); and the two parcels Bull Mountain's Map 8.1 shades for the Baker Lane / Sunrise Lane area. Bull Mountain's Map 8.1 is a raster: page 11 was rendered at 432 dpi, magenta pixels (R>220, 70<G<160, B>180) inside the main frame were placed by the frame's affine (4.6 ft a pixel), and a lot is shaded when they cover more than 10 percent of it (the two cover 0.88 and 0.84).",
+  "counts": {
+   "Bull Mountain|R-15": 52,
+   "Bull Mountain|R-24": 1,
+   "Bull Mountain|R-6": 7,
+   "Raleigh Hills - Garden Home|R-24": 3,
+   "Raleigh Hills - Garden Home|R-5": 35,
+   "Raleigh Hills - Garden Home|R-9": 3
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S105DC00600",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area shaded parcel (Map 8.1), share 0.84",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1254-L1262"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7603299.79,
+       647320.68
+      ],
+      [
+       7602998.35,
+       647327.87
+      ],
+      [
+       7602702.51,
+       647334.94
+      ],
+      [
+       7602699.88,
+       647335.0
+      ],
+      [
+       7602708.1,
+       647492.66
+      ],
+      [
+       7602992.89,
+       647485.73
+      ],
+      [
+       7603302.95,
+       647479.2
+      ],
+      [
+       7603301.84,
+       647433.47
+      ],
+      [
+       7603299.79,
+       647320.68
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S108AB00101",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area shaded parcel (Map 8.1), share 0.88",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1254-L1262"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7603541.88,
+       647112.92
+      ],
+      [
+       7603305.41,
+       647118.04
+      ],
+      [
+       7602998.01,
+       647124.69
+      ],
+      [
+       7602993.01,
+       647124.8
+      ],
+      [
+       7602993.66,
+       647149.79
+      ],
+      [
+       7602998.35,
+       647327.87
+      ],
+      [
+       7603299.79,
+       647320.68
+      ],
+      [
+       7603323.75,
+       647320.1
+      ],
+      [
+       7603547.19,
+       647314.77
+      ],
+      [
+       7603542.54,
+       647137.91
+      ],
+      [
+       7603541.88,
+       647112.92
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00300",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605404.69,
+       642164.52
+      ],
+      [
+       7605349.7,
+       642216.97
+      ],
+      [
+       7605413.8,
+       642284.17
+      ],
+      [
+       7605424.23,
+       642274.09
+      ],
+      [
+       7605468.44,
+       642231.34
+      ],
+      [
+       7605404.69,
+       642164.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00400",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605460.05,
+       642111.71
+      ],
+      [
+       7605404.69,
+       642164.52
+      ],
+      [
+       7605468.44,
+       642231.34
+      ],
+      [
+       7605478.15,
+       642221.96
+      ],
+      [
+       7605523.44,
+       642178.17
+      ],
+      [
+       7605460.05,
+       642111.71
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00500",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605519.38,
+       642055.11
+      ],
+      [
+       7605460.05,
+       642111.71
+      ],
+      [
+       7605523.44,
+       642178.17
+      ],
+      [
+       7605532.07,
+       642169.83
+      ],
+      [
+       7605582.39,
+       642121.18
+      ],
+      [
+       7605519.38,
+       642055.11
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605650.69,
+       642055.15
+      ],
+      [
+       7605637.33,
+       642038.31
+      ],
+      [
+       7605624.87,
+       642020.79
+      ],
+      [
+       7605619.3,
+       642012.49
+      ],
+      [
+       7605616.56,
+       642009.1
+      ],
+      [
+       7605613.28,
+       642006.23
+      ],
+      [
+       7605609.55,
+       642003.98
+      ],
+      [
+       7605605.48,
+       642002.41
+      ],
+      [
+       7605601.2,
+       642001.57
+      ],
+      [
+       7605596.85,
+       642001.49
+      ],
+      [
+       7605592.54,
+       642002.16
+      ],
+      [
+       7605588.42,
+       642003.57
+      ],
+      [
+       7605584.6,
+       642005.67
+      ],
+      [
+       7605553.88,
+       642026.3
+      ],
+      [
+       7605539.81,
+       642036.65
+      ],
+      [
+       7605526.67,
+       642048.16
+      ],
+      [
+       7605519.38,
+       642055.11
+      ],
+      [
+       7605582.39,
+       642121.18
+      ],
+      [
+       7605585.99,
+       642117.7
+      ],
+      [
+       7605650.69,
+       642055.15
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00700",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605452.78,
+       641908.43
+      ],
+      [
+       7605422.09,
+       641872.6
+      ],
+      [
+       7605424.62,
+       641977.57
+      ],
+      [
+       7605470.24,
+       642032.88
+      ],
+      [
+       7605492.16,
+       642011.97
+      ],
+      [
+       7605506.18,
+       641999.55
+      ],
+      [
+       7605521.07,
+       641988.19
+      ],
+      [
+       7605452.78,
+       641908.43
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00800",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605424.62,
+       641977.57
+      ],
+      [
+       7605314.65,
+       641979.94
+      ],
+      [
+       7605426.82,
+       642074.3
+      ],
+      [
+       7605470.24,
+       642032.88
+      ],
+      [
+       7605424.62,
+       641977.57
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC00900",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605314.65,
+       641979.94
+      ],
+      [
+       7605287.69,
+       642035.2
+      ],
+      [
+       7605383.41,
+       642115.71
+      ],
+      [
+       7605426.82,
+       642074.3
+      ],
+      [
+       7605314.65,
+       641979.94
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01000",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605287.69,
+       642035.2
+      ],
+      [
+       7605256.33,
+       642099.49
+      ],
+      [
+       7605272.7,
+       642108.04
+      ],
+      [
+       7605287.81,
+       642118.66
+      ],
+      [
+       7605301.4,
+       642131.15
+      ],
+      [
+       7605315.5,
+       642145.94
+      ],
+      [
+       7605318.78,
+       642148.82
+      ],
+      [
+       7605322.5,
+       642151.09
+      ],
+      [
+       7605326.56,
+       642152.67
+      ],
+      [
+       7605330.83,
+       642153.53
+      ],
+      [
+       7605335.19,
+       642153.63
+      ],
+      [
+       7605339.49,
+       642152.98
+      ],
+      [
+       7605343.62,
+       642151.59
+      ],
+      [
+       7605347.45,
+       642149.5
+      ],
+      [
+       7605350.85,
+       642146.77
+      ],
+      [
+       7605383.41,
+       642115.71
+      ],
+      [
+       7605287.69,
+       642035.2
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01100",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605314.65,
+       641979.94
+      ],
+      [
+       7605210.15,
+       641982.19
+      ],
+      [
+       7605202.65,
+       642087.51
+      ],
+      [
+       7605221.02,
+       642089.15
+      ],
+      [
+       7605239.01,
+       642093.16
+      ],
+      [
+       7605256.33,
+       642099.49
+      ],
+      [
+       7605287.69,
+       642035.2
+      ],
+      [
+       7605314.65,
+       641979.94
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01200",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605196.33,
+       642087.51
+      ],
+      [
+       7605202.65,
+       642087.51
+      ],
+      [
+       7605210.15,
+       641982.19
+      ],
+      [
+       7605135.17,
+       641983.81
+      ],
+      [
+       7605137.98,
+       642088.77
+      ],
+      [
+       7605196.33,
+       642087.51
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01300",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605135.17,
+       641983.81
+      ],
+      [
+       7605060.18,
+       641985.42
+      ],
+      [
+       7605063.0,
+       642090.38
+      ],
+      [
+       7605137.98,
+       642088.77
+      ],
+      [
+       7605135.17,
+       641983.81
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01400",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605060.18,
+       641985.42
+      ],
+      [
+       7604985.2,
+       641987.04
+      ],
+      [
+       7604988.02,
+       642092.0
+      ],
+      [
+       7605063.0,
+       642090.38
+      ],
+      [
+       7605060.18,
+       641985.42
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01500",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604985.2,
+       641987.04
+      ],
+      [
+       7604910.22,
+       641988.66
+      ],
+      [
+       7604913.04,
+       642093.62
+      ],
+      [
+       7604988.02,
+       642092.0
+      ],
+      [
+       7604985.2,
+       641987.04
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604910.22,
+       641988.66
+      ],
+      [
+       7604830.24,
+       641990.38
+      ],
+      [
+       7604829.44,
+       641990.4
+      ],
+      [
+       7604828.63,
+       641990.42
+      ],
+      [
+       7604831.46,
+       642095.38
+      ],
+      [
+       7604832.26,
+       642095.36
+      ],
+      [
+       7604833.06,
+       642095.34
+      ],
+      [
+       7604913.04,
+       642093.62
+      ],
+      [
+       7604910.22,
+       641988.66
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01700",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604828.63,
+       641990.42
+      ],
+      [
+       7604750.26,
+       641992.1
+      ],
+      [
+       7604753.08,
+       642097.07
+      ],
+      [
+       7604831.46,
+       642095.38
+      ],
+      [
+       7604828.63,
+       641990.42
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01800",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604834.19,
+       642137.33
+      ],
+      [
+       7604754.2,
+       642139.05
+      ],
+      [
+       7604756.57,
+       642227.18
+      ],
+      [
+       7604756.97,
+       642242.01
+      ],
+      [
+       7604826.95,
+       642240.51
+      ],
+      [
+       7604834.19,
+       642137.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC01900",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604903.96,
+       642217.42
+      ],
+      [
+       7604909.64,
+       642203.77
+      ],
+      [
+       7604912.98,
+       642189.37
+      ],
+      [
+       7604913.89,
+       642174.62
+      ],
+      [
+       7604913.59,
+       642160.62
+      ],
+      [
+       7604913.11,
+       642156.29
+      ],
+      [
+       7604911.89,
+       642152.11
+      ],
+      [
+       7604909.97,
+       642148.2
+      ],
+      [
+       7604907.39,
+       642144.68
+      ],
+      [
+       7604904.24,
+       642141.67
+      ],
+      [
+       7604900.62,
+       642139.25
+      ],
+      [
+       7604896.63,
+       642137.49
+      ],
+      [
+       7604892.4,
+       642136.45
+      ],
+      [
+       7604888.05,
+       642136.17
+      ],
+      [
+       7604834.19,
+       642137.33
+      ],
+      [
+       7604826.95,
+       642240.51
+      ],
+      [
+       7604892.76,
+       642239.09
+      ],
+      [
+       7604903.96,
+       642217.42
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC02500",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605027.27,
+       642133.16
+      ],
+      [
+       7604980.03,
+       642134.18
+      ],
+      [
+       7604975.7,
+       642134.65
+      ],
+      [
+       7604971.52,
+       642135.87
+      ],
+      [
+       7604967.61,
+       642137.8
+      ],
+      [
+       7604964.09,
+       642140.37
+      ],
+      [
+       7604961.08,
+       642143.52
+      ],
+      [
+       7604958.66,
+       642147.14
+      ],
+      [
+       7604956.9,
+       642151.13
+      ],
+      [
+       7604955.86,
+       642155.36
+      ],
+      [
+       7604955.58,
+       642159.71
+      ],
+      [
+       7604955.88,
+       642173.71
+      ],
+      [
+       7604955.21,
+       642190.02
+      ],
+      [
+       7604952.52,
+       642206.13
+      ],
+      [
+       7604947.85,
+       642221.78
+      ],
+      [
+       7604941.26,
+       642236.72
+      ],
+      [
+       7604940.58,
+       642238.05
+      ],
+      [
+       7605021.58,
+       642236.31
+      ],
+      [
+       7605027.27,
+       642133.16
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC02600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605097.26,
+       642131.65
+      ],
+      [
+       7605027.27,
+       642133.16
+      ],
+      [
+       7605021.58,
+       642236.31
+      ],
+      [
+       7605091.56,
+       642234.8
+      ],
+      [
+       7605097.26,
+       642131.65
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC02700",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605167.22,
+       642183.75
+      ],
+      [
+       7605221.48,
+       642131.98
+      ],
+      [
+       7605209.43,
+       642129.99
+      ],
+      [
+       7605197.23,
+       642129.5
+      ],
+      [
+       7605097.26,
+       642131.65
+      ],
+      [
+       7605091.56,
+       642234.8
+      ],
+      [
+       7605114.21,
+       642234.32
+      ],
+      [
+       7605167.22,
+       642183.75
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC02800",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605167.22,
+       642183.75
+      ],
+      [
+       7605236.24,
+       642256.11
+      ],
+      [
+       7605260.56,
+       642232.91
+      ],
+      [
+       7605284.28,
+       642210.28
+      ],
+      [
+       7605287.16,
+       642207.01
+      ],
+      [
+       7605289.43,
+       642203.29
+      ],
+      [
+       7605291.01,
+       642199.23
+      ],
+      [
+       7605291.87,
+       642194.96
+      ],
+      [
+       7605291.97,
+       642190.6
+      ],
+      [
+       7605291.32,
+       642186.29
+      ],
+      [
+       7605289.92,
+       642182.16
+      ],
+      [
+       7605287.84,
+       642178.34
+      ],
+      [
+       7605285.11,
+       642174.94
+      ],
+      [
+       7605271.01,
+       642160.15
+      ],
+      [
+       7605260.31,
+       642150.45
+      ],
+      [
+       7605248.31,
+       642142.42
+      ],
+      [
+       7605235.28,
+       642136.22
+      ],
+      [
+       7605221.48,
+       642131.98
+      ],
+      [
+       7605167.22,
+       642183.75
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC02900",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605167.22,
+       642183.75
+      ],
+      [
+       7605114.21,
+       642234.32
+      ],
+      [
+       7605112.95,
+       642235.52
+      ],
+      [
+       7605181.97,
+       642307.87
+      ],
+      [
+       7605236.24,
+       642256.11
+      ],
+      [
+       7605167.22,
+       642183.75
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC04500",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605532.07,
+       642169.83
+      ],
+      [
+       7605523.44,
+       642178.17
+      ],
+      [
+       7605478.15,
+       642221.96
+      ],
+      [
+       7605547.66,
+       642293.85
+      ],
+      [
+       7605601.58,
+       642241.72
+      ],
+      [
+       7605532.07,
+       642169.83
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC04600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605585.99,
+       642117.7
+      ],
+      [
+       7605582.39,
+       642121.18
+      ],
+      [
+       7605532.07,
+       642169.83
+      ],
+      [
+       7605601.58,
+       642241.72
+      ],
+      [
+       7605609.25,
+       642234.31
+      ],
+      [
+       7605625.18,
+       642217.53
+      ],
+      [
+       7605639.62,
+       642199.45
+      ],
+      [
+       7605650.55,
+       642184.48
+      ],
+      [
+       7605585.99,
+       642117.7
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC04700",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605585.99,
+       642117.7
+      ],
+      [
+       7605650.55,
+       642184.48
+      ],
+      [
+       7605691.94,
+       642127.84
+      ],
+      [
+       7605694.06,
+       642124.37
+      ],
+      [
+       7605695.59,
+       642120.61
+      ],
+      [
+       7605696.49,
+       642116.65
+      ],
+      [
+       7605696.74,
+       642112.6
+      ],
+      [
+       7605696.33,
+       642108.56
+      ],
+      [
+       7605695.28,
+       642104.64
+      ],
+      [
+       7605693.6,
+       642100.94
+      ],
+      [
+       7605691.34,
+       642097.56
+      ],
+      [
+       7605688.57,
+       642094.6
+      ],
+      [
+       7605668.97,
+       642075.51
+      ],
+      [
+       7605650.69,
+       642055.15
+      ],
+      [
+       7605585.99,
+       642117.7
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC04800",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605808.82,
+       642009.24
+      ],
+      [
+       7605768.46,
+       641979.72
+      ],
+      [
+       7605715.86,
+       642051.68
+      ],
+      [
+       7605736.41,
+       642069.85
+      ],
+      [
+       7605758.3,
+       642086.38
+      ],
+      [
+       7605781.4,
+       642101.16
+      ],
+      [
+       7605827.39,
+       642022.81
+      ],
+      [
+       7605808.82,
+       642009.24
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC04900",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605837.99,
+       642180.85
+      ],
+      [
+       7605810.69,
+       642171.04
+      ],
+      [
+       7605784.16,
+       642159.31
+      ],
+      [
+       7605758.54,
+       642145.72
+      ],
+      [
+       7605754.87,
+       642143.98
+      ],
+      [
+       7605750.96,
+       642142.86
+      ],
+      [
+       7605746.93,
+       642142.38
+      ],
+      [
+       7605742.87,
+       642142.57
+      ],
+      [
+       7605738.9,
+       642143.4
+      ],
+      [
+       7605735.11,
+       642144.88
+      ],
+      [
+       7605731.62,
+       642146.94
+      ],
+      [
+       7605728.5,
+       642149.54
+      ],
+      [
+       7605725.85,
+       642152.62
+      ],
+      [
+       7605694.03,
+       642196.17
+      ],
+      [
+       7605766.17,
+       642253.25
+      ],
+      [
+       7605838.94,
+       642181.15
+      ],
+      [
+       7605837.99,
+       642180.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10000",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7606075.9,
+       642185.1
+      ],
+      [
+       7606000.77,
+       642200.36
+      ],
+      [
+       7605949.66,
+       642210.75
+      ],
+      [
+       7605960.03,
+       642228.8
+      ],
+      [
+       7605968.26,
+       642247.92
+      ],
+      [
+       7605974.24,
+       642267.86
+      ],
+      [
+       7606078.05,
+       642265.07
+      ],
+      [
+       7606075.9,
+       642185.1
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10100",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605997.92,
+       642101.24
+      ],
+      [
+       7605986.65,
+       642101.57
+      ],
+      [
+       7605973.93,
+       642103.03
+      ],
+      [
+       7605961.64,
+       642106.63
+      ],
+      [
+       7605950.14,
+       642112.28
+      ],
+      [
+       7605939.77,
+       642119.79
+      ],
+      [
+       7605930.83,
+       642128.97
+      ],
+      [
+       7605923.58,
+       642139.53
+      ],
+      [
+       7605918.56,
+       642148.37
+      ],
+      [
+       7605916.83,
+       642152.12
+      ],
+      [
+       7605915.73,
+       642156.11
+      ],
+      [
+       7605915.31,
+       642160.23
+      ],
+      [
+       7605915.58,
+       642164.36
+      ],
+      [
+       7605916.52,
+       642168.39
+      ],
+      [
+       7605918.11,
+       642172.2
+      ],
+      [
+       7605920.31,
+       642175.71
+      ],
+      [
+       7605923.06,
+       642178.8
+      ],
+      [
+       7605937.28,
+       642194.01
+      ],
+      [
+       7605949.66,
+       642210.75
+      ],
+      [
+       7606000.77,
+       642200.36
+      ],
+      [
+       7605997.92,
+       642101.24
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10200",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7606073.59,
+       642099.06
+      ],
+      [
+       7606072.59,
+       642099.09
+      ],
+      [
+       7605997.92,
+       642101.24
+      ],
+      [
+       7606000.77,
+       642200.36
+      ],
+      [
+       7606075.9,
+       642185.1
+      ],
+      [
+       7606073.59,
+       642099.06
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10300",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7606069.95,
+       641963.65
+      ],
+      [
+       7605987.89,
+       641965.42
+      ],
+      [
+       7605990.37,
+       642051.44
+      ],
+      [
+       7606071.25,
+       642049.11
+      ],
+      [
+       7606072.25,
+       642049.08
+      ],
+      [
+       7606069.95,
+       641963.65
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10400",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605987.89,
+       641965.42
+      ],
+      [
+       7605880.92,
+       641967.73
+      ],
+      [
+       7605941.57,
+       642060.81
+      ],
+      [
+       7605955.72,
+       642056.0
+      ],
+      [
+       7605970.33,
+       642052.91
+      ],
+      [
+       7605985.21,
+       642051.59
+      ],
+      [
+       7605990.37,
+       642051.44
+      ],
+      [
+       7605987.89,
+       641965.42
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10500",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605840.99,
+       641947.07
+      ],
+      [
+       7605808.82,
+       642009.24
+      ],
+      [
+       7605827.39,
+       642022.81
+      ],
+      [
+       7605900.23,
+       642088.34
+      ],
+      [
+       7605909.48,
+       642079.94
+      ],
+      [
+       7605919.52,
+       642072.5
+      ],
+      [
+       7605930.26,
+       642066.1
+      ],
+      [
+       7605941.57,
+       642060.81
+      ],
+      [
+       7605880.92,
+       641967.73
+      ],
+      [
+       7605840.99,
+       641947.07
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605827.39,
+       642022.81
+      ],
+      [
+       7605781.4,
+       642101.16
+      ],
+      [
+       7605802.41,
+       642112.56
+      ],
+      [
+       7605824.14,
+       642122.52
+      ],
+      [
+       7605846.49,
+       642131.0
+      ],
+      [
+       7605847.43,
+       642131.32
+      ],
+      [
+       7605851.62,
+       642132.34
+      ],
+      [
+       7605855.92,
+       642132.63
+      ],
+      [
+       7605860.2,
+       642132.18
+      ],
+      [
+       7605864.35,
+       642130.99
+      ],
+      [
+       7605868.23,
+       642129.12
+      ],
+      [
+       7605871.73,
+       642126.6
+      ],
+      [
+       7605874.74,
+       642123.52
+      ],
+      [
+       7605877.19,
+       642119.97
+      ],
+      [
+       7605880.09,
+       642114.86
+      ],
+      [
+       7605889.27,
+       642100.92
+      ],
+      [
+       7605900.23,
+       642088.34
+      ],
+      [
+       7605827.39,
+       642022.81
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CC10700",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605907.83,
+       642230.09
+      ],
+      [
+       7605896.98,
+       642217.45
+      ],
+      [
+       7605884.74,
+       642206.15
+      ],
+      [
+       7605871.28,
+       642196.34
+      ],
+      [
+       7605855.61,
+       642187.67
+      ],
+      [
+       7605838.94,
+       642181.15
+      ],
+      [
+       7605766.17,
+       642253.25
+      ],
+      [
+       7605801.46,
+       642281.17
+      ],
+      [
+       7605847.31,
+       642259.15
+      ],
+      [
+       7605907.83,
+       642230.09
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S109CD02800",
+    "zone": "R-6",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7606315.33,
+       642148.49
+      ],
+      [
+       7606295.69,
+       642146.78
+      ],
+      [
+       7606276.3,
+       642143.23
+      ],
+      [
+       7606257.32,
+       642137.88
+      ],
+      [
+       7606238.93,
+       642130.77
+      ],
+      [
+       7606213.12,
+       642120.5
+      ],
+      [
+       7606186.62,
+       642112.17
+      ],
+      [
+       7606159.58,
+       642105.82
+      ],
+      [
+       7606132.14,
+       642101.49
+      ],
+      [
+       7606104.46,
+       642099.21
+      ],
+      [
+       7606076.68,
+       642098.97
+      ],
+      [
+       7606073.59,
+       642099.06
+      ],
+      [
+       7606075.9,
+       642185.1
+      ],
+      [
+       7606078.05,
+       642265.07
+      ],
+      [
+       7606080.04,
+       642339.25
+      ],
+      [
+       7606082.03,
+       642413.42
+      ],
+      [
+       7606084.72,
+       642513.38
+      ],
+      [
+       7606085.79,
+       642553.37
+      ],
+      [
+       7606335.05,
+       642148.36
+      ],
+      [
+       7606315.33,
+       642148.49
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S115C000500",
+    "zone": "R-24",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Southern Lowlands design element 3, no access from Pacific Highway",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L998-L1000"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7611392.98,
+       639064.8
+      ],
+      [
+       7611250.09,
+       639069.3
+      ],
+      [
+       7611251.28,
+       639115.07
+      ],
+      [
+       7610981.12,
+       639123.0
+      ],
+      [
+       7610691.26,
+       639132.0
+      ],
+      [
+       7610691.35,
+       639135.38
+      ],
+      [
+       7610703.27,
+       639580.84
+      ],
+      [
+       7610703.38,
+       639584.75
+      ],
+      [
+       7610764.11,
+       639582.97
+      ],
+      [
+       7611262.01,
+       639568.37
+      ],
+      [
+       7611404.8,
+       639564.18
+      ],
+      [
+       7611583.72,
+       639558.94
+      ],
+      [
+       7611590.99,
+       639558.44
+      ],
+      [
+       7611598.12,
+       639556.99
+      ],
+      [
+       7611605.0,
+       639554.61
+      ],
+      [
+       7611611.51,
+       639551.35
+      ],
+      [
+       7611611.54,
+       639551.33
+      ],
+      [
+       7611618.76,
+       639546.27
+      ],
+      [
+       7611625.07,
+       639540.12
+      ],
+      [
+       7611630.32,
+       639533.04
+      ],
+      [
+       7611634.38,
+       639525.21
+      ],
+      [
+       7611637.13,
+       639516.84
+      ],
+      [
+       7611638.51,
+       639508.13
+      ],
+      [
+       7611638.47,
+       639499.32
+      ],
+      [
+       7611636.18,
+       639471.99
+      ],
+      [
+       7611629.48,
+       639392.16
+      ],
+      [
+       7611612.75,
+       639192.88
+      ],
+      [
+       7611601.45,
+       639058.23
+      ],
+      [
+       7611583.16,
+       639058.81
+      ],
+      [
+       7611392.98,
+       639064.8
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BA00100",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605873.49,
+       641660.0
+      ],
+      [
+       7605875.18,
+       641730.03
+      ],
+      [
+       7605876.87,
+       641800.01
+      ],
+      [
+       7605879.16,
+       641894.98
+      ],
+      [
+       7605880.92,
+       641967.73
+      ],
+      [
+       7605987.89,
+       641965.42
+      ],
+      [
+       7606069.95,
+       641963.65
+      ],
+      [
+       7606072.25,
+       642049.08
+      ],
+      [
+       7606075.23,
+       642049.0
+      ],
+      [
+       7606106.71,
+       642049.26
+      ],
+      [
+       7606138.09,
+       642051.84
+      ],
+      [
+       7606169.19,
+       642056.75
+      ],
+      [
+       7606199.84,
+       642063.94
+      ],
+      [
+       7606229.87,
+       642073.39
+      ],
+      [
+       7606259.13,
+       642085.03
+      ],
+      [
+       7606275.12,
+       642091.09
+      ],
+      [
+       7606291.68,
+       642095.41
+      ],
+      [
+       7606308.6,
+       642097.94
+      ],
+      [
+       7606325.69,
+       642098.64
+      ],
+      [
+       7606342.76,
+       642097.52
+      ],
+      [
+       7606352.41,
+       642096.37
+      ],
+      [
+       7606355.18,
+       642095.81
+      ],
+      [
+       7606357.83,
+       642094.83
+      ],
+      [
+       7606360.29,
+       642093.45
+      ],
+      [
+       7606362.5,
+       642091.7
+      ],
+      [
+       7606364.41,
+       642089.62
+      ],
+      [
+       7606365.98,
+       642087.28
+      ],
+      [
+       7606367.16,
+       642084.71
+      ],
+      [
+       7606367.93,
+       642082.0
+      ],
+      [
+       7606368.26,
+       642079.2
+      ],
+      [
+       7606370.2,
+       642057.74
+      ],
+      [
+       7606374.33,
+       642036.59
+      ],
+      [
+       7606380.61,
+       642015.98
+      ],
+      [
+       7606388.96,
+       641996.12
+      ],
+      [
+       7606399.31,
+       641977.21
+      ],
+      [
+       7606448.6,
+       641897.16
+      ],
+      [
+       7606457.35,
+       641880.93
+      ],
+      [
+       7606464.17,
+       641863.79
+      ],
+      [
+       7606468.97,
+       641845.99
+      ],
+      [
+       7606471.7,
+       641827.75
+      ],
+      [
+       7606472.3,
+       641809.32
+      ],
+      [
+       7606470.79,
+       641790.94
+      ],
+      [
+       7606466.38,
+       641759.69
+      ],
+      [
+       7606465.53,
+       641755.95
+      ],
+      [
+       7606464.07,
+       641752.41
+      ],
+      [
+       7606462.05,
+       641749.16
+      ],
+      [
+       7606459.51,
+       641746.29
+      ],
+      [
+       7606456.54,
+       641743.88
+      ],
+      [
+       7606453.2,
+       641742.0
+      ],
+      [
+       7606449.6,
+       641740.69
+      ],
+      [
+       7606445.83,
+       641740.0
+      ],
+      [
+       7606417.3,
+       641737.23
+      ],
+      [
+       7606317.24,
+       641726.62
+      ],
+      [
+       7606217.39,
+       641714.26
+      ],
+      [
+       7606117.77,
+       641700.17
+      ],
+      [
+       7606018.41,
+       641684.33
+      ],
+      [
+       7605873.44,
+       641658.02
+      ],
+      [
+       7605873.49,
+       641660.0
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00100",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605698.93,
+       641928.9
+      ],
+      [
+       7605667.63,
+       641949.92
+      ],
+      [
+       7605664.23,
+       641952.66
+      ],
+      [
+       7605661.37,
+       641955.94
+      ],
+      [
+       7605659.12,
+       641959.67
+      ],
+      [
+       7605657.55,
+       641963.73
+      ],
+      [
+       7605656.71,
+       641968.01
+      ],
+      [
+       7605656.62,
+       641972.37
+      ],
+      [
+       7605657.29,
+       641976.67
+      ],
+      [
+       7605658.7,
+       641980.8
+      ],
+      [
+       7605660.81,
+       641984.61
+      ],
+      [
+       7605666.38,
+       641992.91
+      ],
+      [
+       7605677.3,
+       642008.27
+      ],
+      [
+       7605689.02,
+       642023.03
+      ],
+      [
+       7605702.04,
+       642037.72
+      ],
+      [
+       7605715.86,
+       642051.68
+      ],
+      [
+       7605768.46,
+       641979.72
+      ],
+      [
+       7605698.93,
+       641928.9
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00200",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605740.08,
+       641894.88
+      ],
+      [
+       7605730.02,
+       641905.17
+      ],
+      [
+       7605719.15,
+       641914.61
+      ],
+      [
+       7605707.54,
+       641923.12
+      ],
+      [
+       7605698.93,
+       641928.9
+      ],
+      [
+       7605768.46,
+       641979.72
+      ],
+      [
+       7605808.82,
+       642009.24
+      ],
+      [
+       7605840.99,
+       641947.07
+      ],
+      [
+       7605740.08,
+       641894.88
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00300",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605770.5,
+       641847.55
+      ],
+      [
+       7605762.08,
+       641864.39
+      ],
+      [
+       7605751.9,
+       641880.23
+      ],
+      [
+       7605740.08,
+       641894.88
+      ],
+      [
+       7605840.99,
+       641947.07
+      ],
+      [
+       7605880.92,
+       641967.73
+      ],
+      [
+       7605879.16,
+       641894.98
+      ],
+      [
+       7605770.5,
+       641847.55
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00400",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605783.27,
+       641802.27
+      ],
+      [
+       7605780.38,
+       641817.73
+      ],
+      [
+       7605776.11,
+       641832.86
+      ],
+      [
+       7605770.5,
+       641847.55
+      ],
+      [
+       7605879.16,
+       641894.98
+      ],
+      [
+       7605876.87,
+       641800.01
+      ],
+      [
+       7605783.27,
+       641802.27
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00500",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605875.18,
+       641730.03
+      ],
+      [
+       7605779.67,
+       641732.34
+      ],
+      [
+       7605782.34,
+       641747.5
+      ],
+      [
+       7605784.56,
+       641765.69
+      ],
+      [
+       7605784.88,
+       641784.02
+      ],
+      [
+       7605783.27,
+       641802.27
+      ],
+      [
+       7605876.87,
+       641800.01
+      ],
+      [
+       7605875.18,
+       641730.03
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605873.49,
+       641660.0
+      ],
+      [
+       7605809.58,
+       641647.21
+      ],
+      [
+       7605805.28,
+       641646.7
+      ],
+      [
+       7605800.95,
+       641646.94
+      ],
+      [
+       7605796.73,
+       641647.93
+      ],
+      [
+       7605792.75,
+       641649.63
+      ],
+      [
+       7605789.11,
+       641652.0
+      ],
+      [
+       7605785.95,
+       641654.95
+      ],
+      [
+       7605783.33,
+       641658.41
+      ],
+      [
+       7605781.36,
+       641662.27
+      ],
+      [
+       7605780.08,
+       641666.41
+      ],
+      [
+       7605778.98,
+       641671.51
+      ],
+      [
+       7605776.44,
+       641688.53
+      ],
+      [
+       7605776.11,
+       641705.73
+      ],
+      [
+       7605777.99,
+       641722.83
+      ],
+      [
+       7605779.67,
+       641732.34
+      ],
+      [
+       7605875.18,
+       641730.03
+      ],
+      [
+       7605873.49,
+       641660.0
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00700",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605727.11,
+       641679.24
+      ],
+      [
+       7605730.1,
+       641660.96
+      ],
+      [
+       7605731.2,
+       641655.86
+      ],
+      [
+       7605731.75,
+       641651.56
+      ],
+      [
+       7605731.54,
+       641647.23
+      ],
+      [
+       7605730.59,
+       641643.0
+      ],
+      [
+       7605728.92,
+       641639.0
+      ],
+      [
+       7605726.59,
+       641635.35
+      ],
+      [
+       7605723.66,
+       641632.16
+      ],
+      [
+       7605720.22,
+       641629.51
+      ],
+      [
+       7605716.38,
+       641627.51
+      ],
+      [
+       7605712.25,
+       641626.19
+      ],
+      [
+       7605650.07,
+       641611.84
+      ],
+      [
+       7605641.19,
+       641609.74
+      ],
+      [
+       7605643.37,
+       641699.72
+      ],
+      [
+       7605725.98,
+       641697.73
+      ],
+      [
+       7605727.11,
+       641679.24
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00800",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605643.37,
+       641699.72
+      ],
+      [
+       7605645.06,
+       641769.7
+      ],
+      [
+       7605734.75,
+       641770.26
+      ],
+      [
+       7605733.09,
+       641756.17
+      ],
+      [
+       7605728.75,
+       641731.5
+      ],
+      [
+       7605726.58,
+       641714.68
+      ],
+      [
+       7605725.98,
+       641697.73
+      ],
+      [
+       7605643.37,
+       641699.72
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB00900",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605645.06,
+       641769.7
+      ],
+      [
+       7605646.26,
+       641819.69
+      ],
+      [
+       7605694.78,
+       641869.68
+      ],
+      [
+       7605705.7,
+       641858.24
+      ],
+      [
+       7605715.08,
+       641845.51
+      ],
+      [
+       7605722.78,
+       641831.71
+      ],
+      [
+       7605728.68,
+       641817.04
+      ],
+      [
+       7605732.68,
+       641801.74
+      ],
+      [
+       7605734.71,
+       641786.07
+      ],
+      [
+       7605734.75,
+       641770.26
+      ],
+      [
+       7605645.06,
+       641769.7
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01000",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605646.26,
+       641819.69
+      ],
+      [
+       7605575.08,
+       641863.23
+      ],
+      [
+       7605582.23,
+       641874.77
+      ],
+      [
+       7605601.74,
+       641903.83
+      ],
+      [
+       7605604.48,
+       641907.22
+      ],
+      [
+       7605607.76,
+       641910.09
+      ],
+      [
+       7605611.49,
+       641912.34
+      ],
+      [
+       7605615.55,
+       641913.91
+      ],
+      [
+       7605619.83,
+       641914.75
+      ],
+      [
+       7605624.19,
+       641914.83
+      ],
+      [
+       7605628.49,
+       641914.16
+      ],
+      [
+       7605632.62,
+       641912.75
+      ],
+      [
+       7605636.43,
+       641910.65
+      ],
+      [
+       7605679.67,
+       641881.61
+      ],
+      [
+       7605687.46,
+       641875.94
+      ],
+      [
+       7605694.78,
+       641869.68
+      ],
+      [
+       7605646.26,
+       641819.69
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01100",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605645.06,
+       641769.7
+      ],
+      [
+       7605551.07,
+       641782.47
+      ],
+      [
+       7605553.55,
+       641803.56
+      ],
+      [
+       7605558.43,
+       641824.23
+      ],
+      [
+       7605565.63,
+       641844.21
+      ],
+      [
+       7605575.08,
+       641863.23
+      ],
+      [
+       7605646.26,
+       641819.69
+      ],
+      [
+       7605645.06,
+       641769.7
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01200",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605643.37,
+       641699.72
+      ],
+      [
+       7605563.21,
+       641710.15
+      ],
+      [
+       7605563.5,
+       641722.15
+      ],
+      [
+       7605549.84,
+       641736.48
+      ],
+      [
+       7605550.79,
+       641775.87
+      ],
+      [
+       7605551.07,
+       641782.47
+      ],
+      [
+       7605645.06,
+       641769.7
+      ],
+      [
+       7605643.37,
+       641699.72
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01300",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605641.19,
+       641609.74
+      ],
+      [
+       7605609.08,
+       641602.14
+      ],
+      [
+       7605542.93,
+       641698.64
+      ],
+      [
+       7605562.92,
+       641698.15
+      ],
+      [
+       7605563.21,
+       641710.15
+      ],
+      [
+       7605643.37,
+       641699.72
+      ],
+      [
+       7605641.19,
+       641609.74
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01400",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605506.9,
+       641577.96
+      ],
+      [
+       7605517.94,
+       641699.24
+      ],
+      [
+       7605542.93,
+       641698.64
+      ],
+      [
+       7605609.08,
+       641602.14
+      ],
+      [
+       7605506.9,
+       641577.96
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01500",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605414.46,
+       641556.09
+      ],
+      [
+       7605414.61,
+       641562.35
+      ],
+      [
+       7605416.06,
+       641622.67
+      ],
+      [
+       7605492.1,
+       641664.85
+      ],
+      [
+       7605492.94,
+       641699.84
+      ],
+      [
+       7605517.94,
+       641699.24
+      ],
+      [
+       7605506.9,
+       641577.96
+      ],
+      [
+       7605414.46,
+       641556.09
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01600",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605416.06,
+       641622.67
+      ],
+      [
+       7605418.95,
+       641742.64
+      ],
+      [
+       7605504.06,
+       641733.87
+      ],
+      [
+       7605493.52,
+       641723.84
+      ],
+      [
+       7605492.94,
+       641699.84
+      ],
+      [
+       7605492.1,
+       641664.85
+      ],
+      [
+       7605416.06,
+       641622.67
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01700",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605510.08,
+       641796.13
+      ],
+      [
+       7605508.8,
+       641776.88
+      ],
+      [
+       7605507.85,
+       641737.49
+      ],
+      [
+       7605504.06,
+       641733.87
+      ],
+      [
+       7605418.95,
+       641742.64
+      ],
+      [
+       7605420.93,
+       641824.61
+      ],
+      [
+       7605512.99,
+       641815.2
+      ],
+      [
+       7605510.08,
+       641796.13
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01800",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605524.1,
+       641853.57
+      ],
+      [
+       7605517.7,
+       641834.63
+      ],
+      [
+       7605512.99,
+       641815.2
+      ],
+      [
+       7605420.93,
+       641824.61
+      ],
+      [
+       7605422.09,
+       641872.6
+      ],
+      [
+       7605452.78,
+       641908.43
+      ],
+      [
+       7605532.14,
+       641871.88
+      ],
+      [
+       7605524.1,
+       641853.57
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB01900",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605452.78,
+       641908.43
+      ],
+      [
+       7605521.07,
+       641988.19
+      ],
+      [
+       7605526.02,
+       641984.78
+      ],
+      [
+       7605560.05,
+       641961.93
+      ],
+      [
+       7605563.45,
+       641959.19
+      ],
+      [
+       7605566.31,
+       641955.91
+      ],
+      [
+       7605568.56,
+       641952.18
+      ],
+      [
+       7605570.13,
+       641948.11
+      ],
+      [
+       7605570.97,
+       641943.84
+      ],
+      [
+       7605571.06,
+       641939.48
+      ],
+      [
+       7605570.39,
+       641935.18
+      ],
+      [
+       7605568.98,
+       641931.05
+      ],
+      [
+       7605566.87,
+       641927.24
+      ],
+      [
+       7605547.36,
+       641898.18
+      ],
+      [
+       7605539.31,
+       641885.28
+      ],
+      [
+       7605532.14,
+       641871.88
+      ],
+      [
+       7605452.78,
+       641908.43
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "2S116BB02100",
+    "zone": "R-15",
+    "plan": "Bull Mountain",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1 traffic study and three access points to Beef Bend Road",
+    "quote": "or/washington/_unincorporated/community-plan.bull-mountain.txt#L769-L779"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604735.28,
+       641363.65
+      ],
+      [
+       7604735.28,
+       641363.8
+      ],
+      [
+       7604735.18,
+       641363.63
+      ],
+      [
+       7604735.13,
+       641363.55
+      ],
+      [
+       7604735.14,
+       641363.62
+      ],
+      [
+       7604735.29,
+       641364.18
+      ],
+      [
+       7604737.57,
+       641459.69
+      ],
+      [
+       7604739.46,
+       641539.12
+      ],
+      [
+       7604739.37,
+       641539.5
+      ],
+      [
+       7604741.53,
+       641629.48
+      ],
+      [
+       7604742.06,
+       641651.4
+      ],
+      [
+       7604742.37,
+       641664.49
+      ],
+      [
+       7604742.38,
+       641664.56
+      ],
+      [
+       7604746.7,
+       641844.07
+      ],
+      [
+       7604746.74,
+       641844.35
+      ],
+      [
+       7604748.85,
+       641933.16
+      ],
+      [
+       7604750.26,
+       641992.1
+      ],
+      [
+       7604828.63,
+       641990.42
+      ],
+      [
+       7604829.44,
+       641990.4
+      ],
+      [
+       7604830.24,
+       641990.38
+      ],
+      [
+       7604910.22,
+       641988.66
+      ],
+      [
+       7604985.2,
+       641987.04
+      ],
+      [
+       7605060.18,
+       641985.42
+      ],
+      [
+       7605135.17,
+       641983.81
+      ],
+      [
+       7605210.15,
+       641982.19
+      ],
+      [
+       7605314.65,
+       641979.94
+      ],
+      [
+       7605424.62,
+       641977.57
+      ],
+      [
+       7605422.09,
+       641872.6
+      ],
+      [
+       7605420.93,
+       641824.61
+      ],
+      [
+       7605418.95,
+       641742.64
+      ],
+      [
+       7605416.06,
+       641622.67
+      ],
+      [
+       7605414.61,
+       641562.35
+      ],
+      [
+       7605414.46,
+       641556.09
+      ],
+      [
+       7605404.46,
+       641553.52
+      ],
+      [
+       7604735.28,
+       641363.65
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S101DD00300",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC M access limited to one point on Raab Road",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L966-L967,L971-L972"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626594.66,
+       678706.1
+      ],
+      [
+       7626563.25,
+       678749.33
+      ],
+      [
+       7626524.5,
+       678795.95
+      ],
+      [
+       7626532.85,
+       678806.08
+      ],
+      [
+       7626560.73,
+       678836.98
+      ],
+      [
+       7626590.19,
+       678866.39
+      ],
+      [
+       7626610.66,
+       678885.11
+      ],
+      [
+       7626642.57,
+       678911.84
+      ],
+      [
+       7626675.84,
+       678936.85
+      ],
+      [
+       7626710.36,
+       678960.1
+      ],
+      [
+       7626734.04,
+       678974.57
+      ],
+      [
+       7626782.98,
+       678907.41
+      ],
+      [
+       7626722.67,
+       678842.93
+      ],
+      [
+       7626594.66,
+       678706.1
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S101DD00400",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC M access limited to one point on Raab Road",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L966-L967,L971-L972"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626918.1,
+       678518.19
+      ],
+      [
+       7626744.6,
+       678522.97
+      ],
+      [
+       7626828.87,
+       678773.12
+      ],
+      [
+       7626922.48,
+       678711.64
+      ],
+      [
+       7626918.1,
+       678518.19
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S101DD00402",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC M access limited to one point on Raab Road",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L966-L967,L971-L972"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626744.6,
+       678522.97
+      ],
+      [
+       7626726.57,
+       678523.47
+      ],
+      [
+       7626691.2,
+       678572.67
+      ],
+      [
+       7626654.95,
+       678623.11
+      ],
+      [
+       7626598.06,
+       678701.42
+      ],
+      [
+       7626594.66,
+       678706.1
+      ],
+      [
+       7626722.67,
+       678842.93
+      ],
+      [
+       7626828.87,
+       678773.12
+      ],
+      [
+       7626744.6,
+       678522.97
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S101DD00502",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC M access limited to one point on Raab Road",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L966-L967,L971-L972"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626915.58,
+       678407.21
+      ],
+      [
+       7626785.12,
+       678410.81
+      ],
+      [
+       7626746.58,
+       678488.11
+      ],
+      [
+       7626737.04,
+       678506.05
+      ],
+      [
+       7626726.57,
+       678523.47
+      ],
+      [
+       7626744.6,
+       678522.97
+      ],
+      [
+       7626918.1,
+       678518.19
+      ],
+      [
+       7626915.58,
+       678407.21
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S110DA00501",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "inside an unlabelled ASC outline on Map 5.1",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L212-L216"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7615633.69,
+       675909.37
+      ],
+      [
+       7615617.39,
+       675893.97
+      ],
+      [
+       7615543.29,
+       675823.98
+      ],
+      [
+       7615530.15,
+       675811.58
+      ],
+      [
+       7615430.36,
+       675717.32
+      ],
+      [
+       7615402.62,
+       675691.12
+      ],
+      [
+       7615398.63,
+       675691.38
+      ],
+      [
+       7615276.25,
+       675699.22
+      ],
+      [
+       7615161.4,
+       675706.58
+      ],
+      [
+       7615163.29,
+       675786.85
+      ],
+      [
+       7615139.99,
+       675777.58
+      ],
+      [
+       7615124.21,
+       675785.17
+      ],
+      [
+       7615115.02,
+       675782.06
+      ],
+      [
+       7615109.6,
+       675776.4
+      ],
+      [
+       7615099.74,
+       675780.68
+      ],
+      [
+       7615096.81,
+       675790.27
+      ],
+      [
+       7615089.79,
+       675795.79
+      ],
+      [
+       7615060.61,
+       675799.27
+      ],
+      [
+       7615048.83,
+       675806.21
+      ],
+      [
+       7615046.43,
+       675709.29
+      ],
+      [
+       7614931.46,
+       675712.01
+      ],
+      [
+       7614932.91,
+       675737.77
+      ],
+      [
+       7615048.9,
+       675892.95
+      ],
+      [
+       7615061.99,
+       675903.21
+      ],
+      [
+       7615341.53,
+       675853.8
+      ],
+      [
+       7615428.65,
+       675935.33
+      ],
+      [
+       7615417.32,
+       676054.06
+      ],
+      [
+       7615462.63,
+       676056.62
+      ],
+      [
+       7615507.75,
+       676061.52
+      ],
+      [
+       7615552.55,
+       676068.76
+      ],
+      [
+       7615568.98,
+       676070.73
+      ],
+      [
+       7615585.53,
+       676070.5
+      ],
+      [
+       7615601.9,
+       676068.07
+      ],
+      [
+       7615617.81,
+       676063.49
+      ],
+      [
+       7615632.96,
+       676056.83
+      ],
+      [
+       7615647.1,
+       676048.22
+      ],
+      [
+       7615659.96,
+       676037.81
+      ],
+      [
+       7615671.33,
+       676025.78
+      ],
+      [
+       7615633.69,
+       675909.37
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S110DA00506",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "inside an unlabelled ASC outline on Map 5.1",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L212-L216"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7615159.04,
+       675606.61
+      ],
+      [
+       7615044.07,
+       675609.32
+      ],
+      [
+       7615046.43,
+       675709.29
+      ],
+      [
+       7615048.83,
+       675806.21
+      ],
+      [
+       7615060.61,
+       675799.27
+      ],
+      [
+       7615089.79,
+       675795.79
+      ],
+      [
+       7615096.81,
+       675790.27
+      ],
+      [
+       7615099.74,
+       675780.68
+      ],
+      [
+       7615109.6,
+       675776.4
+      ],
+      [
+       7615115.02,
+       675782.06
+      ],
+      [
+       7615124.21,
+       675785.17
+      ],
+      [
+       7615139.99,
+       675777.58
+      ],
+      [
+       7615163.29,
+       675786.85
+      ],
+      [
+       7615161.4,
+       675706.58
+      ],
+      [
+       7615159.04,
+       675606.61
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S110DA00509",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "inside an unlabelled ASC outline on Map 5.1",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L212-L216"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7615428.65,
+       675935.33
+      ],
+      [
+       7615341.53,
+       675853.8
+      ],
+      [
+       7615061.99,
+       675903.21
+      ],
+      [
+       7615095.35,
+       675929.34
+      ],
+      [
+       7615098.85,
+       675945.36
+      ],
+      [
+       7615133.29,
+       675951.58
+      ],
+      [
+       7615133.92,
+       676092.19
+      ],
+      [
+       7615180.05,
+       676079.4
+      ],
+      [
+       7615226.81,
+       676069.15
+      ],
+      [
+       7615274.05,
+       676061.47
+      ],
+      [
+       7615321.65,
+       676056.39
+      ],
+      [
+       7615369.46,
+       676053.92
+      ],
+      [
+       7615417.32,
+       676054.06
+      ],
+      [
+       7615428.65,
+       675935.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S112DC08504",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625181.02,
+       673332.73
+      ],
+      [
+       7625087.92,
+       673337.01
+      ],
+      [
+       7625092.54,
+       673437.58
+      ],
+      [
+       7625168.87,
+       673434.08
+      ],
+      [
+       7625185.64,
+       673433.31
+      ],
+      [
+       7625181.02,
+       673332.73
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S112DC08509",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625217.45,
+       673202.92
+      ],
+      [
+       7625107.57,
+       673207.97
+      ],
+      [
+       7625111.15,
+       673285.89
+      ],
+      [
+       7625221.03,
+       673280.85
+      ],
+      [
+       7625217.45,
+       673202.92
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S112DC08510",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625220.5,
+       673094.82
+      ],
+      [
+       7625157.7,
+       673097.65
+      ],
+      [
+       7625151.28,
+       672985.43
+      ],
+      [
+       7625150.15,
+       672965.59
+      ],
+      [
+       7625130.3,
+       672966.67
+      ],
+      [
+       7625130.17,
+       672966.67
+      ],
+      [
+       7625138.01,
+       673103.63
+      ],
+      [
+       7625108.1,
+       673105.0
+      ],
+      [
+       7625083.7,
+       673124.32
+      ],
+      [
+       7625091.17,
+       673286.81
+      ],
+      [
+       7625111.15,
+       673285.89
+      ],
+      [
+       7625107.57,
+       673207.97
+      ],
+      [
+       7625217.45,
+       673202.92
+      ],
+      [
+       7625225.44,
+       673202.56
+      ],
+      [
+       7625224.89,
+       673190.57
+      ],
+      [
+       7625222.6,
+       673140.62
+      ],
+      [
+       7625220.72,
+       673099.81
+      ],
+      [
+       7625220.5,
+       673094.82
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S112DC08518",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625339.83,
+       673089.45
+      ],
+      [
+       7625343.71,
+       673089.27
+      ],
+      [
+       7625339.24,
+       672955.35
+      ],
+      [
+       7625303.06,
+       672957.31
+      ],
+      [
+       7625151.28,
+       672985.43
+      ],
+      [
+       7625157.7,
+       673097.65
+      ],
+      [
+       7625220.5,
+       673094.82
+      ],
+      [
+       7625220.72,
+       673099.81
+      ],
+      [
+       7625222.6,
+       673140.62
+      ],
+      [
+       7625327.42,
+       673135.81
+      ],
+      [
+       7625339.83,
+       673089.45
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AA03100",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW RALEIGHWOOD WAY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625861.03,
+       672655.52
+      ],
+      [
+       7625856.8,
+       672661.5
+      ],
+      [
+       7625853.5,
+       672668.03
+      ],
+      [
+       7625851.18,
+       672674.97
+      ],
+      [
+       7625849.9,
+       672682.18
+      ],
+      [
+       7625849.68,
+       672689.49
+      ],
+      [
+       7625854.23,
+       672794.41
+      ],
+      [
+       7625954.14,
+       672790.08
+      ],
+      [
+       7625951.54,
+       672730.13
+      ],
+      [
+       7625861.03,
+       672655.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AA04600",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW RALEIGHWOOD WAY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625726.2,
+       672567.0
+      ],
+      [
+       7625698.31,
+       672661.05
+      ],
+      [
+       7625699.61,
+       672691.03
+      ],
+      [
+       7625799.66,
+       672689.14
+      ],
+      [
+       7625800.59,
+       672673.56
+      ],
+      [
+       7625803.93,
+       672658.32
+      ],
+      [
+       7625809.61,
+       672643.79
+      ],
+      [
+       7625817.47,
+       672630.32
+      ],
+      [
+       7625726.2,
+       672567.0
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AA04700",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW RALEIGHWOOD WAY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625820.58,
+       672492.91
+      ],
+      [
+       7625812.71,
+       672499.09
+      ],
+      [
+       7625726.2,
+       672567.0
+      ],
+      [
+       7625817.47,
+       672630.32
+      ],
+      [
+       7625826.87,
+       672618.71
+      ],
+      [
+       7625837.9,
+       672608.64
+      ],
+      [
+       7625875.53,
+       672579.1
+      ],
+      [
+       7625883.39,
+       672572.93
+      ],
+      [
+       7625820.58,
+       672492.91
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AA04890",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area shaded parcel (Map 8.1)",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1314-L1318,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625996.13,
+       672392.68
+      ],
+      [
+       7625914.5,
+       672430.57
+      ],
+      [
+       7625956.6,
+       672521.28
+      ],
+      [
+       7626020.09,
+       672491.81
+      ],
+      [
+       7626023.11,
+       672490.07
+      ],
+      [
+       7626025.79,
+       672487.83
+      ],
+      [
+       7626028.03,
+       672485.17
+      ],
+      [
+       7626029.78,
+       672482.15
+      ],
+      [
+       7626030.98,
+       672478.88
+      ],
+      [
+       7626031.59,
+       672475.45
+      ],
+      [
+       7626031.6,
+       672471.96
+      ],
+      [
+       7626031.0,
+       672468.53
+      ],
+      [
+       7626031.07,
+       672467.95
+      ],
+      [
+       7626029.81,
+       672465.24
+      ],
+      [
+       7625996.13,
+       672392.68
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AA05001",
+    "zone": "R-24",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area shaded parcel (Map 8.1); pedestrian connectivity area, words only: SW DOGWOOD LN to SW RALEIGHWOOD WAY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1314-L1318,L1335-L1340; or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625996.13,
+       672392.68
+      ],
+      [
+       7626029.81,
+       672465.24
+      ],
+      [
+       7626031.07,
+       672467.95
+      ],
+      [
+       7626038.23,
+       672483.38
+      ],
+      [
+       7626191.96,
+       672412.01
+      ],
+      [
+       7626064.24,
+       672139.9
+      ],
+      [
+       7625965.51,
+       672185.87
+      ],
+      [
+       7625911.66,
+       672210.94
+      ],
+      [
+       7625890.91,
+       672219.96
+      ],
+      [
+       7625633.03,
+       672332.18
+      ],
+      [
+       7625633.69,
+       672349.84
+      ],
+      [
+       7625637.39,
+       672449.78
+      ],
+      [
+       7625726.2,
+       672567.0
+      ],
+      [
+       7625812.71,
+       672499.09
+      ],
+      [
+       7625820.58,
+       672492.91
+      ],
+      [
+       7625879.0,
+       672447.05
+      ],
+      [
+       7625914.5,
+       672430.57
+      ],
+      [
+       7625996.13,
+       672392.68
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AA05100",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area shaded parcel (Map 8.1)",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1314-L1318,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625623.73,
+       672081.01
+      ],
+      [
+       7625424.4,
+       672091.44
+      ],
+      [
+       7625428.41,
+       672187.97
+      ],
+      [
+       7625428.18,
+       672208.81
+      ],
+      [
+       7625425.98,
+       672229.53
+      ],
+      [
+       7625421.84,
+       672249.95
+      ],
+      [
+       7625415.77,
+       672269.88
+      ],
+      [
+       7625633.69,
+       672349.84
+      ],
+      [
+       7625633.03,
+       672332.18
+      ],
+      [
+       7625623.73,
+       672081.01
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AB00200",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625130.17,
+       672966.67
+      ],
+      [
+       7625110.21,
+       672967.85
+      ],
+      [
+       7624798.17,
+       672986.2
+      ],
+      [
+       7624805.39,
+       673118.95
+      ],
+      [
+       7624820.38,
+       673118.26
+      ],
+      [
+       7624912.28,
+       673114.03
+      ],
+      [
+       7624953.01,
+       673112.15
+      ],
+      [
+       7625021.94,
+       673108.97
+      ],
+      [
+       7625082.87,
+       673106.17
+      ],
+      [
+       7625108.1,
+       673105.0
+      ],
+      [
+       7625138.01,
+       673103.63
+      ],
+      [
+       7625130.17,
+       672966.67
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AB00700",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625103.1,
+       672842.22
+      ],
+      [
+       7624791.32,
+       672860.25
+      ],
+      [
+       7624798.17,
+       672986.2
+      ],
+      [
+       7625110.21,
+       672967.85
+      ],
+      [
+       7625103.1,
+       672842.22
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AB00801",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW SHARON LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625330.78,
+       672804.34
+      ],
+      [
+       7625141.67,
+       672815.15
+      ],
+      [
+       7625150.13,
+       672965.37
+      ],
+      [
+       7625150.15,
+       672965.59
+      ],
+      [
+       7625151.28,
+       672985.43
+      ],
+      [
+       7625303.06,
+       672957.31
+      ],
+      [
+       7625339.24,
+       672955.35
+      ],
+      [
+       7625330.78,
+       672804.34
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AB01503",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area shaded parcel (Map 8.1); pedestrian connectivity area, words only: SW DOGWOOD LN to SW RALEIGHWOOD WAY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1314-L1318,L1335-L1340; or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625415.77,
+       672269.88
+      ],
+      [
+       7625406.6,
+       672291.8
+      ],
+      [
+       7625395.11,
+       672312.6
+      ],
+      [
+       7625381.45,
+       672332.03
+      ],
+      [
+       7625365.77,
+       672349.88
+      ],
+      [
+       7625348.25,
+       672365.94
+      ],
+      [
+       7625329.11,
+       672380.02
+      ],
+      [
+       7625308.57,
+       672391.95
+      ],
+      [
+       7625286.85,
+       672401.59
+      ],
+      [
+       7625264.23,
+       672408.84
+      ],
+      [
+       7625306.2,
+       672456.27
+      ],
+      [
+       7625439.17,
+       672494.86
+      ],
+      [
+       7625437.94,
+       672459.66
+      ],
+      [
+       7625637.39,
+       672449.78
+      ],
+      [
+       7625633.69,
+       672349.84
+      ],
+      [
+       7625415.77,
+       672269.88
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AB02300",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "pedestrian connectivity area, words only: SW DOGWOOD LN to SW RALEIGHWOOD WAY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1331-L1333,L1335-L1340"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625146.31,
+       672203.92
+      ],
+      [
+       7624996.72,
+       672212.38
+      ],
+      [
+       7624847.14,
+       672220.83
+      ],
+      [
+       7624853.49,
+       672349.66
+      ],
+      [
+       7625338.7,
+       672320.32
+      ],
+      [
+       7625352.0,
+       672304.8
+      ],
+      [
+       7625363.45,
+       672287.86
+      ],
+      [
+       7625372.91,
+       672269.74
+      ],
+      [
+       7625380.26,
+       672250.67
+      ],
+      [
+       7625385.39,
+       672230.88
+      ],
+      [
+       7625388.25,
+       672210.65
+      ],
+      [
+       7625388.8,
+       672190.21
+      ],
+      [
+       7625146.31,
+       672203.92
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AC03100",
+    "zone": "R-24",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "commercial-strip ASC landscape buffer to CDC Type 1 along SW BEAVERTON HILLSDALE HWY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L936-L937,L956-L958"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624671.0,
+       671409.99
+      ],
+      [
+       7624651.03,
+       671411.09
+      ],
+      [
+       7624501.5,
+       671419.33
+      ],
+      [
+       7624511.8,
+       671603.36
+      ],
+      [
+       7624681.46,
+       671593.96
+      ],
+      [
+       7624671.0,
+       671409.99
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S113AC80000",
+    "zone": "R-24",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "commercial-strip ASC landscape buffer to CDC Type 1 along SW BEAVERTON HILLSDALE HWY",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L936-L937,L956-L958"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624684.58,
+       671648.87
+      ],
+      [
+       7624681.46,
+       671593.96
+      ],
+      [
+       7624511.8,
+       671603.36
+      ],
+      [
+       7624501.5,
+       671419.33
+      ],
+      [
+       7624500.89,
+       671408.26
+      ],
+      [
+       7624351.12,
+       671416.56
+      ],
+      [
+       7624365.11,
+       671666.57
+      ],
+      [
+       7624514.88,
+       671658.27
+      ],
+      [
+       7624664.61,
+       671649.98
+      ],
+      [
+       7624684.58,
+       671648.87
+      ]
+     ],
+     [
+      [
+       7624477.31,
+       671562.27
+      ],
+      [
+       7624477.94,
+       671574.25
+      ],
+      [
+       7624465.96,
+       671574.88
+      ],
+      [
+       7624465.33,
+       671562.9
+      ],
+      [
+       7624477.31,
+       671562.27
+      ]
+     ],
+     [
+      [
+       7624476.73,
+       671544.16
+      ],
+      [
+       7624477.36,
+       671556.14
+      ],
+      [
+       7624465.38,
+       671556.77
+      ],
+      [
+       7624464.75,
+       671544.79
+      ],
+      [
+       7624476.73,
+       671544.16
+      ]
+     ],
+     [
+      [
+       7624463.55,
+       671528.94
+      ],
+      [
+       7624475.53,
+       671528.32
+      ],
+      [
+       7624476.16,
+       671540.3
+      ],
+      [
+       7624464.18,
+       671540.93
+      ],
+      [
+       7624463.55,
+       671528.94
+      ]
+     ],
+     [
+      [
+       7624439.54,
+       671634.78
+      ],
+      [
+       7624451.53,
+       671634.15
+      ],
+      [
+       7624452.15,
+       671646.14
+      ],
+      [
+       7624440.17,
+       671646.77
+      ],
+      [
+       7624439.54,
+       671634.78
+      ]
+     ],
+     [
+      [
+       7624438.36,
+       671612.61
+      ],
+      [
+       7624450.34,
+       671611.99
+      ],
+      [
+       7624450.97,
+       671623.97
+      ],
+      [
+       7624438.99,
+       671624.6
+      ],
+      [
+       7624438.36,
+       671612.61
+      ]
+     ],
+     [
+      [
+       7624437.57,
+       671590.79
+      ],
+      [
+       7624449.55,
+       671590.17
+      ],
+      [
+       7624450.18,
+       671602.15
+      ],
+      [
+       7624438.2,
+       671602.78
+      ],
+      [
+       7624437.57,
+       671590.79
+      ]
+     ],
+     [
+      [
+       7624433.42,
+       671515.58
+      ],
+      [
+       7624445.4,
+       671514.96
+      ],
+      [
+       7624446.03,
+       671526.94
+      ],
+      [
+       7624434.05,
+       671527.57
+      ],
+      [
+       7624433.42,
+       671515.58
+      ]
+     ],
+     [
+      [
+       7624431.81,
+       671492.32
+      ],
+      [
+       7624443.79,
+       671491.69
+      ],
+      [
+       7624444.42,
+       671503.68
+      ],
+      [
+       7624432.44,
+       671504.31
+      ],
+      [
+       7624431.81,
+       671492.32
+      ]
+     ],
+     [
+      [
+       7624430.67,
+       671470.9
+      ],
+      [
+       7624442.65,
+       671470.27
+      ],
+      [
+       7624443.28,
+       671482.25
+      ],
+      [
+       7624431.3,
+       671482.88
+      ],
+      [
+       7624430.67,
+       671470.9
+      ]
+     ],
+     [
+      [
+       7624428.68,
+       671447.65
+      ],
+      [
+       7624440.66,
+       671447.03
+      ],
+      [
+       7624441.29,
+       671459.01
+      ],
+      [
+       7624429.31,
+       671459.64
+      ],
+      [
+       7624428.68,
+       671447.65
+      ]
+     ],
+     [
+      [
+       7624396.63,
+       671637.23
+      ],
+      [
+       7624397.26,
+       671649.21
+      ],
+      [
+       7624385.28,
+       671649.84
+      ],
+      [
+       7624384.65,
+       671637.86
+      ],
+      [
+       7624396.63,
+       671637.23
+      ]
+     ],
+     [
+      [
+       7624395.45,
+       671615.06
+      ],
+      [
+       7624396.08,
+       671627.04
+      ],
+      [
+       7624384.09,
+       671627.67
+      ],
+      [
+       7624383.46,
+       671615.69
+      ],
+      [
+       7624395.45,
+       671615.06
+      ]
+     ],
+     [
+      [
+       7624394.66,
+       671593.24
+      ],
+      [
+       7624395.29,
+       671605.22
+      ],
+      [
+       7624383.3,
+       671605.85
+      ],
+      [
+       7624382.68,
+       671593.87
+      ],
+      [
+       7624394.66,
+       671593.24
+      ]
+     ],
+     [
+      [
+       7624379.15,
+       671530.64
+      ],
+      [
+       7624378.53,
+       671518.66
+      ],
+      [
+       7624390.51,
+       671518.03
+      ],
+      [
+       7624391.14,
+       671530.01
+      ],
+      [
+       7624379.15,
+       671530.64
+      ]
+     ],
+     [
+      [
+       7624388.89,
+       671494.77
+      ],
+      [
+       7624389.52,
+       671506.75
+      ],
+      [
+       7624377.54,
+       671507.38
+      ],
+      [
+       7624376.91,
+       671495.4
+      ],
+      [
+       7624388.89,
+       671494.77
+      ]
+     ],
+     [
+      [
+       7624387.75,
+       671473.34
+      ],
+      [
+       7624388.38,
+       671485.32
+      ],
+      [
+       7624376.4,
+       671485.95
+      ],
+      [
+       7624375.77,
+       671473.97
+      ],
+      [
+       7624387.75,
+       671473.34
+      ]
+     ],
+     [
+      [
+       7624385.77,
+       671450.1
+      ],
+      [
+       7624386.4,
+       671462.08
+      ],
+      [
+       7624374.41,
+       671462.71
+      ],
+      [
+       7624373.79,
+       671450.73
+      ],
+      [
+       7624385.77,
+       671450.1
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S114BC03200",
+    "zone": "R-9",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "inside an unlabelled ASC outline on Map 5.1",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L212-L216"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7616766.87,
+       672169.18
+      ],
+      [
+       7616766.94,
+       672169.18
+      ],
+      [
+       7616765.17,
+       672071.85
+      ],
+      [
+       7616665.21,
+       672074.53
+      ],
+      [
+       7616667.11,
+       672183.41
+      ],
+      [
+       7616753.13,
+       672181.06
+      ],
+      [
+       7616767.07,
+       672180.68
+      ],
+      [
+       7616766.98,
+       672175.68
+      ],
+      [
+       7616766.87,
+       672169.18
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S123AA00100",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC U conditions of Case #74-96C continue, not held",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1083-L1086"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7621268.96,
+       667463.19
+      ],
+      [
+       7621256.51,
+       667471.45
+      ],
+      [
+       7621143.95,
+       667546.18
+      ],
+      [
+       7621102.22,
+       667573.89
+      ],
+      [
+       7621070.62,
+       667606.92
+      ],
+      [
+       7620948.31,
+       667734.41
+      ],
+      [
+       7620991.61,
+       667767.08
+      ],
+      [
+       7621031.55,
+       667803.79
+      ],
+      [
+       7621067.75,
+       667844.2
+      ],
+      [
+       7621099.87,
+       667887.92
+      ],
+      [
+       7621183.81,
+       668017.41
+      ],
+      [
+       7621377.76,
+       668011.98
+      ],
+      [
+       7621364.1,
+       667607.2
+      ],
+      [
+       7621268.96,
+       667463.19
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AA00203",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC S access cap, fronts SW MAYO ST",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626165.93,
+       662179.27
+      ],
+      [
+       7626115.97,
+       662181.04
+      ],
+      [
+       7626118.06,
+       662267.43
+      ],
+      [
+       7626124.04,
+       662513.99
+      ],
+      [
+       7626174.0,
+       662512.14
+      ],
+      [
+       7626172.55,
+       662452.16
+      ],
+      [
+       7626170.85,
+       662382.18
+      ],
+      [
+       7626165.93,
+       662179.27
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AA07500",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC S access cap, fronts SW MAYO ST",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626172.55,
+       662452.16
+      ],
+      [
+       7626174.0,
+       662512.14
+      ],
+      [
+       7626289.89,
+       662508.04
+      ],
+      [
+       7626292.47,
+       662507.72
+      ],
+      [
+       7626294.96,
+       662506.96
+      ],
+      [
+       7626297.28,
+       662505.78
+      ],
+      [
+       7626299.36,
+       662504.22
+      ],
+      [
+       7626301.14,
+       662502.33
+      ],
+      [
+       7626302.57,
+       662500.15
+      ],
+      [
+       7626303.59,
+       662497.77
+      ],
+      [
+       7626304.2,
+       662495.24
+      ],
+      [
+       7626304.35,
+       662492.64
+      ],
+      [
+       7626304.06,
+       662490.06
+      ],
+      [
+       7626303.32,
+       662487.56
+      ],
+      [
+       7626302.16,
+       662485.23
+      ],
+      [
+       7626300.62,
+       662483.14
+      ],
+      [
+       7626296.04,
+       662477.05
+      ],
+      [
+       7626292.44,
+       662470.34
+      ],
+      [
+       7626289.89,
+       662463.16
+      ],
+      [
+       7626288.47,
+       662455.67
+      ],
+      [
+       7626288.2,
+       662448.06
+      ],
+      [
+       7626172.55,
+       662452.16
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AA08100",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC S access cap, fronts SW MAYO ST",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626502.74,
+       662430.84
+      ],
+      [
+       7626385.74,
+       662434.75
+      ],
+      [
+       7626387.68,
+       662443.15
+      ],
+      [
+       7626388.14,
+       662451.76
+      ],
+      [
+       7626387.11,
+       662460.32
+      ],
+      [
+       7626384.63,
+       662468.57
+      ],
+      [
+       7626380.77,
+       662476.28
+      ],
+      [
+       7626375.65,
+       662483.21
+      ],
+      [
+       7626373.57,
+       662485.9
+      ],
+      [
+       7626371.89,
+       662488.86
+      ],
+      [
+       7626370.61,
+       662492.01
+      ],
+      [
+       7626369.78,
+       662495.31
+      ],
+      [
+       7626504.2,
+       662490.83
+      ],
+      [
+       7626502.74,
+       662430.84
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AA08200",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC S access cap, fronts SW MAYO ST",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7626504.2,
+       662490.83
+      ],
+      [
+       7626369.78,
+       662495.31
+      ],
+      [
+       7626369.46,
+       662497.83
+      ],
+      [
+       7626369.39,
+       662500.36
+      ],
+      [
+       7626370.73,
+       662555.31
+      ],
+      [
+       7626505.65,
+       662550.81
+      ],
+      [
+       7626504.2,
+       662490.83
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC00400",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC S access cap, fronts SW FLORENCE LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624791.01,
+       660670.0
+      ],
+      [
+       7624695.0,
+       660672.39
+      ],
+      [
+       7624695.25,
+       660682.39
+      ],
+      [
+       7624698.79,
+       660822.95
+      ],
+      [
+       7624701.62,
+       660937.92
+      ],
+      [
+       7624702.83,
+       660987.27
+      ],
+      [
+       7624799.31,
+       660984.13
+      ],
+      [
+       7624798.14,
+       660939.91
+      ],
+      [
+       7624796.27,
+       660868.93
+      ],
+      [
+       7624794.15,
+       660788.96
+      ],
+      [
+       7624791.15,
+       660675.0
+      ],
+      [
+       7624791.01,
+       660670.0
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC01600",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW TAYLORS FERRY RD",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625012.02,
+       660117.13
+      ],
+      [
+       7624941.54,
+       660118.21
+      ],
+      [
+       7624862.22,
+       660119.43
+      ],
+      [
+       7624865.62,
+       660317.89
+      ],
+      [
+       7624965.58,
+       660315.08
+      ],
+      [
+       7625065.39,
+       660312.27
+      ],
+      [
+       7625064.05,
+       660241.29
+      ],
+      [
+       7625059.3,
+       659991.01
+      ],
+      [
+       7625059.15,
+       659983.37
+      ],
+      [
+       7625033.84,
+       659972.37
+      ],
+      [
+       7625009.58,
+       659959.21
+      ],
+      [
+       7625012.02,
+       660117.13
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC01602",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW TAYLORS FERRY RD",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624964.79,
+       659961.71
+      ],
+      [
+       7624939.7,
+       659998.92
+      ],
+      [
+       7624941.54,
+       660118.21
+      ],
+      [
+       7625012.02,
+       660117.13
+      ],
+      [
+       7625009.58,
+       659959.21
+      ],
+      [
+       7624989.5,
+       659944.32
+      ],
+      [
+       7624970.66,
+       659927.89
+      ],
+      [
+       7624964.79,
+       659961.71
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC01700",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW TAYLORS FERRY RD",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624855.68,
+       659738.76
+      ],
+      [
+       7624855.67,
+       659738.27
+      ],
+      [
+       7624843.53,
+       659716.92
+      ],
+      [
+       7624829.61,
+       659696.67
+      ],
+      [
+       7624814.02,
+       659677.69
+      ],
+      [
+       7624796.87,
+       659660.1
+      ],
+      [
+       7624778.28,
+       659644.03
+      ],
+      [
+       7624780.29,
+       659756.82
+      ],
+      [
+       7624805.75,
+       659756.36
+      ],
+      [
+       7624807.76,
+       659868.88
+      ],
+      [
+       7624655.29,
+       659871.59
+      ],
+      [
+       7624655.57,
+       659884.24
+      ],
+      [
+       7624657.0,
+       659947.22
+      ],
+      [
+       7624658.43,
+       660010.2
+      ],
+      [
+       7624659.86,
+       660073.19
+      ],
+      [
+       7624660.86,
+       660116.99
+      ],
+      [
+       7624661.2,
+       660132.09
+      ],
+      [
+       7624662.91,
+       660207.41
+      ],
+      [
+       7624663.73,
+       660243.29
+      ],
+      [
+       7624665.61,
+       660326.29
+      ],
+      [
+       7624765.64,
+       660321.59
+      ],
+      [
+       7624865.62,
+       660317.89
+      ],
+      [
+       7624862.22,
+       660119.43
+      ],
+      [
+       7624859.47,
+       659959.55
+      ],
+      [
+       7624855.68,
+       659738.76
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC05600",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW FLORENCE LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625070.1,
+       660507.54
+      ],
+      [
+       7624984.95,
+       660509.97
+      ],
+      [
+       7624986.86,
+       660584.87
+      ],
+      [
+       7624987.27,
+       660588.78
+      ],
+      [
+       7624988.29,
+       660592.59
+      ],
+      [
+       7624989.9,
+       660596.19
+      ],
+      [
+       7624992.05,
+       660599.49
+      ],
+      [
+       7624994.7,
+       660602.41
+      ],
+      [
+       7624997.77,
+       660604.88
+      ],
+      [
+       7625001.19,
+       660606.84
+      ],
+      [
+       7625004.87,
+       660608.23
+      ],
+      [
+       7625008.73,
+       660609.03
+      ],
+      [
+       7625009.23,
+       660609.31
+      ],
+      [
+       7625012.57,
+       660609.22
+      ],
+      [
+       7625072.5,
+       660607.51
+      ],
+      [
+       7625070.1,
+       660507.54
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC06100",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW FLORENCE LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624956.04,
+       660513.79
+      ],
+      [
+       7624869.9,
+       660516.25
+      ],
+      [
+       7624871.99,
+       660613.23
+      ],
+      [
+       7624933.6,
+       660611.47
+      ],
+      [
+       7624937.08,
+       660611.37
+      ],
+      [
+       7624937.57,
+       660611.04
+      ],
+      [
+       7624941.34,
+       660610.01
+      ],
+      [
+       7624944.9,
+       660608.41
+      ],
+      [
+       7624948.17,
+       660606.27
+      ],
+      [
+       7624951.06,
+       660603.64
+      ],
+      [
+       7624953.51,
+       660600.6
+      ],
+      [
+       7624955.46,
+       660597.22
+      ],
+      [
+       7624956.86,
+       660593.57
+      ],
+      [
+       7624957.67,
+       660589.75
+      ],
+      [
+       7624957.87,
+       660585.85
+      ],
+      [
+       7624956.04,
+       660513.79
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC06200",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW FLORENCE LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625006.98,
+       660397.94
+      ],
+      [
+       7624994.36,
+       660402.62
+      ],
+      [
+       7624981.23,
+       660405.6
+      ],
+      [
+       7624967.82,
+       660406.83
+      ],
+      [
+       7624954.37,
+       660406.29
+      ],
+      [
+       7624941.11,
+       660403.98
+      ],
+      [
+       7624928.26,
+       660399.94
+      ],
+      [
+       7624922.42,
+       660414.98
+      ],
+      [
+       7624916.63,
+       660429.91
+      ],
+      [
+       7624940.95,
+       660438.07
+      ],
+      [
+       7624944.14,
+       660439.46
+      ],
+      [
+       7624947.05,
+       660441.39
+      ],
+      [
+       7624949.57,
+       660443.79
+      ],
+      [
+       7624951.64,
+       660446.59
+      ],
+      [
+       7624953.2,
+       660449.72
+      ],
+      [
+       7624954.18,
+       660453.06
+      ],
+      [
+       7624954.58,
+       660456.52
+      ],
+      [
+       7624956.04,
+       660513.79
+      ],
+      [
+       7624957.87,
+       660585.85
+      ],
+      [
+       7624957.67,
+       660589.75
+      ],
+      [
+       7624956.86,
+       660593.57
+      ],
+      [
+       7624955.46,
+       660597.22
+      ],
+      [
+       7624953.51,
+       660600.6
+      ],
+      [
+       7624951.06,
+       660603.64
+      ],
+      [
+       7624948.17,
+       660606.27
+      ],
+      [
+       7624944.9,
+       660608.41
+      ],
+      [
+       7624941.34,
+       660610.01
+      ],
+      [
+       7624937.57,
+       660611.04
+      ],
+      [
+       7624937.08,
+       660611.37
+      ],
+      [
+       7625009.23,
+       660609.31
+      ],
+      [
+       7625008.73,
+       660609.03
+      ],
+      [
+       7625004.87,
+       660608.23
+      ],
+      [
+       7625001.19,
+       660606.84
+      ],
+      [
+       7624997.77,
+       660604.88
+      ],
+      [
+       7624994.7,
+       660602.41
+      ],
+      [
+       7624992.05,
+       660599.49
+      ],
+      [
+       7624989.9,
+       660596.19
+      ],
+      [
+       7624988.29,
+       660592.59
+      ],
+      [
+       7624987.27,
+       660588.78
+      ],
+      [
+       7624986.86,
+       660584.87
+      ],
+      [
+       7624984.95,
+       660509.97
+      ],
+      [
+       7624983.57,
+       660455.78
+      ],
+      [
+       7624983.79,
+       660452.3
+      ],
+      [
+       7624984.61,
+       660448.91
+      ],
+      [
+       7624986.0,
+       660445.71
+      ],
+      [
+       7624987.93,
+       660442.81
+      ],
+      [
+       7624990.33,
+       660440.28
+      ],
+      [
+       7624993.13,
+       660438.21
+      ],
+      [
+       7624996.25,
+       660436.66
+      ],
+      [
+       7625020.12,
+       660427.27
+      ],
+      [
+       7625013.58,
+       660412.65
+      ],
+      [
+       7625006.98,
+       660397.94
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC07700",
+    "zone": "R-9",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW TAYLORS FERRY RD",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624039.79,
+       659868.91
+      ],
+      [
+       7624054.01,
+       659948.18
+      ],
+      [
+       7624102.94,
+       659946.99
+      ],
+      [
+       7624119.78,
+       659914.27
+      ],
+      [
+       7624121.37,
+       659910.43
+      ],
+      [
+       7624122.3,
+       659906.38
+      ],
+      [
+       7624122.55,
+       659902.23
+      ],
+      [
+       7624121.23,
+       659847.57
+      ],
+      [
+       7624120.94,
+       659845.01
+      ],
+      [
+       7624120.21,
+       659842.54
+      ],
+      [
+       7624119.07,
+       659840.23
+      ],
+      [
+       7624117.55,
+       659838.14
+      ],
+      [
+       7624115.7,
+       659836.35
+      ],
+      [
+       7624113.57,
+       659834.9
+      ],
+      [
+       7624111.22,
+       659833.83
+      ],
+      [
+       7624108.72,
+       659833.18
+      ],
+      [
+       7624106.15,
+       659832.97
+      ],
+      [
+       7624103.59,
+       659833.2
+      ],
+      [
+       7624101.09,
+       659833.86
+      ],
+      [
+       7624098.75,
+       659834.94
+      ],
+      [
+       7624039.79,
+       659868.91
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC07900",
+    "zone": "R-9",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW TAYLORS FERRY RD",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624215.02,
+       660134.94
+      ],
+      [
+       7624200.17,
+       660135.3
+      ],
+      [
+       7624140.18,
+       660136.76
+      ],
+      [
+       7624103.05,
+       660137.66
+      ],
+      [
+       7624098.71,
+       660137.39
+      ],
+      [
+       7624094.47,
+       660136.36
+      ],
+      [
+       7624090.48,
+       660134.62
+      ],
+      [
+       7624086.85,
+       660132.21
+      ],
+      [
+       7624083.69,
+       660129.2
+      ],
+      [
+       7624081.11,
+       660125.69
+      ],
+      [
+       7624079.17,
+       660121.79
+      ],
+      [
+       7624077.94,
+       660117.61
+      ],
+      [
+       7624077.45,
+       660113.28
+      ],
+      [
+       7624076.22,
+       660062.36
+      ],
+      [
+       7624076.46,
+       660058.21
+      ],
+      [
+       7624077.39,
+       660054.16
+      ],
+      [
+       7624078.98,
+       660050.32
+      ],
+      [
+       7624098.16,
+       660013.07
+      ],
+      [
+       7624126.04,
+       659958.92
+      ],
+      [
+       7624142.89,
+       659926.19
+      ],
+      [
+       7624146.14,
+       659918.35
+      ],
+      [
+       7624148.04,
+       659910.08
+      ],
+      [
+       7624148.54,
+       659901.61
+      ],
+      [
+       7624148.44,
+       659897.33
+      ],
+      [
+       7624154.43,
+       659897.13
+      ],
+      [
+       7624152.2,
+       659804.14
+      ],
+      [
+       7624098.75,
+       659834.94
+      ],
+      [
+       7624101.09,
+       659833.86
+      ],
+      [
+       7624103.59,
+       659833.2
+      ],
+      [
+       7624106.15,
+       659832.97
+      ],
+      [
+       7624108.72,
+       659833.18
+      ],
+      [
+       7624111.22,
+       659833.83
+      ],
+      [
+       7624113.57,
+       659834.9
+      ],
+      [
+       7624115.7,
+       659836.35
+      ],
+      [
+       7624117.55,
+       659838.14
+      ],
+      [
+       7624119.07,
+       659840.23
+      ],
+      [
+       7624120.21,
+       659842.54
+      ],
+      [
+       7624120.94,
+       659845.01
+      ],
+      [
+       7624121.23,
+       659847.57
+      ],
+      [
+       7624122.55,
+       659902.23
+      ],
+      [
+       7624122.3,
+       659906.38
+      ],
+      [
+       7624121.37,
+       659910.43
+      ],
+      [
+       7624119.78,
+       659914.27
+      ],
+      [
+       7624102.94,
+       659946.99
+      ],
+      [
+       7624095.11,
+       659962.19
+      ],
+      [
+       7624066.43,
+       660017.9
+      ],
+      [
+       7624055.87,
+       660038.41
+      ],
+      [
+       7624052.62,
+       660046.26
+      ],
+      [
+       7624050.72,
+       660054.53
+      ],
+      [
+       7624050.22,
+       660063.0
+      ],
+      [
+       7624050.47,
+       660073.31
+      ],
+      [
+       7624051.81,
+       660128.29
+      ],
+      [
+       7624053.15,
+       660183.27
+      ],
+      [
+       7624054.4,
+       660234.81
+      ],
+      [
+       7624067.4,
+       660234.49
+      ],
+      [
+       7624080.4,
+       660234.18
+      ],
+      [
+       7624079.3,
+       660189.26
+      ],
+      [
+       7624079.58,
+       660184.91
+      ],
+      [
+       7624080.6,
+       660180.67
+      ],
+      [
+       7624082.35,
+       660176.68
+      ],
+      [
+       7624084.76,
+       660173.05
+      ],
+      [
+       7624087.77,
+       660169.9
+      ],
+      [
+       7624091.27,
+       660167.31
+      ],
+      [
+       7624095.18,
+       660165.37
+      ],
+      [
+       7624099.36,
+       660164.14
+      ],
+      [
+       7624103.69,
+       660163.66
+      ],
+      [
+       7624140.81,
+       660162.75
+      ],
+      [
+       7624200.79,
+       660161.29
+      ],
+      [
+       7624215.65,
+       660160.93
+      ],
+      [
+       7624215.34,
+       660147.94
+      ],
+      [
+       7624215.02,
+       660134.94
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AC90000",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC T access cap, fronts SW TAYLORS FERRY RD",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7624461.18,
+       660150.92
+      ],
+      [
+       7624459.3,
+       660071.0
+      ],
+      [
+       7624457.82,
+       660008.01
+      ],
+      [
+       7624456.33,
+       659945.03
+      ],
+      [
+       7624454.85,
+       659882.05
+      ],
+      [
+       7624453.75,
+       659835.29
+      ],
+      [
+       7624421.37,
+       659836.26
+      ],
+      [
+       7624346.37,
+       659838.51
+      ],
+      [
+       7624303.3,
+       659839.8
+      ],
+      [
+       7624300.34,
+       659716.68
+      ],
+      [
+       7624250.8,
+       659745.14
+      ],
+      [
+       7624254.37,
+       659893.75
+      ],
+      [
+       7624255.85,
+       659954.88
+      ],
+      [
+       7624257.33,
+       660016.42
+      ],
+      [
+       7624258.56,
+       660067.52
+      ],
+      [
+       7624260.46,
+       660146.84
+      ],
+      [
+       7624260.5,
+       660148.24
+      ],
+      [
+       7624263.08,
+       660255.71
+      ],
+      [
+       7624263.62,
+       660277.88
+      ],
+      [
+       7624265.06,
+       660337.86
+      ],
+      [
+       7624326.51,
+       660336.02
+      ],
+      [
+       7624365.23,
+       660334.86
+      ],
+      [
+       7624391.48,
+       660334.07
+      ],
+      [
+       7624465.45,
+       660331.85
+      ],
+      [
+       7624461.18,
+       660150.92
+      ]
+     ],
+     [
+      [
+       7624416.96,
+       660254.38
+      ],
+      [
+       7624392.6,
+       660219.31
+      ],
+      [
+       7624392.91,
+       660218.34
+      ],
+      [
+       7624435.89,
+       660188.49
+      ],
+      [
+       7624461.41,
+       660225.23
+      ],
+      [
+       7624418.03,
+       660255.37
+      ],
+      [
+       7624416.96,
+       660254.38
+      ]
+     ],
+     [
+      [
+       7624416.12,
+       660048.4
+      ],
+      [
+       7624448.92,
+       660077.72
+      ],
+      [
+       7624423.6,
+       660106.05
+      ],
+      [
+       7624390.8,
+       660076.74
+      ],
+      [
+       7624416.12,
+       660048.4
+      ]
+     ],
+     [
+      [
+       7624383.0,
+       660293.71
+      ],
+      [
+       7624383.58,
+       660312.5
+      ],
+      [
+       7624337.27,
+       660313.94
+      ],
+      [
+       7624336.33,
+       660283.63
+      ],
+      [
+       7624382.64,
+       660282.19
+      ],
+      [
+       7624382.91,
+       660290.92
+      ],
+      [
+       7624416.35,
+       660255.08
+      ],
+      [
+       7624448.04,
+       660284.63
+      ],
+      [
+       7624413.25,
+       660321.93
+      ],
+      [
+       7624383.0,
+       660293.71
+      ]
+     ],
+     [
+      [
+       7624380.61,
+       659974.1
+      ],
+      [
+       7624414.43,
+       659935.22
+      ],
+      [
+       7624447.5,
+       659963.99
+      ],
+      [
+       7624413.68,
+       660002.87
+      ],
+      [
+       7624380.61,
+       659974.1
+      ]
+     ],
+     [
+      [
+       7624383.85,
+       659889.35
+      ],
+      [
+       7624412.05,
+       659863.29
+      ],
+      [
+       7624443.82,
+       659897.65
+      ],
+      [
+       7624416.22,
+       659923.17
+      ],
+      [
+       7624415.06,
+       659923.12
+      ],
+      [
+       7624383.85,
+       659889.35
+      ]
+     ],
+     [
+      [
+       7624377.8,
+       660061.72
+      ],
+      [
+       7624347.85,
+       660026.41
+      ],
+      [
+       7624372.7,
+       660005.34
+      ],
+      [
+       7624381.55,
+       660001.21
+      ],
+      [
+       7624409.83,
+       660034.56
+      ],
+      [
+       7624377.8,
+       660061.72
+      ]
+     ],
+     [
+      [
+       7624371.43,
+       659896.91
+      ],
+      [
+       7624335.21,
+       659867.74
+      ],
+      [
+       7624355.91,
+       659842.04
+      ],
+      [
+       7624392.13,
+       659871.21
+      ],
+      [
+       7624371.43,
+       659896.91
+      ]
+     ],
+     [
+      [
+       7624371.64,
+       660003.58
+      ],
+      [
+       7624330.26,
+       660016.45
+      ],
+      [
+       7624314.52,
+       659965.84
+      ],
+      [
+       7624355.89,
+       659952.97
+      ],
+      [
+       7624371.64,
+       660003.58
+      ]
+     ],
+     [
+      [
+       7624321.41,
+       660203.01
+      ],
+      [
+       7624288.37,
+       660163.19
+      ],
+      [
+       7624323.76,
+       660133.83
+      ],
+      [
+       7624356.79,
+       660173.65
+      ],
+      [
+       7624321.41,
+       660203.01
+      ]
+     ],
+     [
+      [
+       7624334.37,
+       660288.61
+      ],
+      [
+       7624310.33,
+       660307.1
+      ],
+      [
+       7624277.81,
+       660264.84
+      ],
+      [
+       7624301.85,
+       660246.34
+      ],
+      [
+       7624334.37,
+       660288.61
+      ]
+     ],
+     [
+      [
+       7624329.19,
+       660214.4
+      ],
+      [
+       7624300.29,
+       660245.34
+      ],
+      [
+       7624272.09,
+       660219.02
+      ],
+      [
+       7624300.99,
+       660188.07
+      ],
+      [
+       7624329.19,
+       660214.4
+      ]
+     ],
+     [
+      [
+       7624298.97,
+       660067.66
+      ],
+      [
+       7624326.44,
+       660104.68
+      ],
+      [
+       7624288.53,
+       660132.8
+      ],
+      [
+       7624261.07,
+       660095.78
+      ],
+      [
+       7624298.97,
+       660067.66
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S125AD01100",
+    "zone": "R-5",
+    "plan": "Raleigh Hills - Garden Home",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC S access cap, fronts SW FLORENCE LN",
+    "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1210-L1211,L1218-L1223"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7625479.44,
+       660646.79
+      ],
+      [
+       7625453.23,
+       660647.65
+      ],
+      [
+       7625457.29,
+       660818.03
+      ],
+      [
+       7625434.25,
+       660818.78
+      ],
+      [
+       7625436.4,
+       660908.75
+      ],
+      [
+       7625287.97,
+       660913.6
+      ],
+      [
+       7625289.51,
+       660978.26
+      ],
+      [
+       7625291.76,
+       661061.94
+      ],
+      [
+       7625294.12,
+       661149.42
+      ],
+      [
+       7625295.0,
+       661181.91
+      ],
+      [
+       7625297.39,
+       661282.44
+      ],
+      [
+       7625362.17,
+       661280.22
+      ],
+      [
+       7625435.95,
+       661277.69
+      ],
+      [
+       7625494.25,
+       661275.69
+      ],
+      [
+       7625489.19,
+       661060.75
+      ],
+      [
+       7625486.85,
+       660961.3
+      ],
+      [
+       7625484.5,
+       660861.73
+      ],
+      [
+       7625481.79,
+       660746.76
+      ],
+      [
+       7625479.44,
+       660646.79
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

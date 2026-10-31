@@ -227,6 +227,12 @@ AREA_REVIEWS: dict[str, str] = {
         "Bethany Community Plan, Area of Special Concern 1A design element 2: "
         "every development application through the Type III procedure"
     ),
+    "washington_plan_review": (
+        "Bull Mountain Community Plan, Area of Special Concern 8: development "
+        "planned and reviewed under the master planning - planned development "
+        "provisions; or Raleigh Hills - Garden Home Community Plan, Area of "
+        "Special Concern L, the R-25+ site: Type III review"
+    ),
 }
 
 
