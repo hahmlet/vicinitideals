@@ -858,3 +858,15 @@ def test_east_hillsboro_r5_lots_take_the_stricter_of_county_and_hillsboro() -> N
     facts = _nb_facts("R-5", shape(feats[0]["geometry"]))
     # The overlay answers the hold the plan put on these lots: they are no longer held.
     assert facts[eh] is True and facts["washington_plan_rule_unmeasured"] is False
+    # 1S123AA00100 is Raleigh Hills - Garden Home's ASC U lot, not East Hillsboro's
+    # (Steph 2026-10-31 'Yellow with flag'): outside the overlay, still held.
+    assert "1S123AA00100" not in {f["properties"]["taxlot"] for f in feats}
+    assert all(f["properties"]["taxlot"].startswith("1S211BB") for f in feats)
+    held = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson")
+                      .read_text(encoding="utf-8"))
+    (rh,) = [f for f in held["features"] if f["properties"]["taxlot"] == "1S123AA00100"]
+    assert rh["properties"]["plan"] == "Raleigh Hills - Garden Home"
+    assert "Case #74-96C" in rh["properties"]["why"]
+    rh_facts = _nb_facts("R-5", shape(rh["geometry"]))
+    assert rh_facts[eh] is False and rh_facts["washington_plan_rule_unmeasured"] is True
+    assert rh_facts["raleigh_hills_asc_u"] is True
