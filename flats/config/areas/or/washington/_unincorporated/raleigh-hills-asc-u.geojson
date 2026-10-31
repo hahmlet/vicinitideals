@@ -1,0 +1,98 @@
+{
+ "type": "FeatureCollection",
+ "name": "raleigh-hills-asc-u",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Map 5.1 Areas of Special Concern, page 9 of the Raleigh Hills - Garden Home Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-maps-08-2026/download, retrieved 2026-10-30, sha256 68b540cffc579ea27c1fe1493571175b093d7022fbb4f6065adb1e6777cdf50d), the ASC U outline.",
+  "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1083-L1086",
+  "inputs": {
+   "taxlots": "The ASC U lot as drawn_areas washington_plan_rule_unmeasured holds it (chunk 7, Washington County taxlots fetched 2026-10-30)"
+  },
+  "traced_by": "Claude (districts-c6b worker, FOLLOWUPS 136)",
+  "traced_on": "2026-10-31",
+  "drawn": true,
+  "how": "Copied from the chunk 7 trace of Map 5.1 (washington-plan-rule-unmeasured-lots.geojson, whose 'how' gives the read): ASC U is one taxlot, 1S123AA00100 (R-5, 3.42 acres), and this file holds that lot whole so the lot carries RALEIGH-HILLS-ASC-U-CASE-74-96C. The chunk 7 hold stays and keeps the lot YELLOW (Steph 2026-10-31, 'Yellow with flag').",
+  "counts": {
+   "R-5": {
+    "inside": 1
+   }
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "asc": "U",
+    "taxlot": "1S123AA00100"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7621268.96,
+       667463.19
+      ],
+      [
+       7621256.51,
+       667471.45
+      ],
+      [
+       7621143.95,
+       667546.18
+      ],
+      [
+       7621102.22,
+       667573.89
+      ],
+      [
+       7621070.62,
+       667606.92
+      ],
+      [
+       7620948.31,
+       667734.41
+      ],
+      [
+       7620991.61,
+       667767.08
+      ],
+      [
+       7621031.55,
+       667803.79
+      ],
+      [
+       7621067.75,
+       667844.2
+      ],
+      [
+       7621099.87,
+       667887.92
+      ],
+      [
+       7621183.81,
+       668017.41
+      ],
+      [
+       7621377.76,
+       668011.98
+      ],
+      [
+       7621364.1,
+       667607.2
+      ],
+      [
+       7621268.96,
+       667463.19
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

@@ -694,6 +694,20 @@ RULINGS: dict[str, dict[str, str]] = {
             "of the North Bethany Subarea Plan, named by CDC 390 for the "
             "yards along Kaiser Road; a community-plan area, not a district."
         ),
+        # Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill and
+        # Sunset West, stored 2026-10-31 for the chunk 6 re-read (FOLLOWUPS
+        # 135).
+        "CDC": (
+            "not-a-zone: the plans' short name for the Community Development "
+            "Code itself, 'The CDC contains specific procedures and "
+            "development standards' (aloha-reedville-cooper-mountain#L340)."
+        ),
+        "PR": (
+            "not-a-zone: the former Planned Residential (PR) District under "
+            "which existing developments were approved, named only to keep "
+            "those approvals conforming (aloha-reedville-cooper-mountain"
+            "#L713-L718); no lot is in it on the county's zoning layer."
+        ),
         # The Bethany Community Plan's map pages, stored 2026-10-30 for
         # ASC 1 (FOLLOWUPS 130), print their street and city labels one
         # word a line, split where the label bends (bethany#L1454-L1459,

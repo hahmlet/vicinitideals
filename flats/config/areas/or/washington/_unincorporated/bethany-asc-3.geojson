@@ -1,0 +1,203 @@
+{
+ "type": "FeatureCollection",
+ "name": "bethany-asc-3",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Map 5, Areas of Special Concern (page 42 of Washington County, Bethany Community Plan, Chapter 1 text and maps (chapter-1-bethany-community-plan-text-and-maps-09-2026), https://washingtoncountyor.gov/lut/planning/documents/chapter-1-bethany-community-plan-text-and-maps-09-2026/download, retrieved 2026-10-30, sha256 6ff194eff86183d736865722d72e9be2852fee105266f5d30810d1165ae91851; the sheet is printed 2/9/2023), the outline of ASC 3, Dogwood Park and Wildwood.",
+  "quote": "or/washington/_unincorporated/community-plan.bethany.txt#L1205-L1219",
+  "inputs": {
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), the Bethany plan's boundary envelope, fetched 2026-10-31, 14306 lots (sha256 41e25cf39e7d539b...)",
+   "zoning": "Washington County Land Use Districts (LUT_PDS/Planning_Layers/MapServer/0), same envelope, fetched 2026-10-31; a lot takes the district covering most of it",
+   "streets": "Washington County street centrelines (LUT_PDS/Base_Layers/MapServer/1), fetched 2026-10-31"
+  },
+  "traced_by": "Claude (districts-c6b worker, FOLLOWUPS 134)",
+  "traced_on": "2026-10-31",
+  "drawn": true,
+  "how": "The same read of Map 5 as ASC 1 and 1A (FOLLOWUPS 130): the Areas_of_Special_Concern frame's /VP viewport gave the page-to-ground affine (residual 0.89 ft) and the pink-filled (RGB 1, 0.745, 0.745) outlines were read out of the page as vector paths. The map's numerals are in a font the page does not decode, so ASC 3 is named by what it holds: of the nineteen outlines it is the only one whose lots are all R-5, the district the text says the plan gives 'both Dogwood Park and Wildwood' (#L1208-L1209), and it takes in the established 1950s grid of NW Lakeview Drive, NW Greenwood Drive and NW 134th to 140th Avenues north of NW Laidlaw Road; one undecoded glyph sits at its centre. 89.8 acres. Checked by laying the county's current taxlots over it: 140 lots are at least 90 percent inside (R-5 140); the 4 lots it cuts, 1N121AB03800 (R-5, 78 percent inside), 1N121AB08200 (R-5, 50 percent inside), 1N121BC09100 (R-6, 35 percent inside), 1N121BC10200 (R-6, 27 percent inside), are added whole, because inside the urban growth boundary the review only carries CLEAR-OBJECTIVE and a cut lot left unanswered would hide the question. A lot 10 percent or less inside is outside.",
+  "counts": {
+   "R-5": {
+    "inside": 142
+   },
+   "R-6": {
+    "inside": 2
+   }
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "asc": "3",
+    "name": "Dogwood Park and Wildwood"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7607645.91,
+       697822.96
+      ],
+      [
+       7607681.2,
+       698469.9
+      ],
+      [
+       7607468.82,
+       698437.54
+      ],
+      [
+       7607417.87,
+       698448.25
+      ],
+      [
+       7607362.9,
+       698644.51
+      ],
+      [
+       7607468.57,
+       698701.1
+      ],
+      [
+       7607523.33,
+       698730.44
+      ],
+      [
+       7607582.32,
+       698620.28
+      ],
+      [
+       7607689.17,
+       698615.94
+      ],
+      [
+       7607711.89,
+       699032.53
+      ],
+      [
+       7607725.77,
+       699453.38
+      ],
+      [
+       7609082.76,
+       699436.79
+      ],
+      [
+       7609510.56,
+       699420.15
+      ],
+      [
+       7609508.91,
+       699380.24
+      ],
+      [
+       7609509.35,
+       699380.23
+      ],
+      [
+       7609521.95,
+       699379.74
+      ],
+      [
+       7609518.12,
+       699279.82
+      ],
+      [
+       7609504.79,
+       699280.32
+      ],
+      [
+       7609493.9,
+       699015.96
+      ],
+      [
+       7609489.84,
+       698955.76
+      ],
+      [
+       7609490.24,
+       698955.74
+      ],
+      [
+       7609490.79,
+       698955.72
+      ],
+      [
+       7609485.05,
+       698831.39
+      ],
+      [
+       7609425.09,
+       698833.68
+      ],
+      [
+       7609427.92,
+       698894.6
+      ],
+      [
+       7609059.17,
+       698908.99
+      ],
+      [
+       7609045.29,
+       698568.7
+      ],
+      [
+       7608982.82,
+       697272.81
+      ],
+      [
+       7608978.66,
+       697151.97
+      ],
+      [
+       7608968.94,
+       696947.79
+      ],
+      [
+       7608959.22,
+       696720.01
+      ],
+      [
+       7607596.67,
+       696751.88
+      ],
+      [
+       7607599.45,
+       696832.44
+      ],
+      [
+       7607617.49,
+       697263.01
+      ],
+      [
+       7607625.82,
+       697454.69
+      ],
+      [
+       7607640.46,
+       697722.98
+      ],
+      [
+       7607601.2,
+       697724.57
+      ],
+      [
+       7607605.27,
+       697824.57
+      ],
+      [
+       7607645.91,
+       697822.96
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

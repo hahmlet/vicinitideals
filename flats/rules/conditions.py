@@ -1102,39 +1102,46 @@ _C: tuple[ConditionDef, ...] = (
     ConditionDef(
         "washington_plan_rule_unmeasured",
         "site_fact",
-        "The lot lies where a Raleigh Hills - Garden Home or Bull Mountain "
-        "Community Plan rule binds a pod that the screen cannot measure: an "
-        "access-point cap or access bar on a named street (Raleigh Hills ASC "
-        "S, T and M; Bull Mountain ASC 1 and the Pacific Highway "
-        "frontage), the commercial-strip ASCs' Type 1 landscape buffer (CDC "
-        "411, not stored), conditions of an old case (Raleigh Hills ASC U), "
-        "an outline whose letter the map does not print, or a pedestrian "
-        "connectivity facility built with the lot's development. Answered "
-        "from the plans' Map 5.1 and Map 8.1, traced as Washington County's "
-        "drawn_areas (FOLLOWUPS 109 chunk 7); the lots it holds are True, "
-        "every other lot False.",
+        "The lot lies where a Washington County community plan rule binds a "
+        "pod that the screen cannot measure: an access-point cap, shared "
+        "access or access bar on a named street (Raleigh Hills ASC S, T and "
+        "M; Bull Mountain ASC 1 and the Pacific Highway frontage; Aloha ASC "
+        "10; Cedar Hills ASC 6 and 8 and the Willow Creek arterials; Sunset "
+        "West ASC 3 on Cornell Road), a park access improved with the lot's "
+        "development (Aloha's Winterborne Park), the commercial-strip ASCs' "
+        "Type 1 landscape buffer (CDC 411, not stored), conditions of an old "
+        "case (Raleigh Hills ASC U), an outline whose letter the map does not "
+        "print, or a pedestrian connectivity facility built with the lot's "
+        "development. Answered from the plans' Areas of Special Concern and "
+        "Pedestrian Connectivity maps, traced as Washington County's "
+        "drawn_areas (FOLLOWUPS 109 chunk 7, FOLLOWUPS 135 chunk 6 re-read); "
+        "the lots it holds are True, every other lot False.",
         evidence=(
-            "Map 5.1 (Areas of Special Concern) and Map 8.1 (Pedestrian "
-            "Connectivity) of the Raleigh Hills - Garden Home and Bull Mountain "
-            "Community Plans (Washington County), traced 2026-10-30"
+            "The Areas of Special Concern and Pedestrian Connectivity maps of "
+            "the Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - "
+            "Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany "
+            "Community Plans (Washington County), traced 2026-10-30 and 2026-10-31"
         ),
         assume=None,
     ),
     ConditionDef(
         "washington_local_street_connectivity",
         "site_fact",
-        "The lot lies on the Local Street Connectivity Lands of the Raleigh "
-        "Hills - Garden Home or Bull Mountain Community Plan (Map 7.1), where "
-        "development must provide on-site streets that connect to the "
-        "street system (Bull Mountain: blocks no longer than 530 ft). The "
-        "street's ground is not measured, so the lot cannot be GREEN "
-        "(coordinator ruling 2026-10-30). Answered from Map 7.1, traced as "
-        "Washington County's drawn_areas (FOLLOWUPS 109 chunk 7); a lot the "
-        "lands cut stays unknown.",
+        "The lot lies on the Local Street Connectivity Lands of a Washington "
+        "County community plan (Raleigh Hills - Garden Home, Bull Mountain, "
+        "Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, "
+        "Sunset West or Bethany), where development must provide on-site "
+        "streets that connect to the street system (Bull Mountain: blocks no "
+        "longer than 530 ft). The street's ground is not measured, so the lot "
+        "cannot be GREEN (coordinator ruling 2026-10-30). Answered from each "
+        "plan's Local Street Connectivity map, traced as Washington County's "
+        "drawn_areas (FOLLOWUPS 109 chunk 7, FOLLOWUPS 135 chunk 6 "
+        "re-read); a lot the lands cut stays unknown.",
         evidence=(
-            "Map 7.1 (Local Street Connectivity) of the Raleigh Hills - Garden "
-            "Home and Bull Mountain Community Plans (Washington County), "
-            "traced 2026-10-30"
+            "The Local Street Connectivity maps of the Raleigh Hills - Garden "
+            "Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar "
+            "Hills - Cedar Mill, Sunset West and Bethany Community Plans "
+            "(Washington County), traced 2026-10-30 and 2026-10-31"
         ),
         assume=None,
     ),
@@ -1154,6 +1161,43 @@ _C: tuple[ConditionDef, ...] = (
             "Map 5.1 (Areas of Special Concern) of the Bull Mountain and Raleigh "
             "Hills - Garden Home Community Plans (Washington County), traced "
             "2026-10-30"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "bethany_asc_3",
+        "site_fact",
+        "The parcel lies in Area of Special Concern 3 of the Bethany "
+        "Community Plan (Dogwood Park and Wildwood, R-5), where any "
+        "development action that would add housing must review the "
+        "established character of the two subdivisions and determine and "
+        "mitigate its impact through the development review process. Inside "
+        "an urban growth boundary that judgement review is GREEN with "
+        "CLEAR-OBJECTIVE (Steph 2026-10-15); where the statute does not "
+        "reach the lot it is YELLOW with REVIEW-CONDITIONS. Answered from "
+        "Map 5 of the plan, traced as Washington County's drawn_areas "
+        "(FOLLOWUPS 134); the lots the outline cuts are added whole.",
+        evidence=(
+            "The Areas of Special Concern map (Map 5) of the Bethany Community "
+            "Plan (Washington County, September 2026 edition), traced 2026-10-31"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "raleigh_hills_asc_u",
+        "site_fact",
+        "The parcel is Area of Special Concern U of the Raleigh Hills - "
+        "Garden Home Community Plan (taxlot 1S123AA00100), where the "
+        "conditions Washington County imposed in Case #74-96C (1974) "
+        "continue. They are not online and not held. Steph 2026-10-31: "
+        "yellow with a flag -- the lot stays YELLOW on the plan-rule hold "
+        "(washington_plan_rule_unmeasured), and this fact only carries "
+        "RALEIGH-HILLS-ASC-U-CASE-74-96C, which says why. Answered from Map "
+        "5.1 of the plan, traced as Washington County's drawn_areas "
+        "(FOLLOWUPS 136).",
+        evidence=(
+            "Map 5.1 (Areas of Special Concern) of the Raleigh Hills - Garden "
+            "Home Community Plan (Washington County), traced 2026-10-30"
         ),
         assume=None,
     ),
@@ -1492,6 +1536,7 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 DRAWN_CONDITIONS: tuple[str, ...] = (
     "bethany_asc_1",
     "bethany_asc_1a",
+    "bethany_asc_3",
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "inside_mapped_use_area",
@@ -1502,6 +1547,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "raleigh_hills_asc_u",
     "rockwood_design_district",
     "tigard_bridgeport_village",
     "troutdale_cfec_parking_area",

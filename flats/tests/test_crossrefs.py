@@ -737,6 +737,12 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # section numbers.
         "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt",
         "or/washington/_unincorporated/community-plan.bull-mountain.txt",
+        # Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill and
+        # Sunset West, stored 2026-10-31 for the chunk 6 re-read (FOLLOWUPS
+        # 135): subareas, design elements and ASCs, no section numbers.
+        "or/washington/_unincorporated/community-plan.aloha-reedville-cooper-mountain.txt",
+        "or/washington/_unincorporated/community-plan.cedar-hills-cedar-mill.txt",
+        "or/washington/_unincorporated/community-plan.sunset-west.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 
