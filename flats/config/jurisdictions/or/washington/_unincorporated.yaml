@@ -1734,10 +1734,11 @@ zones:
     # (390-11.6 A, cdc.390.north-bethany.txt#L933-L938). The plan is held
     # (FOLLOWUPS 109 chunk 6): a Kaiser-facing R-24 NB building stands 5 to
     # 10 ft back over at least 75% of the frontage. The Main Street area, the
-    # Special Setbacks Map and the Park Blocks ASC 5 are drawn only on plan
-    # maps that are not held, so each is a fact nothing measures and every
-    # R-24 NB lot is held off GREEN with all three named until the maps are
-    # traced.
+    # Special Setbacks Map and the Park Blocks ASC 5 are drawn only on the
+    # plan's maps, traced for FOLLOWUPS 129 (drawn_areas below); a lot one of
+    # them reaches, or one its line cuts, stays held with the fact named,
+    # and ASC 5 holds only where its items 4 and 5 reach the pod (FOLLOWUPS
+    # 132).
     setback_front_ft:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(a) (by 390-11.6), front yard 20 feet except 10 feet in North Bethany
