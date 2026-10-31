@@ -40,3 +40,5 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   districts (boundaries), Sunnyside Village, Wood Village TC, Sandy Bornstedt, Wilsonville Old Town;
   Portland plan districts (33.5xx) boundaries.
 - Splice base now 137 /root/bridge_spliced_nb_maps, quadfit data/quadfit_2026-10-30_dd_c6.
+
+- 2026-10-31: chunk 7 LIVE run 101 (16ab319d; 16 green->yellow). Chunk 6b (was FOLLOWUPS 134/135/136: WashCo local street connectivity on R-5..R-25+, plan rules / pedestrian areas / ASCs held, Bethany ASC 3 flag, Raleigh Hills ASC U flag) LIVE run 103 (8077332e; 280 green->yellow, fingerprint a7f0be94). Splice base on 137: /root/bridge_spliced_districts_c6b. Optional, offered, not asked for: narrow the connectivity hold to lots big enough to need a street (~5 lots).
