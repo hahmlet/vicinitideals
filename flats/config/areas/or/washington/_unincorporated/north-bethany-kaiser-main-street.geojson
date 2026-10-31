@@ -1,0 +1,210 @@
+{
+ "type": "FeatureCollection",
+ "name": "north_bethany_kaiser_main_street",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Map 17, Areas of Special Concern (page 17 of Washington County, North Bethany Subarea Plan of the Bethany Community Plan, Chapter 2 maps (chapter-2-north-bethany-subarea-plan-maps-11-2024), https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-maps-11-2024/download, retrieved 2026-10-30, sha256 9c22e330fc22f4daeb9635dbb1cc5f7286cc38dfec8b2f934af3f8bcb5ae4a65), the area outlined as ASC 2, the North Bethany Main Street, 'located on both sides of NW Kaiser Road, between NW Brugger Road and Road A, as shown on the North Bethany Subarea Areas of Special Concern Map'. Its design standards reach Kaiser Road-facing building elevations on R-24 NB property.",
+  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1089-L1096,L1217-L1221",
+  "inputs": {
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), fetched 2026-10-30, 8,073 lots in the plan sheet's frame",
+   "zoning": "Washington County Land Use Districts (gispub.co.washington.or.us LUT_PDS/Planning_Layers/MapServer/0), fetched 2026-10-30; a lot takes the district covering most of it",
+   "kaiser_road": "Washington County street centrelines (gispub.co.washington.or.us LUT_PDS/Base_Layers/MapServer/1, FNAME LIKE KAISER), fetched 2026-10-30"
+  },
+  "traced_by": "Claude (nb-maps worker, FOLLOWUPS 129)",
+  "traced_on": "2026-10-30",
+  "drawn": true,
+  "how": "The sheet is an ArcGIS Pro GeoPDF: each map frame carries a /VP viewport with its CRS (NAD_1983_HARN_StatePlane_Oregon_North_FIPS_3601, feet = EPSG:2913) and four corner coordinates. The page-to-ground affine was fitted to those corners (residual 0.31 ft at each) and the map's own vector strokes were read out of the page by colour, so nothing was rendered, picked or flood-filled. Checked by laying the county's current taxlots over the result: the ASC outlines and the setback strokes run on the lot and right-of-way lines. ASC 2 is the closed outline Map 17 strokes in bright green (RGB 0.33, 1.00, 0.00), 16.8 acres. The standards bind a Kaiser-facing elevation, so an R-24 NB lot is INSIDE (whole lot drawn) when at least 90 percent of it is in ASC 2 and it fronts Kaiser Road (within 75 ft of the county centreline with no other taxlot between); UNANSWERED (the lot's part inside ASC 2 drawn, about half) when it fronts Kaiser and the ASC 2 line cuts it; OUTSIDE (not drawn) when it is outside ASC 2 or has no Kaiser frontage. No R-24 NB lot is wholly inside; two are cut.",
+  "counts": {
+   "R-24 NB": {
+    "inside": 0,
+    "unanswered": 2,
+    "outside": 373
+   }
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117A000701",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.485,
+    "why": "faces Kaiser Road, the Main Street line cuts the lot"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7603677.52,
+       702561.87
+      ],
+      [
+       7603656.71,
+       702599.14
+      ],
+      [
+       7603637.43,
+       702637.23
+      ],
+      [
+       7603619.72,
+       702676.08
+      ],
+      [
+       7603588.16,
+       702749.21
+      ],
+      [
+       7603572.56,
+       702787.96
+      ],
+      [
+       7603558.88,
+       702827.43
+      ],
+      [
+       7603547.16,
+       702867.53
+      ],
+      [
+       7603537.42,
+       702908.16
+      ],
+      [
+       7603529.7,
+       702949.21
+      ],
+      [
+       7603711.72,
+       702938.21
+      ],
+      [
+       7603709.42,
+       702928.02
+      ],
+      [
+       7603705.25,
+       702850.23
+      ],
+      [
+       7603706.63,
+       702766.89
+      ],
+      [
+       7603848.29,
+       702701.6
+      ],
+      [
+       7603857.97,
+       702543.67
+      ],
+      [
+       7603699.82,
+       702525.47
+      ],
+      [
+       7603677.52,
+       702561.87
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117A000702",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.496,
+    "why": "faces Kaiser Road, the Main Street line cuts the lot"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7603844.12,
+       702325.12
+      ],
+      [
+       7603840.97,
+       702325.05
+      ],
+      [
+       7603837.84,
+       702325.48
+      ],
+      [
+       7603834.82,
+       702326.39
+      ],
+      [
+       7603831.97,
+       702327.77
+      ],
+      [
+       7603829.39,
+       702329.58
+      ],
+      [
+       7603827.11,
+       702331.78
+      ],
+      [
+       7603825.22,
+       702334.3
+      ],
+      [
+       7603824.33,
+       702333.67
+      ],
+      [
+       7603810.69,
+       702357.88
+      ],
+      [
+       7603795.84,
+       702381.37
+      ],
+      [
+       7603711.24,
+       702508.04
+      ],
+      [
+       7603699.82,
+       702525.47
+      ],
+      [
+       7603857.97,
+       702543.67
+      ],
+      [
+       7603867.7,
+       702384.89
+      ],
+      [
+       7603870.31,
+       702331.81
+      ],
+      [
+       7603847.23,
+       702325.69
+      ],
+      [
+       7603844.12,
+       702325.12
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

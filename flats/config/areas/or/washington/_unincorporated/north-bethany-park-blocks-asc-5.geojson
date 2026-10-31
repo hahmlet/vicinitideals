@@ -1,0 +1,249 @@
+{
+ "type": "FeatureCollection",
+ "name": "north_bethany_park_blocks_asc_5",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Map 17, Areas of Special Concern (page 17 of Washington County, North Bethany Subarea Plan of the Bethany Community Plan, Chapter 2 maps (chapter-2-north-bethany-subarea-plan-maps-11-2024), https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-maps-11-2024/download, retrieved 2026-10-30, sha256 9c22e330fc22f4daeb9635dbb1cc5f7286cc38dfec8b2f934af3f8bcb5ae4a65), the area outlined and hatched as ASC 5. 'Each ASC is identified on the Area of Special Concern Map'; 'The Park Blocks ASC includes the Park Blocks and developable residential land to the north and south', and its requirements 'apply in the Park Blocks ASC'.",
+  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1006-L1007,L1988-L1989,L1995",
+  "inputs": {
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), fetched 2026-10-30, 8,073 lots in the plan sheet's frame",
+   "zoning": "Washington County Land Use Districts (gispub.co.washington.or.us LUT_PDS/Planning_Layers/MapServer/0), fetched 2026-10-30; a lot takes the district covering most of it",
+   "kaiser_road": "Washington County street centrelines (gispub.co.washington.or.us LUT_PDS/Base_Layers/MapServer/1, FNAME LIKE KAISER), fetched 2026-10-30"
+  },
+  "traced_by": "Claude (nb-maps worker, FOLLOWUPS 129)",
+  "traced_on": "2026-10-30",
+  "drawn": true,
+  "how": "The sheet is an ArcGIS Pro GeoPDF: each map frame carries a /VP viewport with its CRS (NAD_1983_HARN_StatePlane_Oregon_North_FIPS_3601, feet = EPSG:2913) and four corner coordinates. The page-to-ground affine was fitted to those corners (residual 0.31 ft at each) and the map's own vector strokes were read out of the page by colour, so nothing was rendered, picked or flood-filled. Checked by laying the county's current taxlots over the result: the ASC outlines and the setback strokes run on the lot and right-of-way lines. ASC 5 is the one closed outline Map 17 strokes in the ASC 5 green (RGB 0.22, 0.66, 0.00) over its hatch; it is stored as drawn (55.2 acres). The whole outline is the area: the text applies the ASC 5 requirements throughout the ASC, not only to lots facing the Park Blocks.",
+  "counts": {
+   "R-6 NB": {
+    "inside": 0,
+    "unanswered": 5,
+    "outside": 1568
+   },
+   "R-9 NB": {
+    "inside": 52,
+    "unanswered": 0,
+    "outside": 455
+   },
+   "R-15 NB": {
+    "inside": 68,
+    "unanswered": 9,
+    "outside": 626
+   },
+   "R-24 NB": {
+    "inside": 56,
+    "unanswered": 0,
+    "outside": 319
+   }
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "asc": "5",
+    "name": "Park Blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7601576.05,
+       702559.91
+      ],
+      [
+       7601612.17,
+       702602.97
+      ],
+      [
+       7601631.61,
+       702634.92
+      ],
+      [
+       7601649.67,
+       702672.42
+      ],
+      [
+       7601663.57,
+       702718.26
+      ],
+      [
+       7601669.13,
+       702755.77
+      ],
+      [
+       7601673.31,
+       702925.23
+      ],
+      [
+       7601667.76,
+       702976.63
+      ],
+      [
+       7601658.04,
+       703011.36
+      ],
+      [
+       7601635.82,
+       703062.75
+      ],
+      [
+       7601609.44,
+       703103.03
+      ],
+      [
+       7601566.39,
+       703151.65
+      ],
+      [
+       7601471.95,
+       703248.89
+      ],
+      [
+       7601605.3,
+       703375.29
+      ],
+      [
+       7601641.41,
+       703404.46
+      ],
+      [
+       7601705.31,
+       703447.52
+      ],
+      [
+       7601774.76,
+       703479.47
+      ],
+      [
+       7601802.53,
+       703489.2
+      ],
+      [
+       7601826.15,
+       703496.14
+      ],
+      [
+       7601890.04,
+       703508.64
+      ],
+      [
+       7601952.54,
+       703512.81
+      ],
+      [
+       7602740.04,
+       703493.37
+      ],
+      [
+       7603408.09,
+       703475.31
+      ],
+      [
+       7603509.48,
+       703451.7
+      ],
+      [
+       7603506.69,
+       703376.69
+      ],
+      [
+       7603526.1,
+       703048.87
+      ],
+      [
+       7603533.04,
+       702961.36
+      ],
+      [
+       7603538.59,
+       702930.8
+      ],
+      [
+       7603558.03,
+       702861.34
+      ],
+      [
+       7603574.69,
+       702808.56
+      ],
+      [
+       7603602.46,
+       702722.44
+      ],
+      [
+       7603624.67,
+       702665.48
+      ],
+      [
+       7603655.22,
+       702611.31
+      ],
+      [
+       7603694.11,
+       702551.58
+      ],
+      [
+       7603759.37,
+       702448.79
+      ],
+      [
+       7603830.2,
+       702332.11
+      ],
+      [
+       7603867.69,
+       702270.99
+      ],
+      [
+       7603751.02,
+       702255.71
+      ],
+      [
+       7601930.19,
+       702302.93
+      ],
+      [
+       7601821.86,
+       702305.71
+      ],
+      [
+       7601760.75,
+       702309.88
+      ],
+      [
+       7601709.36,
+       702320.99
+      ],
+      [
+       7601692.69,
+       702327.93
+      ],
+      [
+       7601662.14,
+       702341.82
+      ],
+      [
+       7601621.86,
+       702369.61
+      ],
+      [
+       7601501.04,
+       702487.68
+      ],
+      [
+       7601576.05,
+       702559.91
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

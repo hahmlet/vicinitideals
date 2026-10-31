@@ -1047,7 +1047,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 125,
     "min_landscaped_pct": 60,
     "setback_front_max_ft": 105,
-    "max_density_du_per_acre": 64,
+    #: FOLLOWUPS 131: Tualatin CO prints no base density (Table 50-2); its 25 is
+    #: a Block 1 variant now, so CO leaves the count.
+    "max_density_du_per_acre": 63,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,

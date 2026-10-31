@@ -137,6 +137,25 @@ def test_co_admits_four_townhouses_in_block_1_and_never_the_pod_on_one_lot() -> 
     assert town.get("min_lot_width_ft") == 80
 
 
+def test_co_base_is_table_50_2_and_the_overlay_minimums_hold_only_in_block_1() -> None:
+    """FOLLOWUPS 131: Table 58-7's 25,000 sq ft and 16-25 du/ac reach CO only
+    inside the overlay; Table 50-2 prints 10,000 sq ft and no density."""
+    r = RuleSet(load_rules())
+    base = r.resolve(TUALATIN, "CO", ())
+    assert base.get("min_lot_sqft") == 10000
+    assert base.values["min_lot_sqft"].prov.quote == "or/clackamas/tualatin/50/50.300.txt#L7-L8"
+    for field in ("min_density_du_per_acre", "max_density_du_per_acre"):
+        assert field in base.exempted
+    assert r.resolve(TUALATIN, "CO", ("unit_lots",)).get("min_lot_sqft") == 10000
+    block_1 = r.resolve(TUALATIN, "CO", ("inside_mapped_use_area",))
+    assert block_1.get("min_lot_sqft") == 25000
+    assert block_1.get("min_density_du_per_acre") == 16
+    # The state lifts the ceiling off the pod on one lot (OAR
+    # 660-046-0220(2)(b)); the townhouse path keeps Table 58-7's 25.
+    town = r.resolve(TUALATIN, "CO", ("inside_mapped_use_area", "unit_lots"))
+    assert town.get("max_density_du_per_acre") == 25
+
+
 def test_the_tracings_carry_their_drawn_provenance() -> None:
     block_1 = json.loads((loader.AREAS_ROOT / BLOCK_1).read_text(encoding="utf-8"))
     assert block_1["source"]["drawn"] is True

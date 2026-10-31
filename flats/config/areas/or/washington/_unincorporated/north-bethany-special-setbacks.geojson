@@ -1,0 +1,5029 @@
+{
+ "type": "FeatureCollection",
+ "name": "north_bethany_special_setbacks",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "Map 8, Special Setbacks (page 8 of Washington County, North Bethany Subarea Plan of the Bethany Community Plan, Chapter 2 maps (chapter-2-north-bethany-subarea-plan-maps-11-2024), https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-maps-11-2024/download, retrieved 2026-10-30, sha256 9c22e330fc22f4daeb9635dbb1cc5f7286cc38dfec8b2f934af3f8bcb5ae4a65). General Design Element 7 sends the reader to it: the build-to setbacks apply to designated areas along the Park Blocks and the Northeast Neighborhood Linear Park, and 'Relevant street segments are identified on the Special Setbacks Map'.",
+  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L552-L557,L739-L743",
+  "inputs": {
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), fetched 2026-10-30, 8,073 lots in the plan sheet's frame",
+   "zoning": "Washington County Land Use Districts (gispub.co.washington.or.us LUT_PDS/Planning_Layers/MapServer/0), fetched 2026-10-30; a lot takes the district covering most of it",
+   "kaiser_road": "Washington County street centrelines (gispub.co.washington.or.us LUT_PDS/Base_Layers/MapServer/1, FNAME LIKE KAISER), fetched 2026-10-30"
+  },
+  "traced_by": "Claude (nb-maps worker, FOLLOWUPS 129)",
+  "traced_on": "2026-10-30",
+  "drawn": true,
+  "how": "The sheet is an ArcGIS Pro GeoPDF: each map frame carries a /VP viewport with its CRS (NAD_1983_HARN_StatePlane_Oregon_North_FIPS_3601, feet = EPSG:2913) and four corner coordinates. The page-to-ground affine was fitted to those corners (residual 0.31 ft at each) and the map's own vector strokes were read out of the page by colour, so nothing was rendered, picked or flood-filled. Checked by laying the county's current taxlots over the result: the ASC outlines and the setback strokes run on the lot and right-of-way lines. Map 8 draws two things: green 'Park Blocks' strokes on the two couplet streets either side of the Park Blocks (and a short stub east of Kaiser Road), and a blue 'Linear Park - north side of road (Adjacent to R-15NB, R-24NB and NCC NB)' stroke along Road A (NW Shackelford Rd). The map marks street segments, not lots, so each R-15 NB and R-24 NB lot was asked whether it fronts a marked segment. INSIDE (whole lot drawn): within 75 ft of the stroke with no other taxlot between; for the linear park also a lot behind the linear park's own tract (a strip at most 40 ft deep that is itself first on the stroke), north of the stroke only, as the legend says. UNANSWERED (the half of the lot nearest the stroke drawn, so the screen leaves the fact open): the stroke runs more than 15 ft inside the lot (a mapped future street that will divide it), the lot sits within 10 ft of a segment's end, or it is within 115 ft with no whole lot between. OUTSIDE (not drawn): everything else.",
+  "counts": {
+   "R-15 NB": {
+    "inside": 21,
+    "unanswered": 5,
+    "outside": 677
+   },
+   "R-24 NB": {
+    "inside": 39,
+    "unanswered": 9,
+    "outside": 327
+   }
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117A000600",
+    "zone": "R-15 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "a mapped segment runs through the lot",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7603937.58,
+       703293.11
+      ],
+      [
+       7603749.09,
+       703297.98
+      ],
+      [
+       7603746.05,
+       703301.48
+      ],
+      [
+       7603733.25,
+       703319.53
+      ],
+      [
+       7603722.29,
+       703338.75
+      ],
+      [
+       7603713.26,
+       703358.95
+      ],
+      [
+       7603706.25,
+       703379.94
+      ],
+      [
+       7603701.34,
+       703401.52
+      ],
+      [
+       7603698.56,
+       703423.47
+      ],
+      [
+       7603697.95,
+       703445.59
+      ],
+      [
+       7603699.51,
+       703467.66
+      ],
+      [
+       7603703.23,
+       703489.47
+      ],
+      [
+       7603709.06,
+       703510.82
+      ],
+      [
+       7603716.96,
+       703531.49
+      ],
+      [
+       7603726.85,
+       703551.28
+      ],
+      [
+       7603738.63,
+       703570.01
+      ],
+      [
+       7603752.19,
+       703587.5
+      ],
+      [
+       7603767.4,
+       703603.57
+      ],
+      [
+       7603784.11,
+       703618.07
+      ],
+      [
+       7603802.16,
+       703630.87
+      ],
+      [
+       7603821.38,
+       703641.84
+      ],
+      [
+       7603839.87,
+       703650.1
+      ],
+      [
+       7604018.05,
+       703645.2
+      ],
+      [
+       7604033.91,
+       703637.27
+      ],
+      [
+       7604052.64,
+       703625.49
+      ],
+      [
+       7604070.12,
+       703611.93
+      ],
+      [
+       7604086.66,
+       703597.75
+      ],
+      [
+       7604097.57,
+       703589.03
+      ],
+      [
+       7604139.23,
+       703555.7
+      ],
+      [
+       7604142.72,
+       703552.84
+      ],
+      [
+       7604164.09,
+       703535.03
+      ],
+      [
+       7604183.95,
+       703519.85
+      ],
+      [
+       7604190.97,
+       703514.26
+      ],
+      [
+       7604247.15,
+       703467.63
+      ],
+      [
+       7604268.79,
+       703453.2
+      ],
+      [
+       7604332.17,
+       703412.75
+      ],
+      [
+       7604334.52,
+       703411.11
+      ],
+      [
+       7604345.51,
+       703405.3
+      ],
+      [
+       7604348.32,
+       703403.79
+      ],
+      [
+       7604390.88,
+       703380.48
+      ],
+      [
+       7604445.11,
+       703361.18
+      ],
+      [
+       7604489.17,
+       703350.37
+      ],
+      [
+       7604525.03,
+       703347.77
+      ],
+      [
+       7604572.32,
+       703353.42
+      ],
+      [
+       7604581.19,
+       703356.5
+      ],
+      [
+       7604583.96,
+       703357.45
+      ],
+      [
+       7604679.8,
+       703389.4
+      ],
+      [
+       7604681.5,
+       703389.9
+      ],
+      [
+       7604676.74,
+       703274.03
+      ],
+      [
+       7603937.58,
+       703293.11
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117A000701",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "a mapped segment runs through the lot",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7603656.71,
+       702599.14
+      ],
+      [
+       7603637.43,
+       702637.23
+      ],
+      [
+       7603619.72,
+       702676.08
+      ],
+      [
+       7603588.16,
+       702749.21
+      ],
+      [
+       7603572.56,
+       702787.96
+      ],
+      [
+       7603561.21,
+       702820.7
+      ],
+      [
+       7603563.89,
+       702820.75
+      ],
+      [
+       7603563.89,
+       702822.61
+      ],
+      [
+       7603564.54,
+       702835.79
+      ],
+      [
+       7603566.47,
+       702848.84
+      ],
+      [
+       7603569.68,
+       702861.63
+      ],
+      [
+       7603574.12,
+       702874.05
+      ],
+      [
+       7603579.77,
+       702885.98
+      ],
+      [
+       7603586.55,
+       702897.29
+      ],
+      [
+       7603594.41,
+       702907.89
+      ],
+      [
+       7603603.27,
+       702917.66
+      ],
+      [
+       7603613.04,
+       702926.52
+      ],
+      [
+       7603623.64,
+       702934.37
+      ],
+      [
+       7603634.95,
+       702941.15
+      ],
+      [
+       7603638.13,
+       702942.66
+      ],
+      [
+       7603772.73,
+       702934.52
+      ],
+      [
+       7603773.0,
+       702934.36
+      ],
+      [
+       7603783.59,
+       702926.5
+      ],
+      [
+       7603793.37,
+       702917.64
+      ],
+      [
+       7603802.22,
+       702907.86
+      ],
+      [
+       7603810.08,
+       702897.27
+      ],
+      [
+       7603816.86,
+       702885.95
+      ],
+      [
+       7603822.5,
+       702874.03
+      ],
+      [
+       7603826.94,
+       702861.61
+      ],
+      [
+       7603830.15,
+       702848.81
+      ],
+      [
+       7603832.08,
+       702835.76
+      ],
+      [
+       7603832.73,
+       702822.59
+      ],
+      [
+       7603832.72,
+       702764.24
+      ],
+      [
+       7603831.54,
+       702746.48
+      ],
+      [
+       7603828.76,
+       702725.65
+      ],
+      [
+       7603826.93,
+       702715.13
+      ],
+      [
+       7603824.27,
+       702704.79
+      ],
+      [
+       7603820.1,
+       702690.9
+      ],
+      [
+       7603816.16,
+       702679.61
+      ],
+      [
+       7603811.22,
+       702668.71
+      ],
+      [
+       7603805.34,
+       702658.29
+      ],
+      [
+       7603798.39,
+       702647.18
+      ],
+      [
+       7603790.51,
+       702635.9
+      ],
+      [
+       7603780.79,
+       702623.39
+      ],
+      [
+       7603773.06,
+       702614.32
+      ],
+      [
+       7603764.55,
+       702605.96
+      ],
+      [
+       7603755.34,
+       702598.39
+      ],
+      [
+       7603744.23,
+       702590.05
+      ],
+      [
+       7603734.25,
+       702583.24
+      ],
+      [
+       7603723.7,
+       702577.36
+      ],
+      [
+       7603709.81,
+       702570.41
+      ],
+      [
+       7603696.33,
+       702564.57
+      ],
+      [
+       7603682.3,
+       702560.23
+      ],
+      [
+       7603679.02,
+       702559.41
+      ],
+      [
+       7603677.52,
+       702561.87
+      ],
+      [
+       7603656.71,
+       702599.14
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117A000709",
+    "zone": "R-15 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "a mapped segment runs through the lot",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604202.3,
+       703135.98
+      ],
+      [
+       7604179.18,
+       703148.22
+      ],
+      [
+       7604173.8,
+       703151.35
+      ],
+      [
+       7604168.67,
+       703154.88
+      ],
+      [
+       7604165.52,
+       703157.25
+      ],
+      [
+       7604102.77,
+       703197.3
+      ],
+      [
+       7604101.45,
+       703198.17
+      ],
+      [
+       7604068.12,
+       703220.39
+      ],
+      [
+       7604061.44,
+       703225.36
+      ],
+      [
+       7603997.39,
+       703278.52
+      ],
+      [
+       7603979.73,
+       703292.02
+      ],
+      [
+       7604261.32,
+       703284.76
+      ],
+      [
+       7604277.24,
+       703276.33
+      ],
+      [
+       7604278.23,
+       703275.8
+      ],
+      [
+       7604330.99,
+       703246.9
+      ],
+      [
+       7604403.16,
+       703221.22
+      ],
+      [
+       7604466.34,
+       703205.72
+      ],
+      [
+       7604528.43,
+       703201.21
+      ],
+      [
+       7604605.34,
+       703210.4
+      ],
+      [
+       7604629.14,
+       703218.68
+      ],
+      [
+       7604630.12,
+       703219.02
+      ],
+      [
+       7604675.09,
+       703234.01
+      ],
+      [
+       7604673.42,
+       703193.47
+      ],
+      [
+       7604673.27,
+       703189.78
+      ],
+      [
+       7604671.87,
+       703155.63
+      ],
+      [
+       7604640.26,
+       703146.81
+      ],
+      [
+       7604608.14,
+       703140.12
+      ],
+      [
+       7604575.64,
+       703135.59
+      ],
+      [
+       7604542.91,
+       703133.24
+      ],
+      [
+       7604510.1,
+       703133.08
+      ],
+      [
+       7604477.35,
+       703135.11
+      ],
+      [
+       7604444.81,
+       703139.32
+      ],
+      [
+       7604412.63,
+       703145.7
+      ],
+      [
+       7604380.94,
+       703154.21
+      ],
+      [
+       7604372.66,
+       703127.07
+      ],
+      [
+       7604270.07,
+       703129.72
+      ],
+      [
+       7604210.96,
+       703131.24
+      ],
+      [
+       7604202.3,
+       703135.98
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38200",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 40 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604932.21,
+       703218.18
+      ],
+      [
+       7604910.95,
+       703220.13
+      ],
+      [
+       7604914.31,
+       703287.6
+      ],
+      [
+       7604925.93,
+       703287.02
+      ],
+      [
+       7604939.57,
+       703285.87
+      ],
+      [
+       7604932.21,
+       703218.18
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38300",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 38 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604910.95,
+       703220.13
+      ],
+      [
+       7604895.64,
+       703221.07
+      ],
+      [
+       7604898.99,
+       703288.36
+      ],
+      [
+       7604914.31,
+       703287.6
+      ],
+      [
+       7604910.95,
+       703220.13
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38400",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 37 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604895.64,
+       703221.07
+      ],
+      [
+       7604880.32,
+       703221.61
+      ],
+      [
+       7604883.67,
+       703289.12
+      ],
+      [
+       7604898.99,
+       703288.36
+      ],
+      [
+       7604895.64,
+       703221.07
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38500",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 36 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604880.32,
+       703221.61
+      ],
+      [
+       7604864.97,
+       703221.76
+      ],
+      [
+       7604868.36,
+       703289.88
+      ],
+      [
+       7604883.67,
+       703289.12
+      ],
+      [
+       7604880.32,
+       703221.61
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38600",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 35 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604864.97,
+       703221.76
+      ],
+      [
+       7604842.08,
+       703221.26
+      ],
+      [
+       7604839.28,
+       703289.79
+      ],
+      [
+       7604851.36,
+       703290.35
+      ],
+      [
+       7604863.46,
+       703290.13
+      ],
+      [
+       7604868.36,
+       703289.88
+      ],
+      [
+       7604864.97,
+       703221.76
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38700",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 33 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604819.33,
+       703219.89
+      ],
+      [
+       7604812.29,
+       703287.03
+      ],
+      [
+       7604834.12,
+       703289.32
+      ],
+      [
+       7604839.28,
+       703289.79
+      ],
+      [
+       7604842.08,
+       703221.26
+      ],
+      [
+       7604819.33,
+       703219.89
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38800",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 33 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604804.05,
+       703218.49
+      ],
+      [
+       7604797.04,
+       703285.44
+      ],
+      [
+       7604812.29,
+       703287.03
+      ],
+      [
+       7604819.33,
+       703219.89
+      ],
+      [
+       7604804.05,
+       703218.49
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC38900",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 33 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604788.83,
+       703216.7
+      ],
+      [
+       7604781.8,
+       703283.84
+      ],
+      [
+       7604797.04,
+       703285.44
+      ],
+      [
+       7604804.05,
+       703218.49
+      ],
+      [
+       7604788.83,
+       703216.7
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC39000",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 34 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604761.69,
+       703212.52
+      ],
+      [
+       7604757.52,
+       703249.65
+      ],
+      [
+       7604756.37,
+       703259.9
+      ],
+      [
+       7604756.26,
+       703263.21
+      ],
+      [
+       7604756.67,
+       703266.5
+      ],
+      [
+       7604757.6,
+       703269.68
+      ],
+      [
+       7604759.01,
+       703272.67
+      ],
+      [
+       7604760.87,
+       703275.41
+      ],
+      [
+       7604763.15,
+       703277.81
+      ],
+      [
+       7604765.77,
+       703279.84
+      ],
+      [
+       7604768.68,
+       703281.42
+      ],
+      [
+       7604771.8,
+       703282.53
+      ],
+      [
+       7604775.05,
+       703283.13
+      ],
+      [
+       7604781.8,
+       703283.84
+      ],
+      [
+       7604788.83,
+       703216.7
+      ],
+      [
+       7604761.69,
+       703212.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC43000",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 34 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604854.11,
+       703423.16
+      ],
+      [
+       7604854.01,
+       703368.18
+      ],
+      [
+       7604840.79,
+       703367.83
+      ],
+      [
+       7604825.47,
+       703367.12
+      ],
+      [
+       7604810.17,
+       703366.1
+      ],
+      [
+       7604794.89,
+       703364.75
+      ],
+      [
+       7604779.63,
+       703363.08
+      ],
+      [
+       7604762.05,
+       703360.75
+      ],
+      [
+       7604757.98,
+       703356.01
+      ],
+      [
+       7604761.58,
+       703303.83
+      ],
+      [
+       7604758.48,
+       703305.61
+      ],
+      [
+       7604755.72,
+       703307.89
+      ],
+      [
+       7604753.4,
+       703310.61
+      ],
+      [
+       7604751.56,
+       703313.68
+      ],
+      [
+       7604750.27,
+       703317.02
+      ],
+      [
+       7604749.57,
+       703320.52
+      ],
+      [
+       7604748.6,
+       703329.16
+      ],
+      [
+       7604729.72,
+       703327.04
+      ],
+      [
+       7604738.64,
+       703247.54
+      ],
+      [
+       7604757.52,
+       703249.65
+      ],
+      [
+       7604761.69,
+       703212.52
+      ],
+      [
+       7604731.84,
+       703206.44
+      ],
+      [
+       7604702.34,
+       703198.86
+      ],
+      [
+       7604673.27,
+       703189.78
+      ],
+      [
+       7604676.74,
+       703274.03
+      ],
+      [
+       7604685.74,
+       703492.84
+      ],
+      [
+       7604686.5,
+       703492.5
+      ],
+      [
+       7604696.78,
+       703488.23
+      ],
+      [
+       7604707.34,
+       703484.72
+      ],
+      [
+       7604711.69,
+       703483.54
+      ],
+      [
+       7604713.11,
+       703488.44
+      ],
+      [
+       7604722.77,
+       703485.89
+      ],
+      [
+       7604738.16,
+       703481.34
+      ],
+      [
+       7604753.11,
+       703475.47
+      ],
+      [
+       7604816.88,
+       703446.42
+      ],
+      [
+       7604834.71,
+       703436.93
+      ],
+      [
+       7604851.27,
+       703425.38
+      ],
+      [
+       7604854.11,
+       703423.17
+      ],
+      [
+       7604855.37,
+       703422.21
+      ],
+      [
+       7604854.11,
+       703423.16
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AC43200",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (72 ft), no whole lot between",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7604978.64,
+       703280.29
+      ],
+      [
+       7604963.46,
+       703282.48
+      ],
+      [
+       7604944.59,
+       703285.21
+      ],
+      [
+       7604939.57,
+       703285.87
+      ],
+      [
+       7604925.93,
+       703287.02
+      ],
+      [
+       7604914.31,
+       703287.6
+      ],
+      [
+       7604898.99,
+       703288.36
+      ],
+      [
+       7604883.67,
+       703289.12
+      ],
+      [
+       7604868.36,
+       703289.88
+      ],
+      [
+       7604863.46,
+       703290.13
+      ],
+      [
+       7604851.36,
+       703290.35
+      ],
+      [
+       7604839.28,
+       703289.79
+      ],
+      [
+       7604834.12,
+       703289.32
+      ],
+      [
+       7604812.29,
+       703287.03
+      ],
+      [
+       7604797.04,
+       703285.44
+      ],
+      [
+       7604781.8,
+       703283.84
+      ],
+      [
+       7604775.05,
+       703283.13
+      ],
+      [
+       7604771.8,
+       703282.53
+      ],
+      [
+       7604768.68,
+       703281.42
+      ],
+      [
+       7604765.77,
+       703279.84
+      ],
+      [
+       7604763.15,
+       703277.81
+      ],
+      [
+       7604760.87,
+       703275.41
+      ],
+      [
+       7604759.01,
+       703272.67
+      ],
+      [
+       7604757.6,
+       703269.68
+      ],
+      [
+       7604756.67,
+       703266.5
+      ],
+      [
+       7604756.26,
+       703263.21
+      ],
+      [
+       7604756.37,
+       703259.9
+      ],
+      [
+       7604757.52,
+       703249.65
+      ],
+      [
+       7604738.64,
+       703247.54
+      ],
+      [
+       7604733.75,
+       703291.09
+      ],
+      [
+       7604794.98,
+       703301.74
+      ],
+      [
+       7604806.31,
+       703303.15
+      ],
+      [
+       7604817.72,
+       703303.44
+      ],
+      [
+       7604877.44,
+       703302.05
+      ],
+      [
+       7604891.25,
+       703300.91
+      ],
+      [
+       7604969.03,
+       703289.81
+      ],
+      [
+       7604979.82,
+       703287.74
+      ],
+      [
+       7604990.37,
+       703284.68
+      ],
+      [
+       7605000.58,
+       703280.63
+      ],
+      [
+       7605002.64,
+       703279.7
+      ],
+      [
+       7605002.17,
+       703276.89
+      ],
+      [
+       7604978.64,
+       703280.29
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD04500",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 29 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605456.34,
+       702978.59
+      ],
+      [
+       7605469.89,
+       703008.65
+      ],
+      [
+       7605478.61,
+       703004.74
+      ],
+      [
+       7605500.6,
+       702994.9
+      ],
+      [
+       7605514.59,
+       702988.63
+      ],
+      [
+       7605528.59,
+       702982.36
+      ],
+      [
+       7605560.04,
+       702968.28
+      ],
+      [
+       7605552.59,
+       702951.63
+      ],
+      [
+       7605551.46,
+       702949.56
+      ],
+      [
+       7605550.02,
+       702947.69
+      ],
+      [
+       7605548.3,
+       702946.08
+      ],
+      [
+       7605546.35,
+       702944.75
+      ],
+      [
+       7605544.22,
+       702943.74
+      ],
+      [
+       7605541.96,
+       702943.08
+      ],
+      [
+       7605539.62,
+       702942.78
+      ],
+      [
+       7605537.26,
+       702942.85
+      ],
+      [
+       7605534.94,
+       702943.29
+      ],
+      [
+       7605532.72,
+       702944.09
+      ],
+      [
+       7605456.34,
+       702978.59
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD18800",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605683.54,
+       702911.32
+      ],
+      [
+       7605614.19,
+       702942.4
+      ],
+      [
+       7605614.79,
+       702943.74
+      ],
+      [
+       7605630.47,
+       702978.74
+      ],
+      [
+       7605699.94,
+       702947.6
+      ],
+      [
+       7605683.54,
+       702911.32
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD18900",
+    "zone": "R-15 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (101 ft), no whole lot between",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605630.47,
+       702978.74
+      ],
+      [
+       7605637.87,
+       702995.26
+      ],
+      [
+       7605707.31,
+       702963.92
+      ],
+      [
+       7605699.94,
+       702947.6
+      ],
+      [
+       7605630.47,
+       702978.74
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD19400",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 29 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605456.34,
+       702978.59
+      ],
+      [
+       7605188.46,
+       703099.56
+      ],
+      [
+       7605186.4,
+       703100.7
+      ],
+      [
+       7605184.54,
+       703102.15
+      ],
+      [
+       7605182.92,
+       703103.87
+      ],
+      [
+       7605181.6,
+       703105.82
+      ],
+      [
+       7605180.6,
+       703107.95
+      ],
+      [
+       7605179.95,
+       703110.22
+      ],
+      [
+       7605179.65,
+       703112.56
+      ],
+      [
+       7605179.73,
+       703114.91
+      ],
+      [
+       7605180.18,
+       703117.23
+      ],
+      [
+       7605180.98,
+       703119.44
+      ],
+      [
+       7605187.99,
+       703134.88
+      ],
+      [
+       7605212.82,
+       703123.76
+      ],
+      [
+       7605226.82,
+       703117.49
+      ],
+      [
+       7605240.81,
+       703111.23
+      ],
+      [
+       7605262.79,
+       703101.39
+      ],
+      [
+       7605284.76,
+       703091.55
+      ],
+      [
+       7605298.76,
+       703085.28
+      ],
+      [
+       7605312.75,
+       703079.01
+      ],
+      [
+       7605334.73,
+       703069.17
+      ],
+      [
+       7605356.71,
+       703059.33
+      ],
+      [
+       7605370.7,
+       703053.06
+      ],
+      [
+       7605384.69,
+       703046.8
+      ],
+      [
+       7605406.67,
+       703036.96
+      ],
+      [
+       7605428.64,
+       703027.12
+      ],
+      [
+       7605442.64,
+       703020.85
+      ],
+      [
+       7605456.64,
+       703014.58
+      ],
+      [
+       7605469.89,
+       703008.65
+      ],
+      [
+       7605456.34,
+       702978.59
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD20400",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605699.96,
+       702903.95
+      ],
+      [
+       7605683.54,
+       702911.32
+      ],
+      [
+       7605699.94,
+       702947.6
+      ],
+      [
+       7605714.77,
+       702980.41
+      ],
+      [
+       7605731.06,
+       703016.46
+      ],
+      [
+       7605739.26,
+       703012.75
+      ],
+      [
+       7605747.46,
+       703009.04
+      ],
+      [
+       7605730.94,
+       702972.5
+      ],
+      [
+       7605716.12,
+       702939.69
+      ],
+      [
+       7605699.96,
+       702903.95
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21200",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605212.82,
+       703123.76
+      ],
+      [
+       7605187.99,
+       703134.88
+      ],
+      [
+       7605208.54,
+       703180.06
+      ],
+      [
+       7605233.21,
+       703168.92
+      ],
+      [
+       7605212.82,
+       703123.76
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21300",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605226.82,
+       703117.49
+      ],
+      [
+       7605212.82,
+       703123.76
+      ],
+      [
+       7605233.21,
+       703168.92
+      ],
+      [
+       7605247.19,
+       703162.6
+      ],
+      [
+       7605226.82,
+       703117.49
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21400",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605240.81,
+       703111.23
+      ],
+      [
+       7605226.82,
+       703117.49
+      ],
+      [
+       7605247.19,
+       703162.6
+      ],
+      [
+       7605261.16,
+       703156.29
+      ],
+      [
+       7605240.81,
+       703111.23
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21500",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605262.79,
+       703101.39
+      ],
+      [
+       7605240.81,
+       703111.23
+      ],
+      [
+       7605261.16,
+       703156.29
+      ],
+      [
+       7605283.11,
+       703146.38
+      ],
+      [
+       7605262.79,
+       703101.39
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21600",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605284.76,
+       703091.55
+      ],
+      [
+       7605262.79,
+       703101.39
+      ],
+      [
+       7605283.11,
+       703146.38
+      ],
+      [
+       7605305.05,
+       703136.47
+      ],
+      [
+       7605284.76,
+       703091.55
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21700",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605298.76,
+       703085.28
+      ],
+      [
+       7605284.76,
+       703091.55
+      ],
+      [
+       7605305.05,
+       703136.47
+      ],
+      [
+       7605319.03,
+       703130.16
+      ],
+      [
+       7605298.76,
+       703085.28
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21800",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 61 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605312.75,
+       703079.01
+      ],
+      [
+       7605298.76,
+       703085.28
+      ],
+      [
+       7605319.03,
+       703130.16
+      ],
+      [
+       7605333.0,
+       703123.85
+      ],
+      [
+       7605312.75,
+       703079.01
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD21900",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605334.73,
+       703069.17
+      ],
+      [
+       7605312.75,
+       703079.01
+      ],
+      [
+       7605333.0,
+       703123.85
+      ],
+      [
+       7605354.95,
+       703113.94
+      ],
+      [
+       7605334.73,
+       703069.17
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22000",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605356.71,
+       703059.33
+      ],
+      [
+       7605334.73,
+       703069.17
+      ],
+      [
+       7605354.95,
+       703113.94
+      ],
+      [
+       7605376.89,
+       703104.03
+      ],
+      [
+       7605356.71,
+       703059.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22100",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605370.7,
+       703053.06
+      ],
+      [
+       7605356.71,
+       703059.33
+      ],
+      [
+       7605376.89,
+       703104.03
+      ],
+      [
+       7605390.87,
+       703097.72
+      ],
+      [
+       7605370.7,
+       703053.06
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22200",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605384.69,
+       703046.8
+      ],
+      [
+       7605370.7,
+       703053.06
+      ],
+      [
+       7605390.87,
+       703097.72
+      ],
+      [
+       7605404.84,
+       703091.41
+      ],
+      [
+       7605384.69,
+       703046.8
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22300",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605406.67,
+       703036.96
+      ],
+      [
+       7605384.69,
+       703046.8
+      ],
+      [
+       7605404.84,
+       703091.41
+      ],
+      [
+       7605426.78,
+       703081.5
+      ],
+      [
+       7605406.67,
+       703036.96
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22400",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605428.64,
+       703027.12
+      ],
+      [
+       7605406.67,
+       703036.96
+      ],
+      [
+       7605426.78,
+       703081.5
+      ],
+      [
+       7605448.73,
+       703071.59
+      ],
+      [
+       7605428.64,
+       703027.12
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22500",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605442.64,
+       703020.85
+      ],
+      [
+       7605428.64,
+       703027.12
+      ],
+      [
+       7605448.73,
+       703071.59
+      ],
+      [
+       7605462.7,
+       703065.28
+      ],
+      [
+       7605442.64,
+       703020.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22600",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605456.64,
+       703014.58
+      ],
+      [
+       7605442.64,
+       703020.85
+      ],
+      [
+       7605462.7,
+       703065.28
+      ],
+      [
+       7605476.68,
+       703058.97
+      ],
+      [
+       7605456.64,
+       703014.58
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22700",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605478.61,
+       703004.74
+      ],
+      [
+       7605469.89,
+       703008.65
+      ],
+      [
+       7605456.64,
+       703014.58
+      ],
+      [
+       7605476.68,
+       703058.97
+      ],
+      [
+       7605498.63,
+       703049.06
+      ],
+      [
+       7605478.61,
+       703004.74
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22800",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605500.6,
+       702994.9
+      ],
+      [
+       7605478.61,
+       703004.74
+      ],
+      [
+       7605498.63,
+       703049.06
+      ],
+      [
+       7605520.58,
+       703039.14
+      ],
+      [
+       7605500.6,
+       702994.9
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD22900",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605514.59,
+       702988.63
+      ],
+      [
+       7605500.6,
+       702994.9
+      ],
+      [
+       7605520.58,
+       703039.14
+      ],
+      [
+       7605534.55,
+       703032.83
+      ],
+      [
+       7605514.59,
+       702988.63
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD23000",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605528.59,
+       702982.36
+      ],
+      [
+       7605514.59,
+       702988.63
+      ],
+      [
+       7605534.55,
+       703032.83
+      ],
+      [
+       7605548.53,
+       703026.52
+      ],
+      [
+       7605528.59,
+       702982.36
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD23100",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "behind the linear park strip, 62 ft from the line",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605560.04,
+       702968.28
+      ],
+      [
+       7605528.59,
+       702982.36
+      ],
+      [
+       7605548.53,
+       703026.52
+      ],
+      [
+       7605579.8,
+       703012.4
+      ],
+      [
+       7605560.04,
+       702968.28
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117AD25200",
+    "zone": "R-15 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (111 ft), no whole lot between",
+    "segment": "linear_park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7605548.53,
+       703026.52
+      ],
+      [
+       7605534.55,
+       703032.83
+      ],
+      [
+       7605520.58,
+       703039.14
+      ],
+      [
+       7605498.63,
+       703049.06
+      ],
+      [
+       7605476.68,
+       703058.97
+      ],
+      [
+       7605462.7,
+       703065.28
+      ],
+      [
+       7605448.73,
+       703071.59
+      ],
+      [
+       7605426.78,
+       703081.5
+      ],
+      [
+       7605404.84,
+       703091.41
+      ],
+      [
+       7605390.87,
+       703097.72
+      ],
+      [
+       7605376.89,
+       703104.03
+      ],
+      [
+       7605354.95,
+       703113.94
+      ],
+      [
+       7605333.0,
+       703123.85
+      ],
+      [
+       7605319.03,
+       703130.16
+      ],
+      [
+       7605305.05,
+       703136.47
+      ],
+      [
+       7605283.11,
+       703146.38
+      ],
+      [
+       7605261.16,
+       703156.29
+      ],
+      [
+       7605247.19,
+       703162.6
+      ],
+      [
+       7605233.21,
+       703168.92
+      ],
+      [
+       7605208.54,
+       703180.06
+      ],
+      [
+       7605212.04,
+       703187.76
+      ],
+      [
+       7605583.29,
+       703020.19
+      ],
+      [
+       7605579.8,
+       703012.4
+      ],
+      [
+       7605548.53,
+       703026.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC00100",
+    "zone": "R-15 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "a mapped segment runs through the lot",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7601837.9,
+       702577.79
+      ],
+      [
+       7601710.38,
+       702581.28
+      ],
+      [
+       7601710.69,
+       702601.61
+      ],
+      [
+       7601632.75,
+       702602.81
+      ],
+      [
+       7601630.2,
+       702610.32
+      ],
+      [
+       7601626.4,
+       702617.27
+      ],
+      [
+       7601621.46,
+       702623.47
+      ],
+      [
+       7601615.53,
+       702628.73
+      ],
+      [
+       7601608.79,
+       702632.89
+      ],
+      [
+       7601601.43,
+       702635.84
+      ],
+      [
+       7601593.67,
+       702637.48
+      ],
+      [
+       7601585.75,
+       702637.76
+      ],
+      [
+       7601579.39,
+       702636.88
+      ],
+      [
+       7601575.85,
+       702641.01
+      ],
+      [
+       7601567.23,
+       702653.33
+      ],
+      [
+       7601559.85,
+       702666.43
+      ],
+      [
+       7601553.8,
+       702680.19
+      ],
+      [
+       7601549.12,
+       702694.48
+      ],
+      [
+       7601545.87,
+       702709.16
+      ],
+      [
+       7601544.07,
+       702724.09
+      ],
+      [
+       7601543.75,
+       702739.13
+      ],
+      [
+       7601544.9,
+       702754.12
+      ],
+      [
+       7601547.51,
+       702768.93
+      ],
+      [
+       7601551.56,
+       702783.41
+      ],
+      [
+       7601557.01,
+       702797.42
+      ],
+      [
+       7601563.81,
+       702810.83
+      ],
+      [
+       7601569.5,
+       702819.77
+      ],
+      [
+       7601564.7,
+       702830.8
+      ],
+      [
+       7601560.09,
+       702845.11
+      ],
+      [
+       7601556.89,
+       702859.81
+      ],
+      [
+       7601555.16,
+       702874.74
+      ],
+      [
+       7601554.89,
+       702889.78
+      ],
+      [
+       7601556.1,
+       702904.76
+      ],
+      [
+       7601558.78,
+       702919.56
+      ],
+      [
+       7601562.89,
+       702934.02
+      ],
+      [
+       7601568.4,
+       702948.01
+      ],
+      [
+       7601575.25,
+       702961.4
+      ],
+      [
+       7601583.38,
+       702974.04
+      ],
+      [
+       7601592.72,
+       702985.83
+      ],
+      [
+       7601603.16,
+       702996.65
+      ],
+      [
+       7601614.61,
+       703006.39
+      ],
+      [
+       7601626.97,
+       703014.96
+      ],
+      [
+       7601640.1,
+       703022.28
+      ],
+      [
+       7601653.89,
+       703028.28
+      ],
+      [
+       7601668.2,
+       703032.9
+      ],
+      [
+       7601682.89,
+       703036.09
+      ],
+      [
+       7601697.83,
+       703037.83
+      ],
+      [
+       7601712.86,
+       703038.09
+      ],
+      [
+       7601848.28,
+       703033.82
+      ],
+      [
+       7601844.41,
+       702863.49
+      ],
+      [
+       7601837.9,
+       702577.79
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC00400",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 2 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602194.99,
+       702362.11
+      ],
+      [
+       7601891.18,
+       702371.56
+      ],
+      [
+       7601889.47,
+       702371.77
+      ],
+      [
+       7601887.81,
+       702372.26
+      ],
+      [
+       7601886.27,
+       702373.03
+      ],
+      [
+       7601884.88,
+       702374.06
+      ],
+      [
+       7601883.68,
+       702375.3
+      ],
+      [
+       7601882.71,
+       702376.73
+      ],
+      [
+       7601882.0,
+       702378.31
+      ],
+      [
+       7601881.57,
+       702379.98
+      ],
+      [
+       7601889.15,
+       702718.47
+      ],
+      [
+       7601889.42,
+       702720.15
+      ],
+      [
+       7601889.97,
+       702721.75
+      ],
+      [
+       7601890.78,
+       702723.25
+      ],
+      [
+       7601891.83,
+       702724.58
+      ],
+      [
+       7601893.08,
+       702725.72
+      ],
+      [
+       7601894.52,
+       702726.63
+      ],
+      [
+       7601896.08,
+       702727.29
+      ],
+      [
+       7601897.73,
+       702727.68
+      ],
+      [
+       7601899.43,
+       702727.78
+      ],
+      [
+       7602203.11,
+       702718.55
+      ],
+      [
+       7602194.99,
+       702362.11
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC00600",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602203.88,
+       702752.54
+      ],
+      [
+       7601900.05,
+       702761.77
+      ],
+      [
+       7601898.33,
+       702761.99
+      ],
+      [
+       7601896.67,
+       702762.49
+      ],
+      [
+       7601895.13,
+       702763.27
+      ],
+      [
+       7601893.74,
+       702764.3
+      ],
+      [
+       7601892.55,
+       702765.55
+      ],
+      [
+       7601891.59,
+       702766.99
+      ],
+      [
+       7601890.89,
+       702768.57
+      ],
+      [
+       7601890.47,
+       702770.25
+      ],
+      [
+       7601890.34,
+       702771.98
+      ],
+      [
+       7601892.16,
+       702851.96
+      ],
+      [
+       7601892.36,
+       702853.69
+      ],
+      [
+       7601892.86,
+       702855.37
+      ],
+      [
+       7601893.64,
+       702856.93
+      ],
+      [
+       7601894.68,
+       702858.34
+      ],
+      [
+       7601895.95,
+       702859.54
+      ],
+      [
+       7601897.41,
+       702860.51
+      ],
+      [
+       7601899.01,
+       702861.21
+      ],
+      [
+       7601900.71,
+       702861.62
+      ],
+      [
+       7601902.46,
+       702861.73
+      ],
+      [
+       7602206.17,
+       702852.52
+      ],
+      [
+       7602204.66,
+       702786.8
+      ],
+      [
+       7602203.88,
+       702752.54
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03100",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602206.94,
+       702886.51
+      ],
+      [
+       7602179.39,
+       702887.34
+      ],
+      [
+       7602181.8,
+       702966.76
+      ],
+      [
+       7602208.75,
+       702965.95
+      ],
+      [
+       7602206.94,
+       702886.51
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03200",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602179.39,
+       702887.34
+      ],
+      [
+       7602159.4,
+       702887.95
+      ],
+      [
+       7602161.81,
+       702967.37
+      ],
+      [
+       7602181.8,
+       702966.76
+      ],
+      [
+       7602179.39,
+       702887.34
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03300",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602159.4,
+       702887.95
+      ],
+      [
+       7602139.41,
+       702888.56
+      ],
+      [
+       7602141.81,
+       702967.98
+      ],
+      [
+       7602161.81,
+       702967.37
+      ],
+      [
+       7602159.4,
+       702887.95
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03400",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602139.41,
+       702888.56
+      ],
+      [
+       7602109.11,
+       702889.47
+      ],
+      [
+       7602111.52,
+       702968.9
+      ],
+      [
+       7602141.81,
+       702967.98
+      ],
+      [
+       7602139.41,
+       702888.56
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03500",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602089.12,
+       702890.08
+      ],
+      [
+       7602059.46,
+       702890.98
+      ],
+      [
+       7602061.87,
+       702970.4
+      ],
+      [
+       7602091.53,
+       702969.5
+      ],
+      [
+       7602089.12,
+       702890.08
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03600",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602059.46,
+       702890.98
+      ],
+      [
+       7602039.47,
+       702891.59
+      ],
+      [
+       7602041.88,
+       702971.01
+      ],
+      [
+       7602061.87,
+       702970.4
+      ],
+      [
+       7602059.46,
+       702890.98
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03700",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602039.47,
+       702891.59
+      ],
+      [
+       7602019.48,
+       702892.19
+      ],
+      [
+       7602021.89,
+       702971.62
+      ],
+      [
+       7602041.88,
+       702971.01
+      ],
+      [
+       7602039.47,
+       702891.59
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03800",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602019.48,
+       702892.19
+      ],
+      [
+       7601992.32,
+       702893.02
+      ],
+      [
+       7601994.73,
+       702972.44
+      ],
+      [
+       7602021.89,
+       702971.62
+      ],
+      [
+       7602019.48,
+       702892.19
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC03900",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7601992.32,
+       702893.02
+      ],
+      [
+       7601965.16,
+       702893.84
+      ],
+      [
+       7601967.57,
+       702973.27
+      ],
+      [
+       7601994.73,
+       702972.44
+      ],
+      [
+       7601992.32,
+       702893.02
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC04000",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7601965.16,
+       702893.84
+      ],
+      [
+       7601945.17,
+       702894.44
+      ],
+      [
+       7601947.58,
+       702973.87
+      ],
+      [
+       7601967.57,
+       702973.27
+      ],
+      [
+       7601965.16,
+       702893.84
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC04100",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7601945.17,
+       702894.44
+      ],
+      [
+       7601925.18,
+       702895.05
+      ],
+      [
+       7601927.59,
+       702974.48
+      ],
+      [
+       7601947.58,
+       702973.87
+      ],
+      [
+       7601945.17,
+       702894.44
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC04200",
+    "zone": "R-15 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7601925.18,
+       702895.05
+      ],
+      [
+       7601903.07,
+       702895.72
+      ],
+      [
+       7601901.36,
+       702895.94
+      ],
+      [
+       7601899.7,
+       702896.44
+      ],
+      [
+       7601898.15,
+       702897.22
+      ],
+      [
+       7601896.77,
+       702898.26
+      ],
+      [
+       7601895.57,
+       702899.51
+      ],
+      [
+       7601894.62,
+       702900.95
+      ],
+      [
+       7601893.92,
+       702902.54
+      ],
+      [
+       7601893.5,
+       702904.22
+      ],
+      [
+       7601893.38,
+       702905.95
+      ],
+      [
+       7601894.96,
+       702975.47
+      ],
+      [
+       7601927.59,
+       702974.48
+      ],
+      [
+       7601925.18,
+       702895.05
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC07600",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602109.11,
+       702889.47
+      ],
+      [
+       7602089.12,
+       702890.08
+      ],
+      [
+       7602091.53,
+       702969.5
+      ],
+      [
+       7602111.52,
+       702968.9
+      ],
+      [
+       7602109.11,
+       702889.47
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BC07700",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (96 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602181.8,
+       702966.76
+      ],
+      [
+       7602161.81,
+       702967.37
+      ],
+      [
+       7602141.81,
+       702967.98
+      ],
+      [
+       7602111.52,
+       702968.9
+      ],
+      [
+       7602091.53,
+       702969.5
+      ],
+      [
+       7602061.87,
+       702970.4
+      ],
+      [
+       7602041.88,
+       702971.01
+      ],
+      [
+       7602021.89,
+       702971.62
+      ],
+      [
+       7601994.73,
+       702972.44
+      ],
+      [
+       7601967.57,
+       702973.27
+      ],
+      [
+       7601947.58,
+       702973.87
+      ],
+      [
+       7601927.59,
+       702974.48
+      ],
+      [
+       7601894.96,
+       702975.47
+      ],
+      [
+       7601895.22,
+       702986.65
+      ],
+      [
+       7602209.0,
+       702976.76
+      ],
+      [
+       7602208.75,
+       702965.95
+      ],
+      [
+       7602181.8,
+       702966.76
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD00400",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 4 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602194.99,
+       702362.11
+      ],
+      [
+       7602203.11,
+       702718.55
+      ],
+      [
+       7602321.41,
+       702714.97
+      ],
+      [
+       7602323.14,
+       702714.76
+      ],
+      [
+       7602324.81,
+       702714.26
+      ],
+      [
+       7602326.37,
+       702713.47
+      ],
+      [
+       7602327.76,
+       702712.43
+      ],
+      [
+       7602328.96,
+       702711.16
+      ],
+      [
+       7602329.91,
+       702709.7
+      ],
+      [
+       7602330.6,
+       702708.1
+      ],
+      [
+       7602331.0,
+       702706.41
+      ],
+      [
+       7602331.1,
+       702704.67
+      ],
+      [
+       7602320.9,
+       702368.21
+      ],
+      [
+       7602320.7,
+       702366.48
+      ],
+      [
+       7602320.19,
+       702364.81
+      ],
+      [
+       7602319.41,
+       702363.25
+      ],
+      [
+       7602318.36,
+       702361.85
+      ],
+      [
+       7602317.09,
+       702360.66
+      ],
+      [
+       7602315.63,
+       702359.7
+      ],
+      [
+       7602314.03,
+       702359.02
+      ],
+      [
+       7602312.33,
+       702358.62
+      ],
+      [
+       7602310.59,
+       702358.52
+      ],
+      [
+       7602194.99,
+       702362.11
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD00500",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 4 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602378.56,
+       702356.4
+      ],
+      [
+       7602376.83,
+       702356.61
+      ],
+      [
+       7602375.16,
+       702357.11
+      ],
+      [
+       7602373.61,
+       702357.9
+      ],
+      [
+       7602372.21,
+       702358.94
+      ],
+      [
+       7602371.02,
+       702360.21
+      ],
+      [
+       7602370.06,
+       702361.67
+      ],
+      [
+       7602369.37,
+       702363.27
+      ],
+      [
+       7602368.97,
+       702364.96
+      ],
+      [
+       7602368.87,
+       702366.7
+      ],
+      [
+       7602379.08,
+       702703.21
+      ],
+      [
+       7602379.28,
+       702704.94
+      ],
+      [
+       7602379.78,
+       702706.61
+      ],
+      [
+       7602380.57,
+       702708.17
+      ],
+      [
+       7602381.61,
+       702709.56
+      ],
+      [
+       7602382.88,
+       702710.76
+      ],
+      [
+       7602384.34,
+       702711.71
+      ],
+      [
+       7602385.94,
+       702712.4
+      ],
+      [
+       7602387.63,
+       702712.8
+      ],
+      [
+       7602389.37,
+       702712.9
+      ],
+      [
+       7602757.21,
+       702701.75
+      ],
+      [
+       7602758.64,
+       702701.6
+      ],
+      [
+       7602760.04,
+       702701.25
+      ],
+      [
+       7602761.37,
+       702700.7
+      ],
+      [
+       7602762.61,
+       702699.97
+      ],
+      [
+       7602763.73,
+       702699.06
+      ],
+      [
+       7602764.87,
+       702697.8
+      ],
+      [
+       7602765.78,
+       702696.37
+      ],
+      [
+       7602766.43,
+       702694.8
+      ],
+      [
+       7602766.81,
+       702693.15
+      ],
+      [
+       7602766.9,
+       702691.45
+      ],
+      [
+       7602756.69,
+       702354.66
+      ],
+      [
+       7602756.49,
+       702352.93
+      ],
+      [
+       7602755.98,
+       702351.26
+      ],
+      [
+       7602755.2,
+       702349.7
+      ],
+      [
+       7602754.15,
+       702348.3
+      ],
+      [
+       7602752.88,
+       702347.11
+      ],
+      [
+       7602751.42,
+       702346.15
+      ],
+      [
+       7602749.82,
+       702345.46
+      ],
+      [
+       7602748.12,
+       702345.06
+      ],
+      [
+       7602746.38,
+       702344.96
+      ],
+      [
+       7602378.56,
+       702356.4
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD00700",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602203.88,
+       702752.54
+      ],
+      [
+       7602204.66,
+       702786.8
+      ],
+      [
+       7602206.17,
+       702852.52
+      ],
+      [
+       7602325.48,
+       702848.9
+      ],
+      [
+       7602327.21,
+       702848.69
+      ],
+      [
+       7602328.88,
+       702848.19
+      ],
+      [
+       7602330.44,
+       702847.41
+      ],
+      [
+       7602331.84,
+       702846.37
+      ],
+      [
+       7602333.03,
+       702845.1
+      ],
+      [
+       7602333.99,
+       702843.64
+      ],
+      [
+       7602334.67,
+       702842.04
+      ],
+      [
+       7602335.07,
+       702840.34
+      ],
+      [
+       7602335.17,
+       702838.6
+      ],
+      [
+       7602333.47,
+       702782.38
+      ],
+      [
+       7602332.74,
+       702758.64
+      ],
+      [
+       7602332.53,
+       702756.91
+      ],
+      [
+       7602332.03,
+       702755.24
+      ],
+      [
+       7602331.24,
+       702753.69
+      ],
+      [
+       7602330.2,
+       702752.29
+      ],
+      [
+       7602328.93,
+       702751.1
+      ],
+      [
+       7602327.47,
+       702750.14
+      ],
+      [
+       7602325.87,
+       702749.45
+      ],
+      [
+       7602324.18,
+       702749.05
+      ],
+      [
+       7602322.44,
+       702748.95
+      ],
+      [
+       7602203.88,
+       702752.54
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD00800",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 16 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602390.4,
+       702746.89
+      ],
+      [
+       7602388.67,
+       702747.1
+      ],
+      [
+       7602387.01,
+       702747.6
+      ],
+      [
+       7602385.45,
+       702748.38
+      ],
+      [
+       7602384.05,
+       702749.43
+      ],
+      [
+       7602382.86,
+       702750.69
+      ],
+      [
+       7602381.9,
+       702752.15
+      ],
+      [
+       7602381.21,
+       702753.75
+      ],
+      [
+       7602380.81,
+       702755.45
+      ],
+      [
+       7602380.71,
+       702757.19
+      ],
+      [
+       7602381.44,
+       702780.73
+      ],
+      [
+       7602383.15,
+       702837.15
+      ],
+      [
+       7602383.36,
+       702838.88
+      ],
+      [
+       7602383.86,
+       702840.55
+      ],
+      [
+       7602384.64,
+       702842.1
+      ],
+      [
+       7602385.69,
+       702843.5
+      ],
+      [
+       7602386.95,
+       702844.7
+      ],
+      [
+       7602388.41,
+       702845.65
+      ],
+      [
+       7602390.01,
+       702846.34
+      ],
+      [
+       7602391.71,
+       702846.74
+      ],
+      [
+       7602393.45,
+       702846.84
+      ],
+      [
+       7602761.29,
+       702835.69
+      ],
+      [
+       7602763.02,
+       702835.48
+      ],
+      [
+       7602764.69,
+       702834.98
+      ],
+      [
+       7602766.25,
+       702834.2
+      ],
+      [
+       7602767.64,
+       702833.15
+      ],
+      [
+       7602768.84,
+       702831.88
+      ],
+      [
+       7602769.79,
+       702830.43
+      ],
+      [
+       7602770.48,
+       702828.83
+      ],
+      [
+       7602770.88,
+       702827.13
+      ],
+      [
+       7602770.98,
+       702825.39
+      ],
+      [
+       7602769.22,
+       702767.45
+      ],
+      [
+       7602768.54,
+       702745.43
+      ],
+      [
+       7602768.34,
+       702743.7
+      ],
+      [
+       7602767.83,
+       702742.03
+      ],
+      [
+       7602767.05,
+       702740.47
+      ],
+      [
+       7602766.01,
+       702739.08
+      ],
+      [
+       7602764.74,
+       702737.88
+      ],
+      [
+       7602763.28,
+       702736.93
+      ],
+      [
+       7602761.68,
+       702736.24
+      ],
+      [
+       7602759.98,
+       702735.84
+      ],
+      [
+       7602758.24,
+       702735.74
+      ],
+      [
+       7602390.4,
+       702746.89
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01200",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 18 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602394.48,
+       702880.82
+      ],
+      [
+       7602392.75,
+       702881.03
+      ],
+      [
+       7602391.08,
+       702881.53
+      ],
+      [
+       7602389.52,
+       702882.32
+      ],
+      [
+       7602388.13,
+       702883.36
+      ],
+      [
+       7602386.93,
+       702884.63
+      ],
+      [
+       7602385.98,
+       702886.08
+      ],
+      [
+       7602385.29,
+       702887.69
+      ],
+      [
+       7602384.89,
+       702889.38
+      ],
+      [
+       7602384.79,
+       702891.12
+      ],
+      [
+       7602393.45,
+       703176.73
+      ],
+      [
+       7602749.39,
+       703165.21
+      ],
+      [
+       7602753.29,
+       703165.08
+      ],
+      [
+       7602762.55,
+       703141.84
+      ],
+      [
+       7602769.66,
+       703117.86
+      ],
+      [
+       7602774.56,
+       703093.33
+      ],
+      [
+       7602777.21,
+       703068.46
+      ],
+      [
+       7602777.59,
+       703043.45
+      ],
+      [
+       7602772.62,
+       702879.36
+      ],
+      [
+       7602772.41,
+       702877.63
+      ],
+      [
+       7602771.91,
+       702875.96
+      ],
+      [
+       7602771.13,
+       702874.41
+      ],
+      [
+       7602770.08,
+       702873.01
+      ],
+      [
+       7602768.82,
+       702871.81
+      ],
+      [
+       7602767.36,
+       702870.86
+      ],
+      [
+       7602765.76,
+       702870.17
+      ],
+      [
+       7602764.06,
+       702869.77
+      ],
+      [
+       7602762.32,
+       702869.67
+      ],
+      [
+       7602394.48,
+       702880.82
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01300",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602307.43,
+       702883.46
+      ],
+      [
+       7602309.44,
+       702949.93
+      ],
+      [
+       7602338.52,
+       702949.05
+      ],
+      [
+       7602336.81,
+       702892.57
+      ],
+      [
+       7602336.61,
+       702890.84
+      ],
+      [
+       7602336.1,
+       702889.17
+      ],
+      [
+       7602335.32,
+       702887.62
+      ],
+      [
+       7602334.28,
+       702886.22
+      ],
+      [
+       7602333.01,
+       702885.03
+      ],
+      [
+       7602331.55,
+       702884.07
+      ],
+      [
+       7602329.95,
+       702883.38
+      ],
+      [
+       7602328.25,
+       702882.98
+      ],
+      [
+       7602326.52,
+       702882.88
+      ],
+      [
+       7602307.43,
+       702883.46
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01400",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602307.43,
+       702883.46
+      ],
+      [
+       7602292.11,
+       702883.92
+      ],
+      [
+       7602294.12,
+       702950.39
+      ],
+      [
+       7602309.44,
+       702949.93
+      ],
+      [
+       7602307.43,
+       702883.46
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01500",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602292.11,
+       702883.92
+      ],
+      [
+       7602276.78,
+       702884.39
+      ],
+      [
+       7602278.79,
+       702950.86
+      ],
+      [
+       7602294.12,
+       702950.39
+      ],
+      [
+       7602292.11,
+       702883.92
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01600",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602276.78,
+       702884.39
+      ],
+      [
+       7602261.46,
+       702884.85
+      ],
+      [
+       7602263.46,
+       702951.32
+      ],
+      [
+       7602278.79,
+       702950.86
+      ],
+      [
+       7602276.78,
+       702884.39
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01700",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602261.46,
+       702884.85
+      ],
+      [
+       7602246.13,
+       702885.32
+      ],
+      [
+       7602248.15,
+       702951.94
+      ],
+      [
+       7602251.68,
+       702951.68
+      ],
+      [
+       7602263.46,
+       702951.32
+      ],
+      [
+       7602261.46,
+       702884.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01800",
+    "zone": "R-24 NB",
+    "answer": "inside",
+    "drawn_share_of_lot": 1.0,
+    "why": "first lot on the segment, 17 ft from the line",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602246.13,
+       702885.32
+      ],
+      [
+       7602206.94,
+       702886.51
+      ],
+      [
+       7602208.75,
+       702965.95
+      ],
+      [
+       7602214.35,
+       702965.4
+      ],
+      [
+       7602219.8,
+       702964.04
+      ],
+      [
+       7602224.99,
+       702961.89
+      ],
+      [
+       7602229.81,
+       702958.99
+      ],
+      [
+       7602235.51,
+       702955.64
+      ],
+      [
+       7602241.67,
+       702953.27
+      ],
+      [
+       7602248.15,
+       702951.94
+      ],
+      [
+       7602246.13,
+       702885.32
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD01900",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (106 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602245.27,
+       702975.3
+      ],
+      [
+       7602241.92,
+       702977.37
+      ],
+      [
+       7602234.41,
+       702981.77
+      ],
+      [
+       7602226.36,
+       702985.04
+      ],
+      [
+       7602217.91,
+       702987.11
+      ],
+      [
+       7602209.25,
+       702987.94
+      ],
+      [
+       7602209.79,
+       703011.67
+      ],
+      [
+       7602249.92,
+       703010.41
+      ],
+      [
+       7602248.81,
+       702973.57
+      ],
+      [
+       7602245.27,
+       702975.3
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD02000",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (103 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602263.39,
+       702970.33
+      ],
+      [
+       7602258.41,
+       702970.8
+      ],
+      [
+       7602253.52,
+       702971.88
+      ],
+      [
+       7602248.81,
+       702973.57
+      ],
+      [
+       7602249.73,
+       703004.24
+      ],
+      [
+       7602265.05,
+       703003.76
+      ],
+      [
+       7602264.04,
+       702970.31
+      ],
+      [
+       7602263.39,
+       702970.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD02100",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (103 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602264.04,
+       702970.31
+      ],
+      [
+       7602265.04,
+       703003.31
+      ],
+      [
+       7602280.36,
+       703002.82
+      ],
+      [
+       7602279.36,
+       702969.85
+      ],
+      [
+       7602264.04,
+       702970.31
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD02200",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (103 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602279.36,
+       702969.85
+      ],
+      [
+       7602280.36,
+       703002.84
+      ],
+      [
+       7602295.7,
+       703002.36
+      ],
+      [
+       7602294.7,
+       702969.38
+      ],
+      [
+       7602279.36,
+       702969.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD02300",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (103 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602294.7,
+       702969.38
+      ],
+      [
+       7602295.7,
+       703002.38
+      ],
+      [
+       7602311.02,
+       703001.89
+      ],
+      [
+       7602310.02,
+       702968.92
+      ],
+      [
+       7602294.7,
+       702969.38
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1N117BD02400",
+    "zone": "R-24 NB",
+    "answer": "unanswered",
+    "drawn_share_of_lot": 0.5,
+    "why": "near the segment (103 ft), no whole lot between",
+    "segment": "park_blocks"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7602310.02,
+       702968.92
+      ],
+      [
+       7602311.02,
+       703001.92
+      ],
+      [
+       7602340.1,
+       703001.0
+      ],
+      [
+       7602339.1,
+       702968.04
+      ],
+      [
+       7602310.02,
+       702968.92
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}
