@@ -106,7 +106,7 @@ the full one.)
 1. [Claude] [Steph: HUMAN_TODO 23] [scan: NO] **The county map copy: loose ends after the first promotion** -- September copy PROMOTED 2026-09-20; loose ends in file. [file](followups/1-county-map-copy.md)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
-138. [Claude] [Steph] [scan: YES] **East Hillsboro overlay** -- R-5 part LIVE run 107 2026-10-31 (14 lots yellow->red on Hillsboro's 25 ft height); OPEN: which Hillsboro zone stands in for county R-24 (2 lots that matter) -- asked Steph 2026-10-31. [file](followups/138-east-hillsboro-city-standards.md)
+138. [Claude] [Steph] [scan: YES] **East Hillsboro overlay** -- R-5 part LIVE run 107 2026-10-31 (14 lots yellow->red on Hillsboro's 25 ft height); R-24 settled by Hillsboro's plan map = MR-2; build STARTED 2026-10-31 (branch flats/east-hillsboro-r24). [file](followups/138-east-hillsboro-city-standards.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
