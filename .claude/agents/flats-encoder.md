@@ -31,10 +31,14 @@ lane, the FOLLOWUPS item file (docs/followups/<N>-*.md) and the scope. Read only
 ## Checks before you say done (run these, nothing more)
 - The targeted test files for every module and city you touched (`uv run pytest <files> -q`).
 - If you changed what quadfit mirrors, re-port in the worktree and run its mirror tests, but do not
-  commit the port.
+  commit the port. Run only `"Lot Analysis/quadfit/tests/test_zone_mirror.py"` (and the parking file
+  below if rules.yaml gained a row), in the background, never the whole quadfit suite: it takes
+  ~8 min on the runner and times out on this PC.
 - `uv run pytest tests/api/test_ui_flats.py -q -k reason` if you added a reason code.
 - The corpus ledgers, which a new document, comment or ported zone moves (~1 min):
-  `uv run pytest flats/tests/test_districts.py flats/tests/test_refusals.py flats/tests/test_port.py -q -n auto`,
+  `uv run pytest flats/tests/test_districts.py flats/tests/test_refusals.py flats/tests/test_port.py flats/tests/test_exemptions.py -q -n auto`,
+  (a new `exempt: true` moves test_exemptions' EXPECTED: fix it with a dated comment; gaps.json staleness
+  is the coordinator's, so do not regenerate it),
   and, if quadfit's rules.yaml gained a row, `"Lot Analysis/quadfit/tests/test_parking_geometry.py"`.
   Fix what is yours; list in the hand-off any count left for the coordinator (rule 2).
 - `uv run ruff check` on the files you touched, plus

@@ -31,10 +31,12 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   the 4 largest WashCo plans read; only North Bethany binds (special setbacks, Park Blocks, Kaiser Main
   Street on R-15 NB / R-24 NB, held behind unmeasured facts). 34 moves, all read right: 33 Tualatin CO
   yellow->red (use not allowed outside Block 1), 1 R-15 NB green->yellow. Follow-ups 129 (trace the
-  maps), 130 (Bethany ASC 1, Steph), 131 (CO overlay minimums).
+  maps) and 131 (CO overlay minimums) LIVE run 97 2026-10-30 (4b80f4ef, 729daaa1; 0 colour moves,
+  683 lots' flags/reasons; splice base now /root/bridge_spliced_nb_maps); 130 (Bethany ASC 1) ruled
+  green with a flag, ASC 1 trace owed.
 - Chunks 7-8: WashCo's seven smaller community plans, unread (Raleigh Hills - Garden Home 6,022 lots and
   Bull Mountain 3,847 next).
 - Smaller tier-1 districts still open: Oregon City Park Place/South End concept plans + historic
   districts (boundaries), Sunnyside Village, Wood Village TC, Sandy Bornstedt, Wilsonville Old Town;
   Portland plan districts (33.5xx) boundaries.
-- Splice base now 137 /root/bridge_spliced_dd_c6, quadfit data/quadfit_2026-10-30_dd_c6.
+- Splice base now 137 /root/bridge_spliced_nb_maps, quadfit data/quadfit_2026-10-30_dd_c6.
