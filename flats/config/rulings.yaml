@@ -2184,3 +2184,28 @@
   source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
   encoded_in:
     - flats/config/jurisdictions/or/washington/_unincorporated.yaml
+
+- id: 2026-10-30-bethany-asc1-green-with-flag
+  kind: ruling
+  date: 2026-10-30
+  scope:
+    county: washington
+    city: _unincorporated
+  question: >-
+    Bethany Community Plan, Area of Special Concern 1 (the Bethany town
+    centre): development must follow the conditions of approval of the 1994
+    Central Bethany Planned Development, including its design guidelines
+    (Exhibit G of Resolution and Order 94-104), which are not held. Hold
+    those lots for review until the conditions are read, or leave them?
+  ruling: >-
+    "Leave it. Green with a flag", and the same minute: "green with a flag
+    meaning that so long as that is the only condition and it is otherwise
+    green, it would be green".
+  effect: >-
+    A lot's colour is not changed by the 1994 planned development's
+    conditions: a lot otherwise GREEN stays GREEN; a lot yellow or red for
+    another reason keeps that colour. A lot inside ASC 1 carries a flag below the yellow line
+    saying the conditions of approval of R&O 94-104 apply and are unread.
+    The flag needs the ASC 1 outline traced from the plan map; until it is,
+    no lot carries it (FOLLOWUPS 130).
+  source: Steph 2026-10-30 (chat), docs/followups/130-bethany-asc1.md
