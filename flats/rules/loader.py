@@ -217,6 +217,7 @@ def _parse_values(
                 body.pop("story_ft", None), f"{where}.{key}", problems
             )
             unless = body.pop("unless", ()) or ()
+            only_when = body.pop("only_when", ()) or ()
             raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
             if unknown:
@@ -628,6 +629,7 @@ def _parse_values(
             stories = None
             story_ft = story_ft_cite = story_ft_quote = None
             unless = ()
+            only_when = ()
             raw_variants = ()
 
         prov_src: dict[str, Any] = dict(cite_default or {})
@@ -735,6 +737,7 @@ def _parse_values(
                 story_ft_cite=story_ft_cite,
                 story_ft_quote=story_ft_quote,
                 unless=tuple(unless),
+                only_when=tuple(only_when),
                 prov=prov,
                 status=Status(declared),
                 reviewer=body.get("reviewer"),
@@ -948,6 +951,7 @@ def _parse_variants(
                 "sqft_per_unit",
                 "spaces_total",
                 "pct_of_lot_width",
+                "stories",
             }
             & set(node)
         ):
@@ -995,6 +999,33 @@ def _parse_variants(
             problems.append(
                 f"{at}: 'floor_ft' is the floor under a 'pct_of_lot_width' and "
                 f"states nothing on its own"
+            )
+            continue
+        v_stories = body.pop("stories", None)
+        v_story_ft, _, _ = _parse_story_ft(body.pop("story_ft", None), at, problems)
+        if v_stories is not None:
+            if value is not None or exempt:
+                problems.append(f"{at}: a variant states feet or a count of stories, not both")
+                continue
+            if (
+                not isinstance(v_stories, (int, float))
+                or isinstance(v_stories, bool)
+                or v_story_ft is None
+            ):
+                problems.append(
+                    f"{at}: 'stories' expects a number and a 'story_ft' block "
+                    f"saying how tall a story may be"
+                )
+                continue
+            # As on a base value: "2 1/2 stories" at "not more than 10 feet" a
+            # story is 25 feet, printed nowhere. East Hillsboro's overlay puts
+            # Hillsboro's story-counted height on a county district that
+            # states feet, so the stories arrive as a variant (FOLLOWUPS 138).
+            value = float(v_stories) * float(v_story_ft)
+        elif v_story_ft is not None:
+            problems.append(
+                f"{at}: 'story_ft' says how tall a story is, and there is no "
+                f"'stories' here for it to multiply"
             )
             continue
         acres = body.pop("acres", None)

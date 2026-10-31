@@ -257,7 +257,7 @@ _NUMERIC_FORMS = frozenset({"value", "per_dwelling", "sqft_per_unit"})
 _NOT_A_VALUE = frozenset(
     {
         "quote", "cite", "url", "when", "retrieved", "notes", "title", "note",
-        "section", "id", "outcome", "fact", "band", "start", "end", "unless",
+        "section", "id", "outcome", "fact", "band", "start", "end", "unless", "only_when",
         "extraction", "status", "definitions_at", "zone", "test", "wins",
         "reviewer", "reviewed", "allow_thin", "zoning_layer", "zone_field",
         "strip_lowercase_suffix", "geoid", "acres", "count", "measured_on",

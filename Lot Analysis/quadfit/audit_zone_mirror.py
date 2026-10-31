@@ -379,7 +379,12 @@ def _effective(layer, zl) -> dict:
     walk(zl)
     out: dict = {}
     for block in chain:
-        out.update(block.values)
+        # An `only_when` standard (FOLLOWUPS 138, East Hillsboro's city
+        # standards on 17 county R-5 lots) holds inside a drawn area only.
+        # rules.yaml has no drawn areas, so it is not the zone row's to mirror.
+        out.update(
+            {k: v for k, v in block.values.items() if not getattr(v, "only_when", ())}
+        )
     return out
 
 

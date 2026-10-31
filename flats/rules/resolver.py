@@ -455,6 +455,10 @@ class RuleSet:
                     # may still have a standard, and cancelling it here would
                     # answer a question this rule never asked.
                     continue
+                if val.only_when and not set(val.only_when) <= set(held):
+                    # A standard stated only inside an area (or for a
+                    # configuration) this lot is not: silence, as above.
+                    continue
                 eff = val.under(held, lot)
                 if eff.exempt:
                     # Not a pass by a wide margin -- the test does not exist

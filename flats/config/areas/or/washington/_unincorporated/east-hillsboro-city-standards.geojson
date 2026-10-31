@@ -1,0 +1,804 @@
+{
+ "type": "FeatureCollection",
+ "name": "east-hillsboro-city-standards",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:EPSG::2913"
+  }
+ },
+ "source": {
+  "map": "East Hillsboro Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/east-hillsboro-community-plan-maps-11-2024/download, sha256 4b6e5c75fda52dcf856ad741b52a87c0b522be7c54fd6437345437aa3a8c21d8), Map 2 Subareas, page 2, read against the text's subarea bounds, retrieved 2026-10-31 (as washington-plan-rule-unmeasured-lots.geojson, from which these lots were moved)",
+  "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883",
+  "inputs": {
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), each plan's boundary envelope (Base_Layers layer 39), fetched 2026-10-30: Raleigh Hills 10569 lots (sha256 6bcbdf6572c06f58...), Bull Mountain 18647 (bea1585ef3757bf2...); chunk 6 re-read, fetched 2026-10-31: Aloha - Reedville - Cooper Mountain 47729 lots (sha256 939f9ebba9f6ea7a...), Cedar Hills - Cedar Mill 22734 lots (sha256 d5827da364bd7ed6...), Sunset West 28441 lots (sha256 f8b1a885d5f23e3c...), Bethany 14306 lots (sha256 41e25cf39e7d539b...); chunk 8, fetched 2026-10-31: Metzger - Progress 4776 lots, West Tigard 17351 lots, East Hillsboro 31090 lots, Sherwood 7453 lots",
+   "zoning": "Washington County Land Use Districts (LUT_PDS/Planning_Layers/MapServer/0), same envelopes, fetched 2026-10-30; a lot takes the district covering most of it; the chunk 6 envelopes fetched 2026-10-31; the chunk 8 envelopes fetched 2026-10-31",
+   "unincorporated": "Washington County Unincorporated Area (LUT_PDS/Base_Layers/MapServer/27); a lot counts when at least half of it is unincorporated land inside the plan boundary",
+   "streets": "Washington County street centrelines (LUT_PDS/Base_Layers/MapServer/1, FDPRE FNAME FTYPE), fetched 2026-10-30; the chunk 6 envelopes fetched 2026-10-31; the chunk 8 envelopes fetched 2026-10-31"
+  },
+  "traced_by": "Claude (districts-c8 worker, FOLLOWUPS 109 chunk 8); moved by Claude (east-hillsboro worker, FOLLOWUPS 138)",
+  "traced_on": "2026-10-31",
+  "drawn": true,
+  "how": "The R-5 lots between Baseline Road and the Tualatin Valley Highway west of 219th Avenue (Cornelius Pass Road), which are the Reedville and Tualatin Valley Highway Corridor subareas by the text's bounds (#L821-L824, L863-L866), whose design elements 5 and 3 make development proposals 'address the city of Hillsboro's development standards' (#L854, L883). Steph 2026-10-31 (rulings.yaml 2026-10-31-east-hillsboro-city-standards-are-an-overlay): an overlay, screened against both the county zone and the Hillsboro standards, the stricter governing each check. The features and geometry are chunk 8's, unchanged; only the file they sit in moved.",
+  "counts": {
+   "East Hillsboro|R-5": 17
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00100",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586260.39,
+       678855.87
+      ],
+      [
+       7586186.89,
+       678859.13
+      ],
+      [
+       7586189.85,
+       678931.74
+      ],
+      [
+       7586277.66,
+       678927.85
+      ],
+      [
+       7586275.35,
+       678869.64
+      ],
+      [
+       7586260.39,
+       678855.87
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00101",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586126.94,
+       678861.78
+      ],
+      [
+       7586067.0,
+       678864.44
+      ],
+      [
+       7586073.73,
+       679032.02
+      ],
+      [
+       7586124.17,
+       679029.7
+      ],
+      [
+       7586133.79,
+       679029.27
+      ],
+      [
+       7586126.94,
+       678861.78
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00102",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586186.89,
+       678859.13
+      ],
+      [
+       7586126.94,
+       678861.78
+      ],
+      [
+       7586133.79,
+       679029.27
+      ],
+      [
+       7586153.77,
+       679028.38
+      ],
+      [
+       7586151.16,
+       678964.48
+      ],
+      [
+       7586182.13,
+       678963.11
+      ],
+      [
+       7586180.86,
+       678932.14
+      ],
+      [
+       7586189.85,
+       678931.74
+      ],
+      [
+       7586186.89,
+       678859.13
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00103",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586277.66,
+       678927.85
+      ],
+      [
+       7586189.85,
+       678931.74
+      ],
+      [
+       7586180.86,
+       678932.14
+      ],
+      [
+       7586182.13,
+       678963.11
+      ],
+      [
+       7586151.16,
+       678964.48
+      ],
+      [
+       7586153.77,
+       679028.38
+      ],
+      [
+       7586174.13,
+       679027.47
+      ],
+      [
+       7586225.73,
+       679025.17
+      ],
+      [
+       7586281.43,
+       679022.68
+      ],
+      [
+       7586277.66,
+       678927.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00200",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586067.0,
+       678864.44
+      ],
+      [
+       7585964.95,
+       678868.96
+      ],
+      [
+       7585971.69,
+       679036.6
+      ],
+      [
+       7586031.33,
+       679033.92
+      ],
+      [
+       7586073.73,
+       679032.02
+      ],
+      [
+       7586067.0,
+       678864.44
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00300",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585964.95,
+       678868.96
+      ],
+      [
+       7585862.91,
+       678873.48
+      ],
+      [
+       7585869.65,
+       679041.18
+      ],
+      [
+       7585925.05,
+       679038.69
+      ],
+      [
+       7585971.69,
+       679036.6
+      ],
+      [
+       7585964.95,
+       678868.96
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00400",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585862.91,
+       678873.48
+      ],
+      [
+       7585760.86,
+       678878.0
+      ],
+      [
+       7585767.6,
+       679045.75
+      ],
+      [
+       7585833.4,
+       679042.8
+      ],
+      [
+       7585869.65,
+       679041.18
+      ],
+      [
+       7585862.91,
+       678873.48
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00500",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585760.86,
+       678878.0
+      ],
+      [
+       7585658.81,
+       678882.52
+      ],
+      [
+       7585665.55,
+       679050.33
+      ],
+      [
+       7585751.1,
+       679046.49
+      ],
+      [
+       7585767.6,
+       679045.75
+      ],
+      [
+       7585760.86,
+       678878.0
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00600",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585658.81,
+       678882.52
+      ],
+      [
+       7585556.76,
+       678886.91
+      ],
+      [
+       7585560.77,
+       678986.83
+      ],
+      [
+       7585562.78,
+       679036.79
+      ],
+      [
+       7585563.51,
+       679054.91
+      ],
+      [
+       7585645.84,
+       679051.22
+      ],
+      [
+       7585665.55,
+       679050.33
+      ],
+      [
+       7585658.81,
+       678882.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00800",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585636.72,
+       678655.33
+      ],
+      [
+       7585571.75,
+       678658.21
+      ],
+      [
+       7585547.61,
+       678659.28
+      ],
+      [
+       7585548.33,
+       678677.09
+      ],
+      [
+       7585550.74,
+       678737.03
+      ],
+      [
+       7585554.76,
+       678837.09
+      ],
+      [
+       7585643.85,
+       678833.14
+      ],
+      [
+       7585636.72,
+       678655.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00900",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585725.8,
+       678651.38
+      ],
+      [
+       7585636.72,
+       678655.33
+      ],
+      [
+       7585643.85,
+       678833.14
+      ],
+      [
+       7585732.93,
+       678829.19
+      ],
+      [
+       7585725.8,
+       678651.38
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01000",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585814.88,
+       678647.44
+      ],
+      [
+       7585725.8,
+       678651.38
+      ],
+      [
+       7585732.93,
+       678829.19
+      ],
+      [
+       7585822.02,
+       678825.24
+      ],
+      [
+       7585814.88,
+       678647.44
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01100",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585903.96,
+       678643.49
+      ],
+      [
+       7585901.47,
+       678643.6
+      ],
+      [
+       7585814.88,
+       678647.44
+      ],
+      [
+       7585822.02,
+       678825.24
+      ],
+      [
+       7585908.6,
+       678821.41
+      ],
+      [
+       7585911.1,
+       678821.3
+      ],
+      [
+       7585903.96,
+       678643.49
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01300",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585993.05,
+       678639.54
+      ],
+      [
+       7585906.46,
+       678643.38
+      ],
+      [
+       7585903.96,
+       678643.49
+      ],
+      [
+       7585911.1,
+       678821.3
+      ],
+      [
+       7585913.6,
+       678821.19
+      ],
+      [
+       7586000.18,
+       678817.35
+      ],
+      [
+       7585993.05,
+       678639.54
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01400",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586082.13,
+       678635.6
+      ],
+      [
+       7585993.05,
+       678639.54
+      ],
+      [
+       7586000.18,
+       678817.35
+      ],
+      [
+       7586089.27,
+       678813.4
+      ],
+      [
+       7586085.38,
+       678716.53
+      ],
+      [
+       7586082.13,
+       678635.6
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01500",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586275.19,
+       678708.12
+      ],
+      [
+       7586269.08,
+       678708.39
+      ],
+      [
+       7586085.38,
+       678716.53
+      ],
+      [
+       7586089.27,
+       678813.4
+      ],
+      [
+       7586265.88,
+       678805.58
+      ],
+      [
+       7586278.51,
+       678790.78
+      ],
+      [
+       7586275.19,
+       678708.12
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01600",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; screened against both the county R-5 district and Hillsboro's Low Density Residential zones (R-10, R-8.5, R-7, R-6), the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586265.74,
+       678627.46
+      ],
+      [
+       7586082.13,
+       678635.6
+      ],
+      [
+       7586085.38,
+       678716.53
+      ],
+      [
+       7586269.08,
+       678708.39
+      ],
+      [
+       7586265.74,
+       678627.46
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

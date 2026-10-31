@@ -494,9 +494,10 @@ def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
 
     data = _c7_file("washington_plan_rule_unmeasured")
     feats = data["features"]
-    # 101 from chunk 7, 381 from the chunk 6 re-read (FOLLOWUPS 135), 65 from chunk 8.
-    assert len(feats) == 547
-    assert len({f["properties"]["taxlot"] for f in feats}) == 547
+    # 101 from chunk 7, 381 from the chunk 6 re-read (FOLLOWUPS 135), 65 from chunk 8,
+    # less the 17 East Hillsboro R-5 lots FOLLOWUPS 138 moved to the overlay (2026-10-31).
+    assert len(feats) == 530
+    assert len({f["properties"]["taxlot"] for f in feats}) == 530
     plans = {f["properties"]["plan"] for f in feats}
     assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS, "Metzger - Progress", "East Hillsboro"}
     for f in feats:
@@ -508,7 +509,7 @@ def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
     for rule in ("ASC S", "ASC T", "ASC M", "ASC U", "ASC 1", "Pacific Highway", "pedestrian",
                  "ASC 10", "ASC 6", "ASC 8", "ASC 3", "Winterborne", "Willow Creek"):
         assert rule in whys, rule
-    assert sum(data["source"]["counts"].values()) == 547
+    assert sum(data["source"]["counts"].values()) == 530
 
 
 def test_a_held_lot_is_inside_and_a_lot_off_the_maps_is_not() -> None:
@@ -766,14 +767,16 @@ def test_the_chunk_8_lots_are_held() -> None:
 
     pr = {f["properties"]["taxlot"]: f for f in _c7_file("washington_plan_rule_unmeasured")["features"]}
     held = collections.Counter(f["properties"]["plan"] for f in pr.values())
-    assert held["Metzger - Progress"] == 44 and held["East Hillsboro"] == 21
+    # 21 until FOLLOWUPS 138 (2026-10-31) moved the 17 R-5 lots to the overlay file.
+    assert held["Metzger - Progress"] == 44 and held["East Hillsboro"] == 4
     for tl in ("1S126AC02400", "1S126AD04300"):
         assert "Oleson" in pr[tl]["properties"]["why"], tl
     assert "Hall" in pr["1S126DA06900"]["properties"]["why"]
     assert pr["1S136BD03100"]["properties"]["zone"] == "R-5"
     assert sum(f["properties"]["zone"] == "TO:R18-24" for f in pr.values()) == 28
-    hillsboro = [f for t, f in pr.items() if t.startswith("1S211BB")]
-    assert len(hillsboro) == 17 and all("Hillsboro" in f["properties"]["why"] for f in hillsboro)
+    hillsboro = [f for f in pr.values() if f["properties"]["plan"] == "East Hillsboro"]
+    assert sorted(f["properties"]["zone"] for f in hillsboro) == ["R-15", "R-24", "R-24", "R-24"]
+    assert all("Hillsboro" in f["properties"]["why"] for f in hillsboro)
     lot = shape(pr["1S126AC02400"]["geometry"])
     zone = pr["1S126AC02400"]["properties"]["zone"]
     assert _nb_facts(zone, lot)["washington_plan_rule_unmeasured"] is True
@@ -801,3 +804,57 @@ def test_137_arterial_frontage_and_the_master_plan_ascs_are_reviews() -> None:
     p = front["properties"]
     assert p["answer"] == "inside" and "#L" in p["quote"]
     assert _nb_facts("R-5", shape(front["geometry"]))["washington_plan_review"] is True
+
+
+# --- FOLLOWUPS 138 (2026-10-31): East Hillsboro takes Hillsboro's standards --
+
+
+def test_east_hillsboro_r5_lots_take_the_stricter_of_county_and_hillsboro() -> None:
+    """Steph 2026-10-31: the city standards are an overlay, the stricter governing."""
+    import json
+
+    from shapely.geometry import shape
+
+    from flats.encode.load import load_trusted
+    from flats.rules import loader
+
+    rules = load_trusted(strict=False).rules
+    lot = {"lot_sqft": 15_000.0, "lot_width_ft": 80.0}
+    eh = "east_hillsboro_city_standards"
+
+    def got(*held: str) -> dict:
+        res = rules.resolve(WASHINGTON, "R-5", held, lot=lot)
+        return {k: v.value for k, v in res.values.items()}
+
+    plain, inside = got(), got(eh)
+    # Outside the subareas nothing moves, and the city-only standards are silent.
+    assert (plain["min_lot_sqft"], plain["setback_front_ft"], plain["setback_side_ft"]) == (7000, 15, 5)
+    assert (plain["setback_rear_ft"], plain["max_height_ft"], plain["front_lot_line_corner"]) == (15, 35, "shortest")
+    for name in ("min_lot_width_ft", "min_lot_depth_ft", "max_coverage_pct", "parking_lot_line_buffer_ft",
+                 "parking_max_per_unit", "parking_area_max_frontage_pct", "parking_alley_access_required"):
+        assert name not in plain, name
+    # Inside, the strictest of Hillsboro R-10, R-8.5, R-7 and R-6 where it is stricter.
+    assert inside["min_lot_sqft"] == 10000 and inside["min_density_du_per_acre"] == 6.0
+    assert (inside["setback_front_ft"], inside["setback_side_ft"], inside["setback_rear_ft"]) == (20, 10, 20)
+    assert inside["max_height_ft"] == 25.0  # 2 1/2 stories at 10 ft (12.50.140 B.6)
+    assert (inside["min_lot_width_ft"], inside["min_lot_depth_ft"], inside["max_coverage_pct"]) == (70, 90, 40)
+    assert inside["parking_lot_line_buffer_ft"] == 4 and inside["parking_max_per_unit"] == 2
+    assert inside["parking_area_max_frontage_pct"] == 50 and inside["parking_alley_access_required"] is True
+    assert inside["front_lot_line_corner"] == "both" and inside["min_frontage_ft"] == 12
+    # The county's own figure stays where it is the stricter one, and nothing goes ambiguous.
+    assert inside["setback_garage_entrance_ft"] == 20 and inside["min_building_separation_ft"] == 6
+    assert got(eh, "corner_lot")["max_coverage_pct"] == 45
+    assert got(eh, "attached_wall")["setback_side_ft"] == 10
+    units = got(eh, "unit_lots")
+    assert units["min_frontage_ft"] == 15 and units["min_lot_sqft"] == 1500
+    assert units["max_density_du_per_acre"] == 17.4
+    assert got(eh, "unit_lots", "flag_lot")["min_frontage_ft"] == 25
+
+    data = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/east-hillsboro-city-standards.geojson")
+                      .read_text(encoding="utf-8"))
+    assert data["source"]["drawn"] is True
+    feats = data["features"]
+    assert len(feats) == 17 and {f["properties"]["zone"] for f in feats} == {"R-5"}
+    facts = _nb_facts("R-5", shape(feats[0]["geometry"]))
+    # The overlay answers the hold the plan put on these lots: they are no longer held.
+    assert facts[eh] is True and facts["washington_plan_rule_unmeasured"] is False
