@@ -60,6 +60,12 @@ END = "  # <<< end of ported blocks"
 SMALLER_BINDS = frozenset({"max_coverage_pct"})
 #: quadfit refuses a zone that allows the pod without these (common.ZoneRule).
 YARDS = ("setback_front_ft", "setback_side_ft", "setback_rear_ft")
+#: Drawn-area conditions that lay ANOTHER code's standards over a zone on a
+#: handful of lots (FOLLOWUPS 138: Hillsboro's Low Density Residential figures
+#: on 17 county R-5 lots in East Hillsboro). Their limbs are the place's, not
+#: the zone's: rules.yaml has no drawn areas, and the larger-limb rule would
+#: carry the city's standards onto every R-5 lot in the county.
+OVERLAY_CONDITIONS = frozenset({"east_hillsboro_city_standards"})
 
 
 @dataclass(frozen=True)
@@ -145,6 +151,8 @@ def _limbs(value: Any) -> list[float]:
             out.append(n)
     for v in getattr(value, "variants", ()) or ():
         if getattr(v, "exempt", False):
+            continue
+        if set(getattr(v, "when", ()) or ()) & OVERLAY_CONDITIONS:
             continue
         n = _number(v.value)
         if n is not None:

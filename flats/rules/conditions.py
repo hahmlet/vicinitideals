@@ -1180,6 +1180,26 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "east_hillsboro_city_standards",
+        "site_fact",
+        "The lot is an R-5 lot in the Reedville or Tualatin Valley Highway "
+        "Corridor subarea of the East Hillsboro Community Plan, whose design "
+        "elements make development proposals 'address the city of "
+        "Hillsboro's development standards'. Steph 2026-10-31: an overlay -- "
+        "the lot is screened against both the county district and the "
+        "Hillsboro standards, the stricter governing each check. The county "
+        "R-5 district takes Hillsboro's Low Density Residential zones (R-10, "
+        "R-8.5, R-7, R-6), the strictest figure of the four on each standard "
+        "(FOLLOWUPS 138). Answered from the plan's subarea bounds, traced as "
+        "Washington County's drawn_areas (FOLLOWUPS 109 chunk 8).",
+        evidence=(
+            "Map 2 (Subareas) and the subarea text of the East Hillsboro "
+            "Community Plan (Washington County, November 2024 edition), traced "
+            "2026-10-31"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "bethany_asc_3",
         "site_fact",
         "The parcel lies in Area of Special Concern 3 of the Bethany "
@@ -1552,6 +1572,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "bethany_asc_1",
     "bethany_asc_1a",
     "bethany_asc_3",
+    "east_hillsboro_city_standards",
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "inside_mapped_use_area",

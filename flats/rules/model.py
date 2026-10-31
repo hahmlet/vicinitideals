@@ -1643,6 +1643,14 @@ class Value(BaseModel):
     #: it is platted -- so the state value has to stand down on the split-plat
     #: path rather than cancel a standard that survives there.
     unless: tuple[str, ...] = ()
+    #: The other side of ``unless``: conditions without which this layer says
+    #: nothing at all. A standard a plan lays over part of a district -- East
+    #: Hillsboro's Reedville subarea takes the city of Hillsboro's development
+    #: standards on top of the county's (FOLLOWUPS 138) -- exists only inside
+    #: the area, and the county district states no figure for the rest. That
+    #: is silence outside, not an exemption: the county may simply not have
+    #: been read for it, and an `exempt: true` base would claim it had.
+    only_when: tuple[str, ...] = ()
     #: True where the zone was read and states no such standard at all --
     #: Portland's RX prints a front lot line and no lot area, and its parking
     #: chapter prints maximums and no minimum. Distinct from a zone that is
@@ -1975,7 +1983,7 @@ class Value(BaseModel):
 
     @model_validator(mode="after")
     def _unless_names_registered_conditions(self) -> Value:
-        for name in self.unless:
+        for name in (*self.unless, *self.only_when):
             try:
                 condition(name)
             except KeyError as exc:

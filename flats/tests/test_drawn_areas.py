@@ -48,6 +48,8 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "bethany_asc_1a",
         # Bethany ASC 3, Dogwood Park and Wildwood, the same Map 5 (FOLLOWUPS 134).
         "bethany_asc_3",
+        # East Hillsboro's Reedville and TV Highway R-5 lots, Hillsboro's standards laid over (FOLLOWUPS 138).
+        "east_hillsboro_city_standards",
         "gladstone_parking_exception_area",
         "gladstone_town_center",
         "inside_mapped_use_area",
