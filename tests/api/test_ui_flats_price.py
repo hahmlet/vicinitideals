@@ -297,6 +297,8 @@ async def test_the_page_limits_are_set_for_the_request_and_a_timeout_gives_a_too
     await ui_flats._lots_limits(session)
     assert (await session.execute(text("SHOW statement_timeout"))).scalar_one() == "25s"
     assert (await session.execute(text("SHOW work_mem"))).scalar_one() == "128MB"
+    # Run 101 (2026-10-31): a spilling hash aggregate timed the green list out.
+    assert (await session.execute(text("SHOW enable_hashagg"))).scalar_one() == "off"
     await session.rollback()
 
     class Cancelled(Exception):

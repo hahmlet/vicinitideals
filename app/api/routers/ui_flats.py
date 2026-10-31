@@ -3331,8 +3331,11 @@ def _colour_column() -> Any:
 
 
 def _rank(column: Any) -> Any:
-    """0..3 for the four colours in ``_COLOURS`` order, 4 for anything else."""
-    return case(*[(column == c, i) for i, c in enumerate(_COLOURS)], else_=len(_COLOURS))
+    """0..3 for the four colours in ``_COLOURS`` order, 4 for anything else.
+
+    The simple ``CASE column WHEN ...`` form reads the column once; the
+    searched form read the colour out of ``checks`` once per colour."""
+    return case({c: i for i, c in enumerate(_COLOURS)}, value=column, else_=len(_COLOURS))
 
 
 def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None) -> Any:
@@ -3420,6 +3423,11 @@ async def _lots_limits(session: DBSession) -> None:
     """Apply the Lots page limits to this request's transaction only."""
     await session.execute(text(f"SET LOCAL work_mem = '{_LOTS_WORK_MEM}'"))
     await session.execute(text(f"SET LOCAL statement_timeout = {_LOTS_TIMEOUT_MS}"))
+    # The per-lot best colour groups ~590,000 lots a run, and the planner's
+    # sample guesses ~176,000. At 128MB it then picks one hash aggregate that
+    # spills to disk (17 s on run 101, 2026-10-31) over the parallel sort
+    # (under 5 s). Sorting is never much worse here, so hashing is off.
+    await session.execute(text("SET LOCAL enable_hashagg = off"))
 
 
 def _timed_out(exc: DBAPIError) -> bool:
