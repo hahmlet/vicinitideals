@@ -732,6 +732,11 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # Chapter 1 of the same plan, stored 2026-10-30 for its ASC 1 and 1A
         # (FOLLOWUPS 130): design elements and ASCs, no section numbers.
         "or/washington/_unincorporated/community-plan.bethany.txt",
+        # Raleigh Hills - Garden Home and Bull Mountain, stored 2026-10-30 by
+        # design districts chunk 7: subareas, design elements and ASCs, no
+        # section numbers.
+        "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt",
+        "or/washington/_unincorporated/community-plan.bull-mountain.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

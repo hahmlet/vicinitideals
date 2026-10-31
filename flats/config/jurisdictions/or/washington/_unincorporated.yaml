@@ -306,6 +306,28 @@ code:
   # rest of the plan stays as chunk 6 read it (THE COMMUNITY PLANS, above
   # the zones).
   allow_thin: true
+- id: "community-plan.raleigh-hills-garden-home"
+  url: https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Raleigh Hills Garden Home"
+  extraction: plain
+  # Read whole by design districts chunk 7 (FOLLOWUPS 109, 2026-10-30) and
+  # stored from pending/. September 2026 edition: the August 2026 address
+  # now answers 404. A word-level diff against the August text found only
+  # Ordinance No. 915's community-involvement wording ("citizens" to
+  # "community members") and the page headers; no number and no design
+  # element changed. Its maps are a separate sheet set
+  # (raleigh-hills-garden-home-community-plan-maps-08-2026), read for the
+  # drawn_areas below.
+  allow_thin: true
+- id: "community-plan.bull-mountain"
+  url: https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Bull Mountain"
+  extraction: plain
+  # Read whole by design districts chunk 7 (FOLLOWUPS 109, 2026-10-30) and
+  # stored from pending/. September 2026 edition, as Raleigh Hills - Garden
+  # Home above: only Ordinance No. 915's wording and the page headers
+  # changed from August. Maps: bull-mountain-community-plan-maps.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC Section 106, which is on disk whole
   # (cdc.106.definitions.txt runs from 106-1 to the Section 107 heading).
@@ -593,8 +615,65 @@ defaults:
 # conditions, community-plan.bethany.txt#L1035-L1037) is GREEN with the
 # BETHANY-ASC1-PD-CONDITIONS flag (Steph 2026-10-30), and ASC 1A's Type III
 # procedure (#L1055-L1058) GREEN with CLEAR-OBJECTIVE (2026-10-15), each on
-# the lots Map 5 draws (drawn_areas bethany_asc_1, bethany_asc_1a). The seven smaller plans are not read and NOT ENCODED; owed
-# to later chunks.
+# the lots Map 5 draws (drawn_areas bethany_asc_1, bethany_asc_1a).
+#
+# Chunk 7 (2026-10-30) read Raleigh Hills - Garden Home and Bull Mountain
+# whole, with their map sets. What binds a pod on an existing lot and
+# cannot be measured is held on the lots the maps put it on (drawn_areas
+# washington_plan_rule_unmeasured, on the garage-entrance yard of R-5 to
+# R-24, as North Bethany's ASC 5 is):
+#   Raleigh Hills - Garden Home: the access caps of ASC S (one point on Mayo
+#   Street, two on Florence Lane) and ASC T (two on Taylors Ferry Road, two
+#   on Florence Lane), on the lots fronting those streets
+#   (community-plan.raleigh-hills-garden-home.txt#L1218-L1223); ASC M's one
+#   point on Raab Road (#L971-L972); the Type 1 landscape buffer
+#   of the commercial-strip ASCs (E, H, K, L) on the residential lots inside
+#   them that abut the highway (#L764-L766, CDC 411 not stored); ASC U's
+#   continuing Case #74-96C conditions, not held (#L1084-L1085); the lots of
+#   two Map 5.1 outlines whose letter the sheet does not print -- the one at
+#   Walker Road and Highway 217 is ASC C by the text, its access limited to
+#   one point on Walker Road (#L720-L726), the other a lot west of SW 103rd
+#   Avenue (ASC B's drainage review, #L716-L718), held for want of the
+#   letter; and the pedestrian
+#   connectivity areas, whose facility "shall be constructed as part of the
+#   development of the affected properties" (#L1335-L1340): the parcels Map
+#   8.1 shades, and for area 3, which the map does not draw, the lots
+#   between Dogwood Lane and Raleighwood Way and Sharon Lane (#L1331-L1333).
+#   Bull Mountain: all of ASC 1, whose easterly portion takes no application
+#   until a traffic study is accepted, behind a cap of three access points to
+#   Beef Bend Road (community-plan.bull-mountain.txt#L773, L778-L779); the
+#   lot fronting Pacific Highway (Southern Lowlands design element 3, no
+#   access from the highway, #L998-L999); and the two parcels Map 8.1
+#   shades for the Baker Lane / Sunrise Lane pedestrian area (#L1257-L1262).
+# A mandatory review is GREEN with CLEAR-OBJECTIVE inside the UGB (2026-10-15,
+# drawn_areas washington_plan_review): Bull Mountain ASC 8's master planning -
+# planned development (#L1004-L1005) and the R-25+ site of Raleigh Hills -
+# Garden Home ASC L, Type III (#L1134-L1137; its 40 units an acre does not
+# bind a four-unit pod on its 4 acres).
+# Held too (coordinator ruling 2026-10-30): the Local Street Connectivity
+# Lands of each plan's Map 7.1, whose development provides on-site streets
+# to the plan's standards (community-plan.bull-mountain.txt#L1136-L1142;
+# community-plan.raleigh-hills-garden-home.txt#L1309-L1311), on the front
+# yard of R-5 to R-15 (drawn_areas washington_local_street_connectivity).
+# The rest, as chunk 6: street and block layout a division draws, which a
+# pod on an existing lot does not change; judgement words (ASC A "minimized", B, F
+# "maximize compatibility", J park review, subarea "low density pattern
+# shall be maintained", Raleigh Hills design element 2's R-15/R-24
+# transition, Bull Mountain ASC 4's buffers and views) -- GREEN with a flag
+# inside the UGB, 2026-10-15; buffering and noise "as required in the CDC"
+# (Raleigh Hills Subarea 1 design element 2; Section 411 is not stored and
+# reaches every district, not these plans alone); hillside grading and
+# vegetation on Bull Mountain's slopes (the slope screen measures the
+# ground); CDC 422 natural resource sites (ASC C, M, N,
+# P, S, T); partitions only (Bull Mountain ASC 2: a quadplex divides
+# nothing); ASCs on zones the pod is refused in or with no unincorporated
+# lot left (Raleigh Hills D, G, O, Q, R; Bull Mountain 5, 6, 7, 9); ASC
+# I's office master plan and its bar on permanent access onto Beaverton -
+# Hillsdale Highway (#L855-L856), whose one residential lot does not reach
+# the highway; and right-of-way the TSP owes (Laurelwood realignment), which
+# an existing lot does not dedicate (2026-10-02). The five smaller plans left -- East
+# Hillsboro, Metzger - Progress, Sherwood, West Tigard, West Union -- are not
+# read and NOT ENCODED; owed to later chunks.
 #
 # NOT ENCODED: the Bonny Slope West Subarea Overlay District (Section 391).
 # It reaches only the Bonny Slope West Subarea of the Cedar Hills - Cedar
@@ -711,10 +790,18 @@ zones:
       value: 15
       cite: Washington County CDC 302-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L352-L354,L356-L358"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 302-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L361-L362"
+      qualified_by:
+        fact: washington_plan_rule_unmeasured
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
       cite: Washington County CDC 302-7.1 B(3), street side yard
@@ -837,10 +924,18 @@ zones:
       value: 15
       cite: Washington County CDC 303-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L356-L358,L360-L362"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 303-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L365-L366"
+      qualified_by:
+        fact: washington_plan_rule_unmeasured
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
       cite: Washington County CDC 303-7.1 B(3), street side yard
@@ -967,10 +1062,18 @@ zones:
       value: 12
       cite: Washington County CDC 304-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L315-L317,L319-L321"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 304-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L324-L325"
+      qualified_by:
+        fact: washington_plan_rule_unmeasured
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
       cite: Washington County CDC 304-7.1 B(3), street side yard
@@ -1097,10 +1200,18 @@ zones:
       value: 10
       cite: Washington County CDC 305-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 305-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L321-L322"
+      qualified_by:
+        fact: washington_plan_rule_unmeasured
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
       cite: Washington County CDC 305-7.1 B(3), street side yard
@@ -1231,6 +1342,10 @@ zones:
       value: 20
       cite: Washington County CDC 306-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L304-L305"
+      qualified_by:
+        fact: washington_plan_rule_unmeasured
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
       cite: Washington County CDC 306-7.1 B(3), street side yard
@@ -3056,3 +3171,81 @@ drawn_areas:
       them: an area-wide planned-development condition, an application
       content rule, and design and use rules on the two CBD parcels, where
       housing is already held behind a planned development.
+  washington_plan_rule_unmeasured:
+    condition: washington_plan_rule_unmeasured
+    zones: [R-5, R-6, R-9, R-15, R-24]
+    file: or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
+    source: >-
+      Raleigh Hills - Garden Home and Bull Mountain Community Plan maps
+      (retrieved 2026-10-30), Map 5.1 Areas of Special Concern and Map 8.1
+      Pedestrian Connectivity of each, read as GeoPDF vector paths (Bull
+      Mountain's Map 8.1 as a placed raster), with the county's taxlots,
+      zoning and street centrelines. The file holds, whole, the 101
+      residential lots on which a plan rule binds the pod and nothing
+      measures it. Drawn provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
+    cite: Raleigh Hills - Garden Home Community Plan ASCs C, L, M, S, T, U and pedestrian connectivity areas; Bull Mountain Community Plan ASC 1, Southern Lowlands design element 3 and the Baker Lane / Sunrise Lane pedestrian area (CDC 300-1)
+    note: >-
+      Inside means the lot is one the file holds, each for the rule its
+      'why' names: an access cap or bar on the street it fronts (the screen
+      cannot bar a driveway from one named street, nor count a cap shared
+      by every lot of an ASC), Bull Mountain ASC 1's traffic-study bar on
+      an easterly portion the map does not draw, a Type 1 buffer of CDC 411
+      (not stored), Case #74-96C's conditions (not held), an outline whose
+      letter the sheet does not print, or a pedestrian facility "constructed
+      as part of the development of the affected properties". A held lot
+      keeps its garage-entrance yard unanswered, so it cannot be GREEN.
+      Outside means every other lot of these zones. The area 3 lots are a
+      judgement trace (the plan places that trail in words only).
+  washington_plan_review:
+    condition: washington_plan_review
+    zones: [R-9, R-15, R-25+]
+    file: or/washington/_unincorporated/washington-plan-review.geojson
+    source: >-
+      Bull Mountain Community Plan Map 5.1, the ASC 8 outline joined to the
+      three lots it cuts, and the one R-25+ lot of Raleigh Hills - Garden
+      Home ASC L on that plan's Map 5.1. Drawn provenance in the file's
+      source block.
+    quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1002-L1005"
+    cite: Bull Mountain Community Plan, Area of Special Concern 8; Raleigh Hills - Garden Home Community Plan, Subarea 8 design element 1f
+    note: >-
+      Inside means the lot lies in Bull Mountain ASC 8, whose development
+      "is to be planned and reviewed under the master planning - planned
+      development provisions in the CDC", or is Raleigh Hills - Garden
+      Home's R-25+ site in ASC L, where "Type III review provisions of the
+      CDC shall be followed" (community-plan.raleigh-hills-garden-home.txt
+      #L1134-L1137). Inside the urban growth boundary that is GREEN with
+      CLEAR-OBJECTIVE (rulings.yaml 2026-10-15-clear-objective-green-flag);
+      where ORS 197A.400 does not reach the lot it is a closer look with
+      REVIEW-CONDITIONS. ASC 8's floodplain is the water screen's; its river
+      path dedication is "whenever possible" and an existing lot dedicates
+      nothing (2026-10-02); the site's 40 units an acre does not bind four
+      units on 4.02 acres.
+  washington_local_street_connectivity:
+    condition: washington_local_street_connectivity
+    zones: [R-5, R-6, R-9, R-15]
+    file: or/washington/_unincorporated/washington-local-street-connectivity-lots.geojson
+    source: >-
+      Map 7.1 Local Street Connectivity of the Raleigh Hills - Garden Home
+      and Bull Mountain Community Plan maps (printed 9/20/2022, retrieved
+      2026-10-30), the "Local Street Connectivity Lands" green read from the
+      rendered page and placed by each frame's GeoPDF affine, over the
+      county's taxlots and zoning. The file holds the residential lots at
+      least 90 percent inside, whole, and the lots the lands cut at their
+      share. Drawn provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1306-L1312"
+    cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans, Local Street Connectivity (CDC 300-1)
+    note: >-
+      Coordinator ruling 2026-10-30: the connectivity text reaches
+      development, not only land division. Bull Mountain: "For residential,
+      office, retail, and institutional development on lands as shown on
+      the Local Street Connectivity Maps, on-site streets shall be provided"
+      to block lengths of 530 ft and perimeters of 1,800 ft
+      (community-plan.bull-mountain.txt#L1136-L1148); Raleigh Hills: the map
+      "indicates where, as part of development, 1) Local Streets are
+      required to connect" (#L1309-L1311). A pod is residential development
+      and an on-site street takes ground nothing measures, so inside holds
+      the front yard unanswered and the lot cannot be GREEN; a cut lot is
+      left unanswered; outside means every other lot of these zones. Not
+      the 430-37 future-development plan, which shows only that a later
+      division stays possible.

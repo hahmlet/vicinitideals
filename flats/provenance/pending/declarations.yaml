@@ -132,11 +132,6 @@
   title: "Washington County Community Plan - Aloha Reedville Cooper Mountain"
   extraction: plain
   allow_thin: true
-- id: "community-plan.bull-mountain"
-  url: https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-updated-08-2026/download
-  title: "Washington County Community Plan - Bull Mountain"
-  extraction: plain
-  allow_thin: true
 - id: "community-plan.cedar-hills-cedar-mill"
   url: https://washingtoncountyor.gov/lut/planning/documents/cedar-hills-cedar-mill-community-plan-updated-08-2026/download
   title: "Washington County Community Plan - Cedar Hills Cedar Mill"
@@ -155,11 +150,6 @@
 - id: "community-plan.north-bethany-subarea"
   url: https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-text-11-2024/download
   title: "Washington County Community Plan - North Bethany Subarea"
-  extraction: plain
-  allow_thin: true
-- id: "community-plan.raleigh-hills-garden-home"
-  url: https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-updated-08-2026/download
-  title: "Washington County Community Plan - Raleigh Hills Garden Home"
   extraction: plain
   allow_thin: true
 - id: "community-plan.sherwood"
