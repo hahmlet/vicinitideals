@@ -1694,6 +1694,24 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [BETHANY_ASC1_PD]
+  RALEIGH-HILLS-ASC-U-CASE-74-96C:
+    description: "The lot is Area of Special Concern U of the Raleigh Hills - Garden Home Community Plan (taxlot 1S123AA00100), where the conditions Washington County imposed on land use there in 1974 (Case #74-96C) continue, and any change to them takes a Type III hearing. Those conditions are not online and not held. Steph 2026-10-31: \"Yellow with flag\" -- the lot stays YELLOW until the conditions are read, and this flag says why."
+    kind: categorical
+    risk: possible
+    # Steph 2026-10-31: the colour comes from the plan-rule hold
+    # (FACT-WASHINGTON-PLAN-RULE-UNMEASURED); this record sits below the
+    # yellow line so it never doubles the yellow.
+    severity: 2
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Ask Washington County Land Use & Transportation for Case #74-96C by public records request (the county's case search indexes nothing that old) and read its conditions against the pod"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [RALEIGH_HILLS_ASC_U]
   FACT-NORTH-BETHANY-SPECIAL-SETBACKS:
     description: "Whether the lot fronts a North Bethany Special Setbacks Map segment (Park Blocks or Northeast Neighborhood Linear Park), where a 5 to 15 ft build-to line governs"
     kind: categorical
@@ -1771,8 +1789,40 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BETHANY-ASC-3:
+    description: "Whether the lot lies in Bethany Community Plan Area of Special Concern 3 (Dogwood Park and Wildwood), where development of additional housing must review the established character and mitigate its impact through the development review process: GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; inside the UGB it carries CLEAR-OBJECTIVE.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Map 5 of the Bethany Community Plan is traced (FOLLOWUPS 134); a lot divided since 2026-10-31 is placed by the outline"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-RALEIGH-HILLS-ASC-U:
+    description: "Whether the lot is Raleigh Hills - Garden Home Community Plan Area of Special Concern U (taxlot 1S123AA00100). The answer only carries RALEIGH-HILLS-ASC-U-CASE-74-96C, below the yellow line; the lot's colour comes from the plan-rule hold (Steph 2026-10-31)"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; it only carries a flag below the line.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Map 5.1 of the Raleigh Hills - Garden Home Community Plan is traced (FOLLOWUPS 109 chunk 7); a lot divided since 2026-10-30 is placed by the traced lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-PLAN-RULE-UNMEASURED:
-    description: "Whether the lot lies where a Raleigh Hills - Garden Home or Bull Mountain Community Plan rule binds the pod that nothing measures: an access-point cap or access bar on a named street, a Type 1 landscape buffer along a highway, an old case's conditions, an unlettered Area of Special Concern, or a pedestrian path to be built with the lot's development"
+    description: "Whether the lot lies where a Washington County community plan rule binds the pod that nothing measures (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany): an access-point cap, shared access or access bar on a named street, a park access improved with the lot's development, a Type 1 landscape buffer along a highway, an old case's conditions, an unlettered Area of Special Concern, or a pedestrian path to be built with the lot's development"
     kind: categorical
     risk: possible
     severity: 5
@@ -1780,14 +1830,14 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "The plans' Map 5.1 and Map 8.1 are traced (FOLLOWUPS 109 chunk 7); a held lot needs a county planner's word that its driveway, buffer or path meets the plan, and a lot divided since 2026-10-30 is placed by the traced lots"
+    path: "The plans' Areas of Special Concern and Pedestrian Connectivity maps are traced (FOLLOWUPS 109 chunk 7, FOLLOWUPS 135); a held lot needs a county planner's word that its driveway, buffer or path meets the plan, and a lot divided since 2026-10-30 is placed by the traced lots"
     priority: later
     status: pending
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-LOCAL-STREET-CONNECTIVITY:
-    description: "Whether the lot lies on the Local Street Connectivity Lands of the Raleigh Hills - Garden Home or Bull Mountain Community Plan, where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
+    description: "Whether the lot lies on the Local Street Connectivity Lands of a Washington County community plan (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany), where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
     kind: categorical
     risk: possible
     severity: 5
@@ -1795,7 +1845,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Map 7.1 of each plan is traced (FOLLOWUPS 109 chunk 7); a held lot needs a county planner's word on whether, and where, an on-site street is required with the pod, and a lot the lands cut needs the line placed"
+    path: "Each plan's Local Street Connectivity map is traced (FOLLOWUPS 109 chunk 7, FOLLOWUPS 135); a held lot needs a county planner's word on whether, and where, an on-site street is required with the pod, and a lot the lands cut needs the line placed"
     priority: later
     status: pending
     approved_by: null

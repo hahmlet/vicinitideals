@@ -127,16 +127,6 @@
   allow_thin: true
 
 # ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
-- id: "community-plan.aloha-reedville-cooper-mountain"
-  url: https://washingtoncountyor.gov/lut/planning/documents/aloha-reedville-cooper-mountain-community-plan-updated-08-2026/download
-  title: "Washington County Community Plan - Aloha Reedville Cooper Mountain"
-  extraction: plain
-  allow_thin: true
-- id: "community-plan.cedar-hills-cedar-mill"
-  url: https://washingtoncountyor.gov/lut/planning/documents/cedar-hills-cedar-mill-community-plan-updated-08-2026/download
-  title: "Washington County Community Plan - Cedar Hills Cedar Mill"
-  extraction: plain
-  allow_thin: true
 - id: "community-plan.east-hillsboro"
   url: https://washingtoncountyor.gov/lut/planning/documents/east-hillsboro-community-plan-updated-11-2024/download
   title: "Washington County Community Plan - East Hillsboro"
@@ -155,11 +145,6 @@
 - id: "community-plan.sherwood"
   url: https://washingtoncountyor.gov/lut/planning/documents/sherwood-community-plan-updated-11-2024/download
   title: "Washington County Community Plan - Sherwood"
-  extraction: plain
-  allow_thin: true
-- id: "community-plan.sunset-west"
-  url: https://washingtoncountyor.gov/lut/planning/documents/sunset-west-community-plan-updated-10-2025/download
-  title: "Washington County Community Plan - Sunset West"
   extraction: plain
   allow_thin: true
 - id: "community-plan.west-tigard"

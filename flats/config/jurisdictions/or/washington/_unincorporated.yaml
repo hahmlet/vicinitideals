@@ -328,6 +328,42 @@ code:
   # Home above: only Ordinance No. 915's wording and the page headers
   # changed from August. Maps: bull-mountain-community-plan-maps.
   allow_thin: true
+- id: "community-plan.aloha-reedville-cooper-mountain"
+  url: https://washingtoncountyor.gov/lut/planning/documents/aloha-reedville-cooper-mountain-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Aloha Reedville Cooper Mountain"
+  extraction: plain
+  # Read whole by design districts chunk 6 (2026-10-30) from pending/, and
+  # re-read for its connectivity, pedestrian and access rules and stored
+  # 2026-10-31 (FOLLOWUPS 135). September 2026 edition: the August 2026
+  # address now answers 404. A word-level diff against the pending text
+  # found only Ordinance No. 915's community-involvement wording and the
+  # page headers; no number and no design element changed. Maps: aloha-reedville-cooper-mountain-community-plan-maps-08-2026,
+  # read for the drawn_areas below.
+  allow_thin: true
+- id: "community-plan.cedar-hills-cedar-mill"
+  url: https://washingtoncountyor.gov/lut/planning/documents/cedar-hills-cedar-mill-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Cedar Hills Cedar Mill"
+  extraction: plain
+  # Read whole by design districts chunk 6 (2026-10-30) from pending/, and
+  # re-read for its connectivity, pedestrian and access rules and stored
+  # 2026-10-31 (FOLLOWUPS 135). September 2026 edition: the August 2026
+  # address now answers 404. A word-level diff against the pending text
+  # found only Ordinance No. 915's community-involvement wording and the
+  # page headers; no number and no design element changed. Maps: cedar-hills-cedar-mill-community-plan-maps-08-2026,
+  # read for the drawn_areas below.
+  allow_thin: true
+- id: "community-plan.sunset-west"
+  url: https://washingtoncountyor.gov/lut/planning/documents/sunset-west-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Sunset West"
+  extraction: plain
+  # Read whole by design districts chunk 6 (2026-10-30) from pending/, and
+  # re-read for its connectivity, pedestrian and access rules and stored
+  # 2026-10-31 (FOLLOWUPS 135). September 2026 edition: the October 2025
+  # address now answers 404. A word-level diff against the pending text
+  # found only Ordinance No. 915's community-involvement wording and the
+  # page headers; no number and no design element changed. Maps: sunset-west-community-plan-maps-10-2025,
+  # read for the drawn_areas below.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC Section 106, which is on disk whole
   # (cdc.106.definitions.txt runs from 106-1 to the Section 107 heading).
@@ -609,8 +645,9 @@ defaults:
 # approval criterion and which CDC 422 carries; a rule the CDC already
 # encodes (access, transit and mixed-use frontage); a rule in a zone the pod
 # is refused in; an area-wide or built-out planned-development condition;
-# or a design detail the screen does not check (2026-10-14). The plans are
-# in pending/, except Bethany's Chapter 1, stored for FOLLOWUPS 130: its Area
+# or a design detail the screen does not check (2026-10-14). The plans were
+# in pending/ (Bethany's Chapter 1 stored for FOLLOWUPS 130, the other
+# three for FOLLOWUPS 135, below). Bethany's Area
 # of Special Concern 1 (the 1994 Central Bethany Planned Development's
 # conditions, community-plan.bethany.txt#L1035-L1037) is GREEN with the
 # BETHANY-ASC1-PD-CONDITIONS flag (Steph 2026-10-30), and ASC 1A's Type III
@@ -655,6 +692,41 @@ defaults:
 # to the plan's standards (community-plan.bull-mountain.txt#L1136-L1142;
 # community-plan.raleigh-hills-garden-home.txt#L1309-L1311), on the front
 # yard of R-5 to R-15 (drawn_areas washington_local_street_connectivity).
+# Chunk 6 re-read (FOLLOWUPS 135, 2026-10-31): chunk 7 found plan rules
+# that bind a pod on an existing lot that chunk 6 had passed over, so the
+# four chunk 6 plans were re-read for them, and the three in pending/
+# stored (09-2026 editions). Held the same way, on lots their maps draw:
+# the Local Street Connectivity Lands of each plan's Local Street
+# Connectivity map (community-plan.aloha-reedville-cooper-mountain.txt
+# #L1406-L1416, community-plan.cedar-hills-cedar-mill.txt#L2535-L2545,
+# community-plan.sunset-west.txt#L1160-L1173, community-plan.bethany.txt
+# #L1369-L1380, Raleigh Hills' text word for word), now on R-24 and R-25+
+# too, where these plans' lands reach; the shaded parcels of the
+# pedestrian connectivity areas (Aloha areas 1 to 4, #L1428-L1454; Cedar
+# Hills areas 1 and 2, #L2557-L2569; Bethany area 1 and the 176th Avenue
+# parcels on Sunset West's map, bethany #L1411-L1424); and the access
+# rules that bind one lot: Aloha's Winterborne Park access with Tax Lot
+# 1400 (#L1196-L1202) and ASC 10's buffer and Hargis Road bar on its old
+# tax lot 5800, now divided, so the whole ASC (#L1324-L1340); Cedar Hills
+# ASC 6's shared Barnes Road access (#L2064-L2068), ASC 8's access only
+# from Miller Road (#L2080-L2084) and Willow Creek design element 3's bar
+# on direct access onto NW Saltzman, NW Thompson and NW 143rd "unless no
+# alternatives exist", on the lots that front another street (#L752-L754);
+# and Sunset West ASC 3's limited, shared access to Cornell Road, on its
+# one residential lot (#L802-L809). Not held: the plans' general
+# arterial-access design elements ("consolidated or shared access will be
+# required" along named roads), which reach every lot on those roads in
+# every plan and are left as chunk 7 left them; Terra Linda's
+# "discouraged" and Bethany's "strongly discouraged" driveways (judgement
+# words); the Tualatin Valley Highway access plan, which ODOT administers;
+# ASCs with no unincorporated residential lot left (Cedar Hills 16, the
+# Teufel property). Bethany ASC 3 (Dogwood Park and Wildwood), whose
+# development of additional housing "shall review the established
+# character" (bethany #L1213-L1219), is a judgement review: GREEN with
+# CLEAR-OBJECTIVE inside the UGB (drawn_areas bethany_asc_3, FOLLOWUPS
+# 134). Raleigh Hills ASC U stays held and carries
+# RALEIGH-HILLS-ASC-U-CASE-74-96C (Steph 2026-10-31, "Yellow with flag";
+# drawn_areas raleigh_hills_asc_u, FOLLOWUPS 136).
 # The rest, as chunk 6: street and block layout a division draws, which a
 # pod on an existing lot does not change; judgement words (ASC A "minimized", B, F
 # "maximize compatibility", J park review, subarea "low density pattern
@@ -792,7 +864,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L352-L354,L356-L358"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -926,7 +998,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L356-L358,L360-L362"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1064,7 +1136,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L315-L317,L319-L321"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1202,7 +1274,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1338,6 +1410,10 @@ zones:
       value: 10
       cite: Washington County CDC 306-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L298-L300,L302-L303"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 306-7.1 B(2)(a), garage vehicle entrance from front or street side yard
@@ -1475,6 +1551,10 @@ zones:
       value: 10
       cite: Washington County CDC 307-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L328-L330,L332-L333"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 307-7.1 B(2)(a), garage vehicle entrance from front or street side yard
@@ -3171,6 +3251,48 @@ drawn_areas:
       them: an area-wide planned-development condition, an application
       content rule, and design and use rules on the two CBD parcels, where
       housing is already held behind a planned development.
+  bethany_asc_3:
+    condition: bethany_asc_3
+    zones: [R-5, R-6]
+    file: or/washington/_unincorporated/bethany-asc-3.geojson
+    source: >-
+      Bethany Community Plan Map 5, Areas of Special Concern (Chapter 1 text
+      and maps 09-2026, page 42), the ASC 3 outline of Dogwood Park and
+      Wildwood, with the four lots it cuts added whole. Drawn provenance in
+      the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.bethany.txt#L1213-L1219"
+    cite: Bethany Community Plan, Springville area design element 1, Area of Special Concern 3 (Dogwood Park and Wildwood)
+    note: >-
+      Inside means a lot in ASC 3, where any development action that would
+      result in "development of additional housing" "shall review the
+      established character of Dogwood Park and Wildwood and shall determine
+      and mitigate through the development review process" its impact on
+      the established land use pattern. That is a review deciding on more
+      than measured standards: inside the urban growth boundary GREEN with
+      CLEAR-OBJECTIVE (rulings.yaml 2026-10-15-clear-objective-green-flag),
+      where ORS 197A.400 does not reach the lot a closer look with
+      REVIEW-CONDITIONS (FOLLOWUPS 134). The outline cuts four lots (two R-5
+      at 50 and 78 percent, two R-6 at 27 and 35 percent); they are added
+      whole, so they carry the flag too.
+  raleigh_hills_asc_u:
+    condition: raleigh_hills_asc_u
+    zones: [R-5]
+    file: or/washington/_unincorporated/raleigh-hills-asc-u.geojson
+    source: >-
+      Raleigh Hills - Garden Home Community Plan Map 5.1, Areas of Special
+      Concern (retrieved 2026-10-30), the one taxlot of ASC U, as drawn_areas
+      washington_plan_rule_unmeasured holds it. Drawn provenance in the
+      file's source block.
+    quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1083-L1086"
+    cite: Raleigh Hills - Garden Home Community Plan, Area of Special Concern U
+    note: >-
+      Inside means taxlot 1S123AA00100, Area of Special Concern U, where
+      "Previously imposed conditions (Case #74-96C) on land use in this area
+      shall continue". The 1974 case is not online. Steph 2026-10-31
+      (rulings.yaml 2026-10-31-raleigh-hills-asc-u-yellow-with-flag):
+      "Yellow with flag". The lot stays YELLOW on the
+      washington_plan_rule_unmeasured hold; this fact only carries
+      RALEIGH-HILLS-ASC-U-CASE-74-96C, which says why.
   washington_plan_rule_unmeasured:
     condition: washington_plan_rule_unmeasured
     zones: [R-5, R-6, R-9, R-15, R-24]
@@ -3179,12 +3301,15 @@ drawn_areas:
       Raleigh Hills - Garden Home and Bull Mountain Community Plan maps
       (retrieved 2026-10-30), Map 5.1 Areas of Special Concern and Map 8.1
       Pedestrian Connectivity of each, read as GeoPDF vector paths (Bull
-      Mountain's Map 8.1 as a placed raster), with the county's taxlots,
-      zoning and street centrelines. The file holds, whole, the 101
-      residential lots on which a plan rule binds the pod and nothing
-      measures it. Drawn provenance in the file's source block.
+      Mountain's Map 8.1 as a placed raster), and the Areas of Special
+      Concern and Pedestrian Connectivity maps of Aloha - Reedville - Cooper
+      Mountain, Cedar Hills - Cedar Mill (with its Willow Creek Subarea),
+      Sunset West and Bethany (retrieved 2026-10-31, FOLLOWUPS 135), with
+      the county's taxlots, zoning and street centrelines. The file holds,
+      whole, the 482 residential lots on which a plan rule binds the pod and
+      nothing measures it. Drawn provenance in the file's source block.
     quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
-    cite: Raleigh Hills - Garden Home Community Plan ASCs C, L, M, S, T, U and pedestrian connectivity areas; Bull Mountain Community Plan ASC 1, Southern Lowlands design element 3 and the Baker Lane / Sunrise Lane pedestrian area (CDC 300-1)
+    cite: Raleigh Hills - Garden Home Community Plan ASCs C, L, M, S, T, U and pedestrian connectivity areas; Bull Mountain Community Plan ASC 1, Southern Lowlands design element 3 and the Baker Lane / Sunrise Lane pedestrian area; Aloha - Reedville - Cooper Mountain ASC 10, Winterborne Park and pedestrian areas 1 to 4; Cedar Hills - Cedar Mill ASCs 6 and 8, Willow Creek design element 3 and pedestrian areas 1 and 2; Sunset West ASC 3 and the 176th Avenue pedestrian area; Bethany pedestrian area 1 (CDC 300-1)
     note: >-
       Inside means the lot is one the file holds, each for the rule its
       'why' names: an access cap or bar on the street it fronts (the screen
@@ -3196,7 +3321,17 @@ drawn_areas:
       as part of the development of the affected properties". A held lot
       keeps its garage-entrance yard unanswered, so it cannot be GREEN.
       Outside means every other lot of these zones. The area 3 lots are a
-      judgement trace (the plan places that trail in words only).
+      judgement trace (the plan places that trail in words only). The
+      chunk 6 re-read (FOLLOWUPS 135) adds a shared or single-street access
+      rule (Aloha ASC 10's Hargis Road bar, held on the whole ASC because its
+      tax lot 5800 has been divided; Cedar Hills ASC 6 and 8; Willow Creek's
+      bar on direct access onto NW Saltzman, NW Thompson and NW 143rd where
+      another street is an alternative; Sunset West ASC 3 on Cornell Road),
+      a park access improved with the lot's development (Aloha Tax Lot 1400,
+      Map 1S2 24AC) and the shaded parcels of seven more pedestrian
+      connectivity areas. Sunset West's text lists no area; the 176th Avenue
+      parcels its map shades are held on the Bethany plan's area 2, which
+      names them (community-plan.bethany.txt#L1417, L1419-L1424).
   washington_plan_review:
     condition: washington_plan_review
     zones: [R-9, R-15, R-25+]
@@ -3223,18 +3358,21 @@ drawn_areas:
       units on 4.02 acres.
   washington_local_street_connectivity:
     condition: washington_local_street_connectivity
-    zones: [R-5, R-6, R-9, R-15]
+    zones: [R-5, R-6, R-9, R-15, R-24, R-25+]
     file: or/washington/_unincorporated/washington-local-street-connectivity-lots.geojson
     source: >-
       Map 7.1 Local Street Connectivity of the Raleigh Hills - Garden Home
       and Bull Mountain Community Plan maps (printed 9/20/2022, retrieved
-      2026-10-30), the "Local Street Connectivity Lands" green read from the
+      2026-10-30), and the Local Street Connectivity maps of the Aloha -
+      Reedville - Cooper Mountain, Cedar Hills - Cedar Mill and Sunset West
+      map sets and of Bethany's Chapter 1 (retrieved 2026-10-31, FOLLOWUPS
+      135), the "Local Street Connectivity Lands" green read from the
       rendered page and placed by each frame's GeoPDF affine, over the
       county's taxlots and zoning. The file holds the residential lots at
       least 90 percent inside, whole, and the lots the lands cut at their
       share. Drawn provenance in the file's source block.
     quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1306-L1312"
-    cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans, Local Street Connectivity (CDC 300-1)
+    cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans, Local Street Connectivity (CDC 300-1)
     note: >-
       Coordinator ruling 2026-10-30: the connectivity text reaches
       development, not only land division. Bull Mountain: "For residential,
@@ -3248,4 +3386,10 @@ drawn_areas:
       the front yard unanswered and the lot cannot be GREEN; a cut lot is
       left unanswered; outside means every other lot of these zones. Not
       the 430-37 future-development plan, which shows only that a later
-      division stays possible.
+      division stays possible. The four chunk 6 plans print Raleigh Hills'
+      text word for word (community-plan.aloha-reedville-cooper-mountain.txt
+      #L1413-L1416, community-plan.cedar-hills-cedar-mill.txt#L2543-L2545,
+      community-plan.sunset-west.txt#L1170-L1173, community-plan.bethany.txt
+      #L1376-L1380); their lands reach R-24 and R-25+ lots too, so the hold
+      sits on those front yards as well. Much of the land their maps shade
+      has been divided and built since; it is held all the same.

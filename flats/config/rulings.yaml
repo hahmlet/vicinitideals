@@ -2236,3 +2236,6 @@
   source: Steph 2026-10-31 (chat), docs/followups/136-raleigh-hills-asc-u.md
   encoded_in:
     - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
+    - flats/config/areas/or/washington/_unincorporated/raleigh-hills-asc-u.geojson
+    - flats/config/flags.yaml
+    - flats/score/screen.py

@@ -213,10 +213,16 @@ CLEAR_OBJECTIVE_RELIEF: frozenset[str] = frozenset({"conditional_use", "judgemen
 #: approval, which are not held. Steph 2026-10-30: GREEN WITH A FLAG, below
 #: the yellow line (BETHANY-ASC1-PD-CONDITIONS, FOLLOWUPS 130).
 BETHANY_ASC1_PD = "BETHANY_ASC1_PD"
+#: The lot is Raleigh Hills - Garden Home's Area of Special Concern U, whose
+#: 1974 Case #74-96C conditions continue and are not held. Steph 2026-10-31:
+#: "Yellow with flag" -- the plan-rule hold keeps it YELLOW and this record
+#: says why (RALEIGH-HILLS-ASC-U-CASE-74-96C, FOLLOWUPS 136).
+RALEIGH_HILLS_ASC_U = "RALEIGH_HILLS_ASC_U"
 #: Site facts a traced area answers whose only rule here is a record below
 #: the yellow line: the fact holding raises the flag and moves no colour.
 AREA_FLAGS: dict[str, tuple[str, str]] = {
     "bethany_asc_1": ("BETHANY-ASC1-PD-CONDITIONS", BETHANY_ASC1_PD),
+    "raleigh_hills_asc_u": ("RALEIGH-HILLS-ASC-U-CASE-74-96C", RALEIGH_HILLS_ASC_U),
 }
 #: Site facts a traced area answers that send every application through a
 #: review deciding on more than measured standards, each with its citation:
@@ -226,6 +232,12 @@ AREA_REVIEWS: dict[str, str] = {
     "bethany_asc_1a": (
         "Bethany Community Plan, Area of Special Concern 1A design element 2: "
         "every development application through the Type III procedure"
+    ),
+    "bethany_asc_3": (
+        "Bethany Community Plan, Springville area design element 1, Area of "
+        "Special Concern 3 (Dogwood Park and Wildwood): development of "
+        "additional housing reviews the established character and mitigates "
+        "its impact through the development review process"
     ),
     "washington_plan_review": (
         "Bull Mountain Community Plan, Area of Special Concern 8: development "

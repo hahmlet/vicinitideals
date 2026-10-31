@@ -31,6 +31,8 @@ factory-built townhome is built to.
 
 from __future__ import annotations
 
+import collections
+
 import pytest
 
 from flats.provenance.store import ProvenanceStore
@@ -317,6 +319,7 @@ def test_north_bethany_kaiser_main_street_figures(washington: Layer) -> None:
 BETHANY_AREAS = {
     "bethany_asc_1": "or/washington/_unincorporated/bethany-asc-1.geojson",
     "bethany_asc_1a": "or/washington/_unincorporated/bethany-asc-1a.geojson",
+    "bethany_asc_3": "or/washington/_unincorporated/bethany-asc-3.geojson",
 }
 
 
@@ -441,6 +444,7 @@ C7_AREAS = {
     "washington_local_street_connectivity": "or/washington/_unincorporated/washington-local-street-connectivity-lots.geojson",
 }
 C7_HELD_ZONES = ("R-5", "R-6", "R-9", "R-15", "R-24")
+C6_PLANS = {"Aloha - Reedville - Cooper Mountain", "Cedar Hills - Cedar Mill", "Sunset West", "Bethany"}
 
 
 def _c7_file(name: str) -> dict:
@@ -480,18 +484,21 @@ def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
 
     data = _c7_file("washington_plan_rule_unmeasured")
     feats = data["features"]
-    assert len(feats) == 101
+    # 101 from chunk 7, 381 from the chunk 6 re-read (FOLLOWUPS 135).
+    assert len(feats) == 482
+    assert len({f["properties"]["taxlot"] for f in feats}) == 482
     plans = {f["properties"]["plan"] for f in feats}
-    assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain"}
+    assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS}
     for f in feats:
         p = f["properties"]
         assert p["answer"] == "inside" and p["drawn_share_of_lot"] == 1
         assert p["zone"] in C7_HELD_ZONES and p["why"] and "#L" in p["quote"]
         assert shape(f["geometry"]).is_valid
     whys = " ".join(f["properties"]["why"] for f in feats)
-    for rule in ("ASC S", "ASC T", "ASC M", "ASC U", "ASC 1", "Pacific Highway", "pedestrian"):
+    for rule in ("ASC S", "ASC T", "ASC M", "ASC U", "ASC 1", "Pacific Highway", "pedestrian",
+                 "ASC 10", "ASC 6", "ASC 8", "ASC 3", "Winterborne", "Willow Creek"):
         assert rule in whys, rule
-    assert sum(data["source"]["counts"].values()) == 101
+    assert sum(data["source"]["counts"].values()) == 482
 
 
 def test_a_held_lot_is_inside_and_a_lot_off_the_maps_is_not() -> None:
@@ -562,14 +569,16 @@ def test_chunk_7_line_numbers_name_the_rules() -> None:
 # plan's Map 7.1 hold the lot, because the plans' on-site street standards
 # reach residential development, not only a land division.
 C7_CONNECTIVITY_ZONES = ("R-5", "R-6", "R-9", "R-15")
+#: The chunk 6 plans' lands reach R-24 and R-25+ lots too (FOLLOWUPS 135).
+CONNECTIVITY_ZONES = (*C7_CONNECTIVITY_ZONES, "R-24", "R-25+")
 
 
-def test_the_connectivity_hold_sits_on_the_front_yard_of_r5_to_r15_only(washington: Layer) -> None:
-    for zone in C7_CONNECTIVITY_ZONES:
+def test_the_connectivity_hold_sits_on_the_front_yard_of_r5_to_r25_only(washington: Layer) -> None:
+    for zone in CONNECTIVITY_ZONES:
         field = washington.zones[zone].values["setback_front_ft"]
         assert field.qualified_by == "washington_local_street_connectivity", zone
-    assert set(washington.drawn_areas["washington_local_street_connectivity"].zones) == set(C7_CONNECTIVITY_ZONES)
-    for zone in ("R-24", "R-6 NB", "R-9 NB", "R-15 NB", "R-24 NB"):
+    assert set(washington.drawn_areas["washington_local_street_connectivity"].zones) == set(CONNECTIVITY_ZONES)
+    for zone in ("R-6 NB", "R-9 NB", "R-15 NB", "R-24 NB"):
         levers = set().union(*(v.levers for v in washington.zones[zone].values.values()))
         assert "washington_local_street_connectivity" not in levers, zone
 
@@ -579,11 +588,13 @@ def test_every_connectivity_lot_is_inside_or_cut_inside_the_band() -> None:
 
     data = _c7_file("washington_local_street_connectivity")
     feats = data["features"]
-    assert len(feats) == 1027 and sum(data["source"]["counts"].values()) == 1027
-    assert {f["properties"]["plan"] for f in feats} == {"Raleigh Hills - Garden Home", "Bull Mountain"}
+    # 1027 from chunk 7, 7125 from the chunk 6 re-read (FOLLOWUPS 135).
+    assert len(feats) == 8152 and sum(data["source"]["counts"].values()) == 8152
+    assert len({f["properties"]["taxlot"] for f in feats}) == 8152
+    assert {f["properties"]["plan"] for f in feats} == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS}
     for f in feats:
         p = f["properties"]
-        assert p["zone"] in C7_CONNECTIVITY_ZONES and p["why"] and "#L" in p["quote"]
+        assert p["zone"] in CONNECTIVITY_ZONES and p["why"] and "#L" in p["quote"]
         if p["answer"] == "inside":
             assert p["drawn_share_of_lot"] == 1
         else:
@@ -608,3 +619,109 @@ def test_a_connectivity_lot_is_held_a_cut_lot_unknown_and_a_far_lot_clear() -> N
     half = MultiPolygon([lot, translate(lot, -20000, -20000)])
     # Half inside: unanswered, so the fact is left off and the screen holds the yard.
     assert "washington_local_street_connectivity" not in _nb_facts("R-6", half)
+
+
+# --- the chunk 6 re-read (FOLLOWUPS 135, 134, 136; 2026-10-31) ---------------
+
+
+def test_the_chunk_6_plans_are_stored_and_their_line_numbers_name_the_rules() -> None:
+    def q(ref: str) -> str:
+        return " ".join(ProvenanceStore().quote(f"{WASHINGTON}/{ref}").split())
+
+    ar = "community-plan.aloha-reedville-cooper-mountain.txt"
+    ch = "community-plan.cedar-hills-cedar-mill.txt"
+    sw = "community-plan.sunset-west.txt"
+    be = "community-plan.bethany.txt"
+    for doc, ref in ((ar, "#L1413-L1416"), (ch, "#L2543-L2545"), (sw, "#L1170-L1173"), (be, "#L1376-L1380")):
+        assert "1) Local Streets are required to connect to the existing system" in q(doc + ref), doc
+    for doc, ref in ((ar, "#L1449-L1454"), (ch, "#L2563-L2569"), (be, "#L1419-L1424")):
+        assert "shall be constructed as part of the development of the affected" in q(doc + ref), doc
+    assert "176th Neighborhood" in q(f"{be}#L1417")
+    assert "development of Tax Lot 1400 on Map 1S2 24AC" in q(f"{ar}#L1196-L1202")
+    assert "Hargis road shall be prohibited except for emergency purposes" in q(f"{ar}#L1324-L1340")
+    assert "Access onto Barnes Road from these properties shall be shared jointly" in q(f"{ch}#L2064-L2068")
+    assert "only from SW Miller Road and shall be shared jointly" in q(f"{ch}#L2080-L2084")
+    assert "shall be prohibited unless no alternatives exist" in q(f"{ch}#L752-L754")
+    assert "Consolidated or shared access will be required" in q(f"{sw}#L802-L809")
+    text = q(f"{be}#L1213-L1219")
+    assert "Area of Special Concern No. 3" in text and "shall review the established character" in text
+
+
+def test_the_chunk_6_lots_are_held() -> None:
+    from shapely.geometry import shape
+
+    lsc = _c7_file("washington_local_street_connectivity")["features"]
+    held = collections.Counter(f["properties"]["plan"] for f in lsc)
+    assert {p: held[p] for p in C6_PLANS} == {
+        "Aloha - Reedville - Cooper Mountain": 3181,
+        "Cedar Hills - Cedar Mill": 2082,
+        "Sunset West": 466,
+        "Bethany": 1396,
+    }
+    pr = {f["properties"]["taxlot"]: f for f in _c7_file("washington_plan_rule_unmeasured")["features"]}
+    for tl, words in (
+        ("1S224AC01400", "Winterborne"),
+        ("1S101CB03800", "ASC 6"),
+        ("1S101AB00801", "ASC 8"),
+        ("1N132A000500", "NW CORNELL RD"),
+        ("1N128BC04000", "Willow Creek"),
+        ("1N119AD03700", "Laidlaw Road"),
+    ):
+        assert words in pr[tl]["properties"]["why"], tl
+    # A Willow Creek lot fronting only the arterial has no alternative and is not held.
+    assert "1N128AA00200" not in pr
+    lot = shape(pr["1S224AC01400"]["geometry"])
+    assert _nb_facts("R-15", lot)["washington_plan_rule_unmeasured"] is True
+
+
+def test_bethany_asc_3_is_green_with_clear_objective_inside_the_ugb() -> None:
+    from flats.score.flags import Colour
+    from flats.score.screen import CLOSER_LOOK_REVIEW_CONDITIONS
+
+    got = _bethany_screen(("bethany_asc_3",))
+    assert got.colour is Colour.green
+    (flag,) = [f for f in got.flags if f.code == "CLEAR-OBJECTIVE"]
+    assert "bethany_asc_3" in flag.key and "established character" in flag.source
+    outside = _bethany_screen(("bethany_asc_3",), inside_ugb=False)
+    assert outside.colour is Colour.yellow
+    assert CLOSER_LOOK_REVIEW_CONDITIONS in outside.reasons
+
+
+def test_the_asc_3_outline_holds_dogwood_park_and_wildwood_and_its_cut_lots() -> None:
+    from shapely.geometry import Point
+
+    source = _bethany_file("bethany_asc_3")["source"]
+    assert source["counts"] == {"R-5": {"inside": 142}, "R-6": {"inside": 2}}
+    for tl in ("1N121BC10200", "1N121BC09100", "1N121AB08200", "1N121AB03800"):
+        assert tl in source["how"]
+    area = _bethany_area("bethany_asc_3")
+    assert 89 < area.area / 43_560 < 92
+    p = area.representative_point()
+    assert _nb_facts("R-5", _box(p))["bethany_asc_3"] is True
+    assert _nb_facts("R-5", _box(Point(p.x - 9000, p.y - 9000)))["bethany_asc_3"] is False
+
+
+def test_raleigh_hills_asc_u_stays_yellow_and_carries_its_flag() -> None:
+    """Steph 2026-10-31: 'Yellow with flag'."""
+    import json
+
+    from shapely.geometry import shape
+
+    from flats.rules import loader
+    from flats.score.flags import colour_rules, load_registry
+
+    entry = load_registry()["RALEIGH-HILLS-ASC-U-CASE-74-96C"]
+    # Below the yellow line: the plan-rule hold already makes the lot yellow.
+    assert entry.severity < colour_rules().yellow_at_severity
+    assert "Case #74-96C" in entry.description
+    plain = _bethany_screen(())
+    got = _bethany_screen(("raleigh_hills_asc_u",))
+    assert got.colour is plain.colour and got.triage == plain.triage
+    (flag,) = [f for f in got.flags if f.code == "RALEIGH-HILLS-ASC-U-CASE-74-96C"]
+    assert flag.by == "RALEIGH_HILLS_ASC_U"
+    data = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/raleigh-hills-asc-u.geojson").read_text(encoding="utf-8"))
+    (feat,) = data["features"]
+    assert feat["properties"]["taxlot"] == "1S123AA00100"
+    got = _nb_facts("R-5", shape(feat["geometry"]))
+    # The lot carries the flag and is still held by the plan-rule hold, so it stays yellow.
+    assert got["raleigh_hills_asc_u"] is True and got["washington_plan_rule_unmeasured"] is True

@@ -46,6 +46,8 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         # Bethany ASC 1 and 1A, Map 5 of the Bethany Community Plan (FOLLOWUPS 130).
         "bethany_asc_1",
         "bethany_asc_1a",
+        # Bethany ASC 3, Dogwood Park and Wildwood, the same Map 5 (FOLLOWUPS 134).
+        "bethany_asc_3",
         "gladstone_parking_exception_area",
         "gladstone_town_center",
         "inside_mapped_use_area",
@@ -56,6 +58,8 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "oregon_city_historic_overlay",
         "oregon_city_park_place",
         "oregon_city_south_end",
+        # Raleigh Hills - Garden Home ASC U's one lot (FOLLOWUPS 136).
+        "raleigh_hills_asc_u",
         "rockwood_design_district",
         "tigard_bridgeport_village",
         "troutdale_cfec_parking_area",
