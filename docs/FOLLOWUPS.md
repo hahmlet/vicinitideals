@@ -109,6 +109,7 @@ the full one.)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
 134. [Claude] [scan: maybe (flags only)] **Bethany ASC 3 (Dogwood Park / Wildwood): add the judgement-review flag** -- OFFERED 2026-10-30. -- STARTED 2026-10-31 (branch flats/districts-c6b, 134+135+136 together). [file](followups/134-bethany-asc3.md)
 136. [Claude] [scan: maybe (one lot, flag only)] **Raleigh Hills ASC U: yellow with a flag** -- DECIDED 2026-10-31 (rulings.yaml 2026-10-31-raleigh-hills-asc-u-yellow-with-flag); stays yellow (chunk 7 hold); BUILD OWED: the flag, fold in with 134. -- STARTED 2026-10-31 (branch flats/districts-c6b, 134+135+136 together). [file](followups/136-raleigh-hills-asc-u.md)
+137. [Claude] [scan: maybe (flags only)] **WashCo plans: flag named-arterial lots (shared access) and master-plan ASCs** -- OFFERED 2026-10-31; fold into chunk 8. [file](followups/137-washco-arterial-and-master-plan-flags.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
