@@ -2285,3 +2285,27 @@
     - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
     - flats/config/areas/or/washington/_unincorporated/east-hillsboro-city-standards.geojson
     - flats/config/jurisdictions/or/washington/_unincorporated.yaml
+
+- id: 2026-10-31-east-hillsboro-r24-zone-unsettled-yellow-with-flag
+  kind: ruling
+  date: 2026-10-31
+  scope:
+    county: washington
+    city: _unincorporated
+  question: >-
+    East Hillsboro Reedville / TV Highway subareas: the plan points county
+    R-24 lots at Hillsboro's development standards but names no Hillsboro
+    zone, and county R-24 spans two (MR-2 min 17 du/ac, MR-3 min 23 du/ac).
+    Which zone stands in for 1S211BC00100 and 1S211BC00103?
+  ruling: >-
+    "If it doesn't settle them, leave them yellow with a flag." (Look up
+    Hillsboro's planning-area map first; if it names the city designation,
+    use it.)
+  effect: >-
+    Hillsboro's comprehensive plan / planning-area designation for the lot,
+    where one is mapped, picks the Hillsboro zone. Where none settles it,
+    the lots stay YELLOW (the chunk 8 hold) and carry a flag naming the
+    unsettled zone. Never resolved by guessing the looser zone.
+  source: Steph 2026-10-31 (chat), docs/followups/138-east-hillsboro-city-standards.md
+  encoded_in:
+    - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
