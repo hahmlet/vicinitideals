@@ -106,6 +106,8 @@ the full one.)
 1. [Claude] [Steph: HUMAN_TODO 23] [scan: NO] **The county map copy: loose ends after the first promotion** -- September copy PROMOTED 2026-09-20; loose ends in file. [file](followups/1-county-map-copy.md)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
+132. [Claude] [scan: YES] **North Bethany Park Blocks (ASC 5): screen its two parking rules instead of holding ~176 lots yellow** -- OFFERED 2026-10-30. [file](followups/132-north-bethany-asc5-measured.md)
+133. [Claude] [scan: maybe] **North Bethany plan text: read the 09-2026 edition** -- OFFERED 2026-10-30. [file](followups/133-north-bethany-2026-edition.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
