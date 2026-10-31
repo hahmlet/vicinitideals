@@ -2239,3 +2239,47 @@
     - flats/config/areas/or/washington/_unincorporated/raleigh-hills-asc-u.geojson
     - flats/config/flags.yaml
     - flats/score/screen.py
+
+- id: 2026-10-31-metzger-unnamed-outlines-yellow
+  kind: ruling
+  date: 2026-10-31
+  scope:
+    county: washington
+    city: _unincorporated
+  question: >-
+    Metzger - Progress Community Plan Map 5.1 draws two unnumbered outlines
+    east of ASC 2 (28 TO:R18-24 lots) and an outline numbered "12" (7 R-5
+    lots) that the plan text never describes. Keep the 35 lots yellow, or
+    ask the county what the outlines are?
+  ruling: >-
+    "yellow".
+  effect: >-
+    The 35 lots stay YELLOW behind washington_plan_rule_unmeasured (chunk 8)
+    and nobody chases the county for the outlines' meaning. A map outline
+    whose rule cannot be found holds the lot; it never rides on GREEN.
+  source: Steph 2026-10-31 (chat), docs/followups/139-metzger-unnamed-outlines.md
+  encoded_in:
+    - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
+
+- id: 2026-10-31-east-hillsboro-city-standards-are-an-overlay
+  kind: ruling
+  date: 2026-10-31
+  scope:
+    county: washington
+    city: _unincorporated
+  question: >-
+    East Hillsboro Community Plan, Reedville and TV Highway subareas:
+    development shall "address the city of Hillsboro's development
+    standards". Keep the 21 lots yellow, or read Hillsboro's standards and
+    screen the lots against them?
+  ruling: >-
+    "city building standards sounds like an overlay, so we need it".
+  effect: >-
+    Treat the named Hillsboro development standards as an overlay on the
+    county zone for lots inside those two subareas: screen the lots against
+    both the county zone and the Hillsboro standards the plan points to,
+    the stricter governing each check. Until encoded the 21 lots stay
+    YELLOW (chunk 8 hold). Build: FOLLOWUPS 138.
+  source: Steph 2026-10-31 (chat), docs/followups/138-east-hillsboro-city-standards.md
+  encoded_in:
+    - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson

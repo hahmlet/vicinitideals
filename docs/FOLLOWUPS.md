@@ -107,8 +107,7 @@ the full one.)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
 137. [Claude] [scan: maybe (flags only)] **WashCo plans: flag named-arterial lots (shared access) and master-plan ASCs** -- OFFERED 2026-10-31; STARTED 2026-10-31 with chunk 8 (branch flats/districts-c8). [file](followups/137-washco-arterial-and-master-plan-flags.md)
-138. [Claude] [Steph] [scan: YES] **East Hillsboro: read Hillsboro's city standards or keep 21 lots held** -- OFFERED 2026-10-31; waits on Steph. [file](followups/138-east-hillsboro-city-standards.md)
-139. [Claude] [Steph] [scan: YES] **Metzger: three map outlines with no text (35 lots held)** -- OFFERED 2026-10-31; waits on Steph. [file](followups/139-metzger-unnamed-outlines.md)
+138. [Claude] [scan: YES] **East Hillsboro: screen the Reedville / TV Hwy lots against Hillsboro's city standards (overlay)** -- DECIDED 2026-10-31 (rulings.yaml 2026-10-31-east-hillsboro-city-standards-are-an-overlay); build after chunk 8 releases. [file](followups/138-east-hillsboro-city-standards.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
