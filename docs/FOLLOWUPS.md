@@ -74,6 +74,7 @@ the full one.)
 
 ### 1c. The rest, most urgent first (dated items first)
 
+135. [Claude] [scan: YES (greens only lose)] **POSSIBLE FALSE GREEN: chunk 6's WashCo plans never read their street-connectivity lands, path parcels or access caps** -- OFFERED 2026-10-30; next after chunk 7. [file](followups/135-washco-connectivity-chunk6.md)
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- merged e63617b8 2026-10-20; moves expected at the next weekly. [file](followups/100-driveway-street.md)
 94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; after 93 merges. [file](followups/94-townhouse-row-angle.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: YES for (C1)] **Agents could not recall a property ruling** -- A, B, C1, C2 MERGED; DLCD backlog READ; (B) waits on Steph. [file](followups/86-ruling-recall.md)
