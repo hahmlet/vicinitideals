@@ -650,10 +650,13 @@ defaults:
 # planned development (#L1004-L1005) and the R-25+ site of Raleigh Hills -
 # Garden Home ASC L, Type III (#L1134-L1137; its 40 units an acre does not
 # bind a four-unit pod on its 4 acres).
-# The rest, as chunk 6: street, block and local-street-connectivity layout
-# (Map 7 / 7.1, the Bull Mountain connectivity standards), which a pod on an
-# existing lot does not change (the future-development plan above is the
-# same kind of rule); judgement words (ASC A "minimized", B, F
+# Held too (coordinator ruling 2026-10-30): the Local Street Connectivity
+# Lands of each plan's Map 7.1, whose development provides on-site streets
+# to the plan's standards (community-plan.bull-mountain.txt#L1136-L1142;
+# community-plan.raleigh-hills-garden-home.txt#L1309-L1311), on the front
+# yard of R-5 to R-15 (drawn_areas washington_local_street_connectivity).
+# The rest, as chunk 6: street and block layout a division draws, which a
+# pod on an existing lot does not change; judgement words (ASC A "minimized", B, F
 # "maximize compatibility", J park review, subarea "low density pattern
 # shall be maintained", Raleigh Hills design element 2's R-15/R-24
 # transition, Bull Mountain ASC 4's buffers and views) -- GREEN with a flag
@@ -787,6 +790,10 @@ zones:
       value: 15
       cite: Washington County CDC 302-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L352-L354,L356-L358"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 302-7.1 B(2)(a), garage vehicle entrance from front or street side yard
@@ -917,6 +924,10 @@ zones:
       value: 15
       cite: Washington County CDC 303-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L356-L358,L360-L362"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 303-7.1 B(2)(a), garage vehicle entrance from front or street side yard
@@ -1051,6 +1062,10 @@ zones:
       value: 12
       cite: Washington County CDC 304-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L315-L317,L319-L321"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 304-7.1 B(2)(a), garage vehicle entrance from front or street side yard
@@ -1185,6 +1200,10 @@ zones:
       value: 10
       cite: Washington County CDC 305-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
+      qualified_by:
+        fact: washington_local_street_connectivity
+        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands Map 7.1 shows provides on-site streets to the plan's block standards, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 305-7.1 B(2)(a), garage vehicle entrance from front or street side yard
@@ -3202,3 +3221,31 @@ drawn_areas:
       path dedication is "whenever possible" and an existing lot dedicates
       nothing (2026-10-02); the site's 40 units an acre does not bind four
       units on 4.02 acres.
+  washington_local_street_connectivity:
+    condition: washington_local_street_connectivity
+    zones: [R-5, R-6, R-9, R-15]
+    file: or/washington/_unincorporated/washington-local-street-connectivity-lots.geojson
+    source: >-
+      Map 7.1 Local Street Connectivity of the Raleigh Hills - Garden Home
+      and Bull Mountain Community Plan maps (printed 9/20/2022, retrieved
+      2026-10-30), the "Local Street Connectivity Lands" green read from the
+      rendered page and placed by each frame's GeoPDF affine, over the
+      county's taxlots and zoning. The file holds the residential lots at
+      least 90 percent inside, whole, and the lots the lands cut at their
+      share. Drawn provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1306-L1312"
+    cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans, Local Street Connectivity (CDC 300-1)
+    note: >-
+      Coordinator ruling 2026-10-30: the connectivity text reaches
+      development, not only land division. Bull Mountain: "For residential,
+      office, retail, and institutional development on lands as shown on
+      the Local Street Connectivity Maps, on-site streets shall be provided"
+      to block lengths of 530 ft and perimeters of 1,800 ft
+      (community-plan.bull-mountain.txt#L1136-L1148); Raleigh Hills: the map
+      "indicates where, as part of development, 1) Local Streets are
+      required to connect" (#L1309-L1311). A pod is residential development
+      and an on-site street takes ground nothing measures, so inside holds
+      the front yard unanswered and the lot cannot be GREEN; a cut lot is
+      left unanswered; outside means every other lot of these zones. Not
+      the 430-37 future-development plan, which shows only that a later
+      division stays possible.

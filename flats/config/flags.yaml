@@ -1786,6 +1786,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-WASHINGTON-LOCAL-STREET-CONNECTIVITY:
+    description: "Whether the lot lies on the Local Street Connectivity Lands of the Raleigh Hills - Garden Home or Bull Mountain Community Plan, where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Map 7.1 of each plan is traced (FOLLOWUPS 109 chunk 7); a held lot needs a county planner's word on whether, and where, an on-site street is required with the pod, and a lot the lands cut needs the line placed"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-PLAN-REVIEW:
     description: "Whether the lot lies in Bull Mountain ASC 8 (master planning - planned development review) or on the R-25+ site of Raleigh Hills - Garden Home ASC L (Type III review): GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
     kind: categorical

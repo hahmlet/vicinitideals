@@ -1121,6 +1121,24 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "washington_local_street_connectivity",
+        "site_fact",
+        "The lot lies on the Local Street Connectivity Lands of the Raleigh "
+        "Hills - Garden Home or Bull Mountain Community Plan (Map 7.1), where "
+        "development must provide on-site streets that connect to the "
+        "street system (Bull Mountain: blocks no longer than 530 ft). The "
+        "street's ground is not measured, so the lot cannot be GREEN "
+        "(coordinator ruling 2026-10-30). Answered from Map 7.1, traced as "
+        "Washington County's drawn_areas (FOLLOWUPS 109 chunk 7); a lot the "
+        "lands cut stays unknown.",
+        evidence=(
+            "Map 7.1 (Local Street Connectivity) of the Raleigh Hills - Garden "
+            "Home and Bull Mountain Community Plans (Washington County), "
+            "traced 2026-10-30"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "washington_plan_review",
         "site_fact",
         "The lot lies where a Washington County community plan sends every "
@@ -1488,6 +1506,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "tigard_bridgeport_village",
     "troutdale_cfec_parking_area",
     "troutdale_town_center",
+    "washington_local_street_connectivity",
     "washington_plan_review",
     "washington_plan_rule_unmeasured",
     "willamette_historic_district",

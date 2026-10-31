@@ -438,6 +438,7 @@ def test_asc_1_and_1a_line_numbers_name_the_rules() -> None:
 C7_AREAS = {
     "washington_plan_rule_unmeasured": "or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson",
     "washington_plan_review": "or/washington/_unincorporated/washington-plan-review.geojson",
+    "washington_local_street_connectivity": "or/washington/_unincorporated/washington-local-street-connectivity-lots.geojson",
 }
 C7_HELD_ZONES = ("R-5", "R-6", "R-9", "R-15", "R-24")
 
@@ -555,3 +556,55 @@ def test_chunk_7_line_numbers_name_the_rules() -> None:
     assert "oriented toward or accessed from Pacific" in q(f"{bm}#L998-L1000")
     assert "master planning - planned development provisions in the CDC" in q(f"{bm}#L1002-L1005")
     assert "shall be constructed as part of the development of the affected properties" in q(f"{bm}#L1254-L1262")
+
+
+# Coordinator ruling 2026-10-30: the Local Street Connectivity Lands of each
+# plan's Map 7.1 hold the lot, because the plans' on-site street standards
+# reach residential development, not only a land division.
+C7_CONNECTIVITY_ZONES = ("R-5", "R-6", "R-9", "R-15")
+
+
+def test_the_connectivity_hold_sits_on_the_front_yard_of_r5_to_r15_only(washington: Layer) -> None:
+    for zone in C7_CONNECTIVITY_ZONES:
+        field = washington.zones[zone].values["setback_front_ft"]
+        assert field.qualified_by == "washington_local_street_connectivity", zone
+    assert set(washington.drawn_areas["washington_local_street_connectivity"].zones) == set(C7_CONNECTIVITY_ZONES)
+    for zone in ("R-24", "R-6 NB", "R-9 NB", "R-15 NB", "R-24 NB"):
+        levers = set().union(*(v.levers for v in washington.zones[zone].values.values()))
+        assert "washington_local_street_connectivity" not in levers, zone
+
+
+def test_every_connectivity_lot_is_inside_or_cut_inside_the_band() -> None:
+    from shapely.geometry import shape
+
+    data = _c7_file("washington_local_street_connectivity")
+    feats = data["features"]
+    assert len(feats) == 1027 and sum(data["source"]["counts"].values()) == 1027
+    assert {f["properties"]["plan"] for f in feats} == {"Raleigh Hills - Garden Home", "Bull Mountain"}
+    for f in feats:
+        p = f["properties"]
+        assert p["zone"] in C7_CONNECTIVITY_ZONES and p["why"] and "#L" in p["quote"]
+        if p["answer"] == "inside":
+            assert p["drawn_share_of_lot"] == 1
+        else:
+            # A cut lot's share keeps clear of both band edges, so it is never read outside.
+            assert p["answer"] == "unanswered" and 0.12 < p["drawn_share_of_lot"] < 0.88
+        geom = shape(f["geometry"])
+        assert geom.is_valid and not geom.is_empty
+
+
+def test_a_connectivity_lot_is_held_a_cut_lot_unknown_and_a_far_lot_clear() -> None:
+    from shapely.affinity import translate
+    from shapely.geometry import MultiPolygon, box, shape
+
+    feats = _c7_file("washington_local_street_connectivity")["features"]
+    inside = next(f for f in feats if f["properties"]["answer"] == "inside" and f["properties"]["zone"] == "R-6"
+                  and shape(f["geometry"]).geom_type == "Polygon")
+    lot = shape(inside["geometry"])
+    assert _nb_facts("R-6", lot)["washington_local_street_connectivity"] is True
+    minx, miny, _, _ = lot.bounds
+    far = box(minx - 20000, miny - 20000, minx - 19900, miny - 19900)
+    assert _nb_facts("R-6", far)["washington_local_street_connectivity"] is False
+    half = MultiPolygon([lot, translate(lot, -20000, -20000)])
+    # Half inside: unanswered, so the fact is left off and the screen holds the yard.
+    assert "washington_local_street_connectivity" not in _nb_facts("R-6", half)

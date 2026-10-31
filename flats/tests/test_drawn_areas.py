@@ -62,6 +62,7 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "troutdale_town_center",
         # Raleigh Hills - Garden Home and Bull Mountain, Maps 5.1 and 8.1
         # (FOLLOWUPS 109 chunk 7, 2026-10-30).
+        "washington_local_street_connectivity",
         "washington_plan_review",
         "washington_plan_rule_unmeasured",
         "willamette_historic_district",
