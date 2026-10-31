@@ -128,7 +128,7 @@ readings:
       cemeteries and natural areas the zone exists for, on land where this product cannot be
       placed at all.
     fingerprint: 1aa863e00137df18
-  "39.cfu.txt#39.4105":
+  "39.4105.txt#39.4105":
     queue: missed
     outcome: not_here
     note: >-
@@ -140,7 +140,7 @@ readings:
       acreage dwelling wants eighty acres in one ownership -- so nothing about this land is a
       place a factory-built four-unit pod goes. The height is recorded in the zone's own notes; it
       is not in a field because a refused zone is never asked for one.
-    fingerprint: 620d612193313c70
+    fingerprint: ed38c3f39623d035
   "39.cfu.txt#39.4110":
     queue: missed
     outcome: not_here

@@ -389,7 +389,7 @@ def test_the_county_states_the_quadplex_exemption_in_its_own_words(
 
     assert city.exempt is True
     assert city.unless == ("unit_lots",)
-    assert city.prov.quote == "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    assert city.prov.quote == "or/clackamas/_unincorporated/1012/1012.04.txt#L3-L7"
     assert "max_density_du_per_acre" in rules.resolve(CLACKAMAS, "R5").exempted
 
 
@@ -407,7 +407,7 @@ def test_the_pod_s_lot_size_in_unincorporated_clackamas_is_section_845s(
     for zone in ("R5", "R7", "R8.5", "R10", "R15", "R20", "R30", "VR57", "VR45"):
         held = zones[zone].values["min_lot_sqft"]
         assert held.value == 7000, zone
-        assert held.prov.quote == "or/clackamas/_unincorporated/zdo.845.txt#L3,L7", zone
+        assert held.prov.quote == "or/clackamas/_unincorporated/845/845.01.txt#L3,L7", zone
 
 
 HAPPY_VALLEY = "or/clackamas/happy-valley"

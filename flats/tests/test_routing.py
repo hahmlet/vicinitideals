@@ -459,6 +459,13 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    # 2026-10-31 (library batch 7): cutting the two unincorporated codes made these
+    # five pointers visible, each to the very next section, which is read.
+    "or/clackamas/_unincorporated 604.03 -> 604.04",
+    "or/multnomah/_unincorporated 39.4750 -> 39.4751",
+    "or/multnomah/_unincorporated 39.4820 -> 39.4822",
+    "or/multnomah/_unincorporated 39.4870 -> 39.4872",
+    "or/multnomah/_unincorporated 39.4970 -> 39.4975",
     # 2026-10-08: CMU's unit-lot density floor is read from 16.60.070, so the
     # three pointers into it count as followed; the same section's floor for
     # R-3, NCR and C-2 is derived (8.712 du/ac) and not encodable yet --

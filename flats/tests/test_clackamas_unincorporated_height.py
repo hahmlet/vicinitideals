@@ -41,18 +41,18 @@ from flats.rules.resolver import RuleSet
 pytestmark = pytest.mark.unit
 
 CLACKAMAS = "or/clackamas/_unincorporated"
-ZDO = f"{CLACKAMAS}/zdo.315.txt"
+ZDO = f"{CLACKAMAS}/315/315.04.txt"
 
 #: Table 315-2, transposed one cell per line, two cells per district in header
 #: order. The second of each pair is the one that reaches this building.
 LOW_DENSITY = {
-    "R5": 1201,
-    "R7": 1203,
-    "R8.5": 1205,
-    "R10": 1207,
-    "R15": 1209,
-    "R20": 1211,
-    "R30": 1213,
+    "R5": 1179,
+    "R7": 1181,
+    "R8.5": 1183,
+    "R10": 1185,
+    "R15": 1187,
+    "R20": 1189,
+    "R30": 1191,
 }
 
 #: Table 315-3, three values under three headers.
@@ -88,7 +88,7 @@ def test_each_low_density_district_takes_its_own_cell(
     for zone, line in LOW_DENSITY.items():
         held = clackamas.zones[zone].values["max_height_ft"]
         assert held.value == 35, zone
-        assert held.prov.quote == f"{ZDO}#L1197,L{line}", zone
+        assert held.prov.quote == f"{ZDO}#L1175,L{line}", zone
         quoted = store.quote(held.prov.quote)
         assert "Maximum Building Height" in quoted, zone
         assert "All other buildings, including accessory dwelling units: 35 feet" in quoted
@@ -102,7 +102,7 @@ def test_the_row_prints_two_cells_and_the_first_is_not_this_building(
     accessory building, so the pod is measured against the second line -- which
     is why the quote carries the row label, so a reviewer can see there were
     two lines to choose between."""
-    assert lines[1196] == "Maximum Building Height"
+    assert lines[1174] == "Maximum Building Height"
     for zone, line in LOW_DENSITY.items():
         accessory = lines[line - 2]
         assert accessory.startswith("Accessory buildings larger than 500 square feet"), zone
@@ -116,13 +116,13 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
     than an exception to it. Sixteen cells, eight districts, every "all other
     buildings" line word-for-word identical: nothing in the text distinguishes
     R-5's cell from R-30's, so the only thing that can is where it sits."""
-    cells = lines[1197:1213]
+    cells = lines[1175:1191]
     assert len(cells) == 16
     ours = cells[1::2]
     assert len(set(ours)) == 1
     assert ours[0] == "All other buildings, including accessory dwelling units: 35 feet"
     # Eight columns in the header, in the order the cells follow.
-    assert lines[1170:1178] == ["R-2.5", "R-5", "R-7", "R-8.5", "R-10", "R-15", "R-20", "R-30"]
+    assert lines[1148:1156] == ["R-2.5", "R-5", "R-7", "R-8.5", "R-10", "R-15", "R-20", "R-30"]
     # The first pair was skipped while Table 315-1 refused the quadplex in
     # R-2.5 outright: a height on a zone that refuses the use is a number
     # nothing reads. Since 2026-10-15 R-2.5 opens as four townhouses on their
@@ -137,7 +137,7 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
 def test_the_low_density_height_row_carries_no_footnote_marker(lines: list[str]) -> None:
     """Unlike the coverage row directly above it, which is marked 5,6. Worth
     asserting because the gate cannot check it here -- see below."""
-    assert lines[1195] == "50 percent[5,6]"
+    assert lines[1173] == "50 percent[5,6]"
     for line in LOW_DENSITY.values():
         assert not lines[line - 1].rstrip().endswith("]")
 
@@ -155,14 +155,14 @@ def test_the_village_zones_read_a_three_value_row_positionally(
     Ord. ZDO-293 (2026-09-08) republished the table with spanned columns, so
     the page now prints one cell per sub-column -- five heights under a header
     that repeats VR-5/7 three times -- and every one of them still says 35."""
-    assert lines[1357:1362] == ["Standard", "VR-5/7", "VR-5/7", "VR-5/7", "VR-4/5"]
-    assert lines[1362] == "Maximum Building Height"
-    assert lines[1363:1368] == ["35 feet[9]"] * 5
+    assert lines[1358:1363] == ["Standard", "VR-5/7", "VR-5/7", "VR-5/7", "VR-4/5"]
+    assert lines[1363] == "Maximum Building Height"
+    assert lines[1364:1369] == ["35 feet[9]"] * 5
 
     for zone in VILLAGE:
         held = clackamas.zones[zone].values["max_height_ft"]
         assert held.value == 35, zone
-        assert held.prov.quote == f"{ZDO}#L1363-L1368", zone
+        assert held.prov.quote == f"{ZDO}#L1364-L1369", zone
         assert store.quote(held.prov.quote).count("35 feet[9]") == 5, zone
 
 
@@ -174,7 +174,7 @@ def test_note_nine_cannot_loosen_this_ceiling_because_it_excludes_middle_housing
     reach. A quadplex is exactly that, so the standard stands unconditionally
     for this building -- the note reads in the direction that keeps the
     ceiling, not the one that lifts it."""
-    note = lines[1497]
+    note = lines[1515]
     assert note.startswith("[9] Except for middle housing developed pursuant to Section 845")
     assert "Triplexes, Quadplexes, Townhouses, and Cottage Clusters" in note
     assert "Sieben Creek Estates" in note
@@ -266,7 +266,7 @@ def test_and_the_cause_was_the_spelling_not_the_absence_of_notes(
         NOTES_HEAD,
     )
 
-    first = lines[1481]
+    first = lines[1498]
     assert first.startswith("[1]The minimum and maximum lot size standards apply")
     assert not any(NOTES_HEAD.match(line.strip()) for line in lines)
     assert HEADLESS_NOTE.match(first) is None  # no column gap, and none needed now
@@ -276,7 +276,7 @@ def test_and_the_cause_was_the_spelling_not_the_absence_of_notes(
     # into five and loses the five.
     assert BRACKET_NOTE.match(first) is None
     assert GLUED_BRACKET_NOTE.match(first) is not None
-    assert BRACKET_NOTE.match(lines[1483]) is not None
+    assert BRACKET_NOTE.match(lines[1501]) is not None
 
 
 def test_a_weld_onto_a_one_letter_word_is_still_a_note() -> None:

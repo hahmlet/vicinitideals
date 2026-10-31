@@ -102,4 +102,4 @@ def test_the_prefabricated_exception_is_a_single_family_word() -> None:
 
 def test_a_refusal_by_the_table_still_quotes_the_table() -> None:
     # R-2.5's X is the table's own refusal, not design review's.
-    assert _held("R2.5").prov.quote == "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    assert _held("R2.5").prov.quote == "or/clackamas/_unincorporated/315/315.04.txt#L9,L11-L22,L263-L274"
