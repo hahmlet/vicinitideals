@@ -2210,3 +2210,29 @@
     no lot carries it (FOLLOWUPS 130).
   source: Steph 2026-10-30 (chat), docs/followups/130-bethany-asc1.md
   encoded_in: [flats/config/flags.yaml, flats/config/jurisdictions/or/washington/_unincorporated.yaml, flats/score/screen.py]
+
+- id: 2026-10-31-raleigh-hills-asc-u-yellow-with-flag
+  kind: ruling
+  date: 2026-10-31
+  scope:
+    county: washington
+    city: _unincorporated
+  question: >-
+    Raleigh Hills - Garden Home Community Plan, Area of Special Concern U
+    (taxlot 1S123AA00100, R-5): "Previously imposed conditions (Case
+    #74-96C) on land use in this area shall continue." The 1974 case is not
+    online (county case search indexes nothing that old; the documents need
+    a public records request). Keep the lot yellow until the conditions are
+    read, or green with a flag as for Bethany ASC 1?
+  ruling: >-
+    "Yellow with flag".
+  effect: >-
+    The ASC U lot stays YELLOW (the chunk 7 hold, drawn_areas
+    washington_plan_rule_unmeasured) until Case #74-96C's conditions are
+    read, and carries a flag saying the 1974 conditions apply and are not
+    held. Unlike Bethany ASC 1 (2026-10-30), unread old-approval conditions
+    here do not ride on GREEN. Flag build owed (FOLLOWUPS 136); the lot's
+    1991 Historic Overlay is FOLLOWUPS 87.
+  source: Steph 2026-10-31 (chat), docs/followups/136-raleigh-hills-asc-u.md
+  encoded_in:
+    - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson

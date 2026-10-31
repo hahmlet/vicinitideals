@@ -108,7 +108,7 @@ the full one.)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
 134. [Claude] [scan: maybe (flags only)] **Bethany ASC 3 (Dogwood Park / Wildwood): add the judgement-review flag** -- OFFERED 2026-10-30. [file](followups/134-bethany-asc3.md)
-136. [Claude] [Steph] [scan: maybe (one lot)] **Raleigh Hills ASC U: a 1974 case's conditions, not held -- yellow, or green with a flag?** -- OFFERED 2026-10-31; the case is not online (records request); the lot also has a 1991 historic overlay (see 87). [file](followups/136-raleigh-hills-asc-u.md)
+136. [Claude] [scan: maybe (one lot, flag only)] **Raleigh Hills ASC U: yellow with a flag** -- DECIDED 2026-10-31 (rulings.yaml 2026-10-31-raleigh-hills-asc-u-yellow-with-flag); stays yellow (chunk 7 hold); BUILD OWED: the flag, fold in with 134. [file](followups/136-raleigh-hills-asc-u.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 

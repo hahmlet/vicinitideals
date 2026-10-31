@@ -1,6 +1,6 @@
 # 136. Raleigh Hills ASC U: a 1974 case's conditions, not held -- hold yellow or green with a flag?
 
-136. [Claude] [Steph] [scan: maybe (one lot)] **Raleigh Hills ASC U (Case #74-96C)** -- OFFERED 2026-10-31; waits on Steph.
+136. [Claude] [Steph] [scan: maybe (one lot)] **Raleigh Hills ASC U (Case #74-96C)** -- DECIDED 2026-10-31: "Yellow with flag" (rulings.yaml 2026-10-31-raleigh-hills-asc-u-yellow-with-flag). BUILD OWED: a flag on 1S123AA00100 saying Case #74-96C's 1974 conditions apply and are not held (the drawn-area 'why' does not reach the lot page). Small; fold into the 134 ASC 3 flag job. Colour already yellow from the chunk 7 hold.
 
 The lot: taxlot 1S123AA00100, 6050 SW Old Scholls Ferry Rd, R-5, ~3.4 acres, a house on it (assessor class 101). Live GREEN in run 99; chunk 7 (FOLLOWUPS 109, b3b11f02) holds it YELLOW via washington-plan-rule-unmeasured-lots.geojson.
 
