@@ -1,0 +1,5 @@
+39.4968  PURPOSE.
+This base zone is defined as Urban Medium
+Density Residential Base zone with a density range from 7.2 to 10.9 dwelling units per acre.
+For purposes of this base zone, the Urban
+Medium and High Density Residential Base zones General Provisions apply.

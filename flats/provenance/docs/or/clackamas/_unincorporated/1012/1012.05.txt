@@ -1,0 +1,118 @@
+1012.05 Maximum Density
+
+If this Ordinance establishes a district land area (DLA) for the applicable zoning district, the proposed development shall be limited to a maximum density.
+Except as necessary to implement a minimum lot size exception granted pursuant to Subsection 1012.02 or as established by Subsection 1012.06, maximum density shall be calculated as follows.
+
+1 Calculate the land area of the subject property.
+The result is gross site area (GSA).
+
+2 Subtract the following from GSA to determine net site area (NSA).
+In the event of an overlap between categories requiring a subtraction, the area of overlap shall be classified in the most restrictive category.
+
+1 The land area of new county, public, or private roads (NR) in the HR, MRR, Urban Low Density Residential, VR-4/5, VR-5/7, and VTH Districts, except:
+
+1 If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted.
+
+2 No subtraction shall be made for strips of land adjacent to existing road rights-of-way when such strips are required to be dedicated as a condition of approval;
+
+2 In a zoning district other than HR and MRR, any land area of the GSA in the following highly restricted areas (HRA), except that no subtraction shall be made for HRA that will remain undeveloped, in which case density accruing to these areas may be transferred to unrestricted areas:
+
+1 Slopes greater than 50 percent;
+
+2 Mass movement hazards regulated by Section 1003, Hazards to Safety;
+
+3 The floodway of the Floodplain Management District regulated by Section 703, Floodplain Management District;
+
+4 The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;
+
+5 Habitat Conservation Areas regulated by Section 706, Habitat Conservation Area District (HCAD); and
+
+6 Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District; and
+
+3 In a zoning district other than HR and MRR, fifty percent of the land area of any portions of the GSA in the following moderately restricted areas (MRA), except that no subtraction shall be made for MRA that will remain undeveloped, in which case density accruing to these areas may be transferred to unrestricted areas.:
+
+1 Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
+
+2 Areas outside the floodway but within the Floodplain Management District regulated by Section 703.
+
+4 In the HR and MRR Districts, any land area of the GSA in the following highly restricted area (HRA).
+Residential development is prohibited in the HRA.
+
+1 The Floodplain Management District regulated by Section 703; and
+
+5 In the HR and MRR Districts, 50 percent of the land area of the GSA in the following moderately restricted areas (MRA).
+Residential development is prohibited in the MRA.
+
+1 Slopes greater than 25 percent;
+
+2 Mass movement hazards regulated by Section 1003; and
+
+3 Wetlands and required buffer areas regulated by Subsection 1002.06 or another public agency.
+
+6 In the HR and MRR Districts, although no subtraction is required for stream corridor areas, residential development is prohibited in these areas.
+
+3 Divide the NSA by the DLA of the applicable zoning district.
+The result is base density (BD).
+The calculations that result in a determination of BD are represented by the following formula:
+
+{GSA – [NR + HRA + (MRA x 0.5)]} / DLA = BD*
+
+* Except in the HR and MRR Districts, HRA and MRA may be reduced to zero as provided by Subsections 1012.05(B)(2) and (3).
+
+4 In the MRR District, the calculation in Subsection 1012.05(C) shall be done separately for each proposed unit size category identified in Table 317-3, District Land Area Standards in the MRR District.
+This requires the applicant to identify the square footage of the NSA that is attributed to each unit size category.
+The results of each separate calculation shall be added to determine BD.
+
+5 Add any applicable density bonuses to BD.
+Bonus density shall be allowed subject to the following criteria:
+
+1 Unless using the affordable housing bonus under option 1 in Table 1012-1, Bonus Density, the proposed development shall include a minimum of four dwelling units, excluding accessory dwelling units and temporary dwellings approved pursuant to Section 1204, Temporary Permits.
+
+2 The bonus density categories and corresponding maximum increases to BD, as well as the zoning districts to which the bonus density categories are applicable, are identified in Table 1012-1, Bonus Density.
+
+3 In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD.
+For example, if a development is proposed with a BD of 50 units of 700 square feet and 50 units of 500 square feet, and a bonus density of 10 units is allowed, the 10 bonus units shall include 5 units of 700 square feet and 5 units of 500 square feet.
+
+Table 1012-1: Bonus Density
+
+Bonus Category
+Maximum Increase in the HR and Urban Low Density Residential Districts
+Maximum Increase in All Other Zoning Districts
+Affordable Housing: One of the following two options:
+(1) For a development inside the Portland Metropolitan Urban Growth Boundary, in which:
+(a) Each unit on the property is made available to own or rent to families with incomes of 80 percent or less of the area median income (AMI) as defined by the U.S. Department of Housing and Urban Development;
+(b) The average of all units on the property is made available to families with incomes of 60 percent or less of AMI; or
+(c) A manufactured dwelling park is operated that serves only households with incomes of 120 percent or less of AMI; and
+(d) Whose affordability, including affordability under a covenant as described in ORS 456.270 to 456.295, is enforceable for a duration of no less than 30 years.
+(A) For property with existing maximum density of 16 or fewer units per acre, up to 100 percent of base density and 12 additional feet in maximum height;
+(B) For property with existing maximum density of 17 or more units per acre and 45 or fewer units per acre, up to 50 percent of base density and 24 additional feet in maximum height; or
+(C) For property with existing maximum density of 46 or more units per acre, up to 25 percent of base density and 36 additional feet in maximum height.
+(A) For property with existing maximum density of 16 or fewer units per acre, up to 100 percent of base density and 12 additional feet in maximum height;
+(B) For property with existing maximum density of 17 or more units per acre and 45 or fewer units per acre, up to 50 percent of base density and 24 additional feet in maximum height; or
+(C) For property with existing maximum density of 46 or more units per acre, up to 25 percent of base density and 36 additional feet in maximum height.
+(2): In any development, for dwelling units affordable to households with incomes of 80 percent or less of the area median income (AMI) as defined by the U.S. Department of Housing and Urban Development, adjusted for household size, and whose affordability, including affordability under a covenant as described in ORS 456.270 to 456.295, is enforceable for a duration of no less than 30 years.
+One dwelling unit per affordable dwelling unit up to 5 percent of the base density
+One dwelling unit per affordable dwelling unit up to 50 percent of the base density[1]
+Mixed-Use Development[2]: Multifamily dwelling units developed as part of a mixed-use development, where a minimum of 20 percent of the total floor area on a site is developed for a non-residential use.
+Not applicable
+One dwelling unit per dwelling unit located in a mixed-use development up to 20 percent of the base density[3]
+Park Dedication: Land will be dedicated as a park and accepted by a government agency pursuant to Subsection 1011.04.
+10 percent of the base density
+10 percent of the base density[1]
+Habitat Conservation Area: At least 75 percent of the HCA on the subject property will be protected from development by a restrictive covenant or a public dedication.
+Not applicable
+25 percent of the base density[4]
+MAXIMUM TOTAL INCREASE5
+15 percent of the base density
+60 percent of the base density
+
+[1]Does not apply in the VA, VR-4/5, VR-5/7, or VTH Districts
+[2]For the purposes of this provision, mixed-use development means a mix of uses located within a single building or a mix of uses located on a single site.
+[3]May only be applied in the C-3, CC, OC, and RTL Districts
+[4]Does not apply in the VR-4/5, VR-5/7, or VTH Districts
+[5]For affordable housing developed using the bonus in option 1, the maximum is that allowed under option 1; it may not be combined with a mixed-use development, park dedication, or Habitat Conservation Area bonus.
+
+1 Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down for a subdivision, partition, or replat of 10 lots or fewer in the Urban Low Density Residential, VR-4/5, or VR-5/7 District.
+
+2 The result is maximum density, except that the result shall be reduced as necessary to comply with the minimum lot size standards, if any, of the applicable zoning district, as modified by Subsection 1012.02.
+

@@ -1,0 +1,14 @@
+1012.07 Maximum Density For Duplexes In The RA-1 District
+
+In the RA-1 District, developments of duplexes approved pursuant to Section 1203, Conditional Uses, shall be limited to a maximum density, which shall be calculated as follows:
+
+1 Calculate the land area of the subject property.
+The result is gross site area.
+
+2 Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet.
+The result is base density.
+
+3 Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down in a subdivision, partition, or replat of 10 lots or fewer.
+
+4 The result is maximum density.
+

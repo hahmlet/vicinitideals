@@ -1,0 +1,43 @@
+1012.08 Minimum Density
+
+A minimum density standard applies in the Urban Low Density Residential, HDR, MR-1, MR-2, PMD, RCHDR, SHD, and VA Districts.
+Minimum density shall be calculated as follows:
+
+1 Calculate the land area of the subject property.
+The result is gross site area (GSA).
+
+2 Subtract the following land area from GSA to determine net acreage:
+
+1 New county, public, or private roads and strips of land dedicated adjacent to existing road rights-of-way;
+
+2 Slopes equal to or greater than 20 percent;
+
+3 Mass movement hazards regulated by Section 1003, Hazards to Safety;
+
+4 Areas in the Floodplain Management District regulated by Section 703, Floodplain Management District;
+
+5 The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;
+
+6 Habitat Conservation Areas (HCA) regulated by Section 706, Habitat Conservation Area District (HCAD), provided that the HCA, or portion thereof, to be subtracted is protected from development by a restrictive covenant or a public dedication, and provided that the subject property was inside the Portland Metropolitan Urban Growth Boundary on January 1, 2002;
+
+7 Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District (WQRAD); and
+
+8 Land to be dedicated to the public for park or open space use.
+
+3 In the RCHDR District, the minimum density is 30 dwelling units per net acre.
+Otherwise, divide by the district land area of the applicable zoning district and multiply the result:
+
+1 By 80 percent in Urban Low Density Residential Districts.
+However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density for the entire property can be met through future land division;
+
+2 By 80 percent in the PMD and MR-1 Districts, except in the case of a manufactured home park where the result shall be multiplied by 50 percent;
+
+3 By 90 percent in the MR-2, HDR, and SHD Districts; or
+
+4 By 50 percent in the VA District.
+
+4 Any partial figure of one-half or greater shall be rounded up to the next whole number.
+
+5 The result is minimum density.
+
+[Amended by Ord. ZDO-245, 7/1/2013; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-277, 1/1/2022; Amended by Ord. ZDO-282, 7/1/2022; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024]

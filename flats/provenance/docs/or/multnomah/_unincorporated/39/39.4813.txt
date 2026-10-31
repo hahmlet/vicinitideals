@@ -1,0 +1,68 @@
+§ 39.4813 DEFINITIONS.
+As used in MCC 39.4790 through MCC
+39.4812, the following terms and their derivations shall have the following meanings:
+Crown Cover - The area within the drip line or perimeter of the foliage of a tree.
+Development - Any short plat, partition, subdivision or planned unit development that is created under the county's land division or zoning regulations.
+Exempt Tree or Vegetation - The full height and breadth of vegetation that the Planning
+Director has identified as solar friendly and listed in the Solar Friendly Tree Report, 1987;
+and any vegetation listed on a plat map, a document recorded with the plat, or a solar access permit as exempt.
+Front Lot Line - For purposes of the solar access regulations, a lot line abutting a street.
+For corner lots the front lot line is that with the narrowest frontage.
+When the lot line abutting a street is curved, the front lot line is the chord or straight line connecting the ends of the curve.
+For a flag lot, the front lot line is the lot line that is most parallel to and closest to the street, excluding the pole portion of the flag lot (see
+Figure 1).
+Non-Exempt Tree or Vegetation.- Vegetation that is not exempt.
+Northern Lot Line - The lot line that is the smallest angle from a line drawn east-west and intersecting the northernmost point of the lot, excluding the pole portion of a flag lot.
+If the north line adjoins an undevelopable area other than a required yard area, the northern lot line shall be at the north edge of the undevelopable area.
+If two lot lines have an identical angle relative to a line drawn east-west, then the northern lot line shall be a line 10 feet in length within the lot parallel with and at a maximum distance from the front lot line (see Figure 2).
+North-South Dimension - The length of a line beginning at the mid-point of the northern lot line and extending in a southerly direction perpendicular to the northern lot line until it reaches a property boundary (see Figure 3).
+Protected Solar Building Line - A line on a plat or map recorded with the plat that identifies the location on a lot where a point two feet above may not be shaded by structures or non-exempt trees (see Figure 10).
+Shade - A shadow cast by the shade point of a structure or vegetation when the sun is at an altitude of 21.3 degrees and an azimuth ranging from 22.7 degrees east and west of true south.
+Shade Point - The part of a structure or non-exempt tree that casts the longest shadow onto the adjacent northern lot(s) when the sun is at an altitude of 21.3 degrees and an azimuth ranging from 22.7 degrees east and west of true south;
+except a shadow caused by a narrow object such as a mast or whip antenna, a dish antenna with a diameter of 3 feet or less, a chimney, utility pole or wire.
+The height of the shade point shall be measured from the shade point to either the average elevation at the front lot line or the elevation at the midpoint of the front lot line.
+If the shade point is located at the north end of a ridgeline of a structure oriented within 45 degrees of a true north-south line, the shade point height computed according to the preceding sentence may be reduced by 3 feet.
+If a structure has a roof oriented within 45 degrees of a true east-west line with a pitch that is flatter than 5 feet (vertical) in 12 feet (horizontal) the shade point height will be the eave of the roof.
+If such a roof has a pitch that is 5 feet in 12 feet or steeper, the shade point will be the peak of the roof (see Figures 4 and 5).
+Shade Reduction Line - A line drawn parallel to the northern lot line that intersects the shade point (see Figure 6).
+Shadow Pattern - A graphic representation of an area that would be shaded by the shade point of a structure or vegetation when the sun is at an altitude of 21.3 degrees and an azimuth ranging between 22.7 degrees east and west of true south
+(see Figure 12).
+Solar Access Height Limit - A series of contour lines establishing the maximum permitted height for non-exempt vegetation on lots affected by a
+Solar Access Permit (see Figure 11).
+Solar Access Permit - A document issued by the county that describes the maximum height that non-exempt vegetation is allowed to grow on lots to which a solar access permit applies.
+Solar Feature - A device or combination of devices or elements that does or will use direct sunlight as a source of energy for such purposes as heating or cooling of a structure, heating or pumping of water, and generating electricity.
+Examples of a solar feature include a window that contains at least 20 square feet of glazing oriented within 45 degrees east and west of true south, a solar greenhouse, or a solar hot water heater.
+A solar feature may be used for purposes in addition to collecting solar energy, including but not limited to serving as a structural member or part of a roof, wall, or window.
+A south-facing wall without windows and without other features that use or collect solar energy is not a solar feature for purposes of MCC 39.4790 through 39.4812.
+Solar Gain Line - A line parallel to the northern property line(s) of the lot(s) south of and adjoining a given lot including lots separated only by a street, that intersects the solar feature on that lot (see Figure 7).
+South or South Facing - True south, or 20 degrees east of magnetic south.
+Sun Chart - One or more photographs that plot the position of the sun between 10:30 a.m. and
+1:30 p.m. on January 21, prepared pursuant to guidelines issued by the Planning Director.
+The sunchart shall show the southern skyline through a transparent grid on which is imposed solar altitude for a 45-degree and 30 minute northern latitude in 10-degree increments and solar azimuth from true south in 15-degree increments.
+Undeveloped Area - An area that cannot be used practicably for a habitable structure because of natural conditions, such as slopes exceeding 20 percent in a direction greater than
+45 degrees east or west of true south, severe topographic relief, water bodies, or conditions that isolate one portion of a property from another portion so that access is not practicable to the unbuildable portion; or human-made conditions, such as existing development which isolates a portion of the site and prevents its further development; setbacks or development restrictions that prohibit development of a given area of a lot by law or private agreement; or existence or absence of easements or access rights that prevent development of a given area.
+Figure 1. Front Lot Line
+
+Figure 2. Northern Lot Line
+
+Figure 3. North-South Dimension of the Lot
+
+Figure 4. Height of the Shade Point of the Structure
+
+Figure 5. Shade Point Height
+
+Figure 7. Solar Gain Line
+
+Figure 8. Solar Balance Point Standard
+
+Figure 9. Solar Lot Option 1-Basic Requirements
+
+Figure 10. Solar Lot Option 2-Protected Solar Building Line
+
+Figure 11. Solar Access Height Limit
+
+Figure 12. Shadow Pattern
+
+4.D.5.b – URBAN LOW DENSITY
+RESIDENTIAL – 5 BASE ZONE (LR-5)
+§

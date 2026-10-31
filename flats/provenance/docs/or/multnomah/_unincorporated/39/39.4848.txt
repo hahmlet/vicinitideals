@@ -1,0 +1,6 @@
+39.4848  PURPOSE.
+This base zone is defined as Urban Low Density
+Residential Base zone with a minimum lot size of 7,000 square feet for one dwelling.
+For purposes of this base zone, the Urban Low
+Density Residential base zones General
+Provisions (MCC 39.4778 through 39.4786) apply.

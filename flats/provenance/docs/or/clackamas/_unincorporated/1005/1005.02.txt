@@ -1,0 +1,158 @@
+1005.02 General Site Design Standards
+
+The following site design standards apply:
+
+1 Where feasible, cluster buildings within single and adjacent developments for efficient sharing of walkways, on-site vehicular circulation, connections to adjoining sites, parking, loading, transit-related facilities, plazas, recreation areas, and similar amenities.
+
+2 Where feasible, design the site so that so that the longest building elevations can be oriented within 20 degrees of true south in order to maximize the south-facing dimensions.
+
+3 Minimum setbacks may be reduced by up to 50 percent as needed to allow improved solar access when solar panels or other active or passive solar use is incorporated into the building plan.
+
+4 A continuous, interconnected on-site walkway system meeting the following standards shall be provided.
+
+1 Walkways shall directly connect each building public entrance accessible to the public to:
+
+1 The nearest sidewalk or pedestrian pathway, and to all adjacent streets, including streets that dead-end at the development or to which the development is not oriented; and
+
+2 Accessible parking spaces.
+
+2 Walkways shall connect each building to outdoor activity areas including parking lots, transit stops, children's play areas, and plazas.
+
+3 Walkways shall be illuminated.
+Separate lighting shall not be required if existing lighting adequately illuminates the walkway.
+
+4 Walkways shall be constructed with a well-drained, hard-surfaced material or porous pavement and shall be at least five feet in unobstructed width.
+
+5 Standards for walkways through vehicular areas:
+
+1 Walkways crossing driveways, parking areas, and loading areas shall be constructed to be clearly identifiable to motorists through the use of different paving material, raised elevation, warning signs, or other similar methods.
+
+2 Where walkways are adjacent to driveways, they shall be separated by a raised curb, bollards, landscaping, or other physical barrier.
+
+3 Inside the Portland Metropolitan Urban Growth Boundary (UGB), if the distance between the building public entrance and street is 75 feet or greater and located adjacent to a driveway or in a parking lot, the walkway shall be raised, with curbs, a minimum four-foot-wide landscape strip and shade trees planted a maximum of 30 feet on center.
+
+4 The exclusive use of a painted crossing zone to make walkways identifiable to motorists may be used only for portions of walkways which are shorter than 30 feet and located across driveways, parking lots, or loading areas.
+
+5 Walkways bordering parking spaces shall be at least seven feet wide or a minimum of five feet wide when concrete bumpers, bollards, curbing, landscaping, or other similar improvements are provided which prevent parked vehicles or opening doors from obstructing the walkway.
+
+6 The interconnected onsite walkway system shall connect to walkways in adjacent developments, or stub to the adjacent property line if the adjacent land is vacant or is developed without walkways.
+
+1 Walkway stubs shall be located in consideration of topography and eventual redevelopment of the adjacent property.
+
+2 Notwithstanding the remainder of Subsection 1005.02(D)(6), walkway linkages to adjacent development shall not be required within industrial developments, to industrial developments, or to vacant industrially zoned land.
+
+5 Inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line.
+
+1 If the minimum front setback standard is less than 20 feet, the front setback may be increased to a maximum of 20 feet provided pedestrian amenities are developed within the front setback area.
+
+2 Primary building entrances for buildings used to comply with Subsection 1005.02(E), shall:
+
+1 Face the street;
+
+2 Be located at an angle facing both the street and a parking lot; or
+
+3 Be located to the side of the building, provided that the walkway connecting to the street is a minimum of eight feet wide and is developed with landscaping and pedestrian amenities.
+
+3 If a development has frontage on more than one street, Subsection 1005.02(E) must be met on only one frontage, as follows:
+
+1 If one of the streets is a major transit street, the standard shall be met on that street.
+
+2 If neither or both are a major transit street, then the standard shall be met on the street with the higher functional classification.
+
+3 If neither 1005.02(E)(3)(a) or (b) applies, then the standard shall be met on the longest frontage.
+
+6 Inside the UGB, parking lots larger than three acres in size shall be built with major on-site vehicular circulation ways that include raised walkways with curbs, a minimum four-foot-wide landscape strip, and shade trees planted a maximum of 30 feet on center.
+
+7 New retail, office, mixed use, and institutional buildings located on major transit streets shall have at least one public entrance facing a major transit street, or street intersecting a major transit street.
+
+1 A private street used to meet the standards in Subsection 1005.02(G) must have raised walking surfaces on both sides, street trees, curbs, and pedestrian-scale street lighting, and must connect at both ends to an existing or proposed street.
+
+2 If a development has frontage on more than one major transit street, this orientation requirement needs to be met on only one side.
+
+3 The public entrance orientation requirement does not apply to warehouses or industrial buildings with less than 5,000 square feet of attached offices.
+
+8 New retail, office, mixed use, multifamily, and institutional buildings located at a major transit stop shall be set back a maximum of 20 feet from at least one of the following: the major transit stop, the major transit street or an intersecting street, or a pedestrian plaza at the major transit stop or a street intersection.
+
+1 For the purpose of Subsection 1005.02(H), a building is located at a major transit stop, if:
+
+1 The building is located on a lot that has frontage on the major transit street or an intersecting street; and
+
+2 Any portion of the building is within a 200-foot radius of the major transit stop.
+
+2 Lawfully established buildings that do not comply with the maximum setback standard may have additional height added as an expansion without being brought into conformance with the standard.
+
+3 The maximum setback standard does not apply to warehouses or industrial buildings with less than 5,000 square feet of attached offices.
+
+9 In the PMU District, there shall be no vehicular parking or circulation within the front setback area.
+
+10 In the OC District, the design and siting of structures shall control public access points into office buildings, utilizing a central lobby design, entrance courtyard, internal pedestrian walkway or mall, or similar designs that protect business/professional uses from the disturbances of direct public access.
+
+11 Where a minimum floor area ratio (FAR) is required by the standards of the applicable zoning district, it shall be calculated as follows:
+
+1 Calculate the building floor area by determining the square footage of all buildings in the proposed development, including:
+
+1 Gross floor area of all commercial structures (except parking structures), including storage and mechanical equipment;
+
+2 Square footage of commercial uses in a parking structure; and
+
+3 Square footage of the footprint of a multifamily residential structure.
+
+2 Calculate the net site area by subtracting from the gross site area the following:
+
+1 Right-of-way dedications;
+
+2 Off-road (except sidewalks) trails, bikeways, or multi-purpose trails;
+
+3 Stormwater detention facilities;
+
+4 Design elements (plazas, greenways, transit stations, etc.);
+
+5 Parks;
+
+6 Civic spaces;
+
+7 Stream buffers;
+
+8 Wetlands; and
+
+9 100-year floodplain (undeveloped portion)
+
+3 Divide the building floor area by the net site area.
+The result is the FAR.
+For example, if the building floor area is 20,000 square feet and the net site area is 40,000 square feet, the FAR is 0.5.
+
+12 The following standards apply in the HDR, RCHDR, and SHD Districts:
+
+1 The minimum distance on a north-south axis between any building and a site area line north of said building shall be the horizontal distance calculated by drawing a 60-degree angle line from the top of the structure to the natural ground elevation north of the structure.
+For purposes of this provision, the "top of the structure" shall be that part of projection of the structure which first intersects a 60-degree angle line projecting toward the ground north of the building.
+(See Figure 1005-0.)
+This provision shall be modified as follows:
+
+1 Intervening streets and 15 feet of setback into the property on the north side of said street may be included in the required separation distance.
+
+2 If an area on the adjacent site north of a proposed structure is developed or committed for use as a circulation drive or parking structure or lot, that area may be included in the required separation distance, provided no existing or proposed primary use structure on the adjacent site shall fall within the required separation distance.
+
+3 If the owner of the site area to the north grants a north-south separation easement, as provided under Subsection 1005.02(L)(2), that area may be included in the required separation distance.
+
+2 An owner, or owners, of a site area may grant a north-south separation easement to the owner, or owners, of a site area to the south provided that:
+
+1 Documentation and a map of the easement is submitted with the development plans for the site areas in question;
+
+2 The development plans for the two or more site areas in question are coordinated to the maximum extent possible; and
+
+3 Buildings are sited to minimize the loss of solar access to primary use structures.
+However, this provision shall not preclude or restrict the use or development of any north-south separation easement area.
+
+3
+The minimum distance on an east-west axis between any building and a site area line, except when abutting a public, County or state road, shall be the horizontal distance calculated by drawing a 15-degree angle line from the top of the structure to the natural ground elevation east and west of the structure.
+(See Figure 1005-0.)
+
+Formula:Separation = b x .267 (tan 15 degrees)
+
+4 The north-south and east-west separation distance requirements shall not preclude structurally connecting two or more buildings on separate site areas provided that the proposed connection is approved as part of the development plans for the affected site areas.
+
+Figure 1005-0: Separation Distance Illustration
+
+1 The standards of Subsection 1005.02(L) are not subject to modification pursuant to Section 904, Height Exceptions.
+However, these standards may be modified if the modification requested is necessary to allow development of primary uses at densities allowed for the site area.
+

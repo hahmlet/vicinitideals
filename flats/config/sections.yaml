@@ -543,3 +543,40 @@ or/multnomah/portland:
   # Chapter 33.110" over "3/1/25 ... Single-Dwelling Zones"; two pages print
   # the footer there.
   page_head: '^\s*(?:Chapter\s+33\.[\d ]+\s{2,}Title 33, Plann\s*ing and Zoning|Title 33, Plann\s*ing and Zoning\s{2,}Chapter\s+33\.[\d ]+|\d{1,2}/\d{1,2}/\d{2}\s{2,}\S.*|\S.*\S\s{2,}\d{1,2}/\d{1,2}/\d{2}|\d{3}-\s*\d{0,3})\s*$'
+
+or/clackamas/_unincorporated:
+  # Clackamas County Zoning and Development Ordinance, web print of one section
+  # per page: "510.01 Purpose" at the margin over its text, printed once, no
+  # contents list. Section 604 prints the number glued to the title
+  # ("604.01Purpose"). A cross-reference wrapped to the margin has no capital
+  # after the number, and no running header or footer is printed.
+  heading: '^(?P<n>\d{3,4}\.\d{2})\s*[A-Z]'
+  # Left whole: ZDO 202 is the definitions chapter (no section headings, the
+  # web page's menu above it); the three Roadway Standards sheets (320 parking
+  # and maneuvering, drawings P100 and P200) are PDF text printed with
+  # letter-spaced words, numbered "320.1" not "320.01", and have no page map.
+  uncut: ['202.definitions', 'roadway.320', 'roadway.p100', 'roadway.p200']
+
+or/multnomah/_unincorporated:
+  # Multnomah County Code chapters 38 and 39 (county print, 4-29 style page
+  # numbers): "§ 39.4822 PRIMARY USES." at the margin, the sign extracted as
+  # U+FFFD in some prints; a chapter's first section prints without it ("39.4050-
+  # PURPOSES.", "38.3000- PURPOSES", "39.4868  PURPOSE."). A reference wrapped to
+  # the margin ("39.4080 when found", "39.2000 pursuant") has no capitals after
+  # the number. Each print opens with the zone's first section, no contents list.
+  heading: '^\s*(?:[^\s\w.]\s*)?(?P<n>3[89]\.\d{4})(?:\s*-\s*|\s+)[A-Z]{2}'
+  # Chapter 39's definitions print "PART 2 - DEFINITIONS" over section 39.2000.
+  front: [39.2000.definitions]
+  # The running header on a page's own first line, with the supplement's label
+  # on the line under it: "4-29 CHAPTER 39 - MULTNOMAH COUNTY ZONING CODE" /
+  # "CHAPTER 39 - MULTNOMAH COUNTY ZONING CODE 4-29" and, in chapter 38, "4-46
+  # Multnomah County - Chapter 38 - Columbia River Gorge National Scenic Area" /
+  # "Chapter 38 - Columbia River Gorge National Scenic Area  4-47", over "(S-1
+  # 2023)". Measured 2026-10-30 on every page start of all 23 page-mapped
+  # prints: the header sits on the page's first line in 167 of 167 and the label
+  # under it in 159 (the others open with the zone's purpose or a blank line).
+  page_head: '^\s*(?:(?:\d-\d+\s+)?(?:Multnomah County \S )?(?:CHAPTER 39 \S MULTNOMAH COUNTY ZONING CODE|Chapter 38 - Columbia River Gorge National Scenic Area)(?:\s+\d-\d+)?|\(S-\d+ \d{4}\))\s*$'
+  # Chapter 33 is Portland's code held for the county's urban pockets: the same
+  # five documents as portland/ (byte for byte), cut there once. 33.418 has no page
+  # map either.
+  uncut: ['33.100', '33.110', '33.140', '33.266', '33.418']

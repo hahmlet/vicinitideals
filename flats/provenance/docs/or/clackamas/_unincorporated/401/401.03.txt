@@ -1,0 +1,65 @@
+401.03 Definitions
+
+Unless specifically defined in Subsection 401.03 or in Section 202, Definitions, words or phrases used in Section 401 shall be interpreted to give them the same meaning as they have in common usage and to give Section 401 its most reasonable application.
+
+1 Agricultural Land:
+
+1 "Agricultural Land" as defined in Statewide Planning Goal 3 includes:
+
+1 Lands classified by the U.S. Natural Resources Conservation Service as predominantly Class I-IV soils;
+
+2 Land in other soil classes that is suitable for farm use as defined in ORS 215.203(2)(a), taking into consideration soil fertility; suitability for grazing; climatic conditions; existing and future availability of water for farm irrigation purposes; existing land use patterns; technological and energy inputs required; and accepted farming practices; and
+
+3 Land that is necessary to permit farm practices to be undertaken on adjacent or nearby agricultural lands.
+
+2 Land in capability classes other than I-IV that is adjacent to or intermingled with lands in capability classes I-IV within a farm unit, shall be inventoried as agricultural lands even though this land may not be cropped or grazed.
+
+3 "Agricultural Land" does not include land within acknowledged urban growth boundaries or land within acknowledged exception areas for Statewide Planning Goal 3 or 4.
+
+2 Commercial Agricultural Enterprise: 1. “Commercial Agricultural Enterprise” consists of farm operations that will: a. Contribute in a substantial way to the area's existing agricultural economy; and b. Help maintain agricultural processors and established farm markets. 2.
+When determining whether a farm is part of the commercial agricultural enterprise, not only what is produced, but how much and how it is marketed shall be considered.
+These are important factors because of the intent of Statewide Planning Goal 3 to maintain the agricultural economy of the state.
+
+3 Commercial Farm: A farm unit with all of the following characteristics: 1.
+The land is used for the primary purpose of obtaining a profit in money from farm use; 2.
+The net income derived from farm products is significant; and 3.
+Products from the farm unit contribute substantially to the agricultural economy, to agricultural processors, and to farm markets.
+
+4 Contiguous: Connected in such a manner as to form a single block of land.
+
+5 Date of Creation and Existence: When a lot of record or tract is reconfigured pursuant to applicable law after November 4, 1993, the effect of which is to qualify a lot of record or tract for the siting of a dwelling, the date of the reconfiguration is the date of creation or existence.
+Reconfigured means any change in the boundary of the lot of record or tract.
+
+6 Dwelling: Except as allowed for an accessory farm dwelling pursuant to Subsection 401.05(C)(9), a dwelling is a detached single-family dwelling, a manufactured dwelling, or a prefabricated structure.
+
+7 Exception Area: An area no longer subject to the requirements of Statewide Planning Goal 3 or 4 because the area is the subject of a site specific exception acknowledged pursuant to ORS 197.732 and OAR chapter 660, division 4.
+
+8 Farm or Ranch Operator: A person who operates a farm or ranch, doing the work, and making the day-to-day decisions about such things as planting, harvesting, feeding, and marketing.
+
+9 Farm or Ranch Operation: All lots of record in the same ownership that are used by the farm or ranch operator for farm use.
+
+10 Farm Use: As defined in ORS 215.203.
+As used in the definition of "farm use" in ORS 215.203:
+
+1 "Preparation" of products or by-products includes but is not limited to the cleaning, treatment, sorting, or packaging of the products or by-products; and
+
+2 "Products or by-products raised on such land" includes:
+
+1 Products or by-products raised on the farm operation where the preparation occurs;
+
+2 Products or by-products raised on other farmland provided:
+
+1 The preparation is occurring only on a tract currently employed for a farm use or farm uses other than preparation; and
+
+2 Such products or by-products are prepared in the same facilities as and in conjunction with products or by-products raised on the farm operation where the preparation occurs.
+
+11 High-Value Farmland: As defined in ORS 215.710 and OAR 660-033-0020(8).
+
+12 Irrigated: Watered by an artificial or controlled means, such as sprinklers, furrows, ditches, or spreader dikes.
+An area or tract is “irrigated” if it is currently watered, or has established rights to use water for irrigation, including such tracts that receive water for irrigation from a water or irrigation district or other provider.
+An area or tract within a water or irrigation district that was once irrigated shall continue to be considered "irrigated" even if the irrigation water was removed or transferred to another tract.
+
+13 NRCS Web Soil Survey: The official source of certified soils data available online that identifies agricultural land capability classes, developed and maintained by the Natural Resources Conservation Service as of January 1, 2016, for agricultural soils that are not high-value, and as of December 6, 2007, for high-value agricultural soils.
+
+14 Tract: One or more contiguous lots of record under the same ownership.
+

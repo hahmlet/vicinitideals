@@ -1,0 +1,147 @@
+406.04 Uses Permitted
+
+Uses permitted in the TBR District are listed in Table 406-1, Permitted Uses in the TBR District.
+
+1 As used in Table 406-1:
+
+1 "A" means the use is allowed.
+
+2 “C” means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+3 “P” means the use is a primary use.
+
+4 “Type II” means the use requires review of a Type II application, pursuant to Section 1307, Procedures.
+
+5 “Type III” means the use requires review of a Type III application, pursuant to Section 1307, Procedures.
+
+6 Numbers in superscript correspond to the notes that follow Table 406-1.
+
+2 Permitted uses are subject to the applicable provisions of Subsection 406.07; Subsection 406.08; Section 1000, Development Standards; and Section 1100, Development Review Process.
+
+Table 406-1: Permitted Uses in the TBR District
+
+Farm and Forest Uses
+
+Type
+Use
+Subject To
+P
+Forest operations or forest practices including, but not limited to, reforestation of forest land, road construction and maintenance, harvesting of a forest tree species, application of chemicals and disposal of slash where such uses pertain to forest uses and operations.
+Inside the Portland Metropolitan Urban Growth Boundary, refer to Subsection 1002.02 regarding a development restriction that may apply if excessive tree removal occurs.
+P
+Temporary on-site structures which are auxiliary to and used during the term of a particular forest operation.
+P
+Physical alterations to the land auxiliary to forest practices including, but not limited to, those made for purposes of exploration, mining, commercial gravel extraction and processing, landfills, dams, reservoirs, road construction, or recreational facilities.
+P
+Farm use as defined in ORS 215.203.
+Marijuana production is subject to Section 841.
+A
+Uses and structures customarily accessory and incidental to a farm or forest use, only if a primary farm or forest use exists.
+P, TYPE II
+For a period not to exceed one year, temporary portable facility for the primary processing of forest products grown on-site.
+406.05(B)(1)
+C
+Permanent facility for the primary processing of forest products.
+406.05(A)(1), (6) &(B)(1)
+C
+Permanent logging equipment repair and storage.
+406.05(A)(1) &(6)
+C
+Log scaling and weigh stations.
+406.05(A)(1) & (6)
+
+Natural Resource Uses
+
+Type  Use                                                                                                                            Subject To
+A     Uninhabitable structures accessory to fish and wildlife enhancement.
+C     Forest management research and experimentation facilities as described by ORS 526.215 or where accessory to forest operations  406.05(A)(1)
+
+Residential Uses
+
+Type           Use                                                                                                                      Subject To
+A              Uses and structures customarily accessory and incidental to a dwelling, only if a lawfully established dwelling exists.
+P, TYPE II[1]  Alteration, restoration, or replacement of a lawfully established dwelling.                                              406.05(A)(3) &(C)(1)
+P, TYPE II     Forest lot of record dwelling.                                                                                           406.05(A)(3), (4), (5) & (C)(2)
+P, TYPE II     Forest template test dwelling.                                                                                           406.05(A)(3), (4), (5) & (C)(3)
+P, TYPE II     160 acre forest dwelling.                                                                                                406.05(A)(3), (4), (5) & (C)(4)
+P, TYPE II     200 acre noncontiguous tract forest dwelling.                                                                            406.05(A)(3), (4), (5) & (C)(5)
+P, TYPE II     Caretaker residences for public parks and public fish hatcheries.                                                        406.05(A)(2) & (5)
+P, TYPE II     Temporary forest labor camp for a period not to exceed one year.
+P, TYPE II     Temporary dwelling for care, subject to Subsection 1204.04.                                                              406.05(A)(1), (2) & (C)(6)
+P, TYPE II     Accessory dwelling supporting family forestry.                                                                           406.05(C)(7)
+
+Commercial Uses
+
+Type        Use                                                      Subject To
+A           Family child care home
+A, TYPE II  Home occupation                                          406.05(A)(1), (2), (5) & (D)(1) & Section 822
+C           Home occupation to host events                           406.05(A)(1), (2), (5) & (D)(1) & Section 806
+C           Home occupation for canine skills training               406.05(A)(1), (2) (5) & (D)(1) & Section 836
+C           Private accommodations for fishing on a temporary basis  406.05(A)(1), (2), (5) & (D)(2)
+C           Private seasonal accommodations for fee based hunting    406.05(A)(1), (5) & (D)(3)
+
+Mineral, Aggregate, Oil and Gas Uses
+
+Type  Use                                                                                                                                                                                                                                                                                                                                                                Subject To
+P     Exploration for mineral and aggregate resources as defined in ORS chapter 517 and subject to the requirements of the Department of Geology and Mineral Industries
+C     Mining and processing of oil, gas, or other subsurface resources, as defined in ORS chapter 520, and not otherwise permitted under the use listing in this table that immediately follows this one (e.g., compressors, separators and storage serving multiple wells), and mining and processing of aggregate and mineral resources as defined in ORS chapter 517  406.05(A)(1) & (6)
+C     Exploration for and production of geothermal, gas, oil, and other associated hydrocarbons, including the placement and operation of compressors, separators and other customary production equipment for an individual well adjacent to the well head                                                                                                              406.05(A)(1) & (6)
+
+Transportation Uses
+
+Type        Use                                                                                                                                                                                                                                                                                                                                              Subject To
+P           Widening of roads within existing rights-of-way in conformance with Chapter 5, Transportation System Plan, of the Comprehensive Plan.
+P           Climbing and passing lanes within the right of way existing as of July 1, 1987.
+P           Reconstruction or modification of public roads and highways, including the placement of utility facilities overhead and in the subsurface of public roads and highways along the public right of way, but not including the addition of travel lanes, where no removal or displacement of buildings would occur, or no new land parcels result.
+P           Temporary public road and highway detours that will be abandoned and restored to original condition or use at such time as no longer needed.
+P           Minor betterment of existing public road and highway related facilities such as maintenance yards, weigh stations, and rest areas, within right of way existing as of July 1, 1987, and contiguous public-owned property utilized to support the operation and maintenance of public roads and highways.
+P, TYPE II  Construction of additional passing and travel lanes requiring the acquisition of right-of-way but not resulting in the creation of new land parcels.                                                                                                                                                                                             406.05(A)(1)
+P, TYPE II  Reconstruction or modification of public roads and highways involving the removal or displacement of buildings but not resulting in the creation of new land parcels.                                                                                                                                                                            406.05(A)(1)
+P, TYPE II  Improvement of public roads and highway-related facilities, such as maintenance yards, weigh stations, and rest areas, where additional property or right-of-way is required but not resulting in the creation of new land parcels.                                                                                                              406.05(A)(1)
+P, TYPE II  Parking of up to seven dump trucks and seven trailers, subject to ORS 215.311.                                                                                                                                                                                                                                                                   406.05(A)(1)
+C           Aids to navigation and aviation.                                                                                                                                                                                                                                                                                                                 406.05(A)(1) & (6)
+C           Expansion of existing airports.                                                                                                                                                                                                                                                                                                                  406.05(A)(1)
+C           Temporary asphalt and concrete batch plants as accessory uses to specific highway projects.                                                                                                                                                                                                                                                      406.05(A)(1)
+C           Roads, highways, and other transportation facilities and improvements not otherwise allowed under this Ordinance.                                                                                                                                                                                                                                406.05(A)(1) &(E)(1)
+
+Utility and Solid Waste Disposal Facility Uses
+
+Type             Use                                                                                                                                                                                                                                                                                    Subject To
+See Table 835-1  Wireless telecommunication facilities                                                                                                                                                                                                                                                  Section 835
+A                Local distribution lines (i.e., electric, telephone, natural gas) and accessory equipment (i.e., electric distribution transformers, poles, meter cabinets, terminal boxes, pedestals), or equipment which provides service hookups, including water service hookups.
+P                Water intake facilities, canals and distribution lines for farm irrigation and ponds.
+A                Solar energy systems.
+A                Rainwater collection systems.
+A                Electric vehicle charging stations for residents and their nonpaying guests.
+A                Meteorological towers.
+P, TYPE II       Wind energy power production systems as an accessory use.                                                                                                                                                                                                                              406.05(F)(1)
+C                Water intake facilities, related treatment facilities, pumping stations, and distribution lines.                                                                                                                                                                                       406.05(A)(1) & (6)
+C                Reservoirs and water impoundments.                                                                                                                                                                                                                                                     406.05(A)(1), (2), (5) & (6)
+C                Disposal site for solid waste for which the Oregon Department of Environmental Quality has granted a permit under ORS 459.245, together with equipment, facilities, or buildings necessary for its operation.
+A composting facility is subject to Section 834, Composting Facilities.  406.05(A)(1) & (6)
+C                Commercial utility facilities for the purpose of generating power.
+A power generation facility shall not preclude more than 10 acres from use as a commercial forest operation unless an exception is taken pursuant to OAR chapter 660, division 4.                                   406.05(A)(1) & (6)
+C                New electric transmission lines with right-of-way widths of up to 100 feet as specified in ORS 772.210.
+New distribution lines (e.g., gas, oil, geothermal, telephone, fiber optic cable) with rights-of-way 50 feet or less in width.                                                 406.05(A)(1)
+C                Television, microwave and radio communication facilities and transmission towers                                                                                                                                                                                                       406.05(A)(1), (6) & (F)(2)
+
+Parks and Public/Quasi-Public Uses
+
+Type  Use                                                                                                               Subject To
+P     Private hunting and fishing operations without any lodging accommodations
+P     Towers and fire stations for forest fire protection
+C     Fire stations for rural fire protection                                                                           406.05(A)(1) & (6)
+C     Youth camps on 40 acres or more, subject to OAR 660-006-0031                                                      406.05(A)(1) & (3)
+C     Cemeteries                                                                                                        406.05(A)(1) & (6)
+C     Firearms training facility as provided in ORS 197.770(2)                                                          406.05(A)(1) & (6)
+C     Private parks and campgrounds                                                                                     406.05(A)(1), (2), (6) & (G)(1)
+C     Public parks including only those uses specified under OAR 660-034-0035 or 660-034-0040, whichever is applicable  406.05(A)(1), (6) & (G)(2)
+
+Outdoor Gatherings
+
+Use          Subject To                                                                                                                                                                                                                                                                    Subject To
+P            An outdoor mass gathering as defined in ORS 433.735, subject to ORS 433.735 to 433.770
+P, TYPE III  An outdoor mass gathering of more than 3,000 persons, any part of which is held outdoors and which continues or can reasonably be expected to continue for a period exceeding that allowable for an outdoor mass gathering as defined in ORS 433.735, subject to ORS 433.763  406.05(A)(1)
+
+[1] Type II review is required except as established by Subsections 406.05(C)(1)(h) or (i).
+

@@ -1,0 +1,63 @@
+§ 39.4075 REVIEW USES.
+The following uses may be permitted when found by the approval authority to satisfy the applicable standards of this Chapter:
+(A) Replacement or restoration of an existing lawfully established habitable dwelling more than 100 feet from the existing dwelling.
+(1) In the case of a replacement dwelling, the existing dwelling is removed, demolished or converted to an allowable nonresidential use within three months of the completion or occupancy of the replacement dwelling.
+(2) Restoration or replacement due to fire, other casualty or natural disaster shall commence within one year from the occurrence of the fire, casualty or natural disaster.
+(B) The following dwellings:
+Base
+Zone
+Large
+Acreage
+Dwelling - pursuant to MCC
+39.4085 and all other applicable criteria.
+Template
+Dwelling - pursuant to MCC
+39.4090 and all other applicable criteria.
+Heritage
+Tract
+Dwelling - pursuant to MCC
+39.4095 and all other applicable criteria.
+CFU YES YES YES
+CFU-
+1
+YES NO NO
+CFU-
+2
+YES YES YES
+CFU-
+3
+NO NO NO
+CFU-
+4
+YES YES YES
+CFU-
+5
+NO YES NO
+(C) A temporary dwelling for health hardship pursuant to all applicable approval criteria, including but not limited to MCC 39.8700 and
+39.4110.
+(D) An asphalt and concrete batch plant accessory to a specific highway project pursuant to MCC 39.4100.
+
+(E) A mobile home during the construction or reconstruction of a residence allowed under
+MCC 39.4070 (D) or MCC 39.4075 (A) or (B), provided that the mobile home is removed, demolished or converted to an allowable nonresidential use within three months of the completion of the dwelling pursuant to all applicable approval criteria, including but not limited to MCC 39.4100, 39.4110 and 39.4115.
+(1) In the CFU-4 zone, the mobile home may not exceed a period of two years.
+(F) Off-street parking and loading as required by MCC 39.6500 through MCC
+39.6600.
+(G) Lot Line Adjustment pursuant to all applicable approval criteria, including but not limited to the provisions of MCC 39.4130.
+(H) Placement of structures necessary for continued public safety, or the protection of essential public services or protection of private or public existing structures, utility facilities, roadways, driveways, accessory uses and exterior improvements damaged during an emergency/disaster event.
+This includes replacement of temporary structures erected during such events with permanent structures performing an identical or related function.
+Land use proposals for such structures shall be submitted within 12 months following an emergency/disaster event.
+Applicants are responsible for all other applicable local, state and federal permitting requirements.
+(I) Wireless communications facilities that employ concealment technology or co-location as described in MCC 39.7710(B) pursuant to the applicable approval criteria of MCC 39.7700 through MCC 39.7765.
+(J) Lots of Exception pursuant to all applicable approval criteria, including, but not limited to MCC 39.4125, MCC 39.4135 and Part
+9 of this Chapter.
+(K) Consolidation of Parcels and Lots pursuant to MCC 39.9200.
+(L) Structures or uses customarily accessory or incidental to any use permitted or approved in the CFU, which do not meet the “accessory structures” standard in MCC 39.4070 Allowed
+Uses, but which meet the following provisions:
+(1) The Accessory Structure shall not be designed or used, whether temporarily or permanently, as a primary dwelling, accessory dwelling unit, apartment, guesthouse, housing rental unit, sleeping quarters or any other residential unit.
+(2) The Accessory Structure shall not contain a bathing tub.
+(3) Any toilet or bathing facilities, such as a shower, shall be located on the ground floor of any multi-story building.
+(4) An Accessory Structure containing a toilet or bathing facilities shall not contain Cooking Facilities.
+(5) The Accessory Structure shall not contain a mattress, bed, Murphy bed, cot, or any other similar item designed to aid in sleep as a primary purpose, unless such item is disassembled for storage.
+(6) The applicant must show that building features or combined building footprints exceeding the Allowed Use provisions are the minimum possible departure from the Allowed Use standards to accommodate the use.
+(7) Compliance with MCC 39.8860 is required.
+(M) A Type B home occupation when approved pursuant to MCC 39.8850.
