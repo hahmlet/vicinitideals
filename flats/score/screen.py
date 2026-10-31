@@ -208,6 +208,35 @@ CLEAR_OBJECTIVE = "CLEAR_OBJECTIVE"
 #: RED -- nor a planned development, a county review use or a state-law path,
 #: each of which is its own procedure with its own standards.
 CLEAR_OBJECTIVE_RELIEF: frozenset[str] = frozenset({"conditional_use", "judgement_review"})
+#: The lot lies in Bethany's Area of Special Concern 1, whose development
+#: must follow the 1994 Central Bethany Planned Development's conditions of
+#: approval, which are not held. Steph 2026-10-30: GREEN WITH A FLAG, below
+#: the yellow line (BETHANY-ASC1-PD-CONDITIONS, FOLLOWUPS 130).
+BETHANY_ASC1_PD = "BETHANY_ASC1_PD"
+#: Site facts a traced area answers whose only rule here is a record below
+#: the yellow line: the fact holding raises the flag and moves no colour.
+AREA_FLAGS: dict[str, tuple[str, str]] = {
+    "bethany_asc_1": ("BETHANY-ASC1-PD-CONDITIONS", BETHANY_ASC1_PD),
+}
+#: Site facts a traced area answers that send every application through a
+#: review deciding on more than measured standards, each with its citation:
+#: GREEN with CLEAR-OBJECTIVE where ORS 197A.400 reaches the lot, else a
+#: closer look with REVIEW-CONDITIONS (Steph 2026-10-14, 2026-10-15).
+AREA_REVIEWS: dict[str, str] = {
+    "bethany_asc_1a": (
+        "Bethany Community Plan, Area of Special Concern 1A design element 2: "
+        "every development application through the Type III procedure"
+    ),
+}
+
+
+def area_review(config: Configuration | None) -> str | None:
+    """The first traced-area review (:data:`AREA_REVIEWS`) this lot holds."""
+    if config is None:
+        return None
+    return next((n for n in sorted(AREA_REVIEWS) if n in config.conditions), None)
+
+
 #: The code requires one driveway approach for every N dwelling units and the
 #: pod's plan draws one drive (Oregon City 16.12.035.F, a requirement: Steph
 #: 2026-09-30). Nothing here holds a second approach's geometry -- its width,
@@ -2571,6 +2600,8 @@ def screen(
         # Where ORS 197A.400 reaches, a condition the review adds must itself
         # be clear and objective (Steph 2026-10-15): flagged, not yellow.
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
+    elif area_review(config) is not None and not reach:
+        closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
 
@@ -3173,6 +3204,13 @@ def _account(
         flag(code, by, fact=review, source=_cite(rules, REVIEW_FIELDS[review]))
     if cleared_use is not None:
         flag("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE, fact=cleared_use[0], source=cleared_use[1])
+    if (area := area_review(config)) is not None:
+        code, by = ("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE) if reach else ("REVIEW-CONDITIONS", CLOSER_LOOK_REVIEW_CONDITIONS)
+        flag(code, by, fact=area, source=AREA_REVIEWS[area])
+    if config is not None:
+        for name, (code, by) in sorted(AREA_FLAGS.items()):
+            if name in config.conditions:
+                flag(code, by, fact=name, source="drawn")
     missing = approaches_missing(rules, design)
     if missing:
         flag(

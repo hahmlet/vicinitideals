@@ -676,14 +676,63 @@ RULINGS: dict[str, dict[str, str]] = {
             "of the North Bethany Subarea Plan, named by CDC 390 for the "
             "yards along Kaiser Road; a community-plan area, not a district."
         ),
-        "P17": (
-            "not-a-zone: a street label. The North Bethany plan numbers its "
-            "streets, 'Primary Street (P17) follows the northern boundary of "
-            "the future Beaverton School District' (north-bethany#L2898)."
+        # The Bethany Community Plan's map pages, stored 2026-10-30 for
+        # ASC 1 (FOLLOWUPS 130), print their street and city labels one
+        # word a line, split where the label bends (bethany#L1454-L1459,
+        # L1546-L1556): "NW KAISER RD", "NW THOMPSON RD", "NW MILLER RD".
+        "BEAVERTON": (
+            "not-a-zone: the City of Beaverton's name on a Bethany Community "
+            "Plan map (bethany#L1502, L1603)."
         ),
-        "P18": (
-            "not-a-zone: a street label, 'Primary Street (P18) follows the "
-            "southern boundary' of the same school site (north-bethany#L2900)."
+        "ILLER": (
+            "not-a-zone: the end of the map label NW MILLER RD, split over "
+            "two lines (bethany#L1552-L1555)."
+        ),
+        "ISER": (
+            "not-a-zone: the end of the map label NW KAISER RD, split over "
+            "two lines (bethany#L1456-L1459)."
+        ),
+        "KA": (
+            "not-a-zone: the start of the map label NW KAISER RD, split over "
+            "two lines (bethany#L1456-L1459)."
+        ),
+        "NW": (
+            "not-a-zone: the compass prefix of street names on the Bethany "
+            "Community Plan maps (NW Kaiser Rd, bethany#L1456)."
+        ),
+        "PSON": (
+            "not-a-zone: the end of the map label NW THOMPSON RD, split over "
+            "two lines (bethany#L1548-L1551)."
+        ),
+        "RD": (
+            "not-a-zone: 'road', the last word of the map's street labels "
+            "(NW KAISER RD, bethany#L1456-L1459)."
+        ),
+        "THOM": (
+            "not-a-zone: the start of the map label NW THOMPSON RD, split "
+            "over two lines (bethany#L1548-L1551)."
+        ),
+        # The North Bethany text's September 2026 edition (FOLLOWUPS 133)
+        # prints Table 2's column heads and an agency one a line.
+        "CWS": (
+            "not-a-zone: Clean Water Services, the sewer and stormwater "
+            "provider (north-bethany#L177)."
+        ),
+        "HEIGHT/": (
+            "not-a-zone: a column head, 'HEIGHT/ SPREAD (FEET)', of the North "
+            "Bethany Street Tree Guide (north-bethany#L3977-L3981)."
+        ),
+        "SPREAD": (
+            "not-a-zone: a column head, 'HEIGHT/ SPREAD (FEET)', of the North "
+            "Bethany Street Tree Guide (north-bethany#L3977-L3981)."
+        ),
+        # P17 and P18 left this list 2026-10-30: the September 2026 North
+        # Bethany text (FOLLOWUPS 133) prints them mid-line, and the reader
+        # now sees P3 where that sentence ends.
+        "P3": (
+            "not-a-zone: a street label, 'intersects with Primary Street "
+            "(P3)', the North Bethany plan's numbered streets "
+            "(north-bethany#L3359-L3363)."
         ),
         "RPZ": (
             "not-a-zone: the runway protection zone of an airport, defined "

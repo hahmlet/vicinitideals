@@ -1,12 +1,12 @@
 WASHINGTON COUNTY
 COMPREHENSIVE PLAN
-VOLU
-ME VIII
+VOLUME V
+III
 BETHANY COMMUNITY PLAN
 Including the North Bethany Subarea Plan
-August 2026
+September 2026
 BETHANY COMMUNITY PLAN
-Overview - Page 1 - August 2026
+Page 1 - September 2026
 BETHANY COMMUNITY PLAN
 
 The information on this community plan is representation of official maps and text filed with
@@ -23,13 +23,13 @@ Planning and Development Services | Long Range Planning
 155 N First Avenue, Suite 350 MS14 | Hillsboro, OR 97124
 503-846-3519 | lutplan@washingtoncountyor.gov
 
-TABLE OF CONTENTS
-
 CHAPTER 1
-West Bethany, Central Bethany, Springville, Arbor Oaks, & Thompson Road Subarea Plans
+West Bethany, Central Bethany, Springville, Arbor Oaks, & Thompson Road
+Subarea Plans
 
+TABLE OF CONTENTS
 ORDINANCE & PLAN AMENDMENT HISTORY ................................................................................. 2
-OVERVIEW ....................................................................................................................................... 6
+OVERVIEW ....................................................................................................................................... 7
 CHAPTER 1..................................................................................................................................... 10
 THE RELATIONSHIP OF COMPREHENSIVE PLAN ELEMENTS ......................................................... 10
 Planning Context ..................................................................................................................... 10
@@ -46,10 +46,10 @@ Transportation .................................................................
 Services ................................................................................................................................... 16
 COMMUNITY PLAN OVERVIEW ..................................................................................................... 16
 BETHANY COMMUNITY PLAN
-Overview - Page 2 - August 2026
+Page 2 - September 2026
 Community Design .................................................................................................................. 17
 SUBAREAS ..................................................................................................................................... 19
-West Bethany .......................................................................................................................... 20
+West Bethany .......................................................................................................................... 19
 Central Bethany ...................................................................................................................... 21
 Thompson ............................................................................................................................... 28
 Springville ................................................................................................................................ 29
@@ -60,70 +60,68 @@ Local Street Connectivity ......................................................
 Transit ..................................................................................................................................... 33
 Bicycle-Pedestrian Pathways .................................................................................................. 33
 Pedestrian Connectivity Areas ................................................................................................ 33
-TABLE OF THE DISTRIBUTION OF PLANNED LAND USES - 1980 ................................................... 34
-MAPS ……………………………………………………………………………………………………………………………….……. 35
+TABLE OF THE DISTRIBUTION OF PLANNED LAND USES - 1980 ................................................... 35
+MAPS ……………………………………………………………………………………………………………………………….……. 36
+
 ORDINANCE & PLAN AMENDMENT HISTORY
+
 Ordinance or
 Plan Amendment
 Number
 Adoption
 Date Taxlots Action
-Ord. 263, Ord.
-264, Ord. 265
-6/28/83 Adopted the Community Plan
-Ord. 278, Ord.
-279, Ord. 280
-12/27/83 Text changes
-Ord. 345 10/24/84 Historic/cultural resources and traffic
+Ord. 263, 264,
+and 265
+6/28/83  Adopted the Community Plan.
+Ord. 278, 279,
+and Ord. 280
+12/27/83  Text changes.
+Ord. 345 10/24/84  Historic/cultural resources and traffic
 circulation.
-Ord. 420 10/27/92 Public transportation facilities
+Ord. 420 10/27/92  Public transportation facilities.
 MSD 92-472 10/27/92 1N118 200
 (part)
-Annexed to the urban area
+Annexed to the urban area.
 92-713-PA 4/28/93 1N118 200
 (part)
-AF5 to INST
+AF5 to INST.
 94-468-S 3/3/95 1N1 21D Plan development application approval NC
-area brought into community plan
-Ord. 471 10/31/95 Creation of Major Transit Stop Areas
-96-028-PA 4/3/96 1N1 20 600
-(part)
-Removal of Open Space designation
+area brought into community plan.
+Ord. 471 10/31/95  Creation of Major Transit Stop Areas.
 BETHANY COMMUNITY PLAN
-Overview - Page 3 - August 2026
+Page 3 - September 2026
 Ordinance or
 Plan Amendment
 Number
-
 Adoption
-Date
-
-Taxlots
-
-Action
-Ord. 480 9/27/96  The Relationship of Comp Plan Elements is
-amended
+Date Taxlots Action
+96-028-PA 4/3/96 1N1 20 600
+(part)
+Removal of Open Space designation.
+Ord. 480 9/27/96  The Relationship of Comprehensive Plan
+Elements is amended.
 97-490-PA 6/9/98 1N1 19 10001 1) Change 8.38 acres of R24 to 6.12 gross
 acres of NC (for a total of 7.38 net acres of
 NC on the site) and 2.442 acres of OC; 2)
 Change all of the R15 to R24; and 3) Amend
 the text of the West Bethany Subarea
 concerning NC.
-98-516-PA 1/20/99 1N1 17D 800 &
-802,
+98-516-PA 1/20/99 1N1 17D 800
+and 802, and
 1N1 17DD 4200
-& 14300
+and 14300
 Remove Open Space designation from
 vacated BPA easement.  Place Open Space
 designation on a second BPA easement.
-Ord. 546 10/26/99  Urban Reserve Area 65
-Ord. 551 7/6/00  Metro’s Regional Parking Policy/Title 2
-Ord. 552 8/24/00  Metro’s Regional Accessibility Plan/Title 6
-Ord. 536 9/22/00  Amends Land Use District Map
-01-279-PA 10/17/01 1N1 17C 500 &
-600
+Ord. 546 10/26/99  Urban Reserve Area 65.
+Ord. 551 7/6/00  Metro’s Regional Parking Policy/Title 2.
+Ord. 552 8/24/00  Metro’s Regional Accessibility Plan/Title 6.
+Ord. 536 9/22/00  Amends Land Use District Map.
+01-279-PA 10/17/01 1N1 17C 500
+and 600, and
 1N1 18 601,
-690, 700 & 800
+690, 700, and
+800
 New text added as Design Element 6 to the
 Springville Subarea and an exception to
 Statewide Planning Goal 3 (Agricultural
@@ -132,150 +130,138 @@ identify 109 acres of land located in the
 Bethany community as an exception area.
 01-443-PA 11/7/01 1N1 19BC
 11000, 11500,
-11600 & 11700
+11600, and
+11700
 Relocate NC/OC boundary and change 0.1-
-acre site from R24 to NC
+acre site from R24 to NC.
 Ord. 588A 10/29/02  Washington County 2020 Transportation
 Plan added a Functional Classification Map
 to this plan.
 Ord. 610A 10/28/03  Modified the Transportation Section text of
 the Background Summary in this
-community plan to reflect the updated TSP.
-Ord. 620 4/6/04 1N121DD05500 Amends Land Use District Map for tax lot to
-change 1.9-acre site from R9 to NC
-Ord. 615B 4/27/04  UGB expansion/North Bethany Subarea
-created.
+community plan to reflect the updated
+Transportation System Plan.
 BETHANY COMMUNITY PLAN
-Overview - Page 4 - August 2026
+Page 4 - September 2026
 Ordinance or
 Plan Amendment
 Number
-
 Adoption
-Date
-
-Taxlots
-
-Action
+Date Taxlots Action
+Ord. 620 4/6/04 1N121DD05500 Amends Land Use District Map for tax lot to
+change 1.9-acre site from R9 to NC.
+Ord. 615B 4/27/04  UGB expansion/North Bethany Subarea
+created.
 03-304-PA 5/24/05 1N1 21BA 101
-&
+and
 1N1 22BB 6900
 Change from EFU to R6.  Add to the
 Springville subarea of the Bethany
 Community Plan.  Amend the Significant
 Natural and Cultural Resources Map to Goal
 5 resources for the area as well as an Open
-Space /Pathways designation.
+Space/Pathways designation.
 Ord. 649 10/25/05  Amends Central Bethany Subarea text to
 make housekeeping and general update
 changes.
 ORD. 420A
 modification
-10/27/92  A text inaccuracy in the ‘General Design
-Elements’ section as portrayed in adopted
+10/27/92  A text inaccuracy in the General Design
+Elements section, as portrayed in adopted
 A-Engrossed Ord. 420, was corrected.
 Ord. 702A 10/28/08  Amends the Bethany Community Plan
 Relating to New Design Elements for Area
-of Special Concern 1 and Creating Area of
-Special Concern 1A.
+of Special Concern (ASC) No. 1 and Creating
+Area of Special Concern (ASC) No. 1A.
 Ord. 712A 10/27/09  Amends the Bethany Community Plan by
 creating the Arbor Oaks Subarea.
 Ord. 730A 10/26/10  Amends the Bethany Community Plan by
-creating two chapters:
-Chapter 1 - Bethany Community Planning
-Area,
-(excluding the North Bethany Subarea)
-Chapter 2 - North Bethany Subarea Plan.
+creating two chapters: Chapter 1 - Bethany
+Community Planning Area (excluding the
+North Bethany Subarea) and Chapter 2 -
+North Bethany Subarea Plan.
 Ord. 739A 10/25/11  Amends the Bethany Community Plan
 Chapter 2 - North Bethany Subarea Plan,
-including the new Urban/Rural Edge Map
+including the new Urban/Rural Edge Map.
 Ord. 744A 5/24/12  Amends the Bethany Community Plan
-Chapter 2 - North Bethany Subarea Plan
+Chapter 2 - North Bethany Subarea Plan.
 Ord. 745A 7/26/12  Amends the Bethany Community Plan
-Chapter 2 - North Bethany Subarea Plan
-Ord. 758 11/23/12  Amends the Bethany Community Plan
-Chapter 2 - North Bethany Subarea Plan
-Ord. 771A 11/20/13  Amends the Bethany Community Plan
-Chapter 2 - North Bethany Subarea Plan
-Ord. 789A 10/28/14  Amends the Bethany Community Plan
-Chapters 1 & 2 (North Bethany Subarea
-Plan)
+Chapter 2 - North Bethany Subarea Plan.
+Ord. 758 11/23/12  Amends the Bethany Community Plan.
 BETHANY COMMUNITY PLAN
-Overview - Page 5 - August 2026
+Page 5 - September 2026
 Ordinance or
 Plan Amendment
 Number
-
 Adoption
-Date
-
-Taxlots
-
-Action
+Date Taxlots Action
+Chapter 2 - North Bethany Subarea Plan.
+Ord. 771A 11/20/13  Amends the Bethany Community Plan
+Chapter 2 - North Bethany Subarea Plan.
+Ord. 789A 10/28/14  Amends the Bethany Community Plan
+Chapters 1 and 2 - North Bethany Subarea
+Plan.
 Ord. 790A 10/28/14  Amends the Bethany Community Plan
-Chapters 1 & 2 (North Bethany Subarea
-Plan)
+Chapters 1 and 2 - North Bethany Subarea
+Plan.
 Ord. 809A 8/19/16  Amends the Bethany Community Plan
-Chapter 2 (North Bethany Subarea Plan)
+Chapter 2 - North Bethany Subarea Plan
 neighborhood design elements in
-Northwest & Northeast Neighborhood
+Northwest & Northeast Neighborhood.
 Ord. 801A 10/25/16  Amends the Bethany Community Plan
-Chapter 2 (North Bethany Subarea Plan)
+Chapter 2 - North Bethany Subarea Plan
 relating to development of density
 restricted lands and the natural features
-buffer with fencing
+buffer with fencing.
 Ord. 843 9/25/18  Amends the Bethany Community Plan
-Chapter 2 (North Bethany Subarea Plan) to
+Chapter 2 - North Bethany Subarea Plan to
 adjust alignment of Road A and remove
 segment of Primary Street P4 and Primary
-Street P16
+Street P16.
 Ord. 838A 10/23/18  Amends the Bethany Community Plan
-Chapter 2 (North Bethany Subarea Plan) to
+Chapter 2 - North Bethany Subarea Plan to
 add requirements applicable to future
 development within the North Bethany
-Main Street area
+Main Street area.
 Ord. 846A 5/28/19  Amends the Bethany Community Plan
-Chapter 2 (North Bethany Subarea Plan)
-Main Street Urban Design Plan
+Chapter 2 - North Bethany Subarea Plan
+Main Street Urban Design Plan.
 Ord. 866 9/1/20  Map 4.1, Significant Natural and Cultural
 Resources, Chapter 1, is amended to
-accurately reflect North Bethany Resources
+accurately reflect North Bethany Resources.
+BETHANY COMMUNITY PLAN
+Page 6 - September 2026
+Ordinance or
+Plan Amendment
+Number
+Adoption
+Date Taxlots Action
 Ord. 889 2/7/23  Affected Chapter 1 maps amended to add
 text referencing North Bethany Subarea
-Plan maps, Chapter 2
+Plan maps, Chapter 2.
 Ord. 901A 11/5/24  Amends the Bethany Community Plan
-Chapters 1 & 2 (North Bethany Subarea
-Plan) text, design elements, and the
+Chapters 1 and 2 - North Bethany Subarea
+Plan text, design elements, and the
 Significant Natural and Cultural Resources
 Maps for the urban unincorporated area to
 reflect updates to the County’s state-wide
-planning Goal 5 SNR program
-BETHANY COMMUNITY PLAN
-Overview - Page 6 - August 2026
-Ordinance or
-Plan Amendment
-Number
-
-Adoption
-Date
-
-Taxlots
-
-Action
+planning Goal 5 SNR program.
 Ord. 903 10/15/24  Amends plan text and deletes maps relating
 to parking, to conform with recent changes
 to state Transportation Planning Rule (TPR)
-requirements as a result of state
--a
-dopted
-Climate-Fri
-endly and Equitable
-Communities (CFEC) rules
+requirements as a result of state-adopted
+Climate-Friendly and Equitable
+Communities (CFEC) rules.
 Ord. 914 7/7/26  Amends the Significant Natural and Cultural
 Resources Maps to reflect minor SNR
 boundary adjustments on individual
-properties
+properties.
+Ord. 915 8/25/26  Amends plan to reflect changes in the
+community involvement program and
+update outdated references.
 
+BETHANY COMMUNITY PLAN
+Overview - Page 7 - September 2026
 OVERVIEW
 
 The Bethany Community Plan reflects the culmination of two distinct planning efforts.  The
@@ -303,8 +289,6 @@ comprise the North Bethany Subarea.
 
 The design elements and standards included in the North Bethany Subarea Plan were
 developed through a multi-year planning process to be consistent with Title 11 of Metro’s
-BETHANY COMMUNITY PLAN
-Overview - Page 7 - August 2026
 Urban Growth Management Functional Plan.  In addition, the North Bethany Subarea Plan takes
 into account the specific conditions placed on the area when it was added to the UGB.
 
@@ -348,12 +332,13 @@ I
 * Printing map at a size other than 8.5x11 will affect stated scale.
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 10 - August 2026
+Page 10 - September 2026
 CHAPTER 1
 West Bethany, Central Bethany, Springville,
 Arbor Oaks, & Thompson Subarea Plans
 
 THE RELATIONSHIP OF COMPREHENSIVE PLAN ELEMENTS
+
 The Bethany Community Plan is one of a number of planning elements which in total comprise
 the Washington County Comprehensive Plan.  The intent of this section is to provide the reader
 of the Bethany Community Plan with a basic understanding of its relationship to the various
@@ -374,9 +359,9 @@ circumstances of the county and the planning area.  In addition to responding to
 these plans respond to the planning concerns and requirements of the region and the state.
 
 The County subscribes to the fundamental planning principle of creating plan elements through
-a public planning process which provides ample opportunity for citizen participation.  Such a
-public planning process utilizes factual information and consideration of alternative courses of
-action which take into account social, economic, energy and environmental concerns.
+a public planning process which provides ample opportunity for community participation.  Such
+a public planning process utilizes factual information and consideration of alternative courses of
+action that take into account social, economic, energy, and environmental concerns.
 
 The following are elements of the Washington County Comprehensive Plan:
 • Comprehensive Framework Plan
@@ -390,7 +375,7 @@ Subsequent to the adoption of these plan elements, the County will begin work on
 Capital Improvement Plan.
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 11 - August 2026
+Page 11 - September 2026
 Comprehensive Framework Plan
 The Comprehensive Framework Plan (CFP) is a policy document.  Its function is to articulate the
 County’s policy regarding the broad range of comprehensive planning and community
@@ -436,7 +421,7 @@ The designation of ASC where applied to one or a combination of several parcels 
 denotes the presence of certain design opportunities or constraints.  In such cases, the
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 12 - August 2026
+Page 12 - September 2026
 community plan text includes specific language that identifies and addresses the design
 opportunities or constraints.  Usually land is designated as an area of special concern when
 parcelization and/or varied ownership requires that the area be considered as one unit during
@@ -457,7 +442,7 @@ Development Code, the Transportation Plan and the Unified Capital Improvement Pl
 Standards and requirements of the Community Plan and the Transportation System Plan that
 are applicable to development applications, including but not limited to new development and
 land divisions, are specified in the Community Development Code.  Design elements or ASC
-provisions related to Significant Natural Resource (SNR) areas are not considered approval
+provisions related to Significant Natural Resources (SNR) areas are not considered approval
 criteria for development applications.
 
 The original inventory and discussion of natural resources adopted in 1983 is contained in
@@ -483,8 +468,7 @@ design elements of this community plan related to these categories of natural re
 therefore removed, as they are no longer applicable.
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 13 - August 2026
-
+Page 13 - September 2026
 The 2024 Goal 5 program update replaced the County’s 1983 inventory for the SNR categories,
 Water   Areas and Wetlands and Water Areas and Wetlands and Fish and Wildlife Habitat, with
 the categories Riparian Wildlife Habitat Class I and II from Metro’s Regionally Significant Fish
@@ -506,7 +490,7 @@ permitted through the development review process.
 An identification of neighborhood park-deficient areas was done in the early 1980s as part of
 the original community plan development.  The identification was made based on a 0.5-mile
 service area radius from park or school playground sites existing at the time.  Those portions of
-the planning area not within this service area are generally regarded as park-deficient.  On this
+the planning area not within this service area are generally regarded as park deficient.  On this
 SNR Map, a “P” was placed in the general locale where a neighborhood park could serve the
 deficient area.  The letter indicators are not site specific, but do reflect the number of
 neighborhood park facilities needed to serve the deficient area on a service area basis.  This has
@@ -526,12 +510,11 @@ processes and procedures for review of specific development proposals, including
 requirements.  The CDC also sets forth the standards and requirements of the community plan
 and the Transportation System Plan that are applicable to development applications, including
 but not limited to new development and land divisions.  As noted above, design elements or
-
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 14 - August 2026
 ASC provisions related to SNR areas are not considered approval criteria for development
 applications.
 
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 14 - September 2026
 Transportation System Plan
 The Transportation System Plan (TSP) is a comprehensive analysis and identification of
 transportation needs associated with the implementation of the development pattern
@@ -552,6 +535,7 @@ and Special Area Local Streets are identified through the development review pro
 amendments to the community plans or the RNRP.  The community plans also address local
 street and pedestrian connectivity and specific transit issues, such as identifying major bus
 stops.
+
 In the event there is a conflict between the requirements of the TSP and the requirements of
 this community plan, the requirements of the TSP shall control.
 
@@ -570,12 +554,11 @@ of northeast Washington County.  The planning area is bordered on the north by N
 Road and the Urban Growth Boundary; on the south by NW West Union and NW Thompson
 Roads; on the west by NW 185th Avenue; and on the east by the Washington/Multnomah
 County line.  The Bethany Planning Area is a part of a larger planning area (Sunset West
+Planning Area), located to the south of Bethany.  In 1980, Bethany had a population of 554
+residents.
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 15 - August 2026
-Planning Area, CPO #7), located to the south of Bethany.  In 1980, Bethany had a population of
-554 residents.
-
+Page 15 - September 2026
 Land Use
 Existing land uses in Bethany reflect a combination of residential and agricultural uses.
 Residential uses are found primarily in the eastern portion of Bethany, while central and
@@ -616,13 +599,12 @@ This updated inventory is reflected in the community plan SNR Maps.
 Transportation
 The primary roads within the planning area include Bethany Boulevard, Springville Road, West
 Union Road, Thompson Road, and 185th Avenue.  Many of these roads and a significant
-
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 16 - August 2026
 number of more minor roadways were improved or built during the last two decades, a period
 during which the Bethany area grew rapidly.  Additional improvements for this area are among
 those called for in the Washington County 2020 Transportation Plan.
 
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 16 - September 2026
 TriMet provides bus service along NW 185th Avenue, Springville Road and Bethany Boulevard.
 While reasonably good service is provided to the Rock Creek Campus of Portland Community
 College, most of the area is underserved.  Transit bus routes and frequencies are reviewed
@@ -661,12 +643,12 @@ to protect the character of existing residential neighborhoods from conflicting 
 
 The western portion of Bethany serves as the first focal point due to its proximity to the Rock
 Creek Campus of Portland Community College and the existing Arterial transportation system.
-
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 17 - August 2026
 Central Bethany serves as the second and larger activity area, and includes a Community
 Business District (CBD) situated to serve the retail needs of future residents.  Both areas have
 been identified as locations where the opportunity exists to create and foster a development
+
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 17 - September 2026
 pattern which will allow for a combination of relationships between activities and surrounding
 residents.
 
@@ -706,17 +688,19 @@ Presented below are first, a set of general implementation considerations relati
 development for the community plan and second, a characterization or explanation of plan
 intent for each of the five general subareas of Bethany.
 
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 18 - August 2026
 General Design Elements:
 1. In the design of new development, floodplains, drainage hazard areas, steep slopes,
 scenic features, and power line easements and rights-of-way may be:
 
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 18 - September 2026
 a. Used to accent, define, or separate areas of differing residential densities and
 differing planned land uses;
+
 b. Preserved and protected consistent with the provisions of the Community
 Development Code to enhance the economic, social, wildlife, open space, scenic,
 recreation qualities of the community; and
+
 c. Where appropriate, interconnected as part of a park and open space system.
 
 2. A density transfer from resource areas to the buildable portion of a site shall be allowed
@@ -749,12 +733,12 @@ more spaces shall provide bicycle parking facilities.
 County’s growth management policies, pedestrian/bicycle pathways identified in
 Washington County’s Transportation Plan shall be included.
 
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 19 - August 2026
 9. The County shall emphasize non-auto (transit, bicycle and pedestrian) measures as an
 interim solution to circulation issues.  These measures shall be used to facilitate access to
 transit centers.
 
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 19 - September 2026
 10. Noise reduction measures shall be incorporated into all new developments located
 adjacent to Arterials and Collectors.  Noise reduction alternatives include vegetative
 buffers, berms, walls and other design techniques such as insulation, setbacks, and
@@ -793,13 +777,13 @@ standards and procedures found in the Community Development Code.  Future develo
 actions will be expected to respond to both the development standards provided in the
 Community Development Code and the design elements of the Bethany Community Plan.
 
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 20 - August 2026
-
 West Bethany
 Land uses in this area take advantage of the area’s proximity to the Rock Creek Campus of
 Portland Community College, transportation accessibility provided by 185th Avenue, West
 Union Road and Springville Road, and the short-term potential for urban services.  Accordingly,
+
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 20 - September 2026
 residential densities in this area reflect more intensive uses and can be characterized as
 medium density in nature.  The area includes a single neighborhood commercial site - a
 maximum of 2 acres - in the northeast quadrant of the intersection of 185th Avenue and West
@@ -837,12 +821,12 @@ serve as the primary access points to West Union Road, 185th Avenue, and Laidlaw
 Individual access to the major road system will be strongly discouraged.  Access shall be
 consolidated to as few points as practical.
 
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 21 - August 2026
 5. Residential development in West Bethany is encouraged to take advantage of the slopes
 facing southward.  In addition to offering views of the Tualatin Valley, housing orientation
 to the southern exposure allows solar energy opportunities.
 
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 21 - September 2026
 Central Bethany
 The Central Bethany area is perhaps the most sensitive area in terms of achieving the overall
 development concept for Bethany.  The Community Business District (CBD) at the southeast
@@ -859,7 +843,7 @@ Bethany Planned Development consistent with the provisions of the community plan
 become the core of the Bethany Town Center.  Bethany Village includes the Bethany Village
 shopping area, which provides a grocery store and a variety of retail shops, offices, restaurants,
 mixed-use retail/residential buildings bordering Central Drive, a day care and an education
-center as well as a popular public plaza and fountain area used to hold public gatherings and
+center, as well as a popular public plaza and fountain area used to hold public gatherings and
 concerts.  The town center provides a wide range of housing types – from the Duets (low scale
 single-family attached housing) to the Arbor Parc Town Homes (medium density) to higher
 density apartments and the multi-story Promenade Condominiums.  Open space amenities
@@ -871,19 +855,24 @@ Central Bethany, provides the opportunity to locate medium and higher density re
 in this area.
 
 A number of elements warrant particular consideration in Central Bethany.  These include:
+
 a. The forested area (approximately 35 acres) located at the western edge of Central
 Bethany;
+
 b. The development of the Community Business District in a manner compatible with
 the overall design of Central Bethany;
+
 c. The buffering of higher density and lower density residential development through
 the provision of open space and landscaping; and
+
 d. The transportation system in Central Bethany.
 
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 22 - August 2026
 Because of these elements and the potential impact on Central Bethany if each area is
 developed without the benefits of the master planning process, the majority of Central Bethany
 has been designated as an Area of Special Concern (Area of Special Concern No. 1).  The
+
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 22 - September 2026
 Bethany Community Plan requires that all development proposals within the area boundary be
 accomplished through the Master Planning - Planned Development process set forth in the
 Community Development Code.
@@ -905,7 +894,7 @@ Ordinance No. 702:
 The Central Bethany Subarea was amended in 2008 by Ordinance No. 702 for the purpose of
 providing 4.38 acres of CBD land at the southwest quadrant of the Laidlaw/Bethany
 intersection [Parcels 1 and 2 of Area of Special Concern 1A].  A legislative plan amendment was
-necessary in order to remove the Central Bethany Subarea requirements that 1) no more than
+necessary in order to remove the Central Bethany Subarea requirements that: 1) no more than
 15 acres of CBD land be provided in Area of Special Concern 1, and 2) that all CBD development
 be located in one quadrant of the Laidlaw/Bethany intersection.  Ordinance No. 702 also
 changed the plan designation of the Providence Health and Services property at the southwest
@@ -915,7 +904,7 @@ providing medical offices.
 Ordinance No. 702 also amended the Central Bethany Subarea text and some plan designations
 in Area of Special Concern 1 (as described below) to recognize the development of ASC 1 that
 was developed as part of the Central Bethany Planned Development.  The Central Bethany
-Planned Development reallocated some plan designations to other areas of ASC 1 pursuant to
+Planned Development reallocated some plan designations to other areas of ASC 1, pursuant to
 the Community Development Code standards for planned developments.
 
 Plan Designations:
@@ -924,12 +913,15 @@ Laidlaw/Bethany intersection, as CBD.  The area of the original CBD plan designa
 also increased from 15 acres to 16.46 acres to reflect the actual size of the shopping
 center as approved by the Central Bethany Planned Development.
 
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 23 - August 2026
 2. Changed the plan designations of the following parcels to reflect the following non-
 residential land uses that were approved as Special Uses by the Planned Development:
+
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 23 - September 2026
 a. Professional offices approved in the R-15 District on 1N120DB 01700;
+
 b. Health/athletic club approved in the R-9 District on 1N120CA07600; and
+
 c. Group care facility for seniors approved in the R-9 District on 1N120CA07200 and a
 portion of 1N120CA07300.
 
@@ -953,13 +945,13 @@ provisions of the Community Development Code.  Portions of the Westside Trail ha
 been constructed in the Central Bethany area.
 
 2. In order to achieve the intended commercial atmosphere envisioned in the Community
-Business District at the southeast quadrant of the Bethany Blvd./Laidlaw Road
+Business District at the southeast quadrant of the Bethany Boulevard/Laidlaw Road
 intersection, the site shall be developed in accordance with a unified theme, presenting
 consistent design features between buildings.  The commercial atmosphere intended by
-the Bethany Community Plan is one of a community center or urban village which, ideally,
+the Bethany Community Plan is one of a community center or urban village, which ideally,
 could take advantage of the historical significance of the Bethany community.  A mixture
 of retail uses or community-based office uses would be considered appropriate.
-Examples include: a full-service grocery store, specialty shops, restaurant, medical offices,
+Examples include a full-service grocery store, specialty shops, restaurant, medical offices,
 and a branch bank.  Additionally, institutional uses such as a library or small post office
 could be considered as well.  The Tanasbourne Town Center is located 2 miles to the
 south and is considered adequate for the provision of regional and comparison shopping.
@@ -970,7 +962,7 @@ commercial and residential uses.  In addition, the CBD is located in close proxi
 Bethany Baptist Church.  The design of both the commercial and residential uses
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 24 - August 2026
+Page 24 - September 2026
 surrounding it should take into account existing views available to the church as well as
 their relationship to the distinct architectural style of the church.
 
@@ -1009,12 +1001,11 @@ b. Laidlaw/Bethany Boulevard intersection;
 c. Bethany Boulevard/West Union intersection;
 d. Access points to the Community Business District; and
 e. Any additional road connections to West Union Road from the north.
-
 • Finally, development proposals in Central Bethany shall identify expected traffic
 impacts to the Cornell Road/Sunset Highway interchange and the segment of Bethany
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 25 - August 2026
+Page 25 - September 2026
 Boulevard between Cornell Road and West Union Road.  Traffic impacts to this access
 point to the Sunset Highway may require consideration of phasing of development in
 Central Bethany until improvements to the Cornell/Sunset interchange have been
@@ -1060,7 +1051,7 @@ Development in ASC 1A shall comply with the following design elements:
 ASC 1A;
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 26 - August 2026
+Page 26 - September 2026
 2. All development applications in ASC 1A shall be processed through the Type III procedure.
 Prior to the submittal of an application, the applicant shall conduct at least two public
 design workshops.  Minutes of the workshops shall be included in the application
@@ -1080,7 +1071,7 @@ above and provide the outstanding 155 dwelling units required in 1. above.  Plan
 shall be consistent with all the requirements of the Central Bethany Subarea, the
 Central Bethany Planned Development, and Community Development Code Sections
 404 through 413 and Section 429.  Any development application for any one of
-these parcels shall include conceptual site plans, building floor plans and building
+these parcels shall include conceptual site plans, building floor plans, and building
 elevations for all five parcels.  The conceptual plans shall be drawn to scale and shall
 not exceed a scale of 1 inch to 60 feet (1”:60’).
 
@@ -1104,7 +1095,7 @@ a continuous walkway through Parcels 1 and 2.
 a. Other main plaza design elements:
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 27 - August 2026
+Page 27 - September 2026
 (1) Be located approximately mid-block along Central Drive and be at least 10,000
 square feet in size.  Vehicular areas, including parking and loading areas, shall
 not be included in the plaza or counted as planned development open space.
@@ -1131,21 +1122,23 @@ pedestrian environment that is sensitive to nearby residents; and
 (4) Have at least four of the following features: entry features, steps, low walls
 with seating or planters atop, free-standing planters, lawn area with trees, a
 drinking fountain, an ornamental fountain or public art.
+
 c. Pedestrian passages shall be at least 10 feet wide and each passage shall include
 three of the following features: entry features, steps, a small courtyard, low walls
 with seating or planters atop, free-standing planters, a drinking fountain, or public
 art.
+
 d. Design elements for building façades facing streets and open space areas:
 (1) The dominant feature of the façades shall be the buildings’ habitable areas
 with accompanying windows and doors.  Darkly tinted windows and mirrored
 windows that block two-way visibility are prohibited on the ground floor;
 (2) Façades shall be broken into multiple vertical elements; and
+
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 28 - September 2026
 (3) Façades greater than 200 feet in length shall not be flat, monolithic walls but
 shall include architectural elements that break up the wall to create a ground
 floor pedestrian scale.  Architectural elements include but are not limited to
-
-BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 28 - August 2026
 recessed entrances, an 8-inch minimum vertical or horizontal wall relief, and
 changes in materials.
 
@@ -1188,7 +1181,7 @@ Design Elements:
 allowed as specified in the CDC.
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 29 - August 2026
+Page 29 - September 2026
 2. The powerline easement in the western portion of Thompson would provide a connection
 to the trail system developed in conjunction with Oak Hills.  Therefore, for development
 that occurs adjacent to the powerline easement, the opportunity to establish a
@@ -1231,10 +1224,10 @@ inventory of ponds and wetlands in Washington County.  The approximately 5-acre 
 one of the few remaining natural pond and habitat areas inside the Urban Growth
 Boundary.  Urban development, even at the low density residential level proposed by this
 plan, could threaten the natural characteristics of this area.  Development adjacent to
+Bales Pond shall be preceded by a plan to avoid or strictly minimize adverse impacts to
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 30 - August 2026
-Bales Pond shall be preceded by a plan to avoid or strictly minimize adverse impacts to
+Page 30 - September 2026
 this area.  Tualatin Hills Park and Recreation District shall be consulted during the review
 of development in the Bales Pond area to determine the potential for preserving this area
 as public open space.
@@ -1277,7 +1270,7 @@ households at or below 80% of area median incomes, as defined by the U.S.
 Department of Housing and Urban Development.
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 31 - August 2026
+Page 31 - September 2026
 d. To assure adequate provision of parks and recreation services to residents, the area
 shall annex to the Tualatin Hills Park & Recreation District prior to final approval of
 any application for development in the area.
@@ -1325,7 +1318,7 @@ the North Bethany Subarea is constructed between NW Joss Avenue and NW 185th
 Avenue, this segment of Joss Avenue is expected to carry significantly higher volumes of
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 32 - August 2026
+Page 32 - September 2026
 traffic than is typical for a Neighborhood Route.  Consequently, while Joss Avenue is
 designated as an Interim Collector on the Functional Classification map in the
 Transportation Plan, it is anticipated that it ultimately will be reclassified to its expected
@@ -1339,14 +1332,14 @@ standard.
 
 3. Area of Special Concern No. 4.  Encompasses the right-of-way along Springville Road
 where Springville Road fronts the Arbor Oaks subdivision between the western boundary
-and Sickle Road.  Within ASC 2 Springville Road shall be five lanes with additional turn
+and Sickle Road.  Within ASC 2, Springville Road shall be five lanes with additional turn
 lanes at intersections as appropriate.  The five-lane section shall be within an 86-foot
 right-of-way unless the lands immediately to the north or south redevelop.  At such time,
 Springville Road shall be developed as a five-lane section within a 98-foot right-of-way.
 
 4. Area of Special Concern No. 5.  Encompasses the right-of-way along Springville Road
 where Springville Road fronts the Arbor Oaks subdivision between Sickle Road and the
-eastern boundary.  Within ASC 5 Springville Road shall be three lanes with additional turn
+eastern boundary.  Within ASC 5, Springville Road shall be three lanes with additional turn
 lanes at intersections as appropriate.  The three-lane section shall be within an 86-foot
 right of way unless the lands immediately to the north or south redevelop.  At such time,
 Springville Road shall be developed as a three-lane section within a 90-foot right-of-way.
@@ -1369,7 +1362,7 @@ Roadway projects identified as needed during the next 20 years are listed in the
 County 2020 Transportation Plan Technical Appendix.  Some of the roadways slated for
 
 BETHANY COMMUNITY PLAN –  CHAPTER 1
-Page 33 - August 2026
+Page 33 - September 2026
 improvement in the Bethany area include Springville, Saltzman, Laidlaw, Thompson, Kaiser and
 West Union Roads, 185th and 143rd Avenues and Bethany Boulevard.
 
@@ -1382,7 +1375,7 @@ system will provide a connected network that will support local travel needs, la
 been determined to be of sufficient size and that are candidates for development or
 redevelopment, are identified on the Local Street Connectivity map.  The Local Street
 Connectivity map indicates where, as part of development, 1) Local Streets are required to
-connect to the existing system; 2) Where it is impracticable to provide a Local Street connection
+connect to the existing system; 2) where it is impracticable to provide a Local Street connection
 based on criteria in the Community Development Code, bicycle and pedestrian accessways are
 required instead.
 
@@ -1394,13 +1387,13 @@ ultimately be provided on these roads.
 
 Transit policies, strategies, facilities and services are identified in the Washington County 2020
 Transportation Plan.  These are implemented over time by TriMet in coordination with regional
-and local governments and serve providers, including Washington County, as resources are
+and local governments and service providers, including Washington County, as resources are
 available and priorities direct.
 
 Bicycle-Pedestrian Pathways
 The plan assumes eventual development in the Bethany area of all pedestrian and bicycle
 facilities identified in the Washington County 2020 Transportation Plan.  Generally, the plan
-calls for bikeways along all Arterial and Collector roads in the area, as well as along major
+calls for bikeways along all Arterial and Collector Roads in the area, as well as along major
 streams and in powerline easements.  The timing of pathways development will be determined
 by the availability of resources and the application of plan implementation priorities, as
 identified in the Transportation Plan.
@@ -1413,9 +1406,8 @@ connectivity area identifies the locations that are to be connected.  The approp
 pedestrian facilities within these areas are sidewalks along streets, accessways, off-street trails,
 off-street pathways, or a combination of these facilities.
 
-BETHANY COMMUNITY PLAN – CHAPTER 1
-Page 34 - August 2026
-
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 34 - September 2026
 The pedestrian connectivity areas in this plan and their purpose are described below.
 
 1. Laidlaw Road Neighborhood: Connect this section of the neighborhood to the future trail
@@ -1431,7 +1423,10 @@ process, the appropriate type of facilities to be provided in these areas and th
 be identified, except in those areas where a specific facility is shown.  The required pedestrian
 facilities shall be constructed as part of the development of the affected properties.
 
-TABLE OF THE DISTRIBUTION OF PLANNED LAND USES - 1980
+BETHANY COMMUNITY PLAN –  CHAPTER 1
+Page 35 - September 2026
+TABLE OF THE DISTRIBUTION OF PLANNED LAND USES – 1980
+
 Land Use Districts  Acres Percentage
 Residential 5 R-5 80.48 4.63%
 Residential 6 R-6 942.22 54.25%
@@ -1459,14 +1454,18 @@ Total  1736.93 100.00%
 NW SPRINGVILLE RD
 NW GERMANTOWN RD
 NW
-KAISER
+KA
+ISER
 RD
 See North Bethany
 Subarea Plan maps,
 Chapter 2
 ËÊ8
 !"#5
-¯_26ÍÎ219
+¯_26
+ÍÎ219
+3.1
+3.2 3.3
 J:\GISDATA\Workgroups\GISPlanning\COMP_PLAN\Community_Plan_Maps\Community_Plan_Maps_Standard.aprx
 Community Plan
 Map 3.
@@ -1496,7 +1495,7 @@ Department of Land Use & Transportation
 Planning and Development Services Division
 1 inch equals  1,000 feet*
 I
-Printed: 8/2/2023
+Printed: 4/20/2023
 See North Bethany
 Subarea Plan maps,
 Chapter 2

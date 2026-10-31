@@ -2209,3 +2209,4 @@
     The flag needs the ASC 1 outline traced from the plan map; until it is,
     no lot carries it (FOLLOWUPS 130).
   source: Steph 2026-10-30 (chat), docs/followups/130-bethany-asc1.md
+  encoded_in: [flats/config/flags.yaml, flats/config/jurisdictions/or/washington/_unincorporated.yaml, flats/score/screen.py]
