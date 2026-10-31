@@ -1107,20 +1107,25 @@ _C: tuple[ConditionDef, ...] = (
         "access or access bar on a named street (Raleigh Hills ASC S, T and "
         "M; Bull Mountain ASC 1 and the Pacific Highway frontage; Aloha ASC "
         "10; Cedar Hills ASC 6 and 8 and the Willow Creek arterials; Sunset "
-        "West ASC 3 on Cornell Road), a park access improved with the lot's "
+        "West ASC 3 on Cornell Road; Metzger - Progress ASC 1 on Oleson Road "
+        "and ASC 2 on Hall Boulevard), a park access improved with the lot's "
         "development (Aloha's Winterborne Park), the commercial-strip ASCs' "
         "Type 1 landscape buffer (CDC 411, not stored), conditions of an old "
-        "case (Raleigh Hills ASC U), an outline whose letter the map does not "
-        "print, or a pedestrian connectivity facility built with the lot's "
+        "case (Raleigh Hills ASC U), an outline whose letter or rule the plan "
+        "does not give, East Hillsboro's Reedville and Tualatin Valley Highway "
+        "subareas (the city of Hillsboro's development standards, not held), "
+        "or a pedestrian connectivity facility built with the lot's "
         "development. Answered from the plans' Areas of Special Concern and "
         "Pedestrian Connectivity maps, traced as Washington County's "
-        "drawn_areas (FOLLOWUPS 109 chunk 7, FOLLOWUPS 135 chunk 6 re-read); "
+        "drawn_areas (FOLLOWUPS 109 chunks 7 and 8, FOLLOWUPS 135 chunk 6 "
+        "re-read); "
         "the lots it holds are True, every other lot False.",
         evidence=(
             "The Areas of Special Concern and Pedestrian Connectivity maps of "
             "the Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - "
-            "Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany "
-            "Community Plans (Washington County), traced 2026-10-30 and 2026-10-31"
+            "Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, "
+            "Metzger - Progress and East Hillsboro Community Plans (Washington "
+            "County), traced 2026-10-30 and 2026-10-31"
         ),
         assume=None,
     ),
@@ -1130,7 +1135,8 @@ _C: tuple[ConditionDef, ...] = (
         "The lot lies on the Local Street Connectivity Lands of a Washington "
         "County community plan (Raleigh Hills - Garden Home, Bull Mountain, "
         "Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, "
-        "Sunset West or Bethany), where development must provide on-site "
+        "Sunset West, Bethany or Metzger - Progress), where development must "
+        "provide on-site "
         "streets that connect to the street system (Bull Mountain: blocks no "
         "longer than 530 ft). The street's ground is not measured, so the lot "
         "cannot be GREEN (coordinator ruling 2026-10-30). Answered from each "
@@ -1140,8 +1146,9 @@ _C: tuple[ConditionDef, ...] = (
         evidence=(
             "The Local Street Connectivity maps of the Raleigh Hills - Garden "
             "Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar "
-            "Hills - Cedar Mill, Sunset West and Bethany Community Plans "
-            "(Washington County), traced 2026-10-30 and 2026-10-31"
+            "Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress "
+            "Community Plans (Washington County), traced 2026-10-30 and "
+            "2026-10-31"
         ),
         assume=None,
     ),
@@ -1151,16 +1158,24 @@ _C: tuple[ConditionDef, ...] = (
         "The lot lies where a Washington County community plan sends every "
         "development through a review deciding on more than measured "
         "standards: Bull Mountain ASC 8's master planning - planned "
-        "development review, or the Type III review of the R-25+ site in "
-        "Raleigh Hills - Garden Home ASC L. Inside an urban growth boundary "
+        "development review, the Type III review of the R-25+ site in "
+        "Raleigh Hills - Garden Home ASC L, Metzger - Progress ASCs 2, 3, 9 "
+        "and 18, East Hillsboro ASC 3, Sherwood ASC 2, the master-plan ASCs "
+        "of Sunset West (2, 3, 7) and Cedar Hills - Cedar Mill (2, 7, 8), or "
+        "a frontage on a county arterial or collector, where every plan "
+        "requires shared or consolidated access as a condition of the permit "
+        "(FOLLOWUPS 137). Inside an urban growth boundary "
         "it is GREEN with CLEAR-OBJECTIVE (Steph 2026-10-15); where the "
         "statute does not reach the lot it is YELLOW with REVIEW-CONDITIONS. "
-        "Answered from the plans' Map 5.1, traced as Washington County's "
-        "drawn_areas (FOLLOWUPS 109 chunk 7).",
+        "Answered from the plans' Areas of Special Concern maps and the "
+        "county TSP functional classification, traced as Washington County's "
+        "drawn_areas (FOLLOWUPS 109 chunks 7 and 8, FOLLOWUPS 137).",
         evidence=(
-            "Map 5.1 (Areas of Special Concern) of the Bull Mountain and Raleigh "
-            "Hills - Garden Home Community Plans (Washington County), traced "
-            "2026-10-30"
+            "The Areas of Special Concern maps of the Bull Mountain, Raleigh "
+            "Hills - Garden Home, Metzger - Progress, East Hillsboro, Sherwood, "
+            "Sunset West and Cedar Hills - Cedar Mill Community Plans, and the "
+            "Washington County TSP functional classification (Washington "
+            "County), traced 2026-10-30 and 2026-10-31"
         ),
         assume=None,
     ),

@@ -743,6 +743,13 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/washington/_unincorporated/community-plan.aloha-reedville-cooper-mountain.txt",
         "or/washington/_unincorporated/community-plan.cedar-hills-cedar-mill.txt",
         "or/washington/_unincorporated/community-plan.sunset-west.txt",
+        # Metzger - Progress, West Tigard, East Hillsboro and Sherwood,
+        # stored 2026-10-31 by design districts chunk 8 (FOLLOWUPS 109):
+        # subareas, design elements and ASCs, no section numbers.
+        "or/washington/_unincorporated/community-plan.metzger-progress.txt",
+        "or/washington/_unincorporated/community-plan.west-tigard.txt",
+        "or/washington/_unincorporated/community-plan.east-hillsboro.txt",
+        "or/washington/_unincorporated/community-plan.sherwood.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

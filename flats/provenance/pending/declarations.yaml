@@ -127,29 +127,9 @@
   allow_thin: true
 
 # ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
-- id: "community-plan.east-hillsboro"
-  url: https://washingtoncountyor.gov/lut/planning/documents/east-hillsboro-community-plan-updated-11-2024/download
-  title: "Washington County Community Plan - East Hillsboro"
-  extraction: plain
-  allow_thin: true
-- id: "community-plan.metzger-progress"
-  url: https://washingtoncountyor.gov/lut/planning/documents/metzger-progress-community-plan-updated-08-2026/download
-  title: "Washington County Community Plan - Metzger Progress"
-  extraction: plain
-  allow_thin: true
 - id: "community-plan.north-bethany-subarea"
   url: https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-text-11-2024/download
   title: "Washington County Community Plan - North Bethany Subarea"
-  extraction: plain
-  allow_thin: true
-- id: "community-plan.sherwood"
-  url: https://washingtoncountyor.gov/lut/planning/documents/sherwood-community-plan-updated-11-2024/download
-  title: "Washington County Community Plan - Sherwood"
-  extraction: plain
-  allow_thin: true
-- id: "community-plan.west-tigard"
-  url: https://washingtoncountyor.gov/lut/planning/documents/west-tigard-community-plan-updated-11-2024/download
-  title: "Washington County Community Plan - West Tigard"
   extraction: plain
   allow_thin: true
 - id: "community-plan.west-union"

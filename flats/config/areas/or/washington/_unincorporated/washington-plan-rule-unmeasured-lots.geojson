@@ -8,18 +8,18 @@
   }
  },
  "source": {
-  "map": "Raleigh Hills - Garden Home Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-maps-08-2026/download, retrieved 2026-10-30, sha256 68b540cffc579ea27c1fe1493571175b093d7022fbb4f6065adb1e6777cdf50d): page 9, Map 5.1 Areas of Special Concern, and page 11, Map 8.1 Pedestrian Connectivity. Bull Mountain Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-maps/download, retrieved 2026-10-30, sha256 35470f9e0026fbc4bff869b42a23777c4f75b92face5fb8360a625e8a72d9746): page 9, Map 5.1 Areas of Special Concern, and page 11, Map 8.1 Pedestrian Connectivity. Chunk 6 re-read (FOLLOWUPS 135, 2026-10-31): Aloha - Reedville - Cooper Mountain maps (https://washingtoncountyor.gov/lut/planning/documents/aloha-reedville-cooper-mountain-community-plan-maps-08-2026/download, sha256 cd13b9157d7fecaf44c97f43b48061244dc7fa2be0c8e8a7e2a48733836fc9cd), Areas of Special Concern pages 16 and 18 (residual 0.07 and 1.06 ft) and Pedestrian Connectivity pages 24 and 25 (residual 0.89 and 1.09 ft); Cedar Hills - Cedar Mill maps (https://washingtoncountyor.gov/lut/planning/documents/cedar-hills-cedar-mill-community-plan-maps-08-2026/download, sha256 1f95859bba209d22f380fc7c9202af7c26ff861ebf26c74bbc6d0786a01a076a), Areas of Special Concern pages 14 and 15 (0.06, 0.07 ft), Pedestrian Connectivity pages 19 and 20 (0.06, 0.07 ft) and the Willow Creek Subarea outline of the subarea map (0.87 ft); Sunset West maps (https://washingtoncountyor.gov/lut/planning/documents/sunset-west-community-plan-maps-10-2025/download, sha256 7c9fce8d3427580802514dc4f204f094dc22ac0d24243c8ee3b4f2be86f14fe5), Areas of Special Concern pages 13 and 14 (0.06, 0.89 ft), Pedestrian Connectivity pages 19 and 20 (0.06, 0.89 ft); Bethany Chapter 1 text and maps (https://washingtoncountyor.gov/lut/planning/documents/chapter-1-bethany-community-plan-text-and-maps-09-2026/download, sha256 6ff194eff86183d736865722d72e9be2852fee105266f5d30810d1165ae91851), Pedestrian Connectivity page 44 (0.9 ft). All retrieved 2026-10-31.",
-  "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223; or/washington/_unincorporated/community-plan.bull-mountain.txt#L773,L778-L779; or/washington/_unincorporated/community-plan.aloha-reedville-cooper-mountain.txt#L1449-L1454; or/washington/_unincorporated/community-plan.cedar-hills-cedar-mill.txt#L2563-L2569; or/washington/_unincorporated/community-plan.bethany.txt#L1419-L1424",
+  "map": "Raleigh Hills - Garden Home Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-maps-08-2026/download, retrieved 2026-10-30, sha256 68b540cffc579ea27c1fe1493571175b093d7022fbb4f6065adb1e6777cdf50d): page 9, Map 5.1 Areas of Special Concern, and page 11, Map 8.1 Pedestrian Connectivity. Bull Mountain Community Plan maps (https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-maps/download, retrieved 2026-10-30, sha256 35470f9e0026fbc4bff869b42a23777c4f75b92face5fb8360a625e8a72d9746): page 9, Map 5.1 Areas of Special Concern, and page 11, Map 8.1 Pedestrian Connectivity. Chunk 6 re-read (FOLLOWUPS 135, 2026-10-31): Aloha - Reedville - Cooper Mountain maps (https://washingtoncountyor.gov/lut/planning/documents/aloha-reedville-cooper-mountain-community-plan-maps-08-2026/download, sha256 cd13b9157d7fecaf44c97f43b48061244dc7fa2be0c8e8a7e2a48733836fc9cd), Areas of Special Concern pages 16 and 18 (residual 0.07 and 1.06 ft) and Pedestrian Connectivity pages 24 and 25 (residual 0.89 and 1.09 ft); Cedar Hills - Cedar Mill maps (https://washingtoncountyor.gov/lut/planning/documents/cedar-hills-cedar-mill-community-plan-maps-08-2026/download, sha256 1f95859bba209d22f380fc7c9202af7c26ff861ebf26c74bbc6d0786a01a076a), Areas of Special Concern pages 14 and 15 (0.06, 0.07 ft), Pedestrian Connectivity pages 19 and 20 (0.06, 0.07 ft) and the Willow Creek Subarea outline of the subarea map (0.87 ft); Sunset West maps (https://washingtoncountyor.gov/lut/planning/documents/sunset-west-community-plan-maps-10-2025/download, sha256 7c9fce8d3427580802514dc4f204f094dc22ac0d24243c8ee3b4f2be86f14fe5), Areas of Special Concern pages 13 and 14 (0.06, 0.89 ft), Pedestrian Connectivity pages 19 and 20 (0.06, 0.89 ft); Bethany Chapter 1 text and maps (https://washingtoncountyor.gov/lut/planning/documents/chapter-1-bethany-community-plan-text-and-maps-09-2026/download, sha256 6ff194eff86183d736865722d72e9be2852fee105266f5d30810d1165ae91851), Pedestrian Connectivity page 44 (0.9 ft). All retrieved 2026-10-31. Chunk 8 (FOLLOWUPS 109, 2026-10-31): Metzger - Progress maps (https://washingtoncountyor.gov/lut/planning/documents/metzger-progress-community-plan-maps-2-2025/download, sha256 0a13827d53181208286528c330159355aaf461599571a833b8db4aaeecdb3e4d), Map 5.1 Areas of Special Concern, page 5 (residual 0.08 ft); East Hillsboro maps (https://washingtoncountyor.gov/lut/planning/documents/east-hillsboro-community-plan-maps-11-2024/download, sha256 4b6e5c75fda52dcf856ad741b52a87c0b522be7c54fd6437345437aa3a8c21d8), Map 2 Subareas, page 2, read against the text's subarea bounds. Retrieved 2026-10-31.",
+  "quote": "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223; or/washington/_unincorporated/community-plan.bull-mountain.txt#L773,L778-L779; or/washington/_unincorporated/community-plan.aloha-reedville-cooper-mountain.txt#L1449-L1454; or/washington/_unincorporated/community-plan.cedar-hills-cedar-mill.txt#L2563-L2569; or/washington/_unincorporated/community-plan.bethany.txt#L1419-L1424; or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703; or/washington/_unincorporated/community-plan.metzger-progress.txt#L718-L725; or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883",
   "inputs": {
-   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), each plan's boundary envelope (Base_Layers layer 39), fetched 2026-10-30: Raleigh Hills 10569 lots (sha256 6bcbdf6572c06f58...), Bull Mountain 18647 (bea1585ef3757bf2...); chunk 6 re-read, fetched 2026-10-31: Aloha - Reedville - Cooper Mountain 47729 lots (sha256 939f9ebba9f6ea7a...), Cedar Hills - Cedar Mill 22734 lots (sha256 d5827da364bd7ed6...), Sunset West 28441 lots (sha256 f8b1a885d5f23e3c...), Bethany 14306 lots (sha256 41e25cf39e7d539b...)",
-   "zoning": "Washington County Land Use Districts (LUT_PDS/Planning_Layers/MapServer/0), same envelopes, fetched 2026-10-30; a lot takes the district covering most of it; the chunk 6 envelopes fetched 2026-10-31",
+   "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), each plan's boundary envelope (Base_Layers layer 39), fetched 2026-10-30: Raleigh Hills 10569 lots (sha256 6bcbdf6572c06f58...), Bull Mountain 18647 (bea1585ef3757bf2...); chunk 6 re-read, fetched 2026-10-31: Aloha - Reedville - Cooper Mountain 47729 lots (sha256 939f9ebba9f6ea7a...), Cedar Hills - Cedar Mill 22734 lots (sha256 d5827da364bd7ed6...), Sunset West 28441 lots (sha256 f8b1a885d5f23e3c...), Bethany 14306 lots (sha256 41e25cf39e7d539b...); chunk 8, fetched 2026-10-31: Metzger - Progress 4776 lots, West Tigard 17351 lots, East Hillsboro 31090 lots, Sherwood 7453 lots",
+   "zoning": "Washington County Land Use Districts (LUT_PDS/Planning_Layers/MapServer/0), same envelopes, fetched 2026-10-30; a lot takes the district covering most of it; the chunk 6 envelopes fetched 2026-10-31; the chunk 8 envelopes fetched 2026-10-31",
    "unincorporated": "Washington County Unincorporated Area (LUT_PDS/Base_Layers/MapServer/27); a lot counts when at least half of it is unincorporated land inside the plan boundary",
-   "streets": "Washington County street centrelines (LUT_PDS/Base_Layers/MapServer/1, FDPRE FNAME FTYPE), fetched 2026-10-30; the chunk 6 envelopes fetched 2026-10-31"
+   "streets": "Washington County street centrelines (LUT_PDS/Base_Layers/MapServer/1, FDPRE FNAME FTYPE), fetched 2026-10-30; the chunk 6 envelopes fetched 2026-10-31; the chunk 8 envelopes fetched 2026-10-31"
   },
-  "traced_by": "Claude (districts-c7 worker, FOLLOWUPS 109 chunk 7); Claude (districts-c6b worker, FOLLOWUPS 135, chunk 6 re-read)",
+  "traced_by": "Claude (districts-c7 worker, FOLLOWUPS 109 chunk 7); Claude (districts-c6b worker, FOLLOWUPS 135, chunk 6 re-read); Claude (districts-c8 worker, FOLLOWUPS 109 chunk 8, FOLLOWUPS 137)",
   "traced_on": "2026-10-30, 2026-10-31",
   "drawn": true,
-  "how": "Both Map 5.1 sheets are ArcGIS Pro GeoPDFs: the Areas_of_Special_Concern frame carries a /VP viewport with its corner coordinates (NAD83 HARN geographic, projected to EPSG:2913); a page-to-ground affine was fitted to them (residual 0.57 ft Raleigh Hills, 0.09 ft Bull Mountain) and the pink-filled ASC outlines (RGB 1, 0.745, 0.745) were read out of the page as vector paths. Each outline took the red Arial-Bold letter or numeral within 50 ft of it; Raleigh Hills prints no letter near some outlines, and an outline more than 600 ft from every letter is 'unlabelled'. A lot is in an ASC when at least 90 percent of it lies inside the outline, and the lots an outline cuts (more than 10 percent inside) are carried too, whole. This file holds, whole, the residential lots (R-5 to R-25+) on which a plan rule binds a pod that the screen cannot measure: Raleigh Hills ASC S and T lots whose boundary runs at least 15 ft within 40 ft of the Mayo Street or Florence Lane centreline or 60 ft of Taylors Ferry Road's (the access-point caps bind only those streets); every ASC M lot (one access point on Raab Road for the whole ASC; ASC I's bar on permanent highway access reaches no residential lot); the residential lots inside the commercial-strip ASCs (E, H, K, L and the unlettered outlines within 600 ft of those letters) that abut Canyon Road, Beaverton - Hillsdale Highway, Scholls Ferry Road or Oleson Road (Type 1 landscape buffer, CDC 411 not stored); the ASC U lot (Case #74-96C conditions); every lot of an unlettered outline more than 600 ft from any letter (two outlines: at Walker Road and Highway 217, ASC C by the text, and one lot west of SW 103rd Avenue); the lots Map 8.1 shades in its one drawn pedestrian connectivity area (magenta fill RGB 1, 0.451, 0.875, read as vector paths; more than 10 percent of the lot) and, for area 3, which no map draws, every lot meeting a 40 ft buffer of the straight line between the nearest points of the Dogwood Lane and Raleighwood Way centrelines and of Dogwood Lane and Sharon Lane (a judgement trace: the plan places the trail in words only; area 1's Laurel Street already meets Laurelwood Avenue and Maple Drive's gap crosses no lot); Bull Mountain ASC 1, every lot inside or cut (the easterly portion is not drawn, so the traffic-study bar is held on all of it, with the three-access-point cap); the residential lot fronting Pacific Highway (within 60 ft, 15 ft of boundary); and the two parcels Bull Mountain's Map 8.1 shades for the Baker Lane / Sunrise Lane area. Bull Mountain's Map 8.1 is a raster: page 11 was rendered at 432 dpi, magenta pixels (R>220, 70<G<160, B>180) inside the main frame were placed by the frame's affine (4.6 ft a pixel), and a lot is shaded when they cover more than 10 percent of it (the two cover 0.88 and 0.84). Chunk 6 re-read (2026-10-31). The Pedestrian Connectivity sheets of Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany are rasters on the same template: each frame's /VP viewport gave its affine, the page was rendered at 432 dpi, each area's own fill (within 10 of its RGB, closed by 3 pixels) was placed on a 5 ft ground grid, and a residential lot (R-5 to R-24) is held, whole, when its shaded share of the area 6 ft in from its lines is more than 10 percent. Aloha's map numbers its areas 3 and 4 the other way round from the text; each lot names the text's area by place. Aloha areas 1 and 2 hold only section 1S117 (stray same-colour pixels elsewhere fall on no area the text names); area 5 shades only NMU and CCMU lots, which a review already holds. Sunset West's text defines pedestrian connectivity areas but lists none; its map shades the 176th Avenue parcels the Bethany plan names as its area 2 and whose facilities 'shall be constructed as part of the development of the affected properties', so they are held on both texts. The Areas of Special Concern sheets are vector GeoPDFs read as Raleigh Hills' were (pink outline, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: Aloha ASC 10, every lot (its tax lot 5800 buffer and Hargis Road bar sit on land since divided, so no current lot can be told apart); Aloha's Tax Lot 1400 on Map 1S2 24AC (Winterborne Park access improved with its development); Cedar Hills ASC 6 (six lots, shared Barnes Road access) and ASC 8's residential lots (access only from Miller Road, shared); Sunset West ASC 3's one residential lot, which fronts Cornell Road (60 ft of the centreline); and the Cedar Hills Willow Creek Subarea lots (its outline read as vector fill RGB 0.537, 0.267, 0.396; at least half the lot inside) whose boundary runs at least 15 ft within 40 ft of the NW Saltzman, NW Thompson or NW 143rd centreline and of another street's, since direct access onto those three 'shall be prohibited unless no alternatives exist'. A lot fronting only one of the three has no alternative and is not held.",
+  "how": "Both Map 5.1 sheets are ArcGIS Pro GeoPDFs: the Areas_of_Special_Concern frame carries a /VP viewport with its corner coordinates (NAD83 HARN geographic, projected to EPSG:2913); a page-to-ground affine was fitted to them (residual 0.57 ft Raleigh Hills, 0.09 ft Bull Mountain) and the pink-filled ASC outlines (RGB 1, 0.745, 0.745) were read out of the page as vector paths. Each outline took the red Arial-Bold letter or numeral within 50 ft of it; Raleigh Hills prints no letter near some outlines, and an outline more than 600 ft from every letter is 'unlabelled'. A lot is in an ASC when at least 90 percent of it lies inside the outline, and the lots an outline cuts (more than 10 percent inside) are carried too, whole. This file holds, whole, the residential lots (R-5 to R-25+) on which a plan rule binds a pod that the screen cannot measure: Raleigh Hills ASC S and T lots whose boundary runs at least 15 ft within 40 ft of the Mayo Street or Florence Lane centreline or 60 ft of Taylors Ferry Road's (the access-point caps bind only those streets); every ASC M lot (one access point on Raab Road for the whole ASC; ASC I's bar on permanent highway access reaches no residential lot); the residential lots inside the commercial-strip ASCs (E, H, K, L and the unlettered outlines within 600 ft of those letters) that abut Canyon Road, Beaverton - Hillsdale Highway, Scholls Ferry Road or Oleson Road (Type 1 landscape buffer, CDC 411 not stored); the ASC U lot (Case #74-96C conditions); every lot of an unlettered outline more than 600 ft from any letter (two outlines: at Walker Road and Highway 217, ASC C by the text, and one lot west of SW 103rd Avenue); the lots Map 8.1 shades in its one drawn pedestrian connectivity area (magenta fill RGB 1, 0.451, 0.875, read as vector paths; more than 10 percent of the lot) and, for area 3, which no map draws, every lot meeting a 40 ft buffer of the straight line between the nearest points of the Dogwood Lane and Raleighwood Way centrelines and of Dogwood Lane and Sharon Lane (a judgement trace: the plan places the trail in words only; area 1's Laurel Street already meets Laurelwood Avenue and Maple Drive's gap crosses no lot); Bull Mountain ASC 1, every lot inside or cut (the easterly portion is not drawn, so the traffic-study bar is held on all of it, with the three-access-point cap); the residential lot fronting Pacific Highway (within 60 ft, 15 ft of boundary); and the two parcels Bull Mountain's Map 8.1 shades for the Baker Lane / Sunrise Lane area. Bull Mountain's Map 8.1 is a raster: page 11 was rendered at 432 dpi, magenta pixels (R>220, 70<G<160, B>180) inside the main frame were placed by the frame's affine (4.6 ft a pixel), and a lot is shaded when they cover more than 10 percent of it (the two cover 0.88 and 0.84). Chunk 6 re-read (2026-10-31). The Pedestrian Connectivity sheets of Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany are rasters on the same template: each frame's /VP viewport gave its affine, the page was rendered at 432 dpi, each area's own fill (within 10 of its RGB, closed by 3 pixels) was placed on a 5 ft ground grid, and a residential lot (R-5 to R-24) is held, whole, when its shaded share of the area 6 ft in from its lines is more than 10 percent. Aloha's map numbers its areas 3 and 4 the other way round from the text; each lot names the text's area by place. Aloha areas 1 and 2 hold only section 1S117 (stray same-colour pixels elsewhere fall on no area the text names); area 5 shades only NMU and CCMU lots, which a review already holds. Sunset West's text defines pedestrian connectivity areas but lists none; its map shades the 176th Avenue parcels the Bethany plan names as its area 2 and whose facilities 'shall be constructed as part of the development of the affected properties', so they are held on both texts. The Areas of Special Concern sheets are vector GeoPDFs read as Raleigh Hills' were (pink outline, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: Aloha ASC 10, every lot (its tax lot 5800 buffer and Hargis Road bar sit on land since divided, so no current lot can be told apart); Aloha's Tax Lot 1400 on Map 1S2 24AC (Winterborne Park access improved with its development); Cedar Hills ASC 6 (six lots, shared Barnes Road access) and ASC 8's residential lots (access only from Miller Road, shared); Sunset West ASC 3's one residential lot, which fronts Cornell Road (60 ft of the centreline); and the Cedar Hills Willow Creek Subarea lots (its outline read as vector fill RGB 0.537, 0.267, 0.396; at least half the lot inside) whose boundary runs at least 15 ft within 40 ft of the NW Saltzman, NW Thompson or NW 143rd centreline and of another street's, since direct access onto those three 'shall be prohibited unless no alternatives exist'. A lot fronting only one of the three has no alternative and is not held. Chunk 8 (2026-10-31). Metzger - Progress Map 5.1 is a vector GeoPDF read as Raleigh Hills' was (pink fill, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: ASC 1's lots fronting SW Oleson Road (direct access limited to SW 89th Avenue) and ASC 2's lots fronting SW Hall Boulevard (access from Cedarcrest Street - SW 91st Avenue, not Hall), each fronting meaning at least 15 ft of lot line within 60 ft of the centreline; the TO:R18-24 lots of two outlines east of ASC 2 that carry no number and match no ASC the text describes (the text puts ASC 18 on the TO:R9-12 parcels, which the third outline there holds); and the R-5 lots of the outline numbered 12, an ASC the text never names. East Hillsboro: the R-5 to R-24 lots between Baseline Road and the Tualatin Valley Highway west of 219th Avenue (Cornelius Pass Road), which are the Reedville and Tualatin Valley Highway Corridor subareas by the text's bounds (#L821-L824, L863-L866), whose design elements 5 and 3 make development proposals 'address the city of Hillsboro's development standards' (#L854, L883); those standards are not held. The plan's other residential lots are former Urban Intermediate Area pockets in no subarea, which carry only the general design elements.",
   "counts": {
    "Aloha - Reedville - Cooper Mountain|R-15": 24,
    "Aloha - Reedville - Cooper Mountain|R-24": 3,
@@ -34,6 +34,12 @@
    "Cedar Hills - Cedar Mill|R-5": 9,
    "Cedar Hills - Cedar Mill|R-6": 48,
    "Cedar Hills - Cedar Mill|R-9": 2,
+   "East Hillsboro|R-15": 1,
+   "East Hillsboro|R-24": 3,
+   "East Hillsboro|R-5": 17,
+   "Metzger - Progress|R-5": 13,
+   "Metzger - Progress|R-9": 3,
+   "Metzger - Progress|TO:R18-24": 28,
    "Raleigh Hills - Garden Home|R-24": 3,
    "Raleigh Hills - Garden Home|R-5": 35,
    "Raleigh Hills - Garden Home|R-9": 3,
@@ -32311,6 +32317,3593 @@
       [
        7592161.05,
        666802.94
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126AC02400",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1, direct access from Oleson Road limited to SW 89th Avenue; the lot fronts SW OLESON RD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619840.16,
+       660490.09
+      ],
+      [
+       7619840.19,
+       660491.4
+      ],
+      [
+       7619842.97,
+       660611.84
+      ],
+      [
+       7619844.22,
+       660665.69
+      ],
+      [
+       7619845.4,
+       660717.04
+      ],
+      [
+       7619846.96,
+       660784.37
+      ],
+      [
+       7619774.8,
+       660786.03
+      ],
+      [
+       7619739.27,
+       660856.87
+      ],
+      [
+       7619868.57,
+       660853.89
+      ],
+      [
+       7619867.55,
+       660809.65
+      ],
+      [
+       7619865.55,
+       660723.02
+      ],
+      [
+       7619860.91,
+       660522.14
+      ],
+      [
+       7619860.48,
+       660503.77
+      ],
+      [
+       7619840.16,
+       660490.09
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126AD02700",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1, direct access from Oleson Road limited to SW 89th Avenue; the lot fronts SW OLESON RD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619860.91,
+       660522.14
+      ],
+      [
+       7619865.55,
+       660723.02
+      ],
+      [
+       7619915.5,
+       660725.05
+      ],
+      [
+       7620020.42,
+       660729.32
+      ],
+      [
+       7620135.32,
+       660734.0
+      ],
+      [
+       7620162.82,
+       660735.12
+      ],
+      [
+       7620162.47,
+       660719.16
+      ],
+      [
+       7620153.51,
+       660713.68
+      ],
+      [
+       7620047.33,
+       660646.25
+      ],
+      [
+       7619938.84,
+       660574.62
+      ],
+      [
+       7619860.91,
+       660522.14
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126AD03500",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1, direct access from Oleson Road limited to SW 89th Avenue; the lot fronts SW OLESON RD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620773.4,
+       661045.06
+      ],
+      [
+       7620773.52,
+       661050.78
+      ],
+      [
+       7620776.48,
+       661191.27
+      ],
+      [
+       7620778.95,
+       661308.82
+      ],
+      [
+       7620500.88,
+       661317.53
+      ],
+      [
+       7620503.19,
+       661437.62
+      ],
+      [
+       7620533.57,
+       661436.8
+      ],
+      [
+       7620540.57,
+       661436.63
+      ],
+      [
+       7620694.52,
+       661432.81
+      ],
+      [
+       7620764.5,
+       661431.08
+      ],
+      [
+       7620781.52,
+       661430.65
+      ],
+      [
+       7620834.48,
+       661429.34
+      ],
+      [
+       7620896.27,
+       661427.81
+      ],
+      [
+       7620890.13,
+       661106.91
+      ],
+      [
+       7620773.4,
+       661045.06
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126AD04100",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1, direct access from Oleson Road limited to SW 89th Avenue; the lot fronts SW OLESON RD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620890.13,
+       661106.91
+      ],
+      [
+       7620896.27,
+       661427.81
+      ],
+      [
+       7620904.46,
+       661427.6
+      ],
+      [
+       7620974.44,
+       661425.87
+      ],
+      [
+       7621031.88,
+       661424.44
+      ],
+      [
+       7621027.19,
+       661179.55
+      ],
+      [
+       7620890.13,
+       661106.91
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126AD04200",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1, direct access from Oleson Road limited to SW 89th Avenue; the lot fronts SW OLESON RD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7621027.19,
+       661179.55
+      ],
+      [
+       7621031.88,
+       661424.44
+      ],
+      [
+       7621054.41,
+       661423.89
+      ],
+      [
+       7621125.8,
+       661422.12
+      ],
+      [
+       7621189.46,
+       661420.54
+      ],
+      [
+       7621219.59,
+       661419.79
+      ],
+      [
+       7621217.12,
+       661290.44
+      ],
+      [
+       7621217.02,
+       661285.65
+      ],
+      [
+       7621166.4,
+       661255.93
+      ],
+      [
+       7621122.14,
+       661230.97
+      ],
+      [
+       7621108.79,
+       661223.44
+      ],
+      [
+       7621050.62,
+       661191.96
+      ],
+      [
+       7621027.19,
+       661179.55
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126AD04300",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 1, direct access from Oleson Road limited to SW 89th Avenue; the lot fronts SW OLESON RD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L696-L703"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7621217.12,
+       661290.44
+      ],
+      [
+       7621219.59,
+       661419.79
+      ],
+      [
+       7621409.95,
+       661413.57
+      ],
+      [
+       7621346.04,
+       661370.85
+      ],
+      [
+       7621289.9,
+       661334.9
+      ],
+      [
+       7621233.14,
+       661299.93
+      ],
+      [
+       7621217.12,
+       661290.44
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DA06900",
+    "zone": "R-9",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 2, access from Cedarcrest Street - SW 91st Avenue and not from Hall Boulevard; the lot fronts SW HALL BLVD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L718-L725"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619990.02,
+       659294.02
+      ],
+      [
+       7619989.34,
+       659271.03
+      ],
+      [
+       7619988.27,
+       659235.05
+      ],
+      [
+       7619987.23,
+       659200.06
+      ],
+      [
+       7620077.19,
+       659197.39
+      ],
+      [
+       7620076.6,
+       659177.4
+      ],
+      [
+       7620031.62,
+       659178.74
+      ],
+      [
+       7619984.32,
+       659180.14
+      ],
+      [
+       7619956.05,
+       659180.98
+      ],
+      [
+       7619956.41,
+       659192.98
+      ],
+      [
+       7619935.83,
+       659214.81
+      ],
+      [
+       7619865.85,
+       659216.24
+      ],
+      [
+       7619865.03,
+       659176.25
+      ],
+      [
+       7619864.21,
+       659136.26
+      ],
+      [
+       7619875.3,
+       659116.11
+      ],
+      [
+       7619874.36,
+       659069.84
+      ],
+      [
+       7619896.1,
+       659048.72
+      ],
+      [
+       7619923.64,
+       659021.97
+      ],
+      [
+       7619958.49,
+       659000.88
+      ],
+      [
+       7619991.9,
+       658978.66
+      ],
+      [
+       7620019.31,
+       658951.81
+      ],
+      [
+       7620057.56,
+       658914.34
+      ],
+      [
+       7620090.61,
+       658899.25
+      ],
+      [
+       7620123.65,
+       658884.16
+      ],
+      [
+       7620175.41,
+       658966.2
+      ],
+      [
+       7620189.37,
+       658965.78
+      ],
+      [
+       7620189.19,
+       658959.78
+      ],
+      [
+       7620192.31,
+       658959.42
+      ],
+      [
+       7620195.32,
+       658958.52
+      ],
+      [
+       7620198.12,
+       658957.11
+      ],
+      [
+       7620200.63,
+       658955.23
+      ],
+      [
+       7620202.79,
+       658952.95
+      ],
+      [
+       7620204.51,
+       658950.32
+      ],
+      [
+       7620205.75,
+       658947.44
+      ],
+      [
+       7620206.47,
+       658944.39
+      ],
+      [
+       7620206.65,
+       658941.26
+      ],
+      [
+       7620205.02,
+       658886.1
+      ],
+      [
+       7620204.31,
+       658875.04
+      ],
+      [
+       7620202.85,
+       658864.04
+      ],
+      [
+       7620200.8,
+       658851.86
+      ],
+      [
+       7620200.04,
+       658848.96
+      ],
+      [
+       7620198.82,
+       658846.23
+      ],
+      [
+       7620197.17,
+       658843.74
+      ],
+      [
+       7620195.12,
+       658841.56
+      ],
+      [
+       7620192.75,
+       658839.74
+      ],
+      [
+       7620190.11,
+       658838.34
+      ],
+      [
+       7620187.27,
+       658837.39
+      ],
+      [
+       7620184.32,
+       658836.93
+      ],
+      [
+       7620181.33,
+       658836.95
+      ],
+      [
+       7620178.38,
+       658837.47
+      ],
+      [
+       7620175.57,
+       658838.47
+      ],
+      [
+       7619834.07,
+       658994.42
+      ],
+      [
+       7619840.38,
+       659309.55
+      ],
+      [
+       7619878.41,
+       659308.78
+      ],
+      [
+       7619913.41,
+       659308.06
+      ],
+      [
+       7619950.4,
+       659307.31
+      ],
+      [
+       7619980.39,
+       659306.69
+      ],
+      [
+       7619982.77,
+       659386.85
+      ],
+      [
+       7619992.69,
+       659383.91
+      ],
+      [
+       7619990.02,
+       659294.02
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DA07200",
+    "zone": "R-9",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 2, access from Cedarcrest Street - SW 91st Avenue and not from Hall Boulevard; the lot fronts SW HALL BLVD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L718-L725"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620206.03,
+       658819.06
+      ],
+      [
+       7620126.89,
+       658855.2
+      ],
+      [
+       7620100.77,
+       658856.13
+      ],
+      [
+       7619833.75,
+       658978.08
+      ],
+      [
+       7619834.07,
+       658994.42
+      ],
+      [
+       7620175.57,
+       658838.47
+      ],
+      [
+       7620206.19,
+       658824.48
+      ],
+      [
+       7620206.03,
+       658819.06
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DB00700",
+    "zone": "R-9",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "ASC 2, access from Cedarcrest Street - SW 91st Avenue and not from Hall Boulevard; the lot fronts SW HALL BLVD",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L718-L725"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619833.75,
+       658978.08
+      ],
+      [
+       7619665.17,
+       659055.09
+      ],
+      [
+       7619663.12,
+       659056.03
+      ],
+      [
+       7619665.06,
+       659162.2
+      ],
+      [
+       7619666.62,
+       659247.19
+      ],
+      [
+       7619667.99,
+       659322.17
+      ],
+      [
+       7619669.34,
+       659396.16
+      ],
+      [
+       7619670.26,
+       659446.15
+      ],
+      [
+       7619672.09,
+       659546.14
+      ],
+      [
+       7619845.08,
+       659544.56
+      ],
+      [
+       7619842.78,
+       659429.53
+      ],
+      [
+       7619842.18,
+       659399.54
+      ],
+      [
+       7619840.38,
+       659309.55
+      ],
+      [
+       7619834.07,
+       658994.42
+      ],
+      [
+       7619833.75,
+       658978.08
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DB00801",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619626.61,
+       658845.13
+      ],
+      [
+       7619604.83,
+       658845.54
+      ],
+      [
+       7619610.68,
+       658998.54
+      ],
+      [
+       7619611.3,
+       659014.8
+      ],
+      [
+       7619640.07,
+       659001.36
+      ],
+      [
+       7619696.46,
+       658975.7
+      ],
+      [
+       7619626.61,
+       658845.13
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DB00802",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619792.01,
+       658842.11
+      ],
+      [
+       7619768.57,
+       658842.46
+      ],
+      [
+       7619696.93,
+       658843.81
+      ],
+      [
+       7619754.72,
+       658949.19
+      ],
+      [
+       7619809.33,
+       658924.33
+      ],
+      [
+       7619792.01,
+       658842.11
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DB00803",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619696.93,
+       658843.81
+      ],
+      [
+       7619626.61,
+       658845.13
+      ],
+      [
+       7619696.46,
+       658975.7
+      ],
+      [
+       7619754.72,
+       658949.19
+      ],
+      [
+       7619696.93,
+       658843.81
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00100",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620307.89,
+       658561.17
+      ],
+      [
+       7620259.61,
+       658562.36
+      ],
+      [
+       7620262.17,
+       658666.41
+      ],
+      [
+       7620280.54,
+       658706.62
+      ],
+      [
+       7620338.71,
+       658680.05
+      ],
+      [
+       7620309.23,
+       658615.51
+      ],
+      [
+       7620307.89,
+       658561.17
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00101",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620804.74,
+       658420.78
+      ],
+      [
+       7620775.05,
+       658421.33
+      ],
+      [
+       7620727.23,
+       658422.21
+      ],
+      [
+       7620593.35,
+       658424.68
+      ],
+      [
+       7620593.91,
+       658454.66
+      ],
+      [
+       7620387.38,
+       658458.23
+      ],
+      [
+       7620197.1,
+       658461.52
+      ],
+      [
+       7620199.62,
+       658563.84
+      ],
+      [
+       7620259.61,
+       658562.36
+      ],
+      [
+       7620307.89,
+       658561.17
+      ],
+      [
+       7620389.87,
+       658559.15
+      ],
+      [
+       7620392.24,
+       658655.6
+      ],
+      [
+       7620402.94,
+       658650.71
+      ],
+      [
+       7620425.09,
+       658640.36
+      ],
+      [
+       7620447.04,
+       658629.63
+      ],
+      [
+       7620468.81,
+       658618.51
+      ],
+      [
+       7620490.38,
+       658607.02
+      ],
+      [
+       7620511.75,
+       658595.15
+      ],
+      [
+       7620538.54,
+       658579.57
+      ],
+      [
+       7620804.74,
+       658420.78
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00102",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620389.87,
+       658559.15
+      ],
+      [
+       7620307.89,
+       658561.17
+      ],
+      [
+       7620309.23,
+       658615.51
+      ],
+      [
+       7620338.71,
+       658680.05
+      ],
+      [
+       7620392.24,
+       658655.6
+      ],
+      [
+       7620389.87,
+       658559.15
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00103",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620259.61,
+       658562.36
+      ],
+      [
+       7620199.62,
+       658563.84
+      ],
+      [
+       7620200.99,
+       658619.47
+      ],
+      [
+       7620204.0,
+       658741.58
+      ],
+      [
+       7620280.54,
+       658706.62
+      ],
+      [
+       7620262.17,
+       658666.41
+      ],
+      [
+       7620259.61,
+       658562.36
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00200",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620105.8,
+       658788.81
+      ],
+      [
+       7620101.67,
+       658621.19
+      ],
+      [
+       7620011.99,
+       658622.74
+      ],
+      [
+       7620013.73,
+       658703.72
+      ],
+      [
+       7620014.38,
+       658733.71
+      ],
+      [
+       7620016.1,
+       658813.46
+      ],
+      [
+       7620016.38,
+       658826.77
+      ],
+      [
+       7620028.65,
+       658821.16
+      ],
+      [
+       7620029.79,
+       658823.66
+      ],
+      [
+       7620105.8,
+       658788.81
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00201",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620103.41,
+       658463.14
+      ],
+      [
+       7620008.58,
+       658464.78
+      ],
+      [
+       7620009.49,
+       658506.77
+      ],
+      [
+       7620010.26,
+       658542.76
+      ],
+      [
+       7620011.13,
+       658582.75
+      ],
+      [
+       7620011.99,
+       658622.74
+      ],
+      [
+       7620101.67,
+       658621.19
+      ],
+      [
+       7620106.49,
+       658621.11
+      ],
+      [
+       7620103.41,
+       658463.14
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00202",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620197.1,
+       658461.52
+      ],
+      [
+       7620103.41,
+       658463.14
+      ],
+      [
+       7620106.49,
+       658621.11
+      ],
+      [
+       7620200.99,
+       658619.47
+      ],
+      [
+       7620199.62,
+       658563.84
+      ],
+      [
+       7620197.1,
+       658461.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD00203",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620200.99,
+       658619.47
+      ],
+      [
+       7620106.49,
+       658621.11
+      ],
+      [
+       7620101.67,
+       658621.19
+      ],
+      [
+       7620105.8,
+       658788.81
+      ],
+      [
+       7620146.12,
+       658770.32
+      ],
+      [
+       7620158.42,
+       658762.48
+      ],
+      [
+       7620203.22,
+       658741.93
+      ],
+      [
+       7620204.0,
+       658741.58
+      ],
+      [
+       7620200.99,
+       658619.47
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD04600",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619858.32,
+       658625.4
+      ],
+      [
+       7619822.35,
+       658626.02
+      ],
+      [
+       7619823.73,
+       658685.14
+      ],
+      [
+       7619824.15,
+       658688.94
+      ],
+      [
+       7619825.23,
+       658692.6
+      ],
+      [
+       7619826.91,
+       658696.03
+      ],
+      [
+       7619829.17,
+       658699.11
+      ],
+      [
+       7619831.93,
+       658701.75
+      ],
+      [
+       7619835.1,
+       658703.88
+      ],
+      [
+       7619838.59,
+       658705.43
+      ],
+      [
+       7619842.3,
+       658706.35
+      ],
+      [
+       7619846.11,
+       658706.62
+      ],
+      [
+       7619859.72,
+       658706.38
+      ],
+      [
+       7619858.32,
+       658625.4
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD04700",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619888.32,
+       658624.88
+      ],
+      [
+       7619858.32,
+       658625.4
+      ],
+      [
+       7619859.72,
+       658706.38
+      ],
+      [
+       7619889.72,
+       658705.86
+      ],
+      [
+       7619888.32,
+       658624.88
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD04800",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619918.31,
+       658624.36
+      ],
+      [
+       7619906.5,
+       658624.56
+      ],
+      [
+       7619888.32,
+       658624.88
+      ],
+      [
+       7619889.72,
+       658705.86
+      ],
+      [
+       7619919.72,
+       658705.35
+      ],
+      [
+       7619918.31,
+       658624.36
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD04900",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619948.31,
+       658623.84
+      ],
+      [
+       7619918.31,
+       658624.36
+      ],
+      [
+       7619919.72,
+       658705.35
+      ],
+      [
+       7619949.71,
+       658704.83
+      ],
+      [
+       7619948.31,
+       658623.84
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05000",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619978.3,
+       658623.32
+      ],
+      [
+       7619948.31,
+       658623.84
+      ],
+      [
+       7619949.71,
+       658704.83
+      ],
+      [
+       7619979.71,
+       658704.31
+      ],
+      [
+       7619978.3,
+       658623.32
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05100",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620011.99,
+       658622.74
+      ],
+      [
+       7619978.3,
+       658623.32
+      ],
+      [
+       7619979.71,
+       658704.31
+      ],
+      [
+       7620013.73,
+       658703.72
+      ],
+      [
+       7620011.99,
+       658622.74
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05200",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619989.51,
+       658734.14
+      ],
+      [
+       7619959.52,
+       658734.66
+      ],
+      [
+       7619961.31,
+       658838.48
+      ],
+      [
+       7619991.08,
+       658824.88
+      ],
+      [
+       7619989.51,
+       658734.14
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05300",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619959.52,
+       658734.66
+      ],
+      [
+       7619925.77,
+       658735.24
+      ],
+      [
+       7619927.81,
+       658853.78
+      ],
+      [
+       7619961.31,
+       658838.48
+      ],
+      [
+       7619959.52,
+       658734.66
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05400",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619925.77,
+       658735.24
+      ],
+      [
+       7619848.23,
+       658736.58
+      ],
+      [
+       7619844.47,
+       658736.98
+      ],
+      [
+       7619840.83,
+       658738.0
+      ],
+      [
+       7619837.42,
+       658739.64
+      ],
+      [
+       7619834.34,
+       658741.84
+      ],
+      [
+       7619831.69,
+       658744.53
+      ],
+      [
+       7619829.53,
+       658747.63
+      ],
+      [
+       7619827.94,
+       658751.06
+      ],
+      [
+       7619826.95,
+       658754.71
+      ],
+      [
+       7619826.61,
+       658758.48
+      ],
+      [
+       7619826.92,
+       658762.25
+      ],
+      [
+       7619840.48,
+       658842.56
+      ],
+      [
+       7619835.41,
+       658842.59
+      ],
+      [
+       7619840.31,
+       658871.61
+      ],
+      [
+       7619840.98,
+       658874.19
+      ],
+      [
+       7619842.05,
+       658876.62
+      ],
+      [
+       7619843.52,
+       658878.84
+      ],
+      [
+       7619845.34,
+       658880.79
+      ],
+      [
+       7619847.45,
+       658882.41
+      ],
+      [
+       7619849.8,
+       658883.65
+      ],
+      [
+       7619852.32,
+       658884.49
+      ],
+      [
+       7619854.95,
+       658884.9
+      ],
+      [
+       7619857.62,
+       658884.87
+      ],
+      [
+       7619860.23,
+       658884.4
+      ],
+      [
+       7619862.74,
+       658883.5
+      ],
+      [
+       7619927.81,
+       658853.78
+      ],
+      [
+       7619925.77,
+       658735.24
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05500",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620014.38,
+       658733.71
+      ],
+      [
+       7619989.51,
+       658734.14
+      ],
+      [
+       7619991.08,
+       658824.88
+      ],
+      [
+       7620016.1,
+       658813.46
+      ],
+      [
+       7620014.38,
+       658733.71
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05600",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619903.1,
+       658466.6
+      ],
+      [
+       7619829.71,
+       658467.87
+      ],
+      [
+       7619827.99,
+       658468.04
+      ],
+      [
+       7619826.31,
+       658468.47
+      ],
+      [
+       7619824.72,
+       658469.16
+      ],
+      [
+       7619823.26,
+       658470.1
+      ],
+      [
+       7619821.97,
+       658471.25
+      ],
+      [
+       7619820.87,
+       658472.59
+      ],
+      [
+       7619819.99,
+       658474.09
+      ],
+      [
+       7619819.36,
+       658475.7
+      ],
+      [
+       7619819.0,
+       658477.4
+      ],
+      [
+       7619818.9,
+       658479.13
+      ],
+      [
+       7619821.39,
+       658585.13
+      ],
+      [
+       7619905.62,
+       658583.67
+      ],
+      [
+       7619905.45,
+       658575.57
+      ],
+      [
+       7619903.1,
+       658466.6
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05700",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619905.62,
+       658583.67
+      ],
+      [
+       7619821.39,
+       658585.13
+      ],
+      [
+       7619822.35,
+       658626.02
+      ],
+      [
+       7619858.32,
+       658625.4
+      ],
+      [
+       7619888.32,
+       658624.88
+      ],
+      [
+       7619906.5,
+       658624.56
+      ],
+      [
+       7619905.62,
+       658583.67
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05800",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620011.13,
+       658582.75
+      ],
+      [
+       7619921.14,
+       658584.3
+      ],
+      [
+       7619920.94,
+       658575.31
+      ],
+      [
+       7619905.45,
+       658575.57
+      ],
+      [
+       7619905.62,
+       658583.67
+      ],
+      [
+       7619906.5,
+       658624.56
+      ],
+      [
+       7619918.31,
+       658624.36
+      ],
+      [
+       7619948.31,
+       658623.84
+      ],
+      [
+       7619978.3,
+       658623.32
+      ],
+      [
+       7620011.99,
+       658622.74
+      ],
+      [
+       7620011.13,
+       658582.75
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD05900",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620010.26,
+       658542.76
+      ],
+      [
+       7619920.28,
+       658544.31
+      ],
+      [
+       7619920.94,
+       658575.31
+      ],
+      [
+       7619921.14,
+       658584.3
+      ],
+      [
+       7620011.13,
+       658582.75
+      ],
+      [
+       7620010.26,
+       658542.76
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD06000",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620009.49,
+       658506.77
+      ],
+      [
+       7619919.5,
+       658508.32
+      ],
+      [
+       7619920.28,
+       658544.31
+      ],
+      [
+       7620010.26,
+       658542.76
+      ],
+      [
+       7620009.49,
+       658506.77
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD06100",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7620008.58,
+       658464.78
+      ],
+      [
+       7619918.6,
+       658466.33
+      ],
+      [
+       7619919.5,
+       658508.32
+      ],
+      [
+       7620009.49,
+       658506.77
+      ],
+      [
+       7620008.58,
+       658464.78
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S126DD06200",
+    "zone": "TO:R18-24",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "an Area of Special Concern outline on Map 5.1 with no number printed on it, whose rule the text does not name (east of ASC 2, transit-oriented lots)",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7619918.6,
+       658466.33
+      ],
+      [
+       7619903.1,
+       658466.6
+      ],
+      [
+       7619905.45,
+       658575.57
+      ],
+      [
+       7619920.94,
+       658575.31
+      ],
+      [
+       7619920.28,
+       658544.31
+      ],
+      [
+       7619919.5,
+       658508.32
+      ],
+      [
+       7619918.6,
+       658466.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD03100",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623496.44,
+       655548.64
+      ],
+      [
+       7623474.74,
+       655549.24
+      ],
+      [
+       7623416.14,
+       655550.85
+      ],
+      [
+       7623418.99,
+       655660.49
+      ],
+      [
+       7623420.7,
+       655726.46
+      ],
+      [
+       7623483.68,
+       655724.75
+      ],
+      [
+       7623481.07,
+       655612.78
+      ],
+      [
+       7623497.93,
+       655612.33
+      ],
+      [
+       7623496.44,
+       655548.64
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD03400",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623606.38,
+       655544.88
+      ],
+      [
+       7623496.42,
+       655547.95
+      ],
+      [
+       7623496.44,
+       655548.64
+      ],
+      [
+       7623497.93,
+       655612.33
+      ],
+      [
+       7623544.04,
+       655611.08
+      ],
+      [
+       7623607.89,
+       655609.34
+      ],
+      [
+       7623606.38,
+       655544.88
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD03500",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623604.8,
+       655477.9
+      ],
+      [
+       7623538.13,
+       655479.76
+      ],
+      [
+       7623494.97,
+       655485.96
+      ],
+      [
+       7623496.42,
+       655547.95
+      ],
+      [
+       7623606.38,
+       655544.88
+      ],
+      [
+       7623604.8,
+       655477.9
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD03700",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623535.64,
+       655371.79
+      ],
+      [
+       7623470.67,
+       655373.6
+      ],
+      [
+       7623473.29,
+       655486.57
+      ],
+      [
+       7623474.74,
+       655549.24
+      ],
+      [
+       7623496.44,
+       655548.64
+      ],
+      [
+       7623496.42,
+       655547.95
+      ],
+      [
+       7623494.97,
+       655485.96
+      ],
+      [
+       7623538.13,
+       655479.76
+      ],
+      [
+       7623535.64,
+       655371.79
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD05400",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623418.99,
+       655660.49
+      ],
+      [
+       7623406.99,
+       655660.8
+      ],
+      [
+       7623402.2,
+       655650.98
+      ],
+      [
+       7623380.67,
+       655651.62
+      ],
+      [
+       7623363.08,
+       655596.64
+      ],
+      [
+       7623354.71,
+       655594.15
+      ],
+      [
+       7623358.2,
+       655728.32
+      ],
+      [
+       7623420.7,
+       655726.46
+      ],
+      [
+       7623418.99,
+       655660.49
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD05500",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623328.5,
+       655586.37
+      ],
+      [
+       7623329.88,
+       655639.37
+      ],
+      [
+       7623304.89,
+       655640.11
+      ],
+      [
+       7623307.22,
+       655729.83
+      ],
+      [
+       7623358.2,
+       655728.32
+      ],
+      [
+       7623354.71,
+       655594.15
+      ],
+      [
+       7623328.5,
+       655586.37
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S136BD05800",
+    "zone": "R-5",
+    "plan": "Metzger - Progress",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "the Map 5.1 outline numbered 12, an Area of Special Concern the text names nowhere, so its rule is unread",
+    "quote": "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7623416.14,
+       655550.85
+      ],
+      [
+       7623412.77,
+       655550.96
+      ],
+      [
+       7623339.79,
+       655553.16
+      ],
+      [
+       7623246.33,
+       655555.98
+      ],
+      [
+       7623246.5,
+       655562.02
+      ],
+      [
+       7623328.5,
+       655586.37
+      ],
+      [
+       7623354.71,
+       655594.15
+      ],
+      [
+       7623363.08,
+       655596.64
+      ],
+      [
+       7623380.67,
+       655651.62
+      ],
+      [
+       7623402.2,
+       655650.98
+      ],
+      [
+       7623406.99,
+       655660.8
+      ],
+      [
+       7623418.99,
+       655660.49
+      ],
+      [
+       7623416.14,
+       655550.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S202CC01100",
+    "zone": "R-15",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586307.34,
+       679581.09
+      ],
+      [
+       7586146.82,
+       679585.1
+      ],
+      [
+       7586155.18,
+       679793.22
+      ],
+      [
+       7586316.37,
+       679789.45
+      ],
+      [
+       7586307.34,
+       679581.09
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00100",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586260.39,
+       678855.87
+      ],
+      [
+       7586186.89,
+       678859.13
+      ],
+      [
+       7586189.85,
+       678931.74
+      ],
+      [
+       7586277.66,
+       678927.85
+      ],
+      [
+       7586275.35,
+       678869.64
+      ],
+      [
+       7586260.39,
+       678855.87
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00101",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586126.94,
+       678861.78
+      ],
+      [
+       7586067.0,
+       678864.44
+      ],
+      [
+       7586073.73,
+       679032.02
+      ],
+      [
+       7586124.17,
+       679029.7
+      ],
+      [
+       7586133.79,
+       679029.27
+      ],
+      [
+       7586126.94,
+       678861.78
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00102",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586186.89,
+       678859.13
+      ],
+      [
+       7586126.94,
+       678861.78
+      ],
+      [
+       7586133.79,
+       679029.27
+      ],
+      [
+       7586153.77,
+       679028.38
+      ],
+      [
+       7586151.16,
+       678964.48
+      ],
+      [
+       7586182.13,
+       678963.11
+      ],
+      [
+       7586180.86,
+       678932.14
+      ],
+      [
+       7586189.85,
+       678931.74
+      ],
+      [
+       7586186.89,
+       678859.13
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00103",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586277.66,
+       678927.85
+      ],
+      [
+       7586189.85,
+       678931.74
+      ],
+      [
+       7586180.86,
+       678932.14
+      ],
+      [
+       7586182.13,
+       678963.11
+      ],
+      [
+       7586151.16,
+       678964.48
+      ],
+      [
+       7586153.77,
+       679028.38
+      ],
+      [
+       7586174.13,
+       679027.47
+      ],
+      [
+       7586225.73,
+       679025.17
+      ],
+      [
+       7586281.43,
+       679022.68
+      ],
+      [
+       7586277.66,
+       678927.85
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00200",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586067.0,
+       678864.44
+      ],
+      [
+       7585964.95,
+       678868.96
+      ],
+      [
+       7585971.69,
+       679036.6
+      ],
+      [
+       7586031.33,
+       679033.92
+      ],
+      [
+       7586073.73,
+       679032.02
+      ],
+      [
+       7586067.0,
+       678864.44
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00300",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585964.95,
+       678868.96
+      ],
+      [
+       7585862.91,
+       678873.48
+      ],
+      [
+       7585869.65,
+       679041.18
+      ],
+      [
+       7585925.05,
+       679038.69
+      ],
+      [
+       7585971.69,
+       679036.6
+      ],
+      [
+       7585964.95,
+       678868.96
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00400",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585862.91,
+       678873.48
+      ],
+      [
+       7585760.86,
+       678878.0
+      ],
+      [
+       7585767.6,
+       679045.75
+      ],
+      [
+       7585833.4,
+       679042.8
+      ],
+      [
+       7585869.65,
+       679041.18
+      ],
+      [
+       7585862.91,
+       678873.48
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00500",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585760.86,
+       678878.0
+      ],
+      [
+       7585658.81,
+       678882.52
+      ],
+      [
+       7585665.55,
+       679050.33
+      ],
+      [
+       7585751.1,
+       679046.49
+      ],
+      [
+       7585767.6,
+       679045.75
+      ],
+      [
+       7585760.86,
+       678878.0
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00600",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585658.81,
+       678882.52
+      ],
+      [
+       7585556.76,
+       678886.91
+      ],
+      [
+       7585560.77,
+       678986.83
+      ],
+      [
+       7585562.78,
+       679036.79
+      ],
+      [
+       7585563.51,
+       679054.91
+      ],
+      [
+       7585645.84,
+       679051.22
+      ],
+      [
+       7585665.55,
+       679050.33
+      ],
+      [
+       7585658.81,
+       678882.52
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00800",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585636.72,
+       678655.33
+      ],
+      [
+       7585571.75,
+       678658.21
+      ],
+      [
+       7585547.61,
+       678659.28
+      ],
+      [
+       7585548.33,
+       678677.09
+      ],
+      [
+       7585550.74,
+       678737.03
+      ],
+      [
+       7585554.76,
+       678837.09
+      ],
+      [
+       7585643.85,
+       678833.14
+      ],
+      [
+       7585636.72,
+       678655.33
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB00900",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585725.8,
+       678651.38
+      ],
+      [
+       7585636.72,
+       678655.33
+      ],
+      [
+       7585643.85,
+       678833.14
+      ],
+      [
+       7585732.93,
+       678829.19
+      ],
+      [
+       7585725.8,
+       678651.38
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01000",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585814.88,
+       678647.44
+      ],
+      [
+       7585725.8,
+       678651.38
+      ],
+      [
+       7585732.93,
+       678829.19
+      ],
+      [
+       7585822.02,
+       678825.24
+      ],
+      [
+       7585814.88,
+       678647.44
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01100",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585903.96,
+       678643.49
+      ],
+      [
+       7585901.47,
+       678643.6
+      ],
+      [
+       7585814.88,
+       678647.44
+      ],
+      [
+       7585822.02,
+       678825.24
+      ],
+      [
+       7585908.6,
+       678821.41
+      ],
+      [
+       7585911.1,
+       678821.3
+      ],
+      [
+       7585903.96,
+       678643.49
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01300",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7585993.05,
+       678639.54
+      ],
+      [
+       7585906.46,
+       678643.38
+      ],
+      [
+       7585903.96,
+       678643.49
+      ],
+      [
+       7585911.1,
+       678821.3
+      ],
+      [
+       7585913.6,
+       678821.19
+      ],
+      [
+       7586000.18,
+       678817.35
+      ],
+      [
+       7585993.05,
+       678639.54
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01400",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586082.13,
+       678635.6
+      ],
+      [
+       7585993.05,
+       678639.54
+      ],
+      [
+       7586000.18,
+       678817.35
+      ],
+      [
+       7586089.27,
+       678813.4
+      ],
+      [
+       7586085.38,
+       678716.53
+      ],
+      [
+       7586082.13,
+       678635.6
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01500",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586275.19,
+       678708.12
+      ],
+      [
+       7586269.08,
+       678708.39
+      ],
+      [
+       7586085.38,
+       678716.53
+      ],
+      [
+       7586089.27,
+       678813.4
+      ],
+      [
+       7586265.88,
+       678805.58
+      ],
+      [
+       7586278.51,
+       678790.78
+      ],
+      [
+       7586275.19,
+       678708.12
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BB01600",
+    "zone": "R-5",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586265.74,
+       678627.46
+      ],
+      [
+       7586082.13,
+       678635.6
+      ],
+      [
+       7586085.38,
+       678716.53
+      ],
+      [
+       7586269.08,
+       678708.39
+      ],
+      [
+       7586265.74,
+       678627.46
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BC00100",
+    "zone": "R-24",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586222.39,
+       677459.86
+      ],
+      [
+       7586089.9,
+       677465.76
+      ],
+      [
+       7586093.4,
+       677547.68
+      ],
+      [
+       7586223.46,
+       677541.9
+      ],
+      [
+       7586225.96,
+       677541.78
+      ],
+      [
+       7586222.39,
+       677459.86
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BC00102",
+    "zone": "R-24",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586223.46,
+       677541.9
+      ],
+      [
+       7586093.4,
+       677547.68
+      ],
+      [
+       7586089.9,
+       677465.76
+      ],
+      [
+       7586085.9,
+       677465.93
+      ],
+      [
+       7585936.05,
+       677472.6
+      ],
+      [
+       7585939.21,
+       677546.53
+      ],
+      [
+       7585942.24,
+       677617.47
+      ],
+      [
+       7585942.34,
+       677619.97
+      ],
+      [
+       7585977.31,
+       677618.41
+      ],
+      [
+       7586017.27,
+       677616.63
+      ],
+      [
+       7586092.2,
+       677613.3
+      ],
+      [
+       7586091.24,
+       677590.82
+      ],
+      [
+       7586225.33,
+       677584.85
+      ],
+      [
+       7586223.46,
+       677541.9
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BC00103",
+    "zone": "R-24",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards', which are not held",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586226.82,
+       677584.79
+      ],
+      [
+       7586225.33,
+       677584.85
+      ],
+      [
+       7586091.24,
+       677590.82
+      ],
+      [
+       7586092.2,
+       677613.3
+      ],
+      [
+       7586094.22,
+       677660.76
+      ],
+      [
+       7586225.1,
+       677654.93
+      ],
+      [
+       7586229.86,
+       677654.72
+      ],
+      [
+       7586226.82,
+       677584.79
       ]
      ]
     ]
