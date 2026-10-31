@@ -70,6 +70,11 @@ BY_RIGHT_GAINS = {
     "or/washington/king-city/KTC.setback_front_ft",
     "or/washington/king-city/KTRC.setback_front_ft",
     "or/washington/king-city/KTTC.setback_front_ft",
+    # 2026-10-31 (FOLLOWUPS 138): the East Hillsboro overlay lays Hillsboro's
+    # R-10 coverage on county R-5 inside the Reedville / TV Highway subareas,
+    # corner 45 against 40 with it -- the same Hillsboro row as above, reached
+    # through the county layer (only_when east_hillsboro_city_standards).
+    "or/washington/_unincorporated/R-5.max_coverage_pct",
 }
 
 
