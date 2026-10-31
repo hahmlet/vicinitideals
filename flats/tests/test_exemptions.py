@@ -155,7 +155,10 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 455, "numeric": 171, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 455, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
+# 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
+# floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
+# CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
 # 168 -> 171 numeric on 2026-10-30 (FOLLOWUPS 109 chunk 6, North Bethany Subarea Plan): the
 # maximum front yard of R-15 NB and R-24 NB and R-24 NB's building share of the frontage are
 # exempt off the plan's map-drawn areas -- Sections 305, 306 and 390 print minimum yards and
