@@ -1822,7 +1822,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-PLAN-RULE-UNMEASURED:
-    description: "Whether the lot lies where a Washington County community plan rule binds the pod that nothing measures (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany): an access-point cap, shared access or access bar on a named street, a park access improved with the lot's development, a Type 1 landscape buffer along a highway, an old case's conditions, an unlettered Area of Special Concern, or a pedestrian path to be built with the lot's development"
+    description: "Whether the lot lies where a Washington County community plan rule binds the pod that nothing measures (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress, East Hillsboro): an access-point cap, shared access or access bar on a named street, a park access improved with the lot's development, a Type 1 landscape buffer along a highway, an old case's conditions, an Area of Special Concern whose letter or rule the plan does not give, the city of Hillsboro's development standards, or a pedestrian path to be built with the lot's development"
     kind: categorical
     risk: possible
     severity: 5
@@ -1830,14 +1830,14 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "The plans' Areas of Special Concern and Pedestrian Connectivity maps are traced (FOLLOWUPS 109 chunk 7, FOLLOWUPS 135); a held lot needs a county planner's word that its driveway, buffer or path meets the plan, and a lot divided since 2026-10-30 is placed by the traced lots"
+    path: "The plans' Areas of Special Concern and Pedestrian Connectivity maps are traced (FOLLOWUPS 109 chunks 7 and 8, FOLLOWUPS 135); a held lot needs a county planner's word that its driveway, buffer or path meets the plan, and a lot divided since 2026-10-30 is placed by the traced lots"
     priority: later
     status: pending
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-LOCAL-STREET-CONNECTIVITY:
-    description: "Whether the lot lies on the Local Street Connectivity Lands of a Washington County community plan (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany), where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
+    description: "Whether the lot lies on the Local Street Connectivity Lands of a Washington County community plan (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress), where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
     kind: categorical
     risk: possible
     severity: 5
@@ -1852,7 +1852,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-PLAN-REVIEW:
-    description: "Whether the lot lies in Bull Mountain ASC 8 (master planning - planned development review) or on the R-25+ site of Raleigh Hills - Garden Home ASC L (Type III review): GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
+    description: "Whether the lot lies where a Washington County community plan sends development through a review: Bull Mountain ASC 8, the R-25+ site of Raleigh Hills - Garden Home ASC L, Metzger - Progress ASCs 2, 3, 9 and 18, East Hillsboro ASC 3, Sherwood ASC 2, the master-plan ASCs of Sunset West and Cedar Hills - Cedar Mill, or a frontage on a county arterial or collector where shared or consolidated access is required (FOLLOWUPS 137): GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
     kind: categorical
     risk: unlikely
     # No standard turns on the fact; inside the UGB it carries CLEAR-OBJECTIVE.
@@ -1861,7 +1861,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Map 5.1 of each plan is traced (FOLLOWUPS 109 chunk 7); a lot divided since 2026-10-30 is placed by the outline"
+    path: "Each plan's Areas of Special Concern map and the county TSP functional classification are traced (FOLLOWUPS 109 chunks 7 and 8, FOLLOWUPS 137); a lot divided since 2026-10-31 is placed by the traced lots"
     priority: later
     status: pending
     approved_by: null

@@ -708,6 +708,13 @@ RULINGS: dict[str, dict[str, str]] = {
             "those approvals conforming (aloha-reedville-cooper-mountain"
             "#L713-L718); no lot is in it on the county's zoning layer."
         ),
+        # East Hillsboro, stored 2026-10-31 by design districts chunk 8
+        # (FOLLOWUPS 109), prints the same chapter head a second time.
+        "SUBAREAS": (
+            "not-a-zone: the chapter head over each plan's subarea design "
+            "elements (aloha-reedville-cooper-mountain#L731, "
+            "east-hillsboro#L784)."
+        ),
         # The Bethany Community Plan's map pages, stored 2026-10-30 for
         # ASC 1 (FOLLOWUPS 130), print their street and city labels one
         # word a line, split where the label bends (bethany#L1454-L1459,

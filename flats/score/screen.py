@@ -242,8 +242,15 @@ AREA_REVIEWS: dict[str, str] = {
     "washington_plan_review": (
         "Bull Mountain Community Plan, Area of Special Concern 8: development "
         "planned and reviewed under the master planning - planned development "
-        "provisions; or Raleigh Hills - Garden Home Community Plan, Area of "
-        "Special Concern L, the R-25+ site: Type III review"
+        "provisions; Raleigh Hills - Garden Home Community Plan, Area of "
+        "Special Concern L, the R-25+ site: Type III review; Metzger - "
+        "Progress ASCs 2, 3 and 9 (Type III) and 18 (an overall master plan "
+        "first); East Hillsboro ASC 3 (a site plan with the abutting lots); "
+        "Sherwood ASC 2 (design in light of the Tonquin - Elsner arterial); "
+        "the master planning - planned development ASCs of Sunset West (2, 3, "
+        "7) and Cedar Hills - Cedar Mill (2, 7, 8); or each plan's general "
+        "design element on a lot fronting an arterial or collector: shared "
+        "or consolidated access required with the development permit"
     ),
 }
 

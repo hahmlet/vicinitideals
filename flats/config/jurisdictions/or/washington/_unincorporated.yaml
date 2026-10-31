@@ -364,6 +364,44 @@ code:
   # page headers; no number and no design element changed. Maps: sunset-west-community-plan-maps-10-2025,
   # read for the drawn_areas below.
   allow_thin: true
+- id: "community-plan.metzger-progress"
+  url: https://washingtoncountyor.gov/lut/planning/documents/metzger-progress-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Metzger Progress"
+  extraction: plain
+  # Read whole by design districts chunk 8 (FOLLOWUPS 109, 2026-10-31) and
+  # stored from pending/. September 2026 edition (the August address is the
+  # pending one): a word-level diff found only Ordinance No. 915's
+  # community-involvement wording and the page headers; no number and no
+  # design element changed. Maps: metzger-progress-community-plan-maps-2-2025,
+  # read for the drawn_areas below.
+  allow_thin: true
+- id: "community-plan.west-tigard"
+  url: https://washingtoncountyor.gov/lut/planning/documents/west-tigard-community-plan-updated-11-2024/download
+  title: "Washington County Community Plan - West Tigard"
+  extraction: plain
+  # Read whole by design districts chunk 8 (FOLLOWUPS 109, 2026-10-31) and
+  # stored from pending/; identical to the pending text. Maps:
+  # west-tigard-community-plan-maps-2-2025 (no Area of Special Concern, no
+  # Local Street Connectivity Lands, no pedestrian area drawn).
+  allow_thin: true
+- id: "community-plan.east-hillsboro"
+  url: https://washingtoncountyor.gov/lut/planning/documents/east-hillsboro-community-plan-updated-11-2024/download
+  title: "Washington County Community Plan - East Hillsboro"
+  extraction: plain
+  # Read whole by design districts chunk 8 (FOLLOWUPS 109, 2026-10-31) and
+  # stored from pending/; identical to the pending text. Maps:
+  # east-hillsboro-community-plan-maps-11-2024, read for the drawn_areas below.
+  allow_thin: true
+- id: "community-plan.sherwood"
+  url: https://washingtoncountyor.gov/lut/planning/documents/sherwood-community-plan-updated-09-2026/download
+  title: "Washington County Community Plan - Sherwood"
+  extraction: plain
+  # Read whole by design districts chunk 8 (FOLLOWUPS 109, 2026-10-31) and
+  # stored from pending/. September 2026 edition (the November 2024 address
+  # is the pending one): only Ordinance No. 915's wording and the page
+  # headers changed. Maps: sherwood-community-plan-maps-2-2025, read for the
+  # drawn_areas below.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC Section 106, which is on disk whole
   # (cdc.106.definitions.txt runs from 106-1 to the Section 107 heading).
@@ -743,9 +781,58 @@ defaults:
 # I's office master plan and its bar on permanent access onto Beaverton -
 # Hillsdale Highway (#L855-L856), whose one residential lot does not reach
 # the highway; and right-of-way the TSP owes (Laurelwood realignment), which
-# an existing lot does not dedicate (2026-10-02). The five smaller plans left -- East
-# Hillsboro, Metzger - Progress, Sherwood, West Tigard, West Union -- are not
-# read and NOT ENCODED; owed to later chunks.
+# an existing lot does not dedicate (2026-10-02).
+# Chunk 8 (FOLLOWUPS 109, 2026-10-31) read the four smaller plans with
+# residential lots whole, with their map sets, and stored them. West Union
+# has no unincorporated lot the pod is allowed on (eight lots, FD-20 and
+# SID), so it was counted and not read; it stays in pending/. Held on the
+# lots the maps put each on (drawn_areas washington_plan_rule_unmeasured):
+#   Metzger - Progress: ASC 1's lots fronting SW Oleson Road, whose direct
+#   access "shall be limited to SW 89th Avenue"
+#   (community-plan.metzger-progress.txt#L696-L703); ASC 2's lots fronting
+#   SW Hall Boulevard, whose access is "from Cedarcrest Street - SW 91st
+#   Avenue and not from Hall Boulevard" (#L718-L725); the TO:R18-24 lots of
+#   two Map 5.1 outlines east of ASC 2 that carry no number and fit no ASC
+#   the text describes, and the R-5 lots of the outline numbered 12, an ASC
+#   the text never names (rule unread, so held; on TO:R9-12's front yard,
+#   which TO:R12-18 and TO:R18-24 take through `like`); and the Local
+#   Street Connectivity Lands of its Map 7.1 (#L866-L876, Raleigh Hills'
+#   text), on R-5 lots.
+#   East Hillsboro: every R-5 to R-24 lot of the Reedville and Tualatin
+#   Valley Highway Corridor subareas, whose design elements make
+#   "Development proposals in this area ... address the city of
+#   Hillsboro's development standards" (community-plan.east-hillsboro.txt
+#   #L854, L883); those standards are not held. The plan's other residential
+#   lots are former Urban Intermediate Area pockets in no subarea.
+# GREEN with CLEAR-OBJECTIVE inside the UGB (drawn_areas
+# washington_plan_review): Metzger - Progress ASCs 2, 3 and 9 (Type III,
+# #L718-L734, L790-L798) and ASC 18 (an overall master plan first,
+# #L736-L744); East Hillsboro ASC 3 (General Design Element 15's site plan
+# for the lot and every abutting lot, "strictly applied", #L765-L773,
+# L885-L887); Sherwood ASC 2 (design "in light of" the Tonquin - Elsner
+# arterial, conditions "may be placed", community-plan.sherwood.txt
+# #L654-L658). Not encoded: West Tigard (no ASC; its Local Street
+# Connectivity and Pedestrian Connectivity maps draw nothing; and nor do
+# Sherwood's or East Hillsboro's); the quarry-noise review within half a
+# mile of a rock quarry (west-tigard #L492-L497, sherwood #L775-L781, as
+# Bull Mountain's #L685, which chunk 7 left): no quarry is mapped, and a
+# review that may add conditions is GREEN with a flag inside the UGB;
+# pedestrian pathways in attached residential development and noise
+# insulation along arterials (design details, 2026-10-14); scenic views
+# and homes "oriented toward the center" of Metzger ASC 2 (design
+# details); CDC 422 natural resource provisions (Metzger ASC 1 and 10,
+# Sherwood ASC 6); ASCs annexed or on refused zones (Metzger 10, 11, 14,
+# 15; Sherwood 1, 3 to 8; East Hillsboro 4, 6, 7, 8).
+# FOLLOWUPS 137 (2026-10-31): the general design element every plan
+# carries, "New access onto Arterials and Collectors shall be limited.
+# Shared or consolidated access shall be required" (e.g.
+# community-plan.bethany.txt#L757-L759), is GREEN with CLEAR-OBJECTIVE
+# (2026-10-15) on every residential lot whose line runs 15 ft within 60 ft
+# of a county TSP principal arterial, arterial or collector centreline,
+# in all ten plans with lots; and so are the master planning - planned
+# development ASCs of Sunset West (2, 3, 7; 6 and 8 hold no lot the pod is
+# allowed on) and Cedar Hills - Cedar Mill (2, 7, 8). Both on
+# washington_plan_review; a lot a hold already keeps YELLOW stays YELLOW.
 #
 # NOT ENCODED: the Bonny Slope West Subarea Overlay District (Section 391).
 # It reaches only the Bonny Slope West Subarea of the Cedar Hills - Cedar
@@ -864,7 +951,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L352-L354,L356-L358"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -872,7 +959,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L361-L362"
       qualified_by:
         fact: washington_plan_rule_unmeasured
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
         quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
@@ -998,7 +1085,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L356-L358,L360-L362"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1006,7 +1093,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L365-L366"
       qualified_by:
         fact: washington_plan_rule_unmeasured
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
         quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
@@ -1136,7 +1223,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L315-L317,L319-L321"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1144,7 +1231,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L324-L325"
       qualified_by:
         fact: washington_plan_rule_unmeasured
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
         quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
@@ -1274,7 +1361,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1282,7 +1369,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L321-L322"
       qualified_by:
         fact: washington_plan_rule_unmeasured
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
         quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
@@ -1412,7 +1499,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L298-L300,L302-L303"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -1420,7 +1507,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L304-L305"
       qualified_by:
         fact: washington_plan_rule_unmeasured
-        cite: Raleigh Hills - Garden Home and Bull Mountain Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
         quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
     setback_street_side_ft:
       value: 8
@@ -1553,7 +1640,7 @@ zones:
       quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L328-L330,L332-L333"
       qualified_by:
         fact: washington_local_street_connectivity
-        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
+        cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
         quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1136-L1142"
     setback_garage_entrance_ft:
       value: 20
@@ -2213,6 +2300,13 @@ zones:
       value: 10
       cite: Washington County CDC 375 Table B(1), Front Yard - minimum 10 feet
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L947"
+      qualified_by:
+        # On the front yard: Table B(1) prints no garage-entrance yard to
+        # carry it as the R districts do. TO:R12-18 and TO:R18-24 take it
+        # through `like`, so the drawn area answers all three.
+        fact: washington_plan_rule_unmeasured
+        cite: Metzger - Progress Community Plan (CDC 300-1), Map 5.1 Area of Special Concern outlines on transit-oriented lots whose number the sheet does not print and whose rule the text does not name -- held only on the lots the outlines cover (drawn_areas washington_plan_rule_unmeasured)
+        quote: "or/washington/_unincorporated/community-plan.metzger-progress.txt#L203,L716,L740-L744"
     setback_front_max_ft:
       value: 15
       cite: Washington County CDC 375 Table B(1), Front Yard - maximum 15 feet
@@ -3295,7 +3389,7 @@ drawn_areas:
       RALEIGH-HILLS-ASC-U-CASE-74-96C, which says why.
   washington_plan_rule_unmeasured:
     condition: washington_plan_rule_unmeasured
-    zones: [R-5, R-6, R-9, R-15, R-24]
+    zones: [R-5, R-6, R-9, R-15, R-24, TO:R9-12, TO:R12-18, TO:R18-24]
     file: or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
     source: >-
       Raleigh Hills - Garden Home and Bull Mountain Community Plan maps
@@ -3305,11 +3399,13 @@ drawn_areas:
       Concern and Pedestrian Connectivity maps of Aloha - Reedville - Cooper
       Mountain, Cedar Hills - Cedar Mill (with its Willow Creek Subarea),
       Sunset West and Bethany (retrieved 2026-10-31, FOLLOWUPS 135), with
-      the county's taxlots, zoning and street centrelines. The file holds,
-      whole, the 482 residential lots on which a plan rule binds the pod and
-      nothing measures it. Drawn provenance in the file's source block.
+      the county's taxlots, zoning and street centrelines; and the Metzger -
+      Progress Map 5.1 and East Hillsboro Map 2 (retrieved 2026-10-31,
+      FOLLOWUPS 109 chunk 8). The file holds, whole, the 547 residential lots
+      on which a plan rule binds the pod and nothing measures it. Drawn
+      provenance in the file's source block.
     quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1218-L1223"
-    cite: Raleigh Hills - Garden Home Community Plan ASCs C, L, M, S, T, U and pedestrian connectivity areas; Bull Mountain Community Plan ASC 1, Southern Lowlands design element 3 and the Baker Lane / Sunrise Lane pedestrian area; Aloha - Reedville - Cooper Mountain ASC 10, Winterborne Park and pedestrian areas 1 to 4; Cedar Hills - Cedar Mill ASCs 6 and 8, Willow Creek design element 3 and pedestrian areas 1 and 2; Sunset West ASC 3 and the 176th Avenue pedestrian area; Bethany pedestrian area 1 (CDC 300-1)
+    cite: Raleigh Hills - Garden Home Community Plan ASCs C, L, M, S, T, U and pedestrian connectivity areas; Bull Mountain Community Plan ASC 1, Southern Lowlands design element 3 and the Baker Lane / Sunrise Lane pedestrian area; Aloha - Reedville - Cooper Mountain ASC 10, Winterborne Park and pedestrian areas 1 to 4; Cedar Hills - Cedar Mill ASCs 6 and 8, Willow Creek design element 3 and pedestrian areas 1 and 2; Sunset West ASC 3 and the 176th Avenue pedestrian area; Bethany pedestrian area 1; Metzger - Progress ASC 1 and 2 access bars and the unnamed outlines; East Hillsboro's Reedville and Tualatin Valley Highway Corridor subareas (CDC 300-1)
     note: >-
       Inside means the lot is one the file holds, each for the rule its
       'why' names: an access cap or bar on the street it fronts (the screen
@@ -3331,18 +3427,31 @@ drawn_areas:
       Map 1S2 24AC) and the shaded parcels of seven more pedestrian
       connectivity areas. Sunset West's text lists no area; the 176th Avenue
       parcels its map shades are held on the Bethany plan's area 2, which
-      names them (community-plan.bethany.txt#L1417, L1419-L1424).
+      names them (community-plan.bethany.txt#L1417, L1419-L1424). Chunk 8
+      (FOLLOWUPS 109, 2026-10-31) adds Metzger - Progress's access bars on
+      Oleson Road (ASC 1) and Hall Boulevard (ASC 2), the lots of three Map
+      5.1 outlines whose rule the text does not name (two unnumbered over
+      TO:R18-24 lots, one numbered 12; these zones are why TO:R9-12 to
+      TO:R18-24 are answered here), and East Hillsboro's Reedville and
+      Tualatin Valley Highway Corridor lots, which must "address the city of
+      Hillsboro's development standards" (community-plan.east-hillsboro.txt
+      #L854, L883), not held.
   washington_plan_review:
     condition: washington_plan_review
-    zones: [R-9, R-15, R-25+]
+    zones: [R-5, R-6, R-9, R-15, R-24, R-25+, R-6 NB, R-9 NB, R-15 NB, R-24 NB, R-25+ NB, TO:R9-12, TO:R12-18, TO:R18-24]
     file: or/washington/_unincorporated/washington-plan-review.geojson
     source: >-
       Bull Mountain Community Plan Map 5.1, the ASC 8 outline joined to the
       three lots it cuts, and the one R-25+ lot of Raleigh Hills - Garden
-      Home ASC L on that plan's Map 5.1. Drawn provenance in the file's
-      source block.
+      Home ASC L on that plan's Map 5.1; the review ASCs of Metzger - Progress,
+      East Hillsboro and Sherwood (chunk 8) and the master-plan ASCs of
+      Sunset West and Cedar Hills - Cedar Mill (FOLLOWUPS 137(b)), each on
+      the lots its plan's Map 5 outline holds; and every residential lot
+      fronting a county TSP principal arterial, arterial or collector in
+      the ten plans with lots (FOLLOWUPS 137(a), TSP_Layers/MapServer/4).
+      Drawn provenance in the file's source block.
     quote: "or/washington/_unincorporated/community-plan.bull-mountain.txt#L1002-L1005"
-    cite: Bull Mountain Community Plan, Area of Special Concern 8; Raleigh Hills - Garden Home Community Plan, Subarea 8 design element 1f
+    cite: Bull Mountain Community Plan, Area of Special Concern 8; Raleigh Hills - Garden Home Community Plan, Subarea 8 design element 1f; Metzger - Progress ASCs 2, 3, 9 and 18; East Hillsboro ASC 3; Sherwood ASC 2; Sunset West ASCs 2, 3 and 7; Cedar Hills - Cedar Mill ASCs 2, 7 and 8; and each plan's general design element requiring shared or consolidated access onto Arterials and Collectors (CDC 300-1)
     note: >-
       Inside means the lot lies in Bull Mountain ASC 8, whose development
       "is to be planned and reviewed under the master planning - planned
@@ -3355,7 +3464,21 @@ drawn_areas:
       REVIEW-CONDITIONS. ASC 8's floodplain is the water screen's; its river
       path dedication is "whenever possible" and an existing lot dedicates
       nothing (2026-10-02); the site's 40 units an acre does not bind four
-      units on 4.02 acres.
+      units on 4.02 acres. Chunk 8 and FOLLOWUPS 137 (2026-10-31) add the
+      Type III ASCs of Metzger - Progress (2, 3, 9) and its ASC 18, where no
+      application is approved before "an overall master plan" agreed by
+      half the owners and half the acreage (community-plan.metzger-progress
+      .txt#L736-L744); East Hillsboro ASC 3, where the site plan of General
+      Design Element 15 is "strictly applied" (#L885-L887); Sherwood ASC 2
+      (#L654-L658); the master planning - planned development ASCs of Sunset
+      West (2, 3, 7) and Cedar Hills - Cedar Mill (2, 7, 8); and, for
+      FOLLOWUPS 137(a), every residential lot whose boundary runs at least
+      15 ft within 60 ft of a TSP principal arterial, arterial or collector
+      centreline, where each plan's general design element makes shared or
+      consolidated access a condition of the development permit "unless
+      demonstrated to be infeasible" (e.g. community-plan.bethany.txt
+      #L757-L759). Who shares an access with whom is decided in the review,
+      so it is a review here, and a lot a hold keeps YELLOW stays YELLOW.
   washington_local_street_connectivity:
     condition: washington_local_street_connectivity
     zones: [R-5, R-6, R-9, R-15, R-24, R-25+]
@@ -3366,13 +3489,14 @@ drawn_areas:
       2026-10-30), and the Local Street Connectivity maps of the Aloha -
       Reedville - Cooper Mountain, Cedar Hills - Cedar Mill and Sunset West
       map sets and of Bethany's Chapter 1 (retrieved 2026-10-31, FOLLOWUPS
-      135), the "Local Street Connectivity Lands" green read from the
+      135) and of Metzger - Progress (chunk 8; West Tigard's, East
+      Hillsboro's and Sherwood's draw no lands), the "Local Street Connectivity Lands" green read from the
       rendered page and placed by each frame's GeoPDF affine, over the
       county's taxlots and zoning. The file holds the residential lots at
       least 90 percent inside, whole, and the lots the lands cut at their
       share. Drawn provenance in the file's source block.
     quote: "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt#L1306-L1312"
-    cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany Community Plans, Local Street Connectivity (CDC 300-1)
+    cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans, Local Street Connectivity (CDC 300-1)
     note: >-
       Coordinator ruling 2026-10-30: the connectivity text reaches
       development, not only land division. Bull Mountain: "For residential,

@@ -445,6 +445,8 @@ C7_AREAS = {
 }
 C7_HELD_ZONES = ("R-5", "R-6", "R-9", "R-15", "R-24")
 C6_PLANS = {"Aloha - Reedville - Cooper Mountain", "Cedar Hills - Cedar Mill", "Sunset West", "Bethany"}
+#: Chunk 8 (FOLLOWUPS 109, 2026-10-31) holds Metzger - Progress's TO lots too.
+C8_TO_ZONES = ("TO:R9-12", "TO:R12-18", "TO:R18-24")
 
 
 def _c7_file(name: str) -> dict:
@@ -477,6 +479,14 @@ def test_the_plan_hold_sits_on_the_garage_entrance_yard_of_r5_to_r24_only(washin
     for zone in ("R-6 NB", "R-9 NB", "R-15 NB", "R-24 NB"):
         levers = set().union(*(v.levers for v in washington.zones[zone].values.values()))
         assert "washington_plan_rule_unmeasured" not in levers, zone
+    # Chunk 8: the TO zones carry it on the front yard, TO:R9-12's, which the others take.
+    field = washington.zones["TO:R9-12"].values["setback_front_ft"]
+    assert field.qualified_by == "washington_plan_rule_unmeasured"
+    for zone in C8_TO_ZONES:
+        assert zone in washington.drawn_areas["washington_plan_rule_unmeasured"].zones
+        if zone != "TO:R9-12":
+            block = washington.zones[zone]
+            assert block.like.zone == "TO:R9-12" and "setback_front_ft" not in block.values, zone
 
 
 def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
@@ -484,21 +494,21 @@ def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
 
     data = _c7_file("washington_plan_rule_unmeasured")
     feats = data["features"]
-    # 101 from chunk 7, 381 from the chunk 6 re-read (FOLLOWUPS 135).
-    assert len(feats) == 482
-    assert len({f["properties"]["taxlot"] for f in feats}) == 482
+    # 101 from chunk 7, 381 from the chunk 6 re-read (FOLLOWUPS 135), 65 from chunk 8.
+    assert len(feats) == 547
+    assert len({f["properties"]["taxlot"] for f in feats}) == 547
     plans = {f["properties"]["plan"] for f in feats}
-    assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS}
+    assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS, "Metzger - Progress", "East Hillsboro"}
     for f in feats:
         p = f["properties"]
         assert p["answer"] == "inside" and p["drawn_share_of_lot"] == 1
-        assert p["zone"] in C7_HELD_ZONES and p["why"] and "#L" in p["quote"]
+        assert p["zone"] in (*C7_HELD_ZONES, *C8_TO_ZONES) and p["why"] and "#L" in p["quote"]
         assert shape(f["geometry"]).is_valid
     whys = " ".join(f["properties"]["why"] for f in feats)
     for rule in ("ASC S", "ASC T", "ASC M", "ASC U", "ASC 1", "Pacific Highway", "pedestrian",
                  "ASC 10", "ASC 6", "ASC 8", "ASC 3", "Winterborne", "Willow Creek"):
         assert rule in whys, rule
-    assert sum(data["source"]["counts"].values()) == 482
+    assert sum(data["source"]["counts"].values()) == 547
 
 
 def test_a_held_lot_is_inside_and_a_lot_off_the_maps_is_not() -> None:
@@ -532,7 +542,7 @@ def test_the_asc_8_outline_carries_its_cut_lots_and_the_r25_site() -> None:
     from shapely.geometry import shape
 
     data = _c7_file("washington_plan_review")
-    by = {f["properties"]["asc"]: f for f in data["features"]}
+    by = {f["properties"]["asc"]: f for f in data["features"] if "asc" in f["properties"]}
     assert set(by) == {"8", "L"}
     assert by["L"]["properties"]["taxlot"] == "1S113BC00200"
     assert 4.0 < shape(by["L"]["geometry"]).area / 43_560 < 4.1
@@ -588,10 +598,11 @@ def test_every_connectivity_lot_is_inside_or_cut_inside_the_band() -> None:
 
     data = _c7_file("washington_local_street_connectivity")
     feats = data["features"]
-    # 1027 from chunk 7, 7125 from the chunk 6 re-read (FOLLOWUPS 135).
-    assert len(feats) == 8152 and sum(data["source"]["counts"].values()) == 8152
-    assert len({f["properties"]["taxlot"] for f in feats}) == 8152
-    assert {f["properties"]["plan"] for f in feats} == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS}
+    # 1027 from chunk 7, 7125 from the chunk 6 re-read (FOLLOWUPS 135), 27 from chunk 8.
+    assert len(feats) == 8179 and sum(data["source"]["counts"].values()) == 8179
+    assert len({f["properties"]["taxlot"] for f in feats}) == 8179
+    assert {f["properties"]["plan"] for f in feats} == {
+        "Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS, "Metzger - Progress"}
     for f in feats:
         p = f["properties"]
         assert p["zone"] in CONNECTIVITY_ZONES and p["why"] and "#L" in p["quote"]
@@ -725,3 +736,68 @@ def test_raleigh_hills_asc_u_stays_yellow_and_carries_its_flag() -> None:
     got = _nb_facts("R-5", shape(feat["geometry"]))
     # The lot carries the flag and is still held by the plan-rule hold, so it stays yellow.
     assert got["raleigh_hills_asc_u"] is True and got["washington_plan_rule_unmeasured"] is True
+
+
+# --- chunk 8 and FOLLOWUPS 137 (2026-10-31) ----------------------------------
+
+
+def test_the_chunk_8_plans_are_stored_and_their_line_numbers_name_the_rules() -> None:
+    def q(ref: str) -> str:
+        return " ".join(ProvenanceStore().quote(f"{WASHINGTON}/{ref}").split())
+
+    mp = "community-plan.metzger-progress.txt"
+    eh = "community-plan.east-hillsboro.txt"
+    sh = "community-plan.sherwood.txt"
+    assert "Direct access to the site from Oleson Road shall be limited to SW 89th Avenue" in q(f"{mp}#L696-L703")
+    text = q(f"{mp}#L718-L725")
+    assert "Type III review provisions of the CDC" in text and "and not from Hall Boulevard" in text
+    assert "approved prior to approval of an overall master plan for all properties" in q(f"{mp}#L736-L744")
+    assert "1) Local Streets are required to connect to the existing" in q(f"{mp}#L866-L876")
+    assert "shall address the city of Hillsboro's development standards" in q(f"{eh}#L854")
+    assert "shall address the city of Hillsboro's development standards" in q(f"{eh}#L883")
+    assert "General Design Element No. 15 shall be strictly applied" in q(f"{eh}#L885-L887")
+    assert "prepare a site plan for the subject lot and all abutting lots" in q(f"{eh}#L765-L773")
+    assert "in light of the proposed Arterial connecting Tonquin and Elsner Roads" in q(f"{sh}#L654-L658")
+    assert "Shared or consolidated access shall be required" in q("community-plan.bethany.txt#L757-L759")
+
+
+def test_the_chunk_8_lots_are_held() -> None:
+    from shapely.geometry import shape
+
+    pr = {f["properties"]["taxlot"]: f for f in _c7_file("washington_plan_rule_unmeasured")["features"]}
+    held = collections.Counter(f["properties"]["plan"] for f in pr.values())
+    assert held["Metzger - Progress"] == 44 and held["East Hillsboro"] == 21
+    for tl in ("1S126AC02400", "1S126AD04300"):
+        assert "Oleson" in pr[tl]["properties"]["why"], tl
+    assert "Hall" in pr["1S126DA06900"]["properties"]["why"]
+    assert pr["1S136BD03100"]["properties"]["zone"] == "R-5"
+    assert sum(f["properties"]["zone"] == "TO:R18-24" for f in pr.values()) == 28
+    hillsboro = [f for t, f in pr.items() if t.startswith("1S211BB")]
+    assert len(hillsboro) == 17 and all("Hillsboro" in f["properties"]["why"] for f in hillsboro)
+    lot = shape(pr["1S126AC02400"]["geometry"])
+    zone = pr["1S126AC02400"]["properties"]["zone"]
+    assert _nb_facts(zone, lot)["washington_plan_rule_unmeasured"] is True
+    lsc = collections.Counter(
+        f["properties"]["plan"] for f in _c7_file("washington_local_street_connectivity")["features"])
+    assert lsc["Metzger - Progress"] == 27
+
+
+def test_137_arterial_frontage_and_the_master_plan_ascs_are_reviews() -> None:
+    from shapely.geometry import shape
+
+    feats = _c7_file("washington_plan_review")["features"]
+    assert len(feats) == 2 + 8222
+    plans = {f["properties"]["plan"] for f in feats if "asc" not in f["properties"]}
+    # FOLLOWUPS 137(a): every plan with lots; West Union has none.
+    assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS,
+                     "Metzger - Progress", "East Hillsboro", "Sherwood", "West Tigard"}
+    whys = " ".join(f["properties"].get("why", "") for f in feats)
+    for asc in ("Sunset West ASC 2", "Sunset West ASC 3", "Sunset West ASC 7", "Cedar Hills - Cedar Mill ASC 2",
+                "Cedar Hills - Cedar Mill ASC 7", "Cedar Hills - Cedar Mill ASC 8", "Metzger - Progress ASC 18",
+                "Metzger - Progress ASC 2", "Metzger - Progress ASC 9", "East Hillsboro ASC 3", "Sherwood ASC 2"):
+        assert asc in whys, asc
+    front = next(f for f in feats if f["properties"].get("why", "").startswith("fronts")
+                 and f["properties"]["zone"] == "R-5" and shape(f["geometry"]).geom_type == "Polygon")
+    p = front["properties"]
+    assert p["answer"] == "inside" and "#L" in p["quote"]
+    assert _nb_facts("R-5", shape(front["geometry"]))["washington_plan_review"] is True
