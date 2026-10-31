@@ -74,7 +74,7 @@ the full one.)
 
 ### 1c. The rest, most urgent first (dated items first)
 
-135. [Claude] [scan: YES (greens only lose)] **POSSIBLE FALSE GREEN: chunk 6's WashCo plans never read their street-connectivity lands, path parcels or access caps** -- OFFERED 2026-10-30; next after chunk 7. [file](followups/135-washco-connectivity-chunk6.md)
+135. [Claude] [scan: YES (greens only lose)] **POSSIBLE FALSE GREEN: chunk 6's WashCo plans never read their street-connectivity lands, path parcels or access caps** -- OFFERED 2026-10-30; next after chunk 7. -- STARTED 2026-10-31 (branch flats/districts-c6b, 134+135+136 together). [file](followups/135-washco-connectivity-chunk6.md)
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- merged e63617b8 2026-10-20; moves expected at the next weekly. [file](followups/100-driveway-street.md)
 94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; after 93 merges. [file](followups/94-townhouse-row-angle.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: YES for (C1)] **Agents could not recall a property ruling** -- A, B, C1, C2 MERGED; DLCD backlog READ; (B) waits on Steph. [file](followups/86-ruling-recall.md)
@@ -107,8 +107,8 @@ the full one.)
 1. [Claude] [Steph: HUMAN_TODO 23] [scan: NO] **The county map copy: loose ends after the first promotion** -- September copy PROMOTED 2026-09-20; loose ends in file. [file](followups/1-county-map-copy.md)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
-134. [Claude] [scan: maybe (flags only)] **Bethany ASC 3 (Dogwood Park / Wildwood): add the judgement-review flag** -- OFFERED 2026-10-30. [file](followups/134-bethany-asc3.md)
-136. [Claude] [scan: maybe (one lot, flag only)] **Raleigh Hills ASC U: yellow with a flag** -- DECIDED 2026-10-31 (rulings.yaml 2026-10-31-raleigh-hills-asc-u-yellow-with-flag); stays yellow (chunk 7 hold); BUILD OWED: the flag, fold in with 134. [file](followups/136-raleigh-hills-asc-u.md)
+134. [Claude] [scan: maybe (flags only)] **Bethany ASC 3 (Dogwood Park / Wildwood): add the judgement-review flag** -- OFFERED 2026-10-30. -- STARTED 2026-10-31 (branch flats/districts-c6b, 134+135+136 together). [file](followups/134-bethany-asc3.md)
+136. [Claude] [scan: maybe (one lot, flag only)] **Raleigh Hills ASC U: yellow with a flag** -- DECIDED 2026-10-31 (rulings.yaml 2026-10-31-raleigh-hills-asc-u-yellow-with-flag); stays yellow (chunk 7 hold); BUILD OWED: the flag, fold in with 134. -- STARTED 2026-10-31 (branch flats/districts-c6b, 134+135+136 together). [file](followups/136-raleigh-hills-asc-u.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
