@@ -175,4 +175,8 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_six_that_state_one() ->
         # 2026-10-28 (FOLLOWUPS 109 chunk 4): King City's townhouse districts read
         # 16.132.040, "Townhome 1.5 spaces per unit" -- six stalls, above the pod's four.
         "or/washington/king-city",
+        # 2026-10-31 (FOLLOWUPS 138): the county's R-5 states Hillsboro's Table
+        # 12.50.320-1 "Quadplex 2" only on the 17 East Hillsboro overlay lots
+        # (only_when) -- eight stalls, above the pod's four, as in Hillsboro.
+        "or/washington/_unincorporated",
     }

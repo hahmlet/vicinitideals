@@ -1002,7 +1002,9 @@ def _parse_variants(
             )
             continue
         v_stories = body.pop("stories", None)
-        v_story_ft, _, _ = _parse_story_ft(body.pop("story_ft", None), at, problems)
+        v_story_ft, _, v_story_ft_quote = _parse_story_ft(
+            body.pop("story_ft", None), at, problems
+        )
         if v_stories is not None:
             if value is not None or exempt:
                 problems.append(f"{at}: a variant states feet or a count of stories, not both")
@@ -1251,6 +1253,9 @@ def _parse_variants(
                     spaces_total=(
                         None if spaces_total is None else float(spaces_total)
                     ),
+                    stories=None if v_stories is None else float(v_stories),
+                    story_ft=None if v_stories is None else float(v_story_ft),
+                    story_ft_quote=None if v_stories is None else v_story_ft_quote,
                     before_step_back=before_step_back,
                     step_back_at_ft=(
                         None if own_step_back is None else float(own_step_back.at_ft)

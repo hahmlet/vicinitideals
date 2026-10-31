@@ -1079,6 +1079,15 @@ class Variant(BaseModel):
     #: `acres_per_dwelling`: the file states the figure a reader will find and
     #: the arithmetic runs through :data:`DWELLINGS` where it can be checked.
     spaces_total: float | None = None
+    #: A height this exception states in stories, and the feet a story may be,
+    #: with that second figure's own citation -- the variant twin of the base
+    #: value's ``stories`` / ``story_ft``. East Hillsboro's overlay (FOLLOWUPS
+    #: 138) lays Hillsboro's "2 1/2 stories" at "not more than 10 feet" on a
+    #: county district that states feet; ``value`` holds the product, which
+    #: neither code prints, so the citation check reads these instead.
+    stories: float | None = None
+    story_ft: float | None = None
+    story_ft_quote: str | None = None
     #: This exception's own printed figure, before the standard's step-back was
     #: added to it. Gresham's LDR-PV rear yard is 10 ft, or 8 with an alley,
     #: and 7.0420(G)(1) pushes a 26 ft box five feet off whichever of the two

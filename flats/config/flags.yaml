@@ -1821,6 +1821,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-EAST-HILLSBORO-CITY-STANDARDS:
+    description: "Whether the lot is one of the county R-5 lots in the East Hillsboro Community Plan's Reedville or Tualatin Valley Highway Corridor subareas, where proposals must address the city of Hillsboro's development standards and the stricter of the county's and Hillsboro's Low Density Residential figures governs each check (Steph 2026-10-31, FOLLOWUPS 138)"
+    kind: categorical
+    risk: possible
+    # Lot size, width, depth, yards, height, coverage, density and parking turn on it.
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Map 2 Subareas of the East Hillsboro Community Plan is traced (FOLLOWUPS 109 chunk 8, FOLLOWUPS 138); a lot divided since 2026-10-31 is placed by the traced lots"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-PLAN-RULE-UNMEASURED:
     description: "Whether the lot lies where a Washington County community plan rule binds the pod that nothing measures (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress, East Hillsboro): an access-point cap, shared access or access bar on a named street, a park access improved with the lot's development, a Type 1 landscape buffer along a highway, an old case's conditions, an Area of Special Concern whose letter or rule the plan does not give, the city of Hillsboro's development standards, or a pedestrian path to be built with the lot's development"
     kind: categorical

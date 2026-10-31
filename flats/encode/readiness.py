@@ -323,6 +323,10 @@ def _printed_variant(variant: object) -> object:
         if getattr(variant, "times", None) and isinstance(variant.value, (int, float))
         else variant.spaces_total
         if getattr(variant, "spaces_total", None) is not None
+        # A height in stories, as on a base value: checked against the count
+        # the table prints; the feet a story may be get their own row.
+        else variant.stories
+        if getattr(variant, "stories", None) is not None
         # A share of the lot's width is checked against the share, which is
         # the figure on the page. WDC 4.113(.02)A.2 prints 20 and prints ten
         # and prints the 15.6 a 78 ft lot owes nowhere.
@@ -383,6 +387,14 @@ def _rows(
             _printed_variant(variant),
             variant.prov.drawn,
         )
+        if getattr(variant, "story_ft_quote", None):
+            yield (
+                where,
+                f"{name} [{'+'.join(sorted(variant.when))}] [story]",
+                variant.story_ft_quote,
+                variant.story_ft,
+                False,
+            )
 
 
 def _quoted_parts(
