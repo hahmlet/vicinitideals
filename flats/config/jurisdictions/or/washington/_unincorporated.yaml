@@ -294,6 +294,18 @@ code:
   # (chapter-2-north-bethany-subarea-plan-maps-11-2024) are unchanged:
   # byte-identical on 2026-10-30, sha256 9c22e330...
   allow_thin: true
+- id: "community-plan.bethany"
+  url: https://washingtoncountyor.gov/lut/planning/documents/chapter-1-bethany-community-plan-text-and-maps-09-2026/download
+  title: "Washington County Community Plan - Bethany"
+  extraction: plain
+  # Chapter 1 of the Bethany Community Plan, text and maps (September 2026
+  # edition; the August 2026 address now answers 404). Stored 2026-10-30 for
+  # FOLLOWUPS 130 from pending/, where design districts chunk 6 read it: the
+  # Central Bethany Subarea's Areas of Special Concern 1 and 1A are the
+  # drawn_areas bethany_asc_1 and bethany_asc_1a, traced from its Map 5. The
+  # rest of the plan stays as chunk 6 read it (THE COMMUNITY PLANS, above
+  # the zones).
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC Section 106, which is on disk whole
   # (cdc.106.definitions.txt runs from 106-1 to the Section 107 heading).
@@ -576,7 +588,12 @@ defaults:
 # encodes (access, transit and mixed-use frontage); a rule in a zone the pod
 # is refused in; an area-wide or built-out planned-development condition;
 # or a design detail the screen does not check (2026-10-14). The plans are
-# in pending/. The seven smaller plans are not read and NOT ENCODED; owed
+# in pending/, except Bethany's Chapter 1, stored for FOLLOWUPS 130: its Area
+# of Special Concern 1 (the 1994 Central Bethany Planned Development's
+# conditions, community-plan.bethany.txt#L1035-L1037) is GREEN with the
+# BETHANY-ASC1-PD-CONDITIONS flag (Steph 2026-10-30), and ASC 1A's Type III
+# procedure (#L1055-L1058) GREEN with CLEAR-OBJECTIVE (2026-10-15), each on
+# the lots Map 5 draws (drawn_areas bethany_asc_1, bethany_asc_1a). The seven smaller plans are not read and NOT ENCODED; owed
 # to later chunks.
 #
 # NOT ENCODED: the Bonny Slope West Subarea Overlay District (Section 391).
@@ -2990,3 +3007,51 @@ drawn_areas:
       frontage, whose Kaiser-facing elevation the corridor standards bind;
       outside means a lot outside ASC 2 or with no Kaiser frontage; the two
       lots the ASC 2 line cuts are unanswered.
+  bethany_asc_1:
+    condition: bethany_asc_1
+    zones: [R-9, R-15, R-24, CBD, OC]
+    file: or/washington/_unincorporated/bethany-asc-1.geojson
+    source: >-
+      Bethany Community Plan Map 5, Areas of Special Concern (Chapter 1 text
+      and maps 09-2026, page 42, printed 2/9/2023, retrieved 2026-10-30), the
+      ASC 1 outline of Central Bethany, with the one lot it cuts added whole.
+      Drawn provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.bethany.txt#L870-L872,L876-L877,L1035-L1037"
+    cite: Bethany Community Plan, Central Bethany Subarea, Area of Special Concern 1, design element 9
+    note: >-
+      Inside means a lot in ASC 1, where all development must comply with
+      the conditions of approval of the 1994 Central Bethany Planned
+      Development, including the design guidelines of Exhibit G of R&O
+      94-104, which are not held. Steph 2026-10-30 (rulings.yaml
+      2026-10-30-bethany-asc1-green-with-flag): green with a flag below the
+      yellow line, so inside moves no colour and only carries
+      BETHANY-ASC1-PD-CONDITIONS. The outline cuts one lot (1N120DA20300, a
+      1,322 sf R-9 lot 39 percent inside); it is added whole and carries
+      the flag too, because a flag below the yellow line costs a half-inside
+      lot nothing. Items 10 to 12 of the same list are a Providence building
+      rule (ASC 1A 4.d), an 860-unit minimum for the whole planned
+      development (built out) and a bar on new commercial designations; none
+      is a lot standard the pod meets or misses.
+  bethany_asc_1a:
+    condition: bethany_asc_1a
+    zones: [R-9, R-15, R-24, CBD]
+    file: or/washington/_unincorporated/bethany-asc-1a.geojson
+    source: >-
+      Bethany Community Plan Map 5, Areas of Special Concern (Chapter 1 text
+      and maps 09-2026, page 42), the five ASC 1A outlines (Parcels 1 to 5)
+      inside ASC 1. Drawn provenance in the file's source block.
+    quote: "or/washington/_unincorporated/community-plan.bethany.txt#L1047-L1048,L1055-L1058"
+    cite: Bethany Community Plan, Area of Special Concern 1A, design element 2
+    note: >-
+      Inside means one of the five county taxlots ASC 1A covers, each at
+      least 99 percent inside, where every development application goes
+      through the Type III procedure after two public design workshops.
+      Inside the urban growth boundary that is GREEN with CLEAR-OBJECTIVE
+      (rulings.yaml 2026-10-15-clear-objective-green-flag); where ORS
+      197A.400 does not reach the lot it is a closer look with
+      REVIEW-CONDITIONS. The other ASC 1A design elements (the 155-unit
+      share of ASC 1's 860, the five-parcel plans, the Parcels 1 and 2
+      plazas and vertical mixed use) are as design districts chunk 6 read
+      them: an area-wide planned-development condition, an application
+      content rule, and design and use rules on the two CBD parcels, where
+      housing is already held behind a planned development.

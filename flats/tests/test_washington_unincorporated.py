@@ -310,3 +310,124 @@ def test_north_bethany_kaiser_main_street_figures(washington: Layer) -> None:
         return {tuple(v.when): v.value for v in rules[field].variants}[kaiser]
 
     assert (at("setback_front_ft"), at("setback_front_max_ft"), at("building_frontage_min_pct")) == (5, 10, 75)
+
+
+# --- Bethany ASC 1 and 1A (FOLLOWUPS 130) ------------------------------------
+
+BETHANY_AREAS = {
+    "bethany_asc_1": "or/washington/_unincorporated/bethany-asc-1.geojson",
+    "bethany_asc_1a": "or/washington/_unincorporated/bethany-asc-1a.geojson",
+}
+
+
+def _bethany_file(name: str) -> dict:
+    import json
+
+    from flats.rules import loader
+
+    data = json.loads((loader.AREAS_ROOT / BETHANY_AREAS[name]).read_text(encoding="utf-8"))
+    assert data["source"]["drawn"] is True
+    return data
+
+
+def _bethany_area(name: str):
+    from shapely.geometry import shape
+
+    (feat,) = _bethany_file(name)["features"]
+    return shape(feat["geometry"])
+
+
+def _box(p, half: float = 4.0):
+    from shapely.geometry import box
+
+    return box(p.x - half, p.y - half, p.x + half, p.y + half)
+
+
+@pytest.mark.parametrize("name", sorted(BETHANY_AREAS))
+def test_bethany_asc_outlines_are_drawn_facts(washington: Layer, name: str) -> None:
+    area = washington.drawn_areas[name]
+    assert area.condition == name
+    assert area.file == BETHANY_AREAS[name]
+    assert "community-plan.bethany.txt#" in area.quote
+    assert _bethany_area(name).is_valid
+
+
+def test_a_lot_in_asc_1a_is_in_asc_1_and_one_off_the_map_is_in_neither() -> None:
+    from shapely.geometry import Point
+
+    asc_1, asc_1a = _bethany_area("bethany_asc_1"), _bethany_area("bethany_asc_1a")
+    assert asc_1a.difference(asc_1).area < 0.01 * asc_1a.area
+    p = asc_1a.representative_point()
+    got = _nb_facts("R-24", _box(p))
+    assert got["bethany_asc_1"] is True and got["bethany_asc_1a"] is True
+    q = asc_1.difference(asc_1a.buffer(50)).representative_point()
+    got = _nb_facts("R-9", _box(q))
+    assert got["bethany_asc_1"] is True and got["bethany_asc_1a"] is False
+    got = _nb_facts("R-9", _box(Point(p.x - 9000, p.y - 9000)))
+    assert got["bethany_asc_1"] is False and got["bethany_asc_1a"] is False
+
+
+def test_the_one_lot_the_asc_1_outline_cuts_is_carried_whole() -> None:
+    source = _bethany_file("bethany_asc_1")["source"]
+    assert "1N120DA20300" in source["how"]
+    assert not any(c.get("unanswered") for c in source["counts"].values())
+
+
+def _bethany_screen(conditions: tuple[str, ...], *, inside_ugb: bool = True):
+    from flats.score import relief, slack
+    from flats.score.configure import Configuration
+    from flats.score.screen import screen
+    from flats.tests.test_clear_objective import facts, rules
+    from flats.tests.test_round2_rulings import DESIGN, fit
+
+    return screen(
+        rules(),
+        facts(inside_ugb=inside_ugb),
+        DESIGN,
+        fit(),
+        policy=slack.SlackPolicy(tolerance={"fit_ft": 0.5}),
+        relief=relief.load_policy(),
+        config=Configuration(conditions=conditions),
+    )
+
+
+def test_asc_1_carries_its_flag_below_the_yellow_line_and_keeps_the_colour() -> None:
+    """Steph 2026-10-30: "Leave it. Green with a flag"."""
+    from flats.score.flags import Colour, colour_rules, load_registry
+
+    entry = load_registry()["BETHANY-ASC1-PD-CONDITIONS"]
+    assert entry.severity < colour_rules().yellow_at_severity
+    plain = _bethany_screen(())
+    got = _bethany_screen(("bethany_asc_1",))
+    assert plain.colour is Colour.green and got.colour is Colour.green
+    assert got.triage == plain.triage
+    (flag,) = [f for f in got.flags if f.code == "BETHANY-ASC1-PD-CONDITIONS"]
+    # One answer for every lot in ASC 1 -- R&O 94-104 -- so the key is the place.
+    assert flag.by == "BETHANY_ASC1_PD" and flag.key == "or/test/round2"
+    assert not [f for f in plain.flags if f.code == "BETHANY-ASC1-PD-CONDITIONS"]
+
+
+def test_asc_1a_type_iii_is_green_with_clear_objective_inside_the_ugb() -> None:
+    from flats.score.flags import Colour
+    from flats.score.screen import CLOSER_LOOK_REVIEW_CONDITIONS
+
+    got = _bethany_screen(("bethany_asc_1", "bethany_asc_1a"))
+    assert got.colour is Colour.green
+    (flag,) = [f for f in got.flags if f.code == "CLEAR-OBJECTIVE"]
+    assert "bethany_asc_1a" in flag.key and "Type III" in flag.source
+    outside = _bethany_screen(("bethany_asc_1", "bethany_asc_1a"), inside_ugb=False)
+    assert outside.colour is Colour.yellow
+    assert CLOSER_LOOK_REVIEW_CONDITIONS in outside.reasons
+    assert [f for f in outside.flags if f.code == "REVIEW-CONDITIONS"]
+
+
+def test_asc_1_and_1a_line_numbers_name_the_rules() -> None:
+    text = " ".join(
+        ProvenanceStore().quote(f"{WASHINGTON}/community-plan.bethany.txt#L870-L872,L876-L877,L1035-L1037").split()
+    )
+    assert "has been designated as an Area of Special Concern (Area of Special Concern No. 1)" in text
+    assert "All development in ASC 1 shall comply with the conditions of approval for the Central Bethany" in text
+    assert "Order No. 94-104" in text
+    text = " ".join(ProvenanceStore().quote(f"{WASHINGTON}/community-plan.bethany.txt#L1047-L1048,L1055-L1058").split())
+    assert "Area of Special Concern 1A" in text
+    assert "All development applications in ASC 1A shall be processed through the Type III procedure" in text

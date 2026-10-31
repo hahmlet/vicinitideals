@@ -43,6 +43,9 @@ SUB_DISTRICT_BLOCKS = {2, 3, 15, 16, 17, 18, 19, 20, 22, 23}
 
 def test_every_drawn_condition_is_a_registered_condition() -> None:
     assert DRAWN_CONDITIONS == (
+        # Bethany ASC 1 and 1A, Map 5 of the Bethany Community Plan (FOLLOWUPS 130).
+        "bethany_asc_1",
+        "bethany_asc_1a",
         "gladstone_parking_exception_area",
         "gladstone_town_center",
         "inside_mapped_use_area",

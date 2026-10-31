@@ -1065,6 +1065,41 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "bethany_asc_1",
+        "site_fact",
+        "The parcel lies in Area of Special Concern 1 of the Bethany "
+        "Community Plan (Central Bethany), where all development must comply "
+        "with the conditions of approval of the 1994 Central Bethany Planned "
+        "Development and its design guidelines (Exhibit G of R&O 94-104), "
+        "which are not held. Steph 2026-10-30: green with a flag below the "
+        "yellow line, so the fact moves no colour; it only carries the flag "
+        "(BETHANY-ASC1-PD-CONDITIONS). Answered from Map 5 of the plan, "
+        "traced as Washington County's drawn_areas (FOLLOWUPS 130); the one "
+        "lot the outline cuts is added whole, so it carries the flag too.",
+        evidence=(
+            "The Areas of Special Concern map (Map 5) of the Bethany Community "
+            "Plan (Washington County, September 2026 edition), traced 2026-10-30"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "bethany_asc_1a",
+        "site_fact",
+        "The parcel is one of Parcels 1 to 5 of Area of Special Concern 1A of "
+        "the Bethany Community Plan, where every development application "
+        "goes through the Type III procedure after two public design "
+        "workshops (design element 2). Inside an urban growth boundary that "
+        "review is GREEN with CLEAR-OBJECTIVE (Steph 2026-10-15); where the "
+        "statute does not reach the lot it is YELLOW with REVIEW-CONDITIONS. "
+        "Answered from Map 5 of the plan, traced as Washington County's "
+        "drawn_areas (FOLLOWUPS 130).",
+        evidence=(
+            "The Areas of Special Concern map (Map 5) of the Bethany Community "
+            "Plan (Washington County, September 2026 edition), traced 2026-10-30"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "north_bethany_kaiser_main_street",
         "site_fact",
         "The parcel is an R-24 NB lot facing Kaiser Road inside the North "
@@ -1397,6 +1432,8 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 #: inside a zone -- on a map nobody publishes as data, in a layer the city
 #: publishes apart from its zoning, or along a line the code names in words.
 DRAWN_CONDITIONS: tuple[str, ...] = (
+    "bethany_asc_1",
+    "bethany_asc_1a",
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "inside_mapped_use_area",

@@ -132,11 +132,6 @@
   title: "Washington County Community Plan - Aloha Reedville Cooper Mountain"
   extraction: plain
   allow_thin: true
-- id: "community-plan.bethany"
-  url: https://washingtoncountyor.gov/lut/planning/documents/chapter-1-bethany-community-plan-text-and-maps-08-2026/download
-  title: "Washington County Community Plan - Bethany"
-  extraction: plain
-  allow_thin: true
 - id: "community-plan.bull-mountain"
   url: https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-updated-08-2026/download
   title: "Washington County Community Plan - Bull Mountain"

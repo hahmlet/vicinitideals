@@ -1678,6 +1678,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  BETHANY-ASC1-PD-CONDITIONS:
+    description: "The lot is in Area of Special Concern 1 of the Bethany Community Plan (Central Bethany), where all development must comply with the conditions of approval of the 1994 Central Bethany Planned Development, including its design guidelines (Exhibit G of Resolution and Order No. 94-104). Those conditions are not held and not read. Steph 2026-10-30: \"Leave it. Green with a flag\" -- so long as this is the only condition and the lot is otherwise green, it is green."
+    kind: categorical
+    risk: unlikely
+    # Steph 2026-10-30: green with a flag, below the yellow line.
+    severity: 2
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Find and read Resolution and Order No. 94-104 (Case File 93-333-PD/S/SU/D(R)/AV/MR) and its Exhibit G at Washington County Land Use & Transportation, and any later revisions to the Central Bethany Planned Development"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [BETHANY_ASC1_PD]
   FACT-NORTH-BETHANY-SPECIAL-SETBACKS:
     description: "Whether the lot fronts a North Bethany Special Setbacks Map segment (Park Blocks or Northeast Neighborhood Linear Park), where a 5 to 15 ft build-to line governs"
     kind: categorical
@@ -1718,6 +1734,38 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The ASC 2 Main Street outline is traced (FOLLOWUPS 129); a lot the outline cuts needs a county planner's word on whether its Kaiser frontage is in the Main Street area"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BETHANY-ASC-1:
+    description: "Whether the lot lies in Bethany Community Plan Area of Special Concern 1 (Central Bethany), whose development follows the 1994 Central Bethany Planned Development's conditions of approval. The answer only carries BETHANY-ASC1-PD-CONDITIONS, below the yellow line (Steph 2026-10-30), so no standard leans on it"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; at worst it carries a flag below the line.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Map 5 of the Bethany Community Plan is traced (FOLLOWUPS 130); a lot divided since 2026-10-30 is placed by the outline"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BETHANY-ASC-1A:
+    description: "Whether the lot is one of Parcels 1 to 5 of Bethany Community Plan Area of Special Concern 1A, where every application goes through the Type III procedure: GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; inside the UGB it carries CLEAR-OBJECTIVE.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Map 5 of the Bethany Community Plan is traced (FOLLOWUPS 130); a lot divided since 2026-10-30 is placed by the outline"
     priority: later
     status: pending
     approved_by: null
