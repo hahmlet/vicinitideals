@@ -226,7 +226,7 @@ readings:
       the boundary in any case.
     fingerprint: 6cac6559d4cb7925
 
-  "zdo.1012.txt#1012.07":
+  "1012.07.txt#1012.07":
     queue: missed
     outcome: not_here
     note: >-
@@ -235,8 +235,8 @@ readings:
       duplex approved as a conditional use in RA-1 is measured against. Wrong building, wrong
       district and wrong approval path all at once. It reached a minimum-lot-size field only
       because the sentence spells out a square footage per dwelling unit.
-    fingerprint: 462b55b7fa3566c1
-  "zdo.1012.txt#1012.05":
+    fingerprint: dae5ece0c0340944
+  "1012.05.txt#1012.05":
     queue: condition
     outcome: never
     note: >-
@@ -252,7 +252,7 @@ readings:
       absent, which can only hold the floor higher.) Verified against the loaded corpus rather than assumed:
       thirteen quadplex-permitting zones, none with a density number of either kind left standing.
       Subtracting acreage from a denominator that feeds no numerator changes nothing.
-    fingerprint: 06d414ac372fd07f
+    fingerprint: 3c468d2b8ab0f5dc
   "zdo.1012.txt#1012.08":
     queue: condition
     outcome: never
@@ -265,7 +265,7 @@ readings:
       preemption strikes it, and none states a minimum. A bonus on a standard that does not apply
       is a number with nothing to modify.
     fingerprint: 86bd9c953e2c10f7
-  "zdo.845.txt#845.04":
+  "845.04.txt#845.04":
     queue: condition
     outcome: never
     note: >-
@@ -280,7 +280,7 @@ readings:
       dwelling's facade -- because a rule of that shape would take real area out of a small lot.
       It governs cottage clusters. The quadplex's own standards are in 845.02, a different
       subsection with a different card.
-    fingerprint: 6b0bc42a6d70b10c
+    fingerprint: fb86893d69e4b2dd
   "zdo.510.txt#510.05":
     queue: condition
     outcome: applies
@@ -532,7 +532,7 @@ readings:
       this: the multifamily row is counted in DWELLING UNITS and every other row in floor area, so
       a residential threshold cannot be reached by a building's size.
     fingerprint: 36abe0a323d225db
-  "zdo.845.txt#845.02":
+  "845.02.txt#845.02":
     queue: nofield
     outcome: design
     note: >-
@@ -545,7 +545,7 @@ readings:
       because ZDO 845 is the chapter this project still owes a full read for a different reason,
       the ZDO 1005.02(E) question over 31,451 lots, and a card that closes here should not be
       mistaken for that chapter being finished.
-    fingerprint: e4252d8b3c451084
+    fingerprint: b52241822f35253a
 crossrefs:
   # --- eight references standing beside a standard, ruled 2026-08-27 -------
   # They were the last eight at the time. Section 316 added four more on

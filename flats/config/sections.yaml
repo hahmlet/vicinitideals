@@ -565,8 +565,6 @@ or/multnomah/_unincorporated:
   # the margin ("39.4080 when found", "39.2000 pursuant") has no capitals after
   # the number. Each print opens with the zone's first section, no contents list.
   heading: '^\s*(?:[^\s\w.]\s*)?(?P<n>3[89]\.\d{4})(?:\s*-\s*|\s+)[A-Z]{2}'
-  # Chapter 39's definitions print "PART 2 - DEFINITIONS" over section 39.2000.
-  front: [39.2000.definitions]
   # The running header on a page's own first line, with the supplement's label
   # on the line under it: "4-29 CHAPTER 39 - MULTNOMAH COUNTY ZONING CODE" /
   # "CHAPTER 39 - MULTNOMAH COUNTY ZONING CODE 4-29" and, in chapter 38, "4-46
@@ -579,4 +577,9 @@ or/multnomah/_unincorporated:
   # Chapter 33 is Portland's code held for the county's urban pockets: the same
   # five documents as portland/ (byte for byte), cut there once. 33.418 has no page
   # map either.
-  uncut: ['33.100', '33.110', '33.140', '33.266', '33.418']
+  # And 39.2000.definitions: the chapter's definitions are ONE section, so a cut
+  # gains nothing, and the readable text joins wrapped lines so that nested items
+  # ("Attached means ...") and sentences ("In the ...", "However, setback ...")
+  # read as terms, which tips the chapter into the glossary's skimmed class (9 out
+  # of order in 177). Left whole it reads as before (measured 2026-10-30).
+  uncut: ['33.100', '33.110', '33.140', '33.266', '33.418', '39.2000.definitions']

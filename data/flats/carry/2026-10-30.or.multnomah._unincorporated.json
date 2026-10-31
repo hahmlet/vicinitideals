@@ -1,25 +1,5 @@
 [
  {
-  "field": "front_lot_line_corner",
-  "layer": "or/multnomah/_unincorporated",
-  "new_fingerprint": "175a53eee08ddd45436acfc2cf5f990f4a7cc30558d06f81cb7d3358a4e647ed",
-  "new_quote": "or/multnomah/_unincorporated/39/39.2000.txt#L291",
-  "old_fingerprint": "f05c1046c6c6347b182a97d1155c6903e88976d9b050fa0da42aec0709cf9b30",
-  "old_quote": "or/multnomah/_unincorporated/39.2000.definitions.txt#L847-L849",
-  "when_key": "",
-  "zone": "defaults"
- },
- {
-  "field": "front_lot_line_through",
-  "layer": "or/multnomah/_unincorporated",
-  "new_fingerprint": "e38cb142d10f200b6584852fdee1e82cba3ce9c9a7bf195b80e4bfe36fd40940",
-  "new_quote": "or/multnomah/_unincorporated/39/39.2000.txt#L291,L293",
-  "old_fingerprint": "626ebc7b4d5c155a0e392148022cf9f0046f1598e9538b0de45a724f70e46b25",
-  "old_quote": "or/multnomah/_unincorporated/39.2000.definitions.txt#L846-L848,L859-L861",
-  "when_key": "",
-  "zone": "defaults"
- },
- {
   "field": "like",
   "layer": "or/multnomah/_unincorporated",
   "new_fingerprint": "62ad1e10c7a9c709b53c6621066e2f15ca307b0d41f904ad334696e64452cf88",

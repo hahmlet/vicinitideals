@@ -1336,7 +1336,7 @@ definitions:
     incomplete: >-
       an intersection formed by a street and an accessway also makes a corner,
       and no layer held records accessways
-    quote: "or/multnomah/_unincorporated/39/39.2000.txt#L288"
+    quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L836-L839"
     cite: "MCC 39.2000, Lot (Corner)"
 
 crossrefs:
@@ -1738,7 +1738,7 @@ defaults:
   # thereof used for or containing three or more dwelling units". Three or more,
   # not five or more: where Troutdale and Gladstone both put their multi-unit
   # noun one unit above this building, Multnomah County puts it one unit below.
-  # The pod is an Apartment. (39.2000.txt#L58)
+  # The pod is an Apartment. (39.2000.definitions.txt#L188-L190)
   #
   # THE COUNTY HAS NOT WRITTEN HB 2001 INTO ITS ZONING CODE. The words "middle
   # housing", "quadplex", "triplex" and "fourplex" appear nowhere in Chapter 39 --
@@ -1878,7 +1878,7 @@ defaults:
     cite: MCC 39.2000, Lot Line (Front), the narrowest frontage on a corner lot
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-27'
-    quote: "or/multnomah/_unincorporated/39/39.2000.txt#L291"
+    quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L847-L849"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -1892,7 +1892,7 @@ defaults:
     cite: MCC 39.2000, Lot Line (Front), for an interior lot a line separating the lot from the street
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-27'
-    quote: "or/multnomah/_unincorporated/39/39.2000.txt#L291,L293"
+    quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L846-L848,L859-L861"
   # NO MAXIMUM, and this one is absence rather than `exempt: true`. The word
   # "maximum" does not occur once in 39.6500 through 39.6600, and the chapter
   # builds no apparatus for one: no ceiling table, no exempt space types, no
@@ -3951,7 +3951,7 @@ zone_rulings:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/multnomah/_unincorporated/39/39.2000.txt#L382"
+  quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L1085-L1086"
   says: "any public or"
   cite: "MCC 39.2000 (Road; Street; Accessway; Lot (Corner); Lot Line (Front))"
   note: >-
