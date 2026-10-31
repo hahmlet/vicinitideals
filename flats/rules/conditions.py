@@ -1048,15 +1048,19 @@ _C: tuple[ConditionDef, ...] = (
         "north_bethany_park_blocks",
         "site_fact",
         "The parcel lies in North Bethany's Park Blocks Area of Special "
-        "Concern (ASC 5), the Park Blocks and the developable land north and "
-        "south of them. ASC 5 bars vehicle access from the Park Blocks to "
-        "the residential property beside them and any parking lot between "
-        "the street and the building. Answered from the ASC 5 outline, "
-        "traced as Washington County's drawn_areas (FOLLOWUPS 129); a lot "
-        "the outline cuts stays unknown.",
+        "Concern (ASC 5) where one of its two lot-level rules reaches the "
+        "pod: item 4, no vehicle access from the Park Blocks to the "
+        "residential property beside them (a lot facing the Park Blocks), or "
+        "item 5, no parking lot between the street and the building (a lot "
+        "with a street on two opposite sides, where the court behind the "
+        "building faces a street). Answered from the ASC 5 outline traced "
+        "for FOLLOWUPS 129 and the lots inside it read for FOLLOWUPS 132, as "
+        "Washington County's drawn_areas; any other lot in ASC 5 is False, "
+        "and a lot the outline cuts stays unknown.",
         evidence=(
             "The Areas of Special Concern map (Map 17) of the North Bethany "
-            "Subarea Plan (Washington County), traced 2026-10-30"
+            "Subarea Plan (Washington County), traced 2026-10-30, with the "
+            "county taxlots"
         ),
         assume=None,
     ),

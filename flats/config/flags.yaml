@@ -1694,7 +1694,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-NORTH-BETHANY-PARK-BLOCKS:
-    description: "Whether the lot lies in North Bethany ASC 5 (the Park Blocks and the land north and south of them), where no vehicle access from the Park Blocks and no parking lot in front of the building are allowed"
+    description: "Whether the lot lies in North Bethany ASC 5 (the Park Blocks) where its access or parking rule reaches the pod: a lot facing the Park Blocks may take no vehicle access from them, and a lot with streets on two opposite sides may not park between a street and the building"
     kind: categorical
     risk: possible
     severity: 5
@@ -1702,7 +1702,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "The ASC 5 outline is traced (FOLLOWUPS 129); a lot inside needs a county planner's word that its garage and parking plan meet ASC 5, and a lot the outline cuts needs the line placed"
+    path: "The ASC 5 outline is traced (FOLLOWUPS 129) and the lots its access and parking rules reach are read (FOLLOWUPS 132); a lot facing the Park Blocks or with streets on two opposite sides needs a county planner's word that its driveway and parking plan meet ASC 5, and a lot the outline cuts needs the line placed"
     priority: later
     status: pending
     approved_by: null

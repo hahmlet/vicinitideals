@@ -9,7 +9,7 @@
  },
  "source": {
   "map": "Map 17, Areas of Special Concern (page 17 of Washington County, North Bethany Subarea Plan of the Bethany Community Plan, Chapter 2 maps (chapter-2-north-bethany-subarea-plan-maps-11-2024), https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-maps-11-2024/download, retrieved 2026-10-30, sha256 9c22e330fc22f4daeb9635dbb1cc5f7286cc38dfec8b2f934af3f8bcb5ae4a65), the area outlined as ASC 2, the North Bethany Main Street, 'located on both sides of NW Kaiser Road, between NW Brugger Road and Road A, as shown on the North Bethany Subarea Areas of Special Concern Map'. Its design standards reach Kaiser Road-facing building elevations on R-24 NB property.",
-  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1089-L1096,L1217-L1221",
+  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L1251-L1258,L1378-L1383",
   "inputs": {
    "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), fetched 2026-10-30, 8,073 lots in the plan sheet's frame",
    "zoning": "Washington County Land Use Districts (gispub.co.washington.or.us LUT_PDS/Planning_Layers/MapServer/0), fetched 2026-10-30; a lot takes the district covering most of it",

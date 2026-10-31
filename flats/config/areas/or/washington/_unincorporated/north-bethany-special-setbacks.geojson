@@ -9,7 +9,7 @@
  },
  "source": {
   "map": "Map 8, Special Setbacks (page 8 of Washington County, North Bethany Subarea Plan of the Bethany Community Plan, Chapter 2 maps (chapter-2-north-bethany-subarea-plan-maps-11-2024), https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-maps-11-2024/download, retrieved 2026-10-30, sha256 9c22e330fc22f4daeb9635dbb1cc5f7286cc38dfec8b2f934af3f8bcb5ae4a65). General Design Element 7 sends the reader to it: the build-to setbacks apply to designated areas along the Park Blocks and the Northeast Neighborhood Linear Park, and 'Relevant street segments are identified on the Special Setbacks Map'.",
-  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L552-L557,L739-L743",
+  "quote": "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L621-L626,L631-L632,L842-L846",
   "inputs": {
    "taxlots": "Washington County taxlots FeatureServer (gispub.co.washington.or.us/server/rest/services/Washington_County_Taxlots/FeatureServer/0), fetched 2026-10-30, 8,073 lots in the plan sheet's frame",
    "zoning": "Washington County Land Use Districts (gispub.co.washington.or.us LUT_PDS/Planning_Layers/MapServer/0), fetched 2026-10-30; a lot takes the district covering most of it",
