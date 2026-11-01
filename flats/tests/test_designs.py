@@ -11,6 +11,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from flats.designs.model import (
     CATALOG_ROOT,
@@ -258,7 +259,7 @@ def test_a_square_pod_is_not_tested_twice() -> None:
 
 
 def test_designs_are_frozen() -> None:
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError, match="Instance is frozen"):
         design().footprint.width_ft = 99
 
 

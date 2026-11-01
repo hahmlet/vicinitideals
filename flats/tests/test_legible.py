@@ -13,6 +13,8 @@ produces something that reads better and means less.
 
 from __future__ import annotations
 
+from dataclasses import FrozenInstanceError
+
 import pytest
 
 from flats.encode.legible import Line, is_grid, legible, marker, read
@@ -142,5 +144,5 @@ def test_a_line_is_frozen():
     downstream may edit what was on screen after the fact."""
     got = Line(1, "raw", "shown", "prose")
 
-    with pytest.raises(Exception):
+    with pytest.raises(FrozenInstanceError, match="cannot assign to field"):
         got.shown = "something else"  # type: ignore[misc]

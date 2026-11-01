@@ -391,7 +391,7 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes] | Non
 
     store = ProvenanceStore()
     mapped = skipped = failed = 0
-    for layer, path, document in declared(load_rules(strict=False), only=args.only):
+    for _layer, path, document in declared(load_rules(strict=False), only=args.only):
         if not store.exists(path):
             continue
         if _is_html(document.url):

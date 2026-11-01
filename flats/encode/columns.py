@@ -218,9 +218,6 @@ _PART = re.compile(r"^L(\d+)(?:-L?(\d+))?$")
 #: How long a cited range may be before it is read as prose rather than rows.
 _MAX_RANGE = 12
 
-#: How far a wrapped value may run past the line its row starts on.
-_MAX_WRAP = 3
-
 #: Wood Village keys four of its zones with a space in the name -- ``LR 7.5``,
 #: ``MR 2`` -- and a pattern that stopped at the space did not merely skip
 #: them: it went on attributing their fields to whichever zone was declared
