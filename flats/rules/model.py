@@ -1088,6 +1088,17 @@ class Variant(BaseModel):
     stories: float | None = None
     story_ft: float | None = None
     story_ft_quote: str | None = None
+    #: The quantity this exception's rate is measured on, and where the code
+    #: defines it -- the variant twin of the base value's ``measured_on``.
+    #: East Hillsboro's overlay (FOLLOWUPS 138) lays Hillsboro MR-2's
+    #: densities, printed per net acre, on a county R-24 district whose own
+    #: plex density is "not a consideration": the base has no denominator to
+    #: lend, and a ceiling read on the whole lot would pass a lot whose net
+    #: acre is smaller.
+    measured_on: str | None = None
+    measured_on_cite: str | None = None
+    measured_on_quote: str | None = None
+    net_area: NetArea | None = None
     #: This exception's own printed figure, before the standard's step-back was
     #: added to it. Gresham's LDR-PV rear yard is 10 ft, or 8 with an alley,
     #: and 7.0420(G)(1) pushes a 26 ft box five feet off whichever of the two
@@ -1319,6 +1330,10 @@ class Effective:
     #: number by the lot count must not do it a second time. Hillsboro R-8.5's
     #: 1,500 sq ft townhouse average came to 24,000 that way, not 6,000.
     whole_project: bool = False
+    #: The winning variant's own denominator, where it states one (FOLLOWUPS
+    #: 138); None means the base value's, as before.
+    measured_on: str | None = None
+    net_area: NetArea | None = None
 
     @property
     def trusted(self) -> bool:
@@ -2324,6 +2339,8 @@ class Value(BaseModel):
             when=winner.key,
             exempt=winner.exempt,
             reduce_pct=winner.reduce_pct,
+            measured_on=winner.measured_on,
+            net_area=winner.net_area,
         )
 
 

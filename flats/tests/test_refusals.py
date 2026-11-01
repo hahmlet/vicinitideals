@@ -376,7 +376,10 @@ pytestmark = pytest.mark.unit
 # 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
 # City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
 # on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
-EXPECTED = {"notes": 165, "comments": 287, "tests": 18}
+# 286 -> 287 comments on 2026-10-31 (east-hillsboro-r24, FOLLOWUPS 138): county R-24's
+# East Hillsboro overlay states that Hillsboro's 12.50.210 usable open space is NOT
+# ENCODED on the three MR-2 lots, as in Hillsboro's own MR-2.
+EXPECTED = {"notes": 165, "comments": 288, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

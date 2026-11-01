@@ -1599,10 +1599,59 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 306-6.1 C(3), Townhouses provided as Middle Housing
           quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L262,L266"
+        # MR-2 prints no quadplex exemption, so its ceiling is stated here;
+        # on a plex the state's OAR 660-046-0220(2)(b) exemption (_state.yaml,
+        # preempts always) still removes it. It binds the townhouse path.
+        - value: 21.25
+          when: [east_hillsboro_city_standards]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Density, with no quadplex exemption"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L14"
+          measured_on:
+            fact: net_developable_area
+            cite: Hillsboro CDC 12.01.500, Acreage, Net
+            quote: "or/washington/hillsboro/12.01/12.01.500.txt#L14-L23"
+            less: [slope_25]
+            may_less: [floodplain, washington_cws_corridor, metro_wetlands]
+            assumed_none:
+              - "required street dedications, private street tracts, access easements and internal fire access"
+              - "hazardous areas where occupancy is not permitted"
+              - "required stormwater treatment and detention facilities"
+              - "land dedicated to the City for parks or greenways"
+        - value: 21.25
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Density, below the county 25 for townhouses"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L14"
+          measured_on:
+            fact: net_developable_area
+            cite: Hillsboro CDC 12.01.500, Acreage, Net
+            quote: "or/washington/hillsboro/12.01/12.01.500.txt#L14-L23"
+            less: [slope_25]
+            may_less: [floodplain, washington_cws_corridor, metro_wetlands]
+            assumed_none:
+              - "required street dedications, private street tracts, access easements and internal fire access"
+              - "hazardous areas where occupancy is not permitted"
+              - "required stormwater treatment and detention facilities"
+              - "land dedicated to the City for parks or greenways"
     min_density_du_per_acre:
       exempt: true
       cite: Washington County CDC 306-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245,L262,L265"
+      variants:
+        - value: 17
+          when: [east_hillsboro_city_standards]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Density"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L13"
+          measured_on:
+            fact: net_developable_area
+            cite: Hillsboro CDC 12.01.500, Acreage, Net
+            quote: "or/washington/hillsboro/12.01/12.01.500.txt#L14-L23"
+            less: [slope_25]
+            may_less: [floodplain, washington_cws_corridor, metro_wetlands]
+            assumed_none:
+              - "required street dedications, private street tracts, access easements and internal fire access"
+              - "hazardous areas where occupancy is not permitted"
+              - "required stormwater treatment and detention facilities"
+              - "land dedicated to the City for parks or greenways"
     min_lot_sqft:
       # 306-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1615,6 +1664,14 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 306-7.1 A(5), townhouse lots must average no less than 1,300 square feet
           quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L296-L297"
+        - per_dwelling: 2000
+          when: [east_hillsboro_city_standards]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Size, 2,000 sq. ft. per dwelling unit (8,000 for four, more than the county 7,000)"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4-L9"
+        - per_dwelling: 2000
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), 2,000 sq. ft. per dwelling unit; the townhouse 'Exceptions to lot areas' state no figure, so the stated one governs (as in Hillsboro's own MR-2), more than the county 1,300 average"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4-L11"
     setback_front_ft:
       # To the front building wall. The 6-foot figure for a porch or
       # other covered or enclosed entryway is one of the layer-wide refusals
@@ -1622,6 +1679,11 @@ zones:
       value: 10
       cite: Washington County CDC 306-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L298-L300,L302-L303"
+      variants:
+        - value: 15
+          when: [east_hillsboro_city_standards]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Setbacks, front yard to structure"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L26,L30-L32"
       qualified_by:
         fact: washington_local_street_connectivity
         cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
@@ -1652,6 +1714,10 @@ zones:
           when: [attached_wall]
           cite: Washington County CDC 306-7.1 B(4)(a), zero feet where units attach
           quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L311-L312"
+        - value: 5
+          when: [east_hillsboro_city_standards, attached_wall]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), side yard 5 feet; the common-wall setback 'may be waived for townhouses', a waiver the review may refuse, so the 5 holds (as in Hillsboro's own MR-2)"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L26,L28-L29,L35"
     setback_rear_ft:
       value: 12
       cite: Washington County CDC 306-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
@@ -1664,6 +1730,15 @@ zones:
       value: 35
       cite: Washington County CDC 306-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L361,L363"
+      variants:
+        - stories: 3
+          story_ft:
+            ft: 10
+            cite: Hillsboro CDC 12.50.140 B.6, a residential story is not more than 10 feet
+            quote: "or/washington/hillsboro/12.50/12.50.140.txt#L20-L21"
+          when: [east_hillsboro_city_standards]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Building Height, 3 stories or 40 feet, whichever is less (30 feet at the 10-foot story, below the county 35)"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L43"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 306-7.1 E(2), all other Middle Housing - no minimum
@@ -1673,6 +1748,87 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 306-7.1 E(1), 15 feet for each townhouse lot
           quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L368-L371"
+        - value: 25
+          when: [east_hillsboro_city_standards]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Dimensions, frontage (25, the same as Table 12.40.160-1 asks of a quadplex on a flag lot)"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L25"
+        - value: 25
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), frontage 25; the townhouse 'Exceptions to lot dimensions' state no figure, so the stated one governs (as in Hillsboro's own MR-2), more than the county 15"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16-L18,L25"
+    # EAST HILLSBORO OVERLAY (FOLLOWUPS 138; rulings.yaml
+    # 2026-10-31-east-hillsboro-city-standards-are-an-overlay and
+    # 2026-10-31-east-hillsboro-r24-zone-unsettled-yellow-with-flag). The
+    # three R-24 lots of the Reedville / TV Highway subareas must "address the
+    # city of Hillsboro's development standards"
+    # (community-plan.east-hillsboro.txt#L854, L883). The City of Hillsboro
+    # Comprehensive Plan Land Use map designates all three RH (High Density
+    # Residential; areas/.../hillsboro-comprehensive-plan-land-use.layer21.json),
+    # and "MR-2 implements the RH High Density Residential Plan designation"
+    # (Hillsboro CDC 12.22.020 B, 12.22/12.22.020.txt#L2,L4). The variants
+    # above and the fields below hold MR-2's figure, on those lots only
+    # (drawn_areas east_hillsboro_city_standards), wherever it is stricter
+    # than the county's: lot size, density (17 to 21.25 per net acre, on
+    # Hillsboro's net acre), frontage, front yard, height (3 stories at
+    # 10 ft), width, depth, coverage, parking and corner front lines.
+    # NOT LAID OVER, the county's being as strict or stricter: side yard 5
+    # (MR-2's 5 + 1.5 a story above the second is 5 for the pod), rear 12
+    # (MR-2 10), garage entrance 20 (MR-2 20), street side 8 (MR-2 states
+    # none; with two front lines on a corner the 15 front yard covers it).
+    # NOT LAID OVER, as on R-5: Hillsboro's procedures (12.80, the MR-2
+    # Development Review) -- the plan names development standards, and the
+    # application stays the county's. NOT ENCODED, as in Hillsboro's own MR-2:
+    # 12.50.210 usable open space ("Variable", hillsboro.yaml layer note).
+    min_lot_width_ft:
+      value: 55
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Dimensions, width at front building plane (applies to the parent lot for townhouses)"
+      quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L20,L23"
+    min_lot_depth_ft:
+      value: 85
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Dimensions, depth"
+      quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L24"
+    max_coverage_pct:
+      value: 50
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Lot Coverage, duplexes, triplexes, quadplexes"
+      quote: "or/washington/hillsboro/12.22/12.22.250.txt#L44,L47-L49"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Lot Coverage, townhouse on individual lot"
+          quote: "or/washington/hillsboro/12.22/12.22.250.txt#L44,L47,L50"
+    parking_lot_line_buffer_ft:
+      value: 4
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
+      quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
+    parking_max_per_unit:
+      value: 2
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.50.320-1, Quadplex maximum (Zone A)"
+      quote: "or/washington/hillsboro/12.50/12.50.320.txt#L8,L18-L24,L36"
+    parking_area_max_frontage_pct:
+      value: 50
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.715 C.1, garages and parking areas no more than 50% of any street frontage"
+      quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L4,L7-L8"
+    parking_area_frontage_any_street:
+      value: true
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.715 C.1, any street frontage (Steph 2026-10-14, FOLLOWUPS 80(a): front, side and rear streets)"
+      quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L4,L7-L8"
+    parking_alley_access_required:
+      value: true
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.715 C.2.c.i, access must be taken from an improved abutting alley"
+      quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L7,L16-L18"
+    front_lot_line_corner:
+      value: both
+      only_when: [east_hillsboro_city_standards]
+      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.01.500, Lot Line, Front (corner lots have 2 front lot lines), stricter than the county narrowest frontage"
+      quote: "or/washington/hillsboro/12.01/12.01.500.txt#L349-L351,L354-L357"
     notes: >-
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
@@ -3472,7 +3628,7 @@ drawn_areas:
       housing is already held behind a planned development.
   east_hillsboro_city_standards:
     condition: east_hillsboro_city_standards
-    zones: [R-5]
+    zones: [R-5, R-24]
     file: or/washington/_unincorporated/east-hillsboro-city-standards.geojson
     source: >-
       East Hillsboro Community Plan Map 2, Subareas (maps 11-2024, page 2),
@@ -3493,8 +3649,15 @@ drawn_areas:
       R-15, #L359-L361), and county R-5 is Hillsboro's Low Density
       Residential designation, which R-10, R-8.5, R-7 and R-6 implement. The
       R-5 block takes the strictest figure of the four on each standard
-      (FOLLOWUPS 138). The subareas' R-24 and R-15 lots stay held on
-      washington_plan_rule_unmeasured.
+      (FOLLOWUPS 138). The subareas' three R-24 lots joined on 2026-10-31
+      (rulings.yaml 2026-10-31-east-hillsboro-r24-zone-unsettled-yellow-with-flag):
+      the City of Hillsboro Comprehensive Plan Land Use map designates them
+      RH, which MR-2 implements (Hillsboro CDC 12.22.020 B), and the R-24
+      block takes MR-2's figure wherever stricter
+      (hillsboro-comprehensive-plan-land-use.layer21.json). The R-15 lot
+      stays held on washington_plan_rule_unmeasured: that map designates it
+      RM, which MR-1 implements only in its "higher densities" (12.22.020 A),
+      so no one Hillsboro zone is settled for it.
   bethany_asc_3:
     condition: bethany_asc_3
     zones: [R-5, R-6]

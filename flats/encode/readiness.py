@@ -387,6 +387,16 @@ def _rows(
             _printed_variant(variant),
             variant.prov.drawn,
         )
+        if getattr(variant, "measured_on_quote", None):
+            # A variant's own denominator, checked as a base value's is: the
+            # sentence must still be where the file says (FOLLOWUPS 138).
+            yield (
+                where,
+                f"{name} [{'+'.join(sorted(variant.when))}] <{variant.measured_on}>",
+                variant.measured_on_quote,
+                None,
+                False,
+            )
         if getattr(variant, "story_ft_quote", None):
             yield (
                 where,

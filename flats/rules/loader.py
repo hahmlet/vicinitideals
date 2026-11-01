@@ -1001,6 +1001,32 @@ def _parse_variants(
                 f"states nothing on its own"
             )
             continue
+        raw_v_measured = body.pop("measured_on", None)
+        v_measured_on, v_measured_cite, v_measured_quote, v_acre = _parse_measured_on(
+            raw_v_measured, at, problems
+        )
+        v_net_area = _parse_net_area(raw_v_measured, at, problems)
+        if raw_v_measured is not None:
+            # A variant's own denominator (FOLLOWUPS 138, East Hillsboro's
+            # overlay of Hillsboro MR-2 densities per net acre on county
+            # R-24). The same checks a base value's gets, said here because
+            # a variant is not a Value.
+            if v_measured_on is None or not (v_measured_cite and v_measured_quote):
+                problems.append(
+                    f"{at}: 'measured_on' names the quantity a rate is computed "
+                    f"on -- name its 'fact' and cite and quote where the code "
+                    f"defines it"
+                )
+                continue
+            if v_acre is not None:
+                problems.append(f"{at}: 'acre_sqft' is not taught on a variant")
+                continue
+            if v_net_area is not None and v_measured_on != "net_developable_area":
+                problems.append(
+                    f"{at}: a subtraction list belongs to net_developable_area, "
+                    f"and this variant is measured on {v_measured_on!r}"
+                )
+                continue
         v_stories = body.pop("stories", None)
         v_story_ft, _, v_story_ft_quote = _parse_story_ft(
             body.pop("story_ft", None), at, problems
@@ -1256,6 +1282,10 @@ def _parse_variants(
                     stories=None if v_stories is None else float(v_stories),
                     story_ft=None if v_stories is None else float(v_story_ft),
                     story_ft_quote=None if v_stories is None else v_story_ft_quote,
+                    measured_on=v_measured_on,
+                    measured_on_cite=v_measured_cite,
+                    measured_on_quote=v_measured_quote,
+                    net_area=v_net_area,
                     before_step_back=before_step_back,
                     step_back_at_ft=(
                         None if own_step_back is None else float(own_step_back.at_ft)
