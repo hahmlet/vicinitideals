@@ -34,3 +34,8 @@ TRAP: the venv's rasterio (GDAL 3.12 wheel) has no OpenFileGDB driver and 137 ha
 step one of the build is converting both to GeoTIFF (a GDAL build with OpenFileGDB raster, >= 3.7)
 and reading the 2019 cell size, which is still unconfirmed. The 1 m layer also carries impervious
 -- possibly useful for 33.537's 50% cap later.
+WATCH (Steph 2026-11-01 asked "are we tracking the tree [map] for updates?" -- not yet): the build
+registers both Metro items (and the Parks corridor layer) in the county source registry the monthly
+probe reads (flats/ingest/probe.py: rlis_zip item -> new_release on a changed modified/size; arcgis
+layer -> moved/count_drift), so a newer canopy release raises the County copy banner like the
+county data does. Record each item's modified date + size in the manifest at acquire.
