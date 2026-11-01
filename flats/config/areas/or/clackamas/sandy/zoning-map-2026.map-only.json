@@ -1,0 +1,9 @@
+{
+  "status": "map only, traced 2026-10-31 (bornstedt-village-overlay.geojson)",
+  "source_url": "ci.sandy.or.us .../16041/zoning_map_2026_11x17.pdf (City of Sandy site, file 16041; the full path was not kept by the chunk 10 scout)",
+  "source_file": "zoning_map_2026_11x17.pdf",
+  "retrieved": "2026-10-31",
+  "sha256": "401a4fad84bd6ed4be1a509228baad180f647c7f8754246eb9d0cc40e19b2fdb",
+  "pages_in_file": 1,
+  "note": "City of Sandy Zoning Map, 11 x 17 edition (Ordinance 2025-01, map updated 2026-04-30). Raster only: the page is an embedded image with no vector linework. It is the map SDC 17.54.60 names for the Bornstedt Village Overlay ('as shown on the City of Sandy Zoning Map') and 17.54.00 E says marks a specific area plan with a border and a letter S. The city publishes no layer for the overlay. Superseded as the source of the BVO line: bornstedt-village-plan-maps.map-only.pdf (the 2003 plan, conceptual)."
+}

@@ -63,6 +63,8 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         # Raleigh Hills - Garden Home ASC U's one lot (FOLLOWUPS 136).
         "raleigh_hills_asc_u",
         "rockwood_design_district",
+        # Sandy's Bornstedt Village Overlay, the 2026 zoning map (FOLLOWUPS 109 chunk 9).
+        "sandy_bornstedt_village",
         "tigard_bridgeport_village",
         "troutdale_cfec_parking_area",
         "troutdale_town_center",

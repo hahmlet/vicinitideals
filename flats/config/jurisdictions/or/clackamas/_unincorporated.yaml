@@ -1920,6 +1920,11 @@ zones:
         front 18, side 0/5, rear 15, coverage 50%)'
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # Sunnyside Village (ZDO 1005.11), checked 2026-10-31 (FOLLOWUPS 109
+    # chunk 9): its garage, entry and alley rules are written for the VTH,
+    # VA, VCS and VO districts (1005.11.txt L6-L121) and name no VR
+    # district, so nothing in it reaches this zone; Table 315-3's roof
+    # pitch already holds the flat-roofed pod here.
     quadplex_allowed:
       # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
       # P7,8, the same as the low-density zones. One table, one row, both
@@ -2034,6 +2039,11 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-3 (Village Residential VR-4/5)
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # Sunnyside Village (ZDO 1005.11), checked 2026-10-31 (FOLLOWUPS 109
+    # chunk 9): its garage, entry and alley rules are written for the VTH,
+    # VA, VCS and VO districts (1005.11.txt L6-L121) and name no VR
+    # district, so nothing in it reaches this zone; Table 315-3's roof
+    # pitch already holds the flat-roofed pod here.
     quadplex_allowed:
       # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
       # P7,8, the same as the low-density zones. One table, one row, both

@@ -949,6 +949,21 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "sandy_bornstedt_village",
+        "site_fact",
+        "The lot lies inside Sandy's Bornstedt Village Overlay (SDC 17.54), "
+        "whose boundary is the hatched 'S' area on the City of Sandy Zoning "
+        "Map (17.54.00 E, 17.54.60) and nothing else: row houses there owe "
+        "the overlay's lot widths (17.54.80 -- 30 ft average in R-1, 20 ft "
+        "in R-2 and R-3, 20 ft at the building line). The city publishes no "
+        "layer; the line is traced from the 2026 zoning map.",
+        evidence=(
+            "the 2026 Sandy zoning map traced and registered to the county "
+            "taxlots -- held as Sandy's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "troutdale_town_center",
         "site_fact",
         "The lot lies inside Troutdale's Town Center Overlay District. The "
@@ -1589,6 +1604,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_south_end",
     "raleigh_hills_asc_u",
     "rockwood_design_district",
+    "sandy_bornstedt_village",
     "tigard_bridgeport_village",
     "troutdale_cfec_parking_area",
     "troutdale_town_center",

@@ -56,10 +56,12 @@ CITE = (
     '  quote: "pdx/33.110.txt#L42-L48"\n'
 )
 
-#: The eight zones that take their setbacks from 4.113(.02). RN is Table 8A,
+#: The seven zones that take their setbacks from 4.113(.02). RN is Table 8A,
 #: V is Table V-1 and TC is its own chapter; none of the three cites the
-#: sentence and none holds the share.
-TAKES_4113 = ("R", "OTR", "PDR1", "PDR2", "PDR3", "PDR4", "PDR5", "PDR6")
+#: sentence and none holds the share. OTR left the list on 2026-10-31
+#: (FOLLOWUPS 109 chunk 9): its setbacks come from the Old Town Residential
+#: Design Standards Book, which 4.138(.04)A puts over 4.113's.
+TAKES_4113 = ("R", "PDR1", "PDR2", "PDR3", "PDR4", "PDR5", "PDR6")
 
 OVER_10K = Band(measure="lot_sqft", more_than=10000)
 UNDER_100_WIDE = Band(measure="lot_width_ft", less_than=100)

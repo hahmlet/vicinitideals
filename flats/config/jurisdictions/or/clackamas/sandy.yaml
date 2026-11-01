@@ -477,8 +477,16 @@ defaults:
 # - Density rounding (17.30.20 D) and the 1.5 times density transfer from
 #   flood and slope restricted areas (17.30.20 B).
 # - Vision clearance (17.74.30, 17.98.110), measured from curb lines.
-# - Overlays: Specific Area Plan (Bornstedt Village), Flood Slope Hazard,
-#   Cultural and Historic Resource: not held by FLATS for Sandy.
+# - Overlays: Flood Slope Hazard and Cultural and Historic Resource: not held
+#   by FLATS for Sandy. The Specific Area Plan overlay (Bornstedt Village,
+#   17.54) IS held since 2026-10-31: its row-house lot widths, inside the line
+#   traced from the 2026 zoning map (drawn_areas). Its access rules add
+#   nothing the zones do not already ask: lots under 40 ft of frontage take
+#   access from an alley or a shared private driveway (17.54.110 E, as
+#   17.36.50 B), and lots on the Village Boulevard, Cascadia Village Drive
+#   and the historic-road boulevard take it from a side street, an alley or
+#   a shared private driveway (17.54.120) -- the pod's one drive serving
+#   four homes is that shared driveway, the reading above.
 
 zones:
   R-1:
@@ -539,9 +547,33 @@ zones:
       cite: Sandy SDC 17.36.30 (A), minimum lot area for other permitted uses (row houses) is "No minimum"
       quote: "or/clackamas/sandy/17.36/17.36.30.txt#L7"
     min_lot_width_ft:
+      # FOLLOWUPS 109 chunk 9 (2026-10-31). Inside the Bornstedt Village
+      # Overlay (17.54.60, traced from the 2026 zoning map: drawn_areas
+      # below) the overlay's own table (17.54.80) sets row-house lots apart
+      # from the zone's "No minimum": an average width and a width at the
+      # building line. The four homes on their own lots are row houses
+      # (rulings.yaml 2026-10-22-sandy-row-houses-not-multi-family), so each
+      # home lot owes them. The table's looser yards (10 ft front, 10 ft
+      # corner side against the zone's 20) are not taken: the overlay is
+      # encoded to hold lots, never to release one, until its edge is
+      # better than a tracing.
       exempt: true
       cite: Sandy SDC 17.36.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
       quote: "or/clackamas/sandy/17.36/17.36.30.txt#L11"
+      variants:
+        - value: 20
+          when: [unit_lots, sandy_bornstedt_village]
+          cite: Sandy SDC 17.54.80, BVO minimum lot width at building line, R1 row house 20 ft
+          quote: "or/clackamas/sandy/17.54/17.54.80.txt#L6,L8"
+    min_average_lot_width_ft:
+      exempt: true
+      cite: Sandy SDC 17.36.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
+      quote: "or/clackamas/sandy/17.36/17.36.30.txt#L11"
+      variants:
+        - value: 30
+          when: [unit_lots, sandy_bornstedt_village]
+          cite: Sandy SDC 17.54.80, BVO minimum average lot width, R1 row house 30 ft
+          quote: "or/clackamas/sandy/17.54/17.54.80.txt#L6-L7"
     min_frontage_ft:
       value: 20
       cite: Sandy SDC 17.36.30, minimum lot frontage 20 ft
@@ -666,9 +698,24 @@ zones:
       cite: Sandy SDC 17.38.30, minimum lot area "No minimum"
       quote: "or/clackamas/sandy/17.38/17.38.30.txt#L5"
     min_lot_width_ft:
+      # Bornstedt Village Overlay row-house widths (17.54.80); see R-1.
       exempt: true
       cite: Sandy SDC 17.38.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
       quote: "or/clackamas/sandy/17.38/17.38.30.txt#L9"
+      variants:
+        - value: 20
+          when: [unit_lots, sandy_bornstedt_village]
+          cite: Sandy SDC 17.54.80, BVO minimum lot width at building line, R2 row house 20 ft
+          quote: "or/clackamas/sandy/17.54/17.54.80.txt#L6,L8"
+    min_average_lot_width_ft:
+      exempt: true
+      cite: Sandy SDC 17.38.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
+      quote: "or/clackamas/sandy/17.38/17.38.30.txt#L9"
+      variants:
+        - value: 20
+          when: [unit_lots, sandy_bornstedt_village]
+          cite: Sandy SDC 17.54.80, BVO minimum average lot width, R2 row house 20 ft
+          quote: "or/clackamas/sandy/17.54/17.54.80.txt#L6-L7"
     min_frontage_ft:
       value: 20
       cite: Sandy SDC 17.38.30, minimum lot frontage 20 ft
@@ -792,9 +839,24 @@ zones:
       cite: Sandy SDC 17.40.30, the R-3 standards print no minimum lot area (average lot width, frontage, depth, yards, height only)
       quote: "or/clackamas/sandy/17.40/17.40.30.txt#L5"
     min_lot_width_ft:
+      # Bornstedt Village Overlay row-house widths (17.54.80); see R-1.
       exempt: true
       cite: Sandy SDC 17.40.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
       quote: "or/clackamas/sandy/17.40/17.40.30.txt#L8"
+      variants:
+        - value: 20
+          when: [unit_lots, sandy_bornstedt_village]
+          cite: Sandy SDC 17.54.80, BVO minimum lot width at building line, R3 row house 20 ft
+          quote: "or/clackamas/sandy/17.54/17.54.80.txt#L6,L8"
+    min_average_lot_width_ft:
+      exempt: true
+      cite: Sandy SDC 17.40.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
+      quote: "or/clackamas/sandy/17.40/17.40.30.txt#L8"
+      variants:
+        - value: 20
+          when: [unit_lots, sandy_bornstedt_village]
+          cite: Sandy SDC 17.54.80, BVO minimum average lot width, R3 row house 20 ft
+          quote: "or/clackamas/sandy/17.54/17.54.80.txt#L6-L7"
     min_frontage_ft:
       value: 20
       cite: Sandy SDC 17.40.30, minimum lot frontage 20 ft
@@ -1016,3 +1078,33 @@ zone_rulings:
     note: >-
       "I3", the regional zoning layer's spelling of Sandy's I-3, General
       Industrial (SDC 17.52), on 2026-10-07. The block is I-3.
+
+drawn_areas:
+  bornstedt_village:
+    condition: sandy_bornstedt_village
+    zones: [R-1, R-2, R-3]
+    file: or/clackamas/sandy/bornstedt-village-overlay.geojson
+    source: >-
+      Traced 2026-10-31 from the map that is the overlay's only statement:
+      the City of Sandy Zoning Map (Ordinance 2025-01, updated 2026-04-30),
+      stored as zoning-map-2026.map-only.pdf, a raster page. The hatched "S"
+      area was lifted from the raster, registered to the county taxlots (82
+      percent of sampled taxlot-line points within a pixel, about 5 ft, of a
+      drawn line) and grown 30 ft outward. The city publishes no layer; the
+      2003 plan map (bornstedt-village-plan-maps.map-only.pdf) is conceptual.
+      Drawn provenance in the file's source block.
+    quote: "or/clackamas/sandy/17.54/17.54.60.txt#L4"
+    cite: Sandy SDC 17.54.00 E, 17.54.60, 17.54.80
+    note: >-
+      The Bornstedt Village Overlay south and east of Highway 211 along
+      Bornstedt Road. Inside it row houses owe the overlay's lot widths
+      (17.54.80): a 30 ft average in R-1 and 20 ft in R-2 and R-3, and 20 ft
+      at the building line in all three, which the 14 ft home lots of the
+      56 ft pod miss everywhere and the 20 ft home lots of the 80 ft pod miss
+      in R-1. A lot at least 90 percent inside is in, at most 10 percent is
+      out, and one the traced line cuts is unanswered: held open with
+      FACT-SANDY-BORNSTEDT-VILLAGE ("Bornstedt Village edge unconfirmed"),
+      never GREEN on the overlay's rules. The line is grown 30 ft outward, so
+      a lot the tracing might misplace is held, not released. Cascadia
+      Village subdivisions 1 to 6, exempt from 17.54.70-17.54.110
+      (17.54.60), are read inside: the stricter side.

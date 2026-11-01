@@ -304,7 +304,12 @@ OPEN = {
     "or/clackamas/wilsonville 4.113 -> 4.156.07",
     "or/clackamas/wilsonville 4.113 -> 4.156.09",
     "or/clackamas/wilsonville 4.113 -> 4.156.10",
-    "or/clackamas/wilsonville 4.123 -> 4.138",
+    # 2026-10-31 (FOLLOWUPS 109 chunk 9): OTR now quotes 4.138(.04)A for the
+    # attached wall's zero setback, so 4.123's pointer to 4.138 is followed,
+    # and 4.138's own sign pointers (4.156.01, 4.156.11) surface. Signs are
+    # not read from, as for 4.125 above.
+    "or/clackamas/wilsonville 4.138 -> 4.156.01",
+    "or/clackamas/wilsonville 4.138 -> 4.156.11",
     "or/clackamas/wilsonville 4.125 -> 4.034",
     "or/clackamas/wilsonville 4.125 -> 4.156.01",
     "or/clackamas/wilsonville 4.125 -> 4.156.11",
@@ -621,6 +626,12 @@ FOLLOWED = {
     "or/clackamas/wilsonville 4.113 -> 4.124",
     "or/clackamas/wilsonville 4.113 -> 4.125",
     "or/clackamas/wilsonville 4.123 -> 4.113",
+    # 2026-10-31 (FOLLOWUPS 109 chunk 9): OTR quotes 4.138(.04)A, so 4.123's
+    # pointer to the overlay is followed, and from 4.138 the pointers to 4.113
+    # and 4.176, sections the layer's citations already land in.
+    "or/clackamas/wilsonville 4.123 -> 4.138",
+    "or/clackamas/wilsonville 4.138 -> 4.113",
+    "or/clackamas/wilsonville 4.138 -> 4.176",
     "or/clackamas/wilsonville 4.127 -> 4.113",
     "or/clackamas/wilsonville 4.135 -> 4.131",
     "or/clackamas/wilsonville 4.136 -> 4.131",
