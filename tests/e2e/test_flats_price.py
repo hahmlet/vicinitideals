@@ -60,6 +60,7 @@ def test_the_filter_keeps_only_lots_at_or_under_the_ceiling_and_never_hides_no_p
     page.locator("#ppu-on").check()
     page.locator("#ppu-max").fill("30000")
     page.get_by_role("button", name="Show").click()
+    expect(page).to_have_url(re.compile("ppu_max=30000"))
 
     expect(page.locator("#ppu-on")).to_be_checked()
     _skip_if_empty(page)
@@ -71,6 +72,7 @@ def test_the_filter_keeps_only_lots_at_or_under_the_ceiling_and_never_hides_no_p
     # A lower ceiling can only narrow the answer; the colour filter is still green.
     page.locator("#ppu-max").fill("15000")
     page.get_by_role("button", name="Show").click()
+    expect(page).to_have_url(re.compile("ppu_max=15000"))
     expect(page.locator("#ppu-max")).to_have_value("15000")
     if not page.get_by_text("No lots match.").count():
         cells = page.locator("#lot-table tbody tr td.ppu-cell")
