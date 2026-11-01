@@ -26,7 +26,7 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
 
 ## Left
 - 2026-11-01 Steph (80%, OK to 90% this week): "do some overlays, see if we can wrap that up". Chunk 9 (zone-keyed, no maps needed): Clackamas Sunnyside Village 1005.11, Wood Village Town Center street types (Table 235-5), Wilsonville Old Town OTR 4.123 + overlay 4.138 re-ruling, Sandy Bornstedt 17.54 text. In parallel a source scout for the map-keyed ones (chunk 10): Oregon City Park Place 17.21 / South End 17.22 / historic 17.40 boundaries, Sandy 'S' overlay, Wilsonville Old Town overlay outline, Portland plan districts 33.5xx layer + text.
-- 2026-11-01 scout: boundaries for Oregon City (17.21/17.22/17.40) and Portland (plan districts, historic, conservation) already in flats/config/areas from the 10-22 ingest; Sandy 'S' and Wilsonville Old Town are map-only (traced in chunk 9). Chunk 10a STARTED (branch flats/districts-c10a): Oregon City Park Place / South End / historic + Portland 33.445 historic/conservation. LEFT AFTER: Portland plan districts 33.5xx -- 24 chapter texts in flats/provenance/pending/or/multnomah/portland, 25 districts with residential land (Johnson Creek 4,647 ac, Northwest Hills 2,283, East Corridor, Glendoveer, Albina, ...); Laurelhurst/Eastmoreland special setback maps not online. Likely 2 chunks; next week.
+- 2026-11-01 scout: boundaries for Oregon City (17.21/17.22/17.40) and Portland (plan districts, historic, conservation) already in flats/config/areas from the 10-22 ingest; Sandy 'S' and Wilsonville Old Town are map-only (traced in chunk 9). Chunk 10a CHECKED 2026-11-01, nothing to change: Oregon City Park Place (13 RED, roof pitch) / South End (21 GREEN, per-unit residence ruling) / 17.40 historic (942 RED, hearing) were done in chunk 3, Portland 33.445 (historic 4,749 RED, conservation 3,004 red / 102 yellow) in chunk 1; status layer covers vacant lots. Historic RED (not yellow) is the standing 2026-10-14 tier + 10-15 statute exception ruling. LEFT AFTER: Portland plan districts 33.5xx -- 24 chapter texts in flats/provenance/pending/or/multnomah/portland, 25 districts with residential land (Johnson Creek 4,647 ac, Northwest Hills 2,283, East Corridor, Glendoveer, Albina, ...); Laurelhurst/Eastmoreland special setback maps not online. Likely 2 chunks; next week.
 - Gladstone Portland Ave C-2 strip: rear edge of the Town Center line unconfirmed; 20 cut lots stay
   yellow until a better map turns up.
 - Chunk 6 LIVE run 94 2026-10-30 (main af509800; 32cf3a0e encoding, 550899fa + 12a3b298 Tualatin CO quadfit row):
@@ -38,8 +38,7 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   green with a flag, ASC 1 trace owed.
 - Chunks 7-8: WashCo's seven smaller community plans, unread (Raleigh Hills - Garden Home 6,022 lots and
   Bull Mountain 3,847 next).
-- Smaller tier-1 districts still open: Oregon City Park Place/South End concept plans + historic
-  districts (boundaries), Sunnyside Village, Wood Village TC, Sandy Bornstedt, Wilsonville Old Town;
+- Smaller tier-1 districts still open (Oregon City concept plans + historic DONE, see 2026-11-01): Sunnyside Village, Wood Village TC, Sandy Bornstedt, Wilsonville Old Town;
   Portland plan districts (33.5xx) boundaries.
 - Splice base now 137 /root/bridge_spliced_nb_maps, quadfit data/quadfit_2026-10-30_dd_c6.
 
