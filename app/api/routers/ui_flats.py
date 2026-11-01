@@ -4160,36 +4160,17 @@ def _outline(geojson: str | None) -> dict[str, Any] | None:
     """
     if not geojson:
         return None
-    try:
-        shape = json.loads(geojson)
-    except ValueError:
-        return None
-    polygons = shape.get("coordinates") or []
-    if shape.get("type") == "Polygon":
-        polygons = [polygons]
-    rings = [ring for polygon in polygons for ring in polygon if len(ring) >= 3]
+    rings = _geojson_rings(geojson)
     if not rings:
         return None
-    xs = [x for ring in rings for x, _y in ring]
-    ys = [y for ring in rings for _x, y in ring]
-    span = max(max(xs) - min(xs), max(ys) - min(ys)) or 1.0
-    pad = 8
-    scale = (_OUTLINE_PX - 2 * pad) / span
-    x0, y0 = min(xs), min(ys)
-    width_px = (max(xs) - x0) * scale + 2 * pad
-    height_px = (max(ys) - y0) * scale + 2 * pad
-    paths = []
-    for ring in rings:
-        points = " ".join(
-            f"{pad + (x - x0) * scale:.1f},{height_px - pad - (y - y0) * scale:.1f}" for x, y in ring
-        )
-        paths.append(points)
+    _plot, width_px, height_px, across_ft, deep_ft = _ring_plotter(rings)
+    paths = [_plot(ring) for ring in rings]
     return {
         "paths": paths,
         "width": round(width_px),
         "height": round(height_px),
-        "feet_across": round(max(xs) - x0),
-        "feet_deep": round(max(ys) - y0),
+        "feet_across": round(across_ft),
+        "feet_deep": round(deep_ft),
     }
 
 
@@ -4207,6 +4188,35 @@ def _plan(geojson: str | None, drawing: dict[str, Any] | None) -> dict[str, Any]
     """
     if not drawing or not geojson:
         return None
+    lot = _geojson_rings(geojson)
+    if not lot:
+        return None
+    lot = [[(float(x), float(y)) for x, y in ring] for ring in lot]
+    layers: dict[str, list[list[list[float]]]] = {"envelope": [r for r in drawing.get("envelope") or [] if len(r) >= 3]}
+    for name in ("court", "lane", "room", "building"):
+        ring = drawing.get(name)
+        layers[name] = [ring] if ring and len(ring) >= 3 else []
+    if not layers["building"]:
+        return None
+    normalized_layers: dict[str, list[list[tuple[float, float]]]] = {
+        name: [[(float(x), float(y)) for x, y in ring] for ring in rings] for name, rings in layers.items()
+    }
+    every = lot + [ring for rings in normalized_layers.values() for ring in rings]
+    points, width_px, height_px, _across_ft, _deep_ft = _ring_plotter(every)
+
+    return {
+        "lot": [points(r) for r in lot],
+        **{name: [points(r) for r in normalized_layers[name]] for name in _PLAN_LAYERS},
+        "fits": bool(drawing.get("fits")),
+        "tight": bool(drawing.get("tight")),
+        "width": round(width_px),
+        "height": round(height_px),
+    }
+
+
+def _geojson_rings(geojson: str | None) -> list[list[list[Any]]] | None:
+    if not geojson:
+        return None
     try:
         shape = json.loads(geojson)
     except ValueError:
@@ -4214,37 +4224,27 @@ def _plan(geojson: str | None, drawing: dict[str, Any] | None) -> dict[str, Any]
     polygons = shape.get("coordinates") or []
     if shape.get("type") == "Polygon":
         polygons = [polygons]
-    lot = [ring for polygon in polygons for ring in polygon if len(ring) >= 3]
-    layers: dict[str, list[list[list[float]]]] = {"envelope": [r for r in drawing.get("envelope") or [] if len(r) >= 3]}
-    for name in ("court", "lane", "room", "building"):
-        ring = drawing.get(name)
-        layers[name] = [ring] if ring and len(ring) >= 3 else []
-    every = lot + [r for rings in layers.values() for r in rings]
-    if not lot or not layers["building"]:
-        return None
-    xs = [float(x) for ring in every for x, _y in ring]
-    ys = [float(y) for ring in every for _x, y in ring]
-    span = max(max(xs) - min(xs), max(ys) - min(ys)) or 1.0
+    return [ring for polygon in polygons for ring in polygon if len(ring) >= 3]
+
+
+def _ring_plotter(
+    rings: Sequence[Sequence[Sequence[float]]],
+) -> tuple[Any, float, float, float, float]:
+    xs = [x for ring in rings for x, _y in ring]
+    ys = [y for ring in rings for _x, y in ring]
+    x0, y0 = min(xs), min(ys)
+    across_ft = max(xs) - x0
+    deep_ft = max(ys) - y0
+    span = max(across_ft, deep_ft) or 1.0
     pad = 8
     scale = (_OUTLINE_PX - 2 * pad) / span
-    x0, y0 = min(xs), min(ys)
-    width_px = (max(xs) - x0) * scale + 2 * pad
-    height_px = (max(ys) - y0) * scale + 2 * pad
+    width_px = across_ft * scale + 2 * pad
+    height_px = deep_ft * scale + 2 * pad
 
-    def points(ring: list[list[float]]) -> str:
-        return " ".join(
-            f"{pad + (float(x) - x0) * scale:.1f},{height_px - pad - (float(y) - y0) * scale:.1f}"
-            for x, y in ring
-        )
+    def points(ring: Sequence[Sequence[float]]) -> str:
+        return " ".join(f"{pad + (x - x0) * scale:.1f},{height_px - pad - (y - y0) * scale:.1f}" for x, y in ring)
 
-    return {
-        "lot": [points(r) for r in lot],
-        **{name: [points(r) for r in layers[name]] for name in _PLAN_LAYERS},
-        "fits": bool(drawing.get("fits")),
-        "tight": bool(drawing.get("tight")),
-        "width": round(width_px),
-        "height": round(height_px),
-    }
+    return points, width_px, height_px, across_ft, deep_ft
 
 
 def _alley_coverage_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:

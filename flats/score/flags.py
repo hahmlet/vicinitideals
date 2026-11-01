@@ -266,20 +266,32 @@ def parse_registry(text: str) -> Registry:
     return Registry(FlagType(code=code, **body) for code, body in (data.get("types") or {}).items())
 
 
+@lru_cache(maxsize=8)
+def _load_registry_cached(path: str, mtime_ns: int) -> Registry:
+    del mtime_ns
+    return parse_registry(Path(path).read_text(encoding="utf-8"))
+
+
 def load_registry(path: Path = REGISTRY_PATH) -> Registry:
-    return parse_registry(path.read_text(encoding="utf-8"))
+    path = path.resolve()
+    return _load_registry_cached(str(path), path.stat().st_mtime_ns)
+
+
+@lru_cache(maxsize=8)
+def _load_rules_cached(path: str, mtime_ns: int) -> ColourRules:
+    del mtime_ns
+    return ColourRules(**yaml.safe_load(Path(path).read_text(encoding="utf-8")))
 
 
 def load_rules(path: Path = COLOUR_PATH) -> ColourRules:
-    return ColourRules(**yaml.safe_load(path.read_text(encoding="utf-8")))
+    path = path.resolve()
+    return _load_rules_cached(str(path), path.stat().st_mtime_ns)
 
 
-@lru_cache(maxsize=1)
 def registry() -> Registry:
     return load_registry()
 
 
-@lru_cache(maxsize=1)
 def colour_rules() -> ColourRules:
     return load_rules()
 
