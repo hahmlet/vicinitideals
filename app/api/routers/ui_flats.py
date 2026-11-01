@@ -1880,6 +1880,8 @@ async def flats_sign_passage(
     the browser, for the same reason the single-value route rebuilds the
     number: the form carries an address and an opinion, never the evidence.
     """
+    note = _no_nul(note)
+    ref = _no_nul(ref)
     user = await _get_user(session, request)
     layer = _layers().get(layer_id.strip("/"))
     if layer is None or verdict not in _VERDICTS:
@@ -2149,6 +2151,7 @@ async def flats_triage_rule(
     no reasoning is worse than an open one — the open row still shows the
     sentence, and the tagged row shows a word nobody can check.
     """
+    note = _no_nul(note)
     user = await _get_user(session, request)
 
     async def render(error: str = "", keep: str = "", at: int = 0) -> HTMLResponse:
@@ -2467,6 +2470,7 @@ async def flats_reading_rule(
     no reasoning is worse than an open one — the open one still shows the
     sentences, and the tagged one shows a word nobody can check.
     """
+    note = _no_nul(note)
     user = await _get_user(session, request)
 
     async def render(error: str = "", keep: str = "", at: int = 0) -> HTMLResponse:
@@ -2736,6 +2740,7 @@ async def flats_words_rule(
     answer to a word the city plainly defines, and a screen that accepts it
     silently records a decision nobody made.
     """
+    note = _no_nul(note)
     user = await _get_user(session, request)
 
     async def render(error: str = "", keep: str = "", at: int = 0) -> HTMLResponse:
@@ -4728,6 +4733,8 @@ async def flats_sign(
     browser sends is an address and an opinion; if it could send the evidence
     as well, a signature could be recorded over text nobody displayed.
     """
+    note = _no_nul(note)
+    ref = _no_nul(ref)
     user = await _get_user(session, request)
     layer = _layers().get(layer_id.strip("/"))
     number = _number(layer, zone, field, when) if layer else None

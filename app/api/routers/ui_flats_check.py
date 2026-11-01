@@ -47,6 +47,7 @@ from app.api.routers.ui_flats import (
     _known_documents,
     _layers,
     _mark,
+    _no_nul,
     _number,
     _page_index,
     _lots_limits,
@@ -2217,6 +2218,9 @@ async def flats_check_answer(
     # The card has one comment box. Under "No" it is what the page says;
     # with "Flag it" it is what the page has that the rules don't; under any
     # other answer it is a note.
+    says = _no_nul(says)
+    note = _no_nul(note)
+    comment = _no_nul(comment)
     if action == "flag":
         question = "page:web" if flag_web else f"page:{flag_page}"
         answer, says = FLAG, comment or says
