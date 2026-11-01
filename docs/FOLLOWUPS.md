@@ -149,6 +149,5 @@ the full one.)
 ## 3. Copilot queue -- low priority, not time-sensitive
 
 101. [Copilot] [scan: NO (quadfit mirror only)] **Port Gladstone Ord. 1545 to quadfit's rules.yaml** -- cold-start brief. [file](followups/101-gladstone-1545-quadfit.md)
-91. [Copilot] [scan: no] **Copilot cleanup batch 10** -- QUEUED for 2026-11-01. [file](followups/91-copilot-batch-10.md)
 23. [Copilot] [scan: NO] **Page check** -- SHIPPED 2026-09-30 (a203e9f1). [file](followups/23-page-check.md)
 16. [Copilot] [PARKED] [scan: NO] **Partial re-screen** -- SHIPPED 50a0ecc2 2026-09-25; PARKED -- ask before firing. [file](followups/16-partial-rescreen.md)
