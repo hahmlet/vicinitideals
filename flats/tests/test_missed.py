@@ -328,18 +328,15 @@ def test_the_report_names_its_three_tiers() -> None:
 class _Store:
     """Just enough of the provenance store to hand back a document."""
 
-    def __init__(self, lines: list[str]) -> None:
+    def __init__(self, lines: list[str], tmp_path: Path) -> None:
         self._lines = lines
+        self._tmp_path = tmp_path
 
     def text_path(self, path: str):
-        import tempfile
-
-        handle = tempfile.NamedTemporaryFile(
-            "w", suffix=".txt", delete=False, encoding="utf-8"
-        )
-        handle.write("\n".join(self._lines))
-        handle.close()
-        return Path(handle.name)
+        text_file = self._tmp_path / path
+        text_file.parent.mkdir(parents=True, exist_ok=True)
+        text_file.write_text("\n".join(self._lines), encoding="utf-8")
+        return text_file
 
 
 def _made(**kw) -> Missed:
@@ -363,14 +360,14 @@ def _made(**kw) -> Missed:
 _DOC = ["Table 19.301.4", "Standard", "the maximum height is 24 ft", "next row", "and another"]
 
 
-def test_the_card_never_carries_the_number_we_hold() -> None:
+def test_the_card_never_carries_the_number_we_hold(tmp_path: Path) -> None:
     """The one property that makes the answer worth having.
 
     A reader shown "we hold 35" agrees with 35. The card carries the page and
     nothing this corpus concluded from it -- not the figure, and not even which
     standard we guessed the line was about.
     """
-    cards, key, _ = work_list([_made()], _Store(_DOC))
+    cards, key, _ = work_list([_made()], _Store(_DOC, tmp_path))
     assert set(cards[0]) == {
         "id",
         "jurisdiction",
@@ -383,31 +380,31 @@ def test_the_card_never_carries_the_number_we_hold() -> None:
     assert "held" in key[0] and "field" in key[0] and "stated" in key[0]
 
 
-def test_the_marked_line_is_the_one_being_asked_about() -> None:
-    cards, _, _ = work_list([_made()], _Store(_DOC))
+def test_the_marked_line_is_the_one_being_asked_about(tmp_path: Path) -> None:
+    cards, _, _ = work_list([_made()], _Store(_DOC, tmp_path))
     marked = [line for line in cards[0]["passage"] if line.startswith(">>")]
     assert len(marked) == 1
     assert "maximum height is 24 ft" in marked[0]
 
 
-def test_a_held_or_unnumbered_line_is_not_asked() -> None:
+def test_a_held_or_unnumbered_line_is_not_asked(tmp_path: Path) -> None:
     cards, _, skipped = work_list(
-        [_made(matched=(Decimal("35"),), stated=(Decimal("35"),))], _Store(_DOC)
+        [_made(matched=(Decimal("35"),), stated=(Decimal("35"),))], _Store(_DOC, tmp_path)
     )
     assert cards == [] and skipped["held_or_unnumbered"] == 1
 
 
-def test_an_unopened_chapter_is_a_different_question() -> None:
-    cards, _, skipped = work_list([_made(read_here=())], _Store(_DOC))
+def test_an_unopened_chapter_is_a_different_question(tmp_path: Path) -> None:
+    cards, _, skipped = work_list([_made(read_here=())], _Store(_DOC, tmp_path))
     assert cards == [] and skipped["far_tier"] == 1
 
 
-def test_the_far_tier_can_be_asked_for_deliberately() -> None:
-    cards, _, _ = work_list([_made(read_here=())], _Store(_DOC), tiers=("unread_section",))
+def test_the_far_tier_can_be_asked_for_deliberately(tmp_path: Path) -> None:
+    cards, _, _ = work_list([_made(read_here=())], _Store(_DOC, tmp_path), tiers=("unread_section",))
     assert len(cards) == 1
 
 
-def test_a_city_nobody_screens_is_not_reading_work() -> None:
+def test_a_city_nobody_screens_is_not_reading_work(tmp_path: Path) -> None:
     """The first run of this queue spent a seventh of itself on excluded land.
 
     26 of 185 cards, and 8 of the 29 findings, were Lake Oswego and Rivergrove
@@ -415,13 +412,13 @@ def test_a_city_nobody_screens_is_not_reading_work() -> None:
     too small to be under the state's fourplex mandate. A finding there is a
     true statement about a code nobody is screening.
     """
-    cards, _, skipped = work_list([_made()], _Store(_DOC), off={"or/x/y"})
+    cards, _, skipped = work_list([_made()], _Store(_DOC, tmp_path), off={"or/x/y"})
     assert cards == [] and skipped["switched_off"] == 1
 
 
-def test_an_excluded_city_comes_back_when_it_is_asked_for() -> None:
+def test_an_excluded_city_comes_back_when_it_is_asked_for(tmp_path: Path) -> None:
     cards, _, skipped = work_list(
-        [_made()], _Store(_DOC), off={"or/x/y"}, include_off=True
+        [_made()], _Store(_DOC, tmp_path), off={"or/x/y"}, include_off=True
     )
     assert len(cards) == 1 and skipped["switched_off"] == 0
 
@@ -500,7 +497,7 @@ def test_a_held_line_does_not_raise_a_gap() -> None:
     assert orphans([row], layers) == []
 
 
-def test_a_section_card_asks_about_every_unread_line_at_once() -> None:
+def test_a_section_card_asks_about_every_unread_line_at_once(tmp_path: Path) -> None:
     """89 of 144 unopened sections hold one line; the largest holds 34.
 
     A per-line card would ask the largest of them thirty-four times and buy
@@ -510,7 +507,7 @@ def test_a_section_card_asks_about_every_unread_line_at_once() -> None:
         _made(line=3, read_here=(), text="the maximum height is 24 ft"),
         _made(line=4, read_here=(), text="next row"),
     ]
-    cards, key, _ = chapter_list(rows, _Store(_DOC))
+    cards, key, _ = chapter_list(rows, _Store(_DOC, tmp_path))
     assert len(cards) == 1
     marked = [line for line in cards[0]["passage"] if line.startswith(">>")]
     assert len(marked) == 2
@@ -518,8 +515,8 @@ def test_a_section_card_asks_about_every_unread_line_at_once() -> None:
     assert key[0]["lines"] == [3, 4]
 
 
-def test_a_section_card_carries_no_guess_of_ours_either() -> None:
-    cards, key, _ = chapter_list([_made(read_here=())], _Store(_DOC))
+def test_a_section_card_carries_no_guess_of_ours_either(tmp_path: Path) -> None:
+    cards, key, _ = chapter_list([_made(read_here=())], _Store(_DOC, tmp_path))
     assert set(cards[0]) == {
         "id",
         "jurisdiction",
@@ -532,23 +529,23 @@ def test_a_section_card_carries_no_guess_of_ours_either() -> None:
     assert key[0]["fields"] == ["max_height_ft"]
 
 
-def test_only_the_unopened_tier_becomes_a_section_card() -> None:
-    cards, _, skipped = chapter_list([_made()], _Store(_DOC))
+def test_only_the_unopened_tier_becomes_a_section_card(tmp_path: Path) -> None:
+    cards, _, skipped = chapter_list([_made()], _Store(_DOC, tmp_path))
     assert cards == [] and skipped["not_the_far_tier"] == 1
 
 
-def test_a_section_in_a_city_nobody_screens_is_not_asked() -> None:
-    cards, _, skipped = chapter_list([_made(read_here=())], _Store(_DOC), off={"or/x/y"})
+def test_a_section_in_a_city_nobody_screens_is_not_asked(tmp_path: Path) -> None:
+    cards, _, skipped = chapter_list([_made(read_here=())], _Store(_DOC, tmp_path), off={"or/x/y"})
     assert cards == [] and skipped["switched_off"] == 1
 
 
-def test_the_biggest_section_is_the_first_card() -> None:
+def test_the_biggest_section_is_the_first_card(tmp_path: Path) -> None:
     rows = [
         _made(line=3, section="small", read_here=()),
         _made(line=3, section="big", read_here=()),
         _made(line=4, section="big", read_here=()),
     ]
-    cards, _, _ = chapter_list(rows, _Store(_DOC))
+    cards, _, _ = chapter_list(rows, _Store(_DOC, tmp_path))
     assert [c["section"] for c in cards] == ["big", "small"]
 
 

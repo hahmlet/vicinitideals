@@ -1311,7 +1311,7 @@ def _fetch_declared(args, *, store: ProvenanceStore, retrieved: date, get) -> in
         return 1
 
     failed = []
-    for layer, path, doc in targets:
+    for _layer, path, doc in targets:
         code = fetch_one(
             path,
             doc.url,

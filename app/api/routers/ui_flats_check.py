@@ -1991,7 +1991,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
             for key in ("no_map", "html"):
                 totals[key] += elsewhere[key]
             by_address = {(r["zone"], r["field"], r["when"]): r for r in rows}
-            for (lid, zone, field, when, question), answer in answers.items():
+            for (lid, zone, field, when, _question), answer in answers.items():
                 row = by_address.get((zone, field, when))
                 if lid != layer_id or row is None or answer.answer not in PROBLEMS:
                     continue

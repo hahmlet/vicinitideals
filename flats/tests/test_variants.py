@@ -18,6 +18,7 @@ from datetime import date
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from flats.encode.verify import (
     VerificationError,
@@ -814,12 +815,12 @@ def test_an_exemption_is_not_a_number() -> None:
 
 def test_an_exempt_variant_may_not_also_state_a_number() -> None:
     """Both would leave every reader guessing which half the engine honours."""
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError, match="an exempt variant states no value"):
         Variant(value=3, exempt=True, when=("unit_lots",), prov=PROV)
 
 
 def test_a_variant_states_a_number_or_states_that_it_is_exempt() -> None:
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError, match="a variant states a value, or states that it is exempt"):
         Variant(when=("unit_lots",), prov=PROV)
 
 
@@ -1066,7 +1067,7 @@ def test_a_base_value_can_state_that_no_such_standard_exists() -> None:
 
 
 def test_an_exempt_base_may_not_also_state_a_number() -> None:
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError, match="an exempt value states no number"):
         Value(name="min_lot_sqft", value=5000, exempt=True, prov=PROV)
 
 

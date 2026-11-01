@@ -192,7 +192,7 @@ def _streets_of_run(
         return sum(ring[i].length_ft * bearing_delta(ring[i].bearing_deg, bearings[k]) for i in g) / total
 
     out: list[tuple[int | None, list[int]]] = []
-    for j, (k, g) in enumerate(groups):
+    for k, g in groups:
         if k is not None:
             out.append((k, list(g)))
     if not out:

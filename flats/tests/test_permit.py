@@ -144,7 +144,7 @@ def test_the_comments_survive() -> None:
 def test_a_zone_with_no_proposal_is_left_exactly_as_it_was() -> None:
     updated, wrote = apply(FILE, {"LDR-5": f"{DOC}#L5"})
 
-    assert "MDR-12" in wrote or True
+    assert "MDR-12" not in wrote
     assert updated.count("quadplex_allowed: true") == 1, "MDR-12's is untouched"
 
 
