@@ -19,3 +19,12 @@ READ 2026-11-01: 33.537.125 C.3 lets any tree within 10 ft of the building or a 
 come out by right, so the canopy test is only over the court/stalls more than 10 ft from both
 (conservative: the court is not a "driveway"). C.6 (6-12 in. trees replaced two-for-one) is also
 by right but the canopy layer cannot size trunks, so it does not clear anything.
+SCOUT 2026-11-01 (nothing held in repo or on 137): canopy = Metro RLIS "Canopy 2019" (LiDAR,
+summer 2019, raster with canopy height; item b6da4ea243df4ba492d47860964cf2b5, 2.9 GB zip, RLIS
+open licence; cell size to confirm on download) as primary, cross-checked with Metro C-CAP land
+cover 2021 (1 m, Ecopia AI from 30 cm imagery, item 8b89f2c933894056a02fd3c2d8a48f31, 477 MB;
+"not for litigation", no ML training -- neither touches us). Rule: canopy in EITHER layer keeps
+yellow (catches post-2019 growth; LiDAR has no shadow problem, C-CAP may). Portland 2022 6 in
+vegetation is tiles only, unusable. Corridor = Portland Parks_Misc/MapServer/2
+NAME='Springwater Corridor' (PROPERTYID 679, one polygon, GeoJSON, no account).
+NEXT: Steph OK to download the two rasters (~3.4 GB, onto 137 not the repo) -- asked 2026-11-01.
