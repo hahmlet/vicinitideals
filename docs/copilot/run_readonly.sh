@@ -41,8 +41,9 @@ done
 wait
 # Parse the results from an empty directory with an isolated interpreter (no planted modules).
 cd "$(mktemp -d)"
-for t in "$@"; do echo "=== $t"; PYTHONIOENCODING=utf-8 python -I -c "
+for t in "$@"; do echo "=== $t"; python -I -c "
 import json,sys
+sys.stdout.reconfigure(encoding='utf-8')  # -I ignores PYTHONIOENCODING
 last=None; aiu=None
 for l in open(sys.argv[1],encoding='utf-8'):
     try: d=json.loads(l)

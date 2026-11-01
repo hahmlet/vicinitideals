@@ -61,3 +61,10 @@ height peaks) in each grid over the court ground, pair peaks within a few feet, 
 height gain (alive in both + growth rate); a peak only in the old scan = probably removed, only in
 2019 = newer tree. C-CAP 2021 adds a third date (cover, no height). Limits: grid cell size (DOGAMI 3
 ft; Metro to confirm) and scan alignment. Copilot tree-growth scout running (docs/copilot/briefs/tree-growth.txt).
+GROWTH ANSWER 2026-11-01 (Copilot gpt-6-luna, 3.3 AI units; main source USFS Urban Tree Database
+PSW-GTR-253, 14,000+ street trees, 17 cities -- per-species coefficients not extractable): NO, a tree
+seen in the 2019 or older scan is not safely over 12 in. now. Unknowns: the scan's minimum height,
+species, trunk size at the scan. A 1-2 in. planting needs ~1.5 in./yr to reach 12 in. by 2026;
+typical urban rates are well under that (general forestry knowledge, not from the scout), and
+hedges / Japanese maple / dogwood may never reach it. So canopy stays a reason to check (YELLOW),
+never proof either way; the ruling as written is unchanged.
