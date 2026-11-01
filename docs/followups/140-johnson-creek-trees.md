@@ -27,4 +27,10 @@ cover 2021 (1 m, Ecopia AI from 30 cm imagery, item 8b89f2c933894056a02fd3c2d8a4
 yellow (catches post-2019 growth; LiDAR has no shadow problem, C-CAP may). Portland 2022 6 in
 vegetation is tiles only, unusable. Corridor = Portland Parks_Misc/MapServer/2
 NAME='Springwater Corridor' (PROPERTYID 679, one polygon, GeoJSON, no account).
-NEXT: Steph OK to download the two rasters (~3.4 GB, onto 137 not the repo) -- asked 2026-11-01.
+DOWNLOADED 2026-11-01 (Steph OK): 137 /root/code/vicinitideals/data/flats/canopy/2026-11-01/
+(Canopy2019.gdb 2.8 GB, one raster `Canopy2019`; LandCover_1meter.gdb 604 MB, rasters
+CCAP_1m_canopy, _canopy_reclassified, _impervious, _water; both EPSG:2913, Esri file-GDB RASTER).
+TRAP: the venv's rasterio (GDAL 3.12 wheel) has no OpenFileGDB driver and 137 has no gdalinfo, so
+step one of the build is converting both to GeoTIFF (a GDAL build with OpenFileGDB raster, >= 3.7)
+and reading the 2019 cell size, which is still unconfirmed. The 1 m layer also carries impervious
+-- possibly useful for 33.537's 50% cap later.
