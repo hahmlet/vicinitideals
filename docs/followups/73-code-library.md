@@ -20,5 +20,6 @@ KNOWN GAPS, left on purpose (fix one only when it causes a real problem):
   %TEMP%\bx\envs\docling, books in data/flats/books by URL hash).
 - gaps.json reads "302-2.14" as "2.14" on 28 WashCo labels (cosmetic).
 
-NEXT, waits on Steph's go: HOSTING -- its own GitHub repo our apps read as a dependency,
+PARKED -- Steph 2026-11-01: "Not ready to publicize". Do not re-offer until Steph raises it.
+HOSTING, when Steph is ready -- its own GitHub repo our apps read as a dependency,
 CC0 on the text, Steph to pick the tooling licence; keep rulings/encoding private.
