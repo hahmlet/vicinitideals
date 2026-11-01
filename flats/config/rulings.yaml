@@ -996,6 +996,29 @@
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/config/footnotes/or/multnomah/gresham.yaml
 
+- id: 2026-11-01-trees-ignored-entered-per-lot
+  kind: ruling
+  date: 2026-11-01
+  scope: {}
+  question: >-
+    Tree limits (Portland's Johnson Creek plan district, PCC 33.537.125, is
+    the only one the screen holds lots for) can't be measured: no public map
+    gives a tree's species or trunk size, and a tree seen in a 2019 or older
+    laser scan is not safely over or under 12 in. now. Build the canopy map
+    in anyway, or drop trees?
+  ruling: >-
+    "I'm thinking we ignore trees entirely and let users put it in per lot.
+    Unless we find a reputable commercial solution in the future (not
+    looking for it now)".
+  effect: >-
+    No tree limit holds a lot anywhere. The Johnson Creek lots held only for
+    tree removal go back to their screened colour; the other Johnson Creek
+    reasons (the Springwater corridor strip, the Flood Risk Area, South
+    subdistrict density) still hold theirs. A person who knows a lot has
+    trees enters it on that lot. No canopy map is built or watched. Until
+    built the lots stay YELLOW. Build: FOLLOWUPS 140.
+  source: Steph 2026-11-01 (chat), docs/followups/140-johnson-creek-trees.md
+
 # ---------------------------------------------------------------------------
 # County and city
 # ---------------------------------------------------------------------------
@@ -2341,3 +2364,4 @@
     measured from the lot lines that abut it. Until built the lots stay
     YELLOW. Build: FOLLOWUPS 140.
   source: Steph 2026-11-01 (chat), docs/followups/140-johnson-creek-trees.md
+  superseded_by: 2026-11-01-trees-ignored-entered-per-lot
