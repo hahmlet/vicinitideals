@@ -45,3 +45,12 @@ mosaic ImageServer https://gis.dogami.oregon.gov/arcgis/rest/services/lidar/CANO
 (3 ft cells, height above ground in ftUS, but outer-SE sources 2004-2014 -- too old alone) and USFS
 Tree Canopy Cover 2025 (30 m, too coarse). Canopy 2019 cell size still UNKNOWN (both runs inferred,
 ~0.5 m and ~1 m); read it from the raster at conversion.
+
+STEPH 2026-11-01 asked: do the height maps give species / can we size the trees from the old height?
+No species in DOGAMI CHM or Metro Canopy 2019 (height only); Portland's street- and park-tree
+inventories carry species + trunk size but not yard trees. Sizing matters at 12 in: 33.537.125 C.6
+lets a 6-12 in tree go by right if replaced two-for-one, so only a tree over 12 in in the court
+ground truly holds a lot. Height -> trunk is species-dependent and the trees have grown since the
+flight, so 'under 12 in now' is NOT safe for a GREEN. PROPOSED (waits on Steph): use height only to
+inform -- print 'tallest tree cover in the parking area: ~N ft (2019 laser scan)' on the yellow lot's
+reason, so whoever checks the lot knows at a glance whether it is a hedge or a big tree.
