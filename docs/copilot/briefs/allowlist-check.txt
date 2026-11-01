@@ -1,0 +1,7 @@
+allowlist-check
+
+WHY: a two-minute check that the read-only scout setup can still read files and fetch pages.
+
+TASK: (1) report the PLDIST and NAME of the first feature in flats/config/areas/or/multnomah/portland/plan-districts.geojson (read the file; do not use python); (2) fetch https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer?f=json and report its first layer's id and name; (3) try to run `python --version` and report whether it was allowed.
+
+ANSWER FORM (under 80 words): three lines, numbered.
