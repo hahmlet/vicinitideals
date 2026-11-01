@@ -2312,3 +2312,32 @@
     - flats/config/areas/or/washington/_unincorporated/east-hillsboro-city-standards.geojson
     - flats/config/areas/or/washington/_unincorporated/hillsboro-comprehensive-plan-land-use.layer21.json
     - flats/config/jurisdictions/or/washington/_unincorporated.yaml
+
+- id: 2026-11-01-johnson-creek-trees-cleared-by-canopy-map
+  kind: ruling
+  date: 2026-11-01
+  scope:
+    county: multnomah
+    city: portland
+  question: >-
+    PCC 33.537.125/.130 (Johnson Creek Basin plan district) bars removing
+    trees 6 inches or more beyond 10 ft of the building or driveway without
+    tree review, on lots in the South subdistrict, the combined flood hazard
+    area or within 20 ft of the Springwater Corridor. Nothing measures
+    trees, so about 430 green lots went yellow. Use a public tree-canopy map
+    to clear the lots with no canopy where the pod and its court go, or
+    leave them yellow?
+  ruling: >-
+    "Let's build in the tree map".
+  effect: >-
+    A measured fact from a public canopy layer (Portland / Metro). Trees
+    under or within 10 ft of the building or a proposed driveway come out by
+    right (33.537.125 C.3), so only canopy over ground the work must clear
+    that lies more than 10 ft from both -- the parking court and stalls,
+    which the code does not call a driveway -- holds the lot. No canopy
+    there goes back to GREEN; canopy there, or ground the layer cannot read
+    clearly, keeps the lot YELLOW. The layer's date is printed with the
+    reason. The corridor's 20 ft no-parking strip (33.537.130 C.1.a) is
+    measured from the lot lines that abut it. Until built the lots stay
+    YELLOW. Build: FOLLOWUPS 140.
+  source: Steph 2026-11-01 (chat), docs/followups/140-johnson-creek-trees.md

@@ -120,6 +120,7 @@ the full one.)
 112. [Claude] **Page check: show the passage that sends a number to another table** -- 81457395 added `via`; 958 cards say the zone is not on the cited page. [file](followups/112-page-check-via.md)
 108. [Claude] [scan: YES (toward green)] **Every taxlot is a legal lot of record** -- GLOBAL ruling 2026-10-21; after 104 lands. [file](followups/108-legal-lots.md)
 109. [Claude] **Design districts** -- chunk 5 LIVE run 91; chunk 6 LIVE run 94 2026-10-30; North Bethany LIVE run 97; Bethany ASC LIVE run 99; chunk 7 (Raleigh Hills-Garden Home, Bull Mountain) LIVE run 101 2026-10-31 (16 green->yellow); chunk 6b re-read (connectivity, plan rules, Bethany ASC 3, Raleigh Hills ASC U; was 134/135/136) LIVE run 103 2026-10-31 (280 green->yellow); chunk 8 (Metzger-Progress, West Tigard, East Hillsboro, Sherwood; West Union has no pod lots) + 137 flags LIVE run 105 2026-10-31 -- ALL ELEVEN WashCo community plans read. Left: smaller tier-1 districts (see file). [file](followups/109-design-districts.md)
+140. [Claude] **Johnson Creek tree limits** -- Steph 2026-11-01: build the canopy map in; ~430 lots yellow until then; scout first, encode after pd1 release. [file](followups/140-johnson-creek-trees.md)
 105. [Claude] [scan: YES (new standards bind)] **Follow every cross-reference one layer down** -- after 73's restructure; Portland batch 6 adds new references. [file](followups/105-follow-cross-references.md)
 116. [Claude] **Mend the misread words the squiggles show, worst city first** -- GRESHAM DONE f048be68 2026-10-29; King City + Canby left. [file](followups/116-misread-words.md)
 118. [Claude] **Durham 3.7.1.7: no driveway apron within 100 ft of an intersection -- FALSE GREEN RISK** -- BACKLOG; flag DONE 392ce30d LIVE (Durham 21 green->yellow, run 87). [file](followups/118-durham-apron-100ft.md)
@@ -128,7 +129,6 @@ the full one.)
 
 ## 2. Waiting on Steph
 
-140. [Claude] [Steph] **Johnson Creek tree limits** -- ~430 lots green->yellow on unmeasured tree rules (Portland plan districts part 1); ask Steph: use the canopy map to clear lots with no big trees? [file](followups/140-johnson-creek-trees.md)
 128. [Claude] [Steph] [scan: NO] **CI takes an hour or more per push** -- BUILT 2026-10-30: pushes tested on LXC 138 ci-runner (~16 min), GitHub daily; open: quadfit 7 min, watch daily runs. [file](followups/128-ci-speed.md)
 127. [Claude] [Steph] [scan: NO] **Cut token spend** -- (a)(b)(e)(f) done (7 profiles d387fd7c, 2849fa9a; first real use next session); open: Copilot 11-01, reading pilot, local pre-sort. [file](followups/127-token-spend.md)
 126. [Claude] [Steph] [scan: NO -- display only] **A fast map of every lot, and a live 3D lot view** -- IDEA 2026-10-29; major feature, check in before any design. [file](followups/126-lot-map-3d.md)
