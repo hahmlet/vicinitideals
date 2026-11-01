@@ -139,6 +139,9 @@ def test_a_filter_survives_the_next_card(
 
     page.get_by_role("button", name=re.compile("Can.t tell yet")).click()
     wait_for_htmx(page)
+    expect(page.locator("#reading-card")).to_contain_text(
+        re.compile(r"1 skipped|Skipped past 1", re.I)
+    )
 
     # The filter has to survive on the URL whether or not a card is left, and
     # that half is checked unconditionally -- an emptied queue is not licence

@@ -174,9 +174,25 @@ def test_a_card_opens_on_the_cited_page_with_its_neighbours_around_it(
         pytest.skip("this instance holds no pages for the Oregon City book")
     expect(page.locator("[data-context='before']")).to_have_count(1)
     expect(page.locator("[data-context='after']")).to_have_count(1)
-    first = page.locator(".check-sheet img").first
+    images = page.locator(".check-sheet img")
+    for i in range(images.count()):
+        image = images.nth(i)
+        expect(image).to_be_visible(timeout=60_000)
+        page.wait_for_function(
+            "img => img.complete && img.naturalWidth > 0",
+            arg=image.element_handle(),
+            timeout=90_000,
+        )
     page.wait_for_function(
-        "img => img.complete && img.naturalWidth > 0", arg=first.element_handle(), timeout=90_000
+        """
+        () => {
+            const cited = document.querySelector("[data-cited]");
+            if (!cited) return false;
+            const top = cited.getBoundingClientRect().top;
+            return top >= -5 && top <= 120;
+        }
+        """,
+        timeout=10_000,
     )
     top = page.locator("[data-cited]").first.bounding_box()["y"]
     assert -5 <= top <= 120, f"the cited page starts at the top of the screen, not {top}px down"
