@@ -202,12 +202,15 @@ def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
                 and v.field.startswith("setback_")]
     # 16 -> 17 on 2026-10-29: Canby C-1, measured at last, carries R-2's
     # corner-and-beside-R-1 rear (the same layer, so the set below holds).
-    assert len(setbacky) == 17, [str(v) for v in setbacky]
+    # 17 -> 16 on 2026-11-01: Wilsonville OTR takes the Old Town Design
+    # Book's flat 10 ft street side (4.138(.04)A), so its 20%-of-width corner
+    # share is gone; R and PDR1-6 keep theirs.
+    assert len(setbacky) == 16, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
         "or/washington/hillsboro", "or/clackamas/tualatin",
         "or/clackamas/canby",
     }, sorted({v.layer for v in setbacky})
     shares = [v for v in setbacky if getattr(v.alt, "pct", None) is not None]
-    assert len(shares) == 8 and {v.field for v in shares} == {"setback_street_side_ft"}
+    assert len(shares) == 7 and {v.field for v in shares} == {"setback_street_side_ft"}
     assert all(v.alt.floor_ft == v.base == 10 for v in shares), [str(v) for v in shares]

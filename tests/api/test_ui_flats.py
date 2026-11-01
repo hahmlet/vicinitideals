@@ -1155,7 +1155,7 @@ async def test_the_chain_page_prints_an_exception_with_its_own_citation(
     await _login(client, session)
 
     page = await client.get(
-        "/flats/why/or/clackamas/wilsonville?zone=OTR&field=setback_front_ft"
+        "/flats/why/or/clackamas/wilsonville?zone=R&field=setback_front_ft"
     )
 
     assert page.status_code == 200
