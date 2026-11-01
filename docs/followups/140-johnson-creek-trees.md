@@ -54,3 +54,10 @@ ground truly holds a lot. Height -> trunk is species-dependent and the trees hav
 flight, so 'under 12 in now' is NOT safe for a GREEN. PROPOSED (waits on Steph): use height only to
 inform -- print 'tallest tree cover in the parking area: ~N ft (2019 laser scan)' on the yellow lot's
 reason, so whoever checks the lot knows at a glance whether it is a hedge or a big tree.
+
+STEPH 2026-11-01: can the old (DOGAMI 2004-14) and 2019 scans be matched tree by tree? No tree IDs:
+both are height GRIDS, so the link is position. Plan option for the build: find tree tops (local
+height peaks) in each grid over the court ground, pair peaks within a few feet, and read each pair's
+height gain (alive in both + growth rate); a peak only in the old scan = probably removed, only in
+2019 = newer tree. C-CAP 2021 adds a third date (cover, no height). Limits: grid cell size (DOGAMI 3
+ft; Metro to confirm) and scan alignment. Copilot tree-growth scout running (docs/copilot/briefs/tree-growth.txt).
