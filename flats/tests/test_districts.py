@@ -687,6 +687,22 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/washington/_unincorporated": {
+        # Twelve tokens surfaced 2026-10-31 when FOLLOWUPS 73 batch 8 cut the
+        # CDC into section files (the whole-chapter print ran them into longer
+        # lines). Provisional, none is a district; for the coordinator to
+        # confirm.
+        "ASC": "not-a-zone: the abbreviation of 'Area of Special Concern' (390/390-11.txt#L64), the plan area, not a district.",
+        "CABO": "not-a-zone: the Council of American Building Officials code named in 375/375-10.txt#L359.",
+        "DUPLEX": "not-a-zone: a column head of the Middle Housing table, 375/375-10.txt#L267, and a definition word, 501/501-2.txt#L74.",
+        "EXCEPT": "not-a-zone: a capitalised table word, 501/501-2.txt#L86.",
+        "FAR": "not-a-zone: floor area ratio, 375/375-10.txt#L389.",
+        "HOA": "not-a-zone: home owners association, 390/390-19.txt#L19.",
+        "HOUSING": "not-a-zone: a table heading word, 375/375-10.txt#L363.",
+        "MEASURE": "not-a-zone: a parking table column head, 413/413-6.txt#L10.",
+        "MIDDLE": "not-a-zone: a table heading word (Middle Housing), 375/375-10.txt#L362.",
+        "ORS 527": "not-a-zone: the Forest Practices Act, named in 342/342-1.txt#L9.",
+        "SDC": "not-a-zone: system development charge, 501/501-10.txt#L117.",
+        "TDT": "not-a-zone: Transportation Development Tax, 501/501-2.txt#L11.",
         # All 42 districts on the county's zoning layer are encoded as zone
         # blocks (2026-09-29, draft); what the harvest still prints is below.
         "ASC 2": (

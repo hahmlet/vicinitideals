@@ -1,0 +1,24 @@
+300-2 Residential Density Calculation
+To determine the maximum or minimum number of units which may be constructed on a site for residential uses, the site size (in acres) shall be multiplied by the maximum or minimum number of units per acre allowed on the site, as designated on the applicable Community Plan, except as specified otherwise below or by Table C of Section 375.
+Example:
+
+Acres × units per acre = number of units allowed 1.6 × 5 = 8.0 or 8 units
+300-2.1 Site size shall include the area of the subject lot(s) or parcel(s), in acres or portions thereof, excluding all areas currently dedicated for public right-of-way.
+300-2.2 Allowable density shall be as designated on the Community Plan Map or Rural Plan, except as otherwise indicated within district standards of this code for
+Middle Housing.
+300-2.3 No portion of the allowable density shall be permitted to be transferred from one land use designation to another land use designation, except as permitted in accordance with the Planned Development provisions of Section 404-4.5.
+300-2.4 The number of units which may be constructed on the subject site shall be subject to the limitations of the applicable provisions of this Code, including the requirements of Section 300-3 and such other things as landscaping, parking, floodplain, buffering, slopes and other site limitations.
+300-2.5 When the maximum or minimum number of units allowed on a site results in a fraction of .5 or more, the number of units allowed shall be the next highest whole number, provided all minimum district requirements other than density can be met.
+300-2.6 Except in the North Bethany Subarea, land that is dedicated to a park and recreation provider as public park land may be used to calculate the minimum or maximum density, provided the land is developed for recreational uses, and is not comprised of floodplain, drainage hazard, wetland, slopes over 10%, or a
+Significant Natural Resource area.
+300-2.7 When allowed by a legislative or quasi-judicial plan amendment:
+A. Assisted living units, that are part of a mixed use residential development, may be used to satisfy the minimum density requirement; and
+B. Land used for a private park, that is available to the general public outside of the residential development the park is located in, may be excluded from the acreage used to calculate the minimum density provided the park is developed for recreational uses, and is not comprised of floodplain, drainage hazard, wetland, slopes over 10%, or a Significant Natural
+Resource area.
+C. The provisions of Section 300-2.7 are not applicable in the North Bethany
+Subarea in the Bethany Community Plan.
+300-2.8 Only categories of land listed in Section 300-3.1 may be excluded from the acreage used to calculate minimum required densities.
+Categories of land listed in Section 300-3.1 may be included when calculating maximum allowed densities provided the densities transferred comply with Section 300-3.3.
+The provisions of Section 300-2.8 and Section 300-3 are not applicable in the North Bethany
+Subarea in the Bethany Community Plan.
+(Ord. No. 885A, § 2.1.(Exh. 1, § 3.), 6-28-22, eff. 7-28-22)

@@ -1,0 +1,2512 @@
+[
+ {
+  "field": "row_to_centerline_class_by",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5676bd9217da0950f6c586f42401aafb4e6d91b6a0b315d5fde096972f270e9f",
+  "new_quote": "or/washington/_unincorporated/302/302-2.txt#L47-L52",
+  "old_fingerprint": "6fc7703c5bdc7280a7138afafc0446c75907cb2160741f54b2e175d45fd389c5",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L101",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5437508d2c5f7395fa29fe0c7365e254e4c5baaaac51428c91fe750e6fe35b3e",
+  "new_quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+  "old_fingerprint": "d6ee5341c034a72846ded17b33a21d3e1cb21482238e3553df2df6e87ebd8161",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a29df9972b4deafb613041d49954e1153bee8ff8c3b8f795b6acae45d205380b",
+  "new_quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+  "old_fingerprint": "e202a4e4eb9f1358808daa4ea702614c2fb59a815cd16d36b9e1c9f83e116d67",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4dc064cd7f0d37b50c7a02938ea34bed3a7faca7a1daf214a8df55a0da1dc93c",
+  "new_quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+  "old_fingerprint": "b696ccd5181af2053cb6deb12d705e7f3ec66cd77cdf3e5e00675e7e76a4a6e8",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "062e56d2d5dafa34c0e3d5dcff37b603ddba6ff56f95702537248a31e7c09513",
+  "new_quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+  "old_fingerprint": "63ceb565404db81341f9051f86755bc1f18a202d0229241df14251e408cbc758",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6e89bba047246babb517d6deec512dbaa7b88c39bfb785262b750b986ee4605b",
+  "new_quote": "or/washington/_unincorporated/302/302-6.txt#L2-L3,L6",
+  "old_fingerprint": "995162508e814e68f59c8a4b0e3f5641ac721d57f329f0549a53fb07166a4390",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L251-L253,L256",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0991341d72aaecc8cfbf429e1fc1c279f68f87d1923a521de62d59aa50186753",
+  "new_quote": "or/washington/_unincorporated/302/302-6.txt#L2-L3",
+  "old_fingerprint": "0b04cb50cb8950be0f0ff32366f33575ae23234df3a6c60ecc44bb4ecb871c52",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L251-L253",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "10b9e4bedef45ee45cd030e30291ba3eb94df85b4484fd63eaf5b7930e8d0f2f",
+  "new_quote": "or/washington/_unincorporated/302/302-6.txt#L14,L17",
+  "old_fingerprint": "946f6f4c2f82138f5e1581f80ca422056cfd108045441cff71de0029f321a130",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L270,L274",
+  "when_key": "unit_lots",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "f98840e63a4da0b2db16bba1cc30a14e377e2fb09d314fff4288aaa6e5fd545b",
+  "new_quote": "or/washington/_unincorporated/302/302-6.txt#L2-L3,L14,L16",
+  "old_fingerprint": "bf6ac86f4d92fb3b81962999a35b8065f40d26afe8a53545b6f33199b85026ff",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L251-L253,L270,L273",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "dd6ce75aebe1a3d845906767630b8664057655774c89fffbf06f2fd3974b0a47",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L2-L3,L6",
+  "old_fingerprint": "a2108164faf8b0dbb5426a9762a33918d1e0167e59c5004db4e21b5c20a2daf4",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L340-L345,L348",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e3d3d82ff085c9dbff34ccef0c33b800f47f09a1cb8b770b37b0bce72be49bf1",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L8-L9",
+  "old_fingerprint": "f872ae47746a01120431412cb3b157f2f9ea3e0a76abe5f41a41be12fcc535e9",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L350-L351",
+  "when_key": "unit_lots",
+  "zone": "R-5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c766fbe3d77376b3b7edacb54eb94c06ac806943de994b2e584160b582f4463f",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L10-L11,L13-L14",
+  "old_fingerprint": "ade413a04bc5f440fb714bcefc1f2a1b0f372d93b1eba1d898c4521f032c3950",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L352-L354,L356-L358",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2a811899fabb6bdf86bb0274a9f4af3ad186f4360f5574fb37bdc1f422f33ce8",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L16-L17",
+  "old_fingerprint": "42d0759005eb6a955db318547086f7cdaa1c1d069ac7e304b1e0eaaf6d2d077a",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L361-L362",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8f3a0fea8e58986676817cb69ff31deae5137f4896d2a95c0405227f7a2fed90",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L19",
+  "old_fingerprint": "775bd955f59d81206c19f75685ed7eabded1ff8b02ab8709245a26d10114b83a",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L367",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "20988946ec6c1f83d28b08315ad9187a62ad9efb15d865f5fbc3ad88807b2e1e",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L20,L22-L23",
+  "old_fingerprint": "3899761cd9dea8ad1128d53a6d1b1e94e335ac7df80f63034d79f1b35517e6c0",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L368,L370-L371",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "35de1deb64c348800cae003a3d62d1516c1457f78e65feab5b50b1669f62de01",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L20-L21",
+  "old_fingerprint": "49ed47beb163af271b456986474342b020ecc17f56af4fe8c0ef1e78ce6ce7cd",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L368-L369",
+  "when_key": "attached_wall",
+  "zone": "R-5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e8cc99b061fbf09cc39b087acfd15fcded7403a24e006ac99c726bada24193e2",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L35-L36",
+  "old_fingerprint": "ab3b828e7c17ff8d46baff52cbaf01b330ff55cf5ceb133bcda00a67e4eb584f",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L396-L397",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "cfdecd7acf3255ce54038c6dabbcee39eb86ac039b7f9b75e40dfc2fb313db9f",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L42",
+  "old_fingerprint": "674d0e69a022c9e3181f20c7caa1b3bc8445057a9454b210dc4385165b514236",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L405-L406",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8552046ee2dc9644ab571d00b6e9c87bbfbc4a8df7f80789aec193bf5d2cd3f4",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L44,L46",
+  "old_fingerprint": "eef694e637c7b60a9a4be827753d7106b8e5d4a0b5667b03baf79947168d1d75",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L412,L414",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "dd99d799c98f5296e02bacb06d9640686675e83e3258d118878c1843dde44e8e",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L49,L51",
+  "old_fingerprint": "ed21faeb417929869eb799ca32b9389cf9afc033fcc5f546ecdf06367ac3f663",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L419,L423",
+  "when_key": "",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7f023d3207f26427e084e48a4cffb76eaf4e879c0e2a965029832e0da4ad6c2e",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L49-L50",
+  "old_fingerprint": "4bb5cad394d08f6e82ba6d521761884746b2f54b24410db0f7bc8d77da73c049",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L419-L422",
+  "when_key": "unit_lots",
+  "zone": "R-5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ee6d83461d56a4f49c7cb2e25c1cf27d6d9d3d785b96ecc4fa3b0d96e12271c8",
+  "new_quote": "or/washington/_unincorporated/302/302-7.txt#L49-L50",
+  "old_fingerprint": "a3a0a388bd0aeeef8970639d30ddb5fd10e9b7c8d24825770e99eefe67fba6d8",
+  "old_quote": "or/washington/_unincorporated/cdc.302.r-5.txt#L419-L422",
+  "when_key": "east_hillsboro_city_standards+unit_lots",
+  "zone": "R-5"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8d3280857513fac94777a1a5e48755755fbd73f570fb8e108cdec1e378965abd",
+  "new_quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+  "old_fingerprint": "a4ebcbd6d1a3d29e970e10f0597967f25cc326da64bb0daf1f5a59edeb3a5f3c",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5b34babaf9475e429f281f5d96270128062eb2f718f11d42ee916a66b5d31149",
+  "new_quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+  "old_fingerprint": "afeec625d7de1d85fbc86ed3e8add48f2a84793413b098e2e505ae789ed365dc",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "1ade9979059de18a19c988c10f8f405d5758599d46f6664f26c65360d7fb6cba",
+  "new_quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+  "old_fingerprint": "54ef19b7bc7234d97028eb18d51dc7068e7cb7b457e7788898cd93747ea42b80",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6db0aa227bc9017c15c97629f7405b46fed006c45a0a7c945e14ddcf44b2c0f5",
+  "new_quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+  "old_fingerprint": "d0d5904e87f672ee90df222d2227b65427772e87e1166a941f5878ff116a02ce",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2ae7a804993c248030508c295ceb2c95e5dfb1bce496d4226d49c9cde916b2db",
+  "new_quote": "or/washington/_unincorporated/303/303-6.txt#L2-L3,L6",
+  "old_fingerprint": "7a3b4715e624d37ffc4e7c2e52ceae5c39d9362fd93619d64d9abc26758e0ef2",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L254-L256,L259",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "906cd2971b632b086ace3fde94e6af549d689ce45fcddd3cd907a1e0e32e479b",
+  "new_quote": "or/washington/_unincorporated/303/303-6.txt#L2-L3",
+  "old_fingerprint": "a840e263e72958241d12e7abf3d051edef1f78c7230d84e5e1a7875c23a870e4",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L254-L256",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c3d1d44b10a9805abdd7f43e64125a64bfc06675d36434f5e3a9a0204587c8c2",
+  "new_quote": "or/washington/_unincorporated/303/303-6.txt#L14,L17",
+  "old_fingerprint": "82623c6f705cedc5b9e05cc2f496c8a318a2dc07a92c8424d28500979f3aebff",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L271,L275",
+  "when_key": "unit_lots",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "847d719238e7cffd2cf07ec3aaf1806cddd1b27b2db33d04cb7f0593d797681e",
+  "new_quote": "or/washington/_unincorporated/303/303-6.txt#L2-L3,L14,L16",
+  "old_fingerprint": "8234a3149e723a25a0fc3ee6a8e0ba46dfe5759ef44f97a9223b920d6233c18c",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L254-L256,L271,L274",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0df006e69496f27255bd9e1d0e4e337b104e6ce8fa2451cc7da26a5cba7cdd66",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L2-L3,L6",
+  "old_fingerprint": "eef1715c370abf47680070a262b76437d2b114fc0e941fb282ef3911e3c46edb",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L342-L347,L350",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ed525f8456fc491e048dd19ae60fdd5d426b18914861e96d9fb6b137ed7eac2d",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L8-L9",
+  "old_fingerprint": "19719530edf56d0b727e77d2855c312fd15d8adc54aeae6988c8d9dd960beec3",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L352-L353",
+  "when_key": "unit_lots",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "99ce6604b4b7e1168185d2f71bf1363a90003f06eee93344a689956e84bd8c13",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L10-L11,L13-L14",
+  "old_fingerprint": "3176d29f40fd9c513eca374e0a9acbeac29f1c5d3d85c1f866191b109caf9fb3",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L356-L358,L360-L362",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "35f081a8a8dfb0c5898f52d884cd49062e24448ae62ba4623449232863abbf2e",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L16-L17",
+  "old_fingerprint": "567ec6b205cc545417d5dbcfe9b0db1b02ad3cf60793750b633e8a980a1bce90",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L365-L366",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "363c2538d43dcf455e4863b7df87acb0437617e6c2d8f5f10c42ffd08063e75f",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L19",
+  "old_fingerprint": "495a54a4924ed264ed931ffd584b96f3d4b69cf5af30c57f77c94fe46759058a",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L371",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b8a978f439b514a0ec6ff1a0ad7e5b0cb9bd82ae1474802849621ff618bc5bc6",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L20,L22-L23",
+  "old_fingerprint": "407088e7073b6b98652b8b0d46a831b2c12e646fe182dda692e74cf9c7919570",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L372,L374-L375",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5f24975d294cf30c638d9d57a9216284ca4b1fde3442a33e1d9e3af52336c1d3",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L20-L21",
+  "old_fingerprint": "c0e21ba97abbe7ef0ca21f23c8b81a9b9e3cf722e74cc51387773d188938f920",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L372-L373",
+  "when_key": "attached_wall",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "50d500d7d6e5e5005f8dfa2f6785bd0a85ae021341b9199204d35f0b0adf2fec",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L35-L36",
+  "old_fingerprint": "e9f22fe6e107e1a0fbcb5381aa678286c2b761eb192886ab4009e19d0e44f69f",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L400-L401",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "99544912921b3ed9e0ca326a30b1808672a319d06debc27cd094823e4cc78f39",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L42",
+  "old_fingerprint": "be7f6f27abaf957e36133335319968e1640ecc440704efc3ac7024ad7d121404",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L409-L410",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ed3930636bed9758395ab6b6691c623f15c28f06b730148439dfaf3d047a6e64",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L44,L46",
+  "old_fingerprint": "7b1a01f46c4018efd670e7147688a8778d287a62fb7a769907566b7770fa15da",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L414,L416",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a4b83cfa4775285a6393820a6ae29d2c5ffd2ca36f5a042c44edc31c44506e52",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L49,L51",
+  "old_fingerprint": "9cd0fa21be603fef965f07867efe24350c975f37ba16ecdff36a1684c4973141",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L421,L425",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "f17bfcc6928dced2853cccedf497e907232e2147953991300a81c114d41485b7",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L49-L50",
+  "old_fingerprint": "593f3dc2ed7ef97f25f2471eeffef2a5320e0d7d9ffd4bd628925919fa405ab9",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L421-L424",
+  "when_key": "unit_lots",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "50f5b711dff24238019677843436ec8717d7cae68f4915a249585c3754e76366",
+  "new_quote": "or/washington/_unincorporated/303/303-7.txt#L16-L17",
+  "old_fingerprint": "a85e609eb24d10fe5a5a9b3fa8fddcb7c214b9784b436b37b4a3a2fae570a306",
+  "old_quote": "or/washington/_unincorporated/cdc.303.r-6.txt#L365-L366",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "3a3f425a0bcf3db995ff6bb89a655d39476526b86ed0c4c4106d608d22ea1a06",
+  "new_quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+  "old_fingerprint": "6097c9d5866d3096a4b69b85b8b124fa28c2bcc2eb11793cd0bf9c748bfadcb9",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b0b04aca04d82a208c1f5f43e66893e7cc35630d0877f608d2fb945302ae0227",
+  "new_quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+  "old_fingerprint": "ec93f6b4f1e16304249b598132b794a324d70b6e8fb9c01665efdc66f7a7f4f1",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4b3307f9309557f506aed8da867bbbce81521f3d6c99c7963898267b30c6271a",
+  "new_quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+  "old_fingerprint": "e28a81865a945e1b76c25444933b9820d6dfcf43113fb8d0951eecc10cfd9ff4",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "010b7a9dd0735ab2b35133ac2eb6e0682a85b019592f58c09312fa008ecb23cd",
+  "new_quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+  "old_fingerprint": "2c6ce7d77727a74138af6c64fe267a57cfd718636a0082f5300968becf0f5f24",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4f9786b04f886ffec56c9a89b950590a3332fb003670ae92f2900df3eef55284",
+  "new_quote": "or/washington/_unincorporated/304/304-6.txt#L2-L3,L6",
+  "old_fingerprint": "d44dedc3925569484a9fd3a88d5ea9f80661f86b34a8c0443c9eea1b4273374e",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L260-L262,L265",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "72083e4e71c858d727adb204cb1770c278e877eb2982fc070fe2495e558f7a51",
+  "new_quote": "or/washington/_unincorporated/304/304-6.txt#L2-L3",
+  "old_fingerprint": "25c37e83e628400593f50ed1807f191239d23138c730e4e1b200a60acbaf6e85",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L260-L262",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0aa5cc35284eb9b965c595ab200e9d111cb0b3e57b52873c3e69525abe9bfb55",
+  "new_quote": "or/washington/_unincorporated/304/304-6.txt#L14,L17",
+  "old_fingerprint": "83eebc2368a83211e83687f8f86ddd81fc2746b16dfa922db4d1ef181e3fc8e8",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L279,L283",
+  "when_key": "unit_lots",
+  "zone": "R-9"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e4af60e6f025b94232032977b7926df8e39e7d3e812f45e1cb5a8a7554f94775",
+  "new_quote": "or/washington/_unincorporated/304/304-6.txt#L2-L3,L14,L16",
+  "old_fingerprint": "d6efc0bc1ad82eee86e4c470132ff79a6c4936e2cccc820d915905227bec482a",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L260-L262,L279,L282",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ffdf7f5c48d33d02dae5b3dcc7a0f3a97adc9756b058c691f44eb8786058b0ad",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L2-L3,L6",
+  "old_fingerprint": "4755112a2001e090fa0d1e9f223ea83aa2536d105e8a4e89e43bb09d9e1e3b08",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L303-L308,L311",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "1b8ec4cfcb1f669b8151d92953c19b4e47d9763404156e0af16edc354f8bdb43",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L8",
+  "old_fingerprint": "a38c83659e96c97fed834c89238d47ca93c969f56051e16bc34f205d31bc112a",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L313-L314",
+  "when_key": "unit_lots",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "af3d6cee074a0edc0d4c123dd7cbe0aaa9f372c6910000d4403d4ec2ef0a093a",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L9-L10,L12-L13",
+  "old_fingerprint": "a77c3d26cb3141002cf5b61b2fc1a37cbaeb4894c5feeb86455a005140185420",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L315-L317,L319-L321",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7e7a75c92a846e552136cd3bcce3b271ca9a673208c6c9ae1ac2c360d6309c91",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L15-L16",
+  "old_fingerprint": "57d94574e85ca4e64e4adcfba4a38f4b0d7f98515c4bd4a6956259970c644007",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L324-L325",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2068f8c10724c705d4ca43530a683ad17ba192bf7de127bb6fb304b312536267",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L18",
+  "old_fingerprint": "4a0f65e0c9290dba226d7bcac082f21fae2bba0039d966656e6584e5382e0038",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L330",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "891726bc96915b8458bfb0a6f4d1c15e4f319a579c53d7ec3df81d3c3b4159bc",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L19,L21-L22",
+  "old_fingerprint": "101bb12c8d93a0af7c3df97a268b1b3b5e987bad18d72f6249bb190aee6b479e",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L331,L333-L334",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d9aff9db6346828b9ce75878de5a21ce7becd3feb4967263c24cc64b25d88b0a",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L19-L20",
+  "old_fingerprint": "57f667867647d8a957049be9ea3f4b74799aee0daa7415329f9a54ed313f8c8a",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L331-L332",
+  "when_key": "attached_wall",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "9c349119665848e2bfdaf93be7802555530c2158966c43cf3d0a21ca8d47cff2",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L34-L35",
+  "old_fingerprint": "b77cdcd98d130dbd014bc1aabbbfb0665792558c89eb00e35739cc2a48d88ab8",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L359-L360",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "3c91b9b5831207c5b2f70902ff423439e6717657fac5d36cfe263d5213214ad3",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L44",
+  "old_fingerprint": "dd3330809d31eacbd31c5d4e99e083bf87b672bdd2afb619596a0fc2a1cb4f54",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L377-L378",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4b51cf605d0c9106537ab9b5a275cfd0948b38229d1e52060c075226d579177e",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L46,L48",
+  "old_fingerprint": "558156885bbb6e6b667cb36df96c9b26a080f690786d87569fc2d68a0f0d95ff",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L382,L384",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "36fa7d233fa8459234f9a7579fdacb8f2a02d4249ed7bef68b4e98883aa10097",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L51,L53",
+  "old_fingerprint": "c82b30b5ff6c2cbde2ba930629fd7afe0891456c062ac82f9bc35839437ae78b",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L389,L393",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8d365dd47c4cdd96409ca2dbc0c9077f321e7b9d6da395844e018c096d3a903e",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L51-L52",
+  "old_fingerprint": "248960acbdc5301950ccbbd61a20a3d4bd8752cc9b5970e31cfa86438ee14c95",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L389-L392",
+  "when_key": "unit_lots",
+  "zone": "R-9"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "32cbe641c8518bb654c1c8c728ffb9075b5b1740c6568e487ef2ce779883a814",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L54,L60-L63",
+  "old_fingerprint": "fabd895a7445eab547e74d2c6262d4635410b7f2dc249ec025bb7ca83b59eeb2",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L405-L411",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "629b67273765cef4a620a77a3b3e1c6d54529d7d55919455a5b8a3c653e1dce4",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L54,L64-L66",
+  "old_fingerprint": "6c7d0a08eb7bcc7c40930748e768022fa97556078171b098e82c68f992e3b4af",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L414-L415",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "55ef224068148a9554cd118bb181dbd6288db049a4dc59c221b52d8f4a6cffbe",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L54,L67",
+  "old_fingerprint": "43b560dce7aacceb28b10f2a2f403ff2ccce784cdfb4fbe60ce4b47f737d9c79",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L419",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4af8414c456896223094a2b3588b3a82075c49ec3a7951d9cd2964632baeeb49",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L54,L68",
+  "old_fingerprint": "f042d33d48b8c23cb8c9096779249ec426fe7a5838aebbb0151398a3b39f8124",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L420",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "43aad2deb286d91ebea83048f33e1b2304750c1f12f5384ed6f51f9af7f73285",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L54,L75-L76",
+  "old_fingerprint": "c9e75a8918056762755995957a9baef8722d5a8269f05f5fa85bbdc5faeef05c",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L437",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2759d1159f3ed51dfdc8f7620b314f2fa515600bc6756419f42842fe09aee5f3",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L54,L86,L89",
+  "old_fingerprint": "da1eec43c25b3b8e2aa0a6528865ad5f1bba2ac7cdacaf58a4bfdd68ca1dfcf1",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L394,L456,L462-L463",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "9d2d5e673357e6bd19d5b21c264d9dbb8ba859f787eac8a1fa435186887a4d9b",
+  "new_quote": "or/washington/_unincorporated/304/304-7.txt#L86-L87",
+  "old_fingerprint": "0d1728b15fe5b740f1175a82eb9e0a3c355cba5cbf0d25ecb9b674031859c3d8",
+  "old_quote": "or/washington/_unincorporated/cdc.304.r-9.txt#L456-L459",
+  "when_key": "unit_lots",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2e0279da89009cd1d971acdfa89bb2850163473ffc3583975b08da3d5dc2e472",
+  "new_quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+  "old_fingerprint": "280b6450f3c9f46ad85fe09320efdb364258b9fecbfb0825e0b65337881c2c59",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "bebfb6c8df41c75f11c8c1bf2e0dafceed8d22979916042f55acc20683b066f5",
+  "new_quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+  "old_fingerprint": "31c4594a6408712c199b4b656eb7c7e23c38c44d8db4c7f84b70d297d3cf91b6",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b67380a78e825ac9447bb6d06c9fab18113456a88ae401ce4dbcf48a2bf93932",
+  "new_quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+  "old_fingerprint": "faab4c0e503dad61a7ab270df2c8c8a4ab2df55a105eeac3f4fbc3b170237678",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6bfc472bd42f10ea9736407cdd02366d9b8b3ed7456d0e7c96aeef548e1e2145",
+  "new_quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+  "old_fingerprint": "b2abaf84a8fa2e1f104627c0a52270738908b6b7ba5d0175d6ebb483750cc7be",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "40da9f6cd316cd71e03d3dc62272335ce587a710dc7cfefa82d832d4af4780e6",
+  "new_quote": "or/washington/_unincorporated/305/305-6.txt#L2-L3,L6",
+  "old_fingerprint": "05b5586aff56b4541d8f43bad99a26bba2930f8cbdd63f23a7aac44e53417447",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L257-L259,L262",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "84209ffd3d3c8f75fff3b901ce75a86ea8a85caf438336a39fed338311537ca1",
+  "new_quote": "or/washington/_unincorporated/305/305-6.txt#L2-L3",
+  "old_fingerprint": "94c8cf1f8567095cafdc3e36c59262f62bf6b5a4cf7d9dce9b6d722b8c0407f6",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L257-L259",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2f9c53badd2169ef75618d2b101989e6cbdcccaa09b22335810975e37a372333",
+  "new_quote": "or/washington/_unincorporated/305/305-6.txt#L14,L17",
+  "old_fingerprint": "8d9a8c37465e84cbf2cf808172b4afdabb61863dd2b3a32725aa3b9bf4ae2066",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L274,L278",
+  "when_key": "unit_lots",
+  "zone": "R-15"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b4df16e14b783b3d57600869d09b508a71af35eea1bf277dad97b116ddc98bbc",
+  "new_quote": "or/washington/_unincorporated/305/305-6.txt#L2-L3,L14,L16",
+  "old_fingerprint": "7ca9083e6c457762c7cb9e8f73aa194dace9321a9e964cdc06e3e2daf699092a",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L257-L259,L274,L277",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "119608554aaf9e5408f354f205a64f51b7a621d0c34cf510d016873997fd0b13",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L2-L3,L6",
+  "old_fingerprint": "c20023b102dd103ff3a43a3335e483478bb100da4fb8bf1b3e592f851c99b5bd",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L298-L303,L306",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5e2888c4353d298f50a2aa4b122f53d5d7e9042f24df97fbc28a1e78aaf3d5bb",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L8-L9",
+  "old_fingerprint": "d683ec0353bc892d93bbc3b524b64256f3fbf8802fc035b45d28be607e835a7a",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L308-L309",
+  "when_key": "unit_lots",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0b05d06bf2ae8453a95dba2dc7fb70f58f66e76832fa2735f5c43f9f068e2d3a",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L10-L11,L13-L14",
+  "old_fingerprint": "7f80a071a36b9d99c7ee1b3b72f25c8f64122d3ca692e25a422eab416b63feb9",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b915026b8c66bec3a27d8b6422987cc61afc1d4ac378b0ecb7563d1a6c84e708",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L16-L17",
+  "old_fingerprint": "4e0bc8176d55fec34af3a148e28b9f6de99ee4b015797801e9d7f9ad8f5ffbed",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L321-L322",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6f0443ec0800ec45c9fa08864f47467052bd7174e9e1a728b4ccd9d3842324af",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L19",
+  "old_fingerprint": "da9d4a411f6f30b2f05c72d09d7c53315d5ca494b1a07874e6ca6a1e03e684b1",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L327",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0bb093cc1e2fb5d4831a164ebbf5dc748e401859abb82bf60554ce51cf630e8f",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L20,L22-L23",
+  "old_fingerprint": "2171ca1a43ad42d9a1182313f3d51a8dcd97dc480b5a980684fdfe8bd2a5bd05",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L328,L330-L331",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a09cce02c136a09bd79ced4baf92b297a0efbc3e86f79a0f000c2a6fbee7292d",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L20-L21",
+  "old_fingerprint": "a7337f0595a4c735a1c10531d9b4f6531bcb3da241cea8866e0c04d629c4db45",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L328-L329",
+  "when_key": "attached_wall",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d9712ddaaf99fa596a65b8d01f709041492ea040576946c7af79ee95c89b74a3",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L35-L36",
+  "old_fingerprint": "c4d9498a61d85f57b93cc622085b201f471b1210212c2e039142a7bdcb94358b",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L354-L355",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "bcab1ae39e7cef05fcba1d6b48dc5edc5691ecaf78915b983a70a126e9e4476e",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L45",
+  "old_fingerprint": "1a2b8d764461d5c99ceee98e0173007fa1ad7ff59fd33c5dd54266947f0a1537",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L371-L372",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "79cd2341448d83e71ecb4603b64bd56abb1a1e58acec8250fa616c954ed60e07",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L47,L49",
+  "old_fingerprint": "e24223308c0e15cf746c1393fdd51fb288c3c1508b16584ead2df1940a4c67dd",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L376,L378",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "579263e036db98b6cfa3ab7e8e9523d64925bc12e68155c491c54f701415b2a9",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L52,L54",
+  "old_fingerprint": "840ebb876dc18edb148aedc3254ea6f1892438180770247781779ffe5ccdc6b2",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L383,L387",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "49df8bbc9fe5ed732bda7fd50e6754d124e93ad49775cfed5e814d6756eae360",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L52-L53",
+  "old_fingerprint": "3b27af74ee1fa6c7379f9c84714b206581f90483f6345a039eba0d597d24cb37",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L383-L386",
+  "when_key": "unit_lots",
+  "zone": "R-15"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "897799facef6dae8d945364f10ace2e62d2d9c95f84b58bd934bc227cc5444da",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L10-L11,L13-L14",
+  "old_fingerprint": "d9310f129dfd104569dff4cead101e941f3963708b58e71d11a71e609956866c",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7060d2e9a817aa52858ac3316426fb0d870958efec96ed72a1b4e3528e0ff2f1",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L10-L11,L13-L14",
+  "old_fingerprint": "68b93f2d550ed4b1644e4985437282d7835eb145d7c6bf6798274cb16dbadfa0",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L310-L312,L314-L316",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "083b0bc5acc51d8274659c035f60dc712f49a4e1f4147d8d19ed43076b54609c",
+  "new_quote": "or/washington/_unincorporated/305/305-7.txt#L16-L17",
+  "old_fingerprint": "2d0adb7dbd69f21ef7d1ba8bde4dd49ed3c4808e71c738724ead61791c3db518",
+  "old_quote": "or/washington/_unincorporated/cdc.305.r-15.txt#L321-L322",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c9092521f6c9de1abf225d908eace39291ef3a94d2bc3cbba2bc31ba5b892233",
+  "new_quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+  "old_fingerprint": "083e05b69a229173d8ffca696dcf06f93f4d2445a5f299ffdb5f6882329754f9",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "cd6a27ba7af867fb3331dc737ddf700cae5956ec4c72813950ad12e05d4a50fc",
+  "new_quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+  "old_fingerprint": "a3ebba78075fafa9ce5c90850e5a3189ee851ce1b3bb3f58d164397010f25b5e",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "abf90d489216541be4c6beeca833c8d92eacd772436293602d78510569d599a1",
+  "new_quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+  "old_fingerprint": "06d313044933f0647ff91e0eca57aa0637048e3b7d6b8ed7f70e6458a3302904",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6461fbac69842878e0006127d89e9c0ecc523439bb9a730ab098626b4ceb9df6",
+  "new_quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+  "old_fingerprint": "e4085880d0312960d1993234112b46d9b03620e09ec843278b53e5bc34c1dbe3",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "12d9fef5daddc65ced60e26452dc4f911a31c36acaab34837b45a4b98600ced8",
+  "new_quote": "or/washington/_unincorporated/306/306-6.txt#L2-L3,L6",
+  "old_fingerprint": "eaf347d8feeef9ba8e5507357144dc6558007a247e51495997d08268852138a7",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245,L250",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "485298690b8eb1d41c5d3900f1b4740c432b230244fa665d670ae3e4913d0d5e",
+  "new_quote": "or/washington/_unincorporated/306/306-6.txt#L2-L3",
+  "old_fingerprint": "a8dc98d97724f2ee1f769e7c62ee99518e3c99be1fc83690727b841149da93b0",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "f52a546f2d4e35c7e4802a1d6ef7b914416eb5fe516de97ffded41083c39ff66",
+  "new_quote": "or/washington/_unincorporated/306/306-6.txt#L14,L17",
+  "old_fingerprint": "675a4e55003b8a7b14da8b8f1e2db2142136486b9e7fe2da4a43ab961e96cc0b",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L262,L266",
+  "when_key": "unit_lots",
+  "zone": "R-24"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "fe30a55c9e8e007845d7893d4aabb97c0b829d6f429d65b07468e10acd6f0f7e",
+  "new_quote": "or/washington/_unincorporated/306/306-6.txt#L2-L3,L14,L16",
+  "old_fingerprint": "5557c375b7b80c7c588f163388edb42312764d773750006f6542c7e0fde733b6",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L243-L245,L262,L265",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6847c0a3ed7a0fa5ee6d036270d409285cd205b6d7925c3ebd8415e1c5450db4",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L2-L4,L7",
+  "old_fingerprint": "6c62e9f9e31d984611716818f7a71e2bce212a887a943681792b258f23cc0a7d",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L286-L291,L294",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "f4cf5c21d9c1157d88158aa5ac0ee71f8d7763baab962672bcdfae0dc19a6f36",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L9-L10",
+  "old_fingerprint": "6b1bf74dad6d6d8638bd03c44019cfed0cad872616e0b777de6631883b3d632a",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L296-L297",
+  "when_key": "unit_lots",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "38068c3cfc835dcc1efff38034292b72e0428dd1ae7dcb7ab67ce92a60415ae2",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L11-L12,L14",
+  "old_fingerprint": "e286d2ad69571b6a33d541e52b6c9f28eda33a8db7936aada9b592ab24679967",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L298-L300,L302-L303",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a36d9a96e48756040b17b89a029889964538be62388529dce564b1235d9a12a2",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L15-L16",
+  "old_fingerprint": "d7e24c0a204b653587026a14055f946833025b0f1f6f0f5a67ea63e0b61b2937",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L304-L305",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "de02c3a6e39b71235988fc8a70aa3f76f87a3c93a6a9c71ea5bf1c166dd72058",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L18",
+  "old_fingerprint": "4b75d7777643100b3b1ed023cd21612491f29f9600075cb0e7ed7e7a9d1a2b7e",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L310",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "07b49befaf24f4b10570c01495ca31fb3552f1a04c7e26857cea3b6703a49144",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L19,L21-L22",
+  "old_fingerprint": "5e7b16d43b723c1d101307b518f3fdfbf5c75d69301065d84dd589cfce5a7ef5",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L311,L313-L314",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5f0e13b440b3b8accb2f9fff6617b9654409bc0909e2d8173334b78570630131",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L19-L20",
+  "old_fingerprint": "ad9c8c0fd2ead6b015aa484471c0e14aaf3e402f072cb9a6cb2953a5622d448c",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L311-L312",
+  "when_key": "attached_wall",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2391d00722ee59fe393b458a884ade43ff715eccad2f08151e6e3c0eefd305f7",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L34-L35",
+  "old_fingerprint": "3594b5cce71561233659d32f1fac2b4d917593a494d56a5f5c28dd0e167623aa",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L339-L340",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "1a4d79788b074ab6fb6945bb7e0ced6b5173fe1ecf65cdf9a90ff26ef8daff14",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L44",
+  "old_fingerprint": "4ada0e360081010086f732f2a4580ea1cae25f6ffa1ba1217fb299dcc944372c",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L354-L355",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "9cf7a6463dfdb149f7ba4591a9c58d60313f2003af75e7be0be6ab068be8136d",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L46,L48",
+  "old_fingerprint": "6ec47646deb9cd05d29d97b333a7b67c632e3a6510f0dbdaa7cb59f3b078d0bd",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L361,L363",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2ac25b28b83feaf398bcf9138e3e0dfaa101a20447d834af7577613cb4d52e84",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L51,L53",
+  "old_fingerprint": "c79e6390c19c7f00b4e674b506f7d9dab4c714cec925cb34513c22ed150642d2",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L368,L372",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d098511f98f1a3f9379647ccff40555f2726601ef7a09f45d54eb3c12c1debdd",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L51-L52",
+  "old_fingerprint": "0bfddc0306342436bc64606a48ce57784238fc577867684d41ba11f6e9be006b",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L368-L371",
+  "when_key": "unit_lots",
+  "zone": "R-24"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c62046dcacd3eb1405e2f4e299c67d3b87cd8a959dd99ca57a3b444eb3271087",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L60-L61,L111-L112",
+  "old_fingerprint": "33b65cfed489191308da13809f79c62fea71dcb233927725201e565a70444172",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L383-L385,L498-L501",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4cd37a81c939c662db0b98c44f3aca09aa3dd624b4056bd71c4cdca7521e5a9b",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L111-L112",
+  "old_fingerprint": "6e7cbc34afe6900b615c7810b858f3b64e38a19381c79116f581bbb3f1af41bc",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L501",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7be55454865707d56d09a81f78f8b16180f5adf3d48a9e1983d5bb2c76be3b30",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L111-L113",
+  "old_fingerprint": "3fc703b612a8933405bab790e77765284d925d4dea53926cbb234f0b411b9a24",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L503",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a8410a8dc3ead3ad70cbafa1b172065e2d39b7d90bf3fa8989e23c8e335cd6e8",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L111,L114",
+  "old_fingerprint": "1eea171c943ccec5a5388c07e7fb3faaf83c5f59a9fc042cdc4011b66ef85055",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L504",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7feee3166b46340716051d6f6fb96e728a1515141eb2b9673cdf24bb8d35b013",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L111,L115-L117,L122-L123",
+  "old_fingerprint": "384764c7df12cd9674fc88f2985034af364bee17bdf51e24878c9b743fc1efc9",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L505-L508,L514-L516",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d1705e46f3139b9f00f7855da128204cfb28ae03b7451471206635be9c6dc8e5",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L111,L121",
+  "old_fingerprint": "819dad39656d46e919497c4bd284bca42312038112a6cd1bc5c099c2cc6eccb3",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L498-L500,L512-L513",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "dec3977f8aa70d2354aab2bf8db80f0648c63e0b1f966a003e8cae127d882810",
+  "new_quote": "or/washington/_unincorporated/306/306-7.txt#L54,L127,L130",
+  "old_fingerprint": "0bffcb6c9fd35c97391d0a3290261598c2890385e59dfd654a1b20ba1b7eab27",
+  "old_quote": "or/washington/_unincorporated/cdc.306.r-24.txt#L373,L523,L528-L529",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ccd68b004888f69a7f08ef5b56c848836ff6022a8a417e78ffbed5f4b40ed886",
+  "new_quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+  "old_fingerprint": "0f2c512395e066b8df7675b06783ab1d88905e7834775ce8e9223182a92f2b44",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a54db09f750554d9cf2a5a50f4b51d023f337b37cdf6152efcd216a744f82a72",
+  "new_quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+  "old_fingerprint": "3cfb06a9d83e227d346d7f7aceaea3820b43a0df1536288f02c0122620ca736a",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d4cfe556b2b3a584f9838086dd90539b6e7f1927c1cf52e1ad3b826adb5ec528",
+  "new_quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+  "old_fingerprint": "d0679391678274c540af19e721c5b9e45d4fecde2e0948a88654cb6d355929c9",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c5aef6f48a7c982d990c56cf6c22b753fdb8d9a4f2da02e6b8d878a3e2e3bdd8",
+  "new_quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+  "old_fingerprint": "1e49ea5faea142cb8932cfc7b487504c02191ff74b1cf5c862a79a6b1e491ed6",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ea596612ae2ee0dd26de545ffab68c09c0bea2bbe02f9c41cf54e2653e86ea66",
+  "new_quote": "or/washington/_unincorporated/307/307-6.txt#L2-L3,L6",
+  "old_fingerprint": "6bc0c8291f39284f0731b9dad21089e1e8462b3f7f13c4c7b57e60010e1729e1",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L249-L251,L254",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "90a3824d9f0a59117808acad853de56d5b3a3a330955724fbcf3395ff4185ff6",
+  "new_quote": "or/washington/_unincorporated/307/307-6.txt#L2-L3",
+  "old_fingerprint": "141a2c5331d9ad573445a16c036a73bc4a248b5376d8c868cb89db1f8a3bda87",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L249-L251",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a66781eef97a1663e6ac6dca9c64f33ef6e027241730a7987c39dfd8f5b98f44",
+  "new_quote": "or/washington/_unincorporated/307/307-6.txt#L14,L17",
+  "old_fingerprint": "14fe5a239727f8f38d042d02a7180ae57cc96d8e3327016539022280d90d9a25",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L266,L270",
+  "when_key": "unit_lots",
+  "zone": "R-25+"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "362f79683311828e8486379b3398bb8a43cdaa266c6e788b88a048bdf60320fb",
+  "new_quote": "or/washington/_unincorporated/307/307-6.txt#L2-L3,L14,L16",
+  "old_fingerprint": "c95c807fe0bbe2ebc3861a9ec491f8cca9f0f4266bb31afd2ee0900c8b2aea0f",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L249-L251,L266,L269",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "62cc5d0dcb26b6d4a1cb9641796dbd524bfe502e0513de32998f71da3adf72f4",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L2-L3,L6",
+  "old_fingerprint": "f447f5efc4b118c41999cbc8e19265a13a533d3b8bb9b7735c2fd8f5d8c9f2ab",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L316-L321,L324",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a9366038a2130b67fac482661e48f71983ec968200f0837586d365df79d2da1a",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L8-L9",
+  "old_fingerprint": "583d1373085bb29797194f45dbfc887377298ea458588a01fb9ebb965a7326eb",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L326-L327",
+  "when_key": "unit_lots",
+  "zone": "R-25+"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2b84fac822ca033fb4ef8fc5a2a8165f0ec781b7c2f5f80f21b4b6f6c7c447ac",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L10-L11,L13",
+  "old_fingerprint": "4cf099101175f4c859c663e4b2032d857dd9b67a87c0068a967718a3340e8028",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L328-L330,L332-L333",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "1ad9af33d220bb126f9bcc35559672ab2aca5186a1e02b6256f5d4197aeb3852",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L14-L15",
+  "old_fingerprint": "1905b37c7b72addf25757b110f4bd24ebd95533fea5f2d6fe8290ef98e2121bf",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L334-L335",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "65f126aa1fb983c0d2222304abe0437295756c8543662c4ed4781cb4196c6a3d",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L17",
+  "old_fingerprint": "b181416f1b7369141983fdc1406e664ea3184be7a3c4cc32eb684103c2adf36d",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L340",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "dc8d84656cd8ac3b5a3a6990286ba5b33d4644dcaeebd01e19bf8fb5ecc37a06",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L18,L20-L21",
+  "old_fingerprint": "ead5f159bf38fa076101fb9a410799757a68525239ebf4277469c4fc146b2ddf",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L341,L343-L344",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a2ddf66ff1d564cb3b56d587dbf393a7a96bc28c4f3d75a3ddad6445e8c3a80b",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L18-L19",
+  "old_fingerprint": "705f6ae971b66084cd5cd2a831b52fb5c8eba6bac76470bd6fe9d34de9678748",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L341-L342",
+  "when_key": "attached_wall",
+  "zone": "R-25+"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8e70e30e4102d02475fe4c9d132f0992a6ef2b2fbc4560853b147a4635bf736e",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L32-L33",
+  "old_fingerprint": "e761779243ce98ddb0d732b56abf9f97fe5d7a73a67d49577c5a6b829d5d2e04",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L369-L370",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "62ad032b7c02b9f32c0a8186348192b0ddaf565597e8899bfcb929bb5ba3ec48",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L42",
+  "old_fingerprint": "22c34566d8779b73c43bb57e901af8743b6bfce0dcd15c66b833b549eb041173",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L384-L385",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "586605d554d89f6c6d8899700d61a3abfae7a0d1d82f0a6465ba2b7baa1aee74",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L44,L46",
+  "old_fingerprint": "ba4eb1b40699394dff489ebc427a61e090976647b5de663977b60f01629236b4",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L391,L393",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d49cf2eda29227ca5a38381e195c88572b87c814c9a0efb7717a32906c5cdc0d",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L49,L51",
+  "old_fingerprint": "ab3b0f997d00b45224506e06f9b3ecd073c23a03222c5babf6b3ead4734e0d58",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L398,L402",
+  "when_key": "",
+  "zone": "R-25+"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "3f4a3d2441811e5dadc48059888dd0511461e66da7d5ade95c8eb27ef7ae7183",
+  "new_quote": "or/washington/_unincorporated/307/307-7.txt#L49-L50",
+  "old_fingerprint": "04adeda5b6c6117320e2eb3a8f8eac0c7a04c4b837d3da820d83d3994f772059",
+  "old_quote": "or/washington/_unincorporated/cdc.307.r-25plus.txt#L398-L401",
+  "when_key": "unit_lots",
+  "zone": "R-25+"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "099abfd132e2efe648ac22ad68d1b92dccfea6b42bb78275bd46a6c88ac8494d",
+  "new_quote": "or/washington/_unincorporated/313/313-3.txt#L59-L63",
+  "old_fingerprint": "e2b13211a3ed7c7197c5f74db131b643856eb47e3c8addd33e59d65957d73512",
+  "old_quote": "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L151",
+  "when_key": "planned_development",
+  "zone": "CBD"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4a8e3c6d1c17b19649a7e1399b42cc39d287dc88ce52dfc34f359494d2dd0c42",
+  "new_quote": "or/washington/_unincorporated/313/313-3.txt#L59-L62",
+  "old_fingerprint": "2657a850b2f955f12f63345c332649764ffc6a413feecb3ecbae5d8793f5d014",
+  "old_quote": "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L150",
+  "when_key": "",
+  "zone": "CBD"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2c77e1b9c2df532c05a46ddb86c2d20a9e4cdbfd33e072442037da173c017974",
+  "new_quote": "or/washington/_unincorporated/313/313-3.txt#L59-L62",
+  "old_fingerprint": "2897974232a16f58eba63b4e5ff8e4e6ed9ae4e014b1a2aaf35f56e8ba97c303",
+  "old_quote": "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L150",
+  "when_key": "",
+  "zone": "CBD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "137a84e4881c21c4293b77968b469caa4485bf943df0169b6ea29701da3563ff",
+  "new_quote": "or/washington/_unincorporated/314/314-5.txt#L1,L4",
+  "old_fingerprint": "cf6e77c00512bdca6cfa9da82d0cf66b811b7abcb8981d20be5588d53164547a",
+  "old_quote": "or/washington/_unincorporated/cdc.314.gc.txt#L185,L192",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "74fec4e61b986b51d776b2bed25bd39708deb303ec34cdc0c47cd269ff52e166",
+  "new_quote": "or/washington/_unincorporated/320/320-5.txt#L1,L4",
+  "old_fingerprint": "db006bb3a36d716a263c6ab7edb3ce8a6720a146d747777b71223005bdd8a77c",
+  "old_quote": "or/washington/_unincorporated/cdc.320.ind.txt#L274,L281",
+  "when_key": "",
+  "zone": "IND"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "300f9d06c78e855c5dd56b6460907f91c703d840b51fc2b98685ae4d0475d700",
+  "new_quote": "or/washington/_unincorporated/330/330-6.txt#L1,L3-L4",
+  "old_fingerprint": "995c85a3b6dbc7871bea1f95a9e4273a0518beab55417ff3c21a747898b7e962",
+  "old_quote": "or/washington/_unincorporated/cdc.330.inst.txt#L150,L156-L157",
+  "when_key": "",
+  "zone": "INST"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0aead3d747f4205035aff481f38f34a5e99938301aa4f3ec89f8c608ea83227f",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L83-L88,L98,L101-L103,L253-L257",
+  "old_fingerprint": "425c79e1f7f6644860837f55e4b14979517e349503b5e83637c33dc5583f0e9c",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "469f70c53114067dce12f5c5ce7e3f5c45321b5374a728b766fe4f7b69c19710",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L361,L365,L367-L368,L372",
+  "old_fingerprint": "e9263b9c7a4edf9cd714103bcfaf812e3c54eab3a41d89ec676b5d48d9ef28df",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1036,L1040,L1042-L1043,L1047",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2ca08fa2e707ad9ee90b360ab4d18c3b073d446fba6338e2f9322c143daf9cc5",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L361,L367-L372",
+  "old_fingerprint": "3f6356c922fdd1f5ce84026235e6efcc20d9b714e720d09a7f5a5972155172dd",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1036,L1042-L1047",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2485df497ae1c46c3a33e150508f5efdc3fb496f5f94f85147e287db13732b98",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L376-L377",
+  "old_fingerprint": "91d62822cff870963be4d2f73ceb15f1e3fc543e7c67d5fe1553d747ab055d49",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1052-L1053",
+  "when_key": "unit_lots",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b4b57aa49c52a3925666a8c8da6aeeb85b7d8f55f37f2226d4e5d4472b39fc97",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L367-L370,L376",
+  "old_fingerprint": "cc417bc1c3fe871512c7384f3ae759ef7ff666b185b8711b7102dd05856571af",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1042-L1045,L1052",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2044943b7ed19e84b6d2b2609c6d95f41522fb83ffeb1d2cf3cf848d2c99d804",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263-L264,L267,L269,L276-L277",
+  "old_fingerprint": "c839ad6c4ef9a19574482b6a2baf344e5fb77d21a0238c10f2fdf3f8bb97fcc5",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L903,L907,L909,L919-L920",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "53812d4af0ec2fd2ddc1b97694577eb09a0b4aeac72c3fcfafedd8a8cf6ef8bc",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L278-L282",
+  "old_fingerprint": "19f6359abc745166bde14704f682093c92be891c90ada1daa68c9e89e61b1afb",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L921-L927",
+  "when_key": "unit_lots",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c3ef8834888cacde82a399bd4ce338eac86fa074da1b48e6e5fff5d0e1b57641",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L288-L289",
+  "old_fingerprint": "2f2ce472cdea1681c8550f95c53a7adb792a6a5a5a5505126ce5428d0c203c6a",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L933-L936",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "498f259b242272ce2c4f8def5a45223594e3d7cb39818794becdf38b4d3e802f",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L288-L291",
+  "old_fingerprint": "06706f3552109fbd720e9cd2e0dce0ebc1265ce51f334b4d903ab7ae678f62a2",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L933-L939",
+  "when_key": "unit_lots",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "842e5787d011eb4bee7fac3ba20ba768692c6bb428a96cc0d668eb0fb5fd4604",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263,L296",
+  "old_fingerprint": "71240dbd381f6cd8f7c2f07c0784711b2e552c5e1ac172af1a86d0be958ccc5d",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L947",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e99eacab337e11ceaf0b9ca9a61c760dc8ea5b544639461f623d6fb7e3a9c1a3",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263,L297",
+  "old_fingerprint": "e4c57b089409d337a98383bac6e03793fbddffcf71f60e52feea2bc48cff32b5",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L948-L949",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ff71c872f2cfa948975d576df8607bf75e78cf9ffd1623af6467a9a3ba9e1004",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L298-L299",
+  "old_fingerprint": "8da75ac4d61afb655bc321ce5a70efbc9f5a57ef06b179de45d6e8bdbfc7039d",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L950-L955",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d2569d042a2139c154bba5d15cd62db265dda1b851ec54b0731255204b916965",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L293-L294",
+  "old_fingerprint": "66fd79a1a792b24fb56ae45ef0857b3922c925f88cacc49d0d1bfa9533702d2d",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L941-L942",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8e98df7faaf942972ef45848e0d5a67a52ff2905b585bcfc98b6ad14394cc585",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263,L296-L299,L359",
+  "old_fingerprint": "d3b2985c2db198b6842cea192f5d0e892bcb68a9be77cde5041b66ac2d2dec1e",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L955,L1030-L1032",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d465a5209dc554f40c0b4ab4cf112b9992f65fe71c0d395bfe21f24d6b993217",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263,L296-L299,L359",
+  "old_fingerprint": "f9489c61359c290cc13ce7ccad56b149b4b660ad7beab721c8552d8430659ef2",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901,L946-L955,L1030-L1032",
+  "when_key": "",
+  "zone": "TO:R9-12"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "16160e87d91315ea83b8013ee86b835d207d36006184ee9ecce40ddd14ec33b2",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L83-L88,L98,L101-L103,L253-L257",
+  "old_fingerprint": "1fb71640e448c6d4bfefdeabf8cb8811de0b2ed271117afaf441c4f14c35a949",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888",
+  "when_key": "",
+  "zone": "TO:R12-18"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a0d38408394fb0b6ddb7c3289a5444b81e7477f43d1aa3d173ad6a63d8af9960",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L83-L88,L98,L101-L103,L253-L257",
+  "old_fingerprint": "3d2232bd957adb05508a6e899b0df23fe5ece28d8ab7da25dee8e56460070235",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888",
+  "when_key": "",
+  "zone": "TO:R18-24"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "23471ed761f94a709bddabde0f386b0505fcf17c3eca6592eb0b8297b9991c2c",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263-L264,L267,L269,L276-L277",
+  "old_fingerprint": "85c329cc5c95dcfc4e505a45b889458db6c517b6cb45dd041d66004bfe01f92f",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L903,L907,L909,L919-L920",
+  "when_key": "",
+  "zone": "TO:R18-24"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a0fe1b848f258f9c1505e974eb7270b81c7727c213421f718449438b9a2e062c",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L278-L279,L284-L285",
+  "old_fingerprint": "fbcad2686015f00bfecf5a27560037ca9ab54e14129f1a345222f356e62abdd5",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L921-L924,L929-L930",
+  "when_key": "unit_lots",
+  "zone": "TO:R18-24"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d3e3d6fc93dd7c6a01c6ca305a900c62d741907971a109dd572d608709c19d98",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L83-L90,L105,L256-L257",
+  "old_fingerprint": "a6da0fe979a2249d0ded1f5f86f7b395c08c81b6759f000f36c41045194b88a6",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L686,L703-L704,L888",
+  "when_key": "unit_lots",
+  "zone": "TO:R24-40"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "aa723f2e51d4da9862cdb019c8667c42b7a0a67e62c5bbb77f7f33ad8dd68c13",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L305,L309,L330-L339",
+  "old_fingerprint": "dad7e9fbf0b7dcddd3ff486fba0825cea5e748888755a1812fa7cf04645020df",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969,L997-L1006",
+  "when_key": "",
+  "zone": "TO:R24-40"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7a2062d6a8b5b0dc25817bd91055c11c87086286c9d8f2a510a600b3d708ae67",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L305,L309-L313",
+  "old_fingerprint": "31c264bd20d53ec89e8986fe0136d5eb4bbafd1e4ca50f8f4bf79649f07ceb18",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969-L974",
+  "when_key": "",
+  "zone": "TO:R24-40"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b5d9e9500d48bdc19f83c03fea2034339ed5036bb87d204057ffae5aab898a37",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L309,L343-L344",
+  "old_fingerprint": "913811d5464012cb2278564f9e169f2cde7b5831f8602d4ce53ae71c7c192247",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L1010-L1011",
+  "when_key": "",
+  "zone": "TO:R24-40"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "f5f41dce56f1ab614e131d56d409a782be60b0cdb8d314c0f7bbeb324682a851",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L388-L389,L403-L404,L409,L421-L423,L431",
+  "old_fingerprint": "add363fae61e6953b7765798904c7f1e1e511c99d6d654b9fd3883f287f86380",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1070-L1071,L1087-L1088,L1093,L1106-L1108,L1117",
+  "when_key": "",
+  "zone": "TO:R24-40"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7981ec5746bbc8e478a709a5bc879385b74f9db64fa9c00344aaa130fed34863",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L403-L404,L440,L449-L450,L456",
+  "old_fingerprint": "6393607c116b7df9e5f19439249830d54fa4652ff03f266b698480cf27e554cf",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1087-L1088,L1130,L1140-L1141,L1149",
+  "when_key": "",
+  "zone": "TO:R24-40"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "80f247fdf3be5976caa8a3aeeb80b4c7ee27f6f4ffc90a08a466296d501428c8",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L83-L92,L105,L256-L257",
+  "old_fingerprint": "71812f182f24e6041631af5df7f887439976e4597a4cd2109ef3f4ab1140201e",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L688,L703-L704,L888",
+  "when_key": "unit_lots",
+  "zone": "TO:R40-80"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "365324c23e045afa48dcd15bed9860bb5e2489aee17d93b429e53f12f5390662",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L305,L309,L330-L340",
+  "old_fingerprint": "cb993c8be952475e7af300ed9dfb7eeacafd6ff5af369ce44c0e39204af0809e",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969,L997-L1007",
+  "when_key": "",
+  "zone": "TO:R40-80"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "72161df61eec753175064b7d9c02a48f935ff674407b7c8d50ac213ac97dceae",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L305,L309-L313",
+  "old_fingerprint": "e489bc4b468dcda859542ffd1a42794ca7610a282a64b1c67c5eba87369963ae",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969-L974",
+  "when_key": "",
+  "zone": "TO:R40-80"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ca881bc71ce74500028443e63e258e9b8a41ed593b48e9f5444c8218e2fd765e",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L309,L343-L345",
+  "old_fingerprint": "68f52a23bc06d428c755584341664b148989c7c58107af20219a8e9e57cd306f",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L1010-L1012",
+  "when_key": "",
+  "zone": "TO:R40-80"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0d6821512770d82a59de2477403e04deb61f700a1906e3a3204c8eb987415823",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L388-L389,L405-L406,L409,L424-L426,L431",
+  "old_fingerprint": "847b17462de923c1010f8724df08c6b937c22e9757fc6c6863949eea88c54dfd",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1070-L1071,L1089-L1090,L1093,L1109-L1111,L1117",
+  "when_key": "",
+  "zone": "TO:R40-80"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c98a5143696a6285c1ebeea71493f4f10d52ffa1aff02cbdfbeb17ab4e3bb9d7",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L405-L406,L440,L451-L452,L456",
+  "old_fingerprint": "46b090ae6ca8d4df1109deb6854c26a69dc0f48fee561288e2bb7ec1f827a277",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1089-L1090,L1130,L1142-L1143,L1149",
+  "when_key": "",
+  "zone": "TO:R40-80"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a08c81099fa5e04624807b6ae649034ee132e65e01ae196726693730e3232d9a",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L305,L309,L330-L331,L352",
+  "old_fingerprint": "99f5057fd91d6d971dc4da114ee0ae391c6323b51642732a3e6c7e0c47040527",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969,L997-L998,L1019",
+  "when_key": "",
+  "zone": "TO:BUS"
+ },
+ {
+  "field": "min_building_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "3d5762c957108d56c1c942253d63149b68638a032b88d4b8f972f24688e69093",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L309,L316-L319,L322-L325",
+  "old_fingerprint": "51ef32e051872c34a0a38250f7bb78a6ae7aad8990f3b72cc4c676dc16e7652e",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L977-L981,L985-L991",
+  "when_key": "",
+  "zone": "TO:BUS"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c29aa1e1e488507ad13a5483381109f36e06e3ad2825fb7a6631aded308e25bb",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L305,L309",
+  "old_fingerprint": "a563c1a56290e6ed84dc61bff49173780d6f6049c5d95cdd35518e1139e105d3",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L965,L969-L970",
+  "when_key": "",
+  "zone": "TO:BUS"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "09acd2fe7e4786f65b7d6a592d73bc673d929690325626313b3a83fc40c52219",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L309,L343",
+  "old_fingerprint": "5c2f4d9fdf4389b8fc3eba2c6738cf3c2914a8fa08ff1371b71d00ad7c781de8",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L969,L1010",
+  "when_key": "",
+  "zone": "TO:BUS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7d894e6d11daaf0e73079fdc1f079650ca7ae5d571ad9b806ae4e8df294884d6",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L85,L98-L109,L260",
+  "old_fingerprint": "57e8c86099e48d03e4bb2b866453e0f28d196cb3310f16bbdc21d6f47e694214",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L681,L695-L709,L892",
+  "when_key": "",
+  "zone": "TO:EMP"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b397e36d0c8ae1c0ee39d4f6f56670952cca407a7a5d6ac2a2f81ef05b424a85",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263,L278-L282,L365-L366",
+  "old_fingerprint": "a6f7e65012262183820d110c7c5ed018c8c5c3120f1b36491e0b8be4b2981804",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L902,L921-L927,L1040-L1041",
+  "when_key": "",
+  "zone": "TO:R12-18"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "df0f26c9ce415243fece7427dd6ce325afb45c47dc76eb73a8c9948c543d773d",
+  "new_quote": "or/washington/_unincorporated/375/375-10.txt#L263,L365-L366",
+  "old_fingerprint": "cce9e66cc3dc620fa5da43d3be2a62dd5d5c3a43e7242947267ff7d3b43495d4",
+  "old_quote": "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L901-L902,L1040-L1041",
+  "when_key": "",
+  "zone": "TO:R18-24"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "ffb21e45438375d2fdf7bb7edc72db473fd3d9486e63367b5f943d41d74faa02",
+  "new_quote": "or/washington/_unincorporated/377/377-1.txt#L10-L13",
+  "old_fingerprint": "def62711fece4aada0a087457be6ab8fdfad62b3597ef75921e78b4d5731c7d3",
+  "old_quote": "or/washington/_unincorporated/cdc.377.sid.txt#L21-L28",
+  "when_key": "",
+  "zone": "SID"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "61f040c9e7efc8fb5a6b5c8d75323d0e3ff0d1090d40a23d854a7d8230eb6bc4",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L7,L38-L41,L70,L75-L78",
+  "old_fingerprint": "f5fb168b45841b06e62465bbf3c01eb02e7d6156dd8264ec542ba45552b8ab71",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L131,L184-L191,L234,L245-L251",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "type_i_max_buildable_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "be2f926320bf3fe359d3ea4847a496dd8a9de25b5e83e330ff2fcb7f28785bcf",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L38-L41,L70-L73,L75-L79",
+  "old_fingerprint": "2bd7e5c8eadea2bcd208f6497865ce9446ab069bdd5fd24240a5e06fa3113219",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L184-L191,L234-L239,L245-L252",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "type_i_density_escape_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e41008e7c54c571e19aabf1e06e479e27aa77343dfdf788ce36da9f4077ad169",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L38-L41,L70-L73,L75-L79",
+  "old_fingerprint": "6a4e86c77c6a1cc95b4911723a037945e68868625e768ca4b640dbf5967a7033",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L184-L191,L234-L239,L245-L252",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "83361a50af2ec3a24aa87736b645f9b6e84e2b9243ecf0b7929befae55aad7a1",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L122-L126,L129",
+  "old_fingerprint": "8a4942f2fc7d1154fa2cfc920e616e0c98c6a360f193c3b874a53070c6575738",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L316-L321,L324",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "cdce5c75d02e9d01f9d1a614c873fd7801d994d36cef99b70cb5402397f07984",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L122-L126",
+  "old_fingerprint": "7d3b8469979a58ed7c61260a9cbe485f7e2096a92fae424944ffc562b3c7f0f1",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L316-L321",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b56bc5421e1e708f1d2ef787217179868a67f5b988a247e88534ba778d9b4d19",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L134,L137",
+  "old_fingerprint": "94e1ff4cf95f0b4dc42bdfe91c6c92cc819dea6dfda239ed7b4094a080a6aca8",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L330,L334",
+  "when_key": "unit_lots",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "8cccaaf74a4bf8e3ffffa11c5ceabd8102ccef34e500cf4d2f5e6bda9630284a",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L125-L126,L134,L136",
+  "old_fingerprint": "1e3ee06e35d43aa4c37133ef14a333697d3d0b975a2d9a2305f398e8cf72a9d6",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L319-L321,L330,L333",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "aeb38a810e78f8f3878f59893c390f96059478c7218cf79b6547bbee51c80a71",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L44-L51",
+  "old_fingerprint": "6188e698ed83bef7ee27229ad257ee86c53af17082c0287720e912eb1aec7d5b",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "41522a6555308e924136edb34a45fbf8e3ca29599072c930afcca8d5e565457e",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L44-L51",
+  "old_fingerprint": "dd04609252fdf8a5c92093ab38449f1a6a4b7074aa6de0a719fd2020cda9c62f",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "850add0b7425567a23909a79c4edd201423536cac2cc888b3143e25a47d05d55",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L44-L51",
+  "old_fingerprint": "8af0b2d8f6d70b0913373158e6fb95b06ca2e376b3409ed273bc155e93b07cc1",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2b0456754422345bd8308be15931625066f5ff591c0c0666dedde65f46cee13d",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L44-L51",
+  "old_fingerprint": "46c0df5b048e8aec8a0eb32ed603c0638d2b1e30ae5be5e2c16459d6977ff880",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "9aaa1ee223070335fd854795a6cf19caf3d47889ea7b6b4d6b12cf8099b08d07",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L72-L75",
+  "old_fingerprint": "8bc53c5b2fe63ed5e341ee05bb72042bb36295fb62da6b48d57c866f2dd18339",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L510-L515",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "1b9b73b9ae08d9303d49dbbcc79a871d09197d296847b314370727a07d817a39",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L146-L147",
+  "old_fingerprint": "669c4a3e6f27f6fc7be8ba784a1d0cfc69b7271ecf2819a48e8c34cd8864709c",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L616-L620",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6c032ab5644b28d5c3c42d01035d6cae72f0fcb9aa8d42e2a3f3225a248b7a49",
+  "new_quote": "or/washington/_unincorporated/390/390-9.txt#L146-L147",
+  "old_fingerprint": "ed3848fa6d8ed0115a813ae84960496f08bb46b7a0be3a13a026167a65f0c3c5",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L616-L620",
+  "when_key": "",
+  "zone": "R-9 NB"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "1cf95f212c6ae413624120ac49f9dce4253a9dd78f62aa181c42c15e99d7d69c",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L9,L43-L45,L58,L64-L67",
+  "old_fingerprint": "543d31cd12ac07c59f7948a7997907b1e84e749b0acf9e7a4f7cbba4548019db",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L657,L707-L711,L734,L741-L746",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "type_i_density_escape_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "f2c6624bed9786f231009b4df563bed58a1b416166e97a9f632761bd90c6bf5b",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L43-L45,L58-L66",
+  "old_fingerprint": "a83ea1252f2a5b0da731f4727f2a42189a63e58676ff2d7a5d7465967fee4892",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L707-L710,L734-L745",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "type_i_standard_plat_required",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c1beea48e63a96f020919423ebd9d648246dd31eb2778f08fe06888be83a8dbc",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L43-L45,L58-L66",
+  "old_fingerprint": "07febd13b7714b37bed663237cbd913ade1203d4d54b7798763f8d405ff30ff1",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L707-L710,L734-L745",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "222f9547ddb225de38cd296169adda4fcd0c6d2cf7517fa7163ea1b161d840e8",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L101-L105,L108",
+  "old_fingerprint": "06e581dadf33af20c06f500a002283cb81b87cf84785efde257e4510867514ca",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L794-L799,L802",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "af12604c86004f31c70ddaa3c7cae4f3c599c92aa3aa03053bc17093ba256e1d",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L101-L105",
+  "old_fingerprint": "6b3c3fbb1e7584c9a8a1245e2c5aa97525c4bbc8b85683d51c19edff5462b443",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L794-L799",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "0ba05635648f59a07277aafcee864a10b8dcd8b43e86edfb9163de7519cc3d34",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L116,L119",
+  "old_fingerprint": "fa52861eaa3c9c10eb16b303bc9ff036b61aa0e61bdc03df2f7d3c6119fdf074",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L816,L820",
+  "when_key": "unit_lots",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "42bf02ce5263f1a0a49cf8ce62f60d4e2187a5e8f56d3228fa45ceb2c49fdc61",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L104-L105,L116,L118",
+  "old_fingerprint": "9d282c6d714066e4e9debb13ae65bc15faa753fecfd1838c83731836311fc972",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L797-L799,L816,L819",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e29036cdafdb6408d5f7b494cf47d5eda2e355194160f8656431309245d1ba76",
+  "new_quote": "or/washington/_unincorporated/390/390-11.txt#L29-L33",
+  "old_fingerprint": "f7981a8982dc59987d75111ca1f0d6254f9989867ce9820888be19d54684b9c0",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L887-L893",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "4360df9862546554de8854a2bb1eb7e9403ab1ba55445ea2f726cedf54ced702",
+  "new_quote": "or/washington/_unincorporated/390/390-11.txt#L60-L61",
+  "old_fingerprint": "b47b6022008fcd82e50b5b90520928856ba1a0bda50e1061c659a23fc7546b46",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L929-L932",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "41020a10fb33635bb42ad87afea50a6b7a27869a7a824a5654afa633c6856b4e",
+  "new_quote": "or/washington/_unincorporated/390/390-11.txt#L60-L61",
+  "old_fingerprint": "581f2bf58b3c8d6cd36a11a96276d418d376e3a1b543a5ccd551cc96395f876a",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L929-L932",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7f01e283b89daa0b327507906d663e451af84e3d994d5706650ee9e0778cd324",
+  "new_quote": "or/washington/_unincorporated/390/390-11.txt#L62-L65",
+  "old_fingerprint": "e7698226b32ab58b0b52a3eb0343c9996edfa07258378e426aafdb5ce3c8ef87",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L933-L938",
+  "when_key": "",
+  "zone": "R-24 NB"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "77ea7447451acd1dbcc71da0e368f264fbd3e1217fcb9c0031d104e372237510",
+  "new_quote": "or/washington/_unincorporated/390/390-12.txt#L9,L33,L38",
+  "old_fingerprint": "9722390cde44ef3ff27f0d5fdc883def8cf1af068786e78ece8be67237cf6dad",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L964,L995,L1001-L1002",
+  "when_key": "",
+  "zone": "R-25+ NB"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "bcbbddde5f255349db5bc56a6d9aed9c42b9a42c8f77ae08e79d1125e68aa539",
+  "new_quote": "or/washington/_unincorporated/390/390-6.txt#L16,L20-L22",
+  "old_fingerprint": "4ea2d47adc86447e55b018696dd311c5920b3a676b61188560397ea0e03c9111",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L98-L99,L104-L106",
+  "when_key": "",
+  "zone": "INST NB"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "bb166e91e6666eadad3195dbee49e9da7c7b75d9b9f4e8ebe96df719cd4ac6f8",
+  "new_quote": "or/washington/_unincorporated/390/390-8.txt#L158-L159",
+  "old_fingerprint": "06fecbf483084a32135e55469eb7bd631bf310be61df057c959d572dc52ed231",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L381-L383",
+  "when_key": "",
+  "zone": "R-6 NB"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "47798392dd92a1e8ddd4c207c79af99b737af8d29e057ca2ec527250f8af6efe",
+  "new_quote": "or/washington/_unincorporated/390/390-10.txt#L126-L127",
+  "old_fingerprint": "59a31d20295acadb9934121f5b503eac3be64e9d8144dd746ed0f860ae378c2a",
+  "old_quote": "or/washington/_unincorporated/cdc.390.north-bethany.txt#L834-L836",
+  "when_key": "",
+  "zone": "R-15 NB"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7ef18f2f11167d98259e6ff185586016c7f831a150965c3aa683ebf00eb27890",
+  "new_quote": "or/washington/_unincorporated/392/392-4.txt#L9-L10,L20-L21",
+  "old_fingerprint": "08b22587dc6fbcf7d8d06452512df0223c2163bb74f9927f85881424a2134bb9",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L42-L43,L53-L54",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "6435e1ecf8814a4249a75d5668eb4f653cbcd8df5524ee6ee5d1f366eed1beba",
+  "new_quote": "or/washington/_unincorporated/392/392-4.txt#L3-L7",
+  "old_fingerprint": "f2717d32abbb2a236bb6e278dd01fe827a5e31e3ce2f8ac614a92ecff5a07401",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L30-L39",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7888c14d30f4fbc92be3e60a9c9250a7444879756bf3c6680176da039c070b47",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L10",
+  "old_fingerprint": "47acc3678abaf1e6df59fc7e419ab17ddd73d055a018dce26b5acaf75313a946",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L284",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_average_lot_width_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "9e6282e3301ce2348a9369c5eae4a1730a64339d1b5fc342af6020788794aeaa",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L13",
+  "old_fingerprint": "56d2891406c9672ac797836d334f0f213f7cc9feafe505e2fb5575504e876bc7",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L287",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "cd97d462006e18f2381e3fe6e101f36b22124d9bb263572f58991a6c8cc745a7",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L9,L14-L16",
+  "old_fingerprint": "e9440b3bfe89beece2673d30c66c697d3dbde5920f3886e46b6e358d217b410e",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L288-L290",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "95954d0352649c1720f56ea2622027b47454c651db28af9467a16f8385ed81bb",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L9,L17-L19",
+  "old_fingerprint": "85440a5aec4ff9f0b5a887455cda9e5107a3aea77a768319b81461c0a2a050e4",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L291-L293",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "696fe0c8d8a431f519f88a06f9ef8451f1110f9b6e4d7b7b999b6a8fee386991",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L9,L21-L23",
+  "old_fingerprint": "ab0cf0892b316ef4392c628b4d1ea6bce970ec1b32d1f3f27f5b8f1c26b327f5",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L295-L297",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "89d3876f771c01d4454234a41fc1706fce72be2b112aafbc44c5668d128091e6",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L24-L27",
+  "old_fingerprint": "06e6b351228d2ca37d90776277899064150164389479d91343b4311e38c624ed",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "971670a81f14ea0f131eaa79c98b17595921c0a40540679cdf8166dfa5f3e112",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L24-L27",
+  "old_fingerprint": "35dd20175720ce3b14fc60b186f77a56d978100fe1afc9f4c694cd6447e0fcc2",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "5cb372df7ec3fe2ee24599a0ad3f64a4f53f27f7f0c1c11a463f0734e8444ab6",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L24-L25,L28",
+  "old_fingerprint": "93326ad1d13f87bf2c6c7a1720187401641b2210cb7acf3b45eb29ca6366d771",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L301,L305",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "fc74a1b60f5e5ecbe8d198b1bc0aabe967b77957691e3dbf482cadc557e01edb",
+  "new_quote": "or/washington/_unincorporated/392/392-7.txt#L1,L5-L10",
+  "old_fingerprint": "450374eb33ff9b3fd0683a38279b40e43221b26d720450b4cb230be8297b0cdd",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L220",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "3457b1544f67ad1fa7477fb62e6fb96ea864401c553bd43ca1447a793ac9c9a3",
+  "new_quote": "or/washington/_unincorporated/392/392-7.txt#L1,L5-L10",
+  "old_fingerprint": "5c5787835953adc52f988eb96a8bc379005e743964c821409647a62caa899f5e",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L220",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "fbcaaad246606b2c4e2e9aca70b2b334f6e908b05f7c723fac6886bc4e0f22aa",
+  "new_quote": "or/washington/_unincorporated/392/392-9.txt#L150,L154-L155",
+  "old_fingerprint": "7f637b1d9042db5f5edcaf6a53da1e1a6666f5d7637db037960e55f4ed464cd6",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L591,L596-L598",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a7c45f18109976baca7baf1b38f104c43b61e18bb4a27d286af3becf15f107ad",
+  "new_quote": "or/washington/_unincorporated/392/392-9.txt#L158,L163-L164",
+  "old_fingerprint": "529c34770dc0cfb1b4bed7642a0d702df58f4eae84f74abc9d964922d55c6a58",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L603,L615-L617",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a9f1164496ffacfa3a40fc728af19abbcf370777c99ea108e980eda3f6c0dc3a",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L31-L33,L36",
+  "old_fingerprint": "2df0906c05acc6fe54e9cf1cd4509ebdfbd7551d12fedbfcbb950be1d25dffb5",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L309-L313,L319-L322",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "building_frontage_through_one",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "dbae320a99dfdb953ce9d1607da0b866bd00e8831ea8ee0b6b0422fc7b62b11e",
+  "new_quote": "or/washington/_unincorporated/392/392-9.txt#L107-L108",
+  "old_fingerprint": "da7224a2f2d0e15b669e0451e8456107cc5a9dd860235c1c561899ca13f02bc6",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L510-L512",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d9576d772d4e91a8eac866c110bfddb5850fe10c94bb303112e193b62a51e2c0",
+  "new_quote": "or/washington/_unincorporated/392/392-4.txt#L9-L10,L20-L21",
+  "old_fingerprint": "45d522c4859cb5d661aac477cc75adfd9f70d26f545f4839c43752a373ab8162",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L42-L43,L53-L54",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "review_discretion",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "7d96d02214ff362cd91e9bd90f4b089460df5d4e95c774ab4088af2717e64e1b",
+  "new_quote": "or/washington/_unincorporated/392/392-4.txt#L3-L7",
+  "old_fingerprint": "48c5c5ffb64eced72329327255e348c273094a0915a9c0ce6806fff9d86f7c50",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L30-L39",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "3e0d9cb554837dbfc81fed6fff7e93362ec0c3681fa3872b4be30fb2632a2081",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L10",
+  "old_fingerprint": "0367f6bf296dabef7d3a7ad978e184cbe4e86ef9434a9e252e79d31a2739beac",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L284",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "min_average_lot_width_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "aa447aeee992f1567170d5cdd286e2b328f42a95d7c20d8473e89337e2f3798a",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L13",
+  "old_fingerprint": "ca7e2f2761c2980b9ac25e2b954bc46eb8165ee7453a850fefe3df877f358a67",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L287",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "86149d02433f53f5a17f46ddf5f2b79bd200b9d20456bdda82ab987cb4b74671",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L9,L14-L16",
+  "old_fingerprint": "35d346e826f84403c38cf0cf55529ed1096313f51f118f504ea725b20cc11bdd",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L288-L290",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c2c89f18e8023983c7e3861d2216b8556603a525f98abdaf413fe66f9d7402f7",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L9,L17-L19",
+  "old_fingerprint": "3740bd6847a0ab670167b49038aeeffd35fcb7d7bea26deb600a798c102b761d",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L291-L293",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c1314b98eb81abdbc350aad2cc82813155bc882c0b781acd1ef0eae89c056f8d",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L7-L9,L21-L23",
+  "old_fingerprint": "a28b7364c84cdf153f35c23e684547f3fb5df107fec32416854f20006dc71f4d",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L281-L283,L295-L297",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "133597821b373323d4b8b9efa6995ba99fc546266f56c81e22a171504bf9d6a3",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L24-L27",
+  "old_fingerprint": "e374c0d6389ffa7b5b3114598194779e2e70d8b713858db6ef6d7ae453dd57cc",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "b9bfdcb87a8cf6e2b5f364884e8d338f45f4a18361415cf1037f594978581f73",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L24-L27",
+  "old_fingerprint": "54aaaf1ae3e0a7ec558090c455e653a85b9c0efea9084afc60f9bb53cdd23597",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L304",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "2161751d8c49ccacff34335bc4d21249884f873a336fbaf74ea5c1493bfd9db5",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L24-L25,L28",
+  "old_fingerprint": "2335337bf2b3f90e494726dfcf0b184a31bea10f3cbd0b960016b7c8f4eb7f6b",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L298-L301,L305",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "d32b051d25ea797704483e96cc8b138218c39a425ff571d7392e1dfece31000c",
+  "new_quote": "or/washington/_unincorporated/392/392-7.txt#L1,L5-L8,L11-L12",
+  "old_fingerprint": "2e3b946b5084b1e4bbb2fc879e8d7a67239d8e89aa1cb017c9019a838554c72e",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L218,L221-L222",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "46ff675571881d0cf3102c039d34ae7dd37d4ca932456a9bd32d3aa4fe64cb4e",
+  "new_quote": "or/washington/_unincorporated/392/392-7.txt#L1,L5-L8,L11-L12",
+  "old_fingerprint": "e2e44b1ae9c99b83cdfd8bd3693cb14a4f52bdefa64bd8ebde9ca3eb3b4ffdaf",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L218,L221-L222",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "09c028e54e27ae4cb42b21b9d3dc7477f0eb75a6537ce1332c56433f9f052aff",
+  "new_quote": "or/washington/_unincorporated/392/392-9.txt#L150,L154-L155",
+  "old_fingerprint": "038f137489384eda6dd60712c17bdf08807201f2cb48784acb1920e359b55f34",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L591,L596-L598",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "97ef79231dd422490b80585110184cc204ff9348e54931856b723459e8745272",
+  "new_quote": "or/washington/_unincorporated/392/392-9.txt#L158,L163-L164",
+  "old_fingerprint": "f6850e202381bf01edb43f0eb903ac8484e215dc876f99dd028160c439838b20",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L603,L615-L617",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "building_frontage_min_pct",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "06d9f7889546ced72b97b482b740ed8ec611fc7d90299666f433b18db631905c",
+  "new_quote": "or/washington/_unincorporated/392/392-8.txt#L31-L33,L36",
+  "old_fingerprint": "cf2f7431d98657cb3876428175313127cc9f62cf4b8fc25a84b29e7d63227220",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L309-L313,L319-L322",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "building_frontage_through_one",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "188a6b75f9329fd6da81333b8d9b782692130de8f41c45abde9198726203564d",
+  "new_quote": "or/washington/_unincorporated/392/392-9.txt#L107-L108",
+  "old_fingerprint": "299c6f25e3b7f8daa4d402c6d8ec65d236c007b171d2dba35afffa0758accacf",
+  "old_quote": "or/washington/_unincorporated/cdc.392.mixed-use.txt#L510-L512",
+  "when_key": "",
+  "zone": "CCMU"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "75ef49c528607c5c380c1efeb53ed7ec6244f70b30b36c3b79cf4e3e4851101b",
+  "new_quote": "or/washington/_unincorporated/413/413-6.txt#L1-L3,L6-L7",
+  "old_fingerprint": "a1744f442eb87723b75b4684028d37e722391c9839be101e083b8751f9b12aec",
+  "old_quote": "or/washington/_unincorporated/cdc.413.parking.txt#L223-L226,L232-L233",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "a0fb0036f565a776a6240aed3e5a5fdd3f7aabe5a850057065bd307d15afceb7",
+  "new_quote": "or/washington/_unincorporated/413/413-3.txt#L1-L2,L6-L17,L37",
+  "old_fingerprint": "a0683c806f22e0ada7678c856e1dc681eaca7cba52b3296912c8a8b1e86d75f7",
+  "old_quote": "or/washington/_unincorporated/cdc.413.parking.txt#L55-L58,L65-L76,L97",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "14f231848070573f8c3e4cbb6243b69b0888e3c8161eb400ce72ac3d8efd218a",
+  "new_quote": "or/washington/_unincorporated/413/413-3.txt#L1-L2,L6-L17,L37",
+  "old_fingerprint": "95affd8f2af40477a204fb6d8ba1d3c971b27f6dfce955b738c290978afdb6c6",
+  "old_quote": "or/washington/_unincorporated/cdc.413.parking.txt#L55-L58,L65-L76,L97",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "c52b630bc82c08c293470367c746e8c1d33459b743e684be3b6f2cdb241d1b07",
+  "new_quote": "or/washington/_unincorporated/413/413-3.txt#L6-L17,L37,L41-L42",
+  "old_fingerprint": "aef2952c4408706c19db35cd9a012dcc08d0811d4656615b34c5cf2ed669253e",
+  "old_quote": "or/washington/_unincorporated/cdc.413.parking.txt#L65-L76,L97,L103-L105",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/_unincorporated",
+  "new_fingerprint": "e4e87d898efb0c8464caef8d1f05ffd7eaff3ee096eb2ad6ed9a29e9e5277fdd",
+  "new_quote": "or/washington/_unincorporated/413/413-3.txt#L6-L17,L37,L41-L42",
+  "old_fingerprint": "d18d7cec6a7a4a6d562e616c149e241c33f084af02f4659d5121f17df1cfbce7",
+  "old_quote": "or/washington/_unincorporated/cdc.413.parking.txt#L65-L76,L97,L103-L105",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

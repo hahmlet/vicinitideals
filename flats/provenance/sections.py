@@ -188,10 +188,14 @@ class Section:
     @property
     def chapter(self) -> str:
         """``40.300`` -> ``40``, ``73C.030`` -> ``73C``, ``16.84.010`` ->
-        ``16.84``: the folder it is filed in -- the number less its last part,
+        ``16.84``, ``302-1`` -> ``302``: the folder it is filed in -- the number less its last part,
         so a title-chapter-section code files by chapter, not by title."""
         if self.named:
             return self.named.rsplit("/", 1)[0]
+        if "." not in self.number and "-" in self.number:
+            # A code numbered chapter-dash-section ("302-1"): the chapter is
+            # what comes before the dash.
+            return self.number.split("-", 1)[0]
         return self.number.rsplit(".", 1)[0]
 
     @property
