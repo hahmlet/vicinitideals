@@ -1867,6 +1867,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-JOHNSON-CREEK-IMPERVIOUS:
+    description: "Whether the lot is one Portland's Johnson Creek Basin plan district caps at 50 percent impervious surface, buildings and paving together: any part of it in the South subdistrict or in the combined flood hazard area (PCC 33.537.140.D, 33.537.150.E)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The South subdistrict outline and the flood layers are traced lot by lot (FOLLOWUPS 109 Portland part 1); a lot divided since 2026-10-30 is placed by the traced lots"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-JOHNSON-CREEK-UNMEASURED:
+    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the limits on removing trees 6 inches or more across (PCC 33.537.125) or the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (33.537.130)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A tree survey of the lot, and which lot line abuts the Springwater Corridor; the city's tree canopy layer could release some lots"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-SPECIAL-BUILDING-SETBACK:
+    description: "Whether the lot lies in Portland's Laurelhurst or Eastmoreland plan district, whose building setbacks are only on the Special Building Setbacks maps held at the Development Services Center (PCC 33.540.030); the setback that governs is unread"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The Special Building Setbacks maps from the Development Services Center, or the city's setback-line layer read against them"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-LOCAL-STREET-CONNECTIVITY:
     description: "Whether the lot lies on the Local Street Connectivity Lands of a Washington County community plan (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress), where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
     kind: categorical

@@ -1308,6 +1308,55 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_johnson_creek_impervious",
+        "site_fact",
+        "The site is one PCC 33.537 caps at 50 percent impervious surface: "
+        "any portion of it lies in the Johnson Creek Basin plan district's "
+        "South subdistrict (33.537.140.D) or in the combined flood hazard "
+        "area (33.537.150.E). Portland's base zones cap building coverage "
+        "only; this cap counts buildings and paving together, and building "
+        "eaves with them. Assumed unknown: it decides whether the cap applies.",
+        evidence=(
+            "the South subdistrict outline (Portland Maps BPS zoning layer 1) "
+            "and every Johnson Creek lot touching it or the 1996 flood and "
+            "FEMA flood layers, traced whole -- held as Portland's "
+            "drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_johnson_creek_unmeasured",
+        "site_fact",
+        "The site is one a Johnson Creek Basin rule reaches that the screen "
+        "does not measure: the tree removal limits of 33.537.125 (South "
+        "subdistrict, combined flood hazard area, within 20 ft of the "
+        "Springwater Corridor) or the Springwater Corridor's 20 ft landscaped "
+        "buffer and vehicle-area setback (33.537.130). Nothing records where "
+        "the trees stand or which lot line abuts the corridor, so the lot "
+        "stays in review. Assumed unknown: it decides the colour.",
+        evidence=(
+            "the Johnson Creek impervious tracing, the Flood Risk Area, and "
+            "every lot within 100 ft of the Springwater Corridor Trail line or "
+            "touching a taxlot the trail crosses -- held as Portland's "
+            "drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_special_building_setback",
+        "site_fact",
+        "The parcel is in Portland's Laurelhurst/Eastmoreland plan district, "
+        "whose required building setbacks are only on the Special Building "
+        "Setbacks maps held at the Development Services Center (33.540.030), "
+        "not published. The front setback that governs there is unread, so "
+        "the lot stays in review. Assumed unknown: it decides the colour.",
+        evidence=(
+            "the Laurelhurst and Eastmoreland plan district outlines (Portland "
+            "Maps BPS zoning layer 0) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_historic_overlay",
         "site_fact",
         "The parcel is inside Oregon City's historic overlay district as the "
@@ -1602,6 +1651,9 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "pdx_johnson_creek_impervious",
+    "pdx_johnson_creek_unmeasured",
+    "pdx_special_building_setback",
     "raleigh_hills_asc_u",
     "rockwood_design_district",
     "sandy_bornstedt_village",

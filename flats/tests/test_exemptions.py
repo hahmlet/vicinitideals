@@ -155,11 +155,16 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 458, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
 # 455 -> 458 stated on 2026-10-31 (FOLLOWUPS 109 chunk 9, Sandy Bornstedt Village): R-1, R-2
 # and R-3 gain min_average_lot_width_ft exempt off 17.36.30/17.38.30/17.40.30's "No minimum"
 # for row houses, with the overlay's 30/20/20 ft as variants behind the traced
 # sandy_bornstedt_village fact -- a hold, never a release.
+# 455 -> 467 stated on 2026-11-01 (FOLLOWUPS 109, Portland plan districts part 1):
+# twelve Johnson Creek Basin zone blocks state no impervious-surface cap outside the
+# South subdistrict and the flood hazard area, citing 33.537.020, whose own words
+# exempt a flood-hazard site from 33.537.140; the 50 percent cap is the variant.
+# 467 -> 470 on merge: both of the above (3 Sandy + 12 Johnson Creek on 455).
+EXPECTED = {"stated": 470, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
