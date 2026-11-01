@@ -1822,7 +1822,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-EAST-HILLSBORO-CITY-STANDARDS:
-    description: "Whether the lot is one of the county R-5 lots in the East Hillsboro Community Plan's Reedville or Tualatin Valley Highway Corridor subareas, where proposals must address the city of Hillsboro's development standards and the stricter of the county's and Hillsboro's Low Density Residential figures governs each check (Steph 2026-10-31, FOLLOWUPS 138)"
+    description: "Whether the lot is one of the county R-5 or R-24 lots in the East Hillsboro Community Plan's Reedville or Tualatin Valley Highway Corridor subareas, where proposals must address the city of Hillsboro's development standards and the stricter of the county's and Hillsboro's Low Density Residential figures governs each check (Steph 2026-10-31, FOLLOWUPS 138), and the three R-24 lots there that Hillsboro's Comprehensive Plan map designates RH, where MR-2's figures are laid over the county's the same way"
     kind: categorical
     risk: possible
     # Lot size, width, depth, yards, height, coverage, density and parking turn on it.

@@ -495,9 +495,10 @@ def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
     data = _c7_file("washington_plan_rule_unmeasured")
     feats = data["features"]
     # 101 from chunk 7, 381 from the chunk 6 re-read (FOLLOWUPS 135), 65 from chunk 8,
-    # less the 17 East Hillsboro R-5 lots FOLLOWUPS 138 moved to the overlay (2026-10-31).
-    assert len(feats) == 530
-    assert len({f["properties"]["taxlot"] for f in feats}) == 530
+    # less the 17 East Hillsboro R-5 lots FOLLOWUPS 138 moved to the overlay (2026-10-31),
+    # and the three R-24 lots it moved there the same day (mapped RH, so MR-2).
+    assert len(feats) == 527
+    assert len({f["properties"]["taxlot"] for f in feats}) == 527
     plans = {f["properties"]["plan"] for f in feats}
     assert plans == {"Raleigh Hills - Garden Home", "Bull Mountain", *C6_PLANS, "Metzger - Progress", "East Hillsboro"}
     for f in feats:
@@ -509,7 +510,7 @@ def test_every_held_lot_is_whole_residential_and_names_its_rule() -> None:
     for rule in ("ASC S", "ASC T", "ASC M", "ASC U", "ASC 1", "Pacific Highway", "pedestrian",
                  "ASC 10", "ASC 6", "ASC 8", "ASC 3", "Winterborne", "Willow Creek"):
         assert rule in whys, rule
-    assert sum(data["source"]["counts"].values()) == 530
+    assert sum(data["source"]["counts"].values()) == 527
 
 
 def test_a_held_lot_is_inside_and_a_lot_off_the_maps_is_not() -> None:
@@ -767,15 +768,15 @@ def test_the_chunk_8_lots_are_held() -> None:
 
     pr = {f["properties"]["taxlot"]: f for f in _c7_file("washington_plan_rule_unmeasured")["features"]}
     held = collections.Counter(f["properties"]["plan"] for f in pr.values())
-    # 21 until FOLLOWUPS 138 (2026-10-31) moved the 17 R-5 lots to the overlay file.
-    assert held["Metzger - Progress"] == 44 and held["East Hillsboro"] == 4
+    # 21 until FOLLOWUPS 138 (2026-10-31) moved the 17 R-5 lots, then the 3 R-24 lots, to the overlay file.
+    assert held["Metzger - Progress"] == 44 and held["East Hillsboro"] == 1
     for tl in ("1S126AC02400", "1S126AD04300"):
         assert "Oleson" in pr[tl]["properties"]["why"], tl
     assert "Hall" in pr["1S126DA06900"]["properties"]["why"]
     assert pr["1S136BD03100"]["properties"]["zone"] == "R-5"
     assert sum(f["properties"]["zone"] == "TO:R18-24" for f in pr.values()) == 28
     hillsboro = [f for f in pr.values() if f["properties"]["plan"] == "East Hillsboro"]
-    assert sorted(f["properties"]["zone"] for f in hillsboro) == ["R-15", "R-24", "R-24", "R-24"]
+    assert sorted(f["properties"]["zone"] for f in hillsboro) == ["R-15"]
     assert all("Hillsboro" in f["properties"]["why"] for f in hillsboro)
     lot = shape(pr["1S126AC02400"]["geometry"])
     zone = pr["1S126AC02400"]["properties"]["zone"]
@@ -854,14 +855,16 @@ def test_east_hillsboro_r5_lots_take_the_stricter_of_county_and_hillsboro() -> N
                       .read_text(encoding="utf-8"))
     assert data["source"]["drawn"] is True
     feats = data["features"]
-    assert len(feats) == 17 and {f["properties"]["zone"] for f in feats} == {"R-5"}
+    # 2026-10-31 (FOLLOWUPS 138 R-24): the three R-24 lots joined, mapped RH (MR-2).
+    assert len(feats) == 17 + 3
+    assert collections.Counter(f["properties"]["zone"] for f in feats) == {"R-5": 17, "R-24": 3}
     facts = _nb_facts("R-5", shape(feats[0]["geometry"]))
     # The overlay answers the hold the plan put on these lots: they are no longer held.
     assert facts[eh] is True and facts["washington_plan_rule_unmeasured"] is False
     # 1S123AA00100 is Raleigh Hills - Garden Home's ASC U lot, not East Hillsboro's
     # (Steph 2026-10-31 'Yellow with flag'): outside the overlay, still held.
     assert "1S123AA00100" not in {f["properties"]["taxlot"] for f in feats}
-    assert all(f["properties"]["taxlot"].startswith("1S211BB") for f in feats)
+    assert all(f["properties"]["taxlot"].startswith("1S211BB") for f in feats if f["properties"]["zone"] == "R-5")
     held = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson")
                       .read_text(encoding="utf-8"))
     (rh,) = [f for f in held["features"] if f["properties"]["taxlot"] == "1S123AA00100"]
@@ -870,3 +873,75 @@ def test_east_hillsboro_r5_lots_take_the_stricter_of_county_and_hillsboro() -> N
     rh_facts = _nb_facts("R-5", shape(rh["geometry"]))
     assert rh_facts[eh] is False and rh_facts["washington_plan_rule_unmeasured"] is True
     assert rh_facts["raleigh_hills_asc_u"] is True
+
+
+def test_east_hillsboro_r24_lots_take_the_stricter_of_county_and_hillsboro_mr2() -> None:
+    """Steph 2026-10-31: Hillsboro's plan map, where it names the designation,
+    picks the zone; it maps the three R-24 lots RH, which MR-2 implements."""
+    import json
+
+    from shapely.geometry import shape
+
+    from flats.encode.load import load_trusted
+    from flats.rules import loader
+
+    rules = load_trusted(strict=False).rules
+    lot = {"lot_sqft": 9_502.0, "lot_width_ft": 70.0}
+    eh = "east_hillsboro_city_standards"
+
+    def res(*held: str) -> dict:
+        return rules.resolve(WASHINGTON, "R-24", held, lot=lot).values
+
+    def got(*held: str) -> dict:
+        return {k: v.value for k, v in res(*held).items()}
+
+    plain, inside = got(), got(eh)
+    # Outside the subareas the county district is as it was.
+    assert (plain["min_lot_sqft"], plain["setback_front_ft"], plain["max_height_ft"]) == (7000, 10, 35)
+    for name in ("min_density_du_per_acre", "max_density_du_per_acre", "min_lot_width_ft", "min_lot_depth_ft",
+                 "max_coverage_pct", "parking_max_per_unit", "parking_alley_access_required", "min_frontage_ft"):
+        assert name not in plain, name
+    # Inside, MR-2 where it is stricter (Table 12.22.250-1).
+    assert inside["min_lot_sqft"] == 8000  # 2,000 a unit, four units
+    assert inside["min_density_du_per_acre"] == 17
+    # MR-2's 21.25 ceiling is stated, but on a plex the state lock wins: OAR
+    # 660-046-0220(2)(b), preempts always (the county's own "not a consideration").
+    assert "max_density_du_per_acre" not in inside
+    assert inside["setback_front_ft"] == 15 and inside["max_height_ft"] == 30.0  # 3 stories at 10 ft
+    assert (inside["min_lot_width_ft"], inside["min_lot_depth_ft"], inside["min_frontage_ft"]) == (55, 85, 25)
+    assert inside["max_coverage_pct"] == 50 and inside["parking_max_per_unit"] == 2
+    assert inside["parking_lot_line_buffer_ft"] == 4 and inside["parking_alley_access_required"] is True
+    assert inside["front_lot_line_corner"] == "both"
+    # The county's figure stays where it is the stricter one.
+    assert (inside["setback_side_ft"], inside["setback_rear_ft"], inside["setback_street_side_ft"]) == (5, 12, 8)
+    assert inside["setback_garage_entrance_ft"] == 20
+    # MR-2 prints its densities per net acre; the overlay keeps Hillsboro's net acre.
+    r = res(eh)
+    assert r["min_density_du_per_acre"].measured_on == "net_developable_area"
+    assert r["min_density_du_per_acre"].net_area is not None
+    ru = res(eh, "unit_lots")["max_density_du_per_acre"]
+    assert ru.measured_on == "net_developable_area" and ru.net_area is not None
+    assert got(eh, "attached_wall")["setback_side_ft"] == 5
+    units = got(eh, "unit_lots")
+    assert units["max_density_du_per_acre"] == 21.25 and units["min_frontage_ft"] == 25
+    assert units["min_lot_sqft"] == 8000 and units["max_coverage_pct"] == 75
+
+    data = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/east-hillsboro-city-standards.geojson")
+                      .read_text(encoding="utf-8"))
+    r24 = {f["properties"]["taxlot"]: f for f in data["features"] if f["properties"]["zone"] == "R-24"}
+    assert set(r24) == {"1S211BC00100", "1S211BC00102", "1S211BC00103"}
+    assert all("RH" in f["properties"]["why"] for f in r24.values())
+    facts = _nb_facts("R-24", shape(r24["1S211BC00103"]["geometry"]))
+    assert facts[eh] is True and facts["washington_plan_rule_unmeasured"] is False
+    # The R-15 lot, RM on the city's map, stays held.
+    held = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson")
+                      .read_text(encoding="utf-8"))
+    eh_held = [f["properties"] for f in held["features"] if f["properties"]["plan"] == "East Hillsboro"]
+    assert [(p["taxlot"], p["zone"]) for p in eh_held] == [("1S202CC01100", "R-15")]
+    # The evidence is kept beside the trace.
+    meta = json.loads((loader.AREAS_ROOT / "or/washington/_unincorporated/hillsboro-comprehensive-plan-land-use.layer21.meta.json")
+                      .read_text(encoding="utf-8"))
+    import hashlib
+    raw = (loader.AREAS_ROOT / "or/washington/_unincorporated" / meta["file"]).read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == meta["sha256"]
+    assert {f["attributes"]["COMP_DESCR"] for f in json.loads(raw)["features"]} == {"RH", "C"}

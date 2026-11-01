@@ -1,0 +1,11 @@
+{
+  "status": "evidence for a traced area (east-hillsboro-city-standards.geojson, the R-24 lots)",
+  "source_url": "https://gis.hillsboro-oregon.gov/public/rest/services/public/LandUseGallery_Prod/MapServer/21/query?geometry=7585936.0%2C677459.9%2C7586229.9%2C677660.8&geometryType=esriGeometryEnvelope&inSR=2913&outSR=2913&spatialRel=esriSpatialRelIntersects&outFields=COMP_DESCR%2COBJECTID&returnGeometry=true&f=json",
+  "service": "City of Hillsboro LandUseGallery_Prod MapServer, layer 21 (Comprehensive Plan Land Use, field COMP_DESCR)",
+  "file": "hillsboro-comprehensive-plan-land-use.layer21.json",
+  "retrieved": "2026-10-31",
+  "sha256": "f884e461425d142d624d7565603850c04fda0b8dce32b0daf1711e594461ef8c",
+  "crs": "EPSG:2913",
+  "result": "Two plan polygons meet the envelope of 1S211BC00100, 00102 and 00103: RH (OBJECTID 121) and C (OBJECTID 213). Share of each lot (lot outlines of washington-plan-rule-unmeasured-lots.geojson): 1S211BC00100 RH 1.000, C 0.002; 1S211BC00102 RH 0.9999, C 0.0004; 1S211BC00103 RH 1.000. Layers 23 (zoning) and 24 (city limits), queried the same day, meet each lot only along its edge (at most 0.14 percent): the lots are outside the city and carry no city zone. 1S202CC01100 (county R-15) is RM on the same layer.",
+  "note": "Hillsboro CDC 12.22.020 B: MR-2 implements the RH High Density Residential Plan designation (or/washington/hillsboro/12.22/12.22.020.txt#L2,L4). Steph 2026-10-31 (rulings.yaml 2026-10-31-east-hillsboro-r24-zone-unsettled-yellow-with-flag): the city's planning designation, where mapped, picks the Hillsboro zone."
+}

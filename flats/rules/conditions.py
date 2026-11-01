@@ -1182,7 +1182,7 @@ _C: tuple[ConditionDef, ...] = (
     ConditionDef(
         "east_hillsboro_city_standards",
         "site_fact",
-        "The lot is an R-5 lot in the Reedville or Tualatin Valley Highway "
+        "The lot is an R-5 or R-24 lot in the Reedville or Tualatin Valley Highway "
         "Corridor subarea of the East Hillsboro Community Plan, whose design "
         "elements make development proposals 'address the city of "
         "Hillsboro's development standards'. Steph 2026-10-31: an overlay -- "
@@ -1190,12 +1190,16 @@ _C: tuple[ConditionDef, ...] = (
         "Hillsboro standards, the stricter governing each check. The county "
         "R-5 district takes Hillsboro's Low Density Residential zones (R-10, "
         "R-8.5, R-7, R-6), the strictest figure of the four on each standard "
-        "(FOLLOWUPS 138). Answered from the plan's subarea bounds, traced as "
-        "Washington County's drawn_areas (FOLLOWUPS 109 chunk 8).",
+        "(FOLLOWUPS 138). The subareas' three county R-24 lots, which the "
+        "City of Hillsboro Comprehensive Plan map designates RH, take MR-2, "
+        "which implements RH (Hillsboro CDC 12.22.020 B). Answered from the "
+        "plan's subarea bounds, traced as Washington County's drawn_areas "
+        "(FOLLOWUPS 109 chunk 8), and the city's plan map (2026-10-31).",
         evidence=(
             "Map 2 (Subareas) and the subarea text of the East Hillsboro "
             "Community Plan (Washington County, November 2024 edition), traced "
-            "2026-10-31"
+            "2026-10-31; City of Hillsboro Comprehensive Plan Land Use "
+            "(LandUseGallery_Prod MapServer layer 21), queried 2026-10-31"
         ),
         assume=None,
     ),

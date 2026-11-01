@@ -2309,3 +2309,6 @@
   source: Steph 2026-10-31 (chat), docs/followups/138-east-hillsboro-city-standards.md
   encoded_in:
     - flats/config/areas/or/washington/_unincorporated/washington-plan-rule-unmeasured-lots.geojson
+    - flats/config/areas/or/washington/_unincorporated/east-hillsboro-city-standards.geojson
+    - flats/config/areas/or/washington/_unincorporated/hillsboro-comprehensive-plan-land-use.layer21.json
+    - flats/config/jurisdictions/or/washington/_unincorporated.yaml

@@ -16,12 +16,13 @@
    "unincorporated": "Washington County Unincorporated Area (LUT_PDS/Base_Layers/MapServer/27); a lot counts when at least half of it is unincorporated land inside the plan boundary",
    "streets": "Washington County street centrelines (LUT_PDS/Base_Layers/MapServer/1, FDPRE FNAME FTYPE), fetched 2026-10-30; the chunk 6 envelopes fetched 2026-10-31; the chunk 8 envelopes fetched 2026-10-31"
   },
-  "traced_by": "Claude (districts-c8 worker, FOLLOWUPS 109 chunk 8); moved by Claude (east-hillsboro worker, FOLLOWUPS 138)",
+  "traced_by": "Claude (districts-c8 worker, FOLLOWUPS 109 chunk 8); moved by Claude (east-hillsboro worker, FOLLOWUPS 138); R-24 lots moved by Claude (east-hillsboro-r24 worker, FOLLOWUPS 138)",
   "traced_on": "2026-10-31",
   "drawn": true,
-  "how": "The R-5 lots between Baseline Road and the Tualatin Valley Highway west of 219th Avenue (Cornelius Pass Road), which are the Reedville and Tualatin Valley Highway Corridor subareas by the text's bounds (#L821-L824, L863-L866), whose design elements 5 and 3 make development proposals 'address the city of Hillsboro's development standards' (#L854, L883). Steph 2026-10-31 (rulings.yaml 2026-10-31-east-hillsboro-city-standards-are-an-overlay): an overlay, screened against both the county zone and the Hillsboro standards, the stricter governing each check. The features and geometry are chunk 8's, unchanged; only the file they sit in moved.",
+  "how": "The R-5 lots between Baseline Road and the Tualatin Valley Highway west of 219th Avenue (Cornelius Pass Road), which are the Reedville and Tualatin Valley Highway Corridor subareas by the text's bounds (#L821-L824, L863-L866), whose design elements 5 and 3 make development proposals 'address the city of Hillsboro's development standards' (#L854, L883). Steph 2026-10-31 (rulings.yaml 2026-10-31-east-hillsboro-city-standards-are-an-overlay): an overlay, screened against both the county zone and the Hillsboro standards, the stricter governing each check. The features and geometry are chunk 8's, unchanged; only the file they sit in moved. FOLLOWUPS 138 R-24 (2026-10-31, rulings.yaml 2026-10-31-east-hillsboro-r24-zone-unsettled-yellow-with-flag: the city's planning designation, where mapped, picks the Hillsboro zone): the three R-24 lots of the same subareas (1S211BC00100, 1S211BC00102, 1S211BC00103) moved here whole from washington-plan-rule-unmeasured-lots.geojson, geometry unchanged. Query: City of Hillsboro LandUseGallery_Prod MapServer layer 21 (Comprehensive Plan Land Use, field COMP_DESCR), envelope 7585936.0,677459.9,7586229.9,677660.8 in EPSG:2913, spatialRel intersects, outSR 2913, returnGeometry true, retrieved 2026-10-31 (response kept as hillsboro-comprehensive-plan-land-use.layer21.json, sha256 f884e461425d142d624d7565603850c04fda0b8dce32b0daf1711e594461ef8c, with its .meta.json). Result: two plan polygons, RH (OBJECTID 121) and C (OBJECTID 213); RH covers 1S211BC00100 1.000 (C 0.002), 1S211BC00102 0.9999 (C 0.0004) and 1S211BC00103 1.000 of the lot. Layers 23 (zoning) and 24 (city limits) meet each lot only along its edge (at most 0.14 percent): outside the city, no city zone. Hillsboro CDC 12.22.020 B: 'MR-2 implements the RH High Density Residential Plan designation'. County R-24 there takes Hillsboro MR-2's standards wherever stricter.",
   "counts": {
-   "East Hillsboro|R-5": 17
+   "East Hillsboro|R-5": 17,
+   "East Hillsboro|R-24": 3
   }
  },
  "features": [
@@ -795,6 +796,175 @@
       [
        7586265.74,
        678627.46
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BC00100",
+    "zone": "R-24",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; the City of Hillsboro Comprehensive Plan Land Use map designates the lot RH High Density Residential, which MR-2 implements (Hillsboro CDC 12.22.020 B), so it is screened against both the county R-24 district and Hillsboro's MR-2 zone, the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586222.39,
+       677459.86
+      ],
+      [
+       7586089.9,
+       677465.76
+      ],
+      [
+       7586093.4,
+       677547.68
+      ],
+      [
+       7586223.46,
+       677541.9
+      ],
+      [
+       7586225.96,
+       677541.78
+      ],
+      [
+       7586222.39,
+       677459.86
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BC00102",
+    "zone": "R-24",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; the City of Hillsboro Comprehensive Plan Land Use map designates the lot RH High Density Residential, which MR-2 implements (Hillsboro CDC 12.22.020 B), so it is screened against both the county R-24 district and Hillsboro's MR-2 zone, the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586223.46,
+       677541.9
+      ],
+      [
+       7586093.4,
+       677547.68
+      ],
+      [
+       7586089.9,
+       677465.76
+      ],
+      [
+       7586085.9,
+       677465.93
+      ],
+      [
+       7585936.05,
+       677472.6
+      ],
+      [
+       7585939.21,
+       677546.53
+      ],
+      [
+       7585942.24,
+       677617.47
+      ],
+      [
+       7585942.34,
+       677619.97
+      ],
+      [
+       7585977.31,
+       677618.41
+      ],
+      [
+       7586017.27,
+       677616.63
+      ],
+      [
+       7586092.2,
+       677613.3
+      ],
+      [
+       7586091.24,
+       677590.82
+      ],
+      [
+       7586225.33,
+       677584.85
+      ],
+      [
+       7586223.46,
+       677541.9
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "taxlot": "1S211BC00103",
+    "zone": "R-24",
+    "plan": "East Hillsboro",
+    "answer": "inside",
+    "drawn_share_of_lot": 1,
+    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards'; the City of Hillsboro Comprehensive Plan Land Use map designates the lot RH High Density Residential, which MR-2 implements (Hillsboro CDC 12.22.020 B), so it is screened against both the county R-24 district and Hillsboro's MR-2 zone, the stricter governing each standard",
+    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       7586226.82,
+       677584.79
+      ],
+      [
+       7586225.33,
+       677584.85
+      ],
+      [
+       7586091.24,
+       677590.82
+      ],
+      [
+       7586092.2,
+       677613.3
+      ],
+      [
+       7586094.22,
+       677660.76
+      ],
+      [
+       7586225.1,
+       677654.93
+      ],
+      [
+       7586229.86,
+       677654.72
+      ],
+      [
+       7586226.82,
+       677584.79
       ]
      ]
     ]

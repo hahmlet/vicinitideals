@@ -19,7 +19,7 @@
   "traced_by": "Claude (districts-c7 worker, FOLLOWUPS 109 chunk 7); Claude (districts-c6b worker, FOLLOWUPS 135, chunk 6 re-read); Claude (districts-c8 worker, FOLLOWUPS 109 chunk 8, FOLLOWUPS 137)",
   "traced_on": "2026-10-30, 2026-10-31",
   "drawn": true,
-  "how": "Both Map 5.1 sheets are ArcGIS Pro GeoPDFs: the Areas_of_Special_Concern frame carries a /VP viewport with its corner coordinates (NAD83 HARN geographic, projected to EPSG:2913); a page-to-ground affine was fitted to them (residual 0.57 ft Raleigh Hills, 0.09 ft Bull Mountain) and the pink-filled ASC outlines (RGB 1, 0.745, 0.745) were read out of the page as vector paths. Each outline took the red Arial-Bold letter or numeral within 50 ft of it; Raleigh Hills prints no letter near some outlines, and an outline more than 600 ft from every letter is 'unlabelled'. A lot is in an ASC when at least 90 percent of it lies inside the outline, and the lots an outline cuts (more than 10 percent inside) are carried too, whole. This file holds, whole, the residential lots (R-5 to R-25+) on which a plan rule binds a pod that the screen cannot measure: Raleigh Hills ASC S and T lots whose boundary runs at least 15 ft within 40 ft of the Mayo Street or Florence Lane centreline or 60 ft of Taylors Ferry Road's (the access-point caps bind only those streets); every ASC M lot (one access point on Raab Road for the whole ASC; ASC I's bar on permanent highway access reaches no residential lot); the residential lots inside the commercial-strip ASCs (E, H, K, L and the unlettered outlines within 600 ft of those letters) that abut Canyon Road, Beaverton - Hillsdale Highway, Scholls Ferry Road or Oleson Road (Type 1 landscape buffer, CDC 411 not stored); the ASC U lot (Case #74-96C conditions); every lot of an unlettered outline more than 600 ft from any letter (two outlines: at Walker Road and Highway 217, ASC C by the text, and one lot west of SW 103rd Avenue); the lots Map 8.1 shades in its one drawn pedestrian connectivity area (magenta fill RGB 1, 0.451, 0.875, read as vector paths; more than 10 percent of the lot) and, for area 3, which no map draws, every lot meeting a 40 ft buffer of the straight line between the nearest points of the Dogwood Lane and Raleighwood Way centrelines and of Dogwood Lane and Sharon Lane (a judgement trace: the plan places the trail in words only; area 1's Laurel Street already meets Laurelwood Avenue and Maple Drive's gap crosses no lot); Bull Mountain ASC 1, every lot inside or cut (the easterly portion is not drawn, so the traffic-study bar is held on all of it, with the three-access-point cap); the residential lot fronting Pacific Highway (within 60 ft, 15 ft of boundary); and the two parcels Bull Mountain's Map 8.1 shades for the Baker Lane / Sunrise Lane area. Bull Mountain's Map 8.1 is a raster: page 11 was rendered at 432 dpi, magenta pixels (R>220, 70<G<160, B>180) inside the main frame were placed by the frame's affine (4.6 ft a pixel), and a lot is shaded when they cover more than 10 percent of it (the two cover 0.88 and 0.84). Chunk 6 re-read (2026-10-31). The Pedestrian Connectivity sheets of Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany are rasters on the same template: each frame's /VP viewport gave its affine, the page was rendered at 432 dpi, each area's own fill (within 10 of its RGB, closed by 3 pixels) was placed on a 5 ft ground grid, and a residential lot (R-5 to R-24) is held, whole, when its shaded share of the area 6 ft in from its lines is more than 10 percent. Aloha's map numbers its areas 3 and 4 the other way round from the text; each lot names the text's area by place. Aloha areas 1 and 2 hold only section 1S117 (stray same-colour pixels elsewhere fall on no area the text names); area 5 shades only NMU and CCMU lots, which a review already holds. Sunset West's text defines pedestrian connectivity areas but lists none; its map shades the 176th Avenue parcels the Bethany plan names as its area 2 and whose facilities 'shall be constructed as part of the development of the affected properties', so they are held on both texts. The Areas of Special Concern sheets are vector GeoPDFs read as Raleigh Hills' were (pink outline, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: Aloha ASC 10, every lot (its tax lot 5800 buffer and Hargis Road bar sit on land since divided, so no current lot can be told apart); Aloha's Tax Lot 1400 on Map 1S2 24AC (Winterborne Park access improved with its development); Cedar Hills ASC 6 (six lots, shared Barnes Road access) and ASC 8's residential lots (access only from Miller Road, shared); Sunset West ASC 3's one residential lot, which fronts Cornell Road (60 ft of the centreline); and the Cedar Hills Willow Creek Subarea lots (its outline read as vector fill RGB 0.537, 0.267, 0.396; at least half the lot inside) whose boundary runs at least 15 ft within 40 ft of the NW Saltzman, NW Thompson or NW 143rd centreline and of another street's, since direct access onto those three 'shall be prohibited unless no alternatives exist'. A lot fronting only one of the three has no alternative and is not held. Chunk 8 (2026-10-31). Metzger - Progress Map 5.1 is a vector GeoPDF read as Raleigh Hills' was (pink fill, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: ASC 1's lots fronting SW Oleson Road (direct access limited to SW 89th Avenue) and ASC 2's lots fronting SW Hall Boulevard (access from Cedarcrest Street - SW 91st Avenue, not Hall), each fronting meaning at least 15 ft of lot line within 60 ft of the centreline; the TO:R18-24 lots of two outlines east of ASC 2 that carry no number and match no ASC the text describes (the text puts ASC 18 on the TO:R9-12 parcels, which the third outline there holds); and the R-5 lots of the outline numbered 12, an ASC the text never names. East Hillsboro: the R-5 to R-24 lots between Baseline Road and the Tualatin Valley Highway west of 219th Avenue (Cornelius Pass Road), which are the Reedville and Tualatin Valley Highway Corridor subareas by the text's bounds (#L821-L824, L863-L866), whose design elements 5 and 3 make development proposals 'address the city of Hillsboro's development standards' (#L854, L883); those standards are not held. The plan's other residential lots are former Urban Intermediate Area pockets in no subarea, which carry only the general design elements. FOLLOWUPS 138 (2026-10-31): the 17 East Hillsboro R-5 lots moved to east-hillsboro-city-standards.geojson, where Hillsboro's Low Density Residential standards are laid over the county's; the three R-24 lots and the one R-15 lot stay here, their Hillsboro zone not stated.",
+  "how": "Both Map 5.1 sheets are ArcGIS Pro GeoPDFs: the Areas_of_Special_Concern frame carries a /VP viewport with its corner coordinates (NAD83 HARN geographic, projected to EPSG:2913); a page-to-ground affine was fitted to them (residual 0.57 ft Raleigh Hills, 0.09 ft Bull Mountain) and the pink-filled ASC outlines (RGB 1, 0.745, 0.745) were read out of the page as vector paths. Each outline took the red Arial-Bold letter or numeral within 50 ft of it; Raleigh Hills prints no letter near some outlines, and an outline more than 600 ft from every letter is 'unlabelled'. A lot is in an ASC when at least 90 percent of it lies inside the outline, and the lots an outline cuts (more than 10 percent inside) are carried too, whole. This file holds, whole, the residential lots (R-5 to R-25+) on which a plan rule binds a pod that the screen cannot measure: Raleigh Hills ASC S and T lots whose boundary runs at least 15 ft within 40 ft of the Mayo Street or Florence Lane centreline or 60 ft of Taylors Ferry Road's (the access-point caps bind only those streets); every ASC M lot (one access point on Raab Road for the whole ASC; ASC I's bar on permanent highway access reaches no residential lot); the residential lots inside the commercial-strip ASCs (E, H, K, L and the unlettered outlines within 600 ft of those letters) that abut Canyon Road, Beaverton - Hillsdale Highway, Scholls Ferry Road or Oleson Road (Type 1 landscape buffer, CDC 411 not stored); the ASC U lot (Case #74-96C conditions); every lot of an unlettered outline more than 600 ft from any letter (two outlines: at Walker Road and Highway 217, ASC C by the text, and one lot west of SW 103rd Avenue); the lots Map 8.1 shades in its one drawn pedestrian connectivity area (magenta fill RGB 1, 0.451, 0.875, read as vector paths; more than 10 percent of the lot) and, for area 3, which no map draws, every lot meeting a 40 ft buffer of the straight line between the nearest points of the Dogwood Lane and Raleighwood Way centrelines and of Dogwood Lane and Sharon Lane (a judgement trace: the plan places the trail in words only; area 1's Laurel Street already meets Laurelwood Avenue and Maple Drive's gap crosses no lot); Bull Mountain ASC 1, every lot inside or cut (the easterly portion is not drawn, so the traffic-study bar is held on all of it, with the three-access-point cap); the residential lot fronting Pacific Highway (within 60 ft, 15 ft of boundary); and the two parcels Bull Mountain's Map 8.1 shades for the Baker Lane / Sunrise Lane area. Bull Mountain's Map 8.1 is a raster: page 11 was rendered at 432 dpi, magenta pixels (R>220, 70<G<160, B>180) inside the main frame were placed by the frame's affine (4.6 ft a pixel), and a lot is shaded when they cover more than 10 percent of it (the two cover 0.88 and 0.84). Chunk 6 re-read (2026-10-31). The Pedestrian Connectivity sheets of Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West and Bethany are rasters on the same template: each frame's /VP viewport gave its affine, the page was rendered at 432 dpi, each area's own fill (within 10 of its RGB, closed by 3 pixels) was placed on a 5 ft ground grid, and a residential lot (R-5 to R-24) is held, whole, when its shaded share of the area 6 ft in from its lines is more than 10 percent. Aloha's map numbers its areas 3 and 4 the other way round from the text; each lot names the text's area by place. Aloha areas 1 and 2 hold only section 1S117 (stray same-colour pixels elsewhere fall on no area the text names); area 5 shades only NMU and CCMU lots, which a review already holds. Sunset West's text defines pedestrian connectivity areas but lists none; its map shades the 176th Avenue parcels the Bethany plan names as its area 2 and whose facilities 'shall be constructed as part of the development of the affected properties', so they are held on both texts. The Areas of Special Concern sheets are vector GeoPDFs read as Raleigh Hills' were (pink outline, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: Aloha ASC 10, every lot (its tax lot 5800 buffer and Hargis Road bar sit on land since divided, so no current lot can be told apart); Aloha's Tax Lot 1400 on Map 1S2 24AC (Winterborne Park access improved with its development); Cedar Hills ASC 6 (six lots, shared Barnes Road access) and ASC 8's residential lots (access only from Miller Road, shared); Sunset West ASC 3's one residential lot, which fronts Cornell Road (60 ft of the centreline); and the Cedar Hills Willow Creek Subarea lots (its outline read as vector fill RGB 0.537, 0.267, 0.396; at least half the lot inside) whose boundary runs at least 15 ft within 40 ft of the NW Saltzman, NW Thompson or NW 143rd centreline and of another street's, since direct access onto those three 'shall be prohibited unless no alternatives exist'. A lot fronting only one of the three has no alternative and is not held. Chunk 8 (2026-10-31). Metzger - Progress Map 5.1 is a vector GeoPDF read as Raleigh Hills' was (pink fill, nearest red label within 50 ft, a lot more than 10 percent inside carried whole). Held: ASC 1's lots fronting SW Oleson Road (direct access limited to SW 89th Avenue) and ASC 2's lots fronting SW Hall Boulevard (access from Cedarcrest Street - SW 91st Avenue, not Hall), each fronting meaning at least 15 ft of lot line within 60 ft of the centreline; the TO:R18-24 lots of two outlines east of ASC 2 that carry no number and match no ASC the text describes (the text puts ASC 18 on the TO:R9-12 parcels, which the third outline there holds); and the R-5 lots of the outline numbered 12, an ASC the text never names. East Hillsboro: the R-5 to R-24 lots between Baseline Road and the Tualatin Valley Highway west of 219th Avenue (Cornelius Pass Road), which are the Reedville and Tualatin Valley Highway Corridor subareas by the text's bounds (#L821-L824, L863-L866), whose design elements 5 and 3 make development proposals 'address the city of Hillsboro's development standards' (#L854, L883); those standards are not held. The plan's other residential lots are former Urban Intermediate Area pockets in no subarea, which carry only the general design elements. FOLLOWUPS 138 (2026-10-31): the 17 East Hillsboro R-5 lots moved to east-hillsboro-city-standards.geojson, where Hillsboro's Low Density Residential standards are laid over the county's; the one R-15 lot stays here, its Hillsboro zone not settled (FOLLOWUPS 138, 2026-10-31: the three R-24 lots moved there too, the city's Comprehensive Plan map designating them RH, which MR-2 implements; the R-15 lot is RM on that map, which MR-1 implements only in part, 12.22.020 A).",
   "counts": {
    "Aloha - Reedville - Cooper Mountain|R-15": 24,
    "Aloha - Reedville - Cooper Mountain|R-24": 3,
@@ -35,7 +35,6 @@
    "Cedar Hills - Cedar Mill|R-6": 48,
    "Cedar Hills - Cedar Mill|R-9": 2,
    "East Hillsboro|R-15": 1,
-   "East Hillsboro|R-24": 3,
    "Metzger - Progress|R-5": 13,
    "Metzger - Progress|R-9": 3,
    "Metzger - Progress|TO:R18-24": 28,
@@ -34959,175 +34958,6 @@
       [
        7586307.34,
        679581.09
-      ]
-     ]
-    ]
-   }
-  },
-  {
-   "type": "Feature",
-   "properties": {
-    "taxlot": "1S211BC00100",
-    "zone": "R-24",
-    "plan": "East Hillsboro",
-    "answer": "inside",
-    "drawn_share_of_lot": 1,
-    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards' (an overlay, Steph 2026-10-31, FOLLOWUPS 138), and neither the plan nor the county code says which Hillsboro zone an R-24 lot answers to: MR-2 (17 to 21.25 du/na) and MR-3 (from 23 du/na) give a four-unit building density ranges that do not overlap, so the city's standards are not held here",
-    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
-   },
-   "geometry": {
-    "type": "Polygon",
-    "coordinates": [
-     [
-      [
-       7586222.39,
-       677459.86
-      ],
-      [
-       7586089.9,
-       677465.76
-      ],
-      [
-       7586093.4,
-       677547.68
-      ],
-      [
-       7586223.46,
-       677541.9
-      ],
-      [
-       7586225.96,
-       677541.78
-      ],
-      [
-       7586222.39,
-       677459.86
-      ]
-     ]
-    ]
-   }
-  },
-  {
-   "type": "Feature",
-   "properties": {
-    "taxlot": "1S211BC00102",
-    "zone": "R-24",
-    "plan": "East Hillsboro",
-    "answer": "inside",
-    "drawn_share_of_lot": 1,
-    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards' (an overlay, Steph 2026-10-31, FOLLOWUPS 138), and neither the plan nor the county code says which Hillsboro zone an R-24 lot answers to: MR-2 (17 to 21.25 du/na) and MR-3 (from 23 du/na) give a four-unit building density ranges that do not overlap, so the city's standards are not held here",
-    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
-   },
-   "geometry": {
-    "type": "Polygon",
-    "coordinates": [
-     [
-      [
-       7586223.46,
-       677541.9
-      ],
-      [
-       7586093.4,
-       677547.68
-      ],
-      [
-       7586089.9,
-       677465.76
-      ],
-      [
-       7586085.9,
-       677465.93
-      ],
-      [
-       7585936.05,
-       677472.6
-      ],
-      [
-       7585939.21,
-       677546.53
-      ],
-      [
-       7585942.24,
-       677617.47
-      ],
-      [
-       7585942.34,
-       677619.97
-      ],
-      [
-       7585977.31,
-       677618.41
-      ],
-      [
-       7586017.27,
-       677616.63
-      ],
-      [
-       7586092.2,
-       677613.3
-      ],
-      [
-       7586091.24,
-       677590.82
-      ],
-      [
-       7586225.33,
-       677584.85
-      ],
-      [
-       7586223.46,
-       677541.9
-      ]
-     ]
-    ]
-   }
-  },
-  {
-   "type": "Feature",
-   "properties": {
-    "taxlot": "1S211BC00103",
-    "zone": "R-24",
-    "plan": "East Hillsboro",
-    "answer": "inside",
-    "drawn_share_of_lot": 1,
-    "why": "Reedville or Tualatin Valley Highway Corridor subarea: development proposals 'shall address the city of Hillsboro's development standards' (an overlay, Steph 2026-10-31, FOLLOWUPS 138), and neither the plan nor the county code says which Hillsboro zone an R-24 lot answers to: MR-2 (17 to 21.25 du/na) and MR-3 (from 23 du/na) give a four-unit building density ranges that do not overlap, so the city's standards are not held here",
-    "quote": "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L821-L824,L854,L863-L866,L883"
-   },
-   "geometry": {
-    "type": "Polygon",
-    "coordinates": [
-     [
-      [
-       7586226.82,
-       677584.79
-      ],
-      [
-       7586225.33,
-       677584.85
-      ],
-      [
-       7586091.24,
-       677590.82
-      ],
-      [
-       7586092.2,
-       677613.3
-      ],
-      [
-       7586094.22,
-       677660.76
-      ],
-      [
-       7586225.1,
-       677654.93
-      ],
-      [
-       7586229.86,
-       677654.72
-      ],
-      [
-       7586226.82,
-       677584.79
       ]
      ]
     ]
