@@ -25,6 +25,7 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   lines: Tigard greens >= 297 ft outside, Gladstone R5 greens 88-100% inside.
 
 ## Left
+- 2026-11-01 Steph (80%, OK to 90% this week): "do some overlays, see if we can wrap that up". Chunk 9 (zone-keyed, no maps needed): Clackamas Sunnyside Village 1005.11, Wood Village Town Center street types (Table 235-5), Wilsonville Old Town OTR 4.123 + overlay 4.138 re-ruling, Sandy Bornstedt 17.54 text. In parallel a source scout for the map-keyed ones (chunk 10): Oregon City Park Place 17.21 / South End 17.22 / historic 17.40 boundaries, Sandy 'S' overlay, Wilsonville Old Town overlay outline, Portland plan districts 33.5xx layer + text.
 - Gladstone Portland Ave C-2 strip: rear edge of the Town Center line unconfirmed; 20 cut lots stay
   yellow until a better map turns up.
 - Chunk 6 LIVE run 94 2026-10-30 (main af509800; 32cf3a0e encoding, 550899fa + 12a3b298 Tualatin CO quadfit row):
