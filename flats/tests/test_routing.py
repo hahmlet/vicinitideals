@@ -443,6 +443,31 @@ OPEN = {
     "or/clackamas/happy-valley 16.23.020 -> 16.44.020",
     "or/clackamas/happy-valley 16.25.005 -> 16.44.020",
     "or/clackamas/happy-valley 16.25.010 -> 16.44.020",
+    # 2026-10-31, batch-8 cut of the Washington County CDC: one sentence to a line makes these pointers visible; none read (several name a subsection of their own section, e.g. 390-10 -> 390-10.5, an artefact of the dash numbering).
+    "or/washington/_unincorporated 302-7 -> 418",
+    "or/washington/_unincorporated 303-7 -> 418",
+    "or/washington/_unincorporated 304-7 -> 418",
+    "or/washington/_unincorporated 305-7 -> 418",
+    "or/washington/_unincorporated 306-7 -> 418",
+    "or/washington/_unincorporated 307-7 -> 418",
+    "or/washington/_unincorporated 308-5 -> 308-4.2",
+    "or/washington/_unincorporated 309-5 -> 309-4.2",
+    "or/washington/_unincorporated 311-5 -> 311-3.6",
+    "or/washington/_unincorporated 320-5 -> 320-3.2",
+    "or/washington/_unincorporated 340-4 -> 340-4.3",
+    "or/washington/_unincorporated 344-4 -> 344-4.3",
+    "or/washington/_unincorporated 354-5 -> 354-2.1",
+    "or/washington/_unincorporated 354-5 -> 354-3.1",
+    "or/washington/_unincorporated 375-10 -> 431",
+    "or/washington/_unincorporated 375-4 -> 431",
+    "or/washington/_unincorporated 390-10 -> 390-10.5",
+    "or/washington/_unincorporated 390-16 -> 390-21",
+    "or/washington/_unincorporated 390-16 -> 390-22",
+    "or/washington/_unincorporated 390-6 -> 390-13.3",
+    "or/washington/_unincorporated 390-8 -> 390-8.5",
+    "or/washington/_unincorporated 390-9 -> 390-9.5",
+    "or/washington/_unincorporated 392-9 -> 413",
+    "or/washington/_unincorporated 413-6 -> 413-6.1",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -602,6 +627,14 @@ FOLLOWED = {
     "or/washington/beaverton 20.30.05 -> 20.30.10",
     "or/washington/beaverton 60.05.25 -> 60.05.60",
     "or/washington/beaverton 60.05.60 -> 60.05.15",
+    # 2026-10-31, batch-8 cut of the Washington County CDC: newly visible pointers whose target a value's citation already lands in.
+    "or/washington/_unincorporated 300-2 -> 300-3",
+    "or/washington/_unincorporated 307-6 -> 300-2",
+    "or/washington/_unincorporated 375-10 -> 430-84",
+    "or/washington/_unincorporated 390-10 -> 300-2",
+    "or/washington/_unincorporated 390-11 -> 300-2",
+    "or/washington/_unincorporated 390-8 -> 300-2",
+    "or/washington/_unincorporated 390-9 -> 300-2",
 }
 
 

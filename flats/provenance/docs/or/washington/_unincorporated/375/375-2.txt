@@ -1,0 +1,12 @@
+375-2 Transit Oriented District Names and Acronyms
+The following are the Transit Oriented Districts, by name an d acronym, addressed by this Section:
+Transit Oriented Residential District, 9-12 units per acre (TO:R9-12)
+Transit Oriented Residential District, 12-18 units per acre (TO:R12-18)
+Transit Oriented Residential District, 18-24 units per acre (TO:R18-24)
+Transit Oriented Residential District, 24-40 units per acre (TO:R24-40)
+Transit Oriented Residential District, 40-80 units per acre (TO:R40-80)
+Transit Oriented Residential District, 80-120 units per acre (TO:R80-120)
+Transit Oriented Retail Commercial District (TO:RC)
+Transit Oriented Employment District (TO:EMP)
+Transit Oriented Business District (TO:BUS)
+Throughout the remainder of this Section, individual Transit Oriented Districts will be referenced by acronym rather than name.

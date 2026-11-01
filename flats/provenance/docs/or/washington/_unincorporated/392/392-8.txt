@@ -1,0 +1,41 @@
+392-8 Dimensional Requirements for Pedestrian-Oriented Mixed-Use Districts
+Dimensional requirements for development in the Pedestria n-Oriented
+Mixed-Use Districts are specified in the table below.
+Figure 392-1 provides an illustrative example of setbacks from street-facing lot li nes and frontage occupancy.
+In the event of a conflict between the dimensional requirements of this section and the dimensional requirements of Section 430 (Special Use Standards), the requirements of this section shall control.
+Numerals enclosed in parentheses, such as (1), refer to applicable regulations or clarifications as indicated in the Reference Key.
+DISTRICT
+DIMENSIONAL
+REQUIREMENT NMU CCMU
+Lot Area, Minimum 6,000 square feet 6,000 square feet
+Lot Width, Minimum
+Average
+85 feet 85 feet
+Lot Width at the Access
+Point, Minimum
+40 feet 40 feet
+Lot Depth, Minimum
+Average
+50 feet 50 feet
+Building Height, Minimum N/A N/A
+Building Height,
+Maximum
+65 feet (1) 100 feet
+Setbacks from street-facing front and side lot lines
+Minimum:
+• Ground floor commercial or nonresidential use = zero feet
+• Ground floor residential use = 10 feet
+Maximum: 20 feet (2)
+Setbacks from interior side and rear lot lines
+Zero feet (3) Zero feet (3)
+Street Frontage
+Occupancy
+At least 50% of a site's street frontage(s) must be occupied by a building located no further than the maximum 20-foot setback. (2), (4)
+Reference Key:
+(1) Normal building appurtenances and projections such as spires, belfries, cupolas, chimneys, ventilators, elevator housings or other roof-mounted structures may exceed the 65-foot building height limit to a maximum height of 80 feet.
+(2) For lots with existing buildings, the maximum setback and street frontage occupancy requirements do not apply to new buildings and building additions when the site has less than 25 linear feet of street frontage that does not contain a building within the maximum setback area.
+(3) No minimum interior yard setbacks are required except where abutting a residential district.
+Where abutting a residential district, the side and/or rear yard shall be no less than that required by the abutting district.
+Additional setbacks may be required as specified in Section 411.
+(4) Street frontage occupancy requirements for new development on sites with multiple frontages are addressed in Section 392-9.5, Sites with
+Multiple Street Frontages.

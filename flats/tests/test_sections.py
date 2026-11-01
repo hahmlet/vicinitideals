@@ -85,6 +85,8 @@ def test_a_section_starts_at_the_last_printing_of_its_heading() -> None:
     assert got == [Section("40.100", 3, 5), Section("40.200", 6, 8)]
     assert got[1].file == "40/40.200.txt"
     assert Section("73C.030", 1, 2).chapter == "73C"
+    assert Section("302-1", 1, 2).chapter == "302"
+    assert Section("302-1", 1, 2).file == "302/302-1.txt"
 
 
 def test_a_running_header_does_not_cut() -> None:

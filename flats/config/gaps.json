@@ -1,5 +1,5 @@
 {
-  "digest": "715f2cc74db152ca955c2282ebb5401470dfed39234abb517aa075a960f90f8c",
+  "digest": "c6b88e7d2b932519289b1d53853e0aa444dd38cd6e0673f07a95d4dbe490ff98",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -808,8 +808,233 @@
       "gaps": []
     },
     "or/washington/_unincorporated": {
-      "section_unread": 45,
-      "misattributed": [],
+      "section_unread": 17,
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "row_to_centerline_class_by",
+          "claimed": "2.14",
+          "found": "302-2",
+          "quote": "or/washington/_unincorporated/302/302-2.txt#L47-L52",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CBD",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.40",
+          "found": "313-3",
+          "quote": "or/washington/_unincorporated/313/313-3.txt#L59-L62",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "CBD",
+          "field": "min_density_du_per_acre",
+          "claimed": "3.40",
+          "found": "313-3",
+          "quote": "or/washington/_unincorporated/313/313-3.txt#L59-L62",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "CBD",
+          "field": "quadplex_allowed [planned_development]",
+          "claimed": "3.40",
+          "found": "313-3",
+          "quote": "or/washington/_unincorporated/313/313-3.txt#L59-L63",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "R-15",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "2.14",
+          "found": "305-2",
+          "quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-15",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "2.14",
+          "found": "305-2",
+          "quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-15",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "2.14",
+          "found": "305-2",
+          "quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-15",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "2.14",
+          "found": "305-2",
+          "quote": "or/washington/_unincorporated/305/305-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-24",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "2.14",
+          "found": "306-2",
+          "quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-24",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "2.14",
+          "found": "306-2",
+          "quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-24",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "2.14",
+          "found": "306-2",
+          "quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-24",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "2.14",
+          "found": "306-2",
+          "quote": "or/washington/_unincorporated/306/306-2.txt#L49-L55",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-25+",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "2.13",
+          "found": "307-2",
+          "quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-25+",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "2.13",
+          "found": "307-2",
+          "quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-25+",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "2.13",
+          "found": "307-2",
+          "quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-25+",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "2.13",
+          "found": "307-2",
+          "quote": "or/washington/_unincorporated/307/307-2.txt#L49-L57",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-5",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "2.14",
+          "found": "302-2",
+          "quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-5",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "2.14",
+          "found": "302-2",
+          "quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-5",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "2.14",
+          "found": "302-2",
+          "quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-5",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "2.14",
+          "found": "302-2",
+          "quote": "or/washington/_unincorporated/302/302-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-6",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "2.14",
+          "found": "303-2",
+          "quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-6",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "2.14",
+          "found": "303-2",
+          "quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-6",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "2.14",
+          "found": "303-2",
+          "quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-6",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "2.14",
+          "found": "303-2",
+          "quote": "or/washington/_unincorporated/303/303-2.txt#L47-L53",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-9",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "2.14",
+          "found": "304-2",
+          "quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-9",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "2.14",
+          "found": "304-2",
+          "quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-9",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "2.14",
+          "found": "304-2",
+          "quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-9",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "2.14",
+          "found": "304-2",
+          "quote": "or/washington/_unincorporated/304/304-2.txt#L50-L56",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Washington Unincorporated",
       "counts": {},
       "gaps": []

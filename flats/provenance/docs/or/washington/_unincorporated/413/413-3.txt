@@ -1,0 +1,58 @@
+413-3 Off-Street Parking Lot Design
+All off-street parking lots including up to 50% of the spaces for compact cars, shall be designed in accordance with County standards for stalls and aisles dimensions as set forth in the following drawings and tables:
+FIGURE 1 - Off Street Parking Lot Design - for illustrative purposes only
+The following figure illustrates design principles included in this Code.
+It is intended for illustrative purposes only, and does not supersede any Code references.
+VEHICLE TYPE  A
+PARKING
+ANGLE
+B
+STALL
+WIDTH
+C
+STALL
+DEPTH*
+D
+AISLE
+WIDTH
+E **
+STALL
+WIDTH
+F *
+MODULE
+WIDTH
+G
+BUMPER
+OVER-
+HANG
+H
+BACKING
+AREA
+I
+MODULE
+INTER-
+MESH standard 45° 8.5' 18.7' 12' 12' 49.4' 2' 5' 43.4'
+60° 8.5' 19.8' 14.5' 9.8' 54.1' 2.5' 5' 49.9'
+75° 8.5' 19.6' 23' 8.8' 62.2' 2.5' 5' 60'
+90° 8.5' 18' 24' 8.5' 59.5' 3' 5' 59.5' compact 90° 7.5' 15' 24' 7.5' 58' 2' 5' 58' motorcycle - 3' 7.5' - - - - - -
+*no bumper overhang
+**parallel to aisle
+413-3.1 For one row of stalls use "C" plus "D" as minimum bay width.
+413-3.2 The minimum aisle width for two-way traffic and for emergency vehicle operations area is 24 feet.
+The minimum aisle width for emergency vehicle (one-way traffic) is 15 feet.
+413-3.3 Where appropriate bumper overhang area is provided (extruded curbs), "G" can be subtracted from "C" to determine stall depth.
+413-3.4 Parallel Parking:
+Space dimensions are to be 9 by 22 feet.
+Aisle dimensions for parallel parking are to be 12 feet for one-way aisles and 24 feet for two-way aisles.
+413-3.5 Pedestrian Access and Landscaping:
+In parking lots of 50 or more spaces and two or more rows of parking stalls, or
+0.5-acre or more:
+A. Separate internal pedestrian connections shall be provid ed consistent with 408-10 to minimize vehicular-pedestrian conflicts, and allow safe pedestrian movement within the lot.
+Parking lots dedicated to the display and storage of automobile, recreational and other vehicle sales are exempt.
+B. Parking lots must include landscaping as provided in Section 407-6.
+413-3.6 If provided, electric vehicle charging parking spaces, either public or private, shall comply with the following requirements:
+A. Electric vehicle charging parking spaces may substitute for required minimum off-street parking spaces of Section 413-6.1 at a 1:1 ratio.
+B. A minimum of one electric vehicle charging space shall be ADA compliant.
+C. Electric vehicle charging parking spaces shall be posted with signage not to exceed 5 square feet in size.
+D. Electric vehicle charging unit outlets and operable parts shall be no less than 18 inches off the ground if indoors and 24 inches off the ground if outdoors and no higher than 48 inches off the ground to ensure easy access.
+(Ord. No. 827A, § 2.A.(Exh. 1, § 5), 10-24-17, eff. 11-24-17; Ord. No. 857, § 2.D.(Exh. 4, § 5), 8-27-19, 11-28-19; Ord. No. 903, § 2.M.(Exh. 13, § 19.), 10-15-24, eff. 11-14-24)

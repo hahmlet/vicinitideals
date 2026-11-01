@@ -583,3 +583,38 @@ or/multnomah/_unincorporated:
   # read as terms, which tips the chapter into the glossary's skimmed class (9 out
   # of order in 177). Left whole it reads as before (measured 2026-10-30).
   uncut: ['33.100', '33.110', '33.140', '33.266', '33.418', '39.2000.definitions']
+
+or/washington/_unincorporated:
+  # Washington County Community Development Code, one Municode PDF extract per
+  # chapter: "302-1 Intent and Purpose" at the margin, a capitalised title
+  # after the number, printed once (no contents list). Its subsections are
+  # numbered "302-2.1", with a full stop, and are not headings. "413-5
+  # [Reserved]" is a heading with its title in brackets. A reference wrapped to
+  # the margin ("501-2 or meets the standards ...", "430-76 and Section ...")
+  # has no capital after the number.
+  heading: '^(?P<n>\d{3}-\d{1,2})\s+(?:[A-Z]|\[Reserved\])'
+  # The chapter's own title and its ordinance history above the first section
+  # ("302 R-5 DISTRICT (RESIDENTIAL 5 UNITS PER ACRE*)"), a district's note,
+  # or the chapter number on its own.
+  # And a table row that opens with a section number: Table B(1) of 375-10 has
+  # a row "430-97 I or II I or II ..." (the Special Use column of the use
+  # table), which is not the start of 430-97.
+  furniture: '^\d{3}-\d{1,2}\s+I or II'
+  front: [cdc.302.r-5, cdc.303.r-6, cdc.304.r-9, cdc.305.r-15, cdc.306.r-24, cdc.307.r-25plus,
+          cdc.377.sid]
+  # Left whole: 106 is the definitions chapter, one numbered entry per term
+  # ("106-5 Accessory Building or Structure ."), so every term would be a
+  # section of a line or two; 430-84 prints one heading over its subsections
+  # ("430-84.1"), so a cut gains nothing; and 431 has no page map (fetched for
+  # one rule, never declared), so the readable text could not take its 14
+  # running footers out and a moved citation could not be checked to name the
+  # same printed page. The eleven community plans (community-plan.*) print no
+  # section numbers at all -- unnumbered capitals, a "Design Element 1" under
+  # each subarea -- so no heading rule cuts them; they have no page map either.
+  uncut: [cdc.106.definitions, cdc.430-84.middle-housing, cdc.431.transit-design]
+  # The running footer and header of the Municode print: "III:8Supp. No. 1",
+  # the bare "III:9" and "IV:12" page tags, "302 WASHINGTON COUNTY COMMUNITY
+  # DEVELOPMENT CODE", and the chapter's title with its number glued on
+  # ("302LAND USE DISTRICTS"). Measured 2026-10-31 on every page start of the
+  # page-mapped chapters.
+  page_furniture: '^\s*(?:(?:I|II|III|IV|V|VI|VII):\d+(?:\.\d+)?(?:Supp\. No\. \d+)?|\d{3}\s*WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE|\d{3}[A-Z][A-Z ,&/-]+)\s*$'
