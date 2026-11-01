@@ -1,0 +1,10 @@
+quadfit-suite-speed
+
+WHY: every push to main waits for the local test gate (scripts/ci_local.py, run on a test machine). The quadfit suite (`Lot Analysis/quadfit/tests`, 363 tests) takes 8 to 20 minutes of it -- the longest FLATS-side suite. Steph wants pushes faster without testing less. Identical assertions, less time.
+
+TASK:
+1. Measure: `$PYTHON -m pytest "Lot Analysis/quadfit/tests" -q -p no:cacheprovider --durations=40` (if it takes more than 15 minutes, run with -n auto too and say so). Report the slowest 15 tests and their fixtures.
+2. Find the shared cost: tests that re-load the same YAML/parquet/corpus, rebuild the same audit, or re-run the same pipeline step. Move the repeated work into session- or module-scoped fixtures (or functools caches on PURE loaders keyed on path + mtime), the pattern flats/tests already uses. Do not change any assertion, expected number, test name or test count; do not mark tests skip/slow; do not change anything under flats/ except test files; do not change "Lot Analysis/quadfit/config/" or any rule data.
+3. Check scripts/ci_local.py: if the quadfit suite is not already run with `-n auto`, say so under QUESTIONS (do not change ci_local.py).
+4. Measure again with the same command. Report before/after wall time and the 15 slowest after.
+Must stay green: `$PYTHON -m pytest "Lot Analysis/quadfit/tests" -q -p no:cacheprovider -n auto` (same pass count before and after), plus the common rules' gate. Read docs/TESTING.md "the FLATS corpus census" section before caching anything census-like; its three rules apply here too.

@@ -1,0 +1,13 @@
+portland-missing-maps
+
+WHY: the FLATS lot screen (does a fixed-size 4-unit townhome fit this lot, legally) cannot apply a Portland zoning rule whose map it does not hold, so lots under it are held "check first" or, worse, left green. The coordinator needs to know, for each map below, whether the City publishes it as GIS data (polygons we can download) or only as a picture at the end of the code chapter -- that decides whether next week's work is a download or a tracing job.
+
+MAPS (Portland Zoning Code, Title 33):
+- Map 120-2 (Eastern Portland centres) and Map 120-3 (Eastern Pattern Area), chapter 33.120.
+- Map 521-4 (East Corridor exterior display and storage), Map 532-3 (Hayden Island core access streets), Map 562-7 (Northwest special development standards), Map 595-2 (West Portland employment focus area), Maps 510-12 to 510-23 (Central City), the "Hillside subarea" of Northwest Hills (33.563).
+- Laurelhurst and Eastmoreland special building setback maps (chapter 33.526 plan district / 33.5xx; the coordinator could not find them online).
+Already held (do not re-report): plan-districts and plan-subdistricts layers, and the layers of https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer (check its full layer list first: a map may be there under another name).
+
+TASK, per map: (1) a GIS layer that draws it -- service URL + layer id + name + feature count, SEEN; else (2) the official PDF/image of the map (portland.gov zoning code chapter page) with its URL and page, SEEN; else "not found" with where you looked. Also look in other Portland Maps services (https://www.portlandmaps.com/arcgis/rest/services/Public?f=json lists them) and Portland's open-data hub (gis-pdx.opendata.arcgis.com).
+
+ANSWER FORM (under 450 words): one line per map: `Map NNN-n | GIS: url layer N "name" (count) | PDF: url p.N | notes`. Then "LOOKED:".

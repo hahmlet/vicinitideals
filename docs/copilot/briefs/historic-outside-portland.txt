@@ -1,0 +1,9 @@
+historic-outside-portland
+
+WHY: in the FLATS lot screen, a lot carrying a protected historic resource needs a discretionary hearing, which the owner has ruled RED. Only Portland's historic map is held today, so historic lots in other cities can show a false GREEN (example: Washington County tax lot 1S123AA00100, R-5 with a Historic Overlay, land-use case L9100610). The coordinator needs the source for each jurisdiction's protected historic properties.
+
+JURISDICTIONS: Washington County (unincorporated) plus Beaverton, Hillsboro, Tigard, Tualatin, Forest Grove, Cornelius, Sherwood, King City, Durham; Clackamas County (unincorporated) plus Oregon City, Lake Oswego, West Linn, Milwaukie, Gladstone, Wilsonville, Happy Valley, Canby, Sandy, Estacada, Molalla; Multnomah County cities Gresham, Troutdale, Fairview, Wood Village. (Oregon City 17.40 is already held -- note it, do not research it.)
+
+TASK, per jurisdiction: the list or GIS layer of its locally designated historic landmarks / historic overlay / historic districts: publisher, URL (GIS layer with feature count, or the inventory list / ordinance page), date, format, and whether it is by tax lot, address or drawn area. Also check two statewide sources once: the Oregon Historic Sites Database (heritagedata.prd.state.or.us) and the National Register layer from Oregon SHPO / NPS -- give their URLs and whether they can be filtered by city and say "locally designated" vs "National Register only".
+
+ANSWER FORM (under 600 words): one line per jurisdiction: `name | source: url | form: GIS layer (N features) / list / ordinance / none found | keyed by: taxlot/address/area | date`. Then the two statewide sources, then "LOOKED:".

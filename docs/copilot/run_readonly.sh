@@ -16,7 +16,7 @@ ALLOW=()
 for c in grep ls cat head tail wc Get-Content Select-String Get-ChildItem Measure-Object; do
   ALLOW+=(--allow-tool "shell($c)")
 done
-for u in 'https://*.gov' 'https://*.or.us' 'https://*.arcgis.com' 'https://arcgis.com'          'https://*.portlandmaps.com' 'https://www.portlandmaps.com' 'https://*.oregonmetro.gov'          'https://*.municode.com' 'https://*.codepublishing.com' 'https://*.amlegal.com'          'https://*.ecode360.com' 'https://*.noaa.gov' 'https://*.usgs.gov' 'https://*.census.gov'          'https://*.github.com' 'https://*.wikipedia.org'; do
+for u in 'https://*.gov' 'https://*.or.us' 'https://*.arcgis.com' 'https://arcgis.com'          'https://*.portlandmaps.com' 'https://www.portlandmaps.com' 'https://*.oregonmetro.gov'          'https://*.municode.com' 'https://*.codepublishing.com' 'https://*.amlegal.com'          'https://*.ecode360.com' 'https://*.noaa.gov' 'https://*.usgs.gov' 'https://*.census.gov'; do
   ALLOW+=(--allow-url "$u")
 done
 mkdir -p "$OUT"
@@ -25,6 +25,10 @@ for t in "$@"; do
   [ -f "$B/$t.txt" ] || { echo "no brief: $B/$t.txt"; exit 2; }
 done
 # Run in a throwaway checkout of main: no .env or other untracked files, nothing of the working copy.
+# Copilot's own path rule keeps file reads inside this directory (no --allow-all-paths, no --add-dir),
+# and the repository is public, so a page that talks the scout into sending a file sends nothing secret.
+# The host list stays wildcard on .gov / .or.us / ArcGIS on purpose: a scout's job is to find city GIS
+# hosts nobody has listed yet.
 WT=$(mktemp -d)/scout; git -C "$REPO" worktree add -q --detach "$WT" main || exit 2
 trap 'git -C "$REPO" worktree remove --force "$WT"' EXIT
 cd "$WT"
