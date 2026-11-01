@@ -1,6 +1,6 @@
 {
   "status": "map only, traced 2026-10-31 (bornstedt-village-overlay.geojson)",
-  "source_url": "ci.sandy.or.us .../16041/zoning_map_2026_11x17.pdf (City of Sandy site, file 16041; the full path was not kept by the chunk 10 scout)",
+  "source_url": "https://ci.sandy.or.us/sites/default/files/fileattachments/planning/page/16041/zoning_map_2026_11x17.pdf",
   "source_file": "zoning_map_2026_11x17.pdf",
   "retrieved": "2026-10-31",
   "sha256": "401a4fad84bd6ed4be1a509228baad180f647c7f8754246eb9d0cc40e19b2fdb",

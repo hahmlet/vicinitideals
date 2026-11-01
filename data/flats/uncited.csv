@@ -1412,9 +1412,6 @@ or/clackamas/sandy,unread,max_height_ft,or/clackamas/sandy/17.52/17.52.30.txt,23
 or/clackamas/sandy,unread,max_height_ft,or/clackamas/sandy/17.54/17.54.100.txt,8,17.54.100,1,Structure Height 45 ft. maximum
 or/clackamas/sandy,unread,min_lot_sqft,or/clackamas/sandy/17.54/17.54.110.txt,24,17.54.110,1,"A variety of lot sizes for detached dwellings where the ""varied"" lot sizes are at least 20 percent larger or smaller than the average lot size for the remaining lots."
 or/clackamas/sandy,unread,setback_garage_entrance_ft,or/clackamas/sandy/17.54/17.54.110.txt,77,17.54.110,1,A garage door that is oriented at least 90 degrees to the street lot line is not subject to standards a.—c. above.
-or/clackamas/sandy,unread,min_average_lot_width_ft,or/clackamas/sandy/17.54/17.54.80.txt,7,17.54.80,1,Minimum Average Lot Width 50 ft. single family detached or duplex 40 ft. single family detached or duplex; 30 ft. zero lot line; 30 ft. row house 40 ft. single family detached or duplex; 30 ft. zero l
-or/clackamas/sandy,unread,min_lot_width_ft,or/clackamas/sandy/17.54/17.54.80.txt,8,17.54.80,1,Minimum Lot Width at Building Line 40 ft. single family detached or duplex 40 ft. single family detached or duplex; 20 ft. zero lot line; 20 ft. row house 40 ft. single family detached or duplex; 20 f
-or/clackamas/sandy,unread,min_frontage_ft,or/clackamas/sandy/17.54/17.54.80.txt,9,17.54.80,1,Minimum Lot Frontage 20 ft. 20 ft. 20 ft. 20 ft.
 or/clackamas/sandy,unread,max_height_ft,or/clackamas/sandy/17.54/17.54.80.txt,19,17.54.80,1,Structure Height 35 ft. max. 35 ft. max. 35 ft. max. 35 ft. max.
 or/clackamas/sandy,unread,max_coverage_pct,or/clackamas/sandy/17.54/17.54.80.txt,20,17.54.80,1,Building Site Coverage No maximum Maximum—80 percent maximum for manufactured dwelling parks Maximum—75 percent maximum for multi-family; 80 percent for manufactured dwelling parks Maximum—75 percent 
 or/clackamas/sandy,unread,max_height_ft,or/clackamas/sandy/17.54/17.54.90.txt,10,17.54.90,1,Structure Height 45 ft. maximum
@@ -2451,8 +2448,6 @@ or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residentia
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,292,,1,• 2 stories: 28’ Max.
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,331,,1,townhouses are permitted to be 25 feet
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,407,,1,ii. Theprimarydwellingunit onthe propertyis 1.5 or2stories tall.
-or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,493,,1,Porches added as part of a remodel to an existing Ranch house can encroach 6 feet into the
-or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,495,,1,"Residences along SW Boones Ferry Road, north of SW 4th Street: 5 feet minimum setback"
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,508,,1,and maximum of 5 feet from the property line adjoining the alley. Or a minimum of
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/old-town-residential-design-standards.txt,513,,1,encouraged (but not required) to be no greater than 12 feet.
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/pws.201.2.23.txt,13,201.2.23,1,100 feet from the nearest intersection (as measured from near edge of driveway drop
@@ -2633,7 +2628,6 @@ or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/4/4.803.t
 or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/4/4.803.txt,72,4.803,1,Trees and shrubs in the vicinity of guy wires shall be of a kind that would not exceed 20 feet in height and would not affect the stability of the guys should they be uprooted.
 or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/old-town-residential-design-standards.txt,290,,1,Height: 1.5 or 2 Stories
 or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/old-town-residential-design-standards.txt,406,,1,"i. ThegarageADUstructureis amaximum1.5stories tall,not exceedingaheightof20feet; and"
-or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/old-town-residential-design-standards.txt,457,,1,Buildings under 120sf and 10ft in height are not counted in lot coverage.
 or/clackamas/wilsonville,unread,setback_garage_entrance_ft,or/clackamas/wilsonville/old-town-residential-design-standards.txt,501,,1,The width of garage doors shallnot exceed 50 percent of the length of the street‐facing façade.
 or/clackamas/wilsonville,unread,setback_front_ft,or/clackamas/wilsonville/old-town-residential-design-standards.txt,504,,1,Minimum front setback for any and all garages and/or accessory buildings is 4 feet from the
 or/clackamas/wilsonville,unread,min_lot_width_ft,or/clackamas/wilsonville/old-town-residential-design-standards.txt,519,,1,facade shall not exceed or 60 percent of the lot width.

@@ -70,14 +70,17 @@ or/clackamas/oregon-city,MUD,min_lot_sqft,,stated,or/clackamas/oregon-city/17.zo
 or/clackamas/oregon-city,WFDD,min_lot_sqft,,stated,or/clackamas/oregon-city/17.zoning.txt#L8188-L8190,17.35.060 Willamette Fal l s Downtown District dimensional | standards . | A. Minimum lot area: None.
 or/clackamas/sandy,R-1,max_coverage_pct,,stated,or/clackamas/sandy/17.36/17.36.30.txt#L22,Building Site Coverage Building Site Coverage No minimum
 or/clackamas/sandy,R-1,max_impervious_pct,,stated,or/clackamas/sandy/17.36/17.36.30.txt#L22,Building Site Coverage Building Site Coverage No minimum
+or/clackamas/sandy,R-1,min_average_lot_width_ft,,stated,or/clackamas/sandy/17.36/17.36.30.txt#L11,B. Minimum Average Lot Width Other permitted uses No minimum
 or/clackamas/sandy,R-1,min_lot_sqft,,stated,or/clackamas/sandy/17.36/17.36.30.txt#L7,A. Minimum Lot Area Other permitted uses No minimum
 or/clackamas/sandy,R-1,min_lot_width_ft,,stated,or/clackamas/sandy/17.36/17.36.30.txt#L11,B. Minimum Average Lot Width Other permitted uses No minimum
 or/clackamas/sandy,R-2,max_coverage_pct,,stated,or/clackamas/sandy/17.38/17.38.30.txt#L21,Building Site Coverage Building Site Coverage No minimum
 or/clackamas/sandy,R-2,max_impervious_pct,,stated,or/clackamas/sandy/17.38/17.38.30.txt#L21,Building Site Coverage Building Site Coverage No minimum
+or/clackamas/sandy,R-2,min_average_lot_width_ft,,stated,or/clackamas/sandy/17.38/17.38.30.txt#L9,Minimum Average Lot Width Other permitted uses No minimum
 or/clackamas/sandy,R-2,min_lot_sqft,,stated,or/clackamas/sandy/17.38/17.38.30.txt#L5,Minimum Lot Area Minimum Lot Area No minimum
 or/clackamas/sandy,R-2,min_lot_width_ft,,stated,or/clackamas/sandy/17.38/17.38.30.txt#L9,Minimum Average Lot Width Other permitted uses No minimum
 or/clackamas/sandy,R-3,max_coverage_pct,,stated,or/clackamas/sandy/17.40/17.40.30.txt#L19,Building Site Coverage Building Site Coverage No maximum
 or/clackamas/sandy,R-3,max_impervious_pct,,stated,or/clackamas/sandy/17.40/17.40.30.txt#L19,Building Site Coverage Building Site Coverage No maximum
+or/clackamas/sandy,R-3,min_average_lot_width_ft,,stated,or/clackamas/sandy/17.40/17.40.30.txt#L8,Minimum Average Lot Width Other permitted uses No minimum
 or/clackamas/sandy,R-3,min_lot_width_ft,,stated,or/clackamas/sandy/17.40/17.40.30.txt#L8,Minimum Average Lot Width Other permitted uses No minimum
 or/clackamas/tualatin,(default),parking_max_per_unit,,stated,"or/clackamas/tualatin/73C/73C.040.txt#L12,L14,L19,L31,L34,L37",TABLE 73C-1: Off-Street Vehicle and Bicycle Parking Quantity Requirements | MAXIMUM PERMITTED VEHICLE PARKING MINIMUM | TO BE COVERED Zone A Zone B | (ii) Middle Housing: | c. Quadplexes | None None None Required N/A
 or/clackamas/tualatin,MUC,min_lot_sqft,,stated,or/clackamas/tualatin/57/57.300.txt#L7-L8,MINIMUM LOT SIZE | All Uses None
