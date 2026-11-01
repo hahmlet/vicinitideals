@@ -39,3 +39,9 @@ registers both Metro items (and the Parks corridor layer) in the county source r
 probe reads (flats/ingest/probe.py: rlis_zip item -> new_release on a changed modified/size; arcgis
 layer -> moved/count_drift), so a newer canopy release raises the County copy banner like the
 county data does. Record each item's modified date + size in the manifest at acquire.
+
+COPILOT RE-SCOUT 2026-11-01 (gpt-6-luna, A/B trial) found two more: DOGAMI Canopy Height Model
+mosaic ImageServer https://gis.dogami.oregon.gov/arcgis/rest/services/lidar/CANOPY_HEIGHT_MODEL_MOSAIC/ImageServer
+(3 ft cells, height above ground in ftUS, but outer-SE sources 2004-2014 -- too old alone) and USFS
+Tree Canopy Cover 2025 (30 m, too coarse). Canopy 2019 cell size still UNKNOWN (both runs inferred,
+~0.5 m and ~1 m); read it from the raster at conversion.

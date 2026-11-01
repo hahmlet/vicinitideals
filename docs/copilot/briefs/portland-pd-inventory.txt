@@ -1,0 +1,19 @@
+portland-pd-inventory
+
+WHY: next week the FLATS screen encodes the rest of Portland's plan districts (zoning code chapters 33.505-33.595). Each chapter adds rules on top of the base zone for lots inside a mapped district. Before anyone reads the rules, the coordinator needs an inventory: for each chapter, is the district boundary already in the repo, does it have subdistricts and are they drawn, and which maps does the chapter rely on that we do not hold. A chapter whose map we do not hold forces its lots to "check first", so the gaps decide the work.
+
+INPUTS (read-only):
+- Chapter texts: flats/provenance/pending/or/multnomah/portland/33.5NN.txt (21 files: 33.505 33.510 33.520 33.521 33.530 33.532 33.533 33.534 33.536 33.538 33.545 33.550 33.560 33.561 33.562 33.563 33.565 33.570 33.580 33.583 33.595).
+- Boundaries already held: flats/config/areas/or/multnomah/portland/plan-districts.geojson (property PLDIST, NAME) and plan-subdistricts.geojson (look at its properties).
+- Portland's public layers: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer (list its layers with ?f=json).
+
+TASK, per chapter:
+1. Chapter title (first heading line of the file, quoted, with path#Lnn).
+2. The matching PLDIST code(s) in plan-districts.geojson, or "none".
+3. Subdistricts the chapter names (grep "Subdistrict" / "subarea"), and whether plan-subdistricts.geojson holds features for them (yes / partial / no).
+4. Every "Map 5NN-n" the chapter cites (grep), and for each: is it drawn by a layer in BPS_Zoning_Code_Layers (give layer id + name) or held in the repo (path), or "not held".
+5. A rough count of lines in the chapter that state a residential dimension (grep -c for "feet|percent|units|stories" is fine -- say it is a grep count).
+
+ANSWER FORM (under 700 words): one line per chapter:
+33.5NN | title (path#Lnn) | PLDIST | subdistricts: names -> held yes/partial/no | maps: Map 5NN-1 -> layer N "name" / path / not held; ... | dims ~N
+Then "GAPS:" the maps or subdistricts not held anywhere, then "LOOKED:" what you queried.

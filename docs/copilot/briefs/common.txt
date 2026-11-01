@@ -9,3 +9,7 @@ RULES (all mandatory):
 - Commit message ends with "Co-Authored-By: GitHub Copilot".
 - Final message under 200 words: what you did, files, test results, QUESTIONS, anything not done.
 - Other agents run tests/ against the SAME Postgres test database at the same time and TRUNCATE between tests. If a tests/ DB test fails with missing rows or a FK/unique error that makes no sense, re-run that file alone before concluding it is a real failure; say so in your report.
+- The brief's first line is the job's short name, then a WHY paragraph: read it -- it says what decision the result feeds, so if you see a better way to serve that decision, say so under QUESTIONS instead of silently doing something else.
+- "There is no X" (no caller, no test, no helper) is a claim: before acting on it, grep for it and name the grep in your report.
+- Run production E2E (E2E_BASE_URL=https://viciniti.deals) only for the files the brief names; never the whole e2e suite.
+- If the task needs a database migration, use the revision number the brief gives; if the brief gives none, stop and ask under QUESTIONS (parallel jobs pick the same next number).
