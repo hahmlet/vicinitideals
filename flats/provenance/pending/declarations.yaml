@@ -5,11 +5,6 @@
 # will ask for (they scan every stored document; that is why these are held here, unread).
 
 # ---- flats/config/jurisdictions/or/multnomah/portland.yaml
-- id: "33.500"
-  url: https://www.portland.gov/sites/default/files/code/33.500-plan-districts-in-general.pdf
-  title: "Chapter 33.500 Plan Districts in General"
-  extraction: plain
-  allow_thin: true
 - id: "33.505"
   url: https://www.portland.gov/sites/default/files/code/33.505-albina-community-plan-district.pdf
   title: "Chapter 33.505 Albina Community Plan District"
@@ -55,19 +50,9 @@
   title: "Chapter 33.536 Hollywood Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.537"
-  url: https://www.portland.gov/sites/default/files/code/537-johnson-creek-basin-pd_0.pdf
-  title: "Chapter 33.537 Johnson Creek Basin Plan District"
-  extraction: plain
-  allow_thin: true
 - id: "33.538"
   url: https://www.portland.gov/sites/default/files/code/538-kenton-pd_0.pdf
   title: "Chapter 33.538 Kenton Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.540"
-  url: https://www.portland.gov/sites/default/files/code/33.540-laurelhurst-eastmoreland-plan-district.pdf
-  title: "Chapter 33.540 Laurelhurst/Eastmoreland Plan District"
   extraction: plain
   allow_thin: true
 - id: "33.545"

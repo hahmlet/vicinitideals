@@ -484,6 +484,12 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    # 2026-11-01 (FOLLOWUPS 109, Portland plan districts part 1): Johnson Creek
+    # Basin's South, Springwater and floodplain sections each send tree removal
+    # to 33.537.125, which the tree hold quotes.
+    "or/multnomah/portland 33.537.130 -> 33.537.125",
+    "or/multnomah/portland 33.537.140 -> 33.537.125",
+    "or/multnomah/portland 33.537.150 -> 33.537.125",
     # 2026-10-31 (library batch 7): cutting the two unincorporated codes made these
     # five pointers visible, each to the very next section, which is read.
     "or/clackamas/_unincorporated 604.03 -> 604.04",

@@ -14,6 +14,7 @@ GREEN is held to.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 
 import pytest
@@ -28,6 +29,9 @@ from flats.tests.test_quadfit_bridge import X0, Y0, pod4, row
 pytestmark = pytest.mark.unit
 
 W, D = 100.0, 200.0
+OFF_PLAN_DISTRICTS = dict.fromkeys(
+    ("pdx_johnson_creek_impervious", "pdx_johnson_creek_unmeasured", "pdx_special_building_setback"), False
+)
 #: A 100 x 200 lot, street along the south edge: room for the pod and its
 #: court in every zone here, so what holds it out of GREEN is the flags.
 BIG = dict(
@@ -59,6 +63,9 @@ def policies():
 
 def screened(corpus, policies, *, bound: bool, **over):
     lot = lot_from_row(row(**{**BIG, **over}))
+    # Portland's plan district tracings answer from the lot's shape and the
+    # layers, which this row is read without; the lot is off all three.
+    lot = dataclasses.replace(lot, observed={**lot.observed, **OFF_PLAN_DISTRICTS})
     (s,) = _screen_lot_once(
         lot, [pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
         bound=bound,
