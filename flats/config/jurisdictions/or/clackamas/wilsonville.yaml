@@ -745,11 +745,16 @@ readings:
     outcome: other_building
     note: >-
       "Back a minimum of 20 feet from any sidewalk or traveled portion of a street across which"
-      -- a setback in Section 4.138, the Old Town Overlay Zone. This project established on
-      2026-09-09 that 4.138 appears in no Wilsonville zone's section list, so it reaches none of
-      the land this layer screens; it is a historic-character overlay on a specific district.
-      Worth the sentence rather than a shrug because a 20-foot setback from a sidewalk is a real
-      number and would matter if the overlay were ever mapped onto screened land.
+      -- 4.138(.05)A, the Old Town Overlay's standards for development under Site Design Review,
+      which (.03)A.1 limits to commercial, industrial, public facility, multi-family and mixed use
+      buildings. Single-family homes and middle housing go the other way: (.03)B.1 sends them to
+      Class I review against (.04), and (.04)B to the Old Town Residential Design Standards Book,
+      which OTR encodes (roof 4 in 12, height 25, setbacks, coverage). RE-RULED 2026-10-31
+      (design-districts chunk 9): the earlier note dismissed 4.138 because it appears in no zone's
+      section list, which is no argument for an overlay. The overlay was traced from its adopted
+      map (old-town-overlay.map-only.pdf) onto the taxlots: it holds every OTR lot and, besides
+      them, only PDC, PDI and FDA-H lots, each closed to the pod by its own use list. So the book
+      reaches no lot the OTR encoding does not already hold, and no drawn area is wired.
     fingerprint: bae7ce6ff39de57a
   "4.planning.txt#4.139":
     queue: nofield
@@ -1023,8 +1028,9 @@ code:
     extraction: plain
   # THE OLD TOWN DESIGN BOOK, fetched in design-districts chunk 2 and moved out
   # of the pending store in chunk 3 (2026-10-22). Section 4.138 sends Old Town
-  # Overlay residential work to it. Nothing in it moves the pod: it permits a
-  # flat roof with a parapet, and the Old Town residential lots hold no GREEN.
+  # Overlay residential work to it. Nothing in it opens the pod: every style
+  # it offers is pitched (4 in 12 at the flattest; a flat roof only on a
+  # dormer, L546), and the Old Town residential lots hold no GREEN.
   - id: "old-town-residential-design-standards"
     url: https://wilsonvilleoregon.gov/DocumentCenter/View/9181/Wilsonville-Old-Town-Residential-Design-Standards-Book-October-2021-PDF
     title: "Old Town Residential Design Standards Book (October 2021)"
@@ -1697,63 +1703,49 @@ zones:
       value: 25
       cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Using Design Standards, Step 2.2.d"
       quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L217"
+    # THE BOOK'S EDGES AND COVERAGE, read 2026-10-31 (design-districts chunk
+    # 9). 4.123(.06)A and 4.138(.04)A both hand setbacks and lot coverage to
+    # the book, and 4.138(.04)A says its standards "take precedence over
+    # setback, lot coverage, height ... standards otherwise established in
+    # the Development Code except that ... zero setbacks for attached
+    # townhouses shall continue to apply". So the 4.113(.02) lot-size bands
+    # held here before are gone, and the attached wall keeps its zero. The
+    # book's "Residences along SW Boones Ferry Road, north of SW 4th Street:
+    # 5 feet" is a relief from the 15 and is left out (the 15 is the stricter
+    # figure). Every OTR lot lies inside the 4.138 overlay (traced
+    # 2026-10-31: all 19.5 OTR acres inside), so both routes reach the same
+    # land.
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4/4.113.txt#L58"
-      variants:
-        - value: 20
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L42-L43"
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Edges and Setbacks: Primary Residences"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L491-L492"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Edges and Setbacks: Primary Residences"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L496-L497"
       variants:
-        - value: 7
-          when: [multi_story]
-          band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L59-L60"
-        - value: 10
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
         - value: 0
           when: [attached_wall]
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L56"
-        - value: 0
-          when: [attached_wall]
-          band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L72"
+          quote: "or/clackamas/wilsonville/4/4.138.txt#L25"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
-      variants:
-        - value: 20
-          when: [multi_story]
-          band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L66-L68"
-        - value: 20
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L50-L51"
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Edges and Setbacks: Primary Residences"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L496,L498"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/wilsonville/4/4.113.txt#L60"
-      variants:
-        # 4.113(.02)A.2: over 10,000 sq ft, "in the case of a corner lot less
-        # than 100 feet in width ... the side yard on the street or private
-        # drive side of such lot shall be not less than 20 percent of the
-        # width of the lot, but not less than ten feet." A share of the lot's
-        # own width, worked out on the lot; the page prints 20 and ten and
-        # never the result. The 10 above is B.2's small-lot figure and A.2's
-        # floor, and stays the number at 100 ft and wider, where A.2 states
-        # no share. Two bands, both of which must hold; a lot whose width is
-        # unmeasured is refused here rather than handed the floor.
-        - pct_of_lot_width: 20
-          floor_ft: 10
-          when: [corner_lot]
-          band:
-            - {measure: lot_sqft, more_than: 10000}
-            - {measure: lot_width_ft, less_than: 100}
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L44-L45"
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Edges and Setbacks: Primary Residences"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L496,L499"
+    max_coverage_pct:
+      # "All built structures are not to exceed 40% lot coverage", and for
+      # townhouses it "is calculated based on the overall townhouse project,
+      # rather than each townhouse lot" -- the pod on the parent lot.
+      value: 40
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Lot Coverage"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L456,L458-L459"
+    # The garage line stays 4.113's 20 feet (4 off an alley). The book puts
+    # a garage 4 feet behind the front building line (15 + 4 = 19) and an
+    # alley garage 3 to 5 feet off the alley line; 20 is the stricter street
+    # figure and 4 sits inside the alley range.
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
@@ -1795,9 +1787,10 @@ zones:
       SETBACKS AND COVERAGE ARE NOT: 4.123(.06)A hands design and siting to the ''Old Town Residential
       Design Standards Book'', naming height, setbacks and lot coverage explicitly. The book was
       stored on 2026-10-22 and its roof pitch and quadplex height are encoded; its edges, setbacks
-      and coverage pages are not yet read. The setbacks shown are the 4.113(.02) citywide default,
-      and coverage is deliberately absent rather than guessed. The pod misses both encoded book
-      standards (flat roof; 26 ft against 25), so no OTR lot can be GREEN on the unread pages. quadfit confidence:
+      and coverage pages were read on 2026-10-31 (chunk 9): front 15, side 5 (zero on the
+      attached wall, 4.138(.04)A), rear 15, street side 10, coverage 40 percent on the whole
+      townhouse project. The pod misses the book''s roof (flat against 4 in 12) and height (26 ft
+      against 25), so OTR stays RED. quadfit confidence:
       needs_verification.'
   PDR1:
     section: ["4.124", "4.113"]

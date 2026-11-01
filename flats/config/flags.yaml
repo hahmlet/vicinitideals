@@ -1300,6 +1300,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-SANDY-BORNSTEDT-VILLAGE:
+    description: "Bornstedt Village edge unconfirmed: whether the lot lies inside Sandy's Bornstedt Village Overlay (2026 zoning map, traced); the line cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A city map of the Bornstedt Village Overlay, or a planner's word on which side of it the lot falls"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-TIGARD-BRIDGEPORT-VILLAGE:
     description: "Whether the lot lies inside Tigard's Bridgeport Village Plan District"
     kind: categorical

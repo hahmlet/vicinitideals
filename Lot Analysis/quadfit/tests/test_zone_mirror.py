@@ -1283,7 +1283,6 @@ def test_the_inert_standards_are_inert_because_of_their_values() -> None:
 FLAT_BUT_BANDED: frozenset[str] = frozenset({
     "milwaukie/R-MD.min_lot_depth_ft",
     "milwaukie/R-MD.setback_rear_ft",
-    "wilsonville/OTR.setback_rear_ft",
     "wilsonville/PDR1.setback_rear_ft",
     "wilsonville/PDR2.setback_rear_ft",
     "wilsonville/PDR3.setback_rear_ft",
@@ -1291,7 +1290,6 @@ FLAT_BUT_BANDED: frozenset[str] = frozenset({
     "wilsonville/PDR5.setback_rear_ft",
     "wilsonville/PDR6.setback_rear_ft",
     "wilsonville/R.setback_rear_ft",
-    "wilsonville/OTR.setback_street_side_ft",
     "wilsonville/PDR1.setback_street_side_ft",
     "wilsonville/PDR2.setback_street_side_ft",
     "wilsonville/PDR3.setback_street_side_ft",
@@ -1375,7 +1373,9 @@ def test_wilsonvilles_corner_side_yard_share_never_exceeds_the_front_s5_charges(
         for row in FLAT_BUT_BANDED
         if row.startswith("wilsonville/") and row.endswith(".setback_street_side_ft")
     ]
-    assert len(zones) == 8, zones
+    # 8 -> 7 on 2026-11-01: OTR takes the Old Town Design Book yards, one
+    # figure for every lot (4.138(.04)A), so it is no longer banded.
+    assert len(zones) == 7, zones
     for zone in zones:
         r = wilsonville.rule_for(zone)
         # The widest lot in the band is just under 100 ft; 20 percent of it

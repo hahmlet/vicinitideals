@@ -416,7 +416,9 @@ def test_a_backported_band_has_to_already_be_here() -> None:
                         f"variant banded there nor that base value"
                     )
                     checked += 1
-    assert checked == 27, f"expected 27 banded rows, walked {checked}"
+    # 27 -> 25 on 2026-11-01: Wilsonville OTR takes the Old Town Design Book
+    # yards in place of the 4.113 bands (4.138(.04)A), one figure per lot.
+    assert checked == 25, f"expected 25 banded rows, walked {checked}"
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:

@@ -3363,20 +3363,23 @@ jurisdictions:
         # column and applied it to every lot in the zone. The pod is two
         # storeys at 26 ft, which settles the storey branch outright: 7 and 20
         # on a small lot, not 5 and 15.
+        # 2026-11-01 (FOLLOWUPS 109 chunk 9): WDC 4.138(.04)A puts the Old
+        # Town Residential Design Standards Book in place of the 4.113 bands,
+        # so the yards and coverage are the book's, one figure for every lot.
+        #   or/clackamas/wilsonville/old-town-residential-design-standards.txt#L491-L499
+        #   or/clackamas/wilsonville/old-town-residential-design-standards.txt#L456,L458-L459
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 7
-        setback_rear_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
         setback_street_side_ft: 10
+        max_coverage_pct: 40
         min_lot_sqft: 7000
         min_frontage_ft: 35
         # WC 4.123 Old Town Residential lot width.
         #   or/clackamas/wilsonville/4.planning.txt#L4510-L4512
         min_lot_width_ft: 35
-        lot_size_bands:
-          setback_front_ft: [[10000, 20]]
-          setback_side_ft: [[10000, 10]]
-        source: "Wilsonville Development Code 4.123 (Old Town Residential OTR Zone); Ord. 841"
+        source: "Wilsonville Development Code 4.123 (Old Town Residential OTR Zone) + Old Town Residential Design Standards Book (4.138(.04)A); Ord. 841"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO"
         confidence: needs_verification
         notes: "Zone code + quadplex use VERIFIED (Middle Housing permitted, 7,000sf min). Setbacks NOT verified: 4.123(.06) delegates to the 'Old Town Residential Design Standards Book'. Values shown are the 4.113(.02) underlying-zone default; confirm against the design book."
@@ -5253,6 +5256,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_frontage_ft: 20
+        min_lot_width_ft: 20
         min_density_du_per_acre: 5
         source: "Sandy SDC 17.36.10 (A), the outright list has single detached, zero lot line, duplex, row houses, manufactured dwelling parks, SRO and residential home; no multi-family dwelling"
         source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.36LODERER-"
@@ -5265,6 +5269,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_frontage_ft: 20
+        min_lot_width_ft: 20
         min_density_du_per_acre: 8
         source: "Sandy SDC 17.38.10 (A), row houses and multi-family dwellings permitted outright"
         source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-"
@@ -5277,6 +5282,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_frontage_ft: 20
+        min_lot_width_ft: 20
         min_density_du_per_acre: 10
         source: "Sandy SDC 17.40.10 (A), row houses and multi-family dwellings permitted outright"
         source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-"

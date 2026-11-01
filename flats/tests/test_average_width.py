@@ -290,6 +290,15 @@ def encoded() -> list[tuple[str, str, float, str]]:
             held = zone.values.get(FIELD)
             if held is None:
                 continue
+            # An exemption holds no number ("No minimum"); the figures a
+            # variant states are checked in its place (Sandy's Bornstedt
+            # Village row-house widths, 2026-10-31).
+            for got in (held, *held.variants):
+                if got.value is None or isinstance(got.value, bool):
+                    continue
+                prov = got.prov or held.prov or layer.cite_default
+                out.append((name, code, float(got.value), (prov.quote if prov else "") or ""))
+            continue
             prov = held.prov or layer.cite_default
             out.append((name, code, float(held.value), (prov.quote if prov else "") or ""))
     return out
