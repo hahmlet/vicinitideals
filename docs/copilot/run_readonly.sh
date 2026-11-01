@@ -1,28 +1,33 @@
 #!/bin/bash
-# Run read-only Copilot scout jobs from the primary checkout.
+# Run read-only Copilot scout jobs in a throwaway checkout of main.
 # Usage: run_readonly.sh <out-dir> <model> <brief> [<brief> ...]
 #   brief = name of docs/copilot/briefs/<brief>.txt; common-readonly.txt is appended.
 # Model: gpt-6-luna by default (2026-11-01 trial: ~1/6 the AI units of claude-sonnet-5.5
 # for an equal-or-better scout). Use claude-sonnet-5.5 where caution beats breadth.
 #
 # An ALLOWLIST, not --allow-all-tools: a scout reads web pages (untrusted text), so it gets only
-# read-and-fetch commands. No python, no find, no git that writes, no shell redirection; anything
-# else is refused in this non-interactive mode.
+# read commands and the built-in fetch tool. Anything else is refused in this non-interactive mode.
 OUT="$1"; MODEL="${2:-gpt-6-luna}"; shift 2
 REPO=/c/Users/Steph/Repos/vicinitideals
 B=$REPO/docs/copilot/briefs
 ALLOW=()
-for c in grep rg ls cat head tail wc sort uniq curl "git log" "git show" "git diff" "git grep" \
-         Get-Content Select-String Get-ChildItem Measure-Object Invoke-RestMethod; do
+# Only commands with no run-a-program or write-a-file flag (no rg --pre, git --output, sort -o,
+# curl -o); web pages come through Copilot's own fetch tool, limited to public-data hosts.
+for c in grep ls cat head tail wc Get-Content Select-String Get-ChildItem Measure-Object; do
   ALLOW+=(--allow-tool "shell($c)")
 done
-ALLOW+=(--allow-tool "url")
+for u in 'https://*.gov' 'https://*.or.us' 'https://*.arcgis.com' 'https://arcgis.com'          'https://*.portlandmaps.com' 'https://www.portlandmaps.com' 'https://*.oregonmetro.gov'          'https://*.municode.com' 'https://*.codepublishing.com' 'https://*.amlegal.com'          'https://*.ecode360.com' 'https://*.noaa.gov' 'https://*.usgs.gov' 'https://*.census.gov'          'https://*.github.com' 'https://*.wikipedia.org'; do
+  ALLOW+=(--allow-url "$u")
+done
 mkdir -p "$OUT"
 for t in "$@"; do
   [[ "$t" =~ ^[A-Za-z0-9_-]+$ ]] || { echo "bad brief name: $t"; exit 2; }
   [ -f "$B/$t.txt" ] || { echo "no brief: $B/$t.txt"; exit 2; }
 done
-cd "$REPO"
+# Run in a throwaway checkout of main: no .env or other untracked files, nothing of the working copy.
+WT=$(mktemp -d)/scout; git -C "$REPO" worktree add -q --detach "$WT" main || exit 2
+trap 'git -C "$REPO" worktree remove --force "$WT"' EXIT
+cd "$WT"
 for t in "$@"; do
   ( copilot -p "$(cat "$B/$t.txt" "$B/common-readonly.txt")" --model "$MODEL" --reasoning-effort medium \
       "${ALLOW[@]}" --deny-tool 'write' \
