@@ -121,6 +121,24 @@ def test_estacada_uses_its_six_stall_minimum_outside_large_city_scope() -> None:
     assert not parking.preempted
 
 
+@pytest.mark.parametrize("city", ["or/clackamas/canby", "or/clackamas/sandy"])
+def test_canby_and_sandy_owe_their_own_count_outside_large_city_scope(city: str) -> None:
+    """Outside Metro and under 25,000, like Estacada: each prints 2 a home, eight
+    for the four, which the Large City ceiling had clipped to four (FOLLOWUPS 80(d))."""
+    layers = load_rules()
+    rules = RuleSet(layers)
+    assert layers[city].large_city is False
+    counted = [
+        rules.resolve(city, zone).values.get("parking_min_per_unit")
+        for zone in layers[city].zones
+    ]
+    counted = [p for p in counted if p is not None and p.value is not None]
+    assert counted
+    for parking in counted:
+        assert not parking.preempted
+        assert parking.value * DWELLINGS > 4
+
+
 def test_large_city_parking_cap_still_resolves_from_the_state_layer() -> None:
     layers = load_rules()
     rules = RuleSet(layers)
