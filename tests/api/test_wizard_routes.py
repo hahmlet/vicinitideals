@@ -71,8 +71,8 @@ def client(client: AsyncClient) -> AsyncClient:
     middleware no longer exempts HTMX requests (the header is
     attacker-settable), so each test must ALSO authenticate via a session
     cookie — ``_seed_setup_model`` / ``set_client_auth`` handle that.
-    The header additionally keeps the onboarding_guard middleware (which
-    opens its own prod-engine DB session) out of the request path."""
+    The header marks the HTMX request but does not bypass onboarding_guard,
+    which checks membership through the test-bound session factory."""
     client.headers["hx-request"] = "true"
     return client
 

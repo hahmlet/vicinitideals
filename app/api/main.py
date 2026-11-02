@@ -472,7 +472,7 @@ def create_app() -> FastAPI:
         path = request.url.path
         is_exempt = any(path.startswith(p) for p in _ONBOARDING_GUARD_EXEMPT) or path == "/"
         is_htmx = request.headers.get("hx-request") == "true"
-        if is_exempt or is_htmx:
+        if is_exempt:
             return await call_next(request)
 
         from app.api.auth import decode_session_token, COOKIE_NAME
@@ -493,8 +493,12 @@ def create_app() -> FastAPI:
         if user is None or not user.is_active:
             return await call_next(request)
         if user.org_id is None:
+            if is_htmx:
+                return Response(status_code=403, headers={"HX-Redirect": "/onboarding"})
             return _RR(url="/onboarding", status_code=303)
         if user.membership_status == MembershipStatus.PENDING:
+            if is_htmx:
+                return Response(status_code=403, headers={"HX-Redirect": "/pending-approval"})
             return _RR(url="/pending-approval", status_code=303)
 
         return await call_next(request)

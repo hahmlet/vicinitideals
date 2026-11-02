@@ -28,10 +28,9 @@ from app.models.org import MembershipStatus, OrgInvite, Organization, User
 
 from tests.conftest import seed_org, set_client_auth
 
-# The onboarding_guard middleware calls AsyncSessionLocal() directly (bypasses
-# FastAPI DI), so it can't reach the test DB. Sending hx-request:true causes
-# the guard to skip its DB check (HTMX requests are exempt). CSRF middleware
-# still fires for HTMX POSTs — set_client_auth satisfies both.
+# The onboarding_guard middleware calls AsyncSessionLocal() directly, and the
+# session fixture binds it to the test DB. HTMX does not bypass this check;
+# set_client_auth provides the session cookie and CSRF token for POSTs.
 _HTMX = {"hx-request": "true"}
 
 
