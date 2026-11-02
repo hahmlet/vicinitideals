@@ -1,0 +1,13 @@
+estacada-stall-count
+
+WHY: FOLLOWUPS 80 part (d) (docs/followups/80-item64-round2-readings.md, line 21). The lot screen charges Estacada lots 4 parking stalls because the state middle-housing parking ceiling (flats/config/jurisdictions/or/_state.yaml, OAR 660-046-0220(2)(e)(B), a `preempts: cap`) clips Estacada's own 1.5 per home (flats/config/jurisdictions/or/clackamas/estacada.yaml `parking_min_per_unit`, EMC 16.76.010). But 660-046-0220 is the LARGE CITY rule, and Estacada is neither a Large City nor inside Metro, so its own 6 stalls (1.5 x 4, rounded up) govern. Claude's earlier check: every Estacada green still seats 6 or more except 34E17D 00700, which seats 5 with room for more -- so this should be a fix with no colour change.
+
+TASK:
+1. Find how the screen decides which jurisdictions a `preempts: cap` from _state.yaml reaches (grep `preempts` in flats/; read the loader). Find how Large City / Metro membership is (or is not) recorded per jurisdiction -- grep `large_city`, `metro`, `population`, `660-046-0205`, `660-046-0010` in flats/config and flats/. Name the greps in your report.
+2. Make the 660-046-0220 parking cap not apply to Estacada, the narrowest correct way: if a per-jurisdiction applicability field already exists, set it for Estacada with a citation to the stored text that supports it (OAR 660-046-0020 applicability / 660-046-0010 definitions are stored under flats/provenance/docs/or/ -- quote only lines that exist). If no such mechanism exists, add the smallest one (a field on the jurisdiction saying the Large City rule does not reach it), defaulting to TODAY's behaviour for every other jurisdiction, so only Estacada changes. Do not decide any other city's status; list under QUESTIONS other jurisdictions you notice that look outside the Large City class.
+3. Tests in flats/tests: Estacada's pod requires 6 stalls; a Large City jurisdiction (e.g. Gresham or Beaverton) is still clipped by the state cap exactly as before.
+4. Report how many Estacada lots in the latest local results would change colour if you can measure it cheaply (grep flats/tests for an existing Estacada fixture first); if any would, STOP before committing the rule change and say so under QUESTIONS (common rules).
+
+The one rule change this brief authorises is Estacada's stall count (4 -> 6); the common rule "no rule value may change" holds for everything else, and "no lot colour may change" holds in full.
+
+MUST NOT CHANGE: any other jurisdiction's parking count, any stall size, the state cap's values, any other preempts behaviour.
