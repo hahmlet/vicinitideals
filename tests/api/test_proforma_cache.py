@@ -129,12 +129,10 @@ async def client() -> AsyncIterator[AsyncClient]:  # type: ignore[override]
     from app.api.main import create_app
 
     app = create_app()
-    # HTMX requests no longer bypass require_auth_for_ui (2026-07-08 fix),
-    # so carry a signed session cookie. The middleware only decodes the
-    # token — no DB read on the HTMX path (onboarding_guard exempts HTMX) —
-    # so a random user id suffices for these DB-free routes. The CSRF
-    # middleware validates X-CSRF-Token on authenticated HTMX mutations,
-    # hence the matching token header.
+    # Carry a signed session cookie so the UI auth middleware accepts the
+    # HTMX request. The onboarding guard looks up this random user ID and
+    # allows the unknown user through; the route handlers need no user rows.
+    # CSRF validates X-CSRF-Token on HTMX mutations, hence the matching token.
     user_id = str(uuid4())
     async with AsyncClient(
         transport=ASGITransport(app=app),
