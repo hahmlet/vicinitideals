@@ -25,5 +25,12 @@
    large_city: false; six-stall court added to court_turns.json. Needs a bound (Estacada only) before
    release. Also outside Metro and under 25,000, still capped at 4, not yet marked: Canby, Sandy (check
    whether their own counts exceed 4 before marking).
+   2026-11-02: Canby + Sandy MARKED too (ebb5277a; scout: own count 8 for 4 homes, was clipped to 4 --
+   possible false greens). 8-stall courts drivable as drawn. HELD before the bound: one test fails,
+   test_frontage_caps.py::test_sandy_holds_a_through_lots_far_street_to_half -- on a 70 ft through lot the
+   8-stall court faces the far street 34% (passes the 50% cap) where the 4-stall court faced 51%, so the
+   apartment form now passes. Explain why the bigger court faces less street before trusting it, then fix
+   the test, bound Estacada+Canby+Sandy (hand-off ../vicinitideals-worktrees/estacada-stall-count.handoff.md),
+   read the moves, release.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
