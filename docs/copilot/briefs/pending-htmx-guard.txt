@@ -1,0 +1,9 @@
+pending-htmx-guard
+
+WHY: a stranger can register on viciniti.deals and, while their membership is still PENDING approval, send HTMX POSTs that reach the FLATS write routes (signing a rule, ruling a reading, page checks, flag decisions), because the onboarding guard passes every HTMX request through. Steph's team relies on those records being made only by approved teammates. Full context: docs/followups/141-pending-users-htmx-posts.md -- read it first.
+
+TASK: in app/api/main.py `onboarding_guard`, an HTMX request (header `HX-Request: true`) on a non-exempt path from a signed-in, active user with no org gets HTTP 403 with header `HX-Redirect: /onboarding`, and one from a PENDING member gets 403 with `HX-Redirect: /pending-approval`. Non-HTMX behaviour (the 303 redirects), the exempt paths, anonymous visitors and ACTIVE members are unchanged. Leave the `_teammate` check in the tree-mark routes (app/api/routers/ui_flats.py) as it is.
+
+TESTS in tests/api/test_onboarding_guard_htmx.py: a PENDING user's HTMX POST to /ui/flats/sign is 403 with the HX-Redirect and writes nothing; the same user's HTMX GET of a FLATS partial is 403; an ACTIVE member's HTMX POST still reaches the handler; a user with no org can still use /ui/onboarding over HTMX; a non-HTMX GET by a PENDING user still 303s to /pending-approval. Also run $PYTHON -m pytest tests/api -q -p no:cacheprovider and $PYTHON -m pytest tests/ -q -m unit --ignore=tests/e2e -p no:cacheprovider.
+
+MUST NOT CHANGE: anything an ACTIVE member or an anonymous visitor sees; the CSRF middleware; any FLATS rule or lot colour.

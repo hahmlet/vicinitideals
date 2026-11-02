@@ -41,6 +41,8 @@ async def test_mark_changes_green_display_and_clear_restores_it(
     user = await _login(client, session)
     run = await _seed(session)
     lot = await _lot(session)
+    page = await client.get(LOT_URL)
+    assert 'id="trees-mark-form"' in page.text  # the form renders on the full page, not only the partial
     before = (await client.get(REPORT_URL)).json()
     assert before["colour"] == "green"
     assert "trees_mark" not in before

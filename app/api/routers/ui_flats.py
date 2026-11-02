@@ -4720,6 +4720,12 @@ async def flats_lot(
             "flag_history": await _flag_history(session, county, tlid),
             "tree_marks": tree_marks,
             "open_tree_mark": next((mark for mark in tree_marks if mark["open"]), None),
+            # What partials/flats_lot_marks.html needs when included on the full page.
+            "user": user,
+            "lot_id": lot.id,
+            "county": lot.county,
+            "tlid": lot.tlid,
+            "run_id": chosen.id if chosen else 0,
             "facts": _fact_rows(facts),
             "net_land": _net_land(lot),
             "quadfit": _quadfit_words(facts.get("quadfit") or {}),
