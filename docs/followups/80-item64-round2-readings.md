@@ -21,5 +21,9 @@
    (d) Estacada is charged 4 stalls (state middle-housing cap) but is under 25,000 people and
    outside Metro, so its own 1.5 per home = 6 stalls applies (emc.16.76.txt:77-78). Every Estacada
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
+   BUILT 2026-11-02 on flats/estacada-stall-count (7c875b2c): the Large City cap skips a layer marked
+   large_city: false; six-stall court added to court_turns.json. Needs a bound (Estacada only) before
+   release. Also outside Metro and under 25,000, still capped at 4, not yet marked: Canby, Sandy (check
+   whether their own counts exceed 4 before marking).
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
