@@ -1,6 +1,6 @@
 # 140. Trees: ignored by the screen, entered per lot
 
-[Claude][Steph] STEPH 2026-11-01 (rulings.yaml 2026-11-01-trees-ignored-entered-per-lot, superseding
+[Claude] STEPH 2026-11-01 (rulings.yaml 2026-11-01-trees-ignored-entered-per-lot, superseding
 2026-11-01-johnson-creek-trees-cleared-by-canopy-map): "I'm thinking we ignore trees entirely and let
 users put it in per lot. Unless we find a reputable commercial solution in the future (not looking for
 it now)". The canopy-map build is CANCELLED and nothing watches the canopy layers.
@@ -16,7 +16,7 @@ TO BUILD (next week, after the Tue reset):
     .125: lots held ONLY for trees (tree reach: South + the 1996 flood / FEMA flood area + 20 ft of
     the corridor; count which lots no other reason reaches) drop out; the rest stay. Bound, read every gained
     green, release. The reason text on lots still held stops naming trees.
-(b) Per-lot entry (new feature, shape WAITS ON STEPH): proposed -- any signed-in teammate can mark a
+(b) Per-lot entry (new feature; STEPH 2026-11-01: "Good plan for marking trees. Yellow, not red") -- any signed-in teammate can mark a
     lot "trees that may need a tree permit" with a note; the lot shows YELLOW for everyone with the
     note, who entered it and when; anyone can clear it (kept in history, like flag instances).
     Playwright E2E on prod for the lot page.

@@ -1009,14 +1009,18 @@
   ruling: >-
     "I'm thinking we ignore trees entirely and let users put it in per lot.
     Unless we find a reputable commercial solution in the future (not
-    looking for it now)".
+    looking for it now)". On the per-lot entry: "Good plan for marking trees.
+    Yellow, not red".
   effect: >-
     No tree limit holds a lot anywhere. The Johnson Creek lots held only for
     tree removal go back to their screened colour; the other Johnson Creek
     reasons (the Springwater corridor strip, the Flood Risk Area, South
-    subdistrict density) still hold theirs. A person who knows a lot has
-    trees enters it on that lot. No canopy map is built or watched. Until
-    built the lots stay YELLOW. Build: FOLLOWUPS 140.
+    subdistrict density) still hold theirs. Any signed-in teammate can mark
+    a lot as having trees that may need a tree permit, with a note; the lot
+    then shows YELLOW (never red) for everyone, with the note, who marked it
+    and when; anyone can clear the mark, and cleared marks stay in its
+    history. No canopy map is built or watched. Until built the tree-only
+    lots stay YELLOW. Build: FOLLOWUPS 140.
   source: Steph 2026-11-01 (chat), docs/followups/140-johnson-creek-trees.md
 
 # ---------------------------------------------------------------------------
