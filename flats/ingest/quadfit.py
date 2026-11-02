@@ -2713,7 +2713,12 @@ def _bounded(
         return s
     known = {(f.code, f.key) for f in signed.flags}
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
-    seen = [s.rules]
+    # A miss the screen let off because a held fact may exempt the lot
+    # (:func:`flats.score.screen._unwaived`) screens differently once that
+    # fact is answered False, on the very same numbers: the unanswered
+    # reading is then no stand-in for the answered one (FOLLOWUPS 68).
+    waived = frozenset().union(*(r.waived_by for r in s.rules.values.values()))
+    seen = [] if waived & set(names) else [s.rules]
     # Every answer True first: the worst reading is the likeliest to bind,
     # and the first combination that binds ends the search.
     for combo in itertools.product((True, False), repeat=len(names)):

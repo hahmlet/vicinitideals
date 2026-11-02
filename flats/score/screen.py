@@ -1107,8 +1107,15 @@ def _checks(
             rules, "min_frontage_ft", per_unit=per_unit, lots=design.units
         )
         min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front)
-        if front_answered:
-            lot_check("min_frontage_ft", lot.frontage_ft, min_front)
+        # Owed on ONE street where the code says so (PCC 33.120.206.C.1, "at
+        # least 90 feet of frontage on a street"): the longest of the lot's
+        # streets, not their sum, and unchecked where they went unmeasured.
+        frontage = lot.frontage_ft
+        if rules.get("min_frontage_one_street") is True and min_front is not None:
+            streets = [float(x) for x in lot.street_lines_ft if x and x > 0]
+            frontage = max(streets) if streets else None
+        if front_answered and frontage is not None:
+            lot_check("min_frontage_ft", frontage, min_front)
         else:
             unchecked.append("min_frontage_ft")
     # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
@@ -2423,6 +2430,34 @@ def fit_for(
     )
 
 
+def _unwaived(
+    checks: list[CheckResult],
+    unchecked: list[str],
+    rules: ZoneResolution,
+    config: Configuration | None,
+) -> list[CheckResult]:
+    """``checks`` less every miss the code may not hold this lot to.
+
+    A standard whose own text exempts lots on a fact nothing here answers --
+    Portland's 90 ft site frontage does not apply where every lot sharing a
+    side lot line is already built to its zone (PCC 33.120.206.C.2.b) -- is
+    not certainly owed, so missing it is no wall. The miss moves to
+    ``unchecked`` and the unanswered fact holds the lot (FACT_UNOBSERVED):
+    a closer look, never a RED and never a GREEN (FOLLOWUPS 68).
+    """
+    if config is None or not config.unknown:
+        return checks
+    unknown = set(config.unknown)
+    kept: list[CheckResult] = []
+    for c in checks:
+        r = rules.values.get(CHECK_FIELD.get(c.check, c.check))
+        if c.verdict is Verdict.fails and r is not None and r.waived_by & unknown:
+            unchecked.append(c.check)
+            continue
+        kept.append(c)
+    return kept
+
+
 def screen(
     rules: ZoneResolution,
     lot: LotFacts,
@@ -2462,6 +2497,7 @@ def screen(
     where = rules.jurisdiction
     across = court_across(design, rules, lot.alley, corner=lot.corner)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
+    checks = _unwaived(checks, unchecked, rules, config)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
     worst_check = dominant(checks)

@@ -1357,6 +1357,52 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_min_site_frontage_area",
+        "site_fact",
+        "The parcel is in one of the Eastern Portland centres shown on Map "
+        "120-2, where a multi-dwelling site more than 160 ft deep may take "
+        "new homes only with at least 90 ft of frontage on a street (PCC "
+        "33.120.206). Assumed unknown: it decides the colour.",
+        evidence=(
+            "Zoning Code Map 120-2, the City's Minimum Required Site Frontage "
+            "Areas layer (Portland Maps COP_OpenData_ZoningCode layer 1278) -- "
+            "held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_site_frontage_neighbour_exception",
+        "site_fact",
+        "Every lot that shares a side lot line with the site is zoned other "
+        "than multi-dwelling, or is multi-dwelling and meets its zone's "
+        "minimum density or holds at least three homes -- the exception PCC "
+        "33.120.206.C.2.b makes to the 90 ft frontage rule. Nothing here "
+        "counts the homes on the neighbouring lots, so a deep, narrow lot "
+        "inside Map 120-2 is held for review rather than refused. Assumed "
+        "unknown: it decides the colour.",
+        evidence=(
+            "nothing yet: the neighbouring lots' homes and density are not "
+            "read (the per-line neighbour zoning could answer the first test "
+            "alone)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_eastern_pattern_area",
+        "site_fact",
+        "The parcel is in Portland's Eastern Pattern Area (Map 120-3), where "
+        "the multi-dwelling zones' rear setback is a quarter of the site's "
+        "depth, no more than half of it vehicle area, on lots deeper than "
+        "100 ft that are not corner lots (PCC 33.120.220.B.2). Assumed "
+        "unknown: it decides the colour.",
+        evidence=(
+            "Zoning Code Map 120-3, the Eastern Neighborhoods polygon of the "
+            "City's Pattern Areas layer (Portland Maps COP_OpenData_ZoningCode "
+            "layer 1279) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_historic_overlay",
         "site_fact",
         "The parcel is inside Oregon City's historic overlay district as the "
@@ -1651,8 +1697,10 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "pdx_eastern_pattern_area",
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_unmeasured",
+    "pdx_min_site_frontage_area",
     "pdx_special_building_setback",
     "raleigh_hills_asc_u",
     "rockwood_design_district",

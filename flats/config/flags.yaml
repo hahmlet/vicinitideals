@@ -1912,6 +1912,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-MIN-SITE-FRONTAGE-AREA:
+    description: "Whether the lot lies in one of the Eastern Portland centres on Zoning Code Map 120-2, where a multi-dwelling site more than 160 ft deep may take new homes only with 90 ft of frontage on a street (PCC 33.120.206); the outline cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 120-2 by hand, or the City's Minimum Required Site Frontage Areas layer at the lot's own boundary"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-SITE-FRONTAGE-NEIGHBOUR-EXCEPTION:
+    description: "Whether every lot sharing a side lot line with this deep, narrow site is zoned other than multi-dwelling, meets its minimum density, or holds three homes -- the exception PCC 33.120.206.C.2.b makes to the 90 ft frontage rule on Map 120-2; nobody has counted the neighbours' homes"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The neighbouring lots' zoning, home counts and areas from the assessor roll, against 33.120.206.C.2.b"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-EASTERN-PATTERN-AREA:
+    description: "Whether the lot lies in Portland's Eastern Pattern Area on Zoning Code Map 120-3, where the multi-dwelling rear setback is a quarter of the site's depth with at most half of it vehicle area (PCC 33.120.220.B.2); the outline cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 120-3 by hand, or the City's Pattern Areas layer at the lot's own boundary"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-LOCAL-STREET-CONNECTIVITY:
     description: "Whether the lot lies on the Local Street Connectivity Lands of a Washington County community plan (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress), where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
     kind: categorical

@@ -78,7 +78,9 @@ def test_the_facts_are_drawn_site_facts_never_assumed(name: str) -> None:
 
 
 def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
-    by_fact = {a.condition: a for a in portland.drawn_areas.values()}
+    # The Map 120-2 and 120-3 areas (FOLLOWUPS 68, 2026-11-01) are base-zone
+    # maps, not plan districts: test_portland_map_120.py guards them.
+    by_fact = {a.condition: a for a in portland.drawn_areas.values() if a.condition in FACTS}
     assert set(by_fact) == set(FACTS)
     for fact, area in by_fact.items():
         assert area.file == FILES[fact]

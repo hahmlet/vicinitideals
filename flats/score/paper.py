@@ -518,6 +518,21 @@ def lot_line_buffer_ft(rules: "ZoneResolution") -> float:
     return _number(rules, "parking_lot_line_buffer_ft") or 0.0
 
 
+def rear_kept_clear_ft(rear_ft: float, rules: "ZoneResolution") -> float:
+    """The part of the required rear yard parking may not use, where the code
+    caps the vehicle share of it (``parking_rear_yard_max_pct``, PCC
+    33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
+    rear setback can be vehicle area"); 0 where none is stated.
+
+    Taken on the yard's depth as though the court ran its whole width, the
+    conservative reading of an area share: the court may reach this far into
+    the yard and no further."""
+    share = _number(rules, "parking_rear_yard_max_pct")
+    if share is None or rear_ft <= 0:
+        return 0.0
+    return rear_ft * max(0.0, 100.0 - float(share)) / 100.0
+
+
 def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") -> float:
     """The ground a lot must give behind the building's rear wall.
 
@@ -543,7 +558,7 @@ def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") ->
     function's, because the side yards are already outside the envelope the
     court is searched in.
     """
-    keep = rear_ft if yards_kept_clear(rules) else 0.0
+    keep = rear_ft if yards_kept_clear(rules) else rear_kept_clear_ft(rear_ft, rules)
     keep = max(keep, lot_line_buffer_ft(rules))
     return max(rear_ft, parked_ft + keep)
 
@@ -1420,6 +1435,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         used.append("parking_required_yard_prohibited")
     if court and lot_line_buffer_ft(rules) > 0:
         used.append("parking_lot_line_buffer_ft")
+    if court and rear_kept_clear_ft(rear or 0.0, rules) > 0:
+        used.append("parking_rear_yard_max_pct")
     used += [
         name
         for name, got in (

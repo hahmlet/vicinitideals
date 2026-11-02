@@ -332,6 +332,8 @@ def _printed_variant(variant: object) -> object:
         # and prints the 15.6 a 78 ft lot owes nowhere.
         else variant.pct_of_lot_width
         if getattr(variant, "pct_of_lot_width", None) is not None
+        else variant.pct_of_lot_depth
+        if getattr(variant, "pct_of_lot_depth", None) is not None
         else variant.reduce_pct
         if variant.reduce_pct is not None
         else getattr(variant, "value", None)
