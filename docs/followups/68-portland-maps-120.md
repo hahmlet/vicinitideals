@@ -20,3 +20,9 @@ some sliver polygons to ignore). No longer waits on anyone: encoder job (fetch b
 
 FETCHED 2026-11-01 (Copilot 86aa8ac5, scripts/flats_fetch_area.py): flats/config/areas/or/multnomah/portland/
 map-120-2-site-frontage-areas.geojson (4) and map-120-3-pattern-areas.geojson (12). Not wired in yet.
+
+ENCODED 2026-11-01 on flats/pdx-map-120 (37c245ff; hand-off ../vicinitideals-worktrees/pdx-map-120.handoff.md):
+90 ft frontage inside the 4 centres (neighbour exception unread = yellow), Eastern rear yard 25% of depth
+with parking in half of it. Bound running on 137 (base run 111). QUESTION for Steph, open: "at least 90
+feet of frontage on a street" read as ONE street (a corner or through lot cannot add its streets) -- the
+stricter reading, shipped as is unless Steph says the streets may be summed.
