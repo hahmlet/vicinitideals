@@ -48,3 +48,8 @@ Estacada 16.48.020 (city inventory), Gresham 3.0103 L497-503 list + 4.1152 downt
 Multnomah uninc. 33.445 (not stored). Thin: WashCo uninc. (only plan designations), Canby (Historical
 Protection A zone only), Gladstone 17.10.070, Tualatin 52.100 (Roamer's Rest), Fairview, Wood Village.
 None: Johnson City, Rivergrove. Fetch the not-stored sections before reading.
+
+STORED 2026-11-01 (Copilot 0d284d47): Clackamas ZDO 707, WashCo CDC 373, Troutdale 4.200-4.230 (with the
+4.230 inventory table, 11 resources), Gresham 5.0300. Already held: Hillsboro 12.27.300; Multnomah uninc.
+uses Portland's 33.445 (or/multnomah/portland/33.445.txt). Beaverton 60.45 is printed [REPEALED]. Still
+not stored: Lake Oswego 50.06.009 (Lake Oswego is switched off, so no hurry). Ready to read next week.
