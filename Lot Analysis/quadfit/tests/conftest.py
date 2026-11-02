@@ -16,6 +16,23 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 QUADFIT_DIR = Path(__file__).resolve().parents[1]
 if str(QUADFIT_DIR) not in sys.path:
     sys.path.insert(0, str(QUADFIT_DIR))
+
+
+@pytest.fixture(scope="session")
+def trusted_rules():
+    from flats.encode.load import load_trusted
+    from flats.rules.resolver import RuleSet
+
+    return RuleSet(load_trusted(strict=False).layers)
+
+
+@pytest.fixture(scope="session")
+def zone_mirror_source():
+    import audit_zone_mirror
+
+    return audit_zone_mirror._load()

@@ -86,7 +86,12 @@ def _audit():
     return audit_corner_variants
 
 
-def test_no_corner_rule_the_screen_could_reach_adds_room_but_hillsboros_coverage() -> None:
+@pytest.fixture(scope="module")
+def corner_variants():
+    return _audit().scan()
+
+
+def test_no_corner_rule_the_screen_could_reach_adds_room_but_hillsboros_coverage(corner_variants) -> None:
     """The whole finding, in one assertion.
 
     If this ever fails it is good news and the docstring above is out of date:
@@ -95,12 +100,11 @@ def test_no_corner_rule_the_screen_could_reach_adds_room_but_hillsboros_coverage
     differently to one without. It failed once, for Hillsboro's coverage, and
     was read (module docstring).
     """
-    audit = _audit()
-    gain = {v.key for v in audit.scan() if v.reachable and v.direction == "loosens"}
+    gain = {v.key for v in corner_variants if v.reachable and v.direction == "loosens"}
     assert gain == BY_RIGHT_GAINS, sorted(gain ^ BY_RIGHT_GAINS)
 
 
-def test_every_loosening_corner_rule_is_gated_behind_a_plat_we_do_not_draw() -> None:
+def test_every_loosening_corner_rule_is_gated_behind_a_plat_we_do_not_draw(corner_variants) -> None:
     """Why the upside is not real rather than merely absent.
 
     Twenty-eight variants loosen and all of them are double-gated on
@@ -110,20 +114,18 @@ def test_every_loosening_corner_rule_is_gated_behind_a_plat_we_do_not_draw() -> 
 
     Except `BY_RIGHT_GAINS`, which are not gated at all.
     """
-    audit = _audit()
-    loosening = [v for v in audit.scan()
+    loosening = [v for v in corner_variants
                  if v.direction == "loosens" and v.key not in BY_RIGHT_GAINS]
     assert len(loosening) > 20, len(loosening)
     for v in loosening:
         assert "unit_lots" in v.when, str(v)
 
 
-def test_the_reachable_corner_rules_are_the_ones_that_take_room_away() -> None:
+def test_the_reachable_corner_rules_are_the_ones_that_take_room_away(corner_variants) -> None:
     """Same population from the other side, so the count is not zero by
     accident: there ARE corner rules the screen would pick up today, and every
     one of them makes a lot harder to build on, `BY_RIGHT_GAINS` aside."""
-    audit = _audit()
-    reachable = [v for v in audit.scan()
+    reachable = [v for v in corner_variants
                  if v.reachable and v.key not in BY_RIGHT_GAINS]
     assert len(reachable) > 30, len(reachable)
 
@@ -132,7 +134,7 @@ def test_the_reachable_corner_rules_are_the_ones_that_take_room_away() -> None:
     assert "tightens" in directions
 
 
-def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost() -> None:
+def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost(corner_variants) -> None:
     """The specific claim that sent this to the work list as an opportunity.
 
     WVDC 720.030 hands over a corner-lot definition word for word from
@@ -140,9 +142,8 @@ def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost() -> None
     from 5 ft to 10 -- ten feet across a 56 ft pod, in the direction that loses
     lots rather than wins them.
     """
-    audit = _audit()
     wv = {
-        v.key: v for v in audit.scan()
+        v.key: v for v in corner_variants
         if v.layer == "or/multnomah/wood-village" and v.reachable
     }
     side = wv["or/multnomah/wood-village/LR 7.5.setback_side_ft"]
@@ -154,7 +155,7 @@ def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost() -> None
     assert rear.direction == "tightens"
 
 
-def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
+def test_only_fourteen_reachable_corner_rules_can_move_a_building(corner_variants) -> None:
     """How much the unbuilt feature is actually worth, pinned.
 
     Twenty-nine corner rules would fire, but a lot-width or frontage minimum
@@ -196,8 +197,7 @@ def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
     the building's height whatever the corner's 15 ft would say. Canby has no
     greens yet (its lots are weighed at the next weekly run).
     """
-    audit = _audit()
-    setbacky = [v for v in audit.scan()
+    setbacky = [v for v in corner_variants
                 if v.reachable and v.direction == "tightens"
                 and v.field.startswith("setback_")]
     # 16 -> 17 on 2026-10-29: Canby C-1, measured at last, carries R-2's
