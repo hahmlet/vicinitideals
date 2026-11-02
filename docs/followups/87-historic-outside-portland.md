@@ -38,3 +38,13 @@ repealed), Cornelius, Sherwood, King City, Durham, Clackamas ZDO 707, Gladstone,
 Molalla, Troutdale, Fairview, Wood Village -- check the stored code text for a landmark section
 before calling any of them none. Next: Claude reads the stored code per city (is listing
 protective by itself? ORS 197.772 owner consent), then address/taxlot match, bound, read losses.
+
+STORED-CODE SCOUT 2026-11-01 (Copilot, read-only, paths in flats/provenance/docs/or/): protective
+sections found -- Milwaukie 19.403 (1988 inventory; city may designate without owner), Sandy 17.62
+(city may request designation), West Linn 25 (owner consent for local landmarks, 25.050 L43-51),
+Wilsonville 4.171(.09) (Cultural Resources Inventory), Happy Valley 16.25.005 (Goal 5 inventories),
+Estacada 16.48.020 (city inventory), Gresham 3.0103 L497-503 list + 4.1152 downtown rule, Lake Oswego
+50.06.009 (not stored), Troutdale 4.230 Table A (not stored), Clackamas ZDO 707 (not stored),
+Multnomah uninc. 33.445 (not stored). Thin: WashCo uninc. (only plan designations), Canby (Historical
+Protection A zone only), Gladstone 17.10.070, Tualatin 52.100 (Roamer's Rest), Fairview, Wood Village.
+None: Johnson City, Rivergrove. Fetch the not-stored sections before reading.

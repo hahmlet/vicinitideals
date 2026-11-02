@@ -24,3 +24,7 @@ TO BUILD (next week, after the Tue reset):
 Left on 137: data/flats/canopy/2026-11-01/ (Metro Canopy 2019 + C-CAP 2021, 3.4 GB, Esri file GDB
 rasters; the venv's rasterio cannot open them). Not used; delete when disk is wanted. Leads if a
 commercial source is ever wanted: none gathered (Steph: not looking now).
+
+(b) DONE 2026-11-01: lot tree marks LIVE (Copilot 22e5252f + Claude fixes 747d6b52 reload, 8cf68c0f approved
+teammates only / no emails, 3c7accea full-page form; migration 0148; prod E2E test_flats_lot_marks green).
+Left: (a) only.

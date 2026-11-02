@@ -76,3 +76,10 @@ display, not repair -- read the map title before using), Northwest Hills Hillsid
 Park, Skyline, Balch Creek only). NAME ONLY: 562-7 (BPS 54, PLDIST=NP retail 3,000 sq ft -- likely the
 NW retail-limit map, check the code text), 595-2 (COP 145 West Portland Multicultural, adopted area
 plans layer -- probably not the map). Still to source: 595-2, Hillside subarea (from the PDF maps).
+
+FETCHED 2026-11-01 (Copilot 86aa8ac5): all 15 layers above as area files in
+flats/config/areas/or/multnomah/portland/ (limited-use-areas, streetcar-lines, park-block-frontages,
+south-waterfront-accessways, height-opportunity-areas, special-building-height-corridors,
+required-master-plan-sites, scenic-view-cones, south-waterfront-top-of-bank, required-building-lines,
+floor-area-transfer-sectors, street-plans, setbacks-plan-districts). Not wired in. Re-fetch with
+scripts/flats_fetch_area.py.

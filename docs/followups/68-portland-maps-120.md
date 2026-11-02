@@ -17,3 +17,6 @@ layer 1278 "Minimum Required Site Frontage Areas" (its own description: "Zone co
 layer 1279 "Pattern Areas" (TYPE 'Eastern Neighborhoods' = Map 120-3's Eastern Pattern Area; also
 some sliver polygons to ignore). No longer waits on anyone: encoder job (fetch both, frontage check
 33.120.206, rear setback 33.120.220.C with corner exemption), bound, read losses.
+
+FETCHED 2026-11-01 (Copilot 86aa8ac5, scripts/flats_fetch_area.py): flats/config/areas/or/multnomah/portland/
+map-120-2-site-frontage-areas.geojson (4) and map-120-3-pattern-areas.geojson (12). Not wired in yet.
