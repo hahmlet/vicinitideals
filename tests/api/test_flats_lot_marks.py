@@ -46,6 +46,7 @@ async def test_mark_changes_green_display_and_clear_restores_it(
 
     added = await client.post("/ui/flats/lot-marks", data=_form(lot, run.id, "Mature oak by the drive"))
     assert added.status_code == 200
+    assert added.headers.get("hx-refresh") == "true"  # colour above the panel reloads
     assert 'id="trees-open-mark"' in added.text
     assert "Mature oak by the drive" in added.text
 
@@ -85,6 +86,7 @@ async def test_mark_changes_green_display_and_clear_restores_it(
         },
     )
     assert cleared.status_code == 200
+    assert cleared.headers.get("hx-refresh") == "true"
     assert 'class="trees-history-row"' in cleared.text
     assert "Tree checked" in cleared.text
     after = (await client.get(REPORT_URL)).json()

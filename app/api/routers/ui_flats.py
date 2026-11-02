@@ -4829,7 +4829,10 @@ async def flats_lot_mark_add(
             error="An open trees mark already exists for this lot.",
             note=note,
         )
-    return await _tree_marks_partial(request, session, lot, target_run_id, user)
+    response = await _tree_marks_partial(request, session, lot, target_run_id, user)
+    # The mark changes the lot's colour, reasons and result cards above the panel: reload them all.
+    response.headers["HX-Refresh"] = "true"
+    return response
 
 
 @router.post("/ui/flats/lot-marks/{mark_id}/clear", response_class=HTMLResponse)
@@ -4872,7 +4875,10 @@ async def flats_lot_mark_clear(
     mark.cleared_at = datetime.now(timezone.utc)
     mark.clear_note = clear_note or None
     await session.commit()
-    return await _tree_marks_partial(request, session, lot, target_run_id, user)
+    response = await _tree_marks_partial(request, session, lot, target_run_id, user)
+    # The mark changes the lot's colour, reasons and result cards above the panel: reload them all.
+    response.headers["HX-Refresh"] = "true"
+    return response
 
 
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)
