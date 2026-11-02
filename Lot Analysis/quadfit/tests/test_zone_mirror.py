@@ -32,7 +32,6 @@ import io
 from datetime import date
 
 import pytest
-import yaml
 
 pytestmark = pytest.mark.unit
 
@@ -197,17 +196,28 @@ def _audit():
     return audit_zone_mirror
 
 
-def _rules() -> dict:
+@pytest.fixture(scope="module", autouse=True)
+def cached_audit_source(zone_mirror_source):
     audit = _audit()
-    doc = yaml.safe_load(io.open(audit.RULES, encoding="utf-8"))
-    return doc.get("jurisdictions", doc)
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        monkeypatch.setattr(audit, "_load", lambda: zone_mirror_source)
+        yield
+
+
+@pytest.fixture(scope="module")
+def audit_scan(cached_audit_source):
+    return _audit().scan()
+
+
+def _rules() -> dict:
+    return _audit()._load()[0]
 
 
 def _zone(juris: str, zone: str) -> dict:
     return [z for z in _rules()[juris]["zones"] if z["zone"] == zone][0]
 
 
-def test_the_two_files_no_longer_drift() -> None:
+def test_the_two_files_no_longer_drift(audit_scan) -> None:
     """A ratchet in both directions, now sitting at zero.
 
     Frozen as a set of keys rather than a count, so the failure message names
@@ -215,8 +225,7 @@ def test_the_two_files_no_longer_drift() -> None:
     missing row means somebody resolved a divergence, which is good and still
     has to be recorded here.
     """
-    audit = _audit()
-    diverge, _uncited, agree = audit.scan()
+    diverge, _uncited, agree = audit_scan
     found = {d.key for d in diverge if d.is_drift}
 
     new = sorted(found - KNOWN_DIVERGENT)
@@ -269,7 +278,7 @@ def test_the_quadplex_row_is_the_one_that_gets_read() -> None:
     assert _zone("gladstone", "R5")["min_lot_sqft"] == 7000
 
 
-def test_no_step_back_in_the_corpus_is_missing_from_the_pipeline() -> None:
+def test_no_step_back_in_the_corpus_is_missing_from_the_pipeline(audit_scan) -> None:
     """The seven are closed, and the guard that found them still runs.
 
     This list held seven dimensions for as long as the pipeline had no way to
@@ -282,8 +291,7 @@ def test_no_step_back_in_the_corpus_is_missing_from_the_pipeline() -> None:
     pod closer to the line than the code allows, which is a green that should
     not exist. Nobody has to remember to check; this does.
     """
-    audit = _audit()
-    diverge, _uncited, _agree = audit.scan()
+    diverge, _uncited, _agree = audit_scan
     found = {d.key for d in diverge
              if not d.is_permission_blocked and d.is_step_back}
     assert found == KNOWN_STEP_BACK_GAPS, sorted(found ^ KNOWN_STEP_BACK_GAPS)
@@ -341,7 +349,7 @@ def test_the_declared_planes_derive_the_corpus_figure() -> None:
             assert zr.effective_setback_side_ft() >= zr.setback_side_ft
 
 
-def test_a_collapsed_combined_side_yard_is_not_a_mistake() -> None:
+def test_a_collapsed_combined_side_yard_is_not_a_mistake(audit_scan) -> None:
     """The one row where rules.yaml is right and the corpus is only richer.
 
     Lake Oswego states both halves of the rule -- 5 feet on one side, 15 across
@@ -351,8 +359,7 @@ def test_a_collapsed_combined_side_yard_is_not_a_mistake() -> None:
     divergence and would screen a 10-foot combined yard against a code that
     asks 15.
     """
-    audit = _audit()
-    diverge, _uncited, _agree = audit.scan()
+    diverge, _uncited, _agree = audit_scan
     found = {d.key for d in diverge
              if not d.is_permission_blocked and not d.is_step_back
              and d.is_side_total_collapse}
@@ -448,7 +455,7 @@ def test_neither_disputed_permission_can_reach_a_green() -> None:
         assert "[capped at review by needs_verification]" in s
 
 
-def test_rn_dimensions_wait_on_the_rn_permission() -> None:
+def test_rn_dimensions_wait_on_the_rn_permission(audit_scan) -> None:
     """Five numbers held behind one question.
 
     RN's dimensional differences are real, but reconciling them would mean
@@ -457,8 +464,7 @@ def test_rn_dimensions_wait_on_the_rn_permission() -> None:
     are not mistaken for agreement, and pinned to the permission split so that
     answering that question is what releases them.
     """
-    audit = _audit()
-    diverge, _uncited, _agree = audit.scan()
+    diverge, _uncited, _agree = audit_scan
     found = {d.key for d in diverge if d.is_permission_blocked}
     assert found == KNOWN_PERMISSION_BLOCKED, sorted(
         found ^ KNOWN_PERMISSION_BLOCKED
@@ -468,7 +474,7 @@ def test_rn_dimensions_wait_on_the_rn_permission() -> None:
             assert d.zone_key in KNOWN_PERMISSION_SPLITS
 
 
-def test_the_village_zone_mirrors_exactly() -> None:
+def test_the_village_zone_mirrors_exactly(audit_scan) -> None:
     """Wilsonville V, added 2026-09-01, and the point of adding the audit.
 
     Every number the site plan will screen 2,508 Villebois lots with came out
@@ -476,8 +482,7 @@ def test_the_village_zone_mirrors_exactly() -> None:
     the divergence list to catch. That is what a zone written after the audit
     exists looks like.
     """
-    audit = _audit()
-    diverge, _uncited, _agree = audit.scan()
+    diverge, _uncited, _agree = audit_scan
     assert not [d for d in diverge if d.jurisdiction == "wilsonville"
                 and d.zone == "V"]
 
@@ -516,7 +521,7 @@ KNOWN_ALIAS_SAME_EDGE: frozenset[str] = frozenset({
 KNOWN_ALIAS_WRONG_EDGE: frozenset[str] = frozenset()
 
 
-def test_the_frontage_numbers_are_quoted_after_all() -> None:
+def test_the_frontage_numbers_are_quoted_after_all(audit_scan) -> None:
     """These nine read as uncited and were not.
 
     rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
@@ -538,7 +543,7 @@ def test_the_frontage_numbers_are_quoted_after_all() -> None:
 
     # And they are gone from the uncited list, which is what they were mistaken
     # for before anyone looked at the field names.
-    _diverge, uncited, _agree = audit.scan()
+    _diverge, uncited, _agree = audit_scan
     assert not [u for u in uncited if "min_frontage_ft" in u], uncited
 
 
@@ -575,7 +580,7 @@ def test_none_of_them_measure_the_wrong_line_on_the_lot() -> None:
             assert "FRONT LOT LINE" in a.why, a.key
 
 
-def test_nothing_in_the_screen_is_unquoted() -> None:
+def test_nothing_in_the_screen_is_unquoted(audit_scan) -> None:
     """The uncited list is empty, and it took two corrections to get there.
 
     Fifteen rows were a naming difference. The other eighteen were three zones
@@ -595,8 +600,8 @@ def test_nothing_in_the_screen_is_unquoted() -> None:
     layer states anywhere, naming it PLACEHOLDER in the row's notes. Those,
     and only those, may be unquoted -- FLATS answers such a lot UNKNOWN.
     """
+    _diverge, uncited, agree = audit_scan
     audit = _audit()
-    _diverge, uncited, agree = audit.scan()
     top, corpus = audit._load()
     placeholders = set()
     for juris, z, _zl, _layer in audit._pairs(top, corpus):

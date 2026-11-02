@@ -29,6 +29,7 @@ pytest.importorskip("yaml")
 
 pytestmark = pytest.mark.unit
 
+
 #: quadfit's StallGeometry field -> the FLATS field registry name.
 MIRRORED = {
     "stall_width_ft": "parking_stall_width_ft",
@@ -74,7 +75,7 @@ ENUM_MIRRORED = {
 }
 
 
-def _corpus_value(layer_id: str, field: str):
+def _corpus_value(layer_id: str, field: str, trusted_rules):
     """The innermost layer's Value for one field, exempt ones included.
 
     Separate from _corpus_defaults because `exempt: true` means two different
@@ -83,26 +84,18 @@ def _corpus_value(layer_id: str, field: str):
     at its own ceiling table and this building is not on it — and it has to beat
     a broader layer's number rather than fall through to it.
     """
-    from flats.encode.load import load_trusted
-    from flats.rules.resolver import RuleSet
-
-    rules = RuleSet(load_trusted(strict=False).layers)
     found = None
-    for layer in rules.chain_for(layer_id):  # broadest first, so the city wins
+    for layer in trusted_rules.chain_for(layer_id):  # broadest first, so the city wins
         value = layer.defaults.get(field)
         if value is not None:
             found = value
     return found
 
 
-def _corpus_defaults(layer_id: str) -> dict:
+def _corpus_defaults(layer_id: str, trusted_rules) -> dict:
     """The parking geometry a layer resolves to, city over county over state."""
-    from flats.encode.load import load_trusted
-    from flats.rules.resolver import RuleSet
-
-    rules = RuleSet(load_trusted(strict=False).layers)
     out: dict = {}
-    for layer in rules.chain_for(layer_id):  # broadest first, so the city wins
+    for layer in trusted_rules.chain_for(layer_id):  # broadest first, so the city wins
         for field in MIRRORED.values():
             value = layer.defaults.get(field)
             if value is not None and not value.exempt:
@@ -110,7 +103,7 @@ def _corpus_defaults(layer_id: str) -> dict:
     return out
 
 
-def test_every_shipped_dimension_is_the_one_the_corpus_holds():
+def test_every_shipped_dimension_is_the_one_the_corpus_holds(trusted_rules):
     from common import load_footprints
     from flats.encode.port_quadfit import layer_id_for
 
@@ -118,7 +111,7 @@ def test_every_shipped_dimension_is_the_one_the_corpus_holds():
     assert sp is not None and sp.geometry, "the site plan ships no stall geometry"
 
     for jurisdiction, geom in sp.geometry.items():
-        corpus = _corpus_defaults(layer_id_for(jurisdiction))
+        corpus = _corpus_defaults(layer_id_for(jurisdiction), trusted_rules)
         for mine, theirs in MIRRORED.items():
             shipped = getattr(geom, mine)
             read = corpus.get(theirs)
@@ -153,7 +146,7 @@ def test_every_shipped_dimension_is_the_one_the_corpus_holds():
             )
 
 
-def test_every_shipped_ceiling_is_the_one_the_corpus_holds():
+def test_every_shipped_ceiling_is_the_one_the_corpus_holds(trusted_rules):
     """The maximum mirrors too, and `null` here has to mean `exempt` there.
 
     A ceiling is the one parking number that can make a lot LOOK worse than it
@@ -165,7 +158,9 @@ def test_every_shipped_ceiling_is_the_one_the_corpus_holds():
     from flats.encode.port_quadfit import layer_id_for
 
     for jurisdiction, geom in load_footprints().siteplan.geometry.items():
-        read = _corpus_value(layer_id_for(jurisdiction), "parking_max_per_unit")
+        read = _corpus_value(
+            layer_id_for(jurisdiction), "parking_max_per_unit", trusted_rules
+        )
         stated = None if read is None or read.exempt else float(read.value)
         assert geom.max_per_unit == stated, (
             f"{jurisdiction}: footprints.yaml ships max_per_unit="
@@ -174,7 +169,7 @@ def test_every_shipped_ceiling_is_the_one_the_corpus_holds():
         )
 
 
-def test_a_dimension_that_stands_down_stands_down_for_the_same_reason():
+def test_a_dimension_that_stands_down_stands_down_for_the_same_reason(trusted_rules):
     """`stands_down_on` mirrors the corpus `unless:`, not a local judgement.
 
     Oregon City is the only entry that carries one, because OCMC 17.52.010
@@ -187,7 +182,7 @@ def test_a_dimension_that_stands_down_stands_down_for_the_same_reason():
     from flats.encode.port_quadfit import layer_id_for
 
     for jurisdiction, geom in load_footprints().siteplan.geometry.items():
-        corpus = _corpus_defaults(layer_id_for(jurisdiction))
+        corpus = _corpus_defaults(layer_id_for(jurisdiction), trusted_rules)
         for theirs in MIRRORED.values():
             read = corpus.get(theirs)
             if read is None:
@@ -289,7 +284,7 @@ def test_a_city_that_states_no_aisle_is_declined_rather_than_borrowed_from():
     ).lays_out() is False
 
 
-def test_an_assumed_aisle_is_assumed_because_nobody_published_one():
+def test_an_assumed_aisle_is_assumed_because_nobody_published_one(trusted_rules):
     """The whole licence for an assumed dimension, stated as a test.
 
     Two cities regulate their parking completely and never state the width of
@@ -313,7 +308,7 @@ def test_an_assumed_aisle_is_assumed_because_nobody_published_one():
     assert assumed, "nothing is assumed; delete this test with the last one"
 
     for jurisdiction in assumed:
-        corpus = _corpus_defaults(layer_id_for(jurisdiction))
+        corpus = _corpus_defaults(layer_id_for(jurisdiction), trusted_rules)
         for theirs in ("parking_aisle_one_way_ft", "parking_aisle_two_way_ft"):
             assert corpus.get(theirs) is None, (
                 f"{jurisdiction}: {theirs} is in the corpus, so the aisle is "
@@ -409,7 +404,7 @@ def test_a_city_on_an_assumed_aisle_is_still_a_city_that_lays_out():
 # ---------------------------------------------------------------------------
 
 
-def _one_lot_value(layer_id: str, field: str):
+def _one_lot_value(layer_id: str, field: str, trusted_rules):
     """What a city's code states for four units on ONE lot, or None.
 
     None where the corpus is silent AND where it is `exempt: true`, because for
@@ -422,13 +417,13 @@ def _one_lot_value(layer_id: str, field: str):
     honoured, which is the one-lot branch — the plat this stage draws, and the
     plat SiteplanSpec refuses to move off while the mirror holds these values.
     """
-    read = _corpus_value(layer_id, field)
+    read = _corpus_value(layer_id, field, trusted_rules)
     if read is None or read.exempt:
         return None
     return read
 
 
-def test_every_shipped_driveway_rule_is_the_one_the_corpus_holds():
+def test_every_shipped_driveway_rule_is_the_one_the_corpus_holds(trusted_rules):
     """The second mirror, guarded exactly like the first.
 
     An omitted field means the city was read and its code states no such rule.
@@ -447,7 +442,7 @@ def test_every_shipped_driveway_rule_is_the_one_the_corpus_holds():
         layer = layer_id_for(jurisdiction)
         for mine, theirs in DRIVEWAY_MIRRORED.items():
             shipped = getattr(dw, mine)
-            read = _one_lot_value(layer, theirs)
+            read = _one_lot_value(layer, theirs, trusted_rules)
             if shipped is None:
                 assert read is None, (
                     f"{jurisdiction}: footprints.yaml leaves {mine} empty but the "
@@ -465,7 +460,7 @@ def test_every_shipped_driveway_rule_is_the_one_the_corpus_holds():
             )
 
 
-def test_the_front_parking_ban_is_mirrored_as_a_ban_and_not_as_a_cap():
+def test_the_front_parking_ban_is_mirrored_as_a_ban_and_not_as_a_cap(trusted_rules):
     """`parking_front_prohibited` is a bool, and the false value is None.
 
     Every other field in the family is a number, where absent and exempt mean
@@ -490,7 +485,9 @@ def test_the_front_parking_ban_is_mirrored_as_a_ban_and_not_as_a_cap():
 
     for jurisdiction, dw in load_footprints().siteplan.driveway.items():
         for mine, theirs in BOOL_MIRRORED.items():
-            read = _one_lot_value(layer_id_for(jurisdiction), theirs)
+            read = _one_lot_value(
+                layer_id_for(jurisdiction), theirs, trusted_rules
+            )
             stated = None if read is None else bool(read.value)
             shipped = getattr(dw, mine)
             assert shipped == stated, (
@@ -500,7 +497,7 @@ def test_the_front_parking_ban_is_mirrored_as_a_ban_and_not_as_a_cap():
             )
 
 
-def test_the_corner_lot_words_are_the_ones_the_corpus_holds():
+def test_the_corner_lot_words_are_the_ones_the_corpus_holds(trusted_rules):
     """`front_lot_line_corner` and `corner_access_street`, verbatim.
 
     A number can be approximately equal and a bool can be None; a word is the
@@ -518,7 +515,9 @@ def test_the_corner_lot_words_are_the_ones_the_corpus_holds():
 
     for jurisdiction, dw in load_footprints().siteplan.driveway.items():
         for mine, theirs in ENUM_MIRRORED.items():
-            read = _one_lot_value(layer_id_for(jurisdiction), theirs)
+            read = _one_lot_value(
+                layer_id_for(jurisdiction), theirs, trusted_rules
+            )
             shipped = getattr(dw, mine)
             assert read is not None, (
                 f"{jurisdiction}: the corpus does not state {theirs}; every read "
@@ -534,7 +533,7 @@ def test_the_corner_lot_words_are_the_ones_the_corpus_holds():
             )
 
 
-def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone():
+def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone(trusted_rules):
     """Portland is the only city that does, and a missed zone reserves nothing.
 
     Table 110-4 asks 250 sq ft of outdoor area in most residential zones and
@@ -544,12 +543,10 @@ def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone():
     does require. Every quadplex-allowed zone in rules.yaml has to be in it.
     """
     from common import load_footprints, load_rules
-    from flats.encode.load import load_trusted
     from flats.encode.port_quadfit import layer_id_for
-    from flats.rules.resolver import RuleSet
 
     rules = load_rules()
-    corpus = RuleSet(load_trusted(strict=False).layers)
+    corpus = trusted_rules
 
     for jurisdiction, dw in load_footprints().siteplan.driveway.items():
         if not dw.open_space_sqft_by_zone:
@@ -574,7 +571,7 @@ def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone():
             )
 
 
-def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in():
+def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in(trusted_rules):
     """Happy Valley states it by pointing at a number that differs by zone.
 
     LDC 16.43.030.E.4 sets parking back from a street lot line by "the same
@@ -589,12 +586,10 @@ def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in():
     and a lot in that zone would be laid out with no street setback at all.
     """
     from common import load_footprints, load_rules
-    from flats.encode.load import load_trusted
     from flats.encode.port_quadfit import layer_id_for
-    from flats.rules.resolver import RuleSet
 
     rules = load_rules()
-    corpus = RuleSet(load_trusted(strict=False).layers)
+    corpus = trusted_rules
 
     for jurisdiction, dw in load_footprints().siteplan.driveway.items():
         if not dw.parking_street_setback_by_zone:
@@ -852,7 +847,7 @@ def test_an_opening_may_be_wider_than_the_lane_behind_it():
 
 
 
-def test_the_alley_as_the_aisle_is_the_back_out_room_the_corpus_holds():
+def test_the_alley_as_the_aisle_is_the_back_out_room_the_corpus_holds(trusted_rules):
     """`alley_is_aisle` + `alley_backout_ft` against `parking_alley_backout_ft`.
 
     FLATS took the alley as the aisle on 2026-09-25 (FOLLOWUPS 4(b)) as one
@@ -869,7 +864,9 @@ def test_the_alley_as_the_aisle_is_the_back_out_room_the_corpus_holds():
 
     fp = load_footprints()
     for jurisdiction, dw in fp.siteplan.driveway.items():
-        read = _one_lot_value(layer_id_for(jurisdiction), "parking_alley_backout_ft")
+        read = _one_lot_value(
+            layer_id_for(jurisdiction), "parking_alley_backout_ft", trusted_rules
+        )
         if not dw.alley_is_aisle:
             assert read is None, (
                 f"{jurisdiction}: the corpus states a back-out room "
