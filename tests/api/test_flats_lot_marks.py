@@ -9,7 +9,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.flats import FlatsLot, FlatsLotMark, FlatsLotResult
 from tests.api.test_ui_flats_lots import DESIGNS, _login, _seed
-from tests.conftest import seed_org
+from app.models.org import MembershipStatus
+from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
 
@@ -180,3 +181,46 @@ async def test_anonymous_add_and_clear_posts_are_refused(client: AsyncClient, se
     stored = await session.get(FlatsLotMark, mark.id)
     assert stored is not None and stored.cleared_at is None
     assert len((await session.execute(select(FlatsLotMark))).scalars().all()) == 1
+
+async def test_a_pending_sign_up_cannot_mark_or_clear_even_over_htmx(
+    client: AsyncClient, session: AsyncSession
+):
+    # The onboarding guard waves HTMX requests through, so the handler itself refuses.
+    run = await _seed(session)
+    lot = await _lot(session)
+    _org, member = await seed_org(session)
+    mark = FlatsLotMark(lot_id=lot.id, kind="trees", note="Existing tree", created_by=member.id)
+    session.add(mark)
+    _org2, pending = await seed_org(session)
+    pending.membership_status = MembershipStatus.PENDING
+    await session.commit()
+    set_client_auth(client, pending.id)
+    htmx = {"HX-Request": "true"}
+
+    add = await client.post("/ui/flats/lot-marks", data=_form(lot, run.id, "New tree"), headers=htmx)
+    clear = await client.post(
+        f"/ui/flats/lot-marks/{mark.id}/clear",
+        data={"lot_id": lot.id, "county": lot.county, "tlid": lot.tlid, "run": run.id},
+        headers=htmx,
+    )
+
+    assert add.status_code == 403
+    assert clear.status_code == 403
+    await session.refresh(mark)
+    assert mark.cleared_at is None
+    assert len((await session.execute(select(FlatsLotMark))).scalars().all()) == 1
+
+
+async def test_a_teammate_with_no_name_shows_as_teammate_not_their_email(
+    client: AsyncClient, session: AsyncSession
+):
+    user = await _login(client, session)
+    user.name = ""
+    user.email = "someone@example.com"
+    await session.commit()
+    run = await _seed(session)
+    lot = await _lot(session)
+    await client.post("/ui/flats/lot-marks", data=_form(lot, run.id, "Big fir"))
+    report = (await client.get(REPORT_URL)).json()
+    assert "(Teammate, " in report["colour_reasons"][0]
+    assert "someone@example.com" not in (await client.get(LOT_URL)).text

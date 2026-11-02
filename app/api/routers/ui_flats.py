@@ -71,7 +71,7 @@ from app.models.flats import (
     FlatsSnapshot,
     FlatsWordRuling,
 )
-from app.models.org import User
+from app.models.org import MembershipStatus, User
 from app.services import flats_flags as flag_history
 from app.services import flats_price
 from app.services import flats_refresh as refresh_service
@@ -3389,7 +3389,7 @@ async def _tree_mark_rows(
     creator = aliased(User)
     clearer = aliased(User)
     stmt = (
-        select(FlatsLotMark, creator.name, creator.email, clearer.name, clearer.email)
+        select(FlatsLotMark, creator.name, clearer.name)
         .outerjoin(creator, creator.id == FlatsLotMark.created_by)
         .outerjoin(clearer, clearer.id == FlatsLotMark.cleared_by)
         .where(FlatsLotMark.lot_id.in_(lot_ids), FlatsLotMark.kind == "trees")
@@ -3398,7 +3398,7 @@ async def _tree_mark_rows(
     if open_only:
         stmt = stmt.where(FlatsLotMark.cleared_at.is_(None))
     marks: dict[int, list[dict[str, Any]]] = {}
-    for row, creator_name, creator_email, clearer_name, clearer_email in (
+    for row, creator_name, clearer_name in (
         await session.execute(stmt)
     ).all():
         created_at = row.created_at or datetime.now(timezone.utc)
@@ -3419,12 +3419,12 @@ async def _tree_mark_rows(
                 "id": row.id,
                 "kind": row.kind,
                 "note": row.note,
-                "who": (creator_name or creator_email or "Former user").strip(),
+                "who": (creator_name or "").strip() or "Teammate",
                 "created_at": created_utc,
                 "created_date": created_utc.date().isoformat(),
                 "created_display": created_utc.strftime("%Y-%m-%d %H:%M UTC"),
                 "open": row.cleared_at is None,
-                "cleared_by": (clearer_name or clearer_email or "").strip(),
+                "cleared_by": ((clearer_name or "").strip() or "Teammate") if row.cleared_by else "",
                 "cleared_at": cleared_utc,
                 "cleared_display": cleared_utc.strftime("%Y-%m-%d %H:%M UTC") if cleared_utc else "",
                 "clear_note": row.clear_note or "",
@@ -4732,6 +4732,16 @@ async def flats_lot(
     )
 
 
+def _teammate(user: Any) -> bool:
+    """An approved member of an org. The onboarding guard lets HTMX requests
+    through, so a pending sign-up must be refused here, not there."""
+    return (
+        user is not None
+        and user.org_id is not None
+        and user.membership_status != MembershipStatus.PENDING
+    )
+
+
 async def _lot_mark_target(
     session: DBSession, county: str, tlid: str, run_id: int, lot_id: int
 ) -> tuple[FlatsLot, FlatsRun | None]:
@@ -4784,6 +4794,8 @@ async def flats_lot_mark_add(
     user = await _get_user(session, request)
     if user is None:
         raise HTTPException(status_code=401, detail="Sign in to mark this lot")
+    if not _teammate(user):
+        raise HTTPException(status_code=403, detail="Only approved teammates can mark lots")
     lot, chosen = await _lot_mark_target(session, county, tlid, run, lot_id)
     target_run_id = chosen.id if chosen else 0
     note = _no_nul(note).strip()
@@ -4849,6 +4861,8 @@ async def flats_lot_mark_clear(
     user = await _get_user(session, request)
     if user is None:
         raise HTTPException(status_code=401, detail="Sign in to clear this lot mark")
+    if not _teammate(user):
+        raise HTTPException(status_code=403, detail="Only approved teammates can clear lot marks")
     lot, chosen = await _lot_mark_target(session, county, tlid, run, lot_id)
     target_run_id = chosen.id if chosen else 0
     clear_note = _no_nul(clear_note).strip()
