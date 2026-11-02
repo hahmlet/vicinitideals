@@ -1,0 +1,7 @@
+historic-stored-code
+
+WHY: in the FLATS lot screen, a lot carrying a locally protected historic resource needs a discretionary hearing (ruled RED). A web scout (docs/followups/87-historic-outside-portland.md, paragraph "LOCAL LISTS SCOUT 2026-11-01") guessed most cities' historic code sections from search results. The repo holds each city's stored code text; Claude will read the sections next week and needs them located exactly first.
+
+TASK: under flats/provenance/docs/or/<county>/<city>/ (Washington, Clackamas and Multnomah cities and the two counties' _unincorporated folders; skip Portland, Tigard and Oregon City), grep each city's stored text for historic landmark / historic resource / historic overlay / historic preservation / landmark / cultural resource. Per city report: the file path and line range of the section that protects designated historic resources, its section number and title as printed, and the lines (path#Lx-Ly) that say WHERE the protected list lives (an adopted inventory, a map, a table in the code) and whether designation needs owner consent. If a city's stored text has none of these words, say "none in stored text" and name the files grepped.
+
+ANSWER FORM (under 700 words): one line per city: `city | section: number title (path#Lx-Ly) | list: what/where (path#L) | owner consent: yes/no/unstated`. Then "LOOKED:".

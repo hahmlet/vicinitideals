@@ -1,0 +1,13 @@
+pdx-area-fetch
+
+WHY: next week Claude encodes Portland Maps 120-2 / 120-3 (docs/followups/68-portland-maps-120.md) and the Portland plan-district part 2 maps (docs/followups/109-pd2-inventory.md, paragraph "LAYER CHECK 2026-11-01"). Encoding needs each map as an area file under flats/config/areas/or/multnomah/portland/, in the same form as plan-subdistricts.geojson there. This job only fetches them; it wires nothing into the screen.
+
+TASK:
+1. Grep for an existing fetch helper first (flats/ingest/acquire.py has _fetch_arcgis, esri_polygon, esri_polyline and paging by objectId; also look in scripts/). Write scripts/flats_fetch_area.py that reuses those (no new HTTP or geometry code) and takes: service URL, layer id, where (default 1=1), the out path and a note. It writes a FeatureCollection reprojected by the server to EPSG:2913 (outSR=2913) with top-level "name", "crs" and "source" {url, where, fields, fetched, note, count} and a per-feature "source" string, the same shape as plan-subdistricts.geojson. Fields = every attribute field except OBJECTID and Shape* / SHAPE*. Polygons and polylines both.
+2. Unit test in flats/tests/test_fetch_area.py with httpx.MockTransport (no network): paging, field filter, polyline layer, the source block.
+3. Run it (network is fine) for these, all on https://www.portlandmaps.com/od/rest/services/COP_OpenData_ZoningCode/MapServer unless noted, writing to flats/config/areas/or/multnomah/portland/<file>:
+   1278 map-120-2-site-frontage-areas.geojson; 1279 map-120-3-pattern-areas.geojson; 157 limited-use-areas.geojson; https://www.portlandmaps.com/arcgis/rest/services/Public/Transit/MapServer layer 5 streetcar-lines.geojson; 192 park-block-frontages.geojson; 139 south-waterfront-accessways.geojson; 156 height-opportunity-areas.geojson; 176 special-building-height-corridors.geojson; 159 required-master-plan-sites.geojson; 229 scenic-view-cones.geojson; 174 south-waterfront-top-of-bank.geojson; 166 required-building-lines.geojson; 244 floor-area-transfer-sectors.geojson; 177 street-plans.geojson; 172 setbacks-plan-districts.geojson.
+   The note names the code map(s) each serves, from the 109 paragraph (for example "Zoning Code Map 510-12 and 521-4").
+4. Report each file's feature count and size. Do not commit a file over 5 MB; list it under QUESTIONS.
+
+MUST NOT CHANGE: flats/config/jurisdictions/**, any rule, any lot colour, any existing area file. If a test insists every area file is referenced by a jurisdiction, stop and say so under QUESTIONS instead of wiring one in.
