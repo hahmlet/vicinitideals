@@ -1,0 +1,11 @@
+gladstone-1545-quadfit
+
+WHY: FOLLOWUPS 101 (docs/followups/101-gladstone-1545-quadfit.md). FLATS already holds Gladstone Ord. 1545 (in force 2026-08-13; flats/config/jurisdictions/or/clackamas/gladstone.yaml `amended:` entry); quadfit's mirror (Lot Analysis/quadfit/config/rules.yaml) still has the pre-1545 numbers for R7.2, so the parcel pipeline that feeds the screen disagrees with the rules.
+
+TASK: in Lot Analysis/quadfit/config/rules.yaml, the Gladstone R7.2 row (~line 2743): min_lot_sqft 3600 -> 7200, setback_side_ft 7.5 -> 5, and rewrite its notes to cite Ord. 1545 the way gladstone.yaml's `amended:` entry does. First run `$PYTHON "Lot Analysis/quadfit/port_from_flats.py" --write` in a scratch copy (or read its docstring) to see whether the port tool already produces exactly this change; if it does, use the tool's output and say so.
+
+TEST: $PYTHON -m pytest "Lot Analysis/quadfit/tests/test_zone_mirror.py" -q -p no:cacheprovider green (plus the common checks).
+
+AUTHORISED EXCEPTION: the two values in this one quadfit row (min_lot_sqft, setback_side_ft) -- they mirror values FLATS already holds (it mirrors a value FLATS already holds); the common rule on rule values holds for everything else, and nothing under flats/ changes.
+
+MUST NOT CHANGE: any other rules.yaml row; anything under flats/.

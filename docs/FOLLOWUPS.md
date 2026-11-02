@@ -75,7 +75,7 @@ the full one.)
 ### 1c. The rest, most urgent first (dated items first)
 
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- merged e63617b8 2026-10-20; moves expected at the next weekly. [file](followups/100-driveway-street.md)
-94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; after 93 merges. [file](followups/94-townhouse-row-angle.md)
+94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; BUILT by Copilot on flats/townhouse-row-angle (4a4ef0f5), needs a bound + read every gain. [file](followups/94-townhouse-row-angle.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: YES for (C1)] **Agents could not recall a property ruling** -- A, B, C1, C2 MERGED; DLCD backlog READ; (B) waits on Steph. [file](followups/86-ruling-recall.md)
 2. [Claude] [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement** -- run 12 PROMOTED 2026-09-22; loose ends still owed. [file](followups/2-neighbour-zoning.md)
 13. [Claude] [scan: NO -- lands with the November county refresh] **Tax code area in the RLIS ingest** -- lands with the November county data refresh. [file](followups/13-taxcode-rlis.md)
@@ -148,6 +148,5 @@ the full one.)
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
-101. [Copilot] [scan: NO (quadfit mirror only)] **Port Gladstone Ord. 1545 to quadfit's rules.yaml** -- cold-start brief. [file](followups/101-gladstone-1545-quadfit.md)
 23. [Copilot] [scan: NO] **Page check** -- SHIPPED 2026-09-30 (a203e9f1). [file](followups/23-page-check.md)
 16. [Copilot] [PARKED] [scan: NO] **Partial re-screen** -- SHIPPED 50a0ecc2 2026-09-25; PARKED -- ask before firing. [file](followups/16-partial-rescreen.md)

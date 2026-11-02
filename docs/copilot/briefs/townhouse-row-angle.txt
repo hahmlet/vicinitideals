@@ -1,0 +1,11 @@
+townhouse-row-angle
+
+WHY: FOLLOWUPS 94 (docs/followups/94-townhouse-row-angle.md -- read it). The FLATS townhouse form (four home lots in a row) lays the row parallel to the street line. On a lot whose side lines meet the street at a slant (example TLID 1S126DD01800), a row set square to the SIDE lot lines would still give every home lot its street frontage and fit, so up to ~105 lots are false RED. Claude will bound the branch on 137 and read every lot that gains, so the change must never loosen a check.
+
+TASK: find where the townhouse form's row angle is chosen (grep flats/ for the townhouse / home-lot / plat row construction; commit b5c0cbf4 added the per-home-lot frontage + width/area checks -- `git show --stat b5c0cbf4`). Also try the row square to the side lot lines (the lot's side-line bearing), alongside today's street-parallel row, keeping the better result by the existing keep-rule. Every check b5c0cbf4 applies (each home lot's street frontage, width, area) must run on the tilted row exactly as on the straight one. Nothing else in the screen changes.
+
+TESTS in flats/tests: a synthetic slanted lot (side lines at, say, 70 degrees to the street) where the street-parallel row fails and the side-square row fits with every home lot fronting the street -> the form fits; a slanted lot where the tilted row would leave one home lot without street frontage -> still fails; a square lot -> identical result to today. Name the existing townhouse test file you extend.
+
+AUTHORISED EXCEPTION: lot colours may change from RED toward yellow/green through the extra row angle only; no rule value changes. Lot colours WILL change (false reds only) -- that is intended here; do not stop for it, but say in the report which test shows a colour moving.
+
+MUST NOT CHANGE: the one-building (pod) form, any rule value, any check's threshold.
