@@ -1,0 +1,9 @@
+historic-local-lists
+
+WHY: in the FLATS lot screen, a lot carrying a locally protected historic resource needs a discretionary hearing, which the owner has ruled RED. Only Portland's historic map is held, so historic lots elsewhere can show a false GREEN. A first scout searched only the ArcGIS catalog and found a GIS layer for Tigard alone (docs/followups/87-historic-outside-portland.md, last paragraph). Most small cities keep their landmark list in the development code or an adopted inventory PDF, not in GIS -- that is what this job looks for.
+
+JURISDICTIONS: Washington County (unincorporated; CDC 373 Historic Overlay), Beaverton, Hillsboro, Tualatin, Forest Grove, Cornelius, Sherwood, King City, Durham; Clackamas County (unincorporated), Lake Oswego, West Linn, Milwaukie, Gladstone, Wilsonville, Happy Valley, Canby, Sandy, Estacada, Molalla; Gresham, Troutdale, Fairview, Wood Village. (Skip Tigard and Oregon City; they are held.)
+
+TASK, per jurisdiction: (1) the code section that protects historic landmarks / a historic overlay, on the city's code publisher (municode, codepublishing, amlegal, ecode360 or the city's own .gov / .or.us site): section number and URL; (2) where the protected list lives -- a table in the code, an adopted inventory (PDF URL, year, number of entries), a city page listing landmarks, or a GIS layer; (3) whether entries are identified by tax lot, address or a drawn area. If the code says a property is protected only once the city designates it, say so.
+
+ANSWER FORM (under 700 words): one line per jurisdiction: `name | code: section url | list: url (form, N entries, year) / none found | keyed by: taxlot/address/area`. Then "LOOKED:".

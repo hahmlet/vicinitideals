@@ -52,3 +52,17 @@ LOOKED:
 - The geojson properties, read with the venv python -I.
 - GET https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer?f=json -> 200.
 - I did not query individual layers, so the layer-to-map matches rest on layer names only.
+
+MISSING MAPS SCOUT 2026-11-01 (Copilot gpt-6-luna, 5.6 AI units; layer matches mostly by NAME, so
+check each layer's description before encoding -- "INFERRED" below = name only). All on
+https://www.portlandmaps.com/od/rest/services/COP_OpenData_ZoningCode/MapServer unless noted:
+510-12 layer 157 Limited Use Areas (Central City features); 510-13 Public/Transit/MapServer 5 Street
+Car Lines (INFERRED); 510-14 192 Park Block Frontages; 510-15 139 South Waterfront Accessways
+(INFERRED); 510-16 156 Height Opportunity Area; 510-17 BPS_Zoning_Code_Layers 96 Vehicle
+Repair/Sales/Leasing Uses Restricted; 510-18 176 Special Building Height Corridors; 510-19 159
+Required Master Plan Sites; 510-20 229 Scenic View Cone Area (INFERRED); 510-21 174 South Waterfront
+Top of Bank; 510-22 166 Required Building Lines; 510-23 244 Floor Area Transfer Sectors; 521-4 157
+Limited Use Areas (East Corridor feature); 532-3 177 Street Plan (Hayden Island, INFERRED);
+540-1/540-2 172 Setbacks Plan Districts (one layer for both). NOT FOUND: 562-7 (Northwest; PDF only,
+page unknown; BPS layer 49 NW FAR not confirmed), 595-2, Northwest Hills Hillside subarea (563).
+Also found: Map 120-2 / 120-3 (item 68).

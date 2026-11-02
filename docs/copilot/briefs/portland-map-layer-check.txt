@@ -1,0 +1,7 @@
+portland-map-layer-check
+
+WHY: the FLATS screen is about to encode Portland plan-district maps from GIS layers a first scout matched to code maps mostly by layer NAME (docs/followups/109-pd2-inventory.md, paragraph "MISSING MAPS SCOUT 2026-11-01"). A wrong match would screen lots against the wrong area. Each match needs the layer's own evidence.
+
+TASK: for every map listed in that paragraph (510-12 to 510-23, 521-4, 532-3, 540-1, 540-2), open the named layer's REST metadata (`<service>/MapServer/<layer>?f=pjson`) and, where that does not settle it, its metadata link and a `query?where=1=1&outFields=*&returnGeometry=false&f=json` of its attributes. Report what the layer itself says (description text naming a code map or chapter, attribute values naming a district or subarea). Then for the three not found (562-7, 595-2, the Northwest Hills Hillside subarea of 33.563), search the same two services (COP_OpenData_ZoningCode and Public/BPS_Zoning_Code_Layers at https://www.portlandmaps.com) by layer description once more.
+
+ANSWER FORM (under 600 words): one line per map: `Map N | layer url | evidence: <quoted description or attribute, SEEN> | verdict: CONFIRMED / NAME ONLY / WRONG (what it really is)`. Then "LOOKED:".

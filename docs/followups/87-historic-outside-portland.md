@@ -10,3 +10,15 @@
    (no re-ask), bound, read losses. Standing rule, no question for Steph.
 
 2026-10-31: Washington County also has a Historic Overlay (CDC 373) and it is not screened. Concrete case: taxlot 1S123AA00100 (6050 SW Old Scholls Ferry Rd, R-5), county case L9100610 (1991, approved) "CHANGE FROM INST. W/HISTORIC OVERLAY TO R-5 W/HISTORIC OVERLAY". Live GREEN in run 99 (chunk 7 holds it yellow for ASC U, FOLLOWUPS 136). The county casefile API (api.washingtoncountyor.gov/v1/services/casefiles/search, Referer header) can find historic-overlay cases by taxlot, but a county historic layer is the real source.
+
+
+SCOUT 2026-11-01 (Copilot gpt-6-luna, 3.4 AI units; searched the ArcGIS catalog only, not city code
+pages): statewide sources confirmed live -- SHPO public GIS
+https://maps.prd.state.or.us/arcgis/rest/services/Cultural/HistSites_GIS_FeaturesOnly/FeatureServer/0
+(72,269 points, city/address fields; an INVENTORY, not designation-only -- needs a designation field
+or the ORS 197.772 filter) and NPS National Register
+https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer
+(National Register only). City layer found: Tigard Historic Sites
+https://services1.arcgis.com/d9Fl2w84c4Vbf9kI/arcgis/rest/services/City_of_Tigard_Historic_Sites/FeatureServer/0
+(11 points). No ArcGIS layer for the other 24 cities / two counties; their local landmark lists
+are probably in code text or PDFs (not searched).

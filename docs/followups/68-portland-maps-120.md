@@ -10,3 +10,10 @@
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
+
+MAPS FOUND 2026-11-01 (Copilot scout gpt-6-luna, checked by Claude): both are polygons on
+https://www.portlandmaps.com/od/rest/services/COP_OpenData_ZoningCode/MapServer --
+layer 1278 "Minimum Required Site Frontage Areas" (its own description: "Zone code map 120-2") and
+layer 1279 "Pattern Areas" (TYPE 'Eastern Neighborhoods' = Map 120-3's Eastern Pattern Area; also
+some sliver polygons to ignore). No longer waits on anyone: encoder job (fetch both, frontage check
+33.120.206, rear setback 33.120.220.C with corner exemption), bound, read losses.
