@@ -111,8 +111,9 @@ async def flats_find_lot(
         rows = [(lot, None) for lot in found.scalars()]
     else:
         best = lots._best(run.id, None)
+        colour = lots._display_colour(best)
         found = await session.execute(
-            select(FlatsLot, best.c.colour)
+            select(FlatsLot, colour)
             .join(best, best.c.lot_id == FlatsLot.id)
             .where(*conditions)
             .order_by(FlatsLot.jurisdiction, FlatsLot.tlid)
@@ -156,7 +157,7 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
     entries = rulings.match(lot.county, _slug(lot.jurisdiction), lot.zone, lot.tlid)
     today = datetime.now(timezone.utc).date()
     results = card["results"]
-    return {
+    report = {
         "county": lot.county,
         "tlid": lot.tlid,
         "address": card["address"],
@@ -189,6 +190,11 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         "run": _run_info(run),
         "page_url": card["href"],
     }
+    if card.get("trees_mark"):
+        report["trees_mark"] = card["trees_mark"]
+    if card.get("mark_reason"):
+        report["colour_reasons"] = [card["mark_reason"]]
+    return report
 
 
 @router.get("/rulings", operation_id="flats_rulings")

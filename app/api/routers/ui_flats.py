@@ -48,10 +48,11 @@ from functools import lru_cache
 from typing import Any, Mapping, Sequence
 from urllib.parse import quote
 
-from fastapi import APIRouter, Form, Query, Request
+from fastapi import APIRouter, Form, HTTPException, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from sqlalchemy import and_, case, func, not_, or_, select, text
-from sqlalchemy.exc import DBAPIError
+from sqlalchemy.exc import DBAPIError, IntegrityError
+from sqlalchemy.orm import aliased
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
@@ -59,6 +60,7 @@ from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templa
 from app.models.flats import (
     FlatsCrossrefRuling,
     FlatsLot,
+    FlatsLotMark,
     FlatsLotPrice,
     FlatsLotResult,
     FlatsLotWorksAs,
@@ -69,6 +71,7 @@ from app.models.flats import (
     FlatsSnapshot,
     FlatsWordRuling,
 )
+from app.models.org import User
 from app.services import flats_flags as flag_history
 from app.services import flats_price
 from app.services import flats_refresh as refresh_service
@@ -3361,6 +3364,104 @@ def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None)
     return stmt.group_by(result.lot_id).subquery("best")
 
 
+def _display_colour(best: Any) -> Any:
+    """A person's open tree mark overrides GREEN only in the display layer."""
+    marked = (
+        select(FlatsLotMark.id)
+        .where(
+            FlatsLotMark.lot_id == best.c.lot_id,
+            FlatsLotMark.kind == "trees",
+            FlatsLotMark.cleared_at.is_(None),
+        )
+        .exists()
+    )
+    return case(
+        (and_(best.c.colour == _COLOURS.index("green"), marked), _COLOURS.index("yellow")),
+        else_=best.c.colour,
+    )
+
+
+async def _tree_mark_rows(
+    session: DBSession, lot_ids: Sequence[int], *, open_only: bool
+) -> dict[int, list[dict[str, Any]]]:
+    if not lot_ids:
+        return {}
+    creator = aliased(User)
+    clearer = aliased(User)
+    stmt = (
+        select(FlatsLotMark, creator.name, creator.email, clearer.name, clearer.email)
+        .outerjoin(creator, creator.id == FlatsLotMark.created_by)
+        .outerjoin(clearer, clearer.id == FlatsLotMark.cleared_by)
+        .where(FlatsLotMark.lot_id.in_(lot_ids), FlatsLotMark.kind == "trees")
+        .order_by(FlatsLotMark.created_at.desc(), FlatsLotMark.id.desc())
+    )
+    if open_only:
+        stmt = stmt.where(FlatsLotMark.cleared_at.is_(None))
+    marks: dict[int, list[dict[str, Any]]] = {}
+    for row, creator_name, creator_email, clearer_name, clearer_email in (
+        await session.execute(stmt)
+    ).all():
+        created_at = row.created_at or datetime.now(timezone.utc)
+        created_utc = (
+            created_at.replace(tzinfo=timezone.utc)
+            if created_at.tzinfo is None
+            else created_at.astimezone(timezone.utc)
+        )
+        cleared_utc = None
+        if row.cleared_at is not None:
+            cleared_utc = (
+                row.cleared_at.replace(tzinfo=timezone.utc)
+                if row.cleared_at.tzinfo is None
+                else row.cleared_at.astimezone(timezone.utc)
+            )
+        marks.setdefault(row.lot_id, []).append(
+            {
+                "id": row.id,
+                "kind": row.kind,
+                "note": row.note,
+                "who": (creator_name or creator_email or "Former user").strip(),
+                "created_at": created_utc,
+                "created_date": created_utc.date().isoformat(),
+                "created_display": created_utc.strftime("%Y-%m-%d %H:%M UTC"),
+                "open": row.cleared_at is None,
+                "cleared_by": (clearer_name or clearer_email or "").strip(),
+                "cleared_at": cleared_utc,
+                "cleared_display": cleared_utc.strftime("%Y-%m-%d %H:%M UTC") if cleared_utc else "",
+                "clear_note": row.clear_note or "",
+            }
+        )
+    return marks
+
+
+def _apply_tree_mark(card: dict[str, Any], mark: dict[str, Any] | None) -> None:
+    """Apply a tree mark to GREEN display colours, leaving run data untouched."""
+    if mark is None:
+        return
+    reason = (
+        "Marked as having trees that may need a tree permit: "
+        f"{mark['note']} ({mark['who']}, {mark['created_date']})"
+    )
+    card["trees_mark"] = mark
+    changes_colour = card["colour"] == "green" or any(
+        result["colour"] == "green" for result in card["results"]
+    )
+    if changes_colour:
+        card["mark_reason"] = reason
+    for result in card["results"]:
+        if changes_colour and result["colour"] == "green":
+            result["colour"] = "yellow"
+            words = _RULE_COLOUR_WORDS if result["ruled"] else _COLOUR_WORDS
+            result["colour_words"] = words["yellow"]
+            result["badge"] = _BADGE["yellow"]
+            result["colour_reasons"] = [*result["colour_reasons"], reason]
+    if changes_colour:
+        card["colour"] = "yellow"
+        card["colour_words"] = (
+            _RULE_COLOUR_WORDS if any(r.get("ruled") for r in card["results"]) else _COLOUR_WORDS
+        )["yellow"]
+        card["badge"] = _BADGE["yellow"]
+
+
 def _works_as(run_id: int, design: str | None, form: str, *, stored: bool = False) -> Any:
     """The lots of a run on which the pod works as ``form`` (one of
     ``_FORM_CHOICES``), across its designs or the one asked for: a form
@@ -3451,7 +3552,8 @@ async def _lot_counts(
 ) -> dict[str, dict[str, int]]:
     """How many lots wear each verdict and each signed colour under the filter."""
     best = _best(run_id, design)
-    stmt = select(best.c.verdict, best.c.colour, func.count()).select_from(best)
+    colour = _display_colour(best)
+    stmt = select(best.c.verdict, colour, func.count()).select_from(best)
     if conditions:
         stmt = stmt.join(FlatsLot, FlatsLot.id == best.c.lot_id).where(*conditions)
     if price is not None and price.get("ceiling") is not None:
@@ -3459,7 +3561,7 @@ async def _lot_counts(
         stmt = stmt.outerjoin(FlatsLotPrice, FlatsLotPrice.lot_id == best.c.lot_id).where(
             flats_price.within(flats_price.per_home_column(price["cfg"], pods), pods, price["ceiling"])
         )
-    stmt = stmt.group_by(best.c.verdict, best.c.colour)
+    stmt = stmt.group_by(best.c.verdict, colour)
     verdicts = {c: 0 for c in _COLOURS}
     colours = {c: 0 for c in _COLOURS}
     for verdict, colour, n in (await session.execute(stmt)).all():
@@ -3719,8 +3821,9 @@ async def _lot_rows(
         base = base.join(FlatsLot, FlatsLot.id == best.c.lot_id).where(*conditions)
     if cheapest_first or ceiling is not None:
         base = base.outerjoin(FlatsLotPrice, FlatsLotPrice.lot_id == best.c.lot_id)
+    display_colour = _display_colour(best)
     if colour in _COLOURS:
-        base = base.where(best.c.colour == _COLOURS.index(colour))
+        base = base.where(display_colour == _COLOURS.index(colour))
     if ceiling is not None:
         base = base.where(flats_price.within(per_home, pods, ceiling))
     if cheapest_first:
@@ -3736,10 +3839,11 @@ async def _lot_rows(
     )
     rank = {lot_id: i for i, lot_id in enumerate(ids_page)}
     page_best = _best(run_id, design, ids_page)
+    page_colour = _display_colour(page_best)
     found_lots = (
         (
             await session.execute(
-                select(FlatsLot, page_best.c.verdict, page_best.c.colour)
+                select(FlatsLot, page_best.c.verdict, page_colour)
                 .join(page_best, page_best.c.lot_id == FlatsLot.id)
             )
         ).all()
@@ -3759,10 +3863,13 @@ async def _lot_rows(
             if design and row.design_key != design:
                 continue
             by_lot.setdefault(row.lot_id, []).append(_result_card(row))
-    return [
-        _lot_row(lot, verdict, colour_rank, by_lot.get(lot.id, []), price)
-        for lot, verdict, colour_rank in lots
-    ]
+    open_marks = await _tree_mark_rows(session, ids, open_only=True)
+    cards = []
+    for lot, verdict, colour_rank in lots:
+        card = _lot_row(lot, verdict, colour_rank, by_lot.get(lot.id, []), price)
+        _apply_tree_mark(card, next(iter(open_marks.get(lot.id, [])), None))
+        cards.append(card)
+    return cards
 
 
 async def _zones_in(session: DBSession, jurisdiction: str, snapshot_id: int | None) -> list[str]:
@@ -4552,6 +4659,8 @@ async def _lot_view(
     price = _price_params("", "", pod, road)
     price["as_of"] = await _county_as_of(session, lot.snapshot_id)
     card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results, price)
+    open_marks = await _tree_mark_rows(session, [lot.id], open_only=True)
+    _apply_tree_mark(card, next(iter(open_marks.get(lot.id, [])), None))
     return lot, geojson, lat, lon, card
 
 
@@ -4595,6 +4704,7 @@ async def flats_lot(
         return templates.TemplateResponse(request, "flats_lots.html", ctx, status_code=404)
     lot, geojson, lat, lon, card = view
     facts = lot.facts or {}
+    tree_marks = (await _tree_mark_rows(session, [lot.id], open_only=False)).get(lot.id, [])
     return templates.TemplateResponse(
         request,
         "flats_lot.html",
@@ -4608,6 +4718,8 @@ async def flats_lot(
             ),
             "decisions": await _lot_decisions(session, county, tlid),
             "flag_history": await _flag_history(session, county, tlid),
+            "tree_marks": tree_marks,
+            "open_tree_mark": next((mark for mark in tree_marks if mark["open"]), None),
             "facts": _fact_rows(facts),
             "net_land": _net_land(lot),
             "quadfit": _quadfit_words(facts.get("quadfit") or {}),
@@ -4618,6 +4730,155 @@ async def flats_lot(
             "source": facts.get("source") or "",
         },
     )
+
+
+async def _lot_mark_target(
+    session: DBSession, county: str, tlid: str, run_id: int, lot_id: int
+) -> tuple[FlatsLot, FlatsRun | None]:
+    county, tlid = _no_nul(county), _no_nul(tlid)
+    chosen = _chosen_run(await _runs(session), run_id or None)
+    view = await _lot_view(session, county, tlid, chosen, plans=False)
+    if view is None or view[0].id != lot_id:
+        raise HTTPException(status_code=404, detail="Lot not found in the selected run")
+    return view[0], chosen
+
+
+async def _tree_marks_partial(
+    request: Request,
+    session: DBSession,
+    lot: FlatsLot,
+    run_id: int,
+    user: Any,
+    *,
+    error: str = "",
+    note: str = "",
+) -> HTMLResponse:
+    marks = (await _tree_mark_rows(session, [lot.id], open_only=False)).get(lot.id, [])
+    return templates.TemplateResponse(
+        request,
+        "partials/flats_lot_marks.html",
+        {
+            "lot_id": lot.id,
+            "county": lot.county,
+            "tlid": lot.tlid,
+            "run_id": run_id,
+            "tree_marks": marks,
+            "open_tree_mark": next((mark for mark in marks if mark["open"]), None),
+            "user": user,
+            "error": error,
+            "note": note,
+        },
+    )
+
+
+@router.post("/ui/flats/lot-marks", response_class=HTMLResponse)
+async def flats_lot_mark_add(
+    request: Request,
+    session: DBSession,
+    lot_id: int = Form(...),
+    county: str = Form(...),
+    tlid: str = Form(...),
+    run: int = Form(0),
+    note: str = Form(""),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Sign in to mark this lot")
+    lot, chosen = await _lot_mark_target(session, county, tlid, run, lot_id)
+    target_run_id = chosen.id if chosen else 0
+    note = _no_nul(note).strip()
+    if not note:
+        return await _tree_marks_partial(
+            request, session, lot, target_run_id, user, error="Add a note about the trees.", note=note
+        )
+    if len(note) > 2000:
+        return await _tree_marks_partial(
+            request, session, lot, target_run_id, user, error="The note must be 2,000 characters or fewer.", note=note
+        )
+    lot_id_for_conflict = lot.id
+    session.add(
+        FlatsLotMark(
+            lot_id=lot_id_for_conflict,
+            kind="trees",
+            note=note,
+            created_by=user.id,
+        )
+    )
+    try:
+        await session.commit()
+    except IntegrityError as exc:
+        await session.rollback()
+        original: BaseException | None = exc.orig
+        constraint = None
+        while original is not None and constraint is None:
+            constraint = getattr(original, "constraint_name", None) or getattr(
+                getattr(original, "diag", None), "constraint_name", None
+            )
+            original = original.__cause__
+        if constraint != "uq_flats_lot_marks_open":
+            raise
+        lot = await session.get(FlatsLot, lot_id_for_conflict)
+        if lot is None:
+            raise HTTPException(status_code=404, detail="Lot no longer exists")
+        return await _tree_marks_partial(
+            request,
+            session,
+            lot,
+            target_run_id,
+            user,
+            error="An open trees mark already exists for this lot.",
+            note=note,
+        )
+    response = await _tree_marks_partial(request, session, lot, target_run_id, user)
+    # The mark changes the lot's colour, reasons and result cards above the panel: reload them all.
+    response.headers["HX-Refresh"] = "true"
+    return response
+
+
+@router.post("/ui/flats/lot-marks/{mark_id}/clear", response_class=HTMLResponse)
+async def flats_lot_mark_clear(
+    request: Request,
+    session: DBSession,
+    mark_id: int,
+    lot_id: int = Form(...),
+    county: str = Form(...),
+    tlid: str = Form(...),
+    run: int = Form(0),
+    clear_note: str = Form(""),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Sign in to clear this lot mark")
+    lot, chosen = await _lot_mark_target(session, county, tlid, run, lot_id)
+    target_run_id = chosen.id if chosen else 0
+    clear_note = _no_nul(clear_note).strip()
+    if len(clear_note) > 2000:
+        return await _tree_marks_partial(
+            request,
+            session,
+            lot,
+            target_run_id,
+            user,
+            error="The clear note must be 2,000 characters or fewer.",
+        )
+    mark = await session.scalar(
+        select(FlatsLotMark).where(
+            FlatsLotMark.id == mark_id,
+            FlatsLotMark.lot_id == lot.id,
+            FlatsLotMark.kind == "trees",
+            FlatsLotMark.cleared_at.is_(None),
+        )
+    )
+    if mark is None:
+        raise HTTPException(status_code=404, detail="Open trees mark not found")
+    mark.cleared_by = user.id
+    mark.cleared_at = datetime.now(timezone.utc)
+    mark.clear_note = clear_note or None
+    await session.commit()
+    response = await _tree_marks_partial(request, session, lot, target_run_id, user)
+    # The mark changes the lot's colour, reasons and result cards above the panel: reload them all.
+    response.headers["HX-Refresh"] = "true"
+    return response
 
 
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)

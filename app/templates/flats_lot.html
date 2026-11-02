@@ -41,6 +41,9 @@
       <span class="muted">If signed as read</span>
       <span class="badge {{ lot.badge }}" style="font-size:14px">{{ lot.colour }}</span>
       <span class="muted" style="font-size:12px">{{ lot.colour_words }}</span>
+      {% if lot.mark_reason %}
+        <div id="tree-mark-reason" class="alert alert-warning" style="font-size:12px;margin:4px 0 0">{{ lot.mark_reason }}</div>
+      {% endif %}
     </div>
     {% set pr = lot.price %}
     <div id="lot-price">
@@ -98,6 +101,8 @@
     {% endfor %}
   </div>
   {% endif %}
+
+  {% include "partials/flats_lot_marks.html" %}
 
   <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
 
