@@ -1,0 +1,59 @@
+<section class="card" id="trees-panel" style="padding:12px;margin:12px 0">
+  <h3 style="margin:0 0 6px">Trees</h3>
+  <p class="muted" style="font-size:12px;margin:0 0 8px">
+    Trees are not screened. A mark records a teammate's site knowledge and turns a GREEN lot YELLOW until cleared.
+  </p>
+  {% if error %}
+    <div class="alert alert-warning" data-error>{{ error }}</div>
+  {% endif %}
+  {% if open_tree_mark %}
+    <div id="trees-open-mark" data-mark-id="{{ open_tree_mark.id }}">
+      <span class="badge badge-yellow">marked</span>
+      {{ open_tree_mark.note }}
+      <span class="muted" style="font-size:12px">Entered by {{ open_tree_mark.who }} on {{ open_tree_mark.created_display }}.</span>
+    </div>
+    {% if user %}
+    <form method="post" action="/ui/flats/lot-marks/{{ open_tree_mark.id }}/clear"
+          hx-post="/ui/flats/lot-marks/{{ open_tree_mark.id }}/clear"
+          hx-target="#trees-panel" hx-swap="outerHTML" style="margin-top:8px">
+      <input type="hidden" name="lot_id" value="{{ lot_id }}">
+      <input type="hidden" name="county" value="{{ county }}">
+      <input type="hidden" name="tlid" value="{{ tlid }}">
+      <input type="hidden" name="run" value="{{ run_id }}">
+      <label style="display:block;font-size:12px">Note when clearing (optional)
+        <textarea name="clear_note" maxlength="2000" rows="2" style="display:block;width:100%;max-width:560px"></textarea>
+      </label>
+      <button class="btn btn-sm btn-secondary" type="submit">Clear tree mark</button>
+    </form>
+    {% endif %}
+  {% elif user %}
+    <form id="trees-mark-form" method="post" action="/ui/flats/lot-marks"
+          hx-post="/ui/flats/lot-marks" hx-target="#trees-panel" hx-swap="outerHTML">
+      <input type="hidden" name="lot_id" value="{{ lot_id }}">
+      <input type="hidden" name="county" value="{{ county }}">
+      <input type="hidden" name="tlid" value="{{ tlid }}">
+      <input type="hidden" name="run" value="{{ run_id }}">
+      <label style="display:block;font-size:12px">Note about the trees
+        <textarea name="note" maxlength="2000" rows="3" required
+                  style="display:block;width:100%;max-width:560px">{{ note }}</textarea>
+      </label>
+      <button class="btn btn-sm btn-primary" type="submit">Mark as having trees</button>
+    </form>
+  {% else %}
+    <p class="muted" style="font-size:12px">Sign in to mark or clear trees on this lot.</p>
+  {% endif %}
+  {% set cleared = tree_marks|selectattr("open", "equalto", false)|list %}
+  {% if cleared %}
+    <div id="trees-history" style="margin-top:10px">
+      <strong style="font-size:13px">Cleared marks</strong>
+      {% for mark in cleared %}
+        <div class="trees-history-row" data-mark-id="{{ mark.id }}" style="font-size:12px;margin:4px 0">
+          <span class="badge badge-green">cleared</span>
+          {{ mark.note }}
+          <span class="muted">Entered by {{ mark.who }} on {{ mark.created_display }}; cleared by
+            {{ mark.cleared_by or "former user" }} on {{ mark.cleared_display }}{% if mark.clear_note %}: {{ mark.clear_note }}{% endif %}.</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>

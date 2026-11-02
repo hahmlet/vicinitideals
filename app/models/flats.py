@@ -36,6 +36,7 @@ grow without a migration.
 
 from __future__ import annotations
 
+import enum
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
@@ -396,6 +397,50 @@ class FlatsLot(Base):
     results: Mapped[list["FlatsLotResult"]] = relationship(
         back_populates="lot", cascade="all, delete-orphan"
     )
+
+
+class FlatsLotMarkKind(str, enum.Enum):
+    TREES = "trees"
+
+
+class FlatsLotMark(Base):
+    """A person's current or cleared lot-level mark, independent of screen results."""
+
+    __tablename__ = "lot_marks"
+    __table_args__ = (
+        CheckConstraint("kind IN ('trees')", name="ck_flats_lot_marks_kind"),
+        CheckConstraint("char_length(note) <= 2000", name="ck_flats_lot_marks_note_length"),
+        CheckConstraint(
+            "clear_note IS NULL OR char_length(clear_note) <= 2000",
+            name="ck_flats_lot_marks_clear_note_length",
+        ),
+        Index(
+            "uq_flats_lot_marks_open",
+            "lot_id",
+            "kind",
+            unique=True,
+            postgresql_where=text("cleared_at IS NULL"),
+        ),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), nullable=False
+    )
+    kind: Mapped[str] = mapped_column(String(16), nullable=False, default=FlatsLotMarkKind.TREES.value)
+    note: Mapped[str] = mapped_column(Text, nullable=False)
+    created_by: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    cleared_by: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    cleared_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    clear_note: Mapped[str | None] = mapped_column(Text)
 
 
 class FlatsLotPrice(Base):
