@@ -2,8 +2,9 @@
 #
 # Values here apply to every jurisdiction below unless a more specific layer
 # overrides them — except where marked `preempts: true`, which a local standard
-# may not exceed. Everything is `draft` until confirmed against the adopted rule
-# text; nothing in this file has been verified.
+# may not exceed, or `large_city_only: true`, which applies only where the city
+# layer does not mark `large_city: false`. Everything is `draft` until confirmed
+# against the adopted rule text; nothing in this file has been verified.
 label: Oregon
 kind: state
 notes: >-
@@ -16,9 +17,10 @@ readings:
     queue: condition
     outcome: applies
     note: >-
-      The state siting rule for Large Cities, and every jurisdiction in this corpus is one --
-      inside Metro and over a thousand people, which is the second limb of the -0020 definition.
-      So it reaches, and the answer is not that it does not. Of the five statements on this card,
+      The state siting rule for Large Cities. OAR 660-046-0020(8) makes its reach depend on
+      jurisdiction status; the old hierarchy applied this value by default to every city.
+      Estacada is now marked outside that class, while every other jurisdiction keeps prior
+      behavior. Of the five statements on this card,
       three are other building types and two are answered by arithmetic rather than by reading.
       Line 76 is the TRIPLEX parking tier, three spaces at 5,000 square feet; the quadplex tier is
       four lines further down and is already encoded here in full, one space under 3,000, two to
@@ -97,10 +99,12 @@ code:
 # 25,000 or more OR a city with a population over 1,000 within a metropolitan
 # service district, and includes unincorporated areas of counties within a
 # metropolitan service district that are provided with sufficient urban
-# services. Every city encoded here is inside Metro and over 1,000 except
-# Johnson City, Rivergrove and Maywood Park -- and none of those three states
-# a density maximum, nor does either county layer, so the exemption below
-# cancels nothing it was not written for.
+# services. An earlier corpus-wide assumption that every city met this test
+# was incorrect: the driveway-standard note below records Canby, Sandy and
+# Estacada as outside Metro and under 25,000. Only Estacada's status is changed
+# here; other jurisdictions retain their existing behavior. Johnson City,
+# Rivergrove and Maywood Park were noted as exceptions to the earlier
+# inside-Metro/over-1,000 assumption and remain to be reviewed.
 #
 # Definitions pages read as thin to the plausibility guard: prose about words,
 # almost nothing dimensioned. Read 2026-08-19 before storing.
@@ -362,6 +366,7 @@ defaults:
     # The four bands together cover every lot size, so any lot whose area IS
     # known lands on a variant and the base never fires for it.
     spaces_total: 4
+    large_city_only: true
     preempts: cap
     cite: "OAR 660-046-0220(2)(e)(B)(iv)"
     url: "https://oregon.public.law/rules/oar_660-046-0220"
@@ -410,8 +415,9 @@ defaults:
   # screen read 4 for every city is harmless -- nobody else prints a ratio, and
   # four units on four per approach is the one drive the plan draws.
   #
-  # Reach: this layer carries no Large-City scoping of its own; its defaults
-  # fall on every jurisdiction beneath it, as the parking cap beside it does.
+  # Reach: this driveway value carries no Large-City scoping of its own; it
+  # still falls on every jurisdiction beneath it. The parking cap above is
+  # separately limited to the Large City class.
   # Canby, Sandy and Estacada sit outside Metro under 25,000 people, so they
   # are Medium or smaller cities and this rule is not written for them; none
   # prints a per-unit approach ratio, so the cap resolves to 4 for them and
