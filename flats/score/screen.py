@@ -498,6 +498,11 @@ class LotFacts:
     #: six. ``None`` where nothing took the measurement, on the same bargain as
     #: the two rows above.
     lot_depth_ft: float | None = None
+    #: A depth the rules are READ at where ``lot_depth_ft`` went unmeasured
+    #: (:func:`flats.ingest.quadfit.depth_checked`): it selects the bands and
+    #: shares stated per depth and nothing else -- no check measures the lot
+    #: against it, since it is a reading, not a measurement (FOLLOWUPS 68).
+    depth_reading_ft: float | None = None
     geometry: GeometryTier = GeometryTier.clean
     #: The rear setback the envelope was CUT with, in feet, when the envelope
     #: came from somewhere other than these rules -- quadfit's s5 carves the

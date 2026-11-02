@@ -363,3 +363,53 @@ def test_the_flags_read_in_plain_english() -> None:
     assert "Map 120-3" in types[fact_code(EASTERN)].description
     for fact in (FRONTAGE, NEIGHBOURS, EASTERN):
         assert types[fact_code(fact)].severity >= flag_plan.colour_rules().yellow_at_severity
+
+
+# --- the bound of 2026-11-01: a depth nobody measured -----------------------
+# 658 lots went RED -> YELLOW on RULE-AMBIGUOUS: no depth on the row, so the
+# 100 ft and 160 ft bands refused the rule set, and a rule set nobody trusts
+# binds nothing. A lot that misses at every depth it could have stays RED.
+
+
+def _undepthed(lot):
+    return dataclasses.replace(lot, facts=dataclasses.replace(lot.facts, lot_depth_ft=None))
+
+
+@pytest.mark.parametrize("corner", [True, False, None])
+def test_a_lot_that_fails_the_fit_at_every_depth_stays_red(corpus, corner) -> None:
+    facts = {FRONTAGE: True, EASTERN: True}
+    if corner is not None:
+        facts["corner_lot"] = corner
+    lot = _answered(_undepthed(_lot(corpus, "RM1", 60, 45)), **facts)
+    if corner is None:
+        lot = dataclasses.replace(
+            lot, observed={k: v for k, v in lot.observed.items() if k != "corner_lot"}
+        )
+    got = _screen(corpus, lot)
+    assert got.colour is flag_plan.Colour.red
+    assert got.binds
+
+
+def test_a_lot_that_clears_at_some_depth_is_held_for_it(corpus) -> None:
+    lot = _answered(
+        _undepthed(_lot(corpus, "RM1", 60, 166)), **{FRONTAGE: True, EASTERN: True, "corner_lot": False}
+    )
+    got = _screen(corpus, lot)
+    assert got.colour is flag_plan.Colour.yellow
+    assert "RULE-AMBIGUOUS" in {f.code for f in got.flags}
+
+
+def test_the_depth_readings_cover_every_band_edge(corpus) -> None:
+    from flats.ingest.quadfit import depth_readings
+
+    got = depth_readings(corpus)
+    assert {100.0, 100.01, 160.0, 160.01} <= set(got)
+    assert min(got) == 1.0
+
+
+def test_a_reading_is_never_measured_against(corpus) -> None:
+    # The minimum lot depth and depth ratios check the measured depth only;
+    # a reading selects bands and nothing else.
+    lot = _undepthed(_lot(corpus, "RM1", 60, 166))
+    read = dataclasses.replace(lot.facts, depth_reading_ft=1.0)
+    assert read.lot_depth_ft is None

@@ -2963,6 +2963,105 @@ def screen_lot(
     )
 
 
+#: The lot measure :func:`depth_checked` reads the lot at, where nothing
+#: measured it.
+DEPTH = "lot_depth_ft"
+
+
+def _refused_on_depth(s: Screened) -> bool:
+    """Whether ``s`` is held only because a standard here is stated per a
+    lot depth nobody measured (a band on it, or a share of it): every
+    ambiguous value names ``lot_depth_ft`` and nothing else."""
+    r = s.rules
+    if r.verdict is not RuleVerdict.ambiguous or not r.ambiguous:
+        return False
+    for name in r.ambiguous:
+        got = r.values.get(name)
+        why = got.ambiguous if got is not None else ()
+        if not why or not all(str(a).startswith(f"{DEPTH}:") for a in why):
+            return False
+    return True
+
+
+def depth_readings(rules: RuleSet) -> tuple[float, ...]:
+    """Every lot depth that opens a band on ``lot_depth_ft`` somewhere in
+    ``rules``, each band's edge read from inside it: a depth at and just past
+    every threshold, and 1 ft for the bottom of the scale. Within one band
+    every depth-stated standard here grows with the depth (a share of it) or
+    holds still, so the shallowest depth inside a band asks the least of the
+    lot that band can ask (FOLLOWUPS 68: PCC 33.120.206, 160 ft; 33.120.220.B.2,
+    100 ft and a quarter of the depth past it)."""
+    edges: set[float] = set()
+    for layer in getattr(rules, "layers", {}).values():
+        values = [*(layer.defaults or {}).values()]
+        for zone in (layer.zones or {}).values():
+            values += [*(zone.values or {}).values()]
+        for value in values:
+            for variant in value.variants:
+                band = getattr(variant, "band", None)
+                if band is None or band.measure != DEPTH:
+                    continue
+                for t in (band.at_least, band.at_most, band.more_than, band.less_than):
+                    if t is not None:
+                        edges.add(float(t))
+    if not edges:
+        return ()
+    return tuple(sorted({1.0, *edges, *(t + 0.01 for t in edges)}))
+
+
+def depth_checked(
+    lot: QuadfitLot,
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` RED where a design held for an unmeasured lot depth misses a
+    standard at every depth the lot could have (FOLLOWUPS 68).
+
+    A band or share on a depth nobody measured refuses the rule set, and a
+    rule set nobody trusts binds nothing -- right where the depth could open
+    the lot, wrong where the lot fails the fit, its coverage or its fire
+    route whatever the depth is. So each such design is screened again at
+    every reading :func:`depth_readings` names -- the rules read at that
+    depth, no check measured against it (``LotFacts.depth_reading_ft``);
+    where every one of them binds, the shallowest is the answer (its misses
+    are owed at any depth), and the lot's own depth stays unmeasured. Where any reading clears, the
+    design keeps its hold.
+    """
+    if lot.facts.lot_depth_ft is not None:
+        return got
+    todo = [i for i, s in enumerate(got) if _refused_on_depth(s)]
+    readings = depth_readings(rules) if todo else ()
+    if not readings:
+        return got
+    first: dict[int, Screened] = {}
+    for depth in readings:
+        if not todo:
+            break
+        here = dataclasses.replace(
+            lot, facts=dataclasses.replace(lot.facts, depth_reading_ft=depth)
+        )
+        out = _screen_lot_once(
+            here, [got[i].design for i in todo], rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads, terrain=terrain,
+        )
+        kept: list[int] = []
+        for i, s in zip(todo, out):
+            if s.signed.binds and not _refused_on_depth(s):
+                first.setdefault(i, s)
+                kept.append(i)
+        todo = kept
+    result = list(got)
+    for i in todo:
+        result[i] = dataclasses.replace(first[i], lot=lot)
+    return result
+
+
 def _screen_plat(
     lot: QuadfitLot,
     designs: Sequence[Design],
@@ -3000,6 +3099,10 @@ def _screen_plat(
         lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
         terrain=terrain,
     )
+    got = depth_checked(
+        lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
+        terrain=terrain,
+    )
     if lot.second is None:
         return got
     alt = _screen_lot_once(
@@ -3007,6 +3110,10 @@ def _screen_plat(
         roads=roads, terrain=terrain,
     )
     alt = easement_checked(
+        lot.second, alt, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    alt = depth_checked(
         lot.second, alt, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
