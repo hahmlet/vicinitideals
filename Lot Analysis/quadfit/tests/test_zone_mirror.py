@@ -17,11 +17,16 @@ away for nothing. It ran the other way once: Milwaukie R-HD was drawn on a
 5-foot front setback that the code applies only to properties mapped in a
 figure, where the general standard is 20.
 
-What is left is not drift, and each kind has its own list below because each
-closes in a different way. Nothing here is a clean bill: the lists are a
-ratchet. A new divergence fails, and so does resolving one without editing this
-file. That is the friction you want, because each row needs a reader deciding
-which side was right, and a silent list would grow forever.
+Gladstone Ord. 1545 (effective 2026-08-13) amends R7.2's minimum lot area and
+side setback. The mirror now follows the ordinance; this audit still compares
+the corpus's base zone values, so those two differences are listed below.
+
+The other remaining differences are not drift, and each kind has its own list
+below because each closes in a different way. Nothing here is a clean bill:
+the lists are a ratchet. A new divergence fails, and so does resolving one
+without editing this file. That is the friction you want, because each row
+needs a reader deciding which side was right, and a silent list would grow
+forever.
 """
 
 from __future__ import annotations
@@ -35,11 +40,13 @@ import pytest
 
 pytestmark = pytest.mark.unit
 
-#: Dimensions where one file was edited and the other was not. Empty, and it
-#: took working through twenty-one rows to get there -- see the module
-#: docstring for the pattern. It closes by somebody reading the code and
-#: editing whichever file was wrong.
-KNOWN_DIVERGENT: frozenset[str] = frozenset()
+#: Gladstone Ord. 1545 amends the base values represented in the corpus. The
+#: mirror follows the effective ordinance; the audit does not apply amendment
+#: blocks, so it deliberately reports these two differences.
+KNOWN_DIVERGENT: frozenset[str] = frozenset({
+    "gladstone/R7.2.min_lot_sqft",
+    "gladstone/R7.2.setback_side_ft",
+})
 
 #: Empty since 2026-09-02, and it took the feature rather than seven edits.
 #: These were the seven dimensions where rules.yaml held the number the district
@@ -271,10 +278,10 @@ def test_the_quadplex_row_is_the_one_that_gets_read() -> None:
     )
     assert _zone("milwaukie", "R-MD")["min_lot_sqft"] == 3000
 
-    # Gladstone prints "Detached single household 7,200 / Middle housing 3,600"
-    # in R-7.2 and a quadplex row of its own in R-5. Opposite directions, same
-    # mistake.
-    assert _zone("gladstone", "R7.2")["min_lot_sqft"] == 3600
+    # Ord. 1545 amends R7.2's minimum lot and side setback; rules.yaml mirrors
+    # the effective ordinance while the corpus audit compares the base values.
+    r72 = _zone("gladstone", "R7.2")
+    assert (r72["min_lot_sqft"], r72["setback_side_ft"]) == (7200, 5)
     assert _zone("gladstone", "R5")["min_lot_sqft"] == 7000
 
 
