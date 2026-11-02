@@ -66,3 +66,13 @@ Limited Use Areas (East Corridor feature); 532-3 177 Street Plan (Hayden Island,
 540-1/540-2 172 Setbacks Plan Districts (one layer for both). NOT FOUND: 562-7 (Northwest; PDF only,
 page unknown; BPS layer 49 NW FAR not confirmed), 595-2, Northwest Hills Hillside subarea (563).
 Also found: Map 120-2 / 120-3 (item 68).
+
+LAYER CHECK 2026-11-01 (Copilot gpt-6-luna, 3.1 AI units; each verdict from the layer's own
+description/attributes): CONFIRMED 510-12 (157, PLDIST=CC), 510-13 (Transit/5 streetcar), 510-14 (192),
+510-15 (139), 510-16 (156), 510-18 (176), 510-19 (159, NOTES "Zoning Code map 510-19"), 510-20 (229),
+510-21 (174), 510-22 (166, PLDIST=CC rows), 510-23 (244), 521-4 (157, PLDIST=EC), 532-3 (177, PLAN=HAYDEN
+ISLAND), 540-1/540-2 (172, PLDIST=LH/EM). WRONG: 510-17 (BPS 96 is vehicle sales/leasing + exterior
+display, not repair -- read the map title before using), Northwest Hills Hillside (COP 137 has Forest
+Park, Skyline, Balch Creek only). NAME ONLY: 562-7 (BPS 54, PLDIST=NP retail 3,000 sq ft -- likely the
+NW retail-limit map, check the code text), 595-2 (COP 145 West Portland Multicultural, adopted area
+plans layer -- probably not the map). Still to source: 595-2, Hillside subarea (from the PDF maps).
