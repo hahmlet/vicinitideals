@@ -2,7 +2,7 @@
 
 142. [Claude] [Steph: (b), (c)] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot.**
    Found by the move read of the Estacada/Canby/Sandy stall-count bound (/root/est_sc, read scripts /root/est_sc_rd/ on 137).
-   (a) FALSE REDS, fix forward: Canby 31E33DC05001 and 31E34CC01800 go red on fire hose reach (187-203 ft vs
+   (a) [Copilot building 2026-11-03: flats/fire-reach-placement, brief docs/copilot/briefs/fire-reach-placement.txt] FALSE REDS, fix forward: Canby 31E33DC05001 and 31E34CC01800 go red on fire hose reach (187-203 ft vs
        150) on very large lots (~57,000 / ~48,000 sq ft buildable); live reached 123-145 ft. The bigger court
        flipped the building's orientation and fire reach plays no part in choosing the placement
        (flats/score/screen.py ~L2338-L2363). Same defect made Sandy 24E15AB06600 a false RED in live.
