@@ -70,6 +70,38 @@ Sandy and Estacada, live until run 113.
 9. **Review economy.** Review ~10 meanings of "lot", not every use. A wrong meaning is wrong
    everywhere it is used -- concentrated, so found and fixed once.
 
+## Finding phrases: brute-force matching (Steph 2026-11-03, assessed sound)
+
+Steph's method: drop grammar words, look every remaining word up in the defined-term list for
+that place (city + county + state), and when a word also appears inside a longer defined term
+("lot" -> "flag lot"), check the neighbouring words in the text and upgrade to the phrase if it is
+there; repeat across the corpus. This is longest-match defined-term linking -- what contract and
+legislative-markup tools do -- and needs no AI: plain text search over the whole corpus.
+
+Refinements found in discussion:
+- Match longest defined terms first ("front lot line", then "lot line", then "lot"); same result
+  as the upgrade loop in one pass.
+- Do NOT strip grammar words before matching: "lot of record", "right of way", "floor area
+  ratio" contain them. Strip only when listing what is left over.
+- Normalise forms before matching: plurals, hyphens (right-of-way), glossary inversions ("story,
+  half" vs "half story"), capitals, phrases broken across lines/pages (use the spelling checker's
+  word list).
+- Split phrases ("front and rear lot lines", "flag or panhandle lot") will be missed: flag any
+  word sitting just before a matched term that itself begins a longer defined term -> review.
+- Only DEFINED phrases are found. Second pass: multi-word phrases that recur or are capitalised but
+  match no definition anywhere -> "used like a term, defined nowhere" queue (Large City-type risk
+  if state definitions are missing from the list).
+- A match is a candidate, not a binding: which definition governs still depends on each
+  definition's scope ("for the purposes of this chapter") -> the meaning-ID step.
+- Keep the inner word reachable: "flag lot"'s own definition leans on "lot", so the phrase's
+  meaning links to lot's meaning rather than dropping it.
+- Leftover queues (unmatched words, split phrases, undefined recurring phrases) are the only part
+  needing AI or human reading.
+
+Possible early measurement (Steph to decide; would not change any rule or colour): run the matcher
+on one city as a Copilot job and report counts -- words matched, phrases upgraded, leftovers per
+queue.
+
 ## Known limits (do not oversell)
 
 - The synthesised meaning is itself an interpretation; precedence must be explicit (point 4).
