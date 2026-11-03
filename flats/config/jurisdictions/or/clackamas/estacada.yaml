@@ -1,6 +1,14 @@
 label: Estacada
 kind: city
 eligible: true
+# OAR 660-046-0010(1): "A local government that is a Medium City or Large City
+# must comply with this division." OAR 660-046-0020(8) defines Large City as
+# "a city with a certified Portland State University Population Research Center
+# estimated population of 25,000 or more or a city with a population over 1,000
+# within a metropolitan service district." Estacada is outside Metro and under
+# 25,000 (recorded in the state layer's OAR 660-046-0225 applicability note).
+# Stored text: oar.660-046-0010.txt#L25 and oar.660-046-0020.txt#L72.
+large_city: false
 notes: >-
   DRAFT, 2026-10-07. Estacada Municipal Code Title 16 (Development), stored from the city's
   published code. Admits C-2, CMU, R-3 (R-3 as townhouse lots only) and NCR (only within 200 ft

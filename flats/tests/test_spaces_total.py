@@ -34,6 +34,8 @@ from flats.rules.resolver import RuleSet
 pytestmark = pytest.mark.unit
 
 STATE = "or"
+ESTACADA = "or/clackamas/estacada"
+GLADSTONE = "or/clackamas/gladstone"
 RULE = "or/oar.660-046-0220.txt#L79,L90-L91"
 PROV = Provenance(
     cite="OAR 660-046-0220(2)(e)(B)(iv)",
@@ -106,6 +108,49 @@ def test_a_lot_nobody_measured_is_assumed_into_the_widest_band() -> None:
     unmeasured = rules.resolve("or/clackamas/gladstone", "R7.2")
 
     assert unmeasured.values["parking_min_per_unit"].value == 4 / DWELLINGS
+
+
+def test_estacada_uses_its_six_stall_minimum_outside_large_city_scope() -> None:
+    rules = RuleSet(load_rules())
+
+    parking = rules.resolve(ESTACADA, "R-3").values["parking_min_per_unit"]
+
+    assert load_rules()[ESTACADA].large_city is False
+    assert parking.value * DWELLINGS == 6
+    assert parking.layer == ESTACADA
+    assert not parking.preempted
+
+
+@pytest.mark.parametrize("city", ["or/clackamas/canby", "or/clackamas/sandy"])
+def test_canby_and_sandy_owe_their_own_count_outside_large_city_scope(city: str) -> None:
+    """Outside Metro and under 25,000, like Estacada: each prints 2 a home, eight
+    for the four, which the Large City ceiling had clipped to four (FOLLOWUPS 80(d))."""
+    layers = load_rules()
+    rules = RuleSet(layers)
+    assert layers[city].large_city is False
+    counted = [
+        rules.resolve(city, zone).values.get("parking_min_per_unit")
+        for zone in layers[city].zones
+    ]
+    counted = [p for p in counted if p is not None and p.value is not None]
+    assert counted
+    for parking in counted:
+        assert not parking.preempted
+        assert parking.value * DWELLINGS > 4
+
+
+def test_large_city_parking_cap_still_resolves_from_the_state_layer() -> None:
+    layers = load_rules()
+    rules = RuleSet(layers)
+
+    parking = rules.resolve(
+        GLADSTONE, "R7.2", lot={"lot_sqft": 7000}
+    ).values["parking_min_per_unit"]
+
+    assert layers[GLADSTONE].large_city is None
+    assert parking.value * DWELLINGS == 4
+    assert parking.prov.cite.endswith("(B)(iv)")
+    assert parking.preempted
 
 
 def test_the_citation_is_checked_against_the_count_and_not_the_rate() -> None:

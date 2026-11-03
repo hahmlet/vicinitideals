@@ -527,16 +527,17 @@ def test_a_lot_round_a_block_end_keeps_three_streets() -> None:
 
 
 def test_sandy_holds_a_through_lots_far_street_to_half(corpus: RuleSet) -> None:
-    # A 70 ft through lot: the court behind the building faces the far
+    # An 85 ft through lot (70 ft until Sandy's own eight stalls, FOLLOWUPS
+    # 80(d): their court is 76 ft across and no longer fits 70): the court behind the building faces the far
     # street across more than half of it. The cap binds the apartment
     # building on the one lot; four row houses on their own lots are not
     # multi-family (Steph 2026-10-22), so the townhouse form escapes it.
-    s = _screen(corpus, "sandy", "R-2", SANDY, 70.0, 200.0, "through", plat=True)
+    s = _screen(corpus, "sandy", "R-2", SANDY, 85.0, 200.0, "through", plat=True)
     share = check(s.screening, "parking_frontage_share")
     assert share is not None and share.threshold == 50.0
     assert share.observed == pytest.approx(s.facts.parking_frontage_share_pct)
     assert share.verdict is not Verdict.passes
-    kept = _screen(corpus, "sandy", "R-2", SANDY, 70.0, 200.0, "through")
+    kept = _screen(corpus, "sandy", "R-2", SANDY, 85.0, 200.0, "through")
     assert check(kept.screening, "parking_frontage_share") is None
     assert any(f.code == "LAND-DIVISION" for f in kept.screening.flags)
 

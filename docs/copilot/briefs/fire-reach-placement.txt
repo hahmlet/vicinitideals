@@ -1,0 +1,11 @@
+fire-reach-placement
+
+WHY: FOLLOWUPS 142 part (a) (docs/followups/142-placement-and-stall-width.md -- read it). The FLATS screen picks ONE building placement on a lot (flats/score/screen.py, around L2338-L2363 -- confirm by reading), then checks fire hose reach (OFC 503.1.1, 150 ft; see `git log --oneline -S hose -- flats/score` and commit 1d3c89cb) on that placement only. On very large lots the chosen placement can sit far from the street and fail fire reach while another placement that also fits would pass. Known false REDs: Canby 31E33DC05001 and 31E34CC01800 (hose 187-203 ft vs 150; an earlier placement on the same lots reached 123-145 ft), Sandy 24E15AB06600. Claude will bound this branch on LXC 137 and read every lot that gains, so the change must never loosen a check.
+
+TASK: find how the placement is chosen and where fire reach is judged. When the chosen placement fails ONLY on fire reach (every other check passes), try the other placements the search already produced that fit, in the existing preference order, and keep the first one that passes fire reach AND every other check exactly as the chosen one was checked. If none passes, the result is exactly today's (same colour, same reasons, same placement reported). Do not add new placement candidates; do not change the order or the keep-rule for any lot that does not fail on fire reach alone.
+
+TESTS in flats/tests (name the existing fire-reach / placement test file you extend): a synthetic large lot where the first-choice placement fails only on hose reach and a second fitting placement within 150 ft passes -> passes, reporting the second placement; the same lot where no fitting placement is within reach -> identical result to today; a lot whose first placement fails on something besides fire reach -> identical result to today.
+
+AUTHORISED EXCEPTION: lot colours may change from RED toward yellow/green through this retry only; no rule value changes. Lot colours WILL change (false reds only) -- that is intended; do not stop for it, but say in the report which test shows a colour moving.
+
+MUST NOT CHANGE: any rule value, the 150 ft hose length, any check's threshold, the placement chosen for any lot that does not fail on fire reach alone.
