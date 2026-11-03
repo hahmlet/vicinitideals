@@ -21,16 +21,8 @@
    (d) Estacada is charged 4 stalls (state middle-housing cap) but is under 25,000 people and
    outside Metro, so its own 1.5 per home = 6 stalls applies (emc.16.76.txt:77-78). Every Estacada
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
-   BUILT 2026-11-02 on flats/estacada-stall-count (7c875b2c): the Large City cap skips a layer marked
-   large_city: false; six-stall court added to court_turns.json. Needs a bound (Estacada only) before
-   release. Also outside Metro and under 25,000, still capped at 4, not yet marked: Canby, Sandy (check
-   whether their own counts exceed 4 before marking).
-   2026-11-02: Canby + Sandy MARKED too (ebb5277a; scout: own count 8 for 4 homes, was clipped to 4 --
-   possible false greens). 8-stall courts drivable as drawn. HELD before the bound: one test fails,
-   test_frontage_caps.py::test_sandy_holds_a_through_lots_far_street_to_half -- on a 70 ft through lot the
-   8-stall court faces the far street 34% (passes the 50% cap) where the 4-stall court faced 51%, so the
-   apartment form now passes. Explain why the bigger court faces less street before trusting it, then fix
-   the test, bound Estacada+Canby+Sandy (hand-off ../vicinitideals-worktrees/estacada-stall-count.handoff.md),
-   read the moves, release.
+   LIVE run 113 2026-11-03 (main afb7ad39, code 513fd4b7): Estacada, Canby, Sandy marked large_city: false;
+   90 lot moves (green->red 44, green->yellow 4, yellow->red 41, red->yellow 1), fingerprint matched the
+   bound exactly. Two Canby false reds (31E33DC05001, 31E34CC01800) fixed forward in item 142.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
