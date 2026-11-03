@@ -2860,14 +2860,14 @@ jurisdictions:
       - zone: R7.2
         quadplex_allowed: true
         setback_front_ft: 20
-        setback_side_ft: 7.5
+        setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 20
-        min_lot_sqft: 3600
+        min_lot_sqft: 7200
         source: "Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional standards)"
         source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html"
         confidence: needs_verification
-        notes: "GIS literal 'R7.2' (code writes 'R-7.2'). Height 35 ft. NO max lot coverage, NO min lot width in code. Middle housing (incl. quadplex) permitted outright. min_lot is the middle-housing row of 17.10.050 (3,600); the detached-household row is 7,200 and does not reach this building. Side setback is 7.5 ft, not 5: 17.10.050 prints two side rows and no housing type against either, 'Side setback | 7.5 ft or 5 ft due to irregular shaped lots' and, two rows below, 'Interior side setback | 5 ft'. Where two rows of one table both reach this building the larger binds until somebody settles it at the counter. Street-side setback read via mirror; confirm 17.10.050."
+        notes: "Ord. 1545 (effective 2026-08-13) amends GMC 17.10.050: minimum lot area for duplex, triplex, quadplex, and cottage cluster is 7,200 sq ft; side setback is 5 ft. See Gladstone Ordinance 1545 Exhibit A (pp. 9-5 to 9-6)."
       - zone: R5
         quadplex_allowed: true
         setback_front_ft: 20

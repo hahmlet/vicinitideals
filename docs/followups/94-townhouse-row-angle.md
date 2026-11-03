@@ -8,3 +8,8 @@
    the side lot lines (and keep the frontage + per-home-lot width/area checks of b5c0cbf4 on the
    tilted row); then bound and read every gain. Never loosens a check, so no false-green risk
    beyond the usual read.
+
+BUILT 2026-11-02 by Copilot on flats/townhouse-row-angle (4a4ef0f5, pushed): the townhouse form also tries
+the row square to the side lot lines, guarded by street frontage for all four home lots; tests in
+flats/tests/test_townhouse_lots.py. Next: bound on 137 (scope: lots whose townhouse form is red on fit),
+read every gain, release.

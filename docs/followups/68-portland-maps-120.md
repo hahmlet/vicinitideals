@@ -20,3 +20,17 @@ some sliver polygons to ignore). No longer waits on anyone: encoder job (fetch b
 
 FETCHED 2026-11-01 (Copilot 86aa8ac5, scripts/flats_fetch_area.py): flats/config/areas/or/multnomah/portland/
 map-120-2-site-frontage-areas.geojson (4) and map-120-3-pattern-areas.geojson (12). Not wired in yet.
+
+ENCODED 2026-11-01 on flats/pdx-map-120 (37c245ff; hand-off ../vicinitideals-worktrees/pdx-map-120.handoff.md):
+90 ft frontage inside the 4 centres (neighbour exception unread = yellow), Eastern rear yard 25% of depth
+with parking in half of it. Bound running on 137 (base run 111). QUESTION for Steph, open: "at least 90
+feet of frontage on a street" read as ONE street (a corner or through lot cannot add its streets) -- the
+stricter reading, shipped as is unless Steph says the streets may be summed.
+BOUND 2026-11-02 (137 /root/pdx_map_120, bundle /root/bundle_pdx_map_120): 1,245 moves. Expected: green->red
+272, green->yellow 271, yellow->red 33. NOT expected: red->yellow 663 (RULE_AMBIGUOUS; lots that failed fit,
+coverage or fire access) and yellow->green 4 (1N2E20BB -00900, 1N2E25BA -00600, 1N2E28AD -01600,
+1N2E35DC -00200). Sent back to the encoder to fix on the branch; re-bound after. Do not release this bound.
+RE-BOUND 2026-11-02 at 5e072374 (/root/pdx_map_120b, bundle /root/bundle_pdx_map_120b): 582 moves, the red->yellow
+group is gone. green->red 272, green->yellow 271, yellow->red 33, yellow->green 4 (same four; each lost only
+SLOPE-GRADE -- likely the deeper rear yard moves the building onto flatter ground; confirm in the read).
+NEXT: move read (flats-move-reader), then release. Not started: after the 2026-11-03 reset.
