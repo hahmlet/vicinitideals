@@ -83,18 +83,67 @@ def fit(lane: float) -> Fit:
     )
 
 
-def share(frontage: float, **extra):
+def share_lot(lot: LotFacts, **extra):
     zone = rules(driveway_max_frontage_pct=50, **extra)
     lane = court_across(DESIGN, zone).lane_ft
     result = screen(
-        zone, LotFacts(lot_sqft=12000, frontage_ft=frontage, lot_width_ft=frontage),
+        zone, lot,
         DESIGN, fit(lane), policy=POLICY,
     )
     return next((c for c in result.checks if c.check == "driveway_frontage_share"), None)
 
 
+def share(frontage: float, **extra):
+    return share_lot(
+        LotFacts(lot_sqft=12000, frontage_ft=frontage, lot_width_ft=frontage),
+        **extra,
+    )
+
+
 def test_the_share_is_a_check_that_names_its_field() -> None:
     assert CHECK_FIELD["driveway_frontage_share"] == "driveway_max_frontage_pct"
+
+
+def test_the_lowest_class_driveway_uses_its_own_street_frontage() -> None:
+    # A short side-street line is not the frontage crossed by the drive.
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=162.9,
+        lot_width_ft=139.9,
+        street_line_min_ft=23.0,
+        street_line_max_ft=139.9,
+        street_lines_ft=(23.0, 139.9),
+        street_line_ranks=(4, 0),
+    )
+    got = share_lot(lot, corner_access_street="lowest_class")
+    assert got is not None and got.verdict is Verdict.passes
+
+
+def test_a_short_lowest_class_street_frontage_still_fails_the_cap() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=23.0,
+        lot_width_ft=23.0,
+        street_line_min_ft=23.0,
+        street_line_max_ft=23.0,
+        street_lines_ft=(23.0,),
+        street_line_ranks=(0,),
+    )
+    got = share_lot(lot, corner_access_street="lowest_class")
+    assert got is not None and got.verdict is Verdict.fails
+
+
+def test_unranked_frontages_do_not_assume_the_shortest_is_the_driveway_street() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=162.9,
+        lot_width_ft=139.9,
+        street_line_min_ft=23.0,
+        street_line_max_ft=139.9,
+        street_lines_ft=(23.0, 139.9),
+        street_line_ranks=(None, None),
+    )
+    assert share_lot(lot, corner_access_street="lowest_class") is None
 
 
 def test_the_pods_lane_needs_twice_its_width_of_frontage() -> None:
