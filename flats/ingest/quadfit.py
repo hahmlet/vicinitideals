@@ -3484,15 +3484,17 @@ def fire_checked(
     and the route misses, the plan is drawn once more at the fronts a truck
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
-    build at. Where the route still misses, the plan is drawn at the fit's
-    other angles (:func:`_turned_for_fire`) and kept at one the hose
-    reaches. Other placements at an angle than the one nearest the street
-    are not searched: where one would reach, the answer is a false red,
-    never a false green. ``green`` says the plan
+    build at.     Where the selected placement misses only on fire reach, the bounded
+    fitting placements already produced for that angle are tried in
+    nearest-front preference order; the first that reaches and keeps every
+    other check unchanged is kept. If none passes, the existing other-angle
+    retry follows unchanged: the plan is drawn at the fit's other angles
+    (:func:`_turned_for_fire`) and kept at one the hose reaches.
+    ``green`` says the plan
     is GREEN whatever its triage reads -- its open facts were bounded
     (:func:`_bounded`) -- and holds it to the same rule.
     """
-    from shapely.geometry import Polygon
+    from shapely.geometry import MultiLineString, Polygon
 
     from flats.fit import fire
 
@@ -3553,15 +3555,77 @@ def fire_checked(
         return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
     out = screened(s, route)
-    # The other angles are drawn only where the hose is all that stands in
-    # the way: a plan missing something else stays short of GREEN whatever
-    # the route, and the search is the dearest step on a big lot.
-    # A route that was never found is not turned for: the fit's own angle
-    # has the most room, and where its drawing holds no building the others
-    # seldom do -- every angle drawn for nothing (run on a 7-acre lot: 13 s
-    # to 233 s). The plan stays out of GREEN, unobserved.
+    def fire_only(screening: Screening) -> bool:
+        fire_checks = [c for c in screening.checks if c.check == "fire_access_ft"]
+        return (
+            len(fire_checks) == 1
+            and fire_checks[0].verdict is CheckVerdict.fails
+            and all(
+                c.verdict is CheckVerdict.passes
+                for c in screening.checks
+                if c.check != "fire_access_ft"
+            )
+        )
+
+    def fire_passed(screening: Screening) -> bool:
+        fire_checks = [c for c in screening.checks if c.check == "fire_access_ft"]
+        return (
+            len(fire_checks) == 1
+            and fire_checks[0].verdict is CheckVerdict.passes
+            and all(
+                c.verdict is CheckVerdict.passes
+                for c in screening.checks
+                if c.check != "fire_access_ft"
+            )
+        )
+
+    if fitter is not None and fire_only(out.screening) and fire_only(out.signed):
+        placements: list[Any] = []
+        drawing_for(out, fitter, street=at, listing=placements)
+        front_lines = MultiLineString(
+            [[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in streets]
+        )
+        alternatives: list[tuple[float, float, int, Any]] = []
+        current = out.drawing or {}
+        current_building = current.get("building")
+        for index, where in enumerate(placements):
+            drawn = drawing_for(out, fitter, street=at, where=where)
+            if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
+                continue
+            building = Polygon(drawn["building"])
+            court_ring = drawn.get("court")
+            court_distance = (
+                Polygon(court_ring).distance(front_lines) if court_ring else 0.0
+            )
+            alternatives.append(
+                (building.distance(front_lines), -court_distance, index, drawn)
+            )
+        for _, _, _, drawn in sorted(alternatives, key=lambda option: option[:3]):
+            candidate = dataclasses.replace(out, drawing=drawn)
+            candidate_route = measure(drawn)
+            if candidate_route is None or candidate_route > limit:
+                continue
+            candidate = screened(candidate, candidate_route)
+            if not fire_passed(candidate.screening) or not fire_passed(candidate.signed):
+                continue
+            if (
+                tuple(c for c in candidate.screening.checks if c.check != "fire_access_ft")
+                != tuple(c for c in out.screening.checks if c.check != "fire_access_ft")
+                or tuple(c for c in candidate.signed.checks if c.check != "fire_access_ft")
+                != tuple(c for c in out.signed.checks if c.check != "fire_access_ft")
+            ):
+                continue
+            return candidate
+
     binds = out.signed.binds
     alone = route is not None and bool(binds) and all(b.check == "fire_access_ft" for b in binds)
+    # Other angles are drawn only where the hose is all that stands in the
+    # way: a plan missing something else stays short of GREEN whatever the
+    # route, and the search is the dearest step on a big lot. A route that was
+    # never found is not turned for: the fit's own angle has the most room,
+    # and where its drawing holds no building the others seldom do -- every
+    # angle drawn for nothing (run on a 7-acre lot: 13 s to 233 s). The plan
+    # stays out of GREEN, unobserved.
     if fitter is not None and alone:
         turned, again = _turned_for_fire(s, fitter, measure, route, limit, street=at)
         if turned is not s:

@@ -638,3 +638,111 @@ def test_a_probe_that_reads_only_the_fit_draws_nothing_and_walks_no_hose(corpus,
     assert probe.drawing is None
     assert not probe.facts.fire_route_tried
     assert check(probe.screening, "fit_ft").verdict is check(full.screening, "fit_ft").verdict
+
+
+def _placement_retry_case(corpus, policies):
+    from flats.fit.rectangle import Fitter
+
+    row = _deep_lot(200.0, 240.0)
+    row.update(jurisdiction="portland", zone="CE")
+    lot = lot_from_row(row, corpus.layers)
+    (s,) = screen_lot(
+        lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    assert s.drawing and s.drawing["fits"] and s.fit.angle_deg is not None
+    assert s.envelope is not None
+    fitter = Fitter(s.envelope.geom, (s.fit.angle_deg,), ground=s.envelope.ground)
+    return lot, s, fitter
+
+
+def test_fire_only_red_uses_the_next_fitting_placement_within_reach(
+    corpus, policies, monkeypatch
+) -> None:
+    """A big lot's preferred drawing is red only on hose reach; the first
+    other fitting placement within reach is kept and moves the colour."""
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    first = Polygon(s.drawing["building"])
+
+    def route(building, *_args, **_kwargs):
+        return 190.0 if building.equals(first) else 120.0
+
+    monkeypatch.setattr(fire, "route_ft", route)
+    base = _coloured(s, Triage.green)
+    today = fire_checked(base, lot, None, policy=policies[0], relief=policies[1])
+    assert today.signed.colour is Colour.red
+    assert check(today.screening, "fire_access_ft").verdict is Verdict.fails
+    assert all(
+        c.verdict is Verdict.passes
+        for c in today.signed.checks
+        if c.check != "fire_access_ft"
+    ), [
+        (c.check, c.verdict)
+        for c in today.signed.checks
+        if c.check != "fire_access_ft" and c.verdict is not Verdict.passes
+    ]
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert got.signed.colour is Colour.yellow
+    assert got.drawing["building"] != s.drawing["building"]
+    assert got.facts.fire_route_ft == 120.0
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.passes
+    assert all(
+        c.verdict is Verdict.passes
+        for c in got.screening.checks
+        if c.check != "fire_access_ft"
+    )
+
+
+def test_fire_only_red_keeps_today_result_when_no_placement_is_within_reach(
+    corpus, policies, monkeypatch
+) -> None:
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    base = _coloured(s, Triage.green)
+    today = fire_checked(base, lot, None, policy=policies[0], relief=policies[1])
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert got.drawing == today.drawing
+    assert got.facts == today.facts
+    assert got.screening == today.screening
+    assert got.signed == today.signed
+
+
+def test_fire_retry_does_not_move_a_placement_with_another_failing_check(
+    corpus, policies, monkeypatch
+) -> None:
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    original_screen = quadfit.screen
+
+    def fit_fails(*args, **kwargs):
+        result = original_screen(*args, **kwargs)
+        checks = tuple(
+            dataclasses.replace(c, verdict=Verdict.fails) if c.check == "fit_ft" else c
+            for c in result.checks
+        )
+        return dataclasses.replace(result, triage=Triage.red, checks=checks)
+
+    monkeypatch.setattr(quadfit, "screen", fit_fails)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    base = _coloured(s, Triage.green)
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert got.drawing == base.drawing
+    assert check(got.screening, "fit_ft").verdict is Verdict.fails
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
