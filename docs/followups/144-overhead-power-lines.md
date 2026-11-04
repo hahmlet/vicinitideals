@@ -22,3 +22,5 @@ would apply (NESC / Oregon OAR 860-024 vertical + horizontal clearance from buil
 setback guidance) -- the screen needs a stated distance; (3) Pacific Power territory (parts of
 Clackamas/Washington?) has no source yet; (4) Steph: use it as a YELLOW flag ("line within X ft of the
 building") or not at all. Overlaps the utility easement rule (memory project_flats_utility_easement).
+
+OSM 2026-11-03: another agent reports OpenStreetMap has some poles/lines. Completeness NOT measured: overpass-api.de answered 406 / empty, kumi.systems and private.coffee empty (3 tries, stopped). To measure: the Geofabrik Oregon extract (download.geofabrik.de/north-america/us/oregon-latest.osm.pbf, a few hundred MB -- needs Steph's OK to download), count power=pole / minor_line / line per city against street length, and compare with PGE layer 17 on the same city.
