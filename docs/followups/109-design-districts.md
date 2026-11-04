@@ -52,4 +52,10 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   map only, not in stored text); 7 chapters read and dismissed. 0 gains expected. Bound queued on 137 (tag pd2a). QUESTIONS for
   Steph 2026-11-04: (1) ask the City for the list of former LR7.5 lots in Glendoveer? (2) fetch the Map 521-3 sheet so small East
   Corridor lots can go back to green? Batch B (510/562/532/565/580) next.
+- 2026-11-04: BATCH B built (flats/districts-pdx-pd2b 5e2a8551, STACKS on pd2a; hand-off districts-pdx-pd2b.handoff.md): Gateway 377,
+  Northwest 58, Sandy Blvd 30, Hayden Island 11, Powell 11, Columbia South Shore 10, Central City 7, South Auditorium 3 green->yellow
+  into the shared hold; RM4/RX/CX/EX join the hold. Coordinator rulings (standing rules): NW 33.562.100.B CM3 on Map 562-2 = RED
+  (flat prohibition, >20% residential); NW main streets traced by eye accepted (54 greens to check in the move read). Bound pd2a+pd2b
+  TOGETHER (replace the queued pd2a tag). QUESTION for Steph: download the City's map sheets (Gateway min building size, East Corridor
+  Map 521-3) so the figures can be read off them (drawn:true form) and small lots reopened?
 
