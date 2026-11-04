@@ -75,7 +75,7 @@ the full one.)
 ### 1c. The rest, most urgent first (dated items first)
 
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- merged e63617b8 2026-10-20; moves expected at the next weekly. [file](followups/100-driveway-street.md)
-94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; BUILT by Copilot on flats/townhouse-row-angle (4a4ef0f5), needs a bound + read every gain. [file](followups/94-townhouse-row-angle.md)
+94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; BUILT by Copilot (merged with main b8ba280b), BOUND RUNNING on 137 (/root/th_row); read every gain next. [file](followups/94-townhouse-row-angle.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: YES for (C1)] **Agents could not recall a property ruling** -- A, B, C1, C2 MERGED; DLCD backlog READ; (B) waits on Steph. [file](followups/86-ruling-recall.md)
 2. [Claude] [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement** -- run 12 PROMOTED 2026-09-22; loose ends still owed. [file](followups/2-neighbour-zoning.md)
 13. [Claude] [scan: NO -- lands with the November county refresh] **Tax code area in the RLIS ingest** -- lands with the November county data refresh. [file](followups/13-taxcode-rlis.md)
@@ -123,10 +123,11 @@ the full one.)
 109. [Claude] **Design districts** -- chunk 5 LIVE run 91; chunk 6 LIVE run 94 2026-10-30; North Bethany LIVE run 97; Bethany ASC LIVE run 99; chunk 7 (Raleigh Hills-Garden Home, Bull Mountain) LIVE run 101 2026-10-31 (16 green->yellow); chunk 6b re-read (connectivity, plan rules, Bethany ASC 3, Raleigh Hills ASC U; was 134/135/136) LIVE run 103 2026-10-31 (280 green->yellow); chunk 8 (Metzger-Progress, West Tigard, East Hillsboro, Sherwood; West Union has no pod lots) + 137 flags LIVE run 105 2026-10-31 -- ALL ELEVEN WashCo community plans read; chunk 9 (Sandy, Wilsonville OTR) + Portland plan districts part 1 (Johnson Creek, Laurelhurst-Eastmoreland) LIVE run 111 2026-11-01 (441 green leave). Left: Portland 33.5xx part 2 (see file). [file](followups/109-design-districts.md)
 140. [Claude] **Trees ignored, entered per lot** -- Steph 2026-11-01: canopy build cancelled; per-lot tree mark LIVE 2026-11-01 (3c7accea); left: drop the Johnson Creek tree hold, NEXT WEEK. [file](followups/140-johnson-creek-trees.md)
 105. [Claude] [scan: YES (new standards bind)] **Follow every cross-reference one layer down** -- after 73's restructure; Portland batch 6 adds new references. [file](followups/105-follow-cross-references.md)
+116. [Claude] **Mend the misread words the squiggles show, worst city first** -- Canby + first King City batch 3046b980; this branch mended 68 more King City joins (89 -> 12); 12 leftovers and Tualatin remain; Claude to close. [file](followups/116-misread-words.md)
 118. [Claude] **Durham 3.7.1.7: no driveway apron within 100 ft of an intersection -- FALSE GREEN RISK** -- BACKLOG; flag DONE 392ce30d LIVE (Durham 21 green->yellow, run 87). [file](followups/118-durham-apron-100ft.md)
 119. [Claude] [scan: NO for (b); YES for (c)] **Portland page-check notes, reviewed 2026-10-28** -- HOLD (Steph 2026-10-29); (a) DONE a54faf2a; (b), (c) left. [file](followups/119-portland-page-check.md)
-142. [Claude] [Steph: (b), (c)] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- found by the est_sc read 2026-11-03; 2 Canby false reds; two questions for Steph. [file](followups/142-placement-and-stall-width.md)
-120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BACKLOG; 22E01DD03100 looks like a false RED. [file](followups/120-happy-valley-driveway-cap.md)
+142. [Claude] [Steph: (b), (c)] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) BUILT bf18785e, BOUND RUNNING on 137 (/root/fire_rp); 2 Canby false reds; two questions for Steph. [file](followups/142-placement-and-stall-width.md)
+120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BUILT by Copilot 56891775 (flats/happy-valley-driveway-cap), also reaches Beaverton + Sherwood; needs a bound + read. [file](followups/120-happy-valley-driveway-cap.md)
 
 ## 2. Waiting on Steph
 

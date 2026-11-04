@@ -69,6 +69,76 @@ JOIN_MENDS: dict[str, tuple[tuple[str, str], ...]] = {
     "or/washington/king-city/kcc.16.88-16.100.residential-zones.txt": (
         ("AP ARTMENTS AND TOWNHOUSES ZONE", "APARTMENTS AND TOWNHOUSES ZONE"),
     ),
+    "or/washington/king-city/kcc.16.24.definitions.txt": (
+        ("manda-\ntory", "mandatory\n"),
+        ("hous-\ning", "housing\n"),
+        ("coun-\ncil", "council\n"),
+        ("estab-\nlishment", "establishment\n"),
+        ("pe-\nrimeter", "perimeter\n"),
+        ("installa-\ntions", "installations\n"),
+        ("reg-\nulations", "regulations\n"),
+        ("prox-\nimately", "proximately\n"),
+        ("nor-\nmally", "normally\n"),
+        ("Insur-\nance", "Insurance\n"),
+        ("offi-\ncial", "official\n"),
+        ("insur-\nance", "insurance\n"),
+        ("rec-\nommended", "recommended\n"),
+        ("perma-\nnently", "permanently\n"),
+        ("rehabilita-\ntion", "rehabilitation\n"),
+        ("ex-\nternal", "external\n"),
+        ("bicy-\nclists", "bicyclists\n"),
+        ("ex-\nclusive", "exclusive\n"),
+        ("dredg-\ning", "dredging\n"),
+        ("com-\nbined", "combined\n"),
+        ("vehi-\ncles", "vehicles\n"),
+        ("corre-\nspond", "correspond\n"),
+        ("Wash-\nington", "Washington\n"),
+        ("calen-\ndar", "calendar\n"),
+        ("Enclo-\nsure", "Enclosure\n"),
+        ("transpar-\nent", "transparent\n"),
+        ("syndi-\ncate", "syndicate\n"),
+        ("hierar-\nchy", "hierarchy\n"),
+        ("Determina-\ntion", "Determination\n"),
+        ("gen-\nerally", "generally\n"),
+        ("hy-\ndrants", "hydrants\n"),
+        ("Al-\nteration", "Alteration\n"),
+        ("di-\nrectional", "directional\n"),
+        ("mechan-\nical", "mechanical\n"),
+        ("descrip-\ntion", "description\n"),
+        ("inciden-\ntal", "incidental\n"),
+        ("mon-\nument", "monument\n"),
+        ("hor-\nizontal", "horizontal\n"),
+        ("iden-\ntifies", "identifies\n"),
+        ("de-\ngrees", "degrees\n"),
+        ("sen-\ntence", "sentence\n"),
+        ("repre-\nsentation", "representation\n"),
+        ("elec-\ntricity", "electricity\n"),
+        ("uncov-\nered", "uncovered\n"),
+        ("gen-\nitals", "genitals\n"),
+        ("sim-\nulated", "simulated\n"),
+        ("recy-\nclables", "recyclables\n"),
+        ("responsibil-\nities", "responsibilities\n"),
+        ("respon-\nsibilities", "responsibilities\n"),
+        ("subdivid-\ning", "subdividing\n"),
+        ("pro-\njected", "projected\n"),
+        ("diam-\neter", "diameter\n"),
+        ("delin-\neation", "delineation\n"),
+        ("invento-\nries", "inventories\n"),
+        ("preva-\nlence", "prevalence\n"),
+        ("gener-\nated", "generated\n"),
+        ("illus-\ntrate", "illustrate\n"),
+        ("compensa-\ntion", "compensation\n"),
+        ("va-\nriety", "variety\n"),
+        ("indi-\nviduals", "individuals\n"),
+        ("stu-\ndios", "studios\n"),
+        ("li-\nquor", "liquor\n"),
+        ("char-\nacterized", "characterized\n"),
+        ("anatom-\nical", "anatomical\n"),
+        ("Gen-\nerally", "Generally\n"),
+        ("mu-\nseums", "museums\n"),
+        ("hos-\npices", "hospices\n"),
+        ("mausole-\nums", "mausoleums\n"),
+    ),
     "or/clackamas/canby/cmc.16.08.110.txt": (
         ("bythe Planning Commission", "by the Planning Commission"),
     ),
@@ -104,7 +174,27 @@ def restore(text: str) -> str:
 def restore_joins(path: str, text: str) -> str:
     """Restore certain source-specific word joins, leaving every other source alone."""
     for old, new in JOIN_MENDS.get(path, ()):
-        text = text.replace(old, new)
+        if "\n" not in old:
+            text = text.replace(old, new)
+            continue
+
+        word = new.rstrip("\n")
+        while old in text:
+            at = text.index(old)
+            end = at + len(old)
+            punctuation_end = end
+            while punctuation_end < len(text) and text[punctuation_end] in ",.;:!?)]}":
+                punctuation_end += 1
+            after = punctuation_end
+            if after < len(text) and text[after] in " \t":
+                after += 1
+            text = (
+                text[:at]
+                + word
+                + text[end:punctuation_end]
+                + "\n"
+                + text[after:]
+            )
     return text
 
 
@@ -122,7 +212,13 @@ def restored_only(old: str, new: str, *, path: str = "") -> list[str]:
     also accepts only that document's explicit :data:`JOIN_MENDS`.
     """
     if path and restore_joins(path, restore(old)) == new:
-        return []
+        restored = restore(old)
+        if (
+            len(restored.split("\n")) == len(new.split("\n"))
+            and _join_characters(restored) == _join_characters(new)
+        ):
+            return []
+        return ["a source-specific join moved lines or changed printed characters"]
     problems: list[str] = []
     old_lines, new_lines = old.split("\n"), new.split("\n")
     if len(old_lines) != len(new_lines):
@@ -149,7 +245,12 @@ def restored_only(old: str, new: str, *, path: str = "") -> list[str]:
 
 
 def _letters(text: str) -> str:
-    return "".join(c for c in text if not c.isspace())
+    return "".join(c for c in text if not c.isspace() and c not in "-\u00ad")
+
+
+def _join_characters(text: str) -> str:
+    """The printed characters, ignoring layout and line-end hyphenation."""
+    return "".join(c for c in text if not c.isspace() and c != "-")
 
 
 @dataclass(frozen=True, slots=True)
@@ -159,7 +260,8 @@ class PageCheck:
     n: int
     #: ``same`` (one sequence), ``reordered`` (the same letters in another
     #: reading order), ``within`` (a slice's edge page: every stored letter
-    #: is on the page, which prints more) or ``differs``.
+    #: is on the page, which prints more), ``unchanged`` (not altered by this
+    #: mend) or ``differs``.
     verdict: str
     #: Letters the stored page holds and the second reader does not, and the
     #: other way round (``differs`` only).
@@ -235,6 +337,7 @@ class Mended:
 
     path: str
     glyphs: int = 0
+    joins: int = 0
     problems: list[str] = field(default_factory=list)
     pages: list[PageCheck] = field(default_factory=list)
     words: int = 0
@@ -265,8 +368,20 @@ def check_document(
     from flats.provenance.fetch import fetch_text
 
     doc = store.load(path)
-    found = Mended(path=path, glyphs=glyphs(doc.text))
     new = restore_joins(path, restore(doc.text))
+    found = Mended(
+        path=path,
+        glyphs=glyphs(doc.text),
+        joins=sum(doc.text.count(old) for old, _new in JOIN_MENDS.get(path, ()))
+        or (
+            sum(
+                new_word.rstrip("\n") + "\n" in doc.text
+                for _old, new_word in JOIN_MENDS.get(path, ())
+            )
+            if new != doc.text
+            else 0
+        ),
+    )
     found.problems = restored_only(doc.text, new, path=path)
     index = page_map.read(store, path)
     if index is None:
@@ -297,11 +412,16 @@ def check_document(
     starts = [(p.n, p.line) for p in index.pages]
     sliced = bool(spec and (spec.start or spec.end))
     read = reader(book, [n for n, _ in starts])
-    old_pages = _pages_of(doc.text.split("\n"), starts)
-    for k, (n, text) in enumerate(_pages_of(lines, starts)):
+    old_slices = _pages_of(doc.text.split("\n"), starts)
+    new_slices = _pages_of(lines, starts)
+    source_joins = bool(JOIN_MENDS.get(path)) and new != doc.text
+    for k, (n, text) in enumerate(new_slices):
         edge = sliced and k in (0, len(starts) - 1)
+        if source_joins and old_slices[k][1] == text:
+            found.pages.append(PageCheck(n, "unchanged"))
+            continue
         found.pages.append(witness(text, read.get(n, ""), n=n, edge=edge))
-        hits, missing = words_found(old_pages[k][1], read.get(n, ""))
+        hits, missing = words_found(old_slices[k][1], read.get(n, ""))
         found.words += hits
         found.missing.extend(f"p{n} {w}" for w in missing)
     return found, new
@@ -460,9 +580,16 @@ def mend(
         if store.layer_of(path) != layer_id:
             continue
         doc = store.load(path)
-        if not glyphs(doc.text) and not every:
+        new = restore_joins(path, restore(doc.text))
+        if (
+            not glyphs(doc.text)
+            and not every
+            and new == doc.text
+        ):
             continue
-        if path in proofs and glyphs(doc.text):
+        if path in proofs and (
+            glyphs(doc.text) or new != doc.text
+        ):
             found = Mended(path=path, glyphs=glyphs(doc.text))
             found.problems.append("already cut into sections: mend before cutting")
             report.documents.append(found)
@@ -471,7 +598,7 @@ def mend(
         if worded:
             found.problems.append("the layer holds word rulings, which a mend does not re-stamp")
         report.documents.append(found)
-        if found.proved and found.glyphs:
+        if found.proved and new != doc.text:
             chosen[path] = new
     if not write or not chosen:
         return report
@@ -520,7 +647,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         state = "PROVED" if found.proved else "REFUSED"
         bad += not found.proved
         print(
-            f"{state} {found.path}: {found.glyphs} glyphs restored; fresh extraction "
+            f"{state} {found.path}: {found.glyphs} glyphs and {found.joins} joins; fresh extraction "
             f"{'agrees' if found.reextracted else 'DIFFERS'}; pages {dict(verdicts)}; "
             f"restored words on the page {found.words}, missing {len(found.missing)}"
         )

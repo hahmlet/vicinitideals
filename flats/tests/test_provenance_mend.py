@@ -47,6 +47,31 @@ def test_source_word_joins_are_restored_only_for_the_named_documents() -> None:
     ) == "approved by the Planning Commission\n"
 
 
+def test_king_city_line_end_joins_preserve_printed_characters_and_lines() -> None:
+    path = "or/washington/king-city/kcc.16.24.definitions.txt"
+    joins = mend.JOIN_MENDS[path]
+
+    assert len(joins) == 68
+    for old, new in joins:
+        assert old.count("\n") == new.count("\n") == 1
+        assert "".join(c for c in old if not c.isspace() and c != "-") == "".join(
+            c for c in new if not c.isspace() and c != "-"
+        )
+        assert mend.restore_joins(path, old) == new
+        assert mend.restored_only(old, new, path=path) == []
+        assert mend.restore_joins("or/washington/another-city/code.txt", old) == old
+
+    assert mend.restore_joins(path, "estab-\nlishment, or termination") == (
+        "establishment,\nor termination"
+    )
+    assert mend.restore_joins(path, "reg-\nulations.") == "regulations.\n"
+    trailing = "reg-\nulations.\nnext"
+    joined = mend.restore_joins(path, trailing)
+    assert joined == "regulations.\n\nnext"
+    assert joined.count("\n") == trailing.count("\n")
+    assert mend.restored_only(trailing, joined, path=path) == []
+
+
 def test_page_extraction_restores_king_city_word_joins(monkeypatch: pytest.MonkeyPatch) -> None:
     import pypdf
 
@@ -88,6 +113,7 @@ def test_the_second_reader_witness_tells_order_from_loss() -> None:
     lost = mend.witness("the foo", "the foot", n=3)
     assert lost.verdict == "differs"
     assert lost.fresh_only == "t"
+    assert mend.witness("representation\n", "repre-\nsentation", n=6).verdict == "same"
     # A slice's edge page prints more than the slice holds; that is not a loss...
     assert mend.witness("6.03 DRIVEWAYS", "6.02 X 6.03 DRIVEWAYS", n=4, edge=True).verdict == "within"
     # ...but a letter the page does not print still is, edge or not.
