@@ -696,6 +696,10 @@ class LotFacts:
     #: measured the lot, and a key missing where that one deduction was not:
     #: either way a rate on a net acre keeps to the gross-area bound.
     net_deductions: Mapping[str, float] | None = None
+    #: Runs of lot line quadfit measured on a private road or drive
+    #: (:attr:`flats.geom.edges.Edge.road_private`). Used for driveway access
+    #: frontage only where no street line was measured.
+    private_drive_lines_ft: tuple[float, ...] = ()
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -889,10 +893,22 @@ def covered_parking_check(
     )
 
 
+_PRIVATE_DRIVE_CAP_JURISDICTIONS = frozenset({
+    "or/clackamas/happy-valley",
+    "or/washington/beaverton",
+    "or/washington/sherwood",
+})
+
+
 def _driveway_cap_frontages(rules: ZoneResolution, lot: LotFacts) -> tuple[float, ...]:
-    """Street lines the driveway frontage cap can apply to."""
+    """Lines the driveway frontage cap can apply to, bounded by lot frontage."""
+    limit = lot.frontage_ft if lot.frontage_ft > 0.0 else None
+
+    def bounded(length: float) -> float:
+        return min(length, limit) if limit is not None else length
+
     lines = tuple(
-        (index, length)
+        (index, bounded(length))
         for index, length in enumerate(lot.street_lines_ft)
         if length > 0.0
     )
@@ -911,11 +927,18 @@ def _driveway_cap_frontages(rules: ZoneResolution, lot: LotFacts) -> tuple[float
             )
         return tuple(length for _, length in lines)
 
+    if rules.jurisdiction in _PRIVATE_DRIVE_CAP_JURISDICTIONS:
+        private_lines = tuple(
+            bounded(length) for length in lot.private_drive_lines_ft if length > 0.0
+        )
+        if private_lines:
+            return private_lines
+
     frontage = lot.cap_frontage_ft
     if frontage is None:
         return ()
     longest = lot.street_line_max_ft
-    return (frontage,) if longest is None else (frontage, longest)
+    return (bounded(frontage),) if longest is None else (bounded(frontage), bounded(longest))
 
 
 def _checks(

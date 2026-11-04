@@ -1844,6 +1844,7 @@ def lot_from_row(
         # Each of those streets' class rank, on the same chains in the same
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
+        private_drive_lines_ft=private_drive_lines_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -4048,6 +4049,38 @@ def street_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
     if edges is None:
         return ()
     return tuple(sum(e.length_ft for e in chain) for chain in street_chains(edges))
+
+
+def private_drive_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
+    """Lengths of contiguous lot-line runs quadfit measured on private roads.
+
+    ``Edge.road_private`` is populated from quadfit's road-width reading; it
+    is distinct from a city street-class rank, which may not exist for a
+    private drive.
+    """
+    if edges is None or not edges.edges:
+        return ()
+    ring = edges.edges
+    marked = [edge.road_private for edge in ring]
+    if not any(marked):
+        return ()
+
+    start = next(
+        (index for index in range(len(ring)) if marked[index] and not marked[index - 1]),
+        0,
+    )
+    runs: list[float] = []
+    length = 0.0
+    for offset in range(len(ring)):
+        edge = ring[(start + offset) % len(ring)]
+        if edge.road_private:
+            length += edge.length_ft
+        elif length:
+            runs.append(length)
+            length = 0.0
+    if length:
+        runs.append(length)
+    return tuple(runs)
 
 
 #: The share of one street's line whose class must be read for the street to
