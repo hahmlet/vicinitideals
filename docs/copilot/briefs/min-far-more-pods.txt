@@ -1,0 +1,22 @@
+min-far-more-pods (new branch flats/min-far-more-pods from main)
+
+WHY: FOLLOWUPS 148 (docs/followups/148-min-floor-area-more-pods.md). Steph ruled 2026-11-04 (flats/config/rulings.yaml id 2026-11-04-min-floor-area-more-pods): a minimum floor area ratio that one pod is too small to meet is RED only when there is clearly no room for the pods it would take; if there clearly is room, or it is unclear, YELLOW. This mirrors the existing building-frontage rule 2026-10-21-wide-lot-frontage-more-pods (flats/score/screen.py: _pods_to_fill, MORE_BUILDINGS, flag FRONTAGE-MORE-BUILDINGS). Read both rulings first.
+
+TODAY, TWO INCONSISTENT PATHS:
+(a) The general `min_far` check (flats/score/screen.py: SOFT_FLOOR_CHECKS ~L154 includes "min_far"; the FAR-MIN flag / CLOSER_LOOK_MIN_FAR ~L2615 and ~L3210): a miss is ALWAYS YELLOW.
+(b) Portland's 33.415 Centers Main Street minimum (flats/geom/pdx_overlays.py ~L841, MIN_FAR_CHECK "pdx_min_far", measured on the part of the lot inside the overlay, crediting only the pod floor on that part): a miss is ALWAYS RED (a flag_plan.Bind).
+
+CHANGE (one rule for both):
+1. Floor area the code needs: need_sqft = required FAR x the measured lot area (for (b) the overlay part, `measured` in pdx_overlays; for (a) whatever area the min_far check already measures on).
+2. Pods it would take: n = ceil(need_sqft / one pod's floor area) (the same floor area the check credits for one pod). n >= 2 whenever one pod misses.
+3. Clearly no room: RED only when even the most lenient packing cannot hold n pods -- the buildable ground (the lot, or for (b) its overlay part, inside the resolved setbacks; use the screen's own envelope/buildable-area figure if one exists -- grep screen.py / flats/fit for envelope, buildable, area_sqft) is smaller than n x the pod's footprint area (width x depth). Ignore parking, separation and shape for this test: that is what makes it "clearly".
+4. Otherwise (room for n pods, or the buildable area unknown/unmeasured): YELLOW, held out of GREEN with a flag that it needs more than one building (reuse FAR-MIN / CLOSER_LOOK_MIN_FAR for (a); for (b) make pdx_min_far behave the same way -- a held/unmeasured outcome or a soft-floor check that yields YELLOW with its flag -- instead of a RED Bind). Never GREEN on a missed minimum.
+5. A pod that meets the minimum on its own is judged exactly as today.
+
+TESTS: new flats/tests/test_min_far_more_pods.py: (i) general min_far, small lot, need 2 pods, buildable area < 2 footprints -> RED; (ii) same, big lot with room for 2+ -> YELLOW with the flag; (iii) buildable area unknown -> YELLOW; (iv) Portland main street (pdx_min_far) big lot inside the overlay -> YELLOW (was RED); (v) Portland main street lot too small for 2 pods -> RED; (vi) a pod meeting the minimum -> unchanged. Update any existing test that pinned "always yellow" or "always red" with a dated comment citing the ruling id. Run uv run pytest flats/tests -q -n auto (green), uv run ruff check flats/, the firewall check, and regenerate flats/config/gaps.json on the branch if test_gaps asks (commit it on the branch). Commit by explicit path, message prefix "flats:" ending "(FOLLOWUPS 148)". Do not push.
+
+Write C:/Users/Steph/Repos/vicinitideals-worktrees/min-far-more-pods.handoff.md: what changed, bound scope (Portland lots in the Centers Main Street overlay; every jurisdiction/zone with a min_far value), expected moves (Portland main-street RED -> YELLOW where room for more pods; elsewhere min_far YELLOW -> RED on lots clearly too small for the pods needed; no lot to GREEN).
+
+MUST NOT CHANGE: any min_far value or the overlay part measurement; minimum DENSITY handling (its own soft-floor rule stays); the building-frontage more-pods logic; anything under app/.
+
+AUTHORISED EXCEPTION: per Steph's ruling 2026-11-04-min-floor-area-more-pods, Portland Centers Main Street lots may move RED -> YELLOW, and lots anywhere failing a min_far may move YELLOW -> RED when clearly too small for the pods needed. No lot may move to GREEN.

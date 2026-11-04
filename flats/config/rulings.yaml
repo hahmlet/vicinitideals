@@ -2460,3 +2460,27 @@
     sites on Map 120-2 deeper than 160 ft; the 10 percent adjustment before
     2032 is not taken (no variances). FOLLOWUPS 68.
   source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md
+
+- id: 2026-11-04-min-floor-area-more-pods
+  kind: ruling
+  date: 2026-11-04
+  scope: {}
+  question: >-
+    A minimum floor area ratio (Portland 33.415 Centers Main Street, the
+    Gateway and East Corridor plan district maps, and every other city's
+    min_far) that one pod is too small to meet on a big lot: YELLOW because
+    more buildings could meet it, or RED because the one pod screened cannot?
+    Today the general min_far is always YELLOW (soft floor) and Portland's
+    main-street minimum is always RED.
+  ruling: >-
+    Steph: "anything that clearly cannot fit another pod is red and anything
+    that clearly can is yellow. Unclear is yellow" -- the same rough count as
+    2026-10-21-wide-lot-frontage-more-pods.
+  effect: >-
+    One rule for every minimum floor area: if the floor area the lot needs
+    could be reached with more pods that could stand on it (a rough count,
+    not a site plan), YELLOW with a more-buildings flag; if there is clearly
+    no room for the pods it needs, RED; unclear is YELLOW. Replaces the
+    always-YELLOW soft floor for min_far and the always-RED Portland
+    main-street minimum. FOLLOWUPS 148.
+  source: Steph 2026-11-04 (chat), docs/followups/148-min-floor-area-more-pods.md
