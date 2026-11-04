@@ -1306,7 +1306,8 @@ def test_a_portland_corner_lot_fronts_its_shorter_street_and_parks_off_the_other
         (50 - street_side - yards.side_ft) * (100 - yards.front_ft - yards.rear_ft)
     )
     side = 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
-    assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 9.0))
+    # 2026-11-03: Portland's stated 8.5 ft minimum sets the court cells.
+    assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 8.5))
     got = row_for(s)
     assert got["front_deg"] == 0.0 and got["side_street_lane"] is True
     assert [c for c in got if c not in BRIDGE_ONLY_COLUMNS] == list(ROW_COLUMNS)

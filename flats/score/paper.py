@@ -73,8 +73,8 @@ class PaperFit:
     #: the design parks nowhere the lot has to give depth for.
     parking_depth_ft: float = 0.0
     #: What that row of stalls asks across the lot: the design's floor,
-    #: raised to the zone's legal minimum and cut to its cap, each the
-    #: design's stall width or the zone's if wider. 0.0 with no rear court.
+    #: raised to the zone's legal minimum and cut to its cap, each at the
+    #: zone's stated width or the design's where none is stated. 0.0 with no court.
     parking_width_ft: float = 0.0
     #: The drive lane beside the building that reaches the court, the design's
     #: figure raised by the zone's two-way driveway minimum. 0.0 with no court.
@@ -777,7 +777,7 @@ class Across:
     #: Stalls the court is charged at: the design's floor, raised to the
     #: zone's legal minimum, cut to its cap.
     stalls: int = 0
-    #: Those stalls side by side, each the wider of the design's and the zone's.
+    #: Those stalls side by side at the zone's stated width or the design's.
     width_ft: float = 0.0
     #: The two-way lane beside the building from the street to the court --
     #: or the one lane a ruling lets serve it (:func:`drive_width`).
@@ -858,10 +858,9 @@ def court_across(
     them the lot seats and says so beside the colour
     (:attr:`flats.score.screen.Screening.stalls_seated`).
 
-    **How wide each.** The design's stall width, raised by the zone's. Gresham
-    dimensions a stall at 8.5 ft and that does not shrink the court, for the
-    same reason its narrower aisle does not deepen it — the design is drawn to
-    a 9 ft cell and a smaller one is a different drawing.
+    **How wide each.** The zone's stated stall width where it gives one;
+    otherwise the design's. A narrower stated width draws a narrower cell,
+    and a wider one draws a wider cell.
 
     A code that plants islands inside the court
     (``parking_island_sqft_per_space``) widens each cell by its share of
@@ -919,10 +918,11 @@ def court_across(
         stalls = min(stalls, math.floor(round(cap * units, 6)))
         most = min(most, math.floor(round(cap * units, 6)))
     most = max(most, stalls)
-    stall = design.parking.stall_width_ft
+    bare = design.parking.stall_width_ft
     if (stated := _number(rules, "parking_stall_width_ft")) is not None:
         used.append("parking_stall_width_ft")
-        stall = max(stall, stated)
+        bare = stated
+    stall = bare
     if (island := _number(rules, "parking_island_sqft_per_space")) is not None and island > 0:
         # Planted islands inside the court, so much ground per stall
         # (Tualatin 73C.210(4), 25 sq ft at the aisle ends): charged as width
@@ -950,9 +950,6 @@ def court_across(
     offered: tuple[Fix, ...] = ()
     turns: bool | None = True
     if lane and stalls > 0:
-        bare = design.parking.stall_width_ft
-        if (stated := _number(rules, "parking_stall_width_ft")) is not None:
-            bare = max(bare, stated)
         deep = design.parking.stall_depth_ft
         if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
             deep = max(deep, stated)

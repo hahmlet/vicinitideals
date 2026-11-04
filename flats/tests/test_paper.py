@@ -558,16 +558,19 @@ def test_a_city_that_asks_for_a_wider_stall_widens_the_court(tmp_path: Path) -> 
     assert got.min_area_sqft == 8034 > 7872, "wider than the lot at 9 ft, either way round"
 
 
-def test_a_city_that_asks_for_a_narrower_stall_does_not_shrink_the_court(
+def test_a_citys_stated_narrower_stall_draws_a_narrower_court(
     tmp_path: Path,
 ) -> None:
-    # Gresham prints 8.5 ft. That is a legal minimum, not a statement that the
-    # pod's six cars fit in 51 ft -- the design's own cell is the floor, as
-    # its own aisle is for the depth.
+    zone = rules(tmp_path, "", {"parking_stall_width_ft": 8.5}).resolve(
+        GRESHAM, "R5", POD.conditions
+    )
+    across = court_across(POD, zone)
     got = fit(tmp_path, parking_stall_width_ft=8.5)
 
-    assert got.parking_width_ft == 54
-    assert got.min_width_ft == 64
+    # 2026-11-03: the stated 8.5 ft width now sets the court before turn fixes.
+    assert across.turn_shape.stall_w_ft == 8.5
+    assert across.width_ft == 6 * (8.5 + across.fix.stall_ft) + across.dead_end_ft
+    assert got.parking_width_ft == across.width_ft
 
 
 def test_a_citys_driveway_minimum_widens_the_lane_and_can_take_over(
