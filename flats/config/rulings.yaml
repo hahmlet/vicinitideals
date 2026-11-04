@@ -2421,3 +2421,24 @@
     plan must pass everything, nothing is waived. Closes FOLLOWUPS 80
     question on 1S113BA07700.
   source: Steph 2026-11-03 (chat), docs/followups/80-item64-round2-readings.md
+
+- id: 2026-11-04-pdx-epa-rear-parking-half-area
+  kind: ruling
+  date: 2026-11-04
+  scope: {state: or, county: multnomah, place: portland}
+  question: >-
+    PCC 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern
+    Area rear setback can be vehicle area." Half the yard's depth across
+    the whole lot, or half the yard's area?
+  ruling: >-
+    Steph: "if your parking is located within the rear setback, it can only
+    take half of it" -- half of the setback's AREA. Consistent with
+    33.120.235.C.1 ("no more than 50 percent of the Eastern Pattern Area
+    minimum rear setback area").
+  effect: >-
+    Parking (stalls and aisle) may cover at most half the square footage of
+    the Eastern Pattern Area rear setback, in any shape; the strict
+    half-the-depth reading is retired. Every other parking rule still binds
+    inside it (Table 266-5 5 ft perimeter setback, Table 266-3 location).
+    FOLLOWUPS 68.
+  source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md

@@ -43,4 +43,4 @@ not only the line most distant from the front (PCC 33.910), e.g. 1N2E23DA -00700
 ROUND 3 building by Copilot in the worktree (brief docs/copilot/briefs/pdx-map-120-r3.txt), then re-bound + re-read.
 QUESTION for Steph 2026-11-04 (open): "No more than 50 percent of the Eastern Pattern Area rear setback can be vehicle area"
 (33.120.220.txt#L24) -- read today as half the yard's DEPTH across the whole lot (strict; turns some lots red). The text says
-half the setback, which reads as half its AREA (parking could fill the full depth over half the width). Strict kept until Steph rules.
+half the setback, which reads as half its AREA (parking could fill the full depth over half the width). RULED 2026-11-04 (2026-11-04-pdx-epa-rear-parking-half-area): half the AREA -- build after round 3 (round 4).
