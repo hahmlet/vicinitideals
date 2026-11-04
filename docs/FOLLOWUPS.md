@@ -47,7 +47,7 @@ the full one.)
 
 ## 1. Claude -- priority
 
-147. [Claude] [scan: YES -- toward red] **Maximum front setback never checked on its own -- FALSE GREEN RISK** -- found 11-04 (Tigard 2S103AA00300 green 60 ft back, max 20); encoder BUILDING flats/max-front-setback. [file](followups/147-max-front-setback-unchecked.md)
+147. [Claude] [scan: YES -- toward red] **Maximum front setback never checked on its own -- FALSE GREEN RISK** -- found 11-04 (Tigard 2S103AA00300 green 60 ft back, max 20); BUILT 20fbf9ed (flats/max-front-setback, pushed): ~2,500 live greens exposed (166 beyond on every street -> RED, ~1,600 some streets, ~740 turned wall -> YELLOW); open readings (Tigard quadplex 15/10 ft, Beaverton MR, Hillsboro, Portland EX/CI2, which street per city) being READ, then bound + read. [file](followups/147-max-front-setback-unchecked.md)
 
 148. [Claude] [scan: YES -- both ways] **Minimum floor area: red only when more pods clearly cannot fit** -- RULED Steph 11-04; replaces always-yellow min_far and always-red Portland main street (~1,600 red); Copilot BUILDING (flats/min-far-more-pods). [file](followups/148-min-floor-area-more-pods.md)
 
