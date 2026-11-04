@@ -1357,6 +1357,45 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_east_corridor_min_far_half",
+        "site_fact",
+        "The lot is in an East Corridor plan district area that Map 521-3 "
+        "labels 4:1 (.5:1): new development there must reach a floor area "
+        "ratio of at least 0.5 to 1 (PCC 33.521.220.C). The figure is "
+        "printed only on the map.",
+        evidence=(
+            "the Map 521-3 .5:1 areas as Portland Maps publishes it (BPS Zoning Code Layers "
+            "layer 50) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_east_corridor_min_far_one",
+        "site_fact",
+        "The lot is in the East Corridor plan district area that Map 521-3 "
+        "labels 4:1 (1:1): new development there must reach a floor area "
+        "ratio of at least 1 to 1 (PCC 33.521.220.C). The figure is "
+        "printed only on the map.",
+        evidence=(
+            "the Map 521-3 1:1 area as Portland Maps publishes it (BPS Zoning Code Layers "
+            "layer 50) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_gateway_min_far",
+        "site_fact",
+        "The lot is in a Gateway plan district area that Map 526-3 labels "
+        "4:1 (.25:1): new development there must reach a floor area ratio "
+        "of at least 0.25 to 1 (PCC 33.526.220.C). The figure is printed "
+        "only on the map.",
+        evidence=(
+            "the Map 526-3 .25:1 areas as Portland Maps publishes it (BPS Zoning Code Layers "
+            "layer 50) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_glendoveer_lr75",
         "site_fact",
         "The lot is R7 land in Portland's Glendoveer plan district, which "
@@ -1391,7 +1430,7 @@ _C: tuple[ConditionDef, ...] = (
         "street or light rail line (East Corridor, Hollywood, Lombard, North "
         "Interstate), a required building line (North Interstate), a minimum "
         "floor area ratio printed only on a map or above what the pod "
-        "supplies (East Corridor, Hollywood, Kenton, West Portland), residential use prohibited on a map (West Portland "
+        "supplies (Hollywood, Kenton, West Portland), residential use prohibited on a map (West Portland "
         "Employment Focus Area), a rear setback of a quarter of the site's "
         "depth (West Portland), setbacks set by wall-plane area and a light "
         "rail setback (Macadam), the Linnton Hillside lot-of-record rule "
@@ -1707,6 +1746,9 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "pdx_east_corridor_min_far_half",
+    "pdx_east_corridor_min_far_one",
+    "pdx_gateway_min_far",
     "pdx_glendoveer_lr75",
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_unmeasured",

@@ -1912,6 +1912,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-EAST-CORRIDOR-MIN-FAR-HALF:
+    description: "Whether the lot lies in an East Corridor plan district area that Map 521-3 labels 4:1 (.5:1), where new development must reach a floor area ratio of at least 0.5 to 1 (PCC 33.521.220.C)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 521-3: a lot the area boundary cuts is unanswered"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-EAST-CORRIDOR-MIN-FAR-ONE:
+    description: "Whether the lot lies in the East Corridor plan district area that Map 521-3 labels 4:1 (1:1), where new development must reach a floor area ratio of at least 1 to 1 (PCC 33.521.220.C)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 521-3: a lot the area boundary cuts is unanswered"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-GATEWAY-MIN-FAR:
+    description: "Whether the lot lies in a Gateway plan district area that Map 526-3 labels 4:1 (.25:1), where new development must reach a floor area ratio of at least 0.25 to 1 (PCC 33.526.220.C)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 526-3: a lot the area boundary cuts is unanswered"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-GLENDOVEER-LR75:
     description: "Whether the lot is R7 land in Portland's Glendoveer plan district that Multnomah County zoned LR7.5, where the setbacks are 30 ft front, 10 ft side and 15 ft rear (PCC 33.530.040)"
     kind: categorical
@@ -1943,7 +1988,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-PLAN-DISTRICT-UNMEASURED:
-    description: "Whether the lot lies where a Portland plan district rule reaches the pod that nothing measures: parking and driveway limits against named streets and light rail (East Corridor, Hollywood, Lombard, North Interstate), required building lines, minimum floor area ratios printed only on a map (East Corridor) or above the pod's, the West Portland Employment Focus Area and quarter-depth rear setback, Macadam's wall-plane setbacks, the Linnton Hillside lot-of-record rule, or Glendoveer's flag-lot standards on an R7 lot whose shape could be a flag lot; and, batch B, parking and access against Gateway streets and light rail and Northwest main streets, minimum floor area ratios in Gateway (map only), Northwest and Central City, Northwest's 20 percent residential limit, map-only heights below the pod's (Northwest, Columbia South Shore, Central City, Marquam Hill), Sandy Boulevard facade orientation, the Powell Boulevard sound wall, South Auditorium's landscaped street edge, and Hayden Island's commercial height step and floor area rules"
+    description: "Whether the lot lies where a Portland plan district rule reaches the pod that nothing measures: parking and driveway limits against named streets and light rail (East Corridor, Hollywood, Lombard, North Interstate), required building lines, minimum floor area ratios above the pod's, the West Portland Employment Focus Area and quarter-depth rear setback, Macadam's wall-plane setbacks, the Linnton Hillside lot-of-record rule, or Glendoveer's flag-lot standards on an R7 lot whose shape could be a flag lot; and, batch B, parking and access against Gateway streets and light rail and Northwest main streets, minimum floor area ratios in Northwest and Central City, Northwest's 20 percent residential limit, map-only heights below the pod's (Northwest, Columbia South Shore, Central City, Marquam Hill), Sandy Boulevard facade orientation, the Powell Boulevard sound wall, South Auditorium's landscaped street edge, and Hayden Island's commercial height step and floor area rules"
     kind: categorical
     risk: possible
     severity: 5

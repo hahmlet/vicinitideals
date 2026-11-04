@@ -52,6 +52,9 @@ PORTLAND = "or/multnomah/portland"
 GLENDOVEER = "pdx_glendoveer_lr75"
 HOLD = "pdx_plan_district_unmeasured"
 FACTS = (GLENDOVEER, HOLD)
+#: The Gateway and East Corridor minimum-FAR map areas (pd2c, 2026-11-04),
+#: read off Maps 526-3 and 521-3; see test_portland_plan_districts_4.
+MIN_FAR = ("pdx_gateway_min_far", "pdx_east_corridor_min_far_half", "pdx_east_corridor_min_far_one")
 FILES = {
     GLENDOVEER: "or/multnomah/portland/glendoveer-lr75.geojson",
     HOLD: "or/multnomah/portland/plan-district-unmeasured-lots.geojson",
@@ -94,7 +97,7 @@ def test_the_facts_are_drawn_site_facts_never_assumed(name: str) -> None:
 def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
     by_fact = {a.condition: a for a in portland.drawn_areas.values()}
     # Batch B (2026-11-04) adds Northwest Map 562-2, test_portland_plan_districts_3.
-    assert set(by_fact) == set(FACTS) | set(PART_1) | {"pdx_nw_residential_limited"}
+    assert set(by_fact) == set(FACTS) | set(PART_1) | set(MIN_FAR) | {"pdx_nw_residential_limited"}
     for fact in FACTS:
         assert by_fact[fact].file == FILES[fact]
     assert set(by_fact[GLENDOVEER].zones) == {"R7"}
@@ -111,10 +114,13 @@ def test_the_numbers_and_the_hold_sit_where_the_code_puts_them(portland) -> None
             assert quad.qualified_by == HOLD, name
         else:
             assert quad is None or quad.qualified_by != HOLD, name
-        # Map 521-3's figures are not in stored text, so no zone carries
-        # them as a number; the hold carries the areas.
+        # Map 521-3's and 526-3's figures are not in stored text, so no zone
+        # carries them as a quoted number: the base is exempt and every figure
+        # is a drawn variant (pd2c, 2026-11-04).
         floor = zone.values.get("min_far")
-        assert floor is None or "33.521" not in (floor.prov.quote or ""), name
+        assert floor is None or (
+            floor.exempt and all(v.prov.drawn and not v.prov.quote for v in floor.variants)
+        ), name
         held = [c for v in zone.values.values() for var in v.variants for c in var.when]
         if name != "R7":
             assert GLENDOVEER not in held, name
@@ -190,12 +196,14 @@ def test_the_tracing_is_in_quadfits_coordinates(fact: str) -> None:
     assert {"map", "says", "inputs", "method"} <= set(data["source"])
 
 
-def test_the_hold_says_it_carries_east_corridors_minimum_far_areas() -> None:
+def test_the_hold_says_east_corridors_minimum_far_areas_left_it() -> None:
+    # Held whole in batch A; read off Map 521-3 and cut out in pd2c.
     from flats.rules import loader
 
     data = json.loads((loader.AREAS_ROOT / FILES[HOLD]).read_text(encoding="utf-8"))
     assert "Map 521-3" in data["source"]["inputs"]["far"]
-    assert "EC Map 521-3 minimum-FAR polygons" in data["source"]["method"]
+    assert "until pd2c" in data["source"]["inputs"]["far"]
+    assert "EC Map 521-3 .5:1 and 1:1 minimum-FAR polygons" in data["source"]["method"]
     assert "GL R7 lots of geometry tier C" in data["source"]["method"]
 
 
@@ -272,7 +280,7 @@ def _answered(lot, **facts):
 
 def _clear(corpus, zone: str = "R5", **kw):
     """A lot every other fact answers, so it is GREEN on its own."""
-    off = {f: False for f in FACTS + PART_1}
+    off = {f: False for f in FACTS + PART_1 + MIN_FAR}
     return _answered(_lot(corpus, zone, **kw), constrained_sites_overlay=False, **off)
 
 
