@@ -1,30 +1,28 @@
-"""Durham 3.7.1.7: no driveway apron within 100 ft of a street intersection
-(FOLLOWUPS 118, owner 2026-10-24).
-
-Nothing measures how far a frontage sits from an intersection's curb return,
-so the sentence is held as a qualifier on the apron standard, on a fact
-nothing answers. What must hold: a Durham lot the rest of the screen would
-certify -- a corner lot above all -- comes back out of GREEN under a flag
-whose words say why in plain English; the flag is the only thing holding it
-(answered False, the same lot is GREEN); and no other city carries the fact.
-"""
+"""Durham 3.7.1.7: measure frontage placement against street intersections."""
 
 from __future__ import annotations
 
-import dataclasses
 import json
 
 import pytest
 import shapely
-from shapely.geometry import box
+import pyarrow as pa
+import pyarrow.parquet as pq
+from shapely.geometry import LineString, box
 
+from flats.geom.durham_apron import (
+    DURHAM_APRON_MIN_CLEARANCE_FT,
+    StreetNetwork,
+    maximum_clearance_ft,
+)
 from flats.designs.model import load_catalog
 from flats.encode.load import load_trusted
-from flats.ingest.quadfit import lot_from_row, screen_lot
+from flats.ingest.quadfit import _durham_apron_clearance_column, lot_from_row, screen_lot
 from flats.rules.conditions import CONDITIONS
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 from flats.score import flags as flag_plan
+from flats.score.screen import DRIVEWAY_NEAR_INTERSECTION_100FT
 from flats.score import relief, slack
 from flats.score.flags import fact_code
 from flats.tests.test_utility_easement import X0, Y0
@@ -38,11 +36,12 @@ FLAG = fact_code(FACT)
 POD = ("multi_story", "attached_wall")
 
 
-def test_the_fact_is_registered_and_never_answered() -> None:
+def test_the_fact_is_registered_with_the_100_foot_threshold() -> None:
     defn = CONDITIONS[FACT]
     assert defn.kind == "site_fact"
     assert defn.assume is None
     assert "3.7.1.7" in defn.describe and "100 feet" in defn.describe
+    assert "RLIS street-centerline intersections" in defn.evidence
 
 
 def test_the_apron_is_qualified_with_the_codes_own_words() -> None:
@@ -119,6 +118,39 @@ def _durham_corner(w: float = 120.0, d: float = 200.0) -> dict[str, object]:
     )
 
 
+def _durham_midblock(w: float = 300.0, d: float = 200.0) -> dict[str, object]:
+    edges = [
+        [X0, Y0, X0 + w, Y0, "F"],
+        [X0 + w, Y0, X0 + w, Y0 + d, "S"],
+        [X0 + w, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+    return _beaverton_row(
+        w,
+        d,
+        TLID="2S113BC00101",
+        jurisdiction="durham",
+        zone="SDR",
+        edges_json=json.dumps(edges),
+        front_bearings_json="[0.0]",
+        frontage_ft=w,
+        area_sqft=w * d,
+        lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + w, Y0 + d)),
+    )
+
+
+def _measured(row: dict[str, object], roads: list[LineString]) -> dict[str, object]:
+    return {
+        **row,
+        "durham_apron_clearance_ft": maximum_clearance_ft(
+            str(row["edges_json"]),
+            json.loads(str(row["front_bearings_json"])),
+            StreetNetwork.build(roads, ["front", *(f"cross-{i}" for i in range(len(roads) - 1))]),
+            30.0,
+        ),
+    }
+
+
 def _screen(corpus, policies, lot):
     (s,) = screen_lot(
         lot,
@@ -131,7 +163,63 @@ def _screen(corpus, policies, lot):
     return s
 
 
-def test_a_durham_corner_lot_cannot_be_green_and_says_why(corpus, policies) -> None:
+def test_a_midblock_apron_clear_of_intersections_can_be_green(corpus, policies) -> None:
+    row = _durham_midblock()
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 800, Y0 - 20))),
+        LineString(((X0 - 200, Y0 - 100), (X0 - 200, Y0 + 100))),
+        LineString(((X0 + 500, Y0 - 100), (X0 + 500, Y0 + 100))),
+    ]
+    row = _measured(row, roads)
+    assert row["durham_apron_clearance_ft"] >= DURHAM_APRON_MIN_CLEARANCE_FT
+    lot = lot_from_row(row, corpus.layers)
+    assert lot.observed[FACT] is False
+    cleared = _screen(corpus, policies, lot)
+    assert FLAG not in {f.code for f in cleared.signed.flags}
+    assert cleared.signed.colour is flag_plan.Colour.green
+
+
+def test_bridge_measures_from_the_s1_street_file(tmp_path) -> None:
+    row = _durham_midblock(w=60.0)
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+        LineString(((X0 - 20, Y0 - 100), (X0 - 20, Y0 + 100))),
+    ]
+    path = tmp_path / "s1_streets.parquet"
+    pq.write_table(
+        pa.table(
+            {
+                "name": ["front", "cross"],
+                "wkb": [shapely.to_wkb(road) for road in roads],
+            }
+        ),
+        path,
+    )
+    (clearance,) = _durham_apron_clearance_column([row], path)
+    assert clearance == pytest.approx(50.0)
+
+
+def test_a_103_foot_corner_frontage_fails_the_apron_rule(corpus, policies) -> None:
+    row = _durham_corner(w=80.0, d=23.0)
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+        LineString(((X0 - 20, Y0 - 100), (X0 - 20, Y0 + 100))),
+    ]
+    row = _measured(row, roads)
+    assert row["frontage_ft"] == 103.0
+    assert row["durham_apron_clearance_ft"] < DURHAM_APRON_MIN_CLEARANCE_FT
+    lot = lot_from_row(row, corpus.layers)
+    assert lot.observed[FACT] is True
+    failed = _screen(corpus, policies, lot)
+    assert failed.signed.colour is flag_plan.Colour.red
+    assert DRIVEWAY_NEAR_INTERSECTION_100FT in failed.signed.reasons
+    apron_check = next(
+        c for c in failed.signed.checks if c.check == DRIVEWAY_NEAR_INTERSECTION_100FT
+    )
+    assert apron_check.verdict.value == "fail"
+
+
+def test_unmeasurable_intersection_geometry_keeps_the_flag(corpus, policies) -> None:
     lot = lot_from_row(_durham_corner(), corpus.layers)
     assert FACT not in lot.observed
     held = _screen(corpus, policies, lot)
@@ -139,9 +227,3 @@ def test_a_durham_corner_lot_cannot_be_green_and_says_why(corpus, policies) -> N
     assert FLAG in flags
     assert held.signed.colour is not flag_plan.Colour.green
     assert held.signed.colour is flag_plan.Colour.yellow
-    # The flag is the only thing holding it: answered False, the lot is GREEN.
-    cleared = _screen(
-        corpus, policies, dataclasses.replace(lot, observed={**lot.observed, FACT: False})
-    )
-    assert FLAG not in {f.code for f in cleared.signed.flags}
-    assert cleared.signed.colour is flag_plan.Colour.green

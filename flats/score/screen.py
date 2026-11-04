@@ -65,6 +65,7 @@ from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import load_rules as slope_rules
 from flats.geom.edges import Tier as GeometryTier
+from flats.geom.durham_apron import DURHAM_APRON_MIN_CLEARANCE_FT
 from flats.rules.conditions import CONDITIONS, Tier
 from flats.rules.fields import REQUIRED_FIELDS, SQFT_PER_ACRE
 from flats.rules.net_area import net_span
@@ -132,6 +133,7 @@ FACT_ASSUMED = "FACT_ASSUMED"
 #: standard turns on it, no layer answered, and guessing either way is
 #: wrong in a different direction.
 FACT_UNOBSERVED = "FACT_UNOBSERVED"
+DRIVEWAY_NEAR_INTERSECTION_100FT = "DRIVEWAY_NEAR_INTERSECTION_100FT"
 
 #: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
@@ -611,6 +613,10 @@ class LotFacts:
     #: (``building_frontage_corner``, GDC 3.0100). Empty where no map serves
     #: the lot, which leaves every street unranked.
     street_line_ranks: tuple[int | None, ...] = ()
+    #: Best measured clearance, in feet, from a Durham apron placement of
+    #: the minimum access width to any street intersection. None if the street
+    #: geometry cannot answer :data:`DRIVEWAY_NEAR_INTERSECTION_100FT`.
+    durham_apron_clearance_ft: float | None = None
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
     #: the building seen from the street within the maximum front setback.
@@ -909,6 +915,22 @@ def _checks(
             unchecked.append(name)
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
+
+    if where == "or/washington/durham" and lot.durham_apron_clearance_ft is not None:
+        clearance = lot.durham_apron_clearance_ft
+        threshold = DURHAM_APRON_MIN_CLEARANCE_FT
+        slack = clearance - threshold
+        out.append(
+            CheckResult(
+                DRIVEWAY_NEAR_INTERSECTION_100FT,
+                clearance,
+                threshold,
+                False,
+                slack,
+                0.0,
+                Verdict.passes if slack >= 0 else Verdict.fails,
+            )
+        )
 
     def rate(
         name: str, amount: float, per_sqft: float, field: str, *, is_maximum: bool
@@ -2468,7 +2490,17 @@ def screen(
 
     # Every definite failure gets a second question: what would it take to
     # clear this anyway? A miss with a path is an application, not a wall.
-    failing = [c for c in checks if c.verdict is Verdict.fails]
+    apron_failed = any(
+        c.check == DRIVEWAY_NEAR_INTERSECTION_100FT and c.verdict is Verdict.fails
+        for c in checks
+    )
+    if apron_failed:
+        reasons.append(DRIVEWAY_NEAR_INTERSECTION_100FT)
+    failing = [
+        c
+        for c in checks
+        if c.verdict is Verdict.fails and c.check != DRIVEWAY_NEAR_INTERSECTION_100FT
+    ]
     outcomes = [
         paths.for_check(
             c.check, shortfall=c.shortfall, threshold=c.threshold, jurisdiction=where
@@ -2582,7 +2614,7 @@ def screen(
         # cost it a GREEN; where the exception exists, the same assumption is
         # load-bearing and the lot cannot be certified on it.
         leaning = config.leans_on(rules.levers)
-        if any(name in config.unknown for name in leaning) or held_open(rules, config):
+        if any(name in config.unknown for name in leaning) or held_open(rules, config, lot):
             reasons.append(FACT_UNOBSERVED)
         if any(name in config.assumed for name in leaning):
             reasons.append(FACT_ASSUMED)
@@ -2629,6 +2661,9 @@ def screen(
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
+
+    if apron_failed:
+        return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -3035,7 +3070,9 @@ _VERDICT_FLAG: dict[RuleVerdict, str] = {
 }
 
 
-def held_open(rules: ZoneResolution, config: Configuration | None) -> tuple[str, ...]:
+def held_open(
+    rules: ZoneResolution, config: Configuration | None, lot: LotFacts | None = None
+) -> tuple[str, ...]:
     """Facts measured TRUE on this lot that move a standard here in a way
     no number states (:attr:`flats.rules.resolver.Resolved.unencoded`).
 
@@ -3051,7 +3088,19 @@ def held_open(rules: ZoneResolution, config: Configuration | None) -> tuple[str,
     if config is None:
         return ()
     held = set(config.conditions) - set(config.assumed)
-    return tuple(sorted(n for n in rules.unencoded if n in held))
+    return tuple(
+        sorted(
+            n
+            for n in rules.unencoded
+            if n in held
+            and not (
+                n == "driveway_near_intersection_100ft"
+                and rules.jurisdiction == "or/washington/durham"
+                and lot is not None
+                and lot.durham_apron_clearance_ft is not None
+            )
+        )
+    )
 
 #: The flag type for each quantity the screen itself left unmeasured. A
 #: name not here is a site fact a rate is stated per, and takes that fact's
@@ -3069,8 +3118,10 @@ _MEASURED_FLAG: dict[str, str] = {
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
-#: the bind it qualifies, and USE_PROHIBITED is the use gate's bind.
-UNFLAGGED_REASONS: frozenset[str] = frozenset({RELIEF_UNCONFIRMED, USE_PROHIBITED})
+#: the bind it qualifies; USE_PROHIBITED and the Durham apron rule have binds.
+UNFLAGGED_REASONS: frozenset[str] = frozenset(
+    {RELIEF_UNCONFIRMED, USE_PROHIBITED, DRIVEWAY_NEAR_INTERSECTION_100FT}
+)
 
 
 def _flagged(
@@ -3149,7 +3200,7 @@ def _account(
                 flag(fact_code(name), FACT_UNOBSERVED, fact=name, source="unobserved")
             elif name in config.assumed:
                 flag(fact_code(name), FACT_ASSUMED, fact=name, source="assumed")
-        for name in held_open(rules, config):
+        for name in held_open(rules, config, lot):
             flag(fact_code(name), FACT_UNOBSERVED, fact=name, source="held")
     for name in sorted(unmeasured):
         flag(_MEASURED_FLAG.get(name) or fact_code(name), FACT_UNOBSERVED, fact=name, source="unmeasured")

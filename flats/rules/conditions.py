@@ -316,15 +316,12 @@ _C: tuple[ConditionDef, ...] = (
         "a vehicle access way within public right of way, \"e.g., the "
         "driveway apron\", \"no portion of same shall be less than 100 feet "
         "from any street intersection as measured from the curb return\". "
-        "On a corner lot, or a lot next to one, the sentence can leave a "
-        "street no legal apron at all. Nothing measures the distance from "
-        "a frontage to an intersection's curb return, so the fact is never "
-        "answered and every Durham lot the rest of the screen would certify "
-        "is held open, named (FOLLOWUPS 118; owner 2026-10-24: hold them out "
-        "of GREEN until the measurement exists). False would lift it; True "
-        "keeps it open, because no number here says what the apron then "
-        "needs.",
-        evidence="not held: the distance along each street lot line to the nearest street intersection's curb return",
+        "measured by whether the frontage has room for the minimum access "
+        "width at that clearance. True means no placement clears the rule "
+        "and fails it; False means a placement exists. False is measured "
+        "only from Durham street-network geometry; missing geometry remains "
+        "unanswered (FOLLOWUPS 118).",
+        evidence="RLIS street-centerline intersections projected along each Durham street lot line, and the maximum clearance available to a minimum-width apron",
         assume=None,
     ),
     ConditionDef(
