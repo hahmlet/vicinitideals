@@ -3,9 +3,9 @@
 The bridge has parcel street edges and RLIS street centerlines, but no
 apron-location drawing. The Durham rule lets access use any frontage, so each
 frontage is checked for a continuous apron-width interval against every mapped
-street intersection. Centerline intersections are projected along each straight
-street-lot-line segment. Passing subtracts the cross street's half-width and a
-conservative curb-return allowance; failure uses the unadjusted centerline
+street intersection. Centerline intersections are projected by station onto
+the whole frontage chain. Passing subtracts the cross street's half-width and
+a conservative curb-return allowance; failure uses the unadjusted centerline
 distance. The interval between those bounds remains unmeasured.
 """
 
@@ -135,102 +135,148 @@ def maximum_clearance_ft(
     )
     for chain in chains:
         length = sum(edge.length_ft for edge in chain)
-        events: list[tuple[float, float]] = []
-        chain_offset = 0.0
+        chain_line = LineString(
+            [(chain[0].x1, chain[0].y1), *((edge.x2, edge.y2) for edge in chain)]
+        )
+        chain_bearing = max(chain, key=lambda edge: edge.length_ft).bearing_deg
+        reach = (
+            FRONT_REACH_FT
+            + DURHAM_APRON_MIN_CLEARANCE_FT
+            + largest_half_width
+            + CURB_RETURN_ALLOWANCE_FT
+            + apron_width_ft
+        )
+        eligible_edges = [
+            edge
+            for edge in chain
+            if edge.length_ft >= apron_width_ft
+            or bearing_delta(edge.bearing_deg, chain_bearing) <= _PARALLEL_TOL_DEG
+        ]
+        first = eligible_edges[0] if eligible_edges else max(
+            chain, key=lambda edge: edge.length_ft
+        )
+        last = eligible_edges[-1] if eligible_edges else first
+        first_ux = (first.x2 - first.x1) / first.length_ft
+        first_uy = (first.y2 - first.y1) / first.length_ft
+        last_ux = (last.x2 - last.x1) / last.length_ft
+        last_uy = (last.y2 - last.y1) / last.length_ft
+        extended_chain = LineString(
+            [
+                (chain[0].x1 - first_ux * reach, chain[0].y1 - first_uy * reach),
+                *list(chain_line.coords),
+                (chain[-1].x2 + last_ux * reach, chain[-1].y2 + last_uy * reach),
+            ]
+        )
+        nearest_names: set[str] = set()
         chain_measured = True
-        for edge in chain:
+        for edge in eligible_edges:
             line = LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
             middle = line.interpolate(line.length / 2.0)
-            reach = (
-                FRONT_REACH_FT
-                + DURHAM_APRON_MIN_CLEARANCE_FT
-                + largest_half_width
-                + CURB_RETURN_ALLOWANCE_FT
-                + apron_width_ft
-            )
-            ux = (edge.x2 - edge.x1) / edge.length_ft
-            uy = (edge.y2 - edge.y1) / edge.length_ft
-            extended = LineString(
-                (
-                    (edge.x1 - ux * reach, edge.y1 - uy * reach),
-                    (edge.x2 + ux * reach, edge.y2 + uy * reach),
-                )
-            )
             own_bearing = edge.bearing_deg
-            near = streets.tree.query(middle, predicate="dwithin", distance=FRONT_REACH_FT)
+            near = streets.tree.query(
+                middle, predicate="dwithin", distance=FRONT_REACH_FT
+            )
             ranked: list[tuple[float, int]] = []
             for idx in near:
-                road = streets.geoms[int(idx)]
+                idx = int(idx)
+                road = streets.geoms[idx]
                 road_bearing = _bearing(road, middle)
                 if road_bearing is None or bearing_delta(own_bearing, road_bearing) > _PARALLEL_TOL_DEG:
                     continue
-                ranked.append((float(road.distance(middle)), int(idx)))
+                distance = float(road.distance(middle))
+                ranked.append((distance, idx))
             if not ranked:
                 chain_measured = False
                 break
 
             nearest = min(d for d, _ in ranked)
-            primaries = [i for d, i in ranked if d <= nearest + 1e-6]
-            search = line.buffer(reach)
-            candidates = streets.tree.query(search, predicate="intersects")
-            for primary_idx in primaries:
-                primary = streets.geoms[primary_idx]
-                for other_idx_raw in candidates:
-                    other_idx = int(other_idx_raw)
-                    if other_idx == primary_idx:
-                        continue
-                    other = streets.geoms[other_idx]
-                    if (
-                        streets.names[primary_idx]
-                        and streets.names[primary_idx] == streets.names[other_idx]
-                    ):
-                        continue
-                    hit = shapely.intersection(primary, other)
-                    if hit.is_empty:
-                        continue
-                    parts = shapely.get_parts(hit)
-                    for point in parts:
-                        if point.geom_type != "Point" or point.is_empty:
-                            continue
-                        other_bearing = _bearing(other, point)
-                        primary_bearing = _bearing(primary, point)
-                        if (
-                            other_bearing is None
-                            or primary_bearing is None
-                            or bearing_delta(other_bearing, primary_bearing) <= _COLLINEAR_TOL_DEG
-                        ):
-                            continue
-                        station = (
-                            chain_offset
-                            + float(shapely.line_locate_point(extended, point))
-                            - reach
-                        )
-                        if (
-                            -DURHAM_APRON_MIN_CLEARANCE_FT
-                            - largest_half_width
-                            - CURB_RETURN_ALLOWANCE_FT
-                            - apron_width_ft
-                            <= station
-                            <= length
-                            + DURHAM_APRON_MIN_CLEARANCE_FT
-                            + largest_half_width
-                            + CURB_RETURN_ALLOWANCE_FT
-                            + apron_width_ft
-                        ):
-                            street_name = _street_key(streets.names[other_idx])
-                            half_width = street_half_widths_ft.get(
-                                street_name, DEFAULT_CROSS_STREET_HALF_ROW_FT
-                            )
-                            if not math.isfinite(half_width) or half_width < 0:
-                                half_width = DEFAULT_CROSS_STREET_HALF_ROW_FT
-                            events.append(
-                                (station, half_width + CURB_RETURN_ALLOWANCE_FT)
-                            )
-            chain_offset += edge.length_ft
+            nearest_names.update(
+                streets.names[idx]
+                for distance, idx in ranked
+                if distance <= nearest + 1e-6 and streets.names[idx]
+            )
 
         if not chain_measured:
             unknown = True
             continue
+        parallel: set[int] = set()
+        nearby = streets.tree.query(
+            chain_line.buffer(FRONT_REACH_FT), predicate="intersects"
+        )
+        for idx_raw in nearby:
+            idx = int(idx_raw)
+            road = streets.geoms[idx]
+            for edge in eligible_edges:
+                line = LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
+                if road.distance(line) > FRONT_REACH_FT:
+                    continue
+                connector = shapely.shortest_line(line, road)
+                coords = shapely.get_coordinates(connector)
+                road_point = Point(float(coords[-1][0]), float(coords[-1][1]))
+                road_bearing = _bearing(road, road_point)
+                if (
+                    road_bearing is not None
+                    and bearing_delta(edge.bearing_deg, road_bearing)
+                    <= _PARALLEL_TOL_DEG
+                ):
+                    parallel.add(idx)
+                    break
+        frontage_segments = [
+            idx
+            for idx in parallel
+            if not nearest_names
+            or not streets.names[idx]
+            or streets.names[idx] in nearest_names
+        ]
+        candidates = streets.tree.query(
+            chain_line.buffer(reach), predicate="intersects"
+        )
+        junctions: dict[tuple[float, float], tuple[float, float]] = {}
+        for primary_idx in frontage_segments:
+            primary = streets.geoms[primary_idx]
+            for other_idx_raw in candidates:
+                other_idx = int(other_idx_raw)
+                if other_idx == primary_idx:
+                    continue
+                other = streets.geoms[other_idx]
+                if (
+                    streets.names[primary_idx]
+                    and streets.names[primary_idx] == streets.names[other_idx]
+                ):
+                    continue
+                hit = shapely.intersection(primary, other)
+                if hit.is_empty:
+                    continue
+                for point in shapely.get_parts(hit):
+                    if point.geom_type != "Point" or point.is_empty:
+                        continue
+                    other_bearing = _bearing(other, point)
+                    primary_bearing = _bearing(primary, point)
+                    if (
+                        other_bearing is None
+                        or primary_bearing is None
+                        or bearing_delta(other_bearing, primary_bearing) <= _COLLINEAR_TOL_DEG
+                    ):
+                        continue
+                    if point.distance(chain_line) > reach:
+                        continue
+                    station = float(
+                        shapely.line_locate_point(extended_chain, point) - reach
+                    )
+                    street_name = _street_key(streets.names[other_idx])
+                    half_width = street_half_widths_ft.get(
+                        street_name, DEFAULT_CROSS_STREET_HALF_ROW_FT
+                    )
+                    if not math.isfinite(half_width) or half_width < 0:
+                        half_width = DEFAULT_CROSS_STREET_HALF_ROW_FT
+                    key = (round(float(point.x), 6), round(float(point.y), 6))
+                    old = junctions.get(key)
+                    allowance = half_width + CURB_RETURN_ALLOWANCE_FT
+                    junctions[key] = (
+                        station,
+                        max(allowance, old[1]) if old else allowance,
+                    )
+        events = list(junctions.values())
         centerline_clearance = _best_clearance(
             length, [station for station, _ in events], apron_width_ft
         )

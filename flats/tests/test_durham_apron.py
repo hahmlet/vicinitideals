@@ -259,6 +259,48 @@ def test_centerline_only_clearance_between_bounds_keeps_the_flag(
     assert held.signed.colour is flag_plan.Colour.yellow
 
 
+def test_a_short_jog_does_not_make_a_phantom_nearby_junction() -> None:
+    edges = [
+        [X0, Y0, X0, Y0 + 3, "F"],
+        [X0, Y0 + 3, X0 + 197, Y0 + 3, "F"],
+        [X0 + 197, Y0 + 3, X0 + 197, Y0 + 100, "R"],
+        [X0 + 197, Y0 + 100, X0, Y0 + 100, "R"],
+        [X0, Y0 + 100, X0, Y0, "R"],
+    ]
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 - 500, Y0), (X0 + 500, Y0))),
+            LineString(((X0 + 186, Y0 - 100), (X0 + 186, Y0 + 100))),
+        ],
+        ["front", "cross"],
+    )
+
+    clearance = maximum_clearance_ft(edges, [0.0], streets, 30.0)
+
+    assert clearance is None
+
+
+def test_a_split_frontage_street_includes_junctions_on_later_segments() -> None:
+    edges = [
+        [X0, Y0, X0 + 200, Y0, "F"],
+        [X0 + 200, Y0, X0 + 200, Y0 + 100, "R"],
+        [X0 + 200, Y0 + 100, X0, Y0 + 100, "R"],
+        [X0, Y0 + 100, X0, Y0, "R"],
+    ]
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 + 80, Y0 - 20), (X0 + 120, Y0 - 20))),
+            LineString(((X0 + 140, Y0 - 20), (X0 + 240, Y0 - 20))),
+            LineString(((X0 + 180, Y0 - 100), (X0 + 180, Y0 + 100))),
+        ],
+        ["front", "front", "cross"],
+    )
+
+    clearance = maximum_clearance_ft(edges, [0.0], streets, 30.0)
+
+    assert clearance is None
+
+
 def test_unmeasurable_intersection_geometry_keeps_the_flag(corpus, policies) -> None:
     lot = lot_from_row(_durham_corner(), corpus.layers)
     assert FACT not in lot.observed
