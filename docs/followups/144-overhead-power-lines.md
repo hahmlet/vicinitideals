@@ -33,3 +33,5 @@ https://services1.arcgis.com/ePo6UhbBpZFy1wO2/arcgis/rest/services/Transmission_
 83 UG), 42 transmission lines; poles span lon -122.77..-122.40, lat 45.49..45.70 = Pacific Power's Portland
 territory (N/NE/East Portland). With PGE layer 17/19 that covers the metro. Individual poles make an aerial
 accuracy check easy (pole vs imagery).
+
+PGE POLES 2026-11-03 (Steph sent the PGE "Pole Search Map", item 3a16ae0abcba4f62a03eca1ae7672def, owner PGE_PublicData): the same Public_Data FeatureServer also has every pole as a point -- layer 13 Distribution Pole (364,540; FACILITYID, HEIGHT ft, MATERIAL, CLASS, INSTALLATIONDATE, lat/lon), 14 Transmission Structure (26,009), 1 Streetlight (176,739), plus wireless/foreign-owned poles (2-5), EV chargers, substations, feeder extents. Claude's earlier "line runs about here" framing was wrong: both utilities publish each pole's position; the line layers join the poles (48 m median vertex spacing = pole spans). Accuracy still unstated -> the aerial spot-check stays, but on poles, not lines.
