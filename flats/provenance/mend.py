@@ -1,4 +1,4 @@
-"""Restore the letters an extraction stored as a ligature glyph, and prove nothing else moved.
+"""Mend known extraction errors, and prove nothing else changed.
 
 Gresham's Development Code sets "fi", "fl", "ff", "ffi" and "ffl" as one
 glyph each, and pypdf hands them back as the Unicode presentation forms
@@ -9,6 +9,8 @@ and a subject phrase could never match the sentence (FOLLOWUPS 116). The
 letters were never lost, only stored in a form no reader of letters reads.
 
 :func:`restore` writes each glyph out as its letters, nothing else.
+:func:`restore_joins` applies a path-scoped list of source-verified word joins;
+every other stored document is unchanged.
 :func:`mend` does that to a stored document and proves it three ways before
 anything is written, each independent of the others:
 
@@ -63,6 +65,34 @@ LIGATURES: dict[str, str] = {
     ch: unicodedata.normalize("NFKC", ch) for ch in map(chr, range(0xFB00, 0xFB07))
 }
 
+JOIN_MENDS: dict[str, tuple[tuple[str, str], ...]] = {
+    "or/washington/king-city/kcc.16.88-16.100.residential-zones.txt": (
+        ("AP ARTMENTS AND TOWNHOUSES ZONE", "APARTMENTS AND TOWNHOUSES ZONE"),
+    ),
+    "or/clackamas/canby/cmc.16.08.110.txt": (
+        ("bythe Planning Commission", "by the Planning Commission"),
+    ),
+    "or/clackamas/canby/cmc.16.10.050.txt": (
+        ("development often or more units", "development of ten or more units"),
+    ),
+    "or/clackamas/canby/cmc.16.18.030.txt": (
+        ("single story ortwenty feet", "single story or twenty feet"),
+    ),
+    "or/clackamas/canby/cmc.16.21.010.txt": (
+        ("through thecreation of", "through the creation of"),
+    ),
+    "or/clackamas/canby/cmc.16.41.030.txt": (
+        ("C-1 zoneare permitted", "C-1 zone are permitted"),
+    ),
+    "or/clackamas/canby/cmc.16.74.020.txt": (
+        ("detached, attachedor in multiple", "detached, attached or in multiple"),
+        ("swimming pools, andplaygrounds", "swimming pools, and playgrounds"),
+    ),
+    "or/clackamas/canby/cmc.16.76.010.txt": (
+        ("such abonus.", "such a bonus."),
+    ),
+}
+
 
 def restore(text: str) -> str:
     """``text`` with every ligature glyph written out as its letters."""
@@ -71,18 +101,28 @@ def restore(text: str) -> str:
     return "".join(LIGATURES.get(ch, ch) for ch in text)
 
 
+def restore_joins(path: str, text: str) -> str:
+    """Restore certain source-specific word joins, leaving every other source alone."""
+    for old, new in JOIN_MENDS.get(path, ()):
+        text = text.replace(old, new)
+    return text
+
+
 def glyphs(text: str) -> int:
     """How many ligature glyphs ``text`` holds."""
     return sum(text.count(ch) for ch in LIGATURES)
 
 
-def restored_only(old: str, new: str) -> list[str]:
+def restored_only(old: str, new: str, *, path: str = "") -> list[str]:
     """Every way ``new`` differs from ``old`` other than restored letters. Empty is proof.
 
     Written without :func:`restore`: it walks both texts a character at a
     time and accepts only the same character, or a ligature glyph in ``old``
-    standing exactly where its letters stand in ``new``.
+    standing exactly where its letters stand in ``new``. A named source path
+    also accepts only that document's explicit :data:`JOIN_MENDS`.
     """
+    if path and restore_joins(path, restore(old)) == new:
+        return []
     problems: list[str] = []
     old_lines, new_lines = old.split("\n"), new.split("\n")
     if len(old_lines) != len(new_lines):
@@ -226,8 +266,8 @@ def check_document(
 
     doc = store.load(path)
     found = Mended(path=path, glyphs=glyphs(doc.text))
-    new = restore(doc.text)
-    found.problems = restored_only(doc.text, new)
+    new = restore_joins(path, restore(doc.text))
+    found.problems = restored_only(doc.text, new, path=path)
     index = page_map.read(store, path)
     if index is None:
         found.problems.append("no page map: the pages cannot be read again to prove the mend")
@@ -247,6 +287,7 @@ def check_document(
         end=spec.end if spec else "",
         nth=spec.nth if spec else 1,
         extraction=spec.extraction if spec else "layout",
+        path=path,
     )
     found.reextracted = fresh == new
     if not found.reextracted:
@@ -503,6 +544,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 __all__ = [
+    "JOIN_MENDS",
     "LIGATURES",
     "Mended",
     "PageCheck",
@@ -510,6 +552,7 @@ __all__ = [
     "mend",
     "narrowed",
     "restore",
+    "restore_joins",
     "restored_only",
     "witness",
     "words_found",

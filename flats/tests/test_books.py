@@ -32,7 +32,7 @@ OTHER = b"%PDF-1.7 a later edition, renumbered"
 @pytest.fixture
 def stored(monkeypatch, tmp_path):
     """A document with text, a page map, and a cache nobody has filled."""
-    monkeypatch.setattr(P, "_pages_of", lambda data, *, extraction="layout": BOOK)
+    monkeypatch.setattr(P, "_pages_of", lambda data, *, extraction="layout", path=None: BOOK)
     monkeypatch.setattr(books, "CACHE", tmp_path / "books")
     store = ProvenanceStore(tmp_path / "docs")
     text = "\n".join(line for page in BOOK for line in page) + "\n"

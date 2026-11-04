@@ -26,6 +26,48 @@ def test_restore_writes_each_glyph_out_as_its_letters() -> None:
     assert mend.glyphs(f"{FL}oor {FL}at {FF}") == 3
 
 
+def test_source_word_joins_are_restored_only_for_the_named_documents() -> None:
+    canby = "or/clackamas/canby/cmc.16.08.110.txt"
+    for path, joins in mend.JOIN_MENDS.items():
+        other_city = f"or/multnomah/portland/{path.rsplit('/', 1)[-1]}"
+        for old, new in joins:
+            assert mend.restore_joins(path, old) == new
+            assert mend.restore_joins(other_city, old) == old
+
+    from flats.provenance.fetch import fetch_text
+
+    old = "approved bythe Planning Commission"
+    new = "approved by the Planning Commission"
+    assert mend.restored_only(old, new, path=canby) == []
+    assert mend.restored_only(f"{old}!", f"{new}?", path=canby)
+    assert fetch_text(
+        "https://example.gov/code",
+        path=canby,
+        get=lambda _url: "approved bythe Planning Commission",
+    ) == "approved by the Planning Commission\n"
+
+
+def test_page_extraction_restores_king_city_word_joins(monkeypatch: pytest.MonkeyPatch) -> None:
+    import pypdf
+
+    from flats.provenance.pages import _pages_of
+
+    class _Page(dict):
+        def __init__(self) -> None:
+            super().__init__({"/Contents": object()})
+
+        def extract_text(self, **_: object) -> str:
+            return "AP ARTMENTS AND TOWNHOUSES ZONE"
+
+    monkeypatch.setattr(pypdf, "PdfReader", lambda _stream: type("R", (), {"pages": [_Page()]})())
+
+    assert _pages_of(
+        b"%PDF-not-really",
+        extraction="plain",
+        path="or/washington/king-city/kcc.16.88-16.100.residential-zones.txt",
+    ) == [["APARTMENTS AND TOWNHOUSES ZONE"]]
+
+
 def test_restored_only_accepts_restored_letters_and_nothing_else() -> None:
     old = f"1. Ground {FL}oor height\n2. A{FF}ordable"
     assert mend.restored_only(old, mend.restore(old)) == []
