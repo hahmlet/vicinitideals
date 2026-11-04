@@ -12,3 +12,5 @@ TESTS (flats/tests/test_driveway_share_and_walk.py): (a) a lot shaped like 22E01
 Append "## Round 2 (2026-11-04)" to the hand-off: what changed, expected moves (the 3 HV lots red->green if their only failure clears, possibly other private-drive lots in the three cities; no other moves; the 9,349-row drift gone).
 
 MUST NOT CHANGE: cap percentages or any rule value; other driveway checks; other cities' paths beyond the clamp; anything under app/.
+
+AUTHORISED EXCEPTION: Happy Valley, Beaverton and Sherwood lots whose ONLY failure is the frontage-share driveway cap and whose access is a private drive may move red->green (or red->yellow) when the cap is measured on the private drive. The clamp in finding 2 may only lower allowances back to the old values; it must not change any colour.

@@ -18,3 +18,5 @@ E. STEPH RULED 2026-11-04 (flats/config/rulings.yaml id 2026-11-04-pdx-epa-rear-
 
 MUST NOT CHANGE: rule values, the 25 percent figure, any other city, anything under app/.
 Note: the hand-off sits OUTSIDE this worktree at ../vicinitideals-worktrees/pdx-map-120.handoff.md (absolute C:/Users/Steph/Repos/vicinitideals-worktrees/pdx-map-120.handoff.md); you have read access to that folder.
+
+AUTHORISED EXCEPTION: Portland RM1-RM4/RX lots in the Eastern Pattern Area (Map 120-3) and on Map 120-2 may change colour as findings A-E describe: red->yellow or red/yellow->green where the rear setback is now taken only from the far rear line, where corner lots are no longer held by the depth band, where the half-AREA vehicle rule (E) lets the court fit; red->yellow for assumed-corner lots. No lot may become GREEN by losing a check -- only by passing it.
