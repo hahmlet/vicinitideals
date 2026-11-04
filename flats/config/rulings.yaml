@@ -2425,7 +2425,7 @@
 - id: 2026-11-04-pdx-epa-rear-parking-half-area
   kind: ruling
   date: 2026-11-04
-  scope: {state: or, county: multnomah, place: portland}
+  scope: {county: multnomah, city: portland}
   question: >-
     PCC 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern
     Area rear setback can be vehicle area." Half the yard's depth across
