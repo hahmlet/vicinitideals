@@ -1,0 +1,11 @@
+side-yard-parking-scout
+
+WHY: FOLLOWUPS 146 (docs/followups/146-parking-in-side-yards.md -- read it). The FLATS screen never lets the drive lane or the parking row sit inside a required SIDE setback. Steph has said go to allowing it where each city's code allows it. Before anything is built, Claude needs, for every jurisdiction in flats/config/jurisdictions/or/*/*.yaml, what its stored code text says. You COLLECT QUOTES; you do not rule.
+
+FOR EACH jurisdiction (folder names under flats/provenance/docs/or/<county>/<place>/; the stored code text is there): search the stored text (grep -i -n) for rules about vehicle areas, parking areas, parking spaces, driveways, maneuvering or aisles in or near SIDE yards / side setbacks / required yards / interior lot lines, and about landscaped or planted buffers between parking and side lot lines. Useful words: "required yard", "side yard", "side setback", "setback area", "parking area", "vehicle area", "driveway", "maneuvering", "perimeter landscaping", "buffer", "interior lot line", "may be located", "shall not be located", "permitted in", "projections", "allowed in setbacks". Also check whether the residential parking section that governs a 4-unit attached townhouse / fourplex development differs from the commercial or multi-dwelling parking-lot section (Portland example: 33.266.120 governs houses/attached houses/fourplexes and 33.266.130.B excludes them, so 130's Table 266-5 strips do not apply).
+
+Also report what flats/config/jurisdictions already encodes for that place: parking_required_yard_prohibited, parking_lot_line_buffer_ft, parking_side_prohibited, any side-yard parking note (grep the yaml).
+
+OUTPUT, one block per jurisdiction:
+<county>/<place> | ALLOWS / FORBIDS / BUFFER <n> ft / SILENT / UNCLEAR | path#Lstart-Lend for every quote | the quote (under 40 words) | which section governs a 4-unit attached townhouse's parking, if the code splits them | already encoded: ...
+SILENT means you searched and found nothing; list the words you searched. Never guess ALLOWS from silence. Finish with a summary table and a list of places where the answer depends on a definition (e.g. what a "yard" is) or a cross-reference you could not follow.
