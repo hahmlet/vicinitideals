@@ -1,12 +1,12 @@
-"""Durham 3.7.1.7: measure whether an apron can clear mapped intersections.
+"""Durham 3.7.1.7: bound whether an apron can clear mapped intersections.
 
 The bridge has parcel street edges and RLIS street centerlines, but no
 apron-location drawing. The Durham rule lets access use any frontage, so each
-frontage is checked for a continuous apron-width interval whose nearer edge is
-at least 100 feet from every mapped street intersection. Centerline intersection
-points are projected along each straight street-lot-line segment; this measures
-their along-frontage station, not the perpendicular distance across the right
-of way.
+frontage is checked for a continuous apron-width interval against every mapped
+street intersection. Centerline intersections are projected along each straight
+street-lot-line segment. Passing subtracts the cross street's half-width and a
+conservative curb-return allowance; failure uses the unadjusted centerline
+distance. The interval between those bounds remains unmeasured.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 import numpy as np
 import shapely
@@ -27,6 +27,9 @@ from flats.geom.corridor import FRONT_REACH_FT
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg, bearing_delta
 
 DURHAM_APRON_MIN_CLEARANCE_FT = 100.0
+DEFAULT_CROSS_STREET_HALF_ROW_FT = 40.0
+# A conservative allowance, not a code figure, pending a measured curb layer.
+CURB_RETURN_ALLOWANCE_FT = 35.0
 _PARALLEL_TOL_DEG = 20.0
 _COLLINEAR_TOL_DEG = 8.0
 _BEARING_HALF_RUN_FT = 3.0
@@ -107,12 +110,15 @@ def maximum_clearance_ft(
     bearings: Sequence[float],
     streets: StreetNetwork | None,
     apron_width_ft: float | None,
+    street_half_widths_ft: Mapping[str, float] | None = None,
 ) -> float | None:
-    """Best achievable clearance, or None if the frontage geometry is unread.
+    """A proved clearance, or None if the result is indeterminate.
 
     A known frontage that cannot fit an apron is a zero-clearance result. An
     unmeasurable frontage prevents a failure conclusion unless another
-    measured frontage already proves a legal placement.
+    measured frontage already proves a legal placement. A returned clearance
+    of at least 100 ft is reduced by the ROW and curb-return allowances; a
+    returned clearance below 100 ft is the unadjusted centerline bound.
     """
     if streets is None or streets.tree is None or not apron_width_ft or apron_width_ft < 0:
         return None
@@ -120,17 +126,28 @@ def maximum_clearance_ft(
     if not chains:
         return None
 
-    measured: list[float] = []
+    measured_failures: list[float] = []
+    passing: list[float] = []
     unknown = False
+    street_half_widths_ft = street_half_widths_ft or {}
+    largest_half_width = max(
+        (DEFAULT_CROSS_STREET_HALF_ROW_FT, *street_half_widths_ft.values())
+    )
     for chain in chains:
         length = sum(edge.length_ft for edge in chain)
-        events: list[float] = []
+        events: list[tuple[float, float]] = []
         chain_offset = 0.0
         chain_measured = True
         for edge in chain:
             line = LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
             middle = line.interpolate(line.length / 2.0)
-            reach = FRONT_REACH_FT + DURHAM_APRON_MIN_CLEARANCE_FT + apron_width_ft
+            reach = (
+                FRONT_REACH_FT
+                + DURHAM_APRON_MIN_CLEARANCE_FT
+                + largest_half_width
+                + CURB_RETURN_ALLOWANCE_FT
+                + apron_width_ft
+            )
             ux = (edge.x2 - edge.x1) / edge.length_ft
             uy = (edge.y2 - edge.y1) / edge.length_ft
             extended = LineString(
@@ -189,24 +206,50 @@ def maximum_clearance_ft(
                             - reach
                         )
                         if (
-                            -DURHAM_APRON_MIN_CLEARANCE_FT - apron_width_ft
+                            -DURHAM_APRON_MIN_CLEARANCE_FT
+                            - largest_half_width
+                            - CURB_RETURN_ALLOWANCE_FT
+                            - apron_width_ft
                             <= station
-                            <= length + DURHAM_APRON_MIN_CLEARANCE_FT + apron_width_ft
+                            <= length
+                            + DURHAM_APRON_MIN_CLEARANCE_FT
+                            + largest_half_width
+                            + CURB_RETURN_ALLOWANCE_FT
+                            + apron_width_ft
                         ):
-                            events.append(station)
+                            street_name = _street_key(streets.names[other_idx])
+                            half_width = street_half_widths_ft.get(
+                                street_name, DEFAULT_CROSS_STREET_HALF_ROW_FT
+                            )
+                            if not math.isfinite(half_width) or half_width < 0:
+                                half_width = DEFAULT_CROSS_STREET_HALF_ROW_FT
+                            events.append(
+                                (station, half_width + CURB_RETURN_ALLOWANCE_FT)
+                            )
             chain_offset += edge.length_ft
 
         if not chain_measured:
             unknown = True
             continue
-        measured.append(_best_clearance(length, events, apron_width_ft))
+        centerline_clearance = _best_clearance(
+            length, [station for station, _ in events], apron_width_ft
+        )
+        if centerline_clearance < DURHAM_APRON_MIN_CLEARANCE_FT:
+            measured_failures.append(centerline_clearance)
+            continue
+        conservative_clearance = _best_clearance_with_allowances(
+            length, events, apron_width_ft
+        )
+        if conservative_clearance >= DURHAM_APRON_MIN_CLEARANCE_FT:
+            passing.append(conservative_clearance)
+        else:
+            unknown = True
 
-    passing = [value for value in measured if value >= DURHAM_APRON_MIN_CLEARANCE_FT]
     if passing:
         return max(passing)
-    if unknown or not measured:
+    if unknown or not measured_failures:
         return None
-    return max(measured)
+    return max(measured_failures)
 
 
 def _best_clearance(length: float, events: Sequence[float], width: float) -> float:
@@ -230,6 +273,56 @@ def _best_clearance(length: float, events: Sequence[float], width: float) -> flo
     return best
 
 
+def _best_clearance_with_allowances(
+    length: float, events: Sequence[tuple[float, float]], width: float
+) -> float:
+    """Maximise centerline clearance after each intersection's allowances."""
+    if width > length:
+        return 0.0
+    if not events:
+        return DURHAM_APRON_MIN_CLEARANCE_FT
+
+    latest_start = length - width
+    candidates = {0.0, latest_start}
+    branches: list[tuple[float, float]] = []
+    for station, allowance in events:
+        candidates.update((station - width, station))
+        branches.extend(
+            (
+                (1.0, -station - allowance),
+                (-1.0, station - width - allowance),
+                (0.0, -allowance),
+            )
+        )
+    for i, (left_slope, left_intercept) in enumerate(branches):
+        for right_slope, right_intercept in branches[i + 1 :]:
+            if left_slope == right_slope:
+                continue
+            start = (right_intercept - left_intercept) / (
+                left_slope - right_slope
+            )
+            if 0.0 <= start <= latest_start:
+                candidates.add(start)
+
+    best = -math.inf
+    for start in candidates:
+        if not 0.0 <= start <= latest_start:
+            continue
+        end = start + width
+        clearance = min(
+            max(start - station, station - end, 0.0) - allowance
+            for station, allowance in events
+        )
+        best = max(best, clearance)
+    return best
+
+
+def _street_key(name: str) -> str:
+    from flats.geom.street_class import street_key
+
+    return street_key(name)
+
+
 def _bearing(line: BaseGeometry, point: Point) -> float | None:
     length = float(shapely.length(line))
     if length <= 0:
@@ -244,6 +337,8 @@ def _bearing(line: BaseGeometry, point: Point) -> float | None:
 
 
 __all__ = [
+    "CURB_RETURN_ALLOWANCE_FT",
+    "DEFAULT_CROSS_STREET_HALF_ROW_FT",
     "DURHAM_APRON_MIN_CLEARANCE_FT",
     "StreetNetwork",
     "frontage_chains",

@@ -2014,12 +2014,6 @@ def iter_rows(
             one_street=one_street_column(frame, streets),
             reach_off_wkb=beyond_reach_column(frame, streets),
         )
-        if any(_layer_id(row) == "or/washington/durham" for row in frame.to_dict("records")):
-            frame = frame.assign(
-                durham_apron_clearance_ft=_durham_apron_clearance_column(
-                    frame.to_dict("records"), streets
-                )
-            )
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers
     # above see one shape of "no answer" whatever dtype the column arrived in.
     frame = frame.astype(object).where(frame.notna(), None)
@@ -2029,7 +2023,7 @@ def iter_rows(
 def _durham_apron_clearance_column(
     rows: Sequence[Mapping[str, Any]], streets: Path
 ) -> list[float | None]:
-    """Measure Durham's feasible apron clearance from the s1 street network."""
+    """Bound Durham's apron clearance using street widths held on each row."""
     from flats.rules.loader import load_rules
 
     network = load_street_network(streets)
@@ -2051,12 +2045,29 @@ def _durham_apron_clearance_column(
             bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
         except (TypeError, ValueError):
             bearings = ()
+        half_widths: dict[str, float] = {}
+        try:
+            width_rows = json.loads(row.get("road_widths_json") or "[]")
+        except (TypeError, ValueError):
+            width_rows = []
+        for width_row in width_rows:
+            if not isinstance(width_row, (list, tuple)) or len(width_row) < 7:
+                continue
+            half_width = _finite(width_row[4])
+            names = width_row[6]
+            if half_width is None or half_width < 0 or not isinstance(names, list):
+                continue
+            for name in names:
+                key = dedication.street_key(name)
+                if key:
+                    half_widths[key] = max(half_widths.get(key, 0.0), half_width)
         out.append(
             maximum_clearance_ft(
                 row.get("edges_json") or "[]",
                 bearings,
                 network,
                 width,
+                half_widths,
             )
         )
     return out
@@ -2069,7 +2080,8 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     :func:`flats.geom.street_class.street_ranks`) for the lowest-class
     driveway rule, and, where the layer's code makes a lot dedicate
     right-of-way, each street line's measured half-width
-    (``road_widths_json``, :func:`flats.geom.dedication.measure`).
+    (``road_widths_json``, :func:`flats.geom.dedication.measure`). Durham also
+    reads these widths to bound the driveway's curb-return distance.
 
     Read off the row's own s4 edges, so a lot screened a second way without
     its private drive (:func:`_sans_row`) carries the first reading -- where
@@ -2083,12 +2095,12 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     answered = 0
     for row in rows:
         layer_id = _layer_id(row)
-        measured = dedication.applies(layer_id)
+        measure_widths = dedication.applies(layer_id) or layer_id == "or/washington/durham"
         ranked = any(m.access and m.covers(layer_id) for m in maps)
-        if not measured and not ranked:
+        if not measure_widths and not ranked:
             continue
         edges = json.loads(row.get("edges_json") or "[]")
-        if measured:
+        if measure_widths:
             row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps))
         if not ranked:
             continue
@@ -4934,6 +4946,10 @@ def run(
     classed = with_local_street(rows, sources)
     if classed:
         log(f"bridge: street class read on {classed:,} lots")
+    if any(_layer_id(row) == "or/washington/durham" for row in rows):
+        clearances = _durham_apron_clearance_column(rows, roads)
+        for row, clearance in zip(rows, clearances, strict=True):
+            row["durham_apron_clearance_ft"] = clearance
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")

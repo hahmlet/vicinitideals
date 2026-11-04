@@ -199,6 +199,29 @@ def test_bridge_measures_from_the_s1_street_file(tmp_path) -> None:
     assert clearance == pytest.approx(50.0)
 
 
+def test_bridge_uses_the_measured_cross_street_half_width(tmp_path) -> None:
+    row = _durham_midblock(w=170.0)
+    row["road_widths_json"] = json.dumps(
+        [[X0, Y0, X0, Y0 + 200, 20.0, True, ["cross-0"], {}]]
+    )
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+        LineString(((X0 - 20, Y0 - 100), (X0 - 20, Y0 + 100))),
+    ]
+    path = tmp_path / "s1_streets.parquet"
+    pq.write_table(
+        pa.table(
+            {
+                "name": ["front", "cross-0"],
+                "wkb": [shapely.to_wkb(road) for road in roads],
+            }
+        ),
+        path,
+    )
+    (clearance,) = _durham_apron_clearance_column([row], path)
+    assert clearance == pytest.approx(105.0)
+
+
 def test_a_103_foot_corner_frontage_fails_the_apron_rule(corpus, policies) -> None:
     row = _durham_corner(w=80.0, d=23.0)
     roads = [
@@ -217,6 +240,23 @@ def test_a_103_foot_corner_frontage_fails_the_apron_rule(corpus, policies) -> No
         c for c in failed.signed.checks if c.check == DRIVEWAY_NEAR_INTERSECTION_100FT
     )
     assert apron_check.verdict.value == "fail"
+
+
+def test_centerline_only_clearance_between_bounds_keeps_the_flag(
+    corpus, policies
+) -> None:
+    row = _durham_midblock(w=170.0)
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+        LineString(((X0 - 20, Y0 - 100), (X0 - 20, Y0 + 100))),
+    ]
+    row = _measured(row, roads)
+    assert row["durham_apron_clearance_ft"] is None
+    lot = lot_from_row(row, corpus.layers)
+    assert FACT not in lot.observed
+    held = _screen(corpus, policies, lot)
+    assert FLAG in {f.code for f in held.signed.flags}
+    assert held.signed.colour is flag_plan.Colour.yellow
 
 
 def test_unmeasurable_intersection_geometry_keeps_the_flag(corpus, policies) -> None:

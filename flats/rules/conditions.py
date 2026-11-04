@@ -316,12 +316,14 @@ _C: tuple[ConditionDef, ...] = (
         "a vehicle access way within public right of way, \"e.g., the "
         "driveway apron\", \"no portion of same shall be less than 100 feet "
         "from any street intersection as measured from the curb return\". "
-        "measured by whether the frontage has room for the minimum access "
-        "width at that clearance. True means no placement clears the rule "
-        "and fails it; False means a placement exists. False is measured "
-        "only from Durham street-network geometry; missing geometry remains "
-        "unanswered (FOLLOWUPS 118).",
-        evidence="RLIS street-centerline intersections projected along each Durham street lot line, and the maximum clearance available to a minimum-width apron",
+        "measured by the maximum clearance available to a minimum-width "
+        "apron. A pass subtracts the cross street's measured half right-of-way "
+        "(40 feet if unknown) and a conservative 35-foot curb-return allowance "
+        "that is not a code figure. A fail requires the unadjusted centerline "
+        "distance to be under 100 feet for every placement. The interval "
+        "between those bounds, and missing geometry, remains unanswered "
+        "(FOLLOWUPS 118).",
+        evidence="RLIS street-centerline intersections projected along each Durham street lot line, with cross-street half-widths from the parcel street-width readings or a 40-foot fallback",
         assume=None,
     ),
     ConditionDef(

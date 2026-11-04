@@ -613,9 +613,9 @@ class LotFacts:
     #: (``building_frontage_corner``, GDC 3.0100). Empty where no map serves
     #: the lot, which leaves every street unranked.
     street_line_ranks: tuple[int | None, ...] = ()
-    #: Best measured clearance, in feet, from a Durham apron placement of
-    #: the minimum access width to any street intersection. None if the street
-    #: geometry cannot answer :data:`DRIVEWAY_NEAR_INTERSECTION_100FT`.
+    #: A proved Durham apron clearance: pass clearance after ROW and curb-return
+    #: allowances, or a centerline clearance proving failure. None if unmeasured
+    #: or between those bounds (:data:`DRIVEWAY_NEAR_INTERSECTION_100FT`).
     durham_apron_clearance_ft: float | None = None
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
