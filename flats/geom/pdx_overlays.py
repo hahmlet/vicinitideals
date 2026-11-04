@@ -1260,9 +1260,10 @@ def _min_far_cannot_fit(s: Any, reading: Reading, bind: flag_plan.Bind, floor_sq
     measured = s.lot.facts.lot_sqft * part
     if bind.threshold is None or measured <= 0:
         return False
-    counted = credited(reading, floor_sqft, building_of(s.drawing))
     footprint = float(s.design.footprint.width_ft) * float(s.design.footprint.depth_ft)
-    return clearly_cannot_fit(bind.threshold * measured, counted, footprint, buildable)
+    # Each further pod is counted whole: the one drawn may stand partly off the
+    # overlay, but the pods the count imagines stand on the overlay part.
+    return clearly_cannot_fit(bind.threshold * measured, floor_sqft, footprint, buildable)
 
 
 __all__ = [
