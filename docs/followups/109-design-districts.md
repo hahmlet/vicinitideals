@@ -63,3 +63,8 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   live -> 534 red, 7 yellow, 417 stay green; 1 gain (1N2E25CD -04200, slope flag gone) to explain; move read running. Glendoveer
   LR7.5 lot-list question re-asked with the count.
 
+## 2026-11-04 batch C (pd2c) and an open question
+- BUILT 9e8f708a on flats/districts-pdx-pd2c (stacked on pd2b), hand-off ../vicinitideals-worktrees/districts-pdx-pd2c.handoff.md. Gateway 0.25:1 and East Corridor 0.5:1 / 1:1 minimum FAR read off the 11/1/26 map sheets (drawn: true); the three polygon sets leave the whole-district hold. Expected 161 Gateway + 12 East Corridor yellow->green, 146 stay yellow on FAR-MIN, no reds. Bound after th_row3, read every gain.
+- Glendoveer Map 530-1 (Map Revised July 8, 2016) shows only the plan district boundary (legend: Plan District Boundary), so the outline IS the former-LR7.5 area per 33.530 L20-22; the 588 R7 moves from pd2ab stand. Coordinator looked at the sheet 11-04.
+- [Steph] QUESTION (asked 11-04): a pod too small for a minimum floor-area rule is YELLOW under the 2026-10-29 soft-floor rule (flats/score/screen.py SOFT_FLOOR_CHECKS includes min_far), but Portland's 33.415 Centers Main Street minimum FAR (pdx_min_far in flats/geom/pdx_overlays.py, not in SOFT_FLOOR_CHECKS) is RED. Pick one for both. Coordinator recommends YELLOW for both (a bigger or second building could meet it; same as minimum density). If yellow: add pdx_min_far to SOFT_FLOOR_CHECKS, count the main-street lots red on it alone first, bound, read.
+- Stored chapter text stale: 33.521 stored URL _0 now 404s (current _1, Ord. 192213), 33.526 stored _1 (current _2). Drift refresh to do.
