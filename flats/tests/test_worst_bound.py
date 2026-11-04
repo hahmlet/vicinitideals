@@ -36,6 +36,7 @@ OFF_PLAN_DISTRICTS = dict.fromkeys(
         "pdx_special_building_setback",
         "pdx_glendoveer_lr75",
         "pdx_plan_district_unmeasured",
+        "pdx_nw_residential_limited",
     ),
     False,
 )

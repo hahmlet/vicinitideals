@@ -93,7 +93,8 @@ def test_the_facts_are_drawn_site_facts_never_assumed(name: str) -> None:
 
 def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
     by_fact = {a.condition: a for a in portland.drawn_areas.values()}
-    assert set(by_fact) == set(FACTS) | set(PART_1)
+    # Batch B (2026-11-04) adds Northwest Map 562-2, test_portland_plan_districts_3.
+    assert set(by_fact) == set(FACTS) | set(PART_1) | {"pdx_nw_residential_limited"}
     for fact in FACTS:
         assert by_fact[fact].file == FILES[fact]
     assert set(by_fact[GLENDOVEER].zones) == {"R7"}

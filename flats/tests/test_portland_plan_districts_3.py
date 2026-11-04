@@ -19,6 +19,9 @@ one hold, ``pdx_plan_district_unmeasured``, on the lots it reaches:
   area of Map 562-2, main-street lots with two street faces or over 10,000
   sq ft, and the Map 562-4 0 ft height area.
 * Sandy: lots on NE Sandy Blvd (walls parallel to Sandy).
+* Northwest Map 562-2 is not a hold: "More than 20 percent [Residential] is
+  prohibited" on CM3 there, so its own drawn fact, pdx_nw_residential_limited,
+  turns quadplex_allowed off -- RED inside, YELLOW where the line cuts.
 * Hayden Island: commercial lots. Powell, South Auditorium, Columbia South
   Shore, Central City and Marquam Hill: every lot.
 
@@ -31,6 +34,7 @@ RED.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 
 import pytest
@@ -189,3 +193,48 @@ def test_quadplex_cite_names_every_batch_b_section() -> None:
 
 def test_shapely_reads_the_tracing_as_valid() -> None:
     assert shapely.is_valid(load_area(FILES[HOLD]))
+
+
+# --- Northwest Map 562-2: a flat prohibition, RED ---------------------------------
+
+NW = "pdx_nw_residential_limited"
+NW_FILE = "or/multnomah/portland/northwest-residential-limited.geojson"
+
+
+def test_the_map_562_2_area_is_the_citys_own_layer_copied_unchanged() -> None:
+    data = json.loads((loader.AREAS_ROOT / NW_FILE).read_text(encoding="utf-8"))
+    assert "COP_OpenData_ZoningCode/MapServer/157" in data["source"]["map"]
+    assert data["source"]["quote"] == "or/multnomah/portland/33.562.txt#L63-L64"
+    src = json.loads((loader.AREAS_ROOT / f"{PORTLAND}/limited-use-areas.geojson").read_text(encoding="utf-8"))
+    (city,) = [f for f in src["features"] if f["properties"]["PLDIST"] == "NP" and f["properties"]["RESLIMIT"] == "YES"]
+    assert shape(city["geometry"]).equals(load_area(NW_FILE))
+    assert "More than 20 percent is prohibited" in ProvenanceStore().quote(data["source"]["quote"])
+
+
+def test_only_cm3_is_asked_and_it_reads_inside_cut_and_outside() -> None:
+    area = load_area(NW_FILE)
+    inside = area.representative_point().buffer(5)
+    assert _facts("CM3", inside)[NW] is True
+    assert NW not in _facts("CM2", inside)
+    minx, miny, maxx, maxy = area.bounds
+    edge = area.exterior.coords[0] if hasattr(area, "exterior") else area.geoms[0].exterior.coords[0]
+    cut = shapely.Point(edge).buffer(40)
+    assert 0.1 < cut.intersection(area).area / cut.area < 0.9
+    assert _facts("CM3", cut).get(NW) is None
+    assert _facts("CM3", box(minx - 3000, miny - 3000, minx - 2900, miny - 2900))[NW] is False
+
+
+def _without(lot, fact: str):
+    return dataclasses.replace(lot, observed={k: v for k, v in lot.observed.items() if k != fact})
+
+
+def test_a_cm3_lot_inside_is_red_cut_yellow_and_outside_green(corpus) -> None:
+    lot = _clear(corpus, "CM3")
+    assert _screen(corpus, _answered(lot, **{NW: False})).colour is flag_plan.Colour.green
+    assert _screen(corpus, _answered(lot, **{NW: True})).colour is flag_plan.Colour.red
+    assert _screen(corpus, _without(lot, NW)).colour is flag_plan.Colour.yellow
+
+
+def test_the_prohibition_does_not_reach_another_zone(corpus) -> None:
+    lot = _clear(corpus, "CM2")
+    assert _screen(corpus, _answered(lot, **{NW: True})).colour is flag_plan.Colour.green

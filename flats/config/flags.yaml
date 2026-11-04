@@ -1927,6 +1927,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-NW-RESIDENTIAL-LIMITED:
+    description: "Whether a CM3 lot lies in the Northwest plan district's Residential Use Limitation Area (Map 562-2, PCC 33.562.100.B), where more than 20 percent Residential use in a building is prohibited"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 562-2: a lot the area boundary cuts is unanswered"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-PLAN-DISTRICT-UNMEASURED:
     description: "Whether the lot lies where a Portland plan district rule reaches the pod that nothing measures: parking and driveway limits against named streets and light rail (East Corridor, Hollywood, Lombard, North Interstate), required building lines, minimum floor area ratios printed only on a map (East Corridor) or above the pod's, the West Portland Employment Focus Area and quarter-depth rear setback, Macadam's wall-plane setbacks, the Linnton Hillside lot-of-record rule, or Glendoveer's flag-lot standards on an R7 lot whose shape could be a flag lot; and, batch B, parking and access against Gateway streets and light rail and Northwest main streets, minimum floor area ratios in Gateway (map only), Northwest and Central City, Northwest's 20 percent residential limit, map-only heights below the pod's (Northwest, Columbia South Shore, Central City, Marquam Hill), Sandy Boulevard facade orientation, the Powell Boulevard sound wall, South Auditorium's landscaped street edge, and Hayden Island's commercial height step and floor area rules"
     kind: categorical

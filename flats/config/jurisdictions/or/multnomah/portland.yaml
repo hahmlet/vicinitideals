@@ -4747,6 +4747,19 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      variants:
+        # Northwest plan district, Map 562-2 (FOLLOWUPS 109 batch B, ruled by
+        # the coordinator 2026-11-04 under the three-tier rule): "up to 20
+        # percent of the net building area may be in Residential uses. More
+        # than 20 percent is prohibited." A four-home building is all
+        # Residential, so a flat prohibition: RED on a lot inside, YELLOW on
+        # one the line cuts (the drawn fact is unanswered there).
+        - value: false
+          when: [pdx_nw_residential_limited]
+          cite: PCC 33.562.100.B (plan districts control over the base zone, 33.500.040)
+          url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
+          retrieved: '2026-10-22'
+          quote: "or/multnomah/portland/33.562.txt#L63-L64"
       qualified_by:
         fact: pdx_plan_district_unmeasured
         cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
@@ -5864,6 +5877,22 @@ drawn_areas:
       district is read as formerly LR7.5 -- the deeper setbacks, never the
       shallower ones. Only R7 is listed: the R10, RM1, CM1 and R5 land inside
       the outline is not what 33.530.020 reaches.
+  northwest_residential_limited:
+    condition: pdx_nw_residential_limited
+    zones: [CM3]
+    file: or/multnomah/portland/northwest-residential-limited.geojson
+    source: >-
+      The Northwest Residential Use Limitation Area of Map 562-2 as the City
+      publishes it (Portland Maps COP_OpenData_ZoningCode layer 157, Limited
+      Use Areas, PLDIST NP, RESLIMIT YES, fetched 2026-11-01), copied
+      unchanged. Drawn provenance in the file's source block.
+    quote: "or/multnomah/portland/33.562.txt#L63-L64"
+    cite: PCC 33.562.100.B
+    note: >-
+      CM3 only, the one zone 33.562.100.B names. A lot nine tenths inside is
+      RED (residential use over 20 percent of the building is prohibited);
+      one the line cuts is unanswered and YELLOW. The lots stay in the
+      plan_district_unmeasured tracing too, which only ever adds a YELLOW.
   plan_district_unmeasured:
     condition: pdx_plan_district_unmeasured
     zones: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RX, CM1, CM2, CM3, CE, CX, EX, CI1, CI2]

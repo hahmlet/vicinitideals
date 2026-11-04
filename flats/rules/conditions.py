@@ -1371,6 +1371,19 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_nw_residential_limited",
+        "site_fact",
+        "The lot is CM3 land in the Northwest plan district's Residential "
+        "Use Limitation Area (Map 562-2), where at most 20 percent of a "
+        "building may be in Residential uses and more is prohibited "
+        "(PCC 33.562.100.B). A four-home building is all Residential.",
+        evidence=(
+            "the Map 562-2 area as Portland Maps publishes it (Limited Use "
+            "Areas, layer 157) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_plan_district_unmeasured",
         "site_fact",
         "The lot is one a Portland plan district rule reaches that the screen "
@@ -1697,6 +1710,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "pdx_glendoveer_lr75",
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_unmeasured",
+    "pdx_nw_residential_limited",
     "pdx_plan_district_unmeasured",
     "pdx_special_building_setback",
     "raleigh_hills_asc_u",

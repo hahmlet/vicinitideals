@@ -67,6 +67,8 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "pdx_glendoveer_lr75",
         "pdx_johnson_creek_impervious",
         "pdx_johnson_creek_unmeasured",
+        # Batch B: Northwest Map 562-2 (FOLLOWUPS 109, 2026-11-04).
+        "pdx_nw_residential_limited",
         "pdx_plan_district_unmeasured",
         "pdx_special_building_setback",
         # Raleigh Hills - Garden Home ASC U's one lot (FOLLOWUPS 136).
