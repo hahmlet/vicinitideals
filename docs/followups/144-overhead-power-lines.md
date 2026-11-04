@@ -24,3 +24,12 @@ Clackamas/Washington?) has no source yet; (4) Steph: use it as a YELLOW flag ("l
 building") or not at all. Overlaps the utility easement rule (memory project_flats_utility_easement).
 
 OSM 2026-11-03: another agent reports OpenStreetMap has some poles/lines. Completeness NOT measured: overpass-api.de answered 406 / empty, kumi.systems and private.coffee empty (3 tries, stopped). To measure: the Geofabrik Oregon extract (download.geofabrik.de/north-america/us/oregon-latest.osm.pbf, a few hundred MB -- needs Steph's OK to download), count power=pole / minor_line / line per city against street length, and compare with PGE layer 17 on the same city.
+
+PACIFIC POWER FOUND 2026-11-03 (Steph sent https://experience.arcgis.com/experience/6f422654851e4d858852fa00d1905170, "PacifiCorp Transmission & Distribution Public Map", owner PacifiCorp_Admin). Behind it:
+https://services1.arcgis.com/ePo6UhbBpZFy1wO2/arcgis/rest/services/Transmission_and_Distribution_Public/FeatureServer
+-- 0 Poles (points; Pole_Type Distribution/Transmission, pole IDs), 1 Substations, 3 Transmission_Lines (Line_Name, Line_Type),
+4 Distribution_Lines (per CIRCUIT_ID, Line_Type OH/UG), 5 Service_Territory. Last edited 2026-11-03. In the metro box
+(lon -123.2..-122.3, lat 45.2..45.7): 15,686 distribution + 1,928 transmission poles, 141 distribution circuits (58 OH,
+83 UG), 42 transmission lines; poles span lon -122.77..-122.40, lat 45.49..45.70 = Pacific Power's Portland
+territory (N/NE/East Portland). With PGE layer 17/19 that covers the metro. Individual poles make an aerial
+accuracy check easy (pole vs imagery).
