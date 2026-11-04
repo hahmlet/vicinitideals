@@ -16,3 +16,9 @@
    draw there; if none fits, the plan fails the maximum (RED where the rule is clear, YELLOW where the
    street it applies to is unclear, e.g. a corner); unmeasured (no drawing/street line) = held, never
    GREEN. Status: encoder BUILDING 2026-11-04 (flats/max-front-setback).
+
+## 2026-11-04 readings (flats-batch-reader) and round 2
+- Read: Tigard quadplex 15/10 ft does NOT reach the pod (pod is a rowhouse in Tigard; a "quad" is 2-over-2) -- no false green. Beaverton MR maximum excludes townhouses (note 18) and reaches only 60.05.15.6 commercial/multiple-use -> exempt (~48 false red/yellow fixed). Portland EX Standard 2 and CI2/IR "within 100 ft" left unset (conservative; transit/pedestrian district not held). Which street per city encoded (front / every / one) for Oregon City C/R-2, WashCo TO zones, Milwaukie NMU, Estacada D, Gresham DCL/DMU/DEM, Fairview, Tualatin CC, West Linn MU, Wilsonville V, Troutdale MU-3, Hillsboro SCR-MD/SCR-V/MU-N (`one`: code says met when at least one facade is within it). King City, Gladstone C2, Oregon City MUC-2 stay unset.
+- Coordinator decided: the maximum is measured from the line left after a street dedication (the same line the minimum yards use).
+- Copilot round 2 (brief docs/copilot/briefs/max-front-setback-r2.txt) encoding the above; then bound (ahead of stall_w) + read.
+- [Steph] QUESTION (asked 11-04): South Hillsboro "active use streets" carry a tighter 10-15 ft limit, but the city's map of them is a picture marked illustrative (final streets set per development). Trace the picture (like Gresham's street map) or hold lots that might face one out of green? Today residential lots there carry no maximum at all, so a lot facing one could be green.
