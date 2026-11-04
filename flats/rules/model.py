@@ -1155,6 +1155,10 @@ class Variant(BaseModel):
     #: than 100 feet in width" -- and every band must hold. The common case
     #: is still written `band:`, singular, and folded in below.
     bands: tuple[Band, ...] = ()
+    #: Conditions that exclude this variant even when its `when` and bands
+    #: match. Used where the code states a standard for every lot except a
+    #: named configuration.
+    unless: tuple[str, ...] = ()
     prov: Provenance
     status: Status = Status.draft
     reviewer: str | None = None
@@ -1216,7 +1220,11 @@ class Variant(BaseModel):
         conditions alone, and a banded variant carrying none of them would
         have addressed as the base.
         """
-        names = self.when + tuple(b.token for b in self.bands)
+        names = (
+            self.when
+            + tuple(b.token for b in self.bands)
+            + tuple(f"unless:{name}" for name in self.unless)
+        )
         return tuple(sorted(names))
 
     @model_validator(mode="after")
@@ -1234,7 +1242,7 @@ class Variant(BaseModel):
     def _conditions_are_registered(self) -> Variant:
         # Same refusal as the field registry: an unregistered name is a typo
         # that would become a second lever nobody can satisfy.
-        for name in self.when:
+        for name in (*self.when, *self.unless):
             try:
                 condition(name)
             except KeyError as exc:
@@ -1242,6 +1250,9 @@ class Variant(BaseModel):
                 # other problem in the file instead of aborting the load on the
                 # first typo. Porting a jurisdiction should surface all of them.
                 raise ValueError(exc.args[0]) from None
+        overlap = set(self.when) & set(self.unless)
+        if overlap:
+            raise ValueError(f"a variant both requires and excludes {sorted(overlap)}")
         return self
 
     @model_validator(mode="after")
@@ -2232,7 +2243,9 @@ class Value(BaseModel):
         What makes the batch view possible: a lever is worth offering only when
         flipping it moves a number some lot in the selection is bound by.
         """
-        held = frozenset(c for variant in self.variants for c in variant.when)
+        held = frozenset(
+            c for variant in self.variants for c in (*variant.when, *variant.unless)
+        )
         return held | ({self.qualified_by} if self.qualified_by else frozenset())
 
     @property
@@ -2297,6 +2310,8 @@ class Value(BaseModel):
         unmeasured: list[Variant] = []
         for v in self.variants:
             if not set(v.when) <= held:
+                continue
+            if not set(v.unless).isdisjoint(held):
                 continue
             verdicts = [(b, b.holds(lot)) for b in v.bands]
             if any(h is False for _, h in verdicts):
@@ -2407,7 +2422,7 @@ def _bands_overlap(a: Band, b: Band) -> bool:
 
 def _depth(v: Variant) -> int:
     """How specific a variant is — every thing that had to be true to pick it."""
-    return len(v.when) + len(v.bands)
+    return len(v.when) + len(v.bands) + len(v.unless)
 
 
 def check_kind(name: str, v: Any) -> None:

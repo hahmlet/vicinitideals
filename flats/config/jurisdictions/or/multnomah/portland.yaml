@@ -3144,7 +3144,8 @@ zones:
           when: [alley_at_rear]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
         # PCC 33.120.220.B.2 (FOLLOWUPS 68): in the Eastern Pattern Area
-        # (Map 120-3, drawn_areas eastern_pattern_area) the rear setback is
+        # (Map 120-3, drawn_areas eastern_pattern_area) the far rear line(s)
+        # take a rear setback that is
         # "an amount equal to 25 percent of the total depth of the site",
         # the depth measured from the midpoints of opposite lot lines
         # (33.930.103, the screen's lot_depth_ft). Corner lots and lots up to
@@ -3156,11 +3157,11 @@ zones:
         # safe reading where a general exception meets the Eastern rule.
         - pct_of_lot_depth: 25
           when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
           band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
         - value: 5
           when: [pdx_eastern_pattern_area, corner_lot]
-          band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
           via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
       qualified_by:
@@ -3192,13 +3193,10 @@ zones:
       variants:
         - exempt: true
           band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
         - exempt: true
           when: [corner_lot]
-          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
-        - exempt: true
-          when: [corner_lot]
-          band: {measure: lot_depth_ft, at_most: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
@@ -3351,11 +3349,11 @@ zones:
         # safe reading where a general exception meets the Eastern rule.
         - pct_of_lot_depth: 25
           when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
           band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
         - value: 5
           when: [pdx_eastern_pattern_area, corner_lot]
-          band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
           via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
       qualified_by:
@@ -3387,13 +3385,10 @@ zones:
       variants:
         - exempt: true
           band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
         - exempt: true
           when: [corner_lot]
-          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
-        - exempt: true
-          when: [corner_lot]
-          band: {measure: lot_depth_ft, at_most: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
@@ -3595,20 +3590,20 @@ zones:
         # safe reading where a general exception meets the Eastern rule.
         - pct_of_lot_depth: 25
           when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
           band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
         - pct_of_lot_depth: 25
           when: [pdx_eastern_pattern_area, low_rise]
+          unless: [corner_lot]
           band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
         - value: 10
           when: [pdx_eastern_pattern_area, corner_lot]
-          band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
           via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
         - value: 5
           when: [pdx_eastern_pattern_area, corner_lot, low_rise]
-          band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
           via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
     parking_rear_yard_max_pct:
@@ -3622,13 +3617,10 @@ zones:
       variants:
         - exempt: true
           band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
         - exempt: true
           when: [corner_lot]
-          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
-        - exempt: true
-          when: [corner_lot]
-          band: {measure: lot_depth_ft, at_most: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
@@ -3828,20 +3820,20 @@ zones:
         # safe reading where a general exception meets the Eastern rule.
         - pct_of_lot_depth: 25
           when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
           band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
         - pct_of_lot_depth: 25
           when: [pdx_eastern_pattern_area, low_rise]
+          unless: [corner_lot]
           band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
         - value: 10
           when: [pdx_eastern_pattern_area, corner_lot]
-          band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
           via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
         - value: 5
           when: [pdx_eastern_pattern_area, corner_lot, low_rise]
-          band: {measure: lot_depth_ft, more_than: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
           via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
     parking_rear_yard_max_pct:
@@ -3855,13 +3847,10 @@ zones:
       variants:
         - exempt: true
           band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
         - exempt: true
           when: [corner_lot]
-          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
-        - exempt: true
-          when: [corner_lot]
-          band: {measure: lot_depth_ft, at_most: 100}
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,

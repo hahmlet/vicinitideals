@@ -157,7 +157,7 @@ from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
-from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.conditions import ACROSS_STREET_CONDITIONS, CONDITIONS
 from flats.rules.fields import BEARING_FIELDS
 from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
@@ -1145,6 +1145,8 @@ def setbacks_for(
     rules: ZoneResolution,
     plain: ZoneResolution | None = None,
     alleyed: ZoneResolution | None = None,
+    *,
+    depth_rear_ft: float | None = None,
 ) -> Setbacks | None:
     """The yards these rules resolve, as the envelope cuts them.
 
@@ -1239,6 +1241,7 @@ def setbacks_for(
         front_ft=front,
         side_ft=side,
         rear_ft=rear,
+        depth_rear_ft=depth_rear_ft,
         street_side_ft=street_side,
         alley_side_ft=alley_side_ft,
         street_off_corridor_ft=off_corridor,
@@ -1428,6 +1431,7 @@ def road_standin(
 #: it (Steph 2026-10-14).
 ROAD_ZONE_STANDIN = "OC-ROAD-ZONE-STANDIN"
 ROAD_ZONE_STANDIN_REASON = "OC_ROAD_ZONE_STANDIN"
+EASTERN_PATTERN_AREA = "pdx_eastern_pattern_area"
 
 
 def road_standin_checked(s: Screened, lot: QuadfitLot) -> Screened:
@@ -1466,6 +1470,9 @@ def envelope_for(
     rules: ZoneResolution,
     plain: ZoneResolution | None = None,
     alleyed: ZoneResolution | None = None,
+    *,
+    setback_rules: ZoneResolution | None = None,
+    depth_rear_ft: float | None = None,
 ) -> Envelope:
     """The envelope this lot offers under these rules (FOLLOWUPS 12).
 
@@ -1520,7 +1527,12 @@ def envelope_for(
     edges = dedicated(lot.edges, rules, lot.zone)
     split = rear_off_alley(lot.edges)
     part = alleyed is not None and part_rear_alley(lot)
-    setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
+    setbacks = setbacks_for(
+        rules if setback_rules is None else setback_rules,
+        plain if split else None,
+        alleyed if part else None,
+        depth_rear_ft=depth_rear_ft,
+    )
     if setbacks is None:
         return quadfit
     # A utility easement the code forbids building on, assumed along every
@@ -2299,6 +2311,7 @@ def _screen_on(
         corner=facts.corner,
         frontage_ft=facts.cap_frontage_ft,
         street_deg=_access_deg(here, front),
+        lot_width_ft=facts.lot_width_ft,
     )
     if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
         # The court beside the building has its aisle in from the street;
@@ -2315,6 +2328,7 @@ def _screen_on(
             corner=facts.corner,
             frontage_ft=facts.cap_frontage_ft,
             street_deg=(),
+            lot_width_ft=facts.lot_width_ft,
         )
     base = facts
 
@@ -2682,7 +2696,45 @@ def _bounded(
     every GREEN is, and keeps its lowered flags through that re-screen.
     """
     signed = s.signed
-    if signed.binds or s.config is None:
+    if s.config is None:
+        return s
+    if signed.binds:
+        corner_can_clear = (
+            all(bind.check == "fit_ft" for bind in signed.binds)
+            and "corner_lot" in s.config.assumed
+            and s.lot.observed.get(EASTERN_PATTERN_AREA) is True
+            and "parking_rear_yard_max_pct" in s.rules.values
+        )
+        assumed_corner = CONDITIONS["corner_lot"].assume
+        if corner_can_clear and assumed_corner is not None:
+            opposite = not assumed_corner
+            observed = {**lot.observed, "corner_lot": opposite}
+            (alternate,) = _screen_lot_once(
+                dataclasses.replace(lot, observed=observed),
+                [s.design],
+                rules=rules,
+                policy=policy,
+                relief=relief,
+                step_deg=step_deg,
+                roads=roads,
+                bound=False,
+                pool=pool,
+                terrain=terrain,
+                room=False,
+            )
+            if not alternate.signed.binds:
+                def held(screening: Screening) -> Screening:
+                    return dataclasses.replace(
+                        screening,
+                        triage=Triage.yellow,
+                        binds=tuple(bind for bind in screening.binds if bind.check != "fit_ft"),
+                    )
+
+                return dataclasses.replace(
+                    s,
+                    screening=held(s.screening),
+                    signed=held(s.signed),
+                )
         return s
     reg = flag_plan.registry()
     line = flag_plan.colour_rules().yellow_at_severity
@@ -3314,6 +3366,28 @@ def _screen_lot_once(
 
     out: list[Screened] = []
     for design, config, got in resolved:
+        setback_rules = got
+        depth_rear_ft = None
+        rear_value = got.values.get("setback_rear_ft")
+        if (
+            lot.observed.get(EASTERN_PATTERN_AREA) is True
+            and rear_value is not None
+            and EASTERN_PATTERN_AREA in rear_value.when
+        ):
+            ordinary_config = configure(
+                lot.facts,
+                design,
+                observed={**lot.observed, EASTERN_PATTERN_AREA: False},
+            )
+            ordinary = rules.resolve(
+                layer_id, lot.zone, ordinary_config.conditions, lot=ordinary_config.measures
+            )
+            applied = _yard(got, "setback_rear_ft")
+            ordinary_rear = _yard(ordinary, "setback_rear_ft")
+            if applied is not None and ordinary_rear is not None and applied != ordinary_rear:
+                setback_rules = ordinary
+                depth_rear_ft = applied
+
         # WHICH STREET IS THE FRONT (FOLLOWUPS 4(e)): where the code names it
         # the lot is cut with that front; where it leaves it to the applicant
         # each street is tried and the better answer kept. None: no front is
@@ -3350,6 +3424,11 @@ def _screen_lot_once(
         unranked: list[bool] = []
         plain: ZoneResolution | None = None
         alleyed: ZoneResolution | None = None
+        geometry_observed = (
+            {**lot.observed, EASTERN_PATTERN_AREA: False}
+            if depth_rear_ft is not None
+            else lot.observed
+        )
         for plan_key, plan_edges, front in plans:
             here = lot
             if plan_edges is not lot.edges:
@@ -3368,15 +3447,25 @@ def _screen_lot_once(
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
                 bare = configure(
-                    lot.facts, design, observed={**lot.observed, "alley_at_rear": False}
+                    lot.facts, design, observed={**geometry_observed, "alley_at_rear": False}
                 )
                 plain = rules.resolve(layer_id, lot.zone, bare.conditions, lot=bare.measures)
             if alleyed is None and part_rear_alley(here):
                 # A rear alley along PART of the line: the covered stretch
                 # abuts the alley and takes its rear (Steph 2026-09-28).
-                on = configure(lot.facts, design, observed={**lot.observed, "alley_at_rear": True})
+                on = configure(
+                    lot.facts, design, observed={**geometry_observed, "alley_at_rear": True}
+                )
                 alleyed = rules.resolve(layer_id, lot.zone, on.conditions, lot=on.measures)
-            envs = [envelope_for(here, got, plain)]
+            envs = [
+                envelope_for(
+                    here,
+                    got,
+                    plain,
+                    setback_rules=setback_rules,
+                    depth_rear_ft=depth_rear_ft,
+                )
+            ]
             if alleyed is not None and part_rear_alley(here):
                 # Both cuts are tried and the better answer kept: the stretch
                 # cut is charged the court against the alley's (smaller) rear
@@ -3385,7 +3474,14 @@ def _screen_lot_once(
                 # stretch than it gains behind the covered one; the whole-line
                 # ordinary cut is the answer before 2026-09-29. Each is sound
                 # alone, so the better of the two is.
-                cut = envelope_for(here, got, plain, alleyed)
+                cut = envelope_for(
+                    here,
+                    got,
+                    plain,
+                    alleyed,
+                    setback_rules=setback_rules,
+                    depth_rear_ft=depth_rear_ft,
+                )
                 if cut.setbacks != envs[0].setbacks:
                     envs.append(cut)
             # The better of the envelope cuts for this reading of the lot;

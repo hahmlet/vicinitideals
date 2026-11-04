@@ -518,22 +518,45 @@ def lot_line_buffer_ft(rules: "ZoneResolution") -> float:
     return _number(rules, "parking_lot_line_buffer_ft") or 0.0
 
 
-def rear_kept_clear_ft(rear_ft: float, rules: "ZoneResolution") -> float:
+def rear_kept_clear_ft(
+    rear_ft: float,
+    rules: "ZoneResolution",
+    *,
+    court_width_ft: float | None = None,
+    lot_width_ft: float | None = None,
+) -> float:
     """The part of the required rear yard parking may not use, where the code
     caps the vehicle share of it (``parking_rear_yard_max_pct``, PCC
     33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
     rear setback can be vehicle area"); 0 where none is stated.
 
-    Taken on the yard's depth as though the court ran its whole width, the
-    conservative reading of an area share: the court may reach this far into
-    the yard and no further."""
+    Where both widths are known, the court may overlap the setback strip by
+    the lesser of its full depth and the area cap expressed as depth:
+    ``share * lot_width / court_width * rear_ft``. Without both widths, use
+    the whole-lot-width case, the conservative bound.
+    """
     share = _number(rules, "parking_rear_yard_max_pct")
     if share is None or rear_ft <= 0:
         return 0.0
-    return rear_ft * max(0.0, 100.0 - float(share)) / 100.0
+    if court_width_ft is None or lot_width_ft is None:
+        return rear_ft * max(0.0, 100.0 - float(share)) / 100.0
+    if court_width_ft <= 0 or lot_width_ft <= 0:
+        return 0.0
+    overlap_depth = min(
+        rear_ft,
+        rear_ft * (float(share) / 100.0) * lot_width_ft / court_width_ft,
+    )
+    return max(0.0, rear_ft - overlap_depth)
 
 
-def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") -> float:
+def behind_wall_ft(
+    parked_ft: float,
+    rear_ft: float,
+    rules: "ZoneResolution",
+    *,
+    court_width_ft: float | None = None,
+    lot_width_ft: float | None = None,
+) -> float:
     """The ground a lot must give behind the building's rear wall.
 
     ``parked_ft`` is how far the parking reaches past the wall -- the rear
@@ -558,7 +581,16 @@ def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") ->
     function's, because the side yards are already outside the envelope the
     court is searched in.
     """
-    keep = rear_ft if yards_kept_clear(rules) else rear_kept_clear_ft(rear_ft, rules)
+    keep = (
+        rear_ft
+        if yards_kept_clear(rules)
+        else rear_kept_clear_ft(
+            rear_ft,
+            rules,
+            court_width_ft=court_width_ft,
+            lot_width_ft=lot_width_ft,
+        )
+    )
     keep = max(keep, lot_line_buffer_ft(rules))
     return max(rear_ft, parked_ft + keep)
 
@@ -1475,7 +1507,15 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         # parking out of required yards (Cornelius 18.145.010 (B)) they
         # stack (`behind_wall_ft`).
         needed_depth = (
-            depth_ft + front + behind_wall_ft(court, rear, rules)
+            depth_ft
+            + front
+            + behind_wall_ft(
+                court,
+                rear,
+                rules,
+                court_width_ft=across.width_ft,
+                lot_width_ft=needed_width,
+            )
             if front is not None and rear is not None
             else None
         )

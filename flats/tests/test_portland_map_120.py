@@ -8,8 +8,9 @@ until the maps were held:
   least 90 ft of frontage on a street. The C.2.b neighbour exception is not
   read, so a short lot is held, never refused and never GREEN.
 * PCC 33.120.220.B.2, in the Eastern Pattern Area of Map 120-3: the rear
-  setback is 25 percent of the site's depth, no more than half of it vehicle
-  area; corner lots and lots up to 100 ft deep are exempt.
+  setback is 25 percent of the site's depth, and vehicle area may cover no
+  more than half the setback's area; corner lots and lots up to 100 ft deep
+  are exempt.
 
 Every test rules both ways: the lot the rule reaches and the lot it leaves.
 """
@@ -21,12 +22,14 @@ import json
 
 import pytest
 import shapely
-from shapely.geometry import box
+from shapely.geometry import Polygon, box
 
 from flats.designs.model import load_catalog
 from flats.encode.load import load_trusted
 from flats.geom.drawn import load_area
-from flats.ingest.quadfit import lot_from_row, observed_facts, screen_lot
+from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
+from flats.geom.envelope import Setbacks, buildable
+from flats.ingest.quadfit import lot_from_row, observed_facts, screen_lot, setbacks_for
 from flats.provenance.store import ProvenanceStore
 from flats.rules import loader
 from flats.rules.conditions import CONDITIONS, DRAWN_CONDITIONS
@@ -176,6 +179,19 @@ def test_the_eastern_rear_setback_is_a_quarter_of_the_depth(rules: RuleSet, zone
     assert got.values["parking_rear_yard_max_pct"].value == 50
 
 
+def test_the_depth_setback_keeps_the_ordinary_rear_yard_for_other_edges(
+    rules: RuleSet,
+) -> None:
+    base = rules.resolve(PORTLAND, "RM1", POD, lot={"lot_depth_ft": 200})
+    eastern = rules.resolve(PORTLAND, "RM1", (*POD, EASTERN), lot={"lot_depth_ft": 200})
+    setbacks = setbacks_for(
+        base, depth_rear_ft=eastern.values["setback_rear_ft"].value
+    )
+    assert setbacks is not None
+    assert setbacks.rear_ft == 5
+    assert setbacks.depth_rear_ft == 50
+
+
 @pytest.mark.parametrize("zone", ["RM1", "RM2", "RM3", "RM4"])
 def test_corner_lots_and_lots_up_to_100_ft_take_the_table(rules: RuleSet, zone: str) -> None:
     base = rules.resolve(PORTLAND, zone, POD, lot={"lot_depth_ft": 200}).values["setback_rear_ft"].value
@@ -185,6 +201,15 @@ def test_corner_lots_and_lots_up_to_100_ft_take_the_table(rules: RuleSet, zone: 
     assert shallow.values["setback_rear_ft"].value == base
     assert "parking_rear_yard_max_pct" not in corner.values
     assert "parking_rear_yard_max_pct" not in shallow.values
+
+
+@pytest.mark.parametrize("zone", ["RM1", "RM2", "RM3", "RM4"])
+def test_an_eastern_corner_needs_no_depth_measure_for_its_rear_setback(
+    rules: RuleSet, zone: str
+) -> None:
+    got = rules.resolve(PORTLAND, zone, (*POD, EASTERN, "corner_lot"), lot={})
+    assert got.values["setback_rear_ft"].value in {5, 10}
+    assert "setback_rear_ft" not in got.ambiguous
 
 
 def test_rm3_above_55_ft_keeps_its_ten_on_a_corner(rules: RuleSet) -> None:
@@ -218,13 +243,63 @@ def test_the_court_may_use_only_half_the_eastern_yard() -> None:
 
     capped = Rules(parking_rear_yard_max_pct=50)
     assert behind_wall_ft(42.0, 50.0, Rules()) == 50.0
-    assert behind_wall_ft(42.0, 50.0, capped) == 67.0
+    assert behind_wall_ft(42.0, 50.0, capped, court_width_ft=100, lot_width_ft=100) == 67.0
     assert behind_wall_ft(10.0, 50.0, capped) == 50.0
+    assert behind_wall_ft(42.0, 50.0, capped, court_width_ft=40, lot_width_ft=100) == 50.0
+
+
+def test_a_depth_setback_is_only_taken_from_the_farthest_rear_edge() -> None:
+    lot = Polygon(
+        [(0, 0), (100, 0), (100, 25), (35, 25), (35, 50), (100, 50), (100, 200), (0, 200)]
+    )
+    edges = LotEdges(
+        Tier.clean,
+        (
+            Edge(0, 0, 100, 0, 100, 0, EdgeClass.front),
+            Edge(100, 0, 100, 25, 25, 90, EdgeClass.side),
+            Edge(100, 25, 35, 25, 65, 0, EdgeClass.rear),
+            Edge(35, 25, 35, 50, 25, 90, EdgeClass.side),
+            Edge(35, 50, 100, 50, 65, 0, EdgeClass.rear),
+            Edge(100, 50, 100, 200, 150, 90, EdgeClass.side),
+            Edge(100, 200, 0, 200, 100, 0, EdgeClass.rear),
+            Edge(0, 200, 0, 0, 200, 90, EdgeClass.side),
+        ),
+        (0.0,),
+        100.0,
+        lot.area / lot.convex_hull.area,
+    )
+    env = buildable(lot, edges, Setbacks(front_ft=5, side_ft=5, rear_ft=5, depth_rear_ft=50))
+    assert env.area == pytest.approx(10_775.0)
+
+
+def test_a_150_ft_map_120_2_lot_has_no_frontage_exception_flag(corpus) -> None:
+    lot = _lot(corpus, "RM1", 60, 150)
+    got = _screen(corpus, _answered(lot, **{FRONTAGE: True, EASTERN: False}))
+    assert fact_code(NEIGHBOURS) not in {f.code for f in got.flags}
+
+
+def test_assumed_corner_is_held_but_measured_noncorner_still_fails(corpus) -> None:
+    lot = _lot(corpus, "RM1", 60, 112)
+    observed = {**lot.observed, FRONTAGE: False, EASTERN: True}
+    observed.pop("corner_lot", None)
+    assumed = _screen(corpus, dataclasses.replace(lot, observed=observed))
+    measured = _screen(
+        corpus,
+        _answered(lot, **{FRONTAGE: False, EASTERN: True, "corner_lot": False})
+    )
+    assert assumed.colour is flag_plan.Colour.yellow
+    assert fact_code("corner_lot") in {f.code for f in assumed.flags}
+    assert measured.colour is flag_plan.Colour.red
 
 
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
     s = "or/multnomah/portland/33.120/"
+    rear_line = store.quote("or/multnomah/portland/33.910/33.910.030.txt#L535-L536")
+    assert (
+        "For other irregularly shaped lots, the rear lot line is all lot lines that are "
+        "most nearly opposite the front lot line."
+    ) in rear_line
     assert "sites shown on Map 120-2" in store.quote(s + "33.120.206.txt#L8")
     rule = store.quote(s + "33.120.206.txt#L10")
     assert "more than 160 feet deep" in rule and "90 feet of frontage on a street" in rule
@@ -232,7 +307,10 @@ def test_the_quotes_say_what_the_rules_say() -> None:
     eastern = store.quote(s + "33.120.220.txt#L23,L25")
     assert "25 percent of the total depth of the site" in eastern and "Map 120-3" in eastern
     assert "No more than 50 percent" in store.quote(s + "33.120.220.txt#L24")
-    assert "Corner lots and lots that are up to 100 feet deep" in store.quote(s + "33.120.220.txt#L28")
+    assert (
+        "Corner lots and lots that are up to 100 feet deep are exempt from the Eastern Pattern "
+        "Area minimum rear building setback"
+    ) in store.quote(s + "33.120.220.txt#L28")
 
 
 # --- the screen ---------------------------------------------------------------
@@ -324,13 +402,8 @@ def test_the_neighbours_answered_settle_the_lot_either_way(corpus) -> None:
 
 def test_a_shallow_lot_on_map_120_2_owes_no_closer_look(corpus) -> None:
     shallow = _screen(corpus, _answered(_lot(corpus, "RM1", 60, 160), **{FRONTAGE: True, EASTERN: False}))
-    # The neighbours are asked about, and either answer clears the lot: the
-    # flag rides along below the yellow line.
     assert shallow.colour is flag_plan.Colour.green
-    line = flag_plan.colour_rules().yellow_at_severity
-    assert all(
-        flag_plan.severity_of(f) < line for f in shallow.flags if f.code == fact_code(NEIGHBOURS)
-    )
+    assert fact_code(NEIGHBOURS) not in {f.code for f in shallow.flags}
     assert "min_frontage_ft" not in {c.check for c in shallow.checks}
 
 
@@ -348,9 +421,8 @@ def test_an_eastern_lot_is_charged_the_quarter_depth_yard(corpus) -> None:
     west = _screen(corpus, _answered(lot, **{FRONTAGE: False, EASTERN: False, "corner_lot": False}))
     east = _screen(corpus, _answered(lot, **{FRONTAGE: False, EASTERN: True, "corner_lot": False}))
     corner = _screen(corpus, _answered(lot, **{FRONTAGE: False, EASTERN: True, "corner_lot": True}))
-    # 25% of 166 ft is 41.5 ft of rear yard against Table 120-4's 5 ft ...
-    assert _fit(west).observed - _fit(east).observed == pytest.approx(36.5)
-    # ... and the court may take up half of it (B.2.a), so the need shrinks.
+    # 25% of 166 ft is 41.5 ft of rear yard against Table 120-4's 5 ft.
+    # The winning fit orientation can change when that yard changes.
     assert _fit(east).threshold < _fit(west).threshold
     assert _fit(corner).observed == _fit(west).observed
     assert east.colour is flag_plan.Colour.green
@@ -397,6 +469,16 @@ def test_a_lot_that_clears_at_some_depth_is_held_for_it(corpus) -> None:
     got = _screen(corpus, lot)
     assert got.colour is flag_plan.Colour.yellow
     assert "RULE-AMBIGUOUS" in {f.code for f in got.flags}
+
+
+def test_an_eastern_corner_with_unmeasured_depth_is_not_held_for_the_rear_setback(corpus) -> None:
+    lot = _answered(
+        _undepthed(_lot(corpus, "RM1", 60, 166)),
+        **{FRONTAGE: False, EASTERN: True, "corner_lot": True},
+    )
+    got = _screen(corpus, lot)
+    assert got.colour is flag_plan.Colour.green
+    assert "RULE-AMBIGUOUS" not in {f.code for f in got.flags}
 
 
 def test_the_depth_readings_cover_every_band_edge(corpus) -> None:

@@ -1223,6 +1223,14 @@ def _parse_variants(
         if not isinstance(when, list):
             problems.append(f"{at}: 'when' must list the condition(s) this applies under")
             continue
+        unless = body.pop("unless", None)
+        if isinstance(unless, str):
+            unless = [unless]
+        if unless is None:
+            unless = []
+        if not isinstance(unless, list):
+            problems.append(f"{at}: 'unless' must list the condition(s) that exclude this")
+            continue
         raw_band = body.pop("band", None)
         bands: list[Band] = []
         if raw_band is not None:
@@ -1307,6 +1315,7 @@ def _parse_variants(
                     ),
                     when=tuple(str(c) for c in when),
                     bands=tuple(bands),
+                    unless=tuple(str(c) for c in unless),
                     prov=Provenance(**_prov_args(merged)),
                     status=Status(declared),
                     reviewer=body.get("reviewer"),
