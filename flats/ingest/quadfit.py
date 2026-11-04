@@ -3484,10 +3484,12 @@ def fire_checked(
     and the route misses, the plan is drawn once more at the fronts a truck
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
-    build at.     Where the selected placement misses only on fire reach, the bounded
+    build at. Where the selected placement misses only on fire reach, the bounded
     fitting placements already produced for that angle are tried in
-    nearest-front preference order; the first that reaches and keeps every
-    other check unchanged is kept. If none passes, the existing other-angle
+    nearest-front preference order, subject to the stated maximum front
+    setback and only where no measured parking share would become stale; the
+    first that reaches and keeps every other check unchanged is kept. If none
+    passes, the existing other-angle
     retry follows unchanged: the plan is drawn at the fit's other angles
     (:func:`_turned_for_fire`) and kept at one the hose reaches.
     ``green`` says the plan
@@ -3579,9 +3581,20 @@ def fire_checked(
             )
         )
 
-    if fitter is not None and fire_only(out.screening) and fire_only(out.signed):
+    if (
+        fitter is not None
+        and fire_only(out.screening)
+        and fire_only(out.signed)
+        and s.facts.parking_frontage_share_pct is None
+        and s.facts.parking_frontage_run_ft is None
+    ):
+        from flats.ingest import flatter
+
+        max_front_ft = flatter._max_front_ft(out, _street_lines(lot))
         placements: list[Any] = []
-        drawing_for(out, fitter, street=at, listing=placements)
+        drawing_for(
+            out, fitter, street=at, listing=placements, max_front_ft=max_front_ft
+        )
         front_lines = MultiLineString(
             [[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in streets]
         )

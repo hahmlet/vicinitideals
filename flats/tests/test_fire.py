@@ -698,6 +698,113 @@ def test_fire_only_red_uses_the_next_fitting_placement_within_reach(
     )
 
 
+@pytest.mark.parametrize(
+    "candidate_front_ft, moved",
+    [(30.0, False), (8.0, True)],
+)
+def test_fire_retry_respects_the_maximum_front_setback(
+    corpus, policies, monkeypatch, candidate_front_ft, moved
+) -> None:
+    from flats.ingest import flatter, quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    base = _coloured(s, Triage.green)
+    ring = base.drawing["building"]
+    front = min(y for _, y in ring)
+    candidate = {
+        **base.drawing,
+        "building": [
+            [x, y + candidate_front_ft - (front - Y0)] for x, y in ring
+        ],
+    }
+    candidate_polygon = Polygon(candidate["building"])
+    monkeypatch.setattr(flatter, "_max_front_ft", lambda *_args: 10.0)
+
+    listed_caps: list[float | None] = []
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            cap = kwargs.get("max_front_ft")
+            listed_caps.append(cap)
+            if cap is not None and candidate_front_ft <= cap:
+                listing.append("candidate")
+            return None
+        if where == "candidate":
+            return candidate
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+
+    def route(building, *_args, **_kwargs):
+        if building.equals(candidate_polygon):
+            return 120.0
+        return 190.0
+
+    monkeypatch.setattr(fire, "route_ft", route)
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert listed_caps == [10.0]
+    if moved:
+        assert got.drawing["building"] == candidate["building"]
+        assert got.facts.fire_route_ft == 120.0
+        assert got.signed.colour is Colour.yellow
+    else:
+        assert got.drawing == base.drawing
+        assert got.facts.fire_route_ft == 190.0
+        assert got.signed.colour is Colour.red
+
+
+def test_fire_retry_skips_a_drawing_with_a_measured_parking_share(
+    corpus, policies, monkeypatch
+) -> None:
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    facts = dataclasses.replace(
+        s.facts, parking_frontage_share_pct=0.0, parking_frontage_run_ft=0.0
+    )
+    base = _coloured(dataclasses.replace(s, facts=facts), Triage.green)
+    listing_calls = 0
+    angle_retry_calls = 0
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, **kwargs):
+        nonlocal listing_calls
+        if listing is not None:
+            listing_calls += 1
+            return None
+        return real_drawing_for(screened, fitter, **kwargs)
+
+    def other_angle(current, *_args, **_kwargs):
+        nonlocal angle_retry_calls
+        angle_retry_calls += 1
+        return current, 190.0
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    monkeypatch.setattr(quadfit, "_turned_for_fire", other_angle)
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert listing_calls == 0
+    assert angle_retry_calls == 1
+    assert got.drawing == base.drawing
+    assert got.facts.parking_frontage_share_pct == 0.0
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+
+
 def test_fire_only_red_keeps_today_result_when_no_placement_is_within_reach(
     corpus, policies, monkeypatch
 ) -> None:
