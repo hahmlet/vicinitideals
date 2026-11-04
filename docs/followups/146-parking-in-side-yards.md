@@ -54,3 +54,12 @@ Next (after the overlays): Claude reads each, settles drive lane vs stalls, and 
 setback in most codes; whether flat paving may sit in it may be answered by each code's "allowed in setbacks" list) -- likely a
 Steph question with a recommended default.
 
+PORTLAND VERIFIED by Claude 2026-11-04 (Steph also brought another AI's answer, which agrees): ALLOWED in interior side
+setbacks. Chain: 33.120.220.txt#L13 "Setbacks for parking areas are in Chapter 33.266." -> 33.266.120 (houses, attached houses,
+duplexes..fourplexes, any zone) sets no interior side/rear limit -- only no vehicle area between building and street (C.1.a), 40%
+front paving cap and 20% side-street cap on corners (C.1.b), no stall within 10 ft of the front line or in a side-street setback
+(C.2.a), alley access (C.3). Paving is at grade (33.120.280.txt#L107: structures <= 2.5 ft high allowed in all building
+setbacks). 33.120.235.C.1 L1 setback landscaping exempts "development allowed in the setbacks" and sites <= 10,000 sq ft, except
+the EPA rear-setback 50% cap (ruled by area, 2026-11-04). The other AI said the 40% cap is "single-dwelling areas": wrong -- it
+follows the building type, so it binds our RM lots too (already encoded? check before building).
+
