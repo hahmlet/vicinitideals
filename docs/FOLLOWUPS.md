@@ -106,6 +106,7 @@ the full one.)
 1. [Claude] [Steph: HUMAN_TODO 23] [scan: NO] **The county map copy: loose ends after the first promotion** -- September copy PROMOTED 2026-09-20; loose ends in file. [file](followups/1-county-map-copy.md)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
 143. [Claude] [Steph: design before build] [FLATS 2.0 -- after 1.0, not midstream] **Every word in the code bound to the definition that governs it** -- major feature, Steph 2026-11-03; proving case: Large City (80(d), run 113). [file](followups/143-word-definitions-flats-2.md)
+144. [Claude] [Steph: whether to use it] [scan: YES if built] **Overhead power lines near the building** -- Steph asked 2026-11-03; PGE publishes overhead distribution + transmission lines (weekly, PGE area only); clearance rule + accuracy check open. [file](followups/144-overhead-power-lines.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
