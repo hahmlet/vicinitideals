@@ -685,6 +685,10 @@ RULINGS: dict[str, dict[str, str]] = {
             "designation named at PZC 33.150.010; the campus institutional "
             "zones that implement it are already in the corpus."
         ),
+        # Two tokens surfaced 2026-11-04 when FOLLOWUPS 109 part 2 batch B
+        # declared the last plan district chapters.
+        "FAR": "not-a-zone: floor area ratio, a measure (33.562.txt#L195, 'an FAR of 1:1').",
+        "NORTH": "not-a-zone: a map's north arrow, 33.515.txt#L1555 ('A NORTH').",
     },
     "or/washington/_unincorporated": {
         # Twelve tokens surfaced 2026-10-31 when FOLLOWUPS 73 batch 8 cut the

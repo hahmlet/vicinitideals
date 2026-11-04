@@ -1559,3 +1559,15 @@ notes:
     state: dismissed
     reason: >-
       a bonus height reachable only through a Planned Development; the pod is under every base height in Table 595-3
+
+  - quote: "or/multnomah/portland/33.510.txt#L2639"
+    digest: "2569fabf912b"
+    state: dismissed
+    reason: >-
+      the ratios in Table 510-2 are per 1,000 sq ft of building except where the table says otherwise, and Household Living's row says 1.2 per dwelling unit; the pod's 4 stalls for 4 homes is 1.0, under the maximum, and every Central City lot sits in the plan_district_unmeasured hold
+
+  - quote: "or/multnomah/portland/33.510.txt#L2640"
+    digest: "18ae44687221"
+    state: dismissed
+    reason: >-
+      defines anchor retail (a store over 50,000 sq ft) and lists who may apply for Preservation parking; neither is a home, and the pod's parking is under the Household Living maximum

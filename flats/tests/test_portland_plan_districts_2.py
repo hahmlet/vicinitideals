@@ -56,7 +56,11 @@ FILES = {
     GLENDOVEER: "or/multnomah/portland/glendoveer-lr75.geojson",
     HOLD: "or/multnomah/portland/plan-district-unmeasured-lots.geojson",
 }
-HOLD_ZONES = {"RF", "R20", "R10", "R7", "R5", "R2.5", "RM1", "RM2", "RM3", "CM1", "CM2", "CM3", "CE", "CI2"}
+HOLD_ZONES = {
+    "RF", "R20", "R10", "R7", "R5", "R2.5", "RM1", "RM2", "RM3", "CM1", "CM2", "CM3", "CE", "CI2",
+    # Batch B (2026-11-04): Gateway, Northwest and Central City greens stand in these.
+    "RM4", "RX", "CX", "EX",
+}
 #: The zone each area is probed in.
 PROBE = {GLENDOVEER: "R7", HOLD: "R5"}
 POD = ("multi_story", "attached_wall")

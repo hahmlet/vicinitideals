@@ -197,9 +197,14 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and forty-five notes, all of them ruled, none blocking.
+    """A hundred and forty-seven notes, all of them ruled, none blocking.
 
-    The last five came with the plan district chapters stored 2026-11-03
+    The last two came with Central City (33.510), stored 2026-11-04 for
+    FOLLOWUPS 109 part 2 batch B: Table 510-2's notes on how its parking
+    maximums are counted and on anchor retail. Both dismissed; Household
+    Living's 1.2 per home is above the pod's 1.0.
+
+    Before them, five came with the plan district chapters stored 2026-11-03
     (FOLLOWUPS 109 part 2 batch A): East Corridor's two landscaping notes on
     exterior display and storage, Glendoveer's attached-house side setback,
     Macadam's pointer to the wall-plane measurement and West Portland's
@@ -233,7 +238,7 @@ def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
     Household Living row starts at five units on site. See
     test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 145
+    assert len(ruled) == 147
     assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 

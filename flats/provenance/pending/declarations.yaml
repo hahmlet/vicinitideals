@@ -10,19 +10,9 @@
   title: "Chapter 33.505 Albina Community Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.510"
-  url: https://www.portland.gov/sites/default/files/code/510-central-city_1.pdf
-  title: "Chapter 33.510 Central City Plan District"
-  extraction: plain
-  allow_thin: true
 - id: "33.520"
   url: https://www.portland.gov/sites/default/files/code/520-division-pd.pdf
   title: "Chapter 33.520 Division Street Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.532"
-  url: https://www.portland.gov/sites/default/files/code/532-hayden-island-pd.pdf
-  title: "Chapter 33.532 Hayden Island Plan District"
   extraction: plain
   allow_thin: true
 - id: "33.533"
@@ -40,11 +30,6 @@
   title: "Chapter 33.560 North Cully Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.562"
-  url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
-  title: "Chapter 33.562 Northwest Plan District"
-  extraction: plain
-  allow_thin: true
 - id: "33.565"
   url: https://www.portland.gov/sites/default/files/code/565-portland-international-airport-pd_0.pdf
   title: "Chapter 33.565 Portland International Airport Plan District"
@@ -53,11 +38,6 @@
 - id: "33.570"
   url: https://www.portland.gov/sites/default/files/code/33.570-rocky-butte-plan-district.pdf
   title: "Chapter 33.570 Rocky Butte Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.580"
-  url: https://www.portland.gov/sites/default/files/code/580-south-auditorium-pd_0.pdf
-  title: "Chapter 33.580 South Auditorium Plan District"
   extraction: plain
   allow_thin: true
 - id: "33.583"

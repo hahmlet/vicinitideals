@@ -1383,7 +1383,14 @@ _C: tuple[ConditionDef, ...] = (
         "depth (West Portland), setbacks set by wall-plane area and a light "
         "rail setback (Macadam), the Linnton Hillside lot-of-record rule "
         "(Northwest Hills), or Glendoveer's flag-lot standards on an R7 lot "
-        "whose shape could be a flag lot. The lot stays in review. Assumed unknown: it "
+        "whose shape could be a flag lot; or, in batch B, parking and access "
+        "against Gateway streets and light rail and Northwest main streets, "
+        "residential use held to 20 percent (Northwest), a height printed "
+        "only on a map below the pod's (Northwest, Columbia South Shore, "
+        "Central City, Marquam Hill), walls set parallel to Sandy Boulevard, "
+        "the Powell Boulevard sound wall, South Auditorium's landscaped "
+        "street edge, or Hayden Island's commercial height step and floor "
+        "area rules. The lot stays in review. Assumed unknown: it "
         "decides the colour.",
         evidence=(
             "the plan district lot tracing in "

@@ -319,7 +319,9 @@ def test_every_zone_in_the_corpus_resolves_the_fire_limit(corpus) -> None:
 
 # --- the bridge -----------------------------------------------------------
 
-X0, Y0 = 7_650_000.0, 680_000.0
+# 200 ft east of where it stood until 2026-11-04: the old spot is Central
+# City, where FOLLOWUPS 109 batch B holds every lot (plan_district_unmeasured).
+X0, Y0 = 7_650_200.0, 680_000.0
 
 
 def bridge_row(**over) -> dict[str, object]:

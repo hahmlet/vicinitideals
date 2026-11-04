@@ -1856,6 +1856,70 @@ code:
     title: "Chapter 33.595 West Portland Multicultural"
     extraction: plain
     allow_thin: true
+  # Plan districts part 2 batch B (FOLLOWUPS 109, 2026-11-04), the last of
+  # them: Central City (33.510), Columbia South Shore (33.515), Gateway
+  # (33.526, stored 2026-10-21 and read by pdx_overlays for its open-area
+  # map, declared here now that it is cited), Hayden Island (33.532),
+  # Marquam Hill (33.555), Northwest (33.562), Powell Boulevard (33.567),
+  # Sandy Boulevard (33.575) and South Auditorium (33.580). Every rule that
+  # reaches the pod is held on drawn_areas plan_district_unmeasured. Read
+  # and dismissed: ground floor windows, main entrances, windows above the
+  # ground floor and the Northwest active floor area (residential exempt
+  # until 2029, 33.562.240.D, 270), the Sandy and Gateway height steps (no
+  # step falls below 30 ft, 33.575.100, 33.526.210), Gateway open area
+  # (sites of 5 acres or more and additions of 10,000 sq ft, 33.526.240.B)
+  # and its Enhanced Pedestrian Street standards (sites of 40,000 sq ft,
+  # 33.526.280.B), and the Northwest 20,000 sq ft surface parking cap
+  # (33.562.280.B). Map heights in Gateway (75 ft and up), Hayden Island
+  # (50 ft and up) and the rest of Northwest (45 ft and up) clear the pod.
+  # Portland International Airport (33.565) is left in pending/: its one
+  # site standard, the 25 ft vegetated setback, binds IG2 in the golf
+  # course transition area only (33.565.410.B), and no lot there is green.
+  - id: "33.510"
+    url: https://www.portland.gov/sites/default/files/code/510-central-city_1.pdf
+    title: "Chapter 33.510 Central City Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.515"
+    url: https://www.portland.gov/sites/default/files/code/515-columbia-ss-pd.pdf
+    title: "Chapter 33.515 Columbia South Shore Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.526"
+    url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_1.pdf
+    title: "Chapter 33.526 Gateway Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.532"
+    url: https://www.portland.gov/sites/default/files/code/532-hayden-island-pd.pdf
+    title: "Chapter 33.532 Hayden Island Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.555"
+    url: https://www.portland.gov/sites/default/files/code/555-marquam-hill-pd_1.pdf
+    title: "Chapter 33.555 Marquam Hill Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.562"
+    url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
+    title: "Chapter 33.562 Northwest Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.567"
+    url: https://www.portland.gov/sites/default/files/code/567-powell-boulevard-pd_0.pdf
+    title: "Chapter 33.567 Powell Boulevard Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.575"
+    url: https://www.portland.gov/sites/default/files/code/575-sandy-blvd-pd.pdf
+    title: "Chapter 33.575 Sandy Boulevard Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.580"
+    url: https://www.portland.gov/sites/default/files/code/580-south-auditorium-pd_0.pdf
+    title: "Chapter 33.580 South Auditorium Plan District"
+    extraction: plain
+    allow_thin: true
   
   # ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
 defaults:
@@ -2264,7 +2328,7 @@ zones:
           quote: "or/hb.2138.2025.txt#L62-L71"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     notes: 'quadfit confidence: verified | Only house/ADU/manufactured home/houseboat/congregate allowed.'
     min_lot_sqft:
@@ -2393,7 +2457,7 @@ zones:
           via: "or/multnomah/portland/33.418.txt#L43-L48"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2525,7 +2589,7 @@ zones:
           via: "or/multnomah/portland/33.418.txt#L43-L48"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2657,7 +2721,7 @@ zones:
           via: "or/multnomah/portland/33.418.txt#L43-L48"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -2856,7 +2920,7 @@ zones:
           via: "or/multnomah/portland/33.418.txt#L43-L48"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
@@ -3017,7 +3081,7 @@ zones:
           via: "or/multnomah/portland/33.418.txt#L43-L48"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.3, one sentence: "In the R2.5 zone, a minimum of two
@@ -3201,7 +3265,7 @@ zones:
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
@@ -3333,7 +3397,7 @@ zones:
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
@@ -3489,7 +3553,7 @@ zones:
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
@@ -3639,6 +3703,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3793,6 +3861,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # Table 120-3 states one dimension for the RX zone and it is a 10-foot
       # front lot line. No area, which is not the same as an area of zero: the
@@ -4251,7 +4323,7 @@ zones:
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
@@ -4448,7 +4520,7 @@ zones:
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
@@ -4677,7 +4749,7 @@ zones:
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
@@ -4910,7 +4982,7 @@ zones:
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
@@ -5119,6 +5191,10 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
       # commercial/mixed use zones." Not a minimum of zero -- the standard
@@ -5289,6 +5365,10 @@ zones:
       # send it to a conditional use. EX is Central Employment.
       value: true
       quote: "or/multnomah/portland/33.140/33.140.100.txt#L104,L106"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "Lot size regulations are in Chapters 33.614 and 33.615." Those are
       # land-division chapters -- how a lot may be created -- and this
@@ -5524,7 +5604,7 @@ zones:
       quote: "or/multnomah/portland/33.150.txt#L340,L342"
       qualified_by:
         fact: pdx_plan_district_unmeasured
-        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C and 33.595.270.B, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height). Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land or for
@@ -5786,7 +5866,7 @@ drawn_areas:
       the outline is not what 33.530.020 reaches.
   plan_district_unmeasured:
     condition: pdx_plan_district_unmeasured
-    zones: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, CM1, CM2, CM3, CE, CI1, CI2]
+    zones: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RX, CM1, CM2, CM3, CE, CX, EX, CI1, CI2]
     file: or/multnomah/portland/plan-district-unmeasured-lots.geojson
     source: >-
       Plan district outlines and subdistricts (plan-districts.geojson,
@@ -5795,7 +5875,7 @@ drawn_areas:
       corridors and Kenton minimum-FAR layers, against the taxlots the screen
       reads (run 113). Drawn provenance in the file's source block.
     quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
-    cite: PCC 33.521.220.C, 290.C; 33.530.050; 33.536.210.B, 240.C, 280.C.2, 300.C; 33.538.220.B; 33.545.100.C; 33.550.220; 33.561.270, 300; 33.563.220; 33.595.100.B.1, 210.C, 250.C, 270.B
+    cite: PCC 33.521.220.C, 290.C; 33.530.050; 33.536.210.B, 240.C, 280.C.2, 300.C; 33.538.220.B; 33.545.100.C; 33.550.220; 33.561.270, 300; 33.563.220; 33.595.100.B.1, 210.C, 250.C, 270.B; 33.510.200.C.3, 210.B; 33.515.210, 230, 262; 33.526.220.B, 340.C; 33.532.220, 230.C, 245; 33.555.230; 33.562.100.B, 210, 220.B, 240.E-F; 33.567.040; 33.575.110; 33.580.110, 130
     note: >-
       One hold for every plan district rule in part 2 batch A that reaches
       the pod but that nothing the screen reads can answer, as Washington
@@ -5826,6 +5906,32 @@ drawn_areas:
       green on run 113. The minimums are held, not computed against the
       pod's 4,032 sq ft. CI1 because RICAP 11 builds a CI1 home to RM1's
       standards.
+      Batch B (2026-11-04) adds, traced the same way: Gateway lots with two
+      or more street faces (vehicle areas may not stand between the building
+      and any street, 33.526.340.C.1) and lots within 150 ft of a MAX line
+      (none within 100 ft of a light rail street, C.2), and the Map 526-3
+      .25 to 1 minimum-FAR areas whole, untraced, the figure printed only on
+      the map (33.526.220.B); Northwest CM2 lots and CM3 lots within 240 ft
+      of a Map 562-7 main street or streetcar centreline (1.5 to 1 minimum
+      FAR, 220.B; the pod's 4,032 sq ft meets it only on 2,688 sq ft or
+      less), CM3 lots in the Map 562-2 area (residential use at most 20
+      percent of a building, 100.B), lots on a main street or the streetcar
+      with two or more street faces or over 10,000 sq ft (240.E-F), and the
+      Map 562-4 0 ft height area whole (210); Sandy lots within 75 ft of the
+      NE Sandy Blvd centreline (walls parallel to Sandy, 33.575.110);
+      Hayden Island commercial lots (25 ft height near R zones, Jantzen Beach
+      .75 to 1 maximum FAR and building coverage, maximum setbacks,
+      33.532.220, 230.C, 245); and every lot in Powell Boulevard (8 ft sound
+      wall with 5 ft of landscaping on the Powell and R-facing lot lines,
+      33.567.040), South Auditorium (15 ft landscaped street edge, trees of 6
+      in. by design review, 33.580.110, 130), Columbia South Shore (view
+      corridor heights of 20 and 30 ft printed only on Map 515-3, the 25 ft
+      Airport Way setback, archaeology, 33.515.210, 230, 262), Central City
+      (a minimum FAR of at least 1 to 1 keyed to Map 510-2, base heights
+      down to 25 ft on Map 510-3, 33.510.200.C.3, 210.B) and Marquam Hill
+      (heights above sea level on Map 555-2, 33.555.230; none green). RM4,
+      RX, CX and EX join the zones because Gateway, Northwest and Central
+      City greens stand in them.
 
 # Which of this city's zones lie on which side of a lot line, for the
 # commercial chapters' "abuts an OS, RX, C, E or CI zone" / "abuts an RF
