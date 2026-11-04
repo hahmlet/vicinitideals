@@ -285,6 +285,73 @@ def test_portland_ce_leaves_its_streets_unread(corpus) -> None:
     assert got.get("setback_front_max_streets") is None
 
 
+@pytest.mark.parametrize(
+    ("jurisdiction", "zone"),
+    [
+        ("or/washington/_unincorporated", "TO:R24-40"),
+        ("or/washington/_unincorporated", "TO:R40-80"),
+        ("or/clackamas/milwaukie", "NMU"),
+        ("or/clackamas/estacada", "D"),
+    ],
+)
+def test_every_street_readings_resolve_from_their_zones(corpus, jurisdiction, zone) -> None:
+    assert corpus.resolve(jurisdiction, zone).get("setback_front_max_streets") == "every"
+
+
+@pytest.mark.parametrize("zone", ["TO:R24-40", "TO:R40-80"])
+def test_washington_county_transit_oriented_maximum_uses_half_the_facade(corpus, zone) -> None:
+    got = corpus.resolve("or/washington/_unincorporated", zone)
+    assert got.get("setback_front_max_facade_pct") == 50
+
+
+@pytest.mark.parametrize(
+    ("jurisdiction", "zone"),
+    [
+        ("or/washington/_unincorporated", "TO:R9-12"),
+        ("or/clackamas/oregon-city", "C"),
+        ("or/clackamas/oregon-city", "R-2"),
+        ("or/multnomah/gresham", "DMU"),
+        ("or/multnomah/gresham", "DCL"),
+        ("or/multnomah/gresham", "DEM"),
+        ("or/multnomah/fairview", "R-6"),
+        ("or/multnomah/fairview", "R-7.5"),
+        ("or/clackamas/tualatin", "CC"),
+        ("or/clackamas/west-linn", "MU"),
+        ("or/clackamas/wilsonville", "V"),
+        ("or/multnomah/troutdale", "MU-3"),
+    ],
+)
+def test_front_only_readings_resolve_from_their_zones(corpus, jurisdiction, zone) -> None:
+    assert corpus.resolve(jurisdiction, zone).get("setback_front_max_streets") == "front"
+
+
+@pytest.mark.parametrize("zone", ["SCR-MD", "SCR-V", "MU-N"])
+def test_hillsboro_middle_housing_maximum_is_met_on_one_street(corpus, zone) -> None:
+    assert corpus.resolve("or/washington/hillsboro", zone).get("setback_front_max_streets") == "one"
+
+
+@pytest.mark.parametrize("zone", ["R-6", "R-7.5"])
+def test_fairview_front_maximum_uses_the_established_area_qualifier(corpus, zone) -> None:
+    held = corpus.layers["or/multnomah/fairview"].zones[zone].values["setback_front_max_ft"]
+    assert held.qualified_by == "established_residential_area"
+    assert held.qualified_quote == (
+        "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,"
+        "L301-L303,L305-L307"
+    )
+
+
+def test_beaverton_mr_exempts_the_maximum_check(corpus) -> None:
+    resolved = corpus.resolve("or/washington/beaverton", "MR")
+    assert "setback_front_max_ft" in resolved.exempted
+    assert resolved.get("setback_front_max_ft") is None
+    got = run(
+        facts(front_max_streets=streets((True, 60.0, 60.0, 0.0)), front_max_tried=True),
+        resolved,
+    )
+    assert check(got, FRONT_MAX) is None
+    assert FRONT_MAX not in got.unchecked
+
+
 # --- the bridge ---------------------------------------------------------------
 
 

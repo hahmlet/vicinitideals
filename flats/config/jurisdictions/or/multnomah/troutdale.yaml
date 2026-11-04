@@ -1553,6 +1553,10 @@ zones:
       # legal front setback and it is 20 feet.
       value: 20
       quote: "or/multnomah/troutdale/3/3.230.txt#L25,L46"
+    setback_front_max_streets:
+      value: front
+      cite: Troutdale Development Code Table 3.230.B, Maximum front yard setback
+      quote: "or/multnomah/troutdale/3/3.230.txt#L42,L46"
     min_building_height_ft:
       # A FLOOR, not a ceiling, and the only standard in this corpus a pod can
       # fail by being too short. Troutdale states it twice and the two agree.

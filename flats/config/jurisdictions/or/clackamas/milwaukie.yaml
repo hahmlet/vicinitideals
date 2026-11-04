@@ -2154,6 +2154,10 @@ zones:
     setback_front_max_ft:
       value: 10
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1002,L1200"
+    setback_front_max_streets:
+      value: every
+      cite: MMC 19.303.4, the NMU maximum street setback and rule encouraging buildings up to the street right-of-way
+      quote: "or/clackamas/milwaukie/19.303/19.303.4.txt#L101,L107,L133"
     # Table 19.303.3 row B.3.c, "Side and rear setbacks": None in the NMU
     # column (the second of GMU, NMU, SMU). Encoded 2026-10-15 once ORS
     # 197A.400 opened the zone; the residential-edge transition as GMU's.

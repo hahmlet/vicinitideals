@@ -1626,14 +1626,16 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4596-L4597"
     setback_front_max_ft:
       # A MAXIMUM front setback: the building may be no further back than 20
-      # ft. Encoded because it is a real standard of this district, and
-      # flagged because nothing screens on it yet -- `setback_front_max_ft` is
-      # in the reach ledger's silently-unread set. Note 3 of the table says
+      # ft. Note 3 of the table says
       # "Maximum setback may be increased per OCMC 17.62.055.D", a relaxation
       # nobody has read; it can only loosen this, so leaving it unread is the
       # conservative direction.
       value: 20
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4598"
+    setback_front_max_streets:
+      value: front
+      cite: OCMC Table 17.12.040, maximum front yard setback; 17.04.490 defines the front lot line
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704,L4598,L4605"
     setback_side_ft:
       # "Minimum interior side yard setback / All, except 5 feet / Townhouse 0
       # feet (attached)/5 feet (side)". The stray "1" on L4602 is footnote
@@ -2458,6 +2460,10 @@ zones:
       # units, so the five-foot maximum reaches this building.
       value: 5
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7629-L7630"
+    setback_front_max_streets:
+      value: front
+      cite: OCMC 17.32.050.E.1, maximum front yard setback; 17.04.490 defines the front lot line
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704,L7629-L7632"
     max_coverage_pct:
       # Building plus parking lot, weakened to building alone -- see MUC-1.
       value: 85

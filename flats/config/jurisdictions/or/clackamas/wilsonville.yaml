@@ -2940,6 +2940,10 @@ zones:
       # loosenings on facts nothing measures, so none is taken.
       value: 20
       quote: "or/clackamas/wilsonville/4/4.125.txt#L164-L165,L180"
+    setback_front_max_streets:
+      value: front
+      cite: Wilsonville Development Code Table V-1, front minimum and maximum setbacks, and note 10 for Village Center lots fronting multiple streets
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L163-L164,L180,L187"
     setback_rear_ft:
       # Note 13 is the measurement rule and it matters on an alley lot: "On
       # lots with alleys, Rear Setback shall be measured from the rear lot line

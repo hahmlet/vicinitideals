@@ -6178,6 +6178,10 @@ zones:
       # Stanley), 20 (Cleveland). The smallest is taken.
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L164"
     setback_garage_entrance_ft:
       value: 15
       quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L82,L166"
@@ -6349,6 +6353,10 @@ zones:
       # Stanley), 20 (Cleveland). The smallest is taken.
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L164"
     setback_garage_entrance_ft:
       value: 15
       quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L82,L166"
@@ -6521,6 +6529,10 @@ zones:
       # Stanley), 20 (Cleveland). The smallest is taken.
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L164"
     setback_garage_entrance_ft:
       value: 15
       quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L82,L166"

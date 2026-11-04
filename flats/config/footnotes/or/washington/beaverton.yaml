@@ -187,14 +187,12 @@ notes:
   - quote: "or/washington/beaverton/20.05/20.05.15.txt#L309-L310"
     digest: "ca32aedd6568"
     state: encoded
-    encoded_as: "MR setback_front_max_ft 20"
+    encoded_as: "MR setback_front_max_ft exempt"
     reason: >-
-      Note 18 says the setbacks apply to all development other than townhouses
-      (the pod is screened as a quadplex, so they apply) and that the maximum
-      setback reaches the part of the site subject to the frontage requirement
-      of 60.05.15.6. The layer holds MR's 20-foot maximum on the front lot
-      line, which is the pod's frontage; the frontage occupancy of 60.05.15.6
-      is a layer-wide NOT ENCODED comment.
+      Note 18 limits the maximum to the part of the site subject to the frontage
+      requirement of 60.05.15.6, which governs Commercial and Multiple Use
+      zones. MR is residential; its separate 60.05.20 standards do not state a
+      maximum front setback.
   - quote: "or/washington/beaverton/20.05/20.05.15.txt#L312"
     digest: "bfd09ea85582"
     state: dismissed

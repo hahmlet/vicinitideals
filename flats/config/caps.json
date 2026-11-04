@@ -443,6 +443,10 @@
       "setback_front_max_ft": [
         "protected_water_feature"
       ],
+      "setback_front_max_streets": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "setback_rear_ft": [
         "protected_water_feature"
       ],
@@ -712,6 +716,10 @@
         "utility_easement"
       ],
       "setback_front_max_ft": [
+        "abuts_lower_density_zone",
+        "utility_easement"
+      ],
+      "setback_front_max_streets": [
         "abuts_lower_density_zone",
         "utility_easement"
       ],

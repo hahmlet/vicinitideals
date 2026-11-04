@@ -164,7 +164,9 @@ pytestmark = pytest.mark.unit
 # South subdistrict and the flood hazard area, citing 33.537.020, whose own words
 # exempt a flood-hazard site from 33.537.140; the 50 percent cap is the variant.
 # 467 -> 470 on merge: both of the above (3 Sandy + 12 Johnson Creek on 455).
-EXPECTED = {"stated": 470, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
+# 470 -> 471 stated on 2026-11-04: Beaverton MR's maximum front setback is
+# exempt because note 18 applies only where 60.05.15.6 governs.
+EXPECTED = {"stated": 471, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
