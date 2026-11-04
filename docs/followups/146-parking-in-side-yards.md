@@ -33,3 +33,24 @@ WORK if Steph says go:
 (c) bound per city, read every gain.
 
 GO 2026-11-04 (Steph: "Yes"), to start after the Portland plan-district overlays (109 part 2). Prep now: Copilot read-only scout collects every city's side-setback parking/driveway text with quotes (brief docs/copilot/briefs/side-yard-parking-scout.txt); Claude verifies each quote before any encoding.
+
+SCOUT 2026-11-04 (Copilot gpt-6-luna, 8.2 AI units; quotes SEEN, verdicts NOT yet checked by Claude):
+- ALLOWS: Canby CMC 16.22.010(b) (residential parking "to the side of the building", not a street-facing side yard; cmc.16.22.010.txt#L15);
+  Beaverton BDC 60.30.10.B (RMA/RMB/RMC/CM-RM, middle housing "may be located in side and rear yards"; 60.30.10.txt#L404-L406).
+- FORBIDS (townhouse model code "No off-street parking ... in the front yard or side yard of a townhouse"): Oregon City 17.16.040.B.1
+  (17.zoning.txt#L5349), Wilsonville 4.113 (#L417), Fairview 19.30.050 (#L118), Gresham 7.0431 (#L39); Cornelius required yards
+  (encoded). NOTE: our yaml carries parking_side_prohibited exempt:true in most places -- read WHY before relying on it; and
+  "off-street parking" may not reach a DRIVE LANE (a driveway is not a parking space in most of these codes) -- the lane and the
+  stalls may need separate answers.
+- BUFFER: Gladstone 10 ft stalls / drives+aisles allowed within 10 ft (17.10.065 #L62-L64; encoded 5 -- check); Tualatin 10 ft
+  landscape setback parking areas, townhouse/quadplex driveways allowed within 5 ft (73C.220 #L3, 73C.090 #L97-L98);
+  Multnomah uninc 5 ft non-street (39.8045 #L23, encoded).
+- UNCLEAR: Happy Valley "landscaped yard areas" (16.43.030 #L513); Milwaukie 19.600 #L955 + quadplex/townhouse split; Sandy
+  (street-abutting side yards only, SDC 17.98.50 #L253); Troutdale 8.130.C.4 (depends on meeting (a)); Hillsboro 12.50.715 vs
+  12.50.350; WashCo uninc overlays.
+- SILENT (not "allowed"): Clackamas uninc, Estacada, Johnson City, Lake Oswego, Rivergrove, West Linn, Portland interior sides
+  (33.266.120 sets nothing), Wood Village, Durham, King City, Sherwood, Tigard. Maywood Park: no stored code.
+Next (after the overlays): Claude reads each, settles drive lane vs stalls, and how "silent" is treated (a setback is a BUILDING
+setback in most codes; whether flat paving may sit in it may be answered by each code's "allowed in setbacks" list) -- likely a
+Steph question with a recommended default.
+
