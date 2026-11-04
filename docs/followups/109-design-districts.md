@@ -58,4 +58,8 @@ WashCo open space off site; 2026-10-28 King City average width per lot, Springwa
   (flat prohibition, >20% residential); NW main streets traced by eye accepted (54 greens to check in the move read). Bound pd2a+pd2b
   TOGETHER (replace the queued pd2a tag). QUESTION for Steph: download the City's map sheets (Gateway min building size, East Corridor
   Map 521-3) so the figures can be read off them (drawn:true form) and small lots reopened?
+- 2026-11-04: Steph APPROVED the map-sheet downloads -> encoder districts-pdx-pd2c (stacks on pd2b) reads Gateway + East Corridor
+  min building size off the City's sheets. Bound pd2ab (0bd2abb1) DONE: 1,466 moves; Glendoveer R7 ~2,048 lots in scope, ~958 green
+  live -> 534 red, 7 yellow, 417 stay green; 1 gain (1N2E25CD -04200, slope flag gone) to explain; move read running. Glendoveer
+  LR7.5 lot-list question re-asked with the count.
 
