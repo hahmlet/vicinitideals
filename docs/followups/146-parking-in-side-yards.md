@@ -1,6 +1,6 @@
 # 146. Let the drive lane (and court) use the side setback where the code allows it.
 
-146. [Claude] [Steph: go/no-go -- layout mechanic change] [scan: YES -- reds/yellows only go green]
+146. [Claude] [GO Steph 2026-11-04: after the overlays] [scan: YES -- reds/yellows only go green]
    **Let the drive lane (and court) use the side setback where the code allows it.**
 
 Raised 2026-11-04 from Steph's question "are we currently placing parking within setbacks?" (FOLLOWUPS 68).
@@ -31,3 +31,5 @@ WORK if Steph says go:
     down to the buffer; the building still keeps its full side setbacks. Fire access, turning, the
     40%-front-paving style caps and frontage-share caps still bind.
 (c) bound per city, read every gain.
+
+GO 2026-11-04 (Steph: "Yes"), to start after the Portland plan-district overlays (109 part 2). Prep now: Copilot read-only scout collects every city's side-setback parking/driveway text with quotes (brief docs/copilot/briefs/side-yard-parking-scout.txt); Claude verifies each quote before any encoding.

@@ -130,7 +130,7 @@ the full one.)
 142. [Claude] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) BUILT bf18785e, first bound timed out, RE-BOUND overnight 11-03 (/root/fire_rp2); (b) RULED city's own stall width, Copilot BUILDING (flats/city-stall-width), (c) RULED later with 92. [file](followups/142-placement-and-stall-width.md)
 145. [Claude] [Steph: parameters + design review] [scan: YES when built] **Set access: truck route, crane setup and lifts solved per lot** -- moderate feature, Steph 2026-11-03; generative like the court search; parameters not yet given. [file](followups/145-set-access-crane-truck.md)
 120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BUILT by Copilot 56891775 (flats/happy-valley-driveway-cap), also reaches Beaverton + Sherwood; BOUND RUNNING 11-03 (/root/hv_cap), then read. [file](followups/120-happy-valley-driveway-cap.md)
-146. [Claude] [Steph: go/no-go] [scan: YES -- toward green] **Let the drive lane (and court) use the side setback where the code allows it** -- offered 2026-11-04; today the lane never sits in a side yard; Portland allows it (33.266.120). [file](followups/146-parking-in-side-yards.md)
+146. [Claude] [scan: YES -- toward green] **Let the drive lane (and court) use the side setback where the code allows it** -- GO 2026-11-04, after the overlays; Copilot scout gathering each city's text; today the lane never sits in a side yard; Portland allows it (33.266.120). [file](followups/146-parking-in-side-yards.md)
 
 ## 2. Waiting on Steph
 
