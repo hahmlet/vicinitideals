@@ -1,0 +1,28 @@
+max-front-setback-r2 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/max-front-setback, branch flats/max-front-setback, head 20fbf9ed; no new branch)
+
+WHY: FOLLOWUPS 147. The open readings in the hand-off (C:/Users/Steph/Repos/vicinitideals-worktrees/max-front-setback.handoff.md) were read by Claude on 2026-11-04. Encode exactly these YAML changes, each with the quote given (paths under flats/provenance/docs/; verify every cited line range exists and contains the quoted words before committing; if one does not, skip that change and say so). Use the field shapes the branch already uses for Tigard (`every`) and Portland (`corner_every`) -- read flats/score/screen.py front_max_owed and the field definitions in flats/rules/fields.py first.
+
+1. Beaverton MR (flats/config/jurisdictions/or/washington/beaverton.yaml): `setback_front_max_ft` -> `exempt: true`, cite "Beaverton 20.05.15 note 18 (applies to all development other than townhouses; maximum setbacks apply only to the portion subject to 60.05.15.6, which governs Commercial and Multiple Use zones; MR is residential)", quote "or/washington/beaverton/20.05/20.05.15.txt#L29,L309-L310". Mention 60.05/60.05.15.txt#L89 and 60.05/60.05.20.txt#L115 in the cite text.
+2. Washington County unincorporated TO:R24-40 and TO:R40-80: `setback_front_max_streets: every` (quote "or/washington/_unincorporated/375/375-3.txt#L16-L17") and `setback_front_max_facade_pct: 50` (quote "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357").
+3. Washington County TO:R9-12: `setback_front_max_streets: front` (quote "or/washington/_unincorporated/375/375-10.txt#L263,L297").
+4. Milwaukie NMU: `every` (quote "or/clackamas/milwaukie/19.303/19.303.4.txt#L101,L107,L133"). Estacada D: `every` (quote "or/clackamas/estacada/16.26/16.26.040.txt#L24"); leave its share unset.
+5. `setback_front_max_streets: front` with these quotes:
+   - Oregon City C: "or/clackamas/oregon-city/17.zoning.txt#L7629-L7632,L1701-L1704"
+   - Oregon City R-2: "or/clackamas/oregon-city/17.zoning.txt#L4598,L4605,L1701-L1704"
+   - Gresham DCL, DMU, DEM: "or/multnomah/gresham/4/4.1130.txt#L91,L164"
+   - Fairview R-6, R-7.5: "or/multnomah/fairview/19.30/19.30.030.txt#L160-L162,L190"
+   - Tualatin CC: "or/clackamas/tualatin/53/53.300.txt#L27,L33-L34"
+   - West Linn MU: "or/clackamas/west-linn/59/59.070.txt#L38-L42,L47-L48"
+   - Wilsonville V: "or/clackamas/wilsonville/4/4.125.txt#L163-L164,L180,L187"
+   - Troutdale MU-3: "or/multnomah/troutdale/3/3.230.txt#L42,L46"
+6. Hillsboro SCR-MD, SCR-V, MU-N: `setback_front_max_streets: one` (quote "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"; for middle housing the maximum is met when at least one facade is within it).
+7. Fairview R-6 and R-7.5: copy the minimum front setback's `qualified_by: established_residential_area` onto `setback_front_max_ft` (19.30.030(D) infill rule).
+NO change: Tigard, Portland EX/CI2/IR, Hillsboro MU-VTC, Oregon City MUC-2, King City, Gladstone C2.
+
+TESTS: extend flats/tests/test_front_max.py: one test per street value now encoded (front / every / one) resolving the actual zone (e.g. Gresham DMU front, Milwaukie NMU every, Hillsboro SCR-MD one, Beaverton MR exempt -> the check does not apply). Run uv run pytest flats/tests -q -n auto (green except, if it is the only failure, test_gaps -- then run uv run python -m flats.encode.gaps and commit flats/config/gaps.json on this branch), uv run ruff check flats/, the firewall check. Commit by explicit path, prefix "flats:" ending "(FOLLOWUPS 147)". Do not push.
+
+Append "## Round 2 (2026-11-04)" to the hand-off: which zones changed and which way (front/one: some corner lots unheld -> measured; Beaverton MR exempt: ~48 lots leave the check).
+
+MUST NOT CHANGE: any setback figure; screen.py logic; any city not listed; anything under app/.
+
+AUTHORISED EXCEPTION: these readings move lots relative to round 1 of this branch: corner lots in the `front`/`one` zones may go from held (YELLOW) to measured (GREEN where they pass on the street the code names); Beaverton MR lots leave the maximum check. Compared with live main, no lot may become GREEN that the branch's round 1 did not already allow, except through these readings.
