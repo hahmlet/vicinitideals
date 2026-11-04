@@ -25,6 +25,7 @@ from flats.encode.port_quadfit import (
     port,
     port_zone,
 )
+from flats.rules.conditions import DRAWN_CONDITIONS
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
 from flats.rules.model import Status
@@ -153,7 +154,12 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
                 # ... and the rear half, on the line that names the line.
                 rear = zone.values.get("setback_rear_ft")
                 assert rear is not None, f"{jname}/{row['zone']} holds no setback_rear_ft"
-                rear_alley = [v for v in rear.variants if "alley_at_rear" in (v.when or ())]
+                # A variant that also names a drawn plan district fact is that
+                # district's own figure, which the base zone's alley sentence
+                # does not relax (Glendoveer, PCC 33.530.040.A, 2026-11-03);
+                # the base zone's alley exemption must still stand on its own.
+                rear_alley = [v for v in rear.variants if "alley_at_rear" in (v.when or ())
+                              and not set(v.when or ()) & set(DRAWN_CONDITIONS)]
                 assert rear_alley and all(v.exempt for v in rear_alley), (
                     f"{jname}/{row['zone']} states setback_alley_ft and the corpus "
                     f"holds no alley_at_rear exemption on setback_rear_ft"

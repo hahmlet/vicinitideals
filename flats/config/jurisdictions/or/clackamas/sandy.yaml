@@ -1,6 +1,10 @@
 label: Sandy
 kind: city
 eligible: true
+# Outside Metro and under 25,000 people (the state layer's OAR 660-046-0225 applicability
+# note), so not a Large City under OAR 660-046-0020(8) (oar.660-046-0020.txt#L72): the state
+# quadplex parking ceiling does not reach it, and its own count governs (FOLLOWUPS 80(d)).
+large_city: false
 notes: >-
   DRAFT, 2026-10-07. Read from the Sandy Development Code (Title 17 of the
   Sandy Municipal Code) as Municode publishes it, one document per chapter,

@@ -60,13 +60,18 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "oregon_city_historic_overlay",
         "oregon_city_park_place",
         "oregon_city_south_end",
-        # Portland plan districts part 1: Johnson Creek Basin (33.537) and
-        # Laurelhurst/Eastmoreland (33.540) (FOLLOWUPS 109, 2026-11-01), and
-        # Zoning Code Maps 120-3 and 120-2 (FOLLOWUPS 68, 2026-11-01).
+        # Portland: Zoning Code Maps 120-3 and 120-2 (FOLLOWUPS 68, 2026-11-01);
+        # plan districts part 1, Johnson Creek Basin (33.537) and
+        # Laurelhurst/Eastmoreland (33.540) (FOLLOWUPS 109, 2026-11-01); part 2
+        # batch A, Glendoveer (33.530) and the one hold for the rules nothing
+        # measures (2026-11-03); batch B, Northwest Map 562-2 (2026-11-04).
         "pdx_eastern_pattern_area",
+        "pdx_glendoveer_lr75",
         "pdx_johnson_creek_impervious",
         "pdx_johnson_creek_unmeasured",
         "pdx_min_site_frontage_area",
+        "pdx_nw_residential_limited",
+        "pdx_plan_district_unmeasured",
         "pdx_special_building_setback",
         # Raleigh Hills - Garden Home ASC U's one lot (FOLLOWUPS 136).
         "raleigh_hills_asc_u",

@@ -78,12 +78,11 @@ def test_the_facts_are_drawn_site_facts_never_assumed(name: str) -> None:
 
 
 def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
-    # The Map 120-2 and 120-3 areas (FOLLOWUPS 68, 2026-11-01) are base-zone
-    # maps, not plan districts: test_portland_map_120.py guards them.
-    by_fact = {a.condition: a for a in portland.drawn_areas.values() if a.condition in FACTS}
-    assert set(by_fact) == set(FACTS)
-    for fact, area in by_fact.items():
-        assert area.file == FILES[fact]
+    by_fact = {a.condition: a for a in portland.drawn_areas.values()}
+    # Part 2's areas (test_portland_plan_districts_2.py) sit beside these.
+    assert set(FACTS) <= set(by_fact)
+    for fact in FACTS:
+        assert by_fact[fact].file == FILES[fact]
     # CI1 because RICAP 11 builds a CI1 home to RM1's standards, holds included.
     assert set(by_fact[IMPERVIOUS].zones) == JC_ZONES | {"CI1"}
     assert set(by_fact[UNMEASURED].zones) == JC_ZONES | {"CI1"}

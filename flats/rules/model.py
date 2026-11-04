@@ -647,6 +647,7 @@ LAYER_META = frozenset(
         "kind",
         "label",
         "eligible",
+        "large_city",
         "cite_default",
         "notes",
         "defaults",
@@ -1468,6 +1469,9 @@ class Value(BaseModel):
     #: default binds nothing. The one place the flat rule set needs
     #: defeasibility, and it needs a direction with it -- see `Preempt`.
     preempts: Preempt = Preempt.none
+    #: Whether this state value is limited to jurisdictions that meet the
+    #: Large City definition. Unmarked values retain the existing hierarchy.
+    large_city_only: bool = False
     #: The per-dwelling figure the code prints, where it prints one instead of
     #: the total. MCC 39.4862(C) states the LR-7 minimum lot size as "5,000
     #: square feet for each dwelling unit"; 20,000 appears nowhere in the
@@ -2795,6 +2799,9 @@ class Layer(BaseModel):
     kind: str = Field(description="state | county | city | unincorporated")
     label: str
     eligible: bool = True
+    #: Explicit Large City status for jurisdiction-scoped state standards.
+    #: None preserves existing inheritance until a layer is classified.
+    large_city: bool | None = None
     defaults: dict[str, Value] = Field(default_factory=dict)
     zones: dict[str, Zone] = Field(default_factory=dict)
     notes: str | None = None

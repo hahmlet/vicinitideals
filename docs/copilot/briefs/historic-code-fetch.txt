@@ -1,0 +1,17 @@
+historic-code-fetch
+
+WHY: FOLLOWUPS 87 (docs/followups/87-historic-outside-portland.md, read the last two paragraphs) -- lots carrying a locally protected historic resource outside Portland can show a false GREEN. Next week Claude reads each city's historic-protection section to decide which listings bind. Several of those sections are referenced by the stored code but their own text is NOT in the store, and nothing may be read or cited until its words are on disk. This job only stores the text; it reads and encodes nothing.
+
+TASK: for each section below, first grep flats/provenance/docs/or/ to confirm it is not already stored (report it if it is, and skip). Otherwise store it with the repo's own tool, flats/provenance/fetch.py (read its docstring; run `git log --stat` on a sibling document of the same city to see how that city's documents were added -- declared source, URL form, --start/--end slicing, section-file layout -- and copy that exactly):
+- Clackamas County ZDO 707 (Historic Landmark, Historic District and Historic Corridor overlays) -> the county's _unincorporated folder.
+- Washington County CDC 373 (Historic and Cultural Resource Overlay District) -> or/washington/_unincorporated.
+- Multnomah County's historic resource overlay section that or/multnomah/_unincorporated/33.100.txt references (~L231-232) -> or/multnomah/_unincorporated.
+- Troutdale Development Code 4.200-4.230 (historic landmarks, including 4.230 Table A) -> or/multnomah/troutdale.
+- Gresham Community Development Code 5.0300 (historic and cultural landmarks) -> or/multnomah/gresham.
+- Hillsboro 12.27.300 (Cultural Resource Overlay) -> or/washington/hillsboro.
+- Beaverton 60.45 (historic) -- report whether the code marks it repealed; store it only if it is in force.
+Use the official publisher only (the URLs the city's existing documents use); never a third-party copy. If a page will not fetch cleanly, report the URL and the error rather than hand-typing text.
+
+After storing: run the corpus ledgers $PYTHON -m pytest flats/tests/test_districts.py flats/tests/test_refusals.py flats/tests/test_port.py flats/tests/test_exemptions.py -q -n auto -p no:cacheprovider. A new document can move a ledger count: update that count with a dated comment naming this job, nothing else.
+
+MUST NOT CHANGE: any rule value, any jurisdiction's zones or conditions, any lot colour, any existing stored document's bytes (a re-fetch that changes stored text must be reported, not committed).

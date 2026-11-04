@@ -8,7 +8,7 @@
    31W15DC05351 and 31W22DC01400 (Wilsonville) STAY GREEN. Bound: 241 lots go red on the cap,
    every one a corner or through lot (Clackamas 105, Beaverton 103, Wilsonville 23, Hillsboro
    SCR-MD 10); two ways one street was read as two (a bend under the 45-degree corner angle; a jog
-   in one frontage) fixed, 38 lots back. QUESTION for Steph, open: 1S113BA07700 (Beaverton RMC
+   in one frontage) fixed, 38 lots back. RULED Steph 2026-11-03 (2026-11-03-green-plan-beats-yellow-preferred): SHOW GREEN -- any plan passing every check wins; check the screen does this, build if not. Was: 1S113BA07700 (Beaverton RMC
    yellow -> green: base's preferred plan was yellow on SLOPE-GRADE, the cap pushed it to a green
    plan off the other front) -- should a yellow preferred plan hide a green one?
    (b) Hillsboro SCR-MD/SCR-HD 5 ft MAXIMUM side setback (12.22 tables): RULED (coordinator
@@ -21,5 +21,8 @@
    (d) Estacada is charged 4 stalls (state middle-housing cap) but is under 25,000 people and
    outside Metro, so its own 1.5 per home = 6 stalls applies (emc.16.76.txt:77-78). Every Estacada
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
+   LIVE run 113 2026-11-03 (main afb7ad39, code 513fd4b7): Estacada, Canby, Sandy marked large_city: false;
+   90 lot moves (green->red 44, green->yellow 4, yellow->red 41, red->yellow 1), fingerprint matched the
+   bound exactly. Two Canby false reds (31E33DC05001, 31E34CC01800) fixed forward in item 142.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.

@@ -1,0 +1,20 @@
+city-stall-width
+
+WHY: FOLLOWUPS 142(b) (docs/followups/142-placement-and-stall-width.md -- read it) and Steph's ruling 2026-11-03-stall-width-city-minimum in flats/config/rulings.yaml: draw the rear court's stalls at the CITY'S OWN stated stall width, not the design's 9 ft. Today flats/score/paper.py takes max(design 9.0, stated) in court_across (~L922-L925 and ~L953-L955), so Canby (8.5 ft, CMC 16.10.070(A)) and Estacada (8 ft, EMC 16.08.010) courts are drawn at 9 ft and ~7 lots miss only by that margin. Claude will bound this branch on LXC 137 and read every lot that moves.
+
+TASK:
+1. In flats/score/paper.py court_across (and anywhere else in flats/ that widens a stall to max(design, stated) -- grep parking_stall_width_ft and stall_width_ft outside tests), use the stated parking_stall_width_ft when the zone states one; keep the design's stall_width_ft when the zone states none. Do NOT change stall DEPTH, aisle, lane, gap, island or dead-end handling. The planted-island width (parking_island_sqft_per_space) still adds on top.
+2. The three-point-turn ledger flats/config/court_turns.json is keyed by court shape (stall count, stall width, depth, aisle, lane, standoff); shapes with the narrower widths will be missing and read as UNSEARCHED. Read flats/score/turns.py (module docstring explains the ledger) and regenerate the ledger the documented way (python -m flats.score.turns, or whatever the docstring/CLI says) so every shape the corpus now draws is searched. Narrower stalls may fail the turn and take a "wider stalls" fix -- that is correct behaviour; do not special-case it. If regeneration needs data not on this PC, say so plainly in your final report and leave the ledger as is.
+3. Update any test whose expectation was the 9 ft max (grep flats/tests for stall_width, parking_stall_width_ft, 9.0) only where the stated width is below 9; explain each changed expectation in a one-line comment dated 2026-11-03.
+
+TESTS in flats/tests (new file test_city_stall_width.py):
+- a Canby zone court of 4 stalls is 4 x 8.5 = 34 ft wide (plus any fix the turn search takes), not 36;
+- an Estacada court of 4 stalls uses 8 ft stalls;
+- a zone stating 9.5 ft draws 9.5 (stated wider than design still wins);
+- a zone stating nothing draws the design's 9.0;
+- the turning check is still asked for the narrower shape (turns is not None when the ledger holds it).
+Run: uv run pytest flats/tests -q -n auto  (must be green) and uv run ruff check flats/.
+
+AUTHORISED EXCEPTION: lots in zones stating a stall width under 9 ft (Canby, Estacada, any other such city -- list them in your report with their stated width) may move red/yellow -> green; that is the task.
+
+MUST NOT CHANGE: any rule value in flats/config/jurisdictions, stall depth, aisle, drive widths, the turning search's logic, anything under app/.

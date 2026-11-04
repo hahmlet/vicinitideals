@@ -1,0 +1,11 @@
+durham-apron-100ft
+
+WHY: FOLLOWUPS 118 (docs/followups/118-durham-apron-100ft.md -- read it). Durham 3.7.1.7 forbids a driveway apron within 100 ft of any street intersection. Today nothing measures it: condition driveway_near_intersection_100ft is never answered, so every Durham would-be GREEN is YELLOW with flag FACT-DRIVEWAY-NEAR-INTERSECTION-100FT (commit 392ce30d; 21 lots). Measure it instead. Claude will bound this branch on LXC 137 and read every lot that moves.
+
+TASK: read the stored Durham text for 3.7.1.7 (flats/provenance/docs/or/washington/durham/ -- grep "3.7.1.7" and "intersection"; quote the line). Find where the screen places the driveway / court access on the frontage and what street-intersection geometry exists (grep flats/ for corner, intersection, street_end, front_lot_line_corner, the street-class per lot line work in FOLLOWUPS 41). Answer the condition by measurement: the distance along the frontage from the nearest street intersection point to the nearer edge of the driveway apron must be >= 100 ft; if the drive can be placed anywhere along the frontage that satisfies it (and every existing driveway check still passes), it passes; if no placement does, the lot FAILS that rule (RED with the 3.7.1.7 reason); if the intersection geometry is not measurable for a lot, keep today's flag (YELLOW) -- never pass an unmeasured lot. Durham only (other cities' similar rules are out of scope; list any you notice).
+
+TESTS in flats/tests: a mid-block Durham lot far from any intersection -> passes; a small corner lot (e.g. 103 ft total frontage across two streets, like 17104 SW BINDDALE CT) where no apron can be 100 ft away -> fails with the 3.7.1.7 reason; a lot with unmeasurable intersection geometry -> still the flag.
+
+AUTHORISED EXCEPTION: the 21 flagged Durham lots may move yellow -> green (measured clear) or yellow -> red (measured too close); that is the task.
+
+MUST NOT CHANGE: any other city, any rule value, any other driveway check.

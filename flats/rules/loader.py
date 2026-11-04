@@ -159,6 +159,7 @@ def _parse_values(
     # a bool is stable, which leaves the file's own order intact otherwise --
     # and the file's order is what a reviewer reads.
     for key, node in sorted(raw.items(), key=lambda kv: _borrows(kv[1])):
+        large_city_only = False
         try:
             field(key)
         except KeyError as exc:
@@ -207,6 +208,7 @@ def _parse_values(
             measured_on, measured_on_cite, measured_on_quote, acre_sqft = (
                 _parse_measured_on(raw_measured_on, f"{where}.{key}", problems)
             )
+            large_city_only = body.pop("large_city_only", False)
             net_area = _parse_net_area(raw_measured_on, f"{where}.{key}", problems)
             qualified, qualified_cite, qualified_quote = _parse_qualified_by(
                 body.pop("qualified_by", None), f"{where}.{key}", problems
@@ -743,6 +745,7 @@ def _parse_values(
                 reviewer=body.get("reviewer"),
                 reviewed=body.get("reviewed"),
                 preempts=Preempt.read(body.get("preempts")),
+                large_city_only=large_city_only,
                 variants=variants,
             )
             if not (built.prov.quote or "").strip() and not built.prov.drawn:
@@ -2714,6 +2717,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             kind=raw.get("kind") or _kind_for(layer_id, path.stem),
             label=raw.get("label") or layer_id,
             eligible=bool(raw.get("eligible", True)),
+            large_city=raw.get("large_city"),
             defaults=defaults,
             zones=zones,
             notes=raw.get("notes"),

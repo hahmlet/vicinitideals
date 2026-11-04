@@ -47,13 +47,15 @@ the full one.)
 
 ## 1. Claude -- priority
 
+147. [Claude] [scan: YES -- toward red] **Maximum front setback never checked on its own -- FALSE GREEN RISK** -- found 11-04 (Tigard 2S103AA00300 green 60 ft back, max 20); encoder BUILDING flats/max-front-setback. [file](followups/147-max-front-setback-unchecked.md)
+
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
 - Weekly re-screen state -- run 87 PROMOTED 2026-10-28; NEXT full re-screen ~2026-11-10, splices in between. [file](followups/weekly-rescreen.md)
 67. [Claude] **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1) ...)** -- MERGED; moves READ at run 78; only (b) open (tax lot includes the roadway). [file](followups/67-wash-co-road-dedication.md)
 77. [Claude] **Road land to the centre line in the cities, not just unincorporated Washington County** -- MERGED; READ at run 78; OPEN: Tigard not encoded, segment qualifiers, lot area. [file](followups/77-city-road-dedication.md)
 78. [Claude] **Portland false GREENs: main street minimum floor area and protected historic buildings are RED** -- MERGED 2026-10-15; READ at run 78, exactly the bound; "Still open" list in file. [file](followups/78-portland-false-greens.md)
-80. [Claude] [Steph: (a), (c)] [(d) Copilot-able] [scan: (a)(b) built] **Readings for Steph from item 64 round 2** -- (a)(b) RULED + BUILT, r3 merged; (c)-(e) open; 1S113BA07700 question waits on Steph. [file](followups/80-item64-round2-readings.md)
+80. [Claude] [Steph: (a), (c)] [scan: (a)(b) built] **Readings for Steph from item 64 round 2** -- (a)(b) RULED + BUILT, r3 merged; (d) LIVE run 113 (main afb7ad39; Estacada, Canby, Sandy stall counts; 90 moves); (c)(e) open; 1S113BA07700 question waits on Steph. [file](followups/80-item64-round2-readings.md)
 76. [Claude] [Steph: (c) assessor lookup] **Tigard pod80x25 red at exactly -43 ft, and split-zoned lots** -- (a)(b) READ at run 78; only (c) open. [file](followups/76-tigard-minus-43.md)
 84. [Claude] **Frontage caps read as caps on every street** -- MERGED, READ at run 78; only Fairview VC open. [file](followups/84-frontage-caps.md)
 42. [Claude] [scan: NO new code, check after the weekly] **Water, wetland and flood ground at slope's fidelity** -- DONE and live; check after the weekly run. [file](followups/42-wetland-flood-fidelity.md)
@@ -75,13 +77,13 @@ the full one.)
 ### 1c. The rest, most urgent first (dated items first)
 
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- merged e63617b8 2026-10-20; moves expected at the next weekly. [file](followups/100-driveway-street.md)
-94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; after 93 merges. [file](followups/94-townhouse-row-angle.md)
+94. [Claude] [scan: YES -- false reds only] **Townhouse row held to the street's angle** -- ~105 false reds; BUILT by Copilot (merged with main b8ba280b), first bound timed out 11-03; RE-BOUND overnight 11-03 (/root/th_row2); read every gain next. [file](followups/94-townhouse-row-angle.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: YES for (C1)] **Agents could not recall a property ruling** -- A, B, C1, C2 MERGED; DLCD backlog READ; (B) waits on Steph. [file](followups/86-ruling-recall.md)
 2. [Claude] [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement** -- run 12 PROMOTED 2026-09-22; loose ends still owed. [file](followups/2-neighbour-zoning.md)
 13. [Claude] [scan: NO -- lands with the November county refresh] **Tax code area in the RLIS ingest** -- lands with the November county data refresh. [file](followups/13-taxcode-rlis.md)
 53. [Claude] [Steph: (b) Molalla PDFs; (c)-(d) HUMAN_TODO 30; (f)] [scan: see file] **Canby, Sandy, Estacada, Molalla** -- Estacada + Canby/Sandy DONE in run 73; Sandy reversed by r3; Steph parts open. [file](followups/53-canby-sandy-estacada-molalla.md)
 87. [Claude] [scan: YES -- greens only lose] **Protected historic buildings outside Portland** -- found 2026-10-15; only Portland's historic map is built. Example 2026-10-31: WashCo 1S123AA00100 (case L9100610, R-5 w/ Historic Overlay), GREEN live. [file](followups/87-historic-outside-portland.md)
-68. [Claude] [scan: YES] **Portland Maps 120-2 and 120-3 are not held** -- found 2026-10-10; maps FETCHED 2026-11-01 into flats/config/areas (86aa8ac5) -- ready to encode. [file](followups/68-portland-maps-120.md)
+68. [Claude] [scan: YES] **Portland Maps 120-2 and 120-3 are not held** -- found 2026-10-10; re-bound READ 11-04: no false green, 60+ false reds + 17 needless holds; round 3 (fixes + half-area parking ruling) BUILT by Copilot b0cdece7 (pushed) -> re-bound after th_row3, read; 90 ft RULED one street 11-04. [file](followups/68-portland-maps-120.md)
 90. [Claude] [scan: NO] **Cites that name a section the cited lines do not sit in** -- CHECKER FIXED 726bb7e1, LIVE 2026-10-22: 367 -> 84 disagreements. [file](followups/90-cite-section-mismatch.md)
 83. [Claude] [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead of flagging it** -- offered 2026-10-14; 731 lots yellow on it. [file](followups/83-standard-plat-gate.md)
 66. [Claude] [Steph: (a), (d)] [scan: NO for (A); YES for (B)] **A price check beside the fit** -- (A) LIVE 2026-10-10 (d1d8c03f); (B) and Steph parts open. [file](followups/66-price-check.md)
@@ -105,6 +107,8 @@ the full one.)
 31. [Claude] [scan: YES (not started)] **Split a big lot to meet a minimum density** -- not started; "maybe never done". [file](followups/31-split-big-lot.md)
 1. [Claude] [Steph: HUMAN_TODO 23] [scan: NO] **The county map copy: loose ends after the first promotion** -- September copy PROMOTED 2026-09-20; loose ends in file. [file](followups/1-county-map-copy.md)
 96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80] **Hand-off: 13 open Gresham questions from 2026-08-17** -- ANSWERED 2026-10-21; Steph to mark the 13 handed on. [file](followups/96-gresham-13-questions.md)
+143. [Claude] [Steph: design before build] [FLATS 2.0 -- after 1.0, not midstream] **Every word in the code bound to the definition that governs it** -- major feature, Steph 2026-11-03; proving case: Large City (80(d), run 113). [file](followups/143-word-definitions-flats-2.md)
+144. [Claude] [Steph: whether to use it] [scan: YES if built] **Overhead power lines near the building** -- Steph asked 2026-11-03; PGE + Pacific Power both publish lines (Pacific Power also every pole); clearance rule + accuracy check open. [file](followups/144-overhead-power-lines.md)
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a per-unit ratio** -- matters only once a 2-unit design exists. [file](followups/99-middle-housing-parking.md)
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
@@ -119,13 +123,16 @@ the full one.)
 113. [Claude] [Steph: design before build] [scan: NO] **Two-source check: a second review queue** -- HOLD -- Steph 2026-10-29; after 73; major feature, check in. [file](followups/113-two-source-check.md)
 112. [Claude] **Page check: show the passage that sends a number to another table** -- 81457395 added `via`; 958 cards say the zone is not on the cited page. [file](followups/112-page-check-via.md)
 108. [Claude] [scan: YES (toward green)] **Every taxlot is a legal lot of record** -- GLOBAL ruling 2026-10-21; after 104 lands. [file](followups/108-legal-lots.md)
-109. [Claude] **Design districts** -- chunk 5 LIVE run 91; chunk 6 LIVE run 94 2026-10-30; North Bethany LIVE run 97; Bethany ASC LIVE run 99; chunk 7 (Raleigh Hills-Garden Home, Bull Mountain) LIVE run 101 2026-10-31 (16 green->yellow); chunk 6b re-read (connectivity, plan rules, Bethany ASC 3, Raleigh Hills ASC U; was 134/135/136) LIVE run 103 2026-10-31 (280 green->yellow); chunk 8 (Metzger-Progress, West Tigard, East Hillsboro, Sherwood; West Union has no pod lots) + 137 flags LIVE run 105 2026-10-31 -- ALL ELEVEN WashCo community plans read; chunk 9 (Sandy, Wilsonville OTR) + Portland plan districts part 1 (Johnson Creek, Laurelhurst-Eastmoreland) LIVE run 111 2026-11-01 (441 green leave). Left: Portland 33.5xx part 2 (see file). [file](followups/109-design-districts.md)
+109. [Claude] **Design districts** -- chunk 5 LIVE run 91; chunk 6 LIVE run 94 2026-10-30; North Bethany LIVE run 97; Bethany ASC LIVE run 99; chunk 7 (Raleigh Hills-Garden Home, Bull Mountain) LIVE run 101 2026-10-31 (16 green->yellow); chunk 6b re-read (connectivity, plan rules, Bethany ASC 3, Raleigh Hills ASC U; was 134/135/136) LIVE run 103 2026-10-31 (280 green->yellow); chunk 8 (Metzger-Progress, West Tigard, East Hillsboro, Sherwood; West Union has no pod lots) + 137 flags LIVE run 105 2026-10-31 -- ALL ELEVEN WashCo community plans read; chunk 9 (Sandy, Wilsonville OTR) + Portland plan districts part 1 (Johnson Creek, Laurelhurst-Eastmoreland) LIVE run 111 2026-11-01 (441 green leave). Portland 33.5xx part 2 batch A 105c1d37 + batch B 5e2a8551 batches A+B LIVE run 115 2026-11-04 (1,466 moves, fingerprint exact; main 6f2d8c35); batch C BUILT 9e8f708a (flats/districts-pdx-pd2c, pushed; Gateway/East Corridor min floor area off the map sheets, ~173 yellow->green expected; Map 530-1 shows only the outline, Glendoveer unchanged) -> bound after th_row3, read; [Steph] too-small-for-minimum-floor-area: yellow everywhere or red everywhere? (Portland main street red since run 78: ~1,600 lots) -- LAST overlay work. [file](followups/109-design-districts.md)
 140. [Claude] **Trees ignored, entered per lot** -- Steph 2026-11-01: canopy build cancelled; per-lot tree mark LIVE 2026-11-01 (3c7accea); left: drop the Johnson Creek tree hold, NEXT WEEK. [file](followups/140-johnson-creek-trees.md)
 105. [Claude] [scan: YES (new standards bind)] **Follow every cross-reference one layer down** -- after 73's restructure; Portland batch 6 adds new references. [file](followups/105-follow-cross-references.md)
-116. [Claude] **Mend the misread words the squiggles show, worst city first** -- GRESHAM DONE f048be68 2026-10-29; King City + Canby left. [file](followups/116-misread-words.md)
-118. [Claude] **Durham 3.7.1.7: no driveway apron within 100 ft of an intersection -- FALSE GREEN RISK** -- BACKLOG; flag DONE 392ce30d LIVE (Durham 21 green->yellow, run 87). [file](followups/118-durham-apron-100ft.md)
+116. [Claude] **Mend the misread words the squiggles show, worst city first** -- Canby + first King City batch 3046b980; this branch mended 68 more King City joins (89 -> 12); 12 leftovers and Tualatin remain; Claude to close. [file](followups/116-misread-words.md)
+118. [Claude] **Durham 3.7.1.7: no driveway apron within 100 ft of an intersection -- FALSE GREEN RISK** -- measurement BUILT 23e839d2 (flats/durham-apron-100ft); bound READ 11-04: 10 gains right, 1 wrong RED (2S124AB01200, phantom junction on a jog) + missed-junction weakness -> Copilot round 2 RUNNING, re-bound, read. [file](followups/118-durham-apron-100ft.md)
 119. [Claude] [scan: NO for (b); YES for (c)] **Portland page-check notes, reviewed 2026-10-28** -- HOLD (Steph 2026-10-29); (a) DONE a54faf2a; (b), (c) left. [file](followups/119-portland-page-check.md)
-120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BACKLOG; 22E01DD03100 looks like a false RED. [file](followups/120-happy-valley-driveway-cap.md)
+142. [Claude] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) BUILT bf18785e, bound /root/fire_rp3 READ 11-04: 4 wrong greens (max front setback ignored) + 2 unconfirmed -> Copilot round 2 RUNNING, re-bound; (b) RULED city's own stall width, BUILT by Copilot 7c342592 (pushed; widths checked, Tigard TMU 7.5 is printed) -> bound after th_row3, read gains; (c) RULED later with 92. [file](followups/142-placement-and-stall-width.md)
+145. [Claude] [Steph: parameters + design review] [scan: YES when built] **Set access: truck route, crane setup and lifts solved per lot** -- moderate feature, Steph 2026-11-03; generative like the court search; parameters not yet given. [file](followups/145-set-access-crane-truck.md)
+120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BUILT by Copilot 56891775 (flats/happy-valley-driveway-cap), also reaches Beaverton + Sherwood; bound READ 11-04: target untouched (private-drive frontage) + tiny lenient drift; round 2 BUILT by Copilot e6efdcb1 (pushed) -> re-bound after th_row3, read. [file](followups/120-happy-valley-driveway-cap.md)
+146. [Claude] [scan: YES -- toward green] **Let the drive lane (and court) use the side setback where the code allows it** -- GO 2026-11-04, after the overlays; Copilot scout gathering each city's text; today the lane never sits in a side yard; Portland allows it (33.266.120). [file](followups/146-parking-in-side-yards.md)
 
 ## 2. Waiting on Steph
 
@@ -148,7 +155,5 @@ the full one.)
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
-141. [Copilot] [scan: NO] **Pending sign-ups can POST to FLATS forms over HTMX** -- found 2026-11-01 (security review); guard fix + test. [file](followups/141-pending-users-htmx-posts.md)
-101. [Copilot] [scan: NO (quadfit mirror only)] **Port Gladstone Ord. 1545 to quadfit's rules.yaml** -- cold-start brief. [file](followups/101-gladstone-1545-quadfit.md)
 23. [Copilot] [scan: NO] **Page check** -- SHIPPED 2026-09-30 (a203e9f1). [file](followups/23-page-check.md)
 16. [Copilot] [PARKED] [scan: NO] **Partial re-screen** -- SHIPPED 50a0ecc2 2026-09-25; PARKED -- ask before firing. [file](followups/16-partial-rescreen.md)

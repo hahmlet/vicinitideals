@@ -453,6 +453,8 @@ class RuleSet:
             values: dict[str, Value], layer: str, origin: str, via: str | None = None
         ) -> None:
             for name, val in values.items():
+                if val.large_city_only and target.large_city is False:
+                    continue
                 if val.unless and not set(val.unless).isdisjoint(held):
                     # This layer's rule addresses a building this configuration
                     # is not. Silence, not an exemption: a more specific layer

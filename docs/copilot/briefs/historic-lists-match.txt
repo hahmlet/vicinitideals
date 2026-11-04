@@ -1,0 +1,16 @@
+historic-lists-match
+
+WHY: FOLLOWUPS 87 (docs/followups/87-historic-outside-portland.md -- read it all). Steph's standing ruling: a protected historic building on the lot = RED. Only Portland's historic map is screened today (see how: grep flats/ for "historic" -- commit history for FOLLOWUPS 78). Other cities' landmark lists are known but not matched to lots. Claude will later read each city's code to rule which listings are protective and wire them into the screen; THIS job only builds the lot-matched lists.
+
+TASK: for each source below, build one CSV under flats/config/historic/ (create the folder; one file per jurisdiction, e.g. troutdale.csv) with columns: tlid, address_listed, name, listing_id_or_row, source (URL or stored path#line), match_method (address-exact / address-fuzzy / point-in-lot / none), match_note. Match each listed resource to a tax lot using the lot data already in the repo / data dir (find where lots and their situs addresses live: grep flats/ingest for "situs" or "address"; data/flats/). TLIDs contain spaces -- never .split() them; compare on re.sub(r"[\s-]","",tlid). Unmatched resources stay in the file with match_method none.
+Sources (stored first, then public pages; download only the named public pages/layers):
+ 1. Troutdale 4.230 inventory table -- flats/provenance/docs/or/multnomah/troutdale/4.200-4.230.historic-landmark-protection.txt (11 resources).
+ 2. Gresham 3.0103 landmark list -- stored Gresham code (grep "3.0103"), and 5.0300.historic-cultural-landmarks.txt.
+ 3. Tigard Historic Sites layer -- https://services1.arcgis.com/d9Fl2w84c4Vbf9kI/arcgis/rest/services/City_of_Tigard_Historic_Sites/FeatureServer/0 (11 points; point-in-lot).
+ 4. West Linn historic landmarks -- https://westlinnoregon.gov/planning/historic-landmarks (25, by address).
+ 5. Washington County CDC 373 -- the stored text (washington/_unincorporated/cdc.373...): if it names properties or a map, record them; at minimum include 1S123AA00100 (county case L9100610, "R-5 W/HISTORIC OVERLAY") with that source.
+Write flats/config/historic/README.md: one line per file -- count listed, count matched by each method, what is uncertain.
+
+TESTS in flats/tests: a small test that every CSV parses, has the columns, and every non-empty tlid exists in the lot data the repo tests already use (skip cleanly if that data is absent in CI).
+
+MUST NOT CHANGE: the screen, any rule value, any lot colour -- these lists are NOT wired into anything in this job.
