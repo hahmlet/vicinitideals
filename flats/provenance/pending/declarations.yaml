@@ -20,16 +20,6 @@
   title: "Chapter 33.520 Division Street Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.521"
-  url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_0.pdf
-  title: "Chapter 33.521 East Corridor Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.530"
-  url: https://www.portland.gov/sites/default/files/code/530-glendoveer-pd.pdf
-  title: "Chapter 33.530 Glendoveer Plan District"
-  extraction: plain
-  allow_thin: true
 - id: "33.532"
   url: https://www.portland.gov/sites/default/files/code/532-hayden-island-pd.pdf
   title: "Chapter 33.532 Hayden Island Plan District"
@@ -45,44 +35,14 @@
   title: "Chapter 33.534 Hillsdale Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.536"
-  url: https://www.portland.gov/sites/default/files/code/536-hollywood-pd_1.pdf
-  title: "Chapter 33.536 Hollywood Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.538"
-  url: https://www.portland.gov/sites/default/files/code/538-kenton-pd_0.pdf
-  title: "Chapter 33.538 Kenton Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.545"
-  url: https://www.portland.gov/sites/default/files/code/545-lombard-pd.pdf
-  title: "Chapter 33.545 Lombard Street Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.550"
-  url: https://www.portland.gov/sites/default/files/code/550-macadam-pd.pdf
-  title: "Chapter 33.550 Macadam Plan District"
-  extraction: plain
-  allow_thin: true
 - id: "33.560"
   url: https://www.portland.gov/sites/default/files/code/560-north-cully-pd.pdf
   title: "Chapter 33.560 North Cully Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.561"
-  url: https://www.portland.gov/sites/default/files/code/561-north-interstate-pd_0.pdf
-  title: "Chapter 33.561 North Interstate Plan District"
-  extraction: plain
-  allow_thin: true
 - id: "33.562"
   url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
   title: "Chapter 33.562 Northwest Plan District"
-  extraction: plain
-  allow_thin: true
-- id: "33.563"
-  url: https://www.portland.gov/sites/default/files/code/563-northwest-hills-pd_1.pdf
-  title: "Chapter 33.563 Northwest Hills Plan District"
   extraction: plain
   allow_thin: true
 - id: "33.565"
@@ -105,13 +65,6 @@
   title: "Chapter 33.583 St. Johns Plan District"
   extraction: plain
   allow_thin: true
-- id: "33.595"
-  url: https://www.portland.gov/sites/default/files/code/595-west-port-multi-pd_0.pdf
-  title: "Chapter 33.595 West Portland Multicultural"
-  extraction: plain
-  allow_thin: true
-
-# ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
 - id: "community-plan.north-bethany-subarea"
   url: https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-text-11-2024/download
   title: "Washington County Community Plan - North Bethany Subarea"

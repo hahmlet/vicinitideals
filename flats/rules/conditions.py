@@ -1357,6 +1357,42 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_glendoveer_lr75",
+        "site_fact",
+        "The lot is R7 land in Portland's Glendoveer plan district, which "
+        "Multnomah County zoned LR7.5 before City zoning (33.530.020). The "
+        "plan district's own setbacks govern there: 30 ft front, 10 ft side, "
+        "15 ft rear (33.530.040). Its flag-lot standards (050) are held "
+        "under pdx_plan_district_unmeasured, not encoded on this fact.",
+        evidence=(
+            "the Glendoveer plan district outline (Portland Maps BPS zoning "
+            "layer 0) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_plan_district_unmeasured",
+        "site_fact",
+        "The lot is one a Portland plan district rule reaches that the screen "
+        "does not measure: where parking and driveways may go against a named "
+        "street or light rail line (East Corridor, Hollywood, Lombard, North "
+        "Interstate), a required building line (North Interstate), a minimum "
+        "floor area ratio printed only on a map or above what the pod "
+        "supplies (East Corridor, Hollywood, Kenton, West Portland), residential use prohibited on a map (West Portland "
+        "Employment Focus Area), a rear setback of a quarter of the site's "
+        "depth (West Portland), setbacks set by wall-plane area and a light "
+        "rail setback (Macadam), the Linnton Hillside lot-of-record rule "
+        "(Northwest Hills), or Glendoveer's flag-lot standards on an R7 lot "
+        "whose shape could be a flag lot. The lot stays in review. Assumed unknown: it "
+        "decides the colour.",
+        evidence=(
+            "the plan district lot tracing in "
+            "plan-district-unmeasured-lots.geojson -- held as Portland's "
+            "drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_historic_overlay",
         "site_fact",
         "The parcel is inside Oregon City's historic overlay district as the "
@@ -1651,8 +1687,10 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "pdx_glendoveer_lr75",
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_unmeasured",
+    "pdx_plan_district_unmeasured",
     "pdx_special_building_setback",
     "raleigh_hills_asc_u",
     "rockwood_design_district",

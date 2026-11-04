@@ -1526,3 +1526,36 @@ notes:
       note 5 does the same for Standard B at 0.7 space per unit until 1
       January 2029, and falls the same way -- the Household Living row starts
       at five units on site
+
+  # FOLLOWUPS 109 Portland plan districts part 2 batch A (2026-11-03): the
+  # notes in the chapters moved from pending to docs.
+
+  - quote: "or/multnomah/portland/33.521.txt#L434"
+    digest: "2c8743e94b62"
+    state: dismissed
+    reason: >-
+      relaxes East Corridor's landscaping of exterior display areas, a use the pod does not have
+
+  - quote: "or/multnomah/portland/33.521.txt#L436"
+    digest: "f8650dd564bb"
+    state: dismissed
+    reason: >-
+      relaxes East Corridor's landscaping of exterior storage areas, a use the pod does not have
+
+  - quote: "or/multnomah/portland/33.530.txt#L36"
+    digest: "165b61e16baa"
+    state: dismissed
+    reason: >-
+      drops the common-wall side setback to zero for attached houses only; the pod is a fourplex on one lot, so Glendoveer's 10 ft side setback stands on both sides
+
+  - quote: "or/multnomah/portland/33.550.txt#L110"
+    digest: "0df1a139a31d"
+    state: dismissed
+    reason: >-
+      points at Chapter 33.930 for how a wall plane is measured; Macadam's wall-plane setbacks are not measured here and every Macadam lot sits in the plan_district_unmeasured hold
+
+  - quote: "or/multnomah/portland/33.595.txt#L363"
+    digest: "1edb11f8489b"
+    state: dismissed
+    reason: >-
+      a bonus height reachable only through a Planned Development; the pod is under every base height in Table 595-3

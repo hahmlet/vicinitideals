@@ -1912,6 +1912,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-GLENDOVEER-LR75:
+    description: "Whether the lot is R7 land in Portland's Glendoveer plan district that Multnomah County zoned LR7.5, where the setbacks are 30 ft front, 10 ft side and 15 ft rear (PCC 33.530.040)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The Glendoveer outline on Portland Maps; a lot the outline cuts is read by hand"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-PLAN-DISTRICT-UNMEASURED:
+    description: "Whether the lot lies where a Portland plan district rule reaches the pod that nothing measures: parking and driveway limits against named streets and light rail (East Corridor, Hollywood, Lombard, North Interstate), required building lines, minimum floor area ratios printed only on a map (East Corridor) or above the pod's, the West Portland Employment Focus Area and quarter-depth rear setback, Macadam's wall-plane setbacks, the Linnton Hillside lot-of-record rule, or Glendoveer's flag-lot standards on an R7 lot whose shape could be a flag lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against the named plan district chapter: which street the drive and court face, the site depth, the building line, or the subdistrict"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-WASHINGTON-LOCAL-STREET-CONNECTIVITY:
     description: "Whether the lot lies on the Local Street Connectivity Lands of a Washington County community plan (Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress), where development must build on-site streets that connect to the street system; the ground those streets take is not measured, so the lot is held"
     kind: categorical
