@@ -25,7 +25,7 @@ ENCODED 2026-11-01 on flats/pdx-map-120 (37c245ff; hand-off ../vicinitideals-wor
 90 ft frontage inside the 4 centres (neighbour exception unread = yellow), Eastern rear yard 25% of depth
 with parking in half of it. Bound running on 137 (base run 111). QUESTION for Steph, open: "at least 90
 feet of frontage on a street" read as ONE street (a corner or through lot cannot add its streets) -- the
-stricter reading, shipped as is unless Steph says the streets may be summed. 2026-11-03: Steph asked for the source -- sent PCC 33.120.206.C.1, page 120-11 of https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf; answer pending.
+stricter reading, shipped as is unless Steph says the streets may be summed. 2026-11-03: Steph asked for the source -- sent PCC 33.120.206.C.1, page 120-11 of https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf; RULED 2026-11-04 ONE STREET (2026-11-04-pdx-site-frontage-one-street) -- as shipped.
 BOUND 2026-11-02 (137 /root/pdx_map_120, bundle /root/bundle_pdx_map_120): 1,245 moves. Expected: green->red
 272, green->yellow 271, yellow->red 33. NOT expected: red->yellow 663 (RULE_AMBIGUOUS; lots that failed fit,
 coverage or fire access) and yellow->green 4 (1N2E20BB -00900, 1N2E25BA -00600, 1N2E28AD -01600,

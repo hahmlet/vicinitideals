@@ -2442,3 +2442,21 @@
     inside it (Table 266-5 5 ft perimeter setback, Table 266-3 location).
     FOLLOWUPS 68.
   source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md
+
+- id: 2026-11-04-pdx-site-frontage-one-street
+  kind: ruling
+  date: 2026-11-04
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PCC 33.120.206.C.1 (Map 120-2 sites more than 160 ft deep): "at least 90
+    feet of frontage on a street" -- one street, or may a corner or through
+    lot add its streets together?
+  ruling: >-
+    Steph: frontage is measured on the frontage lot line; a corner lot may
+    have two to choose from, but you cannot count both. One street.
+  effect: >-
+    Confirms the shipped reading: the 90 ft is met on a single street lot
+    line (the lot's best one), never the sum. Applies only to multi-dwelling
+    sites on Map 120-2 deeper than 160 ft; the 10 percent adjustment before
+    2032 is not taken (no variances). FOLLOWUPS 68.
+  source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md

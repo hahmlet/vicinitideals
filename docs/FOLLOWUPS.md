@@ -81,7 +81,7 @@ the full one.)
 13. [Claude] [scan: NO -- lands with the November county refresh] **Tax code area in the RLIS ingest** -- lands with the November county data refresh. [file](followups/13-taxcode-rlis.md)
 53. [Claude] [Steph: (b) Molalla PDFs; (c)-(d) HUMAN_TODO 30; (f)] [scan: see file] **Canby, Sandy, Estacada, Molalla** -- Estacada + Canby/Sandy DONE in run 73; Sandy reversed by r3; Steph parts open. [file](followups/53-canby-sandy-estacada-molalla.md)
 87. [Claude] [scan: YES -- greens only lose] **Protected historic buildings outside Portland** -- found 2026-10-15; only Portland's historic map is built. Example 2026-10-31: WashCo 1S123AA00100 (case L9100610, R-5 w/ Historic Overlay), GREEN live. [file](followups/87-historic-outside-portland.md)
-68. [Claude] [scan: YES] **Portland Maps 120-2 and 120-3 are not held** -- found 2026-10-10; re-bound READ 11-04: no false green, 60+ false reds + 17 needless holds -> round 3 fix (Copilot), re-bound; [Steph] 90 ft one street or summed? parking half the rear yard RULED by area 11-04 (round 4). [file](followups/68-portland-maps-120.md)
+68. [Claude] [scan: YES] **Portland Maps 120-2 and 120-3 are not held** -- found 2026-10-10; re-bound READ 11-04: no false green, 60+ false reds + 17 needless holds -> round 3 fix (Copilot), re-bound; 90 ft RULED one street 11-04; parking half the rear yard RULED by area 11-04 (round 4). [file](followups/68-portland-maps-120.md)
 90. [Claude] [scan: NO] **Cites that name a section the cited lines do not sit in** -- CHECKER FIXED 726bb7e1, LIVE 2026-10-22: 367 -> 84 disagreements. [file](followups/90-cite-section-mismatch.md)
 83. [Claude] [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead of flagging it** -- offered 2026-10-14; 731 lots yellow on it. [file](followups/83-standard-plat-gate.md)
 66. [Claude] [Steph: (a), (d)] [scan: NO for (A); YES for (B)] **A price check beside the fit** -- (A) LIVE 2026-10-10 (d1d8c03f); (B) and Steph parts open. [file](followups/66-price-check.md)
@@ -130,6 +130,7 @@ the full one.)
 142. [Claude] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) BUILT bf18785e, first bound timed out, RE-BOUND overnight 11-03 (/root/fire_rp2); (b) RULED city's own stall width, Copilot BUILDING (flats/city-stall-width), (c) RULED later with 92. [file](followups/142-placement-and-stall-width.md)
 145. [Claude] [Steph: parameters + design review] [scan: YES when built] **Set access: truck route, crane setup and lifts solved per lot** -- moderate feature, Steph 2026-11-03; generative like the court search; parameters not yet given. [file](followups/145-set-access-crane-truck.md)
 120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BUILT by Copilot 56891775 (flats/happy-valley-driveway-cap), also reaches Beaverton + Sherwood; BOUND RUNNING 11-03 (/root/hv_cap), then read. [file](followups/120-happy-valley-driveway-cap.md)
+146. [Claude] [Steph: go/no-go] [scan: YES -- toward green] **Let the drive lane (and court) use the side setback where the code allows it** -- offered 2026-11-04; today the lane never sits in a side yard; Portland allows it (33.266.120). [file](followups/146-parking-in-side-yards.md)
 
 ## 2. Waiting on Steph
 
