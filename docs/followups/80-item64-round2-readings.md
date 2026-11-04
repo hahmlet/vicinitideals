@@ -8,7 +8,7 @@
    31W15DC05351 and 31W22DC01400 (Wilsonville) STAY GREEN. Bound: 241 lots go red on the cap,
    every one a corner or through lot (Clackamas 105, Beaverton 103, Wilsonville 23, Hillsboro
    SCR-MD 10); two ways one street was read as two (a bend under the 45-degree corner angle; a jog
-   in one frontage) fixed, 38 lots back. QUESTION for Steph, open: 1S113BA07700 (Beaverton RMC
+   in one frontage) fixed, 38 lots back. RULED Steph 2026-11-03 (2026-11-03-green-plan-beats-yellow-preferred): SHOW GREEN -- any plan passing every check wins; check the screen does this, build if not. Was: 1S113BA07700 (Beaverton RMC
    yellow -> green: base's preferred plan was yellow on SLOPE-GRADE, the cap pushed it to a green
    plan off the other front) -- should a yellow preferred plan hide a green one?
    (b) Hillsboro SCR-MD/SCR-HD 5 ft MAXIMUM side setback (12.22 tables): RULED (coordinator

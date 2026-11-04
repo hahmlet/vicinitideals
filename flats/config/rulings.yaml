@@ -2369,3 +2369,55 @@
     YELLOW. Build: FOLLOWUPS 140.
   source: Steph 2026-11-01 (chat), docs/followups/140-johnson-creek-trees.md
   superseded_by: 2026-11-01-trees-ignored-entered-per-lot
+
+- id: 2026-11-03-stall-width-city-minimum
+  kind: ruling
+  date: 2026-11-03
+  scope: {}
+  question: >-
+    Canby allows 8.5 ft parking stalls and Estacada 8 ft, but the parking
+    court is always drawn with 9 ft stalls; about 6 Canby lots and Estacada
+    34E17D 00700 miss only by that margin. Draw stalls at the narrowest
+    width each city allows, or keep 9 ft everywhere?
+  ruling: >-
+    City's own width (chose "Draw stalls at the narrowest width each city
+    allows").
+  effect: >-
+    The parking court is drawn with each jurisdiction's own minimum stall
+    width as encoded from its code; 9 ft stays only where the code sets 9 ft
+    or sets nothing. Build: FOLLOWUPS 142(b).
+  source: Steph 2026-11-03 (chat), docs/followups/142-placement-and-stall-width.md
+
+- id: 2026-11-03-long-lot-parking-later
+  kind: ruling
+  date: 2026-11-03
+  scope: {}
+  question: >-
+    On long narrow lots the parking could run down the lot's length instead
+    of one row across the back (about 20 new Canby/Sandy reds). Try that
+    layout now?
+  ruling: >-
+    Later, with the parking layout generator (FOLLOWUPS 92, parked).
+  effect: >-
+    No new parking layout now; those lots stay as screened until FOLLOWUPS
+    92 is taken up.
+  source: Steph 2026-11-03 (chat), docs/followups/142-placement-and-stall-width.md
+
+- id: 2026-11-03-green-plan-beats-yellow-preferred
+  kind: ruling
+  date: 2026-11-03
+  scope: {}
+  question: >-
+    Beaverton 1S113BA07700: the screen's preferred building plan is YELLOW
+    (unmeasured slope grade), another plan off the other front passes every
+    check and is GREEN. Should a yellow preferred plan hide a green one?
+  ruling: >-
+    Show green (chose "If any layout passes every check, show green with
+    that layout").
+  effect: >-
+    A lot is GREEN when any plan the screen tries passes every check in
+    full; the reported plan is that green plan. A yellow or red preferred
+    plan never hides a fully passing one. Never a false GREEN: the green
+    plan must pass everything, nothing is waived. Closes FOLLOWUPS 80
+    question on 1S113BA07700.
+  source: Steph 2026-11-03 (chat), docs/followups/80-item64-round2-readings.md

@@ -126,7 +126,7 @@ the full one.)
 116. [Claude] **Mend the misread words the squiggles show, worst city first** -- Canby + first King City batch 3046b980; this branch mended 68 more King City joins (89 -> 12); 12 leftovers and Tualatin remain; Claude to close. [file](followups/116-misread-words.md)
 118. [Claude] **Durham 3.7.1.7: no driveway apron within 100 ft of an intersection -- FALSE GREEN RISK** -- BACKLOG; flag DONE 392ce30d LIVE (Durham 21 green->yellow, run 87). [file](followups/118-durham-apron-100ft.md)
 119. [Claude] [scan: NO for (b); YES for (c)] **Portland page-check notes, reviewed 2026-10-28** -- HOLD (Steph 2026-10-29); (a) DONE a54faf2a; (b), (c) left. [file](followups/119-portland-page-check.md)
-142. [Claude] [Steph: (b), (c)] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) BUILT bf18785e, BOUND RUNNING on 137 (/root/fire_rp); 2 Canby false reds; two questions for Steph. [file](followups/142-placement-and-stall-width.md)
+142. [Claude] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) BUILT bf18785e, BOUND RUNNING on 137 (/root/fire_rp); 2 Canby false reds; (b) RULED city's own stall width (build), (c) RULED later with 92. [file](followups/142-placement-and-stall-width.md)
 120. [Claude] [scan: YES -- false red only] **Happy Valley 16.44 driveway cap measured on a short line** -- BUILT by Copilot 56891775 (flats/happy-valley-driveway-cap), also reaches Beaverton + Sherwood; needs a bound + read. [file](followups/120-happy-valley-driveway-cap.md)
 
 ## 2. Waiting on Steph
