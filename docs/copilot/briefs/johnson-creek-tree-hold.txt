@@ -1,0 +1,11 @@
+johnson-creek-tree-hold
+
+WHY: FOLLOWUPS 140 part (a) (docs/followups/140-johnson-creek-trees.md -- read it all). Steph ruled 2026-11-01 (flats/config/rulings.yaml, id 2026-11-01-trees-ignored-entered-per-lot): trees are ignored by the screen and entered per lot by teammates (that per-lot mark is already LIVE). But the Johnson Creek plan district (PCC 33.537) still holds lots in flats/config/areas/or/multnomah/portland/johnson-creek-unmeasured-lots.geojson for four reasons -- tree removal (33.537.125), the Springwater 20 ft strip (.130), South subdistrict density (.140.E), Flood Risk Area (.160). The tree reason must go; the other three stay. Claude will bound this branch on LXC 137 and read every lot that gains green.
+
+TASK: find how that geojson was traced (git log --follow on it; flats/tests/test_portland_plan_districts.py; any script under scripts/ or flats/ that writes it) and re-trace it WITHOUT 33.537.125: a lot stays held if any of .130, .140.E or .160 reaches it, exactly as traced before; a lot held ONLY by .125 drops out. Report: lots before, lots after, lots dropped, and for 5 dropped lots which reason(s) they had. The reason text shown on lots still held must stop naming trees (find where it is written -- the area's YAML/notes or the screen's reason string -- and remove only the tree wording, citing .130/.140.E/.160 as applicable). Add a rulings.yaml cross-reference only if the file's format already has a field for it.
+
+TESTS in flats/tests (extend test_portland_plan_districts.py or the file that tests this area): a lot reached only by the tree reason is no longer held; a lot in the flood risk area / Springwater strip / South density reach is still held; the held reason text contains no "tree".
+
+AUTHORISED EXCEPTION: lots held only for trees may move from yellow toward green -- that is the task and Steph's ruling. Nothing else may move.
+
+MUST NOT CHANGE: the .130/.140.E/.160 reaches, any rule value, any other area file.
