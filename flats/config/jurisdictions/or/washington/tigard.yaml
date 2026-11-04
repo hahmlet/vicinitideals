@@ -466,6 +466,11 @@ zones:
           when: [alley_at_rear]
           cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
           quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34"
+    setback_front_max_streets:
+      # Table 18.280.1 states a maximum for the street side as well as the
+      # front, 20 ft each: every street line of the lot (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L27"
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-A and RES-B)
@@ -578,6 +583,11 @@ zones:
           when: [alley_at_rear]
           cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
           quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34"
+    setback_front_max_streets:
+      # Table 18.280.1 states a maximum for the street side as well as the
+      # front, 20 ft each: every street line of the lot (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L27"
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-A and RES-B)
@@ -690,6 +700,11 @@ zones:
           when: [alley_at_rear]
           cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
           quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34"
+    setback_front_max_streets:
+      # Table 18.280.1 states a maximum for the street side as well as the
+      # front, 20 ft each: every street line of the lot (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L27"
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-C and RES-D)
@@ -802,6 +817,11 @@ zones:
           when: [alley_at_rear]
           cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
           quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34"
+    setback_front_max_streets:
+      # Table 18.280.1 states a maximum for the street side as well as the
+      # front, 20 ft each: every street line of the lot (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L27"
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-C and RES-D)
@@ -909,6 +929,11 @@ zones:
           when: [alley_at_rear]
           cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
           quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34"
+    setback_front_max_streets:
+      # Table 18.280.1 states a maximum for the street side as well as the
+      # front, 20 ft each: every street line of the lot (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L27"
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (RES-E)
@@ -1044,6 +1069,11 @@ zones:
           when: [alley_at_rear]
           cite: Tigard CDC Table 18.280.1 note [2], no rear setback requirement when the rear property line abuts an alley
           quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34"
+    setback_front_max_streets:
+      # Table 18.280.1 states a maximum for the street side as well as the
+      # front, 20 ft each: every street line of the lot (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L27"
     setback_front_max_ft:
       value: 20
       cite: Tigard CDC Table 18.280.1, rowhouse maximum front setback 20 ft (MUR-1 and MUR-2)
@@ -1372,6 +1402,19 @@ zones:
       value: 5
       cite: Tigard CDC Table 18.650.3, minimum rear setback 0 ft (MS) or 5 ft (99H, SC, FB); the strictest held
       quote: "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L12,L16"
+    setback_front_max_streets:
+      # The 10 ft held is the Main Street-Center Street sub-area's, which
+      # states a 10 ft maximum on the street side too (Table 18.650.3);
+      # 18.650.080.A.1.a holds both elevations to it: every street line
+      # (FOLLOWUPS 147).
+      value: every
+      quote: "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L17-L19"
+    setback_front_max_facade_pct:
+      # "at least 50 percent of the first story front building elevation is
+      # located no further from the front property line than the maximum
+      # front setback" (18.650.080.A.1.a).
+      value: 50
+      quote: "or/washington/tigard/18.650/18.650.080.txt#L22"
     setback_front_max_ft:
       value: 10
       cite: Tigard CDC Table 18.650.3, maximum front setback 10 ft (MS), 25 ft (99H), 20 ft (SC, FB); the strictest held
@@ -1501,6 +1544,12 @@ zones:
       value: 1
       cite: Tigard CDC 18.660.070.B.1, minimum building setback one foot from the street property line (every street line)
       quote: "or/washington/tigard/18.660/18.660.070.txt#L13-L16"
+    setback_front_max_facade_pct:
+      # "met when at least 70% of the street-facing building facade is
+      # located no more than 12 feet away from the street property line"
+      # (18.660.070.B.1; FOLLOWUPS 147).
+      value: 70
+      quote: "or/washington/tigard/18.660/18.660.070.txt#L15-L16"
     setback_front_max_ft:
       value: 12
       cite: Tigard CDC 18.660.070.B.1, maximum building setback 12 feet, met when 70% of the street-facing facade is within 12 feet

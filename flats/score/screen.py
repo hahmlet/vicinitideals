@@ -382,6 +382,7 @@ CHECK_FIELD: dict[str, str] = {
     "parking_frontage_width": "parking_area_max_width_ft",
     "building_frontage_share": "building_frontage_min_pct",
     "building_frontage_other_share": "building_frontage_other_pct",
+    "front_setback_max_ft": "setback_front_max_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
@@ -440,6 +441,30 @@ COURT_UNDRIVEN = "court_undriven"
 #: ``FACT_UNOBSERVED``: a question, never a red on a corner piece the drive
 #: need not cross, and never a pass.
 DRIVE_STREET = "drive_street"
+
+#: The drawn building against a stated maximum front setback
+#: (``setback_front_max_ft``, FOLLOWUPS 147), in a zone that asks no building
+#: share of the frontage (where one is asked, :func:`_building_frontage`
+#: measures the building within the maximum already). The check's name, and
+#: the two quantities that hold a lot out of GREEN without failing it.
+#: ``FRONT_MAX_DRAWN``: the bridge looked and had no fitting building, or no
+#: street line, to measure from. ``FRONT_MAX_STREET``: the building stands
+#: within the maximum on one reading and beyond it on another -- which of the
+#: lot's streets the code holds it to (``setback_front_max_streets``), how
+#: much of the facade must stand within it, or a sidewalk easement the
+#: distance may be taken from. Both join ``_checks``'s ``unmeasured``, so
+#: they report as ``FACT_UNOBSERVED``: a question, never a pass.
+FRONT_MAX = "front_setback_max_ft"
+FRONT_MAX_DRAWN = "front_max_drawn"
+FRONT_MAX_STREET = "front_max_street"
+#: Feet past the maximum a drawn building may stand and still be read as
+#: within it: the raster the drawing stands the building on is cut in
+#: half-foot cells (:data:`flats.fit.raster.GRID_FT`) and keeps a building
+#: off any cell the envelope's edge crosses, so the drawn building can stand
+#: up to a cell further back than the envelope allows, and the window a
+#: cell further again. Two cells; the same allowance keeps a building within
+#: it from being failed.
+FRONT_MAX_DRAWN_TOL_FT = 1.0
 
 #: The building's share of the street frontage (FOLLOWUPS 109): the check
 #: names and the two quantities that hold it out of GREEN without failing it.
@@ -633,6 +658,22 @@ class LotFacts:
     #: unrun.
     fire_route_ft: float | None = None
     fire_route_tried: bool = False
+    #: The drawn building's distance from each of the lot's streets
+    #: (FOLLOWUPS 147), in :func:`flats.fit.frontage.street_chains` order, as
+    #: ``(front, near_ft, far_ft, slack_ft)``: whether the street is the
+    #: plan's front lot line (False: a street side); the building's nearest
+    #: point; the far end of the wall that faces that street; both measured
+    #: from the street line less the right-of-way strip the envelope gave up
+    #: there (:attr:`flats.geom.edges.Edge.dedication_ft`); and how much
+    #: nearer a lenient reading could measure it (a sidewalk easement the
+    #: code may measure from, ``QuadfitLot.sidewalk_easement_ft``). Measured
+    #: by the bridge where the zone states a maximum front setback;
+    #: ``front_max_tried`` with nothing here means the bridge looked and had
+    #: no fitting building or no street line -- unobserved, held out of
+    #: GREEN; neither set means nobody measured (every caller but the
+    #: bridge), and the check goes unrun.
+    front_max_streets: tuple[tuple[bool, float, float, float], ...] | None = None
+    front_max_tried: bool = False
     #: The same route with the hose measured from the near curb itself
     #: rather than 10 ft out from it (:data:`flats.fit.fire.READINGS`,
     #: FOLLOWUPS 29). Measured only where the route misses and a curb or
@@ -1606,6 +1647,10 @@ def _checks(
             unchecked.append("fire_access_ft")
             if lot.fire_route_tried:
                 unmeasured.add(FIRE_ROUTE)
+
+    # The building's distance from the street against a stated maximum
+    # front setback (FOLLOWUPS 147).
+    _front_max(rules, lot, check, unchecked, unmeasured)
 
     # The fall across the ground the plan stands on (Steph 2026-10-04). Over
     # the red line on the fine model is a miss; on the coarse model alone it
@@ -2660,6 +2705,104 @@ def screen(
     return Screening(triage=Triage.green, reasons=(), **common)
 
 
+def front_max_owed(
+    rules: ZoneResolution, lot: LotFacts
+) -> tuple[str, tuple[tuple[bool, float, float, float], ...]] | None:
+    """How the maximum front setback is read on this lot: ``(how, streets)``
+    where ``streets`` are the measured streets the code may hold the
+    building to and ``how`` is ``every`` (each of them), ``one`` (any one,
+    the applicant's pick) or ``unheld`` (the code holds it to some of them
+    and nothing here says which). None where nothing was measured.
+
+    ``setback_front_max_streets`` says which (FOLLOWUPS 147): ``every``
+    street line; the ``front`` lot line alone (where the plan names one
+    front; several fronts are ``unheld``); ``one`` street at the
+    applicant's choice; ``corner_every``, both streets of a corner lot and,
+    on any other lot, streets the code picks by a class nothing here holds
+    (Portland 33.130.215.C.2.c). Absent, nothing says which, and the lot is
+    ``unheld``."""
+    streets = lot.front_max_streets
+    if not streets:
+        return None
+    which = rules.get("setback_front_max_streets")
+    if which == "every":
+        return "every", streets
+    if which == "one":
+        return "one", streets
+    if which == "corner_every":
+        return ("every" if lot.corner and len(streets) == 2 else "unheld"), streets
+    if which == "front":
+        fronts = tuple(s for s in streets if s[0])
+        if len(fronts) == 1:
+            return "every", fronts
+        return "unheld", fronts or streets
+    return "unheld", streets
+
+
+def _front_max(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    check: Callable[..., None],
+    unchecked: list[str],
+    unmeasured: set[str],
+) -> None:
+    """The drawn building against a stated maximum front setback
+    (FOLLOWUPS 147).
+
+    Each street the code may hold the building to (:func:`front_max_owed`)
+    is read two ways. Strictly: the facade's reach -- the nearest point,
+    plus the share of the wall facing that street the code asks to stand
+    within the maximum (``setback_front_max_facade_pct``; absent, the whole
+    wall) -- from the street line less its right-of-way strip. Leniently:
+    the nearest point, plus only the share the code states (absent, none),
+    measured from a sidewalk easement where the lot may carry one. A street
+    clears where the strict reach is within the maximum and misses where
+    even the lenient reach is beyond it; between, the reading decides.
+
+    ``every`` passes where every street clears and fails where any misses;
+    ``one`` passes where any clears and fails where every one misses;
+    ``unheld`` passes only where every street clears and fails only where
+    every one misses. Anything else is :data:`FRONT_MAX_STREET`: held out of
+    GREEN, never failed. A zone that asks a building share of the frontage
+    is measured there (:func:`_building_frontage`) and not again here."""
+    cap = _pct(rules, "setback_front_max_ft")
+    if cap is None or _pct(rules, "building_frontage_min_pct") is not None:
+        return
+    owed = front_max_owed(rules, lot)
+    if owed is None:
+        unchecked.append(FRONT_MAX)
+        if lot.front_max_tried:
+            unmeasured.add(FRONT_MAX_DRAWN)
+        return
+    how, streets = owed
+    share = _pct(rules, "setback_front_max_facade_pct")
+    strict_part = 1.0 if share is None else share / 100.0
+    lenient_part = 0.0 if share is None else share / 100.0
+    strict = [near + strict_part * max(0.0, far - near) for _, near, far, _ in streets]
+    lenient = [
+        near - slack + lenient_part * max(0.0, far - near) for _, near, far, slack in streets
+    ]
+    line = cap + FRONT_MAX_DRAWN_TOL_FT
+    clears = [x <= line for x in strict]
+    misses = [x > line for x in lenient]
+    if how == "one":
+        passed, failed = any(clears), all(misses)
+    elif how == "every":
+        passed, failed = all(clears), any(misses)
+    else:
+        passed, failed = all(clears), all(misses)
+    if passed:
+        observed = min(strict) if how == "one" else max(strict)
+        # Within the raster's allowance reads as on the line.
+        check(FRONT_MAX, min(observed, cap), cap, is_maximum=True)
+    elif failed:
+        observed = max(lenient) if how == "every" else min(lenient)
+        check(FRONT_MAX, observed - FRONT_MAX_DRAWN_TOL_FT, cap, is_maximum=True)
+    else:
+        unchecked.append(FRONT_MAX)
+        unmeasured.add(FRONT_MAX_STREET)
+
+
 def _pct(rules: ZoneResolution, name: str) -> float | None:
     got = rules.get(name)
     if isinstance(got, bool) or not isinstance(got, (int, float)):
@@ -3066,6 +3209,8 @@ _MEASURED_FLAG: dict[str, str] = {
     BUILDING_FRONTAGE: "MEASURE-BUILDING-FRONTAGE",
     FRONTAGE_STREET: "MEASURE-FRONTAGE-STREET",
     MORE_BUILDINGS: "FRONTAGE-MORE-BUILDINGS",
+    FRONT_MAX_DRAWN: "MEASURE-FRONT-MAX-DRAWN",
+    FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

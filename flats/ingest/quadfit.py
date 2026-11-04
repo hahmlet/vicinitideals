@@ -155,7 +155,13 @@ from flats.geom.named_street import (
 from flats.geom.one_street import one_street_column
 from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
-from flats.ingest.flatter import flatter_checked
+from flats.ingest.flatter import (
+    _angles as _flatter_angles,
+    _drive_clear,
+    _lane_in_from_street,
+    _no_worse,
+    flatter_checked,
+)
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.fields import BEARING_FIELDS
@@ -184,6 +190,8 @@ from flats.score.paper import (
 from flats.score.screen import (
     BUILDING_SHARE,
     CLOSER_LOOK_SPLIT_ZONE,
+    FRONT_MAX,
+    FRONT_MAX_DRAWN_TOL_FT,
     COURT_SHAPED,
     STEEP_GROUND,
     STREET_RANK_UNKNOWN,
@@ -2748,7 +2756,10 @@ def _bounded(
         ):
             return s
     if s.facts is not None and not s.facts.fire_route_tried:
+        placed = s.drawing
         s = fire_checked(s, lot, roads, policy=policy, relief=relief, fitter=fitter, green=True)
+        if s.drawing is not placed:
+            s = front_max_checked(s, None, policy=policy, relief=relief)
     return dataclasses.replace(
         s,
         screening=dataclasses.replace(s.screening, flags=zeroed(s.screening.flags)),
@@ -3315,6 +3326,8 @@ def _screen_lot_once(
             out.append(_rank_unknown(won) if ask_rank else won)
             continue
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
+        won = front_max_checked(won, fitter, policy=policy, relief=relief)
+        placed = won.drawing
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
         won = slope_checked(
             won, lot, terrain, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
@@ -3324,6 +3337,10 @@ def _screen_lot_once(
             won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
             step_deg=step_deg, roads=roads,
         )
+        if won.drawing is not placed:
+            # The fire route or a flatter spot stood the building elsewhere:
+            # its distance from the street is measured again where it stands.
+            won = front_max_checked(won, None, policy=policy, relief=relief)
         if _coarse_blocked(won, lot):
             # Eliminated on the coarse map's steep ground alone: screened
             # again, the whole way, as though it were not there, and flagged
@@ -3452,6 +3469,201 @@ def strip_waived(
         terrain=terrain,
     )
     return s if alt.signed.binds else alt
+
+
+#: Angles :func:`front_max_checked` draws the building at, the fit's own
+#: first, then nearest square to a street (:func:`flats.ingest.flatter.
+#: _angles`), and the windows within the maximum it puts through the screen
+#: at each. A placement missed between them leaves a red or a question
+#: standing, never a false green.
+FRONT_MAX_ANGLES = 4
+FRONT_MAX_TRIES = 24
+
+
+def _facade_far(building: Any, lines: Any) -> float:
+    """How far from ``lines`` the far end of the building's wall facing
+    them stands: the wall whose middle is nearest them, at its farther
+    corner. A wall square to the street stands at one distance."""
+    from shapely.geometry import Point
+
+    pts = list(building.exterior.coords)[:-1]
+    best: tuple[float, float] | None = None
+    for i, a in enumerate(pts):
+        c = pts[(i + 1) % len(pts)]
+        mid = Point((a[0] + c[0]) / 2, (a[1] + c[1]) / 2).distance(lines)
+        far = max(Point(a).distance(lines), Point(c).distance(lines))
+        if best is None or mid < best[0]:
+            best = (mid, far)
+    return 0.0 if best is None else best[1]
+
+
+def front_max_streets(
+    s: Screened,
+) -> tuple[tuple[bool, float, float, float], ...] | None:
+    """The drawn building's distance from each of the lot's streets
+    (:attr:`LotFacts.front_max_streets`, FOLLOWUPS 147), or None where no
+    fitting building is drawn or the lot has no street line.
+
+    Measured from the street line less the right-of-way strip the envelope
+    gave up there (:func:`dedicated`): the yards were cut from the line the
+    lot keeps once the strip is given, so the maximum is measured from it
+    too. Only an envelope FLATS cut gave a strip up; on quadfit's own the
+    line is the lot's. A sidewalk easement the lot may carry
+    (:attr:`QuadfitLot.sidewalk_easement_ft`) is the lenient reading's
+    alone: nothing says the maximum is measured from it."""
+    from shapely.geometry import LineString, MultiLineString, Polygon
+
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    lot = s.lot
+    if not (drawing.get("fits") and ring and len(ring) >= 4) or lot.edges is None:
+        return None
+    edges = lot.edges
+    cut = s.envelope is not None and s.envelope.source == "flats"
+    if cut:
+        edges = dedicated(edges, s.rules, lot.zone)
+    chains = street_chains(edges)
+    if not chains:
+        return None
+    building = Polygon(ring)
+    slack = float(lot.sidewalk_easement_ft or 0.0)
+
+    def strip(e: Edge) -> float:
+        return e.dedication_ft if cut else 0.0
+
+    out = []
+    for chain in chains:
+        near = min(
+            building.distance(LineString([(e.x1, e.y1), (e.x2, e.y2)])) - strip(e) for e in chain
+        )
+        lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
+        far = _facade_far(building, lines) - min(strip(e) for e in chain)
+        front = any(e.cls is EdgeClass.front for e in chain)
+        out.append((front, round(near, 2), round(max(far, near), 2), round(slack, 2)))
+    return tuple(out)
+
+
+def _front_max_screened(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
+    """``s`` re-screened on its drawing's distance from the street."""
+    assert s.facts is not None
+    facts = dataclasses.replace(
+        s.facts, front_max_streets=front_max_streets(s), front_max_tried=True
+    )
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def _front_max_clear(s: Screened) -> bool:
+    """Whether ``s`` clears the maximum front setback under both readings."""
+    return all(
+        FRONT_MAX not in r.unchecked and all(c.check != FRONT_MAX for c in r.binds)
+        for r in (s.screening, s.signed)
+    )
+
+
+def front_max_checked(
+    s: Screened,
+    fitter: Fitter | None,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> Screened:
+    """``s`` re-screened with its drawn building measured against the
+    zone's maximum front setback (FOLLOWUPS 147,
+    :func:`flats.score.screen._front_max`).
+
+    The drawing stands the building nearest the front lot lines, which a
+    deep envelope, a court the code puts in front, or a corner's second
+    street can leave beyond the maximum. Where the maximum is all that holds
+    the plan -- it misses, or is a question, and nothing else fails -- the
+    same fit is drawn at other windows within the maximum
+    (:func:`flats.fit.draw.draw` ``listing``, ``max_front_ft``) at the fit's
+    angle and the angles nearest square to a street, and the first window
+    whose building fits, whose drive in from the street is clear
+    (:func:`flats.ingest.flatter._drive_clear`) and that clears the maximum
+    with nothing worse (:func:`flats.ingest.flatter._no_worse`) is kept.
+    Only a court reached down a lane from the street moves this way
+    (:func:`flats.ingest.flatter._lane_in_from_street`); any other plan
+    stands where it was drawn. ``fitter`` None measures and searches
+    nothing further. Where nothing is drawn the plan is held out of GREEN
+    (``front_max_drawn``), never passed."""
+    if s.facts is None or s.rules.get("setback_front_max_ft") is None:
+        return s
+    if (
+        front_max_streets(s) is None
+        and s.screening.colour is flag_plan.Colour.red
+        and s.signed.colour is flag_plan.Colour.red
+    ):
+        # Nothing drawn on a plan RED both ways: nothing to hold it out of.
+        return s
+    out = _front_max_screened(s, policy=policy, relief=relief)
+    if fitter is None or _front_max_clear(out) or s.fit.angle_deg is None:
+        return out
+    binds = {c.check for r in (out.screening, out.signed) for c in r.binds}
+    if binds - {FRONT_MAX}:
+        return out
+    drawing = s.drawing or {}
+    if not (drawing.get("fits") and not drawing.get("tight") and drawing.get("lane")):
+        return out
+    if not _lane_in_from_street(s):
+        return out
+    street = _street_lines(s.lot)
+    cap = s.rules.get("setback_front_max_ft")
+    if not street or isinstance(cap, bool) or not isinstance(cap, (int, float)):
+        return out
+    # The listing measures to points two feet apart on the front lines, from
+    # the lot's own line: the strip and the allowance are added, and every
+    # window kept is measured exactly below.
+    strip = 0.0
+    if s.envelope is not None and s.envelope.source == "flats" and s.lot.edges is not None:
+        strip = max(
+            (e.dedication_ft for e in dedicated(s.lot.edges, s.rules, s.lot.zone).edges),
+            default=0.0,
+        )
+    reach = float(cap) + strip + FRONT_MAX_DRAWN_TOL_FT + 2.0
+    for angle in _flatter_angles(s, fitter)[:FRONT_MAX_ANGLES]:
+        at = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
+        listing: list[Any] = []
+        drawing_for(at, fitter, listing=listing, max_front_ft=reach)
+        if len(listing) > FRONT_MAX_TRIES:
+            step = (len(listing) - 1) / (FRONT_MAX_TRIES - 1)
+            listing = [listing[round(i * step)] for i in range(FRONT_MAX_TRIES)]
+        for where in listing:
+            drawn = drawing_for(at, fitter, where=where)
+            if not drawn or not drawn.get("fits") or drawn.get("tight"):
+                continue
+            if not _drive_clear(drawn, at, street):
+                continue
+            cand = _front_max_screened(
+                dataclasses.replace(s, drawing=drawn), policy=policy, relief=relief
+            )
+            if _front_max_clear(cand) and _no_worse_but_front(out, cand):
+                return cand
+    return out
+
+
+def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
+    """:func:`flats.ingest.flatter._no_worse` with the maximum front
+    setback's own bind and flags set aside: the candidate is drawn to
+    clear them."""
+
+    def strip(s: Screened) -> Screened:
+        def one(r: Screening) -> Screening:
+            return dataclasses.replace(
+                r,
+                binds=tuple(c for c in r.binds if c.check != FRONT_MAX),
+                flags=tuple(
+                    f for f in r.flags
+                    if f.code not in ("MEASURE-FRONT-MAX-STREET", "MEASURE-FRONT-MAX-DRAWN")
+                ),
+            )
+
+        return dataclasses.replace(s, screening=one(s.screening), signed=one(s.signed))
+
+    return _no_worse(strip(base), cand)
 
 
 def fire_checked(
