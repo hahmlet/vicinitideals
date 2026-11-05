@@ -2563,3 +2563,20 @@
     that figure but would not fit at the single-house figure is YELLOW with a
     flag that the stricter reading is open, never GREEN. FOLLOWUPS 150.
   source: Steph 2026-11-05 (chat), docs/followups/150-rear-court-sharing-check.md
+- id: 2026-11-05-pdx-shared-outdoor-space-later
+  kind: ruling
+  date: 2026-11-05
+  scope: {county: multnomah, city: portland}
+  question: >-
+    Portland lets a site skip the deep rear yard if 10% of it is shared
+    outdoor space at least 30 ft across. The screen does not try that option,
+    so such lots show RED. Yellow if it could fit, yellow always, or stay red?
+  ruling: >-
+    "They only place I see this working are large lots with multiple pods.
+    This seems like something to add to that feature build out as an option"
+  effect: >-
+    No change now: the screen keeps ignoring the shared-outdoor-space
+    alternative for a single pod, and those lots stay as screened. The option
+    is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
+    FOLLOWUPS 68.
+  source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
