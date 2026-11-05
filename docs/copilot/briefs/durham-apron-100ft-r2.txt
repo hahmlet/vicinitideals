@@ -1,0 +1,16 @@
+durham-apron-100ft-r2 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/durham-apron-100ft, branch flats/durham-apron-100ft, head 23e839d2; no new branch)
+
+WHY: FOLLOWUPS 118. The bound of 23e839d2 over Durham (/root/durham_apron on LXC 137) was read lot by lot on 2026-11-04: 10 yellow->green are right, 1 of the 2 yellow->red is right, and one is a wrong RED. Hand-off: C:/Users/Steph/Repos/vicinitideals-worktrees/durham-apron-100ft.handoff.md (you have read access to that folder). Claude will re-bound and re-read.
+
+FINDINGS TO FIX (flats/geom/durham_apron.py, maximum_clearance_ft):
+1. WRONG RED, 2S124AB01200: its frontage chain has a ~3 ft jog edge. The Boones Ferry junction is projected separately onto each edge's own extended line, so projecting it onto the jog's extension lands a phantom junction at station ~6 ft. The real junction projects at station ~189 ft, leaving ~165 ft of centreline clearance -- above the 100 ft fail line but not enough room for the ROW and curb-return allowances to prove a pass, so the lot must come out YELLOW (indeterminate, None), not RED.
+   FIX: place each junction ONCE along the whole frontage chain (project it onto the chain as one polyline, by station along the chain), not separately per edge. Edges too short to hold the apron must not create their own junction events.
+2. WEAKNESS (would be a false GREEN on some future lot): junctions are looked for only on the single nearest street segment parallel to each frontage edge. If the frontage street is split into several segments, a junction on the next segment of the same street can be missed, and a missed junction can only make the clearance look LARGER. FIX: gather crossing-street junctions from every street segment within reach of the chain that runs parallel to the frontage (same street name where the network carries names, else every parallel segment within FRONT_REACH_FT of the chain), not only the nearest one. When in doubt, include the junction (never drop one).
+
+TESTS (the existing Durham apron test file; grep flats/tests for durham_apron): (a) a frontage chain with a 3 ft jog edge and a cross street whose true station is ~189 ft along a ~200 ft chain gives no junction near station 6; with clearance ~165 ft it returns None (indeterminate), not a failure; (b) a frontage street split into two segments with the cross street meeting only the second segment still finds that junction; (c) every existing Durham apron test unchanged. Run uv run pytest flats/tests -q -n auto (green) and uv run ruff check flats/. Commit by explicit path, message prefix "flats:" ending "(FOLLOWUPS 118)". Do not push.
+
+Append "## Round 2 (2026-11-04)" to the hand-off: what changed, expected moves (2S124AB01200 red->yellow against the round-1 bound; the 10 gains and 2S113BD04400 red unchanged; any lot whose clearance shrinks under finding 2 named).
+
+MUST NOT CHANGE: the 100 ft figure, the ROW / curb-return allowances, FRONT_REACH_FT, any rule value; any city other than Durham; anything under app/.
+
+AUTHORISED EXCEPTION: 2S124AB01200 may move red->yellow. Finding 2 may only move lots toward RED or YELLOW (more junctions found means less clearance); it must not turn any lot GREEN.

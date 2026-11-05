@@ -41,7 +41,7 @@ from flats.geom.alley import (
     side_alley_along,
     usable_run_ft,
 )
-from flats.rules.conditions import CONDITIONS, ENTAILS, close_entailed
+from flats.rules.conditions import CONDITIONS, DRAWN_CONDITIONS, ENTAILS, close_entailed
 from flats.rules.resolver import RuleSet
 from flats.score.configure import configure
 from flats.score.screen import LotFacts
@@ -440,7 +440,11 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # + 4 on 2026-10-29 (chunk 5): Troutdale HDR Town Center, 3.235.C.5.a's alley
     # rear against a non-residential district (5 ft) and the townhouse column's
     # (0), each with and without multi_story, keyed to the rear line.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4
+    # + 1 on 2026-11-03 (FOLLOWUPS 109 part 2): Portland R7 in Glendoveer, the
+    # plan district's 15 ft rear (33.530.040.A) kept where an alley is at the
+    # rear, because the base zone's alley sentence relaxes the base zone's
+    # figure, not the plan district's. It tightens; nothing is waived.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4 + 1
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:
@@ -516,7 +520,11 @@ def test_portlands_rear_waiver_reaches_every_zone_with_the_garage_one(layers) ->
             if garage is None or not any("abuts_alley" in (v.when or ()) for v in garage.variants):
                 continue
             rear = zone.values["setback_rear_ft"]
-            waived = [v for v in rear.variants if "alley_at_rear" in (v.when or ())]
+            # A variant that also names a drawn plan district fact is that
+            # district's own figure (Glendoveer keeps 15 ft, 33.530.040.A,
+            # 2026-11-03); the base zone's waiver must still stand on its own.
+            waived = [v for v in rear.variants if "alley_at_rear" in (v.when or ())
+                      and not set(v.when or ()) & set(DRAWN_CONDITIONS)]
             assert waived and all(v.exempt for v in waived), (lid, zname)
             # and resolving with the bridge's own answer reaches it
             eff = rear.under({"alley_at_rear", "abuts_alley", "multi_story"})

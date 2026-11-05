@@ -22,7 +22,7 @@ from flats.provenance.store import ProvenanceError, ProvenanceStore
 
 def _book(monkeypatch, pages: list[list[str]]) -> None:
     """Stand in for the PDF extraction with a known book."""
-    monkeypatch.setattr(P, "_pages_of", lambda data, *, extraction="layout": pages)
+    monkeypatch.setattr(P, "_pages_of", lambda data, *, extraction="layout", path=None: pages)
 
 
 def _text(pages: list[list[str]]) -> str:

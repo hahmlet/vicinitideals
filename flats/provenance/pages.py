@@ -160,7 +160,7 @@ def _label(lines: Sequence[str]) -> str:
     return ""
 
 
-def _pages_of(data: bytes, *, extraction: str) -> list[list[str]]:
+def _pages_of(data: bytes, *, extraction: str, path: str = "") -> list[list[str]]:
     """The document's text, one list of lines per page.
 
     Deliberately the same call the store's extraction makes, page by page
@@ -171,7 +171,7 @@ def _pages_of(data: bytes, *, extraction: str) -> list[list[str]]:
 
     from pypdf import PdfReader
 
-    from flats.provenance.mend import restore
+    from flats.provenance.mend import restore, restore_joins
     from flats.provenance.pdf_hold import held_extraction
 
     mode = {} if extraction == "plain" else {"extraction_mode": "layout"}
@@ -193,6 +193,7 @@ def _pages_of(data: bytes, *, extraction: str) -> list[list[str]]:
             # And a ligature glyph written out as its letters, as the fetch
             # stores it (flats-html-text/9).
             text = restore(text)
+            text = restore_joins(path, text)
             out.append([line.rstrip() for line in text.split("\n")])
     return out
 
@@ -214,7 +215,7 @@ def index(path: str, data: bytes, text: str, *, extraction: str = "layout") -> P
     stored = [(n, line) for n, line in enumerate(text.split("\n"), 1) if line.strip()]
     from_pdf: list[tuple[int, str]] = []
     furniture: dict[int, str] = {}
-    for number, lines in enumerate(_pages_of(data, extraction=extraction), 1):
+    for number, lines in enumerate(_pages_of(data, extraction=extraction, path=path), 1):
         kept = [line for line in lines if line.strip()]
         if not kept:
             continue

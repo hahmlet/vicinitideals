@@ -7,9 +7,9 @@
        flipped the building's orientation and fire reach plays no part in choosing the placement
        (flats/score/screen.py ~L2338-L2363). Same defect made Sandy 24E15AB06600 a false RED in live.
        Fix: when the chosen placement fails only on fire reach, try the other fitting placements before RED.
-   (b) QUESTION for Steph: Canby allows 8.5 ft stalls and Estacada 8 ft, but the court is drawn at 9 ft.
+   (b) RULED Steph 2026-11-03 (rulings 2026-11-03-stall-width-city-minimum): CITY'S OWN WIDTH -- build next. Was: Canby allows 8.5 ft stalls and Estacada 8 ft, but the court is drawn at 9 ft.
        About 6 Canby lots and Estacada 34E17D 00700 miss only by that margin. Draw to the city's narrower
        stall (more lots, tighter parking) or keep 9 ft (safer)?
-   (c) QUESTION for Steph: on long narrow lots the parking could run down the lot's length instead of one
+   (c) RULED Steph 2026-11-03 (2026-11-03-long-lot-parking-later): LATER, with FOLLOWUPS 92 -- nothing now. Was: on long narrow lots the parking could run down the lot's length instead of one
        row across the back; ~20 of the new Canby/Sandy reds are long enough. Overlaps the parking layout
        generator (FOLLOWUPS 92) -- try that layout?
