@@ -218,11 +218,18 @@ BETHANY_ASC1_PD = "BETHANY_ASC1_PD"
 #: "Yellow with flag" -- the plan-rule hold keeps it YELLOW and this record
 #: says why (RALEIGH-HILLS-ASC-U-CASE-74-96C, FOLLOWUPS 136).
 RALEIGH_HILLS_ASC_U = "RALEIGH_HILLS_ASC_U"
+#: The lot has frontage on a South Hillsboro Active Use Street as Figure
+#: 12.65.930-A draws it, and the figure only illustrates the streets' type
+#: and location (12.65.030.B.2). Steph 2026-11-04: trace the sketch, GREEN
+#: WITH A FLAG, below the yellow line (HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE,
+#: FOLLOWUPS 147).
+ACTIVE_USE_ILLUSTRATIVE = "ACTIVE_USE_ILLUSTRATIVE"
 #: Site facts a traced area answers whose only rule here is a record below
 #: the yellow line: the fact holding raises the flag and moves no colour.
 AREA_FLAGS: dict[str, tuple[str, str]] = {
     "bethany_asc_1": ("BETHANY-ASC1-PD-CONDITIONS", BETHANY_ASC1_PD),
     "raleigh_hills_asc_u": ("RALEIGH-HILLS-ASC-U-CASE-74-96C", RALEIGH_HILLS_ASC_U),
+    "hillsboro_active_use_street": ("HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE", ACTIVE_USE_ILLUSTRATIVE),
 }
 #: Site facts a traced area answers that send every application through a
 #: review deciding on more than measured standards, each with its citation:
@@ -2885,7 +2892,7 @@ def _building_frontage(
     if (
         lot.landlocked
         or not lines
-        or rules.get("setback_front_max_ft") is None
+        or (rules.get("setback_front_max_ft") is None and _stated_band(rules) is None)
     ):
         unchecked.append(BUILDING_SHARE)
         unmeasured.add(BUILDING_FRONTAGE)
@@ -2969,6 +2976,20 @@ def _building_frontage(
         unmeasured.add(BUILDING_FRONTAGE)
     else:
         unmeasured.add(FRONTAGE_STREET)
+
+
+def _stated_band(rules: ZoneResolution) -> float | None:
+    """The band the code counts the building's share within, where it
+    states one as a number (``building_frontage_band_ft``), else None. It
+    bounds the share where the zone states no maximum front setback: South
+    Hillsboro's Table 12.65.850-1 counts the property line coverage within
+    its own 10 or 15 feet, while 12.65.130.A leaves the base zone's maximum
+    -- none, in the multi-dwelling zones -- as the setback test (FOLLOWUPS
+    147)."""
+    got = rules.get("building_frontage_band_ft")
+    if isinstance(got, bool) or not isinstance(got, (int, float)) or got <= 0:
+        return None
+    return float(got)
 
 
 def _primary_streets(

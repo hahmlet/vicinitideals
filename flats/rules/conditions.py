@@ -465,6 +465,49 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "hillsboro_active_use_street",
+        "site_fact",
+        "A street line of the Hillsboro lot abuts, at any point, a South "
+        "Hillsboro Active Use Street as Figure 12.65.930-A draws it, traced "
+        "2026-11-04 onto the RLIS centrelines "
+        "(flats/config/areas/or/washington/hillsboro/active-use-streets.geojson, "
+        "flats.geom.active_use). The figure illustrates the street type and "
+        "location (12.65.030.B.2); the final street is set at the PUD. Steph "
+        "2026-11-04: green with a flag -- the fact moves no colour; it only "
+        "carries the flag (HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE), below the "
+        "yellow line.",
+        evidence="Hillsboro CDC Figure 12.65.930-A (PDF page 889), traced onto RLIS centrelines, against the lot's s4 street lines",
+        assume=None,
+    ),
+    ConditionDef(
+        "hillsboro_active_use_1",
+        "site_fact",
+        "Every street line of the Hillsboro lot is on an Active Use 1 Street "
+        "of Figure 12.65.930-A, so 12.65.850 holds the lot to Table "
+        "12.65.850-1's Active Use 1 row (a 75% minimum property line "
+        "coverage within 10 feet) on every street. False where no street line "
+        "touches a traced Active Use Street; unanswered -- out of GREEN -- "
+        "where the lot touches one but not on every street line alike (an "
+        "Active Use corner with an ordinary street or the other Active Use "
+        "type), since the coverage is owed on the Active Use frontage alone "
+        "(flats.geom.active_use).",
+        evidence="Hillsboro CDC Figure 12.65.930-A (PDF page 889), traced onto RLIS centrelines, against the lot's s4 street lines",
+        assume=None,
+    ),
+    ConditionDef(
+        "hillsboro_active_use_2",
+        "site_fact",
+        "Every street line of the Hillsboro lot is on an Active Use 2 Street "
+        "of Figure 12.65.930-A (the figure's Active Use 2A traced as Active "
+        "Use 2), so 12.65.850 holds the lot to Table 12.65.850-1's Active Use "
+        "2 row (a 70% minimum property line coverage within 15 feet) on every "
+        "street. False where no street line touches a traced Active Use "
+        "Street; unanswered -- out of GREEN -- where the lot touches one but "
+        "not on every street line alike (flats.geom.active_use).",
+        evidence="Hillsboro CDC Figure 12.65.930-A (PDF page 889), traced onto RLIS centrelines, against the lot's s4 street lines",
+        assume=None,
+    ),
+    ConditionDef(
         "no_alley_at_rear",
         "site_fact",
         "No alley runs the lot's whole rear line: the measured negation of "

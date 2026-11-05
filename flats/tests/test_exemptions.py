@@ -166,7 +166,13 @@ pytestmark = pytest.mark.unit
 # 467 -> 470 on merge: both of the above (3 Sandy + 12 Johnson Creek on 455).
 # 470 -> 471 stated on 2026-11-04: Beaverton MR's maximum front setback is
 # exempt because note 18 applies only where 60.05.15.6 governs.
-EXPECTED = {"stated": 471, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 471, "numeric": 185, "marker": 0, "dash": 2, "silent": 8}
+# 173 -> 185 numeric on 2026-11-04 (FOLLOWUPS 147, South Hillsboro Active Use Streets): Hillsboro
+# R-4.5, MR-1, MR-2 and MR-3 hold the building share of the frontage, its band and the ground
+# storey exempt off an Active Use Street -- 12.65.850.B applies the standards only to lots with
+# frontage on one (12.65/12.65.850.txt#L16), and the code grepped whole for "property line
+# coverage" and "building frontage" states no other share for these zones -- with Table
+# 12.65.850-1 and D.6 as variants behind the traced Figure 12.65.930-A's facts.
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
