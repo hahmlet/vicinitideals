@@ -62,4 +62,4 @@ front paving cap and 20% side-street cap on corners (C.1.b), no stall within 10 
 setbacks). 33.120.235.C.1 L1 setback landscaping exempts "development allowed in the setbacks" and sites <= 10,000 sq ft, except
 the EPA rear-setback 50% cap (ruled by area, 2026-11-04). The other AI said the 40% cap is "single-dwelling areas": wrong -- it
 follows the building type, so it binds our RM lots too (already encoded? check before building).
-
+- 2026-11-05 STARTED (for the Monday sizing study, FOLLOWUPS 149): Copilot builds the mechanism on flats/side-yard-parking (field parking_side_yard_allowed none|lane|lane_and_court; unset = today); batch reader verifies every city. [Steph] silent codes: allowed or not?
