@@ -459,6 +459,56 @@ defaults:
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/17.90/17.90.160.txt#L1,L4,L74,L76"
+  # THE REAR COURT AND THE SETBACKS, read 2026-11-05 (FOLLOWUPS 150).
+  # 17.98.50 A: "Parking areas, which abut a residential zoning district,
+  # shall meet the setback of the most restrictive adjoining residential
+  # zoning district." A parking area is property "on which parking spaces are
+  # defined, designated, or otherwise identified" for the owners or tenants
+  # (17.10, L681), which the pod's court is, and 17.98 reaches every use: B
+  # and C carve nothing out for row houses or multi-family, and the zone
+  # tables send parking to it ("See Chapter 17.98", 17.36.30 L23, 17.38.30
+  # L22, 17.40.30 L21). "Abutting" is "joined by a common boundary line or
+  # point" (17.10, L11). Read LITERALLY: the court on an R-1, R-2 or R-3 lot
+  # meets its residential neighbours across the rear and side lot lines, so
+  # it abuts the residential district they are in and must meet that
+  # district's setback -- the court stands in front of the rear setback and
+  # the two stack (`paper.behind_wall_ft`); the sides are already outside the
+  # envelope the court is searched in. The other reading -- that the
+  # sentence reaches only a parking area outside a residential district,
+  # next to one -- is not taken: the words do not say it, and it is the
+  # false-GREEN direction (hand-off question). Applied whatever the
+  # neighbours, which only over-charges a residential lot with no
+  # residential neighbour at all; no Sandy reading of non-residential
+  # neighbours is held to switch it off.
+  #
+  # "The most restrictive adjoining residential zoning district" can be a
+  # stricter one than the lot's own. R-1, R-2 and R-3 print a 15 ft rear and
+  # 5 ft side (17.36.30 L15-L16, 17.38.30 L13-L14, 17.40.30 L12-L13); SFR,
+  # the fourth residential district of 17.30.00 (L8-L12), prints 20 ft rear
+  # and 7.5 ft interior side (sdc.17.34.txt L151-L152). Which of an SFR
+  # neighbour's yards faces our line is not measured, so beside an SFR lot
+  # the court is kept the larger figure, 20 ft, off every lot line that is
+  # not a street (`parking_lot_line_buffer_ft`, read on
+  # `abuts_lower_density_zone`, the `neighbours:` block below). Conservative:
+  # a lot with SFR only at its side is charged 20 there where 7.5 may be all
+  # the code asks.
+  parking_required_yard_prohibited:
+    value: true
+    cite: Sandy SDC 17.98.50 A, parking areas abutting a residential zoning district meet the setback of the most restrictive adjoining residential zoning district
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6"
+  parking_lot_line_buffer_ft:
+    value: 0
+    cite: Sandy SDC 17.98.50 A, the setback of the most restrictive adjoining residential zoning district (the lot's own setbacks, already charged, where no stricter district adjoins)
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6"
+    variants:
+      - value: 20
+        when: [abuts_lower_density_zone]
+        cite: Sandy SDC 17.98.50 A with 17.34.30 E, SFR rear yard 20 ft minimum (the larger SFR yard, held off every non-street line)
+        quote: "or/clackamas/sandy/sdc.17.34.txt#L151-L152"
 
 # NOT ENCODED, read 2026-10-07:
 # - Design review (17.90, a Type II Director's review for multi-family
@@ -1082,6 +1132,27 @@ zone_rulings:
     note: >-
       "I3", the regional zoning layer's spelling of Sandy's I-3, General
       Industrial (SDC 17.52), on 2026-10-07. The block is I-3.
+
+# What zone lies across a non-street lot line (flats.geom.neighbour), read
+# 2026-11-05 for 17.98.50 A (FOLLOWUPS 150).
+neighbours:
+  abuts_lower_density_zone:
+    true_for: [SFR]
+    false_for: [R-1, R-2, R-3, POS, C-1, C-2, C-3, I-1, I-2, I-3]
+    quote: "or/clackamas/sandy/17.30/17.30.00.txt#L6-L20"
+    cite: Sandy SDC 17.30.00, zoning district designations (Residential SFR, R-1, R-2, R-3)
+    note: >-
+      Read only by `parking_lot_line_buffer_ft` (defaults): 17.98.50 A gives
+      a parking area the setback of "the most restrictive adjoining
+      residential zoning district". 17.30.00 files four districts under
+      Residential: SFR, R-1, R-2 and R-3. The three the pod screens in print
+      the same 15 ft rear and 5 ft side; SFR prints 20 and 7.5 (sdc.17.34
+      L151-L152), so SFR is the one stricter neighbour and the only true
+      side. The rest are false: the same yards as ours, or not residential
+      (POS, the commercial and industrial districts). A line across another
+      jurisdiction's land, unzoned land or a split neighbour leaves the fact
+      unstated and the lot out of GREEN -- Clackamas County's rural zones
+      beyond the city line are residential districts with yards of their own.
 
 drawn_areas:
   bornstedt_village:

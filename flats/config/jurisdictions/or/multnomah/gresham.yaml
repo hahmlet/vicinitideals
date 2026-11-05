@@ -2119,6 +2119,62 @@ defaults:
         when: [unit_lots]
         cite: GDC 7.0431(B)(3)(b)(i), no off-street parking in the front yard or side yard of a townhouse
         quote: "or/multnomah/gresham/7/7.0431.txt#L38-L39"
+  # THE REAR COURT AND THE REAR SETBACK, read 2026-11-05 (FOLLOWUPS 150).
+  # The quadplex on its parent lot is governed by 7.0420, whose district list
+  # (L4-L5) holds every district this file opens to it. 7.0420(B)(5): "All
+  # provided off-street parking areas must meet the following standards: ...
+  # c. Two parking spaces per unit may be located in a driveway, in the front
+  # or street side yard setback, or in the rear yard setback when there is an
+  # alley." Read as a CLOSED list. The sentence is a standard every provided
+  # parking area "must meet", and its last limb is pointless unless the rear
+  # yard setback is otherwise closed to parking: a permission that only
+  # applies "when there is an alley" says no alley, no parking there. The
+  # interior side setback is not on the list at all, which the screen already
+  # honours (the court is searched inside the envelope the side setbacks cut).
+  # So without an alley the court stands in front of the rear setback and the
+  # two stack (`paper.behind_wall_ft`). Read narrowly as an alley at the REAR
+  # (`alley_at_rear`): an alley down the side does not open the rear setback.
+  # Two things checked and not reaching the parent lot: 9.0822(A)(6), which
+  # keeps spaces, aisles and maneuvering out of every required setback, sits
+  # in the parking-lot standards that 9.0802(F) switches off for quadplexes
+  # and townhouses "on a unit-by-unit basis" (9.0800.parking.txt#L66-L70),
+  # and 3.0100 says "Parking areas for single detached dwellings and middle
+  # housing are not parking lots except specified in Sections 7.0431 and
+  # 7.0440 where shared parking areas are provided" (3.0100.definitions.txt
+  # #L1500-L1503) -- 7.0420 is not one of the two. And the 3.0100 yard
+  # setback area is kept clear of "structures above grade" (L2233-L2236),
+  # which a surface court is not, so nothing else in the code opens or closes
+  # it. Conservative in one respect: (c) speaks of parking SPACES, and the
+  # field keeps the aisle out of the setback too, so a lot whose aisle alone
+  # could have used the setback is charged its depth.
+  #
+  # The townhouse path keeps sharing the rear yard. 7.0431(B)(3)(b)(i), the
+  # branch this design is on (see `parking_side_prohibited` above): "Off-street
+  # parking areas shall be accessed on the back facade or located in the rear
+  # yard", and 3.0100 makes the rear yard the whole space between the building
+  # and the rear lot line, setback included. 7.0431(B)(5)(a) lets the parking
+  # sit "on individual lots or in a shared parking area on a common tract";
+  # the first leaves it out of the parking-lot standards and so out of
+  # 9.0822(A)(6) (judgement, recorded in the hand-off).
+  parking_required_yard_prohibited:
+    value: true
+    cite: GDC 7.0420(B)(5)(c), quadplex parking spaces allowed in a driveway, the front or street side yard setback, or the rear yard setback only when there is an alley
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+    variants:
+      - value: false
+        when: [alley_at_rear]
+        cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
+        quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      - value: false
+        when: [unit_lots]
+        cite: GDC 7.0431(B)(3)(b)(i), townhouse off-street parking areas located in the rear yard
+        quote: "or/multnomah/gresham/7/7.0431.txt#L38-L39"
+      - value: false
+        when: [unit_lots, alley_at_rear]
+        cite: GDC 7.0431(B)(3)(b)(i), townhouse off-street parking areas located in the rear yard
+        quote: "or/multnomah/gresham/7/7.0431.txt#L38-L39"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
