@@ -31,6 +31,7 @@ import shapely
 from shapely.geometry import box
 
 from flats.encode.load import load_trusted
+from flats.fit.frontage import street_chains
 from flats.geom.edges import EdgeClass
 from flats.ingest import quadfit
 from flats.ingest.quadfit import front_max_streets, lot_from_row, screen_lot
@@ -204,6 +205,7 @@ def _drawn(building, edges, *, dedication: float = 0.0, easement: float | None =
     return SimpleNamespace(
         drawing={"fits": True, "building": [list(p) for p in building.exterior.coords]},
         lot=lot,
+        street_edges=None,
         envelope=None,
         rules=rules(**MAX),
     )
@@ -243,6 +245,97 @@ def test_nothing_fitting_is_nothing_measured() -> None:
     s = _drawn(box(10, 60, 66, 96), INTERIOR)
     s.drawing["fits"] = False
     assert front_max_streets(s) is None
+
+
+SHORT_THROUGH = _edges(
+    [
+        (0, 0, 80, 0, F),
+        (80, 0, 80, 30, S),
+        (80, 30, 0, 30, F),
+        (0, 30, 0, 0, S),
+    ],
+    [0.0],
+)
+
+
+def test_maximum_front_measures_two_opposite_runs_with_the_same_bearing() -> None:
+    # A shallow through lot falls below _split_ends' through-lot distance.
+    # street_chains keeps its existing merged result for frontage-share checks.
+    assert len(street_chains(SHORT_THROUGH)) == 1
+    got = front_max_streets(_drawn(box(10, 5, 50, 10), SHORT_THROUGH))
+    assert got is not None and len(got) == 2
+    assert sorted(row[1] for row in got) == [5.0, 20.0]
+
+
+def test_maximum_front_uses_streets_before_the_through_plan_renames_one() -> None:
+    as_cut = _edges(
+        [
+            (0, 0, 80, 0, F),
+            (80, 0, 80, 42.2, S),
+            (80, 42.2, 0, 42.2, F),
+            (0, 42.2, 0, 0, S),
+        ],
+        [0.0],
+    )
+    plan = _edges(
+        [
+            (0, 0, 80, 0, F),
+            (80, 0, 80, 42.2, S),
+            (80, 42.2, 0, 42.2, R),
+            (0, 42.2, 0, 0, S),
+        ],
+        [0.0],
+    )
+    s = _drawn(box(10, 5, 50, 10), plan)
+    s.street_edges = as_cut
+    measured = front_max_streets(s)
+    assert measured is not None
+    assert sorted(row[1] for row in measured) == [5.0, 32.2]
+    got = run(
+        facts(front_max_streets=measured, front_max_tried=True),
+        rules(setback_front_max_streets="every", setback_front_max_ft=5),
+    )
+    assert check(got, FRONT_MAX).verdict is Verdict.fails
+    assert got.colour is Colour.red
+
+
+def test_three_portland_corner_streets_remain_unheld(corpus) -> None:
+    three_streets = _edges(
+        [
+            (0, 0, 80, 0, F),
+            (80, 0, 80, 100, EdgeClass.street_side),
+            (80, 100, 0, 100, F),
+            (0, 100, 0, 0, R),
+        ],
+        [0.0, 90.0],
+    )
+    measured = front_max_streets(_drawn(box(10, 10, 66, 50), three_streets))
+    assert measured is not None and len(measured) == 3
+    lot = facts(corner=True, front_max_streets=measured, front_max_tried=True)
+    rule = corpus.resolve(PORTLAND, "CM2")
+    assert rule.get("setback_front_max_streets") == "corner_every"
+    assert front_max_owed(rule, lot) == ("unheld", measured)
+    got = run(lot, rule)
+    assert check(got, FRONT_MAX) is None
+    assert got.colour is Colour.yellow
+
+
+def test_close_same_side_frontage_jogs_remain_one_street() -> None:
+    jog = _edges(
+        [
+            (0, 0, 20, 0, F),
+            (20, 0, 20, 10, S),
+            (20, 10, 40, 10, F),
+            (40, 10, 40, 0, S),
+            (40, 0, 80, 0, F),
+            (80, 0, 80, 80, S),
+            (80, 80, 0, 80, R),
+            (0, 80, 0, 0, S),
+        ],
+        [0.0],
+    )
+    measured = front_max_streets(_drawn(box(5, 20, 60, 50), jog))
+    assert measured is not None and len(measured) == 1
 
 
 # --- the corpus ---------------------------------------------------------------
@@ -290,11 +383,33 @@ def test_portland_ce_leaves_its_streets_unread(corpus) -> None:
     [
         ("or/washington/_unincorporated", "TO:R24-40"),
         ("or/washington/_unincorporated", "TO:R40-80"),
+    ],
+)
+def test_transit_oriented_maximum_leaves_pedestrian_street_selection_unheld(
+    corpus, jurisdiction, zone
+) -> None:
+    got = corpus.resolve(jurisdiction, zone)
+    assert got.get("setback_front_max_streets") is None
+    lot = facts(
+        corner=True,
+        front_max_streets=streets((True, 8.0, 8.0, 0.0), (False, 25.0, 25.0, 0.0)),
+        front_max_tried=True,
+    )
+    assert front_max_owed(got, lot) == ("unheld", lot.front_max_streets)
+    assert check(run(lot, got), FRONT_MAX) is None
+    assert run(lot, got).colour is Colour.yellow
+
+
+@pytest.mark.parametrize(
+    ("jurisdiction", "zone"),
+    [
         ("or/clackamas/milwaukie", "NMU"),
         ("or/clackamas/estacada", "D"),
     ],
 )
-def test_every_street_readings_resolve_from_their_zones(corpus, jurisdiction, zone) -> None:
+def test_milwaukie_and_estacada_still_hold_every_street(
+    corpus, jurisdiction, zone
+) -> None:
     assert corpus.resolve(jurisdiction, zone).get("setback_front_max_streets") == "every"
 
 
@@ -302,6 +417,8 @@ def test_every_street_readings_resolve_from_their_zones(corpus, jurisdiction, zo
 def test_washington_county_transit_oriented_maximum_uses_half_the_facade(corpus, zone) -> None:
     got = corpus.resolve("or/washington/_unincorporated", zone)
     assert got.get("setback_front_max_facade_pct") == 50
+    assert got.get("setback_front_ft") is None
+    assert "setback_front_ft" in got.exempted
 
 
 @pytest.mark.parametrize(
@@ -418,8 +535,9 @@ def test_a_building_drawn_far_back_is_moved_within_the_maximum(corpus, policies,
     monkeypatch.setattr(quadfit, "drawing_for", back)
     s = screened(corpus, policies)
     assert pushed["done"]
+    assert corpus.resolve(TIGARD, "RES-B").get("setback_front_ft") == 20
     ((_, near, _, _),) = s.facts.front_max_streets
-    assert near <= 20.0 + 1.0
+    assert near == pytest.approx(20.0)
     assert check(s.signed, FRONT_MAX).verdict is Verdict.passes
 
 

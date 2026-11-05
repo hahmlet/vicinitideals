@@ -73,7 +73,7 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
-from flats.fit.frontage import building_runs, parking_share, street_chains
+from flats.fit.frontage import _runs, _streets_of_run, building_runs, parking_share, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -101,6 +101,8 @@ from flats.geom.corridor import (
 )
 from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
+    THROUGH_MIN_FT,
+    _split_ends,
     front_bearings as corner_fronts,
     is_corner,
     line_length,
@@ -113,7 +115,15 @@ from flats.geom.corner import (
 from flats.geom import dedication
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.drawn import load_area, observed_drawn
-from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
+from flats.geom.edges import (
+    BEARING_CLUSTER_TOL_DEG,
+    Edge,
+    EdgeClass,
+    LotEdges,
+    Tier,
+    bearing_deg,
+    bearing_delta,
+)
 from flats.geom.envelope import Setbacks, buildable
 from flats.geom.frontage_curve import BAND_DEG, angle_of, is_unbroken, makes_corner
 from flats.geom.neighbour import (
@@ -2178,6 +2188,8 @@ class Screened:
     #: fact measured after the drawing (:func:`fire_checked`) re-screens on
     #: the same ground. None from a caller that built one by hand.
     facts: LotFacts | None = None
+    #: The lot's street edges before a through-lot plan renames one end rear.
+    street_edges: LotEdges | None = None
     #: How much bigger the pod could be on this lot, each way
     #: (:func:`flats.score.room.room_for`, FOLLOWUPS 37(ii)): for the pod
     #: report, never read by the colour. None where the fit did not pass,
@@ -2420,6 +2432,7 @@ def _screen_on(
             envelope=env,
             front_deg=front,
             facts=facts,
+            street_edges=streets,
         ),
         fitters[key],
     )
@@ -3527,13 +3540,13 @@ def front_max_streets(
     drawing = s.drawing or {}
     ring = drawing.get("building")
     lot = s.lot
-    if not (drawing.get("fits") and ring and len(ring) >= 4) or lot.edges is None:
+    edges = getattr(s, "street_edges", None) or lot.edges
+    if not (drawing.get("fits") and ring and len(ring) >= 4) or edges is None:
         return None
-    edges = lot.edges
     cut = s.envelope is not None and s.envelope.source == "flats"
     if cut:
         edges = dedicated(edges, s.rules, lot.zone)
-    chains = street_chains(edges)
+    chains = _front_max_chains(edges)
     if not chains:
         return None
     building = Polygon(ring)
@@ -3552,6 +3565,66 @@ def front_max_streets(
         front = any(e.cls is EdgeClass.front for e in chain)
         out.append((front, round(near, 2), round(max(far, near), 2), round(slack, 2)))
     return tuple(out)
+
+
+def _front_max_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
+    """Keep separate street runs distinct, except for a close frontage jog."""
+    ring = edges.edges
+    bearings = [float(b) for b in edges.front_bearings[:2]]
+    if not two_streets(bearings):
+        bearings = bearings[:1]
+    on = [e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley for e in ring]
+    pieces = [
+        [ring[i] for i in indices]
+        for run in _runs(on)
+        for indices in _streets_of_run(ring, run, bearings)
+    ]
+    if len(pieces) < 2:
+        return tuple(tuple(piece) for piece in pieces)
+
+    corners = [pt for e in ring for pt in ((e.x1, e.y1), (e.x2, e.y2))]
+    parent = list(range(len(pieces)))
+
+    def find(i: int) -> int:
+        if parent[i] != i:
+            parent[i] = find(parent[i])
+        return parent[i]
+
+    def same_frontage(a: Sequence[Edge], b: Sequence[Edge]) -> bool:
+        ah = (sum(e.x2 - e.x1 for e in a), sum(e.y2 - e.y1 for e in a))
+        bh = (sum(e.x2 - e.x1 for e in b), sum(e.y2 - e.y1 for e in b))
+        if ah[0] * bh[0] + ah[1] * bh[1] <= 0.0:
+            return False
+        bearing = a[0].bearing_deg
+        if any(bearing_delta(e.bearing_deg, bearing) > BEARING_CLUSTER_TOL_DEG for e in b):
+            return False
+        segments = [(e.x1, e.y1, e.x2, e.y2) for e in (*a, *b)]
+        if _split_ends(segments, corners, bearing) is not None:
+            return False
+        angle = math.radians(bearing)
+        nx, ny = -math.sin(angle), math.cos(angle)
+
+        def span(run: Sequence[Edge]) -> tuple[float, float]:
+            values = [
+                x * nx + y * ny
+                for e in run
+                for x, y in ((e.x1, e.y1), (e.x2, e.y2))
+            ]
+            return min(values), max(values)
+
+        a_span, b_span = span(a), span(b)
+        gap = max(a_span[0] - b_span[1], b_span[0] - a_span[1], 0.0)
+        return gap < THROUGH_MIN_FT
+
+    for i, a in enumerate(pieces):
+        for j in range(i + 1, len(pieces)):
+            if same_frontage(a, pieces[j]):
+                parent[find(j)] = find(i)
+
+    grouped: dict[int, list[Edge]] = {}
+    for i, piece in enumerate(pieces):
+        grouped.setdefault(find(i), []).extend(piece)
+    return tuple(tuple(group) for group in grouped.values())
 
 
 def _front_max_screened(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
@@ -3638,7 +3711,9 @@ def front_max_checked(
     for angle in _flatter_angles(s, fitter)[:FRONT_MAX_ANGLES]:
         at = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
         listing: list[Any] = []
-        drawing_for(at, fitter, listing=listing, max_front_ft=reach)
+        drawing_for(
+            at, fitter, listing=listing, max_front_ft=reach, include_frontmost=True
+        )
         if len(listing) > FRONT_MAX_TRIES:
             step = (len(listing) - 1) / (FRONT_MAX_TRIES - 1)
             listing = [listing[round(i * step)] for i in range(FRONT_MAX_TRIES)]
@@ -4501,6 +4576,7 @@ def drawing_for(
     where: Any = None,
     listing: list[Any] | None = None,
     max_front_ft: float | None = None,
+    include_frontmost: bool = False,
 ) -> dict[str, Any] | None:
     """Where the fit stood this design, for the lot page (FOLLOWUPS 5).
 
@@ -4544,6 +4620,7 @@ def drawing_for(
             where=where,
             listing=listing,
             max_front_ft=max_front_ft,
+            include_frontmost=include_frontmost,
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -4573,6 +4650,7 @@ def drawing_for(
         where=where,
         listing=listing,
         max_front_ft=max_front_ft,
+        include_frontmost=include_frontmost,
     )
     if got is None:
         return None
