@@ -393,4 +393,4 @@ def test_the_chapter_refused_nearly_twice_what_it_kept() -> None:
     # 6 -> 9 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 9 -> 10 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
     # 10 -> 11 on 2026-10-02: parking_lot_line_buffer_ft.
-    assert len(load_rules()[COUNTY].defaults) == 11
+    assert len(load_rules()[COUNTY].defaults) == 13

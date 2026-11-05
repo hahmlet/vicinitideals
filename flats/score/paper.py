@@ -528,6 +528,15 @@ def side_yard_mode(rules: "ZoneResolution") -> str:
     return mode
 
 
+def side_yard_stated_mode(rules: "ZoneResolution") -> str:
+    """The allowed reach the code actually states; absent means silence."""
+    allowed = side_yard_mode(rules)
+    stated = rules.get("parking_side_yard_stated")
+    if allowed == "none" or stated not in ("lane", "lane_and_court"):
+        return "none"
+    return min((allowed, stated), key=("none", "lane", "lane_and_court").index)
+
+
 def _side_yard_clearance_ft(rules: "ZoneResolution") -> float:
     """The side setback available to parking after the lot-line strip."""
     side = _number(rules, "setback_side_ft")
@@ -539,18 +548,24 @@ def _side_yard_clearance_ft(rules: "ZoneResolution") -> float:
     return max(0.0, side - lot_line_buffer_ft(rules))
 
 
-def side_yard_lane_overlap_ft(rules: "ZoneResolution", lane_ft: float) -> float:
+def side_yard_lane_overlap_ft(
+    rules: "ZoneResolution", lane_ft: float, *, corner: bool = False
+) -> float:
     """How much of the lane may overlap one side setback."""
-    if side_yard_mode(rules) == "none":
+    if corner or side_yard_mode(rules) == "none":
         return 0.0
     return min(max(0.0, lane_ft), _side_yard_clearance_ft(rules))
 
 
 def side_yard_court_overlap_ft(
-    rules: "ZoneResolution", court_ft: float, *, lane_ft: float | None = None
+    rules: "ZoneResolution",
+    court_ft: float,
+    *,
+    lane_ft: float | None = None,
+    corner: bool = False,
 ) -> float:
     """How much of the court may overlap the lane's side setback."""
-    if side_yard_mode(rules) != "lane_and_court" or lane_ft == 0:
+    if corner or side_yard_mode(rules) != "lane_and_court" or lane_ft == 0:
         return 0.0
     return min(max(0.0, court_ft), _side_yard_clearance_ft(rules))
 

@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import dataclasses
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field as _dc_field
 from typing import Callable, Iterable, Sequence
 
 import numpy as np
@@ -102,6 +102,8 @@ class Fit:
     #: took. ``None`` on a fit built without it: the screen then charges the
     #: least paving of the fixes that work.
     court_fix: tuple[float, float, float] | None = None
+    #: The same lot fit after reducing side-yard reach to what the code states.
+    side_yard_stated_fit: Fit | None = _dc_field(default=None, compare=False, repr=False)
 
     @property
     def required_ft(self) -> float:

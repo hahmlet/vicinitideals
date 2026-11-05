@@ -4314,7 +4314,9 @@ def drawing_for(
             street=street,
             beside_band_ft=beside.band_ft,
             beside_len_ft=beside.length_ft,
-            court_overlap_ft=side_yard_court_overlap_ft(s.rules, beside.band_ft),
+            court_overlap_ft=side_yard_court_overlap_ft(
+                s.rules, beside.band_ft, corner=corner
+            ),
             short_ft=short,
             where=where,
             listing=listing,
@@ -4325,14 +4327,18 @@ def drawing_for(
         got = side_column(s.design, s.rules, alley)
         court = got[0] if got is not None else 0.0
         across = court_across(s.design, s.rules, alley, corner=corner)
-        lane_overlap = side_yard_lane_overlap_ft(s.rules, across.lane_ft)
+        lane_overlap = side_yard_lane_overlap_ft(
+            s.rules, across.lane_ft, corner=corner
+        )
         court_overlap = 0.0
     else:
         court = court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
         across = court_across(s.design, s.rules, alley, corner=corner)
-        lane_overlap = side_yard_lane_overlap_ft(s.rules, across.lane_ft)
+        lane_overlap = side_yard_lane_overlap_ft(
+            s.rules, across.lane_ft, corner=corner
+        )
         court_overlap = side_yard_court_overlap_ft(
-            s.rules, across.width_ft, lane_ft=across.lane_ft
+            s.rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
         )
     beyond = _court_beyond_rear(
         s.design,

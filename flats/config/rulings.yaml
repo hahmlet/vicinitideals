@@ -2531,3 +2531,23 @@
     Companion to 2026-11-04-south-hillsboro-active-use-streets-traced.
     FOLLOWUPS 147.
   source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
+
+- id: 2026-11-05-side-yard-parking-silent-codes
+  kind: ruling
+  date: 2026-11-05
+  scope: {}
+  question: >-
+    When the code neither allows nor forbids parking in an interior side yard,
+    may a lot whose fit depends on using that yard be GREEN?
+  ruling: >-
+    "A SILENT code lets the lane/court use one side setback, but a lot that
+    fits ONLY that way is YELLOW + flag, never GREEN."
+  effect: >-
+    `parking_side_yard_allowed` records the reach used for fit, while
+    `parking_side_yard_stated` records the reach the code actually states.
+    Where a fit fails at the stated reach and clears only at the allowed
+    reach, the lot is YELLOW with SIDE-YARD-PARKING-SILENT. A prohibition
+    overrides both fields. Only an interior side lot line is used; corner
+    lots do not take side-yard reach.
+  source: Steph 2026-11-05 (side-yard-parking.readings.md, user-provided decision)
+  encoded_in: [flats/rules/fields.py, flats/score/paper.py, flats/score/screen.py, flats/config/flags.yaml]

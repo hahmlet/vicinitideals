@@ -138,6 +138,7 @@ _LABELS: dict[str, str] = {
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_side_yard_allowed": "parking allowed in one side yard",
+    "parking_side_yard_stated": "parking side-yard reach stated by the code",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
@@ -1318,6 +1319,16 @@ _F: tuple[FieldDef, ...] = (
         choices=("none", "lane", "lane_and_court"),
     ),
     FieldDef(
+        "parking_side_yard_stated",
+        "enum",
+        "The part of `parking_side_yard_allowed` the code actually states. "
+        "`none` records silence; `lane` records only the drive lane; "
+        "`lane_and_court` records both the lane and parking court. Optional: "
+        "absent means `none`.",
+        None,
+        choices=("none", "lane", "lane_and_court"),
+    ),
+    FieldDef(
         "parking_island_sqft_per_space",
         "area_sqft",
         "Planted island a code asks INSIDE a parking area, in square feet per "
@@ -1970,6 +1981,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_building_buffer_ft",
         "parking_lot_line_buffer_ft",
         "parking_side_yard_allowed",
+        "parking_side_yard_stated",
         "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",

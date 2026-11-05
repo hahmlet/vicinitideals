@@ -1213,8 +1213,8 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
     # the 50 x 100 lot with its alley along a side line: the code sends the
     # driveway to the alley (33.266.120.C.3), and the court behind the pod
     # meets that alley at its end, so the envelope is searched at the pod's
-    # own side in whichever orientation won -- not that side plus a 12 ft
-    # lane, as it is with no alley.
+    # own side in whichever orientation won -- not that side plus the
+    # unoverlapped part of the 12 ft lane, as it is with no alley.
     def screened(lot):
         (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
         return s
@@ -1229,7 +1229,7 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
     def side(s) -> float:
         return 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
 
-    assert street.fit.across_ft - side(street) == pytest.approx(12.0)
+    assert street.fit.across_ft - side(street) == pytest.approx(7.0)
     assert beside.fit.across_ft == pytest.approx(side(beside))
     assert "fit_across_ft" not in beside.screening.unchecked
 
@@ -1259,7 +1259,7 @@ def test_a_side_alley_that_stops_halfway_along_the_line_keeps_the_street_lane(co
         assert lot.facts.alley_at_side is False and lot.facts.alley is None
         s = screened(lot)
         assert s.fit.column is False
-        assert s.fit.across_ft - side(s) == pytest.approx(12.0), "the lane down the flank is back"
+        assert s.fit.across_ft - side(s) == pytest.approx(7.0), "the side-yard lane overlap is accounted for"
 
 
 # --- which street is the front of a corner lot (FOLLOWUPS 4(e)) ----------------

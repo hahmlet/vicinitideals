@@ -424,6 +424,18 @@ defaults:
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/17.98/17.98.100.txt#L6"
+  parking_side_yard_allowed:
+    value: lane
+    cite: Sandy SDC 17.98.50(B), which restricts required parking in side-yard setbacks abutting a public street
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6,L10"
+  parking_side_yard_stated:
+    value: none
+    cite: Sandy SDC 17.98.50(B), which names the street-abutting side yard but does not state permission for an interior side yard
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6,L10"
   # PARKING SHARE OF EVERY STREET FRONTAGE (FOLLOWUPS 84). 17.90.160 binds
   # "Multi-family residential developments in residential zones" (L2224), and
   # its F. is a number, not a design menu item: "Parking lots in

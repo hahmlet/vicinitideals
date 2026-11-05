@@ -753,9 +753,8 @@ defaults:
   # front yard or side yard of a townhouse", held apart from
   # `parking_front_prohibited` because the two bans reach different ground: a
   # front ban leaves a court beside the building on a wide lot, a side ban
-  # does not. Read by no screen yet -- the site plan draws one arrangement,
-  # the rear court, and this is what will let it try a side court where the
-  # code allows one (FOLLOWUPS 5).
+  # does not. The fit treats this prohibition as overriding any configured
+  # side-yard reach; it does not change the rear-court layout.
   #
   # On one lot 17.16.060.D permits front-facade garages and front-yard parking
   # under two width caps and states no side-yard ban, so the base is exempt

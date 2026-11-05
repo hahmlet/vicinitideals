@@ -21,8 +21,16 @@ from flats.score.paper import (
     paper_fit,
     side_yard_court_overlap_ft,
     side_yard_lane_overlap_ft,
+    side_yard_mode,
+    side_yard_stated_mode,
 )
-from flats.score.screen import LotFacts, fit_for, screen
+from flats.score.screen import (
+    SIDE_YARD_PARKING_SILENT,
+    LotFacts,
+    Triage,
+    fit_for,
+    screen,
+)
 from flats.score.slack import SlackPolicy
 
 pytestmark = pytest.mark.unit
@@ -66,10 +74,29 @@ def rules(**overrides: object) -> ZoneResolution:
     )
 
 
+def screen_rules(**overrides: object) -> ZoneResolution:
+    values = {
+        "min_frontage_ft": 1,
+        "max_coverage_pct": 100,
+        "max_far": 10,
+        "max_height_ft": 100,
+        "max_units": 4,
+        "parking_min_per_unit": 1,
+        **overrides,
+    }
+    return rules(**values)
+
+
 def test_field_is_optional_and_accepts_only_the_three_modes() -> None:
     assert FIELD in OPTIONAL_FIELDS
     assert field(FIELD).kind == "enum"
     assert field(FIELD).choices == ("none", "lane", "lane_and_court")
+
+
+def test_missing_stated_reach_means_silence() -> None:
+    got = rules(**{FIELD: "lane"})
+    assert got.get("parking_side_yard_stated") is None
+    assert side_yard_stated_mode(got) == "none"
 
 
 def test_unset_matches_today_for_fit_width_and_colour() -> None:
@@ -133,6 +160,106 @@ def test_lane_and_court_can_use_the_same_side_setback() -> None:
     assert not without_side_yard.fits
     assert with_side_yard.fits
     assert with_side_yard.across_ft == pytest.approx(67)
+
+
+def test_fit_relying_on_silent_side_yard_is_yellow_with_ruling_flag() -> None:
+    silent = screen_rules(
+        parking_min_per_unit=1.5,
+        parking_stall_width_ft=12,
+        setback_rear_ft=40,
+        **{FIELD: "lane_and_court"},
+    )
+    fitter = Fitter(box(5, 5, 72, 55))
+    fit = fit_for(fitter, DESIGN, silent, carved_rear_ft=40)
+    assert fit.fits and fit.side_yard_stated_fit is not None
+    assert not fit.side_yard_stated_fit.fits
+
+    got = screen(
+        silent,
+        LotFacts(
+            lot_sqft=6_700,
+            frontage_ft=67,
+            lot_width_ft=67,
+            lot_depth_ft=100,
+            envelope_rear_ft=40,
+        ),
+        DESIGN,
+        fit,
+        policy=SlackPolicy(tolerance={"fit_ft": 0.5}),
+    )
+    assert got.colour.value == "yellow"
+    assert SIDE_YARD_PARKING_SILENT in got.reasons
+    assert "2026-11-05-side-yard-parking-silent-codes" in SIDE_YARD_PARKING_SILENT
+    assert any(flag.code == "SIDE-YARD-PARKING-SILENT" for flag in got.flags)
+
+
+def test_stated_reach_fit_remains_green_eligible() -> None:
+    stated = screen_rules(
+        **{FIELD: "lane_and_court", "parking_side_yard_stated": "lane_and_court"}
+    )
+    fitter = Fitter(box(5, 5, 100, 170))
+    fit = fit_for(fitter, DESIGN, stated)
+    assert fit.fits
+    assert fit.side_yard_stated_fit is None
+
+    got = screen(
+        stated,
+        LotFacts(lot_sqft=16_000, frontage_ft=95, lot_width_ft=95),
+        DESIGN,
+        fit,
+        policy=SlackPolicy(tolerance={"fit_ft": 0.5}),
+    )
+    assert got.triage is Triage.green
+    assert got.colour.value == "green"
+    assert not any(flag.code == "SIDE-YARD-PARKING-SILENT" for flag in got.flags)
+
+
+def test_corner_lot_never_uses_side_yard_reach() -> None:
+    allowed = rules(**{FIELD: "lane_and_court"})
+    assert side_yard_mode(allowed) == "lane_and_court"
+    assert side_yard_lane_overlap_ft(allowed, 12, corner=True) == 0
+    assert side_yard_court_overlap_ft(allowed, 24, lane_ft=12, corner=True) == 0
+
+    fitter = Fitter(box(5, 5, 72, 55))
+    corner_fit = fit_for(fitter, DESIGN, allowed, corner=True)
+    no_side_fit = fit_for(fitter, DESIGN, rules(), corner=True)
+    assert corner_fit.across_ft == no_side_fit.across_ft
+    assert corner_fit.slack_ft == no_side_fit.slack_ft
+    assert corner_fit.side_yard_stated_fit is None
+
+
+def test_city_side_yard_values_resolve_from_yaml() -> None:
+    ruleset = RuleSet(load_rules())
+    portland = ruleset.resolve("or/multnomah/portland", "R2.5")
+    assert portland.get(FIELD) == "lane_and_court"
+    assert portland.get("parking_side_yard_stated") == "lane_and_court"
+
+    canby = ruleset.resolve("or/clackamas/canby", "R-1")
+    assert canby.get(FIELD) == "lane_and_court"
+    assert canby.get("parking_side_yard_stated") == "lane"
+
+    gresham = ruleset.resolve("or/multnomah/gresham", "LDR-5")
+    assert gresham.get(FIELD) == "lane"
+    assert gresham.get("parking_side_yard_stated") == "none"
+
+    county_qp = ruleset.resolve("or/multnomah/_unincorporated", "R10")
+    assert county_qp.get(FIELD) == "lane_and_court"
+    assert county_qp.get("parking_side_yard_stated") == "lane_and_court"
+    assert county_qp.get("parking_lot_line_buffer_ft") == 5
+
+    west_linn = ruleset.resolve("or/clackamas/west-linn", "R-10")
+    assert west_linn.get(FIELD) is None
+    assert west_linn.get("parking_side_yard_stated") is None
+
+    oregon_city = ruleset.resolve("or/clackamas/oregon-city", "R-10")
+    assert oregon_city.get(FIELD) is None
+    assert oregon_city.get("parking_side_yard_stated") is None
+    assert oregon_city.get("parking_lot_line_buffer_ft") is None
+
+    wood_village = ruleset.resolve("or/multnomah/wood-village", "LR 7.5")
+    assert wood_village.get(FIELD) is None
+    assert wood_village.get("parking_side_yard_stated") is None
+    assert wood_village.get("parking_lot_line_buffer_ft") is None
 
 
 @pytest.mark.parametrize(
