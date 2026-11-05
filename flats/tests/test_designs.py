@@ -274,7 +274,15 @@ def test_duplicate_key_in_the_catalog_constructor_is_refused() -> None:
 def test_shipped_catalog_loads() -> None:
     cat = load_catalog()
 
-    assert {d.key for d in cat} == {"pod56x36@2", "pod80x25@2"}
+    assert {d.key for d in cat} == {
+        "pod56x36@2",
+        "pod60x33@1",
+        "pod64x31@1",
+        "pod68x29@1",
+        "pod72x28@1",
+        "pod76x26@1",
+        "pod80x25@2",
+    }
     assert all(d.typology is Typology.townhome_rear_court for d in cat)
     assert all(d.status is DesignStatus.active for d in cat)
 
@@ -308,7 +316,15 @@ def test_unconfirmed_values_are_declared_not_hidden() -> None:
 
 def test_catalog_root_points_at_the_shipped_pods() -> None:
     assert CATALOG_ROOT.is_dir()
-    assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == ["pod56x36", "pod80x25"]
+    assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == [
+        "pod56x36",
+        "pod60x33",
+        "pod64x31",
+        "pod68x29",
+        "pod72x28",
+        "pod76x26",
+        "pod80x25",
+    ]
 
 
 def test_a_two_storey_pod_carries_the_storey_condition() -> None:

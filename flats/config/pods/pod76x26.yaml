@@ -1,0 +1,40 @@
+# STUDY DESIGN — FOLLOWUPS 149 — NOT FOR THE LIVE MAP.
+version: 1
+label: "Pod 76 x 26 — 4 x 19 ft units"
+typology: townhome_rear_court
+footprint: {width_ft: 76, depth_ft: 26}
+units: 4
+stories: 2
+height_ft: 26
+# Steph, 2026-10-01, asked whether the ground floor is at least 12 ft
+# (Tigard TMU's first-storey minimum): "Yes, 12 ft or more." The least
+# stated, not a drawn figure.
+ground_story_ft: 12
+# Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
+# this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
+# that sets a minimum pitch or prohibits flat roofs misses on it.
+roof_pitch_in_12: 0
+parking:
+  # Same rule as the county map (Steph, 2026-09-18: "same as the county map.
+  # 4 is enough to sell"). The floor is what the colour charges -- one per
+  # home, the least the pod is built with; the target is what sells; the
+  # preferred is the most drawn, and the seat count reported beside the
+  # colour stops there. None of the three is the law: Gresham LDR-5 requires
+  # zero stalls (CFEC citywide elimination, 9.0802(A)) and sets no maximum;
+  # a zone's own minimum raises the charged count and its cap cuts it.
+  stalls_per_unit: {floor: 1.0, target: 1.5, preferred: 2.0}
+  config: rear_court
+delivery:
+  method: panelized
+notes: >-
+  Narrower frontage than pod80x25, so it clears width-constrained lots the wide
+  pod misses, at the cost of needing 11 more feet of depth.
+assumptions:
+  - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
+     drawing set — confirm before any height-binding result is trusted."
+  - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
+     intent, not a drawing set."
+  - "ground_story_ft 12: the ground storey, floor to the floor above, is 12 ft
+     or more (Steph, 2026-10-01). The least stated, not from a drawing set."
+  - "Delivery method is the product intent (factory-built); module dimensions
+     and crane needs are unspecified until the set-access stage (Phase 4)."
