@@ -1074,10 +1074,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_side_total_ft": 3,
     "min_building_height_ft": 17,
     "front_lot_line_through": 1,
-    # 3 -> 5 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR keep the
-    # court the LDR-1 side yard off the lot lines beside a stricter
-    # residential district (TDC 9.095 A); quadfit has no neighbour fact.
-    "parking_lot_line_buffer_ft": 5,
+    # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
+    # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
+    # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
+    # neighbour fact.
+    "parking_lot_line_buffer_ft": 8,
     "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,

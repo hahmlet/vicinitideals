@@ -266,6 +266,10 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         ("or/clackamas/milwaukie", "abuts_residential_zone"),
         ("or/multnomah/wood-village", "abuts_residential_zone"),
         ("or/multnomah/wood-village", "abuts_lower_density_zone"),
+        # 2026-11-05: parking meets the stricter neighbour district's setback,
+        # SDC 17.98.50 A and TDC 9.095 A (FOLLOWUPS 150).
+        ("or/clackamas/sandy", "abuts_lower_density_zone"),
+        ("or/multnomah/troutdale", "abuts_lower_density_zone"),
     }
 
 

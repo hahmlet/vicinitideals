@@ -129,6 +129,9 @@ def test_a_sandy_court_meets_the_rear_setback(corpus, zone: str) -> None:
     rules = corpus.resolve(SANDY, zone, ())
     assert rules.get(FIELD) is True
     assert "abut a residential zoning district" in quoted(rules.values[FIELD])
+    # No stricter neighbour: the strip is the zone's own side yard, which
+    # the building already keeps, and the court stacks on the 15 ft rear.
+    assert rules.get(STRIP) == rules.get("setback_side_ft") == 5
     assert deeper(rules) == pytest.approx(15)
 
 
@@ -168,4 +171,10 @@ def test_a_troutdale_quadplex_beside_ldr_takes_its_side_yard(corpus, zone: str, 
     townhouses = corpus.resolve(
         TROUTDALE, zone, ("abuts_lower_density_zone", "unit_lots"), lot={"lot_sqft": 9000.0}
     )
-    assert townhouses.get(STRIP) == 0
+    # The townhouse row prints 5 in every district: the strip is the side
+    # yard already charged, so it adds nothing.
+    assert townhouses.get(STRIP) == 5
+    # With no stricter neighbour the strip is the zone's own quadplex side,
+    # likewise already charged.
+    alone = corpus.resolve(TROUTDALE, zone, (), lot={"lot_sqft": 9000.0})
+    assert alone.get(STRIP) == alone.get("setback_side_ft")

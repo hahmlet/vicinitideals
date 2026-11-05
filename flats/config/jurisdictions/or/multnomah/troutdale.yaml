@@ -1942,17 +1942,21 @@ zones:
     # 2.5 ft a side, the price of a lot-level fact. The townhouse row prints 5 ft
     # in every district (L66), so the unit-lots path owes nothing more.
     parking_lot_line_buffer_ft:
-      value: 0
-      cite: TDC 9.095 A, the building setback of the most restrictive adjoining residential zoning district (this zone's own, already charged, where no stricter district adjoins)
+      value: 7.5
+      cite: TDC 9.095 A with 3.130.B, this zone's own quadplex side yard where no stricter residential district adjoins (already charged, so the strip changes nothing)
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
-      quote: "or/multnomah/troutdale/9/9.095.txt#L3"
+      quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
       variants:
         - value: 10
           when: [abuts_lower_density_zone]
-          cite: TDC 9.095 A with 3.130.B, LDR-1 quadplex side yard 10 ft
+          cite: TDC 9.095 A with 3.130.B, LDR-1 quadplex side yard 10 ft (the neighbour's column, not this zone's)
           quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
-        - value: 0
+        - value: 5
+          when: [unit_lots]
+          cite: TDC 9.095 A with 3.130.C, townhouse side yard 5 ft
+          quote: "or/multnomah/troutdale/3/3.130.txt#L59,L66"
+        - value: 5
           when: [unit_lots, abuts_lower_density_zone]
           cite: TDC 9.095 A with 3.130.C, townhouse side yard 5 ft in every residential district
           quote: "or/multnomah/troutdale/3/3.130.txt#L59,L66"
@@ -2155,17 +2159,17 @@ zones:
     # asks 7.5 and is charged 10, conservative. The townhouse row prints 5 ft
     # in every district (L66), so the unit-lots path owes nothing more.
     parking_lot_line_buffer_ft:
-      value: 0
-      cite: TDC 9.095 A, the building setback of the most restrictive adjoining residential zoning district (this zone's own, already charged, where no stricter district adjoins)
+      value: 5
+      cite: TDC 9.095 A with 3.130.B, this zone's own quadplex side yard where no stricter residential district adjoins (already charged, so the strip changes nothing)
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
-      quote: "or/multnomah/troutdale/9/9.095.txt#L3"
+      quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
       variants:
         - value: 10
           when: [abuts_lower_density_zone]
-          cite: TDC 9.095 A with 3.130.B, LDR-1 quadplex side yard 10 ft
+          cite: TDC 9.095 A with 3.130.B, LDR-1 quadplex side yard 10 ft (the neighbour's column, not this zone's)
           quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
-        - value: 0
+        - value: 5
           when: [unit_lots, abuts_lower_density_zone]
           cite: TDC 9.095 A with 3.130.C, townhouse side yard 5 ft in every residential district
           quote: "or/multnomah/troutdale/3/3.130.txt#L59,L66"

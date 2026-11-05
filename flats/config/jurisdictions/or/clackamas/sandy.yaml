@@ -488,7 +488,7 @@ defaults:
   # and 7.5 ft interior side (sdc.17.34.txt L151-L152). Which of an SFR
   # neighbour's yards faces our line is not measured, so beside an SFR lot
   # the court is kept the larger figure, 20 ft, off every lot line that is
-  # not a street (`parking_lot_line_buffer_ft`, read on
+  # not a street (`parking_lot_line_buffer_ft` in R-1, R-2 and R-3, read on
   # `abuts_lower_density_zone`, the `neighbours:` block below). Conservative:
   # a lot with SFR only at its side is charged 20 there where 7.5 may be all
   # the code asks.
@@ -498,17 +498,6 @@ defaults:
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6"
-  parking_lot_line_buffer_ft:
-    value: 0
-    cite: Sandy SDC 17.98.50 A, the setback of the most restrictive adjoining residential zoning district (the lot's own setbacks, already charged, where no stricter district adjoins)
-    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
-    retrieved: '2026-10-07'
-    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6"
-    variants:
-      - value: 20
-        when: [abuts_lower_density_zone]
-        cite: Sandy SDC 17.98.50 A with 17.34.30 E, SFR rear yard 20 ft minimum (the larger SFR yard, held off every non-street line)
-        quote: "or/clackamas/sandy/sdc.17.34.txt#L151-L152"
 
 # NOT ENCODED, read 2026-10-07:
 # - Design review (17.90, a Type II Director's review for multi-family
@@ -694,6 +683,20 @@ zones:
       value: 5
       cite: Sandy SDC 17.36.30 (E), interior side yard 5 ft minimum
       quote: "or/clackamas/sandy/17.36/17.36.30.txt#L16"
+    # 17.98.50 A (FOLLOWUPS 150, read 2026-11-05; the defaults' reading):
+    # the court meets the setback of the most restrictive adjoining
+    # residential district. Where none stricter adjoins that is this zone's
+    # own 5 ft side (already charged, so the strip changes nothing); beside
+    # SFR it is SFR's 20 ft rear, kept off every non-street line.
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Sandy SDC 17.98.50 A with 17.36.30 (E), this zone's own interior side yard where no stricter residential district adjoins
+      quote: "or/clackamas/sandy/17.36/17.36.30.txt#L16"
+      variants:
+        - value: 20
+          when: [abuts_lower_density_zone]
+          cite: Sandy SDC 17.98.50 A with 17.34.30 E, SFR rear yard 20 ft minimum (the larger SFR yard, held off every non-street line)
+          quote: "or/clackamas/sandy/sdc.17.34.txt#L151-L152"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the by-right-only ruling of 2026-10-08, which made this zone red): the use is permitted here after a Type II Director's design review (17.90.40 B; the zone chapter says design review "is required for all uses") on clear and objective standards, which the Director may elevate to a Type III hearing where the Planning Commission may attach conditions (17.12); so the lot is screened on the standards below and flagged REVIEW-CONDITIONS.
       DRAFT. Row houses on individual lots only (no multi-family dwelling
@@ -836,6 +839,20 @@ zones:
       value: 5
       cite: Sandy SDC 17.38.30, interior side yard 5 ft minimum
       quote: "or/clackamas/sandy/17.38/17.38.30.txt#L14"
+    # 17.98.50 A (FOLLOWUPS 150, read 2026-11-05; the defaults' reading):
+    # the court meets the setback of the most restrictive adjoining
+    # residential district. Where none stricter adjoins that is this zone's
+    # own 5 ft side (already charged, so the strip changes nothing); beside
+    # SFR it is SFR's 20 ft rear, kept off every non-street line.
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Sandy SDC 17.98.50 A with 17.38.30, this zone's own interior side yard where no stricter residential district adjoins
+      quote: "or/clackamas/sandy/17.38/17.38.30.txt#L14"
+      variants:
+        - value: 20
+          when: [abuts_lower_density_zone]
+          cite: Sandy SDC 17.98.50 A with 17.34.30 E, SFR rear yard 20 ft minimum (the larger SFR yard, held off every non-street line)
+          quote: "or/clackamas/sandy/sdc.17.34.txt#L151-L152"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the by-right-only ruling of 2026-10-08, which made this zone red): the use is permitted here after a Type II Director's design review (17.90.40 B; the zone chapter says design review "is required for all uses") on clear and objective standards, which the Director may elevate to a Type III hearing where the Planning Commission may attach conditions (17.12); so the lot is screened on the standards below and flagged REVIEW-CONDITIONS.
       DRAFT. Multi-family dwellings and row houses outright. No minimum
@@ -977,6 +994,20 @@ zones:
       value: 5
       cite: Sandy SDC 17.40.30, interior side yard 5 ft minimum
       quote: "or/clackamas/sandy/17.40/17.40.30.txt#L13"
+    # 17.98.50 A (FOLLOWUPS 150, read 2026-11-05; the defaults' reading):
+    # the court meets the setback of the most restrictive adjoining
+    # residential district. Where none stricter adjoins that is this zone's
+    # own 5 ft side (already charged, so the strip changes nothing); beside
+    # SFR it is SFR's 20 ft rear, kept off every non-street line.
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Sandy SDC 17.98.50 A with 17.40.30, this zone's own interior side yard where no stricter residential district adjoins
+      quote: "or/clackamas/sandy/17.40/17.40.30.txt#L13"
+      variants:
+        - value: 20
+          when: [abuts_lower_density_zone]
+          cite: Sandy SDC 17.98.50 A with 17.34.30 E, SFR rear yard 20 ft minimum (the larger SFR yard, held off every non-street line)
+          quote: "or/clackamas/sandy/sdc.17.34.txt#L151-L152"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the by-right-only ruling of 2026-10-08, which made this zone red): the use is permitted here after a Type II Director's design review (17.90.40 B; the zone chapter says design review "is required for all uses") on clear and objective standards, which the Director may elevate to a Type III hearing where the Planning Commission may attach conditions (17.12); so the lot is screened on the standards below and flagged REVIEW-CONDITIONS.
       DRAFT. Multi-family dwellings and row houses outright. No minimum
@@ -1142,7 +1173,7 @@ neighbours:
     quote: "or/clackamas/sandy/17.30/17.30.00.txt#L6-L20"
     cite: Sandy SDC 17.30.00, zoning district designations (Residential SFR, R-1, R-2, R-3)
     note: >-
-      Read only by `parking_lot_line_buffer_ft` (defaults): 17.98.50 A gives
+      Read only by `parking_lot_line_buffer_ft` (R-1, R-2, R-3): 17.98.50 A gives
       a parking area the setback of "the most restrictive adjoining
       residential zoning district". 17.30.00 files four districts under
       Residential: SFR, R-1, R-2 and R-3. The three the pod screens in print
