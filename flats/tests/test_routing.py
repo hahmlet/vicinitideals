@@ -364,6 +364,14 @@ OPEN = {
     "or/multnomah/portland 33.120.220 -> 33.120.283",
     "or/washington/hillsboro 12.61.400 -> 12.23.300",
     "or/washington/hillsboro 12.61.400 -> 12.50.845",
+    # 2026-11-04 (FOLLOWUPS 147): 12.65.850.B applies the Active Use design
+    # standards to lots fronting "an Active Use Street designated in
+    # accordance with Section 12.65.030". 030.B was read: it designates the
+    # streets only by Figure 12.65.930-A, which "illustrate[s] the street type
+    # and location" (030.B.2). The figure is traced as an areas file
+    # (hillsboro/active-use-streets.geojson), not a value, so no citation
+    # lands in 030 and the row stays open by this ledger's one test.
+    "or/washington/hillsboro 12.65.850 -> 12.65.030",
     "or/washington/beaverton 20.05.15 -> 20.25.05",
     "or/washington/beaverton 20.15.15 -> 60.50.05",
     "or/washington/king-city 16.114.040 -> 16.84.060",
