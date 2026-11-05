@@ -8,7 +8,7 @@ import pytest
 
 from flats.designs.model import load_catalog
 from scripts.flats_size_curve import frontier_status
-from scripts.flats_size_report import render_report
+from scripts.flats_size_report import NEVER_SCREENED_REASONS, canonical_place, render_report
 from scripts.flats_size_scope import build_scope, main as scope_main
 
 STUDY_FOOTPRINTS = {
@@ -169,7 +169,11 @@ def test_size_report_counts_colors_gains_losses_and_best_design(tmp_path: Path) 
 
     report = render_report(assign)
 
-    assert "pod60x33@1,1,1,0,0,0" in report
+    assert (
+        "design,green,yellow,red,green_change_vs_pod56x36@2,"
+        "green_change_vs_pod80x25@2"
+    ) in report
+    assert "pod60x33@1,1,1,0,1,0" in report
     assert "pod60x33@1,pod56x36@2,or/multnomah/portland,1,0" in report
     assert "pod56x36@2,pod80x25@2,or/multnomah/portland,0,1" in report
     assert "pod64x31@1,1" in report
@@ -188,8 +192,93 @@ def test_size_report_counts_partial_design_rows_and_missing_lots(tmp_path: Path)
 
     report = render_report(assign)
 
-    assert "pod60x33@1,0,1,0,0,1" in report
-    assert "pod64x31@1,1,0,1,0,0" in report
+    assert "pod60x33@1,0,1,0,0,-1" in report
+    assert "pod64x31@1,1,0,1,1,0" in report
+
+
+def test_size_report_scope_preserves_spaced_tlids_and_drops_synthetic_reasons(
+    tmp_path: Path,
+) -> None:
+    assign = tmp_path / "assign"
+    assign.mkdir()
+    rows = _assignment_rows()
+    marker_rows = (rows[0], rows[1], rows[4], rows[5], rows[6])
+    for row, reason in zip(marker_rows, NEVER_SCREENED_REASONS, strict=True):
+        row["reasons"] = reason
+    pd.DataFrame(rows).to_parquet(assign / "lots.parquet", index=False)
+    scope = tmp_path / "scope.csv"
+    scope.write_text("tlid\n1N1E22CD - 00300\n", encoding="utf-8")
+    tlid_file = tmp_path / "scope.tlids"
+    tlid_file.write_text("1N1E22CD - 00300\n", encoding="utf-8")
+
+    report = render_report(assign, scope=scope)
+    line_report = render_report(assign, scope=tlid_file)
+
+    assert "Rows dropped by measured-only filter,5" in report
+    assert line_report == report
+    for reason in NEVER_SCREENED_REASONS:
+        assert f"{reason},1" in report
+    assert "pod56x36@2,0,0,0,0,0" in report
+    assert "1N1E22CD00300" not in report
+    assert "or/multnomah/portland" in report
+    assert "Rows dropped by measured-only filter,0" in render_report(
+        assign, scope=scope, measured_only=False
+    )
+
+
+@pytest.fixture
+def canonical_place_cases() -> list[tuple[dict[str, object], str]]:
+    return [
+        ({"jurisdiction": "beaverton"}, "or/washington/beaverton"),
+        (
+            {"jurisdiction": "beaverton", "layer_id": "or/washington/beaverton"},
+            "or/washington/beaverton",
+        ),
+        (
+            {"jurisdiction": "washington_unincorporated"},
+            "or/washington/_unincorporated",
+        ),
+        (
+            {
+                "jurisdiction": "or/washington/beaverton",
+                "layer_id": "or/washington/_unincorporated",
+            },
+            "or/washington/_unincorporated",
+        ),
+        ({"jurisdiction": "nan", "layer_id": "nan"}, "unknown"),
+        ({"jurisdiction": float("nan"), "layer_id": None}, "unknown"),
+    ]
+
+
+def test_size_report_canonicalizes_place_keys(canonical_place_cases: list[tuple[dict, str]]) -> None:
+    assert [canonical_place(row) for row, _ in canonical_place_cases] == [
+        expected for _, expected in canonical_place_cases
+    ]
+
+
+def test_size_report_place_table_omits_places_without_green_rows(tmp_path: Path) -> None:
+    assign = tmp_path / "assign"
+    assign.mkdir()
+    rows = _assignment_rows()
+    for design in load_catalog().active():
+        rows.append(
+            {
+                **rows[0],
+                "TLID": "1N1E22CD  -00600",
+                "jurisdiction": "nan",
+                "layer_id": None,
+                "design": design.key,
+                "colour": "red",
+                "reasons": "",
+            }
+        )
+    pd.DataFrame(rows).to_parquet(assign / "lots.parquet", index=False)
+
+    report = render_report(assign)
+
+    place_table = report.split("Green gains/losses by place\n", maxsplit=1)[1]
+    assert "or/multnomah/portland" in place_table
+    assert "unknown" not in place_table
 
 
 def test_size_curve_refuses_to_guess_without_a_stored_frontier(tmp_path: Path) -> None:
