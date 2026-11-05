@@ -1,0 +1,11 @@
+durham-apron-r3 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/durham-apron-100ft, branch flats/durham-apron-100ft; no new branch)
+
+WHY: FOLLOWUPS 118. The bound of round 2 (/root/durham_apron2 on LXC 137, merged code 7365392d) was read 2026-11-05: 13 of 14 moves right; ONE false RED, 2S124AB01200. Its frontage has a 3.5 ft backtracking jog. flats/geom/durham_apron.py treats that jog as a parallel edge because bearing_deg is an undirected 0-180 axis, so the end extension points back along the chain instead of forward; the true south junction projects to station ~100 instead of ~195, clearance computes 70 ft (RED) where the truth is ~161 ft centreline / ~86 ft after allowances (YELLOW). The reader's test script is /root/rd_da2/rd17.py on 137 (not reachable from here; the fix is described fully below).
+
+CHANGE (flats/geom/durham_apron.py only): when choosing the edges that set each end-extension direction (`first` and `last`), use only edges whose DIRECTED bearing runs the same way as the chain from its first point to its last (dot product of the edge vector with the chain's first->last vector > 0). A backtracking jog must never set the extension direction. Nothing else changes.
+
+TESTS (the Durham apron test file; grep flats/tests for durham_apron): (a) a frontage with a 3.5 ft backtracking jog near one end whose true junction lies ~195 ft along -> the junction is placed at ~195, not ~100; (b) a straight frontage unchanged; (c) all existing tests unchanged. Expected on the 403-lot bound scope (reader's dry run): only 2S124AB01200 red -> yellow and 2S113CD03400 passes the apron check but stays RED on fit. Full flats suite green, ruff, firewall. Commit by explicit path, prefix "flats:" ending "(FOLLOWUPS 118)". Do not push.
+
+MUST NOT CHANGE: the 100 ft figure, the allowances, any rule value, any other module, anything under app/.
+
+AUTHORISED EXCEPTION: Durham lots whose frontage has a backtracking jog may move red -> yellow on the apron check. No lot may newly turn GREEN.
