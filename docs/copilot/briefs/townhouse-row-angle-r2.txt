@@ -1,0 +1,18 @@
+townhouse-row-angle-r2 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/townhouse-row-angle, branch flats/townhouse-row-angle, head b8ba280b; no new branch)
+
+WHY: FOLLOWUPS 94. The bound of b8ba280b (/root/th_row3 on LXC 137, 406k lots) was read 2026-11-05: the change moved NO lot. _townhouse_row_angles (flats/ingest/quadfit.py) only tries the tilted row when the two side lot lines are parallel within 1e-6 degrees; real lines almost never are. Of 293,687 scoped lots with 2+ side lines, 222,240 are parallel within 0.5 deg but only 49,094 pass the exact test (mostly plain rectangles that need no tilt). The hand-off's own example 1S126DD01800 has side lines 0.32 deg apart and is turned away; with a looser test it passes frontage (street ~27 deg off square; designs need 62.7 / 89.6 ft, it has 102.3 ft).
+
+CHANGE (flats/ingest/quadfit.py, _townhouse_row_angles only):
+1. Treat side lot lines as parallel when their bearings (mod 180) differ by at most 1.0 degree (a named module constant, e.g. TOWNHOUSE_SIDE_PARALLEL_DEG = 1.0, with a comment citing this brief).
+2. The tilted row angle is the length-weighted mean bearing of those side lines (handle the 0/180 wrap).
+3. Everything downstream unchanged: every per-home-lot check (frontage, width, area) still runs on the tilted row, and the existing keep-rule still picks between street-parallel and tilted.
+
+Then merge origin/main into the branch (resolve conflicts as a union; if one is not obvious, stop and say so).
+
+TESTS (flats/tests/test_townhouse_lots.py): (a) side lines 0.32 deg apart (shaped like 1S126DD01800: street ~27 deg off square, 102 ft frontage) -> tilted row tried and kept; (b) side lines 3 deg apart -> no tilted row (unchanged); (c) the existing exact-parallel tests unchanged; (d) the wrap case (bearings 179.7 and 0.2) treated as parallel. Run uv run pytest flats/tests -q -n auto (green; if test_gaps is the only failure run uv run python -m flats.encode.gaps and commit flats/config/gaps.json on this branch), uv run ruff check flats/, uv run python scripts/check_flats_firewall.py. Commit by explicit path, prefix "flats:" ending "(FOLLOWUPS 94)". Do not push.
+
+Append "## Round 2 (2026-11-05)" to C:/Users/Steph/Repos/vicinitideals-worktrees/townhouse-row-angle.handoff.md (if you cannot write outside the worktree, put the text in your final message): the tolerance, expected moves (slanted-lot townhouse reds -> yellow/green only, up to ~105 plus whatever the tolerance newly reaches; nothing red-ward), and that the re-bound must run on base 0bd2abb1-or-later main against splice /root/bridge_spliced_pd2ab / assign /root/assign_pd2ab.
+
+MUST NOT CHANGE: the pod form; the street-parallel row; any rule value; quadfit rules.yaml; anything under app/.
+
+AUTHORISED EXCEPTION: townhouse-form lots with nearly parallel slanted side lines may move red -> yellow/green when the tilted row passes every per-home-lot check. No lot may move toward red.

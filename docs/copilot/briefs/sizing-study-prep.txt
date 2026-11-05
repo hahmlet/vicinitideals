@@ -1,0 +1,16 @@
+sizing-study-prep (new branch flats/sizing-study from main; a STUDY branch that is never merged to main as-is)
+
+WHY: FOLLOWUPS 149 (docs/followups/149-pod-unit-width.md -- read it all). Steph wants to settle the pod's home width once: try 14..20 ft homes in 1 ft steps, each at ~500 sq ft per floor, four homes side by side, two storeys. The study runs on LXC 137 on Monday 2026-11-09 on a branch combining this one with flats/side-yard-parking. After it, most sizes are retired. Today the catalog (flats/config/pods/, flats/designs/model.py) holds pod56x36 (14x36 homes) and pod80x25 (20x25).
+
+DO:
+1. Five new designs in flats/config/pods/, copying pod56x36.yaml's shape and every non-dimension field (stories, height_ft, ground_story_ft, roof_pitch_in_12, parking, delivery, assumptions) exactly: pod60x33 (4 x 15 x 33), pod64x31 (4 x 16 x 31; 31.25 rounds to 31), pod68x29 (4 x 17 x 29), pod72x28 (4 x 18 x 28; 27.8 rounds to 28), pod76x26 (4 x 19 x 26; 26.3 rounds to 26). Header comment: study design, FOLLOWUPS 149, not for the live map. version: 1.
+2. Audit every place that assumes exactly two designs or names one (grep for pod56x36, pod80x25, "56x36", "80x25", latest(, len(designs), design_key literals, two-column pivots) across flats/ and scripts/ (not app/). Fix what would break or mis-report with seven designs (e.g. flats/encode/height.py latest("pod56x36") is fine to keep if it only reads the shared height -- say so). List every hit and what you did.
+3. A fit-only curve script, scripts/flats_size_curve.py: for every lot, from the stored design-independent fit data (the max-depth-per-width frontier / envelope the catalog docstring describes -- find where it is written; grep frontier, fit_best_depth_ft, envelope) report whether each of the seven building rectangles (with the same court/parking depth the fit check adds -- find it in flats/score/paper.py paper_fit) physically fits. Output per design: lots that fit, and a CSV of TLIDs that fit at least one NEW size but are red under both current sizes. It must run read-only on 137 against /root/assign_pd2ab and its bridge (/root/bridge_spliced_pd2ab) in minutes; no re-screen. If the frontier is not stored in a form that allows this, say exactly what is stored under QUESTIONS and propose the cheapest alternative.
+4. A study scope script, scripts/flats_size_scope.py: every lot not red under both current designs, plus the TLIDs from step 3. TLIDs contain spaces: never .split() a TLID line; match with re.sub(r"[\s-]", "", tlid).
+5. A per-width report script, scripts/flats_size_report.py: given an assign dir with all seven designs, per design: green / yellow / red counts, greens gained and lost vs pod56x36 and vs pod80x25, by jurisdiction; plus "best design per lot" counts.
+
+TESTS: catalog loads 7 designs; each new design is 4 units x ~500 sq ft/floor (+-15 sq ft); the three scripts on a tiny fixture. Full flats suite green, ruff, firewall. Commit by explicit path, prefix "flats:" ending "(FOLLOWUPS 149)". Do not push.
+
+MUST NOT CHANGE: pod56x36.yaml, pod80x25.yaml; any rule value; any live lot result; anything under app/.
+
+AUTHORISED EXCEPTION: five new study designs in flats/config/pods/ on this study branch (not main), and fixes to code that assumed two designs. Existing designs' results must be identical.
