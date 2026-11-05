@@ -1,0 +1,13 @@
+side-yard-chapters-r2 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/side-yard-chapters, branch flats/side-yard-chapters; your round 1 fetched docs but did not commit)
+
+WHY: FOLLOWUPS 146. Round 1 stored cdc.407/411 (WashCo), zdo.1009 (Clackamas), West Linn 54, King City 16.124, and reported 4 FLATS test failures caused by adding documents (unruled designation, stale reference, routing), plus gaps.json changed.
+
+DO:
+1. Make the suite green WITHOUT changing what any lot screens to. You ARE authorised to: register the new documents wherever the store/ledger tests require (document lists, routing tables, designation ledgers, the gaps ledger via `uv run python -m flats.encode.gaps` and commit flats/config/gaps.json), and update a test's expected count with a dated comment "2026-11-05 side-yard chapters fetched (FOLLOWUPS 146)". You are NOT authorised to change any rule value, setback, field, or screen/fit code. If a failure can only be fixed by changing a rule value, stop and describe it.
+2. Re-run the timeout test in isolation to confirm it is load-only.
+3. Sherwood 16.92: try the city's own development code pages/PDFs on sherwoodoregon.gov and codepublishing.com (Sherwood Zoning and Community Development Code). Johnson City: search for its adopted zoning/development code (city site documents, Clackamas County planning pages mentioning Johnson City, ORS/Metro references); if it adopts Clackamas County's ZDO by reference, store the adopting text. If still not found, say so with URLs tried.
+4. Commit by explicit path: "docs(flats): fetch side-yard parking chapters (FOLLOWUPS 146)". Do not push.
+
+Final message: stored paths + source URLs, which tests you changed and why, and the path#Lnn locators for parking-in-yard rules (point only, do not interpret).
+
+MUST NOT CHANGE: rule values in any jurisdiction YAML; flats/score, flats/fit, flats/rules logic; anything under app/.
