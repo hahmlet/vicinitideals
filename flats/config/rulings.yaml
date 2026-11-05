@@ -2484,3 +2484,25 @@
     always-YELLOW soft floor for min_far and the always-RED Portland
     main-street minimum. FOLLOWUPS 148.
   source: Steph 2026-11-04 (chat), docs/followups/148-min-floor-area-more-pods.md
+- id: 2026-11-04-south-hillsboro-active-use-streets-traced
+  kind: ruling
+  date: 2026-11-04
+  scope:
+    county: washington
+    city: hillsboro
+  question: >-
+    South Hillsboro's Active Use Streets (12.65.030(B), 12.65.850) carry a
+    10 ft (type 1) or 15 ft (type 2) maximum front setback and a minimum
+    property-line coverage, but the only map of them, Figure 12.65.930-A, is
+    marked "for illustrative purposes only" (final locations set through each
+    PUD). Trace the figure as the map, or hold every lot that might face one
+    out of GREEN?
+  ruling: '"Trace the sketch, green with a flag"'
+  effect: >-
+    The Active Use Streets are traced from Figure 12.65.930-A (drawn: true, as
+    with Gresham's downtown street-type map) and a lot fronting a traced
+    street is held to Table 12.65.850-1 on that frontage. A lot that passes
+    stays GREEN but carries a flag that the street map is illustrative and
+    the final street is set at the PUD. Lots off the traced streets are
+    screened as before. FOLLOWUPS 147.
+  source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
