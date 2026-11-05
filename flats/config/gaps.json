@@ -1,5 +1,5 @@
 {
-  "digest": "88451adff33f9204fd0edec5cd66a5c2a1ed1a2b5e7d276f26c6c414d6efdbcc",
+  "digest": "44df583b31460369d6878334f4f5ea2c1bdd0b2323f696e52cdc02b084062475",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -124,7 +124,7 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 7,
+      "section_unread": 10,
       "misattributed": [
         {
           "zone": "(defaults)",
