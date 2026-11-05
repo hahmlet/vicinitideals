@@ -166,7 +166,9 @@ pytestmark = pytest.mark.unit
 # 467 -> 470 on merge: both of the above (3 Sandy + 12 Johnson Creek on 455).
 # 470 -> 471 stated on 2026-11-04: Beaverton MR's maximum front setback is
 # exempt because note 18 applies only where 60.05.15.6 governs.
-EXPECTED = {"stated": 471, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
+# 471 -> 473 stated on 2026-11-05: TO:R24-40 and TO:R40-80 print None for the
+# frontage minimum in Table B(2) (375-10.txt#L342).
+EXPECTED = {"stated": 473, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
