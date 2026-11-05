@@ -518,7 +518,18 @@ def lot_line_buffer_ft(rules: "ZoneResolution") -> float:
     return _number(rules, "parking_lot_line_buffer_ft") or 0.0
 
 
-def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") -> float:
+def lot_line_buffer_doubt_ft(rules: "ZoneResolution") -> float:
+    """A stricter, unresolved keep-off distance, or 0 where none is stated."""
+    return _number(rules, "parking_lot_line_buffer_doubt_ft") or 0.0
+
+
+def behind_wall_ft(
+    parked_ft: float,
+    rear_ft: float,
+    rules: "ZoneResolution",
+    *,
+    lot_line_buffer_override_ft: float | None = None,
+) -> float:
     """The ground a lot must give behind the building's rear wall.
 
     ``parked_ft`` is how far the parking reaches past the wall -- the rear
@@ -544,7 +555,7 @@ def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") ->
     court is searched in.
     """
     keep = rear_ft if yards_kept_clear(rules) else 0.0
-    keep = max(keep, lot_line_buffer_ft(rules))
+    keep = max(keep, lot_line_buffer_ft(rules), lot_line_buffer_override_ft or 0.0)
     return max(rear_ft, parked_ft + keep)
 
 

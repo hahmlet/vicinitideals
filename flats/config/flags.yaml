@@ -228,6 +228,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [PARKING_STRIP_UNCONFIRMED]
+  PARKING-SETBACK-DOUBT:
+    description: "The court clears the encoded building setback but the code may mean the single-house figure (Steph's ruling 2026-11-05-troutdale-parking-abutting-setback)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: parking
+    resolution: document_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Review the adjoining-district setback reading under the cited Troutdale ruling"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PARKING_SETBACK_DOUBT]
 
   # --- what our own measurement left open --------------------------------
   FIT-COURT-WIDTH:

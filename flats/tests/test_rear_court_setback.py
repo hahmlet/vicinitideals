@@ -21,19 +21,34 @@ Each test resolves the real zone from the corpus.
 
 from __future__ import annotations
 
+from datetime import date
+
 import pytest
 import yaml
 
 from flats.designs.model import Design
 from flats.encode.load import load_trusted
+from flats.fit.rectangle import Fit
 from flats.provenance.store import ProvenanceStore
+from flats.rules.fields import OPTIONAL_FIELDS, field
+from flats.rules.model import Provenance, Status
+from flats.rules.resolver import Resolved, Verdict as RuleVerdict, ZoneResolution
 from flats.score.paper import paper_fit
-from flats.score.screen import _court_beyond_rear
+from flats.score.screen import (
+    PARKING_SETBACK_DOUBT,
+    PARKING_SETBACK_DOUBT_RULING,
+    LotFacts,
+    Triage,
+    _court_beyond_rear,
+    screen,
+)
+from flats.score.slack import SlackPolicy
 
 pytestmark = pytest.mark.unit
 
 FIELD = "parking_required_yard_prohibited"
 STRIP = "parking_lot_line_buffer_ft"
+DOUBT = "parking_lot_line_buffer_doubt_ft"
 GRESHAM = "or/multnomah/gresham"
 SANDY = "or/clackamas/sandy"
 TROUTDALE = "or/multnomah/troutdale"
@@ -80,6 +95,81 @@ def quoted(value) -> str:
 def deeper(rules) -> float:
     """How much deeper the paper lot is than when the court shared the yard."""
     return paper_fit(pod(), rules).min_depth_ft - paper_fit(pod(), Sharing(rules)).min_depth_ft
+
+
+def screen_rules(*, doubt: float | None = 20, yard_prohibited: bool = True) -> ZoneResolution:
+    values = {
+        "quadplex_allowed": True,
+        "min_lot_sqft": 3000,
+        "min_frontage_ft": 20,
+        "min_lot_width_ft": 20,
+        "max_coverage_pct": 100,
+        "max_far": 10,
+        "max_height_ft": 35,
+        "max_units": 4,
+        "parking_min_per_unit": 1.5,
+        "setback_front_ft": 10,
+        "setback_side_ft": 5,
+        "setback_rear_ft": 10,
+        FIELD: yard_prohibited,
+        STRIP: 0,
+        DOUBT: doubt,
+    }
+    provenance = Provenance(
+        cite="TDC 3.130.A",
+        url="https://api.municode.com/PublicationPdfDownload/1813",
+        retrieved=date(2026, 8, 29),
+    )
+    return ZoneResolution(
+        jurisdiction=TROUTDALE,
+        zone="LDR-2",
+        verdict=RuleVerdict.trusted,
+        values={
+            name: Resolved(
+                name=name,
+                value=value,
+                status=Status.verified,
+                prov=provenance,
+                layer=TROUTDALE,
+                origin="zone",
+            )
+            for name, value in values.items()
+            if value is not None
+        },
+    )
+
+
+def screen_lot(
+    *, depth: float, rules: ZoneResolution, doubt_fit_failed: bool = False
+):
+    design = pod()
+    fit = Fit(
+        fits=True,
+        width_ft=56,
+        depth_ft=36,
+        best_depth_ft=depth,
+        slack_ft=depth - 36,
+        across_ft=100,
+        stalls=6,
+    )
+    return screen(
+        rules,
+        LotFacts(
+            lot_sqft=20_000,
+            frontage_ft=100,
+            lot_width_ft=100,
+            lot_depth_ft=200,
+            parking_setback_doubt_failed=doubt_fit_failed,
+        ),
+        design,
+        fit,
+        policy=SlackPolicy(tolerance={"fit_ft": 0.5}),
+    )
+
+
+def test_setback_doubt_is_an_optional_numeric_field() -> None:
+    assert DOUBT in OPTIONAL_FIELDS
+    assert field(DOUBT).kind == "length_ft"
 
 
 # --- Gresham --------------------------------------------------------------------
@@ -162,6 +252,64 @@ def test_a_troutdale_court_meets_the_rear_setback(corpus, zone: str) -> None:
 def test_a_troutdale_lot_with_no_residential_neighbour_shares(corpus) -> None:
     rules = corpus.resolve(TROUTDALE, "MU-2", ("abuts_nonresidential_zone",), lot={"lot_sqft": 9000.0})
     assert rules.get(FIELD) is False
+
+
+@pytest.mark.parametrize("zone", ["LDR-1", "LDR-2", "MDR", "HDR", "MU-1", "MU-2", "MU-3"])
+def test_troutdale_residential_and_mixed_zones_hold_the_doubt_figure(corpus, zone: str) -> None:
+    rules = corpus.resolve(TROUTDALE, zone, (), lot={"lot_sqft": 9000.0})
+
+    assert rules.get(FIELD) is True
+    assert rules.get(DOUBT) == 20
+
+
+def test_troutdale_fitting_only_the_encoded_setback_is_yellow() -> None:
+    result = screen_lot(depth=90, rules=screen_rules())
+
+    assert result.triage is Triage.yellow
+    assert PARKING_SETBACK_DOUBT in result.reasons
+    (flag,) = [item for item in result.flags if item.code == "PARKING-SETBACK-DOUBT"]
+    assert flag.by == PARKING_SETBACK_DOUBT
+    assert flag.source == PARKING_SETBACK_DOUBT_RULING
+
+
+def test_troutdale_fitting_both_setbacks_keeps_today_green() -> None:
+    result = screen_lot(depth=120, rules=screen_rules())
+
+    assert result.triage is Triage.green
+    assert PARKING_SETBACK_DOUBT not in result.reasons
+    assert not any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
+
+
+def test_troutdale_failing_the_stricter_side_fit_is_yellow() -> None:
+    result = screen_lot(depth=120, rules=screen_rules(), doubt_fit_failed=True)
+
+    assert result.triage is Triage.yellow
+    assert PARKING_SETBACK_DOUBT in result.reasons
+    assert any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
+
+
+def test_troutdale_failing_the_encoded_setback_is_not_a_doubt_move() -> None:
+    result = screen_lot(depth=80, rules=screen_rules())
+
+    assert PARKING_SETBACK_DOUBT not in result.reasons
+    assert not any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
+    assert result.triage is not Triage.green
+
+
+def test_troutdale_nonresidential_neighbour_has_no_setback_doubt() -> None:
+    result = screen_lot(depth=90, rules=screen_rules(yard_prohibited=False))
+
+    assert result.triage is Triage.green
+    assert PARKING_SETBACK_DOUBT not in result.reasons
+    assert not any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
+
+
+def test_city_without_setback_doubt_field_is_unchanged() -> None:
+    result = screen_lot(depth=90, rules=screen_rules(doubt=None))
+
+    assert result.triage is Triage.green
+    assert PARKING_SETBACK_DOUBT not in result.reasons
+    assert not any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
 
 
 @pytest.mark.parametrize(("zone", "strip"), [("MDR", 10), ("LDR-2", 10)])

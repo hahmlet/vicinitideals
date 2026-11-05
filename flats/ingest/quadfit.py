@@ -176,6 +176,7 @@ from flats.score.paper import (
     front_lot_line_rule,
     front_lot_line_through_rule,
     front_min_depth_ft,
+    lot_line_buffer_doubt_ft,
     lot_line_buffer_ft,
     side_column,
     side_court,
@@ -185,6 +186,7 @@ from flats.score.screen import (
     BUILDING_SHARE,
     CLOSER_LOOK_SPLIT_ZONE,
     COURT_SHAPED,
+    PARKING_SETBACK_DOUBT,
     STEEP_GROUND,
     STREET_RANK_UNKNOWN,
     STREET_UNCONFIRMED,
@@ -2253,6 +2255,109 @@ def _search_key(env: Envelope) -> tuple[bytes | None, bytes | None]:
     )
 
 
+def _parking_doubt_rules(rules: ZoneResolution, doubt_ft: float) -> ZoneResolution | None:
+    source = rules.values.get("parking_lot_line_buffer_doubt_ft")
+    if source is None:
+        return None
+    values = dict(rules.values)
+    values[STRIP_FIELD] = dataclasses.replace(source, name=STRIP_FIELD, value=doubt_ft)
+    return dataclasses.replace(rules, values=values)
+
+
+def _parking_doubt_envelope(
+    lot: QuadfitLot, rules: ZoneResolution, env: Envelope, doubt_ft: float
+) -> Envelope | None:
+    if env.setbacks is None or lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
+        return None
+
+    edges = dedicated(lot.edges, rules, lot.zone)
+    setbacks = dataclasses.replace(
+        env.setbacks,
+        side_ft=max(env.setbacks.side_ft, doubt_ft),
+        alley_side_ft=(
+            None
+            if env.setbacks.alley_side_ft is None
+            else max(env.setbacks.alley_side_ft, doubt_ft)
+        ),
+    )
+    in_yards = slope_rules().steep_in_setbacks
+    steep = lot.steep if in_yards else _within(lot.steep, lot.envelope)
+    taken = _taken(lot, steep)
+    geom = buildable(lot.lot_geom, edges, setbacks, less=taken)
+    ground_setbacks = dataclasses.replace(
+        setbacks,
+        rear_ft=doubt_ft,
+        alley_rear_ft=None if setbacks.alley_rear_ft is None else doubt_ft,
+        north_ft=0.0,
+        east_west_ft=0.0,
+    )
+    ground = buildable(lot.lot_geom, edges, ground_setbacks, less=taken)
+    return Envelope(geom, env.rear_cut_ft, env.source, setbacks, ground)
+
+
+def _parking_doubt_fit_fails(
+    lot: QuadfitLot,
+    facts: LotFacts,
+    design: Design,
+    rules: ZoneResolution,
+    env: Envelope,
+    front: float | None,
+    angles: Sequence[float],
+    fitters: dict[Any, Fitter],
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    config: Configuration,
+) -> bool:
+    if not rules.trusted or rules.get("parking_required_yard_prohibited") is not True:
+        return False
+    doubt = lot_line_buffer_doubt_ft(rules)
+    rear = rules.get("setback_rear_ft")
+    rear_ft = float(rear) if isinstance(rear, (int, float)) else 0.0
+    used = max(rear_ft if rules.get("parking_required_yard_prohibited") is True else 0.0,
+               lot_line_buffer_ft(rules))
+    if doubt <= used:
+        return False
+
+    strict_rules = _parking_doubt_rules(rules, doubt)
+    if strict_rules is None:
+        return False
+    strict_env = _parking_doubt_envelope(lot, strict_rules, env, doubt)
+    if strict_env is None:
+        return False
+    key = _search_key(strict_env)
+    if key not in fitters:
+        fitters[key] = Fitter(strict_env.geom, angles, ground=strict_env.ground)
+    fitter = fitters[key]
+    fit = fit_for(
+        fitter,
+        design,
+        strict_rules,
+        placement=False,
+        carved_rear_ft=strict_env.rear_cut_ft,
+        alley=facts.alley,
+        corner=facts.corner,
+        frontage_ft=facts.cap_frontage_ft,
+        street_deg=_access_deg(lot, front),
+    )
+    if fit.beside and not beside_reaches_street(lot, design, strict_rules, fit, fitter, strict_env):
+        fit = fit_for(
+            fitter,
+            design,
+            strict_rules,
+            placement=False,
+            carved_rear_ft=strict_env.rear_cut_ft,
+            alley=facts.alley,
+            corner=facts.corner,
+            frontage_ft=facts.cap_frontage_ft,
+            street_deg=(),
+        )
+    strict_screen = screen(
+        strict_rules, facts, design, fit, policy=policy, relief=relief, config=config
+    )
+    fit_check = next((check for check in strict_screen.checks if check.check == "fit_ft"), None)
+    return fit_check is None or fit_check.verdict is not CheckVerdict.passes
+
+
 def _screen_on(
     here: QuadfitLot,
     design: Design,
@@ -2321,6 +2426,28 @@ def _screen_on(
     def screened(fit: Fit) -> tuple[LotFacts, Screening, Screening]:
         facts = base
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+        fit_check = next((check for check in result.checks if check.check == "fit_ft"), None)
+        if (
+            PARKING_SETBACK_DOUBT not in result.reasons
+            and not facts.parking_setback_doubt_failed
+            and fit_check is not None
+            and fit_check.verdict is CheckVerdict.passes
+            and _parking_doubt_fit_fails(
+                here,
+                facts,
+                design,
+                got,
+                env,
+                front,
+                angles,
+                fitters,
+                policy,
+                relief,
+                config,
+            )
+        ):
+            facts = dataclasses.replace(facts, parking_setback_doubt_failed=True)
+            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
         if "open_space_shape" in result.unchecked:
             # The screen's window could not prove the outdoor square; measure it
             # on the lot's own ground and screen again on the answer.
