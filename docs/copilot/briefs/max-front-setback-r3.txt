@@ -1,0 +1,19 @@
+max-front-setback-r3 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/max-front-setback, branch flats/max-front-setback, head 586a7b9b; no new branch)
+
+WHY: FOLLOWUPS 147. The bound of this branch was read lot by lot: C:/Users/Steph/Repos/vicinitideals-worktrees/max-front-setback.moveread.md -- READ IT WHOLE FIRST, section "Findings" 1-6 gives each cause, the code lines and example lots. Verdict HOLD because of two false-GREEN paths. Fix them; also fix 3-5; investigate 6.
+
+CHANGE:
+1. (MUST, false GREEN) Frontage merge. flats/fit/frontage.py street_chains joins separate street runs whose bearings fall in one cluster, and quadfit.front_max_streets then measures only the nearest. In front_max_streets measure each separate street run as its own street; treat two runs as one frontage only when they are a jog of one frontage (same side of the lot: _split_ends false for the pair and the gap under THROUGH_MIN_FT). Do NOT change street_chains itself (other checks use it). Lots that must stop being GREEN: 1S1E16CD02200 (through lot, Portland -> unheld -> YELLOW), the 10 Portland lots and Milwaukie 22E05A00400 listed under finding 1.
+2. (MUST, false GREEN) Through-lot plan drops a street: measure the maximum on the lot's as-cut street edges, not on the plan's through/rear renaming. Estacada 34E28BB03500 must come out RED (16.26.040 L24-L25: 5 ft on front and street side).
+3. Corner plan renames a street (finding 3): with 1+2 the 25 Portland corners should read three streets -> unheld -> YELLOW, not RED. Test one of them.
+4. Washington County TO:R24-40 (finding 4): encode the front minimum as printed "None" (375-10.txt L342, with the cite in the YAML's provenance form used beside it) and, because note F (L357) applies the maximum only to pedestrian streets that are not held, make the TO zones' street selection unheld (YELLOW, the unranked-street rule of 2026-10-09). Do the same check for TO:R40-80 and say what you found.
+5. Raster just past the line (finding 5): let the front_max_checked placement search include a window flush to the envelope's front edge. Do NOT widen the 1 ft allowance. Tigard RES-B 1S136CB02900 / 2S102CB00700 should then pass when the pod can stand at 20 ft.
+6. Fairview 1N3E28CB01002 (finding 6): find why the moved pod80 drawing stands 140 ft from every street; if the no-worse comparison is against the wrong original, fix it; otherwise describe it and leave it.
+
+INVARIANT: no change may make a lot GREEN that the bound 586a7b9b did not, except via fix 5 (window flush to the front edge) and fix 3/4 cannot make GREEN (they go to YELLOW).
+
+TESTS: in flats/tests (the file this branch added for the maximum front check -- grep front_max), a test per fix 1-5 built from the moveread's real lot facts where possible (two separate runs same bearing -> two streets; through lot as-cut edges; corner three streets unheld; TO:R24-40 unheld + minimum None; flush window passes at min=max=20). Run C:/Users/Steph/Repos/vicinitideals/.venv/Scripts/python -m pytest <that file> -q -p no:cacheprovider, then uv run pytest flats/tests -q -n auto (green; if only test_gaps fails run uv run python -m flats.encode.gaps and commit flats/config/gaps.json on this branch), uv run ruff check flats/, uv run python scripts/check_flats_firewall.py. Commit by explicit path, prefix "flats:", ending "(FOLLOWUPS 147)". Do not push.
+
+Append "## Round 3 (2026-11-05)" to C:/Users/Steph/Repos/vicinitideals-worktrees/max-front-setback.handoff.md: each fix, the lots expected to move and which way, and the answer for finding 6.
+
+MUST NOT CHANGE: street_chains behaviour for other checks; any setback value other than TO:R24-40/R40-80 front minimum; anything under app/.
