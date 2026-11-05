@@ -2531,3 +2531,20 @@
     Companion to 2026-11-04-south-hillsboro-active-use-streets-traced.
     FOLLOWUPS 147.
   source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
+- id: 2026-11-05-side-yard-parking-silent-codes
+  kind: ruling
+  date: 2026-11-05
+  scope: {}
+  question: >-
+    Where a city's code says nothing either way about a driveway or parking
+    sitting in a required side setback (e.g. Tigard, West Linn, Sherwood,
+    Clackamas unincorporated, Estacada), does the screen let the pod's drive
+    lane and parking court use the side setback?
+  ruling: '"Middle option"'
+  effect: >-
+    In a silent code the lane and court may use one side setback, but a lot
+    that fits ONLY because of it is YELLOW with a flag (parking in a side
+    setback; the code is silent), never GREEN on that basis. Codes that allow
+    it outright are measured as written; codes that forbid it stay as today.
+    FOLLOWUPS 146.
+  source: Steph 2026-11-05 (chat), docs/followups/146-parking-in-side-yards.md
