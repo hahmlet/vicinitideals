@@ -518,6 +518,58 @@ def lot_line_buffer_ft(rules: "ZoneResolution") -> float:
     return _number(rules, "parking_lot_line_buffer_ft") or 0.0
 
 
+def side_yard_mode(rules: "ZoneResolution") -> str:
+    """The side-yard parking permission, with prohibitions taking precedence."""
+    mode = rules.get("parking_side_yard_allowed")
+    if mode not in ("lane", "lane_and_court"):
+        return "none"
+    if rules.get("parking_side_prohibited") is True or yards_kept_clear(rules):
+        return "none"
+    return mode
+
+
+def side_yard_stated_mode(rules: "ZoneResolution") -> str:
+    """The allowed reach the code actually states; absent means silence."""
+    allowed = side_yard_mode(rules)
+    stated = rules.get("parking_side_yard_stated")
+    if allowed == "none" or stated not in ("lane", "lane_and_court"):
+        return "none"
+    return min((allowed, stated), key=("none", "lane", "lane_and_court").index)
+
+
+def _side_yard_clearance_ft(rules: "ZoneResolution") -> float:
+    """The side setback available to parking after the lot-line strip."""
+    side = _number(rules, "setback_side_ft")
+    total = _number(rules, "setback_side_total_ft")
+    if total is not None:
+        side = max(side or 0.0, total / 2)
+    if side is None:
+        return 0.0
+    return max(0.0, side - lot_line_buffer_ft(rules))
+
+
+def side_yard_lane_overlap_ft(
+    rules: "ZoneResolution", lane_ft: float, *, corner: bool = False
+) -> float:
+    """How much of the lane may overlap one side setback."""
+    if corner or side_yard_mode(rules) == "none":
+        return 0.0
+    return min(max(0.0, lane_ft), _side_yard_clearance_ft(rules))
+
+
+def side_yard_court_overlap_ft(
+    rules: "ZoneResolution",
+    court_ft: float,
+    *,
+    lane_ft: float | None = None,
+    corner: bool = False,
+) -> float:
+    """How much of the court may overlap the lane's side setback."""
+    if corner or side_yard_mode(rules) != "lane_and_court" or lane_ft == 0:
+        return 0.0
+    return min(max(0.0, court_ft), _side_yard_clearance_ft(rules))
+
+
 def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") -> float:
     """The ground a lot must give behind the building's rear wall.
 
@@ -540,8 +592,8 @@ def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") ->
     lowest-density zones) is the same shape with its own width
     (:func:`lot_line_buffer_ft`), and raises the keep-off distance here; its
     lateral half -- a strip wider than the side setback -- is not this
-    function's, because the side yards are already outside the envelope the
-    court is searched in.
+    function's. Side-yard parking permissions change only the width searched;
+    they do not let the court share the rear yard differently.
     """
     keep = rear_ft if yards_kept_clear(rules) else 0.0
     keep = max(keep, lot_line_buffer_ft(rules))
@@ -1397,6 +1449,10 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     sides = _pair(side, side_total)
     court, court_from_code = court_depth(design, rules)
     across = court_across(design, rules)
+    lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft)
+    court_overlap = side_yard_court_overlap_ft(
+        rules, across.width_ft, lane_ft=across.lane_ft
+    )
     needed = (
         ("setback_front_ft", front),
         ("setback_rear_ft", rear),
@@ -1420,6 +1476,10 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         used.append("parking_required_yard_prohibited")
     if court and lot_line_buffer_ft(rules) > 0:
         used.append("parking_lot_line_buffer_ft")
+    if lane_overlap or court_overlap:
+        used.append("parking_side_yard_allowed")
+        if lot_line_buffer_ft(rules) > 0 and "parking_lot_line_buffer_ft" not in used:
+            used.append("parking_lot_line_buffer_ft")
     used += [
         name
         for name, got in (
@@ -1443,9 +1503,10 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         # behind both, so the lane is never added to the court. This is the
         # rectangle quadfit's site plan draws inside the setbacks, and it is
         # why the pod end-on is not a 36 ft question: six stalls are 54.
-        building = width_ft + across.lane_ft
-        if across.width_ft > building:
-            envelope_ft, width_binding = across.width_ft, ACROSS_COURT
+        building = width_ft + across.lane_ft - lane_overlap
+        court_width = across.width_ft - court_overlap
+        if court_width > building:
+            envelope_ft, width_binding = court_width, ACROSS_COURT
         else:
             envelope_ft, width_binding = building, ACROSS_BUILDING
         needed_width = envelope_ft + sides if sides is not None else None

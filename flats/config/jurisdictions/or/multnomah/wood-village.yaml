@@ -877,6 +877,45 @@ defaults:
     url: https://woodvillage.municipal.codes/WVDC/350.065
     retrieved: '2026-08-30'
     quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L75"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 720.030: "Unless otherwise
+  # indicated, an unspecified setback refers to a building setback", so the
+  # zone tables' side setback does not reach the court. The quadplex is
+  # under 350.065, whose Table 350-2 states the parking-area setbacks line by
+  # line: 5 ft from a lot line abutting an LR or MR lot (L3 planting), 5 ft
+  # with L2 or 10 ft with L1 against the other zones -- five is the
+  # minimum. The townhouse (an "attached house", 720.030 L370) is under
+  # 350.055, which keeps parking only out of the first 10 ft from the front
+  # lot line and holds garages, not surface parking, to the base-zone
+  # setbacks. Stated both ways. The strip is the quadplex's only.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: WVDC 720.030 Setback, an unspecified setback is a building setback; 350.065(C) and Table 350-2 state the parking-area setbacks
+    url: https://woodvillage.municipal.codes/WVDC/720.030
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/720.030.definitions.txt#L370,L378"
+    variants:
+      - value: lane_and_court
+        when: [unit_lots]
+        cite: WVDC 350.055(A)-(B), attached houses (townhouses, 720.030), parking kept only out of the first 10 ft from the front lot line, garages alone held to the base-zone setbacks
+        quote: "or/multnomah/wood-village/350.055.one-and-two-unit.txt#L60,L62"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: WVDC 720.030 Setback and 350.065(C), Table 350-2, parking-area setbacks stated apart from the building setback
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L77"
+    variants:
+      - value: lane_and_court
+        when: [unit_lots]
+        cite: WVDC 350.055(B), the townhouse branch bars parking only near the front lot line
+        quote: "or/multnomah/wood-village/350.055.one-and-two-unit.txt#L60,L62"
+  parking_lot_line_buffer_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: WVDC 350.065(C), Table 350-2, lot line abutting an LR or MR zone lot line, 5 ft (the minimum of every non-street row)
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L77"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

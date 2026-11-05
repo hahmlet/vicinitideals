@@ -86,8 +86,13 @@ from flats.score.paper import (
     home_lot_standard,
     lot_standard,
     paved,
+    paper_fit,
     side_column,
     side_court,
+    side_yard_court_overlap_ft,
+    side_yard_lane_overlap_ft,
+    side_yard_mode,
+    side_yard_stated_mode,
 )
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
@@ -268,6 +273,10 @@ def area_review(config: Configuration | None) -> str | None:
 #: spacing, offset from the lot line and count per frontage are FOLLOWUPS 25
 #: -- so the lot is a closer look, never GREEN, and never a miss.
 CLOSER_LOOK_SECOND_APPROACH = "CLOSER_LOOK_SECOND_APPROACH"
+SIDE_YARD_PARKING_SILENT = (
+    "The code neither allows nor forbids parking in the side yard; "
+    "see rulings.yaml 2026-11-05-side-yard-parking-silent-codes."
+)
 #: Driveway approaches the drawn plan holds: one shared drive to the court.
 PLAN_APPROACHES = 1
 #: The plan's fit, missed on the ground left once the steep ground is taken
@@ -2121,7 +2130,19 @@ def seats(
         seated = 0
         held: tuple[float, float, float] | None = None
         for n in range(across.stalls, across.most + 1):
-            ask = (max(side + across.lane_ft, n * across.stall_ft), deep + behind[n], over[n])
+            court_width = n * across.stall_ft
+            lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft, corner=corner)
+            court_overlap = side_yard_court_overlap_ft(
+                rules, court_width, lane_ft=across.lane_ft, corner=corner
+            )
+            ask = (
+                max(
+                    side + across.lane_ft - lane_overlap,
+                    court_width - court_overlap,
+                ),
+                deep + behind[n],
+                over[n],
+            )
             if ask != held and not fitter.holds(ask[0], ask[1], over_ft=ask[2]):
                 break
             held = ask
@@ -2132,7 +2153,12 @@ def seats(
                     design, rules, carved_rear_ft, alley, column=True, stalls=n
                 )
                 run = _court_over(design, rules, carved_rear_ft, alley, column=True, stalls=n)
-                if not fitter.holds(side + across.lane_ft, along, over_ft=run):
+                lane_overlap = side_yard_lane_overlap_ft(
+                    rules, across.lane_ft, corner=corner
+                )
+                if not fitter.holds(
+                    side + across.lane_ft - lane_overlap, along, over_ft=run
+                ):
                     break
                 seated = n
         for n in range(max(seated + 1, across.stalls), across.most + 1):
@@ -2142,8 +2168,9 @@ def seats(
             if row is None:
                 break
             extra = _beside_beyond(row, deep, rules, carved_rear_ft)
+            overlap = side_yard_court_overlap_ft(rules, row.band_ft, corner=corner)
             if math.isinf(extra) or not fitter.holds(
-                side + row.band_ft,
+                side + row.band_ft - overlap,
                 deep + extra,
                 angles=street_deg,
                 over_ft=_beside_over(row, deep, rules, carved_rear_ft),
@@ -2185,11 +2212,22 @@ def _searched_narrower_than(
         got = side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft)
         if got is None:
             return True
-        asked = side + got.band_ft
+        asked = side + got.band_ft - side_yard_court_overlap_ft(
+            rules, got.band_ft, corner=corner
+        )
     elif fit.column:
-        asked = side + across.lane_ft
+        asked = side + across.lane_ft - side_yard_lane_overlap_ft(
+            rules, across.lane_ft, corner=corner
+        )
     else:
-        asked = max(side + across.lane_ft, across.width_ft)
+        lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft, corner=corner)
+        court_overlap = side_yard_court_overlap_ft(
+            rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
+        )
+        asked = max(
+            side + across.lane_ft - lane_overlap,
+            across.width_ft - court_overlap,
+        )
     searched = side if fit.across_ft is None else fit.across_ft
     return searched + 1e-9 < asked
 
@@ -2285,6 +2323,7 @@ def fit_for(
     frontage_ft: float | None = None,
     street_deg: tuple[float, ...] = (),
     menu: Sequence[Fix] | None = None,
+    _include_stated_fit: bool = True,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -2345,8 +2384,12 @@ def fit_for(
             design,
             axis_required=axis_required,
             placement=placement,
-            lane_ft=court.lane_ft,
-            court_width_ft=court.width_ft,
+            lane_ft=court.lane_ft
+            - side_yard_lane_overlap_ft(rules, court.lane_ft, corner=corner),
+            court_width_ft=court.width_ft
+            - side_yard_court_overlap_ft(
+                rules, court.width_ft, lane_ft=court.lane_ft, corner=corner
+            ),
             over_ft=_court_over(
                 design, rules, carved_rear_ft, alley, corner=corner, fix=court.fix
             ),
@@ -2369,7 +2412,8 @@ def fit_for(
             design,
             axis_required=axis_required,
             placement=placement,
-            lane_ft=across.lane_ft,
+            lane_ft=across.lane_ft
+            - side_yard_lane_overlap_ft(rules, across.lane_ft, corner=corner),
             court_width_ft=0.0,
             over_ft=_court_over(design, rules, carved_rear_ft, alley, column=True),
         )
@@ -2388,10 +2432,11 @@ def fit_for(
         else None
     )
     if court is not None:
+        overlap = side_yard_court_overlap_ft(rules, court.band_ft, corner=corner)
         got = fitter.fit_beside(
             design.footprint.width_ft,
             design.footprint.depth_ft,
-            band_ft=court.band_ft,
+            band_ft=court.band_ft - overlap,
             beyond=lambda deep: _beside_beyond(court, deep, rules, carved_rear_ft),
             angles=street_deg,
             allow_flip=not axis_required,
@@ -2406,7 +2451,7 @@ def fit_for(
             fit = got
     # And how many more the lot seats, floor to preferred: the number the
     # screen reports beside the colour (:func:`seats`).
-    return dataclasses.replace(
+    result = dataclasses.replace(
         fit,
         stalls=seats(
             fitter,
@@ -2421,6 +2466,70 @@ def fit_for(
             fix=_fix(fit),
         ),
     )
+    allowed_mode = side_yard_mode(rules)
+    stated_mode = side_yard_stated_mode(rules)
+    if (
+        _include_stated_fit
+        and not corner
+        and allowed_mode != stated_mode
+        and allowed_mode != "none"
+    ):
+        stated_rules = _with_side_yard_mode(rules, stated_mode)
+        allowed_paper = paper_fit(design, rules)
+        stated_paper = paper_fit(design, stated_rules)
+        if (
+            allowed_paper.min_width_ft != stated_paper.min_width_ft
+            or allowed_paper.min_area_sqft != stated_paper.min_area_sqft
+        ):
+            result = dataclasses.replace(
+                result,
+                side_yard_stated_fit=fit_for(
+                    fitter,
+                    design,
+                    stated_rules,
+                    placement=placement,
+                    carved_rear_ft=carved_rear_ft,
+                    alley=alley,
+                    corner=corner,
+                    frontage_ft=frontage_ft,
+                    street_deg=street_deg,
+                    menu=menu,
+                    _include_stated_fit=False,
+                ),
+            )
+    return result
+
+
+class _SideYardModeOverlay:
+    def __init__(
+        self, rules: ZoneResolution, values: dict[str, Any], mode: str
+    ) -> None:
+        self._rules = rules
+        self.values = values
+        self._mode = mode
+
+    def get(self, name: str, default: Any = None) -> Any:
+        if name == "parking_side_yard_allowed":
+            return self._mode
+        value = self._rules.get(name)
+        if value is None and name not in self.values:
+            return default
+        return value
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._rules, name)
+
+
+def _with_side_yard_mode(rules: ZoneResolution, mode: str) -> ZoneResolution:
+    """Copy the resolved permission for the stated-only fit comparison."""
+    allowed = rules.values.get("parking_side_yard_allowed")
+    if allowed is None:
+        return rules
+    values = dict(rules.values)
+    values["parking_side_yard_allowed"] = dataclasses.replace(allowed, value=mode)
+    if dataclasses.is_dataclass(rules):
+        return dataclasses.replace(rules, values=values)
+    return _SideYardModeOverlay(rules, values, mode)  # type: ignore[return-value]
 
 
 def screen(
@@ -2462,6 +2571,18 @@ def screen(
     where = rules.jurisdiction
     across = court_across(design, rules, lot.alley, corner=lot.corner)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
+    stated_fit_fails = False
+    if fit.side_yard_stated_fit is not None:
+        stated_rules = _with_side_yard_mode(rules, side_yard_stated_mode(rules))
+        stated_checks, _, _ = _checks(
+            stated_rules, lot, design, fit.side_yard_stated_fit, policy
+        )
+        current_fit_check = next(c for c in checks if c.check == "fit_ft")
+        stated_fit_check = next(c for c in stated_checks if c.check == "fit_ft")
+        stated_fit_fails = (
+            current_fit_check.verdict is not Verdict.fails
+            and stated_fit_check.verdict is Verdict.fails
+        )
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
     worst_check = dominant(checks)
@@ -2548,6 +2669,7 @@ def screen(
         fit_slack_ft=common["fit_slack_ft"],
         optimistic=optimistic,
         warnings=common["warnings"],
+        side_yard_silent=stated_fit_fails,
     )
 
     if use_blocked and use_path is not None and not use_path.available:
@@ -2629,6 +2751,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
+    if stated_fit_fails:
+        closer = (*closer, SIDE_YARD_PARKING_SILENT)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -3120,6 +3244,7 @@ def _account(
     fit_slack_ft: float | None,
     optimistic: Sequence[str],
     warnings: Sequence[str],
+    side_yard_silent: bool = False,
 ) -> tuple[tuple[Flag, ...], tuple[Bind, ...]]:
     """The flag plan's record of one screening: every unknown as a flag and
     every confirmed miss as a bind (Steph's flag plan, 2026-10-02).
@@ -3135,6 +3260,8 @@ def _account(
     def flag(code: str, by: str, **extra: Any) -> None:
         raised.append((code, by, extra))
 
+    if side_yard_silent:
+        flag("SIDE-YARD-PARKING-SILENT", SIDE_YARD_PARKING_SILENT)
     reason = rules.reason
     if rules.verdict is RuleVerdict.ambiguous:
         for name in rules.ambiguous or ("(unnamed)",):

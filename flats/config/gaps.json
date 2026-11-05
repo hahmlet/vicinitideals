@@ -1,5 +1,5 @@
 {
-  "digest": "88451adff33f9204fd0edec5cd66a5c2a1ed1a2b5e7d276f26c6c414d6efdbcc",
+  "digest": "0d153dc42b43b88362152aec59c00865e3746ba58793c8e62a7f7416545d24d1",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -16,7 +16,7 @@
       "gaps": []
     },
     "or/clackamas/canby": {
-      "section_unread": 6,
+      "section_unread": 8,
       "misattributed": [],
       "label": "Canby",
       "counts": {},
@@ -801,7 +801,7 @@
       "gaps": []
     },
     "or/multnomah/wood-village": {
-      "section_unread": 3,
+      "section_unread": 4,
       "misattributed": [],
       "label": "Wood Village",
       "counts": {},
@@ -1040,7 +1040,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 36,
+      "section_unread": 37,
       "misattributed": [
         {
           "zone": "CC",

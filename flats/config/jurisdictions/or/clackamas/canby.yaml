@@ -1953,6 +1953,18 @@ defaults:
     url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38523
     retrieved: '2026-10-07'
     quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: Canby CMC 16.10.070 (B)(9)(h), driveway may be paved up to an adjacent property line subject to the stated entry separation
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L281"
+  parking_side_yard_stated:
+    value: lane
+    cite: Canby CMC 16.10.070 (B)(9)(h) states the driveway location, while CMC 16.04.680 defines a yard without a parking rule
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L281"
 
 # NOT ENCODED, read 2026-10-07:
 # - 16.49.030, site and design review (a Type III process) for new

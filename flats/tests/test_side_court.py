@@ -12,6 +12,7 @@ it is the difference.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import math
 
@@ -350,7 +351,26 @@ def test_a_court_beside_the_building_has_to_reach_the_street(corpus, monkeypatch
             corpus.layers,
         )
 
-    kw = dict(rules=corpus, policy=slack.load_policy(), relief=relief.load_policy(), step_deg=1.0)
+    class WithoutSideYard:
+        def __init__(self, base) -> None:
+            self._base = base
+
+        def resolve(self, *args, **kwargs):
+            resolved = self._base.resolve(*args, **kwargs)
+            values = dict(resolved.values)
+            values.pop("parking_side_yard_allowed", None)
+            values.pop("parking_side_yard_stated", None)
+            return dataclasses.replace(resolved, values=values)
+
+        def __getattr__(self, name):
+            return getattr(self._base, name)
+
+    kw = dict(
+        rules=WithoutSideYard(corpus),
+        policy=slack.load_policy(),
+        relief=relief.load_policy(),
+        step_deg=1.0,
+    )
     (s,) = screen_lot(lot(), [pod()], **kw)
     assert s.fit.beside is False
     assert s.signed.triage.value != "green"

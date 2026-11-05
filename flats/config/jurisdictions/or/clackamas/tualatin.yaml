@@ -963,6 +963,26 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
     quote: "or/clackamas/tualatin/41/41.300.txt#L93,L99-L101"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 73C.090(6)(c) lets a townhouse or
+  # quadplex driveway run within five feet of an adjacent property line
+  # (73C/73C.090.txt#L97-L98): the lane is stated. The court is stated
+  # only where a zone table prints its own "Parking and Vehicle
+  # Circulation Areas" setback (RML, below); elsewhere a setback is
+  # measured to a building or structure (31.060) and the court is silent.
+  # Inert in the pod's zones today: RL and RML set 5 ft sides and the
+  # 5-ft strip above takes all of it.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: TDC 31.060 Setback, measured to a building or structure; 73C.090(6)(c), townhouse and quadplex driveways may be built within five feet of adjacent property lines
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/31/31.060.txt#L157"
+  parking_side_yard_stated:
+    value: lane
+    cite: TDC 73C.090(6)(c), townhouse and quadplex driveways within five feet of adjacent property lines
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C/73C.090.txt#L97-L98"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1191,6 +1211,21 @@ zones:
       nearest Tualatin lot is 343 ft from that. No RL lot is adjacent to either. Re-measure when the
       extension reaches the street file or Tualatin annexes Basalt Creek land beside the parkway.'
   RML:
+    # SIDE-YARD PARKING, ROUND 3: the table states the parking's own
+    # setback, so the court is stated -- not for townhouses, whose figure
+    # is left to Architectural Review. The table's 10 ft is held at the
+    # city-wide 5 ft strip until Steph rules (FOLLOWUPS 146 hand-off).
+    parking_side_yard_stated:
+      value: lane_and_court
+      cite: TDC 41.300 Table 41-3, Minimum Setbacks, Parking and Vehicle Circulation Areas 10 feet
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-08-30'
+      quote: "or/clackamas/tualatin/41/41.300.txt#L99-L101"
+      variants:
+        - value: lane
+          when: [unit_lots]
+          cite: TDC 41.300 Table 41-3, the townhouse parking setback is set through Architectural Review; 73C.090(6)(c) states the driveway
+          quote: "or/clackamas/tualatin/41/41.300.txt#L99-L101"
     max_density_du_per_acre:
       # Table 41-3, MAXIMUM DENSITY. The table states a ceiling per
       # housing type and prints "None" against Quadplex, which is the pod on

@@ -38,7 +38,13 @@ from typing import Callable
 from flats.designs.model import Design, Orientation
 from flats.fit.rectangle import Fit, Fitter
 from flats.rules.resolver import ZoneResolution
-from flats.score.paper import Alley, court_across, side_court
+from flats.score.paper import (
+    Alley,
+    court_across,
+    side_court,
+    side_yard_court_overlap_ft,
+    side_yard_lane_overlap_ft,
+)
 from flats.score.screen import (
     _beside_beyond,
     _beside_over,
@@ -108,7 +114,9 @@ def _plan(
         if court is None or not street_deg:
             return None
         return _Plan(
-            base_ft=side + court.band_ft,
+            base_ft=side
+            + court.band_ft
+            - side_yard_court_overlap_ft(rules, court.band_ft, corner=corner),
             floor_ft=0.0,
             run=lambda t: deep + t + _beside_beyond(court, deep + t, rules, carved_rear_ft),
             over=lambda t: _beside_over(court, deep + t, rules, carved_rear_ft),
@@ -120,7 +128,9 @@ def _plan(
         beyond = _court_beyond_rear(design, rules, carved_rear_ft, alley, column=True)
         over = _court_over(design, rules, carved_rear_ft, alley, column=True)
         return _Plan(
-            base_ft=side + lane,
+            base_ft=side
+            + lane
+            - side_yard_lane_overlap_ft(rules, lane, corner=corner),
             floor_ft=0.0,
             run=lambda t: deep + t + beyond,
             over=lambda _t: over,
@@ -132,8 +142,13 @@ def _plan(
     beyond = _court_beyond_rear(design, rules, carved_rear_ft, alley, corner=corner, fix=fix)
     over = _court_over(design, rules, carved_rear_ft, alley, corner=corner, fix=fix)
     return _Plan(
-        base_ft=side + court.lane_ft,
-        floor_ft=court.width_ft,
+        base_ft=side
+        + court.lane_ft
+        - side_yard_lane_overlap_ft(rules, court.lane_ft, corner=corner),
+        floor_ft=court.width_ft
+        - side_yard_court_overlap_ft(
+            rules, court.width_ft, lane_ft=court.lane_ft, corner=corner
+        ),
         run=lambda t: deep + t + beyond,
         over=lambda _t: over,
         fixed=True,
