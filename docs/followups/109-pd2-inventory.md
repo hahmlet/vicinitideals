@@ -83,3 +83,4 @@ south-waterfront-accessways, height-opportunity-areas, special-building-height-c
 required-master-plan-sites, scenic-view-cones, south-waterfront-top-of-bank, required-building-lines,
 floor-area-transfer-sectors, street-plans, setbacks-plan-districts). Not wired in. Re-fetch with
 scripts/flats_fetch_area.py.
+- 2026-11-05 bound pd2c (9e8f708a + main) READ: 172/174 yellow->green right; 2 FALSE GREENS (through lots 1N2E27CC -05600, 1N2E27CD -02900, Gateway 33.526.340.C.1 limits parking toward both streets) -> encoder fixing (through lot = two faces), then re-bound.
