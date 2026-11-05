@@ -21,7 +21,13 @@ def normalized_tlid(tlid: Any) -> str:
 
 
 def lot_key(row: dict[str, Any]) -> tuple[str, str]:
-    return str(row["county"]).strip().casefold(), normalized_tlid(row["TLID"])
+    county = row.get("county")
+    if county is None and "county" not in row:
+        parts = str(row["jurisdiction"]).split("/")
+        if len(parts) < 3 or not parts[1]:
+            raise ValueError(f"cannot derive county from jurisdiction {row['jurisdiction']!r}")
+        county = parts[1]
+    return str(county).strip().casefold(), normalized_tlid(row["TLID"])
 
 
 def _slack(value: Any) -> float:
@@ -39,7 +45,7 @@ def render_report(assign_dir: Path) -> str:
     if len(designs) != 7:
         raise ValueError(f"expected seven active study designs, found {len(designs)}: {designs}")
     frame = pd.read_parquet(assign_dir / "lots.parquet")
-    required = {"county", "jurisdiction", "TLID", "design", "colour", "fit_slack_ft"}
+    required = {"jurisdiction", "TLID", "design", "colour", "fit_slack_ft"}
     missing = sorted(required - set(frame.columns))
     if missing:
         raise ValueError(f"{assign_dir / 'lots.parquet'} is missing columns: {missing}")
@@ -62,19 +68,18 @@ def render_report(assign_dir: Path) -> str:
         if prior != jurisdiction:
             raise ValueError(f"lot {key} has inconsistent jurisdictions: {prior!r}, {jurisdiction!r}")
 
-    incomplete = [key for key, rows in by_lot.items() if set(rows) != set(designs)]
-    if incomplete:
-        raise ValueError(f"{len(incomplete)} lots do not have rows for all seven designs; examples: {incomplete[:5]}")
-
     from io import StringIO
 
     out = StringIO()
     writer = csv.writer(out, lineterminator="\n")
     writer.writerow(("Design counts",))
-    writer.writerow(("design", "green", "yellow", "red", "unknown"))
+    writer.writerow(("design", "green", "yellow", "red", "unknown", "missing_lots"))
     for design in designs:
-        counts = Counter(rows[design]["_status"] for rows in by_lot.values())
-        writer.writerow((design, *(counts[name] for name in STATUS_NAMES)))
+        rows_with_design = [rows[design] for rows in by_lot.values() if design in rows]
+        counts = Counter(row["_status"] for row in rows_with_design)
+        writer.writerow(
+            (design, *(counts[name] for name in STATUS_NAMES), len(by_lot) - len(rows_with_design))
+        )
 
     writer.writerow(())
     writer.writerow(("Green gains/losses by jurisdiction",))
@@ -85,7 +90,11 @@ def render_report(assign_dir: Path) -> str:
             for jurisdiction in place_names:
                 gained = lost = 0
                 for key, rows in by_lot.items():
-                    if jurisdictions[key] != jurisdiction:
+                    if (
+                        jurisdictions[key] != jurisdiction
+                        or design not in rows
+                        or reference not in rows
+                    ):
                         continue
                     target_green = rows[design]["_status"] == "green"
                     reference_green = rows[reference]["_status"] == "green"
@@ -101,7 +110,7 @@ def render_report(assign_dir: Path) -> str:
     for rows in by_lot.values():
         best_counts[
             max(
-                designs,
+                rows,
                 key=lambda design: (
                     STATUS_RANK[rows[design]["_status"]],
                     _slack(rows[design]["fit_slack_ft"]),
