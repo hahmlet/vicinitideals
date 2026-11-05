@@ -23,3 +23,4 @@
 - Copilot round 2 (brief docs/copilot/briefs/max-front-setback-r2.txt) encoding the above; then bound (ahead of stall_w) + read.
 - RULED 11-04 (rulings.yaml 2026-11-04-south-hillsboro-active-use-streets-traced): "Trace the sketch, green with a flag". Encoder building flats/hillsboro-active-streets (off 586a7b9b): trace Figure 12.65.930-A, 10/15 ft max + 75/70% coverage on that frontage, illustrative-map flag. Not ruled: whether the same sketch places the Town/Village Center cores (MU-VTC stays 3-storey RED everywhere).
 - Round 2 committed 33911e99 + gaps 586a7b9b (pushed); bound max_front queued on 137 ahead of stall_w.
+- Coordinator 11-04: 12.65.130.A makes South Hillsboro max setback either/or (base zone OR 12.65.850), so the 10/15 ft adds no fail; the 75/70% Active Use frontage coverage binds (not under 130.A). Mixed-street corners YELLOW. Streets snapped to the regional layer on 137 (read-only). Figure: Municode PDF p889 (hash matches stored 12.65).
