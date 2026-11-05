@@ -243,6 +243,8 @@ OPEN = {
     "or/clackamas/_unincorporated 510.03 -> 510.04",
     "or/clackamas/_unincorporated 511.03 -> 511.04",
     "or/clackamas/_unincorporated 602.03 -> 602.04",
+    # 2026-11-05 side-yard chapters fetched (FOLLOWUPS 146).
+    "or/clackamas/_unincorporated 1005.09 -> 1009",
     # Estacada (FOLLOWUPS 53, 2026-10-07), each read when it was added. The
     # fence lines (16.08.010, and 16.60.010 from the C-2, CMU, R-3 and NCR
     # fence clauses) point at the clear vision rule, which the screen does not
