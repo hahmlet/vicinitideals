@@ -137,6 +137,7 @@ _LABELS: dict[str, str] = {
     "building_frontage_corner": "which street of a corner lot owes the building share",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
+    "parking_side_yard_allowed": "parking allowed in one side yard",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
@@ -1303,6 +1304,20 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef(
+        "parking_side_yard_allowed",
+        "enum",
+        "Where parking and vehicle access areas may use one required side "
+        "yard: `none` keeps today's full setbacks; `lane` lets only the drive "
+        "lane overlap one side setback; `lane_and_court` also lets the "
+        "parking court and stalls overlap that same side setback. The building "
+        "keeps both full side setbacks, and `parking_lot_line_buffer_ft` "
+        "remains between the parking and the lot line. "
+        "`parking_side_prohibited` and `parking_required_yard_prohibited` "
+        "always override this permission. Optional: absent means `none`.",
+        None,
+        choices=("none", "lane", "lane_and_court"),
+    ),
+    FieldDef(
         "parking_island_sqft_per_space",
         "area_sqft",
         "Planted island a code asks INSIDE a parking area, in square feet per "
@@ -1954,6 +1969,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "parking_lot_line_buffer_ft",
+        "parking_side_yard_allowed",
         "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",

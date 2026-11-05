@@ -88,6 +88,8 @@ from flats.score.paper import (
     paved,
     side_column,
     side_court,
+    side_yard_court_overlap_ft,
+    side_yard_lane_overlap_ft,
 )
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
@@ -2121,7 +2123,19 @@ def seats(
         seated = 0
         held: tuple[float, float, float] | None = None
         for n in range(across.stalls, across.most + 1):
-            ask = (max(side + across.lane_ft, n * across.stall_ft), deep + behind[n], over[n])
+            court_width = n * across.stall_ft
+            lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft)
+            court_overlap = side_yard_court_overlap_ft(
+                rules, court_width, lane_ft=across.lane_ft
+            )
+            ask = (
+                max(
+                    side + across.lane_ft - lane_overlap,
+                    court_width - court_overlap,
+                ),
+                deep + behind[n],
+                over[n],
+            )
             if ask != held and not fitter.holds(ask[0], ask[1], over_ft=ask[2]):
                 break
             held = ask
@@ -2132,7 +2146,10 @@ def seats(
                     design, rules, carved_rear_ft, alley, column=True, stalls=n
                 )
                 run = _court_over(design, rules, carved_rear_ft, alley, column=True, stalls=n)
-                if not fitter.holds(side + across.lane_ft, along, over_ft=run):
+                lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft)
+                if not fitter.holds(
+                    side + across.lane_ft - lane_overlap, along, over_ft=run
+                ):
                     break
                 seated = n
         for n in range(max(seated + 1, across.stalls), across.most + 1):
@@ -2142,8 +2159,9 @@ def seats(
             if row is None:
                 break
             extra = _beside_beyond(row, deep, rules, carved_rear_ft)
+            overlap = side_yard_court_overlap_ft(rules, row.band_ft)
             if math.isinf(extra) or not fitter.holds(
-                side + row.band_ft,
+                side + row.band_ft - overlap,
                 deep + extra,
                 angles=street_deg,
                 over_ft=_beside_over(row, deep, rules, carved_rear_ft),
@@ -2185,11 +2203,18 @@ def _searched_narrower_than(
         got = side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft)
         if got is None:
             return True
-        asked = side + got.band_ft
+        asked = side + got.band_ft - side_yard_court_overlap_ft(rules, got.band_ft)
     elif fit.column:
-        asked = side + across.lane_ft
+        asked = side + across.lane_ft - side_yard_lane_overlap_ft(rules, across.lane_ft)
     else:
-        asked = max(side + across.lane_ft, across.width_ft)
+        lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft)
+        court_overlap = side_yard_court_overlap_ft(
+            rules, across.width_ft, lane_ft=across.lane_ft
+        )
+        asked = max(
+            side + across.lane_ft - lane_overlap,
+            across.width_ft - court_overlap,
+        )
     searched = side if fit.across_ft is None else fit.across_ft
     return searched + 1e-9 < asked
 
@@ -2345,8 +2370,9 @@ def fit_for(
             design,
             axis_required=axis_required,
             placement=placement,
-            lane_ft=court.lane_ft,
-            court_width_ft=court.width_ft,
+            lane_ft=court.lane_ft - side_yard_lane_overlap_ft(rules, court.lane_ft),
+            court_width_ft=court.width_ft
+            - side_yard_court_overlap_ft(rules, court.width_ft, lane_ft=court.lane_ft),
             over_ft=_court_over(
                 design, rules, carved_rear_ft, alley, corner=corner, fix=court.fix
             ),
@@ -2369,7 +2395,8 @@ def fit_for(
             design,
             axis_required=axis_required,
             placement=placement,
-            lane_ft=across.lane_ft,
+            lane_ft=across.lane_ft
+            - side_yard_lane_overlap_ft(rules, across.lane_ft),
             court_width_ft=0.0,
             over_ft=_court_over(design, rules, carved_rear_ft, alley, column=True),
         )
@@ -2388,10 +2415,11 @@ def fit_for(
         else None
     )
     if court is not None:
+        overlap = side_yard_court_overlap_ft(rules, court.band_ft)
         got = fitter.fit_beside(
             design.footprint.width_ft,
             design.footprint.depth_ft,
-            band_ft=court.band_ft,
+            band_ft=court.band_ft - overlap,
             beyond=lambda deep: _beside_beyond(court, deep, rules, carved_rear_ft),
             angles=street_deg,
             allow_flip=not axis_required,
