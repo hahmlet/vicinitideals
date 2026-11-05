@@ -166,7 +166,11 @@ pytestmark = pytest.mark.unit
 # 467 -> 470 on merge: both of the above (3 Sandy + 12 Johnson Creek on 455).
 # 470 -> 471 stated on 2026-11-04: Beaverton MR's maximum front setback is
 # exempt because note 18 applies only where 60.05.15.6 governs.
-EXPECTED = {"stated": 471, "numeric": 185, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 471, "numeric": 188, "marker": 0, "dash": 2, "silent": 8}
+# 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
+# MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
+# ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
+# and D.6 as variants -- now that the 3-storey minimum no longer turns every MU-VTC lot RED.
 # 173 -> 185 numeric on 2026-11-04 (FOLLOWUPS 147, South Hillsboro Active Use Streets): Hillsboro
 # R-4.5, MR-1, MR-2 and MR-3 hold the building share of the frontage, its band and the ground
 # storey exempt off an Active Use Street -- 12.65.850.B applies the standards only to lots with

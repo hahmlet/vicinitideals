@@ -379,7 +379,10 @@ pytestmark = pytest.mark.unit
 # 286 -> 287 comments on 2026-10-31 (east-hillsboro-r24, FOLLOWUPS 138): county R-24's
 # East Hillsboro overlay states that Hillsboro's 12.50.210 usable open space is NOT
 # ENCODED on the three MR-2 lots, as in Hillsboro's own MR-2.
-EXPECTED = {"notes": 165, "comments": 288, "tests": 18}
+# 288 -> 287 comments on 2026-11-04 (hillsboro-active-streets round 2, FOLLOWUPS 147):
+# MU-VTC's minimum FAR (Table 12.24.360-1, 0.4 / 0.5) is encoded, held on the
+# 12.65.150.A doubt, so its NOT ENCODED comment goes.
+EXPECTED = {"notes": 165, "comments": 287, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

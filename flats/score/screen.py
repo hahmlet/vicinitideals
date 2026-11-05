@@ -224,12 +224,25 @@ RALEIGH_HILLS_ASC_U = "RALEIGH_HILLS_ASC_U"
 #: WITH A FLAG, below the yellow line (HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE,
 #: FOLLOWUPS 147).
 ACTIVE_USE_ILLUSTRATIVE = "ACTIVE_USE_ILLUSTRATIVE"
+#: South Hillsboro's Center Core Areas are traced off the same illustrative
+#: figure (Steph 2026-11-04, rulings.yaml
+#: 2026-11-04-south-hillsboro-centre-cores-traced): every lot whose
+#: standards turn on the traced core carries the flag, inside, outside or
+#: cut, and keeps its colour (FOLLOWUPS 147).
+CENTER_CORE_ILLUSTRATIVE = "CENTER_CORE_ILLUSTRATIVE"
 #: Site facts a traced area answers whose only rule here is a record below
 #: the yellow line: the fact holding raises the flag and moves no colour.
 AREA_FLAGS: dict[str, tuple[str, str]] = {
     "bethany_asc_1": ("BETHANY-ASC1-PD-CONDITIONS", BETHANY_ASC1_PD),
     "raleigh_hills_asc_u": ("RALEIGH-HILLS-ASC-U-CASE-74-96C", RALEIGH_HILLS_ASC_U),
     "hillsboro_active_use_street": ("HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE", ACTIVE_USE_ILLUSTRATIVE),
+}
+#: Site facts a traced illustrative boundary answers, flagged on every lot
+#: whose zone's standards turn on them -- answered either way or cut -- as a
+#: record below the yellow line: the boundary itself is the doubt, not the
+#: side of it a lot falls on.
+LEVER_FLAGS: dict[str, tuple[str, str]] = {
+    "hillsboro_center_core": ("HILLSBORO-CENTER-CORE-ILLUSTRATIVE", CENTER_CORE_ILLUSTRATIVE),
 }
 #: Site facts a traced area answers that send every application through a
 #: review deciding on more than measured standards, each with its citation:
@@ -3402,6 +3415,9 @@ def _account(
         for name, (code, by) in sorted(AREA_FLAGS.items()):
             if name in config.conditions:
                 flag(code, by, fact=name, source="drawn")
+    for name, (code, by) in sorted(LEVER_FLAGS.items()):
+        if name in rules.levers:
+            flag(code, by, fact=name, source="drawn")
     missing = approaches_missing(rules, design)
     if missing:
         flag(

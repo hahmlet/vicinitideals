@@ -508,6 +508,41 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "hillsboro_center_core",
+        "site_fact",
+        "The MU-VTC lot lies inside South Hillsboro's Town Center or Village "
+        "Center Core Area (12.65.030.A), where Table 12.24.360-1 asks a "
+        "residential building of 3 stories and a minimum FAR of 0.5, against 2 "
+        "stories and 0.4 outside. The cores are placed only by Figure "
+        "12.65.930-A, which 'illustrate[s] the size, location and orientation "
+        "of these areas'; the final boundary is set at the PUD. Traced from the "
+        "figure (Steph 2026-11-04, rulings.yaml "
+        "2026-11-04-south-hillsboro-centre-cores-traced); a lot the traced "
+        "line cuts is unanswered.",
+        evidence=(
+            "Hillsboro CDC Figure 12.65.930-A (PDF page 889), the stippled core "
+            "areas traced and snapped to RLIS centrelines -- held as Hillsboro's "
+            "drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "hillsboro_far_residential_uncounted",
+        "site_fact",
+        "The pod's floor area does NOT count toward the MU-VTC zone's minimum "
+        "floor area ratio, so the stated minimum is not the standard the lot "
+        "is held to (True is the qualifier reaching the lot; False lets the "
+        "stated 0.4 / 0.5 stand). 12.65.150.A: 'Mixed use buildings and free standing "
+        "residential buildings within an approved PUD in the MU-VTC zone may "
+        "be included in the FAR calculation', in a code whose minimum FAR is "
+        "'intended to achieve an increased intensity of non-residential "
+        "development' (12.50.150.A). Whether a free-standing four-unit building "
+        "counts outside an approved PUD -- and whether the lot lies in one -- "
+        "is not held: a doubt, so the minimum FAR is never certified unanswered.",
+        evidence="an approved South Hillsboro PUD covering the lot, or a reading of 12.65.150.A from Steph or Hillsboro Planning",
+        assume=None,
+    ),
+    ConditionDef(
         "no_alley_at_rear",
         "site_fact",
         "No alley runs the lot's whole rear line: the measured negation of "
@@ -1742,6 +1777,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "east_hillsboro_city_standards",
     "gladstone_parking_exception_area",
     "gladstone_town_center",
+    "hillsboro_center_core",
     "inside_mapped_use_area",
     "north_bethany_kaiser_main_street",
     "north_bethany_park_blocks",

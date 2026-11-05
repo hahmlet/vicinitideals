@@ -3008,8 +3008,38 @@ zones:
     # maximum dwelling-unit COUNTS for all mixed-use land north and south
     # of SE McInnis Street (L1375-L1386) -- a plan-area total, not a
     # per-lot rate. No minimum or maximum density is stated per lot.
-    # NOT ENCODED: minimum FAR 0.5 inside Center Cores, 0.4 outside
-    # (L1228-L1230); no field.
+    min_far:
+      # Table 12.24.360-1: "Minimum FAR - Inside Center Cores 0.5 - Outside
+      # Center Cores 0.4", the cores traced (`drawn_areas` center_cores,
+      # 2026-11-04). FAR is "enclosed gross floor area ... to the amount of
+      # net lot area" (12.01.500, 12.01/12.01.500.txt#L211); the pod's floor
+      # area over the whole lot is the lowest it can score, so a pass there is
+      # certain. Missed, it is a closer look, never a wall (`min_far`).
+      #
+      # A DOUBT, held: 12.65.150.A says "Mixed use buildings and free
+      # standing residential buildings within an approved PUD in the MU-VTC
+      # zone may be included in the FAR calculation", in a code whose minimum
+      # FAR is "intended to achieve an increased intensity of non-residential
+      # development" (12.50.150.A, 12.50/12.50.150.txt#L4). Read strictly, a
+      # free-standing four-unit building outside an approved PUD counts for
+      # nothing and misses any minimum; read loosely, residential floor area
+      # always counts (the 12.01.500 definition). Neither the PUD nor the
+      # reading is held, so the minimum is qualified on
+      # `hillsboro_far_residential_uncounted` (True = the strict reading
+      # reaches the lot) and never certified while it is unanswered. A question
+      # for Steph (FOLLOWUPS 147, 2026-11-04).
+      value: 0.4
+      cite: Hillsboro CDC Table 12.24.360-1, Minimum FAR, outside Center Cores
+      quote: "or/washington/hillsboro/12.24/12.24.360.txt#L4-L5,L25,L27"
+      variants:
+        - value: 0.5
+          when: [hillsboro_center_core]
+          cite: Hillsboro CDC Table 12.24.360-1, Minimum FAR, inside Center Cores
+          quote: "or/washington/hillsboro/12.24/12.24.360.txt#L4-L5,L25-L26"
+      qualified_by:
+        fact: hillsboro_far_residential_uncounted
+        cite: Hillsboro CDC 12.65.150.A, residential square footage counted toward FAR within an approved PUD in the MU-VTC zone
+        quote: "or/washington/hillsboro/12.65/12.65.150.txt#L1-L4"
     min_lot_width_ft:
       # Residential with front-yard garage access 22, rear-yard garage
       # access 18. The pod has no garage and the larger figure is held.
@@ -3047,21 +3077,104 @@ zones:
       # 2026-09-29 the pod's two stories pass outside a core. The cores
       # are placed by 12.65.030, whose Figure 12.65.930-A only
       # "illustrate[s] the size, location and orientation of these areas"
-      # (L106-L107): no lot line is drawn, so no lot can be shown to lie
-      # OUTSIDE a core. Looked for a drawn boundary 2026-09-30: the city's
-      # open data (services1.arcgis.com/eQ2vvbCvmxlIgo3a, LandUseGallery_Prod
-      # layers 5-6) holds a 2020 "SoHi" Town Center and a Village Center
-      # polygon of about 4 and 2 acres -- planning-gallery symbols, not the
-      # code's core areas, and the MU-VTC zone they sit in is ~59 acres. So
-      # the 3 binds everywhere -- the tighter reading -- until the city
-      # publishes the core boundaries.
-      value: 3
-      cite: Hillsboro CDC Table 12.24.360-1, Minimum Building Height, inside Center Cores, residential
-      quote: "or/washington/hillsboro/12.24/12.24.360.txt#L83,L117,L120,L129"
+      # (12.65.030.A.2). Until 2026-11-04 no lot could be shown to lie
+      # outside a core, so the 3 bound everywhere. RE-RULED 2026-11-04
+      # (Steph, rulings.yaml 2026-11-04-south-hillsboro-centre-cores-traced:
+      # "Trace the centres too ... Green with flag if outside, red with flag
+      # if inside"): the cores are traced off the figure (`drawn_areas`
+      # center_cores), so a lot outside takes the outside row's 2 and a lot
+      # inside the 3; a lot the traced line cuts is held out of GREEN on
+      # the fact, and every MU-VTC lot carries the illustrative-boundary
+      # flag. The city's open data still holds no core layer (2020 "SoHi"
+      # gallery polygons of about 4 and 2 acres, LandUseGallery_Prod layers
+      # 5-6, looked for 2026-09-30).
+      value: 2
+      cite: Hillsboro CDC Table 12.24.360-1, Minimum Building Height, outside Center Cores, residential
+      quote: "or/washington/hillsboro/12.24/12.24.360.txt#L83,L117,L130,L134"
+      variants:
+        - value: 3
+          when: [hillsboro_center_core]
+          cite: Hillsboro CDC Table 12.24.360-1, Minimum Building Height, inside Center Cores, residential
+          quote: "or/washington/hillsboro/12.24/12.24.360.txt#L83,L117,L120,L129"
     max_height_stories:
       value: 6
       cite: Hillsboro CDC Table 12.24.360-1, Maximum Building Height
       quote: "or/washington/hillsboro/12.24/12.24.360.txt#L83,L135"
+    building_frontage_min_pct:
+      # South Hillsboro Active Use Streets (FOLLOWUPS 147; Steph 2026-11-04,
+      # rulings.yaml 2026-11-04-south-hillsboro-active-use-streets-traced:
+      # trace the sketch, green with a flag). 12.65.850 holds "all
+      # development on lots with frontage on an Active Use Street" (850.B)
+      # to Table 12.65.850-1's minimum property line coverage along that
+      # frontage (D.1.b); off those streets neither the zone's tables nor
+      # 12.65 state a share (Hillsboro's code grepped whole for "property
+      # line coverage" and "building frontage": only 12.65.720, 800 and 850
+      # for South Hillsboro, each pointing at 850). The streets are traced
+      # off Figure 12.65.930-A (flats.geom.active_use); a lot on one only
+      # partly, or on an ordinary street or the other type as well, is held
+      # out of GREEN on the facts. 12.65.130.A's either/or is the maximum
+      # setback only: this zone's own 20 ft maximum stays the setback check
+      # (850's 10 or 15 ft is the nearer, so meeting it meets the 20), and
+      # the coverage counts the building within the table's maximum
+      # (building_frontage_band_ft below, the nearer of the two). Added to
+      # MU-VTC 2026-11-04 with the traced cores: a lot outside a core can
+      # now pass its height, so the Active Use standards decide it.
+      exempt: true
+      cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
+      quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      variants:
+        - value: 75
+          when: [hillsboro_active_use_1]
+          cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, minimum property line coverage 75%, met along Active Use Street frontages (12.65.850.D.1.b)
+          quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25,L27"
+        - value: 70
+          when: [hillsboro_active_use_2]
+          cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, minimum property line coverage 70%, met along Active Use Street frontages (12.65.850.D.1.b)
+          quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26-L27"
+    building_frontage_band_ft:
+      # The table pairs each coverage with its maximum setback, so the
+      # building counts toward the coverage only within it (Figure
+      # 12.65.850-A).
+      exempt: true
+      cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
+      quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      variants:
+        - value: 10
+          when: [hillsboro_active_use_1]
+          cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, maximum setback 10 feet
+          quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25"
+        - value: 15
+          when: [hillsboro_active_use_2]
+          cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, maximum setback 15 feet
+          quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26"
+    min_ground_story_ft:
+      # 12.65.850.D.6, Active Use 1 only: at least 60% of the street
+      # frontage of each primary building with an internal floor-to-ceiling
+      # height of at least 15 feet. The zone states no ground storey off
+      # those streets.
+      exempt: true
+      cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
+      quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      variants:
+        - value: 15
+          when: [hillsboro_active_use_1]
+          cite: Hillsboro CDC 12.65.850.D.6.a, at least 60% of Active Use 1 Street frontage of each primary building with an internal floor-to-ceiling height of at least 15 feet
+          quote: "or/washington/hillsboro/12.65/12.65.850.txt#L75-L77"
+    open_space_min_sqft:
+      # The zone table says "Minimum Useable Open Space Variable See Section
+      # 12.65.210", and 12.65.210 applies "the standards of Section 12.50.210
+      # and the applicable base zones". Table 12.50.210-1 puts MU-VTC in the
+      # MU-C column: "With residential = 200 sq. ft./du" on a project under
+      # three acres. Encoded 2026-11-04 (FOLLOWUPS 147), as MU-C is, once a
+      # lot outside a core could pass its height. Two doubts, both left on
+      # the larger figure: 12.50.210 F.1 sends quadplexes "in middle housing
+      # zones" to the single detached standards (3 percent of net acreage
+      # under three acres), and on a lot over about 26,700 square feet 3
+      # percent is more than 800 square feet; and the D exemption (middle
+      # housing near a park) is a relief on facts nobody measures.
+      per_dwelling: 200
+      cite: Hillsboro CDC Table 12.24.360-1 (see 12.65.210), 12.50.210 F.1 and Table 12.50.210-1, MU-C and MU-VTC with residential, project under 3.0 acres
+      quote: "or/washington/hillsboro/12.50/12.50.210.txt#L23-L25,L31-L35,L40,L44-L45"
     max_coverage_pct:
       exempt: true
       cite: Hillsboro CDC Table 12.24.360-1, Maximum Lot Coverage None
@@ -3092,8 +3205,12 @@ zones:
 
       DRAFT. Quadplex permitted, not on a flag lot (12.65.540). 7,000 sq ft
       quadplex lot, width 22, no depth; density is a plan-area count, not encoded; no minimum front or
-      side yard, front max 20, rear 10; minimum 3 stories (the Center Core
-      row, held everywhere), which the pod fails; maximum 6 stories.
+      side yard, front max 20, rear 10; minimum 3 stories inside a Center
+      Core (which the pod fails) and 2 outside, the cores traced off Figure
+      12.65.930-A (2026-11-04, FOLLOWUPS 147); minimum FAR 0.5 / 0.4, held on
+      the 12.65.150.A doubt; 200 sq ft of usable open space a unit; the
+      Active Use Street coverage on a traced Active Use frontage; maximum 6
+      stories.
   SCR-V:
     cite_default:
       cite: Hillsboro CDC 12.24.400 (SCR-V Station Community Residential - Village), Tables 12.24.420-1 and 12.24.460-1
@@ -4133,3 +4250,34 @@ zone_rulings:
       zone Table 12.01.200-1 lists as SCBP, Station Community Business Park,
       a light-rail zone (12.01.200.txt L33-L34,L68). One zone, two
       spellings; the block is SCBP.
+
+# South Hillsboro's Center Core Areas (FOLLOWUPS 147; Steph 2026-11-04,
+# rulings.yaml 2026-11-04-south-hillsboro-centre-cores-traced: "Trace the
+# centres too ... Green with flag if outside, red with flag if inside").
+drawn_areas:
+  center_cores:
+    condition: hillsboro_center_core
+    zones: [MU-VTC]
+    file: or/washington/hillsboro/center-cores.geojson
+    source: >-
+      Traced 2026-11-04 from Figure 12.65.930-A (PDF page 889, printed
+      CDC12.65:65, dated 12/9/2024), the only statement of where the Town
+      Center and Village Center Core Areas lie: the stippled core fill
+      outlined on the georeferenced figure and snapped to the RLIS street
+      centrelines the figure runs its edges along (SE Blanton St, SE
+      Cornelius Pass Rd, SE Butternut Creek Pkwy, SE Vermont St and the
+      Active Use streets). The Town Center's north and west edges follow no
+      street and are the figure's own lines. The city publishes no core
+      layer (its 2020 "SoHi" gallery polygons are planning symbols, not the
+      code's cores; looked for 2026-09-30). Drawn provenance in the file's
+      source block.
+    quote: "or/washington/hillsboro/12.65/12.65.030.txt#L2,L4-L6"
+    cite: Hillsboro CDC 12.65.030.A and Figure 12.65.930-A; Table 12.24.360-1 (inside / outside Center Cores)
+    note: >-
+      Asked of MU-VTC lots only (12.65.030.A.1 designates the cores "within
+      the Mixed-Use -- Village Town Center (MU-VTC) zone"). A lot at least
+      90 percent inside a traced core is in (3 stories, FAR 0.5), at most 10
+      percent is out (2 stories, FAR 0.4), and one the traced line cuts is
+      unanswered: held out of GREEN on hillsboro_center_core. The figure is
+      illustrative and the final boundary is set at the PUD, so every
+      MU-VTC lot, inside or out, carries HILLSBORO-CENTER-CORE-ILLUSTRATIVE.

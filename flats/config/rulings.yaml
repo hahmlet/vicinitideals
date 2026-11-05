@@ -2460,3 +2460,51 @@
     sites on Map 120-2 deeper than 160 ft; the 10 percent adjustment before
     2032 is not taken (no variances). FOLLOWUPS 68.
   source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md
+
+- id: 2026-11-04-south-hillsboro-active-use-streets-traced
+  kind: ruling
+  date: 2026-11-04
+  scope:
+    county: washington
+    city: hillsboro
+  question: >-
+    South Hillsboro's Active Use Streets (12.65.030(B), 12.65.850) carry a
+    10 ft (type 1) or 15 ft (type 2) maximum front setback and a minimum
+    property-line coverage, but the only map of them, Figure 12.65.930-A, is
+    marked "for illustrative purposes only" (final locations set through each
+    PUD). Trace the figure as the map, or hold every lot that might face one
+    out of GREEN?
+  ruling: '"Trace the sketch, green with a flag"'
+  effect: >-
+    The Active Use Streets are traced from Figure 12.65.930-A (drawn: true, as
+    with Gresham's downtown street-type map) and a lot fronting a traced
+    street is held to Table 12.65.850-1 on that frontage. A lot that passes
+    stays GREEN but carries a flag that the street map is illustrative and
+    the final street is set at the PUD. Lots off the traced streets are
+    screened as before. FOLLOWUPS 147.
+  source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
+- id: 2026-11-04-south-hillsboro-centre-cores-traced
+  kind: ruling
+  date: 2026-11-04
+  scope:
+    county: washington
+    city: hillsboro
+  question: >-
+    South Hillsboro's Town Center and Village Center Core Areas (12.65.030(A))
+    are placed only by Figure 12.65.930-A, marked "for illustrative purposes
+    only". Inside a core a residential building must be 3 storeys
+    (Table 12.24.360-1), outside it 2; with no drawn line the whole MU-VTC
+    zone is held to 3, so the 2-storey pod is RED everywhere there. Trace the
+    cores from the figure too?
+  ruling: >-
+    "Trace the centres too ... Green with flag if outside, red with flag if
+    inside"
+  effect: >-
+    The two core areas are traced from Figure 12.65.930-A (drawn: true). An
+    MU-VTC lot outside the traced cores takes the outside-core minimum height
+    (the pod passes it) and, if it passes everything else, is GREEN with a
+    flag that the core boundary is illustrative and set at the PUD; a lot
+    inside a traced core is RED on the 3-storey minimum, with the same flag.
+    Companion to 2026-11-04-south-hillsboro-active-use-streets-traced.
+    FOLLOWUPS 147.
+  source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
