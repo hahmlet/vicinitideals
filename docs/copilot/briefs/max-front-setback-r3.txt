@@ -16,4 +16,6 @@ TESTS: in flats/tests (the file this branch added for the maximum front check --
 
 Append "## Round 3 (2026-11-05)" to C:/Users/Steph/Repos/vicinitideals-worktrees/max-front-setback.handoff.md: each fix, the lots expected to move and which way, and the answer for finding 6.
 
+AUTHORISED EXCEPTION: lots in the zones carrying setback_front_max_ft may change colour as fixes 1-6 describe: GREEN -> YELLOW or RED (fixes 1, 2), RED -> YELLOW (fixes 3, 4, 6), RED -> GREEN only through fix 5's flush window or fix 6's corrected comparison. The Washington County TO:R24-40 and TO:R40-80 front minimum may be set to the printed "None" (375-10.txt L342) with its cite. Nothing else may change colour.
+
 MUST NOT CHANGE: street_chains behaviour for other checks; any setback value other than TO:R24-40/R40-80 front minimum; anything under app/.
