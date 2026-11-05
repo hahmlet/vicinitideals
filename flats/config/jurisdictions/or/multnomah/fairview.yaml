@@ -1174,6 +1174,26 @@ defaults:
     url: https://ecode360.com/50509420
     retrieved: '2026-08-27'
     quote: "or/multnomah/fairview/19.30.txt#L666-L676,L856-L858"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). Whole-folder grep: the only
+  # interior-side parking rules are the townhouse branch ("No off-street
+  # parking shall be allowed in the front yard or side yard of a
+  # townhouse", 19.30/19.30.050.txt#L117-L118) and cottage clusters
+  # (19.30.060 L166). 19.163.030.A asks that "All yards ... shall be
+  # landscaped" (19.163/19.163.030.txt#L97), which may keep a parking court
+  # out of the side yard -- unsure, so the court is not offered. The lane
+  # is silent: yellow at best.
+  parking_side_yard_allowed:
+    value: lane
+    cite: FMC 19.13.250, a yard is the area defined by setbacks; no section places a drive lane in or out of an interior side yard
+    url: https://ecode360.com/50509420
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.13/19.13.250.txt#L3-L4"
+  parking_side_yard_stated:
+    value: none
+    cite: FMC 19.163.030.A, all yards landscaped; no interior-side-yard parking permission stated
+    url: https://ecode360.com/50509420
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.163/19.163.030.txt#L97"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

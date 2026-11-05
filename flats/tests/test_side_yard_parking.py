@@ -251,15 +251,6 @@ def test_city_side_yard_values_resolve_from_yaml() -> None:
     assert west_linn.get(FIELD) is None
     assert west_linn.get("parking_side_yard_stated") is None
 
-    oregon_city = ruleset.resolve("or/clackamas/oregon-city", "R-10")
-    assert oregon_city.get(FIELD) is None
-    assert oregon_city.get("parking_side_yard_stated") is None
-    assert oregon_city.get("parking_lot_line_buffer_ft") is None
-
-    wood_village = ruleset.resolve("or/multnomah/wood-village", "LR 7.5")
-    assert wood_village.get(FIELD) is None
-    assert wood_village.get("parking_side_yard_stated") is None
-    assert wood_village.get("parking_lot_line_buffer_ft") is None
 
 
 @pytest.mark.parametrize(
@@ -321,3 +312,75 @@ def test_lane_overlap_keeps_both_building_side_setbacks_and_draws_the_lane_in_ya
         or drawing.lane.bounds[2] > drawing.room.bounds[2]
     )
     assert drawing.to_json()["lane"] is not None
+
+
+# Round 3 (2026-11-05): one real zone per tier, resolved from the YAML.
+# (jurisdiction, zone, conditions, allowed, stated, buffer, mode, stated mode)
+ROUND_3 = [
+    # STATED: the code names the side yard or states the parking's own setback.
+    ("or/clackamas/milwaukie", "R-MD", (), "lane_and_court", "lane_and_court", None,
+     "lane_and_court", "lane_and_court"),
+    ("or/multnomah/wood-village", "LR 7.5", (), "lane_and_court", "lane_and_court", 5,
+     "lane_and_court", "lane_and_court"),
+    ("or/multnomah/wood-village", "LR 7.5", ("unit_lots",), "lane_and_court",
+     "lane_and_court", None, "lane_and_court", "lane_and_court"),
+    ("or/washington/beaverton", "RMA", (), "lane_and_court", "lane_and_court", None,
+     "lane_and_court", "lane_and_court"),
+    ("or/clackamas/gladstone", "R5", (), "lane_and_court", "lane_and_court", 5,
+     "lane_and_court", "lane_and_court"),
+    ("or/clackamas/tualatin", "RML", (), "lane_and_court", "lane_and_court", 5,
+     "lane_and_court", "lane_and_court"),
+    # PART STATED: the lane is stated, the court silent.
+    ("or/clackamas/tualatin", "RL", (), "lane_and_court", "lane", 5,
+     "lane_and_court", "lane"),
+    # SILENT: allowed, nothing stated -- yellow at best.
+    ("or/clackamas/happy-valley", "R15", (), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    ("or/clackamas/oregon-city", "R-10", (), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/clackamas/wilsonville", "R", (), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    ("or/clackamas/estacada", "C-2", (), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    ("or/washington/tigard", "RES-A", (), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    ("or/washington/durham", "SDR", (), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    # SILENT LANE, the court kept out (forbidden or unsure).
+    ("or/washington/durham", "SDR", ("unit_lots",), "lane", "none", None, "lane", "none"),
+    ("or/multnomah/troutdale", "MU-1", (), "lane", "none", None, "lane", "none"),
+    ("or/multnomah/fairview", "R-6", (), "lane", "none", None, "lane", "none"),
+    # FORBIDDEN: the code's permission names other zones, or a ban wins.
+    ("or/washington/beaverton", "MR", (), "none", None, None, "none", "none"),
+    ("or/clackamas/oregon-city", "R-10", ("unit_lots",), "lane", "none", None, "none", "none"),
+    ("or/clackamas/milwaukie", "R-MD", ("unit_lots",), "lane", "lane", None, "none", "none"),
+]
+
+
+@pytest.fixture(scope="module")
+def corpus() -> RuleSet:
+    return RuleSet(load_rules())
+
+
+@pytest.mark.parametrize(
+    ("where", "zone", "held", "allowed", "stated", "buffer", "mode", "stated_mode"),
+    ROUND_3,
+    ids=[f"{w.rsplit('/', 1)[-1]}-{z}-{'TH' if h else 'QP'}" for w, z, h, *_ in ROUND_3],
+)
+def test_round_3_city_values_resolve_per_tier(
+    corpus: RuleSet,
+    where: str,
+    zone: str,
+    held: tuple[str, ...],
+    allowed: str,
+    stated: str | None,
+    buffer: float | None,
+    mode: str,
+    stated_mode: str,
+) -> None:
+    got = corpus.resolve(where, zone, held)
+    assert got.get(FIELD) == allowed
+    assert got.get("parking_side_yard_stated") == stated
+    assert got.get("parking_lot_line_buffer_ft") == buffer
+    assert side_yard_mode(got) == mode
+    assert side_yard_stated_mode(got) == stated_mode

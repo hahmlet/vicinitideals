@@ -1082,6 +1082,35 @@ defaults:
         when: [unit_lots]
         cite: MMC 19.505.5.F.2.a, off-street parking accessed on the back facade or located in the rear yard
         quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L297"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 19.607.1 reaches quadplexes and
+  # townhouses; its location list names only the right-of-way and the
+  # sidewalk, and its paving rule names "vehicle parking spaces and
+  # maneuvering areas located within a required ... side yard". Stated.
+  # 19.505.3.D.4.b (parking to the side of a dwelling, 50% of that side,
+  # L162-L163) is not reached: the court stays behind the building and a
+  # drive aisle alone is not counted. Townhouses: the court is rear only.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: MMC 19.607.1.B.1 bars parking only from the right-of-way and the sidewalk; 19.607.1.C.1.a paves parking spaces and maneuvering areas located within a required side yard
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L4,L18-L27,L42"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: MMC 19.505.5, townhouse parking accessed from the back facade or in the rear yard; 19.607.1.C.1.a maneuvering areas in a side yard
+        quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L297"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: MMC 19.607.1.C.1.a, parking spaces and maneuvering areas within a required side yard
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L42"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: MMC 19.607.1.C.1.a, maneuvering areas within a required side yard
+        quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L42"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

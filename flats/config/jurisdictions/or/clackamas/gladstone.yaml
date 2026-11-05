@@ -743,6 +743,23 @@ defaults:
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     retrieved: '2026-08-29'
     quote: "or/clackamas/gladstone/17.48/17.48.040.txt#L17,L27-L28"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 17.06.494 makes a side setback
+  # the distance from a side lot line to a structure
+  # (17.06.definitions.txt#L1309), and 17.48.040(2)(e) states the parking's
+  # own distance from the property line, five feet -- the strip already
+  # encoded above. Stated.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: GMC 17.48.040(2)(e), parking spaces at a parking lot's outer boundaries set back five feet from the property line
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48/17.48.040.txt#L3,L27-L28"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: GMC 17.48.040(2)(e), the parking's own five-foot setback from the property line
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48/17.48.040.txt#L3,L27-L28"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

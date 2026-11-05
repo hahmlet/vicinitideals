@@ -841,6 +841,25 @@ defaults:
         when: [unit_lots]
         cite: TDC 8.130.C.4.b.i, no off-street parking in the front yard or side yard of a townhouse
         quote: "or/multnomah/troutdale/8/8.130.txt#L84-L85"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 9.095.A holds a parking area
+  # abutting a residential district to the building setback (ruling
+  # 2026-11-05-troutdale-parking-abutting-setback), so the court keeps
+  # out of the side setback. The drive lane is not a named parking area
+  # and 1.020 keeps a side yard open "except as authorized"
+  # (1.020.definitions.txt#L876-L877): silent. Townhouses also carry the
+  # 8.130 side-yard ban (8/8.130.txt#L84-L85).
+  parking_side_yard_allowed:
+    value: lane
+    cite: TDC 9.095.A, parking areas abutting a residential district meet the building setback of the most restrictive adjoining residential district
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9/9.095.txt#L3"
+  parking_side_yard_stated:
+    value: none
+    cite: TDC 1.020 Yard, Side, unoccupied except as authorized; no authorization for a drive lane in an interior side yard
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/1.020.definitions.txt#L876-L877"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

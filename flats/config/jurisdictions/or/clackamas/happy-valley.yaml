@@ -848,6 +848,24 @@ defaults:
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
     quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521,L525-L527"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 16.43.030.E (no parking in
+  # landscaped yards; abutting-residential setback) is exempted for
+  # middle housing by 16.43.030.I, and 16.42.020 exempts it from most
+  # landscaping (16.42/16.42.020.txt#L4). Whole-folder grep finds the
+  # cottage-cluster rule (16.44.130) and nothing else for an interior
+  # side. Silent.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: HVMC 16.43.030.I, middle housing exempt from subsections C through F except F.1, so the parking-location rules of E do not reach the pod
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L507-L527,L681"
+  parking_side_yard_stated:
+    value: none
+    cite: HVMC 16.43.030.I exemption leaves no interior-side-yard parking rule for middle housing
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L681"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

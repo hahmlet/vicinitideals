@@ -775,6 +775,52 @@ defaults:
         when: [unit_lots]
         cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
         quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). No residential sentence puts parking
+  # or a drive lane in or out of an interior side yard: 17.16.060.D (the
+  # quadplex path) caps front-yard parking only, 17.16.060.E's "one or
+  # both sides of buildings" is the mixed-use and commercial zones, and
+  # Chapter 17.52 names no yard (grep of 17.52 for setback, yard and lot
+  # line: only the straddle sentence). 17.04.1510 keeps a yard "unoccupied
+  # or unobstructed from the ground upward", which speaks to structures, not
+  # to paving. Silent, so stated is none (ruling
+  # 2026-11-05-side-yard-parking-silent-codes). The townhouse path bans the
+  # court from the side yard (17.16.040.B.1, `parking_side_prohibited`).
+  #
+  # THE FIVE-FOOT PERIMETER. 17.52.060.C: "Parking lots and associated
+  # drive aisles shall include a five-foot wide landscaped buffer where the
+  # parking lot abuts the right-of-way and/or adjoining properties";
+  # 17.04.890 makes a parking lot "off-street parking spaces", and 17.52.010
+  # excludes only detached houses, duplexes, townhouses and cottage clusters,
+  # so a quadplex's court is one. Not the townhouse path: zero there.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: OCMC 17.04.1110, 17.04.1510 and 17.04.1535, a setback separates buildings or structures from a lot line and a yard stays open from the ground upward; 17.16.060.D caps front-yard parking only; no residential rule places parking in or out of an interior side yard
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L3048-L3051,L3846-L3850,L3877-L3881,L5418-L5426"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: OCMC 17.16.040.B.1, townhouse parking only off the back facade or in the rear yard; the drive lane is not named
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5347-L5349"
+  parking_side_yard_stated:
+    value: none
+    cite: OCMC 17.16.060.D and Chapter 17.52 state no interior-side-yard parking rule for a quadplex
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5418-L5426,L14791-L14797"
+    variants:
+      - value: none
+        when: [unit_lots]
+        cite: OCMC 17.16.040.B.1 names the rear yard and back facade only
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5347-L5349"
+  parking_lot_line_buffer_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: OCMC 17.52.060.C, five-foot landscaped buffer where a parking lot and its drive aisles abut adjoining properties; 17.52.010 applicability; 17.04.890 parking lot
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L2598-L2599,L14791-L14797,L15290-L15292,L15324-L15330"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

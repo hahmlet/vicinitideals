@@ -397,10 +397,20 @@
       "parking_front_prohibited": [
         "protected_water_feature"
       ],
+      "parking_lot_line_buffer_ft": [
+        "utility_easement"
+      ],
       "parking_maneuvering_max_width_ft": [
         "protected_water_feature"
       ],
       "parking_side_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_yard_allowed": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_side_yard_stated": [
         "protected_water_feature"
       ]
     },

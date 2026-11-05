@@ -1287,6 +1287,37 @@ defaults:
         when: [unit_lots]
         cite: Wilsonville Development Code 4.113(.14)E.5.c.i, no off-street parking in the front yard or side yard of a townhouse
         quote: "or/clackamas/wilsonville/4/4.113.txt#L416-L417"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). Whole-folder grep for parking or
+  # driveway beside yard, setback or lot line: the townhouse branch
+  # (4.113 L416-L417), multi-family's front-yard ban (4.113 L630, 5+
+  # units), cottage clusters, and the Town Center and Frog Pond setbacks
+  # (4.127, 4.132). Nothing for a quadplex at an interior side. 4.155.G
+  # asks a six-foot screen, no width (4.155.txt#L17-L18). JUDGEMENT:
+  # 4.001(368) keeps a yard "unobstructed other than by landscaping or
+  # permitted fences from the ground upward", which a reader could take
+  # to bar a parked car; held silent, which can only make yellow.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: WC 4.001(368) Yard, open space between a structure and a lot line; no section places quadplex parking in or out of an interior side yard
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4/4.001.txt#L704-L705,L709"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: WC 4.113, townhouse parking accessed from the back facade or in the rear yard, none in the front or side yard; the drive lane is not named
+        quote: "or/clackamas/wilsonville/4/4.113.txt#L415-L417"
+  parking_side_yard_stated:
+    value: none
+    cite: WC 4.113 and 4.155 state no interior-side-yard parking rule for a quadplex
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4/4.155.txt#L17-L18"
+    variants:
+      - value: none
+        when: [unit_lots]
+        cite: WC 4.113, the townhouse branch names the rear yard only
+        quote: "or/clackamas/wilsonville/4/4.113.txt#L415-L417"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
