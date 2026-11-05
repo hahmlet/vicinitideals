@@ -10,6 +10,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 from shapely.geometry import LineString, box
 
+import flats.geom.durham_apron as durham_apron
 from flats.geom.durham_apron import (
     DURHAM_APRON_MIN_CLEARANCE_FT,
     StreetNetwork,
@@ -277,6 +278,37 @@ def test_a_short_jog_does_not_make_a_phantom_nearby_junction() -> None:
 
     clearance = maximum_clearance_ft(edges, [0.0], streets, 30.0)
 
+    assert clearance is None
+
+
+def test_a_backtracking_frontage_jog_keeps_the_junction_station(monkeypatch) -> None:
+    edges = [
+        [X0 + 3.5, Y0, X0, Y0, "F"],
+        [X0, Y0, X0 + 3.5, Y0 + 0.1, "F"],
+        [X0 + 3.5, Y0 + 0.1, X0 + 196.5, Y0 + 0.1, "F"],
+        [X0 + 196.5, Y0 + 0.1, X0 + 196.5, Y0 + 100, "R"],
+        [X0 + 196.5, Y0 + 100, X0, Y0 + 100, "R"],
+        [X0, Y0 + 100, X0 + 3.5, Y0, "R"],
+    ]
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+            LineString(((X0 + 191.5, Y0 - 100), (X0 + 191.5, Y0 + 100))),
+        ],
+        ["front", "cross"],
+    )
+    stations: list[float] = []
+    best_clearance = durham_apron._best_clearance
+
+    def capture_station(length: float, events: list[float], width: float) -> float:
+        stations.extend(events)
+        return best_clearance(length, events, width)
+
+    monkeypatch.setattr(durham_apron, "_best_clearance", capture_station)
+
+    clearance = maximum_clearance_ft(edges, [0.0], streets, 30.0)
+
+    assert stations == pytest.approx([195.0], abs=1.0)
     assert clearance is None
 
 

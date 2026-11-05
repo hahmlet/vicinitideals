@@ -152,10 +152,30 @@ def maximum_clearance_ft(
             if edge.length_ft >= apron_width_ft
             or bearing_delta(edge.bearing_deg, chain_bearing) <= _PARALLEL_TOL_DEG
         ]
-        first = eligible_edges[0] if eligible_edges else max(
-            chain, key=lambda edge: edge.length_ft
-        )
-        last = eligible_edges[-1] if eligible_edges else first
+        chain_dx = chain[-1].x2 - chain[0].x1
+        chain_dy = chain[-1].y2 - chain[0].y1
+        forward_eligible_edges = [
+            edge
+            for edge in eligible_edges
+            if (edge.x2 - edge.x1) * chain_dx
+            + (edge.y2 - edge.y1) * chain_dy
+            > 0.0
+        ]
+        if forward_eligible_edges:
+            first = forward_eligible_edges[0]
+            last = forward_eligible_edges[-1]
+        else:
+            forward_edges = [
+                edge
+                for edge in chain
+                if (edge.x2 - edge.x1) * chain_dx
+                + (edge.y2 - edge.y1) * chain_dy
+                > 0.0
+            ]
+            if not forward_edges:
+                unknown = True
+                continue
+            first = last = max(forward_edges, key=lambda edge: edge.length_ft)
         first_ux = (first.x2 - first.x1) / first.length_ft
         first_uy = (first.y2 - first.y1) / first.length_ft
         last_ux = (last.x2 - last.x1) / last.length_ft
