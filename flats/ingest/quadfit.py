@@ -155,6 +155,11 @@ from flats.geom.named_street import (
 from flats.geom.one_street import one_street_column
 from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
+from flats.geom.durham_apron import (
+    DURHAM_APRON_MIN_CLEARANCE_FT,
+    load_street_network,
+    maximum_clearance_ft,
+)
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
@@ -564,6 +569,11 @@ def observed_facts(
             out[name] = out.get(name) or inside
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     out.update(observed_street_end(_finite(row.get("street_end_ft"))))
+    apron_clearance = _finite(row.get("durham_apron_clearance_ft"))
+    if _layer_id(row) == "or/washington/durham" and apron_clearance is not None:
+        out["driveway_near_intersection_100ft"] = (
+            apron_clearance < DURHAM_APRON_MIN_CLEARANCE_FT
+        )
     out.update(observed_named_street(_finite(row.get("named_street_ft"))))
     out.update(observed_avenue(_finite(row.get("avenue_ft"))))
     if isinstance(row.get("local_street_obs"), bool):
@@ -1844,6 +1854,7 @@ def lot_from_row(
         # Each of those streets' class rank, on the same chains in the same
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
+        durham_apron_clearance_ft=_finite(row.get("durham_apron_clearance_ft")),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -2009,6 +2020,59 @@ def iter_rows(
     yield from frame.to_dict("records")
 
 
+def _durham_apron_clearance_column(
+    rows: Sequence[Mapping[str, Any]], streets: Path
+) -> list[float | None]:
+    """Bound Durham's apron clearance using street widths held on each row."""
+    from flats.rules.loader import load_rules
+
+    network = load_street_network(streets)
+    if network is None:
+        return [None] * len(rows)
+    rules = RuleSet(load_rules())
+    out: list[float | None] = []
+    for row in rows:
+        if _layer_id(row) != "or/washington/durham":
+            out.append(None)
+            continue
+        resolved = rules.resolve(
+            "or/washington/durham",
+            str(row.get("zone") or ""),
+            ("multi_story", "attached_wall"),
+        )
+        width = _finite(resolved.get("driveway_min_width_two_way_ft"))
+        try:
+            bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
+        except (TypeError, ValueError):
+            bearings = ()
+        half_widths: dict[str, float] = {}
+        try:
+            width_rows = json.loads(row.get("road_widths_json") or "[]")
+        except (TypeError, ValueError):
+            width_rows = []
+        for width_row in width_rows:
+            if not isinstance(width_row, (list, tuple)) or len(width_row) < 7:
+                continue
+            half_width = _finite(width_row[4])
+            names = width_row[6]
+            if half_width is None or half_width < 0 or not isinstance(names, list):
+                continue
+            for name in names:
+                key = dedication.street_key(name)
+                if key:
+                    half_widths[key] = max(half_widths.get(key, 0.0), half_width)
+        out.append(
+            maximum_clearance_ft(
+                row.get("edges_json") or "[]",
+                bearings,
+                network,
+                width,
+                half_widths,
+            )
+        )
+    return out
+
+
 def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     """Answer ``local_street`` on every row a city's TSP map serves, in place
     (``local_street_obs``: True, False, or absent), and say how many. The
@@ -2016,7 +2080,8 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     :func:`flats.geom.street_class.street_ranks`) for the lowest-class
     driveway rule, and, where the layer's code makes a lot dedicate
     right-of-way, each street line's measured half-width
-    (``road_widths_json``, :func:`flats.geom.dedication.measure`).
+    (``road_widths_json``, :func:`flats.geom.dedication.measure`). Durham also
+    reads these widths to bound the driveway's curb-return distance.
 
     Read off the row's own s4 edges, so a lot screened a second way without
     its private drive (:func:`_sans_row`) carries the first reading -- where
@@ -2030,12 +2095,12 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     answered = 0
     for row in rows:
         layer_id = _layer_id(row)
-        measured = dedication.applies(layer_id)
+        measure_widths = dedication.applies(layer_id) or layer_id == "or/washington/durham"
         ranked = any(m.access and m.covers(layer_id) for m in maps)
-        if not measured and not ranked:
+        if not measure_widths and not ranked:
             continue
         edges = json.loads(row.get("edges_json") or "[]")
-        if measured:
+        if measure_widths:
             row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps))
         if not ranked:
             continue
@@ -4885,6 +4950,10 @@ def run(
     classed = with_local_street(rows, sources)
     if classed:
         log(f"bridge: street class read on {classed:,} lots")
+    if any(_layer_id(row) == "or/washington/durham" for row in rows):
+        clearances = _durham_apron_clearance_column(rows, roads)
+        for row, clearance in zip(rows, clearances, strict=True):
+            row["durham_apron_clearance_ft"] = clearance
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
