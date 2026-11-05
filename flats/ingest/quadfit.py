@@ -3454,6 +3454,11 @@ def strip_waived(
     return s if alt.signed.binds else alt
 
 
+FIRE_RETRY_MAX_PLACEMENTS = 24
+# Drawing every listed placement at once can exhaust a worker on a large lot.
+FIRE_RETRY_MAX_ACRES = 3.0
+
+
 def fire_checked(
     s: Screened,
     lot: QuadfitLot,
@@ -3485,11 +3490,12 @@ def fire_checked(
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
     build at. Where the selected placement misses only on fire reach, the bounded
-    fitting placements already produced for that angle are tried in
-    nearest-front preference order, subject to the stated maximum front
-    setback and only where no measured parking share would become stale; the
-    first that reaches and keeps every other check unchanged is kept. If none
-    passes, the existing other-angle
+    fitting placements already produced for that angle are ranked by the
+    building's distance from the front and at most
+    ``FIRE_RETRY_MAX_PLACEMENTS`` are drawn, only on lots no larger than
+    ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
+    measured-parking-share guard still apply; the first that reaches and keeps
+    every other check unchanged is kept. If none passes, the existing other-angle
     retry follows unchanged: the plan is drawn at the fit's other angles
     (:func:`_turned_for_fire`) and kept at one the hose reaches.
     ``green`` says the plan
@@ -3587,8 +3593,11 @@ def fire_checked(
         and fire_only(out.signed)
         and s.facts.parking_frontage_share_pct is None
         and s.facts.parking_frontage_run_ft is None
+        and s.facts.lot_sqft <= FIRE_RETRY_MAX_ACRES * 43_560
     ):
         from flats.ingest import flatter
+        from flats.designs.model import Orientation
+        from shapely import affinity
 
         max_front_ft = flatter._max_front_ft(out, _street_lines(lot))
         placements: list[Any] = []
@@ -3598,22 +3607,93 @@ def fire_checked(
         front_lines = MultiLineString(
             [[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in streets]
         )
-        alternatives: list[tuple[float, float, int, Any]] = []
         current = out.drawing or {}
         current_building = current.get("building")
-        for index, where in enumerate(placements):
+
+        def placement_rank(index: int) -> tuple[float, float, int]:
+            where = placements[index]
+            grid = getattr(where, "grid", None)
+            if grid is None:
+                return math.inf, 0.0, index
+
+            if s.fit.orientation is Orientation.depth_facing:
+                across_b, deep_b = s.design.footprint.depth_ft, s.design.footprint.width_ft
+            else:
+                across_b, deep_b = s.design.footprint.width_ft, s.design.footprint.depth_ft
+            across = s.fit.across_ft
+            res = grid.res
+            x0 = grid.minx + where.col * res
+            y0 = grid.miny + where.row * res
+            face, sign = (y0, 1.0) if where.low else (y0 + where.d_cells * res, -1.0)
+            bx0 = x0 if where.left else x0 + across - across_b
+
+            def band(left: float, right: float, start: float, end: float):
+                return Polygon(
+                    (
+                        (left, start),
+                        (right, start),
+                        (right, end),
+                        (left, end),
+                    )
+                )
+
+            def rounded(polygon: Any) -> Any:
+                return Polygon(
+                    [(round(x, 1), round(y, 1)) for x, y, *_ in polygon.exterior.coords]
+                )
+
+            building = rounded(
+                affinity.rotate(
+                    band(bx0, bx0 + across_b, face, face + sign * deep_b),
+                    grid.angle_deg,
+                    origin=grid.origin,
+                )
+            )
+            building_distance = building.distance(front_lines)
+
+            alley, corner = s.lot.facts.alley, s.lot.facts.corner
+            if s.fit.beside:
+                beside = side_court(
+                    s.design,
+                    s.rules,
+                    alley,
+                    corner=corner,
+                    frontage_ft=s.lot.facts.cap_frontage_ft,
+                )
+                if beside is None:
+                    return building_distance, 0.0, index
+                flank = beside.band_ft
+                lx0 = bx0 + across_b if where.left else bx0 - flank
+                court_local = band(
+                    lx0,
+                    lx0 + flank,
+                    face,
+                    face + sign * beside.length_ft,
+                )
+            else:
+                column = side_column(s.design, s.rules, alley) if s.fit.column else None
+                court_depth_ft = (
+                    column[0]
+                    if column is not None
+                    else court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
+                )
+                if court_depth_ft <= 0:
+                    return building_distance, 0.0, index
+                court_local = band(
+                    x0,
+                    x0 + across,
+                    face + sign * deep_b,
+                    face + sign * (deep_b + court_depth_ft),
+                )
+            court = rounded(affinity.rotate(court_local, grid.angle_deg, origin=grid.origin))
+            return building_distance, -court.distance(front_lines), index
+
+        ranked = sorted(range(len(placements)), key=placement_rank)
+        for index in ranked[:FIRE_RETRY_MAX_PLACEMENTS]:
+            where = placements[index]
             drawn = drawing_for(out, fitter, street=at, where=where)
             if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
                 continue
-            building = Polygon(drawn["building"])
-            court_ring = drawn.get("court")
-            court_distance = (
-                Polygon(court_ring).distance(front_lines) if court_ring else 0.0
-            )
-            alternatives.append(
-                (building.distance(front_lines), -court_distance, index, drawn)
-            )
-        for _, _, _, drawn in sorted(alternatives, key=lambda option: option[:3]):
             candidate = dataclasses.replace(out, drawing=drawn)
             candidate_route = measure(drawn)
             if candidate_route is None or candidate_route > limit:

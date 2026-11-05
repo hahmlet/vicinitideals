@@ -698,6 +698,86 @@ def test_fire_only_red_uses_the_next_fitting_placement_within_reach(
     )
 
 
+def test_fire_retry_draws_at_most_its_placement_cap(corpus, policies, monkeypatch) -> None:
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    base = _coloured(s, Triage.green)
+    ring = base.drawing["building"]
+    candidate = {
+        **base.drawing,
+        "building": [[x + 1.0, y] for x, y in ring],
+    }
+    drawn: list[object] = []
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            listing.extend(range(200))
+            return None
+        if where is not None:
+            drawn.append(where)
+            return candidate
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert len(drawn) == quadfit.FIRE_RETRY_MAX_PLACEMENTS == 24
+    assert got.drawing == base.drawing
+
+
+def test_fire_retry_skips_lots_over_its_acreage_limit(corpus, policies, monkeypatch) -> None:
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    large = dataclasses.replace(
+        s,
+        facts=dataclasses.replace(
+            s.facts, lot_sqft=quadfit.FIRE_RETRY_MAX_ACRES * 43_560 + 1
+        ),
+    )
+    base = _coloured(large, Triage.green)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+    no_retry = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1]
+    )
+
+    listings = 0
+    draws = 0
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        nonlocal listings, draws
+        if listing is not None:
+            listings += 1
+            return None
+        if where is not None:
+            draws += 1
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert listings == 0
+    assert draws == 0
+    assert got == no_retry
+
+
 @pytest.mark.parametrize(
     "candidate_front_ft, moved",
     [(30.0, False), (8.0, True)],
