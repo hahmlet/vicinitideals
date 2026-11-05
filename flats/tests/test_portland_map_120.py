@@ -428,6 +428,45 @@ def test_an_eastern_lot_is_charged_the_quarter_depth_yard(corpus) -> None:
     assert east.colour is flag_plan.Colour.green
 
 
+def test_the_court_may_run_into_the_eastern_yard_it_is_charged_for(corpus) -> None:
+    # 1S2E21CB -00600 (held bound pdx_map_120c, 2026-11-05): RM1, 60.04 x
+    # 150.1 ft, Eastern Pattern Area, not a corner. Its rear yard is 25% of
+    # 150.1 = 37.5 ft, half of whose area the court may use: 49 ft of court
+    # across a 60 ft lot may run 37.5 x 0.5 x 60.04 / 49 = 23 ft into it, so
+    # the building and the rest of the court need 80.01 ft of the ~102.6 ft
+    # envelope (the bridge's 1-degree search; this one's 30-degree search may
+    # pick another court). The court's ground was cut with the same 37.5 ft yard, so it
+    # could not run into the yard at all and the fit found 78 ft: RED on a lot
+    # whose live layout keeps ~290 sq ft of parking in a 1,125 sq ft cap.
+    lot = _lot(corpus, "RM1", 60.04, 150.1)
+    got = _screen(corpus, _answered(lot, **{FRONTAGE: False, EASTERN: True, "corner_lot": False}))
+    fit = _fit(got)
+    # The window reaches the envelope's rear (the court runs on into the
+    # yard); before the fix it stopped ~23 ft short (79.5 ft here, 78 ft on
+    # the real lot's 2-degree tilt).
+    assert fit.observed == pytest.approx(150.1 - 10 - 0.25 * 150.1, abs=1.0)
+    assert fit.observed >= fit.threshold
+    assert got.colour is flag_plan.Colour.green
+
+
+def test_the_eastern_court_ground_keeps_the_yard_only_off_the_cap(corpus, rules: RuleSet) -> None:
+    # The ground the court may stand on is the lot less the front and side
+    # yards: the EPA yard comes off the envelope, never off the ground (the
+    # cap is charged in behind_wall_ft instead), or the overlap the cap
+    # allows is charged twice.
+    from flats.ingest.quadfit import envelope_for
+
+    lot = _answered(_lot(corpus, "RM1", 60.04, 150.1), **{FRONTAGE: False, EASTERN: True, "corner_lot": False})
+    ordinary = rules.resolve(PORTLAND, "RM1", POD, lot={"lot_depth_ft": 150.1})
+    env = envelope_for(lot, ordinary, depth_rear_ft=0.25 * 150.1)
+    front = ordinary.values["setback_front_ft"].value
+    assert env.source == "flats"
+    _, gy0, _, gy1 = env.ground.bounds
+    _, ey0, _, ey1 = env.geom.bounds
+    assert ey1 - ey0 == pytest.approx(150.1 - front - 0.25 * 150.1, abs=0.1)
+    assert gy1 - gy0 == pytest.approx(150.1 - front, abs=0.1)
+
+
 def test_the_flags_read_in_plain_english() -> None:
     types = flag_plan.registry().types
     assert "Map 120-2" in types[fact_code(FRONTAGE)].description

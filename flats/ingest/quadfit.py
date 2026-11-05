@@ -1581,10 +1581,14 @@ def envelope_for(
     # The court may use the rear yard, less any planted strip the code keeps
     # between parking and the line (``parking_lot_line_buffer_ft``). A
     # separation 1005.02(L) draws off the top of a STRUCTURE does not reach
-    # the court.
+    # the court. Nor does Portland's Eastern Pattern Area depth yard
+    # (`depth_rear_ft`): the share of it the court may use is charged in
+    # `behind_wall_ft`, so cutting it off the ground too charged the overlap
+    # twice (held bound pdx_map_120c, 1S2E21CB -00600, 2026-11-05).
     open_rear = dataclasses.replace(
         setbacks,
         rear_ft=strip,
+        depth_rear_ft=None,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
         north_ft=0.0,
         east_west_ft=0.0,
