@@ -2548,3 +2548,18 @@
     it outright are measured as written; codes that forbid it stay as today.
     FOLLOWUPS 146.
   source: Steph 2026-11-05 (chat), docs/followups/146-parking-in-side-yards.md
+- id: 2026-11-05-troutdale-parking-abutting-setback
+  kind: ruling
+  date: 2026-11-05
+  scope: {county: multnomah, city: troutdale}
+  question: >-
+    TDC 9.095 A: parking areas abutting a residential district meet "the
+    building setback of the most restrictive adjoining residential zoning
+    district". Is that the quadplex/townhouse figure (10 ft rear, 3.130.B/C)
+    or the single-house figure (15-20 ft rear, 3.130.A)?
+  ruling: '"10 ft, flag the rest yellow"'
+  effect: >-
+    The parking court keeps the quadplex/townhouse figure. A lot that fits at
+    that figure but would not fit at the single-house figure is YELLOW with a
+    flag that the stricter reading is open, never GREEN. FOLLOWUPS 150.
+  source: Steph 2026-11-05 (chat), docs/followups/150-rear-court-sharing-check.md
