@@ -2235,6 +2235,10 @@ def _access_deg(here: QuadfitLot, front: float | None) -> tuple[float, ...]:
     )
 
 
+# FOLLOWUPS 94: real side lot lines can differ slightly in their measured bearings.
+TOWNHOUSE_SIDE_PARALLEL_DEG = 1.0
+
+
 def _townhouse_row_angles(
     lot: QuadfitLot,
     design: Design,
@@ -2262,12 +2266,23 @@ def _townhouse_row_angles(
 
     side_edges = lot.edges.of_class(EdgeClass.side)
     if len(side_edges) < 2 or any(
-        bearing_delta(side_edges[0].bearing_deg, edge.bearing_deg) > 1e-6
-        for edge in side_edges[1:]
+        bearing_delta(edge.bearing_deg, other.bearing_deg)
+        > TOWNHOUSE_SIDE_PARALLEL_DEG
+        for index, edge in enumerate(side_edges)
+        for other in side_edges[index + 1 :]
     ):
         return tuple(street_angles)
 
-    angle = normalize(side_edges[0].bearing_deg + 90.0)
+    bearing_x = sum(
+        edge.length_ft * math.cos(math.radians(2.0 * edge.bearing_deg))
+        for edge in side_edges
+    )
+    bearing_y = sum(
+        edge.length_ft * math.sin(math.radians(2.0 * edge.bearing_deg))
+        for edge in side_edges
+    )
+    side_bearing = normalize(math.degrees(math.atan2(bearing_y, bearing_x)) / 2.0)
+    angle = normalize(side_bearing + 90.0)
     delta = bearing_delta(angle, front)
     if delta <= 1e-6:
         return tuple(street_angles)
