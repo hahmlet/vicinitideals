@@ -27,7 +27,7 @@ import dataclasses
 import json
 
 import pytest
-from shapely.geometry import box, shape
+from shapely.geometry import Polygon, box, shape
 from shapely.ops import unary_union
 
 from flats.geom.drawn import load_area
@@ -201,6 +201,47 @@ def test_the_hold_kept_the_lots_a_street_rule_still_holds() -> None:
     src = json.loads((loader.AREAS_ROOT / FILES[HOLD]).read_text(encoding="utf-8"))["source"]
     assert "pd2c" in src["traced_by"] and "pd2c" in src["method"]
     assert "until pd2c" in src["inputs"]["far_b"]
+
+
+#: Two Gateway CM2 through lots (a street on two opposite faces) as the screen
+#: reads them (run 113 shapes, EPSG:2913). quadfit's front_bearings_deg gives a
+#: through lot ONE bearing for its two parallel street faces, so the batch B
+#: "two or more street faces" rule let them out of the hold and the held pd2c
+#: bound opened them GREEN, while 33.526.340.C.1 (33.526.txt#L762-L767) still
+#: limits parking toward both streets. Fix 2026-11-05: a through lot counts as
+#: two street faces, and these two are held again.
+THROUGH = {
+    "1N2E27CC -05600": [
+        (7675691.13, 687429.29), (7675690.76, 687419.3), (7675687.41, 687329.27), (7675598.45, 687332.06),
+        (7675598.82, 687342.01), (7675604.77, 687501.95), (7675605.15, 687511.94), (7675694.1, 687509.14),
+    ],
+    "1N2E27CD -02900": [
+        (7677432.51, 687272.82), (7677430.11, 687272.86), (7677357.83, 687275.19), (7677361.03, 687375.16),
+        (7677363.59, 687454.98), (7677394.85, 687453.96), (7677409.42, 687453.25), (7677423.97, 687452.06),
+        (7677433.2, 687451.01), (7677436.0, 687450.69), (7677438.09, 687450.45),
+    ],
+}
+#: Its neighbour, an ordinary one-street lot (street on the north face only):
+#: one of the 172 the reader ruled right, it stays out of the hold.
+ONE_STREET = [(7677361.03, 687375.16), (7677261.1, 687378.36), (7677263.66, 687458.23), (7677363.59, 687454.98)]
+
+
+@pytest.mark.parametrize("tlid", sorted(THROUGH))
+def test_a_gateway_through_lot_counts_two_street_faces_and_stays_held(tlid: str) -> None:
+    got = _facts("CM2", Polygon(THROUGH[tlid]))
+    assert got[GATEWAY] is True
+    assert got[HOLD] is True
+
+
+def test_a_one_street_gateway_lot_beside_it_is_out_of_the_hold() -> None:
+    got = _facts("CM2", Polygon(ONE_STREET))
+    assert got[GATEWAY] is True
+    assert got[HOLD] is False
+
+
+def test_the_hold_says_why_through_lots_came_back() -> None:
+    src = json.loads((loader.AREAS_ROOT / FILES[HOLD]).read_text(encoding="utf-8"))["source"]
+    assert "a through lot now counts as two street faces" in src["method"]
 
 
 # --- through the screen -------------------------------------------------------------
