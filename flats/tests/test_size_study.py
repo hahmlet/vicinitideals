@@ -220,3 +220,16 @@ def test_size_curve_refuses_to_guess_without_a_stored_frontier(tmp_path: Path) -
     assert "No design-independent fit frontier is stored" in message
     assert "fit_best_depth_ft" in message and "fit_required_ft" in message
     assert "does not carry the buildable-envelope geometry" in message
+
+
+def test_county_falls_back_to_layer_id_when_jurisdiction_is_a_bare_slug() -> None:
+    # 2026-11-05 trial on 137: some assign rows carry jurisdiction "portland"
+    # while layer_id keeps "or/multnomah/portland" (FOLLOWUPS 149).
+    from scripts.flats_size_report import lot_key
+    from scripts.flats_size_scope import _county
+
+    row = {"TLID": "1N1E22CD  -00300", "jurisdiction": "portland", "layer_id": "or/multnomah/portland"}
+    assert lot_key(row) == ("multnomah", "1N1E22CD00300")
+    assert _county(row) == "multnomah"
+    with pytest.raises(ValueError):
+        lot_key({"TLID": "X", "jurisdiction": "portland", "layer_id": ""})

@@ -23,10 +23,15 @@ def normalized_tlid(tlid: Any) -> str:
 def lot_key(row: dict[str, Any]) -> tuple[str, str]:
     county = row.get("county")
     if county is None and "county" not in row:
-        parts = str(row["jurisdiction"]).split("/")
-        if len(parts) < 3 or not parts[1]:
+        # Some assign rows carry a bare city slug ("portland") as jurisdiction;
+        # layer_id keeps the full "or/<county>/<city>" path, so fall back to it.
+        for source in ("jurisdiction", "layer_id"):
+            parts = str(row.get(source, "")).split("/")
+            if len(parts) >= 3 and parts[1]:
+                county = parts[1]
+                break
+        else:
             raise ValueError(f"cannot derive county from jurisdiction {row['jurisdiction']!r}")
-        county = parts[1]
     return str(county).strip().casefold(), normalized_tlid(row["TLID"])
 
 

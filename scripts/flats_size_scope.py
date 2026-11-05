@@ -47,10 +47,13 @@ def lot_key(county: Any, tlid: Any) -> tuple[str, str]:
 def _county(row: dict[str, Any]) -> str:
     if "county" in row:
         return str(row["county"])
-    parts = str(row["jurisdiction"]).split("/")
-    if len(parts) < 3 or not parts[1]:
-        raise ValueError(f"cannot derive county from jurisdiction {row['jurisdiction']!r}")
-    return parts[1]
+    # Some assign rows carry a bare city slug ("portland") as jurisdiction;
+    # layer_id keeps the full "or/<county>/<city>" path, so fall back to it.
+    for source in ("jurisdiction", "layer_id"):
+        parts = str(row.get(source, "")).split("/")
+        if len(parts) >= 3 and parts[1]:
+            return parts[1]
+    raise ValueError(f"cannot derive county from jurisdiction {row['jurisdiction']!r}")
 
 
 def _failing_checks(value: Any) -> set[str]:
