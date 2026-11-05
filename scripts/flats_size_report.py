@@ -31,7 +31,9 @@ def lot_key(row: dict[str, Any]) -> tuple[str, str]:
                 county = parts[1]
                 break
         else:
-            raise ValueError(f"cannot derive county from jurisdiction {row['jurisdiction']!r}")
+            # Lots never routed to a jurisdiction (JURISDICTION_NOT_ENCODED,
+            # county-roll reds) carry neither; TLIDs are unique across counties.
+            county = "unknown"
     return str(county).strip().casefold(), normalized_tlid(row["TLID"])
 
 

@@ -231,5 +231,6 @@ def test_county_falls_back_to_layer_id_when_jurisdiction_is_a_bare_slug() -> Non
     row = {"TLID": "1N1E22CD  -00300", "jurisdiction": "portland", "layer_id": "or/multnomah/portland"}
     assert lot_key(row) == ("multnomah", "1N1E22CD00300")
     assert _county(row) == "multnomah"
-    with pytest.raises(ValueError):
-        lot_key({"TLID": "X", "jurisdiction": "portland", "layer_id": ""})
+    # Never-routed lots (JURISDICTION_NOT_ENCODED) carry no path at all.
+    assert lot_key({"TLID": "X", "jurisdiction": None, "layer_id": None}) == ("unknown", "X")
+    assert _county({"TLID": "X", "jurisdiction": None, "layer_id": None}) == "unknown"

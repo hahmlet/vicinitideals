@@ -53,7 +53,8 @@ def _county(row: dict[str, Any]) -> str:
         parts = str(row.get(source, "")).split("/")
         if len(parts) >= 3 and parts[1]:
             return parts[1]
-    raise ValueError(f"cannot derive county from jurisdiction {row['jurisdiction']!r}")
+    # Lots never routed to a jurisdiction carry neither; TLIDs are unique.
+    return "unknown"
 
 
 def _failing_checks(value: Any) -> set[str]:
