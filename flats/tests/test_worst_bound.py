@@ -30,7 +30,15 @@ pytestmark = pytest.mark.unit
 
 W, D = 100.0, 200.0
 OFF_PLAN_DISTRICTS = dict.fromkeys(
-    ("pdx_johnson_creek_impervious", "pdx_johnson_creek_unmeasured", "pdx_special_building_setback"), False
+    (
+        "pdx_johnson_creek_impervious",
+        "pdx_johnson_creek_unmeasured",
+        "pdx_special_building_setback",
+        "pdx_glendoveer_lr75",
+        "pdx_plan_district_unmeasured",
+        "pdx_nw_residential_limited",
+    ),
+    False,
 )
 #: A 100 x 200 lot, street along the south edge: room for the pod and its
 #: court in every zone here, so what holds it out of GREEN is the flags.
