@@ -14,3 +14,8 @@
    orientation check and could cut many lots) or a preference; (c) a third design if wanted (e.g. 20 x 30
    or 18 ft homes) -- designs are versioned, adding one is a re-run of the fit stages, not a rebuild.
    Status: waiting on Steph.
+
+## Count (2026-11-04, live run 115, flats.lot_results checks->>colour per design)
+- 44,641 lots green with either design. 20,032 are green ONLY with pod56x36: 19,124 would go RED (80x25 red), 908 YELLOW. 22,015 green with both; 2,594 green only with pod80x25.
+- Lost by place: Portland 8,540 of 23,073; WashCo uninc 3,356/6,121; Clackamas uninc 2,338/4,931; Beaverton 1,784/2,911; Gresham 1,016/1,994; Oregon City 954/1,622; Tigard 399/720.
+- Steph: south-side orientation is theirs to handle, not a screen rule (dropped from (b)).
