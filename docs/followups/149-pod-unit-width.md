@@ -19,3 +19,9 @@
 - 44,641 lots green with either design. 20,032 are green ONLY with pod56x36: 19,124 would go RED (80x25 red), 908 YELLOW. 22,015 green with both; 2,594 green only with pod80x25.
 - Lost by place: Portland 8,540 of 23,073; WashCo uninc 3,356/6,121; Clackamas uninc 2,338/4,931; Beaverton 1,784/2,911; Gresham 1,016/1,994; Oregon City 954/1,622; Tigard 399/720.
 - Steph: south-side orientation is theirs to handle, not a screen rule (dropped from (b)).
+
+## Sizing study plan (Steph 2026-11-04: one-time, find the settled size, 500 sq ft/floor; target ~Mon 11-09)
+- Sizes 14..20 ft by 1 ft, depth = 500/width (15x33, 16x31, 17x29, 18x28, 19x26 new; 14x36, 20x25 exist).
+- Prep (Thu-Fri): fit-only curve from the stored width/depth frontier (minutes); 5 design files on a study branch (never the live map); audit code for two-design assumptions (e.g. flats/encode/height.py latest("pod56x36")); 1-2k-lot sample x 7 designs on 137 to measure time + memory (OOM trap); results stay on 137 as parquet + a per-width report, not loaded into the 114 DB; supervisor with resume.
+- 137 at 11-05 07:15Z: th_row3 done; queue durham_apron2, hv_cap2 (38k), pd2c, pdx_map_120c (28k), max_front (44k), fire_rp4, min_far, hb_active, stall_w (317k, 20-30 h) -> free ~Sat 11-07/Sun 11-08. Disk 22G free.
+- [Steph] OPEN: the two-week full re-screen is also due ~Mon 11-10. Separate runs (re-screen ~14 h then study ~1.5-2.5 days, results ~Thu) or one combined run (study sizes ride the re-screen, only the two current sizes go on the map; ~1 day sooner, a failure in the extras could delay the map refresh)?

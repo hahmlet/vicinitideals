@@ -138,7 +138,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
-149. [Claude] [Steph] **Pod unit width** -- 14 ft homes (pod56x36) too narrow for 2 bedrooms side by side; Steph asked thoughts only, no change; offered: count lots that pass only with it, south-facing rule?, third design [file](followups/149-pod-unit-width.md)
+149. [Claude] [Steph] **Pod unit width** -- 14 ft homes (pod56x36) too narrow for 2 bedrooms side by side; COUNTED: 20,032 of 44,641 greens need it; Steph: one-time sizing study 14-20 ft by 1 ft at 500 sq ft/floor ~Mon 11-09; prep plan in file; Q: separate from or combined with the 11-10 re-screen? [file](followups/149-pod-unit-width.md)
 128. [Claude] [Steph] [scan: NO] **CI takes an hour or more per push** -- BUILT 2026-10-30: pushes tested on LXC 138 ci-runner (~16 min), GitHub daily; open: quadfit 7 min, watch daily runs. [file](followups/128-ci-speed.md)
 127. [Claude] [Steph] [scan: NO] **Cut token spend** -- (a)(b)(e)(f) done (7 profiles d387fd7c, 2849fa9a; first real use next session); open: Copilot 11-01, reading pilot, local pre-sort. [file](followups/127-token-spend.md)
 126. [Claude] [Steph] [scan: NO -- display only] **A fast map of every lot, and a live 3D lot view** -- IDEA 2026-10-29; major feature, check in before any design. [file](followups/126-lot-map-3d.md)
