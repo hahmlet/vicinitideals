@@ -4,9 +4,9 @@
 **The Centers Main Street overlay ("m", PCC 33.415).** 33.415.310 sets a
 minimum floor area ratio on "all new development": 0.5 to 1 in the Inner
 Pattern Area, 0.25 to 1 in the Eastern and Western Pattern Areas (Map 415-1).
-The pod's floor area is fixed (4,032 sf for the 56 x 36 pod, two storeys), so
-past 8,064 sf of lot in the Inner area, or 16,128 sf in the Eastern and
-Western, the pod is too little building and the lot is RED. The code names no
+A missed minimum is RED only where the setbacks-resolved ground clearly cannot
+hold the number of pod footprints needed; room or unmeasured ground holds it
+YELLOW (Steph 2026-11-04, ``2026-11-04-min-floor-area-more-pods``). The code names no
 minimum for the River and Central City pattern areas, and states none: silence
 is none. A lot no pattern area answers takes the Inner 0.5, the worst case.
 A lot only partly in the overlay is measured on that part: PCC 33.700.070.F,
@@ -131,6 +131,7 @@ from pathlib import Path
 from typing import Any
 
 from flats.score import flags as flag_plan
+from flats.score.more_pods import clearly_cannot_fit
 
 MAIN_STREET_KEY = "overlay_pdx_main_street"
 PATTERN_KEY = "pdx_pattern_areas"
@@ -1151,11 +1152,11 @@ def flags_for(
 
 
 def checked(s: Any, reading: Reading | None) -> Any:
-    """``s`` (a bridge ``Screened``) RED where the reading binds its design
-    and YELLOW (from GREEN) where it leaves a question at the yellow line: a
-    bind or a flag each, the reason beside it, as screened and as signed.
+    """Apply the reading's binds and flags, including the minimum-FAR room test.
+
     Adds nothing twice, so a screen that runs again over its own answer is
-    unchanged."""
+    unchanged.
+    """
     if reading is None:
         return s
     design = s.design
@@ -1168,6 +1169,31 @@ def checked(s: Any, reading: Reading | None) -> Any:
         zone=zone,
         height_ft=design.height_ft,
     )
+    min_far_bind = next((b for b in binds if b.check == MIN_FAR_CHECK), None)
+    min_far_flag = None
+    if min_far_bind is not None and not _min_far_cannot_fit(
+        s, reading, min_far_bind, design.ground_sqft * design.stories
+    ):
+        binds = tuple(b for b in binds if b.check != MIN_FAR_CHECK)
+        from flats.score.screen import CLOSER_LOOK_MIN_FAR
+
+        assert min_far_bind.observed is not None and min_far_bind.threshold is not None
+        rules = s.rules
+        min_far_flag = flag_plan.make(
+            "FAR-MIN",
+            CLOSER_LOOK_MIN_FAR,
+            {
+                "jurisdiction": rules.jurisdiction,
+                "zone": rules.zone or "(none)",
+                "lot": flag_plan.LOT,
+                "design": design.key,
+            },
+            bounds=(
+                min(min_far_bind.observed, min_far_bind.threshold),
+                max(min_far_bind.observed, min_far_bind.threshold),
+            ),
+            source=min_far_bind.source,
+        )
     rules = getattr(s, "rules", None)
     flags = flags_for(
         reading,
@@ -1180,6 +1206,8 @@ def checked(s: Any, reading: Reading | None) -> Any:
         edges=getattr(s.lot, "edges", None),
         drawing=s.drawing,
     )
+    if min_far_flag is not None:
+        flags = (*flags, min_far_flag)
     if not binds and not flags:
         return s
     from flats.score.screen import Triage
@@ -1213,6 +1241,29 @@ def checked(s: Any, reading: Reading | None) -> Any:
         )
 
     return dataclasses.replace(s, screening=apply(s.screening), signed=apply(s.signed))
+
+
+def _min_far_cannot_fit(s: Any, reading: Reading, bind: flag_plan.Bind, floor_sqft: float) -> bool:
+    """Whether the overlay's resolved buildable ground cannot hold its pods."""
+    envelope = getattr(s, "envelope", None)
+    if envelope is None or envelope.source != "flats" or envelope.geom is None:
+        return False
+    part = reading.main_street_part
+    buildable = envelope.sqft
+    if part < 1.0:
+        if not reading.main_street_part_wkb:
+            return False
+        import shapely
+
+        overlay_part = shapely.from_wkb(reading.main_street_part_wkb)
+        buildable = float(envelope.geom.intersection(overlay_part).area)
+    measured = s.lot.facts.lot_sqft * part
+    if bind.threshold is None or measured <= 0:
+        return False
+    footprint = float(s.design.footprint.width_ft) * float(s.design.footprint.depth_ft)
+    # Each further pod is counted whole: the one drawn may stand partly off the
+    # overlay, but the pods the count imagines stand on the overlay part.
+    return clearly_cannot_fit(bind.threshold * measured, floor_sqft, footprint, buildable)
 
 
 __all__ = [

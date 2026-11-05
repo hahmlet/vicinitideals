@@ -2288,7 +2288,11 @@ def _screen_on(
         here = dataclasses.replace(
             here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=run)
         )
-    facts = dataclasses.replace(here.facts, envelope_rear_ft=env.rear_cut_ft)
+    facts = dataclasses.replace(
+        here.facts,
+        envelope_rear_ft=env.rear_cut_ft,
+        buildable_area_sqft=env.sqft if env.source == "flats" else None,
+    )
     fit = fit_for(
         fitters[key],
         design,

@@ -89,6 +89,7 @@ from flats.score.paper import (
     side_column,
     side_court,
 )
+from flats.score.more_pods import clearly_cannot_fit
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -143,14 +144,12 @@ USE_PROHIBITED = "USE_PROHIBITED"
 CLOSER_LOOK_MIN_DENSITY = "CLOSER_LOOK_MIN_DENSITY"
 #: The checks a minimum density is measured by.
 MIN_DENSITY_CHECKS: frozenset[str] = frozenset({"min_density_du_per_acre", "min_units"})
-#: The lot misses a MINIMUM floor area ratio (Canby DCO 16.41.050 Table 3):
-#: the four homes are less building than the code asks of a lot this size.
-#: A bigger building could meet it, so it is never a wall; unlike a density
-#: floor it holds the lot at YELLOW (coordinator, districts chunk 5,
-#: 2026-10-29: "lots that fall short go YELLOW with a plain flag").
+#: The lot misses a minimum floor area ratio. More pods may meet it; the miss
+#: is RED only where measured buildable ground cannot hold the needed footprints
+#: (Steph 2026-11-04, 2026-11-04-min-floor-area-more-pods).
 CLOSER_LOOK_MIN_FAR = "CLOSER_LOOK_MIN_FAR"
-#: Floors on the AMOUNT of building a lot carries: missed, a closer look,
-#: never a bind.
+#: Minimum amount-of-building checks stay soft unless the more-pods ruling
+#: proves a missed minimum FAR cannot physically fit.
 SOFT_FLOOR_CHECKS: frozenset[str] = MIN_DENSITY_CHECKS | {"min_far"}
 
 #: The lot standards each `lot_of_record_relief` lets an existing lot of
@@ -696,6 +695,10 @@ class LotFacts:
     #: measured the lot, and a key missing where that one deduction was not:
     #: either way a rate on a net acre keeps to the gross-area bound.
     net_deductions: Mapping[str, float] | None = None
+    #: Area in the setbacks-resolved envelope; None where nobody measured it.
+    #: Used only for the minimum-FAR more-pods test, as an area-only upper
+    #: bound that ignores parking, separation and shape.
+    buildable_area_sqft: float | None = None
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -1620,6 +1623,22 @@ def _checks(
     return out, unchecked, unmeasured
 
 
+def _min_far_cannot_fit(checks: Sequence[CheckResult], lot: LotFacts, design: Design) -> bool:
+    """Whether the missed FAR needs more pod footprints than measured ground."""
+    miss = next(
+        (c for c in checks if c.check == "min_far" and c.verdict is Verdict.fails),
+        None,
+    )
+    pod_floor = design.ground_sqft * design.stories
+    if miss is None or miss.observed <= 0 or miss.threshold <= 0:
+        return False
+    required = miss.threshold * pod_floor / miss.observed
+    footprint = float(design.footprint.width_ft) * float(design.footprint.depth_ft)
+    return clearly_cannot_fit(
+        required, pod_floor, footprint, lot.buildable_area_sqft
+    )
+
+
 def approaches_missing(rules: ZoneResolution, design: Design) -> int:
     """How many driveway approaches the code asks beyond the one the plan
     draws: ``ceil(units / driveway_units_per_approach) - PLAN_APPROACHES``,
@@ -2462,6 +2481,7 @@ def screen(
     where = rules.jurisdiction
     across = court_across(design, rules, lot.alley, corner=lot.corner)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
+    min_far_no_room = _min_far_cannot_fit(checks, lot, design)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
     worst_check = dominant(checks)
@@ -2548,6 +2568,7 @@ def screen(
         fit_slack_ft=common["fit_slack_ft"],
         optimistic=optimistic,
         warnings=common["warnings"],
+        min_far_no_room=min_far_no_room,
     )
 
     if use_blocked and use_path is not None and not use_path.available:
@@ -2610,9 +2631,12 @@ def screen(
     # offers around it (Steph, 2026-10-02): the lot is big enough that the
     # city wants more homes on it than four, which is a closer look -- a
     # bigger plan, or a split (FOLLOWUPS 31) -- and not a lot to throw away.
-    walls = [o for o in outcomes if o.check not in SOFT_FLOOR_CHECKS]
+    walls = [
+        o for o in outcomes
+        if o.check not in SOFT_FLOOR_CHECKS or (o.check == "min_far" and min_far_no_room)
+    ]
     closer = (CLOSER_LOOK_MIN_DENSITY,) if any(o.check in MIN_DENSITY_CHECKS for o in outcomes) else ()
-    if any(o.check == "min_far" for o in outcomes):
+    if any(o.check == "min_far" for o in outcomes) and not min_far_no_room:
         closer = (*closer, CLOSER_LOOK_MIN_FAR)
     # A pad on a grade between Steph's two lines: buildable, at a price.
     if _slope_closer(lot):
@@ -2629,6 +2653,9 @@ def screen(
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
+
+    if min_far_no_room:
+        return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -3120,6 +3147,7 @@ def _account(
     fit_slack_ft: float | None,
     optimistic: Sequence[str],
     warnings: Sequence[str],
+    min_far_no_room: bool,
 ) -> tuple[tuple[Flag, ...], tuple[Bind, ...]]:
     """The flag plan's record of one screening: every unknown as a flag and
     every confirmed miss as a bind (Steph's flag plan, 2026-10-02).
@@ -3196,7 +3224,11 @@ def _account(
     # from the fire marshal would lift it -- so only where the hose is the
     # one bind (a minimum density missed is a flag, never a bind).
     curb_route = lot.fire_route_curb_ft
-    walls = [c for c in checks if c.verdict is Verdict.fails and c.check not in SOFT_FLOOR_CHECKS]
+    walls = [
+        c for c in checks
+        if c.verdict is Verdict.fails
+        and (c.check not in SOFT_FLOOR_CHECKS or (c.check == "min_far" and min_far_no_room))
+    ]
     if curb_route is not None and use_path is None and [c.check for c in walls] == ["fire_access_ft"]:
         (c,) = walls
         if curb_route <= c.threshold:
@@ -3207,7 +3239,7 @@ def _account(
         if c.check in MIN_DENSITY_CHECKS and c.verdict is Verdict.fails:
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
             flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
-        if c.check == "min_far" and c.verdict is Verdict.fails:
+        if c.check == "min_far" and c.verdict is Verdict.fails and not min_far_no_room:
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
             flag("FAR-MIN", CLOSER_LOOK_MIN_FAR, bounds=span, source=_cite(rules, "min_far"))
     if _slope_closer(lot):
@@ -3263,7 +3295,10 @@ def _account(
     if rules.trusted:
         paths = {o.check: o for o in outcomes}
         for c in checks:
-            if c.verdict is not Verdict.fails or c.check in SOFT_FLOOR_CHECKS:
+            if c.verdict is not Verdict.fails or (
+                c.check in SOFT_FLOOR_CHECKS
+                and not (c.check == "min_far" and min_far_no_room)
+            ):
                 continue
             o = paths.get(c.check)
             binds.append(
