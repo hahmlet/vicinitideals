@@ -912,6 +912,17 @@ def _driveway_cap_frontages(rules: ZoneResolution, lot: LotFacts) -> tuple[float
         for index, length in enumerate(lot.street_lines_ft)
         if length > 0.0
     )
+    # The lines a private drive makes a street of, each already held to its
+    # own reading's frontage (flats.ingest.quadfit.drive_lines_ft). On a
+    # reading without the doubtful drive lines they are the most the drive's
+    # frontage can be, and stand beside the measured lines as alternatives:
+    # a larger alternative can only turn a miss into a question, never a pass
+    # (held bound hv_cap2, 22E01DD03100, 2026-11-05).
+    private_lines = (
+        tuple(length for length in lot.private_drive_lines_ft if length > 0.0)
+        if rules.jurisdiction in _PRIVATE_DRIVE_CAP_JURISDICTIONS
+        else ()
+    )
     if lines:
         ranks = lot.street_line_ranks
         if (
@@ -925,14 +936,12 @@ def _driveway_cap_frontages(rules: ZoneResolution, lot: LotFacts) -> tuple[float
                 for index, length in lines
                 if ranks[index] == lowest
             )
-        return tuple(length for _, length in lines)
+        return tuple(length for _, length in lines) + private_lines
 
-    if rules.jurisdiction in _PRIVATE_DRIVE_CAP_JURISDICTIONS:
-        private_lines = tuple(
-            bounded(length) for length in lot.private_drive_lines_ft if length > 0.0
-        )
-        if private_lines:
-            return private_lines
+    # Alone, a drive line is the line the cap is checked on and can pass it,
+    # so it stays held to the lot's frontage as before.
+    if private_lines:
+        return tuple(bounded(length) for length in private_lines)
 
     frontage = lot.cap_frontage_ft
     if frontage is None:
