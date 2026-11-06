@@ -14,3 +14,5 @@
      the depth shortfall at that width exceeds the tolerance.
    - Test: a Fit with width_short_ft 0.5 and a 30 ft depth miss at the narrower width -> RED, not FIT-TIGHT.
    Status: found, not started. Ships separately from 150 (fix-forward).
+
+Status 11-06: BUILT a68b2ec7, flats/width-short-depth, targeted tests pass. A lot too shallow for the building at any width already scores a full miss (short = whole width); this adds the depth check for lots that hold the building but not the court. Merge after a bound, or with the ~11-10 re-screen. Read the moves.
