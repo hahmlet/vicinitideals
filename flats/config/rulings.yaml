@@ -2531,23 +2531,35 @@
     Companion to 2026-11-04-south-hillsboro-active-use-streets-traced.
     FOLLOWUPS 147.
   source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
-
 - id: 2026-11-05-side-yard-parking-silent-codes
   kind: ruling
   date: 2026-11-05
   scope: {}
   question: >-
-    When the code neither allows nor forbids parking in an interior side yard,
-    may a lot whose fit depends on using that yard be GREEN?
-  ruling: >-
-    "A SILENT code lets the lane/court use one side setback, but a lot that
-    fits ONLY that way is YELLOW + flag, never GREEN."
+    Where a city's code says nothing either way about a driveway or parking
+    sitting in a required side setback (e.g. Tigard, West Linn, Sherwood,
+    Clackamas unincorporated, Estacada), does the screen let the pod's drive
+    lane and parking court use the side setback?
+  ruling: '"Middle option"'
   effect: >-
-    `parking_side_yard_allowed` records the reach used for fit, while
-    `parking_side_yard_stated` records the reach the code actually states.
-    Where a fit fails at the stated reach and clears only at the allowed
-    reach, the lot is YELLOW with SIDE-YARD-PARKING-SILENT. A prohibition
-    overrides both fields. Only an interior side lot line is used; corner
-    lots do not take side-yard reach.
-  source: Steph 2026-11-05 (side-yard-parking.readings.md, user-provided decision)
-  encoded_in: [flats/rules/fields.py, flats/score/paper.py, flats/score/screen.py, flats/config/flags.yaml]
+    In a silent code the lane and court may use one side setback, but a lot
+    that fits ONLY because of it is YELLOW with a flag (parking in a side
+    setback; the code is silent), never GREEN on that basis. Codes that allow
+    it outright are measured as written; codes that forbid it stay as today.
+    FOLLOWUPS 146.
+  source: Steph 2026-11-05 (chat), docs/followups/146-parking-in-side-yards.md
+- id: 2026-11-05-troutdale-parking-abutting-setback
+  kind: ruling
+  date: 2026-11-05
+  scope: {county: multnomah, city: troutdale}
+  question: >-
+    TDC 9.095 A: parking areas abutting a residential district meet "the
+    building setback of the most restrictive adjoining residential zoning
+    district". Is that the quadplex/townhouse figure (10 ft rear, 3.130.B/C)
+    or the single-house figure (15-20 ft rear, 3.130.A)?
+  ruling: '"10 ft, flag the rest yellow"'
+  effect: >-
+    The parking court keeps the quadplex/townhouse figure. A lot that fits at
+    that figure but would not fit at the single-house figure is YELLOW with a
+    flag that the stricter reading is open, never GREEN. FOLLOWUPS 150.
+  source: Steph 2026-11-05 (chat), docs/followups/150-rear-court-sharing-check.md

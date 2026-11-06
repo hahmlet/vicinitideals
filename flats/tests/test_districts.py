@@ -707,6 +707,25 @@ RULINGS: dict[str, dict[str, str]] = {
         "ORS 527": "not-a-zone: the Forest Practices Act, named in 342/342-1.txt#L9.",
         "SDC": "not-a-zone: system development charge, 501/501-10.txt#L117.",
         "TDT": "not-a-zone: Transportation Development Tax, 501/501-2.txt#L11.",
+        # 2026-11-05 side-yard chapters fetched (FOLLOWUPS 146): CDC 411-5's
+        # matrix surfaced combined zoning labels and a category heading.
+        "R-9/R-15": (
+            "not-a-zone: a combined matrix label in CDC 411-5, not a single "
+            "zoning designation (cdc.411.screening-buffering.txt#L69, L88, L108)."
+        ),
+        "NC/OC": (
+            "not-a-zone: a combined matrix label in CDC 411-5, not a single "
+            "zoning designation (cdc.411.screening-buffering.txt#L73, L114)."
+        ),
+        "CBD/GC": (
+            "not-a-zone: a combined matrix label in CDC 411-5, not a single "
+            "zoning designation (cdc.411.screening-buffering.txt#L76, L118)."
+        ),
+        "OTHER1": (
+            "not-a-zone: a category heading in the CDC 411-5 screening and "
+            "buffering matrix, not a zoning designation "
+            "(cdc.411.screening-buffering.txt#L85)."
+        ),
         # All 42 districts on the county's zoning layer are encoded as zone
         # blocks (2026-09-29, draft); what the harvest still prints is below.
         "ASC 2": (

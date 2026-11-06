@@ -1,0 +1,36 @@
+side-yard-parking-r2 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/side-yard-parking, branch flats/side-yard-parking, head e92ca641; no new branch)
+
+WHY: FOLLOWUPS 146 (docs/followups/146-*.md). Round 1 built the `parking_side_yard_allowed` mechanism (flats/score/paper.py side_yard_mode / side_yard_lane_overlap_ft / side_yard_court_overlap_ft) with no YAML values. This round (A) adds the "the code is silent" tier Steph ruled on and (B) encodes the per-city values Claude read. Read first: flats/config/rulings.yaml id 2026-11-05-side-yard-parking-silent-codes, and C:/Users/Steph/Repos/vicinitideals-worktrees/side-yard-parking.readings.md (the table; every quote path is in it, relative to flats/provenance/docs/or/).
+
+(A) SILENT TIER. Add an optional field `parking_side_yard_stated` (same values: none | lane | lane_and_court): the part of `parking_side_yard_allowed` the code actually STATES. Whenever `parking_side_yard_allowed` is set and `parking_side_yard_stated` is not, treat stated as `none` (conservative: a value nobody wrote down is silence). Register it in flats/rules/fields.py exactly where round 1 registered the allowed field. Screen rule: if a design fits only by using side-yard reach beyond the stated reach (i.e. it fails with the stated reach but fits with the allowed reach), the lot can be at best YELLOW, with a new flag SIDE-YARD-PARKING-SILENT whose reason says the code neither allows nor forbids parking in the side yard and cites the ruling id. A lot that fits within the stated reach is judged as today. Prohibitions still win over both fields. Find the cheapest correct way to test "fits with stated reach" (paper fit is cheap; re-run it with the stated mode). Side yard means an INTERIOR side lot line only, never a street side of a corner lot (Portland 33.266.120 forbids stalls in the side-street setback; apply this everywhere) -- check what round 1 does and restrict it if needed.
+
+(B) VALUES. TH = the `when: [unit_lots]` townhouse variant of a zone (see e.g. flats/config/jurisdictions/or/clackamas/oregon-city.yaml); QP = the zone's base (quadplex) rules. "allowed/stated/buffer" below. Each value gets a cite + quote from the readings table (verify every cited line exists and contains the words; if one does not, skip that city and say so). buffer = `parking_lot_line_buffer_ft`; NEVER change a buffer value that is already encoded (if the reading disagrees with an existing value, leave it and list it in the hand-off); only add one where none exists.
+- Canby, all residential zones: lane_and_court / lane / -
+- Beaverton RMA, RMB, RMC, CM-RM: lane_and_court / lane_and_court / -. Beaverton MR: none.
+- Oregon City residential: TH lane / none; QP lane_and_court / lane_and_court / 5
+- Wilsonville residential: TH lane / none; QP lane_and_court / none
+- Fairview residential: TH lane / none; QP lane / none
+- Gresham residential: TH lane / lane; QP lane / none
+- Gladstone R-7.2, R-5, MR: lane_and_court / lane_and_court / 5 (already encoded -- keep)
+- Tualatin RML, RMH, RH: lane_and_court / lane_and_court / 10; other Tualatin residential zones: lane_and_court / lane_and_court / 5
+- Multnomah County unincorporated urban residential zones: lane_and_court / lane_and_court / 5
+- Happy Valley residential: lane_and_court / none
+- Milwaukie residential: TH lane / lane; QP lane_and_court / lane_and_court
+- Sandy residential: lane / none
+- Troutdale residential: TH lane / none; QP lane / none
+- Hillsboro zones that allow the pod: TH lane / lane; QP lane_and_court / lane_and_court / 4
+- Wood Village residential: TH lane_and_court / lane_and_court; QP lane_and_court / lane_and_court / 5
+- Durham SDR, MDR: TH lane / none; QP lane_and_court / none
+- Estacada residential: lane_and_court / none
+- Tigard: TH (rowhouse) only lane_and_court / none; QP unset
+- Cornelius: lane / none (its yard prohibition already wins; set it anyway for the record)
+- Portland residential + commercial/mixed zones where the pod is allowed: lane_and_court / lane_and_court
+- LEAVE UNSET: Washington County unincorporated, Clackamas County unincorporated, West Linn, King City, Sherwood, Johnson City.
+
+TESTS: extend flats/tests/test_side_yard_parking.py: (i) silent tier: a lot that fits only via a silent side yard -> YELLOW + SIDE-YARD-PARKING-SILENT, never GREEN; (ii) stated reach fit -> GREEN-eligible as today; (iii) allowed set, stated unset -> treated as none-stated; (iv) a corner lot never uses the street side; (v) one real zone per tier resolved from YAML (e.g. Portland R2.5 stated, Happy Valley silent, Oregon City TH lane silent vs QP stated with 5 ft strip); (vi) an unset city (West Linn) unchanged. Run uv run pytest flats/tests -q -n auto (green; if test_gaps is the only failure run uv run python -m flats.encode.gaps and commit flats/config/gaps.json on this branch), uv run ruff check flats/, uv run python scripts/check_flats_firewall.py. Commit by explicit path, prefix "flats:", ending "(FOLLOWUPS 146)". Do not push.
+
+Write C:/Users/Steph/Repos/vicinitideals-worktrees/side-yard-parking.handoff.md: what changed, every city/zone value set, any skipped quote or buffer disagreement, bound scope (every lot in the cities set above), expected moves (RED -> GREEN where a stated side yard makes the fit; RED -> YELLOW where only a silent one does; GREEN -> YELLOW/RED only where a newly added buffer tightens a rear court -- list those zones).
+
+MUST NOT CHANGE: setback figures; any existing parking_lot_line_buffer_ft value; the unset cities; rear-court logic other than reading a newly added buffer; anything under app/.
+
+AUTHORISED EXCEPTION: lots in the listed cities may move RED -> GREEN only where the code STATES the side-yard permission; RED -> YELLOW where it is silent; and GREEN -> YELLOW/RED where a newly added buffer tightens parking. No other GREEN may appear.

@@ -1,0 +1,17 @@
+side-yard-chapters (new branch flats/side-yard-chapters from main) -- FETCH ONLY, no rule changes
+
+WHY: FOLLOWUPS 146 (docs/followups/146-parking-in-side-yards.md). To decide whether the pod's drive lane and parking court may sit in a side setback, these codes' off-street parking / yard chapters must be in the store; today they are not. Steph approved fetching them (2026-11-05). Use the store's own fetcher: read the module docstring of flats/provenance/fetch.py and copy the pattern of the commit 0d284d47 ("docs(flats): fetch historic code sections": a .txt plus its .meta.json under flats/provenance/docs/or/<county>/<city>/). Existing docs in each place show which publisher serves its code (the .meta.json "url"): reuse that publisher.
+
+FETCH (each the WHOLE chapter: its parking/loading standards, landscaping of parking areas, and any rule about what a required yard/setback may hold):
+1. Washington County unincorporated CDC Section 407 (Parking and Loading) and Section 411 (Screening and Buffering) -> flats/provenance/docs/or/washington/_unincorporated/ (publisher: api.municode.com PublicationPdfDownload/3090 is the CDC already used; cdc.<nnn>.<slug>.txt naming like its siblings).
+2. Clackamas County ZDO Section 1009 (Landscaping) and, if separate, the off-street parking section (ZDO 1015) -> flats/provenance/docs/or/clackamas/_unincorporated/ (zdo.<nnn>.txt like zdo.707.txt).
+3. West Linn CDC Chapter 46 (Off-Street Parking) and Chapter 54 (Landscaping) -> flats/provenance/docs/or/clackamas/west-linn/ (codepublishing.com WestLinnCDC).
+4. King City Chapter 16.124 (or whatever chapter holds off-street parking) -> flats/provenance/docs/or/washington/king-city/ (municode 3913).
+5. Sherwood Chapter 16.92 (Landscaping) and 16.94 (Off-Street Parking and Loading) if 16.94 is not already stored in full -> flats/provenance/docs/or/washington/sherwood/ (Sherwood's development code publisher; find it).
+6. Johnson City (Clackamas County): find the city's adopted zoning/development code (city site, municode, or whether it adopts Clackamas County's ZDO by reference -- say which, with the source). Store its parking and yard chapters under flats/provenance/docs/or/clackamas/johnson-city/. If it adopts the county code, store the adopting text and say so.
+
+RULES: only official publishers (the city/county site, municode, codepublishing, the county document hub). If a source is a PDF, extract text with the store's own extractor path, not a new one. Never invent text. If a chapter cannot be found, say so with the URLs tried. Do not edit any jurisdiction YAML. Run uv run pytest flats/tests -q -n auto (green; if test_gaps or a store-integrity test asks, follow what it asks), uv run ruff check flats/. Commit by explicit path, message "docs(flats): fetch side-yard parking chapters (FOLLOWUPS 146)". Do not push.
+
+Final message: per item, the stored file paths, the source URL, the line where the yard/setback rule for parking appears (path#Lnn) if you saw one -- do NOT interpret it, just point.
+
+MUST NOT CHANGE: any YAML, any code under flats/ other than adding docs files, anything under app/.
