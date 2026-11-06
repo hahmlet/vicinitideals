@@ -5733,6 +5733,10 @@ zones:
       # Street or Pedestrian District".
       value: 10
       quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
+    setback_front_max_streets:
+      # The row heading is the whole condition, and neither fact is held.
+      value: conditional
+      quote: "or/multnomah/portland/33.150.txt#L546-L547"
     setback_side_ft:
       # Three rows, one question, and the answer is the neighbour's zoning.
       # 10 ft from a lot line abutting or across the street from an OS,

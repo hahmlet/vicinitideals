@@ -2737,6 +2737,10 @@ zones:
       value: 10
       cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R24-40
       quote: "or/washington/_unincorporated/375/375-10.txt#L309,L343-L344"
+    setback_front_max_streets:
+      value: conditional
+      cite: Washington County CDC 375 Table B(2), note F, the frontage maximum applies to the first floor facing a pedestrian street; which streets are pedestrian streets is not held
+      quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
     setback_front_max_facade_pct:
       value: 50
       cite: Washington County CDC 375 Table B(2), note F, frontage maximum applies to at least 50 percent of the first floor facing a pedestrian street
@@ -2829,6 +2833,10 @@ zones:
       value: 10
       cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R40-80
       quote: "or/washington/_unincorporated/375/375-10.txt#L309,L343-L345"
+    setback_front_max_streets:
+      value: conditional
+      cite: Washington County CDC 375 Table B(2), note F, the frontage maximum applies to the first floor facing a pedestrian street; which streets are pedestrian streets is not held
+      quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
     setback_front_max_facade_pct:
       value: 50
       cite: Washington County CDC 375 Table B(2), note F, frontage maximum applies to at least 50 percent of the first floor facing a pedestrian street

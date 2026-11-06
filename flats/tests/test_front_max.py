@@ -385,11 +385,11 @@ def test_portland_ce_leaves_its_streets_unread(corpus) -> None:
         ("or/washington/_unincorporated", "TO:R40-80"),
     ],
 )
-def test_transit_oriented_maximum_leaves_pedestrian_street_selection_unheld(
+def test_transit_oriented_maximum_may_not_reach_the_lot(
     corpus, jurisdiction, zone
 ) -> None:
     got = corpus.resolve(jurisdiction, zone)
-    assert got.get("setback_front_max_streets") is None
+    assert got.get("setback_front_max_streets") == "conditional"
     lot = facts(
         corner=True,
         front_max_streets=streets((True, 8.0, 8.0, 0.0), (False, 25.0, 25.0, 0.0)),
@@ -580,3 +580,98 @@ def test_box_distance_in_blocks_gives_the_same_answer(monkeypatch):
     whole = np.hypot(dx, dy).min(axis=1)
     monkeypatch.setattr(draw, "BOX_DISTANCE_BLOCK_CELLS", 100)
     assert np.array_equal(draw._box_distance(x0, y0, x1, y1, pts), whole)
+
+
+# --- the raster's slack, taken back (finding 4 of the round 3 read) -----------
+
+
+def _past_by(feet: float, monkeypatch, *, only_first: bool = True) -> dict:
+    """The drawing as the raster leaves it, ``feet`` behind where it could stand."""
+    real = quadfit.drawing_for
+    seen = {"done": False}
+
+    def back(s, fitter, **kw):
+        if "listing" in kw:
+            return None  # no other window: only the slide can help
+        got = real(s, fitter, **kw)
+        if kw or (only_first and seen["done"]) or not got or not got.get("fits"):
+            return got
+        seen["done"] = True
+        moved = dict(got)
+        for key in ("room", "building", "lane", "court"):
+            if got.get(key):
+                moved[key] = [[x, y + feet] for x, y in got[key]]
+        return moved
+
+    monkeypatch.setattr(quadfit, "drawing_for", back)
+    return seen
+
+
+def test_a_building_the_raster_left_past_the_line_is_slid_to_the_maximum(corpus, policies, monkeypatch) -> None:
+    """Tigard RES-B, minimum and maximum both 20 ft: 1S136CB02900 drew at 21.13."""
+    seen = _past_by(1.13, monkeypatch)
+    s = screened(corpus, policies)
+    assert seen["done"]
+    ((_, near, _, _),) = s.facts.front_max_streets
+    assert 20.0 <= near <= 20.1
+    assert check(s.signed, FRONT_MAX).verdict is Verdict.passes
+
+
+def _sliding(edge_ft: float, *, ground=None, court=False):
+    """A pod's room 21.13 ft off a street line at y=0, on an envelope whose front
+    edge is at ``edge_ft``."""
+    edges = _edges(
+        [(0, 0, 100, 0, F), (100, 0, 100, 200, S), (100, 200, 0, 200, R), (0, 200, 0, 0, S)], [0.0]
+    )
+    ring = [[10, 21.13], [60, 21.13], [60, 57.13], [10, 57.13], [10, 21.13]]
+    drawing = {"fits": True, "building": ring, "room": ring, "lane": None}
+    if court:
+        drawing["court"] = [[10, 57.13], [60, 57.13], [60, 100.13], [10, 100.13], [10, 57.13]]
+    s = SimpleNamespace(
+        drawing=drawing,
+        lot=SimpleNamespace(edges=edges, zone="X", sidewalk_easement_ft=None),
+        street_edges=None,
+        envelope=SimpleNamespace(geom=box(5, edge_ft, 95, 120), source="quadfit"),
+        rules=rules(setback_front_max_ft=20),
+    )
+    return s, SimpleNamespace(ground=ground)
+
+
+def test_the_slide_stops_at_the_maximum_where_the_envelope_lets_it() -> None:
+    s, fitter = _sliding(19.0)
+    slid = quadfit._front_max_flush(s, fitter)
+    assert slid["building"][0][1] == pytest.approx(20.0, abs=0.1)
+    assert slid["room"][0][1] == slid["building"][0][1]
+
+
+def test_the_slide_stops_at_the_envelope() -> None:
+    s, fitter = _sliding(20.6)
+    slid = quadfit._front_max_flush(s, fitter)
+    assert slid["building"][0][1] == pytest.approx(20.6, abs=0.11)
+    assert slid["building"][0][1] >= 20.5
+
+
+def test_nothing_slides_off_an_envelope_already_flush() -> None:
+    s, fitter = _sliding(21.13)
+    assert quadfit._front_max_flush(s, fitter) is None
+
+
+def test_a_court_off_its_ground_stops_the_slide() -> None:
+    s, fitter = _sliding(19.0, ground=box(5, 57.0, 95, 120), court=True)
+    assert quadfit._front_max_flush(s, fitter) is None or (
+        quadfit._front_max_flush(s, fitter)["court"][0][1] >= 57.0
+    )
+
+
+def test_within_the_maximum_nothing_slides() -> None:
+    s, fitter = _sliding(19.0)
+    s.rules = rules(setback_front_max_ft=25)
+    assert quadfit._front_max_flush(s, fitter) is None
+
+
+def test_a_miss_of_more_than_the_raster_can_leave_does_not_slide(corpus, policies, monkeypatch) -> None:
+    _past_by(5.0, monkeypatch, only_first=False)
+    s = screened(corpus, policies)
+    ((_, near, _, _),) = s.facts.front_max_streets
+    assert near >= 24.5
+    assert check(s.signed, FRONT_MAX).verdict is Verdict.fails

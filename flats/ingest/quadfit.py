@@ -144,6 +144,7 @@ from flats.geom.sidewalk import (
     observed_sidewalk_easement,
 )
 from flats.geom.street_types import CONDITION as STREET_TYPE_FACT, observed_street_types
+from flats.geom import street_names
 from flats.geom.street_class import (
     LOCAL_STREET,
     load_class_maps,
@@ -1101,6 +1102,9 @@ def lot_edges(
     # lot gives up (:func:`with_local_street`), looked up by the line's
     # coordinates so a second reading of the lot finds its remaining lines.
     widths = {dedication.key(*m[:4]): m for m in json.loads(row.get("road_widths_json") or "[]")}
+    # The named street each street line lies on (:func:`with_street_names`),
+    # looked up the same way.
+    names = {dedication.key(*m[:4]): m[4] for m in json.loads(row.get("street_names_json") or "[]")}
     # Which street lines are on a public way (ZDO 1005.02(L)'s "public,
     # County or state road"); none where s4 recorded no kinds.
     kinds = _street_kinds(row) or []
@@ -1133,6 +1137,7 @@ def lot_edges(
                 half_width_ft=None if road is None or road[4] is None else float(road[4]),
                 road_private=False if road is None else not bool(road[5]),
                 road_names=None if road is None or road[6] is None else tuple(str(n) for n in road[6]),
+                street_name=names.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None,
                 road_classes=() if road is None else tuple(sorted((road[7] or {}).items())),
                 across_zones=faces if letter == STREET_CLASS else None,
                 public_road=letter == STREET_CLASS and kind == "street",
@@ -2063,6 +2068,28 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
             row["local_street_obs"] = got[LOCAL_STREET]
             answered += 1
     return answered
+
+
+def with_street_names(rows: list[dict[str, Any]], sources: Path | None) -> int:
+    """Read the named street each street line lies on, in place
+    (``street_names_json``, :mod:`flats.geom.street_names`), and say on how many
+    lots. Only where more than one line could be two streets: a single street
+    line has nothing to be told apart from. Without the snapshot's centrelines
+    no name is read, and the maximum front setback reads the lot by its turns
+    (:func:`_named_stretches`)."""
+    if sources is None:
+        return 0
+    streets = street_names.load(sources)
+    if streets is None:
+        return 0
+    read = 0
+    for row in rows:
+        edges = json.loads(row.get("edges_json") or "[]")
+        if sum(1 for e in edges if len(e) >= 5 and e[4] == STREET_CLASS) < 2:
+            continue
+        row["street_names_json"] = json.dumps(street_names.read(edges, streets))
+        read += 1
+    return read
 
 
 def with_sidewalk_easement(rows: list[dict[str, Any]], sources: Path | None) -> int:
@@ -3529,7 +3556,7 @@ def front_max_streets(
     drawing = s.drawing or {}
     ring = drawing.get("building")
     lot = s.lot
-    edges = getattr(s, "street_edges", None) or lot.edges
+    edges = _front_max_edges(s)
     if not (drawing.get("fits") and ring and len(ring) >= 4) or edges is None:
         return None
     cut = s.envelope is not None and s.envelope.source == "flats"
@@ -3540,6 +3567,7 @@ def front_max_streets(
         return None
     building = Polygon(ring)
     slack = float(lot.sidewalk_easement_ft or 0.0)
+    named_lot = any(e.street_name is not None for chain in chains for e in chain)
 
     def strip(e: Edge) -> float:
         return e.dedication_ft if cut else 0.0
@@ -3552,24 +3580,139 @@ def front_max_streets(
         lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
         far = _facade_far(building, lines) - min(strip(e) for e in chain)
         front = any(e.cls is EdgeClass.front for e in chain)
-        out.append((front, round(near, 2), round(max(far, near), 2), round(slack, 2)))
+        far = max(far, near)
+        # A stub of a street, or a line within reach of one on a lot whose
+        # other streets read a name and this no centreline runs beside: a miss
+        # on it is a question, never a failure.
+        stub = len(chains) > 1 and sum(e.length_ft for e in chain) < FRONT_MAX_STUB_FT
+        unread = named_lot and all(e.street_name is None for e in chain)
+        out.append((front, round(near, 2), round(far, 2), round(max(far, slack) if stub or unread else slack, 2)))
     return tuple(out)
 
 
-def _front_max_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
-    """Keep separate street runs distinct, except for a close frontage jog."""
+#: A lot line this short, off a street's direction, at the end where the street
+#: meets another, is the corner's chord and not a stretch of the street.
+#: Shorter than this with no name read, it is passed over by the name test too.
+FRONT_MAX_LEG_FT = 30.0
+#: Two long legs of unread name turning this far apart are taken as two streets:
+#: unread is the conservative answer, and only the name makes a bend of a turn.
+FRONT_MAX_TURN_DEG = 30.0
+#: A street the lot touches for less than this holds the lot out of GREEN where
+#: the building misses it, and never fails it: too little to say the code would
+#: hold a building to it, too much to ignore (:func:`front_max_streets`).
+FRONT_MAX_STUB_FT = 15.0
+
+
+def _ft(ring: Sequence[Edge], lines: Sequence[int]) -> float:
+    return sum(ring[i].length_ft for i in lines)
+
+
+def _named_stretches(ring: Sequence[Edge], run: list[int]) -> tuple[list[list[int]], bool]:
+    """One run of street lines cut where the street's name changes, and
+    whether two named streets met in it.
+
+    One name on an unbroken run is one street, however it bends (Steph
+    2026-10-09). A line with no name read decides nothing when short: it joins
+    the street on both its sides, or, between two different streets, is the
+    corner's chord and belongs to neither, so neither street's nearest point is
+    read off it. A long leg with no name read is told by its turn from the leg
+    before (:data:`FRONT_MAX_TURN_DEG`)."""
+    stretches: list[list[int]] = []
+    last: Edge | None = None
+    name: str | None = None
+    waiting: list[int] = []
+    met = False
+    for i in run:
+        e = ring[i]
+        if e.street_name is None and e.length_ft < FRONT_MAX_LEG_FT:
+            waiting.append(i)
+            continue
+        if last is None:
+            # Unread line ahead of the first named street, long enough to be
+            # a stub of another, is measured on its own: its miss is a question.
+            if waiting and e.street_name is not None and _ft(ring, waiting) >= FRONT_MAX_STUB_FT:
+                stretches.append(waiting)
+                stretches.append([i])
+            else:
+                stretches.append([*waiting, i])
+            name = e.street_name
+        else:
+            both = e.street_name is not None and name is not None
+            same = (
+                e.street_name == name
+                if both
+                else bearing_delta(e.bearing_deg, last.bearing_deg) < FRONT_MAX_TURN_DEG
+            )
+            if same:
+                stretches[-1].extend([*waiting, i])
+                name = name or e.street_name
+            else:
+                stretches.append([i])
+                met = met or both
+                name = e.street_name
+        waiting = []
+        last = e
+    if last is None:
+        return [list(run)], False
+    if waiting and name is not None and _ft(ring, waiting) >= FRONT_MAX_STUB_FT:
+        stretches.append(waiting)
+    else:
+        stretches[-1].extend(waiting)
+    if len(stretches) > 1 and len(run) == len(ring):
+        # A run round the whole lot closes on itself.
+        first, end = ring[stretches[0][0]], ring[stretches[-1][-1]]
+        if first.street_name is not None and first.street_name == end.street_name:
+            stretches[0] = stretches.pop() + stretches[0]
+    return stretches, met
+
+
+def _without_chords(ring: Sequence[Edge], pieces: list[list[int]]) -> list[list[int]]:
+    """Each street of one run less the corner chords at its ends: where it
+    meets the next street, a short line off its direction is the turn between
+    them, and a street's nearest point read off it understates the reach."""
+
+    def trimmed(piece: list[int], start: bool, end: bool) -> list[int]:
+        main = max((ring[i] for i in piece), key=lambda e: e.length_ft).bearing_deg
+
+        def chord(i: int) -> bool:
+            e = ring[i]
+            return e.length_ft < FRONT_MAX_LEG_FT and bearing_delta(e.bearing_deg, main) > BEARING_CLUSTER_TOL_DEG
+
+        kept = list(piece)
+        while start and len(kept) > 1 and chord(kept[0]):
+            kept.pop(0)
+        while end and len(kept) > 1 and chord(kept[-1]):
+            kept.pop()
+        return kept
+
+    return [trimmed(p, j > 0, j < len(pieces) - 1) for j, p in enumerate(pieces)]
+
+
+def _front_max_reading(edges: LotEdges) -> tuple[tuple[tuple[Edge, ...], ...], bool]:
+    """The streets the maximum front setback is measured from, and whether
+    the lot's streets are exactly two names meeting in one run
+    (:func:`front_max_corner`).
+
+    Each run of street line is cut where its name changes
+    (:func:`_named_stretches`), then at the street's turn on a two-direction
+    lot (:func:`flats.fit.frontage._streets_of_run`), and a close jog apart
+    along one street is put back. Unlike :func:`flats.fit.frontage.street_chains`,
+    which answers how much line a street has, this answers how far the building
+    stands from each street, so a corner's chord counts for neither."""
     ring = edges.edges
     bearings = [float(b) for b in edges.front_bearings[:2]]
     if not two_streets(bearings):
         bearings = bearings[:1]
     on = [e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley for e in ring]
-    pieces = [
-        [ring[i] for i in indices]
-        for run in _runs(on)
-        for indices in _streets_of_run(ring, run, bearings)
-    ]
+    met = False
+    pieces: list[list[Edge]] = []
+    for run in _runs(on):
+        stretches, named = _named_stretches(ring, run)
+        met = met or named
+        cut = [indices for part in stretches for indices in _streets_of_run(ring, part, bearings)]
+        pieces.extend([ring[i] for i in piece] for piece in _without_chords(ring, cut))
     if len(pieces) < 2:
-        return tuple(tuple(piece) for piece in pieces)
+        return tuple(tuple(piece) for piece in pieces), False
 
     corners = [pt for e in ring for pt in ((e.x1, e.y1), (e.x2, e.y2))]
     parent = list(range(len(pieces)))
@@ -3580,6 +3723,10 @@ def _front_max_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
         return parent[i]
 
     def same_frontage(a: Sequence[Edge], b: Sequence[Edge]) -> bool:
+        a_names = {e.street_name for e in a} - {None}
+        b_names = {e.street_name for e in b} - {None}
+        if a_names and b_names and not a_names & b_names:
+            return False
         ah = (sum(e.x2 - e.x1 for e in a), sum(e.y2 - e.y1 for e in a))
         bh = (sum(e.x2 - e.x1 for e in b), sum(e.y2 - e.y1 for e in b))
         if ah[0] * bh[0] + ah[1] * bh[1] <= 0.0:
@@ -3613,14 +3760,36 @@ def _front_max_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
     grouped: dict[int, list[Edge]] = {}
     for i, piece in enumerate(pieces):
         grouped.setdefault(find(i), []).extend(piece)
-    return tuple(tuple(group) for group in grouped.values())
+    chains = tuple(tuple(group) for group in grouped.values())
+    return chains, met and len({e.street_name for c in chains for e in c} - {None}) == 2
+
+
+def _front_max_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
+    """The lot's streets as the maximum front setback reads them."""
+    return _front_max_reading(edges)[0]
+
+
+def _front_max_edges(s: Screened) -> LotEdges | None:
+    """The street lines the maximum is measured on: as s4 cut them, before a
+    plan renames one."""
+    return getattr(s, "street_edges", None) or s.lot.edges
+
+
+def front_max_corner(s: Screened) -> bool:
+    """Whether the lot's named streets are two, meeting in one unbroken run
+    of lot line (:attr:`LotFacts.front_max_corner`)."""
+    edges = _front_max_edges(s)
+    return edges is not None and _front_max_reading(edges)[1]
 
 
 def _front_max_screened(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
     """``s`` re-screened on its drawing's distance from the street."""
     assert s.facts is not None
     facts = dataclasses.replace(
-        s.facts, front_max_streets=front_max_streets(s), front_max_tried=True
+        s.facts,
+        front_max_streets=front_max_streets(s),
+        front_max_tried=True,
+        front_max_corner=front_max_corner(s),
     )
     result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(
@@ -3635,6 +3804,95 @@ def _front_max_clear(s: Screened) -> bool:
         FRONT_MAX not in r.unchecked and all(c.check != FRONT_MAX for c in r.binds)
         for r in (s.screening, s.signed)
     )
+
+
+#: How far a drawing past the maximum may be slid toward its street: the
+#: raster stands a window up to two half-foot cells behind the envelope's edge,
+#: and the screen's allowance is half of this.
+FRONT_MAX_SLIDE_FT = 2.0
+FRONT_MAX_SLIDE_STEP_FT = 0.1
+#: The rings are rounded to a tenth of a foot, so this much off the envelope is
+#: no more than the rounding.
+FRONT_MAX_SLIDE_ROUND_FT = 0.05
+
+
+def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
+    """``s``'s drawing slid whole toward the street whose maximum the raster
+    left it just past, or None where nothing is so left (FOLLOWUPS 147).
+
+    The search stands a window on a half-foot raster, so a building the
+    envelope lets stand on the line is drawn up to a foot or so behind it. That
+    is the raster, not the lot. The slide is along one of the building's own
+    sides, no further than :data:`FRONT_MAX_SLIDE_FT` and than the room stays on
+    the envelope and the court on the ground it may use, so the minimum still
+    holds; it stops at the maximum itself, not at the allowance."""
+    from shapely import affinity
+    from shapely.geometry import LineString, MultiLineString, Polygon
+    from shapely.ops import nearest_points
+
+    drawing = s.drawing or {}
+    cap = s.rules.get("setback_front_max_ft")
+    measured = front_max_streets(s)
+    edges = _front_max_edges(s)
+    room, building = drawing.get("room"), drawing.get("building")
+    if (
+        measured is None
+        or edges is None
+        or s.envelope is None
+        or isinstance(cap, bool)
+        or not isinstance(cap, (int, float))
+        or not room
+    ):
+        return None
+    cut = s.envelope.source == "flats"
+    chains = _front_max_chains(dedicated(edges, s.rules, s.lot.zone) if cut else edges)
+    over, chain = max(
+        ((row[1] - float(cap), c) for row, c in zip(measured, chains, strict=True)),
+        key=lambda t: t[0],
+    )
+    if not 0.0 < over <= FRONT_MAX_SLIDE_FT:
+        return None
+    body = Polygon(building)
+    lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
+    here, there = nearest_points(body, lines)
+    run = LineString([here, there]).length
+    if run == 0.0:
+        return None
+    to = ((there.x - here.x) / run, (there.y - here.y) / run)
+    sides = [
+        (b[0] - a[0], b[1] - a[1])
+        for a, b in zip(building[:2], building[1:3], strict=True)
+    ]
+    side = max(sides, key=lambda v: abs(v[0] * to[0] + v[1] * to[1]) / math.hypot(*v))
+    size = math.hypot(*side)
+    way = (side[0] / size, side[1] / size)
+    toward = way[0] * to[0] + way[1] * to[1]
+    if toward < 0.0:
+        way, toward = (-way[0], -way[1]), -toward
+    if toward < math.cos(math.radians(30.0)):
+        return None
+    envelope = s.envelope.geom.buffer(FRONT_MAX_SLIDE_ROUND_FT)
+    ground = (fitter.ground or s.envelope.geom).buffer(FRONT_MAX_SLIDE_ROUND_FT)
+    court = drawing.get("court")
+    best = 0.0
+    need = over / toward
+    steps = int(min(need, FRONT_MAX_SLIDE_FT) / FRONT_MAX_SLIDE_STEP_FT) + 1
+    for i in range(1, steps + 1):
+        t = min(i * FRONT_MAX_SLIDE_STEP_FT, need)
+        dx, dy = way[0] * t, way[1] * t
+        if not envelope.covers(affinity.translate(Polygon(room), dx, dy)):
+            break
+        if court and not ground.covers(affinity.translate(Polygon(court), dx, dy)):
+            break
+        best = t
+    if best == 0.0:
+        return None
+    dx, dy = way[0] * best, way[1] * best
+    moved = dict(drawing)
+    for name in ("room", "building", "lane", "court"):
+        if moved.get(name):
+            moved[name] = [[round(x + dx, 1), round(y + dy, 1)] for x, y in moved[name]]
+    return moved
 
 
 def front_max_checked(
@@ -3660,7 +3918,9 @@ def front_max_checked(
     with nothing worse (:func:`flats.ingest.flatter._no_worse`) is kept.
     Only a court reached down a lane from the street moves this way
     (:func:`flats.ingest.flatter._lane_in_from_street`); any other plan
-    stands where it was drawn. ``fitter`` None measures and searches
+    stands where it was drawn, but for the raster's own slack
+    (:func:`_front_max_flush`), taken back first on any plan the maximum
+    fails. ``fitter`` None measures and searches
     nothing further. Where nothing is drawn the plan is held out of GREEN
     (``front_max_drawn``), never passed."""
     if s.facts is None or s.rules.get("setback_front_max_ft") is None:
@@ -3679,9 +3939,17 @@ def front_max_checked(
     if binds - {FRONT_MAX}:
         return out
     drawing = s.drawing or {}
-    if not (drawing.get("fits") and not drawing.get("tight") and drawing.get("lane")):
+    if not (drawing.get("fits") and not drawing.get("tight")):
         return out
-    if not _lane_in_from_street(s):
+    if any(c.check == FRONT_MAX for r in (out.screening, out.signed) for c in r.binds):
+        slid = _front_max_flush(s, fitter)
+        if slid is not None and (not slid.get("lane") or _drive_clear(slid, s, _street_lines(s.lot))):
+            cand = _front_max_screened(
+                dataclasses.replace(s, drawing=slid), policy=policy, relief=relief
+            )
+            if _front_max_clear(cand) and _no_worse_but_front(out, cand):
+                return cand
+    if not (drawing.get("lane") and _lane_in_from_street(s)):
         return out
     street = _street_lines(s.lot)
     cap = s.rules.get("setback_front_max_ft")
@@ -5171,6 +5439,9 @@ def run(
     classed = with_local_street(rows, sources)
     if classed:
         log(f"bridge: street class read on {classed:,} lots")
+    named = with_street_names(rows, sources)
+    if named:
+        log(f"bridge: street names read on {named:,} lots")
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")

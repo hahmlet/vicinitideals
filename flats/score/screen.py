@@ -674,6 +674,13 @@ class LotFacts:
     #: bridge), and the check goes unrun.
     front_max_streets: tuple[tuple[bool, float, float, float], ...] | None = None
     front_max_tried: bool = False
+    #: The lot's named streets are two, and one unbroken run of lot line turns
+    #: from one onto the other (:func:`flats.ingest.quadfit.front_max_corner`).
+    #: A corner whatever the angle between them, where ``corner`` -- the
+    #: 45-degree test on the lot's two longest directions -- cannot see it. A
+    #: line measured beside them with no name read does not make it three: its
+    #: miss is a question already (:func:`flats.ingest.quadfit.front_max_streets`).
+    front_max_corner: bool = False
     #: The same route with the hose measured from the near curb itself
     #: rather than 10 ft out from it (:data:`flats.fit.fire.READINGS`,
     #: FOLLOWUPS 29). Measured only where the route misses and a curb or
@@ -2730,13 +2737,41 @@ def front_max_owed(
     if which == "one":
         return "one", streets
     if which == "corner_every":
-        return ("every" if lot.corner and len(streets) == 2 else "unheld"), streets
+        # A street measured only as a question (its slack reaches its far end:
+        # :func:`flats.ingest.quadfit.front_max_streets`) does not make a third.
+        held = [s for s in streets if s[3] < s[2]]
+        corner = lot.front_max_corner or (lot.corner and len(held) == 2)
+        return ("every" if corner else "unheld"), streets
     if which == "front":
         fronts = tuple(s for s in streets if s[0])
         if len(fronts) == 1:
             return "every", fronts
         return "unheld", fronts or streets
+    # ``conditional`` is read below (:func:`_front_max_conditional`); on this
+    # question it is unset's answer.
     return "unheld", streets
+
+
+#: Facts that lift a zone's maximum front setback itself, and that nothing here
+#: holds. Fairview's infill rule for established residential areas moves the
+#: printed 30 ft towards the neighbours' average, up to a cap of 40 ft: FMC
+#: 19.30.030(D)(3), or/multnomah/fairview/19.30/19.30.030.txt#L286-L307. Named
+#: rather than every ``qualified_by`` on a maximum: the others ask a different
+#: question of the lot (a water feature, an accessway), and read as read before.
+FRONT_MAX_LIFTED_BY = frozenset({"established_residential_area"})
+
+
+def _front_max_conditional(rules: ZoneResolution) -> bool:
+    """Whether the maximum may not reach this lot, or may be higher here, on a
+    fact nothing here holds: the code's streets or districts
+    (``setback_front_max_streets: conditional``), or a rule beside the figure
+    (:data:`FRONT_MAX_LIFTED_BY`). A building within it passes on any reading;
+    one beyond it may owe nothing more, so it is held out of GREEN and never
+    failed."""
+    if rules.get("setback_front_max_streets") == "conditional":
+        return True
+    value = rules.values.get("setback_front_max_ft")
+    return value is not None and bool(FRONT_MAX_LIFTED_BY & set(value.unencoded))
 
 
 def _front_max(
@@ -2762,8 +2797,9 @@ def _front_max(
     ``every`` passes where every street clears and fails where any misses;
     ``one`` passes where any clears and fails where every one misses;
     ``unheld`` passes only where every street clears and fails only where
-    every one misses. Anything else is :data:`FRONT_MAX_STREET`: held out of
-    GREEN, never failed. A zone that asks a building share of the frontage
+    every one misses. A maximum that may not reach the lot at all
+    (:func:`_front_max_conditional`) never fails. Anything else is
+    :data:`FRONT_MAX_STREET`: held out of GREEN, never failed. A zone that asks a building share of the frontage
     is measured there (:func:`_building_frontage`) and not again here."""
     cap = _pct(rules, "setback_front_max_ft")
     if cap is None or _pct(rules, "building_frontage_min_pct") is not None:
@@ -2791,6 +2827,8 @@ def _front_max(
         passed, failed = all(clears), any(misses)
     else:
         passed, failed = all(clears), all(misses)
+    if _front_max_conditional(rules):
+        failed = False
     if passed:
         observed = min(strict) if how == "one" else max(strict)
         # Within the raster's allowance reads as on the line.
