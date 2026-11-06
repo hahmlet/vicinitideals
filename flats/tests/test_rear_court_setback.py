@@ -436,3 +436,42 @@ def test_a_troutdale_quadplex_beside_ldr_takes_its_side_yard(corpus, zone: str, 
     # likewise already charged.
     alone = corpus.resolve(TROUTDALE, zone, (), lot={"lot_sqft": 9000.0})
     assert alone.get(STRIP) == alone.get("setback_side_ft")
+
+
+def test_troutdale_drawn_court_is_checked_on_unsigned_rules() -> None:
+    """Every Troutdale lot is RULE_UNVERIFIED; the check ran on none of them
+    in round 3 (FOLLOWUPS 150 round-3 read, finding 1)."""
+    import dataclasses
+
+    rules = dataclasses.replace(screen_rules(), verdict=RuleVerdict.unverified)
+    lot = drawn_lot(TROUTDALE, "LDR-1", "MU-2")
+
+    assert not rules.trusted
+    assert _parking_doubt_drawn_fails(lot, rules, drawn_court(side=25, rear=16.5))
+
+
+def test_sandy_unread_line_owes_sfr_strip_even_where_the_resolved_strip_is_the_side_yard() -> None:
+    """24E14DA00700: the strip resolved to the zone's own 5 ft side, the
+    neighbour line partly unread, the drawn court 18.4 ft off it -- not GREEN."""
+    rules = screen_rules(doubt=None, strip=5, jurisdiction=SANDY)
+    lot = drawn_lot(SANDY, "R-2", "R-2", rear_unresolved=1)
+    failed = _sandy_strip_drawn_fails(lot, rules, drawn_court(side=30, rear=18.4))
+    result = screen_lot(depth=120, rules=rules, strip_waived=failed)
+
+    assert failed
+    assert result.triage is not Triage.green
+
+
+def test_sandy_fully_read_neighbours_no_stricter_keep_the_resolved_strip() -> None:
+    rules = screen_rules(doubt=None, strip=5, jurisdiction=SANDY)
+    lot = drawn_lot(SANDY, "R-2", "R-1")
+
+    assert not _sandy_strip_drawn_fails(lot, rules, drawn_court(side=6, rear=6))
+
+
+def test_sandy_sfr_across_a_line_owes_twenty_feet() -> None:
+    rules = screen_rules(doubt=None, strip=5, jurisdiction=SANDY)
+    lot = drawn_lot(SANDY, "R-2", "SFR")
+
+    assert _sandy_strip_drawn_fails(lot, rules, drawn_court(side=12, rear=30))
+    assert not _sandy_strip_drawn_fails(lot, rules, drawn_court(side=20, rear=30))

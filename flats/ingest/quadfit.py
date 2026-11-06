@@ -2316,8 +2316,13 @@ def _troutdale_line_doubt_ft(
 def _parking_doubt_drawn_fails(
     lot: QuadfitLot, rules: ZoneResolution, drawing: Any | None
 ) -> bool:
-    """Whether the selected court misses the line-specific single-house yard."""
-    if not rules.trusted or rules.get("parking_required_yard_prohibited") is not True:
+    """Whether the selected court misses the line-specific single-house yard.
+
+    Not gated on ``rules.trusted``: Troutdale's rules are unsigned, and the
+    gate switched the whole check off (FOLLOWUPS 150 round-3 read, finding 1).
+    An unsigned rule only ever holds a lot out of GREEN, so a check that can
+    only add the doubt runs on it as well."""
+    if rules.get("parking_required_yard_prohibited") is not True:
         return False
     maximum_rear = lot_line_buffer_doubt_ft(rules)
     if maximum_rear <= 0 or lot.edges is None:
@@ -2369,26 +2374,52 @@ def _yard_neighbour_edges(
 def _sandy_strip_drawn_fails(
     lot: QuadfitLot, rules: ZoneResolution, drawing: Any | None
 ) -> bool:
-    """Check Sandy's SFR strip against the court that the screen actually drew."""
+    """Check Sandy's SFR strip against the court that the screen actually drew.
+
+    17.98.50 A gives the court the setback of the most restrictive adjoining
+    residential district. On each non-street line the drawn court must clear
+    the strip the screen resolved, or SFR's 20 ft
+    (:data:`_SANDY_SFR_STRIP_FT`) where SFR lies across the line or the
+    neighbour is not fully read: a line partly unread, across another
+    jurisdiction, or a zone outside the ones the YAML rules on
+    (``abuts_lower_density_zone``). Round 3 read the resolved 5 ft only and
+    quit, which let 24E14DA00700 stand GREEN with its court 18.4 ft off a
+    partly unread line (FOLLOWUPS 150 round-3 read, finding 2)."""
     strip = lot_line_buffer_ft(rules)
-    side = rules.get("setback_side_ft")
-    if (
-        lot.jurisdiction != _SANDY
-        or strip <= 0
-        or not isinstance(side, (int, float))
-        or strip <= float(side)
-    ):
+    if lot.jurisdiction != _SANDY or strip <= 0:
         return False
     import shapely
 
     boundary = _yard_neighbour_edges(lot)
     if not boundary or drawing is None or drawing.court is None:
         return True
-    for edge, _ in boundary:
+    for edge, neighbour in boundary:
+        required = max(strip, _sandy_line_strip_ft(lot, neighbour))
         line = shapely.LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
-        if drawing.court.distance(line) + 1e-6 < strip:
+        if drawing.court.distance(line) + 1e-6 < required:
             return True
     return False
+
+
+#: SFR's rear yard, which 17.98.50 A carries onto the court beside SFR
+#: (sandy.yaml ``parking_lot_line_buffer_ft`` variant; sdc.17.34 L151-L152).
+_SANDY_SFR_STRIP_FT = 20.0
+#: Sandy districts the YAML rules are no stricter neighbour
+#: (sandy.yaml ``abuts_lower_density_zone.false_for``).
+_SANDY_NOT_STRICTER = frozenset(
+    {"R-1", "R-2", "R-3", "POS", "C-1", "C-2", "C-3", "I-1", "I-2", "I-3"}
+)
+
+
+def _sandy_line_strip_ft(lot: QuadfitLot, neighbour: NeighbourLine | None) -> float:
+    """The strip one Sandy line owes from its neighbour: 0 where every point
+    across it is a district no stricter than ours, else SFR's 20 ft."""
+    if neighbour is None or neighbour.unresolved or not neighbour.zones:
+        return _SANDY_SFR_STRIP_FT
+    for jurisdiction, zone in neighbour.zones:
+        if jurisdiction != lot.jurisdiction or zone not in _SANDY_NOT_STRICTER:
+            return _SANDY_SFR_STRIP_FT
+    return 0.0
 
 
 def _screen_on(
