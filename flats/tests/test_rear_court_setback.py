@@ -25,10 +25,19 @@ from datetime import date
 
 import pytest
 import yaml
+from shapely import box
 
 from flats.designs.model import Design
 from flats.encode.load import load_trusted
+from flats.fit.draw import Drawing
 from flats.fit.rectangle import Fit
+from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
+from flats.geom.neighbour import Line as NeighbourLine
+from flats.ingest.quadfit import (
+    QuadfitLot,
+    _parking_doubt_drawn_fails,
+    _sandy_strip_drawn_fails,
+)
 from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import OPTIONAL_FIELDS, field
 from flats.rules.model import Provenance, Status
@@ -97,7 +106,13 @@ def deeper(rules) -> float:
     return paper_fit(pod(), rules).min_depth_ft - paper_fit(pod(), Sharing(rules)).min_depth_ft
 
 
-def screen_rules(*, doubt: float | None = 20, yard_prohibited: bool = True) -> ZoneResolution:
+def screen_rules(
+    *,
+    doubt: float | None = 20,
+    yard_prohibited: bool = True,
+    strip: float = 0,
+    jurisdiction: str = TROUTDALE,
+) -> ZoneResolution:
     values = {
         "quadplex_allowed": True,
         "min_lot_sqft": 3000,
@@ -112,7 +127,7 @@ def screen_rules(*, doubt: float | None = 20, yard_prohibited: bool = True) -> Z
         "setback_side_ft": 5,
         "setback_rear_ft": 10,
         FIELD: yard_prohibited,
-        STRIP: 0,
+        STRIP: strip,
         DOUBT: doubt,
     }
     provenance = Provenance(
@@ -121,7 +136,7 @@ def screen_rules(*, doubt: float | None = 20, yard_prohibited: bool = True) -> Z
         retrieved=date(2026, 8, 29),
     )
     return ZoneResolution(
-        jurisdiction=TROUTDALE,
+        jurisdiction=jurisdiction,
         zone="LDR-2",
         verdict=RuleVerdict.trusted,
         values={
@@ -140,7 +155,12 @@ def screen_rules(*, doubt: float | None = 20, yard_prohibited: bool = True) -> Z
 
 
 def screen_lot(
-    *, depth: float, rules: ZoneResolution, doubt_fit_failed: bool = False
+    *,
+    depth: float,
+    rules: ZoneResolution,
+    doubt_fit_failed: bool = False,
+    doubt_checked: bool = False,
+    strip_waived: bool = False,
 ):
     design = pod()
     fit = Fit(
@@ -160,10 +180,56 @@ def screen_lot(
             lot_width_ft=100,
             lot_depth_ft=200,
             parking_setback_doubt_failed=doubt_fit_failed,
+            parking_setback_doubt_checked=doubt_checked,
+            strip_waived=strip_waived,
         ),
         design,
         fit,
         policy=SlackPolicy(tolerance={"fit_ft": 0.5}),
+    )
+
+
+def drawn_lot(
+    jurisdiction: str,
+    rear_zone: str,
+    side_zone: str,
+    *,
+    rear_unresolved: int = 0,
+) -> QuadfitLot:
+    edges = LotEdges(
+        tier=Tier.clean,
+        edges=(
+            Edge(0, 0, 100, 0, 100, 0, EdgeClass.rear),
+            Edge(0, 0, 0, 100, 100, 90, EdgeClass.side),
+        ),
+        front_bearings=(0,),
+        frontage_ft=100,
+        convexity=1,
+    )
+    return QuadfitLot(
+        tlid="test",
+        jurisdiction=jurisdiction,
+        zone=rear_zone,
+        layer_id=jurisdiction,
+        facts=LotFacts(lot_sqft=20_000),
+        observed={},
+        front_bearings=(0,),
+        envelope=None,
+        edges=edges,
+        neighbour_lines=(
+            NeighbourLine(((jurisdiction, rear_zone),), rear_unresolved),
+            NeighbourLine(((jurisdiction, side_zone),), 0),
+        ),
+    )
+
+
+def drawn_court(*, side: float, rear: float) -> Drawing:
+    return Drawing(
+        room=box(0, 0, 100, 100),
+        building=None,
+        lane=None,
+        court=box(side, rear, side + 10, rear + 10),
+        fits=True,
     )
 
 
@@ -280,6 +346,40 @@ def test_troutdale_fitting_both_setbacks_keeps_today_green() -> None:
     assert not any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
 
 
+def test_troutdale_drawn_court_under_rear_doubt_is_yellow() -> None:
+    rules = screen_rules()
+    lot = drawn_lot(TROUTDALE, "LDR-1", "MU-2")
+    failed = _parking_doubt_drawn_fails(lot, rules, drawn_court(side=25, rear=16.5))
+    result = screen_lot(
+        depth=120, rules=rules, doubt_checked=True, doubt_fit_failed=failed
+    )
+
+    assert failed
+    assert result.triage is Triage.yellow
+    assert PARKING_SETBACK_DOUBT in result.reasons
+
+
+def test_troutdale_drawn_court_clearing_rear_and_side_doubt_can_be_green() -> None:
+    rules = screen_rules()
+    lot = drawn_lot(TROUTDALE, "LDR-1", "LDR-2")
+    failed = _parking_doubt_drawn_fails(lot, rules, drawn_court(side=7.5, rear=20))
+    result = screen_lot(
+        depth=120, rules=rules, doubt_checked=True, doubt_fit_failed=failed
+    )
+
+    assert not failed
+    assert result.triage is Triage.green
+    assert PARKING_SETBACK_DOUBT not in result.reasons
+
+
+def test_troutdale_side_line_uses_its_side_figure_not_the_rear_figure() -> None:
+    rules = screen_rules()
+    lot = drawn_lot(TROUTDALE, "MU-2", "LDR-2")
+    failed = _parking_doubt_drawn_fails(lot, rules, drawn_court(side=8, rear=30))
+
+    assert not failed
+
+
 def test_troutdale_failing_the_stricter_side_fit_is_yellow() -> None:
     result = screen_lot(depth=120, rules=screen_rules(), doubt_fit_failed=True)
 
@@ -310,6 +410,16 @@ def test_city_without_setback_doubt_field_is_unchanged() -> None:
     assert result.triage is Triage.green
     assert PARKING_SETBACK_DOUBT not in result.reasons
     assert not any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
+
+
+def test_sandy_partly_unread_house_line_checks_the_drawn_court_strip() -> None:
+    rules = screen_rules(doubt=None, strip=20, jurisdiction=SANDY)
+    lot = drawn_lot(SANDY, "R-2", "R-2", rear_unresolved=1)
+    failed = _sandy_strip_drawn_fails(lot, rules, drawn_court(side=18.4, rear=30))
+    result = screen_lot(depth=120, rules=rules, strip_waived=failed)
+
+    assert failed
+    assert result.triage is not Triage.green
 
 
 @pytest.mark.parametrize(("zone", "strip"), [("MDR", 10), ("LDR-2", 10)])

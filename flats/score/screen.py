@@ -705,6 +705,9 @@ class LotFacts:
     #: The bridge's fit on the stricter parking line buffer failed; preserved
     #: through later screen passes that refresh other lot measurements.
     parking_setback_doubt_failed: bool = False
+    #: The bridge checked the drawn court against each applicable lot line.
+    #: When true, that per-line result replaces the fit-only approximation.
+    parking_setback_doubt_checked: bool = False
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -2078,6 +2081,8 @@ def _parking_setback_doubt_fails(
         or "fit_across_ft" in unchecked
     ):
         return False
+    if lot.parking_setback_doubt_checked:
+        return lot.parking_setback_doubt_failed
     if lot.parking_setback_doubt_failed:
         return True
 

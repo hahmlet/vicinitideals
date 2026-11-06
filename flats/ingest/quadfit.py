@@ -118,6 +118,7 @@ from flats.geom.envelope import Setbacks, buildable
 from flats.geom.frontage_curve import BAND_DEG, angle_of, is_unbroken, makes_corner
 from flats.geom.neighbour import (
     NEIGHBOUR_FACTS,
+    Line as NeighbourLine,
     lines_from_quadfit,
     observed_neighbours,
     street_line_zones,
@@ -915,6 +916,19 @@ def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dic
     return observed_neighbours(lines, home.neighbours, juris, all_street=all_street)
 
 
+def _neighbour_lines(
+    row: Mapping[str, Any], layers: Mapping[str, Layer] | None
+) -> tuple[NeighbourLine | None, ...]:
+    raw = row.get("neighbour_zones_json")
+    if not raw or layers is None:
+        return ()
+    normalise = _normaliser(layers)
+    return tuple(
+        None if edge is None else lines_from_quadfit((edge,), normalise)[0]
+        for edge in json.loads(raw)
+    )
+
+
 def _park_facts(row: Mapping[str, Any], edges: Sequence[Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
     """``abuts_park`` for one s4 row, or nothing.
 
@@ -978,6 +992,9 @@ class QuadfitLot:
     #: runs the whole line, is not at the rear, or nothing measured it.
     #: :func:`screen_lot` measures the run behind each envelope from it.
     rear_runs: tuple[Any, ...] = ()
+    #: The zones quadfit read across each line; None marks a street edge.
+    #: Empty where no line-by-line zoning record was available.
+    neighbour_lines: tuple[NeighbourLine | None, ...] = ()
     #: The same lot read without the street lines only a private drive
     #: makes (:func:`drive_reading`): :func:`screen_lot` screens both and
     #: keeps the worse answer -- the better where ``second_better``. None
@@ -1880,6 +1897,7 @@ def lot_from_row(
         envelope=envelope,
         lot_geom=lot_geom,
         edges=edges,
+        neighbour_lines=_neighbour_lines(row, layers),
         carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
         reach_off=shapely.from_wkb(row["reach_off_wkb"]) if row.get("reach_off_wkb") else None,
         rear_runs=(
@@ -2255,107 +2273,122 @@ def _search_key(env: Envelope) -> tuple[bytes | None, bytes | None]:
     )
 
 
-def _parking_doubt_rules(rules: ZoneResolution, doubt_ft: float) -> ZoneResolution | None:
-    source = rules.values.get("parking_lot_line_buffer_doubt_ft")
-    if source is None:
-        return None
-    values = dict(rules.values)
-    values[STRIP_FIELD] = dataclasses.replace(source, name=STRIP_FIELD, value=doubt_ft)
-    return dataclasses.replace(rules, values=values)
+_TROUTDALE_HOUSE_SIDE_FT: dict[str, float | None] = {
+    "LDR-1": 10.0,
+    "LDR-2": 7.5,
+    "MDR": 5.0,
+    "MDR(TC)": 5.0,
+    "HDR": None,
+    "HDR(TC)": 5.0,
+}
+_TROUTDALE_RESIDENTIAL_ZONES = frozenset(_TROUTDALE_HOUSE_SIDE_FT)
+_TROUTDALE_NONRESIDENTIAL_ZONES = frozenset(
+    {"MU-1", "MU-2", "MU-3", "CC", "GC", "IP", "LI", "GI", "OS"}
+)
+_TROUTDALE_MAX_HOUSE_SIDE_FT = 10.0
+_SANDY = "or/clackamas/sandy"
 
 
-def _parking_doubt_envelope(
-    lot: QuadfitLot, rules: ZoneResolution, env: Envelope, doubt_ft: float
-) -> Envelope | None:
-    if env.setbacks is None or lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
-        return None
+def _troutdale_line_doubt_ft(
+    lot: QuadfitLot, edge: Edge, neighbour: NeighbourLine | None, maximum_rear_ft: float
+) -> float | None:
+    """Single-house figure for one residential or potentially residential line."""
+    maximum = maximum_rear_ft if edge.cls is EdgeClass.rear else _TROUTDALE_MAX_HOUSE_SIDE_FT
+    if neighbour is None or neighbour.unresolved or not neighbour.zones:
+        return maximum
 
-    edges = dedicated(lot.edges, rules, lot.zone)
-    setbacks = dataclasses.replace(
-        env.setbacks,
-        side_ft=max(env.setbacks.side_ft, doubt_ft),
-        alley_side_ft=(
-            None
-            if env.setbacks.alley_side_ft is None
-            else max(env.setbacks.alley_side_ft, doubt_ft)
-        ),
-    )
-    in_yards = slope_rules().steep_in_setbacks
-    steep = lot.steep if in_yards else _within(lot.steep, lot.envelope)
-    taken = _taken(lot, steep)
-    geom = buildable(lot.lot_geom, edges, setbacks, less=taken)
-    ground_setbacks = dataclasses.replace(
-        setbacks,
-        rear_ft=doubt_ft,
-        alley_rear_ft=None if setbacks.alley_rear_ft is None else doubt_ft,
-        north_ft=0.0,
-        east_west_ft=0.0,
-    )
-    ground = buildable(lot.lot_geom, edges, ground_setbacks, less=taken)
-    return Envelope(geom, env.rear_cut_ft, env.source, setbacks, ground)
+    figures: list[float] = []
+    unknown = neighbour.unresolved > 0
+    for jurisdiction, zone in neighbour.zones:
+        if jurisdiction != lot.jurisdiction:
+            unknown = True
+        elif zone in _TROUTDALE_RESIDENTIAL_ZONES:
+            figure = maximum_rear_ft if edge.cls is EdgeClass.rear else _TROUTDALE_HOUSE_SIDE_FT[zone]
+            if figure is not None:
+                figures.append(figure)
+        elif zone not in _TROUTDALE_NONRESIDENTIAL_ZONES:
+            unknown = True
+    if unknown:
+        figures.append(maximum)
+    return max(figures, default=None)
 
 
-def _parking_doubt_fit_fails(
-    lot: QuadfitLot,
-    facts: LotFacts,
-    design: Design,
-    rules: ZoneResolution,
-    env: Envelope,
-    front: float | None,
-    angles: Sequence[float],
-    fitters: dict[Any, Fitter],
-    policy: SlackPolicy,
-    relief: ReliefPolicy,
-    config: Configuration,
+def _parking_doubt_drawn_fails(
+    lot: QuadfitLot, rules: ZoneResolution, drawing: Any | None
 ) -> bool:
+    """Whether the selected court misses the line-specific single-house yard."""
     if not rules.trusted or rules.get("parking_required_yard_prohibited") is not True:
         return False
-    doubt = lot_line_buffer_doubt_ft(rules)
-    rear = rules.get("setback_rear_ft")
-    rear_ft = float(rear) if isinstance(rear, (int, float)) else 0.0
-    used = max(rear_ft if rules.get("parking_required_yard_prohibited") is True else 0.0,
-               lot_line_buffer_ft(rules))
-    if doubt <= used:
-        return False
+    maximum_rear = lot_line_buffer_doubt_ft(rules)
+    if maximum_rear <= 0 or lot.edges is None:
+        return True
 
-    strict_rules = _parking_doubt_rules(rules, doubt)
-    if strict_rules is None:
-        return False
-    strict_env = _parking_doubt_envelope(lot, strict_rules, env, doubt)
-    if strict_env is None:
-        return False
-    key = _search_key(strict_env)
-    if key not in fitters:
-        fitters[key] = Fitter(strict_env.geom, angles, ground=strict_env.ground)
-    fitter = fitters[key]
-    fit = fit_for(
-        fitter,
-        design,
-        strict_rules,
-        placement=False,
-        carved_rear_ft=strict_env.rear_cut_ft,
-        alley=facts.alley,
-        corner=facts.corner,
-        frontage_ft=facts.cap_frontage_ft,
-        street_deg=_access_deg(lot, front),
-    )
-    if fit.beside and not beside_reaches_street(lot, design, strict_rules, fit, fitter, strict_env):
-        fit = fit_for(
-            fitter,
-            design,
-            strict_rules,
-            placement=False,
-            carved_rear_ft=strict_env.rear_cut_ft,
-            alley=facts.alley,
-            corner=facts.corner,
-            frontage_ft=facts.cap_frontage_ft,
-            street_deg=(),
+    import shapely
+
+    boundary = _yard_neighbour_edges(lot)
+    if not boundary:
+        return True
+    for edge, neighbour in boundary:
+        required = _troutdale_line_doubt_ft(lot, edge, neighbour, maximum_rear)
+        if required is None:
+            continue
+        yard = 0.0
+        if rules.get("parking_required_yard_prohibited") is True:
+            value = rules.get(f"setback_{edge.cls.value}_ft")
+            if isinstance(value, (int, float)):
+                yard = float(value)
+        if required <= max(yard, lot_line_buffer_ft(rules)):
+            continue
+        if drawing is None or drawing.court is None:
+            return True
+        line = shapely.LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
+        if drawing.court.distance(line) + 1e-6 < required:
+            return True
+    return False
+
+
+def _yard_neighbour_edges(
+    lot: QuadfitLot,
+) -> tuple[tuple[Edge, NeighbourLine | None], ...]:
+    if lot.edges is None:
+        return ()
+    if len(lot.neighbour_lines) == len(lot.edges.edges):
+        return tuple(
+            (edge, neighbour)
+            for edge, neighbour in zip(lot.edges.edges, lot.neighbour_lines, strict=True)
+            if neighbour is not None and edge.cls in (EdgeClass.rear, EdgeClass.side)
         )
-    strict_screen = screen(
-        strict_rules, facts, design, fit, policy=policy, relief=relief, config=config
+    return tuple(
+        (edge, None)
+        for edge in lot.edges.edges
+        if edge.cls in (EdgeClass.rear, EdgeClass.side)
+        and edge.street_rank is None
     )
-    fit_check = next((check for check in strict_screen.checks if check.check == "fit_ft"), None)
-    return fit_check is None or fit_check.verdict is not CheckVerdict.passes
+
+
+def _sandy_strip_drawn_fails(
+    lot: QuadfitLot, rules: ZoneResolution, drawing: Any | None
+) -> bool:
+    """Check Sandy's SFR strip against the court that the screen actually drew."""
+    strip = lot_line_buffer_ft(rules)
+    side = rules.get("setback_side_ft")
+    if (
+        lot.jurisdiction != _SANDY
+        or strip <= 0
+        or not isinstance(side, (int, float))
+        or strip <= float(side)
+    ):
+        return False
+    import shapely
+
+    boundary = _yard_neighbour_edges(lot)
+    if not boundary or drawing is None or drawing.court is None:
+        return True
+    for edge, _ in boundary:
+        line = shapely.LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
+        if drawing.court.distance(line) + 1e-6 < strip:
+            return True
+    return False
 
 
 def _screen_on(
@@ -2425,29 +2458,26 @@ def _screen_on(
 
     def screened(fit: Fit) -> tuple[LotFacts, Screening, Screening]:
         facts = base
+        doubt_checked = lot_line_buffer_doubt_ft(got) > 0
+        if doubt_checked:
+            facts = dataclasses.replace(
+                facts, parking_setback_doubt_checked=True, parking_setback_doubt_failed=False
+            )
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
         fit_check = next((check for check in result.checks if check.check == "fit_ft"), None)
-        if (
-            PARKING_SETBACK_DOUBT not in result.reasons
-            and not facts.parking_setback_doubt_failed
-            and fit_check is not None
-            and fit_check.verdict is CheckVerdict.passes
-            and _parking_doubt_fit_fails(
-                here,
-                facts,
-                design,
-                got,
-                env,
-                front,
-                angles,
-                fitters,
-                policy,
-                relief,
-                config,
-            )
-        ):
-            facts = dataclasses.replace(facts, parking_setback_doubt_failed=True)
-            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+        if fit_check is not None and fit_check.verdict is CheckVerdict.passes:
+            drawing = _court_drawn(here, design, got, fit, fitters[key], env, _street_lines(here))
+            doubt_failed = doubt_checked and _parking_doubt_drawn_fails(here, got, drawing)
+            strip_failed = _sandy_strip_drawn_fails(here, got, drawing)
+            if doubt_failed or strip_failed:
+                facts = dataclasses.replace(
+                    facts,
+                    parking_setback_doubt_failed=doubt_failed,
+                    strip_waived=facts.strip_waived or strip_failed,
+                )
+                result = screen(
+                    got, facts, design, fit, policy=policy, relief=relief, config=config
+                )
         if "open_space_shape" in result.unchecked:
             # The screen's window could not prove the outdoor square; measure it
             # on the lot's own ground and screen again on the answer.
