@@ -2434,7 +2434,16 @@ def _rear_court_short(
                 run = shapely.LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
                 if run.distance(middle) < 1.0:
                     return False
-        return court.distance(line) + 0.01 < yard
+        if court.distance(line) + 0.01 < yard:
+            return True
+        # A surveyed rear line a degree off the front makes the lot "irregular"
+        # to the letter and its 10 ft line a far corner: the real line is still
+        # the one opposite, and a court inside the yard off it is held.
+        real = _opposite_line(lot)
+        if real is None or real.cls is not EdgeClass.rear:
+            return False
+        far = shapely.LineString(((real.x1, real.y1), (real.x2, real.y2)))
+        return court.distance(far) + 0.01 < yard
     opposite = _opposite_line(lot)
     if opposite is None or opposite.cls is EdgeClass.rear:
         return False

@@ -704,6 +704,45 @@ def test_gresham_court_is_measured_from_the_imaginary_rear_line(corpus) -> None:
     assert not _rear_court_short(lot, rules, beside_the_slant, 0.0)
 
 
+def test_gresham_court_inside_the_yard_off_a_tilted_rear_line_is_held(corpus) -> None:
+    """1S3E10DA  -10200: 14.5 ft off a rear line a shade off the front, clear of
+    the 10 ft line at its far corner. The real line is still opposite the front."""
+    rules = corpus.resolve(GRESHAM, "LDR-5", ())
+    edges = LotEdges(
+        tier=Tier.clean,
+        edges=(
+            Edge(0, 0, 100, 0, 100, 0, EdgeClass.front),
+            Edge(100, 0, 100, 150, 150, 90, EdgeClass.side),
+            Edge(100, 150, 0, 148, 100, 1, EdgeClass.rear),
+            Edge(0, 148, 0, 0, 148, 90, EdgeClass.side),
+        ),
+        front_bearings=(0,),
+        frontage_ft=100,
+        convexity=1,
+    )
+    across = NeighbourLine((("gresham", "LDR-5"),), 0)
+    lot = QuadfitLot(
+        tlid="1S3E10DA  -10200",
+        jurisdiction="gresham",
+        zone="LDR-5",
+        layer_id=GRESHAM,
+        facts=LotFacts(lot_sqft=15_000),
+        observed={},
+        front_bearings=(0,),
+        envelope=None,
+        edges=edges,
+        lot_geom=Polygon([(0, 0), (100, 0), (100, 150), (0, 148)]),
+        neighbour_lines=(None, across, across, across),
+    )
+    # The low corner of the rear line stands 14.5 off; the 10 ft line, up in the
+    # far corner, 15 and more.
+    court = box(0, 100, 20, 133.5)
+    line = _imaginary_rear_line(lot, 0.0)
+    assert court.distance(line) >= 15
+    assert _rear_court_short(lot, rules, court, 0.0)
+    assert not _rear_court_short(lot, rules, box(0, 100, 20, 132.0), 0.0)
+
+
 def test_gresham_unread_court_is_held(corpus) -> None:
     rules = corpus.resolve(GRESHAM, "LDR-7", ())
     assert _rear_court_short(slanted_lot(GRESHAM), rules, None, 0.0)
