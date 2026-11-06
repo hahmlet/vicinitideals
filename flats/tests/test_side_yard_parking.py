@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import date
 from pathlib import Path
 
@@ -191,6 +192,22 @@ def test_fit_relying_on_silent_side_yard_is_yellow_with_ruling_flag() -> None:
     assert SIDE_YARD_PARKING_SILENT in got.reasons
     assert "2026-11-05-side-yard-parking-silent-codes" in SIDE_YARD_PARKING_SILENT
     assert any(flag.code == "SIDE-YARD-PARKING-SILENT" for flag in got.flags)
+
+
+def test_a_failed_fit_on_steep_ground_does_not_crash_the_side_yard_check() -> None:
+    # The fit's check is named steep_ground there, so looking for fit_ft alone
+    # stopped the whole bridge on the first such lot (size_full, 2026-11-06).
+    miss = Fitter(box(0, 0, 20, 20)).fit(56, 36)
+    assert not miss.fits
+    got = screen(
+        screen_rules(**{FIELD: "lane_and_court"}),
+        LotFacts(lot_sqft=400, frontage_ft=20, lot_width_ft=20, steep_blocks=True),
+        DESIGN,
+        replace(miss, side_yard_stated_fit=miss),
+        policy=SlackPolicy(),
+    )
+    assert got.triage is not Triage.green
+    assert "steep_ground" in {c.check for c in got.checks}
 
 
 def test_stated_reach_fit_remains_green_eligible() -> None:
