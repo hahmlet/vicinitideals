@@ -247,9 +247,10 @@ def test_city_side_yard_values_resolve_from_yaml() -> None:
     assert county_qp.get("parking_side_yard_stated") == "lane_and_court"
     assert county_qp.get("parking_lot_line_buffer_ft") == 5
 
-    west_linn = ruleset.resolve("or/clackamas/west-linn", "R-10")
-    assert west_linn.get(FIELD) is None
-    assert west_linn.get("parking_side_yard_stated") is None
+    # 2026-11-06: West Linn read in round 4; Sherwood's chapter 16.92 still not found.
+    sherwood = ruleset.resolve("or/washington/sherwood", "VLDR")
+    assert sherwood.get(FIELD) is None
+    assert sherwood.get("parking_side_yard_stated") is None
 
 
 
@@ -373,6 +374,71 @@ def test_round_3_city_values_resolve_per_tier(
     zone: str,
     held: tuple[str, ...],
     allowed: str,
+    stated: str | None,
+    buffer: float | None,
+    mode: str,
+    stated_mode: str,
+) -> None:
+    got = corpus.resolve(where, zone, held)
+    assert got.get(FIELD) == allowed
+    assert got.get("parking_side_yard_stated") == stated
+    assert got.get("parking_lot_line_buffer_ft") == buffer
+    assert side_yard_mode(got) == mode
+    assert side_yard_stated_mode(got) == stated_mode
+
+
+# ROUND 4 (2026-11-06): the four places whose deciding chapter is now stored.
+# All silent: a landscape strip along a side line is a limit, not an allowance.
+ROUND_4 = [
+    # West Linn CDC 54.020(B)(3)(h): the strip reaches non-single-family parking.
+    ("or/clackamas/west-linn", "R-10", (), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/clackamas/west-linn", "R-10", ("unit_lots",), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    # Clackamas ZDO 1009.03(B)(1): five feet on both paths, ten in VA.
+    ("or/clackamas/_unincorporated", "R10", (), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/clackamas/_unincorporated", "R2.5", ("unit_lots",), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/clackamas/_unincorporated", "VA", (), "lane_and_court", "none", 10,
+     "lane_and_court", "none"),
+    # Washington County CDC 407-6.4, on the Middle Housing districts.
+    ("or/washington/_unincorporated", "R-5", (), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/washington/_unincorporated", "R-5", ("unit_lots",), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/washington/_unincorporated", "TO:R18-24", (), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    ("or/washington/_unincorporated", "R-15 NB", (), "lane_and_court", "none", 5,
+     "lane_and_court", "none"),
+    # The East Hillsboro overlay takes Hillsboro's lane-only townhouse rule, and
+    # the county's 5 ft beats the city's 4.
+    ("or/washington/_unincorporated", "R-5", ("east_hillsboro_city_standards", "unit_lots"),
+     "lane", "none", 5, "lane", "none"),
+    ("or/washington/_unincorporated", "R-5", ("east_hillsboro_city_standards",),
+     "lane_and_court", "none", 5, "lane_and_court", "none"),
+    # King City: silent, and 16.124.110's buffers do not name a fourplex or a row.
+    ("or/washington/king-city", "KTRC", (), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    ("or/washington/king-city", "R-9", ("unit_lots",), "lane_and_court", "none", None,
+     "lane_and_court", "none"),
+    # LEFT UNSET: off the 430-84 path, Section 411's matrix may govern instead.
+    ("or/washington/_unincorporated", "NMU", (), None, None, None, "none", "none"),
+    ("or/washington/_unincorporated", "R-9 NB", (), None, None, None, "none", "none"),
+]
+
+
+@pytest.mark.parametrize(
+    ("where", "zone", "held", "allowed", "stated", "buffer", "mode", "stated_mode"),
+    ROUND_4,
+    ids=[f"{w.split('/')[1]}-{w.rsplit('/', 1)[-1]}-{z}-{'+'.join(h) or 'QP'}" for w, z, h, *_ in ROUND_4],
+)
+def test_round_4_city_values_resolve_per_tier(
+    corpus: RuleSet,
+    where: str,
+    zone: str,
+    held: tuple[str, ...],
+    allowed: str | None,
     stated: str | None,
     buffer: float | None,
     mode: str,

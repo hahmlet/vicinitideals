@@ -244,7 +244,6 @@ OPEN = {
     "or/clackamas/_unincorporated 511.03 -> 511.04",
     "or/clackamas/_unincorporated 602.03 -> 602.04",
     # 2026-11-05 side-yard chapters fetched (FOLLOWUPS 146).
-    "or/clackamas/_unincorporated 1005.09 -> 1009",
     # Estacada (FOLLOWUPS 53, 2026-10-07), each read when it was added. The
     # fence lines (16.08.010, and 16.60.010 from the C-2, CMU, R-3 and NCR
     # fence clauses) point at the clear vision rule, which the screen does not
@@ -491,6 +490,8 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    # 2026-11-06 (FOLLOWUPS 146): Section 1009 stored and read for side-yard parking.
+    "or/clackamas/_unincorporated 1005.09 -> 1009",
     # 2026-11-01 (FOLLOWUPS 109, Portland plan districts part 1): Johnson Creek
     # Basin's South, Springwater and floodplain sections each send tree removal
     # to 33.537.125, which the tree hold quotes.

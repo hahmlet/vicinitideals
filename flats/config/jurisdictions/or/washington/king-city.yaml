@@ -341,6 +341,34 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
     quote: "or/washington/king-city/16.114/16.114.130.txt#L49,L53"
+  # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Chapter 16.124 now
+  # stored). SILENT. A setback runs from "the wall or foundation of a building"
+  # (16.24), and no chapter places parking in or out of an interior side yard:
+  # 16.132 names no yard, and 16.114.130 C.4.c puts surface parking "to the
+  # side or rear of buildings" without saying a required yard may hold it.
+  # YELLOW at best (ruling 2026-11-05-side-yard-parking-silent-codes).
+  #
+  # NO STRIP. 16.124.110 B bars parking from a BUFFER, and a buffer is owed only
+  # where 16.124.110 requires one: its C names commercial and multi-family
+  # property abutting another zone, and its F (Kingston Terrace) names parking
+  # that serves "dwelling, multi", mixed-use, commercial or institutional
+  # development. 16.24 starts "dwelling, multi" at five units, so a fourplex and
+  # a single-family attached row are neither. A zone-based reading of C could
+  # reach a townhouse row in a denser zone abutting a lesser one; that turns on
+  # the neighbouring zone line by line, which this field cannot say. Left out;
+  # FOLLOWUPS 146 round 4 hand-off.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: King City KCMC 16.24, a setback runs from the wall or foundation of a building; no chapter bars parking from an interior side yard
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.24.definitions.txt#L595-L598,L1102-L1105"
+  parking_side_yard_stated:
+    value: none
+    cite: King City KCMC 16.114.130 C.4.c, surface parking to the side or rear of buildings; it does not say a required side yard may hold it
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/16.114/16.114.130.txt#L49,L53"
   # STALLS AND AISLES. C.9.a sends every off-street stall to Table
   # 16.114-14; the 90-degree Standard row reads "9.0 ft. 8.5 ft. 16.0 ft.
   # 20.0 ft. 16.0 ft." -- stall width, curb length, one-way aisle, two-way

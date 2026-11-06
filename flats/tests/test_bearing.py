@@ -352,7 +352,8 @@ def test_the_bridge_cuts_hdr_by_bearing_and_charges_the_court_against_the_rear_i
     assert owes(env.geom, lot, NORTH, EAST_WEST, az=0.0)
     assert owes(env.geom, lot, NORTH, EAST_WEST, az=env.setbacks.true_north_deg)
     # The court is parking, not a structure: (L) does not reach its ground.
-    assert env.ground.bounds[3] == pytest.approx(Y0 + 160, abs=0.01)
+    # 2026-11-06 (FOLLOWUPS 146): ZDO 1009.03(B)(1)'s five-foot strip does.
+    assert env.ground.bounds[3] == pytest.approx(Y0 + 155, abs=0.01)
 
     # The street on the NORTH: the rear now faces south and owes nothing,
     # so the court is charged in full.

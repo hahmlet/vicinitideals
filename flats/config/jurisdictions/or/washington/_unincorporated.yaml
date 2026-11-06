@@ -1095,11 +1095,6 @@ zones:
           when: [corner_lot]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Maximum Lot Coverage, corner lot, the lowest of the Low Density Residential zones"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L42,L49-L50"
-    parking_lot_line_buffer_ft:
-      value: 4
-      only_when: [east_hillsboro_city_standards]
-      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
-      quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
     parking_max_per_unit:
       value: 2
       only_when: [east_hillsboro_city_standards]
@@ -1129,6 +1124,54 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 15 front / 5 side / 8 street side / 15 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Sections 407 and
+    # 411 now stored). SILENT. 106-205: "Structures do not include paved areas",
+    # and 106-221 keeps a yard clear of "buildings or other structures", so
+    # paving is not barred. No section says parking MAY sit there, though:
+    # 430-84 bars only the front yard, and 413-4.9 reaches parking not
+    # associated with a structure. YELLOW at best (ruling
+    # 2026-11-05-side-yard-parking-silent-codes).
+    #
+    # THE FIVE-FOOT STRIP. 407-6.4: "A minimum 5-foot landscape strip shall be
+    # created along any parking lot boundary, including access roads", which
+    # names the lane too. Section 411 does NOT reach here (411-1.3 excludes
+    # Middle Housing). 407-6 does, by way of 413: 430-84 lists Section 413, and
+    # 413-4.10 says "All parking lots shall be landscaped as required by Section
+    # 407-6". 430-84 lists only 407-7 from 407 itself, so this is a judgement:
+    # unsure reach, conservative answer, and a planted strip goes YELLOW (ruling
+    # 2026-10-04-planted-strips-yellow). It replaces the East Hillsboro 4 ft:
+    # that overlay takes the stricter of county and city, and the county's 5 is
+    # now the stricter.
+    #
+    # R-6 NB and R-15 NB take all this through `like`, rightly: 390-7 sends their
+    # parking to Section 413, and 390-8 and 390-10 state nothing else on it.
+    # NOT ENCODED: every other district. The non-Middle-Housing districts (R-9
+    # NB, R-24 NB, R-25+ NB, NCC NB, NCMU NB, the other TO districts, NMU, CCMU,
+    # CBD) are not on the 430-84 path, so 411's neighbour-by-neighbour matrix may
+    # hold them instead.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      variants:
+        - value: lane
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan overlay, the stricter of county and city (ruling 2026-10-31-east-hillsboro-city-standards-are-an-overlay): Hillsboro CDC 12.50.350.C.1, on the townhouse path driveways may serve parking in side-yard setbacks"
+          quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-6:
     cite_default:
       cite: Washington County CDC 303 (R-6 District), 303-7.1 Middle Housing dimensional requirements
@@ -1263,6 +1306,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 15 front / 5 side / 8 street side / 15 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-9:
     cite_default:
       cite: Washington County CDC 304 (R-9 District), 304-7.1 Middle Housing dimensional requirements
@@ -1401,6 +1463,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 12 front / 5 side / 8 street side / 15 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-15:
     cite_default:
       cite: Washington County CDC 305 (R-15 District), 305-7.1 Middle Housing dimensional requirements
@@ -1539,6 +1620,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-24:
     cite_default:
       cite: Washington County CDC 306 (R-24 District), 306-7.1 Middle Housing dimensional requirements
@@ -1799,11 +1899,6 @@ zones:
           when: [unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Lot Coverage, townhouse on individual lot"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L44,L47,L50"
-    parking_lot_line_buffer_ft:
-      value: 4
-      only_when: [east_hillsboro_city_standards]
-      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
-      quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
     parking_max_per_unit:
       value: 2
       only_when: [east_hillsboro_city_standards]
@@ -1833,6 +1928,30 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip, which replaces the East Hillsboro 4 ft.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      variants:
+        - value: lane
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan overlay, the stricter of county and city (ruling 2026-10-31-east-hillsboro-city-standards-are-an-overlay): Hillsboro CDC 12.50.350.C.1, on the townhouse path driveways may serve parking in side-yard setbacks"
+          quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-25+:
     cite_default:
       cite: Washington County CDC 307 (R-25+ District), 307-7.1 Middle Housing dimensional requirements
@@ -1970,6 +2089,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   # --- North Bethany (Section 390) ---------------------------------------
   #
   # 390-3 makes the North Bethany Subarea Plan (Chapter 2 of the Bethany
@@ -2620,6 +2758,27 @@ zones:
       (Type I or II), 7,000 sq ft parent lot, max four units, front yard 10 to
       15 ft, 35 ft held. No side or rear yard (the Middle Housing table
       states none; Steph 2026-09-29).
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip. 431-6.1 B(2) keeps parking off
+    # facades, to the side or rear of buildings, and states no interior-side rule. TO:R12-18 and
+    # TO:R18-24 take this through `like`.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   TO:R12-18:
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
