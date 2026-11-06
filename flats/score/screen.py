@@ -701,10 +701,17 @@ class LotFacts:
     #: measured the lot, and a key missing where that one deduction was not:
     #: either way a rate on a net acre keeps to the gross-area bound.
     net_deductions: Mapping[str, float] | None = None
+<<<<<<< HEAD
     #: Area in the setbacks-resolved envelope; None where nobody measured it.
     #: Used only for the minimum-FAR more-pods test, as an area-only upper
     #: bound that ignores parking, separation and shape.
     buildable_area_sqft: float | None = None
+=======
+    #: Runs of lot line quadfit measured on a private road or drive
+    #: (:attr:`flats.geom.edges.Edge.road_private`). Used for driveway access
+    #: frontage only where no street line was measured.
+    private_drive_lines_ft: tuple[float, ...] = ()
+>>>>>>> 86254150
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -896,6 +903,63 @@ def covered_parking_check(
         is_maximum=False,
         jurisdiction=where,
     )
+
+
+_PRIVATE_DRIVE_CAP_JURISDICTIONS = frozenset({
+    "or/clackamas/happy-valley",
+    "or/washington/beaverton",
+    "or/washington/sherwood",
+})
+
+
+def _driveway_cap_frontages(rules: ZoneResolution, lot: LotFacts) -> tuple[float, ...]:
+    """Lines the driveway frontage cap can apply to, bounded by lot frontage."""
+    limit = lot.frontage_ft if lot.frontage_ft > 0.0 else None
+
+    def bounded(length: float) -> float:
+        return min(length, limit) if limit is not None else length
+
+    lines = tuple(
+        (index, bounded(length))
+        for index, length in enumerate(lot.street_lines_ft)
+        if length > 0.0
+    )
+    # The lines a private drive makes a street of, each already held to its
+    # own reading's frontage (flats.ingest.quadfit.drive_lines_ft). On a
+    # reading without the doubtful drive lines they are the most the drive's
+    # frontage can be, and stand beside the measured lines as alternatives:
+    # a larger alternative can only turn a miss into a question, never a pass
+    # (held bound hv_cap2, 22E01DD03100, 2026-11-05).
+    private_lines = (
+        tuple(length for length in lot.private_drive_lines_ft if length > 0.0)
+        if rules.jurisdiction in _PRIVATE_DRIVE_CAP_JURISDICTIONS
+        else ()
+    )
+    if lines:
+        ranks = lot.street_line_ranks
+        if (
+            rules.get("corner_access_street") == "lowest_class"
+            and len(ranks) == len(lot.street_lines_ft)
+            and all(ranks[index] is not None for index, _ in lines)
+        ):
+            lowest = min(ranks[index] for index, _ in lines if ranks[index] is not None)
+            lines = tuple(
+                (index, length)
+                for index, length in lines
+                if ranks[index] == lowest
+            )
+        return tuple(length for _, length in lines) + private_lines
+
+    # Alone, a drive line is the line the cap is checked on and can pass it,
+    # so it stays held to the lot's frontage as before.
+    if private_lines:
+        return tuple(bounded(length) for length in private_lines)
+
+    frontage = lot.cap_frontage_ft
+    if frontage is None:
+        return ()
+    longest = lot.street_line_max_ft
+    return (bounded(frontage),) if longest is None else (bounded(frontage), bounded(longest))
 
 
 def _checks(
@@ -1139,28 +1203,22 @@ def _checks(
     # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
     # "Total width of all driveways shall not exceed 50 percent of the street
     # frontage"). The pod has one drive, so its width at the street against
-    # the share of the frontage the code allows -- of ONE street's line
-    # (`cap_frontage_ft`: the shortest street where the lot has more than
-    # one, since the drive's street is not attributed here). Beaverton
-    # 60.05.15.6.C caps "any street lot line"; Steph 2026-10-14 reads a
-    # frontage cap on any street. Summing a corner lot's two lines would
-    # double the allowance (FOLLOWUPS 84). Unmeasured leaves it unchecked.
+    # the share of the frontage the code allows -- of the street line the
+    # driveway crosses. Where the code picks the lowest-class street and its
+    # ranks are measured, only that line applies; otherwise the possible
+    # frontages stay alternatives rather than a summed frontage (FOLLOWUPS 84).
     share = rules.get("driveway_max_frontage_pct")
     if share is not None:
         drive = drive_at_street(
             design, rules, lot.alley, corner=lot.corner, beside=beside
         )
-        line = lot.cap_frontage_ft
-        if lot.landlocked or (drive and line is None):
+        frontages = _driveway_cap_frontages(rules, lot)
+        if lot.landlocked or (drive and not frontages):
             unchecked.append("driveway_frontage_share")
         elif drive:
-            # Held to the shortest street, a lot with 300 ft of frontage
-            # failed on a 30 ft corner piece (Happy Valley, FOLLOWUPS 88).
-            # Where a longer street takes the drive, which one it uses is
-            # not drawn: a question. Where none does, it fails on the
-            # longest -- the least it can miss by.
-            longest = lot.street_line_max_ft
-            if longest is not None and longest > line and drive > share / 100.0 * line:
+            line = min(frontages)
+            longest = max(frontages)
+            if longest > line and drive > share / 100.0 * line:
                 if drive <= share / 100.0 * longest:
                     unchecked.append("driveway_frontage_share")
                     unmeasured.add(DRIVE_STREET)

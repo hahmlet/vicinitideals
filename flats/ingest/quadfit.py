@@ -1787,20 +1787,20 @@ def lot_from_row(
         if how == "replace" and alt is not None:
             # The code says a private drive is not a street: that reading
             # is the lot's only one, and the car may still come in off it.
-            return _with_access(lot_from_row(alt, layers, corridors), row)
+            return _with_drive_lines(_with_access(lot_from_row(alt, layers, corridors), row), row)
         if how == "better":
             # The drive line is a front only where the car comes in from
             # it: the lot as s4 read it, and -- where a street is left --
             # the lot without it, the better kept. With none left the drive
             # is the lot's only way in, and so its front.
             if alt is not None and alt["tier"] != "D":
-                second = lot_from_row(alt, layers, corridors)
+                second = _with_drive_lines(lot_from_row(alt, layers, corridors), row)
         elif alt is None or alt["tier"] == "D":
             # No second reading to screen, or no street left without the
             # drive: nobody can say this lot fronts a street.
             unconfirmed = True
         else:
-            second = lot_from_row(alt, layers, corridors)
+            second = _with_drive_lines(lot_from_row(alt, layers, corridors), row)
             if key == "drives":
                 second = _with_access(second, row)
 
@@ -1854,7 +1854,11 @@ def lot_from_row(
         # Each of those streets' class rank, on the same chains in the same
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
+<<<<<<< HEAD
         durham_apron_clearance_ft=_finite(row.get("durham_apron_clearance_ft")),
+=======
+        private_drive_lines_ft=drive_lines_ft(row) or private_drive_lines_ft(edges),
+>>>>>>> 86254150
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -1928,6 +1932,57 @@ def _with_access(lot: QuadfitLot, row: Mapping[str, Any]) -> QuadfitLot:
     if not any(doubtful):
         bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
     return dataclasses.replace(lot, access=lines, access_bearings=bearings)
+
+
+def drive_lines_ft(row: Mapping[str, Any]) -> tuple[float, ...]:
+    """The lot's lines s4 read as street only because a private drive runs by
+    them (``street_kind_json`` ``drive``, ``drive_on_lot``, ``drive_off_lot``),
+    each contiguous run in feet, no longer than the row's frontage.
+
+    The lot's frontage on its private drive lies somewhere on these lines:
+    the reading without the doubtful lines (``sans_drive_json``) keeps only
+    the part s4 could vouch for, the lines themselves are the most it can be.
+    Empty where s4 recorded no kinds or no drive made a street line.
+    """
+    raw = json.loads(row.get("edges_json") or "[]")
+    kinds = _street_kinds(row) or []
+    if not raw or len(kinds) != len(raw):
+        return ()
+    marked = [
+        len(e) >= 5 and e[4] == STREET_CLASS and kinds[i] in DRIVE_STREET_KINDS
+        for i, e in enumerate(raw)
+    ]
+    if not any(marked):
+        return ()
+    limit = _finite(row.get("frontage_ft"))
+    start = next((i for i in range(len(raw)) if marked[i] and not marked[i - 1]), 0)
+    runs: list[float] = []
+    length = 0.0
+    for offset in range(len(raw)):
+        i = (start + offset) % len(raw)
+        if marked[i]:
+            x1, y1, x2, y2 = (float(v) for v in raw[i][:4])
+            length += math.hypot(x2 - x1, y2 - y1)
+        elif length:
+            runs.append(length)
+            length = 0.0
+    if length:
+        runs.append(length)
+    if limit is not None and limit > 0:
+        runs = [min(r, limit) for r in runs]
+    return tuple(runs)
+
+
+def _with_drive_lines(lot: QuadfitLot, row: Mapping[str, Any]) -> QuadfitLot:
+    """A second reading of ``row`` (without its drive lines) that still knows
+    how long those lines were, so a driveway cap can take them as the most the
+    drive's frontage can be (FOLLOWUPS 120, held bound hv_cap2 2026-11-05)."""
+    lines = drive_lines_ft(row)
+    if not lines:
+        return lot
+    return dataclasses.replace(
+        lot, facts=dataclasses.replace(lot.facts, private_drive_lines_ft=lines)
+    )
 
 
 def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
@@ -4117,6 +4172,38 @@ def street_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
     if edges is None:
         return ()
     return tuple(sum(e.length_ft for e in chain) for chain in street_chains(edges))
+
+
+def private_drive_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
+    """Lengths of contiguous lot-line runs quadfit measured on private roads.
+
+    ``Edge.road_private`` is populated from quadfit's road-width reading; it
+    is distinct from a city street-class rank, which may not exist for a
+    private drive.
+    """
+    if edges is None or not edges.edges:
+        return ()
+    ring = edges.edges
+    marked = [edge.road_private for edge in ring]
+    if not any(marked):
+        return ()
+
+    start = next(
+        (index for index in range(len(ring)) if marked[index] and not marked[index - 1]),
+        0,
+    )
+    runs: list[float] = []
+    length = 0.0
+    for offset in range(len(ring)):
+        edge = ring[(start + offset) % len(ring)]
+        if edge.road_private:
+            length += edge.length_ft
+        elif length:
+            runs.append(length)
+            length = 0.0
+    if length:
+        runs.append(length)
+    return tuple(runs)
 
 
 #: The share of one street's line whose class must be read for the street to
