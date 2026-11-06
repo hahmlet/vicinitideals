@@ -137,6 +137,7 @@ _LABELS: dict[str, str] = {
     "building_frontage_corner": "which street of a corner lot owes the building share",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
+    "parking_lot_line_buffer_doubt_ft": "possible stricter parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
@@ -1339,6 +1340,15 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef(
+        "parking_lot_line_buffer_doubt_ft",
+        "length_ft",
+        "A stricter, unresolved keep-off distance for parking from non-street "
+        "lot lines. It is tested as a second fit and never replaces the "
+        "encoded setback or parking buffer. Optional: absent means no "
+        "additional doubt is held.",
+        False,
+    ),
+    FieldDef(
         "parking_island_sqft_per_space",
         "area_sqft",
         "Planted island a code asks INSIDE a parking area, in square feet per "
@@ -1997,6 +2007,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "parking_lot_line_buffer_ft",
+        "parking_lot_line_buffer_doubt_ft",
         "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",

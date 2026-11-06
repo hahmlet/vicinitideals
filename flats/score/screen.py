@@ -85,10 +85,13 @@ from flats.score.paper import (
     drive_in_front_yard,
     faces_the_street,
     home_lot_standard,
+    lot_line_buffer_doubt_ft,
+    lot_line_buffer_ft,
     lot_standard,
     paved,
     side_column,
     side_court,
+    yards_kept_clear,
 )
 from flats.score.more_pods import clearly_cannot_fit
 from flats.score.relief import (
@@ -330,6 +333,12 @@ STREET_RANK_UNKNOWN = "STREET_RANK_UNKNOWN"
 PARKING_STRIP_UNCONFIRMED = "PARKING_STRIP_UNCONFIRMED"
 #: The field :data:`PARKING_STRIP_UNCONFIRMED` waives.
 STRIP_FIELD = "parking_lot_line_buffer_ft"
+#: A lot fits the encoded setback but not the stricter single-house reading.
+PARKING_SETBACK_DOUBT = "PARKING_SETBACK_DOUBT"
+PARKING_SETBACK_DOUBT_RULING = "2026-11-05-troutdale-parking-abutting-setback"
+#: The drawn court stands closer to the line opposite the front than the rear
+#: yard the code keeps parking out of (:attr:`LotFacts.rear_court_short`).
+REAR_COURT_SHORT = "REAR_COURT_SHORT"
 #: Red on the fire hose alone measured from 10 ft out from the curb, and
 #: clear measured from the curb itself (FIRE-HOSE-START; FOLLOWUPS 29).
 FIRE_HOSE_START = "FIRE_HOSE_START"
@@ -777,6 +786,18 @@ class LotFacts:
     #: (:attr:`flats.geom.edges.Edge.road_private`). Used for driveway access
     #: frontage only where no street line was measured.
     private_drive_lines_ft: tuple[float, ...] = ()
+    #: The bridge's fit on the stricter parking line buffer failed; preserved
+    #: through later screen passes that refresh other lot measurements.
+    parking_setback_doubt_failed: bool = False
+    #: The bridge checked the drawn court against each applicable lot line.
+    #: When true, that per-line result replaces the fit-only approximation.
+    parking_setback_doubt_checked: bool = False
+    #: The drawn court misses the rear yard measured from the line opposite the
+    #: front, which the setback classes may call a side when it runs slanted
+    #: (:func:`flats.ingest.quadfit.rear_court_checked`). False where nothing
+    #: measured it, which is every caller but the bridge. Holds the lot out of
+    #: GREEN and moves no setback.
+    rear_court_short: bool = False
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -2043,6 +2064,7 @@ def _court_beyond_rear(
     stalls: int | None = None,
     corner: bool = False,
     fix: Fix | None = None,
+    doubt_buffer_ft: float | None = None,
 ) -> float:
     """Depth the parking court needs past the envelope's rear edge, in feet.
 
@@ -2095,7 +2117,13 @@ def _court_beyond_rear(
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
-    return max(0.0, behind_wall_ft(court, rear_ft, rules) - carved)
+    return max(
+        0.0,
+        behind_wall_ft(
+            court, rear_ft, rules, lot_line_buffer_override_ft=doubt_buffer_ft
+        )
+        - carved,
+    )
 
 
 def _court_over(
@@ -2169,6 +2197,8 @@ def _beside_beyond(
     deep_ft: float,
     rules: ZoneResolution,
     carved_rear_ft: float | None = None,
+    *,
+    doubt_buffer_ft: float | None = None,
 ) -> float:
     """Depth a court BESIDE a building ``deep_ft`` deep needs past the
     envelope's rear edge (:func:`flats.score.paper.side_court`).
@@ -2192,7 +2222,79 @@ def _beside_beyond(
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
-    return max(0.0, behind_wall_ft(overhang, rear_ft, rules) - carved)
+    return max(
+        0.0,
+        behind_wall_ft(
+            overhang, rear_ft, rules, lot_line_buffer_override_ft=doubt_buffer_ft
+        )
+        - carved,
+    )
+
+
+def _parking_setback_doubt_fails(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    fit: Fit,
+    checks: Sequence[CheckResult],
+    unchecked: Sequence[str],
+    policy: SlackPolicy,
+) -> bool:
+    """Whether a passing encoded fit fails under its stricter keep-off figure.
+
+    Not gated on ``rules.trusted``: Troutdale's rules are unsigned, and the
+    gate threw away the drawn-court doubt the bridge had found (FOLLOWUPS 150
+    round-4 mini check: 45 of 132 false GREENs stood). The doubt only ever
+    holds a lot out of GREEN, so it runs on unsigned rules too."""
+    if rules.get("parking_required_yard_prohibited") is not True:
+        return False
+
+    doubt = lot_line_buffer_doubt_ft(rules)
+    rear = rules.get("setback_rear_ft")
+    rear_ft = float(rear) if isinstance(rear, (int, float)) else 0.0
+    used = max(rear_ft if yards_kept_clear(rules) else 0.0, lot_line_buffer_ft(rules))
+    if doubt <= used:
+        return False
+
+    fit_check = next((check for check in checks if check.check == "fit_ft"), None)
+    if (
+        fit_check is None
+        or fit_check.verdict is Verdict.fails
+        or "fit_across_ft" in unchecked
+    ):
+        return False
+    if lot.parking_setback_doubt_checked:
+        return lot.parking_setback_doubt_failed
+    if lot.parking_setback_doubt_failed:
+        return True
+
+    if fit.beside:
+        doubt_beyond = _beside_beyond(
+            _beside_for(design, rules, lot),
+            fit.required_ft,
+            rules,
+            lot.envelope_rear_ft,
+            doubt_buffer_ft=doubt,
+        )
+    else:
+        doubt_beyond = _court_beyond_rear(
+            design,
+            rules,
+            lot.envelope_rear_ft,
+            lot.alley,
+            column=fit.column,
+            corner=lot.corner,
+            fix=_fix(fit),
+            doubt_buffer_ft=doubt,
+        )
+    doubt_check = policy.evaluate(
+        "fit_ft",
+        fit_check.observed,
+        fit.required_ft + doubt_beyond,
+        is_maximum=False,
+        jurisdiction=rules.jurisdiction,
+    )
+    return doubt_check.verdict is not Verdict.passes
 
 
 def _beside_over(
@@ -2631,6 +2733,9 @@ def screen(
     across = court_across(design, rules, lot.alley, corner=lot.corner)
     checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
     min_far_no_room = _min_far_cannot_fit(checks, lot, design)
+    parking_setback_doubt = _parking_setback_doubt_fails(
+        rules, lot, design, fit, checks, unchecked, policy
+    )
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
     worst_check = dominant(checks)
@@ -2728,6 +2833,7 @@ def screen(
         optimistic=optimistic,
         warnings=common["warnings"],
         min_far_no_room=min_far_no_room,
+        parking_setback_doubt=parking_setback_doubt,
     )
 
     if use_blocked and use_path is not None and not use_path.available:
@@ -2774,6 +2880,8 @@ def screen(
         reasons.append(STREET_UNCONFIRMED)
     if lot.strip_waived:
         reasons.append(PARKING_STRIP_UNCONFIRMED)
+    if lot.rear_court_short:
+        reasons.append(REAR_COURT_SHORT)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
     if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
@@ -2812,6 +2920,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
+    if parking_setback_doubt:
+        closer = (*closer, PARKING_SETBACK_DOUBT)
 
     if min_far_no_room or apron_failed:
         return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
@@ -3461,6 +3571,7 @@ def _account(
     use_path: ReliefOutcome | None,
     *,
     review: str | None = None,
+    parking_setback_doubt: bool = False,
     reach: bool = False,
     cleared_use: tuple[str, str] | None = None,
     tight: bool,
@@ -3509,6 +3620,14 @@ def _account(
         flag("ACCESS-STREET-UNCONFIRMED", STREET_UNCONFIRMED)
     if lot.strip_waived:
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
+    if lot.rear_court_short:
+        flag("PARKING-REAR-COURT-SHORT", REAR_COURT_SHORT)
+    if parking_setback_doubt:
+        flag(
+            "PARKING-SETBACK-DOUBT",
+            PARKING_SETBACK_DOUBT,
+            source=PARKING_SETBACK_DOUBT_RULING,
+        )
     if "fit_across_ft" in unchecked:
         flag("FIT-COURT-WIDTH", COURT_WIDTH_UNMEASURED)
     if rules.values:
@@ -3710,6 +3829,9 @@ __all__ = [
     "NO_FRONTAGE",
     "OPTIMISTIC_CHECKS",
     "PARKING_STRIP_UNCONFIRMED",
+    "PARKING_SETBACK_DOUBT",
+    "PARKING_SETBACK_DOUBT_RULING",
+    "REAR_COURT_SHORT",
     "RELIEF_UNCONFIRMED",
     "STANDARD_NOT_ENCODED",
     "STREET_RANK_UNKNOWN",

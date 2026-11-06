@@ -195,6 +195,29 @@ def test_an_exemption_against_a_printed_figure_is_not_this_check(tmp_path) -> No
     assert found.mismatches == ()
 
 
+def test_a_standard_borrowed_from_the_neighbours_column_is_not_a_misread(tmp_path) -> None:
+    # Troutdale 9.095 A: parking beside LDR-1 meets LDR-1's building setback,
+    # so LDR-2's strip beside it is the 10 in LDR-1's column (FOLLOWUPS 150).
+    # Without the neighbour fact the same 10 is the misread this check exists for.
+    row = "     Side yard     10        7.5       5         5         N/A       5"
+    for when, wrong in (("abuts_lower_density_zone", 0), ("unit_lots", 1)):
+        configroot, docroot = _corpus2(tmp_path / when, HEADER_TC, row, "LDR-2", "x:")
+        (configroot / "or" / "x" / "city.yaml").write_text(
+            "zones:\n"
+            "  LDR-2:\n"
+            "    parking_lot_line_buffer_ft:\n"
+            "      value: 7.5\n"
+            '      quote: "or/x/city/table.txt#L3"\n'
+            "      variants:\n"
+            "        - value: 10\n"
+            f"          when: [{when}]\n"
+            '          quote: "or/x/city/table.txt#L3"\n',
+            encoding="utf-8",
+        )
+        found = survey(configroot=configroot, docroot=docroot)
+        assert len(found.mismatches) == wrong, when
+
+
 def test_zero_and_none_are_the_same_setback(tmp_path) -> None:
     # Portland writes 0 where Table 130-2 reads "none" for a street lot line,
     # and says so in the file. A setback is subtracted rather than tested, so
