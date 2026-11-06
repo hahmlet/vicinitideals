@@ -261,6 +261,13 @@ def flatter_checked(
             site_grade_source=None,
             site_grade_tried=False,
         )
+        if facts.front_max_tried:
+            # The maximum front setback measured where this spot stands the
+            # building (FOLLOWUPS 147), so no worse is read on it.
+            facts = dataclasses.replace(
+                facts,
+                front_max_streets=q.front_max_streets(dataclasses.replace(at, drawing=drawn)),
+            )
         result = q.screen(
             s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config
         )

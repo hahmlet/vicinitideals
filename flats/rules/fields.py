@@ -162,6 +162,8 @@ _LABELS: dict[str, str] = {
     "clear_objective_housing": "state law allows only clear and objective standards for housing",
     "setback_front_ft": "front setback",
     "setback_front_max_ft": "max. front setback",
+    "setback_front_max_streets": "which streets the max. front setback reaches",
+    "setback_front_max_facade_pct": "facade share within the max. front setback",
     "setback_garage_entrance_ft": "garage entrance setback",
     "setback_rear_ft": "rear setback",
     "setback_side_ft": "interior side setback",
@@ -445,6 +447,40 @@ _F: tuple[FieldDef, ...] = (
         "Gresham DRL and Fairview base zones impose these.",
         True,
         "max_front_setback",
+    ),
+    FieldDef(
+        "setback_front_max_streets",
+        "enum",
+        "Which of a lot's streets the maximum front setback "
+        "(`setback_front_max_ft`) holds the building to, where a corner or "
+        "through lot has more than one (FOLLOWUPS 147). `every`: each street "
+        "line (Tigard Table 18.280.1, a maximum for both the front and the "
+        "street side). `front`: the front lot line alone. `one`: any one "
+        "street, the applicant's pick. `corner_every`: both streets of a "
+        "corner lot, and on a through lot or a lot on three streets the ones "
+        "the code picks by a class FLATS does not hold (Portland "
+        "33.130.215.C.2.c, the highest transit street classification). "
+        "`conditional`: only on a street or in a district FLATS does not hold, "
+        "so the maximum may not reach the lot at all: a building within it "
+        "passes, and one beyond it is held out of GREEN, never failed "
+        "(Portland Table 150-2, transit streets and "
+        "Pedestrian Districts). "
+        "Absent, nothing says which: the screen passes a building within the "
+        "maximum of every street, fails one beyond it on every street, and "
+        "holds the rest out of GREEN.",
+        choices=("every", "front", "one", "corner_every", "conditional"),
+    ),
+    FieldDef(
+        "setback_front_max_facade_pct",
+        "percent",
+        "Share of the street-facing facade that must stand within the "
+        "maximum front setback (`setback_front_max_ft`): Portland "
+        "33.130.215.C.1, \"At least 50 percent of the length of the ground "
+        "level street-facing facade of the building must meet the maximum "
+        "setback standard\". Absent, the screen passes a building whose whole "
+        "facing wall is within the maximum and fails one whose nearest point "
+        "is beyond it, and holds a wall turned between the two out of GREEN.",
+        False,
     ),
     FieldDef(
         "setback_garage_entrance_ft",
@@ -1846,6 +1882,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
         "setback_front_max_ft",
+        "setback_front_max_streets",
+        "setback_front_max_facade_pct",
         "setback_garage_entrance_ft",
         "min_building_separation_ft",
         "min_lot_width_ft",

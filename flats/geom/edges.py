@@ -153,6 +153,11 @@ class Edge:
     #: The streets this line may be on, by name (:func:`flats.geom.dedication.street_key`),
     #: for a code that lists its distances by street; None where unread.
     road_names: tuple[str, ...] | None = None
+    #: The named street this street lot line lies on, read off Metro's
+    #: centrelines (:mod:`flats.geom.street_names`, FOLLOWUPS 147). None -- the
+    #: default, and the answer where no centreline runs beside the line or
+    #: nothing read it -- is unread, never a street of its own.
+    street_name: str | None = None
     #: The street's class on each TSP map a dedication reads here, as
     #: ``(map key, class or None)`` pairs (:data:`flats.geom.dedication.BUCKETS`);
     #: a map left out, or a None, is unread.

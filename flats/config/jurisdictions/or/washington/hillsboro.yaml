@@ -1853,6 +1853,10 @@ zones:
       value: 13
       cite: Hillsboro CDC Table 12.22.460-1, Maximum Setbacks, front yard, middle housing
       quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L75-L76,L82"
+    setback_front_max_streets:
+      value: one
+      cite: Hillsboro CDC 12.50.130 C.3.a, middle housing meets the maximum where at least one facade is within it
+      quote: "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"
     min_building_height_stories:
       value: 2
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Building Height
@@ -2540,6 +2544,10 @@ zones:
       value: 20
       cite: Hillsboro CDC Table 12.24.160-1, Maximum Setbacks, front yard
       quote: "or/washington/hillsboro/12.24/12.24.160.txt#L55,L76,L78"
+    setback_front_max_streets:
+      value: one
+      cite: Hillsboro CDC 12.50.130 C.3.a, middle housing meets the maximum where at least one facade is within it
+      quote: "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"
     max_height_ft:
       value: 45
       cite: Hillsboro CDC Table 12.24.160-1, Maximum Building Height
@@ -2933,6 +2941,10 @@ zones:
       value: 15
       cite: Hillsboro CDC Table 12.24.460-1, Maximum Setbacks, front yard, quadplex
       quote: "or/washington/hillsboro/12.24/12.24.460.txt#L47,L83,L85,L90-L92"
+    setback_front_max_streets:
+      value: one
+      cite: Hillsboro CDC 12.50.130 C.3.a, middle housing meets the maximum where at least one facade is within it
+      quote: "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"
     min_building_height_stories:
       # 2 stories within 800 feet of an LRT station, none beyond; held
       # everywhere. The pod is two stories and meets it either way.

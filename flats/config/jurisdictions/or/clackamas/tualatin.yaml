@@ -1764,6 +1764,10 @@ zones:
       value: 20
       cite: TDC Table 53-2, Maximum Setback, Front
       quote: "or/clackamas/tualatin/53/53.300.txt#L33-L34"
+    setback_front_max_streets:
+      value: front
+      cite: TDC Table 53-2, Maximum Setback, Front
+      quote: "or/clackamas/tualatin/53/53.300.txt#L27,L33-L34"
     setback_side_ft:
       # "Side and Rear 0-20 feet. Determined through Architectural Review
       # Process." A range a review settles, held at its top.

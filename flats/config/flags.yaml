@@ -430,6 +430,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-FRONT-MAX-DRAWN:
+    description: "The zone states a maximum front setback and no fitting building, or no street line, was drawn to measure the building's distance from the street on"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the pod on the lot against its street lines and measure it (FOLLOWUPS 147)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  MEASURE-FRONT-MAX-STREET:
+    description: "The drawn building stands within the maximum front setback on one reading and beyond it on another: which of the lot's streets the code holds it to, how much of the facade must stand within it, or a sidewalk easement the distance may be measured from decides"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Read which street the code's maximum front setback reaches on corner and through lots (setback_front_max_streets) and the facade share it asks, per zone (FOLLOWUPS 147)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   FRONTAGE-MORE-BUILDINGS:
     description: "One pod cannot fill the building share of a street this long, but enough pods to fill it could stand side by side along it: the lot needs more than one building"
     kind: categorical

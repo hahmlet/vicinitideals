@@ -168,7 +168,11 @@ pytestmark = pytest.mark.unit
 # zones gain min_far exempt off 33.526.220.C / 33.521.220.C ("shown on Map 526-3 / 521-3"),
 # exemption by omission -- the minimum exists only where the map prints one -- with the
 # drawn .25, .5 and 1 to 1 figures as variants behind the traced Map 526-3 / 521-3 areas.
-EXPECTED = {"stated": 470, "numeric": 187, "marker": 0, "dash": 2, "silent": 8}
+# 470 -> 471 stated on 2026-11-04: Beaverton MR's maximum front setback is
+# exempt because note 18 applies only where 60.05.15.6 governs.
+# 471 -> 473 stated on 2026-11-05: TO:R24-40 and TO:R40-80 print None for the
+# frontage minimum in Table B(2) (375-10.txt#L342).
+EXPECTED = {"stated": 473, "numeric": 187, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

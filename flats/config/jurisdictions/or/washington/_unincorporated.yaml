@@ -2491,10 +2491,10 @@ zones:
   # facade, window and entry details (a design checklist, Steph 2026-10-14).
   # A flat roof with a parapet and cornice is allowed in every TO residential
   # district but TO:R9-12 (431-5.3 B(11)(e)), which is Middle Housing only and
-  # outside 431. Section 411 is not stored. It is also why the yards of those paths are
-  # left owed rather than read from B(2)'s "None": B(2)'s footnotes send the
-  # frontage minimum to Section 418 and the interior minimum to the screening
-  # and buffering of Sections 411 and 431 (L1025, L1030-L1032).
+  # outside 431. Section 411 is not stored. B(2) prints "None" for the
+  # frontage minimum in TO:R24-40 and TO:R40-80; other yard questions remain
+  # owed because the footnotes refer to Section 418 and Sections 411 and 431
+  # (L1025, L1030-L1032).
   TO:R9-12:
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
@@ -2591,6 +2591,10 @@ zones:
     setback_front_max_ft:
       value: 15
       cite: Washington County CDC 375 Table B(1), Front Yard - maximum 15 feet
+      quote: "or/washington/_unincorporated/375/375-10.txt#L263,L297"
+    setback_front_max_streets:
+      value: front
+      cite: Washington County CDC 375 Table B(1), front yard maximum
       quote: "or/washington/_unincorporated/375/375-10.txt#L263,L297"
     min_building_separation_ft:
       value: 6
@@ -2725,10 +2729,26 @@ zones:
       exempt: true
       cite: Washington County CDC 375 Table B(2), Minimum Lot Area None in TO:R24-40
       quote: "or/washington/_unincorporated/375/375-10.txt#L305,L309-L313"
+    setback_front_ft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(2), minimum frontage yard, TO:R24-40
+      quote: "or/washington/_unincorporated/375/375-10.txt#L309,L342"
     setback_front_max_ft:
       value: 10
       cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R24-40
       quote: "or/washington/_unincorporated/375/375-10.txt#L309,L343-L344"
+    setback_front_max_streets:
+      # Note F holds the frontage maximum to "a pedestrian street, as defined in Section
+      # 431-3.8", which reads "Any public or private street, but not including freeways,
+      # alleys, parking lot access drives, and parking lot aisles"
+      # (or/washington/_unincorporated/cdc.431.transit-design.txt#L64-L65): every street.
+      value: every
+      cite: Washington County CDC 375 Table B(2), note F, and 431-3.8, a pedestrian street is any street but a freeway, alley or parking drive
+      quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
+    setback_front_max_facade_pct:
+      value: 50
+      cite: Washington County CDC 375 Table B(2), note F, frontage maximum applies to at least 50 percent of the first floor facing a pedestrian street
+      quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
     min_density_du_per_acre:
       # "24 d.u./ac. or .65 FAR"; the FAR alternative is refused above.
       value: 24
@@ -2750,14 +2770,12 @@ zones:
       value: 40
       cite: Washington County CDC 375 Table C(2), maximum density TO:R24-40
       quote: "or/washington/_unincorporated/375/375-10.txt#L403-L404,L440,L449-L450,L456"
-    # setback_front_ft, setback_side_ft and setback_rear_ft are owed: B(2)
-    # prints "None" and its footnotes (E) and (H) keep Sections 418, 411 and
-    # 431, of which only 418 is stored. They matter only on the townhouse
-    # variant; the four-units-on-one-lot answer is settled false.
+    # B(2) prints "None" for the frontage minimum in this district. Other
+    # yards remain subject to the applicable sections and footnotes.
     notes: >-
       DRAFT. Transit Oriented residential district: four units on one lot
       not listed (false); townhouses on their own lots Type II, 60 ft,
-      24 to 40 units per acre. Yards owed.
+      24 to 40 units per acre.
   TO:R40-80:
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(2) and Table C(2) (all other development)
@@ -2811,10 +2829,26 @@ zones:
       exempt: true
       cite: Washington County CDC 375 Table B(2), Minimum Lot Area None in TO:R40-80
       quote: "or/washington/_unincorporated/375/375-10.txt#L305,L309-L313"
+    setback_front_ft:
+      exempt: true
+      cite: Washington County CDC 375 Table B(2), minimum frontage yard, TO:R40-80
+      quote: "or/washington/_unincorporated/375/375-10.txt#L309,L342"
     setback_front_max_ft:
       value: 10
       cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R40-80
       quote: "or/washington/_unincorporated/375/375-10.txt#L309,L343-L345"
+    setback_front_max_streets:
+      # Note F holds the frontage maximum to "a pedestrian street, as defined in Section
+      # 431-3.8", which reads "Any public or private street, but not including freeways,
+      # alleys, parking lot access drives, and parking lot aisles"
+      # (or/washington/_unincorporated/cdc.431.transit-design.txt#L64-L65): every street.
+      value: every
+      cite: Washington County CDC 375 Table B(2), note F, and 431-3.8, a pedestrian street is any street but a freeway, alley or parking drive
+      quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
+    setback_front_max_facade_pct:
+      value: 50
+      cite: Washington County CDC 375 Table B(2), note F, frontage maximum applies to at least 50 percent of the first floor facing a pedestrian street
+      quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
     min_density_du_per_acre:
       value: 40
       cite: Washington County CDC 375 Table C(2), minimum density TO:R40-80
@@ -2835,11 +2869,11 @@ zones:
       value: 80
       cite: Washington County CDC 375 Table C(2), maximum density TO:R40-80
       quote: "or/washington/_unincorporated/375/375-10.txt#L405-L406,L440,L451-L452,L456"
-    # Yards owed, as in TO:R24-40.
+    # Other yards owed, as in TO:R24-40.
     notes: >-
       DRAFT. Transit Oriented residential district: four units on one lot
       not listed (false); townhouses on their own lots Type II, 80 ft,
-      40 to 80 units per acre. Yards owed.
+      40 to 80 units per acre. Other yards owed.
   TO:BUS:
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(2) and 375-7 (15)
