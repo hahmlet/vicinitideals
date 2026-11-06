@@ -243,6 +243,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [PARKING_SETBACK_DOUBT]
+  PARKING-REAR-COURT-SHORT:
+    description: "The drawn court stands closer to the line opposite the front than the rear yard the code keeps parking out of"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: parking
+    resolution: document_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the court against the rear lot line as the city's definition draws it (Gresham 3.0100: the 10 ft line of an irregular lot)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [REAR_COURT_SHORT]
 
   # --- what our own measurement left open --------------------------------
   FIT-COURT-WIDTH:

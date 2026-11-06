@@ -113,7 +113,7 @@ from flats.geom.corner import (
 from flats.geom import dedication
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.drawn import load_area, observed_drawn
-from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
+from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg, bearing_delta
 from flats.geom.envelope import Setbacks, buildable
 from flats.geom.frontage_curve import BAND_DEG, angle_of, is_unbroken, makes_corner
 from flats.geom.neighbour import (
@@ -177,6 +177,7 @@ from flats.score.paper import (
     front_lot_line_rule,
     front_lot_line_through_rule,
     front_min_depth_ft,
+    kept_rear_yard_ft,
     lot_line_buffer_doubt_ft,
     lot_line_buffer_ft,
     side_column,
@@ -2273,6 +2274,7 @@ def _search_key(env: Envelope) -> tuple[bytes | None, bytes | None]:
     )
 
 
+FIELD_YARD_KEPT = "parking_required_yard_prohibited"
 _TROUTDALE_HOUSE_SIDE_FT: dict[str, float | None] = {
     "LDR-1": 10.0,
     "LDR-2": 7.5,
@@ -2291,13 +2293,168 @@ _TROUTDALE_MAX_HOUSE_SIDE_FT = 10.0
 #: never matched and the strip check ran on no real lot (FOLLOWUPS 150
 #: round-4 mini check, 24E14DA00700).
 _SANDY = "or/clackamas/sandy"
+_GRESHAM = "or/multnomah/gresham"
+_TROUTDALE = "or/multnomah/troutdale"
+#: The cities whose rear court was read off the rear yard (FOLLOWUPS 150).
+#: Cornelius and Gladstone hold the same field and their rear-line definitions
+#: are unread here, so they keep the classes.
+_REAR_COURT_LAYERS = frozenset({_GRESHAM, _SANDY, _TROUTDALE})
+#: A line running further than this off the front is not "opposite" it, whatever
+#: its distance: on a through lot the far non-street line is a side.
+_OPPOSITE_MAX_DEG = 60.0
+
+
+def _opposite_line(lot: QuadfitLot) -> Edge | None:
+    """The non-street line opposite and most distant from the front.
+
+    TDC 1.020 (1.020.definitions.txt#L559): the rear line is one "not abutting
+    a street which is opposite and most distant from the front lot line". The
+    classes in :mod:`flats.geom.edges` go by bearing, so a line more than 30
+    degrees off the front reads as a side, and :func:`flats.geom.corner.name_front`
+    can turn a rear into a side the same way; that stays right for the setbacks,
+    which this does not touch. It is the court's checks that must not take such
+    a line for a side (FOLLOWUPS 150 round 5, 1N3E36AC  -06300: 33 degrees off,
+    court 17.2 ft from it, classed side).
+    """
+    if lot.edges is None:
+        return None
+    fronts = lot.edges.of_class(EdgeClass.front)
+    boundary = _yard_neighbour_edges(lot)
+    if not fronts or not boundary:
+        return None
+    import shapely
+
+    front = shapely.MultiLineString(
+        [((e.x1, e.y1), (e.x2, e.y2)) for e in fronts]
+    )
+
+    def away(edge: Edge) -> float:
+        return front.distance(shapely.Point((edge.x1 + edge.x2) / 2, (edge.y1 + edge.y2) / 2))
+
+    far = max((edge for edge, _ in boundary), key=away)
+    along = max(fronts, key=lambda e: e.length_ft).bearing_deg
+    return far if bearing_delta(far.bearing_deg, along) < _OPPOSITE_MAX_DEG else None
+
+
+def _imaginary_rear_line(lot: QuadfitLot, front_deg: float | None) -> Any | None:
+    """Gresham's rear lot line, drawn as 3.0100 draws it, or None if unreadable.
+
+    "In the case of an irregular or triangular shaped lot, an imaginary lot
+    line ten feet in length shall be drawn within the lot parallel to and at the
+    maximum distance from the front lot line" (3.0100.definitions.txt#L1345-L1347),
+    and an irregular lot is any "other than rectangular in shape" (#L1319). On a
+    rectangle it is the rear line itself. Returned at its full run across the
+    lot, which only ever stands nearer the court than ten feet of it would.
+    """
+    if lot.edges is None or lot.lot_geom is None:
+        return None
+    fronts = lot.edges.of_class(EdgeClass.front)
+    if not fronts:
+        return None
+    import shapely
+
+    longest = max(fronts, key=lambda e: e.length_ft)
+    bearing = math.radians(longest.bearing_deg if front_deg is None else float(front_deg))
+    ux, uy = math.cos(bearing), math.sin(bearing)
+    nx, ny = -uy, ux
+    across = (longest.x1 + longest.x2) / 2 * nx + (longest.y1 + longest.y2) / 2 * ny
+    centre = lot.lot_geom.centroid
+    if (centre.x * nx + centre.y * ny) < across:
+        nx, ny = -nx, -ny
+        across = -across
+    ring = shapely.get_coordinates(lot.lot_geom)
+    deepest = float((ring[:, 0] * nx + ring[:, 1] * ny).max())
+    along = centre.x * ux + centre.y * uy
+    span = ring.max(axis=0) - ring.min(axis=0)
+    reach = math.hypot(float(span[0]), float(span[1])) + 1.0
+
+    def chord(at: float) -> Any | None:
+        base = (at * nx + along * ux, at * ny + along * uy)
+        ruler = shapely.LineString(
+            (
+                (base[0] - reach * ux, base[1] - reach * uy),
+                (base[0] + reach * ux, base[1] + reach * uy),
+            )
+        )
+        cut = ruler.intersection(lot.lot_geom)
+        pieces = [p for p in getattr(cut, "geoms", (cut,)) if p.geom_type == "LineString"]
+        pieces = [p for p in pieces if p.length >= 10.0]
+        return max(pieces, key=lambda p: p.length) if pieces else None
+
+    at = deepest - 0.5
+    while at > across and chord(at) is None:
+        at -= 0.5
+    found = chord(at)
+    if found is None:
+        return None
+    # Walked in half-feet: narrow it to the true depth, or a square rear line
+    # would read half a foot nearer the court than it stands.
+    high = at + 0.5
+    for _ in range(8):
+        middle = (at + high) / 2
+        got = chord(middle)
+        if got is None:
+            high = middle
+        else:
+            at, found = middle, got
+    return found
+
+
+def _rear_court_short(
+    lot: QuadfitLot, rules: ZoneResolution, court: Any | None, front_deg: float | None
+) -> bool:
+    """Whether the drawn court misses the rear yard the code keeps it out of,
+    measured from the line that code calls the rear (FOLLOWUPS 150 round 5).
+
+    Gresham draws its own rear line on any lot but a rectangle
+    (:func:`_imaginary_rear_line`), so a slanted line only counts through that
+    line; where the far end of the lot is a street there is no rear line to
+    stand off. Sandy and Troutdale read the actual line opposite the front
+    (:func:`_opposite_line`), Sandy's own 10 ft line standing further off than
+    the real ones. Anything that cannot be read holds the lot out of GREEN.
+    Moves no setback: this only answers for the court.
+    """
+    if lot.layer_id not in _REAR_COURT_LAYERS or rules.get(FIELD_YARD_KEPT) is not True:
+        return False
+    rear = rules.get("setback_rear_ft")
+    if not isinstance(rear, (int, float)) or lot.edges is None:
+        return False
+    yard = kept_rear_yard_ft(float(rear), rules)
+    if court is None:
+        return True
+    import shapely
+
+    if lot.layer_id == _GRESHAM:
+        line = _imaginary_rear_line(lot, front_deg)
+        if line is None:
+            return True
+        middle = line.interpolate(0.5, normalized=True)
+        for edge in lot.edges.edges:
+            if edge.cls in (EdgeClass.front, EdgeClass.street_side) or edge.street_rank is not None:
+                run = shapely.LineString(((edge.x1, edge.y1), (edge.x2, edge.y2)))
+                if run.distance(middle) < 1.0:
+                    return False
+        return court.distance(line) + 0.01 < yard
+    opposite = _opposite_line(lot)
+    if opposite is None or opposite.cls is EdgeClass.rear:
+        return False
+    line = shapely.LineString(((opposite.x1, opposite.y1), (opposite.x2, opposite.y2)))
+    return court.distance(line) + 1e-6 < yard
 
 
 def _troutdale_line_doubt_ft(
-    lot: QuadfitLot, edge: Edge, neighbour: NeighbourLine | None, maximum_rear_ft: float
+    lot: QuadfitLot,
+    edge: Edge,
+    neighbour: NeighbourLine | None,
+    maximum_rear_ft: float,
+    *,
+    opposite: bool = False,
 ) -> float | None:
-    """Single-house figure for one residential or potentially residential line."""
-    maximum = maximum_rear_ft if edge.cls is EdgeClass.rear else _TROUTDALE_MAX_HOUSE_SIDE_FT
+    """Single-house figure for one residential or potentially residential line.
+
+    ``opposite`` is the rear line the classes called a side (:func:`_opposite_line`)."""
+    at_rear = opposite or edge.cls is EdgeClass.rear
+    maximum = maximum_rear_ft if at_rear else _TROUTDALE_MAX_HOUSE_SIDE_FT
     if neighbour is None or neighbour.unresolved or not neighbour.zones:
         return maximum
 
@@ -2307,7 +2464,7 @@ def _troutdale_line_doubt_ft(
         if jurisdiction != lot.jurisdiction:
             unknown = True
         elif zone in _TROUTDALE_RESIDENTIAL_ZONES:
-            figure = maximum_rear_ft if edge.cls is EdgeClass.rear else _TROUTDALE_HOUSE_SIDE_FT[zone]
+            figure = maximum_rear_ft if at_rear else _TROUTDALE_HOUSE_SIDE_FT[zone]
             if figure is not None:
                 figures.append(figure)
         elif zone not in _TROUTDALE_NONRESIDENTIAL_ZONES:
@@ -2337,13 +2494,15 @@ def _parking_doubt_drawn_fails(
     boundary = _yard_neighbour_edges(lot)
     if not boundary:
         return True
+    far = _opposite_line(lot)
     for edge, neighbour in boundary:
-        required = _troutdale_line_doubt_ft(lot, edge, neighbour, maximum_rear)
+        at_rear = edge is far
+        required = _troutdale_line_doubt_ft(lot, edge, neighbour, maximum_rear, opposite=at_rear)
         if required is None:
             continue
         yard = 0.0
         if rules.get("parking_required_yard_prohibited") is True:
-            value = rules.get(f"setback_{edge.cls.value}_ft")
+            value = rules.get("setback_rear_ft" if at_rear else f"setback_{edge.cls.value}_ft")
             if isinstance(value, (int, float)):
                 yard = float(value)
         if required <= max(yard, lot_line_buffer_ft(rules)):
@@ -2354,6 +2513,45 @@ def _parking_doubt_drawn_fails(
         if drawing.court.distance(line) + 1e-6 < required:
             return True
     return False
+
+
+def rear_court_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` measured once more on the court it finally drew (FOLLOWUPS 150
+    round 5). The search's checks measured an earlier drawing, and the fire and
+    slope steps can move the plan after them, so a GREEN is held to what the lot
+    page shows. Only ever takes a lot out of GREEN."""
+    lot, got = s.lot, s.rules
+    if lot.layer_id not in _REAR_COURT_LAYERS or got.get(FIELD_YARD_KEPT) is not True:
+        return s
+    if not (Triage.green in (s.screening.triage, s.signed.triage) or _map_green(s)):
+        return s
+    from types import SimpleNamespace
+
+    from shapely.geometry import Polygon
+
+    ring = s.drawing.get("court") if s.drawing else None
+    court = Polygon(ring) if ring else None
+    drawn = SimpleNamespace(court=court)
+    facts = s.facts if s.facts is not None else lot.facts
+    doubt = lot_line_buffer_doubt_ft(got) > 0 and _parking_doubt_drawn_fails(lot, got, drawn)
+    strip = _sandy_strip_drawn_fails(lot, got, drawn)
+    short = _rear_court_short(lot, got, court, s.front_deg)
+    if not (doubt or strip or short):
+        return s
+    facts = dataclasses.replace(
+        facts,
+        parking_setback_doubt_failed=facts.parking_setback_doubt_failed or doubt,
+        parking_setback_doubt_checked=facts.parking_setback_doubt_checked or doubt,
+        strip_waived=facts.strip_waived or strip,
+        rear_court_short=facts.rear_court_short or short,
+    )
+    result = screen(got, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        got, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
 def _yard_neighbour_edges(
@@ -2509,15 +2707,19 @@ def _screen_on(
                 facts, parking_setback_doubt_checked=True, parking_setback_doubt_failed=False
             )
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-        if _fit_stands(result):
+        if (doubt_checked or here.layer_id in _REAR_COURT_LAYERS) and _fit_stands(result):
             drawing = _court_drawn(here, design, got, fit, fitters[key], env, _street_lines(here))
             doubt_failed = doubt_checked and _parking_doubt_drawn_fails(here, got, drawing)
             strip_failed = _sandy_strip_drawn_fails(here, got, drawing)
-            if doubt_failed or strip_failed:
+            short = _rear_court_short(
+                here, got, None if drawing is None else drawing.court, front
+            )
+            if doubt_failed or strip_failed or short:
                 facts = dataclasses.replace(
                     facts,
                     parking_setback_doubt_failed=doubt_failed,
                     strip_waived=facts.strip_waived or strip_failed,
+                    rear_court_short=short,
                 )
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
@@ -3548,6 +3750,7 @@ def _screen_lot_once(
             won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads, bound=bound, terrain=terrain,
         )
+        won = rear_court_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
         won = pdx.checked(won, lot.pdx_overlays)

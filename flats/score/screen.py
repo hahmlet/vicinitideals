@@ -315,6 +315,9 @@ STRIP_FIELD = "parking_lot_line_buffer_ft"
 #: A lot fits the encoded setback but not the stricter single-house reading.
 PARKING_SETBACK_DOUBT = "PARKING_SETBACK_DOUBT"
 PARKING_SETBACK_DOUBT_RULING = "2026-11-05-troutdale-parking-abutting-setback"
+#: The drawn court stands closer to the line opposite the front than the rear
+#: yard the code keeps parking out of (:attr:`LotFacts.rear_court_short`).
+REAR_COURT_SHORT = "REAR_COURT_SHORT"
 #: Red on the fire hose alone measured from 10 ft out from the curb, and
 #: clear measured from the curb itself (FIRE-HOSE-START; FOLLOWUPS 29).
 FIRE_HOSE_START = "FIRE_HOSE_START"
@@ -708,6 +711,12 @@ class LotFacts:
     #: The bridge checked the drawn court against each applicable lot line.
     #: When true, that per-line result replaces the fit-only approximation.
     parking_setback_doubt_checked: bool = False
+    #: The drawn court misses the rear yard measured from the line opposite the
+    #: front, which the setback classes may call a side when it runs slanted
+    #: (:func:`flats.ingest.quadfit.rear_court_checked`). False where nothing
+    #: measured it, which is every caller but the bridge. Holds the lot out of
+    #: GREEN and moves no setback.
+    rear_court_short: bool = False
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -2691,6 +2700,8 @@ def screen(
         reasons.append(STREET_UNCONFIRMED)
     if lot.strip_waived:
         reasons.append(PARKING_STRIP_UNCONFIRMED)
+    if lot.rear_court_short:
+        reasons.append(REAR_COURT_SHORT)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
     if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
@@ -3261,6 +3272,8 @@ def _account(
         flag("ACCESS-STREET-UNCONFIRMED", STREET_UNCONFIRMED)
     if lot.strip_waived:
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
+    if lot.rear_court_short:
+        flag("PARKING-REAR-COURT-SHORT", REAR_COURT_SHORT)
     if parking_setback_doubt:
         flag(
             "PARKING-SETBACK-DOUBT",
@@ -3460,6 +3473,7 @@ __all__ = [
     "PARKING_STRIP_UNCONFIRMED",
     "PARKING_SETBACK_DOUBT",
     "PARKING_SETBACK_DOUBT_RULING",
+    "REAR_COURT_SHORT",
     "RELIEF_UNCONFIRMED",
     "STANDARD_NOT_ENCODED",
     "STREET_RANK_UNKNOWN",

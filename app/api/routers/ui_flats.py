@@ -2938,6 +2938,8 @@ _REASON_WORDS = {
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_RANK_UNKNOWN": "closer look: the lot's parking works off only one of its two streets, and a street has no class on file, so it is not known the street that works is the quieter one the code sends the driveway to",
     "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
+    "PARKING_SETBACK_DOUBT": "fits the neighbour district's quadplex setback but the parking court may also owe the larger single-house setback, a question still open",
+    "REAR_COURT_SHORT": "the parking court as drawn stands closer to the line opposite the front than the rear yard the city keeps parking out of",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",
     "FIRE_HOSE_START": "the fire hose reaches if measured from the curb, not from 10 ft out from it; where the street's width is not measured, from the curb of the narrowest street a fire truck may use",
     "CORNER_READ_AS_BEND": "the lot's street lines are all one street that bends, and the city's code does not say whether that makes a corner lot, so it was screened the stricter way: one front on one street",

@@ -257,7 +257,11 @@ def test_gresham_cites_the_closed_list() -> None:
 def test_a_gresham_quadplex_court_no_longer_parks_in_the_rear_setback(corpus) -> None:
     rules = corpus.resolve(GRESHAM, "LDR-7", ())
     assert rules.get(FIELD) is True
-    rear = float(rules.get("setback_rear_ft"))
+    # 2026-11-06, round 5: LDR-7 carries 20 for the wall (the roof plane) and
+    # prints 15; the court stays out of the 15, so that is what it adds.
+    rear = float(rules.values["setback_rear_ft"].before_step_back)
+    assert rear == 15
+    assert float(rules.get("setback_rear_ft")) == 20
     assert rear > 0
     assert deeper(rules) == pytest.approx(rear)
     assert _court_beyond_rear(pod(), rules) > _court_beyond_rear(pod(), Sharing(rules))

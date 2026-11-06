@@ -512,6 +512,20 @@ def yards_kept_clear(rules: "ZoneResolution") -> bool:
     return rules.get("parking_required_yard_prohibited") is True
 
 
+def kept_rear_yard_ft(rear_ft: float, rules: "ZoneResolution") -> float:
+    """The rear yard parking is kept out of, where :func:`yards_kept_clear`.
+
+    The yard the code prints, not the wall's distance. Gresham Table 4.0131
+    prints 15 ft in LDR-5 (4/4.0130.txt#L155) and 7.0420(G)(1)'s roof plane
+    moves a 26 ft building to 20 (7/7.0420.txt#L132-L134); the plane limits the
+    roof, and 7.0420(B)(5)(c) keeps parking out of "the rear yard setback"
+    (7/7.0420.txt#L56), which stays 15 (FOLLOWUPS 150 round 5).
+    """
+    held = rules.values.get("setback_rear_ft")
+    printed = getattr(held, "before_step_back", None)
+    return rear_ft if printed is None else min(rear_ft, float(printed))
+
+
 def lot_line_buffer_ft(rules: "ZoneResolution") -> float:
     """The strip the code keeps between parking and the lot lines that are
     not streets (``parking_lot_line_buffer_ft``); 0 where none is stated."""
@@ -553,8 +567,11 @@ def behind_wall_ft(
     lateral half -- a strip wider than the side setback -- is not this
     function's, because the side yards are already outside the envelope the
     court is searched in.
+
+    The building still stands the whole of ``rear_ft``; what the court stays
+    out of is the printed yard (:func:`kept_rear_yard_ft`).
     """
-    keep = rear_ft if yards_kept_clear(rules) else 0.0
+    keep = kept_rear_yard_ft(rear_ft, rules) if yards_kept_clear(rules) else 0.0
     keep = max(keep, lot_line_buffer_ft(rules), lot_line_buffer_override_ft or 0.0)
     return max(rear_ft, parked_ft + keep)
 
