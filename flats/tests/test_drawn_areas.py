@@ -64,6 +64,10 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         # Laurelhurst/Eastmoreland (33.540) (FOLLOWUPS 109, 2026-11-01), and
         # part 2 batch A: Glendoveer (33.530) and the one hold for the rules nothing measures
         # (FOLLOWUPS 109, 2026-11-03).
+        # pd2c: the Gateway and East Corridor minimum-FAR map areas (2026-11-04).
+        "pdx_east_corridor_min_far_half",
+        "pdx_east_corridor_min_far_one",
+        "pdx_gateway_min_far",
         "pdx_glendoveer_lr75",
         "pdx_johnson_creek_impervious",
         "pdx_johnson_creek_unmeasured",

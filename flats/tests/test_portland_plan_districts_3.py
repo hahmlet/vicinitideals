@@ -13,7 +13,7 @@ one hold, ``pdx_plan_district_unmeasured``, on the lots it reaches:
 * Gateway: lots with two or more street faces (no vehicle area between the
   building and any street, 340.C.1), lots near a MAX line (C.2), and the
   Map 526-3 minimum-FAR areas whole (the .25 to 1 is printed on the map
-  only).
+  only; read off the sheet and cut out in pd2c, test_portland_plan_districts_4).
 * Northwest: CM2 lots and CM3 lots near a Map 562-7 main street or the
   streetcar (1.5 to 1 minimum FAR), CM3 lots in the residential-limited
   area of Map 562-2, main-street lots with two street faces or over 10,000
@@ -149,7 +149,8 @@ def test_the_tracing_says_what_batch_b_added() -> None:
     assert "Map 562-7" in src["inputs"]["streets_b"]
     for name in ("Gateway (33.526)", "Northwest (33.562)", "Central City (33.510)", "Sandy Boulevard (33.575)"):
         assert name in src["map"], name
-    assert "GA Map 526-3 .25 minimum-FAR polygons" in src["method"]
+    # Held whole in batch B; read off the sheet and cut out in pd2c (2026-11-04).
+    assert "GA Map 526-3 .25 and EC Map 521-3 .5:1 and 1:1 minimum-FAR polygons" in src["method"]
 
 
 def test_the_quotes_say_what_the_rules_say() -> None:

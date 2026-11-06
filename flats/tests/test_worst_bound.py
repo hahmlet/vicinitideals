@@ -37,6 +37,9 @@ OFF_PLAN_DISTRICTS = dict.fromkeys(
         "pdx_glendoveer_lr75",
         "pdx_plan_district_unmeasured",
         "pdx_nw_residential_limited",
+        "pdx_gateway_min_far",
+        "pdx_east_corridor_min_far_half",
+        "pdx_east_corridor_min_far_one",
     ),
     False,
 )

@@ -164,7 +164,11 @@ pytestmark = pytest.mark.unit
 # South subdistrict and the flood hazard area, citing 33.537.020, whose own words
 # exempt a flood-hazard site from 33.537.140; the 50 percent cap is the variant.
 # 467 -> 470 on merge: both of the above (3 Sandy + 12 Johnson Creek on 455).
-EXPECTED = {"stated": 470, "numeric": 173, "marker": 0, "dash": 2, "silent": 8}
+# 173 -> 187 numeric on 2026-11-04 (FOLLOWUPS 109 pd2c, Portland map-sheet figures): fourteen
+# zones gain min_far exempt off 33.526.220.C / 33.521.220.C ("shown on Map 526-3 / 521-3"),
+# exemption by omission -- the minimum exists only where the map prints one -- with the
+# drawn .25, .5 and 1 to 1 figures as variants behind the traced Map 526-3 / 521-3 areas.
+EXPECTED = {"stated": 470, "numeric": 187, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
