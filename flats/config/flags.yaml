@@ -1757,6 +1757,38 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [RALEIGH_HILLS_ASC_U]
+  HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE:
+    description: "The lot has frontage on a South Hillsboro Active Use Street as Figure 12.65.930-A of the Hillsboro Community Development Code draws it, so the Active Use Street design standards of 12.65.850 apply to it. The figure only illustrates the streets' type and location (12.65.030.B.2); the final Active Use Street is set at the PUD. Steph 2026-11-04: \"Trace the sketch, green with a flag\" -- a lot that passes the standards the screen measures stays GREEN with this flag."
+    kind: categorical
+    risk: possible
+    # Steph 2026-11-04: green with a flag, below the yellow line.
+    severity: 2
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Read the approved South Hillsboro PUD (or ask Hillsboro Planning) for whether this lot's street is an Active Use Street and of which type, then check 12.65.850's windows, weather protection, entry and corner standards against the plan"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ACTIVE_USE_ILLUSTRATIVE]
+  HILLSBORO-CENTER-CORE-ILLUSTRATIVE:
+    description: "The lot is in South Hillsboro's MU-VTC zone, whose Town Center and Village Center Core Areas (12.65.030.A) are placed only by Figure 12.65.930-A of the Hillsboro Community Development Code: the core boundary is from an illustrative figure, and the final boundary is set at the PUD. Inside a core a residential building must be 3 stories (Table 12.24.360-1), outside it 2. Steph 2026-11-04: \"Trace the centres too ... Green with flag if outside, red with flag if inside.\""
+    kind: categorical
+    risk: possible
+    # Steph 2026-11-04: green with a flag, below the yellow line.
+    severity: 2
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Read the approved South Hillsboro PUD (or ask Hillsboro Planning) for where the Town Center or Village Center Core Area boundary was set, and whether this lot is inside it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CENTER_CORE_ILLUSTRATIVE]
   FACT-NORTH-BETHANY-SPECIAL-SETBACKS:
     description: "Whether the lot fronts a North Bethany Special Setbacks Map segment (Park Blocks or Northeast Neighborhood Linear Park), where a 5 to 15 ft build-to line governs"
     kind: categorical
@@ -1813,6 +1845,82 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Map 5 of the Bethany Community Plan is traced (FOLLOWUPS 130); a lot divided since 2026-10-30 is placed by the outline"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-ACTIVE-USE-STREET:
+    description: "Whether a street line of the Hillsboro lot abuts a South Hillsboro Active Use Street as Figure 12.65.930-A draws it. The answer only carries HILLSBORO-ACTIVE-USE-MAP-ILLUSTRATIVE, below the yellow line (Steph 2026-11-04), so no standard leans on it"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; at worst it carries a flag below the line.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Figure 12.65.930-A is traced onto the RLIS centrelines (FOLLOWUPS 147); a lot with no street lines near the traced streets is read from its outline"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-ACTIVE-USE-1:
+    description: "Whether every street line of the Hillsboro lot is on an Active Use 1 Street of Figure 12.65.930-A, so that it owes the 75% minimum property line coverage within 10 ft and the 15 ft floor-to-ceiling ground floor of Table 12.65.850-1 and 12.65.850.D.6 on every street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Check the lot's street lines against the traced Figure 12.65.930-A (FOLLOWUPS 147): a lot on an Active Use Street and an ordinary street, on both Active Use types, or on a line only partly beside one is held; read the coverage on the Active Use frontage alone, and confirm the street in the approved PUD"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-CENTER-CORE:
+    description: "Center Core edge unconfirmed: whether the MU-VTC lot lies inside South Hillsboro's Town Center or Village Center Core Area (Figure 12.65.930-A, traced); the traced line cuts this lot, and inside it owes 3 stories, outside 2"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The core boundary set in the approved South Hillsboro PUD, or a planner's word on which side of it the lot falls"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-FAR-RESIDENTIAL-UNCOUNTED:
+    description: "Whether the pod's floor area counts toward the MU-VTC minimum floor area ratio (0.4 outside a Center Core, 0.5 inside): 12.65.150.A counts free-standing residential buildings 'within an approved PUD', and neither the PUD nor the reading is held"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: external_inquiry
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Steph's reading of 12.65.150.A, or Hillsboro Planning's word on whether a free-standing four-unit building counts toward the MU-VTC minimum FAR, and whether the lot lies in an approved PUD"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-ACTIVE-USE-2:
+    description: "Whether every street line of the Hillsboro lot is on an Active Use 2 Street of Figure 12.65.930-A, so that it owes the 70% minimum property line coverage within 15 ft of Table 12.65.850-1 on every street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Check the lot's street lines against the traced Figure 12.65.930-A (FOLLOWUPS 147): a lot on an Active Use Street and an ordinary street, on both Active Use types, or on a line only partly beside one is held; read the coverage on the Active Use frontage alone, and confirm the street in the approved PUD"
     priority: later
     status: pending
     approved_by: null

@@ -1503,7 +1503,12 @@ _F: tuple[FieldDef, ...] = (
         "each lot frontage shall be developed with a building(s) built at the "
         "minimum setback from the street lot line\" -- the minimum setback, "
         "0 ft in Table 1, while the rest of the frontage may stand back to "
-        "the 15 ft maximum. Absent, the band is `setback_front_max_ft`.",
+        "the 15 ft maximum. Absent, the band is `setback_front_max_ft`. "
+        "Where the zone states no maximum, a band stated here as a number "
+        "bounds the share on its own: Hillsboro Table 12.65.850-1 counts the "
+        "Active Use property line coverage within 10 or 15 ft, while "
+        "12.65.130.A leaves the base zone's maximum (none in the South "
+        "Hillsboro multi-dwelling zones) as the setback test (FOLLOWUPS 147).",
         True,
     ),
     FieldDef(

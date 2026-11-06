@@ -93,14 +93,15 @@ from flats.score import paper
 #: `min_building_separation_ft` left on 2026-10-22 (FOLLOWUPS 109 chunk 3): it
 #: is the gap between pods counted side by side along a street one pod cannot
 #: fill (`screen._pods_to_fill`, Steph's wide-lot ruling of 2026-10-21).
+#:
+#: `building_frontage_band_ft` left on 2026-11-04 (FOLLOWUPS 147): where a
+#: zone states no maximum front setback, a stated band is what bounds the
+#: building's share of the street frontage (`screen._stated_band`; South
+#: Hillsboro's Active Use Streets, Table 12.65.850-1). Canby's band, read
+#: where the share is measured (`quadfit.share_band`), came in 2026-10-29.
 SILENTLY_UNREAD = frozenset(
     {
         "max_building_width_ft",
-        # 2026-10-29 (FOLLOWUPS 109 chunk 5): Canby's "built at the minimum
-        # setback" band is read where the share is MEASURED -- the bridge's
-        # drawn plan, `flats.ingest.quadfit.share_band`
-        # (test_canby_downtown) -- and the screen judges that measure.
-        "building_frontage_band_ft",
         # 2026-10-02: `parking_front_yard_max_pct` is checked
         # (`front_yard_vehicle_share`), and the approach widths are declared
         # in PaperFit.excluded (in the right of way; every maximum admits a

@@ -143,6 +143,7 @@ from flats.geom.sidewalk import (
     load_streets,
     observed_sidewalk_easement,
 )
+from flats.geom.active_use import FACTS as ACTIVE_USE_FACTS, observed_active_use
 from flats.geom.street_types import CONDITION as STREET_TYPE_FACT, observed_street_types
 from flats.geom import street_names
 from flats.geom.street_class import (
@@ -378,6 +379,9 @@ OBSERVABLE: tuple[str, ...] = (
     # Gresham DMU/DEM/DCL lots only, from the traced Map 4.1140
     # (flats.geom.street_types).
     STREET_TYPE_FACT,
+    # Hillsboro lots only, from the traced Figure 12.65.930-A
+    # (flats.geom.active_use).
+    *ACTIVE_USE_FACTS,
     "corner_lot",
     "through_lot",
     "split_zone",
@@ -558,6 +562,12 @@ def observed_facts(
       through :func:`flats.geom.drawn.observed_drawn`. Only with ``layers``,
       only on lots of the zones the area names, and only from the lot's own
       shape (``lot_wkb``); a lot the boundary cuts through is unanswered.
+    * ``hillsboro_active_use_street`` / ``hillsboro_active_use_1`` /
+      ``hillsboro_active_use_2`` -- Hillsboro lots only: the street lines
+      against South Hillsboro's Active Use Streets, traced off Figure
+      12.65.930-A, through :func:`flats.geom.active_use.observed_active_use`;
+      a lot with no street lines from its shape (``lot_wkb``), False only
+      well clear of every traced Active Use line.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -578,6 +588,7 @@ def observed_facts(
                 )
             )
         out.update(observed_street_types(edges, _layer_id(row), row.get("zone")))
+    out.update(observed_active_use(edges, _layer_id(row), row.get("lot_wkb")))
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
     if layers is not None and edges:
@@ -4887,10 +4898,15 @@ def share_band(got: ZoneResolution) -> float | None:
     the frontage: the maximum front setback, or nearer where the code counts
     only the building "built at the minimum setback" (Canby DCO 16.41.050
     A.1.b, ``building_frontage_band_ft``). None without a maximum: the band
-    is unbounded and the share is not measured."""
+    is unbounded and the share is not measured -- unless the code states the
+    band as a number of its own (South Hillsboro's Table 12.65.850-1, 10 or
+    15 feet, in zones that state no maximum; FOLLOWUPS 147)."""
     band = _yard(got, "setback_front_max_ft")
     if band is None:
-        return None
+        own = got.get("building_frontage_band_ft")
+        if isinstance(own, bool) or not isinstance(own, (int, float)) or own <= 0:
+            return None
+        return float(own)
     nearer = _yard(got, "building_frontage_band_ft")
     return band if nearer is None else min(band, nearer)
 

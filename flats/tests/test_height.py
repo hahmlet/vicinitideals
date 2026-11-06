@@ -484,7 +484,11 @@ def test_the_sweep_at_the_design_height_agrees_with_the_screen() -> None:
 #: (2026-10-10 to 2026-10-14 it left while MU-VTC was refused for Development
 #: Review; the review rule of 2026-10-14 made that review a yellow flag, and
 #: the zone came back.)
-STOREY_FLOOR_ABOVE_TWO = {("or/washington/hillsboro", "MU-VTC")}
+#: 2026-11-04 (FOLLOWUPS 147, rulings.yaml
+#: 2026-11-04-south-hillsboro-centre-cores-traced): the cores are drawn, the
+#: base is 2 and the 3 is a variant behind `hillsboro_center_core`, so the
+#: zone leaves as promised and no zone is left here.
+STOREY_FLOOR_ABOVE_TWO: set[tuple[str, str]] = set()
 
 
 def test_no_storey_standard_binds_on_a_two_storey_building() -> None:

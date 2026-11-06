@@ -172,7 +172,17 @@ pytestmark = pytest.mark.unit
 # exempt because note 18 applies only where 60.05.15.6 governs.
 # 471 -> 473 stated on 2026-11-05: TO:R24-40 and TO:R40-80 print None for the
 # frontage minimum in Table B(2) (375-10.txt#L342).
-EXPECTED = {"stated": 473, "numeric": 187, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 473, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
+# 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
+# MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
+# ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
+# and D.6 as variants -- now that the 3-storey minimum no longer turns every MU-VTC lot RED.
+# 173 -> 185 numeric on 2026-11-04 (FOLLOWUPS 147, South Hillsboro Active Use Streets): Hillsboro
+# R-4.5, MR-1, MR-2 and MR-3 hold the building share of the frontage, its band and the ground
+# storey exempt off an Active Use Street -- 12.65.850.B applies the standards only to lots with
+# frontage on one (12.65/12.65.850.txt#L16), and the code grepped whole for "property line
+# coverage" and "building frontage" states no other share for these zones -- with Table
+# 12.65.850-1 and D.6 as variants behind the traced Figure 12.65.930-A's facts.
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
