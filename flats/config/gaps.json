@@ -1,5 +1,5 @@
 {
-  "digest": "0d153dc42b43b88362152aec59c00865e3746ba58793c8e62a7f7416545d24d1",
+  "digest": "e1808e9c4924a0c0cdc9c64c4b42653c3bf756f6e3d7f41a2d0ffb435ddb151f",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -147,7 +147,7 @@
       "gaps": []
     },
     "or/clackamas/west-linn": {
-      "section_unread": 0,
+      "section_unread": 1,
       "misattributed": [],
       "label": "West Linn",
       "counts": {},
@@ -808,7 +808,7 @@
       "gaps": []
     },
     "or/washington/_unincorporated": {
-      "section_unread": 17,
+      "section_unread": 24,
       "misattributed": [
         {
           "zone": "(defaults)",
