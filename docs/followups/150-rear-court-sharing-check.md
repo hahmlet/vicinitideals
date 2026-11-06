@@ -12,3 +12,7 @@
    Work: Claude reads each in full (definitions of parking area vs driveway, the zones it reaches, TH vs QP), then encode
    parking_required_yard_prohibited (or a rear-only field) where it binds; bound; read every lost green.
    Status: found, not started. Priority over 146's gains (false green).
+   11-05: round 2 bound HOLD (moveread ../vicinitideals-worktrees/rear-court-150.moveread.md). Round 3 c89c1057: the drawn court is
+   checked line by line against 3.130.A (side 10/7.5/5 by neighbour district, rear 20 max); Sandy strip read on the drawn court.
+   The five Gresham 50x100 lots were left alone (Copilot could not tell if the fit was unmeasured): re-check in the r3 move-read.
+   Re-bound /root/rear_court3 (vs live pd2ab; re-splice on the new live at release).
