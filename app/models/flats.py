@@ -75,6 +75,9 @@ SRID_WORKING = 2913
 #: WGS84, for map display and anything leaving the system.
 SRID_WGS84 = 4326
 
+#: Lots-page order of colour/verdict quality: lower is better.
+FLATS_COLOUR_ORDER = ("green", "yellow", "unknown", "red")
+
 
 class FlatsSnapshot(Base):
     """One dated copy of the county map -- what ``flats.ingest.acquire`` took.
@@ -508,6 +511,36 @@ class FlatsLotWorksAs(Base):
     design_key: Mapped[str] = mapped_column(String(80), primary_key=True)
     apartment_green: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     townhomes_green: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+
+
+class FlatsLotBest(Base):
+    """One row per run and lot: that lot's best verdict/colour across designs.
+
+    The Lots page reads this to avoid grouping every row of ``lot_results`` on
+    each request. Jurisdiction/zone/tlid/address are copied over so list
+    filtering and city/tlid sorting can run without joining ``flats.lots``.
+    """
+
+    __tablename__ = "lot_best"
+    __table_args__ = (
+        Index("ix_flats_lot_best_run_verdict_colour", "run_id", "best_verdict", "best_colour"),
+        Index("ix_flats_lot_best_run_jurisdiction_zone", "run_id", "jurisdiction", "zone"),
+        Index("ix_flats_lot_best_run_jurisdiction_tlid", "run_id", "jurisdiction", "tlid", "lot_id"),
+        {"schema": SCHEMA},
+    )
+
+    run_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="CASCADE"), primary_key=True
+    )
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), primary_key=True
+    )
+    jurisdiction: Mapped[str] = mapped_column(String(80), nullable=False)
+    zone: Mapped[str | None] = mapped_column(String(40))
+    tlid: Mapped[str] = mapped_column(String(40), nullable=False)
+    site_address: Mapped[str | None] = mapped_column(String(255))
+    best_verdict: Mapped[int] = mapped_column(Integer, nullable=False)
+    best_colour: Mapped[int] = mapped_column(Integer, nullable=False)
 
 
 class FlatsLotResult(Base):
