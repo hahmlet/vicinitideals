@@ -2342,7 +2342,7 @@ def _imaginary_rear_line(lot: QuadfitLot, front_deg: float | None) -> Any | None
     "In the case of an irregular or triangular shaped lot, an imaginary lot
     line ten feet in length shall be drawn within the lot parallel to and at the
     maximum distance from the front lot line" (3.0100.definitions.txt#L1345-L1347),
-    and an irregular lot is any "other than rectangular in shape" (#L1319). On a
+    and an irregular lot is any "other than rectangular in shape" (#L1316). On a
     rectangle it is the rear line itself. Returned at its full run across the
     lot, which only ever stands nearer the court than ten feet of it would.
     """
@@ -2518,14 +2518,24 @@ def _parking_doubt_drawn_fails(
 def rear_court_checked(
     s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
 ) -> Screened:
-    """``s`` measured once more on the court it finally drew (FOLLOWUPS 150
-    round 5). The search's checks measured an earlier drawing, and the fire and
-    slope steps can move the plan after them, so a GREEN is held to what the lot
-    page shows. Only ever takes a lot out of GREEN."""
+    """``s`` answered on the court it finally drew (FOLLOWUPS 150 round 5).
+
+    The search's checks measure :func:`_court_drawn`, an earlier drawing, and the
+    fire and slope steps can move the plan after that, so the drawing the lot page
+    shows (:func:`drawing_for`) can stand somewhere else. This one measures that
+    court, both ways: a court short of a line holds the lot out of GREEN, and a
+    hold set on the earlier drawing lifts where the court shown clears every line
+    (Troutdale's ruling asks only that the lot fit the stricter figure, and this
+    one does). A strip the bridge waived on its second reading of the lot is a
+    fit question and is not this check's to lift. Nothing else about the lot is
+    decided here: the screen reads the answers again.
+    """
     lot, got = s.lot, s.rules
     if lot.layer_id not in _REAR_COURT_LAYERS or got.get(FIELD_YARD_KEPT) is not True:
         return s
-    if not (Triage.green in (s.screening.triage, s.signed.triage) or _map_green(s)):
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    if not _fit_stands(s.screening):
         return s
     from types import SimpleNamespace
 
@@ -2536,16 +2546,20 @@ def rear_court_checked(
     drawn = SimpleNamespace(court=court)
     facts = s.facts if s.facts is not None else lot.facts
     doubt = lot_line_buffer_doubt_ft(got) > 0 and _parking_doubt_drawn_fails(lot, got, drawn)
-    strip = _sandy_strip_drawn_fails(lot, got, drawn)
+    strip = lot.facts.strip_waived or _sandy_strip_drawn_fails(lot, got, drawn)
     short = _rear_court_short(lot, got, court, s.front_deg)
-    if not (doubt or strip or short):
+    if (
+        doubt == facts.parking_setback_doubt_failed
+        and strip == facts.strip_waived
+        and short == facts.rear_court_short
+    ):
         return s
     facts = dataclasses.replace(
         facts,
-        parking_setback_doubt_failed=facts.parking_setback_doubt_failed or doubt,
+        parking_setback_doubt_failed=doubt,
         parking_setback_doubt_checked=facts.parking_setback_doubt_checked or doubt,
-        strip_waived=facts.strip_waived or strip,
-        rear_court_short=facts.rear_court_short or short,
+        strip_waived=strip,
+        rear_court_short=short,
     )
     result = screen(got, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(

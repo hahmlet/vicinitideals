@@ -21,11 +21,12 @@ Each test resolves the real zone from the corpus.
 
 from __future__ import annotations
 
+import dataclasses
 from datetime import date
 
 import pytest
 import yaml
-from shapely import box
+from shapely import Polygon, box
 
 from flats.designs.model import Design
 from flats.encode.load import load_trusted
@@ -35,18 +36,24 @@ from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
 from flats.geom.neighbour import Line as NeighbourLine
 from flats.ingest.quadfit import (
     QuadfitLot,
+    Screened,
     _fit_stands,
+    _imaginary_rear_line,
+    _opposite_line,
     _parking_doubt_drawn_fails,
+    _rear_court_short,
     _sandy_strip_drawn_fails,
+    rear_court_checked,
 )
 from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import OPTIONAL_FIELDS, field
 from flats.rules.model import Provenance, Status
 from flats.rules.resolver import Resolved, Verdict as RuleVerdict, ZoneResolution
-from flats.score.paper import paper_fit
+from flats.score.paper import behind_wall_ft, paper_fit
 from flats.score.screen import (
     PARKING_SETBACK_DOUBT,
     PARKING_SETBACK_DOUBT_RULING,
+    REAR_COURT_SHORT,
     LotFacts,
     Triage,
     _court_beyond_rear,
@@ -515,3 +522,397 @@ def test_a_tolerated_fit_has_its_drawn_court_checked() -> None:
     assert verdicts == {"tolerated": "tolerated", "passed": "pass", "failed": "fail"}
     assert _fit_stands(tolerated) and _fit_stands(passed)
     assert not _fit_stands(failed)
+
+
+# --- Round 5 (2026-11-06): a slanted line opposite the front is still the rear ---
+
+
+def slanted_lot(layer: str, *, zone: str = "LDR-1", neighbour: str = "LDR-1") -> QuadfitLot:
+    """A 100 ft front along y=0, a square side, and a far line 33 degrees off the
+    front, as 1N3E36AC  -06300 lies: no line is classed rear."""
+    deep_left, deep_right = 150.0, 150.0 - 100.0 * 0.6494
+    edges = LotEdges(
+        tier=Tier.clean,
+        edges=(
+            Edge(0, 0, 100, 0, 100, 0, EdgeClass.front),
+            Edge(100, 0, 100, deep_right, deep_right, 90, EdgeClass.side),
+            Edge(100, deep_right, 0, deep_left, 119.2, 147, EdgeClass.side),
+            Edge(0, deep_left, 0, 0, deep_left, 90, EdgeClass.side),
+        ),
+        front_bearings=(0,),
+        frontage_ft=100,
+        convexity=1,
+    )
+    bare = layer.rsplit("/", 1)[-1]
+    across = NeighbourLine(((bare, neighbour),), 0)
+    return QuadfitLot(
+        tlid="1N3E36AC  -06300",
+        jurisdiction=bare,
+        zone=zone,
+        layer_id=layer,
+        facts=LotFacts(lot_sqft=20_000),
+        observed={},
+        front_bearings=(0,),
+        envelope=None,
+        edges=edges,
+        lot_geom=Polygon([(0, 0), (100, 0), (100, deep_right), (0, deep_left)]),
+        neighbour_lines=(None, across, across, across),
+    )
+
+
+def far_line_court(lot: QuadfitLot, off_ft: float) -> object:
+    """A 10 by 10 court ``off_ft`` from the slanted line, one side along it."""
+    far = _opposite_line(lot)
+    assert far is not None
+    # The slanted line's inward normal, walked from its midpoint.
+    mx, my = (far.x1 + far.x2) / 2, (far.y1 + far.y2) / 2
+    dx, dy = (far.x2 - far.x1) / far.length_ft, (far.y2 - far.y1) / far.length_ft
+    nx, ny = -dy, dx
+    if ny > 0:
+        nx, ny = -nx, -ny
+    cx, cy = mx + nx * off_ft, my + ny * off_ft
+    return Polygon(
+        [
+            (cx - dx * 5, cy - dy * 5),
+            (cx + dx * 5, cy + dy * 5),
+            (cx + dx * 5 + nx * 10, cy + dy * 5 + ny * 10),
+            (cx - dx * 5 + nx * 10, cy - dy * 5 + ny * 10),
+        ]
+    )
+
+
+def test_the_slanted_far_line_is_the_opposite_line() -> None:
+    lot = slanted_lot(TROUTDALE)
+    far = _opposite_line(lot)
+    assert far is lot.edges.edges[2]
+    assert far.cls is EdgeClass.side
+
+
+def test_a_square_line_across_a_through_lot_is_not_opposite() -> None:
+    # The far non-street line runs 90 degrees off the front: a side, never a rear.
+    edges = LotEdges(
+        tier=Tier.clean,
+        edges=(
+            Edge(0, 0, 100, 0, 100, 0, EdgeClass.front),
+            Edge(0, 100, 100, 100, 100, 0, EdgeClass.front),
+            Edge(100, 0, 100, 100, 100, 90, EdgeClass.side),
+            Edge(0, 0, 0, 100, 100, 90, EdgeClass.side),
+        ),
+        front_bearings=(0,),
+        frontage_ft=200,
+        convexity=1,
+    )
+    across = NeighbourLine((("troutdale", "LDR-1"),), 0)
+    lot = QuadfitLot(
+        tlid="through",
+        jurisdiction="troutdale",
+        zone="LDR-1",
+        layer_id=TROUTDALE,
+        facts=LotFacts(lot_sqft=10_000),
+        observed={},
+        front_bearings=(0,),
+        envelope=None,
+        edges=edges,
+        neighbour_lines=(None, None, across, across),
+    )
+    assert _opposite_line(lot) is None
+
+
+def test_troutdale_slanted_far_line_owes_the_rear_figure_not_the_side() -> None:
+    """1N3E36AC  -06300: 17.2 ft off a line classed side, under the 20 of 3.130.A."""
+    rules = screen_rules()
+    lot = slanted_lot(TROUTDALE)
+    drawn = Drawing(
+        room=box(0, 0, 100, 100),
+        building=None,
+        lane=None,
+        court=far_line_court(lot, 17.2),
+        fits=True,
+    )
+    assert _parking_doubt_drawn_fails(lot, rules, drawn)
+    drawn = Drawing(
+        room=box(0, 0, 100, 100),
+        building=None,
+        lane=None,
+        court=far_line_court(lot, 21.0),
+        fits=True,
+    )
+    assert not _parking_doubt_drawn_fails(lot, rules, drawn)
+
+
+def test_the_line_opposite_changes_no_setback_class() -> None:
+    lot = slanted_lot(TROUTDALE)
+    _opposite_line(lot)
+    assert [e.cls for e in lot.edges.edges] == [
+        EdgeClass.front,
+        EdgeClass.side,
+        EdgeClass.side,
+        EdgeClass.side,
+    ]
+
+
+def test_gresham_imaginary_rear_line_is_ten_feet_at_the_deepest_point() -> None:
+    lot = slanted_lot(GRESHAM, zone="LDR-7", neighbour="LDR-7")
+    line = _imaginary_rear_line(lot, 0.0)
+    assert line.length == pytest.approx(10.0, abs=0.1)
+    # Parallel to the front, at the deep corner: 10 ft across at the 0.6494 slope.
+    y = {round(c[1], 3) for c in line.coords}
+    assert len(y) == 1
+    assert y.pop() == pytest.approx(150.0 - 6.494, abs=0.1)
+
+
+def test_gresham_rear_line_of_a_rectangle_is_the_rear_line() -> None:
+    edges = LotEdges(
+        tier=Tier.clean,
+        edges=(
+            Edge(0, 0, 100, 0, 100, 0, EdgeClass.front),
+            Edge(100, 0, 100, 150, 150, 90, EdgeClass.side),
+            Edge(100, 150, 0, 150, 100, 0, EdgeClass.rear),
+            Edge(0, 150, 0, 0, 150, 90, EdgeClass.side),
+        ),
+        front_bearings=(0,),
+        frontage_ft=100,
+        convexity=1,
+    )
+    lot = QuadfitLot(
+        tlid="square",
+        jurisdiction="gresham",
+        zone="LDR-5",
+        layer_id=GRESHAM,
+        facts=LotFacts(lot_sqft=15_000),
+        observed={},
+        front_bearings=(0,),
+        envelope=None,
+        edges=edges,
+        lot_geom=box(0, 0, 100, 150),
+    )
+    line = _imaginary_rear_line(lot, 0.0)
+    assert line.length == pytest.approx(100.0, abs=0.1)
+    assert line.coords[0][1] == pytest.approx(150.0, abs=0.01)
+
+
+def test_gresham_court_is_measured_from_the_imaginary_rear_line(corpus) -> None:
+    """1S3E04BB  -07500 misses it (8.7 ft); 1S3E03BA  -00500 clears it though the
+    slanted line itself stands 5.8 ft off (3.0100 L1316, L1345-L1347)."""
+    rules = corpus.resolve(GRESHAM, "LDR-7", ())
+    lot = slanted_lot(GRESHAM, zone="LDR-7", neighbour="LDR-7")
+    y = 150.0 - 6.494
+    near_the_deep_corner = box(0, y - 8.7 - 10, 10, y - 8.7)
+    assert _rear_court_short(lot, rules, near_the_deep_corner, 0.0)
+    # Clear of the imaginary line by 15 ft, though only ~6 ft off the slanted one.
+    beside_the_slant = box(70, 50, 95, y - 15.5)
+    assert not _rear_court_short(lot, rules, beside_the_slant, 0.0)
+
+
+def test_gresham_unread_court_is_held(corpus) -> None:
+    rules = corpus.resolve(GRESHAM, "LDR-7", ())
+    assert _rear_court_short(slanted_lot(GRESHAM), rules, None, 0.0)
+
+
+def test_a_gresham_townhouse_or_alley_lot_is_not_measured(corpus) -> None:
+    lot = slanted_lot(GRESHAM, zone="LDR-7", neighbour="LDR-7")
+    y = 150.0 - 6.494
+    court = box(0, y - 18, 10, y - 8)
+    for conds in (("unit_lots",), ("alley_at_rear", "abuts_alley")):
+        rules = corpus.resolve(GRESHAM, "LDR-7", conds)
+        assert not _rear_court_short(lot, rules, court, 0.0), conds
+
+
+def test_another_city_with_the_field_is_not_measured(corpus) -> None:
+    # Cornelius holds the same field; its rear-line definition is unread here.
+    rules = corpus.resolve("or/washington/cornelius", "R-7", ())
+    assert rules.get(FIELD) is True
+    lot = slanted_lot("or/washington/cornelius", zone="R-7", neighbour="R-7")
+    assert not _rear_court_short(lot, rules, None, 0.0)
+
+
+def test_rear_court_short_is_held_never_green() -> None:
+    rules = screen_rules()
+    design = pod()
+    fit = Fit(
+        fits=True,
+        width_ft=56,
+        depth_ft=36,
+        best_depth_ft=120,
+        slack_ft=84,
+        across_ft=100,
+        stalls=6,
+    )
+    held = screen(
+        rules,
+        LotFacts(
+            lot_sqft=20_000,
+            frontage_ft=100,
+            lot_width_ft=100,
+            lot_depth_ft=200,
+            rear_court_short=True,
+        ),
+        design,
+        fit,
+        policy=SlackPolicy(tolerance={"fit_ft": 0.5}),
+    )
+    # Held: the colour rules show an unsettled lot as yellow.
+    assert held.triage is Triage.unknown
+    assert REAR_COURT_SHORT in held.reasons
+    assert any(f.code == "PARKING-REAR-COURT-SHORT" for f in held.flags)
+
+
+# --- The court the lot page shows has the last word ---
+
+
+def _screened_for(lot: QuadfitLot, rules, *, court, facts: LotFacts):
+    design = pod()
+    fit = Fit(
+        fits=True,
+        width_ft=56,
+        depth_ft=36,
+        best_depth_ft=120,
+        slack_ft=84,
+        across_ft=100,
+        stalls=6,
+    )
+    policy = SlackPolicy(tolerance={"fit_ft": 0.5})
+    first = screen(rules, facts, design, fit, policy=policy)
+    return Screened(
+        lot=lot,
+        design=design,
+        rules=rules,
+        config=None,
+        fit=fit,
+        screening=first,
+        signed=first,
+        angles=1,
+        step_deg=5.0,
+        envelope=None,
+        front_deg=0.0,
+        drawing=None if court is None else {"court": [list(c) for c in court.exterior.coords]},
+        facts=facts,
+    ), policy
+
+
+GOOD_FACTS = dict(lot_sqft=20_000, frontage_ft=100, lot_width_ft=100, lot_depth_ft=200)
+
+
+def test_the_final_drawing_takes_a_short_troutdale_court_out_of_green() -> None:
+    rules = screen_rules()
+    lot = slanted_lot(TROUTDALE)
+    facts = LotFacts(**GOOD_FACTS, parking_setback_doubt_checked=True)
+    s, policy = _screened_for(lot, rules, court=far_line_court(lot, 17.2), facts=facts)
+    assert s.screening.triage is Triage.green
+    out = rear_court_checked(s, policy=policy, relief=None)
+    assert out.screening.triage is Triage.yellow
+    assert PARKING_SETBACK_DOUBT in out.screening.reasons
+
+
+def test_the_final_drawing_lifts_a_troutdale_hold_set_on_the_earlier_drawing() -> None:
+    """1N3E25CC  -02500 80x25: the search's drawing stood 11.4 ft off the rear, the
+    court the lot page shows clears every line. Finding 3."""
+    rules = screen_rules()
+    lot = drawn_lot(TROUTDALE, "LDR-1", "LDR-2")
+    facts = LotFacts(
+        **GOOD_FACTS,
+        parking_setback_doubt_checked=True,
+        parking_setback_doubt_failed=True,
+    )
+    s, policy = _screened_for(lot, rules, court=drawn_court(side=7.5, rear=20).court, facts=facts)
+    assert s.screening.triage is Triage.yellow
+    out = rear_court_checked(s, policy=policy, relief=None)
+    assert out.screening.triage is Triage.green
+    assert PARKING_SETBACK_DOUBT not in out.screening.reasons
+
+
+def test_a_hold_stays_where_the_final_drawing_is_short_too() -> None:
+    rules = screen_rules()
+    lot = drawn_lot(TROUTDALE, "LDR-1", "LDR-2")
+    facts = LotFacts(
+        **GOOD_FACTS,
+        parking_setback_doubt_checked=True,
+        parking_setback_doubt_failed=True,
+    )
+    s, policy = _screened_for(lot, rules, court=drawn_court(side=7.5, rear=16).court, facts=facts)
+    assert rear_court_checked(s, policy=policy, relief=None) is s
+
+
+def test_no_drawing_keeps_the_hold() -> None:
+    rules = screen_rules()
+    lot = drawn_lot(TROUTDALE, "LDR-1", "LDR-2")
+    facts = LotFacts(
+        **GOOD_FACTS,
+        parking_setback_doubt_checked=True,
+        parking_setback_doubt_failed=True,
+    )
+    s, policy = _screened_for(lot, rules, court=None, facts=facts)
+    out = rear_court_checked(s, policy=policy, relief=None)
+    assert out.screening.triage is not Triage.green
+    assert out.facts.parking_setback_doubt_failed
+
+
+def test_a_strip_the_second_reading_waived_is_not_lifted(corpus) -> None:
+    rules = corpus.resolve(SANDY, "R-2", ("abuts_lower_density_zone",))
+    lot = dataclasses.replace(
+        drawn_lot(SANDY, "R-2", "R-2"),
+        facts=LotFacts(lot_sqft=20_000, strip_waived=True),
+    )
+    facts = LotFacts(**GOOD_FACTS, strip_waived=True)
+    s, policy = _screened_for(lot, rules, court=drawn_court(side=30, rear=30).court, facts=facts)
+    out = rear_court_checked(s, policy=policy, relief=None)
+    assert out.facts.strip_waived
+
+
+def test_a_strip_set_on_the_earlier_drawing_lifts_where_the_court_clears(corpus) -> None:
+    rules = corpus.resolve(SANDY, "R-2", ("abuts_lower_density_zone",))
+    lot = drawn_lot(SANDY, "R-2", "R-2")
+    facts = LotFacts(**GOOD_FACTS, strip_waived=True)
+    s, policy = _screened_for(lot, rules, court=drawn_court(side=30, rear=30).court, facts=facts)
+    assert not rear_court_checked(s, policy=policy, relief=None).facts.strip_waived
+
+
+# --- Fix 2: the court stays out of the printed yard, not the wall's distance ---
+
+
+@pytest.mark.parametrize(
+    ("zone", "wall", "printed"),
+    [
+        ("LDR-5", 20, 15),
+        ("LDR-7", 20, 15),
+        ("TR", 20, 15),
+        ("LDR-SW", 20, 15),
+        ("LDR-PV", 15, 10),
+        ("VLDR-SW", 25, 20),
+    ],
+)
+def test_gresham_court_stays_out_of_the_printed_yard(corpus, zone, wall, printed) -> None:
+    """7.0420(G)(1) moves the 26 ft wall; the yard (B)(5)(c) keeps parking out of
+    is what the table prints. 1S3E05CC  -00400 read 1.0 ft short at 20, fits at 15."""
+    rules = corpus.resolve(GRESHAM, zone, ())
+    assert rules.get("setback_rear_ft") == wall
+    assert rules.values["setback_rear_ft"].before_step_back == printed
+    court = _court_beyond_rear(pod(), Sharing(rules), carved_rear_ft=0.0)
+    assert behind_wall_ft(court, wall, rules) == court + printed
+
+
+def test_a_zone_outside_the_plane_keeps_its_printed_yard(corpus) -> None:
+    # TLDR is the one LDR-family zone 7.0420(G)(1) leaves off the list: 15 is its wall too.
+    rules = corpus.resolve(GRESHAM, "TLDR", ())
+    assert rules.get("setback_rear_ft") == 15
+    assert behind_wall_ft(47.5, 15, rules) == 62.5
+
+
+def test_the_wall_still_stands_the_whole_setback(corpus) -> None:
+    # A court shallower than the plane's extra depth does not bring the wall forward.
+    rules = corpus.resolve(GRESHAM, "LDR-5", ())
+    assert behind_wall_ft(0.0, 20, rules) == 20
+
+
+def test_an_alley_lot_shares_as_before(corpus) -> None:
+    rules = corpus.resolve(GRESHAM, "LDR-5", ("alley_at_rear", "abuts_alley"))
+    rear = float(rules.get("setback_rear_ft"))
+    assert rules.values["setback_rear_ft"].before_step_back == 8
+    assert behind_wall_ft(47.5, rear, rules) == 47.5
+
+
+def test_every_reason_here_is_said_in_words() -> None:
+    from app.api.routers.ui_flats import _REASON_WORDS
+
+    assert PARKING_SETBACK_DOUBT in _REASON_WORDS
+    assert REAR_COURT_SHORT in _REASON_WORDS
