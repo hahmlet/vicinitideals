@@ -35,6 +35,7 @@ from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
 from flats.geom.neighbour import Line as NeighbourLine
 from flats.ingest.quadfit import (
     QuadfitLot,
+    _fit_stands,
     _parking_doubt_drawn_fails,
     _sandy_strip_drawn_fails,
 )
@@ -206,9 +207,13 @@ def drawn_lot(
         frontage_ft=100,
         convexity=1,
     )
+    # As the bridge builds it: ``jurisdiction`` and the neighbours' in
+    # quadfit's bare spelling ("sandy"), the layer the corpus path. Round 3's
+    # fixture used the path for both and hid a check that matched no real lot.
+    bare = jurisdiction.rsplit("/", 1)[-1]
     return QuadfitLot(
         tlid="test",
-        jurisdiction=jurisdiction,
+        jurisdiction=bare,
         zone=rear_zone,
         layer_id=jurisdiction,
         facts=LotFacts(lot_sqft=20_000),
@@ -217,8 +222,8 @@ def drawn_lot(
         envelope=None,
         edges=edges,
         neighbour_lines=(
-            NeighbourLine(((jurisdiction, rear_zone),), rear_unresolved),
-            NeighbourLine(((jurisdiction, side_zone),), 0),
+            NeighbourLine(((bare, rear_zone),), rear_unresolved),
+            NeighbourLine(((bare, side_zone),), 0),
         ),
     )
 
@@ -475,3 +480,34 @@ def test_sandy_sfr_across_a_line_owes_twenty_feet() -> None:
 
     assert _sandy_strip_drawn_fails(lot, rules, drawn_court(side=12, rear=30))
     assert not _sandy_strip_drawn_fails(lot, rules, drawn_court(side=20, rear=30))
+
+
+def test_troutdale_drawn_doubt_holds_an_unsigned_lot_out_of_green() -> None:
+    """The screen kept a gate on ``rules.trusted`` that threw away the
+    bridge's drawn-court doubt on every Troutdale lot (FOLLOWUPS 150 round-4
+    mini check): the doubt must reach the colour on unsigned rules."""
+    import dataclasses
+
+    rules = dataclasses.replace(screen_rules(), verdict=RuleVerdict.unverified)
+    result = screen_lot(depth=120, rules=rules, doubt_checked=True, doubt_fit_failed=True)
+
+    assert not rules.trusted
+    assert result.triage is not Triage.green
+    assert any(item.code == "PARKING-SETBACK-DOUBT" for item in result.flags)
+
+
+def test_a_tolerated_fit_has_its_drawn_court_checked() -> None:
+    """A fit short by less than the tolerance still reads GREEN, so the
+    drawn-court doubt must run on it (FOLLOWUPS 150 round-4 mini check:
+    45 Troutdale GREENs stood on tolerated fits never drawn-checked)."""
+    tolerated = screen_lot(depth=82.8, rules=screen_rules(doubt=None))
+    passed = screen_lot(depth=120, rules=screen_rules(doubt=None))
+    failed = screen_lot(depth=60, rules=screen_rules(doubt=None))
+    verdicts = {
+        name: next(c.verdict.value for c in r.checks if c.check == "fit_ft")
+        for name, r in (("tolerated", tolerated), ("passed", passed), ("failed", failed))
+    }
+
+    assert verdicts == {"tolerated": "tolerated", "passed": "pass", "failed": "fail"}
+    assert _fit_stands(tolerated) and _fit_stands(passed)
+    assert not _fit_stands(failed)

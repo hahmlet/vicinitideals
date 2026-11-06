@@ -2286,6 +2286,10 @@ _TROUTDALE_NONRESIDENTIAL_ZONES = frozenset(
     {"MU-1", "MU-2", "MU-3", "CC", "GC", "IP", "LI", "GI", "OS"}
 )
 _TROUTDALE_MAX_HOUSE_SIDE_FT = 10.0
+#: Sandy's corpus layer. Compared with ``QuadfitLot.layer_id``: the lot's
+#: ``jurisdiction`` is quadfit's bare spelling ("sandy"), so a compare on it
+#: never matched and the strip check ran on no real lot (FOLLOWUPS 150
+#: round-4 mini check, 24E14DA00700).
 _SANDY = "or/clackamas/sandy"
 
 
@@ -2371,6 +2375,16 @@ def _yard_neighbour_edges(
     )
 
 
+def _fit_stands(result: Screening) -> bool:
+    """Whether the screen took the fit as standing: passed, or short by less
+    than the tolerance -- a tolerated fit still reads GREEN, so its drawn
+    court is checked too. Round 4 checked only an outright pass and let 45
+    Troutdale GREENs keep a court under the single-house yard (FOLLOWUPS 150
+    round-4 mini check, 1N3E35DB  -06900: court 9.6 ft off the rear line)."""
+    fit_check = next((check for check in result.checks if check.check == "fit_ft"), None)
+    return fit_check is not None and fit_check.verdict is not CheckVerdict.fails
+
+
 def _sandy_strip_drawn_fails(
     lot: QuadfitLot, rules: ZoneResolution, drawing: Any | None
 ) -> bool:
@@ -2386,7 +2400,7 @@ def _sandy_strip_drawn_fails(
     quit, which let 24E14DA00700 stand GREEN with its court 18.4 ft off a
     partly unread line (FOLLOWUPS 150 round-3 read, finding 2)."""
     strip = lot_line_buffer_ft(rules)
-    if lot.jurisdiction != _SANDY or strip <= 0:
+    if lot.layer_id != _SANDY or strip <= 0:
         return False
     import shapely
 
@@ -2495,8 +2509,7 @@ def _screen_on(
                 facts, parking_setback_doubt_checked=True, parking_setback_doubt_failed=False
             )
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-        fit_check = next((check for check in result.checks if check.check == "fit_ft"), None)
-        if fit_check is not None and fit_check.verdict is CheckVerdict.passes:
+        if _fit_stands(result):
             drawing = _court_drawn(here, design, got, fit, fitters[key], env, _street_lines(here))
             doubt_failed = doubt_checked and _parking_doubt_drawn_fails(here, got, drawing)
             strip_failed = _sandy_strip_drawn_fails(here, got, drawing)

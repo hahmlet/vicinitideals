@@ -2063,8 +2063,13 @@ def _parking_setback_doubt_fails(
     unchecked: Sequence[str],
     policy: SlackPolicy,
 ) -> bool:
-    """Whether a passing encoded fit fails under its stricter keep-off figure."""
-    if not rules.trusted or rules.get("parking_required_yard_prohibited") is not True:
+    """Whether a passing encoded fit fails under its stricter keep-off figure.
+
+    Not gated on ``rules.trusted``: Troutdale's rules are unsigned, and the
+    gate threw away the drawn-court doubt the bridge had found (FOLLOWUPS 150
+    round-4 mini check: 45 of 132 false GREENs stood). The doubt only ever
+    holds a lot out of GREEN, so it runs on unsigned rules too."""
+    if rules.get("parking_required_yard_prohibited") is not True:
         return False
 
     doubt = lot_line_buffer_doubt_ft(rules)
