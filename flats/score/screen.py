@@ -2577,8 +2577,9 @@ def screen(
         stated_checks, _, _ = _checks(
             stated_rules, lot, design, fit.side_yard_stated_fit, policy
         )
-        current_fit_check = next(c for c in checks if c.check == "fit_ft")
-        stated_fit_check = next(c for c in stated_checks if c.check == "fit_ft")
+        # A fit that fails on steep ground carries the name STEEP_GROUND instead.
+        current_fit_check = next(c for c in checks if c.check in ("fit_ft", STEEP_GROUND))
+        stated_fit_check = next(c for c in stated_checks if c.check in ("fit_ft", STEEP_GROUND))
         stated_fit_fails = (
             current_fit_check.verdict is not Verdict.fails
             and stated_fit_check.verdict is Verdict.fails
