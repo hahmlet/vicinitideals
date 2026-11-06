@@ -293,8 +293,9 @@ def test_the_reading_rides_the_row_and_the_lot(tmp_path) -> None:
     assert pdx.missing(tmp_path / "snap") == ()
 
 
-def test_the_bridge_holds_a_main_street_far_miss_yellow_when_more_pods_can_fit(tmp_path) -> None:
+def test_the_bridge_holds_a_main_street_far_miss_yellow_when_more_pods_can_fit(tmp_path, monkeypatch) -> None:
     from flats.encode.load import load_trusted
+    from flats.ingest import quadfit
     from flats.ingest.quadfit import lot_from_row, row_for, screen_lot
     from flats.score import relief, slack
     from flats.score.flags import Colour
@@ -307,6 +308,10 @@ def test_the_bridge_holds_a_main_street_far_miss_yellow_when_more_pods_can_fit(t
 
     r = row(TLID="1S1E22BA  -02300", zone="CM2", area_sqft=8907.0, lot_wkb=shapely.to_wkb(MACADAM))
     pdx.with_overlays([r], snapshot(tmp_path))
+    # This row keeps the shared fixture's street lines, miles from this lot, so
+    # the maximum front setback (FOLLOWUPS 147) would measure that gap and fail.
+    # This test is about the floor area floor alone: leave that check unmeasured.
+    monkeypatch.setattr(quadfit, "front_max_streets", lambda s: None)
     (s,) = screen_lot(lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policy, relief=relieve, step_deg=30.0)
     # Steph's 2026-11-04 ruling (2026-11-04-min-floor-area-more-pods):
     # the measured envelope has room for the second pod needed by this FAR.
