@@ -2738,8 +2738,12 @@ zones:
       cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R24-40
       quote: "or/washington/_unincorporated/375/375-10.txt#L309,L343-L344"
     setback_front_max_streets:
-      value: conditional
-      cite: Washington County CDC 375 Table B(2), note F, the frontage maximum applies to the first floor facing a pedestrian street; which streets are pedestrian streets is not held
+      # Note F holds the frontage maximum to "a pedestrian street, as defined in Section
+      # 431-3.8", which reads "Any public or private street, but not including freeways,
+      # alleys, parking lot access drives, and parking lot aisles"
+      # (or/washington/_unincorporated/cdc.431.transit-design.txt#L64-L65): every street.
+      value: every
+      cite: Washington County CDC 375 Table B(2), note F, and 431-3.8, a pedestrian street is any street but a freeway, alley or parking drive
       quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
     setback_front_max_facade_pct:
       value: 50
@@ -2834,8 +2838,12 @@ zones:
       cite: Washington County CDC 375 Table B(2), frontage yard maximum, TO:R40-80
       quote: "or/washington/_unincorporated/375/375-10.txt#L309,L343-L345"
     setback_front_max_streets:
-      value: conditional
-      cite: Washington County CDC 375 Table B(2), note F, the frontage maximum applies to the first floor facing a pedestrian street; which streets are pedestrian streets is not held
+      # Note F holds the frontage maximum to "a pedestrian street, as defined in Section
+      # 431-3.8", which reads "Any public or private street, but not including freeways,
+      # alleys, parking lot access drives, and parking lot aisles"
+      # (or/washington/_unincorporated/cdc.431.transit-design.txt#L64-L65): every street.
+      value: every
+      cite: Washington County CDC 375 Table B(2), note F, and 431-3.8, a pedestrian street is any street but a freeway, alley or parking drive
       quote: "or/washington/_unincorporated/375/375-10.txt#L343-L345,L357"
     setback_front_max_facade_pct:
       value: 50

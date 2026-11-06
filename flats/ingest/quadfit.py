@@ -3568,6 +3568,13 @@ def front_max_streets(
     building = Polygon(ring)
     slack = float(lot.sidewalk_easement_ft or 0.0)
     named_lot = any(e.street_name is not None for chain in chains for e in chain)
+    # Quadfit's envelope kept a front yard the code exempts (Washington County
+    # TO:R24-40, TO:R40-80, note E's "None"): the building stands behind a line
+    # the code does not draw, so where it stands past the maximum says nothing
+    # about whether it could stand within it.
+    yard_unasked = (
+        s.envelope is not None and not cut and "setback_front_ft" in s.rules.exempted
+    )
 
     def strip(e: Edge) -> float:
         return e.dedication_ft if cut else 0.0
@@ -3586,7 +3593,8 @@ def front_max_streets(
         # on it is a question, never a failure.
         stub = len(chains) > 1 and sum(e.length_ft for e in chain) < FRONT_MAX_STUB_FT
         unread = named_lot and all(e.street_name is None for e in chain)
-        out.append((front, round(near, 2), round(far, 2), round(max(far, slack) if stub or unread else slack, 2)))
+        question = stub or unread or yard_unasked
+        out.append((front, round(near, 2), round(far, 2), round(max(far, slack) if question else slack, 2)))
     return tuple(out)
 
 

@@ -48,7 +48,6 @@ FIXTURE = Path(__file__).parent / "fixtures" / "front_max_real_lots.json"
 LOTS = json.loads(FIXTURE.read_text(encoding="utf-8"))["lots"]
 PORTLAND = "or/multnomah/portland"
 TIGARD = "or/washington/tigard"
-COUNTY = "or/washington/_unincorporated"
 FAIRVIEW = "or/multnomah/fairview"
 
 
@@ -285,7 +284,7 @@ def test_a_stub_of_a_street_holds_but_never_fails() -> None:
 
 @pytest.mark.parametrize(
     ("layer", "zone"),
-    [(COUNTY, "TO:R24-40"), (COUNTY, "TO:R40-80"), (PORTLAND, "CI2"), (FAIRVIEW, "R-6"), (FAIRVIEW, "R-7.5")],
+    [(PORTLAND, "CI2"), (FAIRVIEW, "R-6"), (FAIRVIEW, "R-7.5")],
 )
 def test_a_miss_on_a_maximum_that_turns_on_an_unheld_fact_is_held_not_failed(corpus, layer, zone) -> None:
     rule = corpus.resolve(layer, zone)

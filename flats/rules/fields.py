@@ -463,8 +463,8 @@ _F: tuple[FieldDef, ...] = (
         "`conditional`: only on a street or in a district FLATS does not hold, "
         "so the maximum may not reach the lot at all: a building within it "
         "passes, and one beyond it is held out of GREEN, never failed "
-        "(Washington County 375 Table B(2) note F, pedestrian streets; Portland "
-        "Table 150-2, transit streets and Pedestrian Districts). "
+        "(Portland Table 150-2, transit streets and "
+        "Pedestrian Districts). "
         "Absent, nothing says which: the screen passes a building within the "
         "maximum of every street, fails one beyond it on every street, and "
         "holds the rest out of GREEN.",

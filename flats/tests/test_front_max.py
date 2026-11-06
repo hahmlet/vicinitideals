@@ -378,26 +378,37 @@ def test_portland_ce_leaves_its_streets_unread(corpus) -> None:
     assert got.get("setback_front_max_streets") is None
 
 
-@pytest.mark.parametrize(
-    ("jurisdiction", "zone"),
-    [
-        ("or/washington/_unincorporated", "TO:R24-40"),
-        ("or/washington/_unincorporated", "TO:R40-80"),
-    ],
-)
-def test_transit_oriented_maximum_may_not_reach_the_lot(
-    corpus, jurisdiction, zone
-) -> None:
-    got = corpus.resolve(jurisdiction, zone)
-    assert got.get("setback_front_max_streets") == "conditional"
-    lot = facts(
-        corner=True,
-        front_max_streets=streets((True, 8.0, 8.0, 0.0), (False, 25.0, 25.0, 0.0)),
-        front_max_tried=True,
+@pytest.mark.parametrize("zone", ["TO:R24-40", "TO:R40-80"])
+def test_transit_oriented_maximum_holds_every_street_but_not_quadfits_yard(corpus, zone) -> None:
+    """Note F's pedestrian street is any street (431-3.8), and quadfit's envelope
+    kept a yard the code exempts: a miss on it is a question; on a FLATS envelope,
+    a miss (1N133DB04300 stood 15.5 ft off against 10)."""
+    rule = corpus.resolve("or/washington/_unincorporated", zone)
+    assert rule.get("setback_front_max_streets") == "every"
+    edges = _edges(
+        [(0, 0, 100, 0, F), (100, 0, 100, 200, S), (100, 200, 0, 200, R), (0, 200, 0, 0, S)], [0.0]
     )
-    assert front_max_owed(got, lot) == ("unheld", lot.front_max_streets)
-    assert check(run(lot, got), FRONT_MAX) is None
-    assert run(lot, got).colour is Colour.yellow
+    ring = [[10, 15.5], [60, 15.5], [60, 51.5], [10, 51.5], [10, 15.5]]
+
+    def measured(source: str):
+        return front_max_streets(
+            SimpleNamespace(
+                drawing={"fits": True, "building": ring},
+                lot=SimpleNamespace(edges=edges, zone=zone, sidewalk_easement_ft=None),
+                street_edges=None,
+                envelope=SimpleNamespace(geom=None, source=source),
+                rules=rule,
+            )
+        )
+
+    far = facts(front_max_streets=measured("quadfit"), front_max_tried=True)
+    assert check(run(far, rule), FRONT_MAX) is None
+    assert FRONT_MAX in run(far, rule).unchecked
+    assert run(far, rule).colour is not Colour.green
+    real = facts(front_max_streets=measured("flats"), front_max_tried=True)
+    assert check(run(real, rule), FRONT_MAX).verdict is Verdict.fails
+    near = facts(front_max_streets=((True, 8.0, 8.0, 0.0),), front_max_tried=True)
+    assert check(run(near, rule), FRONT_MAX).verdict is Verdict.passes
 
 
 @pytest.mark.parametrize(
