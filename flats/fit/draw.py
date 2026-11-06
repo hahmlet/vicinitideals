@@ -147,14 +147,30 @@ def _along(lines: Iterable[tuple[float, float, float, float]]) -> np.ndarray:
     return np.concatenate(out) if out else np.empty((0, 2))
 
 
+#: Largest box-by-point array :func:`_box_distance` builds at once (about
+#: 16 MB of float64 per temporary).
+BOX_DISTANCE_BLOCK_CELLS = 2_000_000
+
+
 def _box_distance(
     x0: np.ndarray, y0: np.ndarray, x1: np.ndarray, y1: np.ndarray, pts: np.ndarray
 ) -> np.ndarray:
-    """Distance from each box to the nearest of ``pts`` (0 where one is inside)."""
+    """Distance from each box to the nearest of ``pts`` (0 where one is inside).
+
+    Worked in blocks of boxes so the box-by-point arrays stay under
+    :data:`BOX_DISTANCE_BLOCK_CELLS` elements: the frontmost search hands in
+    every hit on a big lot, and one array for all of them killed a 6.5 acre
+    lot's worker for memory (2S102BD00100, FOLLOWUPS 147). Same answer.
+    """
     px, py = pts[None, :, 0], pts[None, :, 1]
-    dx = np.maximum(np.maximum(x0[:, None] - px, 0.0), px - x1[:, None])
-    dy = np.maximum(np.maximum(y0[:, None] - py, 0.0), py - y1[:, None])
-    return np.hypot(dx, dy).min(axis=1)
+    out = np.empty(len(x0), dtype=float)
+    step = max(1, BOX_DISTANCE_BLOCK_CELLS // max(1, len(pts)))
+    for s in range(0, len(x0), step):
+        e = s + step
+        dx = np.maximum(np.maximum(x0[s:e, None] - px, 0.0), px - x1[s:e, None])
+        dy = np.maximum(np.maximum(y0[s:e, None] - py, 0.0), py - y1[s:e, None])
+        out[s:e] = np.hypot(dx, dy).min(axis=1)
+    return out
 
 
 @dataclass(frozen=True, slots=True)

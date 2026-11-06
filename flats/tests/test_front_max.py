@@ -561,3 +561,22 @@ def test_a_building_drawn_far_back_with_nowhere_else_is_red(corpus, policies, mo
     c = check(s.signed, FRONT_MAX)
     assert c is not None and c.verdict is Verdict.fails
     assert s.signed.colour is Colour.red
+
+
+def test_box_distance_in_blocks_gives_the_same_answer(monkeypatch):
+    """The blocked box distance (memory bound, FOLLOWUPS 147) equals one array."""
+    import numpy as np
+
+    from flats.fit import draw
+
+    rng = np.random.default_rng(7)
+    x0 = rng.uniform(0, 100, 500)
+    y0 = rng.uniform(0, 100, 500)
+    x1, y1 = x0 + 12.0, y0 + 30.0
+    pts = rng.uniform(-20, 140, (37, 2))
+    px, py = pts[None, :, 0], pts[None, :, 1]
+    dx = np.maximum(np.maximum(x0[:, None] - px, 0.0), px - x1[:, None])
+    dy = np.maximum(np.maximum(y0[:, None] - py, 0.0), py - y1[:, None])
+    whole = np.hypot(dx, dy).min(axis=1)
+    monkeypatch.setattr(draw, "BOX_DISTANCE_BLOCK_CELLS", 100)
+    assert np.array_equal(draw._box_distance(x0, y0, x1, y1, pts), whole)
