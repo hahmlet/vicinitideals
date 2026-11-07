@@ -1172,7 +1172,7 @@ BY_HAND: dict[str, dict[str, str]] = {
     },
 }
 
-_VERDICT =re.compile(r"^([a-z-]+): (.+)$", re.S)
+_VERDICT = re.compile(r"^([a-z-]+): (.+)$", re.S)
 
 
 def _declared() -> dict[str, set[str]]:
