@@ -1,0 +1,142 @@
+tlid,address_listed,name,listing_id_or_row,source,match_method,match_note,place,class,county,city,lon,lat
+,910 Pierce St.,"Storey, George Lincoln, House",nps-83002144,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.593448,45.353304
+,Timberline Rd.,Silcox Hut,nps-85000144,nps,none,Not yet matched.,timberline-lodge,nr-individual,Clackamas,Timberline Lodge,-121.709570,45.344475
+,1847 SE 5th Ave.,"Walden, Nicholas O., House",nps-84002935,nps,none,Not yet matched.,west-linn,nr-individual,Clackamas,West Linn,-122.653772,45.342611
+1N3E25DB  -00800,726 E. Columbia St.,"Harlow, Fred, House",nps-84003078,nps,point-only,the point falls in the lot; the address does not fix it: '726 E. Columbia St.',troutdale,nr-individual,Multnomah,Troutdale,-122.382447,45.538141
+,8385 SW Hall Boulevard,"Fanno, Augustus, Farmhouse",nps-84003103,nps,none,Not yet matched.,beaverton,nr-individual,Washington,Beaverton,-122.793372,45.458525
+,230 NE 2nd Ave.,"Linklater, Zula, House",nps-84003108,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.987451,45.524331
+1N5E30CC  -01601,40301 NE Larch Mountain Rd.,View Point Inn,nps-85000367,nps,address-fuzzy,address-fuzzy: situs 40301 E LARCH MOUNTAIN RD. The point falls on 1N5E30CC  -STR.,multnomah-unincorporated,nr-individual,Multnomah,Corbett,-122.248804,45.532659
+,1214 Washington St.,"Babcock, Charles C., House",nps-82001966,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.600548,45.360350
+1S5E04    -00600,SE of Corbett,"Graf, Andreas, House",nps-80003356,nps,point-only,the point falls in the lot; the address does not fix it: 'SE of Corbett',multnomah-unincorporated,nr-individual,Multnomah,Corbett,-122.207619,45.510552
+,S of Carver off OR 224,"Baker, Horace, Log Cabin",nps-76001578,nps,none,Not yet matched.,carver,nr-individual,Clackamas,Carver,-122.496478,45.390183
+,Off OR 211,"Foster, Philip, Farm",nps-80003305,nps,none,Not yet matched.,eagle-creek,nr-individual,Clackamas,Eagle Creek,-122.355294,45.358506
+,NE of Canby at 10205 S. New Era Rd.,"Anthony, Herman, Farm",nps-79002041,nps,none,Not yet matched.,canby,nr-individual,Clackamas,Canby,-122.655461,45.295629
+,E of Marquam,"Albright, Daniel, Farm",nps-79003734,nps,none,Not yet matched.,marquam,nr-individual,Clackamas,Marquam,-122.659617,45.069609
+,503 High St.,"Latourette, Charles David, House",nps-80003306,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.608239,45.355966
+,14711 SE Anderson Rd.,Damascus School,nps-80003304,nps,none,Not yet matched.,damascus,nr-individual,Clackamas,Damascus,-122.458801,45.416024
+,10210 S. Macksburg Rd.,Macksburg Lutheran Church,nps-82003722,nps,none,Not yet matched.,canby,nr-individual,Clackamas,Canby,-122.656785,45.213494
+,809 Washington St.,"Cross, Harvey, House",nps-79002043,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.604270,45.357573
+,1599 S. Alpine St.,"Sholes, Albert S., House",nps-82003755,nps,none,Not yet matched.,cornelius,nr-individual,Washington,Cornelius,-123.052176,45.518918
+,Scotch Church Rd.,Old Scotch Church,nps-74001723,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.994552,45.572757
+,W. Union Rd.,West Union Baptist Church,nps-74001725,nps,none,Not yet matched.,west-union,nr-individual,Washington,West Union,-122.906631,45.573618
+2N1W21    -00100,Off Sauvie Island Rd.,Bybee-Howell House,nps-74001716,nps,point-only,the point falls in the lot; the address does not fix it: 'Off Sauvie Island Rd.',multnomah-unincorporated,nr-individual,Multnomah,Sauvie Island,-122.818748,45.641379
+,"SW of Canby, 24670 U.S. 99E","Barlow, William, House",nps-77001098,nps,none,Not yet matched.,canby,nr-individual,Clackamas,Canby,-122.717659,45.252322
+,18815 SW Boones Ferry Rd.,"Sweek, John, House",nps-74001724,nps,none,Not yet matched.,tualatin,nr-individual,Washington,Tualatin,-122.764775,45.384390
+,308 SE Walnut St.,Rice-Gates House,nps-80003391,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.985980,45.517310
+,6th and John Adams Sts.,First Congregational Church of Oregon City,nps-82003723,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.604800,45.354874
+,NE of Hillsboro off U.S. 26,Imbrie Farm,nps-77001117,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.900523,45.549130
+,224 Center St.,"Milne, James, House",nps-79002044,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.608894,45.353538
+,719 Center St.,"Barclay, Dr. Forbes, House",nps-74001676,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.605547,45.357487
+,16000 S. Depot Lane,"Straight, Hiram A., House",nps-78002280,nps,none,Not yet matched.,park-place,nr-individual,Clackamas,Park Place,-122.583589,45.374601
+,Durham and Church Sts.,Lake Oswego Odd Fellows Hall,nps-79002042,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.662155,45.413791
+,14999 S. Springwater Rd.,"Jackson, C. S. ""Sam"", Log House",nps-81000479,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.499683,45.388847
+,26401 S. Hwy. 213,Howard's Gristmill,nps-81000478,nps,none,Not yet matched.,mulino,nr-individual,Clackamas,Mulino,-122.582012,45.224632
+,554 Warner-Parrot Rd.,"McCarver, Morton Matthew, House",nps-74001677,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.610098,45.336223
+,SW of Zigzag on Truman Rd.,St. John the Evangelist Roman Catholic Church,nps-79002045,nps,none,Not yet matched.,zigzag,nr-individual,Clackamas,Zigzag,-121.956424,45.352042
+,504 Sixth St.,"Petzold, Richard, House",nps-85003452,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.606580,45.355870
+,6750 S.W. Oleson Rd.,Schanen-Zolling House,nps-85003340,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.749063,45.470858
+1N3E19C   -01400,17111 NE Sandy Blvd.,"Zimmerman, Jacob, House",nps-86001226,nps,point-in-lot,point and address agree. address-exact: situs 17111 NE SANDY BLVD,gresham,nr-individual,Multnomah,Gresham,-122.487123,45.548561
+1S1E26CB  -02300,10263 S.W. Riverside Dr.,"Rockey, Dr. A. E. and Phila Jane, House",nps-85003036,nps,address-fuzzy,address-fuzzy: situs 10263 S RIVERSIDE DR. The point falls on 1S1E26CB  -STR.,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.660529,45.450557
+,525 S.W. Fourth Ave.,"Knight, William, House",nps-86002961,nps,none,Not yet matched.,canby,nr-individual,Clackamas,Canby,-122.695964,45.257848
+,9300 S.E. Bell Ave.,Bell Station Store,nps-87001558,nps,none,Not yet matched.,portland,nr-individual,Clackamas,Portland,-122.592584,45.455735
+,3101 S.E. Courtney Rd.,"Broetje, John F. and John H., House",nps-87001498,nps,none,Not yet matched.,oak-grove,nr-individual,Clackamas,Oak Grove,-122.630783,45.423101
+1N3E31BC  -06000,722 N.E. One Hundred and Sixty-second Ave.,Louise Home Hospital and Residence Hall,nps-87001556,nps,point-only,the point falls in the lot; the address does not fix it: '722 N.E. One Hundred and Sixty-second Ave.',gresham,nr-individual,Multnomah,Gresham,-122.495631,45.528257
+,10200 SE Cambridge La.,Hall--Chaney House,nps-88001522,nps,none,Not yet matched.,milwaukie,nr-individual,Clackamas,Milwaukie,-122.646728,45.448804
+1S1E35BD  -01200,11648 SW Military La.,Whidden--Kerr House and Garden,nps-88001039,nps,point-only,the point falls in the lot; the address does not fix it: '11648 SW Military La.',multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.652018,45.441260
+,3980 SW 170th Ave.,"Blanton, M. E., House",nps-89000123,nps,none,Not yet matched.,aloha,nr-individual,Washington,Aloha,-122.851355,45.490930
+,905 E. Main St.,"Shorey, Charles, House",nps-89000518,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.975222,45.522348
+,19000 S. Central Point Rd.,White--Kellogg House,nps-89000415,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.611345,45.331223
+,432 Country Club Rd.,Ladd Estate Company Model House,nps-89001859,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.675918,45.420717
+1S3E10DA  -01800,1304 E. Powell Blvd.,"Gedamke, William, House",nps-89001970,nps,address-exact,address-exact: situs 1304 E POWELL BLVD. The point falls on 1S3E10DA  -01600.,gresham,nr-individual,Multnomah,Gresham,-122.417703,45.497642
+,3235 SE. Harrison St.,"Shindler, William, House",nps-89001867,nps,none,Not yet matched.,milwaukie,nr-individual,Clackamas,Milwaukie,-122.628711,45.446677
+1S1E07AA  -00400,4848 SW. Humphrey Blvd.,"Gangware, Roy and Leola, House",nps-90000284,nps,point-in-lot,point and address agree. address-exact: situs 4848 SW HUMPHREY BLVD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.726512,45.504560
+,1850 N. Shore Rd.,"Jantzen, Carl C., Estate",nps-90000277,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.687470,45.342438
+,13908 SE. Fair Oaks Ave.,"Bailey, Lawrence D., House",nps-90000290,nps,none,Not yet matched.,milwaukie,nr-individual,Clackamas,Milwaukie,-122.650345,45.422262
+,885 McVey Ave.,Mathieson--Worthington House,nps-90000837,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.670233,45.409179
+,11188 SE. 27th Ave.,"Wilson, Andrew P., House",nps-90000838,nps,none,Not yet matched.,milwaukie,nr-individual,Clackamas,Milwaukie,-122.634366,45.442195
+,415 17th St.,"Hackett, Erwin Charles, House",nps-85000292,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.597200,45.364389
+,534 Holmes Lane,"Holmes, William L., House",nps-74001678,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.601063,45.341629
+,10310 SW Canterbury Lane,"Tigard, John W., House",nps-79003739,nps,none,Not yet matched.,tigard,nr-individual,Washington,Tigard,-122.783181,45.414580
+,619 Sixth St.,"Ermatinger, Francis, House",nps-77001099,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.603108,45.359369
+,16948 SW. Bryant Rd.,"Bates, John M. and Elizabeth, House No. 2",nps-90000847,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.722912,45.403378
+,16884 SW. Bryant Rd.,"Bates, John M. and Elizabeth, House No. 3",nps-90000831,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.722273,45.403467
+,4101 South Shore Blvd.,"Bates, John M. and Elizabeth, House No. 4",nps-90000832,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.718052,45.404357
+,19131 S. Leland Rd.,"Ainsworth, Capt. John C., House",nps-73001573,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.604471,45.328679
+1S1E35CB  -00700,02107 SW Greenwood Rd.,"Posey, John V. G., House",nps-90001517,nps,point-in-lot,point and address agree. address-fuzzy: situs 2107 S GREENWOOD RD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.657289,45.436505
+,812 John Adams St.,"Clark, Elizabeth, House",nps-90001590,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.603127,45.356758
+,13100 SW Riverside Dr.,Sherrard--Fenton House,nps-91000051,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.655022,45.430917
+,920 SW Fairway Rd.,"Boutwell, W. S. and Gladys, House",nps-91000052,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.686929,45.417417
+1S1E35CB  -02800,01837 SW. Greenwood Rd.,"Smith, Percy A., House",nps-91000135,nps,point-in-lot,point and address agree. address-fuzzy: situs 1837 S GREENWOOD RD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.660231,45.436334
+,5430 SW. Ames Way,"Oleson, Ole and Polly, Farmhouse",nps-91000140,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.747099,45.480845
+,614 E. Main St.,"Schulmerich, Edward, House",nps-91000050,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.980472,45.522259
+1S1E34DA  -01900,01405 SW. Corbett Hill Cir.,"Corbett, H. L. and Gretchen Hoyt, House",nps-91000129,nps,point-in-lot,point and address agree. address-fuzzy: situs 1405 S CORBETT HILL CIR,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.663797,45.438505
+,1125 Maple St.,"Black, Dr. Walter, House",nps-91000045,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.672071,45.400813
+1S1E35CB  -00800,01905 SW. Greenwood Rd.,"Smith, Stanley C. E., House",nps-91000796,nps,point-in-lot,point and address agree. address-fuzzy: situs 1905 S GREENWOOD RD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.658442,45.436058
+,4400 SW. Scholls Ferry Rd.,"Michos, Thomas, House",nps-91001552,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.745529,45.488672
+,16847 SW. Greenbriar Rd.,"Weinstein, Clara and Samuel B., House",nps-92000082,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.708727,45.403703
+,714 Main St.,"Petzold, Richard B., Building",nps-92000084,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.607842,45.358035
+,914 Madison St.,"Latourette, DeWitt Clinton, House",nps-92000127,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.600188,45.357108
+,15725 SE. Dana Ave.,"Dana, Marshall, House",nps-92000083,nps,none,Not yet matched.,milwaukee,nr-individual,Clackamas,Milwaukee,-122.649150,45.408756
+1S1E35CC  -01200,12714 SW. Iron Mountain Blvd.,"Crumpacker, Maurice, House",nps-92001378,nps,point-in-lot,point and address agree. address-fuzzy: situs 12714 S IRON MOUNTAIN BLVD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.658333,45.432908
+,8808 SW. Rambler Ln.,"Feldman, Adam and Johanna, House",nps-93000013,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.767374,45.466756
+,16445 SW. 92nd Ave.,Shaver--Bilyeu House,nps-93000014,nps,none,Not yet matched.,tigard,nr-individual,Washington,Tigard,-122.771861,45.400966
+1S1E07DB  -90007,3787 SW. 52nd Pl.,"Wilcox, Theodore B., Country Estate",nps-93000019,nps,point-only,the point falls in the lot; the address does not fix it: '3787 SW. 52nd Pl.',multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.729368,45.496286
+,9717 SE. Cambridge Ln.,"Francis, Clarence E., House",nps-93000015,nps,none,Not yet matched.,milwaukie,nr-individual,Clackamas,Milwaukie,-122.650545,45.451967
+,4875 SW. Schatz Rd.,Robbins--Melcher--Schatz Farmstead,nps-93000017,nps,none,Not yet matched.,tualatin,nr-individual,Clackamas,Tualatin,-122.726198,45.358020
+,5419 SW. Scholls Ferry Rd.,"Watkins, J. F., House",nps-93000448,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.760535,45.480784
+1N3E25CA  -04600,302 SE. Harlow St.,Troutdale Methodist Episcopal Church,nps-93000921,nps,address-fuzzy,address-fuzzy: situs 302 SE HARLOW AVE. The point falls on 1N3E25CD  -STR.,troutdale,nr-individual,Multnomah,Troutdale,-122.386959,45.535465
+,4891 Willamette Falls Dr.,Lewthwaite--Moffatt House,nps-93001501,nps,none,Not yet matched.,west-linn,nr-individual,Clackamas,West Linn,-122.612425,45.359941
+,39150 Pioneer Blvd.,"Smith, R. S., Motor Company Building",nps-93001502,nps,none,Not yet matched.,sandy,nr-individual,Clackamas,Sandy,-122.260199,45.395915
+,5611 NE. Elam Young Pkwy.,"Ray, Harold Wass, House",nps-93001504,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.921943,45.530515
+1S1E07BA  -00200,5535 SW. Hewett Blvd.,"O'Donnell, E. J., House",nps-93001564,nps,point-in-lot,point and address agree. address-exact: situs 5535 SW HEWETT BLVD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.734834,45.504220
+,59 Wilbur St.,"Rogers, George, House",nps-96001068,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.662671,45.413028
+1S1E34DD  -04100,1600 S.W. Greenwood Rd.,"Corbett, Elliott R., House",nps-96001070,nps,point-in-lot,point and address agree. address-fuzzy: situs 1600 S GREENWOOD RD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.662037,45.433639
+,18025 S. Harding Rd.,"Johnston, Andrew J. and Anna B., Farmstead",nps-97000140,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.422974,45.344827
+,"Bagby Trail #544, Forest Service Rd. 70, Mt Hood National Forest",Bagby Guard Station,nps-99001088,nps,none,Not yet matched.,estacada,nr-individual,Clackamas,Estacada,-122.173506,44.934702
+1S3E10BC  -00700,410 N. Main St.,Gresham Carnegie Library,nps-99001715,nps,point-in-lot,point and address agree. address-fuzzy: situs 410 N MAIN AVE,gresham,nr-individual,Multnomah,Gresham,-122.430345,45.500496
+,"McLoughlin Park, between 7th and 8th Sts.",McLoughlin House National Historic Site,nps-66000637,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.601202,45.358147
+1S3E09AC  -08600,1229 W. Powell Blvd.,"Hughes, Dr. Herbert H., House",nps-01000932,nps,point-in-lot,point and address agree. address-exact: situs 1229 W POWELL BLVD,gresham,nr-individual,Multnomah,Gresham,-122.444583,45.497371
+1S1E35CB  -01904,01845 SW Military Rd.,"McGraw, Donald and Ruth, House",nps-01000935,nps,point-in-lot,point and address agree. address-fuzzy: situs 1845 S MILITARY RD,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.659828,45.439438
+1S1E35BD  -02200,02393 SW. Military Rd.,"Hines, Pierre Rossiter and Charlotte, House",nps-02000660,nps,address-fuzzy,address-fuzzy: situs 2393 S MILITARY RD. The point falls on 1S1E35BD  -02900.,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.655721,45.442036
+,15361 S. Clackamas River Dr.,"Rosenfeld, Walter, Estate",nps-03000420,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.547913,45.396159
+,34680 SE Firdale Rd.,"Waggener, JS and Melinda, Farmstead",nps-03000693,nps,none,Not yet matched.,cornelius,nr-individual,Washington,Cornelius,-123.041494,45.443538
+,26863 E. Rolling Riffle Lane,"Reid's, Wilbur and Evelyn, Alderbrook Lodge",nps-03001477,nps,none,Not yet matched.,boring,nr-individual,Clackamas,Boring,-121.912539,45.330478
+1S3E15AD  -04300,1420 SE Roberts Ave.,"Anderson, Emanuel and Christina, House",nps-05000448,nps,address-exact,address-exact: situs 1420 SE ROBERTS AVE. The point falls on 1S3E15AD  -04200.,gresham,nr-individual,Multnomah,Gresham,-122.417053,45.486216
+1S3E10CC  -04400,765 SW Walters Rd.,"Olson, Charles and Fae, House",nps-07000921,nps,point-in-lot,point and address agree. address-fuzzy: situs 765 SW WALTERS DR,gresham,nr-individual,Multnomah,Gresham,-122.433637,45.491385
+,29375 NW Evergreen Rd.,Manning--Kamna Farm,nps-07001077,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.979412,45.550549
+,18451 SW. Stafford Rd.,Shipley--Cook Farmstead,nps-07001505,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.691411,45.392316
+1S1E04AA  -05700,1115 SW 11th Ave,Campbell Court Hotel,nps-08000559,nps,address-exact,address-exact: situs 1115 SW 11TH AVE. The point falls on no lot.,portland,nr-individual,Multnomah,Portland,-122.811379,45.413055
+,"14850 132nd Terr, SW",Doriot--Rider Log House,nps-08000554,nps,none,Not yet matched.,tigard,nr-individual,Washington,Tigard,-122.811379,45.413055
+,12050 NW Cornell Rd.,"Young, John Quincy Adams and Elizabeth, House",nps-08001264,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.800933,45.526893
+,40 Wilbur St.,Iron Workers' Cottage,nps-09000531,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.663439,45.412787
+,"4.5 mi. E. of jct. FS Rds. 18 and 1825, Mt. Hood National Forest",Upper Sandy Guard Station Cabin,nps-09000705,nps,none,Not yet matched.,government-camp,nr-individual,Clackamas,Government Camp,-121.784086,45.379157
+1S1E07BD  -02700,5545 SW Sweetbriar St,"Jacobberger, Joseph, Country House",nps-10001171,nps,point-in-lot,point and address agree. address-exact: situs 5545 SW SWEETBRIAR ST,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.734423,45.498962
+1N4E33CC  -00600,32405 E. Historic Columbia R. Hwy.,Springdale School,nps-11000771,nps,point-only,the point falls in the lot; the address does not fix it: '32405 E. Historic Columbia R. Hwy.',multnomah-unincorporated,nr-individual,Multnomah,Corbett,-122.329554,45.519435
+,128 North Shore Cir.,"Roehr, Osco C., House",nps-12000877,nps,none,Not yet matched.,lake-oswego,nr-individual,Clackamas,Lake Oswego,-122.674244,45.416451
+,606 John Adams St.,Oregon City Carnegie Library,nps-14000180,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.605513,45.355228
+,707 Main St.,Oregon City Masonic Lodge,nps-14000200,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.610788,45.358720
+1N5E30CB  -00100,Columbia River Scenic Hwy.,Vista House,nps-74001705,nps,point-only,the point falls in the lot; the address does not fix it: 'Columbia River Scenic Hwy.',multnomah-unincorporated,nr-individual,Multnomah,Crown Point,-122.244494,45.539581
+,4825 NE Starr Blvd.,Shute-Meierjurgen Farmstead,nps-100002647,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.937033,45.555044
+1S3E09AC  -03300,477 NW. Overlook Ave.,"Amundsen, Roy E. and Hildur L., House",nps-100004161,nps,point-in-lot,point and address agree. address-exact: situs 477 NW OVERLOOK AVE,gresham,nr-individual,Multnomah,Gresham,-122.442890,45.500910
+,8740 SW Oleson Road,Fogelbo House,nps-100005343,nps,none,Not yet matched.,portland,nr-individual,Washington,Portland,-122.766761,45.456596
+1S1E26CC  -00300,1950 South Carey Ln.,"Carey, Judge Charles Henry and Mary Bidwell, House",nps-100008329,nps,point-only,the point falls in the lot; the address does not fix it: '1950 South Carey Ln.',multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.659088,45.449076
+,17014 SE Oatfield Rd.,"Kinsman, John and Elizabeth, House",nps-100006185,nps,none,Not yet matched.,milwaukie,nr-individual,Clackamas,Milwaukie,-122.604953,45.400273
+,22825 Willamette Dr.,Historic City Hall,nps-100007086,nps,none,Not yet matched.,west-linn,nr-individual,Clackamas,West Linn,-122.610923,45.360047
+,1601 Jackson St.,Buena Vista Social Clubhouse,nps-100005321,nps,none,Not yet matched.,oregon-city,nr-individual,Clackamas,Oregon City,-122.593280,45.360590
+,22180 NW. Birch St.,"McDonald, Malcolm, House",nps-14001160,nps,none,Not yet matched.,hillsboro,nr-individual,Washington,Hillsboro,-122.904675,45.527398
+1S1E35BD  -03300,11645 SW. Military Ln.,"Lewis, C. Hunt and Gertrude McClintock, House",nps-15000054,nps,point-in-lot,point and address agree. address-fuzzy: situs 11645 S MILITARY LN,multnomah-unincorporated,nr-individual,Multnomah,Portland,-122.653308,45.440803
+,20650 SW. Kinnaman Rd.,"Masters, Andrew Jackson and Sarah Jane, House",nps-15000615,nps,none,Not yet matched.,aloha,nr-individual,Washington,Aloha,-122.889620,45.488820
+1S4E18BB  -02200,1322 SE. 282nd Ave.,"Hamlin, Charles Hunter, House",nps-16000346,nps,address-exact,address-exact: situs 1322 SE 282ND AVE. The point falls on 1S3E13AA  -04700.,gresham,nr-individual,Multnomah,Gresham,-122.373394,45.486904
+,1080 SW. 197th Ave.,Aloha Farmhouse,nps-14000812,nps,none,Not yet matched.,beaverton,nr-individual,Washington,Beaverton,-122.879018,45.511988
+1S3E14CA  -00200,2075 Palmblad Rd.,"Ott, David and Marianne, House",nps-15000167,nps,point-in-lot,point and address agree. address-fuzzy: situs 2075 SE PALMBLAD RD,gresham,nr-individual,Multnomah,Gresham,-122.404753,45.482502
+1N3E27CB  -04100,120 1st St.,Fairview City Jail,nps-16000290,nps,address-exact,address-exact: situs 120 1ST ST. The point falls on 1N3E27CB  -04900.,fairview,nr-individual,Multnomah,Fairview,-122.433400,45.539308
+,5350 River Street,"McLean, Dr. Edward and Anne, House",nps-100011430,nps,none,Not yet matched.,west-linn,nr-individual,Clackamas,West Linn,-122.607246,45.364310
+,W of Brightwood off U.S. 26 near Sandy River,Rock Corral on the Barlow Road,nps-74001673,nps,none,Not yet matched.,brightwood,nr-object,Clackamas,Brightwood,-122.065572,45.383233
+,NW of Wemme,"Oregon Trail, Barlow Road Segment",nps-74001679,nps,none,Not yet matched.,wemme,nr-object,Clackamas,Wemme,-121.985196,45.363643
+1S1E34AD  -00200,11505 SW Summerville Ave.,Rae Selling Berry Garden and House,nps-02001637,nps,point-in-lot,point and address agree. address-fuzzy: situs 11505 S SUMMERVILLE AVE,multnomah-unincorporated,nr-object,Multnomah,Portland,-122.661870,45.442324
+,Roughly along Singer Hill W. of High St.,McLoughlin Promenade,nps-14000179,nps,none,Not yet matched.,oregon-city,nr-object,Clackamas,Oregon City,-122.609598,45.355314
+,E end of Sellwood Bridge,Herschell--Spillman Noah's Ark Carousel,nps-87001380,nps,none,"The listed location is an intersection or description, not a street address.",portland,nr-object,Multnomah,Portland,-123.941356,45.469323
+,Spanning the Williamette River on Oswego Hwy 3(Ore-43) bet. Oregon City and West Linn,Willamette River (Oregon City) Bridge (No. 357),nps-05000639,nps,none,Not yet matched.,oregon-city,nr-object,Clackamas,Oregon City,-122.609800,45.359176
+,1401 N. Hayden Island Dr.,USS LCI-713 (Landing Craft),nps-07000300,nps,none,No lot in the county's table has a situs address that agrees.,portland,nr-object,Multnomah,Portland,-123.797524,46.196595
+,610 Bluff St.,Oregon City Municipal Elevator,nps-14000181,nps,none,Not yet matched.,oregon-city,nr-object,Clackamas,Oregon City,-122.607760,45.357144
+,George Rogers Park,Oregon Iron Company Furnace,nps-74001674,nps,none,Not yet matched.,lake-oswego,nr-object,Clackamas,Lake Oswego,-122.660727,45.410947

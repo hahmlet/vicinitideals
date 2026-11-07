@@ -907,13 +907,37 @@
     A lot holding a protected historic resource is RED. Built from Portland's
     historic resource map (Portland and Multnomah unincorporated) and, since
     FOLLOWUPS 87, from the lists in flats/config/historic: RED where the
-    code clearly protects a listed building (Gresham, West Linn), YELLOW with
-    HISTORIC-LISTING-UNSETTLED where that is not settled (Troutdale, Tigard,
-    Washington County, objects and near-address matches). Elsewhere no list
-    is held yet.
+    code clearly protects a listed building (Gresham, West Linn, Troutdale)
+    and for a National Register building or a contributing one in a National
+    Register district, whose demolition OAR 660-023-0200(8) makes wait on a
+    hearing that can deny it; YELLOW with HISTORIC-LISTING-UNSETTLED where
+    that is not settled (Tigard, Washington County, objects, near-address
+    matches and see 2026-11-06-historic-surveyed-yellow).
   source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md; flats/config/pipeline.yaml)
   encoded_in:
     - flats/config/pipeline.yaml
+    - flats/config/historic/protection.yaml
+    - flats/geom/historic_lists.py
+
+- id: 2026-11-06-historic-surveyed-yellow
+  kind: ruling
+  date: 2026-11-06
+  scope: {}
+  question: >-
+    The state's Historic Sites layer is an inventory, not a list of designations.
+    What colour is a lot holding a building the state only surveyed?
+  ruling: >-
+    Steph accepted that surveyed-only entries may hold some lots back. A surveyed-only
+    or doubtful entry on a lot gives YELLOW with a flag, never RED, and a covered
+    city's own list stays the authority.
+  effect: >-
+    Inventory entries are YELLOW with HISTORIC-LISTING-UNSETTLED where no city list is
+    held. Where one is held (Gresham, West Linn, Troutdale, Tigard) an entry the state
+    only surveyed adds nothing, and a National Register building the list does not carry
+    is YELLOW, except in Troutdale, whose own code reaches National Register resources.
+    Portland keeps its map.
+  source: Steph 2026-11-06, relayed by the coordinator on FOLLOWUPS 87
+  encoded_in:
     - flats/config/historic/protection.yaml
     - flats/geom/historic_lists.py
 

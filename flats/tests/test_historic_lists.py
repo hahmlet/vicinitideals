@@ -23,12 +23,17 @@ HISTORIC_DIR = ROOT / "flats" / "config" / "historic"
 # 2026-11-06: Gresham and Troutdale matched on the local Multnomah table; the
 # rest wait on the county tables (the 137 step in the hand-off).
 # After the 2026-11-06 match on the full lot table (137).
+# 2026-11-06, round 2: Gresham's five placed by the state's own record of each
+# (protection.yaml state_points). The state files matched on the local table, so
+# their Clackamas and Washington rows wait on the same 137 step.
 UNMATCHED: dict[str, int] = {
-    "gresham": 5,
+    "gresham": 0,
     "tigard": 3,
     "troutdale": 3,
     "washington-county": 0,
     "west-linn": 0,
+    "nps-2026-11-06": 95,
+    "shpo-2026-11-06": 4543,
 }
 
 WASHCO_LOT = "1S123AA00100"
@@ -38,8 +43,12 @@ PROTECTED_LOT = "1S3E10BC  -00700"
 NEAR_ADDRESS_LOT = "1S3E10CC  -04400"
 # 23500 SE Stark St, the 13-Mile Marker: an object, on a protected list.
 OBJECT_LOT = "1S3E03AB  -00200"
-# 726 E Historic CRH, Harlow House: Troutdale, whose procedures are not stored.
-UNREAD_CODE_LOT = "1N3E25DB  -00800"
+# 726 E Historic CRH, Harlow House: Troutdale, whose 6.515.E is a Type III case.
+TROUTDALE_LOT = "1N3E25DB  -00800"
+# 3645 SE Harlow Ct, an Oregon white oak: on the list, and not a building.
+TROUTDALE_TREE_LOT = "1S3E01BA  -08500"
+# 11333 SW Gaarde St: Tigard's Historic Sites map, nothing held shows the overlay.
+UNSETTLED_LIST_LOT = "2S103DC01700"
 
 
 def _flat(text: str) -> str:
@@ -68,7 +77,16 @@ def _quoted(policy: dict) -> list[tuple[str, str]]:
         out.append((policy["applies"], policy["applies_quote"]))
     if policy.get("not_buildings"):
         out.append((policy["not_buildings"]["cite"], policy["not_buildings"]["quote"]))
+    out.extend((x["cite"], x["quote"]) for x in policy.get("also", ()))
     return out
+
+
+def _state_quotes() -> list[tuple[str, str, str]]:
+    state = hl.load_state_policy()
+    named: list[tuple[str, dict]] = [*state["classes"].items()]
+    named += [(n, p) for n, p in state["places"].items() if "cite" in p]
+    named += [(x["note"], x) for x in state["rule"]]
+    return [(name, cite, quote) for name, policy in named for cite, quote in _quoted(policy)]
 
 
 # --- the rows ----------------------------------------------------------------
@@ -89,7 +107,7 @@ def test_historic_list_csvs_parse_with_expected_columns() -> None:
 def test_every_list_has_a_reading_and_every_row_loads() -> None:
     policy = hl.load_policy()
     assert {p.stem for p in HISTORIC_DIR.glob("*.csv")} == set(policy)
-    assert len(hl.load_lists()) == 85
+    assert sum(x.list_name in policy for x in hl.load_lists()) == 85
 
 
 def test_a_list_row_with_no_lot_is_reported_not_dropped(tmp_path) -> None:
@@ -100,7 +118,7 @@ def test_a_list_row_with_no_lot_is_reported_not_dropped(tmp_path) -> None:
 
     counts = hl.write_report([{"TLID": PROTECTED_LOT}], tmp_path)
     assert counts["unmatched"] == sum(UNMATCHED.values())
-    assert counts["on_lot"] == 1
+    assert counts["on_lot"] == len(hl.listings_on(PROTECTED_LOT))
     assert sum(counts.values()) == len(hl.load_lists())
     with (tmp_path / hl.REPORT_NAME).open(encoding="utf-8", newline="") as source:
         rows = list(csv.DictReader(source))
@@ -133,12 +151,26 @@ def test_every_cite_quotes_the_stored_code(name) -> None:
         assert _flat(quote) in _lines(cite), f"{cite}: {quote}"
 
 
+@pytest.mark.parametrize(("name", "cite", "quote"), _state_quotes())
+def test_every_state_cite_quotes_the_stored_text(name, cite, quote) -> None:
+    assert _flat(quote) in _lines(cite), f"{name}: {cite}: {quote}"
+
+
+def test_west_linn_list_is_the_citys_own_page() -> None:
+    page = (ROOT / hl.load_policy()["west-linn"]["also"][0]["cite"].partition("#")[0]).read_text(encoding="utf-8")
+    rows = [x for x in hl.load_lists() if x.list_name == "west-linn"]
+    assert len(rows) == 25
+    for x in rows:
+        number, *rest = x.address.split()
+        assert re.search(rf"^{number}\s+{re.escape(rest[0])}", page, re.M | re.I), x.address
+
+
 def test_only_the_codes_that_clearly_protect_read_protected() -> None:
     readings = {n: p["reading"] for n, p in hl.load_policy().items()}
     assert readings == {
         "gresham": hl.PROTECTED,
         "west-linn": hl.PROTECTED,
-        "troutdale": hl.DOUBTFUL,
+        "troutdale": hl.PROTECTED,
         "tigard": hl.DOUBTFUL,
         "washington-county": hl.DOUBTFUL,
     }
@@ -170,11 +202,13 @@ def test_a_taxlot_is_found_however_its_spaces_fall() -> None:
         (WASHCO_LOT, hl.DOUBTFUL),
         (NEAR_ADDRESS_LOT, hl.DOUBTFUL),
         (OBJECT_LOT, hl.DOUBTFUL),
-        (UNREAD_CODE_LOT, hl.DOUBTFUL),
+        (TROUTDALE_LOT, hl.PROTECTED),
+        (TROUTDALE_TREE_LOT, hl.DOUBTFUL),
+        (UNSETTLED_LIST_LOT, hl.DOUBTFUL),
     ],
 )
 def test_the_lots_read_as_the_code_and_the_match_allow(tlid, standing) -> None:
-    (listing,) = hl.listings_on(tlid)
+    listing = next(x for x in hl.listings_on(tlid) if x.list_name in hl.load_policy())
     assert listing.standing == standing
 
 
@@ -338,3 +372,211 @@ def test_a_taxlot_the_source_names_is_not_overruled_by_an_address() -> None:
 
 def test_a_taxlot_with_spaces_survives_the_cell() -> None:
     assert hl.split_tlids("1S3E10BC  -02300;1S3E10BC  -04700") == ("1S3E10BC  -02300", "1S3E10BC  -04700")
+
+
+# --- the state's lists -------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("attrs", "expected"),
+    [
+        ({"nrStat": "Individually Listed", "elig": "eligible/significant", "origUse": "Single Dwelling"}, "nr-individual"),
+        ({"nrStat": "Listed Individually & in Hist", "elig": "eligible/contributing", "origUse": "School"}, "nr-individual"),
+        ({"nrStat": "Part of listing (Indiv Listed", "elig": "", "origUse": "Church"}, "nr-individual"),
+        ({"nrStat": "Natl Hist Landmark", "elig": "", "origUse": "Library"}, "nr-individual"),
+        ({"nrStat": "Individually Listed", "elig": "eligible/significant", "origUse": "Cemetery"}, "nr-object"),
+        ({"nrStat": "Individually Listed", "elig": "eligible/significant", "origUse": ""}, "nr-object"),
+        ({"nrStat": "Listed in Historic District", "elig": "eligible/contributing"}, "nr-district-contributing"),
+        ({"nrStat": "Listed in Historic District", "elig": "not eligible/non-contributing"}, "nr-district-noncontributing"),
+        ({"nrStat": "Listed in Historic District", "elig": "not eligible/out of period"}, "nr-district-noncontributing"),
+        ({"nrStat": "Formally Determined Eligible", "elig": "eligible/significant"}, "determined-eligible"),
+        ({"nrStat": "", "elig": "eligible/contributing"}, "surveyed-eligible"),
+        ({"nrStat": None, "elig": "eligible/significant"}, "surveyed-eligible"),
+        ({"nrStat": "", "elig": "undetermined"}, "surveyed-undetermined"),
+        ({"nrStat": "", "elig": ""}, "surveyed-undetermined"),
+        ({"nrStat": "", "elig": "not eligible/non-contributing"}, "surveyed-not-eligible"),
+        ({"nrStat": "", "elig": "not eligible/out of period"}, "surveyed-not-eligible"),
+        ({"nrStat": "Individually Listed", "elig": "demolished"}, "demolished"),
+        ({"nrStat": "Delisted", "elig": "eligible/significant"}, "delisted"),
+    ],
+)
+def test_the_layer_fields_tell_listed_from_surveyed(attrs, expected) -> None:
+    assert hl.shpo_class(attrs) == expected
+
+
+def test_only_a_national_register_building_reads_protected() -> None:
+    classes = hl.load_state_policy()["classes"]
+    assert {n for n, c in classes.items() if c["standing"] == hl.PROTECTED} == {
+        "nr-individual",
+        "nr-district-contributing",
+    }
+    assert not (set(classes) & hl.LEFT_OUT)
+
+
+def test_a_national_register_district_point_marks_no_lot() -> None:
+    assert hl.nps_class({"ResType": "district"}) is None
+    assert hl.nps_class({"ResType": "building"}) == "nr-individual"
+    assert hl.nps_class({"ResType": "object"}) == "nr-object"
+
+
+def _state_row(kind: str, place: str, method: str = "address-exact", tlid: str = "1S1E01AA00100") -> dict[str, str]:
+    return {
+        "tlid": "" if method == "none" else tlid,
+        "address_listed": "1 N Main St",
+        "name": "x",
+        "listing_id_or_row": "shpo-1",
+        "source": "shpo",
+        "match_method": method,
+        "match_note": "",
+        "place": place,
+        "class": kind,
+        "county": "Washington",
+        "city": "x",
+        "lon": "",
+        "lat": "",
+    }
+
+
+def _read(row: dict[str, str], own: dict[str, set[str]] | None = None):
+    return hl._state_listing("shpo-x", row, hl.load_state_policy(), own or {})
+
+
+def test_a_surveyed_entry_is_yellow_and_never_red() -> None:
+    for kind in ("surveyed-eligible", "surveyed-undetermined", "determined-eligible", "nr-object"):
+        for method in ("address-exact", "point-in-lot", "address-fuzzy", "point-only"):
+            assert _read(_state_row(kind, "sandy", method)).standing == hl.DOUBTFUL
+
+
+def test_a_yellow_carries_what_the_local_code_says() -> None:
+    assert "City Council" in _read(_state_row("surveyed-eligible", "sandy")).why
+    assert "suspends" in _read(_state_row("surveyed-eligible", "milwaukie")).why
+
+
+def test_a_national_register_building_is_red_on_a_sure_match_only() -> None:
+    for method in ("address-exact", "address-range", "point-in-lot"):
+        assert _read(_state_row("nr-individual", "milwaukie", method)).standing == hl.PROTECTED
+        assert _read(_state_row("nr-district-contributing", "beaverton", method)).standing == hl.PROTECTED
+    for method in ("address-fuzzy", "address-ambiguous", "point-only"):
+        assert _read(_state_row("nr-individual", "milwaukie", method)).standing == hl.DOUBTFUL
+    assert _read(_state_row("nr-district-noncontributing", "beaverton")).standing == hl.DOUBTFUL
+
+
+def test_a_city_list_held_stays_the_authority() -> None:
+    assert _read(_state_row("surveyed-eligible", "gresham")) is None
+    assert _read(_state_row("nr-district-noncontributing", "west-linn")) is None
+    # On the National Register, not on the city's list: yellow.
+    assert _read(_state_row("nr-individual", "tigard")).standing == hl.DOUBTFUL
+    assert "own list does not carry" in _read(_state_row("nr-individual", "tigard")).why
+    # And on the city's list, red, the state rule answering for what the list leaves open.
+    on_list = _read(_state_row("nr-individual", "tigard", tlid="1S1E01AA  -00100"), {"tigard": {"1S1E01AA00100"}})
+    assert on_list.standing == hl.PROTECTED
+
+
+def test_troutdales_own_code_reaches_the_national_register() -> None:
+    assert _read(_state_row("nr-individual", "troutdale")).standing == hl.PROTECTED
+    assert _read(_state_row("surveyed-eligible", "troutdale")) is None
+
+
+def test_portlands_map_answers_there() -> None:
+    assert _read(_state_row("nr-individual", "portland")) is None
+    assert _read(_state_row("surveyed-eligible", "portland")) is None
+
+
+def test_every_state_file_row_reads_and_nothing_but_a_national_register_building_is_red() -> None:
+    assert hl.state_files()
+    for path in hl.state_files():
+        assert tuple(hl.read_rows(path)[0]) == hl.STATE_COLUMNS
+        assert (path.parent / "SOURCE.json").is_file()
+    for x in hl.load_lists():
+        if x.listing_class and x.standing == hl.PROTECTED and x.tlids:
+            assert x.listing_class in ("nr-individual", "nr-district-contributing"), x.said()
+            assert x.method in hl.SURE_MATCH, x.said()
+
+
+def test_the_state_rows_do_not_land_portlands_map() -> None:
+    assert not [x for x in hl.load_lists() if x.place == "portland"]
+
+
+def _streets(*rows: tuple[str, str]) -> dict:
+    return _lots(*rows)
+
+
+def test_a_point_and_an_address_are_checked_against_each_other() -> None:
+    streets = _streets(("A", "410 N MAIN AVE"), ("B", "412 N MAIN AVE"))
+    assert hl.place_state_row("410 N Main Ave", ["A"], streets)[:2] == (("A",), "point-in-lot")
+    # The address fixes a lot and the point falls on the neighbour: the address stands.
+    tlids, method, note = hl.place_state_row("410 N Main Ave", ["B"], streets)
+    assert (tlids, method) == (("A",), "address-exact") and "B" in note
+    # No address, a point: only ever yellow.
+    assert hl.place_state_row("Near the old mill", ["B"], streets)[:2] == (("B",), "point-only")
+    assert "point-only" in hl.UNSURE_MATCH
+    assert hl.place_state_row("Near the old mill", [], streets)[:2] == ((), "none")
+
+
+def test_a_place_is_spelled_as_protection_yaml_spells_it() -> None:
+    assert hl.place_of("WEST LINN", "clackamas") == "west-linn"
+    assert hl.place_of("UNINCORPORATED", "clackamas") == "clackamas-unincorporated"
+    assert hl.place_of(None, "washington") == "washington-unincorporated"
+    assert hl.place_of("", "multnomah") == "multnomah-unincorporated"
+
+
+def _local_lot_table():
+    for path in (
+        ROOT / "data" / "quadfit" / "s1_lots.parquet",
+        ROOT.parent.parent / "vicinitideals" / "data" / "quadfit" / "s1_lots.parquet",
+    ):
+        if path.is_file():
+            return path
+    pytest.skip("local s1_lots.parquet data is not present in CI")
+
+
+def test_a_state_point_lands_on_the_right_lot() -> None:
+    """Harlow House, in the state's own degrees: holds the lot table's coordinates."""
+    columns = ["TLID", "SITEADDR", "SITECITY", "JURIS_CITY", "COUNTY", "wkb"]
+    frame = pd.read_parquet(_local_lot_table(), columns=columns)
+    frame = frame[frame["JURIS_CITY"] == "TROUTDALE"]
+    table = hl.LotTable(frame, [("M", "TROUTDALE")])
+    row = next(
+        r
+        for path in hl.state_files()
+        for r in hl.read_rows(path)
+        if r["address_listed"].upper().startswith("726 E") and r["city"].upper() == "TROUTDALE"
+    )
+    (under,) = table.under_points([float(row["lon"])], [float(row["lat"])])
+    assert [hl.compact(table.tlids[i]) for i in under] == [hl.compact(TROUTDALE_LOT)]
+    (got,) = hl.match_state_rows([row], table)
+    # The state prints 726 E Columbia St, the road's old name: the point alone.
+    assert got["match_method"] == "point-only" and hl.compact(got["tlid"]) == hl.compact(TROUTDALE_LOT)
+    assert got["place"] == "troutdale"
+
+
+def test_a_row_of_a_county_the_table_does_not_hold_is_left_as_it_is() -> None:
+    frame = pd.DataFrame(
+        {
+            "TLID": ["A"],
+            "SITEADDR": ["1 N MAIN ST"],
+            "SITECITY": ["GRESHAM"],
+            "JURIS_CITY": ["GRESHAM"],
+            "COUNTY": ["M"],
+            "wkb": [shapely.to_wkb(shapely.box(0, 0, 1, 1))],
+        }
+    )
+    row = _state_row("nr-individual", "tigard", "none")
+    row.update(lon="-122.7", lat="45.4")
+    table = hl.LotTable(frame, [("W", "X")])
+    assert hl.match_state_rows([row], table) == [row]
+
+
+def test_a_landmark_the_address_cannot_fix_borrows_the_states_record_and_stays_yellow() -> None:
+    rows = {x.listing_id: x for x in hl.load_lists() if x.list_name == "gresham"}
+    giese = rows["class1-22"]
+    assert giese.tlids and giese.method == "point-only"
+    assert giese.standing == hl.DOUBTFUL and "shpo-52816" in giese.note
+    state = {r["listing_id_or_row"] for path in hl.state_files() for r in hl.read_rows(path)}
+    for policy in hl.load_policy().values():
+        assert set((policy.get("state_points") or {}).values()) <= state
+
+
+def test_the_known_washington_county_lot_is_never_red_on_a_surveyed_entry() -> None:
+    listings = hl.listings_on(WASHCO_LOT)
+    assert listings and all(x.standing == hl.DOUBTFUL for x in listings)

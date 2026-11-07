@@ -614,7 +614,7 @@ types:
     approved_on: null
     raised_from: [PDX_MAIN_STREET_SETBACK]
   HISTORIC-LISTING-UNSETTLED:
-    description: "The lot appears on a city's or county's historic list, but whether that listing protects a building here is not settled: the code that says what a listing does is not held, an owner may be able to step out of it, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
+    description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
     kind: categorical
     risk: possible
     severity: 5

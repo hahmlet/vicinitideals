@@ -7,12 +7,14 @@
 #                        under Steph's 2026-10-14 ruling, as Portland's are.
 # reading: doubtful   -- it may. The lot is YELLOW with a flag.
 #
-# The state's owner-consent law (ORS 197.772) and historic rule (OAR
-# 660-023-0200) are NOT stored, so nothing below rests on reading them; the
-# cities' own words on owner consent are cited instead. An owner's way out of a
-# designation is not by itself doubt: Gresham and West Linn each limit it to the
-# owner at designation who objected on the record, and a buyer's lot is listed
-# until someone removes it.
+# An owner's way out of a designation is not by itself doubt: ORS 197.772(3) lets an
+# owner remove a designation the government imposed, and OAR 660-023-0200(9)(a)
+# limits that to the owner at designation who has kept the property. A buyer's lot
+# is listed until someone removes it. Gresham and West Linn say the same in their
+# own words.
+#
+# `state` at the end reads the state's two lists by class. Any `also` entry is one
+# more cite and quote the test holds to the stored lines.
 
 lists:
   gresham:
@@ -40,6 +42,15 @@ lists:
         and whether the pod can stand clear of it is not measured
       cite: flats/provenance/docs/or/multnomah/gresham/5.0300.historic-cultural-landmarks.txt#L368-L371
       quote: "Proposed alterations affecting a non-building landmark, such as a monument, mile-post, or other object, shall be submitted to the Historic Resources Subcommittee and the Hearings Officer"
+    # Rows the county's address cannot fix, and the state's record of the same landmark
+    # (same name, same or next-door address) can. The lot comes from that record's row.
+    # Only ever yellow. Ely: the city prints 122 N Main, the state 112.
+    state_points:
+      class1-22: shpo-52816
+      class2-02: shpo-52408
+      class2-06: shpo-53222
+      class2-07: shpo-52203
+      class2-08: shpo-51574
 
   west-linn:
     county: clackamas
@@ -55,42 +66,258 @@ lists:
     # one had it; removal is for an owner at designation who objected (L498).
     owner_consent: flats/provenance/docs/or/clackamas/west-linn/25.willamette-historic.txt#L218
     owner_quote: "The property owner must consent, in writing, to a proposed historic landmark designation"
+    also:
+      # The 25 addresses in west-linn.csv all appear on this page (a test holds them).
+      - cite: flats/provenance/docs/or/clackamas/west-linn/historic-landmarks.city-page.txt#L21
+        quote: "There are 25 individually designated local landmarks located throughout the City."
 
   troutdale:
     county: multnomah
     cities: [TROUTDALE]
-    reading: doubtful
+    reading: protected
     why: >-
-      the chapter says its protection standards apply to the listed landmarks, but the
-      stored text holds no demolition standard to say what they do; the procedures are
-      not stored, so whether a listing can stop a demolition is unread
-    cite: flats/provenance/docs/or/multnomah/troutdale/4.200-4.230.historic-landmark-protection.txt#L13-L15
-    quote: "The historic landmark protection standards of this Chapter apply to designated historic landmarks"
+      demolishing a historic landmark is a Type III case before the Historic Landmarks
+      Commission, which must find that no prudent and feasible alternative exists, that
+      the landmark is deteriorated beyond repair, or that the value to the community of
+      the proposed use outweighs keeping it
+    cite: flats/provenance/docs/or/multnomah/troutdale/6.500.historic-landmarks.txt#L195-L204
+    quote: "In order to approve a Demolition or Relocation of a Historic Landmark, the Historic Landmarks Commission shall make findings of fact"
+    also:
+      - cite: flats/provenance/docs/or/multnomah/troutdale/6.500.historic-landmarks.txt#L195-L196
+        quote: "The Type III procedure, as described in Section 2.060 of this Code, shall apply to a Demolition or Relocation of a Historic Landmark application."
+      - cite: flats/provenance/docs/or/multnomah/troutdale/4.200-4.230.historic-landmark-protection.txt#L13-L15
+        quote: "The historic landmark protection standards of this Chapter apply to designated historic landmarks"
+    not_buildings:
+      # Table A's trees and cemeteries. Row 4, the Althaus House and its walnut
+      # trees, is a house.
+      ids: ["3", "5", "6", "7"]
+      why: >-
+        the landmark is a tree or a cemetery, not a building: the ruling speaks of
+        buildings, and whether the pod can stand clear of it is not measured
+      cite: flats/provenance/docs/or/multnomah/troutdale/1/1.035.txt#L39
+      quote: "The historic resource inventory includes designated historic landmarks in Table A of Section 4.230 of this Chapter."
 
   tigard:
     county: washington
     cities: [TIGARD]
     reading: doubtful
     why: >-
-      the listing comes from the city's Historic Sites map, and the code's chapter on
-      historic resources, 18.755, is named but not stored, so what a listing does is
-      unread
-    cite: flats/provenance/docs/or/washington/tigard/18.660/18.660.030.txt#L34
-    quote: "Historic resource designations and alterations as provided in Chapter 18.755, Historic Resources."
+      demolishing a structure in a Historic Resource Overlay zone needs approval under
+      18.755, which can only be had on its criteria; but this list is the city's Historic
+      Sites map, and nothing held shows that each building on it carries the overlay zone
+    cite: flats/provenance/docs/or/washington/tigard/tdc.18.755.historic-resources.txt#L81
+    quote: "Demolition of a structure located within a Historic Resource Overlay zone without approval under the provisions of this chapter is prohibited."
+    # Joy Theater: the city prints 11959 SW Pacific Highway, the state 11959 SW Hwy 99.
+    state_points:
+      "411": shpo-48616
+    also:
+      - cite: flats/provenance/docs/or/washington/tigard/tdc.18.755.historic-resources.txt#L209
+        quote: "An application for demolition of structures in a Historic Resource Overlay zone is processed through a Type II procedure"
 
   washington-county:
     county: washington
     cities: []
     reading: doubtful
     why: >-
-      demolishing a designated resource is a Type III case, but the code also says the
-      Director shall let a property owner be exempt through a Type I procedure, in words
-      that do not limit it to the owner at designation; and the county's Cultural
-      Resources Inventory, which says which buildings on the lot the overlay reaches, is
-      not held, so whether a protected building stands here today is unread
+      demolishing a designated resource is a Type III case, and a buyer has no way out
+      of it: the code's owner exemption rests on ORS 197.772(3), which the state rule
+      limits to the owner at designation who has kept the property. But the overlay
+      reaches only the buildings its Cultural Resources Inventory calls significant, and
+      that inventory is not held, so whether a protected building stands here today is
+      unread
+    also:
+      - cite: flats/provenance/docs/or/oar.660-023-0200.txt#L125-L128
+        quote: "Has retained ownership since the time of the designation"
     cite: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L287-L291
     quote: "the Director, through a Type I procedure, shall allow a property owner to be exempt from Section 373"
     demolition: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L235-L236
     demolition_quote: "Any application to relocate or demolish a designated histo ric or cultural resource shall be reviewed through a Type III procedure."
     applies: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L169-L171
     applies_quote: "structures on the tax lot subject to the overlay district's provisions are those described in the Cultural Resources Inventory as significant"
+
+# The state's lists (flats/config/historic/state/). The Historic Sites layer is an
+# inventory: `nrStat` and `elig` tell a listed resource from a surveyed one, and
+# flats/geom/historic_lists.py shpo_class reads them.
+state:
+  classes:
+    nr-individual:
+      standing: protected
+      why: >-
+        the building is on the National Register, and the state rule makes its
+        demolition wait on a public hearing that can deny it, whether or not the city
+        designated it and even where the city's code has not caught up
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L113
+      quote: "Must protect National Register Resources, regardless of whether the resources are designated in the local plan or land use regulations"
+      also:
+        - cite: flats/provenance/docs/or/oar.660-023-0200.txt#L119
+          quote: "Until such regulations are adopted, subsections (a) and (b) shall apply directly to National Register Resources."
+    nr-district-contributing:
+      standing: protected
+      why: >-
+        the building contributes to a National Register district: the state rule's hearing
+        reaches districts, and what it lets a city leave out is accessory structures and
+        non-contributing resources, which this is not
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L113
+      quote: "Local jurisdictions may exclude accessory structures and non-contributing resources within a National Register nomination"
+      also:
+        - cite: flats/provenance/docs/or/oar.660-023-0200.txt#L26
+          quote: "means buildings, structures, objects, sites, or districts listed in the National Register of Historic Places"
+    nr-object:
+      standing: doubtful
+      why: >-
+        the National Register lists this as a site or object, or says nothing of a
+        building: the state rule protects it, but whether it is a building the pod must
+        replace, or something the pod can stand clear of, is not measured
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L26
+      quote: "means buildings, structures, objects, sites, or districts listed in the National Register of Historic Places"
+    nr-district-noncontributing:
+      standing: doubtful
+      why: >-
+        the building stands in a National Register district but does not contribute to it:
+        the state rule lets a city leave it out, and whether this one has is not read
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L113
+      quote: "Local jurisdictions may exclude accessory structures and non-contributing resources within a National Register nomination"
+    determined-eligible:
+      standing: doubtful
+      why: >-
+        the state records this as formally found eligible for the National Register, not
+        listed on it, so the state rule's hearing does not reach it; whether the city
+        designated it is not held
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L26
+      quote: "means buildings, structures, objects, sites, or districts listed in the National Register of Historic Places"
+    surveyed-eligible:
+      standing: doubtful
+      why: >-
+        the state's inventory surveyed this and found it eligible, which is not a
+        designation: it protects the building only if the city also deemed it significant,
+        and the city's list is not held (Steph 2026-11-06: a surveyed entry is yellow, never red)
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L23
+      quote: "deemed by a local government to be a significant resource"
+    surveyed-undetermined:
+      standing: doubtful
+      why: >-
+        the state's inventory holds this without a finding, which is not a designation: it
+        protects the building only if the city deemed it significant, and the city's list
+        is not held (Steph 2026-11-06: a surveyed entry is yellow, never red)
+      cite: flats/provenance/docs/or/oar.660-023-0200.txt#L23
+      quote: "deemed by a local government to be a significant resource"
+
+  # What sets the owner's rights, and so what a buyer inherits. Read, not built on.
+  rule:
+    - note: an owner may refuse a local designation; the National Register is not a local designation
+      cite: flats/provenance/docs/or/ors.197.772.txt#L1
+      quote: "a local government shall allow a property owner to refuse to consent to any form of historic property designation"
+    - note: an owner may remove an imposed one; OAR (9)(a) holds this to the owner at designation
+      cite: flats/provenance/docs/or/ors.197.772.txt#L5
+      quote: "A local government shall allow a property owner to remove from the property a historic property designation that was imposed on the property by the local government."
+
+  # Where a place's name is not here, the classes above answer alone.
+  #   map: true       Portland's own map answers; nothing from the state lands there.
+  #   own_list: true  The city's list is held and is the authority: an inventory entry
+  #                   adds nothing, and a National Register building the list does not
+  #                   carry is YELLOW, not RED.
+  #   national_register: true  The city's code itself reaches National Register
+  #                   resources, listed or not, so own_list does not soften them.
+  # `reading` is what the local code does with a landmark. No local list is held for
+  # these, so it moves no lot today: its `why` travels on the YELLOW, and it is here
+  # for whoever brings the list in.
+  places:
+    portland:
+      map: true
+    gresham:
+      own_list: true
+    west-linn:
+      own_list: true
+    tigard:
+      own_list: true
+    troutdale:
+      own_list: true
+      national_register: true
+      cite: flats/provenance/docs/or/multnomah/troutdale/6.500.historic-landmarks.txt#L15-L17
+      quote: "historic resources listed on the National Register of Historic Places whether or not that resource is designated a historic landmark by the City"
+    milwaukie:
+      reading: doubtful
+      why: >-
+        Milwaukie's Commission may reject a landmark's demolition, but that only suspends
+        the permit for up to 120 days, and then the building official shall issue it
+      cite: flats/provenance/docs/or/clackamas/milwaukie/19.400.overlays.txt#L2782-L2786
+      quote: "the building official shall issue such permit"
+    sandy:
+      reading: protected
+      why: >-
+        Sandy sends a landmark's demolition to the City Council at a public hearing, but
+        its list of landmarks is not held
+      cite: flats/provenance/docs/or/clackamas/sandy/17.62/17.62.80.txt#L27
+      quote: "the Director shall refer any request for demolition of a site or structure designated CHR to the Planning Commission as a Type IV quasi-judicial procedure."
+    wilsonville:
+      reading: protected
+      why: >-
+        Wilsonville prohibits demolishing a designated cultural resource unless its
+        criteria are met, but its list of resources is not held
+      cite: flats/provenance/docs/or/clackamas/wilsonville/4/4.171.txt#L105
+      quote: "Demolition or alteration of any structure, or any change in any site or object which has been designated as a cultural resource, is prohibited unless it is determined"
+    estacada:
+      reading: doubtful
+      why: >-
+        Estacada's committee reviews demolishing a resource on the city's inventory, but
+        may not prevent it where the building cannot be economically maintained
+      cite: flats/provenance/docs/or/clackamas/estacada/16.48/16.48.060.txt#L13
+      quote: "nor to prevent the removal or demolition of any structure which cannot be economically maintained or restored"
+    clackamas-unincorporated:
+      reading: doubtful
+      why: >-
+        Clackamas County reviews a landmark's demolition as a Type II case, but the
+        decision may only suspend it, for up to 120 days in all
+      cite: flats/provenance/docs/or/clackamas/_unincorporated/zdo.707.txt#L392
+      quote: "The application may be suspended, if, in the interest of preserving historic values for public benefit, the building should not be moved or demolished."
+      also:
+        - cite: flats/provenance/docs/or/clackamas/_unincorporated/zdo.707.txt#L402
+          quote: "not to exceed a total of 120 days"
+        - cite: flats/provenance/docs/or/clackamas/_unincorporated/zdo.707.txt#L31
+          quote: "if it is listed on the National Register of Historic Places"
+    hillsboro:
+      reading: protected
+      why: >-
+        Hillsboro makes demolishing a designated structure a Type III case that must find
+        it deteriorated beyond repair and its demolition economically necessary, but the
+        list of designated structures is not held
+      cite: flats/provenance/docs/or/washington/hillsboro/12.27/12.27.370.txt#L7
+      quote: "Demolition of a designated structure"
+      also:
+        - cite: flats/provenance/docs/or/washington/hillsboro/12.80/12.80.030.txt#L45
+          quote: "To approve a Major CRA involving relocation or demolition of a designated Cultural Resource, the Review Authority shall make findings"
+    oregon-city:
+      reading: protected
+      why: >-
+        Oregon City's board may approve or deny a demolition in its historic overlay, but
+        the list of single landmarks outside the overlay's districts is not held
+      cite: flats/provenance/docs/or/clackamas/oregon-city/17.zoning.txt#L9278-L9279
+      quote: "The board may approve or deny the demolition or moving request"
+    happy-valley:
+      reading: doubtful
+      why: >-
+        Happy Valley's stored code names historic landmarks on its Goal 5 inventories,
+        but holds no rule on demolishing one
+      cite: flats/provenance/docs/or/clackamas/happy-valley/16.25/16.25.005.txt#L528
+      quote: "Resources such as historic landmarks, significant trees and sensitive natural resources"
+    beaverton:
+      reading: doubtful
+      why: >-
+        Beaverton puts a landmark's demolition under Chapter 40, whose landmark sections
+        are not stored
+      cite: flats/provenance/docs/or/washington/beaverton/70.15/70.15.10.txt#L224
+      quote: "are regulated by CHAPTER 40 of the Development Code: Alteration of Landmark, Emergency Demolition of a Landmark, and Demolition of a Landmark."
+    sherwood:
+      reading: doubtful
+      why: >-
+        Sherwood defines a landmarks register, but the chapter saying what a listing does
+        is not stored
+      cite: flats/provenance/docs/or/washington/sherwood/16.10/16.10.020.txt#L76-L77
+      quote: "A property officially recognized by the City of Sherwood"
+    tualatin:
+      reading: doubtful
+      why: >-
+        Tualatin's stored code defines a landmark's relocation, but the chapter saying
+        what a listing does is not stored
+      cite: flats/provenance/docs/or/clackamas/tualatin/31/31.060.txt#L119
+      quote: "Relocating a landmark from its existing parcel to another parcel"
