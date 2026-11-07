@@ -499,6 +499,14 @@ definitions:
     cite: "TDC 1.020, Lot, Corner"
 
 code:
+  - id: "5.350.nonconforming-lot"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    title: "TDC 5.350 Nonconforming Lot"
+    start: "5.350  Nonconforming Lot."
+    end: "MISCELLANEOUS USES AND STANDARDS"
+    extraction: plain
+    # One section, so the thinness guard would read it as a landing page.
+    allow_thin: true
   # Municode client 4663, publication 1813 (updated 2025-11-17). The zoning
   # lives in the separately-published Development Code, not the Code of
   # Ordinances (publication 1812). The library renders in JavaScript; this
@@ -989,6 +997,12 @@ zones:
       # "see 3.235.A", which defers to width and depth: no figure, as MU-2.
       exempt: true
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684-L685,L724-L725"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     min_lot_width_ft:
       value: 15
       quote: "or/multnomah/troutdale/3/3.230.txt#L25,L27"
@@ -1260,6 +1274,12 @@ zones:
       # 1,050-foot floor cannot decide a single lot either way.
       exempt: true
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684-L688,L724-L725"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     min_lot_width_ft:
       # 15 feet, the same in all three mixed-use columns. A townhouse-unit
       # width applied to every residential use in the district, which is what
@@ -1463,6 +1483,12 @@ zones:
       # so there is no area test here to compare a lot against.
       exempt: true
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684-L688,L724-L725"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     min_lot_width_ft:
       value: 15
       quote: "or/multnomah/troutdale/3/3.230.txt#L25,L27"
@@ -1678,6 +1704,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.130.txt#L58-L60"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     min_lot_width_ft:
       value: 70
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L40"
@@ -1839,6 +1871,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.130.txt#L58-L60"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     min_lot_width_ft:
       value: 60
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L40"
@@ -2000,6 +2038,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.130.txt#L58-L60"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     min_lot_width_ft:
       value: 50
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L40"
@@ -2333,6 +2377,12 @@ zones:
         - exempt: true
           when: [troutdale_town_center]
           quote: "or/multnomah/troutdale/3/3.235.txt#L4-L5"
+    lot_of_record_relief:
+      # 5.350: a lot missing a size requirement may be developed, but with an area
+      # deficiency only as a single-family dwelling. So the dimensions are lifted
+      # and the area row stands.
+      value: lot_shape
+      quote: "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5"
     # Width and depth: "none" in every column of 3.130.C, so the base and the
     # townhouse plat owe neither; the quadplex on one lot in the Town Center
     # owes 3.130.B's HDR (TC) column -- 20 feet wide, and "see 3.235" deep,

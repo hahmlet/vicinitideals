@@ -2014,6 +2014,15 @@ zones:
           when: [unit_lots]
           cite: Canby CMC 16.18.030 (A)(2)(a), townhouse dwelling units, 3,000 square foot minimum lot size
           quote: "or/clackamas/canby/cmc.16.18.030.txt#L9,L11"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     min_lot_width_ft:
       value: 40
       cite: Canby CMC 16.18.030 (C), minimum width and frontage forty feet
@@ -2110,6 +2119,15 @@ zones:
       exempt: true
       cite: Canby CMC 16.20.030 (A)-(G), the R-2 development standards, print no minimum lot area (density, width, yards, height only)
       quote: "or/clackamas/canby/cmc.16.20.030.txt#L5,L7,L9"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     min_lot_width_ft:
       value: 20
       cite: Canby CMC 16.20.030 (C), minimum width and frontage twenty feet
@@ -2223,6 +2241,15 @@ zones:
       value: 60
       cite: Canby CMC 16.24.030 (B), minimum width and frontage sixty feet (stricter than R-1.5's forty)
       quote: "or/clackamas/canby/cmc.16.24.030.txt#L7"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     max_coverage_pct:
       value: 60
       cite: Canby CMC 16.24.030 (E), maximum lot coverage sixty percent
@@ -2278,6 +2305,15 @@ zones:
       exempt: true
       cite: Canby CMC 16.41.030 (A) sends the TC sub-area's housing to the R-2 standards, and 16.20.030 (A)-(G) print no minimum lot area
       quote: "or/clackamas/canby/cmc.16.20.030.txt#L5,L7,L9"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     min_lot_width_ft:
       value: 20
       cite: Canby CMC 16.20.030 (C), minimum width and frontage twenty feet (R-2, by 16.41.030 (A))

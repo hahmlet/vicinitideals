@@ -521,13 +521,6 @@ crossrefs:
     outcome: other_building
     note: >-
       "Accessory Dwelling Unit P Subject to TDC 73A.170." A subordinate unit beside a house.
-  "35":
-    outcome: other_path
-    note: >-
-      Nonconforming Situations. Every mention routes an existing situation that already fails the
-      code into the chapter governing how it may continue. This screen places a new building on a
-      lot that has to pass the standards as written.
-
   # --- rows beside the Washington side's refusals, ruled 2026-10-01 ---------
   # Quoting the IN, MP, MBP and BCE use tables put their neighbouring rows
   # beside a value, and the rows' pointers became binding. Each points at
@@ -573,6 +566,15 @@ definitions:
     cite: "TDC 31, Lot Types, Corner Lot"
 
 code:
+  - id: "tdc.35.040.nonconforming-lots"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC 35.040 - Nonconforming Lots"
+    start: "TDC 35.040."
+    end: "TDC 35.200."
+    nth: 2
+    extraction: plain
+    # One section, so the thinness guard would read it as a landing page.
+    allow_thin: true
   # Municode client 4668, publication 1818 (updated 2026-05-21). The zoning
   # lives in the separately-published Development Code, not the City Charter
   # and Municipal Code (publication 1817). The library renders in JavaScript;
@@ -1124,6 +1126,15 @@ zones:
         - value: 1400
           when: [unit_lots]
           quote: "or/clackamas/tualatin/40/40.300.txt#L33"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     min_lot_width_ft:
       # Table 40.220, MINIMUM LOT WIDTH, the quadplex row. The relief printed
       # under it -- "May be reduced to 30 feet if on a cul-de-sac" -- is
@@ -1258,6 +1269,15 @@ zones:
         - value: 1400
           when: [unit_lots]
           quote: "or/clackamas/tualatin/41/41.300.txt#L35"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     min_lot_width_ft:
       # Table 41.220, MINIMUM AVERAGE LOT WIDTH, "Duplex, Triplex, Quadplex,
       # and Cottage Clusters". RL holds the same row from Table 40.220 and this
@@ -1391,6 +1411,15 @@ zones:
           when: [inside_mapped_use_area, unit_lots]
           cite: TDC 58.800 Table 58-7, CO, "Lot sizes for townhouses must conform to the lot size standards of the RH District"; TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
           quote: "or/clackamas/tualatin/43/43.300.txt#L22-L23"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     # Table 58-7 sends only the townhouse LOT SIZE to RH. The width stays
     # Table 50-2's, which no townhouse lot meets: the townhouse form fails
     # here on width, measured.
@@ -1729,6 +1758,15 @@ zones:
       value: 5000
       cite: TDC Table 53-2, Minimum Lot Size, All Uses (Table 58-7 states none for CC)
       quote: "or/clackamas/tualatin/53/53.300.txt#L4-L5,L7-L11"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     min_lot_width_ft:
       # 58.800(1): "Where no standard is listed, the standards of the base
       # zone apply" -- and Table 58-7 lists one: a 40 ft Minimum Lot Width
@@ -1893,6 +1931,15 @@ zones:
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Minimum Lot Size, Townhouse (or Rowhouse)
           quote: "or/clackamas/tualatin/42/42.300.txt#L19-L20"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     min_lot_width_ft:
       # An AVERAGE width, held as the width the way RML holds its own.
       value: 75
@@ -2015,6 +2062,15 @@ zones:
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
           quote: "or/clackamas/tualatin/43/43.300.txt#L22-L23"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     min_lot_width_ft:
       value: 75
       cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, All Other Permitted Uses
@@ -2124,6 +2180,15 @@ zones:
       value: 10000
       cite: TDC 44.300 Table 44-3, Minimum Lot Size, All Other Permitted Uses (townhouses have no row of their own; Steph's ruling of 2026-10-02)
       quote: "or/clackamas/tualatin/44/44.300.txt#L19,L28"
+    lot_of_record_relief:
+      # 35.040: a nonconforming lot, one that met the standards when it was
+      # created, may be occupied by a permitted use. When it was created and what
+      # applied then are parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/tualatin/tdc.35.040.nonconforming-lots.txt#L2-L4,L7-L8"
     min_lot_width_ft:
       value: 75
       cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, All Other Permitted Uses

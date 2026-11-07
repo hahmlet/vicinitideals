@@ -2475,12 +2475,18 @@ zones:
       value: 20
       quote: "or/clackamas/west-linn/59/59.070.txt#L49-L51"
     min_lot_sqft:
-      # The base row, 4,500 sf "Unless defined as an existing lot of record".
+      # The base row, 4,500 sf "Unless defined as an existing lot of record"
+      # (taken below, lot_of_record_relief; Steph 2026-10-21).
       # The townhouse-project row (average 1,500 sf per lot, L183-L186) is a
       # per-lot average on the split plat; a quadplex on one lot is held to
       # the base figure, which is the same conservative reading the other
       # West Linn zones take.
       value: 4500
+      quote: "or/clackamas/west-linn/59/59.070.txt#L9-L12"
+    lot_of_record_relief:
+      # The row prints "Unless defined as an existing lot of record" beside the
+      # 4,500. The width and depth rows carry no such words and stand.
+      value: lot_area
       quote: "or/clackamas/west-linn/59/59.070.txt#L9-L12"
     min_lot_width_ft:
       # "Minimum lot width at front lot line 35 ft; Does not apply to

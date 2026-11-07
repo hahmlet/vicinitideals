@@ -160,6 +160,30 @@ SOFT_FLOOR_CHECKS: frozenset[str] = MIN_DENSITY_CHECKS | {"min_far"}
 LOT_OF_RECORD_WAIVES: dict[str, frozenset[str]] = {
     "lot_area": frozenset({"min_lot_area_sqft"}),
     "lot_dimensions": frozenset({"min_lot_area_sqft", "min_frontage_ft", "max_lot_depth_ratio"}),
+    "lot_standards": frozenset(
+        {
+            "min_lot_area_sqft",
+            "min_lot_width_ft",
+            "min_average_lot_width_ft",
+            "min_lot_depth_ft",
+            "min_frontage_ft",
+            "max_lot_depth_ratio",
+        }
+    ),
+    "lot_shape": frozenset(
+        {
+            "min_lot_width_ft",
+            "min_average_lot_width_ft",
+            "min_lot_depth_ft",
+            "min_frontage_ft",
+            "max_lot_depth_ratio",
+        }
+    ),
+    "lot_area_frontage": frozenset({"min_lot_area_sqft", "min_frontage_ft"}),
+    "lot_area_width_depth": frozenset(
+        {"min_lot_area_sqft", "min_lot_width_ft", "min_average_lot_width_ft", "min_lot_depth_ft"}
+    ),
+    "lot_width": frozenset({"min_lot_width_ft", "min_average_lot_width_ft"}),
 }
 _LOT_MAXIMA: frozenset[str] = frozenset({"max_lot_depth_ratio"})
 #: The ground the building and its court stand on falls more than GREEN
@@ -441,6 +465,11 @@ COURT_UNDRIVEN = "court_undriven"
 #: ``FACT_UNOBSERVED``: a question, never a red on a corner piece the drive
 #: need not cross, and never a pass.
 DRIVE_STREET = "drive_street"
+
+#: A lot that missed a lot standard and is let off it under a relief that also
+#: asks something the data does not hold (``lot_of_record_condition``): when
+#: the lot was made, or who owned next door. Held out of GREEN, never failed.
+LOT_OF_RECORD_CONDITION = "lot_of_record_condition"
 
 #: The building's share of the street frontage (FOLLOWUPS 109): the check
 #: names and the two quantities that hold it out of GREEN without failing it.
@@ -1101,11 +1130,20 @@ def _checks(
     #: The lot standards this lot missed and was let off.
     let_off: list[str] = []
 
+    # A printed floor on the area (Hillsboro 12.30.300 A, MCC 39.3140 B): under
+    # it the row stands. It says nothing about the width, depth or frontage.
+    relief_floor = rules.get("lot_of_record_floor_sqft")
+    if relief_floor is not None and lot.lot_sqft < relief_floor:
+        relieved = relieved - {"min_lot_area_sqft"}
+    relief_condition = rules.get("lot_of_record_condition") not in (None, "none")
+
     def lot_check(name: str, observed: float, threshold: float | None) -> None:
         if name in relieved and threshold is not None:
             result = policy.evaluate(name, observed, threshold, is_maximum=name in _LOT_MAXIMA, jurisdiction=where)
             if result.verdict is Verdict.fails:
                 let_off.append(name)
+                if relief_condition:
+                    unmeasured.add(LOT_OF_RECORD_CONDITION)
                 return
             out.append(result)
             return
@@ -1244,7 +1282,7 @@ def _checks(
     )
     min_width = _row_of_home_lots(rules, design, "min_lot_width_ft", min_width)
     if lot.lot_width_ft is not None and width_answered:
-        check("min_lot_width_ft", lot.lot_width_ft, min_width, is_maximum=False)
+        lot_check("min_lot_width_ft", lot.lot_width_ft, min_width)
     else:
         unchecked.append("min_lot_width_ft")
     # And the same axis measured at the midpoints, where a code states that
@@ -1259,7 +1297,7 @@ def _checks(
     )
     min_avg = _row_of_home_lots(rules, design, "min_average_lot_width_ft", min_avg)
     if lot.avg_lot_width_ft is not None and avg_answered:
-        check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg, is_maximum=False)
+        lot_check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg)
     else:
         unchecked.append("min_average_lot_width_ft")
     # The other axis. Thirty-eight zones state a minimum lot depth and nothing
@@ -1269,7 +1307,7 @@ def _checks(
         rules, "min_lot_depth_ft", per_unit=per_unit, lots=design.units
     )
     if lot.lot_depth_ft is not None and depth_answered:
-        check("min_lot_depth_ft", lot.lot_depth_ft, min_depth, is_maximum=False)
+        lot_check("min_lot_depth_ft", lot.lot_depth_ft, min_depth)
     else:
         unchecked.append("min_lot_depth_ft")
     # And a ceiling on the same number, stated as a multiple of the width
@@ -3136,6 +3174,7 @@ _MEASURED_FLAG: dict[str, str] = {
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
+    LOT_OF_RECORD_CONDITION: "MEASURE-LOT-OF-RECORD",
     BUILDING_FRONTAGE: "MEASURE-BUILDING-FRONTAGE",
     FRONTAGE_STREET: "MEASURE-FRONTAGE-STREET",
     MORE_BUILDINGS: "FRONTAGE-MORE-BUILDINGS",
