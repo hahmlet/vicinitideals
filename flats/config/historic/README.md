@@ -43,7 +43,7 @@ the list in.
 | Wilsonville | 4.171(.09)-(.10) | Prohibited unless found harmless or no reasonable use | `clackamas/wilsonville/4/4.171.txt#L105-L109` |
 | Estacada | 16.48 | Committee hearing; may not prevent removal of an uneconomic building | `clackamas/estacada/16.48/16.48.060.txt#L3-L15` |
 | Clackamas County | ZDO 707 | Type II; may be suspended | `clackamas/_unincorporated/zdo.707.txt#L334` |
-| Hillsboro | 12.27.300 | Type III; owner may refuse at designation | `washington/hillsboro/12.27/12.27.370.txt#L6` |
+| Hillsboro | 12.27.300 | Type III; owner may refuse at designation | `washington/hillsboro/12.27/12.27.370.txt#L7` |
 | Oregon City | 17.40.070 | Board hearing. The overlay districts are already held; single landmarks outside them are not | `clackamas/oregon-city/17.zoning.txt#L9232` |
 | Happy Valley | 16.25.005 | Names Goal 5 inventories; thin | `clackamas/happy-valley/16.25/16.25.005.txt#L528` |
 | Beaverton | 70.15.10 | Chapter 40 governs, not stored; 60.45 is repealed | `washington/beaverton/bdc.70.downtown.txt#L480-L484` |
