@@ -2598,3 +2598,18 @@
     is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
     FOLLOWUPS 68.
   source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
+- id: 2026-11-06-estacada-lot-of-record-per-home-figure
+  kind: ruling
+  date: 2026-11-06
+  scope: {county: clackamas, city: estacada}
+  question: >-
+    Estacada EMC 16.84.040 lets an existing undersized lot be built on. Does
+    that relief also lift the 2,500 sq ft per home figure, which limits how
+    many homes fit? The code does not say. Stay yellow, go green, or ask the
+    city?
+  ruling: >-
+    "Stay yellow"
+  effect: >-
+    A lot that passes only through this relief (C-2, CMU, NCR, R-3) is YELLOW
+    with a flag, never GREEN, until the city answers. FOLLOWUPS 108.
+  source: Steph 2026-11-06 (chat), docs/followups/108-legal-lots.md
