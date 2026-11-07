@@ -613,6 +613,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [PDX_MAIN_STREET_SETBACK]
+  HISTORIC-LISTING-UNSETTLED:
+    description: "The lot appears on a city's or county's historic list, but whether that listing protects a building here is not settled: the code that says what a listing does is not held, an owner may be able to step out of it, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Read the code section the flag names and the city's record for the lot; a protected listing goes red, one that does not protect goes back to green"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [HISTORIC_LISTING_UNSETTLED]
   PDX-COMMUNITY-DESIGN-STANDARDS:
     description: "The lot is in a Portland Conservation District, where a new building needs historic resource review or must meet the Community Design Standards, the clear and objective alternative (PCC 33.445.210.D, 33.445.500, 33.218). Those standards place the building and its parking -- the front setback between the neighbours' and never more than 25 ft (exactly 25 ft in Piedmont), the car in off an alley where there is one, no parking in the front setback -- and none of it is measured."
     kind: categorical

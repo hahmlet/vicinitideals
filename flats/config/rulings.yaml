@@ -904,11 +904,18 @@
     contributing resource in a Portland conservation district)?
   ruling: RED.
   effect: >-
-    A lot holding a protected historic resource is RED. Built so far from
-    Portland's historic resource map (Portland and Multnomah
-    unincorporated).
+    A lot holding a protected historic resource is RED. Built from Portland's
+    historic resource map (Portland and Multnomah unincorporated) and, since
+    FOLLOWUPS 87, from the lists in flats/config/historic: RED where the
+    code clearly protects a listed building (Gresham, West Linn), YELLOW with
+    HISTORIC-LISTING-UNSETTLED where that is not settled (Troutdale, Tigard,
+    Washington County, objects and near-address matches). Elsewhere no list
+    is held yet.
   source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md; flats/config/pipeline.yaml)
-  encoded_in: [flats/config/pipeline.yaml]
+  encoded_in:
+    - flats/config/pipeline.yaml
+    - flats/config/historic/protection.yaml
+    - flats/geom/historic_lists.py
 
 - id: 2026-10-14-frontage-cap-any-street
   kind: ruling

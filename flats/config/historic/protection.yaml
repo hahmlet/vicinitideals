@@ -1,0 +1,96 @@
+# What each city's code says a listing on its historic list does (FOLLOWUPS 87).
+# flats/geom/historic_lists.py reads this; flats/tests/test_historic_lists.py
+# holds every quote to the stored lines it cites.
+#
+# reading: protected  -- the code clearly makes demolition of a listed building
+#                        wait on a hearing that can refuse it. The lot is RED,
+#                        under Steph's 2026-10-14 ruling, as Portland's are.
+# reading: doubtful   -- it may. The lot is YELLOW with a flag.
+#
+# The state's owner-consent law (ORS 197.772) and historic rule (OAR
+# 660-023-0200) are NOT stored, so nothing below rests on reading them; the
+# cities' own words on owner consent are cited instead. An owner's way out of a
+# designation is not by itself doubt: Gresham and West Linn each limit it to the
+# owner at designation who objected on the record, and a buyer's lot is listed
+# until someone removes it.
+
+lists:
+  gresham:
+    county: multnomah
+    cities: [GRESHAM]
+    reading: protected
+    why: >-
+      demolishing a Class 1 or Class 2 landmark goes to the Hearings Officer as a
+      Type III case, which may approve, deny or delay it, weighing value to the
+      community among other factors
+    cite: flats/provenance/docs/or/multnomah/gresham/5.0300.historic-cultural-landmarks.txt#L319-L326
+    quote: "An application for demolition affecting a Class 1 or a Class 2 landmark shall be reviewed by the Historic Resources Subcommittee and by the Hearings Officer."
+    # 5.0322.B.4 keeps an objecting owner off the list; 5.0323.A.1 takes a listing
+    # off only for the owner at designation who objected or could not. Neither
+    # touches a listing that stands.
+    owner_consent: flats/provenance/docs/or/multnomah/gresham/5.0300.historic-cultural-landmarks.txt#L141-L143
+    owner_quote: "objecting to its addition, it shall not be added to the List."
+    not_buildings:
+      # Table 5.0324's Use column says Object for these five: a milepost, a grave,
+      # a sign. 5.0336 reviews changes to them, but the ruling speaks of buildings
+      # and the pod may stand clear of one.
+      ids: [class2-04, class2-05, class2-06, class2-07, class2-08]
+      why: >-
+        the listing is an object, not a building: changing or moving it needs review,
+        and whether the pod can stand clear of it is not measured
+      cite: flats/provenance/docs/or/multnomah/gresham/5.0300.historic-cultural-landmarks.txt#L368-L371
+      quote: "Proposed alterations affecting a non-building landmark, such as a monument, mile-post, or other object, shall be submitted to the Historic Resources Subcommittee and the Hearings Officer"
+
+  west-linn:
+    county: clackamas
+    cities: [WEST LINN]
+    reading: protected
+    why: >-
+      a demolition permit for a historic landmark issues only with the approval
+      authority's approval, on whether the value to the community of the proposed use
+      outweighs retaining the building, and on economic necessity
+    cite: flats/provenance/docs/or/clackamas/west-linn/25.willamette-historic.txt#L518-L526
+    quote: "A permit for demolition of a historic resource is required and shall not be issued without approval by the approval authority"
+    # A local landmark takes the owner's written consent to designate, so a listed
+    # one had it; removal is for an owner at designation who objected (L498).
+    owner_consent: flats/provenance/docs/or/clackamas/west-linn/25.willamette-historic.txt#L218
+    owner_quote: "The property owner must consent, in writing, to a proposed historic landmark designation"
+
+  troutdale:
+    county: multnomah
+    cities: [TROUTDALE]
+    reading: doubtful
+    why: >-
+      the chapter says its protection standards apply to the listed landmarks, but the
+      stored text holds no demolition standard to say what they do; the procedures are
+      not stored, so whether a listing can stop a demolition is unread
+    cite: flats/provenance/docs/or/multnomah/troutdale/4.200-4.230.historic-landmark-protection.txt#L13-L15
+    quote: "The historic landmark protection standards of this Chapter apply to designated historic landmarks"
+
+  tigard:
+    county: washington
+    cities: [TIGARD]
+    reading: doubtful
+    why: >-
+      the listing comes from the city's Historic Sites map, and the code's chapter on
+      historic resources, 18.755, is named but not stored, so what a listing does is
+      unread
+    cite: flats/provenance/docs/or/washington/tigard/18.660/18.660.030.txt#L34
+    quote: "Historic resource designations and alterations as provided in Chapter 18.755, Historic Resources."
+
+  washington-county:
+    county: washington
+    cities: []
+    reading: doubtful
+    why: >-
+      demolishing a designated resource is a Type III case, but the code also says the
+      Director shall let a property owner be exempt through a Type I procedure, in words
+      that do not limit it to the owner at designation; and the county's Cultural
+      Resources Inventory, which says which buildings on the lot the overlay reaches, is
+      not held, so whether a protected building stands here today is unread
+    cite: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L287-L291
+    quote: "the Director, through a Type I procedure, shall allow a property owner to be exempt from Section 373"
+    demolition: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L235-L236
+    demolition_quote: "Any application to relocate or demolish a designated histo ric or cultural resource shall be reviewed through a Type III procedure."
+    applies: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L169-L171
+    applies_quote: "structures on the tax lot subject to the overlay district's provisions are those described in the Cultural Resources Inventory as significant"

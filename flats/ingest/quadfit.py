@@ -124,6 +124,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom import historic_lists
 from flats.geom import pdx_overlays as pdx
 from flats.geom import split_zone as split_zones
 from flats.geom.sidewalk import (
@@ -3419,6 +3420,7 @@ def _screen_lot_once(
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
         won = pdx.checked(won, lot.pdx_overlays)
+        won = historic_lists.checked(won, lot.tlid)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -4959,6 +4961,12 @@ def run(
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
     marked = pdx.with_overlays(rows, sources)
     log(f"bridge: Portland's main street overlay or a protected historic resource on {marked:,} lots")
+    placed = historic_lists.write_report(rows, out)
+    log(
+        f"bridge: historic lists: {placed['on_lot']:,} listings on a lot of this run, "
+        f"{placed['not_in_run']:,} name a lot it does not hold, {placed['unmatched']:,} name no lot "
+        f"({historic_lists.REPORT_NAME})"
+    )
     from flats.encode.load import load_trusted
     from flats.rules.loader import amendments_in_force, law_on
 
