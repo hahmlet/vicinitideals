@@ -22,12 +22,13 @@ HISTORIC_DIR = ROOT / "flats" / "config" / "historic"
 # reported, never dropped: move this only with the match run that moved it.
 # 2026-11-06: Gresham and Troutdale matched on the local Multnomah table; the
 # rest wait on the county tables (the 137 step in the hand-off).
+# After the 2026-11-06 match on the full lot table (137).
 UNMATCHED: dict[str, int] = {
     "gresham": 5,
-    "tigard": 11,
+    "tigard": 3,
     "troutdale": 3,
     "washington-county": 0,
-    "west-linn": 25,
+    "west-linn": 0,
 }
 
 WASHCO_LOT = "1S123AA00100"
