@@ -2141,7 +2141,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-JOHNSON-CREEK-UNMEASURED:
-    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the limits on removing trees 6 inches or more across (PCC 33.537.125) or the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (33.537.130)"
+    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (PCC 33.537.130), the South subdistrict's slope-class density for land divisions (33.537.140.E) or the Flood Risk Area's limits on land divisions (33.537.160)"
     kind: categorical
     risk: possible
     severity: 5
@@ -2149,7 +2149,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "A tree survey of the lot, and which lot line abuts the Springwater Corridor; the city's tree canopy layer could release some lots"
+    path: "Which lot line abuts the Springwater Corridor, the slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area"
     priority: later
     status: pending
     approved_by: null

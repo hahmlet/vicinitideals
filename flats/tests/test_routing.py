@@ -237,6 +237,14 @@ def rows() -> list[Routing]:
 #: multi-dwelling standards of 33.120.280. The pod is a primary structure;
 #: the pointer reaches a shed or a garage this screen never places.
 OPEN = {
+    # 2026-11-08 (FOLLOWUPS 140): Johnson Creek Basin's South, Springwater and
+    # floodplain sections each send tree removal to 33.537.125. Followed on
+    # 2026-11-01 while the hold quoted it; Steph's ruling
+    # 2026-11-01-trees-ignored-entered-per-lot took trees out of the screen, the
+    # hold no longer quotes 125, so the rows are open again (read and set aside).
+    "or/multnomah/portland 33.537.130 -> 33.537.125",
+    "or/multnomah/portland 33.537.140 -> 33.537.125",
+    "or/multnomah/portland 33.537.150 -> 33.537.125",
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
     "or/clackamas/_unincorporated 406.04 -> 406.08",
@@ -510,12 +518,6 @@ OPEN = {
 FOLLOWED = {
     # 2026-11-06 (FOLLOWUPS 146): Section 1009 stored and read for side-yard parking.
     "or/clackamas/_unincorporated 1005.09 -> 1009",
-    # 2026-11-01 (FOLLOWUPS 109, Portland plan districts part 1): Johnson Creek
-    # Basin's South, Springwater and floodplain sections each send tree removal
-    # to 33.537.125, which the tree hold quotes.
-    "or/multnomah/portland 33.537.130 -> 33.537.125",
-    "or/multnomah/portland 33.537.140 -> 33.537.125",
-    "or/multnomah/portland 33.537.150 -> 33.537.125",
     # 2026-10-31 (library batch 7): cutting the two unincorporated codes made these
     # five pointers visible, each to the very next section, which is read.
     "or/clackamas/_unincorporated 604.03 -> 604.04",
