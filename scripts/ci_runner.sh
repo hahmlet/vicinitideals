@@ -16,6 +16,34 @@ export CI_LOCAL_APP_WORKERS=${CI_LOCAL_APP_WORKERS:-8}
 repo=/root/ci/repo
 wt=/root/ci/wt/${sha:0:12}
 
+# At most 2 runs test at once (FOLLOWUPS 152): four at once OOM-killed Postgres on
+# this 12 GB box. Two slot lock files; the slot is held (fd 9, inherited by the
+# children) from here until this script exits, which covers worktree to cleanup.
+mkdir -p /root/ci
+slot_wait=0
+while :; do
+    for n in 1 2; do
+        exec 9>"/root/ci/slot.$n"
+        flock -n 9 && break 2
+    done
+    if [ "$slot_wait" = 0 ]; then
+        echo "ci_runner: waiting for a free slot"
+        slot_wait=1
+    fi
+    sleep 5
+done
+
+# Fail fast, and clearly, if the test Postgres is down (not 1834 connection errors).
+if ! pg_isready -q -h localhost -p 5432; then
+    echo "ci_runner: test Postgres not ready, trying pg_ctlcluster 16 main start"
+    pg_ctlcluster 16 main start
+    sleep 3
+    if ! pg_isready -q -h localhost -p 5432; then
+        echo "ci_runner: test Postgres is down"
+        exit 3
+    fi
+fi
+
 cd "$repo" || exit 3
 git fetch -q origin
 git worktree remove --force "$wt" 2>/dev/null
