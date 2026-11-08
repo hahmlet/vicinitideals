@@ -302,9 +302,11 @@ def street_runs(
     building: BaseGeometry,
     *,
     front_deg: float | None = None,
+    only: Sequence[bool] | None = None,
 ) -> tuple[tuple[float, float], ...]:
     """Each street's ``(share in percent, feet)`` of frontage that the
-    parking ``rows`` face, in :func:`street_chains` order. The feet are what
+    parking ``rows`` face, in :func:`street_chains` order (``only``, one
+    flag per street in that order, keeps the streets flagged True). The feet are what
     a cap in feet reads (Oregon City 17.16.060.D.1, "forty feet wide or fifty
     percent of the lot frontage, whichever is less"); the share is the same
     run over the street's length.
@@ -317,8 +319,10 @@ def street_runs(
     reach = math.hypot(maxx - minx, maxy - miny) + 1.0
     corners = shapely.points(np.asarray(shapely.get_coordinates(building)))
     out: list[tuple[float, float]] = []
-    for chain in street_chains(edges):
+    for k, chain in enumerate(street_chains(edges)):
         if front_deg is not None and not along(chain, front_deg):
+            continue
+        if only is not None and not (k < len(only) and only[k]):
             continue
         frontage = sum(math.hypot(e.x2 - e.x1, e.y2 - e.y1) for e in chain)
         if frontage <= 0:

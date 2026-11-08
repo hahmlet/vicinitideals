@@ -4409,7 +4409,9 @@ def _screen_lot_once(
         won = alley_court_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
-        won = pdx.checked(won, lot.pdx_overlays)
+        # The run's law day (fixed once in _init_worker), so a run that crosses
+        # midnight on a dated provision's day screens every lot alike.
+        won = pdx.checked(won, lot.pdx_overlays, on=_WORKER.get("law_on"))
         won = historic_lists.checked(won, lot.tlid)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
@@ -6449,6 +6451,7 @@ def _init_worker(
     from flats.score import relief as relief_mod, slack as slack_mod
 
     on = date.fromisoformat(law_on) if law_on else today_law()
+    _WORKER["law_on"] = on
     _WORKER["rules"] = load_trusted(strict=False, on=on).rules
     # Active designs only: an archived entry stays loadable so old results
     # read, but a new run never screens it. Since 2026-11-08 that is one
@@ -6871,7 +6874,10 @@ def run(
     # replayed under this one (batch.run_key).
     on = law_on()
     corpus = load_trusted(strict=False, on=on).rules.layers
-    law = amendments_in_force(corpus)
+    # With the dated provisions code applies (pdx.dated_in_force: Portland's
+    # 33.415.200 residential exemption ends 2029-01-01), which no rule file
+    # carries but which screen a lot differently either side of their day.
+    law = [*amendments_in_force(corpus), *pdx.dated_in_force(on)]
     log(f"bridge: the law in force on {on.isoformat()}" + (f", with {', '.join(law)}" if law else ""))
     split = with_split_zones(rows, s4.parent, corpus)
     if split:
