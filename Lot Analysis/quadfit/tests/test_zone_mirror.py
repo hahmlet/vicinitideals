@@ -1153,6 +1153,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     "lot_of_record_relief": 94,
     "lot_of_record_floor_sqft": 14,
     "lot_of_record_condition": 43,
+    #: 2026-11-08 (FOLLOWUPS 77, tigard-road-land merged into rescreen-1110):
+    #: Washington County's R and TO zones and Milwaukie measure the minimum lot
+    #: area before the road strip; quadfit takes no strip off the lot area.
+    "min_lot_sqft_before_dedication": 11,
     #: FOLLOWUPS 109 (2026-10-21): the building's share of the street
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
