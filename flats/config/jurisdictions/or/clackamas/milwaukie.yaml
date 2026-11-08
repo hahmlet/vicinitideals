@@ -859,11 +859,14 @@ defaults:
   # minimum distance from the center line of the right-of-way to the closest
   # point of any building is the distance listed in Table 19.501.2.A plus
   # the yard requirement of the underlying zone" (#L33-L67). Held by street
-  # name as printed; the stretch in brackets is not read, so the distance
-  # holds along the whole street, and Harrison Street, listed at 40 and at
-  # 30 for two stretches, takes 40 everywhere. A street the table leaves out
-  # takes none. A street line whose street cannot be named takes the
-  # deepest, 40 feet (flats/geom/dedication.py).
+  # name as printed, the stretch in brackets with it. A line the bridge
+  # reads OFF a row's stretch (both end streets found crossing the street
+  # once, the line wholly past one by more than 60 ft along it) is free of
+  # that row; anywhere else the row holds along the whole street, and
+  # Harrison Street, listed at 40 and at 30 for two stretches, takes 40
+  # unless read off the first (FOLLOWUPS 77, flats/geom/dedication.py
+  # stretch_of). A street the table leaves out takes none. A street line
+  # whose street cannot be named takes the deepest, 40 feet.
   row_to_centerline_named_ft:
     value:
       - ["Firwood Street (55th Ave. to Stanley Ave.)", 25]

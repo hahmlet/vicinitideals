@@ -423,6 +423,8 @@ _TYPES: dict[str, str] = {
     "BOULEVARD": "BLVD",
     "COURT": "CT",
     "DRIVE": "DR",
+    # Milwaukie Table 19.501.2.A's "Milwaukie Expressway", Metro's EXPY.
+    "EXPRESSWAY": "EXPY",
     "HIGHWAY": "HWY",
     "LANE": "LN",
     "PARKWAY": "PKWY",

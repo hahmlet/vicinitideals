@@ -59,6 +59,7 @@ the comparison shows them as quadfit RED against whatever FLATS found.
 from __future__ import annotations
 
 import dataclasses
+import functools
 import itertools
 import json
 import math
@@ -1194,6 +1195,9 @@ def lot_edges(
                 road_names=None if road is None or road[6] is None else tuple(str(n) for n in road[6]),
                 street_name=names.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None,
                 road_classes=() if road is None else tuple(sorted((road[7] or {}).items())),
+                road_stretches=(
+                    () if road is None or len(road) < 9 else tuple(sorted((road[8] or {}).items()))
+                ),
                 across_zones=faces if letter == STREET_CLASS else None,
                 public_road=letter == STREET_CLASS and kind == "street",
             )
@@ -1505,7 +1509,7 @@ def dedicated_sqft(lot: QuadfitLot, rules: ZoneResolution) -> float:
 def _line_need(rule: dedication.Rule, e: Edge, zone: str | None) -> tuple[float, float]:
     """The distance one street line must reach, and the distance it would
     without the zone stand-in (the same where none applies)."""
-    widest = rule.required(e.road_names, dict(e.road_classes))
+    widest = rule.required(e.road_names, dict(e.road_classes), dict(e.road_stretches))
     alt = rule.standin(dict(e.road_classes), zone, e.across_zones)
     return (alt if alt is not None and alt < widest else widest), widest
 
@@ -2450,8 +2454,12 @@ def _durham_apron_clearance_column(
                 continue
             half_width = _finite(width_row[4])
             names = width_row[6]
-            if half_width is None or half_width < 0 or not isinstance(names, list):
+            if half_width is None or not isinstance(names, list):
                 continue
+            # The dedication reads a centre line on the lot's side as a
+            # negative half-width (FOLLOWUPS 67 (b)); the curb return here
+            # reads the distance either way, as before.
+            half_width = abs(half_width)
             for name in names:
                 key = dedication.street_key(name)
                 if key:
@@ -2466,6 +2474,32 @@ def _durham_apron_clearance_column(
             )
         )
     return out
+
+
+@functools.lru_cache(maxsize=1)
+def stretch_labels() -> tuple[str, ...]:
+    """Every stretch-limited row label of a named-street table any zone a
+    dedication reaches states (:meth:`flats.geom.dedication.Rule.
+    stretch_labels`): Milwaukie Table 19.501.2.A's bracketed rows, King City
+    16.80.060 A.2's "between" rows. The bridge reads each for every street
+    line on such a street; a zone's own rule decides whether it applies."""
+    from flats.rules.loader import load_rules
+
+    layers = load_rules()
+    rules = RuleSet(layers)
+    out: set[str] = set()
+    for layer_id in dedication.LAYERS:
+        layer = layers.get(layer_id)
+        if layer is None:
+            continue
+        for zone in layer.zones:
+            try:
+                rule = dedication.rule_of(rules.resolve(layer_id, zone))
+            except Exception:  # noqa: BLE001 -- a zone that does not resolve states no row
+                continue
+            if rule is not None:
+                out.update(rule.stretch_labels())
+    return tuple(sorted(out))
 
 
 def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
@@ -2488,6 +2522,8 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     if not maps:
         return 0
     answered = 0
+    import shapely
+
     for row in rows:
         layer_id = _layer_id(row)
         measure_widths = dedication.applies(layer_id) or layer_id == "or/washington/durham"
@@ -2496,7 +2532,13 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
             continue
         edges = json.loads(row.get("edges_json") or "[]")
         if measure_widths:
-            row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps))
+            # The tax lot's shape tells which side of each street line the
+            # centre line is on (FOLLOWUPS 67 (b)); the stretch-limited rows
+            # of the named-street tables are read for every line (77).
+            lot_wkb = row.get("lot_wkb")
+            lot = shapely.from_wkb(lot_wkb) if lot_wkb else None
+            stretches = stretch_labels() if dedication.applies(layer_id) else ()
+            row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps, lot, stretches))
         if not ranked:
             continue
         row["street_ranks_json"] = json.dumps(street_ranks(edges, layer_id, maps))

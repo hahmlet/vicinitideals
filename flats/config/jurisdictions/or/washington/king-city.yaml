@@ -270,14 +270,19 @@ defaults:
   # page." No lot moves on 99W today: every district that fronts it (LC,
   # CBD, INST, the older residential districts) refuses the pod. Before one
   # of them opens, ODOT's figure has to be found, not approximated.
+  # The three "between X and Y" stretches (c, e, f) are held in brackets
+  # after the street, the code's words otherwise as printed: a line read
+  # off its stretch takes "All other city streets", 25 feet; one the bridge
+  # cannot place stays at the row's figure (FOLLOWUPS 77,
+  # flats/geom/dedication.py stretch_of).
   row_to_centerline_named_ft:
     value:
       - [Pacific Highway, null]
       - [Beef Bend Road, 33]
-      - [131st Avenue, 33]
+      - [131st Avenue (between Beef Bend Road and Fischer Road), 33]
       - [Fischer Road, 33]
-      - [116th Avenue, 30]
-      - [Royalty Parkway, 30]
+      - [116th Avenue (between Queen Elizabeth and Pacific Highway), 30]
+      - [Royalty Parkway (between Pacific Highway and 116th Avenue), 30]
     cite: King City KCC 16.80.060 A.2.a-f, right-of-way from centerline by street (Pacific Highway as determined by ODOT, no figure printed)
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
@@ -450,8 +455,9 @@ defaults:
 # Road, 131st Avenue and Fischer Road, 30 on 116th Avenue and Royalty
 # Parkway, 25 on "All other city streets" (16.80.060.txt#L1-L12).
 # Encoded in the defaults as row_to_centerline_named_ft and _other_ft. The
-# "between X and Y" stretches of 131st, 116th and Royalty are not read: the
-# distance holds along the whole street, which can only push a yard back.
+# "between X and Y" stretches of 131st, 116th and Royalty are read where the
+# bridge can place a lot line on or off them (FOLLOWUPS 77); where it cannot,
+# the distance holds along the whole street, which can only push a yard back.
 # Pacific Highway (99W) is "as determined by the Oregon Department of
 # Transportation", which states no number; held as a row with no figure
 # (null), read like a street the screen cannot name: the deepest figure the
