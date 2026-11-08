@@ -49,7 +49,7 @@ from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import OPTIONAL_FIELDS, field
 from flats.rules.model import Provenance, Status
 from flats.rules.resolver import Resolved, Verdict as RuleVerdict, ZoneResolution
-from flats.score.paper import behind_wall_ft, paper_fit
+from flats.score.paper import behind_wall_ft, paper_fit, side_yard_mode
 from flats.score.screen import (
     PARKING_SETBACK_DOUBT,
     PARKING_SETBACK_DOUBT_RULING,
@@ -94,7 +94,16 @@ class Sharing:
         self._rules = rules
 
     def get(self, name: str) -> object:
-        return None if name in (FIELD, STRIP) else self._rules.get(name)
+        # 2026-11-07 (rescreen-1110 merge with FOLLOWUPS 146): the side-yard
+        # permission keeps the reach it had. The yard rule switches it off
+        # (`paper.side_yard_mode`), so taking the rule out alone would also
+        # switch it ON and narrow the lot, and the comparison would measure
+        # two changes instead of one.
+        if name in (FIELD, STRIP):
+            return None
+        if name == "parking_side_yard_allowed" and side_yard_mode(self._rules) == "none":
+            return None
+        return self._rules.get(name)
 
     def __getattr__(self, name: str) -> object:
         return getattr(self._rules, name)

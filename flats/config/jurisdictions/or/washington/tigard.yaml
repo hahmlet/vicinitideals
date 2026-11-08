@@ -207,6 +207,24 @@ defaults:
   # them is "the street of lowest class", and nothing measures street class.
   # Left unread, which the screen takes as the worst reading.
   #
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). The pod is a rowhouse here.
+  # 18.280.040.D sends parking to 18.410, which exempts rowhouse parking
+  # areas from its design subsection (18.410/18.410.030.txt#L241); D.2
+  # names only street lines, where quads (18.270 L72) are kept 10 ft from
+  # every other line. A setback is measured to a structure's wall
+  # (tdc.18.30.definitions.txt#L1489-L1490). Silent at an interior side.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: TDC 18.280.040.D.2, rowhouse parking located at least 20 ft from a street property line, no other line named
+    url: https://ecode360.com/print/TI5024?guid=43706147
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/18.280/18.280.040.txt#L90"
+  parking_side_yard_stated:
+    value: none
+    cite: TDC 18.410.030, rowhouse parking areas exempt; no interior-side-yard rule stated
+    url: https://ecode360.com/print/TI5024?guid=43706147
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/18.410/18.410.030.txt#L241"
   # WHICH STREET THE DRIVEWAY USES. No rule names one for a rowhouse
   # development: 18.920 sends rowhouses to 18.280 (Table 18.920.1,
   # 18.920.030.txt L108-L116), and 18.280.040.D.1 lets access be

@@ -1849,6 +1849,18 @@ defaults:
     url: https://multco.us/file/chapter_39_-_zoning_code/download
     retrieved: '2026-08-30'
     quote: "or/multnomah/_unincorporated/39/39.6580.txt#L3"
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: MCC 39.6555(A) and 39.6585(A), parking-design scope; MCC 39.8045(C)(3)(b), five-foot perimeter strip at other lot lines
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39/39.8045.txt#L23"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: MCC 39.8045(C)(3)(b), five-foot strip at any lot line other than a street
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39/39.8045.txt#L23"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

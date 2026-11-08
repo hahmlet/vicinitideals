@@ -1,0 +1,212 @@
+411-1 Applicability
+411-1.1 Screening and Buffering requirements are in addition to the setback requirements
+in residential and institutional districts and inclusive of the setback requirements
+in the commercial, mixed-use and industrial districts, as well as the setback
+requirements and design standards of the transit oriented districts, and shall be
+provided on the subject site at the time of development.
+411-1.2 Screening and Buffering shall apply to all Development permits as determined
+in Section 411-3 or as determined by the Review Authority.
+411-1.3 Screening and buffering provisions of Section 411 do not apply to:
+A. One Single Detached Dwelling Unit on a lot of record (when the lot is not
+otherwise made subject to Section 411 through a Standard Partition or
+Standard Subdivision);
+B. Middle Housing;
+C. Middle Housing Land Division.
+(Ord. No. 857, § 2.D.(Exh. 4, § 4), 8-27-19, 11-28-19; Ord. No. 885A, § 2.1.(Exh. 1, § 18.),
+6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1, § 19.), 2-7-23, eff. 3-9-23)
+ 411DEVELOPMENT STANDARDS
+IV:87
+411-2 Location
+Screening and Buffering shall be located on the perimeter of a lot or parcel,
+extending to the lot or parcel boundary line. Buffering shall not be located on any
+portion of an existing or dedicated public or private street or right-of-way. In a
+case of two overlapping types of buffers, the higher type shall prevail.
+411-3 Determination of Screening and Buffering Requirements
+411-3.1 To determine the type of Screening and Buffering required, the following
+procedure shall be used:
+A. Identify the primary district of the subject site by referring to the applicable
+Community Plan;
+B. Identify the primary district(s) of the surrounding properties by referring to
+the applicable plan(s);
+C. Determine the Screening and Buffering type by referring to the Screening
+and Buffering Matrix (Section 411-5); and
+D. Determine the Screening and Buffering Standards by referring to the
+Screening and Buffering Standards (Section 411-6).
+411-3.2 Responsibility for Screening and Buffering:
+A. When a property is the first to develop adjacent to a vacant parcel, the first
+property shall provide the buffer identified in the vacant land use category
+as shown on the Screening and Buffering Matrix, Section 411-5.
+B. The second use to develop shall, at the time it develops, provide all
+additional plant materials, landscaping, and land necessary to provide
+total screening and buffering required by the Screening and Buffering
+Matrix for developed uses.
+C. Screening and buffering is not required when lots or parcels are separated
+by a public street or road.
+D. Where two adjacent developments in different districts are developed with
+the same housing type and maintain the same standards as the lower
+density district, the screening and buffering requirements may be reduced
+to the level of the lower density use through a Type II procedure when a
+recorded legal instrument (such as a deed restriction) ensures that the lot
+and house type will remain the same as the lower density requirements for
+the life of development.
+411-4 Limitations
+All areas for screening and buffering shall remain void of buildings, building
+mechanical equipment (e.g., heat pumps, air conditioners), parking, service
+411 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:88
+areas (e.g., solid waste and recyclables storage and pick-up facilities, loading
+and delivery areas), signing, lighting (except lighting of pathways) and utilities
+(unless underground). Area required for screening and buffering may be used to
+satisfy landscape and open space requirements and be included in the density
+calculation of the site.
+ 411DEVELOPMENT STANDARDS
+IV:89
+411-5 Screening and Buffering Matrix
+ADJACENT LAND USE DISTRICT
+ DEVELOPED  VACANT
+ R-5
+R-6
+ R-9/R-15
+TO:R9-12
+ R-24/R-25+
+TO:R12-18
+ NC/OC
+TO:R18-24
+NMU
+ CBD/GC
+TO:BUS
+TO:RC
+TO:R24-40
+CCMU
+ IND
+TO:EMP
+TO:R40-80
+TO:R80-120
+ OTHER1
+ R-5
+R-6
+ R-9/R-15
+TO:R9-12
+ R-24/R-25+
+TO:R12-18
+ NC/OC
+TO:18-24
+NMU
+ CBD/GC
+TO:BUS
+TO:RC
+TO:R24-40
+CCMU
+ IND
+TO:EMP
+TO:R40-80
+TO:R80-120
+ OTHER1
+R-5
+R-6
+0 1 2 2 3 3 0 1 2 2 3 3
+R-9/R-15
+TO:R9-12
+2 0 0 1 3 4 1 0 0 1 1 3
+R-24/R-25+
+TO:R12-18
+3 2 0 1 3 4 2 1 0 1 1 1
+NC/OC
+TO:R18-24
+NMU
+4 4 3 0 0 3 3 3 2 0 0 1
+CBD/GC
+TO:BUS
+TO:RC
+TO:R24-40
+CCMU
+5 4 4 0 0 1 4 3 3 0 0 0
+IND
+TO:EMP
+TO:R40-80
+TO:R-80-120
+6 6 6 5 4 0 5 5 4 3 1 1
+Other
+1 to be determined by review authority
+
+1When adjacent to the Urban Growth Boundary, City Limits or the Institutional District, the Screening and Buffering
+shall be determined by the Review Authority.
+411 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:90
+411-5.1 The numbers in the Screening and Buffering Matrix refer to the Screening and
+Buffering Standards in Section 411-6.
+411-5.2 Required fences shall be located as near the property line as practical or most
+effective.
+411-5.3 Walls, fences and berms shall be the requirement of the higher intensity use.
+411-5.4 All plant unit fractions are rounded up, and existing vegetation may be used to
+satisfy planting requirements.
+411-5.5 Screening and Buffering requirements for Commercial, Industrial, Institutional
+Districts and special uses outside the Urban Growth Boundar y shall be
+determined by the Review Authority based on impact to surrounding uses.
+411-5.6 Gaps in berms, fences, walls or landscaping are allowed if required by Section
+408.
+(Ord. No. 857, § 2.D.(Exh. 4, § 4), 8-27-19, 11-28-19)
+411-6 Screening & Buffering Standards
+ SCREENING &
+BUFFERING TYPE
+ REQUIRED PLANT UNITS
+PER 100 LINEAL FEET
+ ADDITIONAL
+SETBACK
+OPTIONS (IN
+FEET)
+ PLANT UNIT
+MULTIPLIER
+ STRUCTURE
+REQUIRED (SEE
+SECTION 411-7)
+411-6.1 #1 2 Canopy trees
+2 Understory trees
+5.0 1.0 S-1
+7.5 0.8 None
+10.0 0.6 None
+12.5 0.4 None
+411-6.2 #2 2 Canopy trees
+4 Understory trees
+5.0 1.0 S-1
+7.5 0.8 S-1
+10.0 0.6 S-1
+12.5 0.4 S-1
+411-6.3 #3 4 Canopy Trees
+4 Understory trees
+10 Shrubs
+10.0 1.0 S-2
+15.0 0.8 S-2
+20.0 0.6 S-1
+411-6.4 #4 5 Canopy trees
+10 Understory trees
+15 Shrubs
+15.0 0.9 S-3
+20.0 1.0 S-2
+25.0 0.8 None
+30.0 0.6 None
+411-6.5 #5 6 Canopy trees
+9 Understory trees
+36 Shrubs
+18 Evergreen/conifer trees
+25.0 0.6 S-4
+30.0 0.75 S-3
+40.0 1.0 B-2 or S-2
+50.0 0.8 B-1 or S-2
+75.0 0.6 None
+411-6.6 #6 10 Canopy trees
+15 Understory trees
+60 Shrubs
+30 Evergreen/conifer trees
+30 Evergreen/conifer trees
+40.0 .6 BW3
+75.0 .8 BW2
+100.0 1.0 BW1 or S-4
+115.0 1.0 None
+125.0 .8 None
+ 411DEVELOPMENT STANDARDS
+IV:91
+411-7 Structures
+
+411 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:92

@@ -295,4 +295,5 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     # 7 -> 10 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 10 -> 11 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
     # 11 -> 12 on 2026-10-02: parking_lot_line_buffer_ft.
-    assert len(load_rules()[GLADSTONE].defaults) == 12
+    # 12 -> 14 on 2026-11-05: parking_side_yard_allowed and _stated (FOLLOWUPS 146).
+    assert len(load_rules()[GLADSTONE].defaults) == 14

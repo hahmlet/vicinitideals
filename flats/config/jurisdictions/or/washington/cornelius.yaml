@@ -491,6 +491,18 @@ defaults:
     url: https://ecode360.com/print/CO4396?guid=47339373
     retrieved: '2026-09-30'
     quote: "or/washington/cornelius/18.145/18.145.010.txt#L13"
+  parking_side_yard_allowed:
+    value: lane
+    cite: Cornelius CMC 18.145.010(B), required parking is kept out of required yards
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/18.145/18.145.010.txt#L13"
+  parking_side_yard_stated:
+    value: none
+    cite: Cornelius CMC 18.145.010(B), required parking is kept out of required yards; no side-yard permission is stated
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/18.145/18.145.010.txt#L13"
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-30.
 #

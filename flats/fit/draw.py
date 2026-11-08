@@ -32,7 +32,7 @@ building at the column's depth -- the column's side is not known here.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Iterable, Sequence
 
 import numpy as np
@@ -195,6 +195,7 @@ def _place(
     street: np.ndarray,
     fitter: Fitter | None = None,
     over_ft: float = 0.0,
+    lane_outside: bool = False,
 ) -> _Placed | None:
     """The window of this size, and the way round, that puts the building
     nearest the street.
@@ -242,7 +243,7 @@ def _place(
             by0, by1 = (wy0, wy0 + deep_b) if low else (wy1 - deep_b, wy1)
             cy0, cy1 = (by1, wy1) if low else (wy0, by0)
             court = _box_distance(wx0, cy0, wx1, cy1, pts)
-            for left in (True, False):
+            for left in ((False,) if lane_outside else (True, False)):
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
                 building = np.where(way, _box_distance(bx0, by0, bx1, by1, pts), np.inf)
                 i = int(np.lexsort((-court, building))[0])
@@ -273,6 +274,7 @@ def _options(
     over_ft: float,
     max_front_ft: float | None,
     include_frontmost: bool,
+    lane_outside: bool = False,
 ) -> list[_Placed]:
     """Every way the window can stand on the lot with the building toward
     the street and the court behind it, thinned to a lattice
@@ -315,7 +317,7 @@ def _options(
             by0, by1 = (wy0, wy0 + deep_b) if low else (wy1 - deep_b, wy1)
             cy0, cy1 = (by1, wy1) if low else (wy0, by0)
             court = _box_distance(wx0, cy0, wx1, cy1, pts)
-            for left in (True, False):
+            for left in ((False,) if lane_outside else (True, False)):
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
                 building = _box_distance(bx0, by0, bx1, by1, pts)
                 ok = way & (building < court)
@@ -370,6 +372,8 @@ def draw(
     paved_across_ft: float | None = None,
     gap_ft: float = 0.0,
     side_drive: bool = False,
+    lane_overlap_ft: float = 0.0,
+    court_overlap_ft: float = 0.0,
     short_ft: float = 0.0,
     where: _Placed | None = None,
     listing: list[_Placed] | None = None,
@@ -394,6 +398,8 @@ def draw(
     the lane that reaches it) and the unpaved standoff off the rear wall;
     ``side_drive`` says the court is fed across a side yard (a side street
     or a side alley) and paves its depth band across the whole lot.
+    ``lane_overlap_ft`` and ``court_overlap_ft`` stand the parking on the
+    low-x side of the room and draw that amount into the side setback.
 
     ``short_ft`` is how far short of the plan the room may be and still be
     drawn as fitting: the fit's tolerance, on a plan the screen passed tight
@@ -433,16 +439,22 @@ def draw(
         over = max(0.0, beside_len_ft - deep_b - max(court_beyond_ft, 0.0))
     else:
         over = max(0.0, court_depth_ft - max(court_beyond_ft, 0.0))
+    lane_outside = lane_overlap_ft > 0 or court_overlap_ft > 0
     if listing is not None:
         listing.extend(
             _options(
                 grids, need, w_cells, across_b=across_b, deep_b=deep_b, street=pts,
                 fitter=fitter, over_ft=over, max_front_ft=max_front_ft,
                 include_frontmost=include_frontmost,
+                lane_outside=lane_outside,
             )
         )
         return None
-    placed = where or _place(
+    placed = (
+        replace(where, left=False)
+        if where is not None and lane_outside
+        else where
+    ) or _place(
         grids,
         need,
         w_cells,
@@ -451,6 +463,7 @@ def draw(
         street=pts,
         fitter=fitter,
         over_ft=over,
+        lane_outside=lane_outside,
     )
     tight = False
     if placed is None and short_ft > 0:
@@ -463,6 +476,7 @@ def draw(
                 across_b=across_b,
                 deep_b=deep_b,
                 street=pts,
+                lane_outside=lane_outside,
                 fitter=fitter,
                 over_ft=over,
             )
@@ -479,6 +493,7 @@ def draw(
             across_b=across_b,
             deep_b=min(deep_b, d_cells * res),
             street=pts,
+            lane_outside=lane_outside,
         )
         if placed is None:
             return None
@@ -505,7 +520,12 @@ def draw(
     if beside_band_ft > 0:
         court = band(0.0, beside_len_ft, lx0, lx0 + beside_band_ft)
     elif court_depth_ft > 0:
-        court = band(deep_b, deep_b + court_depth_ft, x0, x0 + across)
+        court = band(
+            deep_b,
+            deep_b + court_depth_ft,
+            x0 - court_overlap_ft,
+            x0 + across,
+        )
     else:
         court = None
 
@@ -524,15 +544,16 @@ def draw(
         )
         rows.append(world(band(deep_b + gap_ft, deep_b + court_depth_ft, x0, x0 + across)))
     elif paved_across_ft is not None and court_depth_ft > 0:
-        pw = min(paved_across_ft, across)
+        outer_x0, outer_x1 = x0 - court_overlap_ft, x0 + across
+        pw = min(paved_across_ft, outer_x1 - outer_x0)
         if lane_ft > 0:
             # The row stands against the lane, so the lane meets the aisle.
             sides = [lx0 + lane_ft - pw] if placed.left else [lx0]
         else:
-            sides = [x0, x0 + across - pw]
+            sides = [outer_x0, outer_x1 - pw]
         way_in = band(0.0, deep_b + gap_ft, lx0, lx0 + lane_ft) if lane_ft > 0 else None
         for left in dict.fromkeys(sides):
-            left = min(max(left, x0), x0 + across - pw)
+            left = min(max(left, outer_x0), outer_x1 - pw)
             shape = band(deep_b + gap_ft, deep_b + court_depth_ft, left, left + pw)
             rows.append(world(shape))
             if way_in is not None:

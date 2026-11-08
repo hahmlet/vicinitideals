@@ -831,7 +831,9 @@ def test_east_hillsboro_r5_lots_take_the_stricter_of_county_and_hillsboro() -> N
     # Outside the subareas nothing moves, and the city-only standards are silent.
     assert (plain["min_lot_sqft"], plain["setback_front_ft"], plain["setback_side_ft"]) == (7000, 15, 5)
     assert (plain["setback_rear_ft"], plain["max_height_ft"], plain["front_lot_line_corner"]) == (15, 35, "shortest")
-    for name in ("min_lot_width_ft", "min_lot_depth_ft", "max_coverage_pct", "parking_lot_line_buffer_ft",
+    # 2026-11-06 (FOLLOWUPS 146): the county's own 407-6.4 strip now holds in and out of the subarea.
+    assert plain["parking_lot_line_buffer_ft"] == 5
+    for name in ("min_lot_width_ft", "min_lot_depth_ft", "max_coverage_pct",
                  "parking_max_per_unit", "parking_area_max_frontage_pct", "parking_alley_access_required"):
         assert name not in plain, name
     # Inside, the strictest of Hillsboro R-10, R-8.5, R-7 and R-6 where it is stricter.
@@ -839,7 +841,8 @@ def test_east_hillsboro_r5_lots_take_the_stricter_of_county_and_hillsboro() -> N
     assert (inside["setback_front_ft"], inside["setback_side_ft"], inside["setback_rear_ft"]) == (20, 10, 20)
     assert inside["max_height_ft"] == 25.0  # 2 1/2 stories at 10 ft (12.50.140 B.6)
     assert (inside["min_lot_width_ft"], inside["min_lot_depth_ft"], inside["max_coverage_pct"]) == (70, 90, 40)
-    assert inside["parking_lot_line_buffer_ft"] == 4 and inside["parking_max_per_unit"] == 2
+    # 2026-11-06 (FOLLOWUPS 146): 5, the county's 407-6.4 strip beats Hillsboro's 4; the stricter holds.
+    assert inside["parking_lot_line_buffer_ft"] == 5 and inside["parking_max_per_unit"] == 2
     assert inside["parking_area_max_frontage_pct"] == 50 and inside["parking_alley_access_required"] is True
     assert inside["front_lot_line_corner"] == "both" and inside["min_frontage_ft"] == 12
     # The county's own figure stays where it is the stricter one, and nothing goes ambiguous.
@@ -910,7 +913,8 @@ def test_east_hillsboro_r24_lots_take_the_stricter_of_county_and_hillsboro_mr2()
     assert inside["setback_front_ft"] == 15 and inside["max_height_ft"] == 30.0  # 3 stories at 10 ft
     assert (inside["min_lot_width_ft"], inside["min_lot_depth_ft"], inside["min_frontage_ft"]) == (55, 85, 25)
     assert inside["max_coverage_pct"] == 50 and inside["parking_max_per_unit"] == 2
-    assert inside["parking_lot_line_buffer_ft"] == 4 and inside["parking_alley_access_required"] is True
+    # 2026-11-06 (FOLLOWUPS 146): 5, the county's 407-6.4 strip beats Hillsboro's 4; the stricter holds.
+    assert inside["parking_lot_line_buffer_ft"] == 5 and inside["parking_alley_access_required"] is True
     assert inside["front_lot_line_corner"] == "both"
     # The county's figure stays where it is the stricter one.
     assert (inside["setback_side_ft"], inside["setback_rear_ft"], inside["setback_street_side_ft"]) == (5, 12, 8)

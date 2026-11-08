@@ -466,18 +466,6 @@ definitions:
     cite: "West Linn CDC 2.030, Corner lot"
 
 crossrefs:
-  "54.020": >-
-    Parking area landscaping, and it does not reach this building on two counts. The sentence is a
-    CREDIT rather than a requirement -- "Trees planted or preserved to meet parking area
-    landscaping requirements in CDC 54.020 may count toward the tree canopy cover percentage" --
-    so it lets one planting satisfy two standards and can only mean fewer trees, never more. And
-    the subsection it sits in is gated: 46.150.F opens "The following requirements apply to any
-    new development that includes more than one-half acre of new off-street surface parking". The
-    pod's whole court is four stalls and their aisle, on the order of two thousand square feet,
-    which is an order of magnitude under the threshold. It ranked binding because it sits eight
-    lines below the angle-parking table this layer draws its stall and aisle from -- proximity,
-    not content. What is NOT settled here is Chapter 54 itself: it may well ask a parking area for
-    landscaping somewhere, and this reference is simply not where it says so.
   "34": >-
     Accessory Structures, Accessory Dwelling Units, and Accessory Uses, and the twenty-two mentions
     are two sentences. Every zone chapter says "Accessory uses are allowed in this zone as provided by
@@ -873,6 +861,46 @@ defaults:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/west-linn/46/46.150.txt#L7-L10,L193-L195,L200"
+  # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Chapters 54 and 38
+  # now stored). SILENT, not allowed outright. A yard is land clear of any
+  # structure "30 inches or more above the general ground level" (02.030), and
+  # Chapter 38, on yards, says nothing of parking: only recreation vehicles and
+  # the like in a FRONT yard (38.050). A grep of every stored chapter (46, 48,
+  # 54 and the zone chapters included) finds no rule on parking in an interior
+  # side yard. So the lane and court may use one side setback, YELLOW at best
+  # (ruling 2026-11-05-side-yard-parking-silent-codes).
+  #
+  # THE FIVE-FOOT STRIP. 54.020(B)(3)(h): "When a parking, loading, or service
+  # area or driveway is contiguous to an adjoining lot or parcel, there shall
+  # be an intervening five-foot-wide landscape strip". It names the driveway,
+  # so it holds the lane as well as the court. It is a limit, not an allowance.
+  # (B)(3)(d) keeps it on lots under ten spaces, and 11.090(A)(10) applies
+  # Chapter 54 "to all development including permitted uses". The heading
+  # limits (B)(3) to "residential uses (non-single-family)". Four unit lots are
+  # single-family attached by 02.030 (attached units on separate lots, which
+  # "may be further defined as a duplex, triplex, or quadplex"), so that path
+  # is out; a quadplex on one lot is in.
+  # NOT ENCODED: (h)'s 10-foot strip at a street, and (B)(1)'s 25 percent
+  # landscaped area (FOLLOWUPS 146 round 4 hand-off).
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: West Linn CDC 02.030, a yard is clear only of structures 30 inches or more above the ground; no chapter bars parking from a side yard
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/west-linn/02.definitions.txt#L977,L1089,L1099"
+  parking_side_yard_stated:
+    value: none
+    cite: West Linn CDC 38.050, the only yard-storage rule, reaches recreation and commercial vehicles in a front yard; no section places parking in a side yard
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC38.html
+    retrieved: '2026-11-06'
+    quote: "or/clackamas/west-linn/38.yards.txt#L41-L43"
+  parking_lot_line_buffer_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: West Linn CDC 54.020(B)(3)(h), intervening five-foot-wide landscape strip where a parking area or driveway is contiguous to an adjoining lot; (B)(3) reaches residential uses (non-single-family)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC54.html
+    retrieved: '2026-11-05'
+    quote: "or/clackamas/west-linn/54.landscaping.txt#L45,L61"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

@@ -258,6 +258,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [REAR_COURT_SHORT]
+  SIDE-YARD-PARKING-SILENT:
+    description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
+    kind: categorical
+    risk: possible
+    severity: 3
+    absorbs: parking
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Read a code amendment or authoritative interpretation that states the side-yard parking reach"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIDE_YARD_PARKING_SILENT]
 
   # --- what our own measurement left open --------------------------------
   FIT-COURT-WIDTH:

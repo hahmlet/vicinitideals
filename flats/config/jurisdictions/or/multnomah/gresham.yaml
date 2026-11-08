@@ -2092,9 +2092,8 @@ defaults:
   # front yard or side yard of a townhouse", held apart from
   # `parking_front_prohibited` because the two bans reach different ground: a
   # front ban leaves a court beside the building on a wide lot, a side ban
-  # does not. Read by no screen yet -- the site plan draws one arrangement,
-  # the rear court, and this is what will let it try a side court where the
-  # code allows one (FOLLOWUPS 5).
+  # does not. The fit reads this prohibition before applying the side-yard
+  # reach fields below; it does not change the rear-court layout.
   #
   # On one lot 7.0420(B)(5)(c) puts two spaces per unit "in a driveway, in the
   # front or street side yard setback, or in the rear yard setback when there
@@ -2175,6 +2174,23 @@ defaults:
         when: [unit_lots, alley_at_rear]
         cite: GDC 7.0431(B)(3)(b)(i), townhouse off-street parking areas located in the rear yard
         quote: "or/multnomah/gresham/7/7.0431.txt#L38-L39"
+  parking_side_yard_allowed:
+    value: lane
+    cite: GDC 9.0822, driveway may pass through a yard setback to connect to a public street
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+  parking_side_yard_stated:
+    value: none
+    cite: GDC 3.0100 and 7.0420, yard definitions and no parking-side permission stated for quadplexes
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: GDC 9.0822, driveway pass-through, and 7.0431(B)(3)(b)(i), townhouse side-yard parking prohibition
+        quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street

@@ -16,7 +16,7 @@
       "gaps": []
     },
     "or/clackamas/canby": {
-      "section_unread": 6,
+      "section_unread": 8,
       "misattributed": [],
       "label": "Canby",
       "counts": {},
@@ -147,7 +147,7 @@
       "gaps": []
     },
     "or/clackamas/west-linn": {
-      "section_unread": 0,
+      "section_unread": 1,
       "misattributed": [],
       "label": "West Linn",
       "counts": {},
@@ -914,14 +914,14 @@
       "gaps": []
     },
     "or/multnomah/wood-village": {
-      "section_unread": 3,
+      "section_unread": 4,
       "misattributed": [],
       "label": "Wood Village",
       "counts": {},
       "gaps": []
     },
     "or/washington/_unincorporated": {
-      "section_unread": 17,
+      "section_unread": 24,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -1153,7 +1153,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 36,
+      "section_unread": 37,
       "misattributed": [
         {
           "zone": "CC",

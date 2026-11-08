@@ -1103,6 +1103,42 @@ defaults:
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-09-08'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L51-L55,L115"
+  # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Section 1009 now
+  # stored). SILENT, not allowed outright. A setback is "between a structure
+  # and the lot line" (202), and no stored section places parking in or out of
+  # an interior side setback: 845.02(D) and 845.03(E) speak only to the street,
+  # 1015 names no yard, and the side-line rule in 845 is for cottage clusters.
+  # YELLOW at best (ruling 2026-11-05-side-yard-parking-silent-codes).
+  #
+  # THE FIVE-FOOT STRIP. 1009.03(B)(1): "A landscaping strip with a minimum
+  # width of five feet shall be provided adjacent to the perimeter of the
+  # surface parking or loading area", under the heading "adjacent to abutting
+  # lots or rights-of-way". Permitted uses are "subject to ... Section 1000"
+  # (zdo.315.txt#L33), and 1009 carries no middle-housing exception, so it
+  # holds on both paths. A driveway is defined apart from the parking area
+  # (202), so the strip's reach to a lone lane is unsure; held on the lane too,
+  # the conservative answer (coordinator, 2026-11-05). VA, OA and VCS print 10
+  # below; VO has no key in this layer.
+  # NOT ENCODED: the strip's street half and 1009.06's five feet at a front lot
+  # line (FOLLOWUPS 146 round 4 hand-off).
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: Clackamas ZDO 202, a setback is the distance between a structure and the lot line; no section bars surface parking from a side setback
+    url: https://www.clackamas.us/planning/zdo202
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L489,L495,L591"
+  parking_side_yard_stated:
+    value: none
+    cite: Clackamas ZDO 845.02(D) and 845.03(E)(2) place parking against the front and state no interior-side rule
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L51-L55,L115"
+  parking_lot_line_buffer_ft:
+    value: 5
+    cite: Clackamas ZDO 1009.03(B)(1), landscaping strip with a minimum width of five feet adjacent to the perimeter of the surface parking area, abutting lots
+    url: https://www.clackamas.us/planning/zdo1009
+    retrieved: '2026-11-05'
+    quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -3103,6 +3139,13 @@ zones:
       area for four units -- which is below the 7,000 Section 845 asks, so
       this is the one district of the four where the county's density standard
       would not have bound anyway) and minimum density ("See Section 1012").
+    # 1009.03(B)(1): the perimeter strip is 10 feet in this district (FOLLOWUPS 146).
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: Clackamas ZDO 1009.03(B)(1), in the OA, VA, VCS and VO Districts the minimum width shall be 10 feet
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   HDR:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -3780,6 +3823,13 @@ zones:
       mixed-use building", and they send the freestanding kind somewhere else
       for its standards. A code that draws that line in two other notes has
       drawn it here too.
+    # 1009.03(B)(1): the perimeter strip is 10 feet in this district (FOLLOWUPS 146).
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: Clackamas ZDO 1009.03(B)(1), in the OA, VA, VCS and VO Districts the minimum width shall be 10 feet
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   # === The September 2026 map's thirty codes, ruled 2026-09-20 =============
   #
   # Steph's rule: every code the county map carries is read once, its reason
@@ -3893,6 +3943,13 @@ zones:
       answered the way NC and C-2 answer Table 510-1's note 11: it turns on
       what is built, this product is market rate, and the screen answers the
       question it is asked.
+    # 1009.03(B)(1): the perimeter strip is 10 feet in this district (FOLLOWUPS 146).
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: Clackamas ZDO 1009.03(B)(1), in the OA, VA, VCS and VO Districts the minimum width shall be 10 feet
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   RC:
     cite_default:
       cite: Clackamas ZDO 513.02 (Section 513 applies to RTC and RC), 513.03

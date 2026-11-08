@@ -280,6 +280,28 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: Hillsboro CDC 12.50.350.C.1 permits surface parking in side-yard setbacks, subject to its location rule
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: Hillsboro CDC 12.50.350.C.1, driveways may serve parking in side-yard setbacks
+        quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: Hillsboro CDC 12.50.350.C.1, side-yard parking is allowed subject to its location rule
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: Hillsboro CDC 12.50.350.C.1 and 12.50.715.C.1.c, townhouse side-yard parking location
+        quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
   # PARKING MAXIMUM. Table 12.50.320-1 prints "Quadplex 2" in the Zone A
   # column and nothing in the Zone B column, where every neighbouring row
   # prints "None". 12.50.320 D puts a whole site in Zone A if any part of it

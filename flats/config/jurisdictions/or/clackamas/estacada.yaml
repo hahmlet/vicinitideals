@@ -152,6 +152,23 @@ defaults:
     url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
     retrieved: '2026-10-07'
     quote: "or/clackamas/estacada/16.08/16.08.010.txt#L275-L277"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). Whole-folder grep: 16.76.010
+  # asks a six-foot screen where parking adjoins a residential zone, no
+  # width (16.76/16.76.010.txt#L37-L38); 16.16.040's "no yard ... for
+  # one use shall be used as the required ... for another use" is about
+  # two uses sharing. Silent.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: EMC 16.08.010 Setback, measured to the nearest point of a structure; no section places parking in or out of an interior side yard
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/16.08/16.08.010.txt#L474"
+  parking_side_yard_stated:
+    value: none
+    cite: EMC 16.76.010, screening only; no interior-side-yard parking rule
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/16.76/16.76.010.txt#L37-L38"
   # WHICH STREET THE DRIVEWAY USES. 16.116.010 (D)(3): a lot on two or more
   # streets of different classes connects its access point to "the road of
   # the lesser classification", unless topography or natural features make

@@ -205,6 +205,8 @@ from flats.score.paper import (
     lot_line_buffer_ft,
     side_column,
     side_court,
+    side_yard_court_overlap_ft,
+    side_yard_lane_overlap_ft,
     side_street_fed,
 )
 from flats.score.screen import (
@@ -5472,6 +5474,9 @@ def drawing_for(
             street=street,
             beside_band_ft=beside.band_ft,
             beside_len_ft=beside.length_ft,
+            court_overlap_ft=side_yard_court_overlap_ft(
+                s.rules, beside.band_ft, corner=corner
+            ),
             short_ft=short,
             where=where,
             listing=listing,
@@ -5482,8 +5487,20 @@ def drawing_for(
     if s.fit.column:
         got = side_column(s.design, s.rules, alley)
         court = got[0] if got is not None else 0.0
+        across = court_across(s.design, s.rules, alley, corner=corner)
+        lane_overlap = side_yard_lane_overlap_ft(
+            s.rules, across.lane_ft, corner=corner
+        )
+        court_overlap = 0.0
     else:
         court = court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
+        across = court_across(s.design, s.rules, alley, corner=corner)
+        lane_overlap = side_yard_lane_overlap_ft(
+            s.rules, across.lane_ft, corner=corner
+        )
+        court_overlap = side_yard_court_overlap_ft(
+            s.rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
+        )
     beyond = _court_beyond_rear(
         s.design,
         s.rules,
@@ -5498,10 +5515,12 @@ def drawing_for(
         s.fit,
         width_ft=s.design.footprint.width_ft,
         depth_ft=s.design.footprint.depth_ft,
-        lane_ft=court_across(s.design, s.rules, alley, corner=corner).lane_ft,
+        lane_ft=across.lane_ft,
         court_depth_ft=court,
         court_beyond_ft=beyond,
         street=street,
+        lane_overlap_ft=lane_overlap,
+        court_overlap_ft=court_overlap,
         short_ft=short,
         where=where,
         listing=listing,
