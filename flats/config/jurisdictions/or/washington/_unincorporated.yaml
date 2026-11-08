@@ -968,8 +968,8 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/3090
     retrieved: '2026-09-28'
   entrance_faces_street:
-    value: alternative
-    cite: "Washington County CDC 430-84 middle housing entry orientation (townhouse L306-L318): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Washington County CDC 430-84 middle housing entry orientation (townhouse L306-L318): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://api.municode.com/PublicationPdfDownload/3090
     retrieved: '2026-09-28'
     quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L156-L171"

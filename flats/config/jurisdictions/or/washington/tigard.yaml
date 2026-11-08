@@ -1539,8 +1539,8 @@ zones:
   # ------------------------------------------------------------------
   TMU:
     entrance_faces_street:
-      value: alternative
-      cite: "Tigard TDC 18.660.080 TMU entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+      value: required
+      cite: "Tigard TDC 18.660.080 TMU entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://ecode360.com/print/TI5024?guid=43708038
       retrieved: '2026-09-30'
       quote: "or/washington/tigard/18.660/18.660.080.txt#L23-L55"

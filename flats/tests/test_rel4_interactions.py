@@ -72,3 +72,28 @@ def test_the_kept_drawing_turned_holds_a_green_out_and_lifts(corpus) -> None:  #
     lifted = entrance_drawn_checked(stale, policy=policy, relief=None)
     assert not lifted.facts.entrance_drawn_turned
     assert lifted.screening.triage is Triage.green
+
+
+@pytest.mark.parametrize("value", ["required", "alternative", "not_required"])
+def test_a_settled_standard_leaves_the_drawing_to_the_fit(corpus, value) -> None:  # noqa: F811
+    """Round 3 (rulings.yaml 2026-11-08-no-porch-end-door) made most places
+    ``required``: there the fitter holds only the street bearings, so no step
+    can draw the building turned, and the drawn net stays out of it, as it
+    does where the standard lets a turned building stand."""
+    from flats.score.paper import entrance_unsettled
+
+    s, _ = _plan(corpus)
+    sample = next(iter(s.rules.values.values()))
+    values = {
+        **s.rules.values,
+        "entrance_faces_street": dataclasses.replace(
+            sample, name="entrance_faces_street", value=value
+        ),
+    }
+    settled = dataclasses.replace(s, rules=dataclasses.replace(s.rules, values=values))
+    w, d = s.design.footprint.width_ft, s.design.footprint.depth_ft
+    facing = shapely.box(X0 + 2, Y0 + 15, X0 + 2 + w, Y0 + 15 + d)
+    turned = _with_building(settled, affinity.rotate(facing, 90.0, origin="centroid"))
+    assert settled.rules.get("entrance_faces_street") == value
+    assert not entrance_unsettled(turned.rules, turned.design)
+    assert not drawn_door_turned(turned)

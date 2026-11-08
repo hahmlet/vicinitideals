@@ -2755,3 +2755,26 @@
     The study sizes were never in the catalog. FOLLOWUPS 149.
   encoded_in: [flats/config/pods/pod80x30.yaml, flats/ingest/quadfit.py]
   source: Steph 2026-11-08 (chat, executive decision), docs/followups/149-pod-unit-width.md
+- id: 2026-11-08-no-porch-end-door
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    Most codes let the front doors face away from the street if one home's door
+    sits near the street end of the building and opens onto a covered porch (or
+    the end wall carries windows). Can the product take that change, so the
+    building can stand turned, its 30 ft end to the street?
+  ruling: >-
+    No. The building's doors stay on the 80 ft face; no end-home porch door or
+    street-end windows to meet an entrance-orientation alternative. Where a code
+    requires the main entrance to face the street (with or without a porch or
+    angle alternative), the turned placement fails.
+  effect: >-
+    Every place read as `alternative` (facing the street, up to 45 degrees, a
+    common open space or a porch: the Large Cities Model Code cities, Portland,
+    Gresham, Beaverton RMA/RMB/RMC/CM-RM and the rest) is `required`, and
+    Hillsboro's 12.50.710.C.1.b too: the pod is searched facing the street only,
+    and a lot that fit only turned no longer passes. An angle alternative of up
+    to 45 degrees cannot be met by a 90-degree turn. FOLLOWUPS 153.
+  source: Steph 2026-11-08 (chat), docs/followups/153-entrance-orientation.md
+  encoded_in: [flats/rules/fields.py, flats/score/paper.py]

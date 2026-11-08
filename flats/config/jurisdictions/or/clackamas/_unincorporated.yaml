@@ -1143,8 +1143,8 @@ code:
   allow_thin: true
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Clackamas County ZDO 845.02(B) Entry orientation (845.03(B) for townhouses): at least one main entrance within 8 feet of the longest street-facing wall, facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Clackamas County ZDO 845.02(B) Entry orientation (845.03(B) for townhouses): at least one main entrance within 8 feet of the longest street-facing wall, facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-09-27'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L25-L41"

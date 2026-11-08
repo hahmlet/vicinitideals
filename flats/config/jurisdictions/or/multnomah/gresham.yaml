@@ -1840,8 +1840,8 @@ code:
     extraction: plain
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Gresham GDC 7.0420 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (the 4.1152 and 4.1252 townhouse rules reach townhouse lots, which already face the street) (FOLLOWUPS 153)"
+    value: required
+    cite: "Gresham GDC 7.0420 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (the 4.1152 and 4.1252 townhouse rules reach townhouse lots, which already face the street) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/7/7.0420.txt#L1-L15"

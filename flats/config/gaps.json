@@ -1,5 +1,5 @@
 {
-  "digest": "126fea512dd3b27e72b399b2d41a8a0fa0459d9acf1e2173f63e4a2245ebada6",
+  "digest": "19568f743cb8ac74ef35f84b13c93dccaa29452ed1b1374b0ea2830cddc5a0dd",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -469,27 +469,11 @@
       "misattributed": [
         {
           "zone": "R-10",
-          "field": "entrance_faces_street [oregon_city_south_end]",
-          "claimed": "17.22.050",
-          "found": "17.22.040",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "R-10",
           "field": "lot_of_record_relief",
           "claimed": "17.08.020 17.08.020 17.08.040 17.16.060",
           "found": "17.58.020",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
           "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-2",
-          "field": "entrance_faces_street [oregon_city_south_end]",
-          "claimed": "17.22.050",
-          "found": "17.22.040",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
-          "kind": "header_or_xref"
         },
         {
           "zone": "R-2",
@@ -501,14 +485,6 @@
         },
         {
           "zone": "R-3.5",
-          "field": "entrance_faces_street [oregon_city_south_end]",
-          "claimed": "17.22.050",
-          "found": "17.22.040",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "R-3.5",
           "field": "lot_of_record_relief",
           "claimed": "17.10.020 17.10.040 17.16.060",
           "found": "17.58.020",
@@ -517,27 +493,11 @@
         },
         {
           "zone": "R-5",
-          "field": "entrance_faces_street [oregon_city_south_end]",
-          "claimed": "17.22.050",
-          "found": "17.22.040",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "R-5",
           "field": "lot_of_record_relief",
           "claimed": "17.10.020 17.10.040 17.16.060",
           "found": "17.58.020",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
           "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-6",
-          "field": "entrance_faces_street [oregon_city_south_end]",
-          "claimed": "17.22.050",
-          "found": "17.22.040",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
-          "kind": "header_or_xref"
         },
         {
           "zone": "R-6",
@@ -546,14 +506,6 @@
           "found": "17.58.020",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
           "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-8",
-          "field": "entrance_faces_street [oregon_city_south_end]",
-          "claimed": "17.22.050",
-          "found": "17.22.040",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
-          "kind": "header_or_xref"
         },
         {
           "zone": "R-8",

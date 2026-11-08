@@ -850,8 +850,8 @@ zones:
       of-way and out of the Primary Frontage; 15% open space.
   RMA:
     entrance_faces_street:
-      value: alternative
-      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
@@ -1008,8 +1008,8 @@ zones:
       S11 50% frontage, S13 32 ft of driveway approach, lowest-class access).
   RMB:
     entrance_faces_street:
-      value: alternative
-      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
@@ -1175,8 +1175,8 @@ zones:
       RMA.
   RMC:
     entrance_faces_street:
-      value: alternative
-      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
@@ -1356,8 +1356,8 @@ zones:
   # ------------------------------------------------------------------
   CM-RM:
     entrance_faces_street:
-      value: alternative
-      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"

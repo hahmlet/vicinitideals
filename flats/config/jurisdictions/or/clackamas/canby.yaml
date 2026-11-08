@@ -1885,8 +1885,8 @@ private_drives:
 
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Canby CMC 16.21.040 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Canby CMC 16.21.040 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38670
     retrieved: '2026-10-07'
     quote: "or/clackamas/canby/cmc.16.21.040.txt#L5-L11"

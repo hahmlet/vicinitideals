@@ -1057,9 +1057,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: FOLLOWUPS 153 (2026-11-08): the front-door orientation rule per place
     #: (required / alternative / not_required / unclear). quadfit has one
     #: orientation column, written entrance_only for every place; the new
-    #: field is read by FLATS alone. 55 -> 61 the same day (round 2): Oregon
-    #: City's six residential zones carry the Park Place / South End variants.
-    "entrance_faces_street": 61,
+    #: field is read by FLATS alone. (61 for an hour in round 2, while Oregon
+    #: City's six residential zones carried their own blocks; round 3 folded
+    #: them back into the city default.)
+    "entrance_faces_street": 55,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
