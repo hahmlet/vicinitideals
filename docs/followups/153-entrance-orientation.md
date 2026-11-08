@@ -23,3 +23,4 @@ To do:
   street-facing entrances. Corner lots: which street counts.
 - Bound, read moves, release.
 - 2026-11-08 BUILT c04eeea0 (flats/entrance-orientation, off rescreen-1110): 24 rule files; must-face: Wood Village res, Milwaukie/Estacada/Beaverton downtown, WashCo MU; unread -> yellow. Round 2 (corners, unmapped sub-areas) running. OPEN Steph: (Q2) can one end home's door open onto a covered porch near the street (most cities' alternative)? (Q3) Hillsboro: every home's door to the street, or one per building?
+- 2026-11-08 Steph Q2 = NO (no end-home porch door / street-end windows): alternative cities -> required; Hillsboro Q3 moot (doors only on the 80 ft face). Round 3 on flats/entrance-orientation + ruling 2026-11-08-no-porch-end-door; rides flats/rel4.
