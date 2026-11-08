@@ -849,8 +849,8 @@ code:
 
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Milwaukie MMC 19.505.1 middle housing main entrance: facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Milwaukie MMC 19.505.1 middle housing main entrance: facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.505/19.505.1.txt#L55-L58,L228-L255"

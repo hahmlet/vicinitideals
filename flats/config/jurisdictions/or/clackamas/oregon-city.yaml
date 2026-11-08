@@ -430,8 +430,8 @@ code:
     definitions_at: L834-L3883
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
     quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
@@ -968,30 +968,6 @@ defaults:
 
 zones:
   R-10:
-    entrance_faces_street:
-      # FOLLOWUPS 153 round 2. The city-wide middle housing rule, plus the
-      # two concept plan chapters, each reaching only its mapped area
-      # (drawn_areas oregon_city_park_place, oregon_city_south_end). Every
-      # residence -- each dwelling unit (rulings.yaml
-      # 2026-10-22-oregon-city-residence-per-unit) -- carries a porch with a
-      # front door facing the street: a pod turned end-on has none. South
-      # End asks it only of residences within 20 ft of the sidewalk or front
-      # line, a distance the screen does not measure, so there a turned fit
-      # is held, not barred. The director's style exemption is a judgement.
-      value: alternative
-      cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
-      url: https://api.municode.com/PublicationPdfDownload/1377
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
-      variants:
-        - value: required
-          when: [oregon_city_park_place]
-          cite: OCMC 17.21.050.A, Park Place porches and entries, each residence a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6178-L6180"
-        - value: unclear
-          when: [oregon_city_south_end]
-          cite: OCMC 17.22.050.A, South End porches and entries, residences within twenty feet of the public sidewalk or front property line a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393"
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
@@ -1153,30 +1129,6 @@ zones:
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4155"
   R-8:
-    entrance_faces_street:
-      # FOLLOWUPS 153 round 2. The city-wide middle housing rule, plus the
-      # two concept plan chapters, each reaching only its mapped area
-      # (drawn_areas oregon_city_park_place, oregon_city_south_end). Every
-      # residence -- each dwelling unit (rulings.yaml
-      # 2026-10-22-oregon-city-residence-per-unit) -- carries a porch with a
-      # front door facing the street: a pod turned end-on has none. South
-      # End asks it only of residences within 20 ft of the sidewalk or front
-      # line, a distance the screen does not measure, so there a turned fit
-      # is held, not barred. The director's style exemption is a judgement.
-      value: alternative
-      cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
-      url: https://api.municode.com/PublicationPdfDownload/1377
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
-      variants:
-        - value: required
-          when: [oregon_city_park_place]
-          cite: OCMC 17.21.050.A, Park Place porches and entries, each residence a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6178-L6180"
-        - value: unclear
-          when: [oregon_city_south_end]
-          cite: OCMC 17.22.050.A, South End porches and entries, residences within twenty feet of the public sidewalk or front property line a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393"
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
@@ -1331,30 +1283,6 @@ zones:
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4155"
   R-6:
-    entrance_faces_street:
-      # FOLLOWUPS 153 round 2. The city-wide middle housing rule, plus the
-      # two concept plan chapters, each reaching only its mapped area
-      # (drawn_areas oregon_city_park_place, oregon_city_south_end). Every
-      # residence -- each dwelling unit (rulings.yaml
-      # 2026-10-22-oregon-city-residence-per-unit) -- carries a porch with a
-      # front door facing the street: a pod turned end-on has none. South
-      # End asks it only of residences within 20 ft of the sidewalk or front
-      # line, a distance the screen does not measure, so there a turned fit
-      # is held, not barred. The director's style exemption is a judgement.
-      value: alternative
-      cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
-      url: https://api.municode.com/PublicationPdfDownload/1377
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
-      variants:
-        - value: required
-          when: [oregon_city_park_place]
-          cite: OCMC 17.21.050.A, Park Place porches and entries, each residence a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6178-L6180"
-        - value: unclear
-          when: [oregon_city_south_end]
-          cite: OCMC 17.22.050.A, South End porches and entries, residences within twenty feet of the public sidewalk or front property line a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393"
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
@@ -1509,30 +1437,6 @@ zones:
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4155"
   R-5:
-    entrance_faces_street:
-      # FOLLOWUPS 153 round 2. The city-wide middle housing rule, plus the
-      # two concept plan chapters, each reaching only its mapped area
-      # (drawn_areas oregon_city_park_place, oregon_city_south_end). Every
-      # residence -- each dwelling unit (rulings.yaml
-      # 2026-10-22-oregon-city-residence-per-unit) -- carries a porch with a
-      # front door facing the street: a pod turned end-on has none. South
-      # End asks it only of residences within 20 ft of the sidewalk or front
-      # line, a distance the screen does not measure, so there a turned fit
-      # is held, not barred. The director's style exemption is a judgement.
-      value: alternative
-      cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
-      url: https://api.municode.com/PublicationPdfDownload/1377
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
-      variants:
-        - value: required
-          when: [oregon_city_park_place]
-          cite: OCMC 17.21.050.A, Park Place porches and entries, each residence a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6178-L6180"
-        - value: unclear
-          when: [oregon_city_south_end]
-          cite: OCMC 17.22.050.A, South End porches and entries, residences within twenty feet of the public sidewalk or front property line a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393"
     section: ["17.10.", "17.16."]
     cite_default:
       cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
@@ -1670,30 +1574,6 @@ zones:
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4347"
   R-2:
-    entrance_faces_street:
-      # FOLLOWUPS 153 round 2. The city-wide middle housing rule, plus the
-      # two concept plan chapters, each reaching only its mapped area
-      # (drawn_areas oregon_city_park_place, oregon_city_south_end). Every
-      # residence -- each dwelling unit (rulings.yaml
-      # 2026-10-22-oregon-city-residence-per-unit) -- carries a porch with a
-      # front door facing the street: a pod turned end-on has none. South
-      # End asks it only of residences within 20 ft of the sidewalk or front
-      # line, a distance the screen does not measure, so there a turned fit
-      # is held, not barred. The director's style exemption is a judgement.
-      value: alternative
-      cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
-      url: https://api.municode.com/PublicationPdfDownload/1377
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
-      variants:
-        - value: required
-          when: [oregon_city_park_place]
-          cite: OCMC 17.21.050.A, Park Place porches and entries, each residence a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6178-L6180"
-        - value: unclear
-          when: [oregon_city_south_end]
-          cite: OCMC 17.22.050.A, South End porches and entries, residences within twenty feet of the public sidewalk or front property line a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393"
     # WHY THIS DISTRICT WAS MISSING, AND WHY IT IS BACK, 2026-09-08.
     #
     # R-2 was left out of this file with a one-word reason, recorded in a note
@@ -1974,30 +1854,6 @@ zones:
       gets for R-5. The affordable-housing density bonus of 17.12.050.C reaches
       only projects of five or more units and cannot help a fourplex.
   R-3.5:
-    entrance_faces_street:
-      # FOLLOWUPS 153 round 2. The city-wide middle housing rule, plus the
-      # two concept plan chapters, each reaching only its mapped area
-      # (drawn_areas oregon_city_park_place, oregon_city_south_end). Every
-      # residence -- each dwelling unit (rulings.yaml
-      # 2026-10-22-oregon-city-residence-per-unit) -- carries a porch with a
-      # front door facing the street: a pod turned end-on has none. South
-      # End asks it only of residences within 20 ft of the sidewalk or front
-      # line, a distance the screen does not measure, so there a turned fit
-      # is held, not barred. The director's style exemption is a judgement.
-      value: alternative
-      cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
-      url: https://api.municode.com/PublicationPdfDownload/1377
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
-      variants:
-        - value: required
-          when: [oregon_city_park_place]
-          cite: OCMC 17.21.050.A, Park Place porches and entries, each residence a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6178-L6180"
-        - value: unclear
-          when: [oregon_city_south_end]
-          cite: OCMC 17.22.050.A, South End porches and entries, residences within twenty feet of the public sidewalk or front property line a front porch with a front door that faces the street
-          quote: "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393"
     section: ["17.10.", "17.16."]
     cite_default:
       cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional

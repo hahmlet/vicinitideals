@@ -3053,8 +3053,8 @@ zones:
       refuses the building, so today they are a note.
   R10:
     entrance_faces_street:
-      value: alternative
-      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153)"
+      value: required
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
@@ -3358,8 +3358,8 @@ zones:
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
   R5:
     entrance_faces_street:
-      value: alternative
-      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153)"
+      value: required
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
@@ -3503,8 +3503,8 @@ zones:
       enough that the number matters less than the fact that it was read.
   R7:
     entrance_faces_street:
-      value: alternative
-      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153)"
+      value: required
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"

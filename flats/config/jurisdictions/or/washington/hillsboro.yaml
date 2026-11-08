@@ -262,8 +262,8 @@ private_drives:
 
 defaults:
   entrance_faces_street:
-    value: unclear
-    cite: "Hillsboro CDC 12.50 middle housing entrance standard: whether it asks each home's door or one per building to face the street is unsettled (FOLLOWUPS 153)"
+    value: required
+    cite: "Hillsboro CDC 12.50.710.C.1.b, housing types with individual entries: at least one main entrance to a dwelling unit no further than 8 feet behind the longest street-facing wall, and facing the street, at no more than 45 degrees from it, or opening to a porch with an entry facing the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L11-L14,L40-L53"

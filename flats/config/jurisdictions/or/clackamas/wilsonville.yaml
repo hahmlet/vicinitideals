@@ -1038,8 +1038,8 @@ code:
     allow_thin: true
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Wilsonville WC 4.113 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Wilsonville WC 4.113 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
     quote: "or/clackamas/wilsonville/4/4.113.txt#L319-L332"

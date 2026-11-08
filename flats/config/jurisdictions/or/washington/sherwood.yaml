@@ -352,8 +352,8 @@ private_drives:
 
 defaults:
   entrance_faces_street:
-    value: alternative
-    cite: "Sherwood SZCDC 16.14 residential design: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    value: required
+    cite: "Sherwood SZCDC 16.14 residential design: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
     url: https://api.municode.com/PublicationPdfDownload/3865
     retrieved: '2026-09-29'
     quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L70-L104"

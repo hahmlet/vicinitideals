@@ -183,15 +183,15 @@ def rule_set() -> RuleSet:
         ("or/multnomah/wood-village", "LR 7.5", "required_named"),
         ("or/multnomah/wood-village", "MR 4", "required_named"),
         ("or/clackamas/estacada", "D", "required_named"),
-        ("or/clackamas/oregon-city", "R-6", "alternative"),
-        ("or/multnomah/portland", "CM2", "alternative"),
-        ("or/multnomah/portland", "RM2", "alternative"),
-        ("or/multnomah/portland", "R5", "alternative"),
+        ("or/clackamas/oregon-city", "R-6", "required"),
+        ("or/multnomah/portland", "CM2", "required"),
+        ("or/multnomah/portland", "RM2", "required"),
+        ("or/multnomah/portland", "R5", "required"),
         ("or/multnomah/portland", "R20", "not_required"),
-        ("or/multnomah/gresham", "LDR-7", "alternative"),
+        ("or/multnomah/gresham", "LDR-7", "required"),
         ("or/clackamas/milwaukie", "DMU", "required"),
-        ("or/clackamas/_unincorporated", "R7", "alternative"),
-        ("or/washington/hillsboro", "R-7", "unclear"),
+        ("or/clackamas/_unincorporated", "R7", "required"),
+        ("or/washington/hillsboro", "R-7", "required"),
         ("or/washington/_unincorporated", "R-6 NB", "unclear"),
         ("or/washington/beaverton", "RC-OT", "required"),
         ("or/clackamas/tualatin", "RL", "not_required"),
@@ -253,9 +253,9 @@ def test_required_named_also_confines_the_pod_to_the_street(rule_set: RuleSet) -
     ("where", "zones", "condition", "value"),
     [
         ("or/clackamas/oregon-city", ("R-10", "R-8", "R-6", "R-5", "R-3.5", "R-2"), "oregon_city_park_place", "required"),
-        ("or/clackamas/oregon-city", ("R-10", "R-5", "R-2"), "oregon_city_south_end", "unclear"),
+        ("or/clackamas/oregon-city", ("R-10", "R-5", "R-2"), "oregon_city_south_end", "required"),
         ("or/multnomah/portland", ("CR", "CM1", "CM2", "CM3", "CE", "CX"), "pdx_hayden_island", "required_named"),
-        ("or/multnomah/portland", ("RM2",), "pdx_lombard_subdistrict_a", "unclear"),
+        ("or/multnomah/portland", ("RM2",), "pdx_lombard_subdistrict_a", "required"),
     ],
 )
 def test_a_mapped_sub_area_takes_its_own_rule(
@@ -265,7 +265,9 @@ def test_a_mapped_sub_area_takes_its_own_rule(
         inside = rule_set.resolve(where, zone, conditions=(condition,))
         assert inside.get("entrance_faces_street") == value, zone
         outside = rule_set.resolve(where, zone)
-        assert outside.get("entrance_faces_street") == "alternative", zone
+        # Round 3 (rulings.yaml 2026-11-08-no-porch-end-door): the base rule is
+        # required too, so outside the sub-area only the named street differs.
+        assert outside.get("entrance_faces_street") == "required", zone
 
 
 def test_the_sub_area_outlines_are_held_for_their_zones() -> None:
@@ -353,10 +355,25 @@ def test_where_the_rule_is_unsettled_the_bridge_reads_the_building_facing_the_st
     assert any(abs(s.fit.angle_deg - b) < 1e-6 for b in s.lot.front_bearings)
 
 
+def test_where_only_the_turned_building_fits_and_the_doors_must_face_the_street_it_fails(
+    corpus, policies
+) -> None:
+    # Portland R5 is `required` since round 3 (rulings.yaml
+    # 2026-11-08-no-porch-end-door): 95 ft of lot, 85 ft of envelope, and the
+    # pod stands only end-on -- which the code no longer lets it.
+    s = _bridge(corpus, policies, 95.0, 200.0)
+    assert not s.fit.fits
+
+
 def test_where_only_the_turned_building_fits_the_turned_fit_stands(corpus, policies, monkeypatch) -> None:
     from flats.ingest import quadfit
+    from flats.score import screen as screen_mod
 
+    # An unsettled rule (as Hillsboro's was before round 3): the turned fit is
+    # kept, and held out of GREEN.
     monkeypatch.setattr(quadfit, "entrance_unsettled", lambda rules, design: True)
+    monkeypatch.setattr(quadfit, "faces_the_street", lambda rules, design: False)
+    monkeypatch.setattr(screen_mod, "faces_the_street", lambda rules, design: False)
     # 95 ft of lot, 85 ft of envelope: the pod stands only end-on.
     s = _bridge(corpus, policies, 95.0, 200.0)
     assert s.fit.fits
