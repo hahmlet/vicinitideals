@@ -5791,7 +5791,10 @@ def _init_worker(
 
     on = date.fromisoformat(law_on) if law_on else today_law()
     _WORKER["rules"] = load_trusted(strict=False, on=on).rules
-    _WORKER["designs"] = list(load_catalog())
+    # Active designs only: an archived entry stays loadable so old results
+    # read, but a new run never screens it. Since 2026-11-08 that is one
+    # design, pod80x30 (rulings.yaml 2026-11-08-single-design-80x30).
+    _WORKER["designs"] = load_catalog().active()
     _WORKER["policy"] = slack_mod.load_policy()
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg

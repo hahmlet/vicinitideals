@@ -274,9 +274,55 @@ def test_duplicate_key_in_the_catalog_constructor_is_refused() -> None:
 def test_shipped_catalog_loads() -> None:
     cat = load_catalog()
 
-    assert {d.key for d in cat} == {"pod56x36@2", "pod80x25@2"}
+    assert {d.key for d in cat} == {"pod56x36@2", "pod80x25@2", "pod80x30@1"}
     assert all(d.typology is Typology.townhome_rear_court for d in cat)
-    assert all(d.status is DesignStatus.active for d in cat)
+    # Steph, 2026-11-08 (rulings.yaml 2026-11-08-single-design-80x30): one
+    # design is screened; the two it replaced stay loadable, archived.
+    assert {d.key for d in cat if d.status is DesignStatus.archived} == {"pod56x36@2", "pod80x25@2"}
+
+
+def test_the_screen_runs_exactly_one_design_80_by_30() -> None:
+    # 4 homes x 20 ft wide x 30 ft deep, two storeys, doors on the 80 ft face
+    # (width_ft is the face parallel to the front lot line).
+    (only,) = load_catalog().active()
+
+    assert only.key == "pod80x30@1"
+    assert (only.footprint.width_ft, only.footprint.depth_ft) == (80, 30)
+    assert only.units == 4 and only.unit_width_ft == 20 and only.unit_ground_sqft == 600
+    assert only.stories == 2
+    assert only.oriented()[0] == (Orientation.width_facing, 80, 30)
+
+
+def test_pod80x30_keeps_pod80x25s_building_and_parking() -> None:
+    # Only the depth changed: height, storeys, roof and the parking rule are
+    # the existing pod's exactly.
+    cat = load_catalog()
+    new, old = cat.get("pod80x30@1"), cat.get("pod80x25@2")
+
+    for field in ("typology", "units", "stories", "height_ft", "ground_story_ft",
+                  "roof_pitch_in_12", "parking", "delivery", "plat"):
+        assert getattr(new, field) == getattr(old, field), field
+    assert new.footprint.width_ft == old.footprint.width_ft
+
+
+def test_the_bridge_screens_active_designs_only(monkeypatch: pytest.MonkeyPatch) -> None:
+    # The bridge's worker is what hands designs to screen_lot on 137. It must
+    # take the active list, never the whole catalog with its archived sizes.
+    import flats.encode.load as load_mod
+    import flats.score.relief as relief_mod
+    import flats.score.slack as slack_mod
+    from flats.ingest import quadfit
+
+    class _Trusted:
+        rules = None
+
+    monkeypatch.setattr(load_mod, "load_trusted", lambda **_kw: _Trusted())
+    monkeypatch.setattr(slack_mod, "load_policy", lambda: None)
+    monkeypatch.setattr(relief_mod, "load_policy", lambda: None)
+    monkeypatch.setattr(quadfit, "_WORKER", {})
+    quadfit._init_worker(5.0, law_on="2026-11-08")
+
+    assert [d.key for d in quadfit._WORKER["designs"]] == ["pod80x30@1"]
 
 
 def test_the_shipped_pods_carry_the_county_maps_three_bands() -> None:
@@ -297,6 +343,7 @@ def test_shipped_pods_match_the_quadfit_footprints() -> None:
 
     assert (cat.get("pod56x36@2").footprint.width_ft, cat.get("pod56x36@2").footprint.depth_ft) == (56, 36)
     assert (cat.get("pod80x25@2").footprint.width_ft, cat.get("pod80x25@2").footprint.depth_ft) == (80, 25)
+    assert (cat.get("pod80x30@1").footprint.width_ft, cat.get("pod80x30@1").footprint.depth_ft) == (80, 30)
 
 
 def test_unconfirmed_values_are_declared_not_hidden() -> None:
@@ -308,7 +355,7 @@ def test_unconfirmed_values_are_declared_not_hidden() -> None:
 
 def test_catalog_root_points_at_the_shipped_pods() -> None:
     assert CATALOG_ROOT.is_dir()
-    assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == ["pod56x36", "pod80x25"]
+    assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == ["pod56x36", "pod80x25", "pod80x30"]
 
 
 def test_a_two_storey_pod_carries_the_storey_condition() -> None:
