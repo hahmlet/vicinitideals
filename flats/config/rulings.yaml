@@ -2690,3 +2690,38 @@
     does not expressly allow it. Codes that forbid it are measured as
     written. FOLLOWUPS 142.
   source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md
+- id: 2026-11-08-washington-plat-age-check-yellow
+  kind: ruling
+  date: 2026-11-08
+  scope: {county: washington}
+  question: >-
+    Washington County's Type I middle-housing gate needs a lot made by a
+    standard subdivision or partition plat, not a Middle Housing Land Division
+    (CDC 304-2.14 .. 307-2.13, 106-107). A plat's title need not say it was a
+    middle housing division, and those began in 2022, so a plat passes only
+    when provably older: a partition plat's year, or a named subdivision whose
+    houses were built in three or more different years before 2022. Tract
+    subdivisions built out in one or two years (917 pod-sized lots) cannot be
+    dated that way. Pass them, or keep them yellow?
+  ruling: '"yellow"'
+  effect: >-
+    No change: a plat the tax roll cannot date before 2022 is unread and the
+    lot keeps REVIEW-CONDITIONS (standard_plat), or CLEAR-OBJECTIVE where
+    ORS 197A.400 reaches it. FOLLOWUPS 83.
+  source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
+  encoded_in: [flats/ingest/plats.py]
+- id: 2026-11-08-washington-whole-lots-and-vacated-street-platted
+  kind: ruling
+  date: 2026-11-08
+  scope: {county: washington}
+  question: >-
+    For the same gate, does a tax lot count as made by a plat when it is one
+    whole platted lot plus part of a vacated street, road or alley, or two or
+    more whole platted lots together?
+  ruling: '"yes to both"'
+  effect: >-
+    Both read as made by a plat (still subject to the pre-2022 plat-age
+    check). Part of a lot, a vacated tract, a tract and a second plat in the
+    description still do not pass. FOLLOWUPS 83.
+  source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
+  encoded_in: [flats/ingest/plats.py]
