@@ -116,6 +116,14 @@ CROSSREF_OUTCOMES: dict[str, str] = {
     # `narrows_only` would be worse. It belongs in the pro forma, not the
     # envelope.
     "fee_in_lieu": "Satisfiable by payment — costs money, not ground",
+    # Added 2026-11-08 (FOLLOWUPS 105), reading Portland's 33.248. An eleventh
+    # shape: the chapter reaches the pod and is full of numbers, and every
+    # number says what fills ground some other section has already sized --
+    # plants per linear foot, a fence 6 feet high, a berm 4 to 6 feet tall.
+    # The width of a landscaped strip is stated by the section that cites
+    # 33.248, never by 33.248. `procedure` would be false (there are
+    # numbers) and `narrows_only` would be wrong (it narrows nothing).
+    "design": "Specifies what fills ground already sized elsewhere — takes none",
     "read": "Read and ruled before the outcomes existed",
 }
 

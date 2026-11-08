@@ -78,6 +78,7 @@ from flats.score.margins import passing as _passing
 from flats.score.paper import (
     Alley,
     Beside,
+    alley_fed,
     behind_wall_ft,
     court_across,
     court_depth,
@@ -4003,6 +4004,12 @@ def _account(
     if lot.easement_street_ft is not None:
         ft = float(lot.easement_street_ft)
         flag("UTILITY-EASEMENT-ASSUMED", "UTILITY_EASEMENT_ASSUMED", bounds=(ft, ft))
+    # Parking reached from an alley the code accepts only once it is
+    # improved (Washington County CDC 430-84, citing 409-3.3 A): the
+    # alley's width is measured, its paving is not. A record, below the
+    # yellow line (coordinator 2026-11-08, FOLLOWUPS 105).
+    if rules.get("alley_improved_required") is True and alley_fed(rules, lot.alley):
+        flag("ALLEY-IMPROVEMENT-UNCONFIRMED", "ALLEY_IMPROVEMENT_UNCONFIRMED")
 
     binds: list[Bind] = []
     if rules.trusted:

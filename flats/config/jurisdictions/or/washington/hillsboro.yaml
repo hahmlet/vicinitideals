@@ -24,6 +24,59 @@ ingest:
   geoid: null
   juris_city_codes:
   - HILLSBORO
+crossrefs:
+  # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed.
+  "0.4":
+    outcome: misread
+    note: >-
+      Not a reference: "Minimum FAR 0.4" (12.21.750) is a floor-area-ratio figure that the dotted-
+      number pattern reads as a section number.
+  "1.00":
+    outcome: misread
+    note: >-
+      Not a reference: "Minimum FAR 1.00" (12.24.660) is a floor-area-ratio figure that the
+      dotted-number pattern reads as a section number.
+  "15.50.715":
+    outcome: other_building
+    note: >-
+      "Subsection 15.50.715.E.4." (12.21.450), cited for cottage cluster height. There is no Title
+      15 of the zoning code; the text intends 12.50.715 (cottage clusters). A cottage cluster is
+      detached cottages around a common court, not the pod's attached fourplex.
+  "12.61.700G":
+    outcome: other_path
+    note: >-
+      See Subsection 12.61.700G (12.21.850), held in this layer's SCR-DNC text: the arterial
+      exception area along First Avenue, which allows three stories within 100 ft of the arterial
+      and two stories from 100 to 200 ft. A height allowance; the pod is two storeys at 26 ft,
+      under either figure, so it can only loosen.
+  "12.70.040":
+    outcome: procedure
+    note: >-
+      Type II procedure ("either a Type II procedure as described in Section 12.70.040 or a Type
+      I", 12.80.100). Notice, decision and appeal steps; the tier the review lands in is already
+      carried by review_discretion.
+  "12.70.110":
+    outcome: procedure
+    note: >-
+      Application submittal requirements ("More specific submittal requirements are provided on
+      application forms and checklists as authorized in Section 12.70.110"). What to file, not
+      ground the building gives up.
+  "12.70.120":
+    outcome: procedure
+    note: >-
+      Conditions of approval: "Pursuant to Section 12.70.120, the Review Authority may impose
+      conditions on the approval" (12.80.099). The conditions tier is already carried by
+      review_discretion.
+  "12.70.140":
+    outcome: procedure
+    note: >-
+      "Refer to Section 12.70.140" (12.80.096): Expiration of a Decision (12.80, "J. Expiration of
+      a Decision"). When an approval lapses; a process, no ground taken.
+  "12.70.150":
+    outcome: procedure
+    note: >-
+      "Refer to Section 12.70.150" (12.80.096): Extension of a Decision (12.80, "K. Extension of a
+      Decision"). How an approval is extended; a process, no ground taken.
 code:
 - id: "cdc.12.30.300.lots-of-record"
   url: https://api.municode.com/PublicationPdfDownload/4450

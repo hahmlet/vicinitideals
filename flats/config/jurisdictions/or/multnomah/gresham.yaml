@@ -1646,6 +1646,46 @@ crossrefs:
       screen places the pod on the lot as it stands; the split plat is a path no pod in the
       catalog declares. Fetch it the day one does.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "4.125":
+    outcome: misread
+    note: >-
+      A split of 4.1252: the extraction breaks "Section 4.125 2" across a column gap (4.1252.txt,
+      "Guidelines and standards in Section 4.125 2 shall apply"). 4.1252 is held in this layer.
+  "4.1531-4.1534":
+    outcome: other_path
+    note: >-
+      A range the resolver cannot split; all four sections are held (4/4.1531.txt to 4.1534.txt).
+      Table 4.1508 row O, "Master Plan Requirements (Section 4.1531-4.1534)", reads "No No Yes"
+      across VLDR-SW, LDR-SW, THR-SW (4.1508.txt#L66-L67): a master plan is required only in THR-
+      SW, and Table 4.1507 refuses a quadplex there (P P NP). The two districts the pod can use
+      need none.
+  "9.0100":
+    outcome: other_building
+    note: >-
+      Fences: "For purposes of Section 9.0100, walls are a type of fence" (3.0103). Fence and wall
+      standards bind the fence somebody builds, not the pod or its court.
+  "7.0":
+    outcome: misread
+    note: >-
+      A split of 7.0512.A.2: "See Section 7.0 512.A.2 Building Frontage and Placement" (4.0430)
+      breaks across a column gap. 7.0512 is held and was read 2026-08-21: 7.0502(B) takes
+      quadplexes out of 7.0501-7.0512 (gresham.yaml notes, L39-L45).
+  "10.0430":
+    outcome: other_building
+    note: >-
+      Conversion of a hotel or motel to an emergency shelter or affordable housing (4.0420).
+      Another building's conversion, not the pod.
+  "10.1300":
+    outcome: other_building
+    note: >-
+      "Temporary health hardship dwellings may be permitted per Section 10.1300" (4.0420). A
+      temporary second dwelling, not the pod.
+  "3.0204":
+    outcome: procedure
+    note: >-
+      "See also Section 3.0204, Classifying a Use" (3.0103): how the Manager classifies an
+      unlisted use. The pod's use is listed; a procedure.
 code:
   # The city hosts the Development Code as one PDF per section series,
   # served plain (no impersonation). Layout extraction is clean (no

@@ -1663,6 +1663,61 @@ crossrefs:
       as 33.613 in the commercial chapter: how a lot may be created, not a minimum a built lot
       has to meet. EX is encoded exempt on that sentence. Parked with 33.613 for the same reason:
       no pod declares plat: unit_lots today.
+  "33.612":
+    outcome: later
+    note: >-
+      Lots in Multi-Dwelling Zones. 33.120.205 says only "The creation of new lots is subject to
+      the lot size standards listed in Chapter 33.612" -- the multi-dwelling twin of the 33.613
+      sentence above, and parked for the same reason: it is how a lot may be made, not a minimum
+      a built lot has to meet, and no pod declares plat: unit_lots. (FOLLOWUPS 105, 2026-11-08.)
+
+  # --- FOLLOWUPS 105 (2026-11-08): every remaining binding reference followed one layer down ---
+  "33.248":
+    outcome: design
+    note: >-
+      Landscaping and Screening, fetched and read 2026-11-08
+      (https://www.portland.gov/sites/default/files/code/248-landscape_0.pdf). Every number in the
+      chapter says what fills a landscaped area: L1 trees per 30, 22 or 15 linear feet by tree
+      size, L2/L3 shrub screens 3 and 6 feet high, L4 a 6-foot wall, L5 a 4-to-6-foot berm, F1/F2
+      fences 6 feet high, plant sizes at planting. None states how wide or how large a landscaped
+      area is: that figure is always the citing section's ("5 ft. @ L3" in Table 140-3, the
+      perimeter strips of 33.266.130), and those are read where they are printed. So following
+      the pointer adds no ground to any lot; the setbacks and open space it stands beside are
+      unchanged.
+  "33.248.030":
+    outcome: design
+    note: >-
+      Plant Materials, inside 33.248 (read 2026-11-08, see above): the list of species and sizes,
+      cited for what a "large canopy tree" is (33.130.225) and when planting may happen. It sizes
+      plants, not ground.
+  "33.299":
+    outcome: other_building
+    note: >-
+      Wind Turbines. Every mention is the one bullet "Small wind turbines are subject to the
+      standards of Chapter 33.299", printed in each zone chapter's height-exceptions list. A wind
+      turbine is an accessory structure the pod does not include.
+  "17.38":
+    outcome: other_path
+    note: >-
+      Title 17 Drainage and Water Quality and the Stormwater Management Manual, cited from
+      33.266.130.E: "Stormwater runoff from parking lots is regulated by the Bureau of
+      Environmental Services." A public works engineering title, sized to the impervious area the
+      development makes rather than stated as a distance on the lot -- the same ruling as Oregon
+      City's 13.12. A pod is built to it; no lot fails the fit because of it.
+  "33.853":
+    outcome: other_path
+    note: >-
+      Tree Review, cited once from the Johnson Creek Basin plan district (33.537.txt L213-L216):
+      "Trees that do not qualify for removal under C.1 through 6 may be removed if approved through
+      tree review". The tree limits themselves are in 33.537, which is held; 33.853 is the review a
+      project asks for to remove MORE than they allow -- a relief this screen never takes.
+  "33.205.020":
+    outcome: other_building
+    note: >-
+      Accessory dwelling units. Both mentions are 33.418.040's list of allowances the Constrained
+      Sites overlay switches off (33.418.txt L52-L55): "33.205.020.B.1.c which allows an accessory
+      dwelling unit on a site with a duplex" and B.2's two ADUs beside a house. The fourplex line
+      of the same list (33.110.265.F) is the one the screen reads.
 
 code:
   # Portland's HTML route for a chapter serves navigation furniture; the PDF is

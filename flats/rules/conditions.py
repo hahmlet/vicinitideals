@@ -507,6 +507,22 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "beaverton_type_a_frontage",
+        "site_fact",
+        "The Beaverton Downtown lot fronts a Type A frontage of Figure "
+        "70.20.10.6.2 (Active Frontage Design Map), or is one of the Area C "
+        "or Area D tax lots 70.20.10.6.D.4 names, so the building facade on "
+        "it must meet the Non-residential Active Ground Floor Design, whose "
+        "S1.a asks a ground floor at least 16 feet floor to floor "
+        "(70.20.10.txt#L377-L378, L486-L496). The figure is not held (the "
+        "stored map PDF carries Figure 70.15.25.1, the use map, not this "
+        "one), so nothing observes the fact yet and every lot in a zone "
+        "that turns on it is unanswered -- out of GREEN -- until the figure "
+        "is traced (FOLLOWUPS 105).",
+        evidence="Beaverton BDC Figure 70.20.10.6.2 -- not held; needs fetching and tracing onto RLIS centrelines",
+        assume=None,
+    ),
+    ConditionDef(
         "hillsboro_center_core",
         "site_fact",
         "The MU-VTC lot lies inside South Hillsboro's Town Center or Village "
