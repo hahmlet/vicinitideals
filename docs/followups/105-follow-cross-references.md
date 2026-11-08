@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [batch 1 DONE 2026-11-08 on flats/crossref-follow; rest listed below] [scan: YES (new standards bind)]
+105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; rest listed below] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -34,26 +34,31 @@ Routing rows read (routing.csv stays open until something is encoded inside the 
 
 ## Still open
 
-1. **Beaverton 70.20.10.6.2, the Active Frontage Design Map (live finding, possible false GREENs).**
-   Facades on mapped Downtown streets (RC-BC, RC-OT, RC-MU, RC-DT; 460 lots in all) must meet the
-   Active Ground Floor rules. Type A frontages need the non-residential design, with a ground floor of
-   at least 16 ft floor to floor (70.20.10.txt#L377-L378). The pod states 12 ft. Type B may take the
-   residential design (12 ft minimum, entry no more than 4 ft above the sidewalk, and a stoop, porch,
-   patio, terrace or frontage court) (L486-L491). Encode it the Hillsboro Active Use Street way: trace
-   the Type A and Type B frontages of the figure as a drawn condition, then put `min_ground_story_ft` 16
-   under the Type A condition. Until then a GREEN lot on a Type A frontage is a false GREEN.
+1. **Beaverton 70.20.10.6.2, the Active Frontage Design Map: HELD, trace still owed.** Facades on
+   mapped Downtown streets must meet the Active Ground Floor rules; Type A frontages (and the Area C and D
+   tax lots of D.4) take the non-residential design, a ground floor at least 16 ft floor to floor
+   (70.20.10.txt#L377-L378, L486-L496), against the pod's 12. Type B may take the residential design,
+   which 12 ft meets. Round 2 encoded `min_ground_story_ft` 16 under the site fact
+   `beaverton_type_a_frontage` in RC-BC, RC-OT, RC-MU and RC-DT. Nothing observes the fact, so every lot
+   in those zones is held out of GREEN (FACT-BEAVERTON-TYPE-A-FRONTAGE). The figure is NOT in the corpus:
+   the stored map PDF (flats/config/areas/or/washington/beaverton/downtown-street-types-and-frontage)
+   carries Figure 70.15.25.1, the Active Frontage USE Map, a different figure. Next: fetch Chapter 70's
+   Figure 70.20.10.6.2 (ask Steph first), trace its Type A streets onto RLIS centrelines the Hillsboro
+   way (flats/geom/active_use.py), observe the fact in flats/ingest/quadfit.py, and the held lots off
+   Type A streets reopen.
 2. **Corner vision areas** (Washington 418-3; West Linn Chapter 42 kept `fetch`; Beaverton 60.55.35.3,
    which defers to the Engineering Design Manual). This corpus does not model vision areas anywhere.
    This is the known under-count.
 3. **West Linn Chapter 28** (river protection areas and Habitat Conservation Areas) is kept `fetch`. The
    areas are boundaries the screen does not hold (see the 28.040 ruling).
-4. **Washington "improved alley"**: 430-84 lets middle housing take access from an improved alley, and
-   409-3.3 A sets an alley at 16 ft paved. The screen measures alley width, maybe as right-of-way
-   rather than paving. Question for Steph.
-5. **Clackamas 1002.02 tree history** (ruled `procedure`). The county refuses design review,
-   conditional use or land division applications where more than three trees were removed in the past
-   five years (UGB). It reaches the pod only where design review applies (1102.01 districts). Question
-   for Steph: flag it, or leave it to the purchase check.
+4. **Washington "improved alley"**: DONE round 2 as a flag. 430-84 lets middle housing take access
+   from an alley only where it is improved to 409-3.3 A (not held). `alley_improved_required` on the
+   county's defaults raises ALLEY-IMPROVEMENT-UNCONFIRMED (severity 1, no colour change) where the court
+   is reached from the alley. Today that is only the East Hillsboro overlay rows, which send the court
+   there; elsewhere the county only permits alley access and the screen keeps the street. Open: fetch
+   409-3.3 A to state the width (the batch 1 note's "16 ft paved" had no stored source and was removed).
+5. **Clackamas 1002.02 tree history** (ruled `procedure`): answered by Steph's 2026-11-01 trees
+   ruling (trees are ignored and entered per lot). No flag.
 6. **Resolver gap** in flats/encode/crossrefs.py `_resolves`. A held section answers only for printed
    full-number headings. So subsections printed locally ("7." under 60.05.15), hyphen numbering
    (Washington 431-8, 407-6, 307-7.5), letter suffixes (Hillsboro 12.61.700G), ranges (Gresham

@@ -244,11 +244,13 @@ crossrefs:
   "409-3.3":
     outcome: other_path
     note: >-
-      Private street and alley pavement standards (409-3.3 A: alleys 16 ft paved, private streets
-      by units served), cited from 430-84 to define an "improved alley" from which middle housing
-      may take access. 409-2.1 applies 409-3 to homes on separate lots served by a private street;
-      the one-lot pod's court is a parking aisle. The alley sentence is a permission conditioned
-      on the alley being improved -- see FOLLOWUPS 105 open list.
+      Alley width and pavement standards, cited from 430-84 to define the "improved alley" from
+      which middle housing "may" take access (cdc.430-84.middle-housing.txt#L231-L234). A
+      permission: where the county only permits alley access the screen feeds the court from the
+      street, a branch it never takes. Where a row sends the court to the alley
+      (parking_alley_access_required, the East Hillsboro overlay), alley_improved_required raises
+      ALLEY-IMPROVEMENT-UNCONFIRMED below the yellow line (coordinator 2026-11-08). Section 409 is
+      not held, so no width is stated; fetching it is on the FOLLOWUPS 105 open list.
   # --- a use the pod is not, named in the citing sentence (district use lists) ---
   "430":
     outcome: other_building
@@ -951,6 +953,20 @@ private_drives:
     (106-71.1, L508-L510).
 
 defaults:
+  # AN IMPROVED ALLEY (FOLLOWUPS 105, coordinator 2026-11-08). 430-84 lets
+  # middle housing take access from an alley only where it is "improved
+  # (defined as meeting alley width and pavement standards under Section
+  # 409-3.3 A)". 409 is not held, so no width is stated here; the alley's
+  # width is measured and its paving is not, so a lot whose court is reached
+  # from its alley carries ALLEY-IMPROVEMENT-UNCONFIRMED, below the yellow
+  # line. Today the screen sends the court to the alley only where
+  # parking_alley_access_required holds (the East Hillsboro overlay rows).
+  alley_improved_required:
+    value: true
+    cite: "Washington County CDC 430-84, lots or parcels abutting an improved alley (alley width and pavement standards under Section 409-3.3 A) may take access from the alley"
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L231-L234"
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
   # WHOSE STREET CLASSES. 302-2.14 C(1) and its 303 to 306 twins state the
   # dedication by the county's own street classes ("Local street ...
   # Neighborhood route ... Collector ... Arterial"), which are the

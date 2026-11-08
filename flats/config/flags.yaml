@@ -1721,6 +1721,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [UTILITY_EASEMENT_ASSUMED]
+  ALLEY-IMPROVEMENT-UNCONFIRMED:
+    description: "The parking is reached from the alley, and the code lets access come from an alley only where it is improved -- built to the county's alley width and pavement standards (Washington County CDC 430-84, citing 409-3.3 A). The alley's width is measured; its paving is not"
+    kind: categorical
+    risk: unlikely
+    # Informational, never holds a green: below the yellow line (coordinator 2026-11-08, FOLLOWUPS 105).
+    severity: 1
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "Look at the alley (street view or a site visit): paved to the county's alley standard, CDC 409-3.3 A, which is not held -- fetch it to state the width"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ALLEY_IMPROVEMENT_UNCONFIRMED]
   OC-ROAD-ZONE-STANDIN:
     description: "Oregon City's road strip was read with the zones on both sides of the street standing in for the plan designations its table asks for, and came out narrower than the widest row (Steph 2026-10-14, FOLLOWUPS 82)"
     kind: parametric
@@ -1951,6 +1967,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Check the lot's street lines against the traced Figure 12.65.930-A (FOLLOWUPS 147): a lot on an Active Use Street and an ordinary street, on both Active Use types, or on a line only partly beside one is held; read the coverage on the Active Use frontage alone, and confirm the street in the approved PUD"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEAVERTON-TYPE-A-FRONTAGE:
+    description: "Whether the Beaverton Downtown lot fronts a Type A frontage of Figure 70.20.10.6.2 (or is an Area C or D tax lot), where the ground floor must be at least 16 ft floor to floor (BDC 70.20.10.6 S1.a, 70.20.10.6.D.2) against the pod's 12 ft"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Fetch Figure 70.20.10.6.2 (the Active Frontage Design Map, BDC Chapter 70) and trace its Type A streets onto the RLIS centrelines (FOLLOWUPS 105): a lot on one fails the 16 ft ground floor; a lot on none is cleared"
     priority: later
     status: pending
     approved_by: null

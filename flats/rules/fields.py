@@ -149,6 +149,7 @@ _LABELS: dict[str, str] = {
     "parking_required_yard_prohibited": "parking banned in required yards",
     "parking_covered_required": "covered parking required",
     "solar_shade_limit": "height capped by shade on the lot to the north",
+    "alley_improved_required": "alley access only from an improved alley",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -1332,6 +1333,23 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "alley_improved_required",
+        "bool",
+        "True where the code lets vehicle access come from an alley only "
+        "once the alley is improved -- built to the jurisdiction's alley "
+        "width and pavement standards. Washington County CDC 430-84 "
+        "(\"For lots or parcels abutting an improved alley (defined as "
+        "meeting alley width and pavement standards under Section 409-3.3 "
+        "A), access may be taken from the alley\"). The alley's width is "
+        "measured (quadfit s4) and its paving is not, so it never moves a "
+        "verdict: where True and the court is reached from the alley "
+        "(`parking_alley_access_required` on a lot with one), the screening "
+        "carries the ALLEY-IMPROVEMENT-UNCONFIRMED flag, below the yellow "
+        "line (coordinator 2026-11-08, FOLLOWUPS 105). Optional: absent "
+        "means no such rule was read.",
+        None,
+    ),
+    FieldDef(
         "corner_access_street",
         "enum",
         "Which street a lot with frontage on more than one takes its "
@@ -2093,6 +2111,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_required_yard_prohibited",
         "parking_covered_required",
         "solar_shade_limit",
+        "alley_improved_required",
         "corner_access_street",
         "front_lot_line_corner",
         # Same argument as the corner line above it: a definition, not a row

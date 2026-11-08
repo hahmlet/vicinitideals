@@ -172,7 +172,11 @@ pytestmark = pytest.mark.unit
 # exempt because note 18 applies only where 60.05.15.6 governs.
 # 471 -> 473 stated on 2026-11-05: TO:R24-40 and TO:R40-80 print None for the
 # frontage minimum in Table B(2) (375-10.txt#L342).
-EXPECTED = {"stated": 473, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
+# 473 -> 477 stated on 2026-11-08 (FOLLOWUPS 105 round 2): Beaverton RC-BC, RC-OT,
+# RC-MU and RC-DT state no ground-floor minimum off the streets of Figure
+# 70.20.10.6.2 (70.20.10.6.D.1, 70.20.10.txt#L486-L489); the 16 ft Type A floor is
+# the variant behind the unobserved beaverton_type_a_frontage fact -- a hold.
+EXPECTED = {"stated": 477, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1

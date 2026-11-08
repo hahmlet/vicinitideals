@@ -174,9 +174,11 @@ crossrefs:
       70.20.10.txt#L377-L378, against the pod's stated 12), and Type B frontages may instead take
       the residential design (S2: ground floor no more than 4 feet above the sidewalk, at least 12
       feet floor to floor, and a stoop, porch, patio, terrace or frontage court). Facades not on a
-      mapped street are exempt. The map is a drawing with no condition to hold it -- the Hillsboro
-      Active Use Street pattern (min_ground_story_ft under a traced condition) is the encoding.
-      Kept in the queue: see FOLLOWUPS 105.
+      mapped street are exempt. Encoded 2026-11-08: min_ground_story_ft 16 under
+      beaverton_type_a_frontage in RC-BC, RC-OT, RC-MU and RC-DT. The figure itself is not held
+      (the stored map PDF carries Figure 70.15.25.1, the use map), so the fact is unobserved and
+      every lot in those zones is held out of GREEN. Kept in the queue until the figure is fetched
+      and traced: see FOLLOWUPS 105.
   "60.70.35.14":
     outcome: other_building
     note: >-
@@ -3597,6 +3599,24 @@ zones:
       value: true
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 60 du/net acre (all-
       residential development); 120 ft; front 6 (max 12), street side 6,
@@ -3726,6 +3746,24 @@ zones:
       value: true
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre (18 where
       Figure 70.15.10.2.3 says so, not encoded); 65 ft; front 6 (max 16),
@@ -3854,6 +3892,24 @@ zones:
       value: true
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 43 du/net acre; 75 ft;
       front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
@@ -3994,6 +4050,24 @@ zones:
       value: true
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; 30 to 60 du/net acre; 60 ft;
       front 10 (max 20), street side 10, interior 0 (side 10 and rear 20
