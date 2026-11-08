@@ -1091,7 +1091,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     # side-yard lane's new planted strips (Oregon City and Wood Village QP,
     # West Linn, Clackamas and Washington unincorporated). The side-yard
     # permission itself has no column here either.
-    "parking_lot_line_buffer_ft": 20,
+    # 20 -> 21 on 2026-11-08 (FOLLOWUPS 2(a)): Oregon City R-2 restates the strip
+    # so Table 17.12.040 note 1 can widen it to 10 ft beside R-10/R-8/R-6.
+    "parking_lot_line_buffer_ft": 21,
     "parking_side_yard_allowed": 16,
     "parking_side_yard_stated": 16,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
