@@ -2434,6 +2434,63 @@ def _access_deg(here: QuadfitLot, front: float | None) -> tuple[float, ...]:
     )
 
 
+# FOLLOWUPS 94: real side lot lines can differ slightly in their measured bearings.
+TOWNHOUSE_SIDE_PARALLEL_DEG = 1.0
+
+
+def _townhouse_row_angles(
+    lot: QuadfitLot,
+    design: Design,
+    rules: ZoneResolution,
+    front: float | None,
+    street_angles: Sequence[float],
+) -> tuple[float, ...]:
+    """Also try a townhouse row square to its side lines where all home lots
+    still reach the selected street frontage. Party walls meet the street at
+    intervals stretched by the secant of the row-to-street angle."""
+    if design.plat is not Plat.unit_lots or not faces_the_street(rules, design) or lot.edges is None:
+        return tuple(street_angles)
+    if front is None:
+        if len(lot.front_bearings) != 1:
+            return tuple(street_angles)
+        front = lot.front_bearings[0]
+
+    frontage = sum(
+        edge.length_ft
+        for edge in lot.edges.of_class(EdgeClass.front)
+        if bearing_delta(edge.bearing_deg, front) <= 1e-6
+    )
+    if frontage <= 0:
+        return tuple(street_angles)
+
+    side_edges = lot.edges.of_class(EdgeClass.side)
+    if len(side_edges) < 2 or any(
+        bearing_delta(edge.bearing_deg, other.bearing_deg)
+        > TOWNHOUSE_SIDE_PARALLEL_DEG
+        for index, edge in enumerate(side_edges)
+        for other in side_edges[index + 1 :]
+    ):
+        return tuple(street_angles)
+
+    bearing_x = sum(
+        edge.length_ft * math.cos(math.radians(2.0 * edge.bearing_deg))
+        for edge in side_edges
+    )
+    bearing_y = sum(
+        edge.length_ft * math.sin(math.radians(2.0 * edge.bearing_deg))
+        for edge in side_edges
+    )
+    side_bearing = normalize(math.degrees(math.atan2(bearing_y, bearing_x)) / 2.0)
+    angle = normalize(side_bearing + 90.0)
+    delta = bearing_delta(angle, front)
+    if delta <= 1e-6:
+        return tuple(street_angles)
+    row_frontage = design.footprint.width_ft / math.cos(math.radians(delta))
+    if row_frontage > frontage + 1e-6:
+        return tuple(street_angles)
+    return tuple(sorted(set(street_angles) | {angle}))
+
+
 def _search_key(env: Envelope) -> tuple[bytes | None, bytes | None]:
     """What one envelope search is shared by: the exact ground it is built
     on, the envelope and the court's ground (FOLLOWUPS 74). A
@@ -3798,19 +3855,14 @@ def _screen_lot_once(
         got = rules.resolve(layer_id, lot.zone, config.conditions, lot=config.measures)
         resolved.append((design, config, got))
 
-    # Where the code makes the building face the street, or the pod is
-    # platted as townhouse lots that each have to front one
-    # (:func:`flats.score.paper.faces_the_street`), the search runs only at
-    # the street's own bearings.
+    # Keep the existing search for every form; townhouse rows add their
+    # side-square angles separately, after each lot front has been named.
     axis_required = any(faces_the_street(got, design) for design, _, got in resolved)
     angles = angles_for(
         lot.front_bearings,
         axis_required=axis_required and bool(lot.front_bearings),
         step_deg=step_deg,
     )
-    # One search per distinct envelope: the designs usually resolve the
-    # same yards, and a Fitter is the expensive part.
-    fitters: dict[Any, Fitter] = pool.setdefault(tuple(angles), {})
 
     out: list[Screened] = []
     for design, config, got in resolved:
@@ -3864,6 +3916,12 @@ def _screen_lot_once(
             # A street class nobody measured: the driveway is tried off each
             # street and the worse answer kept (FOLLOWUPS 49(c)).
             other_got = unknown_access(got, plan_edges, front)
+            row_angles = _townhouse_row_angles(
+                here, design, got, front, angles
+            )
+            # One search per distinct envelope and angle set: apartment and
+            # townhouse forms may share the former without sharing the row.
+            fitters = pool.setdefault(tuple(row_angles), {})
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
@@ -3894,7 +3952,7 @@ def _screen_lot_once(
                 (variant, min(
                     (
                         _screen_on(
-                            here, design, config, variant, env, front, angles, fitters, step_deg,
+                            here, design, config, variant, env, front, row_angles, fitters, step_deg,
                             policy=policy, relief=relief, plan=plan_key, streets=lot.edges,
                         )
                         for env in envs
