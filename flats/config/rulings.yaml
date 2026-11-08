@@ -2675,3 +2675,18 @@
     with no existing-lot relief for the shortfall the dedication causes; a
     lot left below the minimum misses it. FOLLOWUPS 77.
   source: Steph 2026-11-08 (chat), docs/followups/77-city-road-dedication.md
+- id: 2026-11-08-no-front-yard-parking-silent-codes
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    In a code that says nothing about it, may the parking court sit between
+    the building and the street (in the front yard)?
+  ruling: >-
+    "no"
+  effect: >-
+    The court must not sit between the building and any street line; a
+    placement that puts it there is rejected wherever the city's own text
+    does not expressly allow it. Codes that forbid it are measured as
+    written. FOLLOWUPS 142.
+  source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md

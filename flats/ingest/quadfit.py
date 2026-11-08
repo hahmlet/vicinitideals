@@ -4682,6 +4682,68 @@ def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
         return dataclasses.replace(s, screening=one(s.screening), signed=one(s.signed))
 
     return _no_worse(strip(base), cand)
+FIRE_RETRY_MAX_PLACEMENTS = 24
+# Drawing every listed placement at once can exhaust a worker on a large lot.
+FIRE_RETRY_MAX_ACRES = 3.0
+#: Feet the court must come nearer a street line than the building, over a
+#: stretch of that line at least this long, before it is read as standing
+#: between them (:func:`_court_street_side`): drawings round to 0.1 ft, and a
+#: court beside the building starts at the building's own face.
+COURT_STREET_SIDE_TOL_FT = 1.0
+
+
+def _court_street_side(
+    drawing: Mapping[str, Any], streets: Sequence[tuple[float, float, float, float]]
+) -> bool:
+    """Whether ``drawing``'s parking court stands between its building and a
+    street line (Steph 2026-11-08, rulings.yaml
+    ``2026-11-08-no-front-yard-parking-silent-codes``: in a code silent on it
+    the court may not sit in the front yard; Milwaukie MMC 19.505.3.D.4.a
+    forbids it outright).
+
+    For each street line, the building and court are read in the line's own
+    frame -- along it, and out from it into the lot -- over the stretch of
+    the line both of them face. The court stands between where, over that
+    stretch, it comes nearer the line than the building does (by more than
+    :data:`COURT_STREET_SIDE_TOL_FT`). A court behind the building, or beside
+    it at the same face, does not; a court in front of it does, and so does a
+    court behind it on a through lot, where behind is the other street's
+    front yard. A drawing with no court stands nothing between.
+    """
+    from shapely import affinity
+    from shapely.geometry import Polygon, box
+
+    ring, court_ring = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court_ring and len(court_ring) >= 4):
+        return False
+    building, court = Polygon(ring), Polygon(court_ring)
+    tol = COURT_STREET_SIDE_TOL_FT
+    for x1, y1, x2, y2 in streets:
+        length = math.hypot(x2 - x1, y2 - y1)
+        if length <= tol:
+            continue
+        turn = -math.degrees(math.atan2(y2 - y1, x2 - x1))
+
+        def framed(shape: Any) -> Any:
+            return affinity.rotate(
+                affinity.translate(shape, -x1, -y1), turn, origin=(0.0, 0.0)
+            )
+
+        b, c = framed(building), framed(court)
+        if b.centroid.y < 0:
+            b = affinity.scale(b, 1.0, -1.0, origin=(0.0, 0.0))
+            c = affinity.scale(c, 1.0, -1.0, origin=(0.0, 0.0))
+        lo = max(b.bounds[0], c.bounds[0], 0.0)
+        hi = min(b.bounds[2], c.bounds[2], length)
+        if hi - lo <= tol:
+            continue
+        window = box(lo, -1e7, hi, 1e7)
+        bw, cw = b.intersection(window), c.intersection(window)
+        if bw.is_empty or cw.is_empty:
+            continue
+        if cw.bounds[1] < bw.bounds[1] - tol:
+            return True
+    return False
 
 
 def fire_checked(
@@ -4714,15 +4776,22 @@ def fire_checked(
     and the route misses, the plan is drawn once more at the fronts a truck
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
-    build at. Where the route still misses, the plan is drawn at the fit's
-    other angles (:func:`_turned_for_fire`) and kept at one the hose
-    reaches. Other placements at an angle than the one nearest the street
-    are not searched: where one would reach, the answer is a false red,
-    never a false green. ``green`` says the plan
+    build at. Where the selected placement misses only on fire reach, the bounded
+    fitting placements already produced for that angle are ranked by the
+    building's distance from the front and at most
+    ``FIRE_RETRY_MAX_PLACEMENTS`` are drawn, only on lots no larger than
+    ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
+    measured-parking-share guard still apply; the first that reaches and keeps
+    every other check unchanged is kept, never one that stands its court
+    between the building and a street line (:func:`_court_street_side`).
+    If none passes, the existing other-angle
+    retry follows unchanged: the plan is drawn at the fit's other angles
+    (:func:`_turned_for_fire`) and kept at one the hose reaches.
+    ``green`` says the plan
     is GREEN whatever its triage reads -- its open facts were bounded
     (:func:`_bounded`) -- and holds it to the same rule.
     """
-    from shapely.geometry import Polygon
+    from shapely.geometry import MultiLineString, Polygon
 
     from flats.fit import fire
 
@@ -4783,15 +4852,167 @@ def fire_checked(
         return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
     out = screened(s, route)
-    # The other angles are drawn only where the hose is all that stands in
-    # the way: a plan missing something else stays short of GREEN whatever
-    # the route, and the search is the dearest step on a big lot.
-    # A route that was never found is not turned for: the fit's own angle
-    # has the most room, and where its drawing holds no building the others
-    # seldom do -- every angle drawn for nothing (run on a 7-acre lot: 13 s
-    # to 233 s). The plan stays out of GREEN, unobserved.
+    def fire_only(screening: Screening) -> bool:
+        fire_checks = [c for c in screening.checks if c.check == "fire_access_ft"]
+        return (
+            len(fire_checks) == 1
+            and fire_checks[0].verdict is CheckVerdict.fails
+            and all(
+                c.verdict is CheckVerdict.passes
+                for c in screening.checks
+                if c.check != "fire_access_ft"
+            )
+        )
+
+    def fire_passed(screening: Screening) -> bool:
+        fire_checks = [c for c in screening.checks if c.check == "fire_access_ft"]
+        return (
+            len(fire_checks) == 1
+            and fire_checks[0].verdict is CheckVerdict.passes
+            and all(
+                c.verdict is CheckVerdict.passes
+                for c in screening.checks
+                if c.check != "fire_access_ft"
+            )
+        )
+
+    if (
+        fitter is not None
+        and fire_only(out.screening)
+        and fire_only(out.signed)
+        and s.facts.parking_frontage_share_pct is None
+        and s.facts.parking_frontage_run_ft is None
+        and s.facts.lot_sqft <= FIRE_RETRY_MAX_ACRES * 43_560
+    ):
+        from flats.ingest import flatter
+        from flats.designs.model import Orientation
+        from shapely import affinity
+
+        max_front_ft = flatter._max_front_ft(out, _street_lines(lot))
+        placements: list[Any] = []
+        drawing_for(
+            out, fitter, street=at, listing=placements, max_front_ft=max_front_ft
+        )
+        front_lines = MultiLineString(
+            [[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in streets]
+        )
+        current = out.drawing or {}
+        current_building = current.get("building")
+
+        def placement_rank(index: int) -> tuple[float, float, int]:
+            where = placements[index]
+            grid = getattr(where, "grid", None)
+            if grid is None:
+                return math.inf, 0.0, index
+
+            if s.fit.orientation is Orientation.depth_facing:
+                across_b, deep_b = s.design.footprint.depth_ft, s.design.footprint.width_ft
+            else:
+                across_b, deep_b = s.design.footprint.width_ft, s.design.footprint.depth_ft
+            across = s.fit.across_ft
+            res = grid.res
+            x0 = grid.minx + where.col * res
+            y0 = grid.miny + where.row * res
+            face, sign = (y0, 1.0) if where.low else (y0 + where.d_cells * res, -1.0)
+            bx0 = x0 if where.left else x0 + across - across_b
+
+            def band(left: float, right: float, start: float, end: float):
+                return Polygon(
+                    (
+                        (left, start),
+                        (right, start),
+                        (right, end),
+                        (left, end),
+                    )
+                )
+
+            def rounded(polygon: Any) -> Any:
+                return Polygon(
+                    [(round(x, 1), round(y, 1)) for x, y, *_ in polygon.exterior.coords]
+                )
+
+            building = rounded(
+                affinity.rotate(
+                    band(bx0, bx0 + across_b, face, face + sign * deep_b),
+                    grid.angle_deg,
+                    origin=grid.origin,
+                )
+            )
+            building_distance = building.distance(front_lines)
+
+            alley, corner = s.lot.facts.alley, s.lot.facts.corner
+            if s.fit.beside:
+                beside = side_court(
+                    s.design,
+                    s.rules,
+                    alley,
+                    corner=corner,
+                    frontage_ft=s.lot.facts.cap_frontage_ft,
+                )
+                if beside is None:
+                    return building_distance, 0.0, index
+                flank = beside.band_ft
+                lx0 = bx0 + across_b if where.left else bx0 - flank
+                court_local = band(
+                    lx0,
+                    lx0 + flank,
+                    face,
+                    face + sign * beside.length_ft,
+                )
+            else:
+                column = side_column(s.design, s.rules, alley) if s.fit.column else None
+                court_depth_ft = (
+                    column[0]
+                    if column is not None
+                    else court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
+                )
+                if court_depth_ft <= 0:
+                    return building_distance, 0.0, index
+                court_local = band(
+                    x0,
+                    x0 + across,
+                    face + sign * deep_b,
+                    face + sign * (deep_b + court_depth_ft),
+                )
+            court = rounded(affinity.rotate(court_local, grid.angle_deg, origin=grid.origin))
+            return building_distance, -court.distance(front_lines), index
+
+        ranked = sorted(range(len(placements)), key=placement_rank)
+        for index in ranked[:FIRE_RETRY_MAX_PLACEMENTS]:
+            where = placements[index]
+            drawn = drawing_for(out, fitter, street=at, where=where)
+            if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
+                continue
+            # The screen never re-reads where the court stands, so a move
+            # that turns it toward a street is refused here (Steph
+            # 2026-11-08; Milwaukie 12E30CD04700, fire_rp5).
+            if _court_street_side(drawn, streets):
+                continue
+            candidate = dataclasses.replace(out, drawing=drawn)
+            candidate_route = measure(drawn)
+            if candidate_route is None or candidate_route > limit:
+                continue
+            candidate = screened(candidate, candidate_route)
+            if not fire_passed(candidate.screening) or not fire_passed(candidate.signed):
+                continue
+            if (
+                tuple(c for c in candidate.screening.checks if c.check != "fire_access_ft")
+                != tuple(c for c in out.screening.checks if c.check != "fire_access_ft")
+                or tuple(c for c in candidate.signed.checks if c.check != "fire_access_ft")
+                != tuple(c for c in out.signed.checks if c.check != "fire_access_ft")
+            ):
+                continue
+            return candidate
+
     binds = out.signed.binds
     alone = route is not None and bool(binds) and all(b.check == "fire_access_ft" for b in binds)
+    # Other angles are drawn only where the hose is all that stands in the
+    # way: a plan missing something else stays short of GREEN whatever the
+    # route, and the search is the dearest step on a big lot. A route that was
+    # never found is not turned for: the fit's own angle has the most room,
+    # and where its drawing holds no building the others seldom do -- every
+    # angle drawn for nothing (run on a 7-acre lot: 13 s to 233 s). The plan
+    # stays out of GREEN, unobserved.
     if fitter is not None and alone:
         turned, again = _turned_for_fire(s, fitter, measure, route, limit, street=at)
         if turned is not s:
