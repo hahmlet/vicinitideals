@@ -21,3 +21,4 @@
    held -- a remaining false-GREEN gap, item 81); segment qualifiers in the tables applied to the
    whole street; lot area not reduced by the strip (only the envelope); an unmeasured public line
    gives up the whole 40-63 ft.
+- 2026-11-08 BUILT 19ee2d97 (flats/tigard-road-land): Tigard was already encoded (item 81); lot area now net of the strip for min lot size + coverage (WashCo + Milwaukie keep gross per their text); rides flats/rescreen-1110; toward red only. [Steph] OPEN: Oregon City -- if the road hand-over shrinks an existing lot below the zone minimum, does the lot still count (17.58.020)? Built as NO (conservative).

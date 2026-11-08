@@ -14,3 +14,4 @@
    point), and a cap so the PC never runs hot while in use (item 32). ~2-4 days of agent
    work. Steph to decide; measure the 137 queue first (46(d) lockwatch on 137,
    /root/lockwatch.log, every 5 min since 2026-10-10).
+- Steph 2026-11-08 GO in principle: idle check from 1 AM every 10 min, process only if unused, stop at 10 AM; Steph can also message 'available' ad hoc. Research (shared design with rented machines, native vs WSL2) running -> ../vicinitideals-worktrees/compute-research.md; build after it.

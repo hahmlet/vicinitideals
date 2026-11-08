@@ -43,3 +43,4 @@
    cost proxy; 47's signals (Washington PUB or PROP_CODE 9xx: 90; Multnomah
    ASSESSVAL 0 with TOTALVAL > 0: 109) leave ~660, mostly private (vacant,
    MFR, COM, farm, SFR acreage; Clackamas's 181 unsorted).
+- Steph 2026-11-08 UNPARKED rented compute: research A) parallel bridge on rented machines, B) recommended service (Cloudflare first) -> ../vicinitideals-worktrees/compute-research.md.
