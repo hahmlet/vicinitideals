@@ -464,7 +464,8 @@ def observed_facts(
     * ``at_street_end`` -- False only where no street ends within
       :data:`~flats.geom.street_end.REACH_FT` of the taxlot (``street_end_ft``,
       measured by :func:`iter_rows`); never True, so near an end, or where
-      nothing measured, Gresham's Minor Access Street note keeps its cap.
+      nothing measured, Gresham's Minor Access Street maximum is tried at
+      both answers by :func:`_bounded`.
     * ``near_named_street_200ft`` -- True where the taxlot lies within 200 ft of
       Eagle Creek Rd or Hinman Rd (``named_street_ft``, measured by
       :func:`iter_rows`), False beyond; Estacada's NCR fourplex path. The code's

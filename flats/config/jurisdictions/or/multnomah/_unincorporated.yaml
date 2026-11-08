@@ -4010,6 +4010,14 @@ zone_rulings:
       district (4.1506), a different place and not this code, and no text
       defines a bare THR. Kept as a ruling; nothing to encode without
       guessing, and a guessed zone could print a false GREEN.
+      Re-checked 2026-11-08 (FOLLOWUPS 10 b) against Gresham's own GIS
+      (gis.greshamoregon.gov GME/Planning MapServer): the lot's point lies in
+      layer 10, City Permit Services Area, with InsideCity empty, and in no
+      polygon of the Zoning group's four layers 4, 6, 7 and 28 (City Zoning
+      and the Kelley Creek, Springwater and Pleasant Valley plan zonings); the
+      nearest city zone within 300 ft is SC, Station Center, across the
+      city line. Gresham issues the permits there and maps no zone, so the
+      map answers nothing either; only Gresham planning can.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

@@ -17,10 +17,12 @@ cannot be at the end of a Minor Access Street, whatever that street's class,
 and the note does not reach it. That is the only answer this module gives.
 
 **Never True.** A street ending near a lot does not say the lot is AT that
-end, nor that the street is a Minor Access Street, and the note's own
-numbers (5 and 25) are not in the corpus: an answer of True would lift the
-cap and screen the lot against the very row the note replaces. Near an end,
-the fact stays unknown and the cap stays.
+end, nor that the street is a Minor Access Street. Near an end the fact
+stays unknown. Since 2026-11-08 (FOLLOWUPS 37 iii) the note's 25 ft maximum
+is encoded on the True answer (``setback_front_max_ft`` with no street
+named, so every street line), and the 5 ft minimum is never the stricter
+figure, so the severity-0 bound (``flats.ingest.quadfit._bounded``) screens
+a lot near an end at both answers: GREEN only where both clear.
 
 **Ends are counted generously**, because every extra end only keeps a cap:
 

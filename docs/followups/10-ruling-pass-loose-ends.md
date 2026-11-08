@@ -7,4 +7,9 @@
    VC/FLX rule to quadfit's rules.yaml. (b) THR is one lot (1N2E36DA-02200,
    the Gresham IGA-162nd pocket) whose code no published document defines
    -- not Gresham 4.0100, not MCC 39; ruled `to_read` and worth one
-   question to Gresham planning if it ever matters; nothing else owed.
+   question to Gresham planning if it ever matters. Re-checked 2026-11-08
+   by measurement (flats/flag-leftovers): Gresham's own GIS puts the lot in
+   its City Permit Services Area (not inside the city) and in no zoning
+   polygon of any of its four zoning layers, so no map answers it either.
+   The lot is YELLOW (zone not encoded), never GREEN. Only an email to
+   Gresham planning can close it [Steph]; no build work is owed.

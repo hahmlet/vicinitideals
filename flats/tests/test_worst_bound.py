@@ -135,13 +135,58 @@ def test_a_fact_whose_bad_answer_refuses_the_building_keeps_its_severity(
 
 
 def test_a_fact_on_a_footnote_with_no_number_is_never_bounded(corpus, policies) -> None:
-    # Gresham LDR-7: the sidewalk easement and the end of a Minor Access
-    # Street move the yards by a footnote that states no number, so neither
-    # has a worst reading anybody can compute.
+    # Gresham LDR-7 with no easement depth taken: the sidewalk easement moves
+    # the yards by a footnote that states no number, so it has no worst
+    # reading anybody can compute. The end of a Minor Access Street has had
+    # its number since 2026-11-08 (FOLLOWUPS 37 iii) and is not unencoded.
     s = screened(corpus, policies, bound=True, jurisdiction="gresham", zone="LDR-7")
-    assert {"sidewalk_easement", "at_street_end"} <= s.rules.unencoded
-    got = severities(s)
-    assert got["FACT-SIDEWALK-EASEMENT"] == 5 and got["FACT-AT-STREET-END"] == 5
+    assert "sidewalk_easement" in s.rules.unencoded
+    assert "at_street_end" not in s.rules.unencoded
+    assert severities(s)["FACT-SIDEWALK-EASEMENT"] == 5
+
+
+def _street_end_lot(**over):
+    # Gresham LDR-7 on the big lot, the sidewalk easement taken at its worst
+    # (so it no longer holds the lot) and a street ending 10 ft away: only
+    # the end of a Minor Access Street is left open.
+    base = dict(jurisdiction="gresham", zone="LDR-7", sidewalk_easement_ft=7.0,
+                street_end_ft=10.0)
+    return {**base, **over}
+
+
+def test_greshams_street_end_is_a_lever_the_bound_can_try(corpus, policies) -> None:
+    # Near an end the fact is unknown: a lever with a number on its True
+    # answer, not an unencoded cap, and it still holds the lot out of GREEN.
+    before = screened(corpus, policies, bound=False, **_street_end_lot())
+    assert "at_street_end" in before.rules.levers
+    assert "at_street_end" not in before.rules.unencoded
+    assert severities(before)["FACT-AT-STREET-END"] >= 3
+    assert before.signed.colour is not flag_plan.Colour.green
+
+
+def test_the_true_answer_measures_the_drawn_building_against_25_ft(corpus, policies) -> None:
+    # The re-screen the bound runs at the True answer: the 25 ft maximum is
+    # measured on the drawing, every street line (none named), and passes
+    # here -- the pod stands at the 10 ft front setback.
+    lot = lot_from_row(row(**{**BIG, "jurisdiction": "gresham", "zone": "LDR-7"}))
+    lot = dataclasses.replace(
+        lot, observed={**lot.observed, **OFF_PLAN_DISTRICTS, "at_street_end": True}
+    )
+    (s,) = _screen_lot_once(
+        lot, [pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+        bound=False,
+    )
+    assert s.rules.get("setback_front_max_ft") == 25
+    assert s.facts.front_max_tried
+    (check,) = [c for c in s.screening.checks if c.check == "front_setback_max_ft"]
+    assert check.threshold == 25 and check.observed <= 25
+    assert "FACT-AT-STREET-END" not in severities(s)
+
+
+def test_a_lot_no_street_ends_near_owes_no_maximum(corpus, policies) -> None:
+    s = screened(corpus, policies, bound=False, **_street_end_lot(street_end_ft=500.0))
+    assert "FACT-AT-STREET-END" not in severities(s)
+    assert s.rules.get("setback_front_max_ft") is None
 
 
 def test_a_red_plan_is_left_alone(corpus, policies) -> None:
