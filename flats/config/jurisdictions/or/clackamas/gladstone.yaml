@@ -354,6 +354,52 @@ definitions:
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
 crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
+  "17.76":
+    outcome: fetch
+    note: >-
+      Chapter 17.76, Exceptions, is not held. Every district's dimensional standards apply "Except
+      as provided in ... Chapter 17.72 (Variances) and Chapter 17.76 (Exceptions)"
+      (17.14/17.14.050.txt#L3), and the design chapter sends nonconforming situations there
+      (17.21.dco.txt#L55). An exceptions chapter is usually reliefs (projections, height
+      exceptions), but one subsection is known to modify a yard: 17.76.040(5) moves the front lot
+      line of a flag lot (17.06/17.06.290.txt#L5), which sets where a flag lot's front setback is
+      measured. Unread, so it is ordered, not dismissed. Fetch Chapter 17.76 (needs Steph's OK).
+  "17.76.040":
+    outcome: fetch
+    note: >-
+      "Except as modified by GMC Section 17.76.040(5), the front lot line of a flag lot ... shall be
+      a line within the boundaries of the lot by a distance equal to the width of the narrow deeded
+      strip" (17.06/17.06.290.txt#L5). The modification is not held. See 17.76.
+  "5.22":
+    outcome: other_building
+    note: >-
+      Portable storage containers, which a setback "does not apply to" (17.10/17.10.030.txt#L31).
+  "506":
+    outcome: other_path
+    note: >-
+      Section 506 of the Oregon Structural Specialty Code: "Maximum building height may be increased
+      by one story if the building is provided with an approved automatic sprinkler system"
+      (17.20/17.20.050.txt#L18). A height relief the two-storey pod never needs.
+  "404":
+    outcome: read
+    note: >-
+      Section 404 of the federal Clean Water Act, named in the net-acre definition
+      (17.06/17.06.358.txt#L7) as one class of constrained land. The definition is held and ruled
+      (definitions block, 17.06.358: net acre is the base for maximum density, which this screen
+      does not test).
+  "17.62.100":
+    outcome: other_building
+    note: >-
+      Recreation vehicle park (17.16/17.16.040.txt#L19).
+  "17.62.120":
+    outcome: other_building
+    note: >-
+      Off-street parking and storage of truck tractors and semi-trailers (17.20/17.20.040.txt#L15).
+  "17.62.130":
+    outcome: other_building
+    note: >-
+      Light manufacturing as an accessory use (17.20/17.20.040.txt#L17).
 
   # 17.18.020 was ruled here (other_building) until 2026-09-20, when the C-2
   # chapter came into the store for the C2 zone ruling below. A ruling on a

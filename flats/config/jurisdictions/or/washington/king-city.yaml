@@ -26,6 +26,19 @@ ingest:
 # cut those footers are page furniture, out of the readable text, and their
 # rulings went with them. The rest name chapters the pod's path does not reach.
 crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
+  "18.106.050":
+    outcome: other_path
+    note: >-
+      Angle parking aisles "as determined by interpolation of the table in Section 18.106.050.B"
+      (16.132/16.132.050.txt#L24), the older numbering of the citywide parking chapter's own table.
+      Chapter 16.132 does not reach the pod: the Kingston Terrace zones, the only ones open to it,
+      replace it with 16.114.130 ("Parking and Loading 16.132 Exempt. Superseded by Section
+      16.114.130", 16.114/16.114.020.txt#L16-L17), whose 90-degree row is encoded.
+  "16.44.030":
+    outcome: procedure
+    note: >-
+      The application form and information an applicant submits (16.114/16.114.080.txt#L43).
   "8.04.130":
     outcome: other_building
     note: >-

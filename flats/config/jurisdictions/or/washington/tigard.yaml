@@ -116,6 +116,192 @@ code:
   url: https://ecode360.com/print/TI5024?guid=43709542
   title: Chapter 18.930 Vision Clearance Areas
   allow_thin: true
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed. Most are
+  # table and figure captions printed inside the held section that cites them (the resolver gap,
+  # FOLLOWUPS 105 open item 6), each read and already encoded.
+  "18.110.2":
+    outcome: read
+    note: >-
+      Table 18.110.2, the residential use table, is printed in the held section
+      (18.110/18.110.030.txt#L25) and is cited by every residential zone's quadplex_allowed.
+  "18.110.3":
+    outcome: read
+    note: >-
+      Table 18.110.3, residential housing types, is printed in the held section
+      (18.110/18.110.040.txt#L36); rowhouses L[2] is cited by quadplex_allowed.
+  "18.120.1":
+    outcome: read
+    note: >-
+      Table 18.120.1, the commercial use table, is printed in the held section
+      (18.120/18.120.030.txt#L34) and cited by the commercial zones' quadplex_allowed.
+  "18.120.2":
+    outcome: read
+    note: >-
+      Table 18.120.2, commercial-zone housing types, is printed in the held section
+      (18.120/18.120.040.txt#L32) and cited by the commercial zones' quadplex_allowed.
+  "18.130.1":
+    outcome: read
+    note: >-
+      Table 18.130.1, the industrial use table, is printed in the held section
+      (18.130/18.130.030.txt#L29).
+  "18.140.1":
+    outcome: read
+    note: >-
+      Table 18.140.1, the parks and recreation use table, is printed in the held section
+      (18.140/18.140.040.txt#L25).
+  "18.650.1":
+    outcome: read
+    note: >-
+      Table 18.650.1, the downtown (MU-CBD) use table, is printed in the held section
+      (18.650/18.650.050.txt#L25).
+  "18.650.2":
+    outcome: read
+    note: >-
+      Table 18.650.2, MU-CBD housing types, is printed in the held section
+      (18.650/18.650.060.txt#L36) and cited by MU-CBD's quadplex_allowed.
+  "18.650.3":
+    outcome: read
+    note: >-
+      Table 18.650.3, the downtown development standards, is printed in the held section
+      (18.650/18.650.070.txt#L7) and is the source of MU-CBD's encoded dimensions.
+  "18.660.1":
+    outcome: read
+    note: >-
+      Table 18.660.1, the Tigard Triangle's required land use applications, is printed in the held
+      section (18.660/18.660.040.txt#L138-L146). None reaches a by-right rowhouse meeting the
+      standards: transportation mitigation only where a traffic study finds off-site impacts, an
+      adjustment only where a design standard is not met, land division, conditional use only for
+      basic utilities and wireless facilities, sensitive lands (screened as overlays), temporary uses.
+  "18.660.4":
+    outcome: read
+    note: >-
+      Table 18.660.4, the Triangle use table, is printed in the held section
+      (18.660/18.660.060.txt#L55) and cited by TMU's quadplex_allowed.
+  "18.660.7":
+    outcome: read
+    note: >-
+      Table 18.660.7, height by type of story, is printed in the held section
+      (18.660/18.660.080.txt#L15) and is cited by the encoded Triangle story heights.
+  "18.670.2":
+    outcome: read
+    note: >-
+      Table 18.670.2, Washington Square housing types, is printed in the held section
+      (18.670/18.670.060.txt#L36) and cited by the Washington Square zones' quadplex_allowed.
+  "18.280.1":
+    outcome: read
+    note: >-
+      Table 18.280.1, the rowhouse development standards, is printed in the held section
+      (18.280/18.280.040.txt#L18) and is the source of every rowhouse dimension encoded here.
+  "18.280.2":
+    outcome: read
+    note: >-
+      Figure 18.280.2, the shared-access configuration, is printed in the held section
+      (18.280/18.280.040.txt#L74); the 24 ft maximum shared access width beside it is a ceiling the
+      pod's drive stays under (see the layer-wide refusals).
+  "18.410.1":
+    outcome: other_building
+    note: >-
+      Table 18.410.1 is stacking lanes for drive-through facilities (18.410/18.410.030.txt#L83).
+  "18.410.2":
+    outcome: read
+    note: >-
+      Table 18.410.2, parking space and aisle dimensions, is printed in the held section
+      (18.410/18.410.030.txt#L165) and is the source of the encoded stall and aisle sizes.
+  "18.410.3":
+    outcome: read
+    note: >-
+      Table 18.410.3 is printed in the held section (18.410/18.410.060.txt#L3), vehicle and bicycle parking quantities, cited by the
+      encoded parking figures.
+  "18.805.1":
+    outcome: read
+    note: >-
+      Table 18.805.1, residential lot dimensions, is printed in the held section
+      (18.805/18.805.030.txt#L7) and is the source of the encoded lot sizes and widths.
+  "18.910.1":
+    outcome: read
+    note: >-
+      Table 18.910.1, street right-of-way widths, is printed in the held section
+      (18.910/18.910.030.txt#L194) and is the source of the encoded right-of-way to centreline.
+  "18.640.7":
+    outcome: read
+    note: >-
+      Figure 18.640.7, the River Terrace Boulevard cross-section, is printed in the held section
+      (18.640/18.640.080.txt#L5-L8) and cited by row_to_centerline_named_ft.
+  "18.420.2":
+    outcome: fetch
+    note: >-
+      Table 18.420.2, the screening standards, sits in Chapter 18.420 (Landscaping and Screening),
+      which is not held. In RES-A to RES-C, parking areas at the side or rear of buildings and not
+      in garages "must be screened from adjacent properties to the S-3 standard"
+      (18.280/18.280.040.txt#L111). That is the pod's rear court. If S-3 is a planted strip of set
+      width it takes court ground; the width is not stored, so it is not encoded (see the
+      layer-wide refusal of 2026-09-30). The other citations (S-1 service areas, S-4 parking on
+      Bridgeport and downtown streets) screen what the screen already places. Fetch Chapter 18.420
+      (needs Steph's OK).
+  "18.420.050":
+    outcome: design
+    note: >-
+      Roof-mounted equipment screened to the S-1 standard (18.620/18.620.070.txt#L108,
+      18.620/18.620.080.txt#L30, Bridgeport Village). A screen on the roof; takes no ground.
+  "18.230":
+    outcome: other_building
+    note: >-
+      Chapter 18.230, Apartments. Apartments exclude rowhouses (18.30), and the pod is a rowhouse
+      development here. A rowhouse applicant MAY elect the apartment standards
+      (18.280/18.280.020.txt#L7), a branch the screen does not take; the River Terrace facade
+      standards apply "in lieu of" 18.230/18.280/18.290 (18.640/18.640.060.txt#L30) and are read
+      where they are encoded.
+  "18.230.040":
+    outcome: other_building
+    note: >-
+      Common space for "all apartment or mixed-use developments" (18.670/18.670.090.txt#L5,
+      18.320/18.320.040.txt#L78). The pod is neither.
+  "18.200":
+    outcome: read
+    note: >-
+      Chapter 18.200, Residential Development Standards, is the series holding Chapter 18.280
+      Rowhouses, which is held and encoded. The citing lines send residential development to the
+      review process of its housing type (18.670/18.670.040.txt#L14) and rowhouse density to the
+      lot-size tables (18.40/18.40.130.txt#L11).
+  "18.450":
+    outcome: other_building
+    note: >-
+      Wireless Communication Facilities, in every use table and in Table 18.660.1.
+  "18.330":
+    outcome: other_building
+    note: >-
+      "The standards for nonresidential development in industrial zones" (18.130/18.130.030.txt#L27).
+  "18.740":
+    outcome: procedure
+    note: >-
+      Conditional use approval process and criteria. Where a use table makes the rowhouse
+      conditional, quadplex_allowed already carries that status from the table; the chapter itself
+      is the process.
+  "18.715":
+    outcome: other_path
+    note: >-
+      Adjustments: a Type II relief from a standard (18.640/18.640.060.txt#L147). The screen takes
+      no adjustments (Steph 2026-10-02, no variances). The River Terrace street lines leave the
+      final street widths to the Public Works Director "using the following standards as
+      guidelines unless the applicant requests a formal adjustment" (18.640/18.640.080.txt#L16).
+  "18.20":
+    outcome: procedure
+    note: >-
+      "Administration and enforcement as provided in Chapter 18.20" (18.660/18.660.030.txt#L18).
+  "18.810":
+    outcome: later
+    note: >-
+      Lot line adjustments and consolidations (18.660/18.660.040.txt#L213, flag lot creation at
+      18.805/18.805.030.txt#L196). Lot creation; binds only when a pod declares a plat.
+  "18.820":
+    outcome: later
+    note: >-
+      Land partitions. Lot creation; binds only when a pod declares a plat.
+  "18.830":
+    outcome: later
+    note: >-
+      Subdivisions. Lot creation; binds only when a pod declares a plat.
 definitions:
   # Read 2026-10-01 from 18.30, which is on disk whole
   # (tdc.18.30.definitions.txt).

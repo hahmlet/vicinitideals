@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; rest listed below] [scan: YES (new standards bind)]
+105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2; rest listed below] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -68,5 +68,37 @@ Routing rows read (routing.csv stays open until something is encoded inside the 
 7. **Beaverton, noticed and not chased**: 60.05.20.7.A asks for a 10 ft walkway along an elevation with
    a primary entrance. It reads as commercial (tenant entrances, display windows). Cooper Mountain
    Nature Park 25 ft setback (Table 20.22.15 G.6): already listed NOT ENCODED.
-8. **Not started**: Tigard (34 binding; unmapped, so no lots move), every other place's binding rows,
-   all non-binding rows, and the footnote ledger's "See Section" notes.
+8. **Non-binding rows: not worked.** 1,523 open rows that stand beside no encoded value (round 3
+   read one, Beaverton 60.05.25.13 landscape buffers: N/A for middle housing except the Cooper Mountain
+   NPB-25 already listed). Most are use-specific chapters, procedures and boilerplate; the top of the
+   queue by mentions was skimmed and nothing distance-bearing seen besides that one.
+9. **Tigard 18.420 (landscaping and screening): not held, ordered `fetch`.** In RES-A to RES-C,
+   parking at the side or rear of buildings and not in garages must be screened from adjacent
+   properties to the S-3 standard of Table 18.420.2 (18.280.040.txt#L111). That is the pod's rear
+   court. If S-3 is a planted strip of set width it takes court ground. Tigard IS mapped and screened
+   (pipeline.yaml `or/washington/tigard: true` since 2026-10-07; the round 1 note "unmapped" was wrong),
+   so RES-A to RES-C greens rest on the 2026-09-30 refusal of this standard. Needs Steph's OK to fetch.
+10. **Canby 16.41.060 and Gladstone 17.76 / 17.76.040: not held, ordered `fetch`.** Canby: the
+   secondary (side-street) facade definition that decides whether a CC/TC corner lot's court beside
+   the side street is barred (cmc.16.41.050.txt#L78). Gladstone: the Exceptions chapter every
+   dimensional table defers to, including 17.76.040(5), which moves a flag lot's front lot line
+   (17.06.290.txt#L5).
+
+## Round 3 (2026-11-08, flats/crossref-follow-2)
+
+Every BINDING crossref row in the corpus is now ruled (21 left open are `fetch` or `later` on
+purpose). Tigard (34 rows): 23 are table and figure captions printed inside the held section that
+cites them (the resolver gap, item 6), each the source of encoded values (`read`); the rest are
+apartments, wireless, industrial, procedures, adjustments and land division, and 18.420.2 (item 9).
+Then Canby (16, eight of them 1984 ordinance numbering in history notes, `misread`), unincorporated
+Multnomah (11: home occupations, signs, lighting, the Gorge review uses GGR2 already refuses),
+Estacada (10), Gladstone (8), Milwaukie (8: variances, nonconforming, the 19.907 Type I path already
+ruled in DMU), Sandy, Wilsonville, Tualatin (57.400 is cited but never enacted: the chapter's section
+list stops at 57.300), King City (18.106.050 is the old numbering of 16.132, which Kingston Terrace
+replaces), Sherwood, and the state layer (OAR 660-046 citing itself). Nothing read tightens a standard
+the screen applies to the pod, so no lot moves.
+
+Footnote "see Section" pass: 283 of the 1,363 dismissed footnotes carry a cross-reference. Their
+reasons were grouped and the 23 on dimensional rows (setback, height, lot, parking, access) read
+against their targets; every one either followed the target (ZDO 845, Gresham 4.1416, Wood Village
+230.335, Tigard 18.650.080.D, Clackamas 1005.02) or is scoped off the pod. No dismissal reopened.

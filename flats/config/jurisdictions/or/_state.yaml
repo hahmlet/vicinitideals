@@ -526,6 +526,12 @@ defaults:
 # behind a reader. Each section the guide names is ruled here, read against
 # the guide's own restatement of it. Only 503.1.1 is screened.
 crossrefs:
+  "46":
+    outcome: read
+    note: >-
+      "Chapter 660, Division 46, Middle Housing in Medium and Large Cities" is OAR 660-046 itself
+      (oar.660-046.adopted-2026-08.txt#L42), held and encoded in this layer; the mentions are its own
+      page headers and title lines (FOLLOWUPS 105 round 3, 2026-11-08).
   "503.1.1":
     outcome: other_path
     note: >-

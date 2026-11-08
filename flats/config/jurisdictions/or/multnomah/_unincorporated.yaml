@@ -1341,6 +1341,58 @@ definitions:
 
 crossrefs:
 
+  # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
+  "39.6850":
+    outcome: design
+    note: >-
+      "All exterior lighting shall comply with MCC 39.6850" (39/39.4115.txt#L5): a dark-sky fixture
+      standard. Takes no ground.
+  "39.6700":
+    outcome: other_building
+    note: >-
+      Signs, "MCC 39.6700 through 39.6820" (39/39.4784.txt#L2).
+  "39.7400":
+    outcome: other_building
+    note: >-
+      Type C home occupations, MCC 39.7400 through 39.7410 (39/39.4080.txt#L83).
+  "39.8800":
+    outcome: other_building
+    note: >-
+      "Type A home occupations pursuant to MCC 39.8800" (39/39.4070.txt#L33-L34).
+  "39.8850":
+    outcome: other_building
+    note: >-
+      "A Type B home occupation when approved pursuant to MCC 39.8850" (39/39.4075.txt#L63).
+  "39.8700":
+    outcome: other_building
+    note: >-
+      Temporary dwellings for health hardship and temporary uses (39/39.4075.txt#L36,
+      39/39.4315.txt#L3).
+  "33.205.020":
+    outcome: other_building
+    note: >-
+      Portland's accessory dwelling unit allowances, cited in the 33.418 Constrained Sites overlay
+      (33.418.txt#L52-L54).
+  "38.7000":
+    outcome: other_path
+    note: >-
+      National Scenic Area site review, MCC 38.7000 to 38.7085, for review uses on GGR and GSR land
+      (38/38.3025.txt#L5, L89). GGR2 is refused: the only residential entry is one single-family
+      dwelling per parcel (see the GGR2 block).
+  "38.7305":
+    outcome: other_path
+    note: >-
+      A Gorge review-use standard (38/38.3025.txt#L13). GGR2 is refused (see the GGR2 block).
+  "38.0060":
+    outcome: other_path
+    note: >-
+      Buffers from GGA or GGF land for a Gorge review use (38/38.3025.txt#L10). GGR2 is refused.
+  "38.1005":
+    outcome: read
+    note: >-
+      The uses allowed without review on GGR and GSR land (38/38.3020.txt#L3), held and read in the
+      GGR2 block: no dwelling among them.
+
   # --- the four Portland chapters that arrive with 33.110 ------------------
   # Ruled in or/multnomah/portland.yaml, and repeated here rather than
   # cross-referenced because the citing sentences are this layer''s own: the

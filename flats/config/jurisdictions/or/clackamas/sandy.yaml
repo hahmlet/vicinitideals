@@ -315,6 +315,25 @@ code:
   extraction: plain
   allow_thin: true
 
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
+  "100":
+    outcome: other_path
+    note: >-
+      ORS Chapter 100, condominiums, named in the definition of a condominium
+      (17.10/17.10.30.txt#L180). A form of ownership; the screen places a building.
+  "300":
+    outcome: other_building
+    note: >-
+      OAR 414 Division 300, certified child care centres, named in a definition
+      (17.10/17.10.30.txt#L245).
+  "1-5":
+    outcome: read
+    note: >-
+      Not another section: "the dimensional standards in Subsections 1-5" are the five subsections
+      of the held 17.98.60 printed just above (17.98/17.98.60.txt#L37), the source of the encoded
+      stall and aisle sizes. Spaces that do not conform go to Chapter 17.66 review, a branch the
+      screen does not take.
 definitions:
   # Read 2026-10-07 from SDC 17.10, on disk chapter by chapter.
   #

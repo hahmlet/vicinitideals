@@ -88,6 +88,58 @@ code:
   end: "Chapter 16.136 ENFORCEMENT"
   allow_thin: true
 
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
+  "8.12.050":
+    outcome: design
+    note: >-
+      "Fences ... subject to clear vision regulations of EMC 16.60.010 and EMC 8.12.050 limiting the
+      use of barbed wire and electrical fences" (16.16/16.16.040.txt#L53). A fence material rule;
+      takes no ground.
+  "13.08.010":
+    outcome: other_path
+    note: >-
+      Roof and impervious-surface water "shall be disposed of in accordance with EMC 13.08.010"
+      (16.16/16.16.040.txt#L57), the stormwater title, ruled like Portland 17.38 and Oregon City
+      13.12: a drainage design discharged off the envelope, which the screen does not size.
+  "16.68.030":
+    outcome: procedure
+    note: >-
+      A geotechnical analysis where the property is a listed geological hazard area or has slope of
+      33 percent or more (16.16/16.16.040.txt#L77). A study, no number. The slope screen already
+      takes ground over 15 percent off the building and court, so a lot cannot reach a green with
+      33 percent ground under the pod; the mapped-hazard half has no map FLATS holds (layer
+      refusals, 16.68.030).
+  "16.61.060":
+    outcome: other_building
+    note: >-
+      Accessory dwelling units' exceptions to rear setbacks (16.16/16.16.040.txt#L45, L74).
+  "16.61":
+    outcome: other_building
+    note: >-
+      Accessory dwelling units (16.16/16.16.020.txt#L37).
+  "16.62":
+    outcome: other_building
+    note: >-
+      Short-term rentals (16.16/16.16.020.txt#L33).
+  "16.65":
+    outcome: other_building
+    note: >-
+      Marijuana retailing and cannabis production (16.28/16.28.030.txt#L29).
+  "16.66":
+    outcome: other_building
+    note: >-
+      Food carts, "No more than two food carts on a lot of record" (16.26/16.26.020.txt#L50).
+  "16.74":
+    outcome: later
+    note: >-
+      "All land divisions shall comply with EMC 16.74" (16.116/16.116.010.txt#L19). Lot creation;
+      binds only when a pod declares a plat.
+  "92":
+    outcome: later
+    note: >-
+      ORS Chapter 92, named in the definition of a partition (16.08/16.08.010.txt#L354). Lot
+      creation.
 definitions:
   # Read 2026-10-07 from EMC 16.08, on disk.
   #
