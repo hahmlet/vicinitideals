@@ -74,3 +74,7 @@ data/flats/books/
 # the registry, described by the manifest they carry.
 data/flats/sources/
 data/flats/bridge/
+
+# Washington County tax-lot pulls (flats.ingest.plats): the raw download is
+# untrusted and re-pullable; only the parsed plats.parquet + plats.json are kept.
+data/flats/plats/*/raw.parquet

@@ -1,0 +1,24 @@
+{
+  "source": "https://gispub.co.washington.or.us/server/rest/services/Urban_Services_Plan_Framework/Urban_Services_Framework/FeatureServer/151",
+  "fields": [
+    "OBJECTID",
+    "TLID",
+    "LEGAL_DESCRIPTION",
+    "YEARBUILT",
+    "X_COORD",
+    "Y_COORD"
+  ],
+  "fetched_at": "2026-11-08T06:41:04+00:00",
+  "raw": "data\\flats\\plats\\2026-11-07\\raw.parquet",
+  "lots": 201693,
+  "with_description": 201275,
+  "tlids": 200332,
+  "kept": 130839,
+  "origins": {
+    "platted": 91996,
+    "mhld": 16,
+    "unplatted": 38827,
+    "unread": 69493
+  },
+  "classified_at": "2026-11-08T06:46:23+00:00"
+}
