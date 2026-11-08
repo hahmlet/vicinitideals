@@ -55,6 +55,7 @@ from flats.encode.height import (  # noqa: E402
     curve,
     demand,
     derived,
+    screened_design,
     derived_at,
     widest,
 )
@@ -422,7 +423,7 @@ def test_only_the_rear_yard_is_absorbed_by_the_court() -> None:
 # --------------------------------------------------------------------------
 
 
-CATALOGUE_FT = load_catalog().latest("pod56x36").height_ft
+CATALOGUE_FT = screened_design().height_ft
 
 
 def test_every_derived_setback_reproduces_the_height_it_was_baked_to() -> None:
@@ -461,7 +462,9 @@ def test_the_sweep_at_the_design_height_agrees_with_the_screen() -> None:
     for exactly the lot the live screen already asks for -- same width, same
     depth, same way round."""
     rules = RuleSet(load_rules(strict=False))
-    design = load_catalog().latest("pod56x36")
+    # The design the sweep runs on is the one the screen runs (pod80x30
+    # since 2026-11-08), so the two can be compared at all.
+    design = screened_design()
     rows = demand(CATALOGUE_FT, rules)
     assert rows, "no height-coupled zones found -- this test proves nothing"
     for row in rows:

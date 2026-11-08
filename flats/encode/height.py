@@ -419,11 +419,17 @@ class Demand:
         )
 
 
+def screened_design() -> Design:
+    """The tallest design new runs screen -- since 2026-11-08 the only one,
+    pod80x30. Tallest because a taller building owes more."""
+    return max(load_catalog().active(), key=lambda d: (d.height_ft, d.key))
+
+
 def demand(height_ft: float, rules: RuleSet | None = None) -> list[Demand]:
     """The lot each height-coupled zone asks for, at this building height."""
     layers = load_rules(strict=False)
     rules = RuleSet(layers) if rules is None else rules
-    design = load_catalog().latest("pod56x36")
+    design = screened_design()
     tall: Design = design.model_copy(update={"height_ft": height_ft})
 
     by_zone: dict[tuple[str, str], list[Derived]] = defaultdict(list)
@@ -482,7 +488,7 @@ def render(at: Sequence[float] | None = None) -> str:
         )
         previous = step
 
-    catalogue = load_catalog().latest("pod56x36").height_ft
+    catalogue = screened_design().height_ft
     band = widest(steps)
     if band is not None:
         lo, hi, most = band

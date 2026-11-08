@@ -6,6 +6,9 @@
 # Version 2, 2026-09-18: the parking count became three bands and the screen
 # charges the floor -- see pod56x36.yaml.
 version: 2
+# Archived 2026-11-08 (rulings.yaml 2026-11-08-single-design-80x30): FLATS
+# screens pod80x30 only. Kept loadable because run results name this key.
+status: archived
 label: "Pod 80 x 25 — 4 x 20 ft units"
 typology: townhome_rear_court
 footprint: {width_ft: 80, depth_ft: 25}

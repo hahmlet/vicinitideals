@@ -1,0 +1,48 @@
+# Wide pod -- 4 x 20 x 30 ft units, 600 sqft ground each.
+#
+# The one design FLATS screens (Steph, 2026-11-08, rulings.yaml
+# 2026-11-08-single-design-80x30): four attached townhomes in a row, each
+# 20 ft wide and 30 ft deep, two storeys, each front door on the home's
+# 20 ft wall, so the building is 80 x 30 with every door along the 80 ft
+# face. width_ft is that face, parallel to the front lot line before any
+# rotation, the same convention as pod80x25. Parking is pod80x25's exactly.
+# It replaced pod56x36 and pod80x25, which stay in the catalog as archived so
+# results that name them still read.
+version: 1
+label: "Pod 80 x 30 — 4 x 20 ft units"
+typology: townhome_rear_court
+footprint: {width_ft: 80, depth_ft: 30}
+units: 4
+stories: 2
+height_ft: 26
+# Steph, 2026-10-01, asked whether the ground floor is at least 12 ft
+# (Tigard TMU's first-storey minimum): "Yes, 12 ft or more." The least
+# stated, not a drawn figure.
+ground_story_ft: 12
+# Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
+# this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
+# that sets a minimum pitch or prohibits flat roofs misses on it.
+roof_pitch_in_12: 0
+parking:
+  # The county map's bands: floor charged, target sells, preferred is where
+  # the seat count stops. Unchanged from pod80x25 (see pod56x36.yaml).
+  stalls_per_unit: {floor: 1.0, target: 1.5, preferred: 2.0}
+  config: rear_court
+delivery:
+  method: panelized
+notes: >-
+  The single screened design since 2026-11-08. 20 ft homes put two bedrooms
+  side by side; 600 sqft a floor, 1,200 a home. Its 80 ft frontage is the
+  binding constraint on most narrow city lots, and its 30 ft depth plus the
+  rear court asks 5 ft more of the lot than pod80x25 did.
+assumptions:
+  - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
+     drawing set — confirm before any height-binding result is trusted."
+  - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
+     intent, not a drawing set."
+  - "ground_story_ft 12: the ground storey, floor to the floor above, is 12 ft
+     or more (Steph, 2026-10-01). The least stated, not from a drawing set."
+  - "footprint 80 x 30 and the door on each home's 20 ft wall: Steph,
+     2026-11-08. Product intent, not a drawing set."
+  - "Delivery method is the product intent (factory-built); module dimensions
+     and crane needs are unspecified until the set-access stage (Phase 4)."

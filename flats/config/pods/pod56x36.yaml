@@ -11,6 +11,9 @@
 # 1.5-per-home target (54 ft). A run under each is a different court and the
 # two are not comparable, which is what the version is for.
 version: 2
+# Archived 2026-11-08 (rulings.yaml 2026-11-08-single-design-80x30): FLATS
+# screens pod80x30 only. Kept loadable because run results name this key.
+status: archived
 label: "Pod 56 x 36 — 4 x 14 ft units"
 typology: townhome_rear_court
 footprint: {width_ft: 56, depth_ft: 36}

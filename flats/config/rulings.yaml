@@ -2725,3 +2725,23 @@
     description still do not pass. FOLLOWUPS 83.
   source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
   encoded_in: [flats/ingest/plats.py]
+- id: 2026-11-08-single-design-80x30
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    The screen tries every lot with two pod sizes (4 x 14 ft homes, 56 x 36,
+    and 4 x 20 ft homes, 80 x 25) and the sizing study measured five more.
+    Which building should FLATS screen?
+  ruling: >-
+    One design only: 4 attached townhomes in a row, each 20 ft wide x 30 ft
+    deep (600 sq ft ground floor), 2 storeys, front door on each home's 20 ft
+    wall, so the building is 80 x 30 with every door along the 80 ft face.
+    Parking stays exactly as today. Retire every other size.
+  effect: >-
+    New runs screen pod80x30 alone (flats/config/pods/pod80x30.yaml), with
+    pod80x25's height, storeys, roof and parking bands. pod56x36 and pod80x25
+    are archived: still loadable so results that name them read, never run.
+    The study sizes were never in the catalog. FOLLOWUPS 149.
+  encoded_in: [flats/config/pods/pod80x30.yaml, flats/ingest/quadfit.py]
+  source: Steph 2026-11-08 (chat, executive decision), docs/followups/149-pod-unit-width.md
