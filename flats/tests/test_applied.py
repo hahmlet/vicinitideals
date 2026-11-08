@@ -144,8 +144,14 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     92 -> 93 on 2026-10-21, Gresham: Table 4.0130 note 2 (an undersized lot
     of record may be developed), taken as lot_of_record_relief lot_area on
     Steph's ruling that every existing taxlot is a lot of record.
+
+    93 -> 94 on 2026-11-08, Oregon City: Table 17.12.040 note 1 (the ten-foot
+    landscaped yard an R-2 lot owes beside R-10, R-8 or R-6), taken as R-2's
+    side yard and parking strip variants on `abuts_lower_density_zone`
+    (FOLLOWUPS 2(a)). It sat `unmeasured` while note 2's easement cap held
+    the same values; Steph's easement ruling answers that one now.
     """
-    assert len(rows) == 93
+    assert len(rows) == 94
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:
