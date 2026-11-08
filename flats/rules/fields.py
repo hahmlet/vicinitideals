@@ -137,6 +137,7 @@ _LABELS: dict[str, str] = {
     "building_frontage_corner": "which street of a corner lot owes the building share",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
+    "parking_lot_line_buffer_doubt_ft": "possible stricter parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
@@ -162,6 +163,8 @@ _LABELS: dict[str, str] = {
     "clear_objective_housing": "state law allows only clear and objective standards for housing",
     "setback_front_ft": "front setback",
     "setback_front_max_ft": "max. front setback",
+    "setback_front_max_streets": "which streets the max. front setback reaches",
+    "setback_front_max_facade_pct": "facade share within the max. front setback",
     "setback_garage_entrance_ft": "garage entrance setback",
     "setback_rear_ft": "rear setback",
     "setback_side_ft": "interior side setback",
@@ -445,6 +448,40 @@ _F: tuple[FieldDef, ...] = (
         "Gresham DRL and Fairview base zones impose these.",
         True,
         "max_front_setback",
+    ),
+    FieldDef(
+        "setback_front_max_streets",
+        "enum",
+        "Which of a lot's streets the maximum front setback "
+        "(`setback_front_max_ft`) holds the building to, where a corner or "
+        "through lot has more than one (FOLLOWUPS 147). `every`: each street "
+        "line (Tigard Table 18.280.1, a maximum for both the front and the "
+        "street side). `front`: the front lot line alone. `one`: any one "
+        "street, the applicant's pick. `corner_every`: both streets of a "
+        "corner lot, and on a through lot or a lot on three streets the ones "
+        "the code picks by a class FLATS does not hold (Portland "
+        "33.130.215.C.2.c, the highest transit street classification). "
+        "`conditional`: only on a street or in a district FLATS does not hold, "
+        "so the maximum may not reach the lot at all: a building within it "
+        "passes, and one beyond it is held out of GREEN, never failed "
+        "(Portland Table 150-2, transit streets and "
+        "Pedestrian Districts). "
+        "Absent, nothing says which: the screen passes a building within the "
+        "maximum of every street, fails one beyond it on every street, and "
+        "holds the rest out of GREEN.",
+        choices=("every", "front", "one", "corner_every", "conditional"),
+    ),
+    FieldDef(
+        "setback_front_max_facade_pct",
+        "percent",
+        "Share of the street-facing facade that must stand within the "
+        "maximum front setback (`setback_front_max_ft`): Portland "
+        "33.130.215.C.1, \"At least 50 percent of the length of the ground "
+        "level street-facing facade of the building must meet the maximum "
+        "setback standard\". Absent, the screen passes a building whose whole "
+        "facing wall is within the maximum and fails one whose nearest point "
+        "is beyond it, and holds a wall turned between the two out of GREEN.",
+        False,
     ),
     FieldDef(
         "setback_garage_entrance_ft",
@@ -1303,6 +1340,15 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef(
+        "parking_lot_line_buffer_doubt_ft",
+        "length_ft",
+        "A stricter, unresolved keep-off distance for parking from non-street "
+        "lot lines. It is tested as a second fit and never replaces the "
+        "encoded setback or parking buffer. Optional: absent means no "
+        "additional doubt is held.",
+        False,
+    ),
+    FieldDef(
         "parking_island_sqft_per_space",
         "area_sqft",
         "Planted island a code asks INSIDE a parking area, in square feet per "
@@ -1467,7 +1513,12 @@ _F: tuple[FieldDef, ...] = (
         "each lot frontage shall be developed with a building(s) built at the "
         "minimum setback from the street lot line\" -- the minimum setback, "
         "0 ft in Table 1, while the rest of the frontage may stand back to "
-        "the 15 ft maximum. Absent, the band is `setback_front_max_ft`.",
+        "the 15 ft maximum. Absent, the band is `setback_front_max_ft`. "
+        "Where the zone states no maximum, a band stated here as a number "
+        "bounds the share on its own: Hillsboro Table 12.65.850-1 counts the "
+        "Active Use property line coverage within 10 or 15 ft, while "
+        "12.65.130.A leaves the base zone's maximum (none in the South "
+        "Hillsboro multi-dwelling zones) as the setback test (FOLLOWUPS 147).",
         True,
     ),
     FieldDef(
@@ -1846,6 +1897,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
         "setback_front_max_ft",
+        "setback_front_max_streets",
+        "setback_front_max_facade_pct",
         "setback_garage_entrance_ft",
         "min_building_separation_ft",
         "min_lot_width_ft",
@@ -1954,6 +2007,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
         "parking_lot_line_buffer_ft",
+        "parking_lot_line_buffer_doubt_ft",
         "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",

@@ -884,6 +884,22 @@ def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, list[int]]
                 encoded, when, depth = None, None, -1
 
 
+#: Facts about the NEIGHBOUR's district. A value read under one of them is a
+#: standard the code borrows from the district next door -- Sandy 17.98.50 A
+#: and Troutdale 9.095 A give a parking area "the setback of the most
+#: restrictive adjoining residential zoning district" -- so its figure sits in
+#: the other district's column by design, and judging it against this zone's
+#: own cell would report the one correct reading as a misread (FOLLOWUPS 150,
+#: 2026-11-05). Readiness still checks that the quoted line prints it.
+_NEIGHBOUR_FACTS = frozenset(
+    {"abuts_lower_density_zone", "abuts_residential_zone", "abuts_nonresidential_zone"}
+)
+
+
+def _reads_the_neighbour(when: str) -> bool:
+    return any(part.strip() in _NEIGHBOUR_FACTS for part in when.split(","))
+
+
 def survey(
     layers: Sequence[str] = (),
     *,
@@ -901,6 +917,8 @@ def survey(
         if layers and not any(layer.startswith(want.strip("/")) for want in layers):
             continue
         for zone, field, when, encoded, rel, line_nos in _citations(path):
+            if _reads_the_neighbour(when):
+                continue
             doc = _doc(cache, rel, docroot)
             if doc is None:
                 continue

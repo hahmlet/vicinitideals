@@ -244,4 +244,12 @@ def test_only_cornelius_keeps_parking_out_of_its_yards() -> None:
             if FIELD in zone.values:
                 declaring.add(layer_id)
     # Gladstone joined 2026-10-08 (FOLLOWUPS 52): C2 states the same prohibition in its own words.
-    assert declaring == {CORNELIUS, "or/clackamas/gladstone"}
+    # Gresham, Sandy and Troutdale joined 2026-11-05 (FOLLOWUPS 150): GDC 7.0420(B)(5)(c),
+    # SDC 17.98.50 A and TDC 9.095 A (flats/tests/test_rear_court_setback.py).
+    assert declaring == {
+        CORNELIUS,
+        "or/clackamas/gladstone",
+        "or/multnomah/gresham",
+        "or/clackamas/sandy",
+        "or/multnomah/troutdale",
+    }

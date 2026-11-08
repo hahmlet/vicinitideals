@@ -150,6 +150,12 @@ class Resolved:
     #: has to be able to tell a stand-in from a yard of its own.
     same_as: str | None = None
     floor_ft: float | None = None
+    #: The figure the code prints, where a roof-plane step-back pushed the
+    #: carried number past it (:attr:`flats.rules.model.Value.before_step_back`).
+    #: The plane moves the building and makes no yard of its own: Gresham's
+    #: LDR-5 carries 20 for the wall and prints 15 for the yard
+    #: (:func:`flats.score.paper.kept_rear_yard_ft`).
+    before_step_back: float | None = None
 
     @property
     def trusted(self) -> bool:
@@ -228,6 +234,16 @@ class ZoneResolution:
     def get(self, name: str, default: Any = None) -> Any:
         r = self.values.get(name)
         return default if r is None else r.value
+
+
+def _printed(val: Value, eff: Any) -> float | None:
+    """The printed figure behind a stepped-back number (:attr:`Resolved.before_step_back`)."""
+    if not eff.when:
+        return val.before_step_back
+    for variant in val.variants:
+        if tuple(variant.key) == tuple(eff.when):
+            return variant.before_step_back
+    return None
 
 
 def _qualified(val: Value) -> frozenset[str]:
@@ -536,6 +552,7 @@ class RuleSet:
                     unencoded=_qualified(val),
                     same_as=None if eff.when else val.same_as,
                     floor_ft=None if eff.when else val.floor_ft,
+                    before_step_back=_printed(val, eff),
                 )
                 if val.preempts.binds:
                     locked[name] = (val.preempts, eff.value)

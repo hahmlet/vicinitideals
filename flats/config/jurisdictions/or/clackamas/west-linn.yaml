@@ -2448,10 +2448,14 @@ zones:
       quote: "or/clackamas/west-linn/59/59.070.txt#L38-L40"
     setback_front_max_ft:
       # The "Maximum" row under Front yard: the building may stand no further
-      # back than 20 ft. Encoded because it is a real standard of the zone;
-      # nothing screens on it yet (same footing as Oregon City MUC-1).
+      # back than 20 ft. The separate Street side yard row applies to the
+      # other street line.
       value: 20
       quote: "or/clackamas/west-linn/59/59.070.txt#L41-L43"
+    setback_front_max_streets:
+      value: front
+      cite: West Linn CDC 59.070, Front yard maximum; Street side yard is separately identified
+      quote: "or/clackamas/west-linn/59/59.070.txt#L38-L42,L47-L48"
     setback_side_ft:
       # "Interior side yard 7.5 ft; Townhouse common walls that are attached
       # may have a 0-ft side setback." The 0 is for the shared walls of

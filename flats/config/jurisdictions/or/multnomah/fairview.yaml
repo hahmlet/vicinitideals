@@ -1574,6 +1574,14 @@ zones:
     setback_front_max_ft:
       value: 30
       quote: "or/multnomah/fairview/19.30/19.30.030.txt#L161"
+      qualified_by:
+        fact: established_residential_area
+        cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,L301-L303,L305-L307"
+    setback_front_max_streets:
+      value: front
+      cite: FMC Table 19.30.030.A, Front Yard Setback Maximum; 19.30.030(D) separately governs front yard setbacks
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L160-L162,L190"
   R-7.5:
     min_density_du_per_acre:
       # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
@@ -1775,6 +1783,14 @@ zones:
     setback_front_max_ft:
       value: 30
       quote: "or/multnomah/fairview/19.30/19.30.030.txt#L162"
+      qualified_by:
+        fact: established_residential_area
+        cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,L301-L303,L305-L307"
+    setback_front_max_streets:
+      value: front
+      cite: FMC Table 19.30.030.A, Front Yard Setback Maximum; 19.30.030(D) separately governs front yard setbacks
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L160-L162,L190"
   R-10:
     min_density_du_per_acre:
       # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage

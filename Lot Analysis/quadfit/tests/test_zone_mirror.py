@@ -617,7 +617,9 @@ def test_nothing_in_the_screen_is_unquoted(audit_scan) -> None:
             placeholders |= {f"{juris}/{z['zone']}.{f.strip()}" for f in m.group(1).split(",")}
     assert {u.split("=")[0] for u in uncited} == placeholders, uncited
     # 16 -> 27 on 2026-10-19: the zones the ORS 197A.400 lane admits (FOLLOWUPS 85).
-    assert len(placeholders) == 27
+    # 27 -> 25 on 2026-11-08 (FOLLOWUPS 147, f4ac56b0): Washington County TO:R24-40 and
+    # TO:R40-80 front yards are read (Table B(2) prints "None"), no longer placeholders.
+    assert len(placeholders) == 25
     assert agree > 460, agree
 
 
@@ -1058,7 +1060,14 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
     "setback_garage_entrance_ft": 125,
     "min_landscaped_pct": 60,
-    "setback_front_max_ft": 105,
+    # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
+    # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
+    "setback_front_max_ft": 104,
+    #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
+    #: streets, every street, the front) and the share of the facade it binds --
+    #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
+    "setback_front_max_streets": 34,
+    "setback_front_max_facade_pct": 10,
     #: FOLLOWUPS 131: Tualatin CO prints no base density (Table 50-2); its 25 is
     #: a Block 1 variant now, so CO leaves the count.
     "max_density_du_per_acre": 63,
@@ -1074,7 +1083,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_side_total_ft": 3,
     "min_building_height_ft": 17,
     "front_lot_line_through": 1,
-    "parking_lot_line_buffer_ft": 3,
+    # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
+    # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
+    # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
+    # neighbour fact.
+    "parking_lot_line_buffer_ft": 8,
+    # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
+    # doubtful larger court buffer (20 ft, TDC 3.130.A, when the adjoining district
+    # is unknown) as a question; quadfit has no neighbour fact.
+    "parking_lot_line_buffer_doubt_ft": 7,
     "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,
@@ -1162,7 +1179,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: add landscaping, maximum fronts, impervious, frontage shares, review tiers,
     #: a parking frontage cap and a height floor -- counted on the keys above.
     "building_frontage_band_ft": 1,
-    "min_far": 1,
+    # 1 -> 2 on 2026-11-08 (FOLLOWUPS 147, 8adfedd5): Hillsboro MU-VTC's minimum
+    # FAR, 0.5 inside the traced Center Cores and 0.4 outside (Table 12.24.360-1).
+    "min_far": 2,
 }
 
 

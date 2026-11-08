@@ -30,7 +30,8 @@ from flats.rules.model import Provenance, Status  # noqa: E402
 from flats.rules.resolver import Resolved, ZoneResolution  # noqa: E402
 from flats.rules.resolver import Verdict as RuleVerdict  # noqa: E402
 from flats.score.paper import court_across, drive_at_street, side_court  # noqa: E402
-from flats.score.screen import CHECK_FIELD, LotFacts, screen  # noqa: E402
+from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier as GeometryTier  # noqa: E402
+from flats.score.screen import CHECK_FIELD, LotFacts, _driveway_cap_frontages, screen  # noqa: E402
 from flats.score.slack import SlackPolicy, Verdict  # noqa: E402
 
 pytestmark = pytest.mark.unit
@@ -57,9 +58,10 @@ CLEAR = {
 
 
 def rules(**overrides) -> ZoneResolution:
+    jurisdiction = overrides.pop("jurisdiction", WHERE)
     values = {**CLEAR, **overrides}
     return ZoneResolution(
-        jurisdiction=WHERE,
+        jurisdiction=jurisdiction,
         zone="R-6",
         verdict=RuleVerdict.trusted,
         values={
@@ -83,18 +85,150 @@ def fit(lane: float) -> Fit:
     )
 
 
-def share(frontage: float, **extra):
+def share_screen(lot: LotFacts, **extra):
     zone = rules(driveway_max_frontage_pct=50, **extra)
     lane = court_across(DESIGN, zone).lane_ft
-    result = screen(
-        zone, LotFacts(lot_sqft=12000, frontage_ft=frontage, lot_width_ft=frontage),
+    return screen(
+        zone, lot,
         DESIGN, fit(lane), policy=POLICY,
     )
+
+
+def share_lot(lot: LotFacts, **extra):
+    result = share_screen(lot, **extra)
     return next((c for c in result.checks if c.check == "driveway_frontage_share"), None)
+
+
+def share(frontage: float, **extra):
+    return share_lot(
+        LotFacts(lot_sqft=12000, frontage_ft=frontage, lot_width_ft=frontage),
+        **extra,
+    )
 
 
 def test_the_share_is_a_check_that_names_its_field() -> None:
     assert CHECK_FIELD["driveway_frontage_share"] == "driveway_max_frontage_pct"
+
+
+def test_the_lowest_class_driveway_uses_its_own_street_frontage() -> None:
+    # A short side-street line is not the frontage crossed by the drive.
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=162.9,
+        lot_width_ft=139.9,
+        street_line_min_ft=23.0,
+        street_line_max_ft=139.9,
+        street_lines_ft=(23.0, 139.9),
+        street_line_ranks=(4, 0),
+    )
+    got = share_lot(lot, corner_access_street="lowest_class")
+    assert got is not None and got.verdict is Verdict.passes
+
+
+def test_a_short_lowest_class_street_frontage_still_fails_the_cap() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=23.0,
+        lot_width_ft=23.0,
+        street_line_min_ft=23.0,
+        street_line_max_ft=23.0,
+        street_lines_ft=(23.0,),
+        street_line_ranks=(0,),
+    )
+    got = share_lot(lot, corner_access_street="lowest_class")
+    assert got is not None and got.verdict is Verdict.fails
+
+
+def test_unranked_frontages_do_not_assume_the_shortest_is_the_driveway_street() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=162.9,
+        lot_width_ft=139.9,
+        street_line_min_ft=23.0,
+        street_line_max_ft=139.9,
+        street_lines_ft=(23.0, 139.9),
+        street_line_ranks=(None, None),
+    )
+    assert share_lot(lot, corner_access_street="lowest_class") is None
+
+
+def test_private_drive_line_is_the_cap_frontage_without_measured_streets() -> None:
+    from flats.ingest.quadfit import private_drive_lines_ft
+
+    private = Edge(0, 0, 70, 0, 70, 0, EdgeClass.front, road_private=True)
+    private_continuation = Edge(70, 0, 139.9, 0, 69.9, 0, EdgeClass.front, road_private=True)
+    other = Edge(139.9, 0, 139.9, 20, 20, 90, EdgeClass.side)
+    edges = LotEdges(
+        tier=GeometryTier.irregular,
+        edges=(private, private_continuation, other),
+        front_bearings=(),
+        frontage_ft=139.9,
+        convexity=0.5,
+    )
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=139.9,
+        street_line_min_ft=23.1,
+        geometry=GeometryTier.irregular,
+        private_drive_lines_ft=private_drive_lines_ft(edges),
+    )
+    result = share_screen(
+        lot,
+        jurisdiction="or/clackamas/happy-valley",
+        driveway_min_width_two_way_ft=20,
+    )
+    cap = next(c for c in result.checks if c.check == "driveway_frontage_share")
+    assert lot.street_lines_ft == ()
+    assert lot.private_drive_lines_ft == pytest.approx((139.9,))
+    assert cap.verdict is Verdict.passes
+    assert cap.threshold == pytest.approx(69.95)
+    assert "GEOM-UNREADABLE" in {flag.code for flag in result.flags}
+
+
+def test_no_private_drive_line_keeps_the_unmeasured_frontage_fallback() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=139.9,
+        street_line_min_ft=23.1,
+        geometry=GeometryTier.irregular,
+    )
+    result = share_screen(
+        lot,
+        jurisdiction="or/clackamas/happy-valley",
+        driveway_min_width_two_way_ft=20,
+    )
+    cap = next(c for c in result.checks if c.check == "driveway_frontage_share")
+    assert _driveway_cap_frontages(rules(jurisdiction="or/clackamas/happy-valley"), lot) == (
+        23.1,
+    )
+    assert cap.verdict is Verdict.fails
+    assert cap.threshold == pytest.approx(11.55)
+
+
+def test_private_drive_fallback_is_limited_to_the_three_bound_cities() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=139.9,
+        street_line_min_ft=23.1,
+        private_drive_lines_ft=(139.9,),
+    )
+    assert _driveway_cap_frontages(rules(), lot) == (23.1,)
+
+
+def test_measured_street_line_is_capped_at_the_lots_frontage() -> None:
+    lot = LotFacts(
+        lot_sqft=12000,
+        frontage_ft=100.0,
+        street_line_min_ft=100.02,
+        street_line_max_ft=100.02,
+        street_lines_ft=(100.02,),
+    )
+    cap = share_lot(
+        lot,
+        driveway_min_width_two_way_ft=20,
+    )
+    assert _driveway_cap_frontages(rules(), lot) == (100.0,)
+    assert cap is not None and cap.threshold == 50.0
 
 
 def test_the_pods_lane_needs_twice_its_width_of_frontage() -> None:
@@ -228,3 +362,96 @@ def test_an_unmeasured_width_leaves_the_share_unchecked() -> None:
     got, result = front(None)
     assert got is None
     assert "front_yard_vehicle_share" in result.unchecked
+
+
+# --- 22E01DD03100, the held bound hv_cap2 (2026-11-05) ------------------------
+#
+# The real lot, as s4 wrote it (quadfit 2026-10-30 dd_c6, EPSG:2913). Its only
+# street lines are a 116.87 ft line s4 read as street off a drive on the
+# neighbour's land (``drive_off_lot``) and the 23.08 ft jog onto Golden Eye's
+# private tract (``drive``): 139.9 ft in all. The screen keeps the worse of the
+# reading with and without the doubtful line, and without it the lot has
+# 23.1 ft of frontage. Round 2 read the cap on private-drive lines only where
+# NO street line was measured, and only off ``Edge.road_private`` (the road
+# width file), which no drive line carries: on real data the path never ran,
+# and the 23.1 ft reading failed the cap (11.55 ft against a 20 ft drive).
+# The truth lies between: by the parcel map the lot meets the Golden Eye tract
+# along ~27 ft of the long line and the 23 ft jog, about 50 ft. So the drive
+# lines' 139.9 ft stand beside the 23.1 ft as the most the frontage can be:
+# a question (YELLOW), never the pass 69.95 ft alone would make.
+HV_EDGES = [
+    [7687776.62, 646501.27, 7687892.72, 646499.07, "R"],
+    [7687892.72, 646499.07, 7687974.66, 646468.85, "R"],
+    [7687974.66, 646468.85, 7687988.63, 646397.65, "R"],
+    [7687988.63, 646397.65, 7688012.79, 646329.84, "R"],
+    [7688012.79, 646329.84, 7688051.06, 646278.21, "S"],
+    [7688051.06, 646278.21, 7688086.48, 646242.38, "S"],
+    [7688086.48, 646242.38, 7688196.16, 646165.16, "S"],
+    [7688196.16, 646165.16, 7688191.24, 646020.23, "R"],
+    [7688191.24, 646020.23, 7687650.83, 646038.61, "R"],
+    [7687650.83, 646038.61, 7687659.21, 646480.42, "R"],
+    [7687659.21, 646480.42, 7687776.06, 646478.2, "F"],
+    [7687776.06, 646478.2, 7687776.62, 646501.27, "F"],
+]
+HV_SANS = [
+    [*e[:4], letter]
+    for e, letter in zip(HV_EDGES, ["S", "S", "R", "R", "S", "S", "S", "R", "S", "R", "S", "F"], strict=True)
+]
+
+
+def _hv_lot():
+    import json
+
+    import shapely
+    from shapely.geometry import Polygon
+
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import lot_from_row
+    from flats.tests.test_quadfit_bridge import row
+
+    ring = Polygon([(e[0], e[1]) for e in HV_EDGES])
+    r = row(
+        TLID="22E01DD03100",
+        jurisdiction="happy_valley",
+        zone="MURS",
+        tier="C",
+        area_sqft=197795.5,
+        frontage_ft=139.9,
+        lot_width_ft=None,
+        lot_depth_ft=None,
+        edges_json=json.dumps(HV_EDGES),
+        front_bearings_json="[178.91, 88.6]",
+        street_kind_json=json.dumps([None] * 10 + ["drive_off_lot", "drive"]),
+        sans_drive_json=json.dumps(
+            {"doubtful": {"tier": "C", "edges": HV_SANS, "front_bearings": [88.61], "frontage_ft": 23.1}}
+        ),
+        wkb=shapely.to_wkb(ring.buffer(-10)),
+        lot_wkb=shapely.to_wkb(ring),
+    )
+    return lot_from_row(r, load_trusted(strict=False).rules.layers)
+
+
+def test_the_real_lot_keeps_its_drive_lines_on_the_reading_without_them() -> None:
+    lot = _hv_lot()
+    assert lot.second is not None and not lot.second_better
+    assert sorted(lot.facts.street_lines_ft) == pytest.approx([23.08, 116.87], abs=0.05)
+    assert lot.second.facts.frontage_ft == pytest.approx(23.1)
+    assert lot.second.facts.private_drive_lines_ft == pytest.approx((139.9,), abs=0.05)
+    hv = rules(jurisdiction="or/clackamas/happy-valley")
+    assert _driveway_cap_frontages(hv, lot.second.facts) == pytest.approx((23.08, 139.9), abs=0.05)
+
+
+def test_the_real_lot_is_a_question_on_the_cap_never_a_pass_or_a_miss() -> None:
+    second = _hv_lot().second
+    assert second is not None
+    result = share_screen(
+        second.facts, jurisdiction="or/clackamas/happy-valley", driveway_min_width_two_way_ft=20
+    )
+    assert not [c for c in result.checks if c.check == "driveway_frontage_share"]
+    assert "driveway_frontage_share" in result.unchecked
+
+
+def test_drive_lines_never_reach_a_city_outside_the_three() -> None:
+    second = _hv_lot().second
+    assert second is not None
+    assert _driveway_cap_frontages(rules(), second.facts) == pytest.approx((23.08,), abs=0.05)

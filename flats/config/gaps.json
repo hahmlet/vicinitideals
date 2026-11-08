@@ -1,5 +1,5 @@
 {
-  "digest": "f4f8507dada7c468fe915d4e1434f4dee47db6d46ae1d29cd4733df1e443dfd8",
+  "digest": "414af72e4384432f92cf8d7828ca6a8680b75893230cb45796f4532813a3ce56",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -124,7 +124,7 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 7,
+      "section_unread": 10,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -698,7 +698,7 @@
       "gaps": []
     },
     "or/multnomah/portland": {
-      "section_unread": 8,
+      "section_unread": 9,
       "misattributed": [
         {
           "zone": "CI2",

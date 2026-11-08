@@ -628,6 +628,10 @@ zones:
       value: 5
       cite: Estacada EMC 16.26.040 (C)(1), front and street side setbacks five feet maximum (ten abutting 2nd Avenue or OR 224), met when fifty percent of a primary structure is within the yard
       quote: "or/clackamas/estacada/16.26/16.26.040.txt#L24-L25"
+    setback_front_max_streets:
+      value: every
+      cite: Estacada EMC 16.26.040 (C)(1), maximum front and street-side setbacks
+      quote: "or/clackamas/estacada/16.26/16.26.040.txt#L24"
     setback_street_side_ft:
       value: 5
       cite: Estacada EMC 16.26.040 (C)(1), front and street side setbacks, five feet minimum abutting 2nd Avenue or OR 224; charged on every lot (conservative)

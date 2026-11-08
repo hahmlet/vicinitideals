@@ -4481,6 +4481,21 @@ zones:
       # row. A line the stretch ends part way along is not off, and keeps 10.
       value: 0
       quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L99"
+    setback_front_max_facade_pct:
+      # Half the ground-level street-facing facade must stand within the
+      # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
+      value: 50
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L98"
+    setback_front_max_streets:
+      # Which streets the maximum reaches (33.130.215.C.2.c): on three or
+      # more streets, the two with the highest transit street
+      # classification; on a through lot, the one with the highest; on a
+      # corner lot, then, both. The transit classification is not held, so
+      # only a corner lot is read both ways; any other lot passes within the
+      # maximum on every street, fails beyond it on every street, and is a
+      # question between (FOLLOWUPS 147).
+      value: corner_every
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L97,L105-L108"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -4710,6 +4725,21 @@ zones:
       # row. A line the stretch ends part way along is not off, and keeps 10.
       value: 0
       quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L99"
+    setback_front_max_facade_pct:
+      # Half the ground-level street-facing facade must stand within the
+      # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
+      value: 50
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L98"
+    setback_front_max_streets:
+      # Which streets the maximum reaches (33.130.215.C.2.c): on three or
+      # more streets, the two with the highest transit street
+      # classification; on a through lot, the one with the highest; on a
+      # corner lot, then, both. The transit classification is not held, so
+      # only a corner lot is read both ways; any other lot passes within the
+      # maximum on every street, fails beyond it on every street, and is a
+      # question between (FOLLOWUPS 147).
+      value: corner_every
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L97,L105-L108"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -4979,6 +5009,21 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
+    setback_front_max_facade_pct:
+      # Half the ground-level street-facing facade must stand within the
+      # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
+      value: 50
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L98"
+    setback_front_max_streets:
+      # Which streets the maximum reaches (33.130.215.C.2.c): on three or
+      # more streets, the two with the highest transit street
+      # classification; on a through lot, the one with the highest; on a
+      # corner lot, then, both. The transit classification is not held, so
+      # only a corner lot is read both ways; any other lot passes within the
+      # maximum on every street, fails beyond it on every street, and is a
+      # question between (FOLLOWUPS 147).
+      value: corner_every
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L97,L105-L108"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -5274,6 +5319,21 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
+    setback_front_max_facade_pct:
+      # Half the ground-level street-facing facade must stand within the
+      # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
+      value: 50
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L98"
+    setback_front_max_streets:
+      # Which streets the maximum reaches (33.130.215.C.2.c): on three or
+      # more streets, the two with the highest transit street
+      # classification; on a through lot, the one with the highest; on a
+      # corner lot, then, both. The transit classification is not held, so
+      # only a corner lot is read both ways; any other lot passes within the
+      # maximum on every street, fails beyond it on every street, and is a
+      # question between (FOLLOWUPS 147).
+      value: corner_every
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L97,L105-L108"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -5552,6 +5612,11 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
+    setback_front_max_facade_pct:
+      # Half the ground-level street-facing facade must stand within the
+      # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
+      value: 50
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L98"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -5763,6 +5828,21 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L618,L640,L830-L831"
+    setback_front_max_facade_pct:
+      # Half the ground-level street-facing facade must stand within the
+      # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
+      value: 50
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L98"
+    setback_front_max_streets:
+      # Which streets the maximum reaches (33.130.215.C.2.c): on three or
+      # more streets, the two with the highest transit street
+      # classification; on a through lot, the one with the highest; on a
+      # corner lot, then, both. The transit classification is not held, so
+      # only a corner lot is read both ways; any other lot passes within the
+      # maximum on every street, fails beyond it on every street, and is a
+      # question between (FOLLOWUPS 147).
+      value: corner_every
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L96-L97,L105-L108"
     setback_front_max_ft:
       # A maximum, not a minimum: the building has to be within 10 ft of the
       # street lot line. This is the standard in the chapter most likely to
@@ -6241,6 +6321,10 @@ zones:
       # Street or Pedestrian District".
       value: 10
       quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
+    setback_front_max_streets:
+      # The row heading is the whole condition, and neither fact is held.
+      value: conditional
+      quote: "or/multnomah/portland/33.150.txt#L546-L547"
     setback_side_ft:
       # Three rows, one question, and the answer is the neighbour's zoning.
       # 10 ft from a lot line abutting or across the street from an OS,

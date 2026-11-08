@@ -446,12 +446,11 @@ zones:
       cite: "Beaverton BDC Table 20.05.15, F.1.a Front Yard Minimum"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L28"
     setback_front_max_ft:
-      # Note 18: the maximum applies to all development other than
-      # townhouses, on the portion of the site subject to the frontage
-      # requirement of 60.05.15.6.
-      value: 20
-      cite: "Beaverton BDC Table 20.05.15, F.1.b Front Yard Maximum (MR 20, note 18)"
-      quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L29,L309-L311"
+      # Note 18 limits the maximum to frontage governed by 60.05.15.6, which
+      # covers Commercial and Multiple Use zones, not residential MR.
+      exempt: true
+      cite: "Beaverton BDC Table 20.05.15, F.1.b Front Yard Maximum, note 18 (applies to all development other than townhouses; maximum setbacks apply only to the portion subject to 60.05.15.6, which governs Commercial and Multiple Use zones; see or/washington/beaverton/60.05/60.05.15.txt#L89; MR is addressed separately for all uses at or/washington/beaverton/60.05/60.05.20.txt#L115)"
+      quote: "or/washington/beaverton/20.05/20.05.15.txt#L29,L309-L310"
     setback_side_ft:
       # MR prints "0 internal, 5 external" for townhouses and N/A for
       # land divisions; 5 is the external figure.

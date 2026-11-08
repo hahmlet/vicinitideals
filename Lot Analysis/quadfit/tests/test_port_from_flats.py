@@ -76,4 +76,7 @@ def test_each_row_takes_the_strict_limb_and_names_its_placeholders(layers) -> No
     assert checked > 100, checked
     # 16 -> 25 on 2026-10-19: the rows the ORS 197A.400 lane admits (FOLLOWUPS 85)
     # carry their unread yards as placeholders the same way.
-    assert placeholders == 25, "the six Washington rows and the clear-objective rows with an unread yard"
+    # 25 -> 23 on 2026-11-08 (FOLLOWUPS 147, f4ac56b0): Washington County TO:R24-40
+    # and TO:R40-80 read their front yard, Table B(2)'s printed "None" frontage
+    # minimum (375-10.txt#L342), so it is exempt (0) rather than a placeholder.
+    assert placeholders == 23, "the six Washington rows and the clear-objective rows with an unread yard"

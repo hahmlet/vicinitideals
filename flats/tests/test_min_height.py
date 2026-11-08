@@ -281,7 +281,8 @@ def test_no_floor_sits_above_its_own_zones_ceiling() -> None:
 #: the pod fails them as drafted, and this set says so instead of hiding it.
 FLOORS_ABOVE_THE_POD = {
     ("or/washington/hillsboro", "MU-C", "min_building_height_ft"),
-    ("or/washington/hillsboro", "MU-VTC", "min_building_height_stories"),
+    # MU-VTC left 2026-11-04 (FOLLOWUPS 147): the Center Cores are traced, the
+    # base is 2 stories and the 3 is a variant on `hillsboro_center_core`.
     ("or/washington/hillsboro", "SCC-SC", "min_building_height_ft"),
     ("or/washington/hillsboro", "UC-AC", "min_building_height_ft"),
     ("or/washington/hillsboro", "UC-MU", "min_building_height_ft"),
@@ -295,7 +296,7 @@ def test_both_catalogued_pods_clear_every_floor_on_file() -> None:
 
     2026-09-29: true today except for :data:`FLOORS_ABOVE_THE_POD`, which is
     pinned both ways -- a new floor the pods miss fails here, and so does one
-    of these five that stops binding."""
+    of these that stops binding (five; four since MU-VTC left 2026-11-04)."""
     for design in load_catalog().active():
         missed = set()
         for name, code, field, value, _quote in encoded():

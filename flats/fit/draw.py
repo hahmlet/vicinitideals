@@ -147,14 +147,30 @@ def _along(lines: Iterable[tuple[float, float, float, float]]) -> np.ndarray:
     return np.concatenate(out) if out else np.empty((0, 2))
 
 
+#: Largest box-by-point array :func:`_box_distance` builds at once (about
+#: 16 MB of float64 per temporary).
+BOX_DISTANCE_BLOCK_CELLS = 2_000_000
+
+
 def _box_distance(
     x0: np.ndarray, y0: np.ndarray, x1: np.ndarray, y1: np.ndarray, pts: np.ndarray
 ) -> np.ndarray:
-    """Distance from each box to the nearest of ``pts`` (0 where one is inside)."""
+    """Distance from each box to the nearest of ``pts`` (0 where one is inside).
+
+    Worked in blocks of boxes so the box-by-point arrays stay under
+    :data:`BOX_DISTANCE_BLOCK_CELLS` elements: the frontmost search hands in
+    every hit on a big lot, and one array for all of them killed a 6.5 acre
+    lot's worker for memory (2S102BD00100, FOLLOWUPS 147). Same answer.
+    """
     px, py = pts[None, :, 0], pts[None, :, 1]
-    dx = np.maximum(np.maximum(x0[:, None] - px, 0.0), px - x1[:, None])
-    dy = np.maximum(np.maximum(y0[:, None] - py, 0.0), py - y1[:, None])
-    return np.hypot(dx, dy).min(axis=1)
+    out = np.empty(len(x0), dtype=float)
+    step = max(1, BOX_DISTANCE_BLOCK_CELLS // max(1, len(pts)))
+    for s in range(0, len(x0), step):
+        e = s + step
+        dx = np.maximum(np.maximum(x0[s:e, None] - px, 0.0), px - x1[s:e, None])
+        dy = np.maximum(np.maximum(y0[s:e, None] - py, 0.0), py - y1[s:e, None])
+        out[s:e] = np.hypot(dx, dy).min(axis=1)
+    return out
 
 
 @dataclass(frozen=True, slots=True)
@@ -256,6 +272,7 @@ def _options(
     fitter: Fitter,
     over_ft: float,
     max_front_ft: float | None,
+    include_frontmost: bool,
 ) -> list[_Placed]:
     """Every way the window can stand on the lot with the building toward
     the street and the court behind it, thinned to a lattice
@@ -263,9 +280,12 @@ def _options(
 
     The building must stand nearer the front lines than the court does, and
     no further from them than ``max_front_ft`` where the code sets a
-    maximum front setback. Nothing is ranked here: the caller grades them.
+    maximum front setback. When requested, the nearest valid window is kept
+    ahead of the thinned lattice so a boundary-flush option is not skipped.
+    Nothing is ranked here: the caller grades them.
     """
     out: list[_Placed] = []
+    frontmost: tuple[float, _Placed] | None = None
     if not len(street):
         return out
     for grid in grids:
@@ -275,6 +295,7 @@ def _options(
         hits = np.argwhere(masks[0] | masks[1])
         if not len(hits):
             continue
+        all_hits = hits
         stride = OPTIONS_STRIDE_CELLS
         keep = (hits[:, 0] % stride == 0) & (hits[:, 1] % stride == 0)
         # A window the lattice misses still counts where it is the only way.
@@ -303,6 +324,34 @@ def _options(
                 for i in np.nonzero(ok)[0]:
                     hit = lattice[i]
                     out.append(_Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
+        if include_frontmost and max_front_ft is not None:
+            pts = _local(street, grid)
+            res = grid.res
+            wx0 = grid.minx + all_hits[:, 1] * res
+            wy0 = grid.miny + all_hits[:, 0] * res
+            wx1 = wx0 + w_cells * res
+            wy1 = wy0 + d_cells * res
+            for low in (True, False):
+                way = masks[0 if low else 1][all_hits[:, 0], all_hits[:, 1]]
+                if not way.any():
+                    continue
+                by0, by1 = (wy0, wy0 + deep_b) if low else (wy1 - deep_b, wy1)
+                cy0, cy1 = (by1, wy1) if low else (wy0, by0)
+                court = _box_distance(wx0, cy0, wx1, cy1, pts)
+                for left in (True, False):
+                    bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
+                    building = _box_distance(bx0, by0, bx1, by1, pts)
+                    valid = way & (building < court) & (building <= max_front_ft)
+                    candidates = np.nonzero(valid)[0]
+                    if not len(candidates):
+                        continue
+                    i = candidates[int(np.argmin(building[candidates]))]
+                    hit = all_hits[i]
+                    placed = _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left)
+                    if frontmost is None or building[i] < frontmost[0]:
+                        frontmost = (float(building[i]), placed)
+    if frontmost is not None:
+        out.insert(0, frontmost[1])
     return out
 
 
@@ -325,6 +374,7 @@ def draw(
     where: _Placed | None = None,
     listing: list[_Placed] | None = None,
     max_front_ft: float | None = None,
+    include_frontmost: bool = False,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -357,7 +407,9 @@ def draw(
     the one nearest the street (FOLLOWUPS 57). ``listing``, when given,
     asks for those windows instead of a drawing: they are appended to it
     and ``None`` comes back; ``max_front_ft`` bounds how far from the front
-    lines the building may stand in them.
+    lines the building may stand in them. ``include_frontmost`` keeps the
+    nearest valid option in a listing even when it falls between lattice
+    windows.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -386,6 +438,7 @@ def draw(
             _options(
                 grids, need, w_cells, across_b=across_b, deep_b=deep_b, street=pts,
                 fitter=fitter, over_ft=over, max_front_ft=max_front_ft,
+                include_frontmost=include_frontmost,
             )
         )
         return None

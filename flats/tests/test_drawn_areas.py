@@ -52,6 +52,9 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "east_hillsboro_city_standards",
         "gladstone_parking_exception_area",
         "gladstone_town_center",
+        # South Hillsboro's Town and Village Center Core Areas, Figure 12.65.930-A
+        # (FOLLOWUPS 147, 2026-11-04).
+        "hillsboro_center_core",
         "inside_mapped_use_area",
         "north_bethany_kaiser_main_street",
         "north_bethany_park_blocks",

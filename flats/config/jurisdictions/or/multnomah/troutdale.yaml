@@ -841,6 +841,49 @@ defaults:
         when: [unit_lots]
         cite: TDC 8.130.C.4.b.i, no off-street parking in the front yard or side yard of a townhouse
         quote: "or/multnomah/troutdale/8/8.130.txt#L84-L85"
+  # THE REAR COURT AND THE SETBACKS, read 2026-11-05 (FOLLOWUPS 150).
+  # 9.095 A: "Parking areas which abut a residential zoning district shall
+  # meet the building setback of the most restrictive adjoining residential
+  # zoning district." Chapter 9 reaches every development (9.005, "Off-street
+  # parking and loading space shall be provided for all developments") and
+  # where it spares the small residential uses it says so by name -- 9.085 B
+  # and 9.090 F spare single-family and two-family dwellings, 9.055 A a
+  # residential development with landscaped yards -- and 9.095 names none.
+  # The middle-housing sections do not switch it off: 8.120.C.1.b voids only
+  # design standards that apply ONLY to triplexes, quadplexes or multifamily,
+  # and 8.130.B.1.c only base-zone and townhouse-only standards; 9.095 is
+  # neither. "Abutting" is "adjoining with any common boundary line(s)"
+  # (1.020, L77). Read LITERALLY: a court whose rear and side lot lines meet
+  # residential land abuts the residential district that land is in, so it
+  # meets that district's building setback -- the court stands in front of
+  # the rear setback and the two stack (`paper.behind_wall_ft`); the sides are
+  # already outside the envelope the court is searched in. The reading that
+  # reaches only parking outside a residential district is not taken (the
+  # words do not say it, and it is the false-GREEN direction; hand-off
+  # question). A lot with NO residential neighbour -- every non-street line
+  # read and every one of them non-residential (`abuts_nonresidential_zone`,
+  # the `neighbours:` block) -- has nothing to abut, and shares as before.
+  #
+  # "The building setback of the most restrictive adjoining district" is read
+  # as the setback that district prints for the same building: the quadplex
+  # row of 3.130.B (3.130.txt L46, L49) or the townhouse row of 3.130.C (L66, L74).
+  # The rears agree with ours in every residential district (10, or 0 on a
+  # townhouse alley), and the mixed-use zones' own yards are larger, so the
+  # rear needs nothing more. A quadplex SIDE can: LDR-1 prints 10, LDR-2 7.5,
+  # MDR 5 -- read in LDR-2 and MDR (`parking_lot_line_buffer_ft`). Read
+  # instead as the single-family row (15 or 20 rear, 3.130.A, L20), every
+  # residential rear here would be short by 5 to 10 ft (hand-off question).
+  parking_required_yard_prohibited:
+    value: true
+    cite: TDC 9.095 A, parking areas abutting a residential zoning district meet the building setback of the most restrictive adjoining residential zoning district
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9/9.095.txt#L3"
+    variants:
+      - value: false
+        when: [abuts_nonresidential_zone]
+        cite: TDC 9.095 A, which binds only a parking area abutting a residential zoning district
+        quote: "or/multnomah/troutdale/9/9.095.txt#L3"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -959,6 +1002,12 @@ defaults:
 zones:
   MU-1:
     section: ["3.210", "3.220", "3.230", "3.235", "3.140", "8.130"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
         dimensional standards) (Municode, through Ord. 899)
@@ -1234,6 +1283,12 @@ zones:
           - "proposed public streets"
           - "land dedicated or conveyed to the City"
     section: ["3.210", "3.220", "3.230", "3.235", "3.140"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
         dimensional standards) (Municode, through Ord. 899)
@@ -1449,6 +1504,12 @@ zones:
           - "proposed public streets"
           - "land dedicated or conveyed to the City"
     section: ["3.210", "3.220", "3.230", "3.235", "3.140"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.A and 3.230.B (residential uses), 3.235
         (Municode, through Ord. 899)
@@ -1553,6 +1614,10 @@ zones:
       # legal front setback and it is 20 feet.
       value: 20
       quote: "or/multnomah/troutdale/3/3.230.txt#L25,L46"
+    setback_front_max_streets:
+      value: front
+      cite: Troutdale Development Code Table 3.230.B, Maximum front yard setback
+      quote: "or/multnomah/troutdale/3/3.230.txt#L42,L46"
     min_building_height_ft:
       # A FLOOR, not a ceiling, and the only standard in this corpus a pod can
       # fail by being too short. Troutdale states it twice and the two agree.
@@ -1660,6 +1725,12 @@ zones:
           cite: TDC 3.140.B.3.a (townhouse projects, four (4) times the detached single-family density) and 3.130.A (single-family detached minimum lot, 10,000 sq ft in LDR-1)
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L284-L286,L506,L512-L514"
     section: ["3.111", "3.120", "3.130", "8.120"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
         8.120 (Municode, through Ord. 899)
@@ -1821,6 +1892,12 @@ zones:
           cite: TDC 3.140.B.3.a (townhouse projects, four (4) times the detached single-family density) and 3.130.A (single-family detached minimum lot, 7,000 sq ft in LDR-2)
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L284-L286,L506,L512-L514"
     section: ["3.112", "3.120", "3.130", "8.120"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
         8.120 (Municode, through Ord. 899)
@@ -1887,6 +1964,36 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+    # 9.095 A on a quadplex SIDE (FOLLOWUPS 150, read 2026-11-05; the
+    # parking_required_yard_prohibited default has the reading): the court
+    # meets the building setback of the most restrictive adjoining
+    # residential district, and an LDR-1 quadplex side is 10 ft (3.130.B,
+    # L46) where this zone's is 7.5. Which line the neighbour is on is not
+    # measured, so the strip is kept off every non-street line. Read on
+    # `abuts_lower_density_zone`, which this layer answers as "abuts LDR-1
+    # or LDR-2" (the `neighbours:` block). In LDR-2 that also
+    # fires on an LDR-2 neighbour, whose 7.5 ft needs nothing: conservative,
+    # 2.5 ft a side, the price of a lot-level fact. The townhouse row prints 5 ft
+    # in every district (L66), so the unit-lots path owes nothing more.
+    parking_lot_line_buffer_ft:
+      value: 7.5
+      cite: TDC 9.095 A with 3.130.B, this zone's own quadplex side yard where no stricter residential district adjoins (already charged, so the strip changes nothing)
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          cite: TDC 9.095 A with 3.130.B, LDR-1 quadplex side yard 10 ft (the neighbour's column, not this zone's)
+          quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
+        - value: 5
+          when: [unit_lots]
+          cite: TDC 9.095 A with 3.130.C, townhouse side yard 5 ft
+          quote: "or/multnomah/troutdale/3/3.130.txt#L59,L66"
+        - value: 5
+          when: [unit_lots, abuts_lower_density_zone]
+          cite: TDC 9.095 A with 3.130.C, townhouse side yard 5 ft in every residential district
+          quote: "or/multnomah/troutdale/3/3.130.txt#L59,L66"
     setback_side_ft:
       value: 7.5
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L46"
@@ -1982,6 +2089,12 @@ zones:
           cite: TDC 3.140.B.3.b (townhouse projects, three (3) times the detached single-family density) and 3.130.A (single-family detached minimum lot, 5,000 sq ft in MDR)
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L284-L286,L506,L512,L515-L516"
     section: ["3.113", "3.120", "3.130", "8.120"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
         8.120 (Municode, through Ord. 899)
@@ -2075,6 +2188,31 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+    # 9.095 A on a quadplex SIDE (FOLLOWUPS 150, read 2026-11-05; the
+    # parking_required_yard_prohibited default has the reading): the court
+    # meets the building setback of the most restrictive adjoining
+    # residential district, and an LDR-1 quadplex side is 10 ft (3.130.B,
+    # L46) where this zone's is 5. Which line the neighbour is on is not
+    # measured, so the strip is kept off every non-street line. Read on
+    # `abuts_lower_density_zone`, which this layer answers as "abuts LDR-1
+    # or LDR-2" (the `neighbours:` block); an LDR-2 neighbour
+    # asks 7.5 and is charged 10, conservative. The townhouse row prints 5 ft
+    # in every district (L66), so the unit-lots path owes nothing more.
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: TDC 9.095 A with 3.130.B, this zone's own quadplex side yard where no stricter residential district adjoins (already charged, so the strip changes nothing)
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          cite: TDC 9.095 A with 3.130.B, LDR-1 quadplex side yard 10 ft (the neighbour's column, not this zone's)
+          quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
+        - value: 5
+          when: [unit_lots, abuts_lower_density_zone]
+          cite: TDC 9.095 A with 3.130.C, townhouse side yard 5 ft in every residential district
+          quote: "or/multnomah/troutdale/3/3.130.txt#L59,L66"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L46"
@@ -2218,6 +2356,12 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.140.txt#L11,L20"
     section: ["3.114", "3.120", "3.130", "8.120"]
+    parking_lot_line_buffer_doubt_ft:
+      value: 20
+      cite: TDC 3.130.A, conservative maximum single-house rear setback where the adjoining district is unknown
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
     cite_default:
       cite: Troutdale Development Code 3.120 (Quadplex = N in HDR), 3.130 (dimensional standards)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
@@ -2634,6 +2778,24 @@ neighbours:
       which is the tightening way to be incomplete. The condition is true
       of a lot only when EVERY non-street line is fully read and everything
       across it is on the true_for side; one residential point settles it false.
+  abuts_lower_density_zone:
+    true_for: [LDR-1, LDR-2]
+    false_for: [MDR, HDR, MU-1, MU-2, MU-3, CC, GC, IP, LI, GI, OS]
+    quote: "or/multnomah/troutdale/3/3.130.txt#L38,L46"
+    cite: TDC 3.130.B, triplex and quadplex side yard (LDR-1 10 ft, LDR-2 7.5 ft, MDR 5 ft)
+    note: >-
+      Read only by `parking_lot_line_buffer_ft` in LDR-2 and MDR (FOLLOWUPS
+      150): 9.095 A gives a parking area the building setback of "the most
+      restrictive adjoining residential zoning district", and the quadplex
+      side yard is 10 ft in LDR-1, 7.5 in LDR-2 and 5 in MDR. Held here as
+      "abuts LDR-1 or LDR-2", the two districts whose side yard exceeds 5 ft;
+      in LDR-2 the LDR-2 half asks nothing new and is charged anyway (one
+      list per layer). The false side is every other district 3.020 files:
+      MDR and HDR (5 ft; HDR prints no quadplex row and its townhouse row is
+      5), and the mixed-use, commercial, industrial and open-space districts,
+      which are not residential. A line across another city, a park the
+      layer cannot place, or a split neighbour leaves the fact unstated and
+      the lot out of GREEN.
 
 # Which of Metro's ORCA open-land types this code calls "a park", for the
 # MU-3 park row of 3.230.A -- the fact quadfit's s4 reads by looking the same
