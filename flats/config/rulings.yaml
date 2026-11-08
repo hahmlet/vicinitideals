@@ -188,8 +188,12 @@
   effect: >-
     The alley setback applies only to the stretch the alley covers; the rest
     of the line keeps the ordinary setback. A partial alley counts as the
-    court's travel lane only when the covered run is long enough.
+    court's travel lane only when the covered run is long enough, and only
+    for a court that stands against that covered run (FOLLOWUPS 3(c),
+    2026-11-08): where no window does, the court keeps its own aisle, and a
+    final drawing with the court off the stretch is held out of GREEN.
   source: Steph 2026-09-28 (memory feedback_partial_alley_ruling.md), commit 59533da1
+  encoded_in: [flats/geom/alley.py, flats/score/paper.py, flats/fit/draw.py, flats/ingest/quadfit.py]
 
 - id: 2026-09-29-stated-number-governs
   kind: ruling

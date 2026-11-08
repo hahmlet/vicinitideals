@@ -387,6 +387,221 @@ def _yard_bad(
     return _between_boxes(got[0], got[1], yard)
 
 
+#: How much shorter than the row the covered stretch behind a court may be
+#: and still serve it: the half-foot :func:`flats.geom.alley.usable_run_ft`
+#: walks the stretch at, and the fit's own cell.
+STRETCH_TOL_FT = 0.5
+
+
+@dataclass(frozen=True, slots=True)
+class AlleyStretch:
+    """Where a rear alley that runs only PART of the rear line serves as the
+    court's aisle (Steph 2026-09-28, rulings.yaml ``2026-09-28-partial-alley``:
+    *"we can use the portion the alley abuts for our travel lane only if the
+    lane is actually long enough"*; FOLLOWUPS 3(c)).
+
+    The row of stalls backs straight out into the alley, so the court has to
+    stand against the covered stretch: its far edge -- the one away from the
+    building -- within ``reach_ft`` of the stretch, and at least ``row_ft``
+    of covered stretch (less :data:`STRETCH_TOL_FT`) along that edge.
+    ``lines`` are the covered stretches in the lot's coordinates and
+    ``chain`` the run each belongs to: stretches that meet across a bend are
+    one run, as :func:`flats.geom.alley.usable_run_ft` walks them."""
+
+    lines: tuple[tuple[float, float, float, float], ...]
+    chain: tuple[int, ...]
+    row_ft: float
+    reach_ft: float
+
+    @classmethod
+    def of(
+        cls,
+        runs: Sequence[Sequence[tuple[float, float, float, float]]],
+        row_ft: float,
+        reach_ft: float,
+        join_ft: float = STRETCH_TOL_FT,
+    ) -> "AlleyStretch | None":
+        """From :func:`flats.geom.alley.rear_cover_runs`; None where no
+        stretch is on record."""
+        lines: list[tuple[float, float, float, float]] = []
+        chain: list[int] = []
+        run = -1
+        for line in runs:
+            prev: tuple[float, float] | None = None
+            for x1, y1, x2, y2 in line:
+                if math.hypot(x2 - x1, y2 - y1) <= 0:
+                    continue
+                if prev is None or math.hypot(x1 - prev[0], y1 - prev[1]) > join_ft:
+                    run += 1
+                lines.append((float(x1), float(y1), float(x2), float(y2)))
+                chain.append(run)
+                prev = (x2, y2)
+        if not lines:
+            return None
+        return cls(tuple(lines), tuple(chain), float(row_ft), float(reach_ft))
+
+
+def _clipped(
+    x0: np.ndarray, x1: np.ndarray, y0: np.ndarray, y1: np.ndarray, seg: np.ndarray
+) -> np.ndarray:
+    """Length of the segment ``seg`` (``x1, y1, x2, y2``) inside each box,
+    Liang-Barsky over many boxes at once."""
+    sx, sy, ex, ey = (float(v) for v in seg)
+    dx, dy = ex - sx, ey - sy
+    t0 = np.zeros(len(x0))
+    t1 = np.ones(len(x0))
+    ok = np.ones(len(x0), dtype=bool)
+    for p, q in ((-dx, sx - x0), (dx, x1 - sx), (-dy, sy - y0), (dy, y1 - sy)):
+        if abs(p) < 1e-12:
+            ok &= q >= 0
+            continue
+        t = q / p
+        if p < 0:
+            t0 = np.maximum(t0, t)
+        else:
+            t1 = np.minimum(t1, t)
+    return np.where(ok, np.maximum(0.0, t1 - t0), 0.0) * math.hypot(dx, dy)
+
+
+def _on_stretch(
+    cx0: np.ndarray, cx1: np.ndarray, far: np.ndarray, stretch: AlleyStretch, segs: np.ndarray
+) -> np.ndarray:
+    """Which courts (``cx0..cx1`` across, far edge at ``far``, in a frame
+    where the court's depth runs along ``y``) stand against a covered run
+    at least as long as the row (:class:`AlleyStretch`). ``segs`` are the
+    stretch's lines in that frame."""
+    lo, hi = far - stretch.reach_ft, far + stretch.reach_ft
+    runs: dict[int, np.ndarray] = {}
+    for k, seg in enumerate(segs):
+        got = _clipped(cx0, cx1, lo, hi, seg)
+        c = stretch.chain[k]
+        runs[c] = got if c not in runs else runs[c] + got
+    if not runs:
+        return np.zeros(len(cx0), dtype=bool)
+    best = np.max(np.vstack(list(runs.values())), axis=0)
+    return best >= stretch.row_ft - STRETCH_TOL_FT
+
+
+def _stretch_bad(
+    wx0: np.ndarray,
+    wy0: np.ndarray,
+    wy1: np.ndarray,
+    *,
+    low: bool,
+    left: bool,
+    across_b: float,
+    deep_b: float,
+    court: _Court | None,
+    stretch: AlleyStretch | None,
+    segs: np.ndarray,
+) -> np.ndarray:
+    """Which windows stand a court the partial alley feeds anywhere but
+    against its covered stretch (:class:`AlleyStretch`)."""
+    if stretch is None or court is None or court.beside_band_ft > 0 or court.depth_ft <= 0:
+        return np.zeros(len(wx0), dtype=bool)
+    got = _court_boxes(
+        wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b, court=court
+    )
+    if got is None:
+        return np.zeros(len(wx0), dtype=bool)
+    cx0, cy0, cx1, cy1 = got[1]
+    return ~_on_stretch(cx0, cx1, cy1 if low else cy0, stretch, segs)
+
+
+def court_on_stretch(
+    building: BaseGeometry, court: BaseGeometry, stretch: AlleyStretch
+) -> bool:
+    """Whether a drawn ``court`` stands against the covered stretch of a
+    partial rear alley (:class:`AlleyStretch`), read in the court's own
+    frame: the axis that parts it from ``building`` is its depth, and its
+    far edge the one away from the building. A court that is not a
+    rectangle is read on its bounds in that frame."""
+    ring = list(court.exterior.coords)
+    if len(ring) < 4:
+        return False
+    (ax, ay), (bx, by) = ring[0][:2], ring[1][:2]
+    turn = -math.degrees(math.atan2(by - ay, bx - ax))
+    c = affinity.rotate(court, turn, origin=(0.0, 0.0))
+    b = affinity.rotate(building, turn, origin=(0.0, 0.0))
+    t = math.radians(turn)
+    cos, sin = math.cos(t), math.sin(t)
+    raw = np.asarray(stretch.lines, dtype=float).reshape(-1, 4)
+    segs = np.column_stack(
+        (
+            raw[:, 0] * cos - raw[:, 1] * sin,
+            raw[:, 0] * sin + raw[:, 1] * cos,
+            raw[:, 2] * cos - raw[:, 3] * sin,
+            raw[:, 2] * sin + raw[:, 3] * cos,
+        )
+    )
+    cb, bb = c.bounds, b.bounds
+
+    def overlap(i: int) -> float:
+        return min(cb[i + 2], bb[i + 2]) - max(cb[i], bb[i])
+
+    if overlap(1) > overlap(0):
+        # The two stand side by side along x: x is the depth. Swap the axes.
+        cb = (cb[1], cb[0], cb[3], cb[2])
+        bb = (bb[1], bb[0], bb[3], bb[2])
+        segs = segs[:, [1, 0, 3, 2]]
+    far = cb[3] if (cb[1] + cb[3]) >= (bb[1] + bb[3]) else cb[1]
+    got = _on_stretch(
+        np.asarray([cb[0]]), np.asarray([cb[2]]), np.asarray([far]), stretch, segs
+    )
+    return bool(got[0])
+
+
+def stretch_window(
+    fitter: Fitter,
+    fit: Fit,
+    *,
+    width_ft: float,
+    depth_ft: float,
+    court_depth_ft: float,
+    court_beyond_ft: float,
+    stretch: AlleyStretch,
+    court_overlap_ft: float = 0.0,
+) -> bool:
+    """Whether any window the fitter holds, at ANY of its angles, stands
+    the fit's plan with its court against the covered stretch
+    (:class:`AlleyStretch`; FOLLOWUPS 3(c)). The same windows
+    :func:`draw` places in -- the room ``fit.across_ft`` wide, the building
+    plus the court's charge deep, the court's run past it on the court's
+    ground -- every one of them, not thinned. Where none does, the partial
+    alley is no aisle for this plan and the court keeps its own
+    (:func:`flats.ingest.quadfit._screen_on`)."""
+    if fit.across_ft is None or court_depth_ft <= 0:
+        return False
+    if fit.orientation is Orientation.depth_facing:
+        deep_b = width_ft
+    else:
+        deep_b = depth_ft
+    over = max(0.0, court_depth_ft - max(court_beyond_ft, 0.0))
+    for grid in fitter.grids:
+        res = grid.res
+        w_cells = cells_for(fit.across_ft, res)
+        need = cells_for(deep_b + max(court_beyond_ft, 0.0), res)
+        masks = fitter.court_masks(grid, need, w_cells, over)
+        if masks is None:
+            continue
+        segs = _lines_local(stretch.lines, grid)
+        for low in (True, False):
+            hits = np.argwhere(masks[0 if low else 1])
+            if not len(hits):
+                continue
+            wx0 = grid.minx + hits[:, 1] * res
+            wy0 = grid.miny + hits[:, 0] * res
+            if low:
+                far = wy0 + deep_b + court_depth_ft
+            else:
+                far = wy0 + need * res - deep_b - court_depth_ft
+            if _on_stretch(
+                wx0 - court_overlap_ft, wx0 + fit.across_ft, far, stretch, segs
+            ).any():
+                return True
+    return False
+
+
 @dataclass(frozen=True, slots=True)
 class _Placed:
     grid: Grid
@@ -413,6 +628,7 @@ def _place(
     court: _Court | None = None,
     yard: Iterable[tuple[float, float, float, float]] = (),
     yard_moves: bool = True,
+    stretch: AlleyStretch | None = None,
 ) -> _Placed | None:
     """The window of this size, and the way round, that puts the building
     nearest the street.
@@ -433,7 +649,10 @@ def _place(
     the court the plan draws: a window whose court stands between its
     building and one of them (:func:`_between_boxes`) is taken only where no
     other way stands the plan, so the drawing still shows where it would go
-    and the caller reads it (:func:`court_between`). ``yard_moves`` False
+    and the caller reads it (:func:`court_between`). ``stretch`` likewise: a
+    window whose court a partial rear alley feeds but that does not stand it
+    against the covered stretch (:class:`AlleyStretch`) is taken only where
+    no other way stands the plan. ``yard_moves`` False
     takes a clear window only as near the street as the nearest at all --
     the same window turned round, the court on the building's other flank:
     a court whose way in the drawing does not place (beside the building, fed
@@ -462,6 +681,7 @@ def _place(
             hits = hits[np.linspace(0, len(hits) - 1, MAX_CANDIDATES).astype(int)]
         pts = _local(street, grid)
         yard_local = _lines_local(yard, grid) if court is not None else np.empty((0, 4))
+        segs = _lines_local(stretch.lines, grid) if stretch is not None else np.empty((0, 4))
         res = grid.res
         wx0 = grid.minx + hits[:, 1] * res
         wy0 = grid.miny + hits[:, 0] * res
@@ -480,6 +700,9 @@ def _place(
                 bad = _yard_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=court, yard=yard_local,
+                ) | _stretch_bad(
+                    wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
+                    court=court, stretch=stretch, segs=segs,
                 )
                 for clear in (True, False):
                     ranked = np.where(bad, np.inf, building) if clear else building
@@ -496,7 +719,10 @@ def _place(
                         else:
                             fallback = got
     if (
+        # A court the partial alley feeds is reached from the alley: moving
+        # the plan back toward it is how it reaches the stretch.
         not yard_moves
+        and stretch is None
         and best is not None
         and fallback is not None
         and best[0] > fallback[0] + (grids[0].res if grids else 0.0)
@@ -529,6 +755,7 @@ def _options(
     lane_outside: bool = False,
     court: _Court | None = None,
     yard: Iterable[tuple[float, float, float, float]] = (),
+    stretch: AlleyStretch | None = None,
 ) -> list[_Placed]:
     """Every way the window can stand on the lot with the building toward
     the street and the court behind it, thinned to a lattice
@@ -542,7 +769,9 @@ def _options(
     ``court`` (:func:`_place`), a window whose court stands between its
     building and a yard line is not listed at all: the placements the fire,
     flatter and front-maximum searches choose among keep the parking out of
-    the front yard (Steph 2026-11-08).
+    the front yard (Steph 2026-11-08). With ``stretch``, nor is a window
+    whose court the partial rear alley feeds standing anywhere but against
+    its covered stretch (:class:`AlleyStretch`).
     """
     out: list[_Placed] = []
     yard = tuple(yard)
@@ -553,6 +782,7 @@ def _options(
     for grid in grids:
         masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
         yard_local = _lines_local(yard, grid) if spec is not None else np.empty((0, 4))
+        segs = _lines_local(stretch.lines, grid) if stretch is not None else np.empty((0, 4))
         if masks is None:
             continue
         hits = np.argwhere(masks[0] | masks[1])
@@ -584,6 +814,9 @@ def _options(
                 ok = way & (building < court) & ~_yard_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=spec, yard=yard_local,
+                ) & ~_stretch_bad(
+                    wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
+                    court=spec, stretch=stretch, segs=segs,
                 )
                 if max_front_ft is not None:
                     ok &= building <= max_front_ft
@@ -614,6 +847,11 @@ def _options(
                         & ~_yard_bad(
                             wx0, wy0, wy1, low=low, left=left and not lane_outside,
                             across_b=across_b, deep_b=deep_b, court=spec, yard=yard_local,
+                        )
+                        & ~_stretch_bad(
+                            wx0, wy0, wy1, low=low, left=left and not lane_outside,
+                            across_b=across_b, deep_b=deep_b, court=spec, stretch=stretch,
+                            segs=segs,
                         )
                     )
                     candidates = np.nonzero(valid)[0]
@@ -653,6 +891,7 @@ def draw(
     include_frontmost: bool = False,
     yard: Iterable[tuple[float, float, float, float]] = (),
     yard_moves: bool = True,
+    stretch: AlleyStretch | None = None,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -697,6 +936,11 @@ def draw(
     clear of them (:func:`_place`), else the nearest at all, which the
     caller reads with :func:`court_between`; a listing holds only clear
     windows (:func:`_options`). ``yard_moves`` is :func:`_place`'s.
+
+    ``stretch`` is where a partial rear alley serves as the court's aisle
+    (:class:`AlleyStretch`, FOLLOWUPS 3(c)): the court is drawn against the
+    covered stretch wherever a window allows, and a listing holds only those
+    windows; the caller reads the drawing with :func:`court_on_stretch`.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -730,7 +974,7 @@ def draw(
             beside_band_ft=beside_band_ft,
             beside_len_ft=beside_len_ft,
         )
-        if yard
+        if yard or stretch is not None
         else None
     )
     if listing is not None:
@@ -742,6 +986,7 @@ def draw(
                 lane_outside=lane_outside,
                 court=spec,
                 yard=yard,
+                stretch=stretch,
             )
         )
         return None
@@ -762,6 +1007,7 @@ def draw(
         court=spec,
         yard=yard,
         yard_moves=yard_moves,
+        stretch=stretch,
     )
     tight = False
     if placed is None and short_ft > 0:
@@ -780,6 +1026,7 @@ def draw(
                 court=spec,
                 yard=yard,
                 yard_moves=yard_moves,
+                stretch=stretch,
             )
             tight = placed is not None
     fits = placed is not None

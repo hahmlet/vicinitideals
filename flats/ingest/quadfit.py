@@ -72,7 +72,13 @@ from flats.designs.model import Design, Plat
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
-from flats.fit.draw import COURT_BETWEEN_TOL_FT, draw
+from flats.fit.draw import (
+    COURT_BETWEEN_TOL_FT,
+    AlleyStretch,
+    court_on_stretch,
+    draw,
+    stretch_window,
+)
 from flats.fit.frontage import _runs, _streets_of_run, building_runs, parking_share, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
@@ -84,6 +90,7 @@ from flats.geom.alley import (
     alley_lines,
     cover_stretches,
     decode_cover,
+    RUN_PROBE_FT,
     observed_alley,
     rear_cover_runs,
     registry_alley,
@@ -195,6 +202,7 @@ from flats.score import margins as margin_record
 from flats.score.relief import ReliefPolicy
 from flats.score.room import Room, room_for
 from flats.score.paper import (
+    _row_ft,
     court_across,
     court_depth,
     faces_the_street,
@@ -1389,6 +1397,23 @@ class Envelope:
     #: is s5o's, no yard is known and the lot less the carve stands in: the
     #: court at least stays on the lot. None without a lot polygon.
     ground: Any = None
+    #: Whether :attr:`ground` was cut from the yards the corpus resolved
+    #: (FOLLOWUPS 33(c)). False where the envelope is s5o's and FLATS could
+    #: not name the yards (no taxlot or edges, a landlocked lot, a yard with
+    #: no number): the court's ground is then the lot less the carve, which
+    #: lets the court stand in a front or side yard, so the screen holds the
+    #: lot out of GREEN on it (:attr:`flats.score.screen.LotFacts.
+    #: court_ground_unread`).
+    yards_read: bool = True
+
+    @property
+    def court_in_unread_yards(self) -> bool:
+        """Whether the court may stand in a yard nobody read: the yards are
+        unread AND there is a ground past the envelope. With no ground (no
+        lot polygon) the court is held inside s5o's envelope itself
+        (:meth:`flats.fit.rectangle.Fitter._over_cells` is 0), which already
+        keeps out of every yard s5o cut."""
+        return not self.yards_read and self.ground is not None and not self.ground.is_empty
 
     @property
     def sqft(self) -> float:
@@ -1595,7 +1620,9 @@ def envelope_for(
         # No line named: keep the strip off every line (conservative).
         on_lot = on_lot.buffer(-strip)
     fallback = None if lot.envelope is None else _less_carve(_less_carve(lot.envelope, lot.steep), lot.reach_off)
-    quadfit = Envelope(fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
+    quadfit = Envelope(
+        fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot, yards_read=False
+    )
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
     edges = dedicated(lot.edges, rules, lot.zone)
@@ -1608,11 +1635,10 @@ def envelope_for(
     # street line where Steph's ruling reaches the lot (FOLLOWUPS 43).
     setbacks = easement.floored(setbacks, lot.facts.easement_street_ft)
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
-    if split and plain is None and strips and "setback_rear_ft" in rules.exempted:
-        # The exemption is about the rear line on the alley; a rear line that
-        # is not on it has a setback this resolution does not carry, and the
-        # caller did not resolve it (``plain``).
-        return quadfit
+    # The exemption is about the rear line on the alley; a rear line that is
+    # not on it has a setback this resolution does not carry, and the caller
+    # did not resolve it (``plain``): the envelope stays s5o's, below.
+    unsplit = split and plain is None and strips and "setback_rear_ft" in rules.exempted
     if strip > 0:
         # A side yard narrower than the planted strip: the court and the
         # lane are searched inside the envelope, so the envelope's sides
@@ -1634,6 +1660,14 @@ def envelope_for(
         # Both norths, grid and true (:mod:`flats.geom.bearing`).
         at = lot.lot_geom.centroid
         setbacks = dataclasses.replace(setbacks, true_north_deg=true_north_deg(at.x, at.y))
+    if unsplit:
+        # Only the rear is in doubt, and the court's ground takes no rear:
+        # it is cut from the front and side yards these rules do resolve
+        # (FOLLOWUPS 33(c)), not the whole lot.
+        return dataclasses.replace(
+            quadfit, ground=buildable(lot.lot_geom, edges, _open_rear(setbacks, strip), less=taken),
+            yards_read=True,
+        )
     geom = buildable(lot.lot_geom, edges, setbacks, less=taken)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
@@ -1651,15 +1685,21 @@ def envelope_for(
     # between parking and the line (``parking_lot_line_buffer_ft``). A
     # separation 1005.02(L) draws off the top of a STRUCTURE does not reach
     # the court.
-    open_rear = dataclasses.replace(
+    ground = buildable(lot.lot_geom, edges, _open_rear(setbacks, strip), less=taken)
+    return Envelope(geom, cut, "flats", setbacks, ground)
+
+
+def _open_rear(setbacks: Setbacks, strip: float) -> Setbacks:
+    """``setbacks`` with the rear yard opened to the court
+    (:attr:`Envelope.ground`): only the planted ``strip`` stays off the rear
+    line, the alley's rear too."""
+    return dataclasses.replace(
         setbacks,
         rear_ft=strip,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
         north_ft=0.0,
         east_west_ft=0.0,
     )
-    ground = buildable(lot.lot_geom, edges, open_rear, less=taken)
-    return Envelope(geom, cut, "flats", setbacks, ground)
 
 
 def _taken(lot: QuadfitLot, steep: Any = None) -> Any:
@@ -2158,6 +2198,91 @@ def court_in_front_yard(s: "Screened", drawing: Mapping[str, Any] | None = None)
     if not (ring and len(ring) >= 4 and court and len(court) >= 4):
         return False
     return court_between(Polygon(ring), Polygon(court), court_yard_lines(s))
+
+
+def alley_stretch(
+    lot: QuadfitLot,
+    design: Design,
+    rules: ZoneResolution,
+    envelope: "Envelope | None",
+    fit: Fit,
+) -> AlleyStretch | None:
+    """Where this plan's court has to stand when a rear alley that runs only
+    PART of the rear line is its aisle (Steph 2026-09-28, rulings.yaml
+    ``2026-09-28-partial-alley``; FOLLOWUPS 3(c)); None where it is not --
+    no partial alley, a column or beside court, or a court that keeps its own
+    aisle (:func:`flats.score.paper.court_depth` charged no back-out).
+
+    The row is the charged floor (:func:`flats.score.paper._row_ft`), as the
+    depth is charged. The court's far edge may stand off the alley by the
+    strip the envelope lost at the rear -- or the planted strip kept off the
+    line, where that is wider -- and the probe's foot, as
+    :func:`flats.geom.alley.usable_run_ft` measured the run."""
+    alley = lot.facts.alley
+    if alley is None or not alley.at_rear or alley.rear_whole or not lot.rear_runs:
+        return None
+    if fit.column or fit.beside:
+        return None
+    _court, used = court_depth(design, rules, alley, corner=lot.facts.corner, fix=_fix(fit))
+    if "parking_alley_backout_ft" not in used:
+        return None
+    rear = 0.0 if envelope is None else _rear_ft(envelope, rules)
+    reach = max(rear, lot_line_buffer_ft(rules)) + RUN_PROBE_FT
+    return AlleyStretch.of(lot.rear_runs, _row_ft(design, rules, alley, None), reach)
+
+
+def _court_reaches_stretch(
+    lot: QuadfitLot,
+    design: Design,
+    rules: ZoneResolution,
+    envelope: "Envelope",
+    fit: Fit,
+    fitter: Fitter,
+    stretch: AlleyStretch,
+) -> bool:
+    """Whether any window ``fitter`` holds stands this plan's court -- the
+    shallow one the partial alley's back-out allows -- against the covered
+    stretch (:func:`flats.fit.draw.stretch_window`): the court the fit
+    charged, drawn as :func:`drawing_for` draws it."""
+    alley, corner = lot.facts.alley, lot.facts.corner
+    court = court_depth(design, rules, alley, corner=corner, fix=_fix(fit))[0]
+    across = court_across(design, rules, alley, corner=corner)
+    beyond = _court_beyond_rear(
+        design, rules, envelope.rear_cut_ft, alley, corner=corner, fix=_fix(fit)
+    )
+    return stretch_window(
+        fitter,
+        fit,
+        width_ft=design.footprint.width_ft,
+        depth_ft=design.footprint.depth_ft,
+        court_depth_ft=court,
+        court_beyond_ft=beyond,
+        stretch=stretch,
+        court_overlap_ft=side_yard_court_overlap_ft(
+            rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
+        ),
+    )
+
+
+def court_off_stretch(s: "Screened", drawing: Mapping[str, Any] | None = None) -> bool:
+    """Whether ``drawing`` (``s``'s own where omitted) stands a court the
+    partial rear alley feeds anywhere but against the covered stretch
+    (:func:`alley_stretch`, :func:`flats.fit.draw.court_on_stretch`). False
+    where the alley is not this plan's aisle. A plan that needs the stretch
+    and shows no fitting drawing is read as off it: nothing showed where
+    the court would stand."""
+    from shapely.geometry import Polygon
+
+    stretch = alley_stretch(s.lot, s.design, s.rules, s.envelope, s.fit)
+    if stretch is None:
+        return False
+    drawing = s.drawing if drawing is None else drawing
+    if not drawing or not drawing.get("fits"):
+        return True
+    ring, court = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court and len(court) >= 4):
+        return True
+    return not court_on_stretch(Polygon(ring), Polygon(court), stretch)
 
 
 def transit_from_row(row: Mapping[str, Any]) -> tuple[tuple[str, float], ...]:
@@ -3012,6 +3137,39 @@ def court_yard_checked(
     return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
+def alley_court_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the court it finally drew stands against
+    the stretch of rear alley that serves as its aisle (Steph 2026-09-28,
+    rulings.yaml ``2026-09-28-partial-alley``; FOLLOWUPS 3(c)).
+
+    The fit takes the partial alley as the aisle only where some window
+    stands the court against the covered stretch (:func:`_screen_on`), and
+    every drawing step prefers such a window (:func:`drawing_for`); the
+    fire, flatter and front-maximum steps can still stand the plan where no
+    window at that angle does. Where the drawing kept stands the court off
+    the stretch, its stalls would back out into a neighbour's yard, not the
+    alley: the lot is held out of GREEN (``alley_court_off_stretch``,
+    ALLEY_COURT_OFF_STRETCH), and a hold set earlier lifts where the court
+    shown stands on it. The fit is not undone -- the court with its own
+    aisle may yet stand -- so the hold is a closer look, not a red. A plan
+    RED both ways is not read."""
+    if s.facts is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    held = court_off_stretch(s)
+    if held == s.facts.alley_court_off_stretch:
+        return s
+    facts = dataclasses.replace(s.facts, alley_court_off_stretch=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
 def _yard_neighbour_edges(
     lot: QuadfitLot,
 ) -> tuple[tuple[Edge, NeighbourLine | None], ...]:
@@ -3132,23 +3290,12 @@ def _screen_on(
         envelope_rear_ft=env.rear_cut_ft,
         buildable_area_sqft=env.sqft if env.source == "flats" else None,
         dedicated_sqft=dedicated_sqft(here, got),
+        # The court's ground is the lot less the carve where FLATS could not
+        # name the yards (FOLLOWUPS 33(c)): held out of GREEN.
+        court_ground_unread=env.court_in_unread_yards and bool(design.parking.court_depth_ft),
     )
-    fit = fit_for(
-        fitters[key],
-        design,
-        got,
-        placement=False,
-        carved_rear_ft=env.rear_cut_ft,
-        alley=facts.alley,
-        corner=facts.corner,
-        frontage_ft=facts.cap_frontage_ft,
-        street_deg=_access_deg(here, front),
-    )
-    if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
-        # The court beside the building has its aisle in from the street;
-        # where the only room for it stands back from the street (the wide
-        # back of an L-shaped lot, behind a flag pole) no drive reaches it,
-        # so the lot is read on the row behind the building as before.
+
+    def fitted(facts: LotFacts) -> Fit:
         fit = fit_for(
             fitters[key],
             design,
@@ -3158,8 +3305,40 @@ def _screen_on(
             alley=facts.alley,
             corner=facts.corner,
             frontage_ft=facts.cap_frontage_ft,
-            street_deg=(),
+            street_deg=_access_deg(here, front),
         )
+        if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
+            # The court beside the building has its aisle in from the street;
+            # where the only room for it stands back from the street (the wide
+            # back of an L-shaped lot, behind a flag pole) no drive reaches it,
+            # so the lot is read on the row behind the building as before.
+            fit = fit_for(
+                fitters[key],
+                design,
+                got,
+                placement=False,
+                carved_rear_ft=env.rear_cut_ft,
+                alley=facts.alley,
+                corner=facts.corner,
+                frontage_ft=facts.cap_frontage_ft,
+                street_deg=(),
+            )
+        return fit
+
+    fit = fitted(facts)
+    stretch = alley_stretch(here, design, got, env, fit) if fit.fits else None
+    if stretch is not None and not _court_reaches_stretch(
+        here, design, got, env, fit, fitters[key], stretch
+    ):
+        # The covered stretch is long enough, but no window at any angle
+        # stands the court against it (FOLLOWUPS 3(c)): the alley is no
+        # aisle for this plan, and its court keeps its own -- the run a court
+        # can stand behind is none.
+        here = dataclasses.replace(
+            here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=0.0)
+        )
+        facts = dataclasses.replace(facts, alley_rear_run_ft=0.0)
+        fit = fitted(facts)
     base = facts
 
     def screened(fit: Fit) -> tuple[LotFacts, Screening, Screening]:
@@ -4227,6 +4406,7 @@ def _screen_lot_once(
         )
         won = rear_court_checked(won, policy=policy, relief=relief)
         won = court_yard_checked(won, policy=policy, relief=relief)
+        won = alley_court_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
         won = pdx.checked(won, lot.pdx_overlays)
@@ -5918,6 +6098,9 @@ def drawing_for(
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     yard = court_yard_lines(s)
     rear = s.envelope.rear_cut_ft if s.envelope else None
+    # A partial rear alley as the aisle: the court against its stretch
+    # wherever a window allows (FOLLOWUPS 3(c); :func:`court_off_stretch`).
+    stretch = alley_stretch(s.lot, s.design, s.rules, s.envelope, s.fit)
     if street is None:
         street = _street_lines(s.lot)
     short = _tight_ft(s)
@@ -5995,6 +6178,7 @@ def drawing_for(
         include_frontmost=include_frontmost,
         yard=yard,
         yard_moves=_lane_in_from_street(s),
+        stretch=stretch,
     )
     if got is None:
         return None
