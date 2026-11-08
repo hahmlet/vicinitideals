@@ -28,3 +28,9 @@ commercial source is ever wanted: none gathered (Steph: not looking now).
 (b) DONE 2026-11-01: lot tree marks LIVE (Copilot 22e5252f + Claude fixes 747d6b52 reload, 8cf68c0f approved
 teammates only / no emails, 3c7accea full-page form; migration 0148; prod E2E test_flats_lot_marks green).
 Left: (a) only.
+
+(a) BUILT 2026-11-08 on flats/johnson-creek-trees (off rescreen-1110): the tracing re-cut without 33.537.125 --
+993 of 6,317 held lots taken out (flood-hazard / corridor-edge lots no other reason reaches; 25 stay held through
+an overlapping kept taxlot); the hold's wording now names .130, .140.E and .160 only. WAITING: bound on 137, read
+every gained green, release. Not separated (stays held, conservative): South lots in the combined flood hazard
+area, which 33.537.020 sends to .150 instead of .140.E, and corridor-reach lots that are near but do not abut.

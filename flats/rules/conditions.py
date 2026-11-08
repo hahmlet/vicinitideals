@@ -1405,17 +1405,20 @@ _C: tuple[ConditionDef, ...] = (
         "pdx_johnson_creek_unmeasured",
         "site_fact",
         "The site is one a Johnson Creek Basin rule reaches that the screen "
-        "does not measure: the tree removal limits of 33.537.125 (South "
-        "subdistrict, combined flood hazard area, within 20 ft of the "
-        "Springwater Corridor) or the Springwater Corridor's 20 ft landscaped "
-        "buffer and vehicle-area setback (33.537.130). Nothing records where "
-        "the trees stand or which lot line abuts the corridor, so the lot "
+        "does not measure: the Springwater Corridor's 20 ft landscaped "
+        "buffer and vehicle-area setback (33.537.130), the South "
+        "subdistrict's slope-class density for land divisions (33.537.140.E) "
+        "or the Flood Risk Area's limits on land divisions (33.537.160). "
+        "Nothing records which lot line abuts the corridor, the slope "
+        "classes or the Flood Risk Area's share of the site, so the lot "
         "stays in review. Assumed unknown: it decides the colour.",
+        # 33.537.125 (tree removal) no longer holds a lot: Steph's ruling
+        # 2026-11-01-trees-ignored-entered-per-lot, FOLLOWUPS 140.
         evidence=(
-            "the Johnson Creek impervious tracing, the Flood Risk Area, and "
-            "every lot within 100 ft of the Springwater Corridor Trail line or "
-            "touching a taxlot the trail crosses -- held as Portland's "
-            "drawn_areas"
+            "the South subdistrict and every lot touching it, the Flood Risk "
+            "Area and every lot touching it, and every lot within 100 ft of "
+            "the Springwater Corridor Trail line or touching a taxlot the "
+            "trail crosses -- held as Portland's drawn_areas"
         ),
         assume=None,
     ),

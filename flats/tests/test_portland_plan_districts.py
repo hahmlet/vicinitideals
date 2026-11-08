@@ -5,9 +5,11 @@ zone (PCC 33.500.040). Part 1 reads the two districts that held about half of
 the plan-district GREEN lots on run 109:
 
 * Johnson Creek Basin (33.537). South subdistrict and flood-hazard sites take
-  a 50 percent impervious-surface cap (140.D, 150.E), and the tree limits
-  (125) and Springwater Corridor buffer (130) reach lots nothing measures, so
-  those lots are held.
+  a 50 percent impervious-surface cap (140.D, 150.E), and the Springwater
+  Corridor buffer (130), South land-class density (140.E) and Flood Risk Area
+  (160) reach lots nothing measures, so those lots are held. The tree limits
+  (125) no longer hold a lot (ruling 2026-11-01-trees-ignored-entered-per-lot,
+  FOLLOWUPS 140): the lots only they reached were taken out of the tracing.
 * Laurelhurst/Eastmoreland (33.540). Its setbacks are only on maps held at the
   Development Services Center, so every lot inside is held.
 
@@ -147,11 +149,84 @@ def test_the_tracing_is_in_quadfits_coordinates(fact: str) -> None:
     assert data["source"]["quote"].startswith("or/multnomah/portland/33.5")
 
 
-def test_the_unmeasured_tracing_holds_every_lot_the_cap_reaches() -> None:
+def _subdistrict(name: str):
+    from flats.rules import loader
+
+    path = loader.AREAS_ROOT / PORTLAND / "plan-subdistricts.geojson"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return shapely.union_all(
+        [
+            shapely.geometry.shape(f["geometry"])
+            for f in data["features"]
+            if f["properties"]["PLDIST"] == "JC" and f["properties"]["SUBDIST"] == name
+        ]
+    )
+
+
+@pytest.mark.parametrize("name", ["SOUTH", "FLOOD RISK"])
+def test_the_hold_still_covers_south_and_the_flood_risk_area(name: str) -> None:
+    # 140.E (South density) and 160 (Flood Risk Area) still hold their lots.
+    sub, held = _subdistrict(name), load_area(FILES[UNMEASURED])
+    assert not sub.is_empty
+    assert sub.difference(held).area < 0.001 * sub.area
+
+
+def _tree_only():
+    """Where only 33.537.125 reached: the cap's flood-hazard lots outside
+    South, the Flood Risk Area and the corridor reach."""
     cap, held = load_area(FILES[IMPERVIOUS]), load_area(FILES[UNMEASURED])
-    # The tree limits reach every South and flood-hazard site the cap does.
-    assert cap.difference(held).area < 0.001 * cap.area
-    assert held.area > cap.area
+    reach = shapely.union_all([_subdistrict("SOUTH"), _subdistrict("FLOOD RISK")]).buffer(5)
+    return cap.difference(held).difference(reach)
+
+
+def test_trees_alone_no_longer_hold_a_lot() -> None:
+    # Ruling 2026-11-01-trees-ignored-entered-per-lot (FOLLOWUPS 140): about
+    # a thousand flood-hazard lots the tree limits alone held were taken out.
+    gone = _tree_only()
+    assert gone.area / 43_560 > 300
+    # What is left of the hold is the three other reaches, not a new one.
+    held, cap = load_area(FILES[UNMEASURED]), load_area(FILES[IMPERVIOUS])
+    assert held.area < cap.union(_subdistrict("FLOOD RISK")).area + 2_000 * 43_560
+
+
+def test_a_tree_only_lot_keeps_the_cap_but_not_the_hold() -> None:
+    gone = _tree_only()
+    piece = max(getattr(gone, "geoms", [gone]), key=lambda g: g.area).buffer(-10)
+    lot = max(getattr(piece, "geoms", [piece]), key=lambda g: g.area).representative_point().buffer(5)
+    facts = _facts("R5", lot)
+    assert facts[IMPERVIOUS] is True
+    assert facts[UNMEASURED] is False
+
+
+def test_the_held_reason_names_no_trees() -> None:
+    import yaml
+
+    from flats.rules import loader
+
+    texts = [
+        CONDITIONS[UNMEASURED].describe,
+        CONDITIONS[UNMEASURED].evidence,
+        flag_plan.registry().types[fact_code(UNMEASURED)].description,
+    ]
+    area = json.loads((loader.AREAS_ROOT / FILES[UNMEASURED]).read_text(encoding="utf-8"))
+    texts.append(area["source"]["says"])
+
+    def walk(node):
+        if isinstance(node, dict):
+            q = node.get("qualified_by")
+            if isinstance(q, dict) and q.get("fact") == UNMEASURED:
+                texts.append(q["cite"])
+            for v in node.values():
+                walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v)
+
+    layer = loader.CONFIG_ROOT / f"{PORTLAND}.yaml"
+    walk(yaml.safe_load(layer.read_text(encoding="utf-8")))
+    assert len(texts) > 10
+    for text in texts:
+        assert "tree" not in text.lower(), text
 
 
 def test_the_two_districts_are_the_two_outlines() -> None:
