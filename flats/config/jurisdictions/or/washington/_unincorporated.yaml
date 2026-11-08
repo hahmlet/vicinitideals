@@ -12,6 +12,465 @@ ingest:
   juris_city_codes:
   - UNINCORPORATED
   - ''
+crossrefs:
+  # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed one layer
+  # down, read in CDC publication 3090 (the PDF this layer is sliced from). Several targets
+  # are HELD (431-8, 431-3.8, 407-6, 407-1.6, 307-7.5): crossrefs.py credits a document only
+  # for dotted children and the CDC numbers with a hyphen, so they read as unfetched. Ruled
+  # here on what they say; the resolver gap is listed in item 105.
+  "431-8":
+    outcome: other_path
+    note: >-
+      Transitions in Density -- held, inside cdc.431.transit-design; the ledger reports it
+      unfetched because the CDC numbers subsections with a hyphen and the resolver credits a
+      document only for dotted children. Read: where a TO district abuts R-5/R-6 it asks a Type
+      #2-#6 buffer (411-6), a 35 ft height cap, only detached/duplex/triplex/fourplex beside
+      existing houses in TO:R9-12, and the adjacent district's rear yard from the R-5/R-6 line.
+      375-10 says in terms that "Middle Housing is subject to design standards in Section 430-84,
+      not Section 431" (375-10.txt#L255); the only part of 431-8 the middle-housing table reaches
+      is its height note, and Table B(1) already prints that cap as "35 feet if abutting R-5 or
+      R-6" -- above the pod's 26 ft.
+  "430-1.6":
+    outcome: narrows_only
+    note: >-
+      Heat Pumps and Air Conditioners: "may be located within a required interior side yard as
+      long as they comply with State Building Code requirements." A permission to put equipment
+      inside a yard; it takes nothing from the envelope.
+  "430-1":
+    outcome: other_building
+    note: >-
+      Accessory Uses and Structures: uses "subordinate to the use of a site" -- sheds, garages,
+      dishes, wind and solar equipment. The pod is the primary use.
+  "430-1.1":
+    outcome: other_building
+    note: >-
+      Residential accessory uses and structures; the citing note gives them a 15 ft height cap
+      (375-10). Not the pod.
+  "430-1.2":
+    outcome: other_building
+    note: >-
+      Commercial and institutional accessory uses. Not the pod.
+  "430-2":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Unit, Urban: a unit subordinate to a detached house. The pod is four
+      primary units.
+  "430-2.1":
+    outcome: other_building
+    note: >-
+      Urban ADUs "in conjunction with a Single Detached Dwelling"; every mention is the ADU-above-
+      a-garage setback sentence in the 30x-7 tables.
+  "430-46":
+    outcome: later
+    note: >-
+      Flag Lot: "Creation of a flag lot shall be subject to the following" -- a 15 ft access strip
+      for one flag lot, 20 ft for two, the pole left out of lot area. 430-46.1 reaches Middle
+      Housing only for lots "to be considered flag lot(s) for Middle Housing purposes", i.e. lots
+      a middle housing land division makes. Lot creation: every existing taxlot is a lot of record
+      (ruling 2026-10-21-lots-are-legal) and no pod declares plat: unit_lots, so it binds the day
+      one does.
+  "430-37.1":
+    outcome: procedure
+    note: >-
+      Single Detached Dwelling on Lot of Record, Middle Housing Duplex, and Type II Middle
+      Housing. A: Type I design features for a house or duplex (not the pod). B: what a Type II
+      middle-housing plan must show -- that it "will not preclude feasible future development ...
+      to the minimum density of the district", with a plan of feasible future lots. That is the
+      Type II review this layer already flags REVIEW-CONDITIONS (207-5); a plan to show, not
+      ground the pod gives up.
+  "430-37":
+    outcome: procedure
+    note: >-
+      The heading of 430-37 (see 430-37.1): Type I house/duplex design and the Type II middle-
+      housing feasibility plan, already the REVIEW-CONDITIONS path here.
+  "430-37.2":
+    outcome: other_building
+    note: >-
+      Accessory Farm Dwelling in conjunction with a farm use (EFU/AF districts). Not the pod.
+  "375-7.32":
+    outcome: other_path
+    note: >-
+      "A modification to the maximum building height may be approved subject to Section
+      375-7.32.b" -- a relief by application, never taken.
+  "431-3.8":
+    outcome: read
+    note: >-
+      Definition of a pedestrian street (held in cdc.431.transit-design; the hyphen-numbering miss
+      as 431-8). Already cited by this layer for the TO frontage rows.
+  "431-3.4":
+    outcome: narrows_only
+    note: >-
+      TO density denominator: land for streets, accessways, parks and common open space comes out
+      of the area density is computed on. Middle housing density is exempt here, so it can only
+      lower a floor.
+  "431-7.1":
+    outcome: other_path
+    note: >-
+      Common open space in transit oriented districts (431-7, held). Not reached: middle housing
+      takes 430-84's design standards, not 431's (375-10.txt#L255).
+  "431-12":
+    outcome: other_path
+    note: >-
+      On-street parking exception inside 431 (held); not reached by middle housing
+      (375-10.txt#L255).
+  "403-3.1":
+    outcome: other_path
+    note: >-
+      Application of Section 431 to a house or duplex outside a land division, reviewed Type III
+      if it misses 431's design principles. Not the pod's path; middle housing takes 430-84.
+  "421":
+    outcome: narrows_only
+    note: >-
+      Floodplain and Drainage Hazard Area Development. Cited from density arithmetic and 430-84's
+      list, it subtracts floodplain from the area density is computed on -- middle housing density
+      is exempt, so it can only lower a floor. The floodplain itself is screened on its mapped
+      layer on every zone that permits the pod.
+  "422-7":
+    outcome: other_building
+    note: >-
+      Tree removal in Significant Habitat is a listed use ("Tree removal in areas identified ...
+      as Significant Habitat, subject to Section 422-7"). The habitat itself is screened on its
+      mapped layer.
+  "422-9":
+    outcome: other_building
+    note: >-
+      Tree removal in Significant Habitat as a listed Type II use (see 422-7).
+  "422-11":
+    outcome: other_building
+    note: >-
+      Tree removal in Significant Habitat as a listed Type III use (see 422-7).
+  "427-4":
+    outcome: other_building
+    note: >-
+      Solar Balance Point Standard: applies "For any detached dwelling or manufactured dwelling
+      ... and their accessory structures". The pod is attached.
+  "404-4.5":
+    outcome: other_path
+    note: >-
+      Required open space in a planned development; cited for the bonus density ranges of the
+      mixed-use districts. A density bonus path this screen does not take.
+  "407-6":
+    outcome: read
+    note: >-
+      Parking Area Landscaping -- held in cdc.407.landscape-design; the hyphen-numbering miss.
+      Already followed: 407-6.4's 5-foot strip is encoded as parking_lot_line_buffer_ft through
+      413-4.10.
+  "407-1.6":
+    outcome: narrows_only
+    note: >-
+      Reduction of the minimum landscape area by up to 20% (held). Can only loosen.
+  "408-6":
+    outcome: other_building
+    note: >-
+      Review standards for development on neighborhood routes, cited from the North Bethany
+      arterial access-management sentence. Streets and access a land division lays out, not the
+      pod's lot.
+  "413-8.6":
+    outcome: other_path
+    note: >-
+      Parking for a use not listed takes the most similar listed use. The pod's use is listed.
+  "414-3":
+    outcome: other_building
+    note: >-
+      Signs in the Pedestrian-Oriented Mixed-Use Districts.
+  "305-7.2D":
+    outcome: other_path
+    note: >-
+      Land division in R-15 "Other housing" (residential development that does not meet the
+      definition of Middle Housing). Not the pod.
+  "307-7.5":
+    outcome: other_path
+    note: >-
+      Required Outdoor Area of 307-7.2 "Other housing ... (residential development that does not
+      meet the definition of Middle Housing)" -- held in 307-7.txt; the middle-housing half is
+      307-7.1, which this layer reads.
+  "430-13":
+    outcome: other_path
+    note: >-
+      Attached Dwelling Units "when proposal is not consistent with the Middle Housing definition
+      in Section 106 and provisions of 430-84". The pod is middle housing.
+  "430-13.3":
+    outcome: other_building
+    note: >-
+      A Duplex on an Approved Duplex Lot -- a two-unit building on a lot approved for one; the pod
+      is four units under 430-84.
+  "430-72":
+    outcome: other_path
+    note: >-
+      Infill review, "not including Middle Housing" in the citing sentence itself.
+  "430-147":
+    outcome: other_path
+    note: >-
+      Zero Lot Line Development, a detached-house development form.
+  "207-5":
+    outcome: procedure
+    note: >-
+      Conditions of Approval: "The Review Authority may impose conditions on any Type II or III
+      development". The Type II/III middle-housing paths already carry REVIEW-CONDITIONS here on
+      this sentence.
+  "201":
+    outcome: procedure
+    note: >-
+      Development Permit -- who needs one. A process.
+  "201-2":
+    outcome: procedure
+    note: >-
+      Exclusions from Permit Requirement. A process.
+  "202-2.2":
+    outcome: procedure
+    note: >-
+      Type II procedure: notice, decision and appeal steps. A process, no ground taken.
+  "610-1.1":
+    outcome: procedure
+    note: >-
+      Property Line Adjustment procedure. Moving a lot line is a process the screen never takes.
+  "606":
+    outcome: later
+    note: >-
+      Middle Housing Land Division. Lot creation; no pod declares plat: unit_lots.
+  "601":
+    outcome: later
+    note: >-
+      Land divisions (Article VI). Lot creation; see 606.
+  "106-57":
+    outcome: procedure
+    note: >-
+      The definition of "development" cited from another definition. A word, not a standard.
+  "106-205":
+    outcome: other_building
+    note: >-
+      The definition of "structure", cited from the EFU dwelling-separation rule. Not the pod's
+      district.
+  "409-3.3":
+    outcome: other_path
+    note: >-
+      Private street and alley pavement standards (409-3.3 A: alleys 16 ft paved, private streets
+      by units served), cited from 430-84 to define an "improved alley" from which middle housing
+      may take access. 409-2.1 applies 409-3 to homes on separate lots served by a private street;
+      the one-lot pod's court is a parking aisle. The alley sentence is a permission conditioned
+      on the alley being improved -- see FOLLOWUPS 105 open list.
+  # --- a use the pod is not, named in the citing sentence (district use lists) ---
+  "430":
+    outcome: other_building
+    note: >-
+      Special Use Standards, the whole section; each mention names a use with its own subsection.
+      The pod's own subsection, 430-84 Middle Housing, is held and read. A use-list entry named in
+      the citing sentence; the pod is four attached dwelling units under 430-84.
+  "430-109":
+    outcome: other_building
+    note: >-
+      Telecommunication Facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-109.2":
+    outcome: other_building
+    note: >-
+      Small Wireless Facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-109.3":
+    outcome: other_building
+    note: >-
+      Telecommunication facilities exempt from review. A use-list entry named in the citing
+      sentence; the pod is four attached dwelling units under 430-84.
+  "430-109.5":
+    outcome: other_building
+    note: >-
+      Telecommunication facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-190":
+    outcome: other_building
+    note: >-
+      Co-location on existing communication towers. A use-list entry named in the citing sentence;
+      the pod is four attached dwelling units under 430-84.
+  "430-97":
+    outcome: other_building
+    note: >-
+      Parks. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-135":
+    outcome: other_building
+    note: >-
+      Temporary Use. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-135.1":
+    outcome: other_building
+    note: >-
+      Type I temporary uses and structures. A use-list entry named in the citing sentence; the pod
+      is four attached dwelling units under 430-84.
+  "430-135.2":
+    outcome: other_building
+    note: >-
+      Temporary Use. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-63.1":
+    outcome: other_building
+    note: >-
+      Home Occupation. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-63.2":
+    outcome: other_building
+    note: >-
+      Home Occupation. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-76":
+    outcome: other_building
+    note: >-
+      Manufactured Home on an existing lot. A use-list entry named in the citing sentence; the pod
+      is four attached dwelling units under 430-84.
+  "430-77":
+    outcome: other_building
+    note: >-
+      Manufactured Dwelling Park. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-77.14":
+    outcome: other_building
+    note: >-
+      Access to a manufactured dwelling park. A use-list entry named in the citing sentence; the
+      pod is four attached dwelling units under 430-84.
+  "430-79":
+    outcome: other_building
+    note: >-
+      Manufactured Dwelling Subdivision. A use-list entry named in the citing sentence; the pod is
+      four attached dwelling units under 430-84.
+  "430-53":
+    outcome: other_building
+    note: >-
+      Group Care. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-53.1":
+    outcome: other_building
+    note: >-
+      Group Care. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-53.2":
+    outcome: other_building
+    note: >-
+      Day Care Facility. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-53.3":
+    outcome: other_building
+    note: >-
+      Group Care. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-53.5":
+    outcome: other_building
+    note: >-
+      Retirement Housing Community. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-113":
+    outcome: other_building
+    note: >-
+      Recycle Drop Box. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-19":
+    outcome: other_building
+    note: >-
+      Boarding House, including Bed and Breakfast. A use-list entry named in the citing sentence;
+      the pod is four attached dwelling units under 430-84.
+  "430-80":
+    outcome: other_building
+    note: >-
+      Marijuana Facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-81":
+    outcome: other_building
+    note: >-
+      Mobile Food Site (Large). A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-9.1":
+    outcome: other_building
+    note: >-
+      Ambulance Service. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-121":
+    outcome: other_building
+    note: >-
+      Schools. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-55":
+    outcome: other_building
+    note: >-
+      Guest House. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-91":
+    outcome: other_building
+    note: >-
+      Parking not in conjunction with a permitted use. A use-list entry named in the citing
+      sentence; the pod is four attached dwelling units under 430-84.
+  "430-23":
+    outcome: other_building
+    note: >-
+      Bus Shelter. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-8.1":
+    outcome: other_building
+    note: >-
+      Alteration or replacement of a lawfully established dwelling (rural). A use-list entry named
+      in the citing sentence; the pod is four attached dwelling units under 430-84.
+  "430-8.2":
+    outcome: other_building
+    note: >-
+      Alteration or replacement of a lawfully established dwelling (rural). A use-list entry named
+      in the citing sentence; the pod is four attached dwelling units under 430-84.
+  "430-103":
+    outcome: other_building
+    note: >-
+      Public Building. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-3":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Unit, Rural. A use-list entry named in the citing sentence; the pod is
+      four attached dwelling units under 430-84.
+  "430-102":
+    outcome: other_building
+    note: >-
+      Processing facility for farm products. A use-list entry named in the citing sentence; the
+      pod is four attached dwelling units under 430-84.
+  "430-85.3":
+    outcome: other_building
+    note: >-
+      Nonfarm Dwelling. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-59":
+    outcome: other_building
+    note: >-
+      Heliport. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-41":
+    outcome: other_building
+    note: >-
+      Drive-in or drive-up establishment. A use-list entry named in the citing sentence; the pod
+      is four attached dwelling units under 430-84.
+  "430-65":
+    outcome: other_building
+    note: >-
+      Hospital. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-21":
+    outcome: other_building
+    note: >-
+      Boarding (stabling) of horses. A use-list entry named in the citing sentence; the pod is
+      four attached dwelling units under 430-84.
+  "430-35":
+    outcome: other_building
+    note: >-
+      Convenience Grocery. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-47":
+    outcome: other_building
+    note: >-
+      Forest products, temporary portable processing. A use-list entry named in the citing
+      sentence; the pod is four attached dwelling units under 430-84.
+  "414":
+    outcome: other_building
+    note: >-
+      Signs. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "428-3":
+    outcome: other_building
+    note: >-
+      Forest structure siting and fire safety standards in the forest districts. A use-list entry
+      named in the citing sentence; the pod is four attached dwelling units under 430-84.
 code:
 # Municode client 11326, publication 3090 ("Community Development Code",
 # updated 2026-09-08). The unsigned publication endpoint, per

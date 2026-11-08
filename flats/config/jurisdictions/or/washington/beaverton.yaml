@@ -16,6 +16,315 @@ ingest:
   geoid: null
   juris_city_codes:
   - BEAVERTON
+crossrefs:
+  # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed. Many targets
+  # are HELD (60.05.15, 60.30.10, 60.30.15, 20.25.10, 70.15.10 ...): the resolver credits a
+  # held document only for full-number headings and these print as "7." or as table and
+  # figure captions. `read` says the content is already encoded or inert; see item 105.
+  "60.05.15.7":
+    outcome: read
+    note: >-
+      Height Transition, held in 60.05/60.05.15.txt and already encoded: Table 20.05.15 G.2 and
+      Table 20.10.15 F.2 say whether "Standards of 60.05.15.7 Apply" per zone, and 60.05.15.7.A
+      (within 30 feet of RMA, RMB or RMC) is encoded as a max_height_ft variant
+      (60.05.15.txt#L132-L135). The resolver misses it because the subsection prints as "7." under
+      60.05.15.
+  "60.05.15.6":
+    outcome: read
+    note: >-
+      Building location and orientation along streets, held in 60.05/60.05.15.txt and already
+      encoded: 60.05.15.6.A's building frontage share and the A.4 subtractions (driveway, plaza)
+      are encoded per zone, and note 18's front maximum is limited to the frontage 60.05.15.6
+      governs. The mentions here are the guideline labels in 60.05.35.
+  "60.30.10.5":
+    outcome: read
+    note: >-
+      Table 60.30.10.5.A, held in 60.30/60.30.10.txt and already encoded as parking_max_per_unit
+      (row 4.A, Quadplex) and the row 2 N/A cells for RMA, RMB, RMC and CM-RM.
+  "60.30.10.2":
+    outcome: read
+    note: >-
+      CFEC parking maximums, held in 60.30/60.30.10.txt#L7-L10: within the mapped transit areas
+      the maximum is 2 spaces per non-studio unit, and the stricter of this and Table 60.30.10.5.A
+      applies. The pod provides 4 spaces for 4 units, under either maximum.
+  "60.30.10.11":
+    outcome: read
+    note: >-
+      Compact Cars (60.30.10.txt#L413-L415): "For residential uses, proposed vehicle parking
+      spaces shall be provided at standard size pursuant to Section 60.30.10.7" -- the stall size
+      this layer already encodes. The compact allowance is for other uses.
+  "60.30.15.10":
+    outcome: misread
+    note: >-
+      Not a reference out: "Figure 60.30.15.10, Tree Canopy Overlap Measurement" inside the held
+      60.30/60.30.15.txt. The canopy standard it illustrates applies to "A new development that
+      adds more than one-half acre of new surface parking" (60.30.15.txt#L50); the pod's court of
+      four stalls is a small fraction of that.
+  "20.25.10.4":
+    outcome: read
+    note: >-
+      Held in 20.25/20.25.10.txt#L20-L23: the method of calculating MINIMUM development intensity
+      (minimum residential density and non-residential minimum FAR) for multiple use developments
+      with single-use residential buildings. A floor: minimum density is a flag here (DENSITY-
+      MIN), and min_far has no value in these zones. It adds no maximum.
+  "70.15.10.5":
+    outcome: narrows_only
+    note: >-
+      Supplemental Density and Intensity Standards: sites under 50 feet average depth or width
+      whose configuration existed before December 9, 1999 "shall be subject to reduced minimum
+      density and intensity standards" (70.15.10.txt#L16-L17). It can only lower a floor; noted
+      NOT ENCODED in the Downtown header.
+  "70.15.10.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the number of RC-BC's own subsection and the titles of its Height &
+      Density and Setbacks tables inside the held 70.15/70.15.10.txt; this layer encodes RC-BC
+      from those two tables. The resolver credits a held document only for printed full-number
+      headings.
+  "70.15.10.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the number of RC-OT's own subsection and the titles of its Height &
+      Density and Setbacks tables inside the held 70.15/70.15.10.txt; this layer encodes RC-OT
+      from those two tables. The resolver credits a held document only for printed full-number
+      headings.
+  "70.15.10.3":
+    outcome: misread
+    note: >-
+      Not a reference out: the number of RC-MU's own subsection and the titles of its Height &
+      Density and Setbacks tables inside the held 70.15/70.15.10.txt; this layer encodes RC-MU
+      from those two tables. The resolver credits a held document only for printed full-number
+      headings.
+  "70.15.10.4":
+    outcome: misread
+    note: >-
+      Not a reference out: the number of RC-DT's own subsection and the titles of its Height &
+      Density and Setbacks tables inside the held 70.15/70.15.10.txt; this layer encodes RC-DT
+      from those two tables. The resolver credits a held document only for printed full-number
+      headings.
+  "70.15.10.1.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.1.1 (setbacks without ground-floor
+      residential) for RC-BC inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-BC ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.1.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.1.2 (setbacks with ground-floor
+      residential) for RC-BC inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-BC ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.2.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.2.1 (setbacks without ground-floor
+      residential) for RC-OT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-OT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.2.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.2.2 (setbacks with ground-floor
+      residential) for RC-OT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-OT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.3.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.3.1 (setbacks without ground-floor
+      residential) for RC-MU inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-MU ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.3.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.3.2 (setbacks with ground-floor
+      residential) for RC-MU inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-MU ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.4.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.4.1 (setbacks without ground-floor
+      residential) for RC-DT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-DT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.4.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.4.2 (setbacks with ground-floor
+      residential) for RC-DT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-DT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.2.3":
+    outcome: misread
+    note: >-
+      Not a reference out: Figure 70.15.10.2.3, "RC-OT Minimum Density / Intensity"
+      (70.15.10.txt#L92), the map note 4 of the RC-OT table sends minimum density to. It decides
+      where a floor applies, and minimum density is a flag here.
+  "70.20.10.6.2":
+    outcome: fetch
+    note: >-
+      Figure 70.20.10.6.2, the Active Frontage Design Map, and a standard that does reach the pod.
+      70.20.10.6.D (70.20.10.txt#L486-L491): building facades fronting a mapped street must meet
+      the Active Ground Floor rules; Type A frontages "must comply with the Non-residential Active
+      Ground Floor Design regulations" (S1: a ground floor at least 16 feet floor to floor,
+      70.20.10.txt#L377-L378, against the pod's stated 12), and Type B frontages may instead take
+      the residential design (S2: ground floor no more than 4 feet above the sidewalk, at least 12
+      feet floor to floor, and a stoop, porch, patio, terrace or frontage court). Facades not on a
+      mapped street are exempt. The map is a drawing with no condition to hold it -- the Hillsboro
+      Active Use Street pattern (min_ground_story_ft under a traced condition) is the encoding.
+      Kept in the queue: see FOLLOWUPS 105.
+  "60.70.35.14":
+    outcome: other_building
+    note: >-
+      Wireless Communication Facilities: every mention is the "Yard Setbacks - Other ... Refer to
+      60.70.35.14.A and B" row, which footnote 8 makes "Applicable to all WCF towers, antenna
+      arrays, and ground and/or roof-mounted equipment shelters" (20.20.15.txt#L110, L156-L163).
+  "40.30":
+    outcome: other_path
+    note: >-
+      Adjustments and variances: "Under the thresholds outlined in Section 40.30., application may
+      be made for zero side yard setbacks ... in conjunction with a land division application"
+      (20.10.15.txt#L84). A relief by application, never taken.
+  "60.35.10":
+    outcome: other_path
+    note: >-
+      Planned Unit Development: the FAR row "Maximum with a PUD ... See Section 60.35.10"
+      (20.20.15.txt#L41-L51). A PUD bonus path this screen does not take; the pod's floor area is
+      far under every base FAR.
+  "20.10.16.1":
+    outcome: other_path
+    note: >-
+      The FAR thresholds of 20.10.16.1.a -- 6.0 near Frequent Transit Service with Regulated
+      Affordable Housing, otherwise 4.0 (20.05.16.txt#L5-L7). An affordable-housing bonus this
+      screen does not take (market rate); the 4.0 base is far above the pod's floor area on any
+      lot it fits.
+  "40.55.15.1":
+    outcome: other_path
+    note: >-
+      Parking Requirement Determination for "uses not specifically mentioned" (60.30.10.txt#L50).
+      The pod's use is listed in Table 60.30.10.5.A.
+  "1.5.2":
+    outcome: procedure
+    note: >-
+      Table 1 in Section 1.5.2 of the Comprehensive Plan, which assigns a City zone to annexed
+      County land (10.40.txt#L9-L15). A zoning step for annexation, not a standard.
+  "60.05.20.3":
+    outcome: design
+    note: >-
+      Pedestrian circulation, held in 60.05/60.05.20.txt (from L24): walkways at least 5 feet wide
+      linking primary entrances to streets and adjacent pedestrian facilities, one per 300 feet of
+      frontage, separated where they cross parking. They pave ground the front yard and court
+      already hold; the mentions are the guideline labels in 60.05.40.
+  "60.05.20.8":
+    outcome: other_path
+    note: >-
+      On-site circulation, held in 60.05/60.05.20.txt#L129-L140: a drive aisle linking a street to
+      stalls is designed as a private street "unless one of the following is met" -- less than 100
+      feet long, serving two or fewer units, or giving direct access to angled or perpendicular
+      stalls. The pod's court aisle serves perpendicular stalls, so the private-street standard of
+      8.B is a branch it never takes.
+  "60.05.25.3":
+    outcome: other_building
+    note: >-
+      Held in 60.05/60.05.25.txt#L18: the open space and landscape requirements for 8 or more
+      units, non-residential and mixed use development. The pod's four units take 60.05.25.2 (4 to
+      7 units), encoded as open_space_min_pct 15; 60.05.25.2 borrows 25.3.B.5 only for what
+      "landscaped" means.
+  "60.05.25.4":
+    outcome: design
+    note: >-
+      General Landscaping Requirements, held in 60.05/60.05.25.txt#L116: what the 15 percent open
+      space of 60.05.25.2 must be planted with. Fills ground already sized by the encoded share.
+  "60.05.25.17":
+    outcome: design
+    note: >-
+      60.05.25 has no subsection 17 (it runs to 16, 60.05.25.txt#L585); the Cooper Mountain Nature
+      Park buffer is 60.05.25.13's Native plantings buffer (L376), a planting specification for
+      the setback Table 20.22.15 G.6 sizes (25 feet, already listed NOT ENCODED in the Cooper
+      Mountain header).
+  "60.15.10.3":
+    outcome: design
+    note: >-
+      On-site surface contouring, held in 60.15/60.15.10.txt#L10-L16: within 25 feet of a line
+      abutting residential land, finished grade may differ from the neighbour's by at most 2 feet
+      within 5 feet, 4 within 10, 6 within 15. It shapes the grade of ground the plan has already
+      placed and takes no plan area; steep ground is screened by the slope check.
+  "60.55.35.3":
+    outcome: narrows_only
+    note: >-
+      The mention is the waiver: "The requirements specified in 60.55.35.3.A. may be lessened or
+      waived" (60.55.35.txt#L15). 3.A (Visibility at Intersections) sends sight clearance to the
+      Engineering Design Manual, case by case in the Regional and Town Centers -- the corner
+      vision area this corpus does not model anywhere (listed in FOLLOWUPS 105).
+  "70.10.1":
+    outcome: other_path
+    note: >-
+      Design Places for People, one of the Downtown design principles listed under "Applicable
+      Design Principles" in each 70.20 table. A principle is what a design GUIDELINE answers to on
+      the Type 2 or 3 track (70.05.10); this layer holds the pod to the STANDARDS.
+  "70.10.2":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (mixed-income, mixed-use Downtown); answered only by a guideline
+      on the Type 2 or 3 track. See 70.10.1.
+  "70.10.3":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (high-quality design); answered only by a guideline on the Type
+      2 or 3 track. See 70.10.1.
+  "70.10.4":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (development context); answered only by a guideline on the Type
+      2 or 3 track. See 70.10.1.
+  "70.10.5":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (connectivity); answered only by a guideline on the Type 2 or 3
+      track. See 70.10.1.
+  "70.10.6":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (nature); answered only by a guideline on the Type 2 or 3 track.
+      See 70.10.1.
+  "70.10.7":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (sustainability); answered only by a guideline on the Type 2 or
+      3 track. See 70.10.1.
+  "70.10.8":
+    outcome: other_path
+    note: >-
+      A Downtown design principle (places to gather outdoors); answered only by a guideline on the
+      Type 2 or 3 track. See 70.10.1.
+  "10.70.10":
+    outcome: other_building
+    note: >-
+      "Emergency Shelters may occur where allowed pursuant to Section 10.70.10"
+      (20.05.20.txt#L66). A use the pod is not.
+  "60.11":
+    outcome: other_building
+    note: >-
+      Food Cart Pods (20.10.20.txt#L114). A use the pod is not.
+  "60.20.20":
+    outcome: other_building
+    note: >-
+      "The placement of a manufactured home is subject to the design and placement criteria found
+      in Section 60.20.20" (20.05.20.txt#L68). A building the pod is not.
+  "60.50.25.14":
+    outcome: other_building
+    note: >-
+      Vehicle Camping, "subject to the special requirements found in Section 60.50.25.14"
+      (20.05.20.txt#L98-L99). A use the pod is not.
+  "845":
+    outcome: other_building
+    note: >-
+      OAR Chapter 845, division 25, cited for Retail Marijuana Sales (20.10.20.txt#L118-L119). A
+      use the pod is not.
 code:
 - id: "bdc.30.15.nonconforming-lots"
   url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf

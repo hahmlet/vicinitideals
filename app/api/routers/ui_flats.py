@@ -1995,6 +1995,9 @@ _TRIAGE_ORDER = (
     # answer one step further on -- not "no number in it", but "a number that
     # takes money instead of ground".
     "fee_in_lieu",
+    # What fills ground another section sized (planting, fence and wall
+    # heights): it reaches, it has numbers, and it takes no ground.
+    "design",
     "misread",
     "later",
 )

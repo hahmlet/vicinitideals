@@ -656,22 +656,18 @@ crossrefs:
       gates a use that is not this pod -- an RV as a second dwelling, an accessory historic
       dwelling -- and none of them states a dimension.
   "1002.02":
-    outcome: fetch
+    outcome: procedure
     note: >-
-      Tree removal, and the one reference here that is genuinely about our building on land we
-      would buy. Table 316-1 note 13 (L640), printed on the Forest Practices row: "For land
-      inside the Portland Metropolitan Urban Growth Boundary, refer to Subsection 1002.02
-      regarding a development restriction that may apply if excessive tree removal occurs." The
-      row it sits on is why the footnote itself is dismissed and this reference is not: a note
-      about forestry cannot move a use gate, but the subsection it points at is a development
-      restriction and says nothing about who is doing the clearing. A development restriction
-      triggered by clearing is
-      the same shape as Portland's Title 11, which is encoded as fee_in_lieu and cost real ground
-      before it was read -- and this cannot be ruled the way it is tempting to rule it, namely
-      that Section 316's own districts refuse the pod so the note is moot. That is a reason that
-      argues about OUR corpus rather than about the page, and it goes stale the moment anybody
-      reads 1002 for the urban districts. Section 1002 is not in the store. `fetch` keeps the row
-      in the queue, which is where it belongs.
+      Fetched 2026-11-08 from https://www.clackamas.us/planning/zdo1002 (ZDO 1002, Protection of
+      Natural Features). 1002.02 is a development restriction: inside the Portland Metropolitan
+      UGB, where more than three trees were removed from a lot in the previous five years, the
+      county denies an application for design review, a conditional use, or a land division other
+      than a middle housing land division. It reaches the pod only where the pod needs design
+      review (ZDO 1102.01: commercial and industrial districts and HDR, MR-1, MR-2, MRR, PMD,
+      RCHDR, SHD, VA, VTH) and only on a lot whose recent tree history the screen cannot see. That
+      is a condition on whether an application is accepted, not ground the building gives up: an
+      approval process. 1002.03 (tree preservation) states it cannot preclude development. The
+      tree history is a purchase check; see item 105 for the question put to Steph.
   # --- and five more, arriving with ZDO Sections 510 and 1005 on 2026-09-08 -
   # Four close and one does not, and the one that does not is the shape §30
   # taught: a section this county cites for what it MAKES a site hold, not for
@@ -717,21 +713,14 @@ crossrefs:
       Services, subject to Section 827" (ZDO 510 L209). A window a car stops at, and one of the
       thirty-eight markers in Table 510-1 that resolve to a row this building is not on.
   "1021":
-    outcome: fetch
+    outcome: other_building
     note: >-
-      Solid Waste and Recyclable Material Collection, and the second reference in this layer that
-      a chapter's arrival turned from a name into a requirement. Table 510-1 note 8 (ZDO 510 L67):
-      "In the SCMU District, outdoor displays, processes, or storage, except for the storage of
-      solid waste and recyclables either as required by Section 1021, Solid Waste and Recyclable
-      Material Collection, or as an accessory use to a townhouse, are prohibited." The three words
-      that matter are "as required by": the sentence is a prohibition on outdoor storage, and it
-      carves out the collection area because the county requires one somewhere else. A collection
-      area is ground. It is the same family as the parking court, which took between twelve and
-      forty-two feet of depth off every quadplex zone in this corpus the day somebody measured it
-      instead of assuming it, and this model holds no field for it. The tempting ruling -- that
-      the citing sentence is about SCMU and SCMU is not encoded -- argues about our corpus rather
-      than about the page and expires the day somebody encodes SCMU. Section 1021 is not in the
-      store. `fetch` keeps the row in the queue, which is where it belongs.
+      Fetched 2026-11-08 from https://www.clackamas.us/planning/zdo1021 (ZDO 1021, Solid Waste and
+      Recyclable Material Collection). 1021.01 applies to "Multifamily dwellings" and to
+      commercial, industrial and institutional development, and ZDO 202 defines a multifamily
+      dwelling as five or more units (zdo.202.definitions.txt#L177). The pod is four attached
+      units -- the citing sentence itself carves out storage "as an accessory use to a townhouse"
+      -- so the collection area the section sizes is somebody else's building.
   # --- two made binding on 2026-10-14 by encoding 1005.02(L) (FOLLOWUPS 61) --
   "904":
     outcome: other_path
@@ -753,6 +742,134 @@ crossrefs:
       fire is not four attached units placed new, and the term only decides whether a rebuilt
       footprint counts toward the 40,000 sq ft tally.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "830":
+    outcome: other_building
+    note: >-
+      Utility Carrier Cabinets ("Utility Carrier Cabinets, subject to Section 830", 511.05). A
+      use-table row naming its own special-use section; the pod is four attached dwelling units,
+      not this use.
+  "840":
+    outcome: other_building
+    note: >-
+      Farmers' Markets ("Farmers' Markets, subject to Section 840", 315.04). A use-table row
+      naming its own special-use section; the pod is four attached dwelling units, not this use.
+  "849":
+    outcome: other_building
+    note: >-
+      Crisis Stabilization Centers ("as defined in ORS 430.626, subject to Section 849", 510.05).
+      A use-table row naming its own special-use section; the pod is four attached dwelling units,
+      not this use.
+  "832":
+    outcome: other_building
+    note: >-
+      Bed and Breakfast Inns (315.04). A use-table row naming its own special-use section; the pod
+      is four attached dwelling units, not this use.
+  "841":
+    outcome: other_building
+    note: >-
+      Marijuana production ("Marijuana production is subject to Section 841", 401.04). A use-table
+      row naming its own special-use section; the pod is four attached dwelling units, not this
+      use.
+  "848":
+    outcome: other_building
+    note: >-
+      Emergency Shelter ("Emergency Shelter, subject to Section 848", 315.04). A use-table row
+      naming its own special-use section; the pod is four attached dwelling units, not this use.
+  "1204.04":
+    outcome: other_building
+    note: >-
+      Temporary dwelling for care (401.04), a temporary permit for a second dwelling. A use-table
+      row naming its own special-use section; the pod is four attached dwelling units, not this
+      use.
+  "835":
+    outcome: other_building
+    note: >-
+      Wireless telecommunication facilities (401.04). A use-table row naming its own special-use
+      section; the pod is four attached dwelling units, not this use.
+  "804":
+    outcome: other_building
+    note: >-
+      Places of Worship (315.04). A use-table row naming its own special-use section; the pod is
+      four attached dwelling units, not this use.
+  "834":
+    outcome: other_building
+    note: >-
+      Composting operations and facilities other than accepted farm practice (401.04 L184-L188). A
+      use-table row naming its own special-use section; the pod is four attached dwelling units,
+      not this use.
+  "806":
+    outcome: other_building
+    note: >-
+      Home Occupations to Host Events (316.04). A use-table row naming its own special-use
+      section; the pod is four attached dwelling units, not this use.
+  "821":
+    outcome: other_building
+    note: >-
+      Livestock (316.04). A use-table row naming its own special-use section; the pod is four
+      attached dwelling units, not this use.
+  "817":
+    outcome: other_building
+    note: >-
+      Auto Wrecking Yards and Junkyards (604.04). A use-table row naming its own special-use
+      section; the pod is four attached dwelling units, not this use.
+  "836":
+    outcome: other_building
+    note: >-
+      Home occupation for canine skills training (406.04). A use-table row naming its own special-
+      use section; the pod is four attached dwelling units, not this use.
+  "1003":
+    outcome: narrows_only
+    note: >-
+      Hazards to Safety, named in ZDO 1012.05 only as one of the areas subtracted from the site
+      before minimum density is computed ("2 Mass movement hazards regulated by Section 1003").
+      Subtracting land can only lower a minimum-density floor, and maximum density is exempt for
+      middle housing; this mention takes nothing from the pod.
+  "703":
+    outcome: narrows_only
+    note: >-
+      Floodplain Management District, named in ZDO 1012.05 only as an area subtracted before
+      minimum density is computed ("3 The floodway of the Floodplain Management District regulated
+      by Section 703"). Can only lower a floor; the floodplain itself reaches a lot through its
+      mapped overlay, not this list.
+  "705":
+    outcome: narrows_only
+    note: >-
+      Willamette River Greenway, named in ZDO 1012.05 only as an area subtracted before minimum
+      density is computed ("4 The Willamette River and the required buffer area regulated by
+      Section 705"). Can only lower a floor.
+  "706":
+    outcome: narrows_only
+    note: >-
+      Habitat Conservation Area District, named in ZDO 1012.05 only as an area subtracted before
+      minimum density is computed ("5 Habitat Conservation Areas regulated by Section 706"). Can
+      only lower a floor; the HCA reaches a lot through its mapped overlay, not this list.
+  "709":
+    outcome: narrows_only
+    note: >-
+      Water Quality Resource Area District, named in ZDO 1012.05 only as an area subtracted before
+      minimum density is computed ("6 Water Quality Resource Areas regulated by Section 709"). Can
+      only lower a floor; the WQRA reaches a lot through its mapped overlay, not this list.
+  "512":
+    outcome: narrows_only
+    note: >-
+      A district section (512) named in ZDO 1015.02's list of urban districts where "no minimum
+      off-street parking spaces are required for any development" inside the UGB (1015.02.txt#L40,
+      #L212). A relief from a parking minimum; it can only loosen.
+  "846.01":
+    outcome: other_path
+    note: >-
+      Affordable housing: "[7] Dwellings not otherwise permitted in the applicable zoning district
+      may nonetheless be permitted if they are developed as affordable housing" (315.04). A path
+      for a use the district does not permit, taken only by affordable housing; this screen
+      answers as market rate (affordable deferred).
+  "1002.04":
+    outcome: other_path
+    note: >-
+      Stream corridor protection, cited from the ZDO 202 definition of STREAM CORRIDOR AREA.
+      1002.04 governs stream corridors outside the Portland Metropolitan UGB, where the urban
+      districts that permit the pod do not sit; inside the UGB stream buffers are the Water
+      Quality Resource Areas of Section 709.
 definitions:
   # "LOT, CORNER: A lot with more than one front lot line, where at least two
   # front lot lines intersect. A lot within the radius curve or curves of a

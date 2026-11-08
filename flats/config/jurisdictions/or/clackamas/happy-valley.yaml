@@ -525,6 +525,41 @@ crossrefs:
       this layer already encodes as land_division_parent_standards, from these same table notes.
       The chapter behind it governs how the split is approved, which is a path no pod declares.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "16.71":
+    outcome: other_path
+    note: >-
+      Variances: "All of the applicable development standards contained in the underlying zoning
+      district, except where the applicant has obtained variances pursuant to Chapter 16.71"
+      (16.25.005.txt#L96). A relief by application, never taken.
+  "16.49":
+    outcome: other_building
+    note: >-
+      Note [6] of Tables 16.23.010-1 and 16.23.030-1, "Pursuant to Chapter 16.49", carried by the
+      Marijuana retailing and Psilocybin service center rows (16.23.010.txt#L59, L64, L119). A use
+      the pod is not.
+  "16.69.030":
+    outcome: other_building
+    note: >-
+      Note [5] of Tables 16.23.010-1 and 16.23.030-1, "Pursuant to Section 16.69.030", carried by
+      the Mobile food units row (16.23.010.txt#L61, L118). A use the pod is not.
+  "16.62":
+    outcome: other_path
+    note: >-
+      Land Use and Design Review, cited by the commercial districts' own sentences: "New
+      development in the district shall be subject to Chapter 16.62" (16.23.010.txt#L438;
+      16.23.030.txt#L222). Those districts are MUC, RCMU, CCC and MCC, whose use tables have no
+      row for a four-unit building (multifamily is five or more; residential only upper-floor or
+      tied to nonresidential use) and which this layer encodes quadplex_allowed false on the
+      tables themselves. A review the pod cannot reach.
+  "16.46":
+    outcome: other_path
+    note: >-
+      Happy Valley Style Design Standards, cited beside 16.62 by the same commercial-district
+      sentence (16.23.030.txt#L222) and by the Rock Creek PMU master-plan text
+      (16.31.030.txt#L80-L81). Neither district's use table admits a four-unit building (see
+      16.62). Where the pod is permitted, the residential districts state their own roof and
+      design rules, encoded (VTH min_roof_pitch_in_12).
 definitions:
   # "Corner lot. A lot bounded entirely by streets, or a lot which adjoins the
   # point of intersection of two or more streets and which the interior angle

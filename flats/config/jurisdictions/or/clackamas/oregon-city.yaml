@@ -376,6 +376,42 @@ crossrefs:
       lot. A quadplex here is built to it and no lot fails this screen because of it -- the
       standard applies to the development, not to whether the development fits.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "402.8.1":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.8.1 Oregon City Supp. No. 48" of the codified Title 17
+      (17.zoning.txt#L7114), a page number the dotted-number pattern reads as a section.
+  "402.16.3":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.3 Oregon City Supp. No. 44" of the codified Title
+      17 (17.zoning.txt#L7637), a page number the dotted-number pattern reads as a section.
+  "402.16.20":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.20 Oregon City Supp. No. 41" of the codified Title
+      17 (17.zoning.txt#L8600), a page number the dotted-number pattern reads as a section.
+  "402.16.23":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.23 Oregon City Supp. No. 40" of the codified Title
+      17 (17.zoning.txt#L8899), a page number the dotted-number pattern reads as a section.
+  "402.16.24":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.24 Oregon City Supp. No. 40" of the codified Title
+      17 (17.zoning.txt#L8944), a page number the dotted-number pattern reads as a section.
+  "402.16.5":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.5 Oregon City Supp. No. 44" of the codified Title
+      17 (17.zoning.txt#L7731), a page number the dotted-number pattern reads as a section.
+  "416.16.21":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "416.16.21 Oreg on City Supp. No . 42" of the codified
+      Title 17 (17.zoning.txt#L8739), letter-spaced in extraction; a page number, not a section.
 definitions:
   # "Corner lot" means a lot abutting upon two or more streets at their
   # intersection."

@@ -515,6 +515,95 @@ crossrefs:
     structures permit. Neither reaches a new building on a lot, which is the only thing this screen
     places, so the chapter is not fetched.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "55":
+    outcome: other_path
+    note: >-
+      Design Review. "The provisions of Chapter 55 CDC, Design Review, apply to all uses except
+      attached and/or detached single-family dwellings, cottage clusters, townhouses, manufactured
+      homes, accessory dwelling units, residential homes and residential facilities"
+      (08.090.txt#L25, repeated in each zone chapter), and this code defines both single-family
+      forms to include the pod: single-family attached and detached units "may be further defined
+      as a duplex, triplex, or quadplex" (02.030.txt#L1347-L1353), and 55.020(A)(10) (read live
+      2026-10-08, see MU) writes "single-family detached dwelling (including a duplex, triplex, or
+      quadplex)". The MU zone's Class I review is ruled in its zone note.
+  "55.100":
+    outcome: other_path
+    note: >-
+      Class II design review standards. Reached from Chapter 54 for "Residential uses (non-single-
+      family)" (54.landscaping.txt#L41) and from tree protection "if applicable" (L35); the pod is
+      a single-family form in this code's words (see 55), and in MU it takes the Class I
+      residential standards (55.020(A)(10), MU zone note).
+  "55.105":
+    outcome: narrows_only
+    note: >-
+      The mentions loosen: an optional subtraction from the density area "as measured in CDC
+      55.105(C)(2)(a)" (05.025.txt#L15), and an exclusion of 55.105(F)(1) from the MU zone's
+      Chapter 55 (59.070.txt#L73). Neither adds a standard.
+  "42":
+    outcome: fetch
+    note: >-
+      Clear Vision Areas, listed among each zone chapter's applicable chapters (08.090.txt#L13). A
+      real standard that reaches corner lots and driveways -- the corner vision area this corpus
+      models nowhere (FOLLOWUPS 105 open list). Kept in the queue so the gap stays visible.
+  "28":
+    outcome: fetch
+    note: >-
+      Willamette and Tualatin River Protection, which governs development inside the Habitat
+      Conservation Areas and the river protection areas (02.030.txt#L680-L681). As the 28.040
+      ruling says, what Chapter 28 states about building inside a protection area is a real gap --
+      the areas are boundaries nothing here holds. Kept in the queue (FOLLOWUPS 105).
+  "80":
+    outcome: procedure
+    note: >-
+      Similar unlisted uses: "If a use is not listed ... it may be held to be a similar unlisted
+      use under the provisions of Chapter 80 CDC" (08.020.txt#L4). The quadplex is listed
+      outright.
+  "60":
+    outcome: other_path
+    note: >-
+      Conditional Uses: "The approval of a conditional use (CDC 08.060) is discretionary with the
+      Planning Commission" (08.020.txt#L12-L13). The pod is a use permitted outright.
+  "99.060":
+    outcome: procedure
+    note: >-
+      Administrative procedures: "The Planning Director shall make the decision in the manner
+      provided by CDC 99.060(A)(2)" (08.020.txt#L8). A process, no ground taken.
+  "99.240":
+    outcome: procedure
+    note: >-
+      Appeals: "The decision may be appealed by the applicant to the Planning Commission as
+      provided by CDC 99.240(A)" (08.020.txt#L10). A process, no ground taken.
+  "52":
+    outcome: other_building
+    note: >-
+      Signs: the definitions "with regard to Chapter 52 CDC, Signs" (02.030.txt#L1212). Not the
+      pod.
+  "35":
+    outcome: other_building
+    note: >-
+      Temporary Structures and Uses (08.050.txt#L9; 08.090.txt#L7). Not the pod.
+  "57":
+    outcome: other_building
+    note: >-
+      "Wireless communication facilities, subject to the provisions of Chapter 57 CDC"
+      (09.050.txt#L14). A use the pod is not.
+  "37":
+    outcome: other_building
+    note: >-
+      "Home occupations, subject to the provisions of Chapter 37 CDC" (08.050.txt#L5). A use the
+      pod is not.
+  "66.070":
+    outcome: other_building
+    note: >-
+      Rebuilding cost of a damaged non-conforming single-family home, "per CDC 66.070(A)"
+      (19.060.txt#L43-L44). An existing building, not the pod.
+  "85.170":
+    outcome: procedure
+    note: >-
+      "A traffic analysis prepared by a qualified professional may be required"; its applicability
+      and standards are in CDC 85.170(B)(2) (48.025.txt#L9-L10). A study to file, not ground
+      taken.
 code:
   # The CDC gives every residential zone its own chapter, and Code
   # Publishing serves each chapter as one server-rendered HTML page —
