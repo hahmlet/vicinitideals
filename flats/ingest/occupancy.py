@@ -68,11 +68,11 @@ MAIN_SQFT = 600.0
 
 #: One building this big or bigger is "larger" -- past any house a teardown
 #: test should be run on.
-LARGE_SQFT = 3000.0
+LARGE_SQFT = 4000.0
 
 #: The roll's building value at or under this reads as "no building" (fences,
 #: paving and yard improvements carry a few thousand dollars on vacant lots).
-VACANT_BLDGVAL = 5000.0
+VACANT_BLDGVAL = 20_000.0
 
 #: A building worth under this, or under this share of the whole property, is
 #: a teardown candidate (Steph 2026-11-07).
@@ -86,7 +86,7 @@ LABEL_WORDS = {
     "vacant": "Vacant: no building on the footprint map and next to no building value on the tax roll",
     "teardown": "Teardown candidate: one small building the tax roll values under $100,000 or under a quarter of the property",
     "house": "A house: one building the tax roll values above the teardown line",
-    "larger": "Larger or several buildings: a building of 3,000 sq ft or more, or two or more main buildings",
+    "larger": "Larger or several buildings: a building of 4,000 sq ft or more, or two or more main buildings",
     "unclear": "Unclear: the footprint map and the tax roll disagree about what stands here",
 }
 

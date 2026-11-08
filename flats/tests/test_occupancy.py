@@ -39,7 +39,11 @@ def _one(sqft: float) -> Measure:
         # Over $100,000 but under a quarter of the property: still a teardown.
         (_one(1200), 140_000, 700_000, ("teardown", None)),
         (_one(1200), 260_000, 700_000, ("house", None)),
-        (_one(3200), 50_000, 700_000, ("larger", None)),
+        (_one(4200), 50_000, 700_000, ("larger", None)),
+        (_one(3200), 50_000, 700_000, ("teardown", None)),
+        (_one(3200), 300_000, 700_000, ("house", None)),
+        (Measure(lot_sqft=5000), 20_000, 300_000, ("vacant", None)),
+        (Measure(lot_sqft=5000), 21_000, 300_000, ("unclear", "roll_building_no_footprint")),
         (measure_pieces([1500, 900], 8000), 300_000, 700_000, ("larger", None)),
         # A house and its garage is one main building, not "several".
         (measure_pieces([1500, 480], 8000), 300_000, 700_000, ("house", None)),
