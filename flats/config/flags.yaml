@@ -550,6 +550,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-STREET:
+    description: "The front doors must face the street the code names (the address street, the busiest street or a mapped access street), and this lot has more than one street"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Check which street the code names for this lot (its address, foot traffic or the access-street map) and that the building faces it (FOLLOWUPS 153)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric
@@ -2195,6 +2210,36 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The Glendoveer outline on Portland Maps; a lot the outline cuts is read by hand"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-HAYDEN-ISLAND:
+    description: "Whether the lot is in Portland's Hayden Island plan district, where in the commercial/mixed use zones the main entrance faces the street, or on a lot with more than one street the Island Core Access Street (PCC 33.532.250)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The Hayden Island outline on Portland Maps; a lot the outline cuts is read by hand"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-LOMBARD-SUBDISTRICT-A:
+    description: "Whether the lot is in Subdistrict A of Portland's Lombard Street plan district, where on RM2 sites the main entrance of each building faces the street lot line (PCC 33.545.120.C.2)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The Lombard Subdistrict A outline on Portland Maps; a lot the outline cuts is read by hand"
     priority: later
     status: pending
     approved_by: null

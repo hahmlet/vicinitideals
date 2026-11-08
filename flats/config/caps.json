@@ -638,6 +638,9 @@
       ]
     },
     "R-10": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "max_coverage_pct": [
         "utility_easement"
       ],
@@ -683,6 +686,9 @@
       ]
     },
     "R-2": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "max_coverage_pct": [
         "abuts_lower_density_zone",
         "utility_easement"
@@ -750,6 +756,9 @@
       ]
     },
     "R-3.5": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "max_coverage_pct": [
         "utility_easement"
       ],
@@ -792,6 +801,9 @@
       ]
     },
     "R-5": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "max_coverage_pct": [
         "utility_easement"
       ],
@@ -833,6 +845,9 @@
       ]
     },
     "R-6": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "max_coverage_pct": [
         "utility_easement"
       ],
@@ -878,6 +893,9 @@
       ]
     },
     "R-8": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "max_coverage_pct": [
         "utility_easement"
       ],

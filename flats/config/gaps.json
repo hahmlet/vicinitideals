@@ -1,5 +1,5 @@
 {
-  "digest": "67fa1afb7159eb66526d95293abdf9828e5ff8c418d2b9d15590530021e361df",
+  "digest": "0003ca9024235f5ce134b83c016c967491422b89d8f5aef4a5206151dd679e7d",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -385,7 +385,7 @@
       "gaps": []
     },
     "or/clackamas/milwaukie": {
-      "section_unread": 0,
+      "section_unread": 3,
       "misattributed": [
         {
           "zone": "DMU",
@@ -469,11 +469,27 @@
       "misattributed": [
         {
           "zone": "R-10",
+          "field": "entrance_faces_street [oregon_city_south_end]",
+          "claimed": "17.22.050",
+          "found": "17.22.040",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "R-10",
           "field": "lot_of_record_relief",
           "claimed": "17.08.020 17.08.020 17.08.040 17.16.060",
           "found": "17.58.020",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-2",
+          "field": "entrance_faces_street [oregon_city_south_end]",
+          "claimed": "17.22.050",
+          "found": "17.22.040",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-2",
@@ -485,11 +501,27 @@
         },
         {
           "zone": "R-3.5",
+          "field": "entrance_faces_street [oregon_city_south_end]",
+          "claimed": "17.22.050",
+          "found": "17.22.040",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "R-3.5",
           "field": "lot_of_record_relief",
           "claimed": "17.10.020 17.10.040 17.16.060",
           "found": "17.58.020",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-5",
+          "field": "entrance_faces_street [oregon_city_south_end]",
+          "claimed": "17.22.050",
+          "found": "17.22.040",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-5",
@@ -501,11 +533,27 @@
         },
         {
           "zone": "R-6",
+          "field": "entrance_faces_street [oregon_city_south_end]",
+          "claimed": "17.22.050",
+          "found": "17.22.040",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "R-6",
           "field": "lot_of_record_relief",
           "claimed": "17.08.020 17.08.020 17.08.040 17.16.060",
           "found": "17.58.020",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-8",
+          "field": "entrance_faces_street [oregon_city_south_end]",
+          "claimed": "17.22.050",
+          "found": "17.22.040",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L6389-L6393",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-8",
@@ -528,7 +576,7 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 10,
+      "section_unread": 11,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -567,6 +615,14 @@
     "or/multnomah/_unincorporated": {
       "section_unread": 17,
       "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "entrance_faces_street",
+          "claimed": "39.4969 39.4990",
+          "found": "39.4975",
+          "quote": "or/multnomah/_unincorporated/39/39.4975.txt#L1-L3",
+          "kind": "heading_other_file"
+        },
         {
           "zone": "CFU",
           "field": "quadplex_allowed",
@@ -1709,7 +1765,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 51,
+      "section_unread": 56,
       "misattributed": [
         {
           "zone": "CC",

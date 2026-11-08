@@ -358,7 +358,10 @@ def faces_the_street(rules: "ZoneResolution", design: Design) -> bool:
     """
     if rules.get("orientation_constraint") == "axis_required":
         return True
-    if design.door_face == "width" and rules.get("entrance_faces_street") == "required":
+    if design.door_face == "width" and rules.get("entrance_faces_street") in (
+        "required",
+        "required_named",
+    ):
         # FOLLOWUPS 153: the code makes the main entrance face the street
         # and offers nothing a building turned end-on meets, and every door
         # of this design is on its long face -- so the long face is the one
@@ -387,6 +390,19 @@ def entrance_unsettled(rules: "ZoneResolution", design: Design) -> bool:
     if design.door_face is None or faces_the_street(rules, design):
         return False
     return rules.get("entrance_faces_street") in (None, "unclear")
+
+
+def entrance_street_named(rules: "ZoneResolution", design: Design) -> bool:
+    """Whether the zone makes the doors of ``design`` face the street and,
+    on a lot with more than one, names which street
+    (``entrance_faces_street: required_named``, FOLLOWUPS 153 round 2):
+    Wood Village's official address, downtown Estacada's busiest street or
+    Broadway, Hayden Island's Core Access Street. Nothing the screen reads
+    says which street that is, so a fit on such a lot cannot be shown to
+    face the right one."""
+    return design.door_face is not None and (
+        rules.get("entrance_faces_street") == "required_named"
+    )
 
 
 def door_turn_deg(fit: "Fit", bearings: "tuple[float, ...]") -> float | None:

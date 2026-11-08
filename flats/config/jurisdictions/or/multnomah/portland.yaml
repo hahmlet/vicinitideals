@@ -3592,6 +3592,17 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.120/33.120.231.txt#L8-L40"
+      variants:
+        # PCC 33.545.120.C.2 (Lombard Street plan district, Subdistrict A,
+        # RM2): the main entrance of each primary structure faces the street
+        # lot line, no porch alternative; corner lots either street; an
+        # entrance facing a shared courtyard landscaped to L1 is exempt,
+        # which a turned pod's side-yard doors may or may not be -- held,
+        # not barred (FOLLOWUPS 153 round 2).
+        - value: unclear
+          when: [pdx_lombard_subdistrict_a]
+          cite: PCC 33.545.120.B-C.2, Lombard Subdistrict A RM2 location of main entrance, facing the street lot line, courtyard entrances exempt
+          quote: "or/multnomah/portland/33.545.txt#L63-L65,L79-L86"
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
@@ -4495,6 +4506,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L18-L43"
+      variants:
+        # PCC 33.532.250 (Hayden Island plan district, which controls over
+        # the base zone, 33.500.040): at least one main entrance faces the
+        # street or stands within 45 degrees of it, no porch alternative;
+        # on a site with more than one street, the Island Core Access
+        # Street of Map 532-3, which is not stored (FOLLOWUPS 153 round 2).
+        - value: required_named
+          when: [pdx_hayden_island]
+          cite: PCC 33.532.250.B-C, Hayden Island main entrance, facing the street or at up to 45 degrees, the Core Access Street on a site with frontage on more than one
+          quote: "or/multnomah/portland/33.532.txt#L233-L249"
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
@@ -4743,6 +4764,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L18-L43"
+      variants:
+        # PCC 33.532.250 (Hayden Island plan district, which controls over
+        # the base zone, 33.500.040): at least one main entrance faces the
+        # street or stands within 45 degrees of it, no porch alternative;
+        # on a site with more than one street, the Island Core Access
+        # Street of Map 532-3, which is not stored (FOLLOWUPS 153 round 2).
+        - value: required_named
+          when: [pdx_hayden_island]
+          cite: PCC 33.532.250.B-C, Hayden Island main entrance, facing the street or at up to 45 degrees, the Core Access Street on a site with frontage on more than one
+          quote: "or/multnomah/portland/33.532.txt#L233-L249"
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
@@ -5010,6 +5041,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L18-L43"
+      variants:
+        # PCC 33.532.250 (Hayden Island plan district, which controls over
+        # the base zone, 33.500.040): at least one main entrance faces the
+        # street or stands within 45 degrees of it, no porch alternative;
+        # on a site with more than one street, the Island Core Access
+        # Street of Map 532-3, which is not stored (FOLLOWUPS 153 round 2).
+        - value: required_named
+          when: [pdx_hayden_island]
+          cite: PCC 33.532.250.B-C, Hayden Island main entrance, facing the street or at up to 45 degrees, the Core Access Street on a site with frontage on more than one
+          quote: "or/multnomah/portland/33.532.txt#L233-L249"
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
@@ -5309,6 +5350,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L18-L43"
+      variants:
+        # PCC 33.532.250 (Hayden Island plan district, which controls over
+        # the base zone, 33.500.040): at least one main entrance faces the
+        # street or stands within 45 degrees of it, no porch alternative;
+        # on a site with more than one street, the Island Core Access
+        # Street of Map 532-3, which is not stored (FOLLOWUPS 153 round 2).
+        - value: required_named
+          when: [pdx_hayden_island]
+          cite: PCC 33.532.250.B-C, Hayden Island main entrance, facing the street or at up to 45 degrees, the Core Access Street on a site with frontage on more than one
+          quote: "or/multnomah/portland/33.532.txt#L233-L249"
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
@@ -5625,6 +5676,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L18-L43"
+      variants:
+        # PCC 33.532.250 (Hayden Island plan district, which controls over
+        # the base zone, 33.500.040): at least one main entrance faces the
+        # street or stands within 45 degrees of it, no porch alternative;
+        # on a site with more than one street, the Island Core Access
+        # Street of Map 532-3, which is not stored (FOLLOWUPS 153 round 2).
+        - value: required_named
+          when: [pdx_hayden_island]
+          cite: PCC 33.532.250.B-C, Hayden Island main entrance, facing the street or at up to 45 degrees, the Core Access Street on a site with frontage on more than one
+          quote: "or/multnomah/portland/33.532.txt#L233-L249"
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
@@ -5856,6 +5917,16 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-09-28'
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L18-L43"
+      variants:
+        # PCC 33.532.250 (Hayden Island plan district, which controls over
+        # the base zone, 33.500.040): at least one main entrance faces the
+        # street or stands within 45 degrees of it, no porch alternative;
+        # on a site with more than one street, the Island Core Access
+        # Street of Map 532-3, which is not stored (FOLLOWUPS 153 round 2).
+        - value: required_named
+          when: [pdx_hayden_island]
+          cite: PCC 33.532.250.B-C, Hayden Island main entrance, facing the street or at up to 45 degrees, the Core Access Street on a site with frontage on more than one
+          quote: "or/multnomah/portland/33.532.txt#L233-L249"
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
@@ -6796,6 +6867,37 @@ drawn_areas:
       district is read as formerly LR7.5 -- the deeper setbacks, never the
       shallower ones. Only R7 is listed: the R10, RM1, CM1 and R5 land inside
       the outline is not what 33.530.020 reaches.
+  hayden_island:
+    condition: pdx_hayden_island
+    zones: [CR, CM1, CM2, CM3, CE, CX]
+    file: or/multnomah/portland/hayden-island.geojson
+    source: >-
+      The Hayden Island (HI) outline of plan-districts.geojson (Portland Maps
+      BPS_Zoning_Code_Layers layer 0, fetched 2026-10-22), copied unchanged.
+      Drawn provenance in the file's source block.
+    quote: "or/multnomah/portland/33.532.txt#L48-L49,L233-L238"
+    cite: PCC 33.532.020, 33.532.250.B
+    note: >-
+      33.532.250 reaches sites in commercial/mixed use zones in the plan
+      district, so only those zones are listed. Map 532-3 (the Island Core
+      Access Streets) is not stored: on a lot with more than one street the
+      street the main entrance must face is unread (required_named,
+      ENTRANCE-STREET). FOLLOWUPS 153 round 2.
+  lombard_subdistrict_a:
+    condition: pdx_lombard_subdistrict_a
+    zones: [RM2]
+    file: or/multnomah/portland/lombard-subdistrict-a.geojson
+    source: >-
+      The Lombard Street (LB) Subdistrict A outlines of
+      plan-subdistricts.geojson (Portland Maps BPS_Zoning_Code_Layers layer
+      1, fetched 2026-10-22), copied unchanged. Drawn provenance in the
+      file's source block.
+    quote: "or/multnomah/portland/33.545.txt#L63-L65"
+    cite: PCC 33.545.120.B
+    note: >-
+      33.545.120 reaches duplexes, attached houses and multi-dwelling
+      structures on Subdistrict A sites zoned RM2, so only RM2 is listed.
+      FOLLOWUPS 153 round 2.
   northwest_residential_limited:
     condition: pdx_nw_residential_limited
     zones: [CM3]

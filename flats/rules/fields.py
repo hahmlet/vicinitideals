@@ -1678,10 +1678,15 @@ _F: tuple[FieldDef, ...] = (
         "a reading nobody has settled. `unclear`, or absent, holds a turned "
         "fit out of GREEN on ENTRANCE-TURNED and never fails it; a building "
         "that also fits facing the street is read that way. Corner lots: "
-        "facing either street counts.",
+        "facing either street counts. `required_named`: `required`, and on "
+        "a lot with more than one street the code names which one the "
+        "entrance faces (the official address, the street with the most "
+        "foot traffic, a mapped access street) -- which nothing the screen "
+        "reads tells, so a corner or through lot, or one whose streets were "
+        "never measured, is held out of GREEN on ENTRANCE-STREET.",
         None,
         "building_orientation",
-        choices=("required", "alternative", "not_required", "unclear"),
+        choices=("required", "required_named", "alternative", "not_required", "unclear"),
         label="front-door orientation rule",
     ),
     FieldDef(

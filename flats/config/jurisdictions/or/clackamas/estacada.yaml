@@ -636,8 +636,8 @@ zones:
       carved; parking may not front Eagle Creek Rd (L872) not drawn.
   D:
     entrance_faces_street:
-      value: required
-      cite: "Estacada EMC 16.26.050(6) Downtown building entrances: Primary entrances shall face the street likely to have the greatest pedestrian traffic; development abutting Broadway Street shall orient to it (FOLLOWUPS 153)"
+      value: required_named
+      cite: "Estacada EMC 16.26.050(6) Downtown building entrances: Primary entrances shall face the street likely to have the greatest pedestrian traffic, as the Design Review Committee determines; development abutting Broadway Street shall orient to it (FOLLOWUPS 153)"
       url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
       retrieved: '2026-10-07'
       quote: "or/clackamas/estacada/16.26/16.26.050.txt#L92-L98"

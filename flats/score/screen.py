@@ -84,6 +84,7 @@ from flats.score.paper import (
     drive_at_street,
     drive_in_front_yard,
     door_turned,
+    entrance_street_named,
     entrance_unsettled,
     faces_the_street,
     home_lot_standard,
@@ -426,6 +427,14 @@ UNPAVED = "parking_pavement"
 #: never failed, until someone reads the rule.
 ENTRANCE_TURNED = "entrance_faces_street"
 
+#: The street the front doors must face, where the code names one of a
+#: lot's several streets (``entrance_faces_street: required_named``: the
+#: official address, the busiest street, a mapped access street) and the
+#: lot is a corner or through lot, or its streets were never measured
+#: (FOLLOWUPS 153 round 2). Joins ``_checks``'s ``unmeasured``: the fit
+#: faces a street, but nothing read says it is the one the code names.
+ENTRANCE_STREET = "entrance_named_street"
+
 #: The shape a code asks the open space to take (a square that fits inside
 #: it, a patio off each home) where the fit's window does not prove it and
 #: the ground outside that window was never measured (:func:`_outdoor_shape`).
@@ -648,6 +657,11 @@ class LotFacts:
     #: (:func:`flats.score.paper.side_street_fed`). False where nothing
     #: measured the lot, which keeps the lane beside the building.
     corner: bool = False
+    #: Street along two opposite lines (:func:`flats.geom.corner.through_lot`).
+    #: Read only where the code names the street the front doors face
+    #: (:data:`ENTRANCE_STREET`). False where nothing measured the lot; the
+    #: bridge sets it True where the fact went unobserved.
+    through_lot: bool = False
     #: The bearings of the lot's front lot lines, degrees mod 180, the ones
     #: the fit's angles are read against (:func:`flats.score.paper.door_turned`,
     #: FOLLOWUPS 153). Empty where nothing measured the lot, which leaves a
@@ -1903,6 +1917,15 @@ def _checks(
     # the main entrance face a side yard. Unread is never a pass.
     if entrance_unsettled(rules, design) and door_turned(design, fit, lot.street_bearings):
         unmeasured.add(ENTRANCE_TURNED)
+    # The street they face (FOLLOWUPS 153 round 2): where the code names
+    # one of several streets, a lot with more than one -- or one whose
+    # streets nobody measured -- cannot be shown to face the named one.
+    if (
+        fit.fits
+        and entrance_street_named(rules, design)
+        and (lot.corner or lot.through_lot or not lot.street_bearings)
+    ):
+        unmeasured.add(ENTRANCE_STREET)
 
     return out, unchecked, unmeasured
 
@@ -3764,6 +3787,7 @@ _MEASURED_FLAG: dict[str, str] = {
     FRONT_MAX_DRAWN: "MEASURE-FRONT-MAX-DRAWN",
     FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",
     ENTRANCE_TURNED: "ENTRANCE-TURNED",
+    ENTRANCE_STREET: "ENTRANCE-STREET",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

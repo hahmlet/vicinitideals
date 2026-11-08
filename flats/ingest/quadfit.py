@@ -2980,6 +2980,9 @@ def _screen_on(
         buildable_area_sqft=env.sqft if env.source == "flats" else None,
         dedicated_sqft=dedicated_sqft(here, got),
         street_bearings=here.front_bearings,
+        # Unobserved is read as a through lot: the named-street hold
+        # (ENTRANCE-STREET) is the only reader.
+        through_lot=here.observed.get("through_lot") is not False,
     )
     fit = fit_for(
         fitters[key],

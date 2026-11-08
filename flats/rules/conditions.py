@@ -1487,6 +1487,32 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_hayden_island",
+        "site_fact",
+        "The lot is in Portland's Hayden Island plan district. In its "
+        "commercial/mixed use zones at least one main entrance faces the "
+        "street or stands within 45 degrees of it, and on a site with more "
+        "than one street, the Island Core Access Street (33.532.250).",
+        evidence=(
+            "the Hayden Island plan district outline (Portland Maps BPS "
+            "zoning layer 0) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_lombard_subdistrict_a",
+        "site_fact",
+        "The lot is in Subdistrict A of Portland's Lombard Street plan "
+        "district. On RM2 sites there the main entrance of each primary "
+        "structure faces the street lot line; entrances facing a shared "
+        "landscaped courtyard are exempt (33.545.120.C.2).",
+        evidence=(
+            "the Lombard Street Subdistrict A outlines (Portland Maps BPS "
+            "zoning layer 1) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_nw_residential_limited",
         "site_fact",
         "The lot is CM3 land in the Northwest plan district's Residential "
@@ -1828,8 +1854,10 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "pdx_east_corridor_min_far_one",
     "pdx_gateway_min_far",
     "pdx_glendoveer_lr75",
+    "pdx_hayden_island",
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_unmeasured",
+    "pdx_lombard_subdistrict_a",
     "pdx_nw_residential_limited",
     "pdx_plan_district_unmeasured",
     "pdx_special_building_setback",

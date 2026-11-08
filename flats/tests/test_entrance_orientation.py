@@ -8,6 +8,9 @@ street. Whether the code lets it stand turned is a per-place reading,
 * ``required`` -- the doors must face the street: the fit is confined to the
   street's bearings, unflipped (:func:`flats.score.paper.faces_the_street`);
 * ``alternative`` / ``not_required`` -- a turned fit stands;
+* ``required_named`` -- ``required``, and the code names which of several
+  streets: a corner or through lot (or one never measured) is held out of
+  GREEN on ENTRANCE-STREET, never failed (round 2);
 * ``unclear`` or unread -- a turned fit is held out of GREEN on
   ENTRANCE-TURNED, never failed, and the bridge also reads the lot facing
   the street, keeping the better (:func:`flats.ingest.quadfit._screen_on`).
@@ -29,10 +32,11 @@ from flats.score.flags import Colour
 from flats.score.paper import (
     door_turn_deg,
     door_turned,
+    entrance_street_named,
     entrance_unsettled,
     faces_the_street,
 )
-from flats.score.screen import ENTRANCE_TURNED, _MEASURED_FLAG, screen
+from flats.score.screen import ENTRANCE_STREET, ENTRANCE_TURNED, _MEASURED_FLAG, screen
 from flats.tests.test_round2_rulings import facts, rules
 
 pytestmark = pytest.mark.unit
@@ -55,10 +59,10 @@ def _fit(angle: float | None, orientation: Orientation | None, *, fits: bool = T
     )
 
 
-def _run(fit: Fit, street: tuple[float, ...], **values):
+def _run(fit: Fit, street: tuple[float, ...], *, corner: bool = False, through: bool = False, **values):
     return screen(
         rules(**values),
-        facts(lot_sqft=12000, street_bearings=street),
+        facts(lot_sqft=12000, street_bearings=street, corner=corner, through_lot=through),
         POD,
         fit,
         policy=slack.SlackPolicy(tolerance={"fit_ft": 0.5}),
@@ -176,8 +180,12 @@ def rule_set() -> RuleSet:
 @pytest.mark.parametrize(
     ("where", "zone", "value"),
     [
-        ("or/multnomah/wood-village", "LR 7.5", "required"),
-        ("or/multnomah/wood-village", "MR 4", "required"),
+        ("or/multnomah/wood-village", "LR 7.5", "required_named"),
+        ("or/multnomah/wood-village", "MR 4", "required_named"),
+        ("or/clackamas/estacada", "D", "required_named"),
+        ("or/clackamas/oregon-city", "R-6", "alternative"),
+        ("or/multnomah/portland", "CM2", "alternative"),
+        ("or/multnomah/portland", "RM2", "alternative"),
         ("or/multnomah/portland", "R5", "alternative"),
         ("or/multnomah/portland", "R20", "not_required"),
         ("or/multnomah/gresham", "LDR-7", "alternative"),
@@ -199,6 +207,74 @@ def test_wood_village_confines_the_pod_to_the_street(rule_set: RuleSet) -> None:
     got = rule_set.resolve("or/multnomah/wood-village", "LR 7.5")
     assert faces_the_street(got, POD)
     assert not entrance_unsettled(got, POD)
+
+
+# --- round 2: the named street, the mapped sub-areas -------------------------------
+
+
+def test_a_named_street_holds_a_corner_or_through_lot_never_fails_it() -> None:
+    assert _MEASURED_FLAG[ENTRANCE_STREET] == "ENTRANCE-STREET"
+    facing = _fit(0.0, Orientation.width_facing)
+    for kw in ({"corner": True}, {"through": True}):
+        got = _run(facing, (0.0,), entrance_faces_street="required_named", **kw)
+        assert "ENTRANCE-STREET" in codes(got)
+        assert got.colour is not Colour.green
+        assert not any(c.check == ENTRANCE_STREET for c in got.checks)
+        plain = _run(facing, (0.0,), entrance_faces_street="required", **kw)
+        if plain.colour is Colour.green:
+            assert got.colour is Colour.yellow
+
+
+def test_a_named_street_on_a_one_street_lot_is_not_held() -> None:
+    got = _run(_fit(0.0, Orientation.width_facing), (0.0,), entrance_faces_street="required_named")
+    assert "ENTRANCE-STREET" not in codes(got)
+
+
+def test_a_named_street_on_an_unmeasured_lot_is_held() -> None:
+    got = _run(_fit(0.0, Orientation.width_facing), (), entrance_faces_street="required_named")
+    assert "ENTRANCE-STREET" in codes(got)
+
+
+def test_plain_required_does_not_ask_which_street() -> None:
+    got = _run(_fit(0.0, Orientation.width_facing), (0.0,), corner=True, entrance_faces_street="required")
+    assert "ENTRANCE-STREET" not in codes(got)
+
+
+def test_required_named_also_confines_the_pod_to_the_street(rule_set: RuleSet) -> None:
+    for where, zone in (("or/multnomah/wood-village", "MR 2"), ("or/clackamas/estacada", "D")):
+        got = rule_set.resolve(where, zone)
+        assert faces_the_street(got, POD)
+        assert entrance_street_named(got, POD)
+        assert not entrance_unsettled(got, POD)
+        assert not entrance_street_named(got, POD.model_copy(update={"door_face": None}))
+
+
+@pytest.mark.parametrize(
+    ("where", "zones", "condition", "value"),
+    [
+        ("or/clackamas/oregon-city", ("R-10", "R-8", "R-6", "R-5", "R-3.5", "R-2"), "oregon_city_park_place", "required"),
+        ("or/clackamas/oregon-city", ("R-10", "R-5", "R-2"), "oregon_city_south_end", "unclear"),
+        ("or/multnomah/portland", ("CR", "CM1", "CM2", "CM3", "CE", "CX"), "pdx_hayden_island", "required_named"),
+        ("or/multnomah/portland", ("RM2",), "pdx_lombard_subdistrict_a", "unclear"),
+    ],
+)
+def test_a_mapped_sub_area_takes_its_own_rule(
+    rule_set: RuleSet, where: str, zones: tuple[str, ...], condition: str, value: str
+) -> None:
+    for zone in zones:
+        inside = rule_set.resolve(where, zone, conditions=(condition,))
+        assert inside.get("entrance_faces_street") == value, zone
+        outside = rule_set.resolve(where, zone)
+        assert outside.get("entrance_faces_street") == "alternative", zone
+
+
+def test_the_sub_area_outlines_are_held_for_their_zones() -> None:
+    layers = load_rules()
+    pdx = layers["or/multnomah/portland"].drawn_areas
+    assert pdx["hayden_island"].condition == "pdx_hayden_island"
+    assert set(pdx["hayden_island"].zones) == {"CR", "CM1", "CM2", "CM3", "CE", "CX"}
+    assert pdx["lombard_subdistrict_a"].condition == "pdx_lombard_subdistrict_a"
+    assert set(pdx["lombard_subdistrict_a"].zones) == {"RM2"}
 
 
 def test_a_turned_fit_can_carry_the_lot_facts_bearings() -> None:
