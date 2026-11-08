@@ -1078,6 +1078,14 @@ RULINGS: dict[str, dict[str, str]] = {
             "(tdc.18.910.improvement-standards L177)."
         ),
     },
+    "or": {
+        # 2026-11-06, FOLLOWUPS 87: OAR 660-023-0200 stored at the state root.
+        "PL 89-665": (
+            "not-a-zone: Public Law 89-665, the National Historic Preservation "
+            "Act of 1966, cited in the rule's definition of a National Register "
+            "Resource (oar.660-023-0200.txt#L26)."
+        ),
+    },
 }
 
 #: Designations found by hand while ruling the rows above, which the ledger

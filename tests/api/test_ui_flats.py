@@ -3218,6 +3218,17 @@ async def test_portland_overlay_reasons_are_said_in_words() -> None:
     assert "historic" in _CHECK_WORDS[pdx_overlays.PROTECTED_RESOURCE_CHECK]
 
 
+async def test_historic_list_reasons_are_said_in_words() -> None:
+    """FOLLOWUPS 87: a listed landmark outside Portland, and a listing not yet
+    settled, read as sentences, never as their codes."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS
+    from flats.geom import historic_lists
+
+    for code in historic_lists.REASONS:
+        assert code in _REASON_WORDS, code
+    assert "historic" in _CHECK_WORDS[historic_lists.LISTED_CHECK]
+
+
 async def test_institutional_land_is_said_in_words() -> None:
     """A school, park or rail lot answered RED by assign reads as
     institutional land, and says churches are still screened (FOLLOWUPS 47)."""
