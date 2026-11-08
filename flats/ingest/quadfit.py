@@ -3526,6 +3526,65 @@ def strip_waived(
 FIRE_RETRY_MAX_PLACEMENTS = 24
 # Drawing every listed placement at once can exhaust a worker on a large lot.
 FIRE_RETRY_MAX_ACRES = 3.0
+#: Feet the court must come nearer a street line than the building, over a
+#: stretch of that line at least this long, before it is read as standing
+#: between them (:func:`_court_street_side`): drawings round to 0.1 ft, and a
+#: court beside the building starts at the building's own face.
+COURT_STREET_SIDE_TOL_FT = 1.0
+
+
+def _court_street_side(
+    drawing: Mapping[str, Any], streets: Sequence[tuple[float, float, float, float]]
+) -> bool:
+    """Whether ``drawing``'s parking court stands between its building and a
+    street line (Steph 2026-11-08, rulings.yaml
+    ``2026-11-08-no-front-yard-parking-silent-codes``: in a code silent on it
+    the court may not sit in the front yard; Milwaukie MMC 19.505.3.D.4.a
+    forbids it outright).
+
+    For each street line, the building and court are read in the line's own
+    frame -- along it, and out from it into the lot -- over the stretch of
+    the line both of them face. The court stands between where, over that
+    stretch, it comes nearer the line than the building does (by more than
+    :data:`COURT_STREET_SIDE_TOL_FT`). A court behind the building, or beside
+    it at the same face, does not; a court in front of it does, and so does a
+    court behind it on a through lot, where behind is the other street's
+    front yard. A drawing with no court stands nothing between.
+    """
+    from shapely import affinity
+    from shapely.geometry import Polygon, box
+
+    ring, court_ring = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court_ring and len(court_ring) >= 4):
+        return False
+    building, court = Polygon(ring), Polygon(court_ring)
+    tol = COURT_STREET_SIDE_TOL_FT
+    for x1, y1, x2, y2 in streets:
+        length = math.hypot(x2 - x1, y2 - y1)
+        if length <= tol:
+            continue
+        turn = -math.degrees(math.atan2(y2 - y1, x2 - x1))
+
+        def framed(shape: Any) -> Any:
+            return affinity.rotate(
+                affinity.translate(shape, -x1, -y1), turn, origin=(0.0, 0.0)
+            )
+
+        b, c = framed(building), framed(court)
+        if b.centroid.y < 0:
+            b = affinity.scale(b, 1.0, -1.0, origin=(0.0, 0.0))
+            c = affinity.scale(c, 1.0, -1.0, origin=(0.0, 0.0))
+        lo = max(b.bounds[0], c.bounds[0], 0.0)
+        hi = min(b.bounds[2], c.bounds[2], length)
+        if hi - lo <= tol:
+            continue
+        window = box(lo, -1e7, hi, 1e7)
+        bw, cw = b.intersection(window), c.intersection(window)
+        if bw.is_empty or cw.is_empty:
+            continue
+        if cw.bounds[1] < bw.bounds[1] - tol:
+            return True
+    return False
 
 
 def fire_checked(
@@ -3564,7 +3623,9 @@ def fire_checked(
     ``FIRE_RETRY_MAX_PLACEMENTS`` are drawn, only on lots no larger than
     ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
     measured-parking-share guard still apply; the first that reaches and keeps
-    every other check unchanged is kept. If none passes, the existing other-angle
+    every other check unchanged is kept, never one that stands its court
+    between the building and a street line (:func:`_court_street_side`).
+    If none passes, the existing other-angle
     retry follows unchanged: the plan is drawn at the fit's other angles
     (:func:`_turned_for_fire`) and kept at one the hose reaches.
     ``green`` says the plan
@@ -3762,6 +3823,11 @@ def fire_checked(
             where = placements[index]
             drawn = drawing_for(out, fitter, street=at, where=where)
             if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
+                continue
+            # The screen never re-reads where the court stands, so a move
+            # that turns it toward a street is refused here (Steph
+            # 2026-11-08; Milwaukie 12E30CD04700, fire_rp5).
+            if _court_street_side(drawn, streets):
                 continue
             candidate = dataclasses.replace(out, drawing=drawn)
             candidate_route = measure(drawn)

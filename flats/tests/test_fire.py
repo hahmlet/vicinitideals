@@ -935,3 +935,120 @@ def test_fire_retry_does_not_move_a_placement_with_another_failing_check(
     assert got.drawing == base.drawing
     assert check(got.screening, "fit_ft").verdict is Verdict.fails
     assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+
+
+def _box_ring(x0: float, y0: float, x1: float, y1: float) -> list[list[float]]:
+    return [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]
+
+
+FRONT = (0.0, 0.0, 200.0, 0.0)
+FAR_FRONT = (200.0, 240.0, 0.0, 240.0)
+SIDE_STREET = (200.0, 0.0, 200.0, 240.0)
+
+
+@pytest.mark.parametrize(
+    "court, streets, between",
+    [
+        # Behind the building on an interior lot: the plan every green draws.
+        (_box_ring(20, 80, 100, 120), (FRONT,), False),
+        # Beside it, starting at its own face.
+        (_box_ring(80, 20, 120, 70), (FRONT,), False),
+        # In front of it, in the front yard.
+        (_box_ring(20, 2, 100, 18), (FRONT,), True),
+        # Behind it on a through lot: the far street's front yard.
+        (_box_ring(20, 80, 100, 120), (FRONT, FAR_FRONT), True),
+        # Behind it and wider, reaching toward a corner's side street: not
+        # between the building and that street.
+        (_box_ring(20, 80, 190, 120), (FRONT, SIDE_STREET), False),
+        # Beside it, toward the corner's side street.
+        (_box_ring(80, 20, 190, 70), (FRONT, SIDE_STREET), True),
+        # No court drawn.
+        (None, (FRONT,), False),
+    ],
+)
+def test_court_street_side_reads_the_court_between_building_and_street(
+    court, streets, between
+) -> None:
+    from flats.ingest.quadfit import _court_street_side
+
+    drawing = {"building": _box_ring(20, 20, 80, 70), "court": court}
+    assert _court_street_side(drawing, streets) is between
+
+
+def test_court_street_side_holds_at_an_angle() -> None:
+    """A plan turned 10 degrees to the street reads the same."""
+    from shapely import affinity
+
+    from flats.ingest.quadfit import _court_street_side
+
+    def turned(ring):
+        return [list(p) for p in affinity.rotate(Polygon(ring), 10.0, origin=(50, 45)).exterior.coords]
+
+    building = turned(_box_ring(20, 20, 80, 70))
+    behind = turned(_box_ring(20, 80, 100, 120))
+    ahead = turned(_box_ring(20, 2, 80, 16))
+    assert not _court_street_side({"building": building, "court": behind}, (FRONT,))
+    assert _court_street_side({"building": building, "court": ahead}, (FRONT,))
+
+
+@pytest.mark.parametrize("court_ahead", [True, False])
+def test_fire_retry_never_moves_the_court_toward_the_street(
+    corpus, policies, monkeypatch, court_ahead
+) -> None:
+    """Milwaukie 12E30CD04700 (fire_rp5): the only placement the hose
+    reaches stands the court between the building and the street. The
+    retry refuses it and the lot stays RED; the same move with the court
+    kept behind the building is taken (the pattern of the three right
+    greens, Portland 1S2E12AB06900, 1S3E07AC09706, West Linn
+    21E35BC03000)."""
+    from flats.ingest import quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    base = _coloured(s, Triage.green)
+    ring, court = base.drawing["building"], base.drawing.get("court")
+    assert court and len(court) >= 4
+    b_front = min(y for _, y in ring)
+    c_front, c_back = min(y for _, y in court), max(y for _, y in court)
+    assert c_front >= max(y for _, y in ring) - 0.5, "the fixture's court stands behind"
+    depth = c_back - c_front
+    lift = depth + 5.0
+    moved = [[x, y + lift] for x, y in ring]
+    if court_ahead:
+        court_to = [[x, y - c_front + b_front] for x, y in court]
+    else:
+        court_to = [[x, y + lift] for x, y in court]
+    candidate = {**base.drawing, "building": moved, "court": court_to}
+    candidate_polygon = Polygon(moved)
+    streets = tuple((e.x1, e.y1, e.x2, e.y2) for e in lot.edges.edges if e.cls.value == "front")
+    assert not quadfit._court_street_side(base.drawing, streets)
+    assert quadfit._court_street_side(candidate, streets) is court_ahead
+
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            listing.append("candidate")
+            return None
+        if where == "candidate":
+            return candidate
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(
+        fire, "route_ft", lambda building, *_a, **_k: 120.0 if building.equals(candidate_polygon) else 190.0
+    )
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+
+    if court_ahead:
+        assert got.drawing == base.drawing
+        assert got.facts.fire_route_ft == 190.0
+        assert got.signed.colour is Colour.red
+    else:
+        assert got.drawing["building"] == moved
+        assert got.facts.fire_route_ft == 120.0
+        assert got.signed.colour is Colour.yellow
