@@ -74,3 +74,8 @@ data/flats/books/
 # the registry, described by the manifest they carry.
 data/flats/sources/
 data/flats/bridge/
+
+# FOLLOWUPS 125: the building footprint downloads and the occupancy builds
+# (scripts/flats_lot_occupancy.py) -- hundreds of MB, refetched on demand.
+data/flats/footprints/
+data/flats/occupancy/

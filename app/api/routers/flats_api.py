@@ -181,6 +181,8 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         "key_facts": [{"label": label, "value": value} for label, value in lots._fact_rows(facts)],
         "alley_coverage": facts.get("alley_coverage") or [],
         "net_land": lots._net_land(lot),
+        # What stands on the lot today (FOLLOWUPS 125): a label, never a colour.
+        "occupancy": await lots._lot_occupancy(session, lot.id),
         "rulings": [e.as_dict() for e in entries],
         # Adopted amendments carried on the zone itself, with whether the run shown applied them.
         "law_changes": lots._law_changes(lot.jurisdiction, lot.zone, run_on=lots._run_law_on(run)),

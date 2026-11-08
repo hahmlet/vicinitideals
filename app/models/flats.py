@@ -486,6 +486,45 @@ class FlatsLotPrice(Base):
     net_area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
 
 
+class FlatsLotOccupancy(Base):
+    """What stands on one lot today: ``vacant`` / ``teardown`` / ``house`` /
+    ``larger`` / ``unclear`` (FOLLOWUPS 125, :mod:`flats.ingest.occupancy`).
+
+    A LABEL, never a colour (ruling 2026-10-14-existing-buildings-stay-green):
+    nothing that screens reads it. Filled by ``scripts/flats_lot_occupancy.py
+    load`` from the footprint map cut against the copy's lots and the county
+    roll's building value; ``disagreement`` names a lot where the two disagree.
+    A lot with no row was not measured.
+    """
+
+    __tablename__ = "lot_occupancy"
+    __table_args__ = (
+        Index("ix_flats_lot_occupancy_snapshot_label", "snapshot_id", "label"),
+        {"schema": SCHEMA},
+    )
+
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), primary_key=True
+    )
+    snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
+    label: Mapped[str] = mapped_column(String(20), nullable=False)
+    disagreement: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    building_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
+    main_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
+    footprint_sqft: Mapped[float | None] = mapped_column(Numeric(14, 1), nullable=True)
+    largest_sqft: Mapped[float | None] = mapped_column(Numeric(14, 1), nullable=True)
+    #: Share of the lot under counted footprints, 0..1.
+    coverage: Mapped[float | None] = mapped_column(Numeric(6, 4), nullable=True)
+    building_value: Mapped[float | None] = mapped_column(Numeric(16, 2), nullable=True)
+    total_value: Mapped[float | None] = mapped_column(Numeric(16, 2), nullable=True)
+    year_built: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    roll_building_sqft: Mapped[float | None] = mapped_column(Numeric(14, 1), nullable=True)
+    #: The footprint layer and its fetch date.
+    source: Mapped[str | None] = mapped_column(String(160), nullable=True)
+
+
 class FlatsLotWorksAs(Base):
     """For one lot, one design, one run: whether the pod comes out GREEN as an
     apartment and as townhomes. The Lots page's "Works as" filter reads this
