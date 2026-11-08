@@ -34,9 +34,18 @@ back from the lot line where the street is already that wide. So one
 arithmetic serves both forms: the strip is the stated distance less the
 measured half-width, never below zero, added to the line's setback
 (:meth:`flats.geom.envelope.Setbacks.for_edge`). The forms differ in whether
-the lot's AREA shrinks (a dedication) or not; the screen counts area before
-either (WashCo 302-7.1 A), which is the permissive side for a dedication
-and is named in FOLLOWUPS 77.
+the lot's AREA shrinks (a dedication) or not. The screen takes the strip
+off the lot area its minimum lot area and coverage are measured on
+(:func:`strip_sqft`, ``LotFacts.dedicated_sqft``; FOLLOWUPS 77) wherever a
+distance applies: the dedication codes say the strip leaves the lot
+(Sherwood's "Lot Area" is "exclusive of streets", SZCDC 16.10; Oregon City
+16.12.015 and Tigard 18.910.030.A.3 ask the adjacent street brought to its
+standard width), and where a code reads as a yard only (King City,
+Milwaukie) its public-improvement chapter is not held, so the strip is
+taken as handed over -- the conservative side. A code that measures the
+minimum lot area BEFORE the dedication says so and keeps the whole lot for
+that one check (:data:`LOT_AREA_FIELD`: Washington County 302-7.1 A to
+307-7.1 A and 375's Table B footnote, Milwaukie 19.504.2).
 
 **What is measured** (:func:`measure`, once per lot in the bridge). For each
 street lot line: the distance to the street's centre line (Metro's RLIS
@@ -153,6 +162,12 @@ WIDTH_FIELD = "row_to_centerline_stated_as_width"
 #: feet]`` (:func:`_designation_rows`). Read only through the stand-in
 #: (:meth:`Rule.standin`); the class fields hold each class's widest row.
 DESIGNATION_FIELD = "row_to_centerline_by_designation"
+
+#: True where the code measures the one-lot plan's minimum lot area on the
+#: lot BEFORE the right-of-way strip is handed over (Washington County
+#: 302-7.1 A: "based on lot size prior to any right-of-way dedications").
+#: Read by the screen; the unit lots a plat makes are always measured after.
+LOT_AREA_FIELD = "min_lot_sqft_before_dedication"
 
 #: Every field this module reads.
 FIELDS: tuple[str, ...] = (
@@ -714,6 +729,30 @@ def depth_ft(required: float, half_width: float | None) -> float:
     return max(0.0, required - half_width)
 
 
+def strip_sqft(edges: Iterable[Any], lot_geom: Any) -> float:
+    """The lot area the road strips take, in square feet: each line's
+    ``dedication_ft`` laid square off it into the lot, unioned (a corner
+    the two strips share counts once) and clipped to ``lot_geom``. Zero
+    where no line gives up a strip or there is no lot shape."""
+    pieces = []
+    if lot_geom is None or lot_geom.is_empty:
+        return 0.0
+    from shapely.geometry import LineString
+    from shapely.ops import unary_union
+
+    for e in edges:
+        ft = float(getattr(e, "dedication_ft", 0.0) or 0.0)
+        if ft <= 0:
+            continue
+        line = LineString([(e.x1, e.y1), (e.x2, e.y2)])
+        if line.length <= 0:
+            continue
+        pieces.append(line.buffer(ft, cap_style="flat"))
+    if not pieces:
+        return 0.0
+    return float(unary_union(pieces).intersection(lot_geom).area)
+
+
 __all__ = [
     "BUCKETS",
     "CLASS_BY_FIELD",
@@ -723,6 +762,7 @@ __all__ = [
     "DESIGNATION_FIELD",
     "FIELDS",
     "LAYERS",
+    "LOT_AREA_FIELD",
     "MIN_MEASURED",
     "NAMED_FIELD",
     "OTHER_FIELD",
@@ -739,4 +779,5 @@ __all__ = [
     "read_line",
     "rule_of",
     "street_key",
+    "strip_sqft",
 ]

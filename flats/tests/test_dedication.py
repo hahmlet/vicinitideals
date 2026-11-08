@@ -1100,3 +1100,57 @@ def test_every_class_by_names_a_map_with_buckets() -> None:
         assert key in CLASS_MAPS, by
         assert key in dedication.BUCKETS, by
         assert key in dedication.READS, by
+
+
+# --- the lot area the strip takes (FOLLOWUPS 77) ---------------------------
+
+
+class _Line:
+    def __init__(self, x1, y1, x2, y2, ft):
+        self.x1, self.y1, self.x2, self.y2, self.dedication_ft = x1, y1, x2, y2, ft
+
+
+LOT_BOX = shapely.box(X0, Y0, X0 + 50, Y0 + 100)
+
+
+def test_the_strip_area_is_the_strip_laid_into_the_lot() -> None:
+    assert dedication.strip_sqft([_Line(X0, Y0, X0 + 50, Y0, 4.5)], LOT_BOX) == pytest.approx(225.0)
+    assert dedication.strip_sqft([_Line(X0, Y0, X0 + 50, Y0, 0.0)], LOT_BOX) == 0.0
+    assert dedication.strip_sqft([], LOT_BOX) == 0.0
+    assert dedication.strip_sqft([_Line(X0, Y0, X0 + 50, Y0, 4.5)], None) == 0.0
+
+
+def test_a_corner_the_two_strips_share_counts_once() -> None:
+    lines = [_Line(X0, Y0, X0 + 50, Y0, 5.0), _Line(X0 + 50, Y0, X0 + 50, Y0 + 100, 3.0)]
+    assert dedication.strip_sqft(lines, LOT_BOX) == pytest.approx(5 * 50 + 3 * 100 - 5 * 3)
+
+
+def test_the_bridge_measures_the_strip_the_envelope_takes(rules) -> None:
+    from flats.ingest.quadfit import dedicated_sqft
+
+    lot = lot_from_row(row(20.5, "local"))
+    assert dedicated_sqft(lot, rules.resolve(WASHCO, "R-6")) == pytest.approx(4.5 * 50)
+    assert dedicated_sqft(lot_from_row(row(40.0, "local")), rules.resolve(WASHCO, "R-6")) == 0.0
+    # A code with no distance to the centre line takes no strip.
+    assert dedicated_sqft(lot, rules.resolve("or/washington/beaverton", "MR")) == 0.0
+
+
+@pytest.mark.parametrize(
+    "zone", ["R-5", "R-6", "R-9", "R-15", "R-24", "R-25+", "TO:R9-12", "TO:R12-18", "TO:R18-24"]
+)
+def test_washington_county_reads_the_parent_lot_before_the_dedication(rules, zone) -> None:
+    assert rules.resolve(WASHCO, zone).get(dedication.LOT_AREA_FIELD) is True
+
+
+def test_milwaukie_lets_a_dedication_take_a_lot_below_its_minimum(rules) -> None:
+    assert rules.resolve(MILWAUKIE, "R-MD").get(dedication.LOT_AREA_FIELD) is True
+
+
+@pytest.mark.parametrize(
+    ("layer", "zone"),
+    [(OREGON_CITY, "R-10"), (SHERWOOD, "MDRL"), (TIGARD, "RES-A"), (KING_CITY, "R-9")],
+)
+def test_elsewhere_the_strip_comes_off_the_minimum_lot_area(rules, layer, zone) -> None:
+    got = rules.resolve(layer, zone)
+    assert dedication.rule_of(got) is not None, (layer, zone)
+    assert got.get(dedication.LOT_AREA_FIELD) is None, (layer, zone)

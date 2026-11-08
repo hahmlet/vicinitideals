@@ -1867,3 +1867,83 @@ def test_the_statute_lets_the_parent_read_its_own_zone_unchanged() -> None:
     area = next(c for c in result.checks if c.check == "min_lot_area_sqft")
     assert area.threshold == 3_000
     assert area.verdict is Verdict.passes
+
+
+# --- the road strip comes off the lot area (FOLLOWUPS 77) -----------------
+
+
+def _check(result, name):
+    return next(c for c in result.checks if c.check == name)
+
+
+def test_the_road_strip_comes_off_the_minimum_lot_area() -> None:
+    """A lot that hands a road strip over is smaller by it when its minimum
+    lot area is read: 6,000 sq ft less a 200 sq ft strip misses 5,900."""
+    whole = run(rules(min_lot_sqft=5_900))
+    given = run(rules(min_lot_sqft=5_900), lot=replace(LOT, dedicated_sqft=200.0))
+
+    assert _check(whole, "min_lot_area_sqft").verdict is Verdict.passes
+    area = _check(given, "min_lot_area_sqft")
+    assert area.observed == pytest.approx(5_800.0)
+    assert area.verdict is Verdict.fails
+
+
+def test_a_code_measuring_the_lot_before_the_dedication_keeps_the_whole_lot() -> None:
+    """Washington County 302-7.1 A: the parent lot "based on lot size prior to
+    any right-of-way dedications"."""
+    got = run(
+        rules(min_lot_sqft=5_900, min_lot_sqft_before_dedication=True),
+        lot=replace(LOT, dedicated_sqft=200.0),
+    )
+
+    area = _check(got, "min_lot_area_sqft")
+    assert area.observed == pytest.approx(6_000.0)
+    assert area.verdict is Verdict.passes
+
+
+def test_coverage_is_a_share_of_the_lot_left_after_the_road_strip() -> None:
+    cap = DESIGN.ground_sqft / 6_000 * 100.0 + 0.5
+    whole = run(rules(max_coverage_pct=cap))
+    given = run(rules(max_coverage_pct=cap), lot=replace(LOT, dedicated_sqft=300.0))
+
+    assert _check(whole, "coverage_pct").verdict is Verdict.passes
+    coverage = _check(given, "coverage_pct")
+    assert coverage.observed == pytest.approx(DESIGN.ground_sqft / 5_700 * 100.0)
+    assert coverage.verdict is not Verdict.passes
+
+
+def test_the_before_dedication_rule_does_not_reach_coverage() -> None:
+    cap = DESIGN.ground_sqft / 6_000 * 100.0 + 0.5
+    got = run(
+        rules(max_coverage_pct=cap, min_lot_sqft_before_dedication=True),
+        lot=replace(LOT, dedicated_sqft=300.0),
+    )
+
+    assert _check(got, "coverage_pct").observed == pytest.approx(DESIGN.ground_sqft / 5_700 * 100.0)
+
+
+def test_a_lot_of_record_relief_does_not_cover_the_road_strips_shortfall() -> None:
+    """Steph 2026-11-08 (ruling 2026-11-08-oregon-city-dedication-below-minimum):
+    a lot the road strip leaves below the minimum misses it, existing-lot
+    relief (OCMC 17.58.020) or not. Without a strip the relief still lets an
+    undersized lot off (FOLLOWUPS 108). Added 2026-11-07 where the two lanes
+    met (rescreen-1110)."""
+    relief = {"lot_of_record_relief": "lot_standards"}
+    stripped = run(
+        rules(min_lot_sqft=5_900, **relief), lot=replace(LOT, dedicated_sqft=200.0)
+    )
+    area = _check(stripped, "min_lot_area_sqft")
+    assert area.observed == pytest.approx(5_800.0)
+    assert area.verdict is Verdict.fails
+    assert stripped.triage is not Triage.green
+
+    small = run(rules(min_lot_sqft=6_500, **relief))
+    assert all(c.check != "min_lot_area_sqft" for c in small.checks)
+    assert small.triage is Triage.green
+
+
+def test_no_strip_leaves_the_lot_area_as_measured() -> None:
+    assert LOT.kept_sqft == LOT.lot_sqft
+    assert replace(LOT, dedicated_sqft=200.0).kept_sqft == pytest.approx(5_800.0)
+    # A lot the strips swallow is left one square foot, never zero.
+    assert replace(LOT, dedicated_sqft=9_000.0).kept_sqft == 1.0

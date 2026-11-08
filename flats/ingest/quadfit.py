@@ -1460,6 +1460,20 @@ def dedicated(edges: LotEdges, rules: ZoneResolution, zone: str | None = None) -
     return dataclasses.replace(edges, edges=tuple(out))
 
 
+def dedicated_sqft(lot: QuadfitLot, rules: ZoneResolution) -> float:
+    """The lot area the road strips of :func:`dedicated` take
+    (:func:`flats.geom.dedication.strip_sqft`), for the minimum lot area and
+    coverage the screen measures on what is left (``LotFacts.kept_sqft``,
+    FOLLOWUPS 77). Zero where the zone states no distance, and where the lot
+    has no shape or no street lines the envelope cuts (a landlocked lot):
+    the envelope takes no strip there either."""
+    if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
+        return 0.0
+    if dedication.rule_of(rules) is None:
+        return 0.0
+    return round(dedication.strip_sqft(dedicated(lot.edges, rules, lot.zone).edges, lot.lot_geom), 1)
+
+
 def _line_need(rule: dedication.Rule, e: Edge, zone: str | None) -> tuple[float, float]:
     """The distance one street line must reach, and the distance it would
     without the zone stand-in (the same where none applies)."""
@@ -2931,6 +2945,7 @@ def _screen_on(
         here.facts,
         envelope_rear_ft=env.rear_cut_ft,
         buildable_area_sqft=env.sqft if env.source == "flats" else None,
+        dedicated_sqft=dedicated_sqft(here, got),
     )
     fit = fit_for(
         fitters[key],

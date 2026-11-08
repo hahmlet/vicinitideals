@@ -187,6 +187,7 @@ _LABELS: dict[str, str] = {
     "row_to_centerline_class_by": "street classes for right-of-way, whose plan",
     "row_to_centerline_stated_as_width": "right-of-way stated as whole width",
     "row_to_centerline_by_designation": "right-of-way by class and plan designation",
+    "min_lot_sqft_before_dedication": "min. lot area measured before the road strip",
     "setback_north_ft": "setback from a lot line to the north (by bearing)",
     "setback_east_west_ft": "setback from a lot line to the east or west (by bearing)",
     "setback_north_street_credit_ft": "street credit toward the north setback",
@@ -400,6 +401,23 @@ _F: tuple[FieldDef, ...] = (
         "deepest distance the zone states.",
         None,
         choices=("washington_county", "sherwood", "oregon_city", "tigard"),
+    ),
+    FieldDef(
+        "min_lot_sqft_before_dedication",
+        "bool",
+        "True where the code measures the minimum lot area of the one-lot plan "
+        "on the lot BEFORE the right-of-way strip of the row_to_centerline_* "
+        "fields is handed over: Washington County 302-7.1 A to 307-7.1 A, "
+        "\"based on lot size prior to any right-of-way dedications\", and 375's "
+        "Table B footnote; Milwaukie 19.504.2, no lot area reduced below the "
+        "minimum \"except by dedication or conveyance for a public use\". "
+        "Absent, the strip comes off the lot area the minimum lot area and the "
+        "coverage cap are measured on (flats/geom/dedication.py strip_sqft), "
+        "the conservative side. Never read for the unit lots a plat makes: "
+        "those are measured as drawn, after the dedication (375's footnote: "
+        "\"based on actual proposed lot sizes regardless of any right-of-way "
+        "dedication\").",
+        None,
     ),
     FieldDef(
         "setback_north_ft",
@@ -1955,6 +1973,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "row_to_centerline_class_by",
         "row_to_centerline_stated_as_width",
         "row_to_centerline_by_designation",
+        # Said only by a code that measures lot area before the road strip;
+        # silence keeps the conservative reading (the strip off the lot).
+        "min_lot_sqft_before_dedication",
         # Distances set by which way a lot line faces rather than by its
         # class. One code in the corpus writes them (Clackamas ZDO
         # 1005.02(L), in HDR, SHD and RCHDR), and a zone silent about them
