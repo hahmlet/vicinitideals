@@ -703,6 +703,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [PDX_MAIN_STREET_SETBACK]
+  PDX-MAIN-STREET-ACTIVE-USE:
+    description: "A lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.200 requires, on a site with frontage on a transit street, that 25% of the ground level floor area within 100 ft of that street be a non-residential active use (retail, office, daycare and the like). The four homes have none. Development that includes a residential use is exempt until January 1, 2029 (and 33.415.340's 60% ground floor windows wait for the same day): screened under the law of an earlier day the flag sits below the yellow line and says when the exemption ends; from that day it is a closer look. No map of the city's transit streets is held, so every street is taken as one (FOLLOWUPS 78)."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Before 2029: apply for the permit before January 1, 2029, or check whether the city has extended the exemption. From 2029: acquire the Transportation System Plan's transit street classes and measure whether the lot fronts one; a lot that does needs a ground floor active use the design does not have"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_MAIN_STREET_ACTIVE_USE]
   HISTORIC-LISTING-UNSETTLED:
     description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
     kind: categorical

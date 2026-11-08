@@ -1,6 +1,6 @@
 # 104. Gresham Table 4.0430 notes, read note by note (Steph 2026-10-20).
 
-104. [Claude] [left: (f), (g)] [LIVE run 81 2026-10-21 (main 0060aad3); Gresham green 1,834 -> 2,039] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
+104. [Claude] [2026-11-08: (f) done, (g) folded into 142(a); close after the rescreen-1110 read] [LIVE run 81 2026-10-21 (main 0060aad3); Gresham green 1,834 -> 2,039] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
    (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
@@ -32,7 +32,12 @@
    on the corridor zones, missing on these three (live: 54 greens). Added to flats/gresham-4430.
    BOUND (ead841e2, 25,660 Gresham lots): 289 move, 0 false GREEN -- +149 green lots of record (CMF CMU
    SC SC-RJ), +65 Rockwood setbacks, +81 both; -20 green on the 50% frontage (MDR-12 11, MDR-24 9).
-   LEFT: (f) the 50% frontage is applied to the TOWNHOUSE form too (as on the eight zones that already
-   carry it) -- J.1 names plexes only; read 7.0431 before exempting townhouses (possible false REDs).
-   (g) 1S3E14AA-08900 + two big yellows fail the 150 ft fire hose at 167 ft -- placement on very
-   large lots looks poor (too strict, not a false GREEN).
+   (f) DONE a4a4dcc1 (2026-10-22, FOLLOWUPS 109 chunk 3): townhouse form exempt from the 50% share and the
+   long-axis rule outside Rockwood on MDR-12, MDR-24, OFR, DRL-1, DRL-2, CMF, CMU, RTC (7.0420(J)(1) names
+   plexes; 7.0431 asks no share); Rockwood keeps both (7.0512(A)(2) S2). SC and SC-RJ carry no townhouse
+   exemption, and need none: checked 2026-11-08 against the city zoning layer (GME/Planning/MapServer/4), all
+   154.2 ac of SC, 28.7 ac of SC-RJ and 194.7 ac of RTC lie inside the Rockwood Design District outline, and
+   4.0433(B)(1) sends SC/SC-RJ townhouse orientation to 7.0500 -- no lot moves.
+   (g) FOLDED INTO FOLLOWUPS 142(a) (fire-hose placement retry, merged into rescreen-1110 1b08a69e, rounds 1-6).
+   1S3E14AA-08900 (live run 122: red, hose 167.5 ft on pod56x36) is a spot-check for the rescreen-1110 read.
+   Item closes when that read confirms (g).

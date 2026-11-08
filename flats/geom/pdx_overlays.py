@@ -78,6 +78,19 @@ RED:
   ``setback_front_max_ft`` on every street; a miss, no drawing, or a zone
   whose maximum is not read raises :data:`MAIN_STREET_SETBACK_FLAG` -- the
   pod could be stood forward, so not RED.
+* 33.415.200: on a site with frontage on a transit street, 25 % of the ground
+  level floor area within 100 ft of it must be a non-residential active use
+  (retail, office, daycare, ...). The pod is Household Living from the
+  ground up and never meets it. "Development that includes a residential use
+  is exempt from this standard until January 1, 2029" (:data:`ACTIVE_USE_FROM`;
+  33.415.340's 60 % ground floor windows wait for the same day). A screen
+  under the law of an earlier day says so on every "m" lot below the yellow
+  line, as an adopted change not yet in force is said (rulings.yaml
+  2026-08-06-portland-ricap11-ci1-housing); from that day the lot is YELLOW
+  with :data:`MAIN_STREET_ACTIVE_USE_FLAG`, every street taken as a transit
+  street like the three rules above. The date is a run-key input
+  (:func:`dated_in_force`), so a cache kept under the old law is not replayed.
+  FOLLOWUPS 78's last main street item.
 
 **Historic and Conservation Districts (33.445, the 2026-10-14 review
 tiers).** Building a new structure in a Historic District or a Conservation
@@ -127,6 +140,7 @@ import dataclasses
 import json
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -182,6 +196,14 @@ SETBACK_FACADE_PCT = 70.0
 FACADE_ANGLE_DEG = 45.0
 #: Drawn rings are rounded to a tenth of a foot.
 DRAWN_TOL_FT = 0.5
+#: 33.415.200: "Development that includes a residential use is exempt from
+#: this standard until January 1, 2029" (33.415.340's 60 % windows likewise).
+ACTIVE_USE_FROM = date(2029, 1, 1)
+#: The active-use flag's severity on a lot screened under earlier law: said
+#: on the lot page, below the yellow line (``colour.yaml``).
+ACTIVE_USE_NOTICE_SEVERITY = 2
+#: The run-key label of the day the exemption ends (:func:`dated_in_force`).
+ACTIVE_USE_LAW = "portland:m:33.415.200-residential-exemption-ends-2029-01-01"
 
 #: Map 415-1's label for the Central City, read as the plan district.
 CENTRAL_CITY = "Central City"
@@ -208,6 +230,7 @@ DESIGN_REVIEW_REASON = "PDX_DESIGN_REVIEW"
 MAIN_STREET_TRANSIT_REASON = "PDX_MAIN_STREET_TRANSIT"
 MAIN_STREET_VEHICLE_REASON = "PDX_MAIN_STREET_VEHICLE_AREA"
 MAIN_STREET_SETBACK_REASON = "PDX_MAIN_STREET_SETBACK"
+MAIN_STREET_ACTIVE_USE_REASON = "PDX_MAIN_STREET_ACTIVE_USE"
 COMMUNITY_DESIGN_REASON = "PDX_COMMUNITY_DESIGN_STANDARDS"
 DESIGN_STANDARDS_REASON = "PDX_DESIGN_STANDARDS"
 REASONS: tuple[str, ...] = (
@@ -218,6 +241,7 @@ REASONS: tuple[str, ...] = (
     MAIN_STREET_TRANSIT_REASON,
     MAIN_STREET_VEHICLE_REASON,
     MAIN_STREET_SETBACK_REASON,
+    MAIN_STREET_ACTIVE_USE_REASON,
     COMMUNITY_DESIGN_REASON,
     DESIGN_STANDARDS_REASON,
 )
@@ -239,12 +263,14 @@ _BIND_REASON: Mapping[str, str] = {
 MAIN_STREET_TRANSIT_FLAG = "PDX-MAIN-STREET-TRANSIT"
 MAIN_STREET_VEHICLE_FLAG = "PDX-MAIN-STREET-VEHICLE-AREA"
 MAIN_STREET_SETBACK_FLAG = "PDX-MAIN-STREET-SETBACK"
+MAIN_STREET_ACTIVE_USE_FLAG = "PDX-MAIN-STREET-ACTIVE-USE"
 COMMUNITY_DESIGN_FLAG = "PDX-COMMUNITY-DESIGN-STANDARDS"
 DESIGN_STANDARDS_FLAG = "PDX-DESIGN-STANDARDS"
 FLAGS: Mapping[str, str] = {
     MAIN_STREET_TRANSIT_FLAG: MAIN_STREET_TRANSIT_REASON,
     MAIN_STREET_VEHICLE_FLAG: MAIN_STREET_VEHICLE_REASON,
     MAIN_STREET_SETBACK_FLAG: MAIN_STREET_SETBACK_REASON,
+    MAIN_STREET_ACTIVE_USE_FLAG: MAIN_STREET_ACTIVE_USE_REASON,
     COMMUNITY_DESIGN_FLAG: COMMUNITY_DESIGN_REASON,
     DESIGN_STANDARDS_FLAG: DESIGN_STANDARDS_REASON,
 }
@@ -344,6 +370,20 @@ CITES: Mapping[str, tuple[str, str, str]] = {
         "PCC 33.415.320",
         "or/multnomah/portland/33.415.txt#L86-L87",
         "of the building must meet the maximum building setback standard of the base zone.",
+    ),
+    "active_use": (
+        "PCC 33.415.200",
+        "or/multnomah/portland/33.415.txt#L53-L55",
+        "On sites with frontage on a transit street, at least 25 percent of the ground level "
+        "floor area located within 100 feet of the transit street must be in one of the "
+        "following active uses . Development that includes a residential use is exempt from "
+        "this standard until January 1, 2029.",
+    ),
+    "active_use_windows": (
+        "PCC 33.415.340",
+        "or/multnomah/portland/33.415.txt#L115-L116",
+        "Until January 1, 2029, the increase to 60 percent for 33.130.230.B.2.a(1) does not "
+        "apply to development that includes a residential use.",
     ),
     "street_facing_facade": (
         "PCC 33.910 (Street-facing Facade)",
@@ -1062,11 +1102,14 @@ def flags_for(
     lot: Any,
     edges: Any,
     drawing: Mapping[str, Any] | None,
+    on: date | None = None,
 ) -> tuple[flag_plan.Flag, ...]:
     """The open questions the reading leaves on one design: the main
     street's transit-street rules, a Conservation District's Community
     Design Standards, and the design overlay's standards track. ``plat`` is
-    the design's plat (``unit_lots`` for the townhouse form)."""
+    the design's plat (``unit_lots`` for the townhouse form); ``on`` the day
+    whose law the screen applies (:func:`flats.rules.loader.law_on` when
+    omitted)."""
     if reading is None:
         return ()
     out: list[flag_plan.Flag] = []
@@ -1076,6 +1119,7 @@ def flags_for(
 
     unheld = f"no map of transit streets is held, so every street is taken as one ({CITES['transit_street'][0]})"
     if reading.main_street:
+        flag(*active_use(on, unheld))
         if plat == "unit_lots":
             flag(
                 MAIN_STREET_TRANSIT_FLAG,
@@ -1151,11 +1195,53 @@ def flags_for(
     return tuple(out)
 
 
-def checked(s: Any, reading: Reading | None) -> Any:
+def _law_day(on: date | None) -> date:
+    if on is not None:
+        return on
+    from flats.rules.loader import law_on
+
+    return law_on()
+
+
+def active_use(on: date | None, unheld: str) -> tuple[str, str, int | None]:
+    """33.415.200's required ground floor active use, as a flag's code, source
+    and severity: below the yellow line before :data:`ACTIVE_USE_FROM` (the
+    exemption for residential development), the type's own after it."""
+    rule = (
+        f"{CITES['active_use'][0]}: on a site with frontage on a transit street, 25% of the "
+        f"ground level floor area within 100 ft of it must be a non-residential active use, and "
+        f"the four homes have none"
+    )
+    windows = f"{CITES['active_use_windows'][0]}'s 60% ground floor windows apply from the same day"
+    if _law_day(on) < ACTIVE_USE_FROM:
+        return (
+            MAIN_STREET_ACTIVE_USE_FLAG,
+            f"{rule}; development that includes a residential use is exempt until "
+            f"{ACTIVE_USE_FROM:%B} {ACTIVE_USE_FROM.day}, {ACTIVE_USE_FROM.year}, so a permit "
+            f"after that day owes it ({windows}); {unheld}",
+            ACTIVE_USE_NOTICE_SEVERITY,
+        )
+    return (
+        MAIN_STREET_ACTIVE_USE_FLAG,
+        f"{rule}; the exemption for residential development ended on "
+        f"{ACTIVE_USE_FROM:%B} {ACTIVE_USE_FROM.day}, {ACTIVE_USE_FROM.year} ({windows}); {unheld}",
+        None,
+    )
+
+
+def dated_in_force(on: date) -> list[str]:
+    """The dated provisions this module applies on ``on``, for the run key
+    (:func:`flats.ingest.batch.run_key`'s ``law``): two runs either side of
+    the day screen an "m" lot differently, so their caches must differ."""
+    return [ACTIVE_USE_LAW] if on >= ACTIVE_USE_FROM else []
+
+
+def checked(s: Any, reading: Reading | None, on: date | None = None) -> Any:
     """Apply the reading's binds and flags, including the minimum-FAR room test.
 
-    Adds nothing twice, so a screen that runs again over its own answer is
-    unchanged.
+    ``on`` is the day whose law the screen applies (today in Oregon when
+    omitted). Adds nothing twice, so a screen that runs again over its own
+    answer is unchanged.
     """
     if reading is None:
         return s
@@ -1205,6 +1291,7 @@ def checked(s: Any, reading: Reading | None) -> Any:
         lot=getattr(s.lot, "lot_geom", None),
         edges=getattr(s.lot, "edges", None),
         drawing=s.drawing,
+        on=on,
     )
     if min_far_flag is not None:
         flags = (*flags, min_far_flag)
