@@ -81,10 +81,25 @@ _CONDO = re.compile(r"\bCONDO")
 _ACRES_ONLY = re.compile(r"^ACRES?\s+[\d.]+$")
 #: A partition plat's name carries its recording year ("2016-037 PARTITION PLAT").
 _PARTITION = re.compile(r"^(\d{4})-\d+\s+PARTITION\s+PLAT$")
-#: The lot clause, whole: one block (optional) and ONE lot or parcel, named
-#: by a number or a letter -- "LOT 3", "BLOCK 2, LOT 3", "LOT A".
+#: The lot clause: whole lots or parcels, each named by a number, a run of
+#: numbers or a letter, under an optional block -- "LOT 3", "BLOCK 2, LOT 3",
+#: "LOT A", "LOTS 3 & 4", "BLOCK 4, LOT 5-8, BLOCK 5, LOTS 1-6, 11, 13-16".
+#: Steph 2026-11-08 (FOLLOWUPS 83): two or more whole platted lots together
+#: count as made by a plat.
+_ID = r"(?:\d+(?:-\d+)?|[A-Z]{1,2})"
+_IDS = rf"{_ID}(?:\s*(?:&|\bAND\b)\s*{_ID})*"
 _BLOCK = re.compile(r"^BLOCK\s+(?:\d+|[A-Z]{1,2})$")
-_ONE_LOT = re.compile(r"^(?:LOT|PARCEL)\s+(?:\d+|[A-Z]{1,2})$")
+_LOTS = re.compile(rf"^(?:LOTS?|PARCELS?)\s+{_IDS}$")
+_MORE_LOTS = re.compile(rf"^{_IDS}$")
+#: Part of a vacated street, road or alley added to whole lots ("PLUS PT
+#: VACATED ST", "LOT 1 & PT VACATED STREET"). Steph 2026-11-08 (FOLLOWUPS
+#: 83): the lot still counts as made by a plat, so the phrase is set aside
+#: before the lot is read. A vacated tract or "portion" is not a street and
+#: stays part of the reading.
+_WAY = r"(?:STREETS?|STS?|ROADS?|RDS?|ALLEYS?)"
+_VACATED = re.compile(
+    rf"(?:^|\s*(?:&|\bPLUS\b)\s*)(?:PLUS\s+)?(?:(?:PT|PART)\s+)?VACATED\s+{_WAY}(?:\s*&\s*{_WAY})*$"
+)
 #: Notes the assessor appends that say nothing about how the lot was made.
 _NOTES = (
     re.compile(r"^ACRES?\s+[\d.]+$"),
@@ -92,7 +107,7 @@ _NOTES = (
     re.compile(r"^CODE SPLIT$"),
 )
 #: Only part of a platted lot, block or tract ("LOT PT 10", "LOT 94 & PT 93",
-#: "PLUS PT VACATED RD"): a deed, not the plat, made the lot as it stands.
+#: "PLUS PT VACATED TR 'A'"): a deed, not the plat, made the lot as it stands.
 _PART = re.compile(r"\bPTS?\b|\bPORTION\b|\bPART\b")
 #: Washington County's Middle Housing Land Division came in with Ord. No.
 #: 885A, eff. 7-28-22 (CDC 106-126,
@@ -114,12 +129,13 @@ def parse(legal: str | None) -> tuple[str, str | None, int | None]:
     """``(origin, plat, partition_year)`` of one legal description.
 
     ``origin`` is :data:`PLATTED` only where the description is exactly a
-    plat's name, an optional block, ONE whole lot or parcel, and the
-    assessor's notes (acres, a tax-code split) -- and that is a candidate
-    still: :func:`classify` keeps it only where the plat is known to predate
-    middle housing land divisions. Part of a lot is :data:`UNPLATTED`, as
-    is land by acres alone; a unit, a tract, several lots run together or
-    anything else is :data:`UNREAD`.
+    plat's name, whole lots or parcels under optional blocks (with part of a
+    vacated street beside them, Steph 2026-11-08), and the assessor's notes
+    (acres, a tax-code split) -- and that is a candidate still:
+    :func:`classify` keeps it only where the plat is known to predate middle
+    housing land divisions. Part of a lot is :data:`UNPLATTED`, as is land
+    by acres alone; a unit, a tract, a second plat or anything else is
+    :data:`UNREAD`.
     """
     if legal is None:
         return UNREAD, None, None
@@ -138,13 +154,21 @@ def parse(legal: str | None) -> tuple[str, str | None, int | None]:
         return (UNPLATTED if all(any(n.match(i) for n in _NOTES) for i in rest) else UNREAD), None, None
     if not re.search(r"[A-Z]{3,}", head):
         return UNREAD, None, None
+    rest = [_VACATED.sub("", i).strip() for i in rest]
+    rest = [i for i in rest if i]
     if any(_PART.search(i) for i in rest):
         return UNPLATTED, head, None
-    if rest and _BLOCK.match(rest[0]):
-        rest = rest[1:]
-    if not rest or not _ONE_LOT.match(rest[0]):
-        return UNREAD, head, None
-    if not all(any(n.match(i) for n in _NOTES) for i in rest[1:]):
+    at, groups = 0, 0
+    while at < len(rest):
+        if _BLOCK.match(rest[at]):
+            at += 1
+        if at < len(rest) and _LOTS.match(rest[at]):
+            at, groups = at + 1, groups + 1
+            while at < len(rest) and _MORE_LOTS.match(rest[at]):
+                at += 1
+            continue
+        break
+    if not groups or not all(any(n.match(i) for n in _NOTES) for i in rest[at:]):
         return UNREAD, head, None
     year = _PARTITION.match(head)
     return PLATTED, head, int(year.group(1)) if year else None

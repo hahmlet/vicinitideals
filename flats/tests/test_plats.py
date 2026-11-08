@@ -40,6 +40,14 @@ GATE = {"type_i_standard_plat_required": True}
         ("EMERALD ESTATES, LOT A, ACRES 4.05", PLATTED),
         ("HURLBUTT'S NORTHRIDGE A PLANNED DEVELOPMENT, LOT 36, ACRES 0.22", PLATTED),
         ("FOO ESTATES, LOT 9, ACRES 0.21; POTENTIAL ADD'L TAX LIABILITY", PLATTED),
+        # Steph 2026-11-08: whole lots together, and whole lots with part of a
+        # vacated street, are made by the plat too.
+        ("TOUCHSTONE NO.3, LOT 45 & 46", PLATTED),
+        ("FOO ACRES, LOT 13 AND 14", PLATTED),
+        ("PARK RIDGE WEST, LOT 8, PLUS PT VACATED RD, ACRES 0.26", PLATTED),
+        ("FOO ADDITION, BLOCK 2, LOT 1 & PT VACATED STREET", PLATTED),
+        ("HYDE PARK, BLOCK 12, LOT 1-24, BLOCK 13, LOTS 1-24, PLUS PT VACATED ST, ACRES 7.21", PLATTED),
+        ("NORTH PLAINS, BLOCK 4, LOT 5-8, PLUS PT VACATED STREETS, BLOCK 5, LOTS 1-6, 11, 13-16, ACRES 2.34", PLATTED),
         # A middle housing land division.
         ("HAZEL WOODS MIDDLE HOUSING, LOT 4, ACRES 0.06", MHLD),
         ("HAZEL WOODS MIDDLE HOUSING, TRACT A, ACRES 0.25", MHLD),
@@ -49,11 +57,15 @@ GATE = {"type_i_standard_plat_required": True}
         ("GENTRY PLACE, LOT PT 10, ACRES 0.15", UNPLATTED),
         ("WINTHROP PARK NO.2, LOT 94 & PT 93", UNPLATTED),
         ("1991-104 PARTITION PLAT, LOT PT 1, ACRES 4.34", UNPLATTED),
-        ("PARK RIDGE WEST, LOT 8, PLUS PT VACATED RD, ACRES 0.26", UNPLATTED),
+        ("FOO, LOT PT 69 PLUS PT VACATED RD", UNPLATTED),
+        # A vacated tract, or an unnamed "portion", is not a street.
+        ("FOO, LOT 3, PLUS PT VACATED TR 'A'", UNPLATTED),
+        ("FOO, LOT 3, PLUS VACATED PORTION", UNPLATTED),
         # Not read: a condominium unit, a tract, several lots, anything else.
         ("SYLVAN HEIGHTS CONDO, LOT 157", UNREAD),
         ("KAISER WOODS, TRACT B, ACRES 0.69", UNREAD),
-        ("TOUCHSTONE NO.3, LOT 45 & 46", UNREAD),
+        ("FOO, LOT 7-F", UNREAD),
+        ("FOO, LOT 3, BAR ESTATES, LOT 4", UNREAD),
         ("NORTH TIGARDVILLE ADDITION, AMENDED, LOT 46-49 & 51-52, ACRES 6.54", UNREAD),
         ("ACRES 10, ADDL: NON-FARM PARCEL", UNREAD),
         ("ROSEDALE GARDENS, BLOCK PT 3, ACRES 2.50, CODE SPLIT", UNPLATTED),
