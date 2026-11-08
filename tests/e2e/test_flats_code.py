@@ -168,10 +168,10 @@ def test_empty_lines_are_a_small_gap_not_a_row(logged_in_page: Page) -> None:
 
 def test_a_misread_word_carries_a_squiggle(logged_in_page: Page) -> None:
     page = logged_in_page
-    page.goto(f"/flats/code/{CITY}/52/52.200.txt")
-    # line 34 sits in the use table: the squiggle is on its cell, and on the
-    # printed line folded under the table
-    odd = page.locator(".odd:visible", has_text="avern").first
+    # "feetto" is printed so (no space in the PDF); "T avern", the example
+    # until 2026-11-08, is mended (FOLLOWUPS 116)
+    page.goto(f"/flats/code/{CITY}/71/71.900.txt")
+    odd = page.locator(".odd:visible", has_text="feetto").first
     expect(odd).to_be_visible()
-    assert page.locator("#L34 .odd", has_text="avern").count() == 1
+    assert page.locator("#L151 .odd", has_text="feetto").count() == 1
     assert "wavy" in odd.evaluate("el => getComputedStyle(el).textDecorationStyle")
