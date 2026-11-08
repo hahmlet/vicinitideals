@@ -44,3 +44,4 @@
    ASSESSVAL 0 with TOTALVAL > 0: 109) leave ~660, mostly private (vacant,
    MFR, COM, farm, SFR acreage; Clackamas's 181 unsorted).
 - Steph 2026-11-08 UNPARKED rented compute: research A) parallel bridge on rented machines, B) recommended service (Cloudflare first) -> ../vicinitideals-worktrees/compute-research.md.
+- RESEARCH DONE 2026-11-08 (../vicinitideals-worktrees/compute-research.md): job-board design, 137 coordinates; Cloudflare ~$25-37/full re-screen (~$330-480/mo), 3-4 h on 25 boxes, 6.5-10 agent-days; fallbacks AWS spot / GCP spot ~$4-5/run, Hetzner Hillsboro ~$9-11/run (runs today's scan unchanged, 2-3 days build); AVX-512 maths trap (pin the code path). [Steph] OFFERED: Cloudflare vs cheap single box; budget; box count.
