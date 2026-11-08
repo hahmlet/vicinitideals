@@ -12,3 +12,4 @@
    (one suspect, item 120). Portland 4,830 if-signed yellow->red (PDX_DESIGN_REVIEW) -- shown colour was
    already red, no map move. NEXT full re-screen ~2026-11-10 (every two weeks, Steph 2026-10-29; the chain's
    last step now audits the splices it replaces, 072590de); splices in between.
+- 2026-11-08 06:30Z OFFERED (Steph to pick): 137 backlog = th_row4 (406,714 lots, FOLLOWUPS 94, started 06:13Z, ~25-30 h) + stall_w (317,020 lots, b5054ecd, ~20-25 h) + the full re-screen on flats/rescreen-1110 (~14 h) -> re-screen lands ~Wed 11-11 if run last. Recommended: stop th_row4, fold 94 (1dc9159f) and stall_w (b5054ecd) into flats/rescreen-1110 and run ONE full re-screen as soon as the package passes (~Mon 11-09), reading all their moves together. rel3 + fire_rp5 done 11-08, move-reads running.
