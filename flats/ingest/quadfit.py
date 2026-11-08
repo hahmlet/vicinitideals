@@ -1763,6 +1763,25 @@ def inside_ugb_of(row: Mapping[str, Any]) -> bool | None:
     return bool(got)
 
 
+def plat_origin_of(row: Mapping[str, Any]) -> str | None:
+    """How a Washington County lot was made, off its legal description
+    (:mod:`flats.ingest.plats`, joined by :func:`iter_rows`; FOLLOWUPS 83).
+
+    Read only where the lot is a Washington County lot: a TLID names a lot
+    in one county's map, and the same string elsewhere is another lot. None
+    -- unread, the gate unmeasured -- everywhere else and where the row
+    carries no answer.
+    """
+    got = row.get("plat_origin")
+    if not isinstance(got, str) or not got:
+        return None
+    try:
+        layer = layer_id_for(str(row.get("jurisdiction")))
+    except KeyError:
+        return None
+    return got if layer.startswith("or/washington/") else None
+
+
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
@@ -1869,6 +1888,7 @@ def lot_from_row(
         corner_read_as_bend=bend,
         curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
         inside_ugb=inside_ugb_of(row),
+        plat_origin=plat_origin_of(row),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -1966,6 +1986,7 @@ def iter_rows(
     zones: Iterable[str] = (),
     tlids: Iterable[str] = (),
     streets: Path | None = None,
+    plats: Path | None = None,
 ) -> Iterator[dict[str, Any]]:
     """Every lot's bridge row, s4 facts joined to s5o's envelope on TLID.
 
@@ -1982,6 +2003,10 @@ def iter_rows(
     ``street_end_ft``, the taxlot's distance to the nearest place a street
     ends (:func:`flats.geom.street_end.street_end_column`). Measured after
     the scope is cut, so a partial measures only its own lots.
+
+    ``plats`` is the Washington County plat reading
+    (:mod:`flats.ingest.plats`); each row gains ``plat_origin``, read only
+    for a Washington County lot (:func:`plat_origin_of`).
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -1999,6 +2024,12 @@ def iter_rows(
         # does not hold simply has no distance (:func:`transit_from_row`).
         near = pd.read_parquet(transit, columns=["TLID", *TRANSIT_MEASURES])
         frame = frame.merge(near.drop_duplicates("TLID"), on="TLID", how="left")
+    if plats is not None:
+        from flats.ingest.plats import read as read_plats
+        from flats.ingest.plats import tlid_key
+
+        frame = frame.assign(plat_key=[tlid_key(t) for t in frame["TLID"]])
+        frame = frame.merge(read_plats(plats), on="plat_key", how="left").drop(columns="plat_key")
     keep = scope_mask(frame, jurisdictions, zones, tlids)
     if keep is not None:
         frame = frame[keep]
@@ -4857,6 +4888,7 @@ def run(
     curbs: Path | None = None,
     institutional: Path | None = None,
     cache: Path | None = None,
+    plats: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -4870,6 +4902,9 @@ def run(
     corridor maps answer the corridor facts; without it they stay unasked.
     ``transit`` is the distance file :mod:`flats.ingest.transit` wrote for
     the transit release in use; without it no lot has a distance to transit.
+    ``plats`` is the Washington County plat reading :mod:`flats.ingest.plats`
+    wrote (default: the committed pull, :data:`flats.ingest.plats.CURRENT`);
+    without one every lot's standard-plat gate stays unmeasured.
     ``roads`` is quadfit s1's street centrelines (``s1_streets.parquet``),
     which the fire route is measured to; it defaults to the file beside
     ``s4`` and a run without one is refused -- measured from the lot line,
@@ -4925,6 +4960,12 @@ def run(
             f"{sources}: run acquire (FOLLOWUPS 78)"
         )
     institutional = _institutional_source(institutional, sources)
+    if plats is None:
+        from flats.ingest.plats import CURRENT
+
+        # Without the reading every Washington County lot keeps its
+        # standard-plat gate unmeasured: the conservative answer.
+        plats = CURRENT if CURRENT.is_file() else None
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
     parts_dir.mkdir(exist_ok=True)
@@ -4936,8 +4977,12 @@ def run(
         iter_rows(
             s4, s5o, transit=transit, limit=limit, sample=sample, seed=seed,
             jurisdictions=jurisdictions, zones=zones, tlids=tlids, streets=roads,
+            plats=plats,
         )
     )
+    # How many lots the plat reading answered: a bound reads this beside the
+    # Washington County lot count -- near zero means the TLIDs did not join.
+    plats_read = sum(1 for r in rows if plat_origin_of(r) is not None)
     if not _is_reading(institutional):
         institutional = _read_institutional(rows, institutional, out)
     from flats.ingest.institutional import skip_tlids
@@ -5021,6 +5066,8 @@ def run(
         "tlids": tlids,
         "sources": str(sources) if sources is not None else None,
         "transit": str(transit) if transit is not None else None,
+        "plats": str(plats) if plats is not None else None,
+        "plats_read": plats_read,
         "roads": str(roads),
         "dem": str(dem),
         "curbs": str(curbs) if curbs is not None else None,
@@ -5081,6 +5128,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--sources", type=Path, help="snapshot dir holding the corridor maps")
     ap.add_argument("--transit", type=Path, help="distances.parquet from flats.ingest.transit")
     ap.add_argument(
+        "--plats",
+        type=Path,
+        help="plats.parquet from flats.ingest.plats (default: the committed Washington County pull)",
+    )
+    ap.add_argument(
         "--roads",
         type=Path,
         help="street centrelines for the fire route (default: s1_streets beside --s4)",
@@ -5134,6 +5186,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         chunk_size=args.chunk_size,
         sources=args.sources,
         transit=args.transit,
+        plats=args.plats,
         roads=args.roads,
         dem=args.dem,
         curbs=args.curbs,

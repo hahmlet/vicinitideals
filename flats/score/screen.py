@@ -663,6 +663,14 @@ class LotFacts:
     #: outside it). Only True lets ORS 197A.400 reach the lot
     #: (:func:`clear_objective_reaches`); None is the conservative silence.
     inside_ugb: bool | None = None
+    #: How the lot was made, read off the county's legal description
+    #: (:mod:`flats.ingest.plats`): ``"platted"`` (a recorded subdivision or
+    #: partition plat older than middle housing land divisions), ``"mhld"``,
+    #: ``"unplatted"`` (acres, or part of a lot) or ``"unread"``; None where
+    #: nothing was read. Only ``"platted"`` passes Washington County's
+    #: standard-plat gate (``type_i_standard_plat_required``, FOLLOWUPS 83).
+    #: Set by the bridge, for Washington County lots only.
+    plat_origin: str | None = None
     #: The ground on this lot steeper than Steph's slope ruling allows
     #: building or parking on (``flats/config/slope.yaml``,
     #: :meth:`flats.fit.slope.Terrain.steep`), square feet, and the
@@ -3062,9 +3070,15 @@ def review_with_conditions(rules: ZoneResolution, lot: LotFacts, design: Design)
     area is flagged even where mapped flood or resource land might bring it
     under -- the flag is the question, not a miss. In the denser zones the
     Type I path is open only on a lot a standard subdivision or partition
-    plat created (``type_i_standard_plat_required``), which nothing here
-    measures, so every such lot is flagged too (``"buildable_area"`` named
-    before ``"standard_plat"``, the first that holds).
+    plat created (``type_i_standard_plat_required``): read off the lot's
+    legal description (:attr:`LotFacts.plat_origin`, FOLLOWUPS 83), a lot a
+    plat older than middle housing land divisions made passes; a lot no
+    plat made, one a middle housing land division made, and one nothing
+    read are flagged (``"buildable_area"`` named before ``"standard_plat"``,
+    the first that holds). Working reading 2026-11-03, Steph GO 2026-11-07:
+    "Standard" is set against the Middle Housing Land Division alone
+    (CDC 106-107), so any recorded subdivision or partition plat, a PUD's
+    included, counts.
     """
     if (how := rules.get("review_discretion")) is not None:
         return str(how)
@@ -3079,7 +3093,7 @@ def review_with_conditions(rules: ZoneResolution, lot: LotFacts, design: Design)
         )
         if not (within or dense):
             return "buildable_area"
-    if rules.get("type_i_standard_plat_required") is True:
+    if rules.get("type_i_standard_plat_required") is True and lot.plat_origin != "platted":
         return "standard_plat"
     return None
 

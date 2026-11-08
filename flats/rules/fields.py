@@ -799,9 +799,12 @@ _F: tuple[FieldDef, ...] = (
         "True where the Type I path is open only on a lot \"approved for the "
         "construction of a Single Detached Dwelling Unit through a Standard "
         "Subdivision or Standard Partition\" (Washington County R-9, R-15, "
-        "R-24, R-25+, R-9 NB and the transit districts). Nothing here holds "
-        "how a lot was created, so every such lot carries REVIEW-CONDITIONS "
-        "(Steph 2026-10-14: unmeasured, the same yellow flag, not red).",
+        "R-24, R-25+, R-9 NB and the transit districts). How a lot was made "
+        "is read off the county's legal description (flats.ingest.plats, "
+        "FOLLOWUPS 83): a lot a plat older than middle housing land "
+        "divisions made passes; any other carries REVIEW-CONDITIONS "
+        "(Steph 2026-10-14: unmeasured or missed, the same yellow flag, "
+        "not red).",
     ),
     # --- parking and open space ----------------------------------------
     FieldDef("parking_min_per_unit", "ratio", "Required off-street stalls per unit.", False, "parking_min"),
