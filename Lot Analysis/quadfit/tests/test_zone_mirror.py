@@ -1054,6 +1054,11 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: the ORS 197A.400 lane admits and the townhouse unit-lot rows add front-max, density,
 #: landscaping, garage-entrance, unit-count and review-tier standards.
 UNEXPRESSIBLE: dict[str, int] = {
+    #: FOLLOWUPS 153 (2026-11-08): the front-door orientation rule per place
+    #: (required / alternative / not_required / unclear). quadfit has one
+    #: orientation column, written entrance_only for every place; the new
+    #: field is read by FLATS alone.
+    "entrance_faces_street": 55,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and

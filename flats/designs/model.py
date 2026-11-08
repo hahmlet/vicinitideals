@@ -27,7 +27,7 @@ from __future__ import annotations
 import enum
 import math
 from pathlib import Path
-from typing import Any, Iterable, Iterator
+from typing import Any, Iterable, Iterator, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -331,6 +331,15 @@ class Design(BaseModel):
     #: Adding it stated a fact about an unchanged building, so no version
     #: moved.
     roof_pitch_in_12: float | None = Field(default=None, ge=0)
+    #: Which face carries every front door: ``width`` is the face parallel
+    #: to the front lot line before any rotation (pod80x30: each home's door
+    #: on its 20 ft wall, all four along the 80 ft face; Steph 2026-11-08).
+    #: Read only by a code's main-entrance standard
+    #: (``entrance_faces_street``, FOLLOWUPS 153), which may bar the
+    #: building turned with its doors to a side yard. ``None`` is "not
+    #: stated", and the standard is left unread for the design. Adding it
+    #: stated a fact about an unchanged building, so no version moved.
+    door_face: Literal["width"] | None = None
     parking: Parking
     delivery: DeliverySpec
     #: Which plat path this entry is costed for. Defaults to the path the rule

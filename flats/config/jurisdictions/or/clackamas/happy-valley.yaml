@@ -665,6 +665,12 @@ code:
   # table; this screen places a dwelling.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Happy Valley HVMC 16.44.010 design standards reach multifamily housing only; the 16.22.050 rowhouse orientation reaches attached single-family dwellings in VTH, not a quadplex on one lot (whole-document grep) (FOLLOWUPS 153)"
+    url: https://ecode360.com/print/HA4934?guid=43529967
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/happy-valley/16.44/16.44.010.txt#L1,L9"
   # PARKING, read 2026-08-27. Happy Valley is the first city in this corpus to
   # answer the whole question in one chapter: it requires parking, dimensions
   # it, and says where it may not go, all in LDC 16.43.030.

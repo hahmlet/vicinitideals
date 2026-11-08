@@ -197,6 +197,8 @@ from flats.score.room import Room, room_for
 from flats.score.paper import (
     court_across,
     court_depth,
+    door_turned,
+    entrance_unsettled,
     faces_the_street,
     front_lot_line_rule,
     front_lot_line_through_rule,
@@ -2977,6 +2979,7 @@ def _screen_on(
         envelope_rear_ft=env.rear_cut_ft,
         buildable_area_sqft=env.sqft if env.source == "flats" else None,
         dedicated_sqft=dedicated_sqft(here, got),
+        street_bearings=here.front_bearings,
     )
     fit = fit_for(
         fitters[key],
@@ -3079,27 +3082,26 @@ def _screen_on(
         )
         return facts, result, shadow
 
-    def refit(menu: Sequence[Fix]) -> Fit:
-        return fit_for(
-            fitters[key],
-            design,
-            got,
-            placement=False,
-            carved_rear_ft=env.rear_cut_ft,
-            alley=base.alley,
-            corner=base.corner,
-            frontage_ft=base.cap_frontage_ft,
-            street_deg=_access_deg(here, front),
-            menu=menu,
-        )
+    def refit_on(fitter: Fitter, face_street: bool) -> Callable[[Sequence[Fix] | None], Fit]:
+        def refit(menu: Sequence[Fix] | None) -> Fit:
+            return fit_for(
+                fitter,
+                design,
+                got,
+                placement=False,
+                carved_rear_ft=env.rear_cut_ft,
+                alley=base.alley,
+                corner=base.corner,
+                frontage_ft=base.cap_frontage_ft,
+                street_deg=_access_deg(here, front),
+                menu=menu,
+                face_street=face_street,
+            )
 
-    offered = court_across(design, got, base.alley, corner=base.corner).fixes
-    facts, result, shadow = screened(fit)
-    fit, facts, result, shadow = _other_fixes(
-        fit, facts, result, shadow, screened, refit, offered
-    )
-    return (
-        Screened(
+        return refit
+
+    def reading(fit: Fit, facts: LotFacts, result: Screening, shadow: Screening) -> Screened:
+        return Screened(
             lot=here,
             design=design,
             rules=got,
@@ -3113,9 +3115,70 @@ def _screen_on(
             front_deg=front,
             facts=facts,
             street_edges=streets,
-        ),
-        fitters[key],
+        )
+
+    offered = court_across(design, got, base.alley, corner=base.corner).fixes
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit_on(fitters[key], False), offered
     )
+    chosen = reading(fit, facts, result, shadow)
+    if (
+        here.front_bearings
+        and entrance_unsettled(got, design)
+        and door_turned(design, fit, here.front_bearings)
+    ):
+        # The best fit stands the building turned, its front doors off the
+        # street, where nobody has read whether the code allows that
+        # (FOLLOWUPS 153): the screen holds that fit out of GREEN. Try the
+        # building facing the street too, and keep whichever the map shows
+        # better -- the facing one where they tie, since it carries no hold.
+        facing = _facing_reading(
+            here, design, got, env, base, fitters[key], screened,
+            refit_on(fitters[key].only(here.front_bearings), True), offered, reading,
+        )
+        if facing is not None and _shown(facing) <= _shown(chosen):
+            chosen = facing
+    return chosen, fitters[key]
+
+
+def _facing_reading(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    env: Envelope,
+    base: LotFacts,
+    fitter: Fitter,
+    screened: Callable[[Fit], tuple[LotFacts, Screening, Screening]],
+    refit: Callable[[Sequence[Fix] | None], Fit],
+    offered: Sequence[Fix],
+    reading: Callable[[Fit, LotFacts, Screening, Screening], Screened],
+) -> Screened | None:
+    """The lot read with the building's front doors to the street: the fit
+    confined to the lot's front bearings, unflipped (``face_street``), its
+    court beside the building dropped where no drive reaches it, as
+    :func:`_screen_on` does for the free fit. None where it does not fit."""
+    fit = refit(None)
+    if fit.beside and not beside_reaches_street(here, design, got, fit, fitter, env):
+        fit = fit_for(
+            fitter.only(here.front_bearings),
+            design,
+            got,
+            placement=False,
+            carved_rear_ft=env.rear_cut_ft,
+            alley=base.alley,
+            corner=base.corner,
+            frontage_ft=base.cap_frontage_ft,
+            street_deg=(),
+            face_street=True,
+        )
+    if not fit.fits:
+        return None
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit, offered
+    )
+    return reading(fit, facts, result, shadow)
 
 
 def _other_fixes(

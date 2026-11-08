@@ -535,6 +535,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-TURNED:
+    description: "The building fits only turned, its front doors away from the street, and nobody has read whether this city's front-door rule allows that"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the zone's main-entrance orientation standard and record it as entrance_faces_street (FOLLOWUPS 153)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric

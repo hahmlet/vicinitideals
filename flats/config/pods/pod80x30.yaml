@@ -23,6 +23,11 @@ ground_story_ft: 12
 # this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
 # that sets a minimum pitch or prohibits flat roofs misses on it.
 roof_pitch_in_12: 0
+# Every front door is on the 80 ft face (Steph 2026-11-08, rulings.yaml
+# 2026-11-08-single-design-80x30). A code that makes the main entrance face
+# the street then decides whether the building may stand turned, its 30 ft
+# end to the street (entrance_faces_street, FOLLOWUPS 153).
+door_face: width
 parking:
   # The county map's bands: floor charged, target sells, preferred is where
   # the seat count stops. Unchanged from pod80x25 (see pod56x36.yaml).

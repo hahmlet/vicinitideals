@@ -1799,6 +1799,12 @@ code:
     # label's last line, which is what the clear-vision quote cites.
     extraction: plain
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Gresham GDC 7.0420 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (the 4.1152 and 4.1252 townhouse rules reach townhouse lots, which already face the street) (FOLLOWUPS 153)"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7/7.0420.txt#L1-L15"
   # The city says it once, in a sentence, for everything: GDC 9.0802(A),
   # "Vehicle parking minimums are not required for any land use type."
   # Table 9.0851 has no minimum column at all -- auto parking is stated as a

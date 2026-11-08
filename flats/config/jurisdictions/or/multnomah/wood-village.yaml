@@ -1138,6 +1138,12 @@ zones:
     notes: >-
       Table 240-1 reads N on Household Living and on Group Living in both manufacturing columns. Light Manufacturing is the looser of the two on retail and office and is no different on housing. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
   TC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Wood Village 235.450.F: a primary entrance turned more than 45 degrees from the street must stand within 20 feet of a street sidewalk, a distance the screen does not measure (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/235.450
+      retrieved: '2026-10-22'
+      quote: "or/multnomah/wood-village/235.450.txt#L86"
     section: ["235.200", "235.300", "235.310", "235.320", "235.330", "235.340",
               "235.390", "235.410", "235.420", "235.440", "235.450", "235.465",
               "710.100"]
@@ -1318,6 +1324,12 @@ zones:
       answer, and 167 lots is too many to leave unread because the other half
       is out of reach.
   LR 7.5:
+    entrance_faces_street:
+      value: required
+      cite: "Wood Village 210.375(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L60-L64,L90-L92"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1448,6 +1460,12 @@ zones:
       NOT ENCODED: footnote (3), which gives cottage housing a 10-foot rear and street side yard and
       exempts it from coverage outright. A cottage cluster is not the pod.'
   LR 12:
+    entrance_faces_street:
+      value: required
+      cite: "Wood Village 210.375(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L60-L64,L90-L92"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1578,6 +1596,12 @@ zones:
       NOT ENCODED: footnote (3), which gives cottage housing a 10-foot rear and street side yard and
       exempts it from coverage outright. A cottage cluster is not the pod.'
   MR 2:
+    entrance_faces_street:
+      value: required
+      cite: "Wood Village 220.355(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L60-L64"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
@@ -1697,6 +1721,12 @@ zones:
       units. The pod is four. MR tables also state no corner-lot rows at all, so no street-side
       setback is applied here -- genuinely unstated rather than assumed away.'
   MR 4:
+    entrance_faces_street:
+      value: required
+      cite: "Wood Village 220.355(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L60-L64"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),

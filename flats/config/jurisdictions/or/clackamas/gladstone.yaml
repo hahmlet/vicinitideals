@@ -573,6 +573,12 @@ code:
     title: "Chapter 17.26 - OS Open Space District"
     allow_thin: true
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Gladstone GMC 17.10 R-7.2 entrance standard reaches single-household dwellings only (FOLLOWUPS 153)"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L261-L265,L273"
   # ---- GMC Chapter 17.48, Off-Street Parking and Loading, read 2026-08-29 ----
   #
   # A city that requires almost no parking and regulates all of it. 17.48.010 is

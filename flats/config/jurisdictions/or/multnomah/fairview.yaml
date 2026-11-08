@@ -950,6 +950,12 @@ code:
     url: https://ecode360.com/print/FA4439?guid=50510034
     title: Chapter 19.85 General Industrial (GI) District
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Fairview FMC 19.30.040 middle housing entry orientation (townhouse 19.30.050 L3-L40): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://ecode360.com/print/FA4439?guid=50509420
+    retrieved: '2026-09-27'
+    quote: "or/multnomah/fairview/19.30/19.30.040.txt#L15-L51"
   # Chapter 19.164, Off-Street Parking, read 2026-08-26. The cross-reference
   # ledger ordered it because Fairview's maximum was unread and a maximum below
   # four would stop a pod that needs four stalls. The chapter answers both ends
@@ -2857,6 +2863,12 @@ zones:
       that reached the dimensions before the list would find nothing here to
       stop a building this zone never admits.
   VSF:
+    entrance_faces_street:
+      value: unclear
+      cite: "Fairview FMC 19.145 Village design standards; whether a building turned end-on meets its orientation rule is unsettled (FOLLOWUPS 153)"
+      url: https://ecode360.com/print/FA4439?guid=50511096
+      retrieved: '2026-09-27'
+      quote: "or/multnomah/fairview/19.145.txt#L15-L30"
     # NOT ENCODED: min_landscaped_pct, and this is the zone where leaving it
     # out takes an argument. VSF is Village Single-Family *Residential*, so a
     # reader skimming 19.163.030(C)(1) -- "Residential districts: 20 percent of

@@ -836,6 +836,12 @@ code:
     nth: 2
     extraction: plain
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Tualatin TDC 73A.030 asks only for a walkway from a main entrance to the sidewalk, no orientation (whole-document grep) (FOLLOWUPS 153)"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/tualatin/73A/73A.030.txt#L23-L29"
   # PARKING, read 2026-08-30. Tualatin is the second city in this corpus whose
   # parking chapter states no dimension of its own and sends the reader to a
   # drawing -- and the first where the drawing answers. TDC 73C.030(1) says

@@ -377,6 +377,9 @@
   },
   "or/clackamas/oregon-city": {
     "(defaults)": {
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "front_lot_line_corner": [
         "utility_easement"
       ],

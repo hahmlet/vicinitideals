@@ -354,6 +354,12 @@ private_drives:
     reading that does not shrink a yard. A doubt.
 
 defaults:
+  entrance_faces_street:
+    value: unclear
+    cite: "Sandy SDC 17.90 entrance orientation with a pedestrian-way alternative the screen does not measure; 17.82 transit-street rules (sdc.17.82.txt L18-L22, L36-L43) (FOLLOWUPS 153)"
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.90.txt#L2222-L2252"
   # PARKING COUNT. 17.98.40 table: single family detached/attached 2 per
   # dwelling unit (L157); multi-family 1.5 per studio or one-bedroom unit and
   # 2.0 per two-bedroom unit or greater (L160). The catalog holds no bedroom

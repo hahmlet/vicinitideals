@@ -33,10 +33,12 @@ import math
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
-from flats.designs.model import Design, ParkingConfig, Plat
+from flats.designs.model import Design, Orientation, ParkingConfig, Plat
+from flats.geom.edges import bearing_delta
 from flats.score.turns import AS_DRAWN, Fix, Shape, Unsearched, fixes
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
+    from flats.fit.rectangle import Fit
     from flats.rules.resolver import ZoneResolution
 
 #: What sets the area floor. Named rather than inferred so the page can say
@@ -356,7 +358,60 @@ def faces_the_street(rules: "ZoneResolution", design: Design) -> bool:
     """
     if rules.get("orientation_constraint") == "axis_required":
         return True
+    if design.door_face == "width" and rules.get("entrance_faces_street") == "required":
+        # FOLLOWUPS 153: the code makes the main entrance face the street
+        # and offers nothing a building turned end-on meets, and every door
+        # of this design is on its long face -- so the long face is the one
+        # that must face the street.
+        return True
     return design.plat is Plat.unit_lots and townhouse_lots(rules)
+
+
+#: How far the door face may turn from a street before the doors no longer
+#: face it, where a zone's entrance standard is unread or unsettled
+#: (``entrance_faces_street`` absent or ``unclear``). Forty-five degrees is
+#: the angle the Large Cities Model Code (OAR 660-046 Exhibit B,
+#: C.2.b.ii, "Be at an angle of up to 45 degrees from the street") and the
+#: codes copied from it print; a judgement for a zone that prints none, and
+#: one that only decides which fits are held out of GREEN, never failed.
+ENTRANCE_TURN_DEG = 45.0
+
+
+def entrance_unsettled(rules: "ZoneResolution", design: Design) -> bool:
+    """Whether a turned fit of ``design`` here waits on an entrance standard
+    nobody has settled: the design's doors are all on one face, the building
+    is not already made to face the street, and the zone's
+    ``entrance_faces_street`` is ``unclear`` or was never read (FOLLOWUPS
+    153). ``alternative`` and ``not_required`` let the turned fit stand;
+    ``required`` never searches it (:func:`faces_the_street`)."""
+    if design.door_face is None or faces_the_street(rules, design):
+        return False
+    return rules.get("entrance_faces_street") in (None, "unclear")
+
+
+def door_turn_deg(fit: "Fit", bearings: "tuple[float, ...]") -> float | None:
+    """How far the face carrying the doors stands from the nearest street
+    direction, 0 to 90 degrees, for a design whose doors are on its
+    ``width`` face: the fit's grid angle is the direction its across side
+    runs, which is the width face standing ``width_facing`` and the depth
+    face standing ``depth_facing``. ``None`` where the fit or the lot names
+    no direction."""
+    if fit.angle_deg is None or fit.orientation is None or not bearings:
+        return None
+    face = fit.angle_deg + (0.0 if fit.orientation is Orientation.width_facing else 90.0)
+    return min(bearing_delta(face, b) for b in bearings)
+
+
+def door_turned(design: Design, fit: "Fit", bearings: "tuple[float, ...]") -> bool:
+    """Whether ``fit`` stands ``design`` with its doors turned away from
+    every street (more than :data:`ENTRANCE_TURN_DEG`). A fit that names no
+    angle is read by its orientation alone: end-on is turned."""
+    if design.door_face is None or not fit.fits:
+        return False
+    turn = door_turn_deg(fit, bearings)
+    if turn is None:
+        return fit.orientation is Orientation.depth_facing
+    return turn > ENTRANCE_TURN_DEG
 
 
 

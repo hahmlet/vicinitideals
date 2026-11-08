@@ -384,6 +384,12 @@ private_drives:
     zone, which is not encoded.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Cornelius CMC 18.100.040(B) entrance rules are Nonresidential Design Standards; no residential entrance standard (whole-document grep) (FOLLOWUPS 153)"
+    url: https://ecode360.com/print/CO4396?guid=47339017
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/18.100/18.100.040.txt#L70,L77"
   # PARKING COUNT. 18.145.030 (A), Table: "Middle Housing 1.0/DU none none",
   # the minimum and the Zone A and Zone B maximums (cmc.18.145.parking.txt
   # L111-L135). The table applies "regardless of the parking zone in which

@@ -246,6 +246,12 @@ private_drives:
     (L1421-L1422), but that choice is not tied to where the car comes in.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Beaverton BDC 60.05.11.3 sends other districts to 60.05.15, whose entrance standard reaches non-residential buildings (FOLLOWUPS 153)"
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L39-L60,L195-L206"
   # PARKING COUNT. 60.30.10.3.A.1: "No minimum parking is required for any
   # use." Encoded as zero rather than left out, because an omitted minimum
   # lets the state cap resolve as though it were a requirement.
@@ -532,6 +538,12 @@ zones:
       by a residential lot line); FAR 4.0. Parking kept 20 ft off the right-
       of-way and out of the Primary Frontage; 15% open space.
   RMA:
+    entrance_faces_street:
+      value: alternative
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -684,6 +696,12 @@ zones:
       maximum; 60.05.60 middle housing standards (S4 open area by lot size,
       S11 50% frontage, S13 32 ft of driveway approach, lowest-class access).
   RMB:
+    entrance_faces_street:
+      value: alternative
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -845,6 +863,12 @@ zones:
       at the setback line, 1:1); FAR 1.20 on net area. 60.05.60 standards as
       RMA.
   RMC:
+    entrance_faces_street:
+      value: alternative
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1020,6 +1044,12 @@ zones:
   # and I.1 minimum FAR (no field).
   # ------------------------------------------------------------------
   CM-RM:
+    entrance_faces_street:
+      value: alternative
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -3160,6 +3190,12 @@ zones:
   # measured standard the pod fails stays RED (Steph 2026-10-14).
   # ------------------------------------------------------------------
   RC-BC:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-BC Beaverton Central), Tables 70.15.10.1.A and 70.15.10.1.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3295,6 +3331,12 @@ zones:
       neither residential nor RC-DT). Surface parking out of the primary
       frontage and 6 ft off the street; 48 sq ft of open space a unit.
   RC-OT:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-OT Old Town), Tables 70.15.10.2.A and 70.15.10.2.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3423,6 +3465,12 @@ zones:
       street side 6, side and rear 10 (0 as RC-BC). Parking and open space
       as RC-BC.
   RC-MU:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-MU Mixed Use), Tables 70.15.10.3.A and 70.15.10.3.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3550,6 +3598,12 @@ zones:
       front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
       Parking and open space as RC-BC.
   RC-DT:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-DT Downtown Transition), Tables 70.15.10.4.A and 70.15.10.4.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf

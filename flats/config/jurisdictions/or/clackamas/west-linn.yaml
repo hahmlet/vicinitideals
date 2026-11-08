@@ -645,6 +645,12 @@ code:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC59.html
     title: "CDC Chapter 59 - Willamette Neighborhood Mixed Use Transitional Zone, MU"
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "West Linn CDC states no residential main-entrance orientation standard (whole-document grep: only historic primary facades and cottage walkways) (FOLLOWUPS 153)"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/west-linn/46/46.070.txt#L18"
   # PARKING AND VEHICLE ACCESS, read 2026-08-27 out of Chapters 46 and 48,
   # which every one of the nine zone chapters lists under "OTHER APPLICABLE
   # DEVELOPMENT STANDARDS -- The following standards apply to all development
@@ -2440,6 +2446,12 @@ zones:
       and the shortest reading.
 
   MU:
+    entrance_faces_street:
+      value: unclear
+      cite: "West Linn CDC 59 MU sends all uses to Chapter 55 design review, which is not stored (FOLLOWUPS 153)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC59.html
+      retrieved: '2026-09-20'
+      quote: "or/clackamas/west-linn/59.mu.txt#L235"
     section: ["59."]
     cite_default:
       cite: West Linn CDC 59.020(A), 59.030 (uses permitted outright), 59.070(A)
