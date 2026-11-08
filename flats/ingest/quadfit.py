@@ -72,7 +72,7 @@ from flats.designs.model import Design, Plat
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
-from flats.fit.draw import draw
+from flats.fit.draw import COURT_BETWEEN_TOL_FT, draw
 from flats.fit.frontage import _runs, _streets_of_run, building_runs, parking_share, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
@@ -2083,6 +2083,79 @@ def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], .
     return fronts + tuple(a for a in lot.access if a not in fronts)
 
 
+#: The field whose ``True`` bans parking between the building and ANY street
+#: (Portland 33.266.120.C.1.a, Milwaukie 19.505.3.D.4.a).
+PARKING_FRONT_BAN = "parking_front_prohibited"
+
+
+def court_yard_lines(s: "Screened") -> tuple[tuple[float, float, float, float], ...]:
+    """The lines whose yard this plan's parking court may not stand in
+    (Steph 2026-11-08, rulings.yaml
+    ``2026-11-08-no-front-yard-parking-silent-codes``: "no" parking in the
+    front yard where the code is silent; FOLLOWUPS 142).
+
+    A yard is the code's, named by the plan's own lot lines
+    (:attr:`Screened.lot` edges, as the plan resolved them):
+
+    * every FRONT lot line: the front yard. That is both ends of a through
+      lot where the code makes each a front (``front_lot_line_through``
+      ``both``, ``manager``, and the both-fronts reading the unread and
+      ``both_unless_no_access`` codes keep at its worst), and every street
+      of a corner lot whose front is not named (``front_lot_line_corner``
+      ``both``, an alley lot). A through lot's far end the code lets the
+      owner name the rear (``owner``) is a rear yard, and a court there is
+      behind the building;
+    * a private road the yards do not count (:attr:`QuadfitLot.access`):
+      Steph 2026-09-30, private roads are streets "for purpose of where
+      parking should be";
+    * where the code bans parking between the building and the street
+      outright (``parking_front_prohibited`` true and not waived), EVERY
+      street line -- the corner's side street and a through lot's far end
+      renamed rear included (:attr:`Screened.street_edges`): the ban says
+      "the street", not "the front yard".
+
+    NOT a corner's side street (``street_side``) elsewhere: the code names
+    that yard a street side yard, not a front yard, and a court reached
+    from the side street (Steph 2026-10-02 / 10-05) stands in the side or
+    rear yard. Alley lines are never streets.
+    """
+    lines: list[tuple[float, float, float, float]] = []
+
+    def add(edges: LotEdges | None, classes: tuple[EdgeClass, ...]) -> None:
+        if edges is None:
+            return
+        for e in edges.edges:
+            line = (e.x1, e.y1, e.x2, e.y2)
+            if e.cls in classes and not e.alley and line not in lines:
+                lines.append(line)
+
+    add(s.lot.edges, (EdgeClass.front,))
+    if s.rules.get(PARKING_FRONT_BAN) is True and PARKING_FRONT_BAN not in set(s.rules.exempted):
+        every = (EdgeClass.front, EdgeClass.street_side)
+        add(s.lot.edges, every)
+        add(getattr(s, "street_edges", None), every)
+    lines += [a for a in s.lot.access if a not in lines]
+    return tuple(lines)
+
+
+def court_in_front_yard(s: "Screened", drawing: Mapping[str, Any] | None = None) -> bool:
+    """Whether ``drawing`` (``s``'s own where omitted) stands its parking
+    court between its building and one of :func:`court_yard_lines`. False
+    where nothing fitting is drawn, or no court: a fit that fell short shows
+    its shortfall, not a place the court would stand."""
+    from shapely.geometry import Polygon
+
+    from flats.fit.draw import court_between
+
+    drawing = s.drawing if drawing is None else drawing
+    if not drawing or not drawing.get("fits"):
+        return False
+    ring, court = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court and len(court) >= 4):
+        return False
+    return court_between(Polygon(ring), Polygon(court), court_yard_lines(s))
+
+
 def transit_from_row(row: Mapping[str, Any]) -> tuple[tuple[str, float], ...]:
     """The lot's distances to transit, where the row carries them.
 
@@ -2853,6 +2926,84 @@ def rear_court_checked(
     result = screen(got, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(
         got, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+#: At most this many angles besides the fit's own are drawn looking for a
+#: court clear of the front yard (:func:`court_turned`): each is a window
+#: search, and the flatter search reads as many.
+COURT_TURN_MAX = 6
+
+
+def court_turned(s: Screened, fitter: Fitter | None) -> Screened:
+    """``s`` drawn at another angle where its first drawing stands the court
+    in a front yard (Steph 2026-11-08; :func:`court_yard_lines`) and another
+    angle keeps it out.
+
+    The first drawing already takes the nearest window at the fit's angle
+    whose court stands clear (:func:`drawing_for`); on a through lot whose
+    ends are both fronts none does, the court behind the building facing the
+    far street. Turned, the building and court can stand side by side along
+    the street. The angles nearest square to a street are drawn first
+    (:func:`flats.ingest.flatter._angles`, at most :data:`COURT_TURN_MAX`
+    besides the fit's), and the first drawing that holds the plan (``fits``,
+    no tighter than the first), whose court stands clear and whose drive in
+    from the street is clear (:func:`flats.ingest.flatter._drive_clear`) is
+    kept. Only a court reached down a lane from the street moves
+    (:func:`flats.ingest.flatter._lane_in_from_street`): any other has a way
+    in the drawing does not place. Runs before anything measures the
+    drawing (the maximum front setback, the hose, the grade), so each reads
+    the plan where it now stands. Changes no verdict:
+    :func:`court_yard_checked` reads the drawing finally kept."""
+    drawing = s.drawing or {}
+    if fitter is None or s.fit.angle_deg is None or not court_in_front_yard(s):
+        return s
+    if not (drawing.get("lane") and _lane_in_from_street(s)):
+        return s
+    street = _street_lines(s.lot)
+    if not street:
+        return s
+    for angle in _flatter_angles(s, fitter)[1 : COURT_TURN_MAX + 1]:
+        at = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
+        drawn = drawing_for(at, fitter)
+        if not drawn or not drawn.get("fits") or (drawn.get("tight") and not drawing.get("tight")):
+            continue
+        if court_in_front_yard(s, drawn) or not _drive_clear(drawn, at, street):
+            continue
+        return dataclasses.replace(s, drawing=drawn)
+    return s
+
+
+def court_yard_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the court it finally drew stands in a front
+    yard (Steph 2026-11-08, rulings.yaml
+    ``2026-11-08-no-front-yard-parking-silent-codes``; FOLLOWUPS 142).
+
+    Every step that stands the plan somewhere -- the first drawing, the
+    turn for a clear court (:func:`court_turned`), the maximum front
+    setback's search, the hose's, the flatter spot's -- keeps the court out
+    of the yards :func:`court_yard_lines` names where it can. Where the
+    drawing kept still stands it there, nothing tried found a place for this
+    plan's court outside the front yard: the lot is held out of GREEN
+    (``court_front_yard``, COURT_FRONT_YARD), and a hold set earlier lifts
+    where the court shown is clear. The fit is not undone -- the court
+    beside the building, or the plan at an angle nothing drew, may yet
+    stand it -- so the hold is a closer look, not a red. A plan RED both
+    ways is not read."""
+    if s.facts is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    held = court_in_front_yard(s)
+    if held == s.facts.court_front_yard:
+        return s
+    facts = dataclasses.replace(s.facts, court_front_yard=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
     )
     return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
@@ -4031,6 +4182,7 @@ def _screen_lot_once(
             out.append(_rank_unknown(won) if ask_rank else won)
             continue
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
+        won = court_turned(won, fitter)
         won = front_max_checked(won, fitter, policy=policy, relief=relief)
         placed = won.drawing
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
@@ -4070,6 +4222,7 @@ def _screen_lot_once(
             roads=roads, bound=bound, terrain=terrain,
         )
         won = rear_court_checked(won, policy=policy, relief=relief)
+        won = court_yard_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
         won = pdx.checked(won, lot.pdx_overlays)
@@ -4685,65 +4838,28 @@ def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
 FIRE_RETRY_MAX_PLACEMENTS = 24
 # Drawing every listed placement at once can exhaust a worker on a large lot.
 FIRE_RETRY_MAX_ACRES = 3.0
-#: Feet the court must come nearer a street line than the building, over a
-#: stretch of that line at least this long, before it is read as standing
-#: between them (:func:`_court_street_side`): drawings round to 0.1 ft, and a
-#: court beside the building starts at the building's own face.
-COURT_STREET_SIDE_TOL_FT = 1.0
+#: Feet the court must come nearer a street line than the building before it
+#: is read as standing between them (:data:`flats.fit.draw.COURT_BETWEEN_TOL_FT`).
+COURT_STREET_SIDE_TOL_FT = COURT_BETWEEN_TOL_FT
 
 
 def _court_street_side(
     drawing: Mapping[str, Any], streets: Sequence[tuple[float, float, float, float]]
 ) -> bool:
-    """Whether ``drawing``'s parking court stands between its building and a
-    street line (Steph 2026-11-08, rulings.yaml
-    ``2026-11-08-no-front-yard-parking-silent-codes``: in a code silent on it
-    the court may not sit in the front yard; Milwaukie MMC 19.505.3.D.4.a
-    forbids it outright).
-
-    For each street line, the building and court are read in the line's own
-    frame -- along it, and out from it into the lot -- over the stretch of
-    the line both of them face. The court stands between where, over that
-    stretch, it comes nearer the line than the building does (by more than
-    :data:`COURT_STREET_SIDE_TOL_FT`). A court behind the building, or beside
-    it at the same face, does not; a court in front of it does, and so does a
-    court behind it on a through lot, where behind is the other street's
-    front yard. A drawing with no court stands nothing between.
+    """Whether ``drawing``'s parking court stands between its building and
+    one of ``streets`` (:func:`flats.fit.draw.court_between`; Steph
+    2026-11-08, rulings.yaml ``2026-11-08-no-front-yard-parking-silent-codes``).
+    Which lines count is :func:`court_yard_lines`'s. A drawing with no court
+    stands nothing between.
     """
-    from shapely import affinity
-    from shapely.geometry import Polygon, box
+    from shapely.geometry import Polygon
+
+    from flats.fit.draw import court_between
 
     ring, court_ring = drawing.get("building"), drawing.get("court")
     if not (ring and len(ring) >= 4 and court_ring and len(court_ring) >= 4):
         return False
-    building, court = Polygon(ring), Polygon(court_ring)
-    tol = COURT_STREET_SIDE_TOL_FT
-    for x1, y1, x2, y2 in streets:
-        length = math.hypot(x2 - x1, y2 - y1)
-        if length <= tol:
-            continue
-        turn = -math.degrees(math.atan2(y2 - y1, x2 - x1))
-
-        def framed(shape: Any) -> Any:
-            return affinity.rotate(
-                affinity.translate(shape, -x1, -y1), turn, origin=(0.0, 0.0)
-            )
-
-        b, c = framed(building), framed(court)
-        if b.centroid.y < 0:
-            b = affinity.scale(b, 1.0, -1.0, origin=(0.0, 0.0))
-            c = affinity.scale(c, 1.0, -1.0, origin=(0.0, 0.0))
-        lo = max(b.bounds[0], c.bounds[0], 0.0)
-        hi = min(b.bounds[2], c.bounds[2], length)
-        if hi - lo <= tol:
-            continue
-        window = box(lo, -1e7, hi, 1e7)
-        bw, cw = b.intersection(window), c.intersection(window)
-        if bw.is_empty or cw.is_empty:
-            continue
-        if cw.bounds[1] < bw.bounds[1] - tol:
-            return True
-    return False
+    return court_between(Polygon(ring), Polygon(court_ring), streets, COURT_STREET_SIDE_TOL_FT)
 
 
 def fire_checked(
@@ -4783,7 +4899,7 @@ def fire_checked(
     ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
     measured-parking-share guard still apply; the first that reaches and keeps
     every other check unchanged is kept, never one that stands its court
-    between the building and a street line (:func:`_court_street_side`).
+    in a yard :func:`court_yard_lines` names (:func:`_court_street_side`).
     If none passes, the existing other-angle
     retry follows unchanged: the plan is drawn at the fit's other angles
     (:func:`_turned_for_fire`) and kept at one the hose reaches.
@@ -4835,6 +4951,12 @@ def fire_checked(
             at = served
             drawn = drawing_for(s, fitter, street=served)
             again = measure(drawn) if drawn and drawn.get("fits") else None
+            # Standing the building at the served end must not stand its
+            # court in a front yard the plan's own drawing kept it out of
+            # (Steph 2026-11-08): on a through lot whose ends are both
+            # fronts, the court behind faces the other street.
+            if again is not None and court_in_front_yard(s, drawn) and not court_in_front_yard(s):
+                again = None
             if again is not None and (route is None or again < route):
                 s, route = dataclasses.replace(s, drawing=drawn), again
     green = green or Triage.green in (s.screening.triage, s.signed.triage) or _map_green(s)
@@ -4983,10 +5105,11 @@ def fire_checked(
             drawn = drawing_for(out, fitter, street=at, where=where)
             if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
                 continue
-            # The screen never re-reads where the court stands, so a move
-            # that turns it toward a street is refused here (Steph
-            # 2026-11-08; Milwaukie 12E30CD04700, fire_rp5).
-            if _court_street_side(drawn, streets):
+            # A move that stands the court in a yard it may not use is
+            # refused (Steph 2026-11-08; Milwaukie 12E30CD04700, fire_rp5):
+            # the listing already holds none, and this reads the drawing
+            # itself on the plan's own yards (:func:`court_yard_lines`).
+            if _court_street_side(drawn, court_yard_lines(out)):
                 continue
             candidate = dataclasses.replace(out, drawing=drawn)
             candidate_route = measure(drawn)
@@ -5094,9 +5217,15 @@ def _turned_for_fire(
         key=lambda a: (off(a), a),
     )[:TURN_MAX]
     best: tuple[float, dict[str, Any]] | None = None
+    # A turn may not stand the court in a yard the drawing kept it out of
+    # (Steph 2026-11-08): on a through lot the court behind faces the far
+    # street at some angles.
+    kept_out = not court_in_front_yard(s)
     for angle in angles:
         turned = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
         drawn = drawing_for(turned, fitter, street=street)
+        if kept_out and court_in_front_yard(s, drawn):
+            continue
         got = measure(drawn) if drawn and drawn.get("fits") else None
         if got is not None and (best is None or got < best[0]):
             best = (got, drawn)
@@ -5776,9 +5905,14 @@ def drawing_for(
     ``street``, some of those lines, where the caller names them
     (:func:`fire_checked`). ``where``, ``listing`` and ``max_front_ft`` are
     :func:`flats.fit.draw.draw`'s: a chosen window, or the windows listed
-    (:mod:`flats.ingest.flatter`).
+    (:mod:`flats.ingest.flatter`). The court is kept out of the yards
+    :func:`court_yard_lines` names wherever a window allows (Steph
+    2026-11-08): the nearest window whose court stands clear is drawn, and a
+    listing holds only those; where none is clear the nearest is drawn and
+    :func:`court_in_front_yard` reads it.
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
+    yard = court_yard_lines(s)
     rear = s.envelope.rear_cut_ft if s.envelope else None
     if street is None:
         street = _street_lines(s.lot)
@@ -5809,6 +5943,8 @@ def drawing_for(
             listing=listing,
             max_front_ft=max_front_ft,
             include_frontmost=include_frontmost,
+            yard=yard,
+            yard_moves=False,
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -5853,6 +5989,8 @@ def drawing_for(
         listing=listing,
         max_front_ft=max_front_ft,
         include_frontmost=include_frontmost,
+        yard=yard,
+        yard_moves=_lane_in_from_street(s),
     )
     if got is None:
         return None

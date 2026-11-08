@@ -258,6 +258,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [REAR_COURT_SHORT]
+  PARKING-COURT-FRONT-YARD:
+    description: "The drawn parking court stands between the building and a street the code makes a front, and no placement tried kept it out of the front yard"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the plan with the court beside the building or the plan turned on the lot; Steph 2026-11-08: no parking in the front yard where the code is silent"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [COURT_FRONT_YARD]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical

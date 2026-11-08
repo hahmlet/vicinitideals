@@ -372,6 +372,12 @@ PARKING_SETBACK_DOUBT_RULING = "2026-11-05-troutdale-parking-abutting-setback"
 #: The drawn court stands closer to the line opposite the front than the rear
 #: yard the code keeps parking out of (:attr:`LotFacts.rear_court_short`).
 REAR_COURT_SHORT = "REAR_COURT_SHORT"
+#: The drawn court stands between the building and a front lot line -- in the
+#: front yard -- and no placement tried keeps it out (:attr:`LotFacts.
+#: court_front_yard`; Steph 2026-11-08, no front-yard parking).
+COURT_FRONT_YARD = "COURT_FRONT_YARD"
+#: The ruling :data:`COURT_FRONT_YARD` reads.
+COURT_FRONT_YARD_RULING = "2026-11-08-no-front-yard-parking-silent-codes"
 #: Red on the fire hose alone measured from 10 ft out from the curb, and
 #: clear measured from the curb itself (FIRE-HOSE-START; FOLLOWUPS 29).
 FIRE_HOSE_START = "FIRE_HOSE_START"
@@ -844,6 +850,14 @@ class LotFacts:
     #: measured it, which is every caller but the bridge. Holds the lot out of
     #: GREEN and moves no setback.
     rear_court_short: bool = False
+    #: The drawn court stands between the building and a line whose yard it
+    #: may not use -- a front lot line, a private road, every street where the
+    #: code bans parking between the building and the street
+    #: (:func:`flats.ingest.quadfit.court_yard_lines`) -- and no placement
+    #: the drawing tried keeps it out (:func:`flats.ingest.quadfit.
+    #: court_yard_checked`; Steph 2026-11-08). False where nothing measured
+    #: it. Holds the lot out of GREEN; the fit is not undone.
+    court_front_yard: bool = False
     #: The lot area the road strips take where the code states a distance to
     #: the street's centre line (:func:`flats.geom.dedication.strip_sqft`,
     #: FOLLOWUPS 77). The minimum lot area and the coverage cap are measured
@@ -3089,6 +3103,8 @@ def screen(
         reasons.append(PARKING_STRIP_UNCONFIRMED)
     if lot.rear_court_short:
         reasons.append(REAR_COURT_SHORT)
+    if lot.court_front_yard:
+        reasons.append(COURT_FRONT_YARD)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
     if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
@@ -3841,6 +3857,8 @@ def _account(
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if lot.rear_court_short:
         flag("PARKING-REAR-COURT-SHORT", REAR_COURT_SHORT)
+    if lot.court_front_yard:
+        flag("PARKING-COURT-FRONT-YARD", COURT_FRONT_YARD, source=COURT_FRONT_YARD_RULING)
     if parking_setback_doubt:
         flag(
             "PARKING-SETBACK-DOUBT",
@@ -4033,6 +4051,8 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 
 __all__ = [
     "CORNER_READ_AS_BEND",
+    "COURT_FRONT_YARD",
+    "COURT_FRONT_YARD_RULING",
     "CURVE_ON_THE_LINE",
     "THROUGH_FRONT_GUESSED",
     "CLOSER_LOOK_MIN_DENSITY",

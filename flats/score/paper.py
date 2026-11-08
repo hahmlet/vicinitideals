@@ -1171,7 +1171,12 @@ def side_court(
       Milwaukie 19.505.3.D.4.a keep parking off. Where that ban holds on an
       interior lot the court stops at the rear wall
       (:attr:`Beside.within_building`) -- a through lot's far end is a
-      street the fit cannot see either;
+      street the fit cannot see either. Which flank the court takes is the
+      drawing's: it stands the court on the flank clear of the yards
+      :func:`flats.ingest.quadfit.court_yard_lines` names (a side street
+      the code makes a front, or any street where the ban holds), and a
+      plan whose court still stands in one is held out of GREEN (Steph
+      2026-11-08, no front-yard parking; COURT_FRONT_YARD);
     * not on a corner lot whose code sends the driveway to the side street
       (``corner_access_street: side``): the aisle is entered off the front;
     * not where the code sends the driveway to the alley
