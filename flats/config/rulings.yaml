@@ -188,8 +188,12 @@
   effect: >-
     The alley setback applies only to the stretch the alley covers; the rest
     of the line keeps the ordinary setback. A partial alley counts as the
-    court's travel lane only when the covered run is long enough.
+    court's travel lane only when the covered run is long enough, and only
+    for a court that stands against that covered run (FOLLOWUPS 3(c),
+    2026-11-08): where no window does, the court keeps its own aisle, and a
+    final drawing with the court off the stretch is held out of GREEN.
   source: Steph 2026-09-28 (memory feedback_partial_alley_ruling.md), commit 59533da1
+  encoded_in: [flats/geom/alley.py, flats/score/paper.py, flats/fit/draw.py, flats/ingest/quadfit.py]
 
 - id: 2026-09-29-stated-number-governs
   kind: ruling
@@ -2685,11 +2689,17 @@
   ruling: >-
     "no"
   effect: >-
-    The court must not sit between the building and any street line; a
-    placement that puts it there is rejected wherever the city's own text
-    does not expressly allow it. Codes that forbid it are measured as
-    written. FOLLOWUPS 142.
+    The court must not sit between the building and a front lot line (the
+    front yard: both ends of a through lot whose code makes each a front,
+    every street of a corner whose front is not named, a private road only
+    where the city counts it as a front lot line); where the code bans
+    parking between the building and the street (parking_front_prohibited),
+    every street line. A corner's street side yard is not a front yard, nor
+    a private road the yards ignore. Every placement prefers a clear court; a plan
+    whose final drawing still stands it there is held out of GREEN
+    (COURT_FRONT_YARD). FOLLOWUPS 142.
   source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md
+  encoded_in: [flats/ingest/quadfit.py, flats/fit/draw.py]
 - id: 2026-11-08-washington-plat-age-check-yellow
   kind: ruling
   date: 2026-11-08

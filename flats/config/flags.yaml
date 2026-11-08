@@ -258,6 +258,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [REAR_COURT_SHORT]
+  PARKING-COURT-FRONT-YARD:
+    description: "The drawn parking court stands between the building and a street the code makes a front, and no placement tried kept it out of the front yard"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the plan with the court beside the building or the plan turned on the lot; Steph 2026-11-08: no parking in the front yard where the code is silent"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [COURT_FRONT_YARD]
+  PARKING-ALLEY-COURT-OFF-STRETCH:
+    description: "The court backs out into a rear alley that runs only part of the rear line, and the drawn court stands off the stretch the alley covers"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Stand the court against the covered stretch, or give it its own aisle; Steph 2026-09-28: the alley is the travel lane only where it abuts the court and is long enough"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ALLEY_COURT_OFF_STRETCH]
+  PARKING-COURT-GROUND-UNREAD:
+    description: "The envelope is quadfit's and FLATS could not name the yards, so where the parking court may stand was read as the whole lot less the carve"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the lot's front and side yards and check the court stands outside them (FOLLOWUPS 33(c))"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [COURT_GROUND_UNREAD]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical

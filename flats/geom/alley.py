@@ -370,9 +370,11 @@ def usable_run_ft(
     breaks it. The answer is the longest unbroken run, measured along the
     line. 0.0 where there is no lot, no envelope or no stretch.
 
-    Only the length is compared (:meth:`flats.score.paper.Alley.rear_aisle_for`):
-    the fit finds the deepest rectangle anywhere in the envelope and does
-    not say where along the rear line its court stands.
+    Here only the length is compared (:meth:`flats.score.paper.Alley.rear_aisle_for`).
+    Where along the line the court stands is the fit's: the bridge keeps the
+    alley as the aisle only where some window stands the court against the
+    stretch (:func:`flats.fit.draw.stretch_window`), and the drawing is read
+    for it (:func:`flats.ingest.quadfit.alley_court_checked`; FOLLOWUPS 3(c)).
     """
     import shapely
 

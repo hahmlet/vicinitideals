@@ -372,6 +372,22 @@ PARKING_SETBACK_DOUBT_RULING = "2026-11-05-troutdale-parking-abutting-setback"
 #: The drawn court stands closer to the line opposite the front than the rear
 #: yard the code keeps parking out of (:attr:`LotFacts.rear_court_short`).
 REAR_COURT_SHORT = "REAR_COURT_SHORT"
+#: The drawn court stands between the building and a front lot line -- in the
+#: front yard -- and no placement tried keeps it out (:attr:`LotFacts.
+#: court_front_yard`; Steph 2026-11-08, no front-yard parking).
+COURT_FRONT_YARD = "COURT_FRONT_YARD"
+#: The ruling :data:`COURT_FRONT_YARD` reads.
+COURT_FRONT_YARD_RULING = "2026-11-08-no-front-yard-parking-silent-codes"
+#: The drawn court leans on a rear alley that runs only part of the rear line
+#: as its aisle, and stands off the covered stretch (:attr:`LotFacts.
+#: alley_court_off_stretch`; Steph 2026-09-28, FOLLOWUPS 3(c)).
+ALLEY_COURT_OFF_STRETCH = "ALLEY_COURT_OFF_STRETCH"
+#: The ruling :data:`ALLEY_COURT_OFF_STRETCH` reads.
+ALLEY_COURT_OFF_STRETCH_RULING = "2026-09-28-partial-alley"
+#: The court's ground was not cut from the yards: the envelope is s5o's and
+#: FLATS could not name them (:attr:`LotFacts.court_ground_unread`;
+#: FOLLOWUPS 33(c)).
+COURT_GROUND_UNREAD = "COURT_GROUND_UNREAD"
 #: Red on the fire hose alone measured from 10 ft out from the curb, and
 #: clear measured from the curb itself (FIRE-HOSE-START; FOLLOWUPS 29).
 FIRE_HOSE_START = "FIRE_HOSE_START"
@@ -844,6 +860,26 @@ class LotFacts:
     #: measured it, which is every caller but the bridge. Holds the lot out of
     #: GREEN and moves no setback.
     rear_court_short: bool = False
+    #: The drawn court stands between the building and a line whose yard it
+    #: may not use -- a front lot line, a private road, every street where the
+    #: code bans parking between the building and the street
+    #: (:func:`flats.ingest.quadfit.court_yard_lines`) -- and no placement
+    #: the drawing tried keeps it out (:func:`flats.ingest.quadfit.
+    #: court_yard_checked`; Steph 2026-11-08). False where nothing measured
+    #: it. Holds the lot out of GREEN; the fit is not undone.
+    court_front_yard: bool = False
+    #: The court leans on a rear alley that runs only PART of the rear line
+    #: as its aisle, and the drawing kept stands it off the covered stretch
+    #: (:func:`flats.ingest.quadfit.alley_court_checked`; Steph 2026-09-28,
+    #: FOLLOWUPS 3(c)). False where nothing measured it. Holds the lot out of
+    #: GREEN; the fit is not undone.
+    alley_court_off_stretch: bool = False
+    #: The court's ground is the lot less the carve, not the lot less every
+    #: yard but the rear: the envelope is quadfit's and FLATS could not name
+    #: the yards (:attr:`flats.ingest.quadfit.Envelope.yards_read`; FOLLOWUPS
+    #: 33(c)), so the court the fit passed may stand in a front or side yard.
+    #: Holds the lot out of GREEN. False where nothing measured it.
+    court_ground_unread: bool = False
     #: The lot area the road strips take where the code states a distance to
     #: the street's centre line (:func:`flats.geom.dedication.strip_sqft`,
     #: FOLLOWUPS 77). The minimum lot area and the coverage cap are measured
@@ -3089,6 +3125,12 @@ def screen(
         reasons.append(PARKING_STRIP_UNCONFIRMED)
     if lot.rear_court_short:
         reasons.append(REAR_COURT_SHORT)
+    if lot.court_front_yard:
+        reasons.append(COURT_FRONT_YARD)
+    if lot.alley_court_off_stretch:
+        reasons.append(ALLEY_COURT_OFF_STRETCH)
+    if lot.court_ground_unread:
+        reasons.append(COURT_GROUND_UNREAD)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
     if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
@@ -3841,6 +3883,16 @@ def _account(
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if lot.rear_court_short:
         flag("PARKING-REAR-COURT-SHORT", REAR_COURT_SHORT)
+    if lot.court_front_yard:
+        flag("PARKING-COURT-FRONT-YARD", COURT_FRONT_YARD, source=COURT_FRONT_YARD_RULING)
+    if lot.alley_court_off_stretch:
+        flag(
+            "PARKING-ALLEY-COURT-OFF-STRETCH",
+            ALLEY_COURT_OFF_STRETCH,
+            source=ALLEY_COURT_OFF_STRETCH_RULING,
+        )
+    if lot.court_ground_unread:
+        flag("PARKING-COURT-GROUND-UNREAD", COURT_GROUND_UNREAD)
     if parking_setback_doubt:
         flag(
             "PARKING-SETBACK-DOUBT",
@@ -4032,7 +4084,12 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 
 
 __all__ = [
+    "ALLEY_COURT_OFF_STRETCH",
+    "ALLEY_COURT_OFF_STRETCH_RULING",
+    "COURT_GROUND_UNREAD",
     "CORNER_READ_AS_BEND",
+    "COURT_FRONT_YARD",
+    "COURT_FRONT_YARD_RULING",
     "CURVE_ON_THE_LINE",
     "THROUGH_FRONT_GUESSED",
     "CLOSER_LOOK_MIN_DENSITY",
