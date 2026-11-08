@@ -30,6 +30,13 @@ DURHAM_APRON_MIN_CLEARANCE_FT = 100.0
 DEFAULT_CROSS_STREET_HALF_ROW_FT = 40.0
 # A conservative allowance, not a code figure, pending a measured curb layer.
 CURB_RETURN_ALLOWANCE_FT = 35.0
+# 3.7.1.7: the apron "shall be set back from adjacent property by at least 5
+# feet" (ddc.3.site-design.txt#L356). Held on the pass bound only, at both ends
+# of each frontage: where a frontage ends at a corner the intersection rule
+# keeps the apron far further off anyway.
+APRON_PROPERTY_SETBACK_FT = 5.0
+# Street ends within this of one point are one node.
+_NODE_TOL_FT = 0.5
 _PARALLEL_TOL_DEG = 20.0
 _COLLINEAR_TOL_DEG = 8.0
 _BEARING_HALF_RUN_FT = 3.0
@@ -259,11 +266,9 @@ def maximum_clearance_ft(
                 if other_idx == primary_idx:
                     continue
                 other = streets.geoms[other_idx]
-                if (
-                    streets.names[primary_idx]
-                    and streets.names[primary_idx] == streets.names[other_idx]
-                ):
-                    continue
+                same_name = bool(streets.names[primary_idx]) and (
+                    streets.names[primary_idx] == streets.names[other_idx]
+                )
                 hit = shapely.intersection(primary, other)
                 if hit.is_empty:
                     continue
@@ -279,6 +284,8 @@ def maximum_clearance_ft(
                     ):
                         continue
                     if point.distance(chain_line) > reach:
+                        continue
+                    if same_name and _bend(streets, primary, other, point):
                         continue
                     station = float(
                         shapely.line_locate_point(extended_chain, point) - reach
@@ -304,7 +311,7 @@ def maximum_clearance_ft(
             measured_failures.append(centerline_clearance)
             continue
         conservative_clearance = _best_clearance_with_allowances(
-            length, events, apron_width_ft
+            length, events, apron_width_ft, inset=APRON_PROPERTY_SETBACK_FT
         )
         if conservative_clearance >= DURHAM_APRON_MIN_CLEARANCE_FT:
             passing.append(conservative_clearance)
@@ -340,16 +347,22 @@ def _best_clearance(length: float, events: Sequence[float], width: float) -> flo
 
 
 def _best_clearance_with_allowances(
-    length: float, events: Sequence[tuple[float, float]], width: float
+    length: float,
+    events: Sequence[tuple[float, float]],
+    width: float,
+    *,
+    inset: float = 0.0,
 ) -> float:
-    """Maximise centerline clearance after each intersection's allowances."""
-    if width > length:
+    """Maximise centerline clearance after each intersection's allowances,
+    the apron kept ``inset`` feet in from both ends of the frontage."""
+    earliest = inset
+    latest_start = length - width - inset
+    if latest_start < earliest:
         return 0.0
     if not events:
         return DURHAM_APRON_MIN_CLEARANCE_FT
 
-    latest_start = length - width
-    candidates = {0.0, latest_start}
+    candidates = {earliest, latest_start}
     branches: list[tuple[float, float]] = []
     for station, allowance in events:
         candidates.update((station - width, station))
@@ -367,12 +380,12 @@ def _best_clearance_with_allowances(
             start = (right_intercept - left_intercept) / (
                 left_slope - right_slope
             )
-            if 0.0 <= start <= latest_start:
+            if earliest <= start <= latest_start:
                 candidates.add(start)
 
     best = -math.inf
     for start in candidates:
-        if not 0.0 <= start <= latest_start:
+        if not earliest <= start <= latest_start:
             continue
         end = start + width
         clearance = min(
@@ -381,6 +394,23 @@ def _best_clearance_with_allowances(
         )
         best = max(best, clearance)
     return best
+
+
+def _bend(
+    streets: StreetNetwork, primary: BaseGeometry, other: BaseGeometry, point: Point
+) -> bool:
+    """Whether two lines of one street meet at ``point`` only end to end, with
+    no third line there: the street bends, it does not meet another
+    (moveread F1, 2026-11-05). A leg of the same name joining at a T or a
+    crossing is an intersection; the name alone no longer hides it."""
+    ends = [
+        shapely.boundary(line).distance(point) <= _NODE_TOL_FT for line in (primary, other)
+    ]
+    if not all(ends):
+        return False
+    assert streets.tree is not None
+    touching = streets.tree.query(point, predicate="dwithin", distance=_NODE_TOL_FT)
+    return len(touching) <= 2
 
 
 def _street_key(name: str) -> str:
