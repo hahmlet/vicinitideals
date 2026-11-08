@@ -1208,14 +1208,18 @@ def _checks(
     )
     # Where no window was found at any depth the depth observed is zero and
     # the miss would read as the whole of what was needed (-43 ft on a pod).
-    # The lot missed by how much narrower it is than the building asked, so
-    # that is the shortfall the near-miss rule sees (never more than the
-    # old floor).
+    # The lot missed by how much narrower it is than the building asked, and
+    # where that narrower width was measured too, by how much depth still
+    # failed there. The near-miss line sees the worse of the two (never more
+    # than the old floor).
+    shortfall = None
+    if fit.width_short_ft is not None:
+        shortfall = fit.width_short_ft
+        if fit.depth_at_short_width_ft is not None:
+            shortfall = max(shortfall, fit_needs - fit.depth_at_short_width_ft)
     fitted = policy.evaluate(
         "fit_ft",
-        fit_needs - min(fit.width_short_ft, fit_needs)
-        if fit.width_short_ft is not None
-        else fit.best_depth_ft,
+        fit_needs - min(shortfall, fit_needs) if shortfall is not None else fit.best_depth_ft,
         fit_needs,
         is_maximum=False,
         jurisdiction=where,

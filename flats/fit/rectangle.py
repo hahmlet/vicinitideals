@@ -64,6 +64,11 @@ class Fit:
     #: step (a miss is a miss). The screen scores the miss by it, so the 1-ft near-miss rule sees the
     #: real distance instead of the floor of ``-required_ft``.
     width_short_ft: float | None = None
+    #: Where ``width_short_ft`` is set, the deepest run this envelope does hold
+    #: at the narrower width (``across_ft - width_short_ft``). ``None`` where
+    #: the fit found depth at the asked width, or where older callers built a
+    #: synthetic fit before this field existed.
+    depth_at_short_width_ft: float | None = None
     #: What the envelope was searched for, across, in the winning orientation:
     #: the design's own side, or wider where the caller charged the drive lane
     #: beside the building or the parking court behind it (the court sits
@@ -362,19 +367,24 @@ class Fitter:
             best = lo
         return best * self.res
 
-    def _width_short(
+    def _width_short_and_depth(
         self, got_ft: float, across_ft: float, depth_ft: float, over_ft: float
-    ) -> float | None:
-        """The width a search that found no window at all fell short by.
+    ) -> tuple[float | None, float | None]:
+        """The width shortfall and depth at that narrower width.
 
         ``None`` where ``got_ft`` is not zero: a depth found measures the
         miss itself. Where it is zero the depth says nothing, and the width
         is the honest distance -- how much narrower than ``across_ft`` the
-        widest window ``depth_ft`` deep is (:meth:`widest`).
+        widest window ``depth_ft`` deep is (:meth:`widest`). The paired depth
+        is measured at ``across_ft - short``.
         """
         if got_ft > 0 or depth_ft <= 0:
-            return None
-        return max(self.res, across_ft - self.widest(depth_ft, over_ft=over_ft))
+            return None, None
+        short = max(self.res, across_ft - self.widest(depth_ft, over_ft=over_ft))
+        # No window at all at the building's depth: no narrower width to measure.
+        narrower_ft = across_ft - short
+        depth_at_short_width_ft = self._best(narrower_ft, over_ft=over_ft)[0] if narrower_ft > 0 else 0.0
+        return short, depth_at_short_width_ft
 
     def fit(
         self,
@@ -414,7 +424,7 @@ class Fitter:
         for orientation, across_ft, d_ft in options:
             got_ft, grid = self._best(across_ft, over_ft=over_ft)
             slack = got_ft - d_ft
-            short = self._width_short(got_ft, across_ft, d_ft, over_ft)
+            short, depth_at_short = self._width_short_and_depth(got_ft, across_ft, d_ft, over_ft)
             if (
                 best is None
                 or (
@@ -434,6 +444,7 @@ class Fitter:
                     orientation=orientation,
                     across_ft=across_ft,
                     width_short_ft=short,
+                    depth_at_short_width_ft=depth_at_short,
                 )
                 best_grid = grid
 
@@ -459,6 +470,7 @@ class Fitter:
             orientation=best.orientation,
             across_ft=best.across_ft,
             width_short_ft=best.width_short_ft,
+            depth_at_short_width_ft=best.depth_at_short_width_ft,
             placement=best_grid.to_world(row, col, d_cells, w_cells),
         )
 
@@ -513,7 +525,7 @@ class Fitter:
             across_ft = side + band_ft
             got_ft, grid = self._best(across_ft, angles, over_ft=run)
             room = got_ft - deep - extra
-            short = self._width_short(got_ft, across_ft, deep, run)
+            short, depth_at_short = self._width_short_and_depth(got_ft, across_ft, deep, run)
             if best is None or (
                 short < best[1].width_short_ft
                 if short is not None and best[1].width_short_ft is not None
@@ -531,6 +543,7 @@ class Fitter:
                         orientation=orientation,
                         across_ft=across_ft,
                         width_short_ft=short,
+                        depth_at_short_width_ft=depth_at_short,
                         beside=True,
                     ),
                     grid,

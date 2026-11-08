@@ -258,7 +258,7 @@ def test_the_screen_makes_a_near_miss_yellow() -> None:
     assert run(f=fit(over_ft=-1.5), relief=READ).colour is Colour.red
 
 
-def _no_window(width_short: float) -> Fit:
+def _no_window(width_short: float, *, depth_at_short_width_ft: float | None = None) -> Fit:
     """A fit that found no window as wide as it asked at ANY depth (so the
     depth observed is zero, the floor), missing by ``width_short`` feet of
     width."""
@@ -270,6 +270,7 @@ def _no_window(width_short: float) -> Fit:
         slack_ft=-36.0,
         across_ft=ACROSS_FT,
         width_short_ft=width_short,
+        depth_at_short_width_ft=depth_at_short_width_ft,
     )
 
 
@@ -298,6 +299,42 @@ def test_a_lot_with_no_window_at_all_is_scored_by_the_width_it_missed() -> None:
     assert floor.shortfall == pytest.approx(old.binds[0].shortfall)
     # A fit with a depth found keeps measuring the depth.
     assert run(f=fit(over_ft=-0.8), relief=READ).binds[0].shortfall == pytest.approx(0.8)
+
+
+def test_a_width_short_fit_uses_the_worse_depth_miss_at_the_narrower_width() -> None:
+    # fit_needs here is the building plus the court, with no rear setback in
+    # this synthetic lot setup.
+    fit_needs = 36.0 + DESIGN.parking.court_depth_ft
+    s = run(
+        f=_no_window(0.5, depth_at_short_width_ft=fit_needs - 30.0),
+        relief=READ,
+    )
+    (b,) = s.binds
+    assert b.check == "fit_ft" and b.shortfall == pytest.approx(30.0)
+    assert s.colour is Colour.red
+    assert "FIT-TIGHT" not in s.reasons
+
+
+def test_a_width_short_fit_with_depth_clearing_at_the_narrower_width_scores_as_before() -> None:
+    fit_needs = 36.0 + DESIGN.parking.court_depth_ft
+    old = run(
+        f=_no_window(0.5, depth_at_short_width_ft=None),
+        relief=READ,
+    )
+    new = run(
+        f=_no_window(0.5, depth_at_short_width_ft=fit_needs),
+        relief=READ,
+    )
+    assert new.colour is old.colour
+    assert new.tight_fit is old.tight_fit
+    assert [(b.check, b.shortfall) for b in new.binds] == [(b.check, b.shortfall) for b in old.binds]
+
+
+def test_missing_depth_at_short_width_keeps_the_legacy_width_only_scoring() -> None:
+    s = run(f=_no_window(0.8, depth_at_short_width_ft=None), relief=READ)
+    (b,) = s.binds
+    assert b.check == "fit_ft" and b.shortfall == pytest.approx(0.8)
+    assert s.colour is Colour.yellow
 
 
 # --- the screen writes them -------------------------------------------------
