@@ -3820,23 +3820,23 @@ jurisdictions:
       - zone: "TO:R24-40"
         quadplex_allowed: true
         min_density_du_per_acre: 24
-        setback_front_ft: 15
+        setback_front_ft: 0
         setback_side_ft: 10
         setback_rear_ft: 20
         source: "Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143"
         source_url: "https://api.municode.com/PublicationPdfDownload/3090"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R24-40) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R24-40) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
       - zone: "TO:R40-80"
         quadplex_allowed: true
         min_density_du_per_acre: 40
-        setback_front_ft: 15
+        setback_front_ft: 0
         setback_side_ft: 10
         setback_rear_ft: 20
         source: "Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143"
         source_url: "https://api.municode.com/PublicationPdfDownload/3090"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R40-80) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R40-80) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
       - zone: "TO:BUS"
         quadplex_allowed: true
         setback_front_ft: 15
