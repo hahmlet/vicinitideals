@@ -2611,3 +2611,19 @@
     is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
     FOLLOWUPS 68.
   source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
+- id: 2026-11-07-national-register-district-contributing-red
+  kind: ruling
+  date: 2026-11-07
+  scope: {state: oregon, outside: portland}
+  question: >-
+    Outside Portland, a house that is a contributing resource in a National
+    Register historic district (about 520 lots, nearly all Oak Hills,
+    unincorporated Washington County) but not individually listed: RED like
+    an individually listed building, or YELLOW?
+  ruling: '"red."'
+  effect: >-
+    A contributing resource in a National Register district is RED on a sure
+    match, the same as an individually listed National Register building
+    (OAR 660-023-0200(8)(a) protects National Register resources whether or
+    not the local government designated them). FOLLOWUPS 87.
+  source: Steph 2026-11-07 (chat), docs/followups/87-historic-outside-portland.md
