@@ -939,6 +939,14 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.450-1 (R-6), minimum density, the highest of the Low Density Residential zones (read on the whole lot, which can only ask more of a floor than net acres would)"
           quote: "or/washington/hillsboro/12.21/12.21.450.txt#L4,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      unless: [east_hillsboro_city_standards]
+      cite: Washington County CDC 302-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/302/302-7.txt#L2-L3"
     min_lot_sqft:
       # 302-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1189,6 +1197,13 @@ zones:
       exempt: true
       cite: Washington County CDC 303-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/303/303-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 303-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/303/303-7.txt#L2-L3"
     min_lot_sqft:
       # 303-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1327,6 +1342,13 @@ zones:
       exempt: true
       cite: Washington County CDC 304-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/304/304-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 304-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/304/304-7.txt#L2-L3"
     min_lot_sqft:
       # 304-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1465,6 +1487,13 @@ zones:
       exempt: true
       cite: Washington County CDC 305-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/305/305-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 305-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/305/305-7.txt#L2-L3"
     min_lot_sqft:
       # 305-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1652,6 +1681,14 @@ zones:
               - "hazardous areas where occupancy is not permitted"
               - "required stormwater treatment and detention facilities"
               - "land dedicated to the City for parks or greenways"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      unless: [east_hillsboro_city_standards]
+      cite: Washington County CDC 306-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/306/306-7.txt#L2-L4"
     min_lot_sqft:
       # 306-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1900,6 +1937,13 @@ zones:
       exempt: true
       cite: Washington County CDC 307-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/307/307-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 307-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/307/307-7.txt#L2-L3"
     min_lot_sqft:
       # 307-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -2557,6 +2601,13 @@ zones:
       exempt: true
       cite: Washington County CDC 375 Table C(1), density requirement N/A for plexes, Townhouses minimum N/A
       quote: "or/washington/_unincorporated/375/375-10.txt#L367-L370,L376"
+    min_lot_sqft_before_dedication:
+      # Table B footnote *: parent lot minimums before the right-of-way
+      # dedication of 375-7 Table A 30; townhouse lot averages "regardless
+      # of any right-of-way dedication" are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 375 Table B footnote *, parent lot minimums apply based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/375/375-10.txt#L301"
     min_lot_sqft:
       # B(1) measures the parent lot before any right-of-way dedication
       # (footnote *). Townhouse lots are an average.

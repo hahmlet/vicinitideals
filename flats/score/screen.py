@@ -705,6 +705,19 @@ class LotFacts:
     #: Used only for the minimum-FAR more-pods test, as an area-only upper
     #: bound that ignores parking, separation and shape.
     buildable_area_sqft: float | None = None
+    #: The lot area the road strips take where the code states a distance to
+    #: the street's centre line (:func:`flats.geom.dedication.strip_sqft`,
+    #: FOLLOWUPS 77). The minimum lot area and the coverage cap are measured
+    #: on the lot less it (:attr:`kept_sqft`); zero -- the default -- where no
+    #: strip is owed or nothing measured one.
+    dedicated_sqft: float = 0.0
+
+    @property
+    def kept_sqft(self) -> float:
+        """The lot area left once the road strip is handed over, never below
+        one square foot (a lot the strips swallow fails every area check
+        rather than dividing by zero)."""
+        return max(self.lot_sqft - self.dedicated_sqft, 1.0) if self.dedicated_sqft > 0 else self.lot_sqft
 
     @property
     def cap_frontage_ft(self) -> float | None:
@@ -1114,8 +1127,13 @@ def _checks(
     min_lot, lot_answered = lot_standard(
         rules, "min_lot_sqft", per_unit=per_unit, lots=design.units
     )
+    # The road strip a lot hands over comes off the area its minimum is
+    # measured on, unless the code measures the parent lot before the
+    # dedication (`min_lot_sqft_before_dedication`); the unit lots a plat
+    # makes are measured as drawn, after it (FOLLOWUPS 77).
+    before = rules.get("min_lot_sqft_before_dedication") is True and not per_unit
     if lot_answered:
-        lot_check("min_lot_area_sqft", lot.lot_sqft, min_lot)
+        lot_check("min_lot_area_sqft", lot.lot_sqft if before else lot.kept_sqft, min_lot)
     else:
         unchecked.append("min_lot_area_sqft")
     if lot.landlocked:
@@ -1317,15 +1335,18 @@ def _checks(
         fix=_fix(fit),
     )
 
-    allowed_sqft, _source = _coverage_allowed_sqft(rules, lot.lot_sqft)
+    # Coverage is a share of the lot as it stands once the road strip is
+    # handed over (`LotFacts.kept_sqft`, FOLLOWUPS 77).
+    covered_on = lot.kept_sqft
+    allowed_sqft, _source = _coverage_allowed_sqft(rules, covered_on)
     if allowed_sqft is None:
         unchecked.append("coverage_pct")
     else:
         out.append(
             policy.evaluate(
                 "coverage_pct",
-                design.ground_sqft / lot.lot_sqft * 100.0,
-                allowed_sqft / lot.lot_sqft * 100.0,
+                design.ground_sqft / covered_on * 100.0,
+                allowed_sqft / covered_on * 100.0,
                 is_maximum=True,
                 jurisdiction=where,
             )

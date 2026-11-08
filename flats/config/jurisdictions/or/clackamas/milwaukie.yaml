@@ -897,6 +897,18 @@ defaults:
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.501/19.501.2.txt#L5-L38"
+  # LOT AREA AND THE STRIP (FOLLOWUPS 77). 19.501.2.A is a yard, but the
+  # chapter that would say whether the strip is also dedicated (19.700,
+  # public facility improvements) is not held, so the screen takes it as
+  # handed over: the lot area the coverage cap is measured on loses it.
+  # 19.504.2 lets a dedication take a lot below the minimum lot area, so
+  # that one check reads the whole lot.
+  min_lot_sqft_before_dedication:
+    value: true
+    cite: Milwaukie MMC 19.504.2, no lot area shall be reduced below the minimum requirements of this title, except by dedication or conveyance for a public use
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.504/19.504.2.txt#L1-L3"
   # PARKING, read 2026-08-27. Milwaukie states no vehicle-parking minimum for
   # a quadplex, caps one at four spaces, dimensions the space, and dimensions
   # no aisle it is allowed to use. Every part of that is in Chapter 19.600
