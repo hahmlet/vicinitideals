@@ -123,6 +123,7 @@ _LABELS: dict[str, str] = {
     "open_space_min_pct": "min. open space %",
     "open_space_min_sqft": "min. open space area",
     "orientation_constraint": "building orientation rule",
+    "entrance_faces_street": "front-door orientation rule",
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
     "parking_area_frontage_any_street": "parking share capped on every street frontage",
@@ -1676,6 +1677,37 @@ _F: tuple[FieldDef, ...] = (
         choices=("none", "entrance_only", "axis_required"),
     ),
     FieldDef(
+        "entrance_faces_street",
+        "enum",
+        "Whether the code's main-entrance standard lets the pod stand turned, "
+        "its 30 ft end to the street and every front door facing a side yard "
+        "(FOLLOWUPS 153; Steph 2026-11-08: \"Each muni will have a standard "
+        "typically\"). `required`: the entrance must face the street (or "
+        "within 45 degrees of it) and nothing the turned building can do "
+        "meets it, so a design whose doors are on its long face is searched "
+        "only facing the street, as `orientation_constraint: axis_required` "
+        "is (flats.score.paper.faces_the_street). `alternative`: required, "
+        "but the code offers a way the turned building meets with a design "
+        "detail -- a porch of a stated size, the end home's door within a "
+        "stated distance of the street wall -- which the pod can be adapted "
+        "to (rulings.yaml 2026-10-14-unchecked-design-details), so the turned "
+        "fit stands. `not_required`: no entrance standard reaches the pod. "
+        "`unclear`: one reaches it and whether a turned building meets it is "
+        "a reading nobody has settled. `unclear`, or absent, holds a turned "
+        "fit out of GREEN on ENTRANCE-TURNED and never fails it; a building "
+        "that also fits facing the street is read that way. Corner lots: "
+        "facing either street counts. `required_named`: `required`, and on "
+        "a lot with more than one street the code names which one the "
+        "entrance faces (the official address, the street with the most "
+        "foot traffic, a mapped access street) -- which nothing the screen "
+        "reads tells, so a corner or through lot, or one whose streets were "
+        "never measured, is held out of GREEN on ENTRANCE-STREET.",
+        None,
+        "building_orientation",
+        choices=("required", "required_named", "alternative", "not_required", "unclear"),
+        label="front-door orientation rule",
+    ),
+    FieldDef(
         "front_lot_line_corner",
         "enum",
         "Which of a corner lot's street lines is the front. `shortest`: the "
@@ -2134,6 +2166,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "private_open_space_min_dimension_ft",
         "min_landscaped_pct",
         "orientation_constraint",
+        # Silence is not incomplete: an unread entrance standard holds a
+        # turned fit out of GREEN in the screen (ENTRANCE-TURNED) rather
+        # than counting the zone short of a required field.
+        "entrance_faces_street",
         # The review path, not a dimension (Steph 2026-10-14, FOLLOWUPS 79).
         # A zone silent on it has a review on measurable standards, or none,
         # and is not incomplete.

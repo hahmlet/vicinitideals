@@ -61,3 +61,10 @@
    (e) WATCH: Housing Choices rulemaking (HB 2138 §22: siting/design of
    prefabricated middle housing; RAC 1 on 2026-10-07, adoption ~2027-12-02)
    -- item 20's catalog is the baseline; January 2027 drift run (17g).
+   (f) FRONT DOORS (FOLLOWUPS 153, 2026-11-08): OAR 660-046-0225, operative
+   2027-01-01, holds a Large City's middle housing to the Model Code's design
+   standards, a looser one, or its detached-house one, and entry orientation
+   is a design standard (oar.660-046.adopted-2026-08.txt#L227-L230,L777-L788).
+   Where a city prints a stricter rule (Wood Village, Milwaukie DMU, Beaverton
+   RC-*, Washington County NMU/CCMU, Tigard), re-read entrance_faces_street on
+   the run date the rule takes force; until then the city rule governs.

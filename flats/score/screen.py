@@ -84,6 +84,9 @@ from flats.score.paper import (
     court_depth,
     drive_at_street,
     drive_in_front_yard,
+    door_turned,
+    entrance_street_named,
+    entrance_unsettled,
     faces_the_street,
     home_lot_standard,
     lot_line_buffer_doubt_ft,
@@ -433,6 +436,22 @@ OPTIMISTIC_CHECKS: frozenset[str] = frozenset()
 #: reports as ``FACT_UNOBSERVED``: the code names ground nobody measured.
 UNPAVED = "parking_pavement"
 
+#: The front doors' orientation, where the fit stands the building turned
+#: (its doors more than 45 degrees off every front lot line) and the code's
+#: main-entrance standard is unread or unsettled (``entrance_faces_street``
+#: absent or ``unclear``, FOLLOWUPS 153). Joins ``_checks``'s ``unmeasured``
+#: and so reports as ``FACT_UNOBSERVED``: a turned fit is held out of GREEN,
+#: never failed, until someone reads the rule.
+ENTRANCE_TURNED = "entrance_faces_street"
+
+#: The street the front doors must face, where the code names one of a
+#: lot's several streets (``entrance_faces_street: required_named``: the
+#: official address, the busiest street, a mapped access street) and the
+#: lot is a corner or through lot, or its streets were never measured
+#: (FOLLOWUPS 153 round 2). Joins ``_checks``'s ``unmeasured``: the fit
+#: faces a street, but nothing read says it is the one the code names.
+ENTRANCE_STREET = "entrance_named_street"
+
 #: The shape a code asks the open space to take (a square that fits inside
 #: it, a patio off each home) where the fit's window does not prove it and
 #: the ground outside that window was never measured (:func:`_outdoor_shape`).
@@ -655,6 +674,16 @@ class LotFacts:
     #: (:func:`flats.score.paper.side_street_fed`). False where nothing
     #: measured the lot, which keeps the lane beside the building.
     corner: bool = False
+    #: Street along two opposite lines (:func:`flats.geom.corner.through_lot`).
+    #: Read only where the code names the street the front doors face
+    #: (:data:`ENTRANCE_STREET`). False where nothing measured the lot; the
+    #: bridge sets it True where the fact went unobserved.
+    through_lot: bool = False
+    #: The bearings of the lot's front lot lines, degrees mod 180, the ones
+    #: the fit's angles are read against (:func:`flats.score.paper.door_turned`,
+    #: FOLLOWUPS 153). Empty where nothing measured the lot, which leaves a
+    #: fit with an angle read from its orientation alone.
+    street_bearings: tuple[float, ...] = ()
     #: One of the lot's street lines rests only on a private drive the lot
     #: does not abut (:data:`STREET_UNCONFIRMED`,
     #: :func:`flats.ingest.quadfit.street_unconfirmed`). False where nothing
@@ -881,6 +910,14 @@ class LotFacts:
     #: 33(c)), so the court the fit passed may stand in a front or side yard.
     #: Holds the lot out of GREEN. False where nothing measured it.
     court_ground_unread: bool = False
+    #: The drawing finally kept stands the building with its door face more
+    #: than :data:`flats.score.paper.ENTRANCE_TURN_DEG` off every street,
+    #: though the fit itself faced one: a later step (the court's turn, the
+    #: hose's, the flatter spot's, the maximum front setback's) drew it at
+    #: another angle (:func:`flats.ingest.quadfit.entrance_drawn_checked`;
+    #: rel4, FOLLOWUPS 153 with 142). Read only where the entrance standard
+    #: is unsettled, as the fit's own turn is. False where nothing measured it.
+    entrance_drawn_turned: bool = False
     #: The lot area the road strips take where the code states a distance to
     #: the street's centre line (:func:`flats.geom.dedication.strip_sqft`,
     #: FOLLOWUPS 77). The minimum lot area and the coverage cap are measured
@@ -1920,6 +1957,23 @@ def _checks(
     elif lot.site_grade_tried:
         unmeasured.add(SITE_GRADE)
 
+    # The front doors (FOLLOWUPS 153): a fit that stands the building turned,
+    # its doors off the street, where nobody has read whether the code lets
+    # the main entrance face a side yard. Unread is never a pass.
+    if entrance_unsettled(rules, design) and (
+        door_turned(design, fit, lot.street_bearings) or lot.entrance_drawn_turned
+    ):
+        unmeasured.add(ENTRANCE_TURNED)
+    # The street they face (FOLLOWUPS 153 round 2): where the code names
+    # one of several streets, a lot with more than one -- or one whose
+    # streets nobody measured -- cannot be shown to face the named one.
+    if (
+        fit.fits
+        and entrance_street_named(rules, design)
+        and (lot.corner or lot.through_lot or not lot.street_bearings)
+    ):
+        unmeasured.add(ENTRANCE_STREET)
+
     return out, unchecked, unmeasured
 
 
@@ -2714,6 +2768,7 @@ def fit_for(
     frontage_ft: float | None = None,
     street_deg: tuple[float, ...] = (),
     menu: Sequence[Fix] | None = None,
+    face_street: bool = False,
     _include_stated_fit: bool = True,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
@@ -2766,7 +2821,10 @@ def fit_for(
     (:data:`COURT_SHAPED`).
     """
     across = court_across(design, rules, alley, corner=corner)
-    axis_required = faces_the_street(rules, design)
+    # ``face_street``: the caller wants the fit a building facing the street
+    # takes, on a Fitter it confined to the street's directions (FOLLOWUPS
+    # 153, an entrance standard nobody has settled).
+    axis_required = face_street or faces_the_street(rules, design)
     fit: Fit | None = None
     best_room = -math.inf
     for option in menu if menu is not None else (across.fixes or (across.fix,)):
@@ -2885,6 +2943,7 @@ def fit_for(
                     frontage_ft=frontage_ft,
                     street_deg=street_deg,
                     menu=menu,
+                    face_street=face_street,
                     _include_stated_fit=False,
                 ),
             )
@@ -3780,6 +3839,8 @@ _MEASURED_FLAG: dict[str, str] = {
     MORE_BUILDINGS: "FRONTAGE-MORE-BUILDINGS",
     FRONT_MAX_DRAWN: "MEASURE-FRONT-MAX-DRAWN",
     FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",
+    ENTRANCE_TURNED: "ENTRANCE-TURNED",
+    ENTRANCE_STREET: "ENTRANCE-STREET",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

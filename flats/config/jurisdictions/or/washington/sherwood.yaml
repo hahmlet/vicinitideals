@@ -351,6 +351,12 @@ private_drives:
     L170); a drive through the lot itself is screened both ways anyway.
 
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Sherwood SZCDC 16.14 residential design: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L70-L104"
   # ADDITIONAL SETBACK FROM THE CENTRE LINE (16.106.030 D; see the
   # right-of-way note above the zones). The street's class comes from the
   # city's TSP web map (registry street_class_sherwood, Kittelson's

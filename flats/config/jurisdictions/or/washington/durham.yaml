@@ -141,6 +141,12 @@ private_drives:
     (L223), and it does not reach the residential districts.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Durham DDC 3.4.2.2 and 3.5.1.7 principal-entrance rules reach the OP and IP districts only (whole-document grep) (FOLLOWUPS 153)"
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L215,L237,L245,L271"
   # PARKING COUNT. Table 3.7.5: "Single Dwelling and Middle Housing,
   # Attached or Detached 1 / No maximum" (L436-L437). The pod is Middle
   # Housing by 12.2.22. One stall per unit; the state layer's lot-size bands

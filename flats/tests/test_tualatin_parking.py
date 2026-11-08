@@ -287,4 +287,5 @@ def test_four_refusals_against_ten_values(tualatin: Layer) -> None:
     # 10 -> 13 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 13 -> 15 on 2026-10-02: the perimeter strip and the islands.
     # 15 -> 17 on 2026-11-05: parking_side_yard_allowed and _stated (FOLLOWUPS 146).
-    assert len(tualatin.defaults) == 17
+    # 17 -> 18 on 2026-11-08: entrance_faces_street (FOLLOWUPS 153).
+    assert len(tualatin.defaults) == 18

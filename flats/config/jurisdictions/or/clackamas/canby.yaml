@@ -1884,6 +1884,12 @@ private_drives:
     does not shrink a yard.
 
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Canby CMC 16.21.040 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38670
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.21.040.txt#L5-L11"
   # PARKING COUNT. 16.10.050 (A): single-family and two-family dwellings 2.00
   # spaces per dwelling unit (L14, L17); multi-family dwellings in complexes
   # with private internal driveways one space per studio or one-bedroom unit

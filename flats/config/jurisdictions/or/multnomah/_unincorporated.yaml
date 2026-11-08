@@ -1719,6 +1719,12 @@ code:
   end: "38.3200- PURPOSES"
   extraction: plain
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Multnomah County MCC 39.4969-39.4990 (MR-4) states no main-entrance standard (whole-document grep) (FOLLOWUPS 153)"
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-09-20'
+    quote: "or/multnomah/_unincorporated/39/39.4975.txt#L1-L3"
   # MCC 39.6500 through 39.6600, the chapter every base zone in Part 4 points at
   # and none of them states. Read 2026-08-30, and it is the first parking
   # geometry this layer has ever held.
@@ -3046,6 +3052,12 @@ zones:
       rules a geometry layer could hold one day; they sit on a zone that
       refuses the building, so today they are a note.
   R10:
+    entrance_faces_street:
+      value: alternative
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets);
         33.418
@@ -3162,6 +3174,12 @@ zones:
           when: [abuts_alley]
           quote: "or/multnomah/_unincorporated/33.110.txt#L746-L747"
   R20:
+    entrance_faces_street:
+      value: not_required
+      cite: "Portland Zoning Code 33.110.230.B.1 as Multnomah applies it: the main entrance standards apply in the R10 through R2.5 zones (FOLLOWUPS 153)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Dunthorpe-Riverdale is largely
         R20); 33.418
@@ -3339,6 +3357,12 @@ zones:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
   R5:
+    entrance_faces_street:
+      value: alternative
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered
         pockets); 33.110.205
@@ -3478,6 +3502,12 @@ zones:
       and LR-7 asks 20,000. Thirteen lots carry the label, which is small
       enough that the number matters less than the fact that it was read.
   R7:
+    entrance_faces_street:
+      value: alternative
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf

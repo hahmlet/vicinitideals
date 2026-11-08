@@ -967,6 +967,12 @@ defaults:
     quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L231-L234"
     url: https://api.municode.com/PublicationPdfDownload/3090
     retrieved: '2026-09-28'
+  entrance_faces_street:
+    value: alternative
+    cite: "Washington County CDC 430-84 middle housing entry orientation (townhouse L306-L318): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L156-L171"
   # WHOSE STREET CLASSES. 302-2.14 C(1) and its 303 to 306 twins state the
   # dedication by the county's own street classes ("Local street ...
   # Neighborhood route ... Collector ... Arterial"), which are the
@@ -2657,6 +2663,12 @@ zones:
   # Reserves (L2673-L2677). Both are drawn on the plan's maps; no map is
   # held. Overlay work.
   R-6 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-8 (R-6 North Bethany District)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2719,6 +2731,12 @@ zones:
       DRAFT. North Bethany R-6: the Middle Housing uses and density of
       390-8, the dimensions of R-6 (303-7) by 390-8.7.
   R-9 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-9 (R-9 North Bethany District), 304-7.2 by 390-9.6
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2829,6 +2847,12 @@ zones:
       Housing path is open only on lots a subdivision approved for a
       detached house.
   R-15 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-10 (R-15 North Bethany District)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2913,6 +2937,12 @@ zones:
       DRAFT. North Bethany R-15: the Middle Housing uses and density of
       390-10, the dimensions of R-15 (305-7) by 390-10.6.
   R-24 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-11 (R-24 North Bethany District), 306-7.2 by 390-11.6
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3153,6 +3183,12 @@ zones:
   # owed because the footnotes refer to Section 418 and Sections 411 and 431
   # (L1025, L1030-L1032).
   TO:R9-12:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 431-5.2 B(2) transit-oriented entrance standard; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-10-22'
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L518-L529"
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3310,6 +3346,12 @@ zones:
       retrieved: '2026-11-05'
       quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   TO:R12-18:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 431-5.2 B(2) transit-oriented entrance standard; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-10-22'
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L518-L529"
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3331,6 +3373,12 @@ zones:
     notes: >-
       DRAFT. As TO:R9-12 (one Middle Housing table for the three districts).
   TO:R18-24:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 431-5.2 B(2) transit-oriented entrance standard; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-10-22'
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L518-L529"
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3732,6 +3780,12 @@ zones:
   # a residential district", a negation `when:` cannot say, and the abutting
   # district's yard is a number from another zone.
   NMU:
+    entrance_faces_street:
+      value: required
+      cite: "Washington County CDC 392 mixed-use: Buildings must have at least one primary entrance door facing a public sidewalk (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L336-L338"
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), NMU
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3847,6 +3901,12 @@ zones:
       of every street frontage it owes (392-8); facade design standards not
       held.
   CCMU:
+    entrance_faces_street:
+      value: required
+      cite: "Washington County CDC 392 mixed-use: Buildings must have at least one primary entrance door facing a public sidewalk (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L336-L338"
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), CCMU
       url: https://api.municode.com/PublicationPdfDownload/3090

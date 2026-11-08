@@ -125,6 +125,12 @@ private_drives:
     drive the lot abuts is a street for the yards. A doubt.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Estacada EMC 16.16.040 structure and facade design: an entrance facing the street is one item on a design menu, not a requirement; the C-2 (16.32) and CMU (16.37) chapters state no entrance standard (whole-document grep) (FOLLOWUPS 153)"
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.zones.txt#L288,L308"
   # PARKING COUNT. 16.76.010 table: triplex and fourplex 1.5 for each dwelling
   # unit rounded up (L77-L78); commonwall 2 for each commonwall dwelling
   # (L80-L81). The one-building pod is six stalls; four townhouse lots eight.
@@ -629,6 +635,12 @@ zones:
       there (conservative). Doubts: Currin Creek 70 ft buffer (L894) not
       carved; parking may not front Eagle Creek Rd (L872) not drawn.
   D:
+    entrance_faces_street:
+      value: required_named
+      cite: "Estacada EMC 16.26.050(6) Downtown building entrances: Primary entrances shall face the street likely to have the greatest pedestrian traffic, as the Design Review Committee determines; development abutting Broadway Street shall orient to it (FOLLOWUPS 153)"
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+      quote: "or/clackamas/estacada/16.26/16.26.050.txt#L92-L98"
     cite_default:
       cite: Estacada EMC Chapter 16.26 (Downtown, D)
       url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT

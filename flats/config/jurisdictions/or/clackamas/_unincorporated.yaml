@@ -1142,6 +1142,12 @@ code:
   end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Clackamas County ZDO 845.02(B) Entry orientation (845.03(B) for townhouses): at least one main entrance within 8 feet of the longest street-facing wall, facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L25-L41"
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
   # is the section Table 315-1's note 8 sends this building to for everything.
   # Unincorporated Clackamas is Fairview's shape almost word for word, because
@@ -3105,6 +3111,12 @@ zones:
       (H)" -- read 2026-09-09 and now carried as `orientation_constraint:
       axis_required`) and minimum density ("See Section 1012").
   VA:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.11(D) Villages at Mt. Hood building orientation; how a building turned end-on reads against it is unsettled (flat roofs also prohibited, L935) (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L919,L923"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4181,6 +4193,12 @@ zones:
       resources". A caretaker's dwelling is the one residence the district
       admits and it is accessory to a park.
   SCMU:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4444,6 +4462,12 @@ zones:
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
       differs.
   RTL:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4514,6 +4538,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   CC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4584,6 +4614,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   C3:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4654,6 +4690,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   OC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4724,6 +4766,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   RCC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4797,6 +4845,12 @@ zones:
       standards (like: RCHDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (510.05.txt#L1511-L1512).
   RCO:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion

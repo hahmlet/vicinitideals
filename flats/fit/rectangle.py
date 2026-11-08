@@ -192,6 +192,19 @@ class Fitter:
     def empty(self) -> bool:
         return not self.grids
 
+    def only(self, angles: Iterable[float]) -> "Fitter":
+        """This Fitter confined to the grids at ``angles``: the same
+        rasters and ground, no new work. The screen asks it for the fit a
+        building facing the street would take (FOLLOWUPS 153), at the
+        street directions the free sweep already rasterized."""
+        out = object.__new__(Fitter)
+        out.angles = tuple(normalize(a) for a in angles)
+        out.grids = self._grids(out.angles)
+        out.res = self.res
+        out.ground = self.ground
+        out._grounds = self._grounds
+        return out
+
     def _grids(self, angles: Iterable[float] | None) -> list[Grid]:
         """The grids at these angles (folded into [0, 180)); all where None."""
         if angles is None:

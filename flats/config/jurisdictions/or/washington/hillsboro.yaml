@@ -314,6 +314,12 @@ private_drives:
     these.
 
 defaults:
+  entrance_faces_street:
+    value: unclear
+    cite: "Hillsboro CDC 12.50 middle housing entrance standard: whether it asks each home's door or one per building to face the street is unsettled (FOLLOWUPS 153)"
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L11-L14,L40-L53"
   # PARKING COUNT. 12.50.310 A.2: "The City of Hillsboro does not have
   # standards which require mandate the provision of parking" (the doubled
   # verb is the code's). Encoded as zero rather than left out, because an

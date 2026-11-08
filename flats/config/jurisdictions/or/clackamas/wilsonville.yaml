@@ -1037,6 +1037,12 @@ code:
     extraction: plain
     allow_thin: true
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Wilsonville WC 4.113 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4/4.113.txt#L319-L332"
   # PARKING, read 2026-08-22 off Table 5 and the two notes under it, which were
   # the last unread footnotes in this layer. Wilsonville held no parking field
   # at all before today, so the screen was placing a four-unit building against
@@ -2882,6 +2888,12 @@ zones:
       when East/South lots appear in the fabric (Table 8B, and (.06)F lets any single-family lot
       there be built as middle housing) or if the city declares West''s initial development done.'
   V:
+    entrance_faces_street:
+      value: unclear
+      cite: "Wilsonville WC 4.113 excepts the Village zone, sent to the Villebois Pattern Book, which is not stored (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/wilsonville/4/4.113.txt#L239-L242"
     section: ["4.125", "4.001"]
     cite_default:
       cite: Wilsonville Development Code 4.125 (V—Village Zone) Table V-1, as applied to a quadplex

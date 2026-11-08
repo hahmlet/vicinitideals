@@ -273,6 +273,12 @@ OPEN = {
     # 2026-10-08-estacada-staff-review-by-right).
     "or/clackamas/estacada 16.26.040 -> 16.60.010",
     "or/clackamas/estacada 16.26.050 -> 16.132.015",
+    # 2026-11-08 (FOLLOWUPS 153), each read: 16.16.040, quoted for Estacada's
+    # entrance menu, carries the same fence clause to clear vision; 19.505.1,
+    # quoted for Milwaukie's main entrance, sends a manufactured home on its own
+    # lot to 19.506, which the pod is not.
+    "or/clackamas/estacada 16.16.040 -> 16.60.010",
+    "or/clackamas/milwaukie 19.505.1 -> 19.506",
     "or/clackamas/milwaukie 19.309.2 -> 19.509",
     "or/clackamas/milwaukie 19.310.2 -> 19.509.2",
     "or/clackamas/milwaukie 19.310.5 -> 19.509",
@@ -427,9 +433,7 @@ OPEN = {
     #   FOLLOWED.
     "or/washington/cornelius 18.145.010 -> 18.145.020",
     "or/washington/cornelius 18.35.050 -> 18.150.010",
-    "or/washington/cornelius 18.35.060 -> 18.100",
     "or/washington/cornelius 18.70.050 -> 18.150.010",
-    "or/washington/cornelius 18.70.060 -> 18.100",
     "or/washington/cornelius 18.70.060 -> 18.100.030",
     "or/washington/cornelius 18.70.060 -> 18.100.070",
     "or/washington/cornelius 18.75.065 -> 18.75.060",
@@ -516,6 +520,14 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    # 2026-11-08 (FOLLOWUPS 153): 18.100.040 quoted for Cornelius's entrance
+    # rules (B, Nonresidential Design Standards). Followed for the entrance
+    # reading; 18.100.030 and .070 stay open above.
+    "or/washington/cornelius 18.35.060 -> 18.100",
+    "or/washington/cornelius 18.70.060 -> 18.100",
+    # 2026-11-08 (FOLLOWUPS 153): Hillsboro's design applicability (12.50.710)
+    # names 12.50.715, the middle housing standards quoted for the entrance rule.
+    "or/washington/hillsboro 12.50.710 -> 12.50.715",
     # 2026-11-06 (FOLLOWUPS 146): Section 1009 stored and read for side-yard parking.
     "or/clackamas/_unincorporated 1005.09 -> 1009",
     # 2026-10-31 (library batch 7): cutting the two unincorporated codes made these

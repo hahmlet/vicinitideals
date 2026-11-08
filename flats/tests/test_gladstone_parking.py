@@ -296,4 +296,5 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     # 10 -> 11 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
     # 11 -> 12 on 2026-10-02: parking_lot_line_buffer_ft.
     # 12 -> 14 on 2026-11-05: parking_side_yard_allowed and _stated (FOLLOWUPS 146).
-    assert len(load_rules()[GLADSTONE].defaults) == 14
+    # 14 -> 15 on 2026-11-08: entrance_faces_street (FOLLOWUPS 153).
+    assert len(load_rules()[GLADSTONE].defaults) == 15

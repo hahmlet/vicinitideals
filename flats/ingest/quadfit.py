@@ -202,9 +202,12 @@ from flats.score import margins as margin_record
 from flats.score.relief import ReliefPolicy
 from flats.score.room import Room, room_for
 from flats.score.paper import (
+    ENTRANCE_TURN_DEG,
     _row_ft,
     court_across,
     court_depth,
+    door_turned,
+    entrance_unsettled,
     faces_the_street,
     front_lot_line_rule,
     front_lot_line_through_rule,
@@ -2200,6 +2203,41 @@ def court_in_front_yard(s: "Screened", drawing: Mapping[str, Any] | None = None)
     return court_between(Polygon(ring), Polygon(court), court_yard_lines(s))
 
 
+def drawn_door_turned(s: "Screened", drawing: Mapping[str, Any] | None = None) -> bool:
+    """Whether ``drawing`` (``s``'s own where omitted) stands the building
+    with its door face more than :data:`flats.score.paper.ENTRANCE_TURN_DEG`
+    off every street direction, where the zone's entrance standard is
+    unsettled (:func:`flats.score.paper.entrance_unsettled`; FOLLOWUPS 153).
+
+    The screen reads the fit's angle; the court's turn, the hose's, the
+    flatter spot's and the maximum front setback's search draw the same fit
+    at other angles and keep only the drawing, so the building shown can
+    stand turned while the fit faced the street (rel4). The door face is the
+    drawn building's side as long as the design's ``width``. False where
+    nothing fitting is drawn, the lot names no street direction, or the
+    standard is settled."""
+    if s.design.door_face != "width" or not entrance_unsettled(s.rules, s.design):
+        return False
+    bearings = s.lot.front_bearings
+    drawing = s.drawing if drawing is None else drawing
+    if not bearings or not drawing or not drawing.get("fits"):
+        return False
+    ring = drawing.get("building")
+    if not ring or len(ring) < 4:
+        return False
+    pts = [tuple(p) for p in ring]
+    if pts[0] == pts[-1]:
+        pts = pts[:-1]
+    sides = [(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    width = s.design.footprint.width_ft
+    a, b = min(
+        sides,
+        key=lambda w: abs(math.hypot(w[1][0] - w[0][0], w[1][1] - w[0][1]) - width),
+    )
+    face = bearing_deg(a[0], a[1], b[0], b[1])
+    return min(bearing_delta(face, x) for x in bearings) > ENTRANCE_TURN_DEG
+
+
 def alley_stretch(
     lot: QuadfitLot,
     design: Design,
@@ -3100,6 +3138,11 @@ def court_turned(s: Screened, fitter: Fitter | None) -> Screened:
             continue
         if court_in_front_yard(s, drawn) or not _drive_clear(drawn, at, street):
             continue
+        if drawn_door_turned(s, drawn) and not drawn_door_turned(s):
+            # Turned off the street where the entrance standard is unread
+            # (FOLLOWUPS 153): one hold traded for another, and the drawing
+            # shown worse; the fit's own placement stays.
+            continue
         return dataclasses.replace(s, drawing=drawn)
     return s
 
@@ -3163,6 +3206,35 @@ def alley_court_checked(
     if held == s.facts.alley_court_off_stretch:
         return s
     facts = dataclasses.replace(s.facts, alley_court_off_stretch=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def entrance_drawn_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the drawing it finally kept stands the
+    building turned, its doors off every street, where the entrance standard
+    is unsettled (:func:`drawn_door_turned`; FOLLOWUPS 153, rel4).
+
+    The screen holds a TURNED FIT out of GREEN (ENTRANCE-TURNED); the steps
+    after the fit (:func:`court_turned`, :func:`front_max_checked`,
+    :func:`fire_checked`, the flatter spot) may draw a facing fit at another
+    angle and keep only the drawing. Where the building shown is turned, the
+    same hold applies (``entrance_drawn_turned``), and a hold set earlier
+    lifts where it is not. A closer look, never a red. A plan RED both ways
+    is not read."""
+    if s.facts is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    held = drawn_door_turned(s)
+    if held == s.facts.entrance_drawn_turned:
+        return s
+    facts = dataclasses.replace(s.facts, entrance_drawn_turned=held)
     result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(
         s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
@@ -3293,6 +3365,10 @@ def _screen_on(
         # The court's ground is the lot less the carve where FLATS could not
         # name the yards (FOLLOWUPS 33(c)): held out of GREEN.
         court_ground_unread=env.court_in_unread_yards and bool(design.parking.court_depth_ft),
+        street_bearings=here.front_bearings,
+        # Unobserved is read as a through lot: the named-street hold
+        # (ENTRANCE-STREET) is the only reader.
+        through_lot=here.observed.get("through_lot") is not False,
     )
 
     def fitted(facts: LotFacts) -> Fit:
@@ -3413,27 +3489,26 @@ def _screen_on(
         )
         return facts, result, shadow
 
-    def refit(menu: Sequence[Fix]) -> Fit:
-        return fit_for(
-            fitters[key],
-            design,
-            got,
-            placement=False,
-            carved_rear_ft=env.rear_cut_ft,
-            alley=base.alley,
-            corner=base.corner,
-            frontage_ft=base.cap_frontage_ft,
-            street_deg=_access_deg(here, front),
-            menu=menu,
-        )
+    def refit_on(fitter: Fitter, face_street: bool) -> Callable[[Sequence[Fix] | None], Fit]:
+        def refit(menu: Sequence[Fix] | None) -> Fit:
+            return fit_for(
+                fitter,
+                design,
+                got,
+                placement=False,
+                carved_rear_ft=env.rear_cut_ft,
+                alley=base.alley,
+                corner=base.corner,
+                frontage_ft=base.cap_frontage_ft,
+                street_deg=_access_deg(here, front),
+                menu=menu,
+                face_street=face_street,
+            )
 
-    offered = court_across(design, got, base.alley, corner=base.corner).fixes
-    facts, result, shadow = screened(fit)
-    fit, facts, result, shadow = _other_fixes(
-        fit, facts, result, shadow, screened, refit, offered
-    )
-    return (
-        Screened(
+        return refit
+
+    def reading(fit: Fit, facts: LotFacts, result: Screening, shadow: Screening) -> Screened:
+        return Screened(
             lot=here,
             design=design,
             rules=got,
@@ -3447,9 +3522,70 @@ def _screen_on(
             front_deg=front,
             facts=facts,
             street_edges=streets,
-        ),
-        fitters[key],
+        )
+
+    offered = court_across(design, got, base.alley, corner=base.corner).fixes
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit_on(fitters[key], False), offered
     )
+    chosen = reading(fit, facts, result, shadow)
+    if (
+        here.front_bearings
+        and entrance_unsettled(got, design)
+        and door_turned(design, fit, here.front_bearings)
+    ):
+        # The best fit stands the building turned, its front doors off the
+        # street, where nobody has read whether the code allows that
+        # (FOLLOWUPS 153): the screen holds that fit out of GREEN. Try the
+        # building facing the street too, and keep whichever the map shows
+        # better -- the facing one where they tie, since it carries no hold.
+        facing = _facing_reading(
+            here, design, got, env, base, fitters[key], screened,
+            refit_on(fitters[key].only(here.front_bearings), True), offered, reading,
+        )
+        if facing is not None and _shown(facing) <= _shown(chosen):
+            chosen = facing
+    return chosen, fitters[key]
+
+
+def _facing_reading(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    env: Envelope,
+    base: LotFacts,
+    fitter: Fitter,
+    screened: Callable[[Fit], tuple[LotFacts, Screening, Screening]],
+    refit: Callable[[Sequence[Fix] | None], Fit],
+    offered: Sequence[Fix],
+    reading: Callable[[Fit, LotFacts, Screening, Screening], Screened],
+) -> Screened | None:
+    """The lot read with the building's front doors to the street: the fit
+    confined to the lot's front bearings, unflipped (``face_street``), its
+    court beside the building dropped where no drive reaches it, as
+    :func:`_screen_on` does for the free fit. None where it does not fit."""
+    fit = refit(None)
+    if fit.beside and not beside_reaches_street(here, design, got, fit, fitter, env):
+        fit = fit_for(
+            fitter.only(here.front_bearings),
+            design,
+            got,
+            placement=False,
+            carved_rear_ft=env.rear_cut_ft,
+            alley=base.alley,
+            corner=base.corner,
+            frontage_ft=base.cap_frontage_ft,
+            street_deg=(),
+            face_street=True,
+        )
+    if not fit.fits:
+        return None
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit, offered
+    )
+    return reading(fit, facts, result, shadow)
 
 
 def _other_fixes(
@@ -4407,6 +4543,7 @@ def _screen_lot_once(
         won = rear_court_checked(won, policy=policy, relief=relief)
         won = court_yard_checked(won, policy=policy, relief=relief)
         won = alley_court_checked(won, policy=policy, relief=relief)
+        won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
         # The run's law day (fixed once in _init_worker), so a run that crosses
@@ -5055,6 +5192,15 @@ def front_max_checked(
         for snap in (False, True):
             slid = _front_max_flush(s, fitter, snap=snap)
             if slid is None or (slid.get("lane") and not _drive_clear(slid, s, _street_lines(s.lot))):
+                continue
+            if any(
+                held(s, slid) and not held(s)
+                for held in (court_in_front_yard, court_off_stretch, drawn_door_turned)
+            ):
+                # The slide or its turn stands the court in a front yard, off
+                # the alley stretch that is its aisle, or the doors off the
+                # street, where the drawing did not (rel4: FOLLOWUPS 142,
+                # 3(c), 153 hold with 147).
                 continue
             cand = _front_max_screened(
                 dataclasses.replace(s, drawing=slid), policy=policy, relief=relief

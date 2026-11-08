@@ -40,6 +40,8 @@ OFF_PLAN_DISTRICTS = dict.fromkeys(
         "pdx_gateway_min_far",
         "pdx_east_corridor_min_far_half",
         "pdx_east_corridor_min_far_one",
+        "pdx_hayden_island",
+        "pdx_lombard_subdistrict_a",
     ),
     False,
 )

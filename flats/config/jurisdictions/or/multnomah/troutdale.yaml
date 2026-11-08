@@ -547,6 +547,12 @@ code:
     start: "OFF-STREET PARKING AND LOADING"
     end: "CHAPTER 10"
 defaults:
+  entrance_faces_street:
+    value: alternative
+    cite: "Troutdale TDC 8.120 middle housing entry orientation (townhouse 8.130): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153)"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/troutdale/8/8.120.txt#L38-L55"
   # PARKING AND VEHICLE ACCESS, read 2026-08-29 out of TDC Chapter 9,
   # Off-Street Parking and Loading, and the off-street parking subsections of
   # 8.120, Triplex and Quadplex Dwellings. Chapter 3 sends every zone here --
