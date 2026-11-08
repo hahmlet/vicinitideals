@@ -1987,6 +1987,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-TIGARD-S3-SCREEN-REACHES-COURT:
+    description: "Whether the S-3 screening Tigard asks between the rear parking court and the neighbouring properties (RES-A to RES-C, TDC 18.280.040.D.4, Table 18.420.2) takes ground the court needs; Chapter 18.420 is not held, so its width is unread"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: parking
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Fetch Tigard CDC Chapter 18.420 (needs Steph's OK, FOLLOWUPS 105): if S-3 is a planted strip of set width, encode it as parking_lot_line_buffer_ft in RES-A to RES-C and drop the qualifier; if it is a fence or hedge that takes no court ground, drop the qualifier"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-HILLSBORO-CENTER-CORE:
     description: "Center Core edge unconfirmed: whether the MU-VTC lot lies inside South Hillsboro's Town Center or Village Center Core Area (Figure 12.65.930-A, traced); the traced line cuts this lot, and inside it owes 3 stories, outside 2"
     kind: categorical
