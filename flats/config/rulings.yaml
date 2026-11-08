@@ -2614,7 +2614,7 @@
 - id: 2026-11-07-national-register-district-contributing-red
   kind: ruling
   date: 2026-11-07
-  scope: {state: oregon, outside: portland}
+  scope: {}
   question: >-
     Outside Portland, a house that is a contributing resource in a National
     Register historic district (about 520 lots, nearly all Oak Hills,
