@@ -54,8 +54,11 @@ What is read per lot, off the acquire snapshot (``flats/config/pipeline.yaml``):
 of 33.415's development regulations reach the pod, and each turns on a
 *transit street* -- a street the Transportation System Plan classes as a
 Major Transit Priority, Transit Access or Community Transit Street (33.910).
-No snapshot holds that classification, so every street of the lot is taken as
-one, the worst case, and a miss is YELLOW (the street may not be one), never
+Since 2026-11-08 the city's own map of that classification answers it per lot
+line (:mod:`flats.geom.pdx_transit`): a rule whose transit street the map
+rules out raises nothing, and a street the map cannot settle -- and every
+street of a lot the map does not read (the unincorporated pockets, a lot off
+its extent) -- is still taken as one, the worst case. A miss is YELLOW, never
 RED:
 
 * 33.415.300.B bars "Houses, attached houses, and duplexes" within 100 ft of
@@ -63,14 +66,17 @@ RED:
   out. The townhouse form is four homes each on its own lot -- attached
   houses, unless the lots come from a middle housing land division (33.910's
   definition carves those out), and which way the plat goes is not known, so
-  the townhouse form on an "m" lot carries :data:`MAIN_STREET_TRANSIT_FLAG`.
+  the townhouse form on an "m" lot carries :data:`MAIN_STREET_TRANSIT_FLAG`
+  unless the drawn houses (the lot, with nothing drawn) lie surely beyond
+  100 ft of every transit street.
 * 33.415.330.B caps the frontage "used for vehicle areas" (33.910: "All the
   area on a site where vehicles may circulate or park including parking
   areas, driveways") on any transit street: 30 % in the Inner pattern area,
   50 % in the Eastern and Western. The lane and the court of the drawn plan
-  are laid against every street the way :func:`flats.fit.frontage.street_runs`
-  reads parking; a share over the cap, or no drawing, raises
-  :data:`MAIN_STREET_VEHICLE_FLAG`. River and Central City state no cap.
+  are laid against every street the map does not rule out, the way
+  :func:`flats.fit.frontage.street_runs` reads parking; a share over the cap,
+  or no drawing, raises :data:`MAIN_STREET_VEHICLE_FLAG`. River and Central
+  City state no cap.
 * 33.415.320 (Inner pattern area only): at least 70 % of the length of the
   ground level street-facing facade (33.910: the wall planes "at an angle of
   45 degrees or less from a street lot line") must meet the base zone's
@@ -87,8 +93,8 @@ RED:
   under the law of an earlier day says so on every "m" lot below the yellow
   line, as an adopted change not yet in force is said (rulings.yaml
   2026-08-06-portland-ricap11-ci1-housing); from that day the lot is YELLOW
-  with :data:`MAIN_STREET_ACTIVE_USE_FLAG`, every street taken as a transit
-  street like the three rules above. The date is a run-key input
+  with :data:`MAIN_STREET_ACTIVE_USE_FLAG`, on a lot the map does not read
+  as fronting no transit street. The date is a run-key input
   (:func:`dated_in_force`), so a cache kept under the old law is not replayed.
   FOLLOWUPS 78's last main street item.
 
@@ -1013,12 +1019,15 @@ def _ring_of(drawing: Mapping[str, Any] | None, name: str) -> Any | None:
     return g if g.is_valid else g.buffer(0)
 
 
-def vehicle_share(lot: Any, edges: Any, drawing: Mapping[str, Any] | None) -> tuple[float, float] | None:
+def vehicle_share(
+    lot: Any, edges: Any, drawing: Mapping[str, Any] | None, only: Sequence[bool] | None = None
+) -> tuple[float, float] | None:
     """``(percent, feet)`` of the worst street frontage the drawn plan's
     vehicle areas -- its lane and its court (33.910: "parking areas,
     driveways") -- face, read as :func:`flats.fit.frontage.street_runs`
-    reads parking. ``(0, 0)`` for a plan with no vehicle area; None where
-    there is no lot, no street, or no drawn building."""
+    reads parking, on the streets ``only`` keeps (every street when None).
+    ``(0, 0)`` for a plan with no vehicle area; None where there is no lot,
+    no street, or no drawn building."""
     from flats.fit.frontage import street_chains, street_runs
 
     building = building_of(drawing)
@@ -1032,7 +1041,7 @@ def vehicle_share(lot: Any, edges: Any, drawing: Mapping[str, Any] | None) -> tu
     rows = shapely.union_all(areas).intersection(lot)
     if rows.is_empty:
         return 0.0, 0.0
-    runs = street_runs(lot, edges, rows, building)
+    runs = street_runs(lot, edges, rows, building, only=only)
     if not runs:
         return None
     return max(p for p, _ in runs), max(f for _, f in runs)
@@ -1103,13 +1112,16 @@ def flags_for(
     edges: Any,
     drawing: Mapping[str, Any] | None,
     on: date | None = None,
+    transit: Any = None,
 ) -> tuple[flag_plan.Flag, ...]:
     """The open questions the reading leaves on one design: the main
     street's transit-street rules, a Conservation District's Community
     Design Standards, and the design overlay's standards track. ``plat`` is
     the design's plat (``unit_lots`` for the townhouse form); ``on`` the day
     whose law the screen applies (:func:`flats.rules.loader.law_on` when
-    omitted)."""
+    omitted); ``transit`` the city's transit street map
+    (:class:`flats.geom.pdx_transit.TransitMap`) where it reads the lot --
+    None takes every street as a transit street."""
     if reading is None:
         return ()
     out: list[flag_plan.Flag] = []
@@ -1117,10 +1129,19 @@ def flags_for(
     def flag(code: str, source: str, severity: int | None = None) -> None:
         out.append(flag_plan.Flag(code, flag_plan.LOT, FLAGS[code], source=source, severity=severity))
 
-    unheld = f"no map of transit streets is held, so every street is taken as one ({CITES['transit_street'][0]})"
+    from flats.geom import pdx_transit
+
+    unheld = f"no map of transit streets reads the lot, so every street is taken as one ({CITES['transit_street'][0]})"
+    frontage = (
+        pdx_transit.read(transit, lot, edges, building_of(drawing)) if reading.main_street else None
+    )
+    if frontage is not None:
+        unheld = f"{frontage.words()} ({CITES['transit_street'][0]})"
+    fronts = frontage is None or frontage.fronts != pdx_transit.CLEAR
     if reading.main_street:
-        flag(*active_use(on, unheld))
-        if plat == "unit_lots":
+        if fronts:
+            flag(*active_use(on, unheld))
+        if plat == "unit_lots" and (frontage is None or frontage.near != pdx_transit.CLEAR):
             flag(
                 MAIN_STREET_TRANSIT_FLAG,
                 f"{CITES['transit_ban'][0]}: houses, attached houses and duplexes are barred within "
@@ -1130,10 +1151,20 @@ def flags_for(
             )
         stated = [VEHICLE_AREA_CAP_PCT[p] for p in reading.pattern_areas if p in VEHICLE_AREA_CAP_PCT]
         cap = min(stated) if stated else (None if reading.pattern_areas else VEHICLE_AREA_CAP_UNMEASURED)
-        if cap is not None:
+        if cap is not None and fronts:
             cite = CITES["vehicle_area_inner" if cap <= 30.0 else "vehicle_area_outer"][0]
-            got = vehicle_share(lot, edges, drawing)
-            if got is None:
+            only = None
+            if frontage is not None:
+                only = [k != pdx_transit.CLEAR for k in frontage.streets]
+            got = vehicle_share(lot, edges, drawing, only) if only is None or any(only) else None
+            if only is not None and not any(only):
+                flag(
+                    MAIN_STREET_VEHICLE_FLAG,
+                    f"{cite}: vehicle areas may use at most {cap:.0f}% of any transit street "
+                    f"frontage; a line of the lot the map leaves open is not read as a street "
+                    f"line, so nothing measures the plan against it; {unheld}",
+                )
+            elif got is None:
                 flag(
                     MAIN_STREET_VEHICLE_FLAG,
                     f"{cite}: vehicle areas may use at most {cap:.0f}% of any transit street "
@@ -1193,6 +1224,14 @@ def flags_for(
                 5,
             )
     return tuple(out)
+
+
+def transit_map(jurisdiction: object) -> Any:
+    """The city's transit street map where it reads a lot of ``jurisdiction``
+    (:data:`flats.geom.pdx_transit.SERVES`), else None."""
+    from flats.geom import pdx_transit
+
+    return pdx_transit.load() if jurisdiction == pdx_transit.SERVES else None
 
 
 def _law_day(on: date | None) -> date:
@@ -1292,6 +1331,7 @@ def checked(s: Any, reading: Reading | None, on: date | None = None) -> Any:
         edges=getattr(s.lot, "edges", None),
         drawing=s.drawing,
         on=on,
+        transit=transit_map(getattr(s.lot, "jurisdiction", None)) if reading.main_street else None,
     )
     if min_far_flag is not None:
         flags = (*flags, min_far_flag)
@@ -1387,6 +1427,7 @@ __all__ = [
     "load",
     "missing",
     "read",
+    "transit_map",
     "vehicle_share",
     "with_overlays",
 ]

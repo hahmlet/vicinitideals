@@ -14,5 +14,9 @@
      flats/pdx-gresham-leftovers (flats/geom/pdx_overlays.py active_use, flag PDX-MAIN-STREET-ACTIVE-USE): every "m"
      lot carries a below-the-line notice before that day (the RICAP 11 "says when it takes effect" pattern) and is
      YELLOW from it (transit streets not mapped, every street taken as one); the day is in the run key. 0 colour moves now.
+   - Transit streets wired 2026-11-08 (flats/pdx-transit-streets, flats/geom/pdx_transit.py): the city's TSP transit map
+     (areas transit-streets.geojson 2026-10-22 + transit-streets-unclassified.geojson 2026-11-08) now answers 33.415.200,
+     300.B and 330.B per lot line on Portland "m" lots; a line it cannot settle (and every pocket lot) is still taken as one.
+     Only removes flags; needs a bound. Open for Steph: from 2029 is a lot on a mapped transit street RED or YELLOW?
    - The 800 sf accessory-building demolition exemption (33.445.210.E.2.c etc.): LEFT OUT -- it can only turn a
      RED green (not a false-GREEN risk), and the data cannot tell an accessory shed from the house.
