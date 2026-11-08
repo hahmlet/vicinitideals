@@ -4826,9 +4826,69 @@ FRONT_MAX_SLIDE_STEP_FT = 0.1
 #: The rings are rounded to a tenth of a foot, so this much off the envelope is
 #: no more than the rounding.
 FRONT_MAX_SLIDE_ROUND_FT = 0.05
+#: The most :func:`_front_max_turned` turns a drawing to stand its street wall
+#: square to the street before the slide: three of the fit's one-degree sweep
+#: steps (:data:`flats.fit.angles.DEFAULT_STEP_DEG`). A building turned further
+#: from its street is a different plan, the window search's to find.
+FRONT_MAX_SNAP_DEG = 3.0
 
 
-def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
+def _front_max_turned(drawing: Mapping[str, Any], chain: Sequence[Edge]) -> dict[str, Any] | None:
+    """``drawing`` turned about the near corner of its wall facing ``chain`` so
+    that wall runs with the street line it faces, or None where it already does
+    or would turn more than :data:`FRONT_MAX_SNAP_DEG` (FOLLOWUPS 147, rel3
+    read finding 1).
+
+    A building the fit stood a degree or two off its street reaches the
+    maximum at its near corner but not along its wall: Tigard 2S103BA00137
+    stood 21.15 ft off the street at one end of its wall and 22.52 ft at the
+    other, behind a minimum and a maximum both 20 ft, so the slide alone left
+    the far end past the line. Turned about the near corner, the whole wall
+    stands at the near corner's distance; the slide then brings it to the
+    envelope's front edge. Whether the turned plan still stands on the
+    envelope and its ground is the slide's to check."""
+    from shapely.geometry import LineString, MultiLineString, Point
+
+    ring = drawing.get("building")
+    if not ring or len(ring) < 4 or not chain:
+        return None
+    lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
+    pts = [tuple(p) for p in ring]
+    if pts[0] == pts[-1]:
+        pts = pts[:-1]
+    walls = [(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    a, c = min(
+        walls, key=lambda w: Point((w[0][0] + w[1][0]) / 2, (w[0][1] + w[1][1]) / 2).distance(lines)
+    )
+    mid = Point((a[0] + c[0]) / 2, (a[1] + c[1]) / 2)
+    edge = min(chain, key=lambda e: LineString([(e.x1, e.y1), (e.x2, e.y2)]).distance(mid))
+    wall_deg = math.degrees(math.atan2(c[1] - a[1], c[0] - a[0]))
+    edge_deg = math.degrees(math.atan2(edge.y2 - edge.y1, edge.x2 - edge.x1))
+    turn = (edge_deg - wall_deg + 90.0) % 180.0 - 90.0
+    if abs(turn) < 1e-3 or abs(turn) > FRONT_MAX_SNAP_DEG:
+        return None
+    px, py = a if Point(a).distance(lines) <= Point(c).distance(lines) else c
+    cos_t, sin_t = math.cos(math.radians(turn)), math.sin(math.radians(turn))
+
+    def turned(points: Sequence[Sequence[float]]) -> list[list[float]]:
+        return [
+            [
+                px + (x - px) * cos_t - (y - py) * sin_t,
+                py + (x - px) * sin_t + (y - py) * cos_t,
+            ]
+            for x, y in points
+        ]
+
+    out = dict(drawing)
+    for name in ("room", "building", "lane", "court"):
+        if out.get(name):
+            out[name] = turned(out[name])
+    return out
+
+
+def _front_max_flush(
+    s: Screened, fitter: Fitter, *, snap: bool = False
+) -> dict[str, Any] | None:
     """``s``'s drawing slid whole toward the street whose maximum the raster
     left it just past, or None where nothing is so left (FOLLOWUPS 147).
 
@@ -4837,7 +4897,12 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     is the raster, not the lot. The slide is along one of the building's own
     sides, no further than :data:`FRONT_MAX_SLIDE_FT` and than the room stays on
     the envelope and the court on the ground it may use, so the minimum still
-    holds; it stops at the maximum itself, not at the allowance."""
+    holds; it stops at the maximum itself, not at the allowance.
+
+    ``snap`` first turns the drawing square to that street
+    (:func:`_front_max_turned`), so the slide brings the whole wall, not one
+    corner, to the envelope's front edge."""
+    import shapely
     from shapely import affinity
     from shapely.geometry import LineString, MultiLineString, Polygon
     from shapely.ops import nearest_points
@@ -4846,7 +4911,7 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     cap = s.rules.get("setback_front_max_ft")
     measured = front_max_streets(s)
     edges = _front_max_edges(s)
-    room, building = drawing.get("room"), drawing.get("building")
+    room = drawing.get("room")
     if (
         measured is None
         or edges is None
@@ -4864,6 +4929,12 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     )
     if not 0.0 < over <= FRONT_MAX_SLIDE_FT:
         return None
+    if snap:
+        turned = _front_max_turned(drawing, chain)
+        if turned is None:
+            return None
+        drawing = turned
+    room, building = drawing.get("room"), drawing.get("building")
     body = Polygon(building)
     lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
     here, there = nearest_points(body, lines)
@@ -4886,6 +4957,25 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     envelope = s.envelope.geom.buffer(FRONT_MAX_SLIDE_ROUND_FT)
     ground = (fitter.ground or s.envelope.geom).buffer(FRONT_MAX_SLIDE_ROUND_FT)
     court = drawing.get("court")
+    # The court as drawn may already stand partly off this ground: the fit
+    # asks only its run past the window to land on it, and the drawn court
+    # spans the lane beside the building too, into the side yard. The slide
+    # may stand it on the ground, or where the plan's own court and lane
+    # already stood, and nowhere else (rel3 read finding 1: asking the whole
+    # court on the ground stopped every such slide at its first step).
+    # Against the drawing as the fit drew it, so a snap's turn counts too.
+    if court:
+        drawn = s.drawing or {}
+        ground = shapely.union_all(
+            [
+                ground,
+                *(
+                    Polygon(drawn[name]).buffer(FRONT_MAX_SLIDE_ROUND_FT)
+                    for name in ("court", "lane")
+                    if drawn.get(name)
+                ),
+            ]
+        )
     best = 0.0
     need = over / toward
     steps = int(min(need, FRONT_MAX_SLIDE_FT) / FRONT_MAX_SLIDE_STEP_FT) + 1
@@ -4895,7 +4985,9 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
         if not envelope.covers(affinity.translate(Polygon(room), dx, dy)):
             break
         if court and not ground.covers(affinity.translate(Polygon(court), dx, dy)):
-            break
+            # Not a place to stop; a turned court may land on its ground
+            # further along. Only the room leaving the envelope ends the slide.
+            continue
         best = t
     if best == 0.0:
         return None
@@ -4953,20 +5045,33 @@ def front_max_checked(
     drawing = s.drawing or {}
     if not (drawing.get("fits") and not drawing.get("tight")):
         return out
+    # A slide that brings the near corner within the maximum but leaves the
+    # wall's far end past it turns the fail into a question: kept, held out of
+    # GREEN, where no window below clears it (rel3 read finding 1).
+    fallback = out
     if any(c.check == FRONT_MAX for r in (out.screening, out.signed) for c in r.binds):
-        slid = _front_max_flush(s, fitter)
-        if slid is not None and (not slid.get("lane") or _drive_clear(slid, s, _street_lines(s.lot))):
+        for snap in (False, True):
+            slid = _front_max_flush(s, fitter, snap=snap)
+            if slid is None or (slid.get("lane") and not _drive_clear(slid, s, _street_lines(s.lot))):
+                continue
             cand = _front_max_screened(
                 dataclasses.replace(s, drawing=slid), policy=policy, relief=relief
             )
             if _front_max_clear(cand) and _no_worse_but_front(out, cand):
                 return cand
+            if (
+                fallback is out
+                and not _front_max_failed(cand)
+                and flag_plan.Colour.green not in (cand.screening.colour, cand.signed.colour)
+                and _no_worse_but_front(out, cand, question=True)
+            ):
+                fallback = cand
     if not (drawing.get("lane") and _lane_in_from_street(s)):
-        return out
+        return fallback
     street = _street_lines(s.lot)
     cap = s.rules.get("setback_front_max_ft")
     if not street or isinstance(cap, bool) or not isinstance(cap, (int, float)):
-        return out
+        return fallback
     # The listing measures to points two feet apart on the front lines, from
     # the lot's own line: the strip and the allowance are added, and every
     # window kept is measured exactly below.
@@ -4997,13 +5102,20 @@ def front_max_checked(
             )
             if _front_max_clear(cand) and _no_worse_but_front(out, cand):
                 return cand
-    return out
+    return fallback
 
 
-def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
+def _front_max_failed(s: Screened) -> bool:
+    """Whether ``s`` fails the maximum front setback under either reading."""
+    return any(c.check == FRONT_MAX for r in (s.screening, s.signed) for c in r.binds)
+
+
+def _no_worse_but_front(base: Screened, cand: Screened, *, question: bool = False) -> bool:
     """:func:`flats.ingest.flatter._no_worse` with the maximum front
     setback's own bind and flags set aside: the candidate is drawn to
-    clear them."""
+    clear them. ``question`` sets the candidate's own front-max flags aside
+    too: one left a question on the maximum, held out of GREEN by them, is
+    measured against the base on everything else."""
 
     def strip(s: Screened) -> Screened:
         def one(r: Screening) -> Screening:
@@ -5018,7 +5130,7 @@ def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
 
         return dataclasses.replace(s, screening=one(s.screening), signed=one(s.signed))
 
-    return _no_worse(strip(base), cand)
+    return _no_worse(strip(base), strip(cand) if question else cand)
 FIRE_RETRY_MAX_PLACEMENTS = 24
 # Drawing every listed placement at once can exhaust a worker on a large lot.
 FIRE_RETRY_MAX_ACRES = 3.0

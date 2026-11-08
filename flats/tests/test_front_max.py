@@ -619,8 +619,14 @@ def _past_by(feet: float, monkeypatch, *, only_first: bool = True) -> dict:
 
 
 def test_a_building_the_raster_left_past_the_line_is_slid_to_the_maximum(corpus, policies, monkeypatch) -> None:
-    """Tigard RES-B, minimum and maximum both 20 ft: 1S136CB02900 drew at 21.13."""
-    seen = _past_by(1.13, monkeypatch)
+    """Tigard RES-B, minimum and maximum both 20 ft: 1S136CB02900 drew at 21.13.
+
+    Every drawing stands 1.13 ft back, so no later redraw at the fit's own
+    spot can pass it: only the slide can (rel3 read finding 1 -- with the
+    first drawing alone moved, this passed on the fire step's redraw while the
+    slide itself never moved a plan whose court spans its lane).
+    """
+    seen = _past_by(1.13, monkeypatch, only_first=False)
     s = screened(corpus, policies)
     assert seen["done"]
     ((_, near, _, _),) = s.facts.front_max_streets
@@ -686,3 +692,120 @@ def test_a_miss_of_more_than_the_raster_can_leave_does_not_slide(corpus, policie
     ((_, near, _, _),) = s.facts.front_max_streets
     assert near >= 24.5
     assert check(s.signed, FRONT_MAX).verdict is Verdict.fails
+
+
+# --- a building stood a degree or two off its street (rel3 read finding 1) ----
+
+
+def _turn(points, deg: float, px: float, py: float, dy: float = 0.0):
+    import math
+
+    c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    return [
+        [px + (x - px) * c - (y - py) * s, py + (x - px) * s + (y - py) * c + dy] for x, y in points
+    ]
+
+
+def _turned_sliding(deg: float):
+    """Tigard 2S103BA00137's shape: a pod's near corner 21.15 ft off a street at
+    y=0, its wall turned ``deg`` so the far end stands further back, on an
+    envelope whose front edge is the 20 ft minimum."""
+    s, fitter = _sliding(20.0)
+    ring = _turn([[10, 21.15], [60, 21.15], [60, 57.15], [10, 57.15], [10, 21.15]], deg, 10, 21.15)
+    s.drawing = {"fits": True, "building": ring, "room": ring, "lane": None}
+    return s, fitter
+
+
+def _front_corners(ring):
+    return sorted(y for _, y in ring[:-1])[:2]
+
+
+def test_the_slide_alone_leaves_a_turned_walls_far_end_past_the_line() -> None:
+    s, fitter = _turned_sliding(1.5)
+    slid = quadfit._front_max_flush(s, fitter)
+    near, far = _front_corners(slid["building"])
+    assert near == pytest.approx(20.0, abs=0.1)
+    assert far > 21.0  # past the maximum and its allowance
+
+
+def test_the_snap_stands_the_whole_wall_on_the_envelopes_front_edge() -> None:
+    s, fitter = _turned_sliding(1.5)
+    snapped = quadfit._front_max_flush(s, fitter, snap=True)
+    near, far = _front_corners(snapped["building"])
+    assert near == pytest.approx(20.0, abs=0.1)
+    assert far == pytest.approx(20.0, abs=0.1)
+    assert snapped["room"] == snapped["building"]
+
+
+def test_a_wall_turned_more_than_the_snap_allows_is_not_turned() -> None:
+    s, fitter = _turned_sliding(quadfit.FRONT_MAX_SNAP_DEG + 1.0)
+    assert quadfit._front_max_flush(s, fitter, snap=True) is None
+
+
+def test_a_turn_that_takes_the_room_off_the_envelope_does_not_snap() -> None:
+    # The envelope's side edge stands where the turned room's back corner would.
+    s, fitter = _turned_sliding(1.5)
+    s.envelope = SimpleNamespace(geom=box(9.0, 20.0, 95, 120), source="quadfit")
+    snapped = quadfit._front_max_flush(s, fitter, snap=True)
+    assert snapped is None or s.envelope.geom.buffer(0.05).covers(shapely.Polygon(snapped["room"]))
+
+
+def _turned_by(deg: float, monkeypatch) -> dict:
+    """Every drawing at the fit's spot turned ``deg`` about a front corner and
+    stood with its near corner 1.15 ft behind where it was cut, as the raster
+    left 2S103BA00137; 12 ft in from the side yard, so the turned room stays on
+    the envelope."""
+    real = quadfit.drawing_for
+    seen = {"done": False}
+
+    def turned(s, fitter, **kw):
+        if "listing" in kw:
+            return None  # no other window: only the slide can help
+        got = real(s, fitter, **kw)
+        if kw or not got or not got.get("fits"):
+            return got
+        # Every drawing at the fit's spot, as the raster stands it each time.
+        seen["done"] = True
+        px, py = min(got["building"][:-1], key=lambda p: (p[1], p[0]))
+        low0 = py  # the drawing as cut stands on the 20 ft line
+        moved = dict(got)
+        for key in ("room", "building", "lane", "court"):
+            if got.get(key):
+                moved[key] = _turn(got[key], deg, px, py)
+        low = min(y for _, y in moved["building"])
+        for key in ("room", "building", "lane", "court"):
+            if moved.get(key):
+                moved[key] = [[x + 12.0, y + (low0 + 1.15 - low)] for x, y in moved[key]]
+        return moved
+
+    monkeypatch.setattr(quadfit, "drawing_for", turned)
+    return seen
+
+
+def test_a_building_a_degree_off_its_street_is_snapped_to_the_line(corpus, policies, monkeypatch) -> None:
+    """Tigard RES-B, minimum and maximum both 20 ft: 2S103BA00137 stood 21.15 ft
+    off at one end of its wall and 22.52 ft at the other, and stayed RED."""
+    seen = _turned_by(1.5, monkeypatch)
+    s = screened(corpus, policies)
+    assert seen["done"]
+    ((_, near, far, _),) = s.facts.front_max_streets
+    assert 20.0 <= near <= 20.1
+    assert far <= 20.1
+    assert check(s.signed, FRONT_MAX).verdict is Verdict.passes
+
+
+def test_a_turn_too_far_to_snap_is_a_question_never_a_fail_nor_a_pass(corpus, policies, monkeypatch) -> None:
+    # The snap barred: the slide brings the near corner to the line and the
+    # far end stays past it -- the reading decides, so held out of GREEN.
+    monkeypatch.setattr(quadfit, "FRONT_MAX_SNAP_DEG", 0.5)
+    # Turned so the lane's near corner is its outer one: the drive in from the
+    # street (flatter._drive_clear) is read from that corner and stays off
+    # the building, so the slide alone stands.
+    _turned_by(1.5, monkeypatch)
+    s = screened(corpus, policies)
+    ((_, near, far, _),) = s.facts.front_max_streets
+    assert near <= 21.0 < far  # the near corner within, the far end past
+    for r in (s.screening, s.signed):
+        assert check(r, FRONT_MAX) is None
+        assert "MEASURE-FRONT-MAX-STREET" in codes(r)
+        assert r.colour is not Colour.green
