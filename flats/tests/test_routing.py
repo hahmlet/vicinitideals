@@ -482,6 +482,16 @@ OPEN = {
     "or/washington/_unincorporated 390-9 -> 390-9.5",
     "or/washington/_unincorporated 392-9 -> 413",
     "or/washington/_unincorporated 413-6 -> 413-6.1",
+    # 2026-11-07 (rescreen-1110, FOLLOWUPS 108 merged): LR-5, LR-7, LR-10 and
+    # MR-4 point at MCC 39.3140, now stored (39.3140.lot-of-record.txt) and
+    # quoted for the lot-of-record relief. They read OPEN only because the
+    # heading finder misses that file's "§ 39.3140" first line and credits
+    # its lines to the "39.3005" a sentence opens with at L7. Really followed;
+    # a ledger artifact, not an unread section.
+    "or/multnomah/_unincorporated 39.4830 -> 39.3140",
+    "or/multnomah/_unincorporated 39.4862 -> 39.3140",
+    "or/multnomah/_unincorporated 39.4878 -> 39.3140",
+    "or/multnomah/_unincorporated 39.4990 -> 39.3140",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -510,16 +520,6 @@ FOLLOWED = {
     # five pointers visible, each to the very next section, which is read.
     "or/clackamas/_unincorporated 604.03 -> 604.04",
     "or/multnomah/_unincorporated 39.4750 -> 39.4751",
-    # 2026-11-07 (rescreen-1110, FOLLOWUPS 108 merged): LR-5, LR-7, LR-10 and
-    # MR-4 point at MCC 39.3140, now stored (39.3140.lot-of-record.txt) and
-    # quoted for the lot-of-record relief. They read OPEN only because the
-    # heading finder misses that file's "§ 39.3140" first line and credits
-    # its lines to the "39.3005" a sentence opens with at L7. Really followed;
-    # a ledger artifact, not an unread section.
-    "or/multnomah/_unincorporated 39.4830 -> 39.3140",
-    "or/multnomah/_unincorporated 39.4862 -> 39.3140",
-    "or/multnomah/_unincorporated 39.4878 -> 39.3140",
-    "or/multnomah/_unincorporated 39.4990 -> 39.3140",
     "or/multnomah/_unincorporated 39.4820 -> 39.4822",
     "or/multnomah/_unincorporated 39.4870 -> 39.4872",
     "or/multnomah/_unincorporated 39.4970 -> 39.4975",
