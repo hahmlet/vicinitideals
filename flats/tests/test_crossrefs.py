@@ -739,6 +739,9 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # section numbers.
         "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt",
         "or/washington/_unincorporated/community-plan.bull-mountain.txt",
+        # West Linn's historic landmarks web page, stored 2026-11-06 (FOLLOWUPS
+        # 87) for its list of 25 addresses: a city page, no section numbers.
+        "or/clackamas/west-linn/historic-landmarks.city-page.txt",
         # Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill and
         # Sunset West, stored 2026-10-31 for the chunk 6 re-read (FOLLOWUPS
         # 135): subareas, design elements and ASCs, no section numbers.
