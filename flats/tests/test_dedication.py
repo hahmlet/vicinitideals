@@ -1154,3 +1154,208 @@ def test_elsewhere_the_strip_comes_off_the_minimum_lot_area(rules, layer, zone) 
     got = rules.resolve(layer, zone)
     assert dedication.rule_of(got) is not None, (layer, zone)
     assert got.get(dedication.LOT_AREA_FIELD) is None, (layer, zone)
+
+
+# --- a tax lot drawn over the road (FOLLOWUPS 67 (b)) ----------------------
+#
+# Rural Washington County lots are often drawn to the road's centre line, or
+# past it. The strip is the stated distance off the centre line on the lot's
+# side, so a centre line on the lot's side of the lot line ADDS its distance:
+# read as a negative half-width.
+
+
+def _over_road(y_off: float) -> ClassMap:
+    street = LineString([(X0 - 500, Y0 + y_off), (X0 + 500, Y0 + y_off)])
+    return _two_maps([EDY_TSP], ["SW EDY RD"], (0,), [street], ["SW EDY RD"])
+
+
+def test_a_centre_line_inside_the_lot_reads_negative() -> None:
+    (got,) = dedication.measure([FRONT], WASHCO, [_over_road(6.0)], lot=LOT_BOX)
+    assert got[4] == pytest.approx(-6.0)
+    # Past the street across the lot line it reads as before.
+    (out,) = dedication.measure([FRONT], WASHCO, [_over_road(-22.0)], lot=LOT_BOX)
+    assert out[4] == pytest.approx(22.0)
+    # Without the lot's shape the side is unknown: the unsigned reading.
+    (bare,) = dedication.measure([FRONT], WASHCO, [_over_road(6.0)])
+    assert bare[4] == pytest.approx(6.0)
+
+
+def test_the_side_is_read_whichever_way_the_line_runs() -> None:
+    backwards = [X0 + 50, Y0, X0, Y0, "F"]
+    (got,) = dedication.measure([backwards], WASHCO, [_over_road(6.0)], lot=LOT_BOX)
+    assert got[4] == pytest.approx(-6.0)
+
+
+def test_a_lot_over_the_road_gives_up_the_distance_plus_the_overlap(rules) -> None:
+    # A local street, 25 ft to centre line: the centre line 6 ft inside the
+    # lot puts the new line 31 ft in from the lot line, not 19.
+    local = {"street_class_washington": "local"}
+    assert strip(rules, WASHCO, "R-6", -6.0, classes=local) == pytest.approx(31.0)
+    assert strip(rules, WASHCO, "R-6", 6.0, classes=local) == pytest.approx(19.0)
+
+
+def test_the_bridge_reads_the_side_off_the_lot_shape(tmp_path, monkeypatch) -> None:
+    from flats.ingest import quadfit
+
+    r = row(None, None)
+    monkeypatch.setattr(quadfit, "load_class_maps", lambda sources: [_over_road(6.0)])
+    quadfit.with_local_street([r], tmp_path)
+    (got,) = json.loads(r["road_widths_json"])
+    assert got[4] == pytest.approx(-6.0)
+
+
+def test_durham_reads_the_curb_return_either_way(monkeypatch) -> None:
+    # Durham's curb return reads the half-width as a distance, unsigned: a
+    # negative one is the same street, not a missing one.
+    from flats.ingest import quadfit
+
+    seen: list[dict[str, float]] = []
+
+    def fake(edges_json, bearings, network, width, half_widths):
+        seen.append(dict(half_widths))
+        return None
+
+    monkeypatch.setattr(quadfit, "maximum_clearance_ft", fake)
+    monkeypatch.setattr(quadfit, "load_street_network", lambda streets: object())
+    r = {
+        "jurisdiction": "durham",
+        "zone": "SDR",
+        "edges_json": json.dumps(EDGES),
+        "road_widths_json": json.dumps([[*dedication.key(*FRONT[:4]), -6.0, True, ["UPPER BOONES FERRY RD"], {}]]),
+    }
+    monkeypatch.setattr(quadfit, "_layer_id", lambda row: "or/washington/durham")
+    quadfit._durham_apron_clearance_column([r], __import__("pathlib").Path("."))
+    assert seen == [{"UPPER BOONES FERRY RD": 6.0}]
+
+
+# --- a stretch of a named street (FOLLOWUPS 77) -----------------------------
+#
+# Milwaukie Table 19.501.2.A and King City 16.80.060 A.2 limit some rows to
+# one stretch of the street. A row holds unless the line is read OFF it.
+
+MX, MY = 7_652_000.0, 655_000.0
+
+
+def _milwaukie_map(streets, names) -> ClassMap:
+    return ClassMap(
+        serves=(MILWAUKIE,),
+        lines=Lines.build(list(streets), list(names)),
+        kinds=("",) * len(streets),
+        streets=Lines.build(list(streets), list(names)),
+        types=(1500,) * len(streets),
+        ranks=(None,) * len(streets),
+        key="street_class_milwaukie",
+    )
+
+
+FIRWOOD = LineString([(MX - 3000, MY), (MX + 3000, MY)])
+FIFTY_FIFTH = LineString([(MX, MY - 500), (MX, MY + 500)])
+STANLEY = LineString([(MX + 1000, MY - 500), (MX + 1000, MY + 500)])
+FIRWOOD_ROW = "Firwood Street (55th Ave. to Stanley Ave.)"
+
+
+def _on_firwood(x: float, streets=None, names=None) -> bool | None | str:
+    cmap = _milwaukie_map(
+        streets or [FIRWOOD, FIFTY_FIFTH, STANLEY], names or ["SE FIRWOOD ST", "SE 55TH AVE", "SE STANLEY AVE"]
+    )
+    edge = [MX + x, MY + 30, MX + x + 50, MY + 30, "F"]
+    (got,) = dedication.measure([edge], MILWAUKIE, [cmap], stretches=(FIRWOOD_ROW,))
+    assert got[6] == ["FIRWOOD ST"]
+    return got[8].get(FIRWOOD_ROW, "absent")
+
+
+def test_the_printed_stretches_read_as_stretches() -> None:
+    stretch = dedication.Stretch
+    assert dedication.stretch_of(FIRWOOD_ROW) == stretch("FIRWOOD ST", "between", ("55TH AVE", "STANLEY AVE"))
+    assert dedication.stretch_of("River Road (south of Lark St.)") == stretch("RIVER RD", "south", ("LARK ST",))
+    assert dedication.stretch_of("131st Avenue (between Beef Bend Road and Fischer Road)") == stretch(
+        "131ST AVE", "between", ("BEEF BEND RD", "FISCHER RD")
+    )
+    harrison = dedication.stretch_of("Harrison Street (Milwaukie Expressway to 44th Ave.)")
+    assert harrison is not None and harrison.ends == ("MILWAUKIE EXPY", "44TH AVE")
+    assert dedication.stretch_of("King Road") is None
+
+
+def test_every_bracketed_row_reads_as_a_stretch(rules) -> None:
+    from flats.ingest.quadfit import stretch_labels
+
+    got = stretch_labels()
+    # 18 of Milwaukie's 29 rows, King City's three "between" rows.
+    assert len(got) == 21
+    for zone, layer in (("R-MD", MILWAUKIE), ("KTTC", KING_CITY)):
+        for label, _ in rules.resolve(layer, zone).get(dedication.NAMED_FIELD):
+            if "(" in str(label):
+                assert dedication.stretch_of(label) is not None, label
+                assert label in got
+
+
+def test_a_line_on_the_stretch_reads_on_and_one_past_its_end_reads_off() -> None:
+    assert _on_firwood(400.0) is True
+    assert _on_firwood(2000.0) is False
+    assert _on_firwood(-800.0) is False
+    # Within 60 ft past the end street: still on.
+    assert _on_firwood(1020.0) is True
+
+
+def test_a_stretch_whose_end_street_is_not_found_is_unread() -> None:
+    assert _on_firwood(2000.0, [FIRWOOD, FIFTY_FIFTH], ["SE FIRWOOD ST", "SE 55TH AVE"]) is None
+
+
+def test_an_end_street_crossing_twice_leaves_the_stretch_unread() -> None:
+    twice = LineString([(MX + 2500, MY - 500), (MX + 2500, MY + 500)])
+    got = _on_firwood(
+        2000.0,
+        [FIRWOOD, FIFTY_FIFTH, STANLEY, twice],
+        ["SE FIRWOOD ST", "SE 55TH AVE", "SE STANLEY AVE", "SE STANLEY AVE"],
+    )
+    assert got is None
+
+
+def test_a_side_stretch_reads_by_the_side_of_its_end_street() -> None:
+    river = LineString([(MX, MY - 3000), (MX, MY + 3000)])
+    lark = LineString([(MX - 500, MY), (MX + 500, MY)])
+    cmap = _milwaukie_map([river, lark], ["SE RIVER RD", "SE LARK ST"])
+    label = "River Road (south of Lark St.)"
+
+    def at(y: float) -> bool | None:
+        edge = [MX + 30, MY + y, MX + 30, MY + y + 50, "F"]
+        (got,) = dedication.measure([edge], MILWAUKIE, [cmap], stretches=(label,))
+        return got[8][label]
+
+    assert at(-600.0) is True
+    assert at(500.0) is False
+    assert at(20.0) is True
+
+
+def _named_strip(rules, layer, zone, names, on) -> float:
+    r = row(0.0, None, names=names, classes={})
+    entry = json.loads(r["road_widths_json"])[0]
+    r["road_widths_json"] = json.dumps([[*entry, on]])
+    lot = lot_from_row(r)
+    (front,) = [e for e in dedicated(lot.edges, rules.resolve(layer, zone)).edges if e.cls is EdgeClass.front]
+    return front.dedication_ft
+
+
+def test_milwaukie_a_line_off_the_stretch_takes_none(rules) -> None:
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["FIRWOOD ST"], {FIRWOOD_ROW: False}) == 0
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["FIRWOOD ST"], {FIRWOOD_ROW: True}) == 25
+    # Unread, or not read at all: the row holds.
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["FIRWOOD ST"], {FIRWOOD_ROW: None}) == 25
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["FIRWOOD ST"], {}) == 25
+
+
+def test_harrison_takes_the_row_whose_stretch_it_is_on(rules) -> None:
+    east = "Harrison Street (Milwaukie Expressway to 44th Ave.)"
+    west = "Harrison Street (Milwaukie Expressway to McLoughlin Blvd.)"
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["HARRISON ST"], {east: False, west: True}) == 30
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["HARRISON ST"], {east: True, west: False}) == 40
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["HARRISON ST"], {east: False, west: None}) == 30
+    assert _named_strip(rules, MILWAUKIE, "R-MD", ["HARRISON ST"], {east: False, west: False}) == 0
+
+
+def test_king_city_off_the_stretch_takes_all_other_streets(rules) -> None:
+    label = "131st Avenue (between Beef Bend Road and Fischer Road)"
+    assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE"], {label: False}) == 25
+    assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE"], {label: None}) == 33
+    # A line that may be on a second street keeps that one's distance.
+    assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE", "FISCHER RD"], {label: False}) == 33

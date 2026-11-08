@@ -58,6 +58,25 @@ any bearing within reach of every point is read instead -- never farther than
 the street truly abutted -- and every street within reach counts as a name
 the line might be on.
 
+**Which side the centre line is on** (FOLLOWUPS 67 (b)). A tax lot drawn
+over the road -- to the centre line, or past it -- has the centre line on
+its own side of the lot line. The distance is then read as a NEGATIVE
+half-width, so the strip is the stated distance PLUS it: the new line is the
+stated distance off the centre line on the lot's side, wherever the lot line
+was drawn. Read off the lot's shape (:func:`_inward`); a lot with no shape
+keeps the unsigned reading.
+
+**A stretch of a named street** (FOLLOWUPS 77). A row the code lists for one
+stretch -- "Firwood Street (55th Ave. to Stanley Ave.)", "River Road (south
+of Lark St.)", "131st Avenue (between Beef Bend Road and Fischer Road)" --
+holds along the whole street unless the line is read OFF the stretch
+(:func:`stretch_of`, :func:`_stretch_reading`): the stretch's end streets
+each cross the named street at one place within :data:`STRETCH_REACH_FT`,
+both on one unbroken run of it, and every sample point of the line lies
+more than :data:`STRETCH_MARGIN_FT` past an end along that run. Anything
+else -- an end street not found, crossing twice, a broken run, a point
+beside no run -- leaves the row applying (the conservative side).
+
 A short piece whose own class reading fails (a corner cut-off, a curve) but
 whose street -- or each of its two streets -- is read with a class on
 another line of the same lot takes the busiest class read for them
@@ -87,6 +106,8 @@ only how a class rank or a street name picks one.
 from __future__ import annotations
 
 import dataclasses
+import math
+import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
@@ -96,6 +117,7 @@ from flats.geom.corridor import (
     FRONT_REACH_FT,
     SAMPLES,
     STREET_CLASS,
+    Lines,
     _abreast,
     _fronted,
 )
@@ -268,6 +290,200 @@ PRIVATE_TYPES: frozenset[int] = frozenset({1700, 1800})
 #: beside them for a line to count as measured.
 MIN_MEASURED = SAMPLES // 2 + 1
 
+#: How far from the lot line a stretch's end streets are looked for: every
+#: stretch the codes here list lies inside one small city (Milwaukie's
+#: longest, Harrison Street, is under two miles). An end beyond it is not
+#: found, and the row holds.
+STRETCH_REACH_FT = 15_000.0
+
+#: How far past a stretch's end street, along the named street, a point must
+#: lie to be read off the stretch: beyond the widest half right-of-way any
+#: of these tables states (40 ft), so a corner lot across the end street
+#: stays on.
+STRETCH_MARGIN_FT = FRONT_REACH_FT
+
+#: The gap a crossing street's centreline may leave short of the named
+#: street's and still meet it, and the spread of one crossing's pieces (a
+#: divided road, an offset T) that still counts as one place.
+_MEET_FT = 3.0
+_ONE_CROSSING_FT = 150.0
+
+#: Street types a code may leave off an end street's name ("Queen
+#: Elizabeth"): such a name matches the street with any one of them.
+_TYPE_WORDS = frozenset({"AVE", "BLVD", "CT", "DR", "HWY", "LN", "PKWY", "PL", "RD", "ST", "TER", "WAY", "EXPY", "CIR", "LOOP"})
+
+
+@dataclass(frozen=True)
+class Stretch:
+    """The stretch a named-street row holds for, as the code prints it in
+    brackets: ``between`` two end streets, or one ``side`` (``north``,
+    ``south``, ``east``, ``west``) of one."""
+
+    street: str
+    kind: str
+    ends: tuple[str, ...]
+
+
+_BETWEEN = re.compile(r"(?:between\s+)?(?P<a>.+?)\s+(?:to|and)\s+(?P<b>.+)", re.IGNORECASE)
+_SIDE = re.compile(r"(?P<side>north|south|east|west)\s+of\s+(?P<x>.+)", re.IGNORECASE)
+
+
+def stretch_of(label: object) -> Stretch | None:
+    """The stretch a printed row name limits itself to, or None where it
+    holds the whole street or the bracket does not read as one of the two
+    forms (the row then holds everywhere)."""
+    m = re.search(r"\(([^)]*)\)", str(label or ""))
+    if m is None:
+        return None
+    text = m.group(1).strip()
+    street = street_key(label)
+    side = _SIDE.fullmatch(text)
+    if side is not None:
+        x = street_key(side.group("x"))
+        return Stretch(street, side.group("side").lower(), (x,)) if x and street else None
+    two = _BETWEEN.fullmatch(text)
+    if two is not None:
+        a, b = street_key(two.group("a")), street_key(two.group("b"))
+        if a and b and street and a != b:
+            return Stretch(street, "between", (a, b))
+    return None
+
+
+def _named(name: str, wanted: str) -> bool:
+    """Whether a centreline's name is the street ``wanted`` (keyed), allowing
+    a code's name that leaves the street type off."""
+    got = street_key(name)
+    if got == wanted:
+        return True
+    if wanted.rsplit(" ", 1)[-1] in _TYPE_WORDS:
+        return False
+    head, _, last = got.rpartition(" ")
+    return last in _TYPE_WORDS and head == wanted
+
+
+def _pieces(streets: Lines, wanted: str, near: Any) -> list[Any]:
+    return [streets.lines[i] for i in streets.near(near, STRETCH_REACH_FT) if _named(streets.names[i], wanted)]
+
+
+def _crossing(run: Any, cross: Sequence[Any]) -> Any | None:
+    """Where the end street ``cross`` meets ``run``: one place, or None where
+    it meets it nowhere or at two places apart."""
+    if not cross:
+        return None
+    from shapely.ops import unary_union
+
+    hit = run.intersection(unary_union(list(cross)).buffer(_MEET_FT))
+    if hit.is_empty:
+        return None
+    if unary_union(list(getattr(hit, "geoms", [hit]))).buffer(_ONE_CROSSING_FT / 2).geom_type != "Polygon":
+        return None
+    return hit.centroid
+
+
+def _stretch_reading(stretch: Stretch, points: Sequence[Any], streets: Lines) -> bool | None:
+    """Whether a lot line (its sample ``points``) lies on ``stretch``: False
+    where every point is read past an end by more than
+    :data:`STRETCH_MARGIN_FT` along one unbroken run of the street, True
+    where a point is read inside, None where any point is not read."""
+    from shapely.ops import linemerge, unary_union
+
+    own = _pieces(streets, stretch.street, points[0])
+    if not own:
+        return None
+    joined = unary_union(own)
+    merged = joined if joined.geom_type == "LineString" else linemerge(joined)
+    runs = list(getattr(merged, "geoms", [merged]))
+    at = [_crossing(merged, _pieces(streets, end, points[0])) for end in stretch.ends]
+    if any(p is None for p in at):
+        return None
+    held = [r for r in runs if all(r.distance(p) <= _ONE_CROSSING_FT / 2 for p in at)]
+    if len(held) != 1:
+        return None
+    run = held[0]
+    ts = [run.project(p) for p in at]
+    if stretch.kind == "between":
+        lo, hi = min(ts), max(ts)
+    else:
+        # Which way along the run the named side lies: the run's points 200
+        # ft either side of the crossing, compared on the compass.
+        t0 = ts[0]
+        ahead, behind = run.interpolate(min(run.length, t0 + 200.0)), run.interpolate(max(0.0, t0 - 200.0))
+        axis = {"north": (0, 1), "south": (0, -1), "east": (1, 0), "west": (-1, 0)}[stretch.kind]
+        lean = (ahead.x - behind.x) * axis[0] + (ahead.y - behind.y) * axis[1]
+        if abs(lean) < 1.0:
+            return None
+        lo, hi = (t0, math.inf) if lean > 0 else (-math.inf, t0)
+    got: set[bool] = set()
+    for p in points:
+        if run.distance(p) > FRONT_REACH_FT:
+            return None
+        t = run.project(p)
+        past = t < lo - STRETCH_MARGIN_FT or t > hi + STRETCH_MARGIN_FT
+        if past and stretch.kind != "between":
+            # Off one side only where the compass agrees too.
+            x = at[0]
+            ax = {"north": p.y < x.y - STRETCH_MARGIN_FT, "south": p.y > x.y + STRETCH_MARGIN_FT,
+                  "east": p.x < x.x - STRETCH_MARGIN_FT, "west": p.x > x.x + STRETCH_MARGIN_FT}[stretch.kind]
+            if not ax:
+                return None
+        got.add(not past)
+    return True if True in got else False
+
+
+def stretch_readings(
+    edge: Sequence[Any], names: Sequence[str] | None, labels: Sequence[str], streets: Lines
+) -> dict[str, bool | None]:
+    """Each row ``label`` whose street the line may be on, read for whether
+    the line lies on the row's stretch (:func:`_stretch_reading`)."""
+    if not names or not labels:
+        return {}
+    got = _samples(edge)
+    if got is None:
+        return {}
+    points, _ = got
+    out: dict[str, bool | None] = {}
+    for label in labels:
+        stretch = stretch_of(label)
+        if stretch is not None and stretch.street in names:
+            out[label] = _stretch_reading(stretch, points, streets)
+    return out
+
+
+def _inward(edge: Sequence[Any], lot: Any) -> tuple[float, float] | None:
+    """The unit normal of a lot line pointing into ``lot``, or None where the
+    lot has no shape or the line's two sides do not tell it."""
+    if lot is None or lot.is_empty:
+        return None
+    from shapely.geometry import Point
+
+    x1, y1, x2, y2 = (float(v) for v in edge[:4])
+    length = math.hypot(x2 - x1, y2 - y1)
+    if length <= 0:
+        return None
+    nx, ny = -(y2 - y1) / length, (x2 - x1) / length
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+    for step in (0.5, 2.0):
+        left = lot.contains(Point(mx + nx * step, my + ny * step))
+        right = lot.contains(Point(mx - nx * step, my - ny * step))
+        if left != right:
+            return (nx, ny) if left else (-nx, -ny)
+    return None
+
+
+def _signed(line: Any, p: Any, inward: tuple[float, float] | None, lot: Any = None) -> float:
+    """The distance from lot-line point ``p`` to centreline ``line``, NEGATIVE
+    where the centreline lies on the lot's side of the line (the tax lot is
+    drawn over the road, FOLLOWUPS 67 (b)). Unsigned without the lot."""
+    d = float(line.distance(p))
+    if d <= 0.0 or (inward is None and lot is None):
+        return d
+    c = line.interpolate(line.project(p))
+    if inward is not None:
+        inside = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0
+    else:
+        inside = bool(lot.contains(c))
+    return -d if inside else d
+
 
 def applies(layer_id: str | None) -> bool:
     """Whether ``layer_id``'s lots are measured."""
@@ -301,18 +517,20 @@ def half_width_ft(edge: Sequence[float], cmap: ClassMap) -> tuple[float | None, 
 
 
 def read_line(
-    edge: Sequence[float], cmap: ClassMap, through_private: bool = False
+    edge: Sequence[float], cmap: ClassMap, through_private: bool = False, lot: Any = None
 ) -> tuple[float | None, bool, tuple[str, ...] | None]:
     """:func:`half_width_ft` and the names of the streets the line may be on
     (:func:`street_key`), None where some point has no street within reach.
 
     ``through_private`` measures a line on a private road as on any street
     (the public flag still says private), for a city map that calls the
-    street public (:func:`measure`)."""
+    street public (:func:`measure`). With the ``lot``'s shape, a centreline
+    on the lot's side of the line reads negative (:func:`_signed`)."""
     got = _samples(edge)
     if got is None:
         return None, True, None
     points, own = got
+    inward = _inward(edge, lot)
     widths: list[float] = []
     names: set[str] = set()
     public = True
@@ -324,16 +542,20 @@ def read_line(
             if not through_private:
                 return None, False, None
             public = False
-        widths.append(float(cmap.streets.lines[s].distance(p)))
+        widths.append(_signed(cmap.streets.lines[s], p, inward, lot))
         names.add(street_key(cmap.streets.names[s]))
     if len(widths) >= MIN_MEASURED:
         return min(widths), public, tuple(sorted(names))
-    width, near_public, near_names = _nearest(points, cmap, through_private)
+    width, near_public, near_names = _nearest(points, cmap, through_private, inward, lot)
     return width, public and near_public, near_names
 
 
 def _nearest(
-    points: Sequence[Any], cmap: ClassMap, through_private: bool = False
+    points: Sequence[Any],
+    cmap: ClassMap,
+    through_private: bool = False,
+    inward: tuple[float, float] | None = None,
+    lot: Any = None,
 ) -> tuple[float | None, bool, tuple[str, ...] | None]:
     """The reading for a line no centreline runs beside (a stub, a curve):
     the distance to the nearest centreline of any bearing within reach of
@@ -355,10 +577,11 @@ def _nearest(
                 return None, False, None
             public = False
         names.update(street_key(cmap.streets.names[i]) for i in near)
-        d = float(cmap.streets.lines[s].distance(p))
+        d = _signed(cmap.streets.lines[s], p, inward, lot)
         if cmap.osm is not None:
             # A street Metro's file lacks may run closer: OpenStreetMap's roads
-            # can only bring the reading in, never push it out.
+            # can only bring the reading in, never push it out. Unsigned: its
+            # service roads and drives run inside lots, and are no street.
             d = min([d, *(float(cmap.osm.lines[i].distance(p)) for i in cmap.osm.near(p, FRONT_REACH_FT))])
         widths.append(d)
     return min(widths), public, tuple(sorted(names))
@@ -369,18 +592,27 @@ def _reads(cmap: ClassMap, layer_id: str | None) -> bool:
     return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in places)
 
 
-def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence[ClassMap]) -> list[list[Any]]:
+def measure(
+    edges: Iterable[Sequence[Any]],
+    layer_id: str | None,
+    maps: Sequence[ClassMap],
+    lot: Any = None,
+    stretches: Sequence[str] = (),
+) -> list[list[Any]]:
     """Every street line of one lot, as ``[x1, y1, x2, y2, half_width_ft,
-    public, names, classes]`` -- the half-width None where unmeasured, the
-    names None where unread, ``classes`` the class name on each map read for
-    the layer (``{map key: class or None}``). Empty where no map gives the
-    streets."""
+    public, names, classes, on_stretch]`` -- the half-width None where
+    unmeasured and negative where the centre line is on the lot's side
+    (``lot``, the tax lot's shape), the names None where unread, ``classes``
+    the class name on each map read for the layer (``{map key: class or
+    None}``), ``on_stretch`` each row label of ``stretches`` whose street the
+    line may be on, read for its stretch (:func:`stretch_readings`; ``{label:
+    True, False or None}``). Empty where no map gives the streets."""
     cmap = _streets_for(layer_id, maps)
     if cmap is None:
         return []
     ranked = [m for m in maps if _reads(m, layer_id)]
     lines = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
-    reads = [read_line(e, cmap) for e in lines]  # type: ignore[arg-type]
+    reads = [read_line(e, cmap, lot=lot) for e in lines]  # type: ignore[arg-type]
     ranks = {m.key: _lot_ranks(lines, [names for _, _, names in reads], m) for m in ranked}
     # A city map naming its private streets: Metro's "private" alone gives up
     # nothing only where that map agrees (:func:`_private_reading`).
@@ -389,8 +621,8 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
         for i, (e, (_, public, _)) in enumerate(zip(lines, reads)):
             if public:
                 continue
-            width, _, names = read_line(e, cmap, through_private=True)  # type: ignore[arg-type]
-            got, city_width = _private_reading(e, cmap, named.get(key))
+            width, _, names = read_line(e, cmap, through_private=True, lot=lot)  # type: ignore[arg-type]
+            got, city_width = _private_reading(e, cmap, named.get(key), _inward(e, lot), lot)
             if got == "private":
                 continue
             reads[i] = (width if city_width is None else city_width, True, names)
@@ -408,6 +640,7 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
                 public,
                 None if names is None else list(names),
                 classes,
+                stretch_readings(e, names, stretches, cmap.streets),
             ]
         )
     return out
@@ -427,7 +660,11 @@ def _name_matched(layer_id: str | None) -> list[str]:
 
 
 def _private_reading(
-    edge: Sequence[Any], streets: ClassMap, cmap: ClassMap | None
+    edge: Sequence[Any],
+    streets: ClassMap,
+    cmap: ClassMap | None,
+    inward: tuple[float, float] | None = None,
+    lot: Any = None,
 ) -> tuple[str | int, float | None]:
     """What a city map that names its streets says of a lot line Metro puts
     on a private road or drive, and the half-width to take if it calls the
@@ -466,7 +703,7 @@ def _private_reading(
         if streets.types[s] in PRIVATE_TYPES:
             private.append((p, street_key(streets.streets.names[s]), s))
         else:
-            public_widths.append(float(streets.streets.lines[s].distance(p)))
+            public_widths.append(_signed(streets.streets.lines[s], p, inward, lot))
     along: dict[int, list[tuple[Any, int | None]]] = {}
     if not private:
         # A corner cut-off or curve piece no centreline runs beside: it may be
@@ -504,13 +741,13 @@ def _private_reading(
     for i in public:
         line = cmap.lines.lines[i]
         for p, s in along[i]:
-            d = float(line.distance(p))
+            d = _signed(line, p, inward, lot)
             if s is not None:
                 # The city's line drawn on the private road itself (the same
                 # road, a few feet apart): the nearer of the two centrelines.
                 drive = streets.streets.lines[s]
                 if float(line.distance(drive.interpolate(drive.project(p)))) <= COINCIDE_FT:
-                    d = min(d, float(drive.distance(p)))
+                    d = min(d, _signed(drive, p, inward, lot))
             widths.append(d)
     return max(cmap.ranks[i] for i in public), min(widths)  # type: ignore[type-var]
 
@@ -584,6 +821,10 @@ class Rule:
     #: A line on one is read like an unread name -- :meth:`deepest` -- not as
     #: a street the list leaves out, whose distance the code does state.
     unstated: tuple[str, ...] = ()
+    #: Each row of ``named`` as the code prints it, bracketed stretch and all:
+    #: a row limited to one stretch (:func:`stretch_of`) holds unless the
+    #: line is read off it.
+    labels: tuple[str, ...] = ()
 
     def deepest(self) -> float:
         """The deepest distance the zone states: what an unread line takes."""
@@ -595,21 +836,28 @@ class Rule:
             return max(self.classes.values())
         return self.classes[bucket]
 
-    def required(self, names: Sequence[str] | None, classes: Mapping[str, str | None]) -> float:
+    def required(
+        self,
+        names: Sequence[str] | None,
+        classes: Mapping[str, str | None],
+        on_stretch: Mapping[str, bool | None] | None = None,
+    ) -> float:
         """The distance one street line must reach.
 
-        A street the name list holds takes its listed distance (the deepest,
-        where the code lists one street twice for two stretches: the stretch
-        is not read). Any other street takes its class's distance, or the
-        unlisted distance, or none. An unread name, where names decide, and
-        an unread class, where classes do, take :meth:`deepest` -- and so
-        does a street the list names without a figure (:attr:`unstated`).
+        A street the name list holds takes its listed distance (the deepest
+        of the rows that hold there). A row limited to one stretch holds
+        unless ``on_stretch`` reads the line OFF it (False); a street every
+        row of which is read off is a street the list leaves out. Any other
+        street takes its class's distance, or the unlisted distance, or none.
+        An unread name, where names decide, and an unread class, where
+        classes do, take :meth:`deepest` -- and so does a street the list
+        names without a figure (:attr:`unstated`).
         """
         if self.named and names is None:
             return self.deepest()
         if not self.named:
             return self._by_class(classes) if self.classes else (self.other or 0.0)
-        listed = dict(self._listed())
+        listed = dict(self._listed(on_stretch or {}))
         got = []
         for n in names or ():
             if n in self.unstated and n not in listed:
@@ -656,11 +904,18 @@ class Rule:
             return None
         return max(rows[d] for d in sides if d is not None)
 
-    def _listed(self) -> list[tuple[str, float]]:
+    def _listed(self, on_stretch: Mapping[str, bool | None]) -> list[tuple[str, float]]:
         best: dict[str, float] = {}
-        for n, ft in self.named:
+        for i, (n, ft) in enumerate(self.named):
+            label = self.labels[i] if i < len(self.labels) else ""
+            if on_stretch.get(label) is False and stretch_of(label) is not None:
+                continue
             best[n] = max(ft, best.get(n, 0.0))
         return list(best.items())
+
+    def stretch_labels(self) -> tuple[str, ...]:
+        """The printed labels of the rows limited to one stretch."""
+        return tuple(label for label in self.labels if stretch_of(label) is not None)
 
 
 def rule_of(rules: "ZoneResolution") -> Rule | None:
@@ -669,6 +924,7 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
     if rules.get(WIDTH_FIELD) is True:
         classes = {c: n / 2.0 for c, n in classes.items()}
     named: list[tuple[str, float]] = []
+    labels: list[str] = []
     unstated: list[str] = []
     table = rules.get(NAMED_FIELD)
     if isinstance(table, (list, tuple)):
@@ -678,6 +934,7 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
             ft = _number(entry[1])
             if ft is not None:
                 named.append((street_key(entry[0]), ft))
+                labels.append(str(entry[0]))
             elif entry[1] is None:
                 unstated.append(street_key(entry[0]))
     if rules.get(WIDTH_FIELD) is True:
@@ -696,6 +953,7 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
         other=other,
         by_designation=rows,
         unstated=tuple(unstated),
+        labels=tuple(labels),
     )
 
 
@@ -769,8 +1027,11 @@ __all__ = [
     "PRIVATE_TYPES",
     "READS",
     "STREETS_FROM",
+    "STRETCH_MARGIN_FT",
+    "STRETCH_REACH_FT",
     "WIDTH_FIELD",
     "Rule",
+    "Stretch",
     "applies",
     "depth_ft",
     "half_width_ft",
@@ -779,5 +1040,7 @@ __all__ = [
     "read_line",
     "rule_of",
     "street_key",
+    "stretch_of",
+    "stretch_readings",
     "strip_sqft",
 ]
