@@ -204,3 +204,43 @@ def test_a_screened_lot_off_every_transit_street_drops_the_rules(tmp_path, monke
         assert pdx.MAIN_STREET_TRANSIT_FLAG not in codes
         assert pdx.MAIN_STREET_ACTIVE_USE_FLAG not in codes
         assert pdx.MAIN_STREET_VEHICLE_FLAG not in codes
+
+
+def test_from_2029_a_lot_on_a_mapped_transit_street_is_red_on_the_shop_rule() -> None:
+    # rulings.yaml 2026-10-02-no-variances: a rule the building fails is red.
+    on_it = pt.read(_map((LineString([(-200, -30), (300, -30)]), "SE DIVISION ST", "TA")), STREET_LOT, _street_edges())
+    unsettled = pt.read(_map((LineString([(-200, -120), (300, -120)]), "SE DIVISION ST", "TA")), STREET_LOT, _street_edges())
+    assert (on_it.fronts, unsettled.fronts) == (pt.TRANSIT, pt.MAYBE)
+    after, before = date(2029, 1, 1), date(2028, 12, 31)
+    bind = pdx.active_use_bind(MAIN, on_it, after)
+    assert bind.check == pdx.ACTIVE_USE_CHECK and bind.source.startswith("PCC 33.415.200")
+    assert "SE DIVISION ST (Transit Access Street)" in bind.source
+    from flats.tests.test_pdx_overlays import _colour
+
+    assert _colour(binds=[bind]).value == "red"
+    # Before the day, off the overlay, unsettled, or unread: no bind.
+    assert pdx.active_use_bind(MAIN, on_it, before) is None
+    assert pdx.active_use_bind(pdx.Reading(), on_it, after) is None
+    assert pdx.active_use_bind(MAIN, unsettled, after) is None
+    assert pdx.active_use_bind(MAIN, None, after) is None
+    # The bind takes the flag's place; an unsettled lot keeps the yellow flag.
+    tm_on = _map((LineString([(-200, -30), (300, -30)]), "SE DIVISION ST", "TA"))
+    tm_maybe = _map((LineString([(-200, -120), (300, -120)]), "SE DIVISION ST", "TA"))
+    assert pdx.MAIN_STREET_ACTIVE_USE_FLAG not in _codes(_flags(MAIN, tm_on, plat="one_lot", on=after))
+    (flag,) = [f for f in _flags(MAIN, tm_maybe, plat="one_lot", on=after) if f.code == pdx.MAIN_STREET_ACTIVE_USE_FLAG]
+    assert flag.severity is None and _colour(flags=[flag]).value == "yellow"
+    assert pdx.ACTIVE_USE_CHECK in pdx.CHECKS
+
+
+def test_macadam_screened_after_2029_is_red_on_the_shop_rule(tmp_path) -> None:
+    from flats.ingest.quadfit import lot_from_row
+
+    r = _macadam_row()
+    pdx.with_overlays([r], snapshot(tmp_path))
+    s = _screen(tmp_path)
+    reading = lot_from_row(r).pdx_overlays
+    assert reading.main_street
+    after = pdx.checked(s, reading, on=date(2029, 1, 1))
+    assert after.signed.colour.value == "red"
+    assert pdx.ACTIVE_USE_CHECK in [b.check for b in after.signed.binds]
+    assert pdx.MAIN_STREET_ACTIVE_USE_REASON in after.signed.reasons

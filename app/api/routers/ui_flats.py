@@ -2900,6 +2900,7 @@ _CHECK_WORDS = {
     "historic_listed": "a landmark on the city's historic list or the National Register stands on the lot: removing it needs a public hearing that can refuse it",
     "pdx_historic_review": "a new building here needs Portland's historic resource review, decided on whether it fits the district's character",
     "pdx_design_review": "a new building here needs Portland's design review, decided on the city's design guidelines",
+    "pdx_active_use": "the lot is on a Portland transit street in the main street overlay: from 2029 a quarter of the ground floor near the street must be a shop, office or similar, and four homes have none",
 }
 
 #: What the verdict the screen actually gave means. Today it is "unknown" on

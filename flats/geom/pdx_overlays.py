@@ -92,9 +92,11 @@ RED:
   33.415.340's 60 % ground floor windows wait for the same day). A screen
   under the law of an earlier day says so on every "m" lot below the yellow
   line, as an adopted change not yet in force is said (rulings.yaml
-  2026-08-06-portland-ricap11-ci1-housing); from that day the lot is YELLOW
-  with :data:`MAIN_STREET_ACTIVE_USE_FLAG`, on a lot the map does not read
-  as fronting no transit street. The date is a run-key input
+  2026-08-06-portland-ricap11-ci1-housing). From that day a lot the map
+  reads as fronting a transit street is RED (:data:`ACTIVE_USE_CHECK`: the
+  four homes fail the standard, and rulings.yaml 2026-10-02-no-variances
+  takes no adjustment), and a lot whose streets the map cannot settle is
+  YELLOW with :data:`MAIN_STREET_ACTIVE_USE_FLAG`. The date is a run-key input
   (:func:`dated_in_force`), so a cache kept under the old law is not replayed.
   FOLLOWUPS 78's last main street item.
 
@@ -256,14 +258,16 @@ MIN_FAR_CHECK = "pdx_min_far"
 PROTECTED_RESOURCE_CHECK = "pdx_protected_resource"
 HISTORIC_REVIEW_CHECK = "pdx_historic_review"
 DESIGN_REVIEW_CHECK = "pdx_design_review"
+ACTIVE_USE_CHECK = "pdx_active_use"
 CHECKS: tuple[str, ...] = (
-    MIN_FAR_CHECK, PROTECTED_RESOURCE_CHECK, HISTORIC_REVIEW_CHECK, DESIGN_REVIEW_CHECK
+    MIN_FAR_CHECK, PROTECTED_RESOURCE_CHECK, HISTORIC_REVIEW_CHECK, DESIGN_REVIEW_CHECK, ACTIVE_USE_CHECK
 )
 _BIND_REASON: Mapping[str, str] = {
     MIN_FAR_CHECK: MIN_FAR_REASON,
     PROTECTED_RESOURCE_CHECK: PROTECTED_RESOURCE_REASON,
     HISTORIC_REVIEW_CHECK: HISTORIC_REVIEW_REASON,
     DESIGN_REVIEW_CHECK: DESIGN_REVIEW_REASON,
+    ACTIVE_USE_CHECK: MAIN_STREET_ACTIVE_USE_REASON,
 }
 #: The flag types (``flats/config/flags.yaml``), each with its reason.
 MAIN_STREET_TRANSIT_FLAG = "PDX-MAIN-STREET-TRANSIT"
@@ -1113,6 +1117,7 @@ def flags_for(
     drawing: Mapping[str, Any] | None,
     on: date | None = None,
     transit: Any = None,
+    frontage: Any = None,
 ) -> tuple[flag_plan.Flag, ...]:
     """The open questions the reading leaves on one design: the main
     street's transit-street rules, a Conservation District's Community
@@ -1121,7 +1126,8 @@ def flags_for(
     whose law the screen applies (:func:`flats.rules.loader.law_on` when
     omitted); ``transit`` the city's transit street map
     (:class:`flats.geom.pdx_transit.TransitMap`) where it reads the lot --
-    None takes every street as a transit street."""
+    None takes every street as a transit street; ``frontage`` its reading of
+    the lot, where the caller has it (:func:`flats.geom.pdx_transit.read`)."""
     if reading is None:
         return ()
     out: list[flag_plan.Flag] = []
@@ -1132,14 +1138,13 @@ def flags_for(
     from flats.geom import pdx_transit
 
     unheld = f"no map of transit streets reads the lot, so every street is taken as one ({CITES['transit_street'][0]})"
-    frontage = (
-        pdx_transit.read(transit, lot, edges, building_of(drawing)) if reading.main_street else None
-    )
+    if frontage is None and reading.main_street:
+        frontage = pdx_transit.read(transit, lot, edges, building_of(drawing))
     if frontage is not None:
         unheld = f"{frontage.words()} ({CITES['transit_street'][0]})"
     fronts = frontage is None or frontage.fronts != pdx_transit.CLEAR
     if reading.main_street:
-        if fronts:
+        if fronts and active_use_bind(reading, frontage, on) is None:
             flag(*active_use(on, unheld))
         if plat == "unit_lots" and (frontage is None or frontage.near != pdx_transit.CLEAR):
             flag(
@@ -1268,6 +1273,34 @@ def active_use(on: date | None, unheld: str) -> tuple[str, str, int | None]:
     )
 
 
+def active_use_bind(reading: Reading | None, frontage: Any, on: date | None) -> flag_plan.Bind | None:
+    """33.415.200's RED: from :data:`ACTIVE_USE_FROM`, on a main street lot
+    the city's map reads as fronting a transit street (``frontage``,
+    :func:`flats.geom.pdx_transit.read`). The four homes have no active use,
+    and rulings.yaml ``2026-10-02-no-variances`` takes no adjustment. None
+    before the day, off the overlay, or where the map does not settle it
+    (the flag of :func:`active_use` then asks)."""
+    from flats.geom import pdx_transit
+
+    if reading is None or not reading.main_street or _law_day(on) < ACTIVE_USE_FROM:
+        return None
+    if frontage is None or frontage.fronts != pdx_transit.TRANSIT:
+        return None
+    return flag_plan.Bind(
+        ACTIVE_USE_CHECK,
+        None,
+        None,
+        None,
+        source=(
+            f"{CITES['active_use'][0]}: on a site with frontage on a transit street, 25% of the ground "
+            f"level floor area within 100 ft of it must be a non-residential active use, and the four "
+            f"homes have none; the exemption for residential development ended on "
+            f"{ACTIVE_USE_FROM:%B} {ACTIVE_USE_FROM.day}, {ACTIVE_USE_FROM.year}; {frontage.words()} "
+            f"(Steph 2026-10-02: no variances, a confirmed miss is red)"
+        ),
+    )
+
+
 def dated_in_force(on: date) -> list[str]:
     """The dated provisions this module applies on ``on``, for the run key
     (:func:`flats.ingest.batch.run_key`'s ``law``): two runs either side of
@@ -1294,6 +1327,17 @@ def checked(s: Any, reading: Reading | None, on: date | None = None) -> Any:
         zone=zone,
         height_ft=design.height_ft,
     )
+    from flats.geom import pdx_transit
+
+    transit = transit_map(getattr(s.lot, "jurisdiction", None)) if reading.main_street else None
+    frontage = (
+        pdx_transit.read(transit, getattr(s.lot, "lot_geom", None), getattr(s.lot, "edges", None), building_of(s.drawing))
+        if transit is not None
+        else None
+    )
+    shop = active_use_bind(reading, frontage, on)
+    if shop is not None:
+        binds = (*binds, shop)
     min_far_bind = next((b for b in binds if b.check == MIN_FAR_CHECK), None)
     min_far_flag = None
     if min_far_bind is not None and not _min_far_cannot_fit(
@@ -1331,7 +1375,8 @@ def checked(s: Any, reading: Reading | None, on: date | None = None) -> Any:
         edges=getattr(s.lot, "edges", None),
         drawing=s.drawing,
         on=on,
-        transit=transit_map(getattr(s.lot, "jurisdiction", None)) if reading.main_street else None,
+        transit=transit,
+        frontage=frontage,
     )
     if min_far_flag is not None:
         flags = (*flags, min_far_flag)

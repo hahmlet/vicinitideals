@@ -3216,6 +3216,8 @@ async def test_portland_overlay_reasons_are_said_in_words() -> None:
         assert code in _REASON_WORDS, code
     assert "floor area" in _CHECK_WORDS[pdx_overlays.MIN_FAR_CHECK]
     assert "historic" in _CHECK_WORDS[pdx_overlays.PROTECTED_RESOURCE_CHECK]
+    for check in pdx_overlays.CHECKS:
+        assert check in _CHECK_WORDS, check
 
 
 async def test_historic_list_reasons_are_said_in_words() -> None:
