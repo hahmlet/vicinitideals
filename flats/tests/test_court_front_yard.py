@@ -195,12 +195,18 @@ def test_a_ban_on_parking_before_the_building_reaches_every_street() -> None:
     assert court_yard_lines(_plan(CORNER, ban=True, exempt=True)) == ((0, 0, 50, 0),)
 
 
-def test_a_private_road_is_a_street_for_where_the_parking_goes() -> None:
-    """Steph 2026-09-30: a private road the yards do not count is a street
-    "for purpose of where parking should be"."""
+def test_a_private_road_makes_a_front_yard_only_where_the_city_counts_it() -> None:
+    """Steph 2026-09-30: a private road is a way in for parking and governs
+    setbacks only where the city counts it. A road the yards ignore
+    (``lot.access``) makes no front yard, so the court may face it; a road the
+    city counts is a front edge of that reading and does."""
     road = (0.0, 100.0, 50.0, 100.0)
     lot = _edges((0, 0, 50, 0, F), (50, 0, 50, 100, S), (50, 100, 0, 100, R), (0, 100, 0, 0, S))
-    assert court_yard_lines(_plan(lot, access=(road,)))[-1] == road
+    assert court_yard_lines(_plan(lot, access=(road,))) == ((0, 0, 50, 0),)
+    counted = _edges((0, 0, 50, 0, F), (50, 0, 50, 100, S), (50, 100, 0, 100, F), (0, 100, 0, 0, S))
+    assert court_yard_lines(_plan(counted)) == ((0, 0, 50, 0), (50, 100, 0, 100))
+    # where the code bans parking toward the street, the ignored road still is not one
+    assert court_yard_lines(_plan(lot, ban=True, access=(road,))) == ((0, 0, 50, 0),)
 
 
 # --- the screen -----------------------------------------------------------------

@@ -2105,9 +2105,14 @@ def court_yard_lines(s: "Screened") -> tuple[tuple[float, float, float, float], 
       ``both``, an alley lot). A through lot's far end the code lets the
       owner name the rear (``owner``) is a rear yard, and a court there is
       behind the building;
-    * a private road the yards do not count (:attr:`QuadfitLot.access`):
-      Steph 2026-09-30, private roads are streets "for purpose of where
-      parking should be";
+    * a private road only where the city counts it as a front lot line for
+      the yards -- then it is a front edge of this reading (``private_drives
+      .street``; Clackamas ZDO 202 exception 2 in the reading that takes
+      access from it; Fairview's both readings, the worse kept). Steph
+      2026-09-30: a private road is a way in for parking, and governs
+      setbacks only where the city says so. A private road the yards do not
+      count (:attr:`QuadfitLot.access`) makes no front yard: parking may
+      face it;
     * where the code bans parking between the building and the street
       outright (``parking_front_prohibited`` true and not waived), EVERY
       street line -- the corner's side street and a through lot's far end
@@ -2134,7 +2139,6 @@ def court_yard_lines(s: "Screened") -> tuple[tuple[float, float, float, float], 
         every = (EdgeClass.front, EdgeClass.street_side)
         add(s.lot.edges, every)
         add(getattr(s, "street_edges", None), every)
-    lines += [a for a in s.lot.access if a not in lines]
     return tuple(lines)
 
 

@@ -2687,10 +2687,11 @@
   effect: >-
     The court must not sit between the building and a front lot line (the
     front yard: both ends of a through lot whose code makes each a front,
-    every street of a corner whose front is not named) or a private road;
-    where the code bans parking between the building and the street
-    (parking_front_prohibited), every street line. A corner's street side
-    yard is not a front yard. Every placement prefers a clear court; a plan
+    every street of a corner whose front is not named, a private road only
+    where the city counts it as a front lot line); where the code bans
+    parking between the building and the street (parking_front_prohibited),
+    every street line. A corner's street side yard is not a front yard, nor
+    a private road the yards ignore. Every placement prefers a clear court; a plan
     whose final drawing still stands it there is held out of GREEN
     (COURT_FRONT_YARD). FOLLOWUPS 142.
   source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md
