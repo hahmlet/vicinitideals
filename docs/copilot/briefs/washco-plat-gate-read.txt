@@ -1,0 +1,7 @@
+washco-plat-gate-read
+
+WHY: FOLLOWUPS 83 (docs/followups/83-standard-plat-gate.md -- read it). ~731 Washington County lots are yellow only because nothing says whether the lot was created by a "standard" subdivision or partition plat (CDC 302-2.14 .. 307-2.13 gates). The county taxlot layer's LEGAL_DESCRIPTION tells platted vs metes-and-bounds, but not standard vs PUD/expedited. Claude must decide whether a PUD or expedited plat changes the answer before building the measurement. READ-ONLY job: no edits.
+
+TASK: in the stored Washington County code (flats/provenance/docs/or/washington/_unincorporated/), find every gate sentence in 302-2.14 through 307-2.13 that mentions a plat / subdivision / partition / "standard" (quote each with path#line). Find the CDC definitions of "standard subdivision", "standard partition", "Planned Development"/PUD, "expedited land division" (grep the definitions chapter; quote). Then answer: (1) does each gate apply to lots created by ANY plat, only by a STANDARD plat, or does it exclude PUD/expedited plats? (2) Is there any text that makes a lot in a PUD plat pass or fail the gate differently? (3) How does the encoded rule (grep flats/config/jurisdictions/or/washington/ for the condition behind those yellows -- "standard_plat" or similar) word the question today? Mark every claim QUOTED (with line) or INFERRED.
+
+ANSWER FORM (under 500 words): the gate table (section | applies to | quote path#line), the definitions, answers (1)-(3), then "LOOKED:".

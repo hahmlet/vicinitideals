@@ -58,7 +58,9 @@ from starlette.concurrency import run_in_threadpool
 from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import (
+    FLATS_COLOUR_ORDER,
     FlatsCrossrefRuling,
+    FlatsLotBest,
     FlatsLot,
     FlatsLotMark,
     FlatsLotPrice,
@@ -2825,7 +2827,7 @@ async def flats_words_rule(
 #: green design and one red is a green lot -- the buyer picks the design --
 #: so "either design" takes the lowest rank across the run's designs, the
 #: same choice ``flats.ingest.quadfit.per_lot`` makes.
-_COLOURS = ("green", "yellow", "unknown", "red")
+_COLOURS = FLATS_COLOUR_ORDER
 
 #: What each colour means, said once and reused on both pages.
 _COLOUR_WORDS = {
@@ -2916,6 +2918,7 @@ _REASON_WORDS = {
     "CONDO_AIR_PARCEL": "condominium air parcel, not land",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_MIN_FAR": "closer look: the city asks for more floor area on a lot this size than the four homes give — a bigger building could meet it",
+    "DRIVEWAY_NEAR_INTERSECTION_100FT": "Durham asks the driveway to stand at least 100 ft from a street intersection, and on this lot it cannot, so it is red",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
     "CLOSER_LOOK_SPLIT_ZONE": "closer look: the lot lies in more than one zoning district and the building or its parking stands across the line; the city's code has no rule that puts the whole lot in one, and the standards were read from the district that covers most of it",
@@ -3346,10 +3349,33 @@ def _rank(column: Any) -> Any:
     return case({c: i for i, c in enumerate(_COLOURS)}, value=column, else_=len(_COLOURS))
 
 
-def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None) -> Any:
+def _best(
+    run_id: int,
+    design: str | None,
+    lot_ids: Sequence[int] | None = None,
+    *,
+    stored: bool = False,
+    conditions: Sequence[Any] = (),
+) -> Any:
     """One row per lot: the lowest verdict rank and the lowest colour rank
     across the run's designs (or the one design asked for). ``lot_ids`` limits
-    it to a page's lots, so the aggregate does not run over the whole run."""
+    it to a page's lots, so the aggregate does not run over the whole run.
+    ``conditions`` are filters on the stored table, applied inside (``stored``
+    only): outside the subquery they would be a cross join."""
+    if stored and design is None:
+        best = FlatsLotBest
+        stmt = select(
+            best.lot_id.label("lot_id"),
+            best.jurisdiction.label("jurisdiction"),
+            best.zone.label("zone"),
+            best.tlid.label("tlid"),
+            best.site_address.label("site_address"),
+            best.best_verdict.label("verdict"),
+            best.best_colour.label("colour"),
+        ).where(best.run_id == run_id, *conditions)
+        if lot_ids is not None:
+            stmt = stmt.where(best.lot_id.in_(lot_ids))
+        return stmt.subquery("best")
     result = FlatsLotResult
     colour = _colour_column()
     stmt = select(
@@ -3504,8 +3530,7 @@ def _no_nul(value: str) -> str:
     return value.replace("\x00", "")
 
 
-def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
-    lot = FlatsLot
+def _lot_conditions(jurisdiction: str, zone: str, q: str, *, lot: Any = FlatsLot) -> list[Any]:
     jurisdiction, zone, q = _no_nul(jurisdiction), _no_nul(zone), _no_nul(q)
     conditions: list[Any] = []
     if jurisdiction:
@@ -3549,12 +3574,15 @@ async def _lot_counts(
     design: str | None,
     conditions: list[Any],
     price: Mapping[str, Any] | None = None,
+    *,
+    stored: bool = False,
+    conditions_on_best: bool = False,
 ) -> dict[str, dict[str, int]]:
     """How many lots wear each verdict and each signed colour under the filter."""
-    best = _best(run_id, design)
+    best = _best(run_id, design, stored=stored, conditions=conditions if conditions_on_best else ())
     colour = _display_colour(best)
     stmt = select(best.c.verdict, colour, func.count()).select_from(best)
-    if conditions:
+    if conditions and not conditions_on_best:
         stmt = stmt.join(FlatsLot, FlatsLot.id == best.c.lot_id).where(*conditions)
     if price is not None and price.get("ceiling") is not None:
         pods = flats_price.pods_column(price["cfg"], best.c.colour)
@@ -3811,14 +3839,23 @@ async def _lot_rows(
     page: int,
     price: Mapping[str, Any],
     cheapest_first: bool = False,
+    *,
+    stored: bool = False,
+    conditions_on_best: bool = False,
 ) -> list[dict[str, Any]]:
-    best = _best(run_id, design)
+    best = _best(run_id, design, stored=stored, conditions=conditions if conditions_on_best else ())
     pods = flats_price.pods_column(price["cfg"], best.c.colour)
     per_home = flats_price.per_home_column(price["cfg"], pods)
     ceiling = price.get("ceiling")
     base = select(best.c.lot_id).select_from(best)
-    if conditions or not cheapest_first:
+    joined_lots = False
+    if conditions and not conditions_on_best:
         base = base.join(FlatsLot, FlatsLot.id == best.c.lot_id).where(*conditions)
+        joined_lots = True
+    if not cheapest_first and not stored:
+        if not joined_lots:
+            base = base.join(FlatsLot, FlatsLot.id == best.c.lot_id)
+            joined_lots = True
     if cheapest_first or ceiling is not None:
         base = base.outerjoin(FlatsLotPrice, FlatsLotPrice.lot_id == best.c.lot_id)
     display_colour = _display_colour(best)
@@ -3830,6 +3867,8 @@ async def _lot_rows(
         # Cheapest first never reads the wide lot row to sort: the page's
         # fifty ids come off the stored price columns, then the lots are fetched.
         order = [per_home.asc().nulls_last(), best.c.lot_id]
+    elif stored:
+        order = [best.c.jurisdiction, best.c.tlid]
     else:
         order = [FlatsLot.jurisdiction, FlatsLot.tlid]
     ids_page = (
@@ -3838,7 +3877,7 @@ async def _lot_rows(
         .all()
     )
     rank = {lot_id: i for i, lot_id in enumerate(ids_page)}
-    page_best = _best(run_id, design, ids_page)
+    page_best = _best(run_id, design, ids_page, stored=stored)
     page_colour = _display_colour(page_best)
     found_lots = (
         (
@@ -4219,7 +4258,13 @@ async def flats_lots(
     picked = design if design in designs else None
     ctx["design"] = picked or ""
     ctx["designs"] = designs
-    conditions = _lot_conditions(jurisdiction, zone, q)
+    has_best_rows = (
+        await session.execute(select(FlatsLotBest.lot_id).where(FlatsLotBest.run_id == chosen.id).limit(1))
+    ).first() is not None
+    use_stored_best = has_best_rows and picked is None
+    condition_row = FlatsLotBest if use_stored_best else FlatsLot
+    lot_id_col = condition_row.id if condition_row is FlatsLot else condition_row.lot_id
+    conditions = _lot_conditions(jurisdiction, zone, q, lot=condition_row)
     if tight_only:
         # Lots with a fit inside 6 inches either way (Steph 2026-09-25): the
         # ones the acquisition review looks at twice.
@@ -4229,12 +4274,12 @@ async def flats_lots(
         )
         if picked:
             flagged = flagged.where(FlatsLotResult.design_key == picked)
-        conditions.append(FlatsLot.id.in_(flagged))
+        conditions.append(lot_id_col.in_(flagged))
     if form in _FORM_CHOICES:
         has_rows = (
             await session.execute(select(FlatsLotWorksAs.lot_id).where(FlatsLotWorksAs.run_id == chosen.id).limit(1))
         ).first() is not None
-        conditions.append(FlatsLot.id.in_(_works_as(chosen.id, picked, form, stored=has_rows)))
+        conditions.append(lot_id_col.in_(_works_as(chosen.id, picked, form, stored=has_rows)))
     if await _ruled_run(session, chosen.id):
         ctx["colour_words"] = _RULE_COLOUR_WORDS
         ctx["ruled"] = True
@@ -4244,12 +4289,31 @@ async def flats_lots(
         # A savepoint, so a query the clock stops leaves the page's other reads usable.
         async with session.begin_nested():
             await _lots_limits(session)
-            counts = await _lot_counts(session, chosen.id, picked, conditions, price)
+            counts = await _lot_counts(
+                session,
+                chosen.id,
+                picked,
+                conditions,
+                price,
+                stored=use_stored_best,
+                conditions_on_best=use_stored_best,
+            )
             shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
             ctx["counts"] = counts
             ctx["shown"] = shown
             ctx["pages"] = max(1, -(-shown // _LOTS_PAGE))
-            ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page, price, cheapest)
+            ctx["lots"] = await _lot_rows(
+                session,
+                chosen.id,
+                picked,
+                conditions,
+                colour,
+                page,
+                price,
+                cheapest,
+                stored=use_stored_best,
+                conditions_on_best=use_stored_best,
+            )
     except DBAPIError as exc:
         if not _timed_out(exc):
             raise

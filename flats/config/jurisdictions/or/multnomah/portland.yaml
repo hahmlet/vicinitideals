@@ -1800,6 +1800,128 @@ code:
     title: "Chapter 33.540 Laurelhurst/Eastmoreland Plan District"
     extraction: plain
     allow_thin: true
+  # Plan districts part 2 batch A (FOLLOWUPS 109, 2026-11-03). Read for the
+  # pod and encoded where a rule reaches it: Glendoveer (33.530), East
+  # Corridor (33.521), Hollywood (33.536), Kenton (33.538), Lombard (33.545),
+  # Macadam (33.550), North Interstate (33.561), Northwest Hills (33.563) and
+  # West Portland Multicultural (33.595). Read and left in pending/ because
+  # nothing in them reaches a fourplex on an existing lot: Albina (33.505,
+  # enables nothing on its own), Division (33.520, design details), Healy
+  # Heights (33.533, no green lots), Hillsdale (33.534, its RM2 front 10 ft
+  # equals the base), North Cully (33.560, Type III review only on sites of 5
+  # acres or more, none of them residential), Rocky Butte (33.570, no green
+  # lots) and St. Johns (33.583, heights and coverage the pod never reaches).
+  - id: "33.521"
+    url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_0.pdf
+    title: "Chapter 33.521 East Corridor Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.530"
+    url: https://www.portland.gov/sites/default/files/code/530-glendoveer-pd.pdf
+    title: "Chapter 33.530 Glendoveer Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.536"
+    url: https://www.portland.gov/sites/default/files/code/536-hollywood-pd_1.pdf
+    title: "Chapter 33.536 Hollywood Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.538"
+    url: https://www.portland.gov/sites/default/files/code/538-kenton-pd_0.pdf
+    title: "Chapter 33.538 Kenton Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.545"
+    url: https://www.portland.gov/sites/default/files/code/545-lombard-pd.pdf
+    title: "Chapter 33.545 Lombard Street Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.550"
+    url: https://www.portland.gov/sites/default/files/code/550-macadam-pd.pdf
+    title: "Chapter 33.550 Macadam Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.561"
+    url: https://www.portland.gov/sites/default/files/code/561-north-interstate-pd_0.pdf
+    title: "Chapter 33.561 North Interstate Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.563"
+    url: https://www.portland.gov/sites/default/files/code/563-northwest-hills-pd_1.pdf
+    title: "Chapter 33.563 Northwest Hills Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.595"
+    url: https://www.portland.gov/sites/default/files/code/595-west-port-multi-pd_0.pdf
+    title: "Chapter 33.595 West Portland Multicultural"
+    extraction: plain
+    allow_thin: true
+  # Plan districts part 2 batch B (FOLLOWUPS 109, 2026-11-04), the last of
+  # them: Central City (33.510), Columbia South Shore (33.515), Gateway
+  # (33.526, stored 2026-10-21 and read by pdx_overlays for its open-area
+  # map, declared here now that it is cited), Hayden Island (33.532),
+  # Marquam Hill (33.555), Northwest (33.562), Powell Boulevard (33.567),
+  # Sandy Boulevard (33.575) and South Auditorium (33.580). Every rule that
+  # reaches the pod is held on drawn_areas plan_district_unmeasured. Read
+  # and dismissed: ground floor windows, main entrances, windows above the
+  # ground floor and the Northwest active floor area (residential exempt
+  # until 2029, 33.562.240.D, 270), the Sandy and Gateway height steps (no
+  # step falls below 30 ft, 33.575.100, 33.526.210), Gateway open area
+  # (sites of 5 acres or more and additions of 10,000 sq ft, 33.526.240.B)
+  # and its Enhanced Pedestrian Street standards (sites of 40,000 sq ft,
+  # 33.526.280.B), and the Northwest 20,000 sq ft surface parking cap
+  # (33.562.280.B). Map heights in Gateway (75 ft and up), Hayden Island
+  # (50 ft and up) and the rest of Northwest (45 ft and up) clear the pod.
+  # Portland International Airport (33.565) is left in pending/: its one
+  # site standard, the 25 ft vegetated setback, binds IG2 in the golf
+  # course transition area only (33.565.410.B), and no lot there is green.
+  - id: "33.510"
+    url: https://www.portland.gov/sites/default/files/code/510-central-city_1.pdf
+    title: "Chapter 33.510 Central City Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.515"
+    url: https://www.portland.gov/sites/default/files/code/515-columbia-ss-pd.pdf
+    title: "Chapter 33.515 Columbia South Shore Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.526"
+    url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_1.pdf
+    title: "Chapter 33.526 Gateway Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.532"
+    url: https://www.portland.gov/sites/default/files/code/532-hayden-island-pd.pdf
+    title: "Chapter 33.532 Hayden Island Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.555"
+    url: https://www.portland.gov/sites/default/files/code/555-marquam-hill-pd_1.pdf
+    title: "Chapter 33.555 Marquam Hill Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.562"
+    url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
+    title: "Chapter 33.562 Northwest Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.567"
+    url: https://www.portland.gov/sites/default/files/code/567-powell-boulevard-pd_0.pdf
+    title: "Chapter 33.567 Powell Boulevard Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.575"
+    url: https://www.portland.gov/sites/default/files/code/575-sandy-blvd-pd.pdf
+    title: "Chapter 33.575 Sandy Boulevard Plan District"
+    extraction: plain
+    allow_thin: true
+  - id: "33.580"
+    url: https://www.portland.gov/sites/default/files/code/580-south-auditorium-pd_0.pdf
+    title: "Chapter 33.580 South Auditorium Plan District"
+    extraction: plain
+    allow_thin: true
+  
+  # ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
 defaults:
   # ORS 197A.400(2)(a): the clear and objective rule does not reach "an area
   # identified in a formally adopted central city plan, or a regional center
@@ -2204,6 +2326,10 @@ zones:
           when: [state_middle_housing]
           cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
           quote: "or/hb.2138.2025.txt#L62-L71"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     notes: 'quadfit confidence: verified | Only house/ADU/manufactured home/houseboat/congregate allowed.'
     min_lot_sqft:
       # The house's minimum, which is the fourplex's on the state path: Table
@@ -2329,6 +2455,10 @@ zones:
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2457,6 +2587,10 @@ zones:
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2585,6 +2719,10 @@ zones:
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2596,6 +2734,9 @@ zones:
       value: 30
       cite: PCC 33.110 Table 110-4; 33.110.215
       quote: "or/multnomah/portland/33.110/33.110.205.txt#L14,L31"
+      # PCC 33.530.050.C (Glendoveer flag lots, 25 ft) is not a variant: no
+      # lot is read as a flag lot, so it rides the plan_district_unmeasured
+      # hold on the Glendoveer R7 lots whose shape could be one.
     min_density_trigger_lot_sqft:
       # 33.110.205.C.1, one sentence: "In the R7 zone, a minimum of two
       # dwelling units are required on sites that are 14,000 square feet or
@@ -2627,9 +2768,27 @@ zones:
         fact: pdx_special_building_setback
         cite: PCC 33.540.030 (Laurelhurst/Eastmoreland plan district, which controls over the base zone, 33.500.040) -- the required building setbacks are on the Special Building Setbacks maps at the Development Services Center, which are not published, so the setback that governs here is unread; held only inside the two districts (drawn_areas laurelhurst_eastmoreland)
         quote: "or/multnomah/portland/33.540.txt#L22-L24"
+      variants:
+        # PCC 33.530.040.A (Glendoveer plan district, which controls over the base zone, 33.500.040): 30 ft on
+        # R7 land the county zoned LR7.5. 33.530.050.B (15 ft on every lot
+        # line of a flag lot) rides the hold instead of a variant: no lot is read as a flag
+        # lot, so the Glendoveer R7 lots whose shape could be one (geometry
+        # tier C) sit in the plan_district_unmeasured hold.
+        - value: 30
+          when: [pdx_glendoveer_lr75]
+          cite: PCC 33.530.040.A, front setback 30 feet
+          quote: "or/multnomah/portland/33.530.txt#L31,L33"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/portland/33.110/33.110.205.txt#L37"
+      variants:
+        # PCC 33.530.040.A (Glendoveer plan district, which controls over the base zone, 33.500.040). Note [1]
+        # drops the common-wall side to zero for attached houses only; the pod
+        # is a fourplex on one lot, so both sides keep 10.
+        - value: 10
+          when: [pdx_glendoveer_lr75]
+          cite: PCC 33.530.040.A, side setback 10 feet (note [1] reaches attached houses only)
+          quote: "or/multnomah/portland/33.530.txt#L31,L34,L36-L39"
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/portland/33.110/33.110.205.txt#L39"
@@ -2639,6 +2798,18 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
+        # PCC 33.530.040.A (Glendoveer plan district, which controls over the base zone, 33.500.040): 15 ft,
+        # with no alley relief of its own -- the base zone's alley waiver
+        # relaxes the base zone's figure, not the plan district's, so the
+        # two-fact variants keep 15 where an alley is at the rear.
+        - value: 15
+          when: [pdx_glendoveer_lr75]
+          cite: PCC 33.530.040.A, rear setback 15 feet
+          quote: "or/multnomah/portland/33.530.txt#L31,L35"
+        - value: 15
+          when: [pdx_glendoveer_lr75, alley_at_rear]
+          cite: PCC 33.530.040.A, rear setback 15 feet; the plan district states no alley relief
+          quote: "or/multnomah/portland/33.530.txt#L31,L35"
       qualified_by:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.125 and 33.537.130 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- trees 6 inches or more may not be removed beyond 10 ft of the building or a driveway without tree review (33.853), on sites in the South subdistrict, the combined flood hazard area or within 20 ft of the Springwater Corridor; and along a lot line abutting the corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it. Nothing measures where the trees stand or which line abuts the corridor; held only on the lots drawn_areas johnson_creek_unmeasured traces
@@ -2664,6 +2835,13 @@ zones:
       # number for both side lines; the far side yard keeps that number.
       exempt: true
       quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
+      variants:
+        # PCC 33.530.040.A (Glendoveer plan district, which controls over the base zone, 33.500.040): the
+        # side setback is 10 ft on every side line, an alley side included.
+        - value: 10
+          when: [pdx_glendoveer_lr75]
+          cite: PCC 33.530.040.A, side setback 10 feet; the plan district states no alley relief
+          quote: "or/multnomah/portland/33.530.txt#L31,L34"
     min_lot_sqft:
       value: 4200
       quote: "or/multnomah/portland/33.110/33.110.265.txt#L62"
@@ -2692,6 +2870,55 @@ zones:
         - exempt: true
           when: [abuts_alley]
           quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   R5:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2740,6 +2967,10 @@ zones:
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2847,6 +3078,55 @@ zones:
         - exempt: true
           when: [abuts_alley]
           quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   R2.5:
     cite_default:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
@@ -2897,6 +3177,10 @@ zones:
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/portland/33.110/33.110.200.txt#L12-L13"
           via: "or/multnomah/portland/33.418.txt#L43-L48"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.3, one sentence: "In the R2.5 zone, a minimum of two
       # dwelling units are required on sites that are 5,000 square feet or
@@ -2993,6 +3277,55 @@ zones:
         - exempt: true
           when: [abuts_alley]
           quote: "or/multnomah/portland/33.110/33.110.220.txt#L102"
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   RM1:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -3077,6 +3410,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3161,6 +3498,55 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
     notes: 'Lowest-intensity multi-dwelling zone, and the only one that still allows cottage clusters and manufactured dwelling parks. Side and rear are a flat 5 ft here: the 5/10 step in 33.120.220.B.1 is written for RM3 and RM4 only. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.521.txt#L127-L128"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   RM2:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -3205,6 +3591,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3304,6 +3694,55 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
     notes: 'Table 120-4 prints coverage as "60/70%". 33.120.225.B splits it: 70 percent on a site abutting a Civic or Neighborhood Corridor shown on Map 120-1, 60 on every other RM2 site. 60 is the base and 70 the civic_corridor variant, answered from the city''s corridor layer by flats/geom/corridor.py; a lot the map cannot answer keeps 60, the half that cannot turn a lot green by mistake. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.521.txt#L127-L128"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   RM3:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -3357,6 +3796,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3452,6 +3895,55 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
     notes: 'Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.521.txt#L127-L128"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   RM4:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -3505,6 +3997,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3659,6 +4155,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120/33.120.200.txt#L8-L18"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # Table 120-3 states one dimension for the RX zone and it is a 10-foot
       # front lot line. No area, which is not the same as an area of zero: the
@@ -3737,6 +4237,55 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
     notes: 'Central-city residential. The zeroes are read off the table, not placeholders: Table 120-3 states no minimum area for RX at all, only a 10-foot front lot line, and Table 120-4 states 0 ft setbacks, 100 percent coverage and no landscaped area. Nothing dimensional in this zone can fail a fourplex, so a RED here will come from somewhere other than the zone. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   RMP:
     cite_default:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
@@ -4115,6 +4664,10 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
       # commercial/mixed use zones." Not a minimum of zero -- the standard
@@ -4252,6 +4805,55 @@ zones:
       value: entrance_only
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L27-L33"
     notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) does not reach this zone: "The setbacks do not apply in the CR or CM1 zones" (#L838). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   CM2:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -4308,6 +4910,10 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
       # commercial/mixed use zones." Not a minimum of zero -- the standard
@@ -4477,6 +5083,55 @@ zones:
       sqft_per_unit: 1450
       quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L84-L86"
     notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.521.txt#L127-L128"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   CM3:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -4533,6 +5188,23 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      variants:
+        # Northwest plan district, Map 562-2 (FOLLOWUPS 109 batch B, ruled by
+        # the coordinator 2026-11-04 under the three-tier rule): "up to 20
+        # percent of the net building area may be in Residential uses. More
+        # than 20 percent is prohibited." A four-home building is all
+        # Residential, so a flat prohibition: RED on a lot inside, YELLOW on
+        # one the line cuts (the drawn fact is unanswered there).
+        - value: false
+          when: [pdx_nw_residential_limited]
+          cite: PCC 33.562.100.B (plan districts control over the base zone, 33.500.040)
+          url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
+          retrieved: '2026-10-22'
+          quote: "or/multnomah/portland/33.562.txt#L63-L64"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
       # commercial/mixed use zones." Not a minimum of zero -- the standard
@@ -4706,6 +5378,55 @@ zones:
       sqft_per_unit: 1000
       quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L84-L86"
     notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.521.txt#L127-L128"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   CE:
     cite_default:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
@@ -4762,6 +5483,10 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
       # commercial/mixed use zones." Not a minimum of zero -- the standard
@@ -4969,6 +5694,10 @@ zones:
       # houses is a thing that gets built here.
       value: true
       quote: "or/multnomah/portland/33.130.txt#L341,L343,L1695-L1697"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land in
       # commercial/mixed use zones." Not a minimum of zero -- the standard
@@ -5111,6 +5840,55 @@ zones:
       value: entrance_only
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L27-L33"
     notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   EX:
     cite_default:
       cite: PCC 33.140 — Table 140-1 (33.140.100 Primary Uses), 33.140.100.B.1 and .B.2, 33.140.200 Lot Size, Table 140-2 (Development Standards), Table 140-3 (Minimum Building Setbacks From Residential Zone Lot Lines)
@@ -5139,6 +5917,10 @@ zones:
       # send it to a conditional use. EX is Central Employment.
       value: true
       quote: "or/multnomah/portland/33.140/33.140.100.txt#L104,L106"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "Lot size regulations are in Chapters 33.614 and 33.615." Those are
       # land-division chapters -- how a lot may be created -- and this
@@ -5195,6 +5977,55 @@ zones:
       value: 0
       quote: "or/multnomah/portland/33.140/33.140.210.txt#L29,L52"
     notes: 'Central Employment. The one zone in the employment and industrial chapter where Household Living is allowed outright, and on the dimensions it is among the loosest land in the city: no minimum lot size, 65 ft of height, 100 percent coverage, no landscaped area and no setback from a street lot line. What is left is the neighbour test -- 10 ft from a lot line abutting an R zoned lot, nothing otherwise -- and Table 140-3 makes that height-banded, with the pod always in the taller band. NOT ENCODED, on purpose. (1) The inclusionary-housing bonus raises FAR from 3 to 5 (#L593); it is earned. (2) Table 140-3 note [1] disapplies the residential setbacks against lots in the RX zone (#L631), which is a third state of the neighbour fact this screen does not hold. (3) Ground-floor window standards apply in EX (#L616) and are a facade rule, not a fit one.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   IG1:
     cite_default:
       cite: PCC 33.140 — Table 140-1 (33.140.100 Primary Uses), 33.140.100.B.1 and .B.2, 33.140.200 Lot Size, Table 140-2 (Development Standards), Table 140-3 (Minimum Building Setbacks From Residential Zone Lot Lines)
@@ -5372,6 +6203,10 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.150.txt#L340,L342"
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     min_lot_sqft:
       # "There is no required minimum lot size for development of land or for
       # the creation of new lots in campus institution zones." Stronger than
@@ -5439,6 +6274,55 @@ zones:
       value: 15
       quote: "or/multnomah/portland/33.150.txt#L531,L552-L553"
     notes: 'Campus Institutional 2. Household Living is a plain Y and there is no minimum lot size of any kind, which makes this 245-lot zone as open on paper as the commercial ones. Height is 150 ft against a 26 ft pod. What is left is the neighbour test at 10 ft and a maximum street setback of 10 ft. NOT ENCODED, on purpose. (1) Note [4]: heights are reduced adjacent to certain zones under 33.150.210.C, and every reduction in that subsection lands at 30 ft or above, so none of them reaches a 26 ft pod. (2) Maps 150-1 through 150-5 supersede both the height and the setback rows of Table 150-2 for the sites they cover; that is a mapped standard this screen does not read, and it is the one thing here that could make a CI2 lot tighter than this file says. (3) The inclusionary housing bonus raises FAR from 3 to 3.75 and is earned.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
   IR:
     cite_default:
       cite: PCC 33.150 — Table 150-1 (33.150.100 Primary Uses), 33.150.200 Lot Size, Table 150-2 (Summary of Development Standards in Campus Institutional Zones), 33.150.215 Setbacks, 33.150.220 Building Coverage, 33.150.240 Landscaped Areas
@@ -5542,6 +6426,55 @@ zones:
       value: 20
       quote: "or/multnomah/portland/33.150.txt#L531,L552-L553"
     notes: 'Institutional Residential. Sixty lots, and the only zone in the corpus whose setback is measured off the building instead of the lot: 1 ft for every 2 ft of height, floored at 10, which for a 26 ft pod is 13 ft. Its column of Table 150-2''s three minimum-setback rows is one merged cell, so unlike CI1 and CI2 the neighbour''s zoning changes nothing -- and the rows are headed "Lot line abutting or across the street from", so the front lot line owes the same 13. The one frontage that does not is a transit street or a street lot line in a Pedestrian District, where note [5] removes the minimum outright; neither map is read here. No minimum lot size, 75 ft of height, 70 percent coverage, 20 percent landscaped. NOT ENCODED, on purpose: Maps 150-1 through 150-5 supersede the Table 150-2 setback and height rows where they apply, and this screen does not read them; and note [1] treats an entire CI zone as one site for Colleges and Medical Centers, which is a different applicant than this one.'
+    min_far:
+      # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
+      # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
+      # and each map prints it only as the bracketed figure under the 4:1
+      # maximum -- (.25:1) in Gateway, (.5:1) and (1:1) in East Corridor.
+      # The chapters' text carries no number and the map pages have no text
+      # layer, so the variants are drawn figures, read off the 11/1/26 sheets
+      # (FOLLOWUPS 109 pd2c). Which lot is in which area is the City's own
+      # layer 50 (gateway-min-far, east-corridor-min-far-half/-one), matched
+      # to the sheets; a lot the line cuts is unanswered and YELLOW.
+      # Outside the mapped areas this zone states no minimum FAR (whole-corpus
+      # grep, 2026-11-04: only plan districts and 33.415 do). The other plan
+      # district minimums ride the pdx_plan_district_unmeasured hold and the
+      # 33.415 Main Street minimum is pdx_overlays.py's, so none rests on this
+      # exemption. A miss is YELLOW with the FAR-MIN flag (SOFT_FLOOR_CHECKS,
+      # coordinator 2026-10-29): a bigger building could meet it.
+      exempt: true
+      quote: "or/multnomah/portland/33.526.txt#L196-L197"
+      variants:
+        - value: 0.25
+          when: [pdx_gateway_min_far]
+          cite: PCC 33.526.220.C; Map 526-3 Floor Area Ratios, "4:1 (.25:1)"
+          url: https://www.portland.gov/sites/default/files/code/526-gateway-pd_2.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 0.5
+          when: [pdx_east_corridor_min_far_half]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (.5:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
+        - value: 1.0
+          when: [pdx_east_corridor_min_far_one]
+          cite: PCC 33.521.220.C; Map 521-3 Floor Area Ratios, "4:1 (1:1)"
+          url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_1.pdf
+          retrieved: '2026-11-04'
+          # A drawn figure has no text to quote: the base's quote is not this figure's.
+          quote: null
+          drawn: true
+          read_by: flats-encoder pd2c (Opus)
+          read_on: '2026-11-04'
 
 # Plan districts (FOLLOWUPS 109 Portland part 1, 2026-11-01). A plan
 # district's rules control where they conflict with a base or overlay zone
@@ -5613,6 +6546,155 @@ drawn_areas:
       what each figure is measured from, so the setback is unread and every
       lot inside is held in review, never green. The zones listed are the
       ones with lots inside on run 109.
+  glendoveer_lr75:
+    condition: pdx_glendoveer_lr75
+    zones: [R7]
+    file: or/multnomah/portland/glendoveer-lr75.geojson
+    source: >-
+      The Glendoveer (GL) outline of plan-districts.geojson (Portland Maps
+      BPS_Zoning_Code_Layers layer 0, fetched 2026-10-22), copied unchanged.
+      Drawn provenance in the file's source block.
+    quote: "or/multnomah/portland/33.530.txt#L20-L23"
+    cite: PCC 33.530.020
+    note: >-
+      The standards apply only to R7 land that Multnomah County zoned LR7.5
+      before City zoning, shown on Map 530-1. The map as stored draws the
+      plan district boundary and nothing inside it, so every R7 lot in the
+      district is read as formerly LR7.5 -- the deeper setbacks, never the
+      shallower ones. Only R7 is listed: the R10, RM1, CM1 and R5 land inside
+      the outline is not what 33.530.020 reaches.
+  northwest_residential_limited:
+    condition: pdx_nw_residential_limited
+    zones: [CM3]
+    file: or/multnomah/portland/northwest-residential-limited.geojson
+    source: >-
+      The Northwest Residential Use Limitation Area of Map 562-2 as the City
+      publishes it (Portland Maps COP_OpenData_ZoningCode layer 157, Limited
+      Use Areas, PLDIST NP, RESLIMIT YES, fetched 2026-11-01), copied
+      unchanged. Drawn provenance in the file's source block.
+    quote: "or/multnomah/portland/33.562.txt#L63-L64"
+    cite: PCC 33.562.100.B
+    note: >-
+      CM3 only, the one zone 33.562.100.B names. A lot nine tenths inside is
+      RED (residential use over 20 percent of the building is prohibited);
+      one the line cuts is unanswered and YELLOW. The lots stay in the
+      plan_district_unmeasured tracing too, which only ever adds a YELLOW.
+  gateway_min_far:
+    condition: pdx_gateway_min_far
+    zones: [R7, R5, R2.5, RM1, RM2, RM3, RX, CM1, CM2, CM3, CX, EX, CI1, CI2, IR]
+    file: or/multnomah/portland/gateway-min-far.geojson
+    source: >-
+      The twelve Map 526-3 areas labelled "4:1 (.25:1)" (PLDIST GA, MINFAR ".25") as the City publishes it (Portland Maps BPS_Zoning_Code_Layers
+      layer 50, Floor Area Ratio, fetched 2026-11-04), copied unchanged and
+      matched to the 11/1/26 sheet by georeferencing. Drawn provenance in the
+      file's source block.
+    quote: "or/multnomah/portland/33.526.txt#L196-L197"
+    cite: PCC 33.526.220.C, Map 526-3
+    note: >-
+      Every area of the Gateway map that is not grey (BZ). Every zone that carries the min_far variants is listed (and CI1, which
+      RICAP 11 builds to RM1's standards), because a zone whose lever fact went unobserved would be held YELLOW everywhere; a lot nine tenths inside takes the figure, one the line cuts is unanswered and YELLOW.
+  east_corridor_min_far_half:
+    condition: pdx_east_corridor_min_far_half
+    zones: [R7, R5, R2.5, RM1, RM2, RM3, RX, CM1, CM2, CM3, CX, EX, CI1, CI2, IR]
+    file: or/multnomah/portland/east-corridor-min-far-half.geojson
+    source: >-
+      The five Map 521-3 areas labelled "4:1 (.5:1)" (PLDIST EC, MINFAR ".5:1") as the City publishes it (Portland Maps BPS_Zoning_Code_Layers
+      layer 50, Floor Area Ratio, fetched 2026-11-04), copied unchanged and
+      matched to the 11/1/26 sheet by georeferencing. Drawn provenance in the
+      file's source block.
+    quote: "or/multnomah/portland/33.521.txt#L127-L128"
+    cite: PCC 33.521.220.C, Map 521-3
+    note: >-
+      Every zone that carries the min_far variants is listed (and CI1, which
+      RICAP 11 builds to RM1's standards), because a zone whose lever fact went unobserved would be held YELLOW everywhere; a lot nine tenths inside takes the figure, one the line cuts is unanswered and YELLOW.
+  east_corridor_min_far_one:
+    condition: pdx_east_corridor_min_far_one
+    zones: [R7, R5, R2.5, RM1, RM2, RM3, RX, CM1, CM2, CM3, CX, EX, CI1, CI2, IR]
+    file: or/multnomah/portland/east-corridor-min-far-one.geojson
+    source: >-
+      The one Map 521-3 area labelled "4:1 (1:1)" (PLDIST EC, MINFAR "1:1") as the City publishes it (Portland Maps BPS_Zoning_Code_Layers
+      layer 50, Floor Area Ratio, fetched 2026-11-04), copied unchanged and
+      matched to the 11/1/26 sheet by georeferencing. Drawn provenance in the
+      file's source block.
+    quote: "or/multnomah/portland/33.521.txt#L127-L128"
+    cite: PCC 33.521.220.C, Map 521-3
+    note: >-
+      Every zone that carries the min_far variants is listed (and CI1, which
+      RICAP 11 builds to RM1's standards), because a zone whose lever fact went unobserved would be held YELLOW everywhere; a lot nine tenths inside takes the figure, one the line cuts is unanswered and YELLOW.
+  plan_district_unmeasured:
+    condition: pdx_plan_district_unmeasured
+    zones: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RX, CM1, CM2, CM3, CE, CX, EX, CI1, CI2]
+    file: or/multnomah/portland/plan-district-unmeasured-lots.geojson
+    source: >-
+      Plan district outlines and subdistricts (plan-districts.geojson,
+      plan-subdistricts.geojson), the transit streets, required building
+      lines, Hollywood Enhanced Pedestrian Streets, West Portland commercial
+      corridors and Kenton minimum-FAR layers, against the taxlots the screen
+      reads (run 113). Drawn provenance in the file's source block.
+    quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
+    cite: PCC 33.521.290.C; 33.530.050; 33.536.210.B, 240.C, 280.C.2, 300.C; 33.538.220.B; 33.545.100.C; 33.550.220; 33.561.270, 300; 33.563.220; 33.595.100.B.1, 210.C, 250.C, 270.B; 33.510.200.C.3, 210.B; 33.515.210, 230, 262; 33.526.340.C; 33.532.220, 230.C, 245; 33.555.230; 33.562.100.B, 210, 220.B, 240.E-F; 33.567.040; 33.575.110; 33.580.110, 130
+    note: >-
+      One hold for every plan district rule in part 2 batch A that reaches
+      the pod but that nothing the screen reads can answer, as Washington
+      County's washington_plan_rule_unmeasured does for its community plans.
+      Traced lot by lot where the rule turns on a street, a line or a lot's
+      shape: East Corridor through lots and corner lots on E Burnside (where
+      parking may go against which street, 290.C); North Interstate lots on a
+      required building line outside the R zones, and corner lots on
+      Interstate (270, 300); Hollywood Subdistrict A (single-dwelling
+      development prohibited, a term 33.910 does not define, and a 1 to 1
+      minimum FAR), and corner lots on an Enhanced Pedestrian Street; West
+      Portland Subdistricts A and B (the Employment Focus Area and the 1.5 to
+      1 minimum FAR), CM2 and CM3 lots on a commercial corridor (vehicle area
+      on 30 percent of the frontage), and Subdistrict C multi-dwelling lots
+      that are neither corner lots nor 100 ft deep or less (a rear setback of
+      25 percent of the site's depth, unless 10 percent of the site is
+      common outdoor area); all of Macadam (setbacks by wall-plane area from
+      every lot line and 40 ft from the future light rail centreline); and
+      Lombard Subdistrict B corner lots (no surface parking within 40 ft of
+      the corner); and Glendoveer R7 lots of geometry tier C (concave,
+      many-sided or pole-shaped), the lots a flag lot can be among, because
+      33.530.050 sets 15 ft on every lot line and a 25 ft height on a flag
+      lot and no lot is read as one (34 on run 113, none green). Kenton's 1 to 1 minimum-FAR areas and the Northwest Hills
+      Linnton Hillside subarea are held whole, untraced; no lot in either was
+      green on run 113. East Corridor's Map 521-3 minimum-FAR areas (0.5 to
+      1 and 1 to 1) were held whole too until pd2c (2026-11-04) read the
+      figures off the sheet; see east_corridor_min_far_half and _one. The minimums are held, not computed against the
+      pod's 4,032 sq ft. CI1 because RICAP 11 builds a CI1 home to RM1's
+      standards.
+      Batch B (2026-11-04) adds, traced the same way: Gateway lots with two
+      or more street faces (vehicle areas may not stand between the building
+      and any street, 33.526.340.C.1) and lots within 150 ft of a MAX line
+      (none within 100 ft of a light rail street, C.2), and, until pd2c,
+      the Map 526-3 .25 to 1 minimum-FAR areas whole; Northwest CM2 lots and CM3 lots within 240 ft
+      of a Map 562-7 main street or streetcar centreline (1.5 to 1 minimum
+      FAR, 220.B; the pod's 4,032 sq ft meets it only on 2,688 sq ft or
+      less), CM3 lots in the Map 562-2 area (residential use at most 20
+      percent of a building, 100.B), lots on a main street or the streetcar
+      with two or more street faces or over 10,000 sq ft (240.E-F), and the
+      Map 562-4 0 ft height area whole (210); Sandy lots within 75 ft of the
+      NE Sandy Blvd centreline (walls parallel to Sandy, 33.575.110);
+      Hayden Island commercial lots (25 ft height near R zones, Jantzen Beach
+      .75 to 1 maximum FAR and building coverage, maximum setbacks,
+      33.532.220, 230.C, 245); and every lot in Powell Boulevard (8 ft sound
+      wall with 5 ft of landscaping on the Powell and R-facing lot lines,
+      33.567.040), South Auditorium (15 ft landscaped street edge, trees of 6
+      in. by design review, 33.580.110, 130), Columbia South Shore (view
+      corridor heights of 20 and 30 ft printed only on Map 515-3, the 25 ft
+      Airport Way setback, archaeology, 33.515.210, 230, 262), Central City
+      (a minimum FAR of at least 1 to 1 keyed to Map 510-2, base heights
+      down to 25 ft on Map 510-3, 33.510.200.C.3, 210.B) and Marquam Hill
+      (heights above sea level on Map 555-2, 33.555.230; none green). RM4,
+      RX, CX and EX join the zones because Gateway, Northwest and Central
+      City greens stand in them.
+      pd2c (2026-11-04) cut the Gateway and East Corridor minimum-FAR areas
+      out of the hold, now that the figures are read (gateway_min_far,
+      east_corridor_min_far_half and _one), and put back whole the lots
+      inside them that a traced rule still holds: Gateway by the batch B
+      rule on run 113; East Corridor wider than batch A (two or more street
+      faces of any angle, or within 100 ft of the E Burnside centreline),
+      because the faces were recomputed on the July taxlots and the wider
+      rule is the one that holds every lot the run-113 tracing holds.
 
 # Which of this city's zones lie on which side of a lot line, for the
 # commercial chapters' "abuts an OS, RX, C, E or CI zone" / "abuts an RF

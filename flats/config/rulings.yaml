@@ -2369,3 +2369,214 @@
     YELLOW. Build: FOLLOWUPS 140.
   source: Steph 2026-11-01 (chat), docs/followups/140-johnson-creek-trees.md
   superseded_by: 2026-11-01-trees-ignored-entered-per-lot
+
+- id: 2026-11-03-stall-width-city-minimum
+  kind: ruling
+  date: 2026-11-03
+  scope: {}
+  question: >-
+    Canby allows 8.5 ft parking stalls and Estacada 8 ft, but the parking
+    court is always drawn with 9 ft stalls; about 6 Canby lots and Estacada
+    34E17D 00700 miss only by that margin. Draw stalls at the narrowest
+    width each city allows, or keep 9 ft everywhere?
+  ruling: >-
+    City's own width (chose "Draw stalls at the narrowest width each city
+    allows").
+  effect: >-
+    The parking court is drawn with each jurisdiction's own minimum stall
+    width as encoded from its code; 9 ft stays only where the code sets 9 ft
+    or sets nothing. Build: FOLLOWUPS 142(b).
+  source: Steph 2026-11-03 (chat), docs/followups/142-placement-and-stall-width.md
+
+- id: 2026-11-03-long-lot-parking-later
+  kind: ruling
+  date: 2026-11-03
+  scope: {}
+  question: >-
+    On long narrow lots the parking could run down the lot's length instead
+    of one row across the back (about 20 new Canby/Sandy reds). Try that
+    layout now?
+  ruling: >-
+    Later, with the parking layout generator (FOLLOWUPS 92, parked).
+  effect: >-
+    No new parking layout now; those lots stay as screened until FOLLOWUPS
+    92 is taken up.
+  source: Steph 2026-11-03 (chat), docs/followups/142-placement-and-stall-width.md
+
+- id: 2026-11-03-green-plan-beats-yellow-preferred
+  kind: ruling
+  date: 2026-11-03
+  scope: {}
+  question: >-
+    Beaverton 1S113BA07700: the screen's preferred building plan is YELLOW
+    (unmeasured slope grade), another plan off the other front passes every
+    check and is GREEN. Should a yellow preferred plan hide a green one?
+  ruling: >-
+    Show green (chose "If any layout passes every check, show green with
+    that layout").
+  effect: >-
+    A lot is GREEN when any plan the screen tries passes every check in
+    full; the reported plan is that green plan. A yellow or red preferred
+    plan never hides a fully passing one. Never a false GREEN: the green
+    plan must pass everything, nothing is waived. Closes FOLLOWUPS 80
+    question on 1S113BA07700.
+  source: Steph 2026-11-03 (chat), docs/followups/80-item64-round2-readings.md
+
+- id: 2026-11-04-pdx-epa-rear-parking-half-area
+  kind: ruling
+  date: 2026-11-04
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PCC 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern
+    Area rear setback can be vehicle area." Half the yard's depth across
+    the whole lot, or half the yard's area?
+  ruling: >-
+    Steph: "if your parking is located within the rear setback, it can only
+    take half of it" -- half of the setback's AREA. Consistent with
+    33.120.235.C.1 ("no more than 50 percent of the Eastern Pattern Area
+    minimum rear setback area").
+  effect: >-
+    Parking (stalls and aisle) may cover at most half the square footage of
+    the Eastern Pattern Area rear setback, in any shape; the strict
+    half-the-depth reading is retired. Every other parking rule still binds
+    inside it (Table 266-5 5 ft perimeter setback, Table 266-3 location).
+    FOLLOWUPS 68.
+  source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md
+
+- id: 2026-11-04-pdx-site-frontage-one-street
+  kind: ruling
+  date: 2026-11-04
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PCC 33.120.206.C.1 (Map 120-2 sites more than 160 ft deep): "at least 90
+    feet of frontage on a street" -- one street, or may a corner or through
+    lot add its streets together?
+  ruling: >-
+    Steph: frontage is measured on the frontage lot line; a corner lot may
+    have two to choose from, but you cannot count both. One street.
+  effect: >-
+    Confirms the shipped reading: the 90 ft is met on a single street lot
+    line (the lot's best one), never the sum. Applies only to multi-dwelling
+    sites on Map 120-2 deeper than 160 ft; the 10 percent adjustment before
+    2032 is not taken (no variances). FOLLOWUPS 68.
+  source: Steph 2026-11-04 (chat), docs/followups/68-portland-maps-120.md
+
+- id: 2026-11-04-min-floor-area-more-pods
+  kind: ruling
+  date: 2026-11-04
+  scope: {}
+  question: >-
+    A minimum floor area ratio (Portland 33.415 Centers Main Street, the
+    Gateway and East Corridor plan district maps, and every other city's
+    min_far) that one pod is too small to meet on a big lot: YELLOW because
+    more buildings could meet it, or RED because the one pod screened cannot?
+    Today the general min_far is always YELLOW (soft floor) and Portland's
+    main-street minimum is always RED.
+  ruling: >-
+    Steph: "anything that clearly cannot fit another pod is red and anything
+    that clearly can is yellow. Unclear is yellow" -- the same rough count as
+    2026-10-21-wide-lot-frontage-more-pods.
+  effect: >-
+    One rule for every minimum floor area: if the floor area the lot needs
+    could be reached with more pods that could stand on it (a rough count,
+    not a site plan), YELLOW with a more-buildings flag; if there is clearly
+    no room for the pods it needs, RED; unclear is YELLOW. Replaces the
+    always-YELLOW soft floor for min_far and the always-RED Portland
+    main-street minimum. FOLLOWUPS 148.
+  source: Steph 2026-11-04 (chat), docs/followups/148-min-floor-area-more-pods.md
+- id: 2026-11-04-south-hillsboro-active-use-streets-traced
+  kind: ruling
+  date: 2026-11-04
+  scope:
+    county: washington
+    city: hillsboro
+  question: >-
+    South Hillsboro's Active Use Streets (12.65.030(B), 12.65.850) carry a
+    10 ft (type 1) or 15 ft (type 2) maximum front setback and a minimum
+    property-line coverage, but the only map of them, Figure 12.65.930-A, is
+    marked "for illustrative purposes only" (final locations set through each
+    PUD). Trace the figure as the map, or hold every lot that might face one
+    out of GREEN?
+  ruling: '"Trace the sketch, green with a flag"'
+  effect: >-
+    The Active Use Streets are traced from Figure 12.65.930-A (drawn: true, as
+    with Gresham's downtown street-type map) and a lot fronting a traced
+    street is held to Table 12.65.850-1 on that frontage. A lot that passes
+    stays GREEN but carries a flag that the street map is illustrative and
+    the final street is set at the PUD. Lots off the traced streets are
+    screened as before. FOLLOWUPS 147.
+  source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
+- id: 2026-11-04-south-hillsboro-centre-cores-traced
+  kind: ruling
+  date: 2026-11-04
+  scope:
+    county: washington
+    city: hillsboro
+  question: >-
+    South Hillsboro's Town Center and Village Center Core Areas (12.65.030(A))
+    are placed only by Figure 12.65.930-A, marked "for illustrative purposes
+    only". Inside a core a residential building must be 3 storeys
+    (Table 12.24.360-1), outside it 2; with no drawn line the whole MU-VTC
+    zone is held to 3, so the 2-storey pod is RED everywhere there. Trace the
+    cores from the figure too?
+  ruling: >-
+    "Trace the centres too ... Green with flag if outside, red with flag if
+    inside"
+  effect: >-
+    The two core areas are traced from Figure 12.65.930-A (drawn: true). An
+    MU-VTC lot outside the traced cores takes the outside-core minimum height
+    (the pod passes it) and, if it passes everything else, is GREEN with a
+    flag that the core boundary is illustrative and set at the PUD; a lot
+    inside a traced core is RED on the 3-storey minimum, with the same flag.
+    Companion to 2026-11-04-south-hillsboro-active-use-streets-traced.
+    FOLLOWUPS 147.
+  source: Steph 2026-11-04 (chat), docs/followups/147-max-front-setback-unchecked.md
+- id: 2026-11-05-side-yard-parking-silent-codes
+  kind: ruling
+  date: 2026-11-05
+  scope: {}
+  question: >-
+    Where a city's code says nothing either way about a driveway or parking
+    sitting in a required side setback (e.g. Tigard, West Linn, Sherwood,
+    Clackamas unincorporated, Estacada), does the screen let the pod's drive
+    lane and parking court use the side setback?
+  ruling: '"Middle option"'
+  effect: >-
+    In a silent code the lane and court may use one side setback, but a lot
+    that fits ONLY because of it is YELLOW with a flag (parking in a side
+    setback; the code is silent), never GREEN on that basis. Codes that allow
+    it outright are measured as written; codes that forbid it stay as today.
+    FOLLOWUPS 146.
+  source: Steph 2026-11-05 (chat), docs/followups/146-parking-in-side-yards.md
+- id: 2026-11-05-troutdale-parking-abutting-setback
+  kind: ruling
+  date: 2026-11-05
+  scope: {county: multnomah, city: troutdale}
+  question: >-
+    TDC 9.095 A: parking areas abutting a residential district meet "the
+    building setback of the most restrictive adjoining residential zoning
+    district". Is that the quadplex/townhouse figure (10 ft rear, 3.130.B/C)
+    or the single-house figure (15-20 ft rear, 3.130.A)?
+  ruling: '"10 ft, flag the rest yellow"'
+  effect: >-
+    The parking court keeps the quadplex/townhouse figure. A lot that fits at
+    that figure but would not fit at the single-house figure is YELLOW with a
+    flag that the stricter reading is open, never GREEN. FOLLOWUPS 150.
+  source: Steph 2026-11-05 (chat), docs/followups/150-rear-court-sharing-check.md
+- id: 2026-11-05-pdx-shared-outdoor-space-later
+  kind: ruling
+  date: 2026-11-05
+  scope: {county: multnomah, city: portland}
+  question: >-
+    Portland lets a site skip the deep rear yard if 10% of it is shared
+    outdoor space at least 30 ft across. The screen does not try that option,
+    so such lots show RED. Yellow if it could fit, yellow always, or stay red?
+  ruling: >-
+    "They only place I see this working are large lots with multiple pods.
+    This seems like something to add to that feature build out as an option"
+  effect: >-
+    No change now: the screen keeps ignoring the shared-outdoor-space
+    alternative for a single pod, and those lots stay as screened. The option
+    is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
+    FOLLOWUPS 68.
+  source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md

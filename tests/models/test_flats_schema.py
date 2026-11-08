@@ -120,6 +120,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # Per run, whether each result is green as an apartment / as townhomes
         # (0147), so the "Works as" filter does not group the results' JSON.
         "lot_works_as",
+        # Per run and lot, the best verdict/colour plus list sort/filter keys
+        # (0149), so /flats/lots avoids grouping every result row each time.
+        "lot_best",
         "rules",
         "clauses",
         "review_decisions",

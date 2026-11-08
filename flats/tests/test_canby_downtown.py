@@ -64,7 +64,9 @@ def test_a_lot_the_pods_floor_satisfies_carries_no_far_flag() -> None:
     assert s.colour is Colour.green
 
 
-def test_a_lot_too_big_for_the_pods_floor_is_yellow_never_a_bind() -> None:
+# Steph's 2026-11-04 ruling (2026-11-04-min-floor-area-more-pods): with no
+# buildable-area measurement, a minimum-FAR miss remains yellow.
+def test_a_lot_too_big_for_the_pods_floor_with_unknown_ground_is_yellow() -> None:
     big = LotFacts(lot_sqft=FLOOR / 0.4 + 2000, frontage_ft=90, lot_width_ft=90)
     s = run(rules(min_far=0.4), lot=big, relief=NO_RELIEF)
     assert CLOSER_LOOK_MIN_FAR in s.reasons

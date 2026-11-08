@@ -1,0 +1,9 @@
+king-city-misread-words
+
+WHY: FOLLOWUPS 116 (docs/followups/116-misread-words.md -- read it all). The code-library spelling checker (flats/provenance/spelling.py) underlines words no dictionary and no other city knows. King City's stored code has ~99 words split at the page margin WITHOUT a hyphen ("repre sentative"); Canby has ~15 words run together ("bythe"). Gresham's version of this was fixed in commit f048be68 (batch 5) -- `git show --stat f048be68` and read its message: re-extract or mend, PROVE the new text against the old (only the mended characters may differ), then re-stamp every quote/citation hash and recut + carry the page checks so nothing points at a moved line.
+
+TASK: do the same for King City (or/washington/king_city under flats/provenance/docs/or/), then Canby (or/clackamas/canby). Mend only words where the join is certain: both halves together form a word that the dictionary or another city's text knows, and the split sits at a line/margin break (King City) or the run-together pair splits into two known words (Canby). Leave anything uncertain and list it. Use the same proofs, re-stamping and carry tools Gresham's batch used (find them from f048be68); run the provenance drift / citation checks and the code-library tests and report their results. Report underline counts before and after per city.
+
+TESTS: the existing provenance/code-library tests must pass; add a test only if f048be68 added one you can mirror.
+
+MUST NOT CHANGE: any rule value, any lot colour, any city other than King City and Canby, any character in the stored text beyond the mended joins (the proof must show that).

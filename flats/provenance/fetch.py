@@ -687,6 +687,7 @@ def implausible(text: str) -> str | None:
 def fetch_text(
     url: str,
     *,
+    path: str = "",
     get: Callable[[str], bytes | str] | None = None,
     start: str = "",
     end: str = "",
@@ -699,12 +700,15 @@ def fetch_text(
     ``lost`` collects what the extraction is known to have thrown away, so
     the caller can say so. Silence here is the failure it exists to prevent.
     """
-    return slice_between(
+    text = slice_between(
         _to_text((get or _http_get)(url), extraction=extraction, lost=lost),
         start,
         end,
         nth=nth,
     )
+    from flats.provenance.mend import restore_joins
+
+    return restore_joins(path, text)
 
 
 def citing(layers: dict[str, Layer], doc_path: str) -> list[VerKey]:
@@ -830,7 +834,14 @@ def fetch_one(
     lost: list[str] = []
     try:
         text = fetch_text(
-            url, get=get, start=start, end=end, nth=nth, extraction=extraction, lost=lost
+            url,
+            path=path,
+            get=get,
+            start=start,
+            end=end,
+            nth=nth,
+            extraction=extraction,
+            lost=lost,
         )
     except ProvenanceError as exc:
         print(f"{path}: {exc}", file=sys.stderr)

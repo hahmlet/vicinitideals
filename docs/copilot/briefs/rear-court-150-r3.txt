@@ -1,0 +1,19 @@
+rear-court-150-r3 (follow-up round in the EXISTING worktree ../vicinitideals-worktrees/rear-court-150, branch flats/rear-court-150, head 73ac9be7; no new branch)
+
+WHY: FOLLOWUPS 150. The bound of round 2 was read lot by lot: C:/Users/Steph/Repos/vicinitideals-worktrees/rear-court-150.moveread.md -- READ IT WHOLE FIRST. Verdict HOLD. Ruling 2026-11-05-troutdale-parking-abutting-setback (flats/config/rulings.yaml): the court keeps the 10 ft quadplex/townhouse setback, but a lot that fits at 10 ft and would NOT fit at the single-house figure is YELLOW with PARKING-SETBACK-DOUBT, never GREEN.
+
+CHANGE:
+1. (MUST, false GREEN) Troutdale, moveread Finding 1: the doubt re-test only asks whether SOME layout fits at the doubt figure; that layout is never drawn or screened, so GREENs stand on a drawing whose court is under the single-house figure (16 lots under 15 ft, 13 more at 15-20 ft, listed in the moveread). Fix: a lot stays out of GREEN (YELLOW + PARKING-SETBACK-DOUBT) unless the DRAWN court (the one the screen kept) itself clears the doubt figure on every lot line where it applies. Do not search for a new layout.
+2. (MUST, ruling as written) The doubt figure is the single-house REAR figure (15 or 20 by district, 3.130.A) on rear lot lines and the single-house SIDE figure (5 / 7.5 / 10 by district) on side lot lines -- not the rear figure on every line. Today 20 ft is charged on every side (37 lots over-charged, listed in the moveread). Where the neighbour district is unknown, the largest figure for that line type among the districts it could be.
+3. (MUST, false GREEN) Sandy 24E14DA00700 (moveread "Gained GREENs"): the lot carries FACT-ABUTS-LOWER-DENSITY-ZONE but its drawn court is 18.4 ft off a partly unread R-2 neighbour line, under the 20 ft beside-SFR strip, while the same fact turned 24E11AA01200 and 24E13BD02200 yellow. Find why this lot escaped (the strip test must read the drawn court, as for the other two) and fix so it is not GREEN.
+4. Gresham five 50x100 lots 1S3E03CC02201, 1S3E03CC05800, 1S3E10AC05200, 1S3E10AC07000, 1S3E10BD00100 went RED -> YELLOW on a fit that was never measured (moveread "Losses and other moves"). Find the path; if the fit is unmeasured because of this branch, restore the measured verdict. Report the 29 live yellows with the same fault but do not change them unless the same fix covers them.
+
+INVARIANT: no lot may become GREEN that the round-2 bound (73ac9be7) did not make GREEN, except Troutdale lots moving YELLOW -> GREEN via fix 2 when the drawn court clears the correct side/rear figures.
+
+AUTHORISED EXCEPTION: Troutdale lots may move GREEN -> YELLOW (fix 1) and YELLOW -> GREEN (fix 2, only as above); Sandy 24E14DA00700 GREEN -> YELLOW; the five Gresham lots may change colour to their measured verdict. Nothing else may change colour.
+
+TESTS: extend flats/tests/test_rear_court_setback.py: (i) Troutdale drawn court 16.5 ft from a house-zone rear line where the single-house rear is 20 -> YELLOW + PARKING-SETBACK-DOUBT; (ii) drawn court clears 20 at the rear and 7.5 at a side where the side figure is 7.5 -> GREEN possible; (iii) side lot line charged the side figure, not 20; (iv) the Sandy strip case; (v) a city without the field unchanged. Run C:/Users/Steph/Repos/vicinitideals/.venv/Scripts/python -m pytest flats/tests/test_rear_court_setback.py -q -p no:cacheprovider, then uv run pytest flats/tests -q -n auto (green; if only test_gaps fails run uv run python -m flats.encode.gaps and commit flats/config/gaps.json on this branch), uv run ruff check flats/, uv run python scripts/check_flats_firewall.py. Commit by explicit path, prefix "flats:", ending "(FOLLOWUPS 150)". Do not push.
+
+Append "## Round 3 (2026-11-05)" to C:/Users/Steph/Repos/vicinitideals-worktrees/rear-court-150.handoff.md: each fix and the expected moves.
+
+MUST NOT CHANGE: any setback or buffer value; the 10 ft figure; anything under app/.

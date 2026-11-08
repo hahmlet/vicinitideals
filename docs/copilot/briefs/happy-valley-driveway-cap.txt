@@ -1,0 +1,11 @@
+happy-valley-driveway-cap
+
+WHY: FOLLOWUPS 120 (docs/followups/120-happy-valley-driveway-cap.md -- read it). Happy Valley's driveway cap (HVMC 16.44, encoded in flats/config/jurisdictions/or/clackamas/happy_valley.yaml -- grep "16.44" and "driveway") limits driveway width to a share of the lot's frontage. The screen took the frontage from a SHORT lot line instead of the street frontage the driveway crosses: lot 22E01DD03100 has 139.9 ft of frontage but its cap came out 11.5 ft, so it went RED falsely (run 87). Claude will bound this branch on LXC 137 and read every lot that moves.
+
+TASK: find where the screen computes a frontage-share driveway cap (grep flats/score and flats/rules for the field the 16.44 value feeds, e.g. driveway width max / frontage share / "half"). Make the cap use the frontage of the street lot line(s) the code bases it on -- the line the driveway crosses (read the stored code text under flats/provenance/docs/or/clackamas/happy_valley/ for exactly what it says the share is OF, and quote the line in your report) -- not whichever lot line the code currently picks. If other cities share the same code path, the fix applies to them only if their stored text bases the cap on the same thing; list every jurisdiction the change reaches.
+
+TESTS in flats/tests (name the file you extend; grep for an existing driveway-cap / frontage-share test): a synthetic lot with ~140 ft street frontage and a short side/rear line where the cap must come from the street frontage; a lot whose street frontage really is short -> unchanged; an existing passing test for another city on the same path -> unchanged.
+
+AUTHORISED EXCEPTION: lot colours may change because the cap is measured on the right line; that is the task. Say in the report which direction you expect (larger cap -> toward green) and whether any lot could move toward red.
+
+MUST NOT CHANGE: any rule value in any YAML, any other check.

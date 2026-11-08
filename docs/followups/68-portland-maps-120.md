@@ -25,7 +25,7 @@ ENCODED 2026-11-01 on flats/pdx-map-120 (37c245ff; hand-off ../vicinitideals-wor
 90 ft frontage inside the 4 centres (neighbour exception unread = yellow), Eastern rear yard 25% of depth
 with parking in half of it. Bound running on 137 (base run 111). QUESTION for Steph, open: "at least 90
 feet of frontage on a street" read as ONE street (a corner or through lot cannot add its streets) -- the
-stricter reading, shipped as is unless Steph says the streets may be summed.
+stricter reading, shipped as is unless Steph says the streets may be summed. 2026-11-03: Steph asked for the source -- sent PCC 33.120.206.C.1, page 120-11 of https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf; RULED 2026-11-04 ONE STREET (2026-11-04-pdx-site-frontage-one-street) -- as shipped.
 BOUND 2026-11-02 (137 /root/pdx_map_120, bundle /root/bundle_pdx_map_120): 1,245 moves. Expected: green->red
 272, green->yellow 271, yellow->red 33. NOT expected: red->yellow 663 (RULE_AMBIGUOUS; lots that failed fit,
 coverage or fire access) and yellow->green 4 (1N2E20BB -00900, 1N2E25BA -00600, 1N2E28AD -01600,
@@ -34,3 +34,15 @@ RE-BOUND 2026-11-02 at 5e072374 (/root/pdx_map_120b, bundle /root/bundle_pdx_map
 group is gone. green->red 272, green->yellow 271, yellow->red 33, yellow->green 4 (same four; each lost only
 SLOPE-GRADE -- likely the deeper rear yard moves the building onto flatter ground; confirm in the read).
 NEXT: move read (flats-move-reader), then release. Not started: after the 2026-11-03 reset.
+READ 2026-11-04 (flats-move-reader, scratch /root/pdx_map_120b_rd/ on 137): DO NOT MERGE. No false GREEN; the 4 gains are right
+(flatter ground). Wrong: (A) 60+ false REDs -- the 25% EPA rear setback taken from every rear-labelled edge (notch steps),
+not only the line most distant from the front (PCC 33.910), e.g. 1N2E23DA -00700, 1S2E20DB -04000, 1N2E20BA -00500;
+(B) 14 corner lots held yellow by a depth band on the corner variant (corners exempt at any depth; list mv12.csv);
+(C) 3 lots RED on an assumed "not a corner" (1N2E22AD -03701, 1S2E01CD -01800, 1S2E04DC -03600) -- standing rule: hold YELLOW;
+(D) cosmetic frontage flag on exempt <=160 ft lots. Watch 1N2E35DC -00200 (0.25 ft fit margin, 4.88% grade) in the re-read.
+ROUND 3 building by Copilot in the worktree (brief docs/copilot/briefs/pdx-map-120-r3.txt), then re-bound + re-read.
+QUESTION for Steph 2026-11-04 (open): "No more than 50 percent of the Eastern Pattern Area rear setback can be vehicle area"
+(33.120.220.txt#L24) -- read today as half the yard's DEPTH across the whole lot (strict; turns some lots red). The text says
+half the setback, which reads as half its AREA (parking could fill the full depth over half the width). RULED 2026-11-04 (2026-11-04-pdx-epa-rear-parking-half-area): half the AREA -- build after round 3 (round 4).
+- 2026-11-05 bound pdx_map_120c (ffef96f3) READ = HOLD: no false green; ~252 wrong REDs (rear-yard overlap charged twice in the fit, e.g. 1S2E21CB -00600); encoder fixing on the branch, then re-bound. [Steph] OPEN Q: Portland lets a site skip the deep rear yard if 10% of it is shared outdoor space at least 30 ft across; the screen ignores that option, so such lots show RED -- yellow ('might work with a shared yard') or stay RED?
+- Steph 11-05 ANSWERED the shared-outdoor-space Q: only works on large lots with several pods -> goes into FOLLOWUPS 31 as an option; no change now (ruling 2026-11-05-pdx-shared-outdoor-space-later).

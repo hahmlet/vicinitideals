@@ -316,15 +316,14 @@ _C: tuple[ConditionDef, ...] = (
         "a vehicle access way within public right of way, \"e.g., the "
         "driveway apron\", \"no portion of same shall be less than 100 feet "
         "from any street intersection as measured from the curb return\". "
-        "On a corner lot, or a lot next to one, the sentence can leave a "
-        "street no legal apron at all. Nothing measures the distance from "
-        "a frontage to an intersection's curb return, so the fact is never "
-        "answered and every Durham lot the rest of the screen would certify "
-        "is held open, named (FOLLOWUPS 118; owner 2026-10-24: hold them out "
-        "of GREEN until the measurement exists). False would lift it; True "
-        "keeps it open, because no number here says what the apron then "
-        "needs.",
-        evidence="not held: the distance along each street lot line to the nearest street intersection's curb return",
+        "measured by the maximum clearance available to a minimum-width "
+        "apron. A pass subtracts the cross street's measured half right-of-way "
+        "(40 feet if unknown) and a conservative 35-foot curb-return allowance "
+        "that is not a code figure. A fail requires the unadjusted centerline "
+        "distance to be under 100 feet for every placement. The interval "
+        "between those bounds, and missing geometry, remains unanswered "
+        "(FOLLOWUPS 118).",
+        evidence="RLIS street-centerline intersections projected along each Durham street lot line, with cross-street half-widths from the parcel street-width readings or a 40-foot fallback",
         assume=None,
     ),
     ConditionDef(
@@ -1357,6 +1356,101 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_east_corridor_min_far_half",
+        "site_fact",
+        "The lot is in an East Corridor plan district area that Map 521-3 "
+        "labels 4:1 (.5:1): new development there must reach a floor area "
+        "ratio of at least 0.5 to 1 (PCC 33.521.220.C). The figure is "
+        "printed only on the map.",
+        evidence=(
+            "the Map 521-3 .5:1 areas as Portland Maps publishes it (BPS Zoning Code Layers "
+            "layer 50) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_east_corridor_min_far_one",
+        "site_fact",
+        "The lot is in the East Corridor plan district area that Map 521-3 "
+        "labels 4:1 (1:1): new development there must reach a floor area "
+        "ratio of at least 1 to 1 (PCC 33.521.220.C). The figure is "
+        "printed only on the map.",
+        evidence=(
+            "the Map 521-3 1:1 area as Portland Maps publishes it (BPS Zoning Code Layers "
+            "layer 50) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_gateway_min_far",
+        "site_fact",
+        "The lot is in a Gateway plan district area that Map 526-3 labels "
+        "4:1 (.25:1): new development there must reach a floor area ratio "
+        "of at least 0.25 to 1 (PCC 33.526.220.C). The figure is printed "
+        "only on the map.",
+        evidence=(
+            "the Map 526-3 .25:1 areas as Portland Maps publishes it (BPS Zoning Code Layers "
+            "layer 50) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_glendoveer_lr75",
+        "site_fact",
+        "The lot is R7 land in Portland's Glendoveer plan district, which "
+        "Multnomah County zoned LR7.5 before City zoning (33.530.020). The "
+        "plan district's own setbacks govern there: 30 ft front, 10 ft side, "
+        "15 ft rear (33.530.040). Its flag-lot standards (050) are held "
+        "under pdx_plan_district_unmeasured, not encoded on this fact.",
+        evidence=(
+            "the Glendoveer plan district outline (Portland Maps BPS zoning "
+            "layer 0) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_nw_residential_limited",
+        "site_fact",
+        "The lot is CM3 land in the Northwest plan district's Residential "
+        "Use Limitation Area (Map 562-2), where at most 20 percent of a "
+        "building may be in Residential uses and more is prohibited "
+        "(PCC 33.562.100.B). A four-home building is all Residential.",
+        evidence=(
+            "the Map 562-2 area as Portland Maps publishes it (Limited Use "
+            "Areas, layer 157) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_plan_district_unmeasured",
+        "site_fact",
+        "The lot is one a Portland plan district rule reaches that the screen "
+        "does not measure: where parking and driveways may go against a named "
+        "street or light rail line (East Corridor, Hollywood, Lombard, North "
+        "Interstate), a required building line (North Interstate), a minimum "
+        "floor area ratio printed only on a map or above what the pod "
+        "supplies (Hollywood, Kenton, West Portland), residential use prohibited on a map (West Portland "
+        "Employment Focus Area), a rear setback of a quarter of the site's "
+        "depth (West Portland), setbacks set by wall-plane area and a light "
+        "rail setback (Macadam), the Linnton Hillside lot-of-record rule "
+        "(Northwest Hills), or Glendoveer's flag-lot standards on an R7 lot "
+        "whose shape could be a flag lot; or, in batch B, parking and access "
+        "against Gateway streets and light rail and Northwest main streets, "
+        "residential use held to 20 percent (Northwest), a height printed "
+        "only on a map below the pod's (Northwest, Columbia South Shore, "
+        "Central City, Marquam Hill), walls set parallel to Sandy Boulevard, "
+        "the Powell Boulevard sound wall, South Auditorium's landscaped "
+        "street edge, or Hayden Island's commercial height step and floor "
+        "area rules. The lot stays in review. Assumed unknown: it "
+        "decides the colour.",
+        evidence=(
+            "the plan district lot tracing in "
+            "plan-district-unmeasured-lots.geojson -- held as Portland's "
+            "drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "oregon_city_historic_overlay",
         "site_fact",
         "The parcel is inside Oregon City's historic overlay district as the "
@@ -1651,8 +1745,14 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "pdx_east_corridor_min_far_half",
+    "pdx_east_corridor_min_far_one",
+    "pdx_gateway_min_far",
+    "pdx_glendoveer_lr75",
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_unmeasured",
+    "pdx_nw_residential_limited",
+    "pdx_plan_district_unmeasured",
     "pdx_special_building_setback",
     "raleigh_hills_asc_u",
     "rockwood_design_district",

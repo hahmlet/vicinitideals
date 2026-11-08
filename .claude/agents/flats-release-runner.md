@@ -31,7 +31,8 @@ it; never work around it.
 7. **Fingerprint.** For each lot, take the best colour over designs, ranking green < yellow < red
    < none; colour = `COALESCE(checks->>'colour', checks->>'if_signed')` in flats.lot_results for both
    runs (SELECT only). Then compare:
-   - build sorted `tlid,old,new` lines for the lots that changed;
+   - build sorted `tlid,old,new` lines for the lots that changed (TLIDs exactly as stored, spaces kept),
+     joined by a newline with NO trailing newline (md5 of `head -c -1 file`), the bound runner's recipe;
    - their md5 must EQUAL the bound runner's fingerprint, and the per-transition counts must match.
 8. **Promote, only if steps 5-7 all passed.**
    - `python scripts/flats_promote.py promote --run <new> --by "agent, standing word 2026-09-19"`;

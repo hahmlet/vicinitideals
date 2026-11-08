@@ -8,3 +8,5 @@
    tracts and each city's land-division rules. Until then, a lot whose
    ONLY failure is minimum density is yellow "closer look" (item 30), not
    red. Not started; may never be.
+
+- Steph 2026-11-05 (ruling 2026-11-05-pdx-shared-outdoor-space-later): when this several-pods build happens, add Portland's alternative to the deep rear yard -- 10% of the site as shared outdoor space at least 30 ft across -- as an option the layout can take. Not for a single pod.

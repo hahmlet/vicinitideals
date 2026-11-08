@@ -1,0 +1,16 @@
+side-yard-parking (new branch flats/side-yard-parking from main)
+
+WHY: FOLLOWUPS 146 (docs/followups/146-parking-in-side-yards.md -- read it all first; Steph GO 2026-11-04). Today the drive lane and the parking court never sit in a SIDE setback: the width a lot needs is building + lane beside it (or the stall row if wider) + BOTH side setbacks (flats/score/paper.py paper_fit ~L1349-L1452, behind_wall_ft ~L521; and the matching envelope/lane search in flats/ingest/quadfit.py). Where a city's code lets paving sit in a side setback, that over-charges width and makes false reds. This also feeds a one-time pod-sizing study (FOLLOWUPS 149) that will run on this branch on Monday 2026-11-09, so the mechanism must be done and tested by Friday; Claude fills in each city's answer separately.
+
+BUILD THE MECHANISM ONLY (per-city values come later from Claude; with no value set, behaviour must be EXACTLY today's):
+1. New rule field in flats/rules/fields.py (follow how parking_side_prohibited / parking_lot_line_buffer_ft are declared, documented and listed): `parking_side_yard_allowed`, values `none` (today) | `lane` (the drive lane may sit in one side setback) | `lane_and_court` (the lane and the parking court/stalls may). Unset = `none`. Register it wherever fields must be registered (readiness, gaps, conditions, zone mirror -- grep how parking_lot_line_buffer_ft is wired and mirror every place; name the grep in your report).
+2. paper_fit + behind_wall_ft + the quadfit lane/court search: where `lane` or `lane_and_court`, the lane (and, for lane_and_court, the court) may overlap ONE side setback -- the side the lane is on -- down to `parking_lot_line_buffer_ft` from that lot line (0 if unset). The BUILDING keeps its full side setbacks. Every other check still binds unchanged: fire access/route, turning (court_turns), front paving caps, parking/driveway frontage shares, parking_street_setback_ft, no-parking-between-building-and-street, parking_side_prohibited, parking_required_yard_prohibited (if a zone sets either prohibition, the new field cannot loosen it -- prohibition wins; add a loader/consistency test).
+3. The drawing (site_plan/drawing JSON) must show the lane where it now stands, so a reader can see it in the side yard.
+
+TESTS (new flats/tests/test_side_yard_parking.py): (a) unset -> identical fit width and colour to today on a fixture lot; (b) `lane`, 5 ft side setback, no buffer -> required lot width drops by 5 ft; (c) `lane` with a 3 ft buffer -> drops by 2 ft; (d) `lane_and_court` lets a court that needed the side setback fit; (e) parking_side_prohibited set + `lane_and_court` -> no change (prohibition wins); (f) building still keeps both side setbacks. Full flats suite green, ruff, firewall. Commit by explicit path, prefix "flats:" ending "(FOLLOWUPS 146)". Do not push.
+
+Write C:/Users/Steph/Repos/vicinitideals-worktrees/side-yard-parking.handoff.md (or put it in your final message if you cannot write there): what changed, files, where the field is read, how to set it per zone, and that with no value set no lot can move.
+
+MUST NOT CHANGE: any rule value or YAML jurisdiction file; any lot's result while the field is unset; anything under app/.
+
+AUTHORISED EXCEPTION: a new rule field and the fit/lane code that reads it. No lot may move in this task (no zone sets the field yet).

@@ -1,0 +1,18 @@
+width-short-depth (new worktree ../vicinitideals-worktrees/width-short-depth, branch flats/width-short-depth, off origin/main)
+
+WHY: FOLLOWUPS 151 (docs/followups/151-width-short-fit-depth.md if that is its name; glob docs/followups/151-*). Where a lot holds no window as wide as the search asked, the fit keeps width_short_ft and best_depth_ft 0, and the screen scores only the width shortfall. A lot one grid step too narrow reads -0.5 ft (FIT-TIGHT, YELLOW) even when the building could never reach its depth at the narrower width. We want the screen's near-miss to be honest: a near miss on both measures or it is not a near miss. Not a false GREEN; these lots stay out of GREEN today, and must stay out.
+
+CHANGE:
+1. flats/fit/rectangle.py: where width_short_ft is set, also measure the deepest run the envelope holds at the narrower width (the widest window the lot does hold, i.e. across_ft less width_short_ft), and carry it on Fit in a new optional field (say depth_at_short_width_ft, default None; slots dataclass, frozen). Do not change fits, slack_ft, best_depth_ft or width_short_ft for any existing case.
+2. flats/score/screen.py, around the fit_ft scoring that uses width_short_ft (grep width_short_ft): score the WORSE of the width shortfall and the depth shortfall at that narrower width, against what the fit needs (fit_needs). So width -0.5 with depth -33 scores -33, and the existing near-miss rule then fails it. Width -0.5 with depth clearing or within the near-miss tolerance scores as today. If depth_at_short_width_ft is None (a Fit built without the search), behave as today.
+3. Grep every other reader of width_short_ft (screen, ingest, report, templates) and keep them consistent. Do not add new codes or flags unless a test forces it.
+
+INVARIANT: this may only move lots toward RED. No lot may become more favourable. Performance: the extra measure runs only on width-short fits; do not slow the normal path.
+
+AUTHORISED EXCEPTION: lots whose fit is width-short and whose depth at the narrower width misses by more than the near-miss tolerance may move YELLOW -> RED. Nothing else may change colour, and no rule value changes.
+
+TESTS: add to the existing fit/screen test files (grep width_short_ft under flats/tests): (i) a Fit with width_short_ft 0.5 and a 30 ft depth miss at the narrower width -> fit_ft fails, RED, not FIT-TIGHT; (ii) width_short_ft 0.5 with depth clearing at the narrower width -> same result as before this change; (iii) a real rectangle: a 49.5 x 60 envelope asked for 50 x 90 gets depth_at_short_width_ft near 60; (iv) depth_at_short_width_ft None -> same result as before. Run flats/tests in full with -n auto (that is flats tests only).
+
+Write your summary to C:/Users/Steph/Repos/vicinitideals-worktrees/width-short-depth.handoff.md: what changed, and the live-lot pattern a bound should expect to move.
+
+MUST NOT CHANGE: any setback, buffer or rule value; flats/config/; anything under app/.

@@ -136,7 +136,9 @@ def test_an_m_is_a_letter_of_the_overlay_list() -> None:
 # --- 1S1E22BA  -02300 --------------------------------------------------------
 
 
-def test_macadam_is_red_on_the_main_street_minimum_far(maps) -> None:
+def test_macadam_misses_the_main_street_minimum_far(maps) -> None:
+    # Steph's 2026-11-04 ruling (2026-11-04-min-floor-area-more-pods):
+    # this checks the raw miss; checked() decides the colour from pod capacity.
     got = pdx.read(MACADAM, maps)
     assert got.main_street and got.pattern_areas == ("Inner",) and not got.protected
     (bind,) = pdx.binds_for(got, 56 * 36 * 2, MACADAM.area)
@@ -291,12 +293,12 @@ def test_the_reading_rides_the_row_and_the_lot(tmp_path) -> None:
     assert pdx.missing(tmp_path / "snap") == ()
 
 
-def test_the_bridge_answers_red_with_a_bind_and_a_reason(tmp_path) -> None:
+def test_the_bridge_holds_a_main_street_far_miss_yellow_when_more_pods_can_fit(tmp_path) -> None:
     from flats.encode.load import load_trusted
     from flats.ingest.quadfit import lot_from_row, row_for, screen_lot
     from flats.score import relief, slack
     from flats.score.flags import Colour
-    from flats.score.screen import Triage
+    from flats.score.screen import CLOSER_LOOK_MIN_FAR, Triage
     from flats.tests.test_quadfit_bridge import pod
 
     corpus = load_trusted(strict=False).rules
@@ -306,11 +308,14 @@ def test_the_bridge_answers_red_with_a_bind_and_a_reason(tmp_path) -> None:
     r = row(TLID="1S1E22BA  -02300", zone="CM2", area_sqft=8907.0, lot_wkb=shapely.to_wkb(MACADAM))
     pdx.with_overlays([r], snapshot(tmp_path))
     (s,) = screen_lot(lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policy, relief=relieve, step_deg=30.0)
-    assert s.signed.colour is Colour.red and s.signed.triage is Triage.red
-    assert pdx.MIN_FAR_REASON in s.signed.reasons
-    assert [b.check for b in s.signed.binds].count(pdx.MIN_FAR_CHECK) == 1
+    # Steph's 2026-11-04 ruling (2026-11-04-min-floor-area-more-pods):
+    # the measured envelope has room for the second pod needed by this FAR.
+    assert s.signed.colour is Colour.yellow and s.signed.triage is Triage.yellow
+    assert CLOSER_LOOK_MIN_FAR in s.signed.reasons
+    assert [b.check for b in s.signed.binds].count(pdx.MIN_FAR_CHECK) == 0
+    assert "FAR-MIN" in {f.code for f in s.signed.flags}
     out = row_for(s)
-    assert pdx.MIN_FAR_CHECK in out["binds"] and pdx.MIN_FAR_REASON in out["if_signed_reasons"]
+    assert pdx.MIN_FAR_CHECK not in out["binds"] and CLOSER_LOOK_MIN_FAR in out["if_signed_reasons"]
     # Run over its own answer, nothing is added twice.
     again = pdx.checked(s, lot_from_row(r).pdx_overlays)
     assert again.signed.binds == s.signed.binds and again.signed.reasons == s.signed.reasons
