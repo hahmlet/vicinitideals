@@ -181,7 +181,7 @@ readings:
     fingerprint: 3fff08ddf77729c4
   "19.501.1.txt#19.501.1":
     queue: condition
-    outcome: cant_tell
+    outcome: applies
     note: >-
       CORRECTED 2026-09-10 -- this card previously read `never`, on the reason that 19.501.1
       "applies to a single detached dwelling on a lot created after June 3, 2022" and so could not
@@ -201,16 +201,12 @@ readings:
       -- are excepted by right, and the pod is held only by the building standards. Milwaukie's
       version is BROADER than the same provision elsewhere: Gresham Table 4.0130 note 2 and
       Clackamas ZDO 315/316 note 1 except the minimum lot SIZE alone, where "area or dimensional
-      requirements" here reaches width, depth and frontage too. Ruled cant_tell rather than
-      applies, and NOT encoded, because the qualifier is "legal lot or lot of record" -- whether a
-      given tax lot was lawfully created is parcel history this pipeline holds nothing about.
-      Almost every parcel we screen is one; almost is not a measurement, and this is the
-      fourth-footnote-state shape (read, waiting on data) that transit, corner, alley and sewer
-      already sit in. Leaving it unencoded is the conservative direction and matches Gresham's
-      recorded reason there -- "a relief nobody can select is better left out than assumed" -- so
-      the exposure is possible false REDs in Milwaukie, never a false GREEN. What changes is the
-      record: the old reason was checkable and wrong, and a wrong reason on a closed card is the
-      failure this queue exists to prevent.
+      requirements" here reaches width, depth and frontage too. RE-RULED 2026-11-06 (FOLLOWUPS
+      108): this card stood at cant_tell, unencoded, because whether a tax lot was lawfully created
+      is parcel history. Steph answered that on 2026-10-21: every taxlot is taken as legal
+      (rulings.yaml 2026-10-21-existing-taxlots-are-lots-of-record), and this relief asks nothing
+      else about the lot. Encoded as lot_of_record_relief lot_standards on R-MD, R-HD, DMU, NMU,
+      GMU and SMU. The density is not lifted.
     fingerprint: f22b7f0d8fd35357
   "19.502.3.txt#19.502.3":
     queue: condition
@@ -1488,6 +1484,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L34-L45"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L60"
@@ -1695,6 +1698,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L13"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_lot_width_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L24"
@@ -2042,6 +2052,13 @@ zones:
           cite: MMC 19.505.5.E.2, townhouse development must meet the minimum lot size of 1,500 sq ft (larger than the table 750)
           url: https://ecode360.com/print/MI4969?guid=43861924
           quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L262"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 15
       quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L32-L33"
@@ -2171,6 +2188,13 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 25
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
@@ -2253,6 +2277,13 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 25
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
@@ -2379,6 +2410,13 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 25
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"

@@ -23,6 +23,14 @@ ingest:
   strip_lowercase_suffix: false
 
 code:
+- id: "emc.16.84.040"
+  url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+  title: "EMC 16.84.040 Nonconforming Lots Of Record"
+  start: "16.84.040 Nonconforming Lots Of Record"
+  end: "Chapter 16.88 CONDITIONAL USES"
+  nth: 2
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 - id: "emc.16.08"
   url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
   title: "EMC Chapter 16.08 Definitions"
@@ -241,6 +249,20 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.32.040 (A), commonwall dwellings 2,500 square feet per lot for each dwelling unit
           quote: "or/clackamas/estacada/16.32/16.32.040.txt#L9"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_floor_sqft:
+      value: 5000
+      quote: "or/clackamas/estacada/16.32/16.32.040.txt#L7"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.32.040, the C-2 standards print no minimum lot width
@@ -306,6 +328,20 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.37.060 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
           quote: "or/clackamas/estacada/16.37/16.37.060.txt#L9"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_floor_sqft:
+      value: 4000
+      quote: "or/clackamas/estacada/16.37/16.37.060.txt#L7"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_density_du_per_acre:
       # EMC 16.60.070 binds "residential subdivisions" (four or more lots,
       # 16.08) and new multi-family (five or more units on one lot). The
@@ -403,6 +439,18 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.24.040 (A)(1), commonwall dwellings 2,500 square feet per lot for each dwelling unit
           quote: "or/clackamas/estacada/16.24/16.24.040.txt#L10"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      # 16.24.040 prints no single-family minimum, so no floor can be read.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.24.040, the R-3 standards print no minimum lot width
@@ -517,6 +565,20 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.25.050 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
           quote: "or/clackamas/estacada/16.25/16.25.050.txt#L9"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_floor_sqft:
+      value: 5000
+      quote: "or/clackamas/estacada/16.25/16.25.050.txt#L7"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.25.050, the NCR standards print no minimum lot width

@@ -445,6 +445,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-LOT-OF-RECORD:
+    description: "The lot misses a lot standard the code lifts for an existing lot only on a condition the data does not hold: when the lot was created, who has owned the land beside it, or whether the lift reaches an area stated per dwelling"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the deed history and adjoining ownership in legal review, or a planner's letter on the per-dwelling area (FOLLOWUPS 108)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-BUILDING-FRONTAGE:
     description: "The zone asks the building to fill a share of the street frontage; the drawn plan was not measured, or falls short where the same pod placed otherwise could clear it"
     kind: categorical

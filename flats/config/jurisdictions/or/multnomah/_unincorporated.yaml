@@ -1442,14 +1442,6 @@ crossrefs:
       "OAR 660, Division 004" broken across the extraction, leaving the division number to match
       the abbreviation branch as a county section. State law is counted separately by state_law()
       and is not a dangling city chapter.
-  "39.3140":
-    outcome: narrows_only
-    note: >-
-      "Except as provided in MCC 39.3140(B) and 39.4782(A) and (B), the minimum lot size of a
-      single family detached dwelling shall be 10,000 square feet." 39.3140(B) is the Lots of
-      Record definition -- an exception letting an undersized existing lot be built on. It can
-      only lower the minimum this screen already applies, so leaving it unread keeps the stricter
-      test.
   "39.3120":
     outcome: narrows_only
     note: >-
@@ -1493,6 +1485,14 @@ crossrefs:
       encoded standards. A mobile home park is not the building this screen places.
 
 code:
+- id: "39.3140.lot-of-record"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: "MCC 39.3140 Lot of Record - LR-5, LR-7, LR-10, MR-4"
+  start: "§ 39.3140 LOT OF RECORD"
+  end: "§ 39.3150 LOT OF RECORD"
+  extraction: plain
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 # R10/R20/RF/R7 are Portland-administered pockets: the standards live in
 # PCC 33.110, the same chapter PDF the Portland layer declares. LR7 (MCC
 # S-1) and RR (MCC 39.4350) cite the Multnomah County Code, which still
@@ -2388,6 +2388,19 @@ zones:
       per_dwelling: 4000
       cite: MCC 39.4990(C)
       quote: "or/multnomah/_unincorporated/39/39.4990.txt#L6"
+    lot_of_record_relief:
+      # MCC 39.3140: a Lot of Record here is one recorded before July 26, 1979 (A),
+      # and may have less area, down to 3,000 sq ft, for a house or approved use
+      # (B), or less front lot line (C). Width stays. The date is parcel history
+      # we do not hold. YELLOW, not GREEN.
+      value: lot_area_frontage
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23"
+    lot_of_record_floor_sqft:
+      value: 3000
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12"
     max_height_ft:
       value: 35
       cite: MCC 39.4990(J)
@@ -2552,6 +2565,19 @@ zones:
       per_dwelling: 4500
       cite: MCC 39.4830(C)
       quote: "or/multnomah/_unincorporated/39/39.4830.txt#L8"
+    lot_of_record_relief:
+      # MCC 39.3140: a Lot of Record here is one recorded before July 26, 1979 (A),
+      # and may have less area, down to 3,000 sq ft, for a house or approved use
+      # (B), or less front lot line (C). Width stays. The date is parcel history
+      # we do not hold. YELLOW, not GREEN.
+      value: lot_area_frontage
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23"
+    lot_of_record_floor_sqft:
+      value: 3000
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12"
     max_height_ft:
       # 39.4830(H): "Maximum Structure Height - 35 feet", and then exception
       # (4), which is the one height rule in this corpus a 26 ft pod actually
@@ -2723,6 +2749,19 @@ zones:
       value: 10000
       cite: MCC 39.4878(A)
       quote: "or/multnomah/_unincorporated/39/39.4878.txt#L1-L4"
+    lot_of_record_relief:
+      # MCC 39.3140: a Lot of Record here is one recorded before July 26, 1979 (A),
+      # and may have less area, down to 3,000 sq ft, for a house or approved use
+      # (B), or less front lot line (C). Width stays. The date is parcel history
+      # we do not hold. YELLOW, not GREEN.
+      value: lot_area_frontage
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23"
+    lot_of_record_floor_sqft:
+      value: 3000
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12"
     max_height_ft:
       value: 35
       cite: MCC 39.4878(F)
@@ -3689,6 +3728,19 @@ zones:
       # number the article never prints; the multiplication is done at load.
       per_dwelling: 5000
       quote: "or/multnomah/_unincorporated/39/39.4862.txt#L7"
+    lot_of_record_relief:
+      # MCC 39.3140: a Lot of Record here is one recorded before July 26, 1979 (A),
+      # and may have less area, down to 3,000 sq ft, for a house or approved use
+      # (B), or less front lot line (C). Width stays. The date is parcel history
+      # we do not hold. YELLOW, not GREEN.
+      value: lot_area_frontage
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23"
+    lot_of_record_floor_sqft:
+      value: 3000
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12"
     notes: 'County plan areas (Interlachen). CORRECTED: the yards were encoded front 10 / rear 10 from
       the state Model Code Exhibit B, which is not a stored document, while side 5 and street-side 10
       were quoted from MCC 39.4862(H) — two columns read off a row and two overridden from an uncited

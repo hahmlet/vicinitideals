@@ -1058,7 +1058,12 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
     "setback_garage_entrance_ft": 125,
     "min_landscaped_pct": 60,
-    "setback_front_max_ft": 105,
+    # 105 -> 104 on 2026-11-07 (rescreen-1110, counted after rel3's maximum
+    # front setback and Hillsboro active streets, FOLLOWUPS 147), with the
+    # street choice and facade share those rows now carry.
+    "setback_front_max_ft": 104,
+    "setback_front_max_streets": 34,
+    "setback_front_max_facade_pct": 10,
     #: FOLLOWUPS 131: Tualatin CO prints no base density (Table 50-2); its 25 is
     #: a Block 1 variant now, so CO leaves the count.
     "max_density_du_per_acre": 63,
@@ -1078,7 +1083,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
     # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
     # neighbour fact.
-    "parking_lot_line_buffer_ft": 8,
+    # 8 -> 20 on 2026-11-07 (rescreen-1110, FOLLOWUPS 146 merged): the
+    # side-yard lane's new planted strips (Oregon City and Wood Village QP,
+    # West Linn, Clackamas and Washington unincorporated). The side-yard
+    # permission itself, and the stricter setback held as a doubt (FOLLOWUPS
+    # 150), have no column here either.
+    "parking_lot_line_buffer_ft": 20,
+    "parking_side_yard_allowed": 16,
+    "parking_side_yard_stated": 16,
+    "parking_lot_line_buffer_doubt_ft": 7,
     "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,
@@ -1133,7 +1146,13 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: record, so a Gresham lot missing the size, frontage or width/depth row
     #: may still take one building (4.0431.C, Table 4.0130 note 2). FLATS
     #: lifts those rows per form; quadfit has no per-form lift.
-    "lot_of_record_relief": 10,
+    #: 10 -> 94 on 2026-11-07 (FOLLOWUPS 108, legal-lots merged into
+    #: rescreen-1110): the lot-of-record reliefs of every other layer, with
+    #: the floors some print and the conditions (creation date, adjoining
+    #: ownership) others ask.
+    "lot_of_record_relief": 94,
+    "lot_of_record_floor_sqft": 14,
+    "lot_of_record_condition": 43,
     #: FOLLOWUPS 109 (2026-10-21): the building's share of the street
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
@@ -1166,7 +1185,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: add landscaping, maximum fronts, impervious, frontage shares, review tiers,
     #: a parking frontage cap and a height floor -- counted on the keys above.
     "building_frontage_band_ft": 1,
-    "min_far": 1,
+    # 1 -> 2 on 2026-11-07 (rescreen-1110): Hillsboro MU-VTC's floor-area
+    # minimum (FOLLOWUPS 147).
+    "min_far": 2,
 }
 
 

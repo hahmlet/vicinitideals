@@ -1018,14 +1018,32 @@
     lot-of-record relief it is encoded as lot_of_record_relief and applied on
     the one-lot path only: the unit-lots plat makes new lots, and they meet
     the lot standards. Gresham first (corridor CMF, SC, SC-RJ, CMU:
-    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area); the
-    other cities wait for their own sweep (docs/FOLLOWUPS.md item 108).
+    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area). The
+    sweep of every other layer (FOLLOWUPS 108, 2026-11-06) took Milwaukie,
+    Oregon City, West Linn MU, Hillsboro and Troutdale outright. The ruling
+    says a lot is legal, not when it was made or who owned next door: where a
+    relief asks either (Tualatin, Beaverton, Happy Valley, Canby, Portland's
+    multi-dwelling zones, MCC LR/MR) or leaves its reach open (Estacada's area
+    per dwelling), a lot let off it is YELLOW with MEASURE-LOT-OF-RECORD
+    (lot_of_record_condition).
   source: Steph 2026-10-21 (chat, via the FLATS coordinator), docs/FOLLOWUPS.md item 108
   encoded_in:
     - flats/rules/fields.py
     - flats/score/screen.py
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/config/footnotes/or/multnomah/gresham.yaml
+    - flats/config/jurisdictions/or/clackamas/milwaukie.yaml
+    - flats/config/jurisdictions/or/clackamas/oregon-city.yaml
+    - flats/config/jurisdictions/or/clackamas/west-linn.yaml
+    - flats/config/jurisdictions/or/washington/hillsboro.yaml
+    - flats/config/jurisdictions/or/multnomah/troutdale.yaml
+    - flats/config/jurisdictions/or/clackamas/estacada.yaml
+    - flats/config/jurisdictions/or/clackamas/tualatin.yaml
+    - flats/config/jurisdictions/or/washington/beaverton.yaml
+    - flats/config/jurisdictions/or/clackamas/happy-valley.yaml
+    - flats/config/jurisdictions/or/clackamas/canby.yaml
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
 
 - id: 2026-11-01-trees-ignored-entered-per-lot
   kind: ruling
@@ -2627,3 +2645,18 @@
     (OAR 660-023-0200(8)(a) protects National Register resources whether or
     not the local government designated them). FOLLOWUPS 87.
   source: Steph 2026-11-07 (chat), docs/followups/87-historic-outside-portland.md
+- id: 2026-11-06-estacada-lot-of-record-per-home-figure
+  kind: ruling
+  date: 2026-11-06
+  scope: {county: clackamas, city: estacada}
+  question: >-
+    Estacada EMC 16.84.040 lets an existing undersized lot be built on. Does
+    that relief also lift the 2,500 sq ft per home figure, which limits how
+    many homes fit? The code does not say. Stay yellow, go green, or ask the
+    city?
+  ruling: >-
+    "Stay yellow"
+  effect: >-
+    A lot that passes only through this relief (C-2, CMU, NCR, R-3) is YELLOW
+    with a flag, never GREEN, until the city answers. FOLLOWUPS 108.
+  source: Steph 2026-11-06 (chat), docs/followups/108-legal-lots.md

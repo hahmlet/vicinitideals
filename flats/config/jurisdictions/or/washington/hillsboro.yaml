@@ -25,6 +25,14 @@ ingest:
   juris_city_codes:
   - HILLSBORO
 code:
+- id: "cdc.12.30.300.lots-of-record"
+  url: https://api.municode.com/PublicationPdfDownload/4450
+  title: "CDC 12.30.300 A - Non-conforming Lots of Record"
+  start: "12.30.300  Exceptions"
+  end: "B. Exceptions Regarding Incomplete"
+  extraction: plain
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 # Municode client Hillsboro, publication 4450 ("Community Development
 # Code"). The unsigned publication endpoint, per flats/provenance/municode.py;
 # the signed blob URL it returns expires. Plain extraction throughout: the
@@ -488,8 +496,11 @@ defaults:
 # NOT STORED: Subchapter 12.30 (nonconforming situations, 12.30.900 drive-
 # throughs) and 12.70 (procedures: Types I to IV, hearings, appeals and the
 # transportation studies of 12.70.200-230). Neither is a base-zone
-# standard; a question for the reviewer only if a later reading finds 12.30
-# reaching new middle housing.
+# standard. 12.30.300 A does reach new middle housing on an existing lot, so
+# that one section is stored (cdc.12.30.300.lots-of-record.txt) and taken as
+# lot_of_record_relief (Steph 2026-10-21; FOLLOWUPS 108). SCR-OTC is left out:
+# 12.62.300 A.1, its own rule for lots under 7,500 sq ft, is dated August 15,
+# 1996 and holds them to fewer homes than the pod.
 #
 # PROHIBITION GREP (checklist step 10), over all 23 stored documents for
 # "quadplex", "plex" and "middle housing": what reaches a four-unit
@@ -538,6 +549,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.150-1, townhouse lots average minimum lot size
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L7-L8"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 3.5
       cite: Hillsboro CDC Table 12.21.150-1, Minimum Density
@@ -635,6 +652,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.250-1, townhouse lots average minimum lot size
           quote: "or/washington/hillsboro/12.21/12.21.250.txt#L4,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 4
       cite: Hillsboro CDC Table 12.21.250-1, Minimum Density
@@ -735,6 +758,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.350-1, townhouse lots average minimum lot size
           quote: "or/washington/hillsboro/12.21/12.21.350.txt#L4,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 5.0
       cite: Hillsboro CDC Table 12.21.350-1, Minimum Density
@@ -834,6 +863,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.450-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.450.txt#L4,L7,L14"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 6000
+      quote: "or/washington/hillsboro/12.21/12.21.450.txt#L12"
     min_density_du_per_acre:
       value: 6.0
       cite: Hillsboro CDC Table 12.21.450-1, Minimum Density
@@ -937,6 +975,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.550-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.550.txt#L4,L7,L13"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 4500
+      quote: "or/washington/hillsboro/12.21/12.21.550.txt#L10"
     min_density_du_per_acre:
       value: 8.0
       cite: Hillsboro CDC Table 12.21.550-1, Minimum Density
@@ -1094,6 +1141,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.650-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.650.txt#L4,L7,L12"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 3600
+      quote: "or/washington/hillsboro/12.21/12.21.650.txt#L8-L9"
     min_density_du_per_acre:
       value: 9.0
       cite: Hillsboro CDC Table 12.21.650-1, Minimum Density
@@ -1346,6 +1402,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.850-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.850.txt#L5,L8,L12"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 3000
+      quote: "or/washington/hillsboro/12.21/12.21.850.txt#L9"
     min_density_du_per_acre:
       # Within 1,300 feet of an LRT station 15 du/na, beyond it 9, banded
       # on the measured distance to a MAX station (flats.geom.transit). A
@@ -1498,6 +1563,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.22.150-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.22/12.22.150.txt#L4,L7,L13"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 4500
+      quote: "or/washington/hillsboro/12.22/12.22.150.txt#L10"
     min_density_du_per_acre:
       value: 11
       cite: Hillsboro CDC Table 12.22.150-1, Minimum Density
@@ -1662,6 +1736,12 @@ zones:
       per_dwelling: 2000
       cite: Hillsboro CDC Table 12.22.250-1, Minimum Lot Size, 2,000 sq. ft. per dwelling unit
       quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4-L9"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 17
       cite: Hillsboro CDC Table 12.22.250-1, Minimum Density
@@ -1843,6 +1923,12 @@ zones:
       value: 6000
       cite: Hillsboro CDC Table 12.22.350-1, Minimum Lot Size
       quote: "or/washington/hillsboro/12.22/12.22.350.txt#L4-L9"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 23
       cite: Hillsboro CDC Table 12.22.350-1, Minimum Density
@@ -2020,6 +2106,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.22.460-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.22/12.22.460.txt#L4,L7,L11"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 2000
+      quote: "or/washington/hillsboro/12.22/12.22.460.txt#L8"
     min_density_du_per_acre:
       # The 7.0 du/na limit within 100 feet of a developed standard-zone
       # neighborhood (L1035-L1041) is for single detached dwellings and
@@ -2143,6 +2238,12 @@ zones:
       per_dwelling: 1500
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Lot Size, 1,500 sq. ft. per unit
       quote: "or/washington/hillsboro/12.22/12.22.560.txt#L4-L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 24
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Density
@@ -2429,6 +2530,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.23/12.23.460.txt#L4-L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       # Free-standing: 30 du/na within 1,300 feet of an LRT station, 24
       # beyond, banded on the measured distance to a MAX station.
@@ -2568,6 +2675,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.23/12.23.560.txt#L4-L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 15
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Density, free-standing
@@ -2715,6 +2828,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.24.160-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.24/12.24.160.txt#L4,L7,L17"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 4000
+      quote: "or/washington/hillsboro/12.24/12.24.160.txt#L8,L11"
     min_density_du_per_acre:
       # 12 du/na on a lot fronting an Arterial, 8 on a lot fronting a local
       # or Collector street. The 12 binds and is the base; the 8 is a
@@ -2871,6 +2993,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.260.txt#L4-L5,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       # The free-standing row; the 12 applies to upper floors of vertical
       # mixed-use buildings, which the pod is not.
@@ -3025,6 +3153,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.24.360-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.24/12.24.360.txt#L4,L7,L11"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     # NOT ENCODED: density. "Within the South Hillsboro Plan District, see
     # Table 12.24.360-2" (L1223-L1227), and that table states minimum and
     # maximum dwelling-unit COUNTS for all mixed-use land north and south
@@ -3250,6 +3384,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, Minimum Lot Size, triplex, quadplex ... None
       quote: "or/washington/hillsboro/12.24/12.24.460.txt#L4-L5,L7,L9-L10"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       # 24 within 1,300 feet of an LRT station, 15 to 2,600 feet, 7 beyond,
       # banded on the measured distance to a MAX station. The table writes
@@ -3371,6 +3511,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.560.txt#L4-L5,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 24
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Residential Density
@@ -3500,6 +3646,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.660.txt#L4-L5,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 43
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Residential Density
@@ -3986,6 +4138,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.1060.txt#L3-L4,L6"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 18
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Residential Density, triplex and quadplex

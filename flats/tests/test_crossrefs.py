@@ -115,8 +115,10 @@ def test_the_reference_worth_chasing_was_chased(
     # (58.central-tualatin-overlay.txt L286-L287). The same ruling.
     # Six since 2026-10-08: 34.400, the already-ruled retirement-housing section, binds four
     # more times with the Tualatin zones encoded that day; the standing ruling covers it.
+    # Chapter 35 left the queue on 2026-11-06 (FOLLOWUPS 108): 35.040 Nonconforming
+    # Lots is stored and taken; the rest of the chapter is existing situations.
     assert max(d.binding for d in tualatin.values()) <= 6
-    assert tualatin["35"].ruling
+    assert tualatin["32"].ruling
 
 
 def test_binding_is_what_orders_the_queue() -> None:
@@ -151,9 +153,9 @@ def test_a_table_cell_is_not_a_citation(tualatin: dict[str, Dangling]) -> None:
 def test_a_spelled_out_word_may_still_take_a_bare_number(
     tualatin: dict[str, Dangling]
 ) -> None:
-    """"See TDC Chapter 35" is a reference and there is nothing else it could
+    """"See TDC Chapter 32" is a reference and there is nothing else it could
     be, so the strictness is on the abbreviation and not on the number."""
-    assert "35" in tualatin
+    assert "32" in tualatin
 
 
 def test_state_law_is_counted_somewhere_else(

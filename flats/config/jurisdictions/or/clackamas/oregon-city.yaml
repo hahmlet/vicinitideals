@@ -1037,6 +1037,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4120-L4121"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 65
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1191,6 +1198,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4120-L4121"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1338,6 +1352,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4120-L4121"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1475,6 +1496,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4317"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
@@ -1635,6 +1663,13 @@ zones:
         - value: 2000
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4578"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       # "Minimum lot width / All, except 50 feet, except / Townhouse 20 feet".
       # The pod on one lot is in "All".
@@ -1890,6 +1925,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4317"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"

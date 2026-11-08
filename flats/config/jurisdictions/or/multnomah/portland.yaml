@@ -3428,6 +3428,15 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    lot_of_record_relief:
+      # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
+      # has not abutted land under the same ownership since July 26, 1979 needs
+      # neither. The ownership history is not held. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3609,6 +3618,15 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    lot_of_record_relief:
+      # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
+      # has not abutted land under the same ownership since July 26, 1979 needs
+      # neither. The ownership history is not held. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -3814,6 +3832,15 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    lot_of_record_relief:
+      # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
+      # has not abutted land under the same ownership since July 26, 1979 needs
+      # neither. The ownership history is not held. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -4015,6 +4042,15 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    lot_of_record_relief:
+      # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
+      # has not abutted land under the same ownership since July 26, 1979 needs
+      # neither. The ownership history is not held. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
@@ -4176,6 +4212,15 @@ zones:
       # test does not exist rather than being one every lot passes.
       exempt: true
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L28-L31"
+    lot_of_record_relief:
+      # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
+      # has not abutted land under the same ownership since July 26, 1979 needs
+      # neither. The ownership history is not held. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     min_frontage_ft:
       value: 10
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L28-L31"
@@ -4341,6 +4386,15 @@ zones:
     min_lot_sqft:
       value: 10000
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L32-L34"
+    lot_of_record_relief:
+      # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
+      # has not abutted land under the same ownership since July 26, 1979 needs
+      # neither. The ownership history is not held. YELLOW, not GREEN.
+      value: lot_standards
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     min_lot_width_ft:
       value: 70
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L32-L34"

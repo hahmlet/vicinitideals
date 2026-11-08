@@ -554,6 +554,11 @@ definitions:
     cite: "HV LDC 16.12.030, Corner lot"
 
 code:
+- id: "16.72.nonconforming"
+  url: https://ecode360.com/print/HA4934?guid=43529984
+  title: "HV LDC Chapter 16.72 - Nonconforming Uses, Structures and Lots"
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 - id: 16.12.definitions
   url: https://ecode360.com/print/HA4934?guid=43529904
   title: HV LDC Chapter 16.12 - Definitions
@@ -1134,6 +1139,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
@@ -1355,6 +1369,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 80
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
@@ -1574,6 +1597,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 70
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
@@ -1783,6 +1815,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
@@ -1993,6 +2034,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
@@ -2203,6 +2253,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
@@ -2449,6 +2508,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L149"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 40
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L152"
@@ -2633,6 +2701,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L149"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L37"
@@ -2732,6 +2809,15 @@ zones:
     min_lot_sqft:
       value: 2000
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271-L272"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
@@ -2892,6 +2978,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L352-L357"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
@@ -3055,6 +3150,15 @@ zones:
     min_lot_sqft:
       value: 2000
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271,L274"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.

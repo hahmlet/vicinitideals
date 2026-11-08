@@ -17,6 +17,15 @@ ingest:
   juris_city_codes:
   - BEAVERTON
 code:
+- id: "bdc.30.15.nonconforming-lots"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 30.15 Nonconforming Lots of Record"
+  start: "30.15. Nonconforming Lots of Record."
+  end: "30.20. Nonconforming Uses."
+  nth: 2
+  extraction: plain
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 # The whole BDC as one PDF from the encodeplus export endpoint (the city's
 # own development-code page links to it). Plain extraction throughout. The
 # PDF prints a table of contents first, so every chapter and section
@@ -433,6 +442,15 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex (MR N/A)"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -545,6 +563,15 @@ zones:
       value: 3000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 17
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -688,6 +715,15 @@ zones:
       value: 4000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -840,6 +876,15 @@ zones:
       value: 5000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 7
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -1006,6 +1051,15 @@ zones:
       value: 4000
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22,L157-L158"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 10
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1134,6 +1188,15 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-MR N/A)"
       quote: "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1519,6 +1582,15 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/20.10/20.10.15.txt#L7,L10-L27"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"

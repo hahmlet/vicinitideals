@@ -1,0 +1,6 @@
+5.350  Nonconforming Lot.
+If a lot, or the aggregate of contiguous lots or parcels of land held in a single ownership, has an area
+or dimension which does not meet size requirements, the lot or aggregate holdings may be
+developed subject to all other requirements. If there is an area deficiency, residential use shall be
+limited to a single-family dwelling.
+ 5.350

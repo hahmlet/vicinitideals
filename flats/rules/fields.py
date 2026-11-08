@@ -546,13 +546,56 @@ _F: tuple[FieldDef, ...] = (
         "be developed anyway. `lot_area`: the minimum lot area (Gresham Table "
         "4.0130 note 2). `lot_dimensions`: minimum lot area, minimum frontage "
         "and the depth ratio, and a lot that misses any of them is then "
-        "exempt from the minimum density (Gresham 4.0431.C). Every existing "
-        "taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml "
+        "exempt from the minimum density (Gresham 4.0431.C). `lot_standards`: "
+        "lot area, width, average width, depth, frontage and the depth ratio "
+        "(Milwaukie 19.501.1). `lot_shape`: the same without the area, where "
+        "an undersized lot of record may hold only a house (Troutdale 5.350). "
+        "`lot_area_frontage`: area and frontage (MCC 39.3140). "
+        "`lot_area_width_depth`: area, width and depth (Happy Valley "
+        "16.72.040). `lot_width`: width alone (Beaverton 30.15, Canby "
+        "16.08.080 C). None of these lifts a minimum density except "
+        "`lot_dimensions`. Every existing taxlot is taken as a lot of record "
+        "(Steph 2026-10-21, rulings.yaml "
         "2026-10-21-existing-taxlots-are-lots-of-record). Never reaches the "
         "unit-lots path, which makes new lots.",
         None,
-        choices=("none", "lot_area", "lot_dimensions"),
+        choices=(
+            "none",
+            "lot_area",
+            "lot_dimensions",
+            "lot_standards",
+            "lot_shape",
+            "lot_area_frontage",
+            "lot_area_width_depth",
+            "lot_width",
+        ),
         label="lot-of-record relief",
+    ),
+    FieldDef(
+        "lot_of_record_floor_sqft",
+        "area_sqft",
+        "The smallest lot `lot_of_record_relief` lets off the minimum lot "
+        "area, where the code prints one: Hillsboro 12.30.300 A and Estacada "
+        "16.84.040 hold a lot under the zone's single-dwelling minimum to a "
+        "house, a duplex or a townhouse, and MCC 39.3140 (B) stops at 3,000 "
+        "sq ft. Below it the area row stands. Touches nothing but the area.",
+        False,
+        label="lot-of-record relief floor",
+    ),
+    FieldDef(
+        "lot_of_record_condition",
+        "enum",
+        "What the code's lot-of-record relief depends on that the data does "
+        "not hold, where it does. `creation_date`: the lot's date or history "
+        "of creation. `adjoining_ownership`: who has owned the land beside "
+        "it. `per_dwelling_area`: whether a relief from the area requirement "
+        "reaches an area stated per dwelling, which also sets how many homes "
+        "a lot holds. A lot let off under such a relief is held at YELLOW "
+        "with MEASURE-LOT-OF-RECORD, never GREEN: Steph's 2026-10-21 ruling "
+        "says the lot is legal, not when it was made or who owned next door.",
+        None,
+        choices=("none", "creation_date", "adjoining_ownership", "per_dwelling_area"),
+        label="lot-of-record relief condition",
     ),
     FieldDef(
         "land_division_parent_standards",
@@ -1944,6 +1987,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_lot_depth_ratio",
         # A relief, not a standard: a code that states none relieves nothing.
         "lot_of_record_relief",
+        "lot_of_record_floor_sqft",
+        "lot_of_record_condition",
         # One jurisdiction in the corpus caps building width, and only inside
         # a historic district. A zone that is silent about it is not an
         # incomplete zone.
