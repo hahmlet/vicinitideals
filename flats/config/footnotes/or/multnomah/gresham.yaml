@@ -370,16 +370,24 @@ notes:
 
   - quote: "or/multnomah/gresham/4/4.0130.txt#L179-L180"
     digest: "f733ca818d64"
-    state: unmeasured
-    fact: at_street_end
+    state: encoded
+    encoded_as: >-
+      setback_front_max_ft 25 variant when [at_street_end] on LDR-5, LDR-7,
+      TLDR and TR, over an exempt base (no maximum front setback otherwise)
     reason: >-
       states a 25-foot maximum and a 5-foot minimum setback from the end of a
-      Minor Access Street, and neither number is encoded. The note turns on
-      the END of a street, not on the class of the one a lot fronts (it was
-      held against `local_street` until 2026-10-04): a lot no street ends
-      near is not at the end of a Minor Access Street, and the bridge answers
-      `at_street_end` False there (flats.geom.street_end). Never True, so a
-      lot near an end keeps the cap
+      Minor Access Street. Held `unmeasured` until 2026-11-08 (FOLLOWUPS 58),
+      which capped every Table 4.0131 setback in eight zones; it is ruled on
+      where the marker sits, as this file rules Table 4.0131's other notes:
+      "10 ft.5" on the Facade/Wall front cell of the LDR-5, LDR-7, TLDR and
+      TR plex and townhouse rows (L155, L160) and of the cottage-cluster row,
+      and on no MDR-12, MDR-24 or OFR cell (L157, L162, L168), so the note
+      reaches only those four zones' front setback. The maximum is encoded
+      there as a variant on `at_street_end`, which the bridge answers False
+      where no street ends within 200 ft (flats.geom.street_end) and never
+      True; near an end the screen tries both answers and holds the 25 ft on
+      every street line. The 5-foot minimum only relaxes the 10-foot front
+      and is not taken (conservative)
 
   - quote: "or/multnomah/gresham/4/4.0130.txt#L145"
     digest: "69581d2a6fa6"

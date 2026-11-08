@@ -1030,7 +1030,6 @@
         "civic_corridor"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
@@ -1039,19 +1038,16 @@
         "civic_corridor"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
@@ -1083,27 +1079,26 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_front_max_ft": [
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1134,27 +1129,26 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_front_max_ft": [
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1182,27 +1176,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1227,27 +1216,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1278,27 +1262,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1326,27 +1305,26 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_front_max_ft": [
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1377,27 +1355,26 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_front_max_ft": [
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]

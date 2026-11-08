@@ -2367,6 +2367,28 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (FOLLOWUPS 58, 2026-11-08): "For townhouses,
+      # single detached dwellings, and plexes, the maximum setback from the
+      # end of a Minor Access Street is 25 feet." Its marker sits on this
+      # zone's Facade/Wall front cell, "10 ft.5" on the plex row (L155) and
+      # the townhouse row (L160), and on no MDR-12, MDR-24 or OFR cell (L157,
+      # L162). Off a street's end the code states no maximum front setback
+      # here: note 7 applies maxima in MDR-12, MDR-24 and OFR only (L185).
+      # Whether a street ends at the lot is measured (flats.geom.street_end:
+      # False beyond 200 ft); near an end it stays unknown, so the screen
+      # tries both answers, and on "yes" the 25 ft is held on every street
+      # line (no `setback_front_max_streets`: nothing says which line is the
+      # end, so a lot passes only where every street clears). The note's
+      # 5 ft minimum only relaxes the 10 ft front and is not taken.
+      exempt: true
+      cite: GDC Table 4.0131 prints no maximum front setback on the LDR-5 rows; note 7 applies maximum front setbacks in MDR-12, MDR-24 and OFR only
+      quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155,L159-L160,L185"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street, marked on the LDR-5 front (Facade/Wall) cell of the plex and townhouse rows
+          quote: "or/multnomah/gresham/4/4.0130.txt#L155,L160,L179"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
@@ -2563,6 +2585,28 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (FOLLOWUPS 58, 2026-11-08): "For townhouses,
+      # single detached dwellings, and plexes, the maximum setback from the
+      # end of a Minor Access Street is 25 feet." Its marker sits on this
+      # zone's Facade/Wall front cell, "10 ft.5" on the plex row (L155) and
+      # the townhouse row (L160), and on no MDR-12, MDR-24 or OFR cell (L157,
+      # L162). Off a street's end the code states no maximum front setback
+      # here: note 7 applies maxima in MDR-12, MDR-24 and OFR only (L185).
+      # Whether a street ends at the lot is measured (flats.geom.street_end:
+      # False beyond 200 ft); near an end it stays unknown, so the screen
+      # tries both answers, and on "yes" the 25 ft is held on every street
+      # line (no `setback_front_max_streets`: nothing says which line is the
+      # end, so a lot passes only where every street clears). The note's
+      # 5 ft minimum only relaxes the 10 ft front and is not taken.
+      exempt: true
+      cite: GDC Table 4.0131 prints no maximum front setback on the LDR-7 rows; note 7 applies maximum front setbacks in MDR-12, MDR-24 and OFR only
+      quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155,L159-L160,L185"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street, marked on the LDR-7 front (Facade/Wall) cell of the plex and townhouse rows
+          quote: "or/multnomah/gresham/4/4.0130.txt#L155,L160,L179"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
@@ -2763,6 +2807,28 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (FOLLOWUPS 58, 2026-11-08): "For townhouses,
+      # single detached dwellings, and plexes, the maximum setback from the
+      # end of a Minor Access Street is 25 feet." Its marker sits on this
+      # zone's Facade/Wall front cell, "10 ft.5" on the plex row (L155) and
+      # the townhouse row (L160), and on no MDR-12, MDR-24 or OFR cell (L157,
+      # L162). Off a street's end the code states no maximum front setback
+      # here: note 7 applies maxima in MDR-12, MDR-24 and OFR only (L185).
+      # Whether a street ends at the lot is measured (flats.geom.street_end:
+      # False beyond 200 ft); near an end it stays unknown, so the screen
+      # tries both answers, and on "yes" the 25 ft is held on every street
+      # line (no `setback_front_max_streets`: nothing says which line is the
+      # end, so a lot passes only where every street clears). The note's
+      # 5 ft minimum only relaxes the 10 ft front and is not taken.
+      exempt: true
+      cite: GDC Table 4.0131 prints no maximum front setback on the TLDR rows; note 7 applies maximum front setbacks in MDR-12, MDR-24 and OFR only
+      quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155,L159-L160,L185"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street, marked on the TLDR front (Facade/Wall) cell of the plex and townhouse rows
+          quote: "or/multnomah/gresham/4/4.0130.txt#L155,L160,L179"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
@@ -2943,6 +3009,28 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (FOLLOWUPS 58, 2026-11-08): "For townhouses,
+      # single detached dwellings, and plexes, the maximum setback from the
+      # end of a Minor Access Street is 25 feet." Its marker sits on this
+      # zone's Facade/Wall front cell, "10 ft.5" on the plex row (L155) and
+      # the townhouse row (L160), and on no MDR-12, MDR-24 or OFR cell (L157,
+      # L162). Off a street's end the code states no maximum front setback
+      # here: note 7 applies maxima in MDR-12, MDR-24 and OFR only (L185).
+      # Whether a street ends at the lot is measured (flats.geom.street_end:
+      # False beyond 200 ft); near an end it stays unknown, so the screen
+      # tries both answers, and on "yes" the 25 ft is held on every street
+      # line (no `setback_front_max_streets`: nothing says which line is the
+      # end, so a lot passes only where every street clears). The note's
+      # 5 ft minimum only relaxes the 10 ft front and is not taken.
+      exempt: true
+      cite: GDC Table 4.0131 prints no maximum front setback on the TR rows; note 7 applies maximum front setbacks in MDR-12, MDR-24 and OFR only
+      quote: "or/multnomah/gresham/4/4.0130.txt#L147-L155,L159-L160,L185"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street, marked on the TR front (Facade/Wall) cell of the plex and townhouse rows
+          quote: "or/multnomah/gresham/4/4.0130.txt#L155,L160,L179"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"

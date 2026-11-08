@@ -22,7 +22,7 @@ import shapely
 
 from flats.encode.load import load_trusted
 from flats.geom import split_zone as sz
-from flats.ingest.quadfit import _screen_lot_once, lot_from_row
+from flats.ingest.quadfit import _screen_lot_once, lot_from_row, screen_lot
 from flats.score import flags as flag_plan, relief, slack
 from flats.tests.test_quadfit_bridge import X0, Y0, pod4, row
 
@@ -135,13 +135,72 @@ def test_a_fact_whose_bad_answer_refuses_the_building_keeps_its_severity(
 
 
 def test_a_fact_on_a_footnote_with_no_number_is_never_bounded(corpus, policies) -> None:
-    # Gresham LDR-7: the sidewalk easement and the end of a Minor Access
-    # Street move the yards by a footnote that states no number, so neither
-    # has a worst reading anybody can compute.
+    # Gresham LDR-7: the sidewalk easement moves the yards by a footnote that
+    # states no number until a depth is taken, so with none it has no worst
+    # reading anybody can compute.
     s = screened(corpus, policies, bound=True, jurisdiction="gresham", zone="LDR-7")
-    assert {"sidewalk_easement", "at_street_end"} <= s.rules.unencoded
-    got = severities(s)
-    assert got["FACT-SIDEWALK-EASEMENT"] == 5 and got["FACT-AT-STREET-END"] == 5
+    assert "sidewalk_easement" in s.rules.unencoded
+    assert severities(s)["FACT-SIDEWALK-EASEMENT"] == 5
+
+
+#: A Gresham LDR-7 lot a street ends near (FOLLOWUPS 58): the bridge cannot say
+#: it is not at the end. Its own polygon is held, so the envelope is the one
+#: FLATS cuts, and Marine Drive is answered (the row carries no layers).
+NEAR_END = dict(
+    jurisdiction="gresham",
+    zone="LDR-7",
+    street_end_ft=40.0,
+    lot_wkb=shapely.to_wkb(shapely.box(X0, Y0, X0 + W, Y0 + D)),
+)
+
+
+def near_end(corpus, policies, *, easement_ft: float, **observed):
+    lot = lot_from_row(row(**{**BIG, **NEAR_END, "sidewalk_easement_ft": easement_ft}))
+    lot = dataclasses.replace(
+        lot,
+        observed={
+            **lot.observed,
+            **OFF_PLAN_DISTRICTS,
+            "north_of_marine_drive": False,
+            **observed,
+        },
+    )
+    (s,) = screen_lot(lot, [pod4()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    return s
+
+
+def test_the_end_of_a_minor_access_street_is_a_number_now(corpus, policies) -> None:
+    # Table 4.0131 note 5's 25 ft maximum is encoded on the fact, so the fact
+    # is no longer a footnote with no number; read "at the end", the drawn
+    # building is measured from the street (10 ft yard + 7 ft easement).
+    s = near_end(corpus, policies, easement_ft=7.0, at_street_end=True)
+    assert "at_street_end" not in s.rules.unencoded
+    assert s.rules.get("setback_front_max_ft") == 25
+    assert s.facts.front_max_streets == ((True, 17.0, 17.0, 7.0),)
+    assert s.signed.colour is flag_plan.Colour.green
+
+
+def test_a_lot_whose_building_stands_within_25_ft_of_every_street_clears_the_end(
+    corpus, policies
+) -> None:
+    # Not observed either way: tried both ways, it clears on both, so the
+    # flag stays named at 0 and the lot is GREEN.
+    s = near_end(corpus, policies, easement_ft=7.0)
+    assert severities(s)["FACT-AT-STREET-END"] == 0
+    assert s.signed.colour is flag_plan.Colour.green
+
+
+def test_a_building_past_the_25_ft_on_the_strict_reading_keeps_the_end_flag(
+    corpus, policies
+) -> None:
+    # A 20 ft easement depth puts the building 30 ft from the lot line: past
+    # 25 measured from the line, within it from the easement. Which one the
+    # code measures from is a question, so "at the end" is not cleared and
+    # the lot stays YELLOW -- never GREEN, and never RED on a fact nobody
+    # observed.
+    s = near_end(corpus, policies, easement_ft=20.0)
+    assert severities(s)["FACT-AT-STREET-END"] == 5
+    assert s.signed.colour is flag_plan.Colour.yellow
 
 
 def test_a_red_plan_is_left_alone(corpus, policies) -> None:

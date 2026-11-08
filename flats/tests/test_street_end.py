@@ -1,11 +1,13 @@
 """The street-end fact: Gresham's Minor Access Street note, and how far it reaches.
 
 Gresham Table 4.0131 note 5 sets a 5 ft minimum and a 25 ft maximum setback
-"from the end of a Minor Access Street". Neither number is encoded, so the
-note caps every Gresham setback until a lot is shown not to be at a street's
-end. These tests pin the three things that keep that from becoming a false
+"from the end of a Minor Access Street". Until 2026-11-08 neither number was
+encoded and the note capped every Table 4.0131 setback in eight zones; since
+then (FOLLOWUPS 58) the 25 ft maximum is a variant on this fact, on the four
+zones whose front cell carries the marker, and a lot near an end is screened
+both ways. These tests pin the things that keep that from becoming a false
 GREEN: what counts as a street ending, that the answer is only ever False,
-and that the note's cap names this fact and not the street's class.
+and that the note binds on this fact and not on the street's class.
 """
 
 from __future__ import annotations
@@ -93,12 +95,45 @@ def test_the_fact_is_registered_with_no_assumption() -> None:
     assert STREET_END_FACT in OBSERVABLE
 
 
-def test_greshams_end_of_street_note_caps_on_the_street_end_not_the_class() -> None:
+#: The zones whose Table 4.0131 front cell prints note 5's marker ("10 ft.5",
+#: or/multnomah/gresham/4/4.0130.txt#L155,L160), and the ones whose does not
+#: (#L157,L162,L168).
+MARKED = ("LDR-5", "LDR-7", "TLDR", "TR")
+UNMARKED = ("MDR-12", "MDR-24", "OFR")
+
+
+def test_greshams_end_of_street_note_no_longer_caps_a_setback() -> None:
+    # Encoded, not unmeasured: no Gresham value carries the fact as a
+    # question with no number, so a lot near an end can be screened both ways.
     caps.reload()
-    for zone in ("LDR-5", "LDR-7", "TLDR", "TR", "MDR-12", "MDR-24", "OFR"):
+    for zone in (*MARKED, *UNMARKED, "CMF"):
         fields = caps.caps_for("or/multnomah/gresham", zone)
-        assert STREET_END_FACT in fields["setback_front_ft"], zone
+        assert all(STREET_END_FACT not in facts for facts in fields.values()), zone
         assert all("local_street" not in facts for facts in fields.values()), zone
+
+
+def test_the_25_ft_maximum_binds_on_the_street_end_in_the_marked_zones_only() -> None:
+    from flats.encode.load import load_trusted
+
+    layer = load_trusted(strict=False).rules
+    near = {STREET_END_FACT}
+    far: set[str] = set()
+    for zone in MARKED:
+        at_end = layer.resolve("or/multnomah/gresham", zone, near)
+        assert at_end.get("setback_front_max_ft") == 25, zone
+        # No street-choice field: held on every street line ("unheld").
+        assert at_end.get("setback_front_max_streets") is None, zone
+        # The note's 5 ft minimum is a relaxation and is not taken.
+        assert at_end.get("setback_front_ft") == 10, zone
+        off_end = layer.resolve("or/multnomah/gresham", zone, far)
+        assert off_end.get("setback_front_max_ft") is None, zone
+        assert "setback_front_max_ft" in off_end.exempted, zone
+    for zone in UNMARKED:
+        # These zones' own maximum (note 7, 20 ft) is untouched by the fact.
+        assert (
+            layer.resolve("or/multnomah/gresham", zone, near).get("setback_front_max_ft")
+            == layer.resolve("or/multnomah/gresham", zone, far).get("setback_front_max_ft")
+        ), zone
 
 
 def test_the_bridge_answers_false_only_on_a_lot_no_street_ends_near() -> None:
