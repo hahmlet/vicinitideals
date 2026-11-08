@@ -2580,3 +2580,18 @@
     is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
     FOLLOWUPS 68.
   source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
+- id: 2026-11-08-oregon-city-dedication-below-minimum
+  kind: ruling
+  date: 2026-11-08
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    When an existing Oregon City lot must give up a strip of land for the
+    road and is left smaller than the zone's minimum lot size, does it still
+    count as a lot that meets the minimum (existing-lot relief, OCMC
+    17.58.020)?
+  ruling: '"no"'
+  effect: >-
+    The lot area after the road strip is measured against the zone minimum
+    with no existing-lot relief for the shortfall the dedication causes; a
+    lot left below the minimum misses it. FOLLOWUPS 77.
+  source: Steph 2026-11-08 (chat), docs/followups/77-city-road-dedication.md
