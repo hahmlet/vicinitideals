@@ -14,3 +14,4 @@
        row across the back; ~20 of the new Canby/Sandy reds are long enough. Overlaps the parking layout
        generator (FOLLOWUPS 92) -- try that layout?
 - 2026-11-08 fire_rp5 READ: HOLD -- 1 wrong GREEN Milwaukie 12E30CD04700 (retry moved the court between building and street; MMC 19.505.3.D.4.a) + 4 unconfirmed yellows same defect; 3 greens right. Round 6 fix (re-check court position after the move) being built; rides flats/rescreen-1110. [Steph] OFFERED: in codes silent on it, may parking sit between the building and the street? Built as NO meanwhile.
+- Steph 2026-11-08: NO front-yard parking in silent codes (rulings.yaml 2026-11-08-no-front-yard-parking-silent-codes, added on the fire placement branch with round 6).
