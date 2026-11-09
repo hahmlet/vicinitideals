@@ -465,6 +465,32 @@ definitions:
     quote: "or/clackamas/west-linn/02/02.030.txt#L221"
     cite: "West Linn CDC 2.030, Corner lot"
 
+# READ AND NOT ENCODED (FOLLOWUPS 105 round 4, Chapters 42 and 28 fetched 2026-11-09 under Steph's
+# standing download OK; both were `fetch` crossref rulings until they came into the store).
+# - Chapter 42, Clear Vision Areas (42.clear-vision.txt). 42.020 keeps every structure over 3 ft out
+#   of the triangle (#L17-L19). 42.040: at a street corner, and where a street meets an accessway 24
+#   ft or wider, legs of 30 ft along the right-of-way or property lines from their intersection
+#   (#L27). 42.050: where a street meets an accessway under 24 ft wide, a base of 30 ft along the
+#   right-of-way each way from the accessway centreline and an apex "30 feet back from the property
+#   line on all other types of uses" -- every use but a single- or two-family house, so the pod
+#   (#L33). That second triangle sits beside the pod's own driveway: the building must stand where
+#   its depth behind the street line plus its offset from the drive centreline is at least 30 ft.
+#   Nothing in FLATS models a vision triangle (the corpus-wide gap, FOLLOWUPS 105 round 4 open
+#   list), so this is NOT ENCODED and recorded as a possible false GREEN on lots whose front
+#   setback plus the drive's half-width is under 30 ft.
+# - Chapter 28, Willamette and Tualatin River Protection (28.river-protection.txt). An overlay on
+#   the city's zoning map: the Willamette Greenway, 200 ft from the Tualatin's low water mark and its
+#   100-year floodplain (28.030.A, #L67-L75), none of it held. Where a lot is inside it and holds a
+#   Metro HCA, a protection area permit is a quasi-judicial (Chapter 99) review (28.060, #L173-L175)
+#   whose criteria are judgement ("avoided to the greatest degree possible", 28.110.A.2), with one
+#   measurable rule: houses and attached housing go on "Habitat and Impact Areas Not Designated as
+#   HCAs" first, and once on HCA land the house plus its impermeable surfaces may total 5,000 sq ft
+#   (28.110.B.1-2, #L239-L262). The Metro Title 13 map is not laid over West Linn (quadfit
+#   overlays.yaml carries it for Wood Village only), so a West Linn pod on HCA land is not caught.
+#   NOT ENCODED; recorded as a possible false GREEN beside the two rivers (a quadfit overlay change
+#   for the coordinator).
+#   The 28.040 crossref ruling (an exemption list inside Chapter 2's definition of Development,
+#   which can only narrow what counts as development) went with it: the chapter now resolves it.
 crossrefs:
   "34": >-
     Accessory Structures, Accessory Dwelling Units, and Accessory Uses, and the twenty-two mentions
@@ -499,14 +525,6 @@ crossrefs:
     an approved, active development order ... allowed in all zoning districts subject to conditional
     use approval and the additional criteria of CDC 60.090". A road, not a dwelling. Both binding
     mentions are inside Chapter 2''s definition of a transportation facility.
-  "28.040": >-
-    An exemption inside the definition of Development: within the Willamette and Tualatin River
-    Protection Areas the term also reaches change of use, grading and vegetation removal "unless
-    specifically exempted per CDC 28.040". An exemption list can only narrow what counts as
-    development, so reading it cannot add a standard to this building. What Chapter 28 states about
-    building inside a protection area is a separate gap and a real one -- the areas are boundaries
-    nothing here holds, which is why the river chapters are unencoded. This reference is not what
-    would close it.
   "66": >-
     Non-conforming Structures, and every one of the nineteen mentions is one of two sentences. Eight
     are the zone chapters' own list of related procedures ("2. Chapter 66 CDC, Non-conforming
@@ -540,19 +558,6 @@ crossrefs:
       The mentions loosen: an optional subtraction from the density area "as measured in CDC
       55.105(C)(2)(a)" (05.025.txt#L15), and an exclusion of 55.105(F)(1) from the MU zone's
       Chapter 55 (59.070.txt#L73). Neither adds a standard.
-  "42":
-    outcome: fetch
-    note: >-
-      Clear Vision Areas, listed among each zone chapter's applicable chapters (08.090.txt#L13). A
-      real standard that reaches corner lots and driveways -- the corner vision area this corpus
-      models nowhere (FOLLOWUPS 105 open list). Kept in the queue so the gap stays visible.
-  "28":
-    outcome: fetch
-    note: >-
-      Willamette and Tualatin River Protection, which governs development inside the Habitat
-      Conservation Areas and the river protection areas (02.030.txt#L680-L681). As the 28.040
-      ruling says, what Chapter 28 states about building inside a protection area is a real gap --
-      the areas are boundaries nothing here holds. Kept in the queue (FOLLOWUPS 105).
   "80":
     outcome: procedure
     note: >-
@@ -613,6 +618,15 @@ code:
   - id: "25.willamette-historic"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
     title: "CDC Chapter 25 - Willamette and Willamette Falls Drive Historic Districts"
+  # Fetched 2026-11-09 (FOLLOWUPS 105 round 4, Steph's standing download OK):
+  # the two chapters every zone chapter lists among its applicable chapters.
+  - id: "42.clear-vision"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC42.html
+    title: "CDC Chapter 42 - Clear Vision Areas"
+    allow_thin: true
+  - id: "28.river-protection"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC28.html
+    title: "CDC Chapter 28 - Willamette and Tualatin River Protection"
   - id: "02.definitions"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     title: CDC Chapter 2 - Definitions
