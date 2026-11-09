@@ -259,7 +259,9 @@ def test_city_side_yard_values_resolve_from_yaml() -> None:
     assert gresham.get(FIELD) == "lane"
     assert gresham.get("parking_side_yard_stated") == "none"
 
-    county_qp = ruleset.resolve("or/multnomah/_unincorporated", "R10")
+    # LR7, a county zone: R10 is a Portland pocket on Title 33 since 2026-11-09
+    # (no perimeter buffer there; test_multnomah_pockets_title33).
+    county_qp = ruleset.resolve("or/multnomah/_unincorporated", "LR7")
     assert county_qp.get(FIELD) == "lane_and_court"
     assert county_qp.get("parking_side_yard_stated") == "lane_and_court"
     assert county_qp.get("parking_lot_line_buffer_ft") == 5

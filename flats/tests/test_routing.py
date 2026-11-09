@@ -612,6 +612,9 @@ FOLLOWED = {
     # 2026-09-25: the alley back-out room, quoted from inside 130 (see the
     # note on OPEN).
     "or/multnomah/portland 33.266.120 -> 33.266.130",
+    # 2026-11-09 (FOLLOWUPS 112(b)): the Multnomah pockets on Title 33 quote
+    # 33.266.130.B (L385-L386) for the aisle and buffer 120 never prints.
+    "or/multnomah/_unincorporated 33.266.120 -> 33.266.130",
     # 2026-09-29, Beaverton (a cloud draft). Four use tables print the same
     # note: food cart pods "are exempt from the Site Development Standards of
     # 20.10.15 but are subject to the standards of 60.11". The ledger reads

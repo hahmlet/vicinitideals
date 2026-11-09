@@ -132,13 +132,22 @@ def test_the_numbers_and_the_hold_sit_where_the_code_puts_them(portland) -> None
             assert GLENDOVEER not in held, name
 
 
+#: Layers that hold the plan-district HOLD on their own drawn area: the
+#: Multnomah pockets (2026-11-09, FOLLOWUPS 112(b)) are on Title 33 under the
+#: county/city planning IGA, so Portland's plan districts reach them, held whole
+#: off plan-districts.geojson (test_multnomah_pockets_title33). Glendoveer stays
+#: Portland's alone.
+HOLD_ALSO = {"or/multnomah/_unincorporated"}
+
+
 def test_no_other_layer_carries_the_facts() -> None:
     for jid, layer in load_rules().items():
         if jid == PORTLAND:
             continue
         held = list(layer.defaults.values()) + [v for z in layer.zones.values() for v in z.values.values()]
+        allowed = {HOLD} if jid in HOLD_ALSO else set()
         for v in held:
-            assert v.qualified_by not in FACTS, jid
+            assert v.qualified_by not in set(FACTS) - allowed, jid
             assert not {c for var in v.variants for c in var.when} & set(FACTS), jid
 
 

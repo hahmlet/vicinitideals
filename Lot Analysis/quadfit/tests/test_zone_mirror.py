@@ -1089,7 +1089,14 @@ UNEXPRESSIBLE: dict[str, int] = {
     "max_height_stories": 25,
     "setback_side_total_ft": 3,
     "min_building_height_ft": 17,
-    "front_lot_line_through": 1,
+    # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
+    # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
+    # Portland-administered pockets): stall, driveway, side-yard reach, corner street,
+    # 33.910's front lot lines, the 40% front paving cap and the outdoor square -- +4 on
+    # each of those keys. Their footprints.yaml row stays the county's (per jurisdiction).
+    "front_lot_line_through": 5,
+    "front_lot_line_corner": 4,
+    "parking_front_yard_max_pct": 4,
     # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
     # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
@@ -1103,8 +1110,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 23 -> 24 on 2026-11-08 (FOLLOWUPS 2(a), rel5 merge): Oregon City R-2 restates the strip
     # so Table 17.12.040 note 1 can widen it to 10 ft beside R-10/R-8/R-6.
     "parking_lot_line_buffer_ft": 24,
-    "parking_side_yard_allowed": 16,
-    "parking_side_yard_stated": 16,
+    "parking_side_yard_allowed": 20,
+    "parking_side_yard_stated": 20,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
     # doubtful larger court buffer (20 ft, TDC 3.130.A, when the adjoining district
     # is unknown) as a question; quadfit has no neighbour fact.
@@ -1115,21 +1122,21 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_aisle_two_way_ft": 17,
     "parking_aisle_one_way_ft": 17,
     "driveway_approach_max_width_ft": 10,
-    "corner_access_street": 4,
+    "corner_access_street": 8,
     "max_impervious_pct": 20,
     "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
-    "open_space_min_dimension_ft": 6,
-    "driveway_min_width_one_way_ft": 17,
-    "driveway_min_width_two_way_ft": 17,
+    "open_space_min_dimension_ft": 10,
+    "driveway_min_width_one_way_ft": 21,
+    "driveway_min_width_two_way_ft": 21,
     "driveway_one_lane_ft": 1,
     "min_ground_story_ft": 2,
     "parking_covered_required": 5,
-    "parking_stall_depth_ft": 14,
-    "parking_stall_width_ft": 14,
+    "parking_stall_depth_ft": 18,
+    "parking_stall_width_ft": 18,
     "solar_shade_limit": 2,
     #: Road land to a distance from the street's centre line (FOLLOWUPS 67/77):
     #: per street lot line, measured by the FLATS bridge
