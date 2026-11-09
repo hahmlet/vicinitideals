@@ -267,8 +267,9 @@ crossrefs:
       permission: where the county only permits alley access the screen feeds the court from the
       street, a branch it never takes. Where a row sends the court to the alley
       (parking_alley_access_required, the East Hillsboro overlay), alley_improved_required raises
-      ALLEY-IMPROVEMENT-UNCONFIRMED below the yellow line (coordinator 2026-11-08). Section 409 is
-      not held, so no width is stated; fetching it is on the FOLLOWUPS 105 open list.
+      ALLEY-IMPROVEMENT-UNCONFIRMED below the yellow line (coordinator 2026-11-08). Section 409,
+      fetched 2026-11-09 (FOLLOWUPS 105 round 4), prints the width the flag now names: an alley of
+      1-8 units paved at least 16 ft, curbs only for drainage (cdc.409.private-streets.txt#L106-L111).
   # --- a use the pod is not, named in the citing sentence (district use lists) ---
   "430":
     outcome: other_building
@@ -708,6 +709,17 @@ code:
   start: "392-1 Intent and Purpose"
   end: "ARTICLE IV"
   extraction: plain
+# Fetched 2026-11-09 (FOLLOWUPS 105 round 4, Steph's standing download OK of
+# 2026-11-09): the alley width and pavement standards 430-84 cites for an
+# improved alley (409-3.3 A rows 10-11).
+- id: "cdc.409.private-streets"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 409 - Private Streets"
+  start: "409-1 Intent and Purpose"
+  end: "410-1 General Provisions"
+  extraction: plain
+  # The CDC writes "409-3.3", which fetch._SECTION_NO does not count.
+  allow_thin: true
 - id: "cdc.413.parking"
   url: https://api.municode.com/PublicationPdfDownload/3090
   title: "CDC Section 413 - Parking and Loading"
@@ -974,8 +986,10 @@ defaults:
   # AN IMPROVED ALLEY (FOLLOWUPS 105, coordinator 2026-11-08). 430-84 lets
   # middle housing take access from an alley only where it is "improved
   # (defined as meeting alley width and pavement standards under Section
-  # 409-3.3 A)". 409 is not held, so no width is stated here; the alley's
-  # width is measured and its paving is not, so a lot whose court is reached
+  # 409-3.3 A)". 409-3.3 A (held 2026-11-09) prints an alley of 1-8 units at
+  # a minimum pavement width of 16 ft, curbs only where drainage needs them
+  # and no sidewalks (cdc.409.private-streets.txt#L75,L106-L111,L117). The
+  # alley's width is measured and its paving is not, so a lot whose court is reached
   # from its alley carries ALLEY-IMPROVEMENT-UNCONFIRMED, below the yellow
   # line. Today the screen sends the court to the alley only where
   # parking_alley_access_required holds (the East Hillsboro overlay rows).
@@ -1202,7 +1216,8 @@ defaults:
 #   (community-plan.raleigh-hills-garden-home.txt#L1218-L1223); ASC M's one
 #   point on Raab Road (#L971-L972); the Type 1 landscape buffer
 #   of the commercial-strip ASCs (E, H, K, L) on the residential lots inside
-#   them that abut the highway (#L764-L766, CDC 411 not stored); ASC U's
+#   them that abut the highway (#L764-L766; CDC 411, held since 2026-11-06,
+#   exempts Middle Housing at 411-1.3 B, so the plan's buffer is the only one); ASC U's
 #   continuing Case #74-96C conditions, not held (#L1084-L1085); the lots of
 #   two Map 5.1 outlines whose letter the sheet does not print -- the one at
 #   Walker Road and Highway 217 is ASC C by the text, its access limited to
@@ -1270,8 +1285,8 @@ defaults:
 # shall be maintained", Raleigh Hills design element 2's R-15/R-24
 # transition, Bull Mountain ASC 4's buffers and views) -- GREEN with a flag
 # inside the UGB, 2026-10-15; buffering and noise "as required in the CDC"
-# (Raleigh Hills Subarea 1 design element 2; Section 411 is not stored and
-# reaches every district, not these plans alone); hillside grading and
+# (Raleigh Hills Subarea 1 design element 2; Section 411, held since
+# 2026-11-06, exempts Middle Housing at 411-1.3 B); hillside grading and
 # vegetation on Bull Mountain's slopes (the slope screen measures the
 # ground); CDC 422 natural resource sites (ASC C, M, N,
 # P, S, T); partitions only (Bull Mountain ASC 2: a quadplex divides
@@ -1652,10 +1667,10 @@ zones:
     #
     # R-6 NB and R-15 NB take all this through `like`, rightly: 390-7 sends their
     # parking to Section 413, and 390-8 and 390-10 state nothing else on it.
-    # NOT ENCODED: every other district. The non-Middle-Housing districts (R-9
-    # NB, R-24 NB, R-25+ NB, NCC NB, NCMU NB, the other TO districts, NMU, CCMU,
-    # CBD) are not on the 430-84 path, so 411's neighbour-by-neighbour matrix may
-    # hold them instead.
+    # The non-Middle-Housing districts the pod may use (R-9 NB, R-24 NB, NMU,
+    # CCMU) reach 413 directly (390-7, 392-9.7 A), so they carry the strip too
+    # (FOLLOWUPS 105 round 4); the rest refuse the pod. Those four are also
+    # under Section 411 (411-1.3 exempts only Middle Housing): see each zone.
     parking_side_yard_allowed:
       value: lane_and_court
       cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
@@ -2842,10 +2857,18 @@ zones:
       value: 5
       cite: Washington County CDC 304-7.2 B(4) (by 390-9.6), five-foot side yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L68"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 304-7.2 B(8) (by 390-9.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/304/304-7.txt#L84-L85"
     setback_rear_ft:
       value: 15
       cite: Washington County CDC 304-7.2 B(5) (by 390-9.6), fifteen-foot rear yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L75-L76"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 304-7.2 B(8) (by 390-9.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/304/304-7.txt#L84-L85"
     max_height_ft:
       # C(1)'s 35 feet is for "detached dwelling units and attached dwelling
       # units on individual lots"; attached units sharing a lot are "all
@@ -2858,6 +2881,16 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 304-7.2 C(1), attached dwelling units on individual lots
           quote: "or/washington/_unincorporated/304/304-7.txt#L86-L87"
+    parking_lot_line_buffer_ft:
+      # 390-7 sends North Bethany parking to Section 413 (390/390-7.txt#L2).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 390-7 and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     notes: >-
       DRAFT. North Bethany R-9, read as other housing (Attached Dwelling
       Units, Type II): 7 to 9 units per acre, yards 12 front / 5 side /
@@ -3059,6 +3092,10 @@ zones:
           when: [north_bethany_special_setbacks]
           cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to rear yard is 12 ft in R-24 NB
           quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L842-L846,L849-L853"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 306-7.2 B(5) (by 390-11.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/306/306-7.txt#L124-L125"
     setback_side_ft:
       # Seven feet for two stories, "or 10-foot when adjacent to lower
       # density district", and (vii) ten feet on every yard when the site
@@ -3069,6 +3106,10 @@ zones:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(d)(ii) and (vii) (by 390-11.6), side yard
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111,L115-L117,L122-L123"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 306-7.2 B(5) (by 390-11.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/306/306-7.txt#L124-L125"
     setback_street_side_ft:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(d)(vi) (by 390-11.6), street side yard
@@ -3082,6 +3123,16 @@ zones:
       value: 50
       cite: Washington County CDC 306-7.2 C(3) (by 390-11.6), all other structures
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L127,L130"
+    parking_lot_line_buffer_ft:
+      # 390-7 sends North Bethany parking to Section 413 (390/390-7.txt#L2).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 390-7 and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     notes: >-
       DRAFT. North Bethany R-24 is not a Middle Housing district; the pod is
       Attached Dwelling Units (Type II): 19 to 24 units per acre, yards
@@ -3196,7 +3247,8 @@ zones:
   # facade, window and entry details (a design checklist, Steph 2026-10-14).
   # A flat roof with a parapet and cornice is allowed in every TO residential
   # district but TO:R9-12 (431-5.3 B(11)(e)), which is Middle Housing only and
-  # outside 431. Section 411 is not stored. B(2) prints "None" for the
+  # outside 431. Section 411 (held since 2026-11-06) exempts Middle Housing
+  # (411-1.3 B), so TO:R9-12 to TO:R18-24 owe it nothing. B(2) prints "None" for the
   # frontage minimum in TO:R24-40 and TO:R40-80; other yard questions remain
   # owed because the footnotes refer to Section 418 and Sections 411 and 431
   # (L1025, L1030-L1032).
@@ -3328,7 +3380,8 @@ zones:
     # note (H) says "No minimum interior yard setback is required for
     # transit oriented district" (L1030-L1032). What (H) keeps -- the
     # screening and buffering of Sections 411 and 431 and the building code
-    # -- is not stored and not held; a known unknown, not a hold.
+    # -- 411 exempts Middle Housing (411-1.3 B, held since 2026-11-06), and
+    # 431 is outside the Middle Housing path; not a hold.
     setback_side_ft:
       exempt: true
       cite: Washington County CDC 375 Table B(1) (no side yard row) + Table B(2) note (H), no minimum interior yard (Steph ruling 2026-09-29)
@@ -3797,6 +3850,24 @@ zones:
   # (392-8.txt#L29-L30,L37-L39). Zero needs "does not abut
   # a residential district", a negation `when:` cannot say, and the abutting
   # district's yard is a number from another zone.
+  #
+  # SECTION 411 (read FOLLOWUPS 105 round 4, 2026-11-09). When these yards are
+  # encoded they must also carry the 411 buffer: the pod here is Attached
+  # Dwelling Units, not Middle Housing (411-1.3 B exempts only that), and 411
+  # is "inclusive of the setback requirements in the ... mixed-use ...
+  # districts" (cdc.411.screening-buffering.txt#L2-L4), so the yard is the
+  # larger of the two. The 411-5 matrix (#L104-L130, developed neighbour) and
+  # the 411-6 minimum additional setbacks (#1 and #2 5 ft, #3 10, #4 15, #5
+  # 25, #6 40; #L149-L205) give, beside a developed R-5/R-6, R-9/R-15/TO:R9-12,
+  # R-24/R-25+/TO:R12-18, NC/OC/NMU, CBD/CCMU and IND/TO:R40-80 district:
+  #   NMU (row 4 4 3 0 0 3): 15, 15, 10, 0, 0, 10 ft.
+  #   CCMU (row 5 4 4 0 0 1): 25, 15, 15, 0, 0, 5 ft.
+  # Beside vacant land the first developer gives the smaller vacant column
+  # (411-3.2 A); none across a street (411-3.2 C); the buffer is void of
+  # parking (411-4); beside the UGB, a city line, the Institutional District
+  # or any district the matrix does not name (the NB districts), the Review
+  # Authority sets it (footnote 1, #L132-L133). 418-2's future right-of-way
+  # also reaches both districts, on TSP widths not held.
   NMU:
     entrance_faces_street:
       value: required
@@ -3872,6 +3943,16 @@ zones:
       value: 25
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, NMU
       quote: "or/washington/_unincorporated/392/392-7.txt#L1,L5-L10"
+    parking_lot_line_buffer_ft:
+      # 392-9.7 A sends this district's parking to Section 413 (392/392-9.txt#L151).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 392-9.7 A and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     parking_front_prohibited:
       value: true
       cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
@@ -3990,6 +4071,16 @@ zones:
       value: 40
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, CCMU
       quote: "or/washington/_unincorporated/392/392-7.txt#L1,L5-L8,L11-L12"
+    parking_lot_line_buffer_ft:
+      # 392-9.7 A sends this district's parking to Section 413 (392/392-9.txt#L151).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 392-9.7 A and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     parking_front_prohibited:
       value: true
       cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings

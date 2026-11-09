@@ -523,6 +523,23 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "washington_county_411_buffer",
+        "site_fact",
+        "Washington County's Section 411 screening and buffering adds a "
+        "setback to the side and rear yards of a North Bethany R-9 NB or "
+        "R-24 NB lot. 304-7.2 B(8) and 306-7.2 B(5) (by 390-9.6 and "
+        "390-11.6) say additional setbacks may be required under 411, and "
+        "411 reaches every development permit that is not Middle Housing "
+        "(411-1.2, 411-1.3); the pod there is Attached Dwelling Units, not "
+        "Middle Housing. The 411-5 matrix names no North Bethany district, "
+        "so the lot falls to its Other row, \"to be determined by review "
+        "authority\" (cdc.411.screening-buffering.txt#L129-L130), and the "
+        "width is a number nobody has printed. Held out of GREEN until it "
+        "is known (FOLLOWUPS 105 round 4).",
+        evidence="the Review Authority's buffer for the North Bethany districts -- not printed in CDC 411-5",
+        assume=None,
+    ),
+    ConditionDef(
         "hillsboro_center_core",
         "site_fact",
         "The MU-VTC lot lies inside South Hillsboro's Town Center or Village "
