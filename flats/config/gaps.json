@@ -1,5 +1,5 @@
 {
-  "digest": "85da6067777a865979f78745eb564b4292375e98cb898eb56a739861489c5deb",
+  "digest": "9ec9bff658ffc4019c8f7a5de63cc4ba38d6577bcb8dc5c77630aca36a6a99a5",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -829,9 +829,9 @@
           "zone": "DCC",
           "field": "orientation_constraint [unit_lots]",
           "claimed": "4.1100 4.1120 4.1130 7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
-          "kind": "heading_same_file"
+          "found": "4.1152",
+          "quote": "or/multnomah/gresham/4/4.1152.txt#L3,L7,L286-L290,L310",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DCC",
@@ -933,9 +933,9 @@
           "zone": "DTM",
           "field": "orientation_constraint [unit_lots]",
           "claimed": "4.1100 4.1120 4.1130 7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
-          "kind": "heading_same_file"
+          "found": "4.1152",
+          "quote": "or/multnomah/gresham/4/4.1152.txt#L3,L7,L286-L290,L310",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DTM",
@@ -1147,27 +1147,11 @@
         },
         {
           "zone": "RTC",
-          "field": "building_frontage_min_pct [unit_lots]",
-          "claimed": "7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "RTC",
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
           "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
-        },
-        {
-          "zone": "RTC",
-          "field": "orientation_constraint [unit_lots]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
-          "kind": "heading_same_file"
         },
         {
           "zone": "SC",
@@ -1549,7 +1533,7 @@
       "gaps": []
     },
     "or/washington/_unincorporated": {
-      "section_unread": 24,
+      "section_unread": 28,
       "misattributed": [
         {
           "zone": "(defaults)",
