@@ -8,9 +8,10 @@
    the covered stretch is the travel lane only if long enough (covered run
    with buildable ground behind it >= stalls x stall width; probe 53
    partial rear lines, 30 long enough, 23 not).
-   Status 2026-11-08: the court placement (c) BUILT on
-   flats/court-alley-leftovers, waits for its bound; the rest is read and
-   accepted. Remove this item when that branch is live.
+   Status 2026-11-09: the court placement (c) BUILT 84ae41a0 on
+   flats/court-alley-leftovers, merged into flats/rel5 (rides that
+   release); the rest is read and accepted, nothing left to build. Remove
+   this item when rel5 is live.
    (a) 36 of run 24's 4,803 quadfit cannot draw (knife-edge or a slanted
    alley), read and accepted.
    (b) Of the 55 side-alley lots gained, quadfit draws no pod on 23 -- 15

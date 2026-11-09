@@ -2,9 +2,10 @@
 
 33. [Claude] [scan: YES for (c) and any speed-up (must prove identical answers)] **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
-   Status 2026-11-08: (b) CLOSED, (c) BUILT on flats/court-alley-leftovers
-   (off flats/court-front-yard 698907b2), waits for its bound; remove this
-   item when that branch is live.
+   Status 2026-11-09: (b) CLOSED, (c) BUILT 84ae41a0 on
+   flats/court-alley-leftovers (off flats/court-front-yard 698907b2),
+   merged into flats/rel5 (rides that release); remove this item when rel5
+   is live.
    Done: (a) the court beside the building f7ba7038; (d) scanline raster
    ce65b86b (2.2-2.6x faster).
    (b) CLOSED: the lots outside the 15,940 scope were corrected by the full
