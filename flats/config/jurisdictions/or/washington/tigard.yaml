@@ -1780,6 +1780,30 @@ zones:
       url: https://ecode360.com/print/TI5024?guid=43708038
       retrieved: '2026-09-30'
       quote: "or/washington/tigard/18.660/18.660.080.txt#L23-L55"
+    entrance_angle_max_deg:
+      # FOLLOWUPS 159. 18.660.080.C.2 (L54-L55): "A required building
+      # entrance must be at an angle that is no more than 45 degrees from
+      # the street, except for entrances to individual residences.
+      # Entrances to individual residences that open onto a porch or stoop
+      # must be at an angle that is no more than 90 degrees from the
+      # street." 18.30 applies in TMU (18.660.030.C.2): "Residence" -- See
+      # "Dwelling unit" (tdc.18.30.definitions.txt L1479-L1480), a structure
+      # or portion of one with its own sleeping, cooking and sanitation
+      # (L984-L985). Each of the pod's four doors is the entrance to one
+      # dwelling unit, so the 45-degree limit does not bind them: the code
+      # holds them to something looser (90 degrees onto a porch or stoop,
+      # and otherwise only that they be on a street-facing facade, C, L23).
+      # The pod takes no porch (rulings.yaml 2026-11-08-no-porch-end-door)
+      # and "street-facing facade" is undefined, so 45 -- the angle the
+      # same section prints, and the one Tigard's own quads (18.270, L159)
+      # and 18.320/18.670 use for a face that still faces the street -- is
+      # taken as the bound. Never looser than the code; a judgement only
+      # in not taking more.
+      value: 45
+      cite: "Tigard TDC 18.660.080.C.2: \"A required building entrance must be at an angle that is no more than 45 degrees from the street, except for entrances to individual residences.\" The pod's doors are entrances to individual residences (18.30 \"Residence\" -- see \"Dwelling unit\"), which the code holds to a looser limit (90 degrees onto a porch or stoop); 45 taken as the bound (FOLLOWUPS 159)"
+      url: https://ecode360.com/print/TI5024?guid=43708038
+      retrieved: '2026-09-30'
+      quote: "or/washington/tigard/18.660/18.660.080.txt#L54-L55"
     cite_default:
       cite: Tigard CDC 18.660 (Tigard Triangle Plan District)
       url: https://ecode360.com/print/TI5024?guid=43708038
