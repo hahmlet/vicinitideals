@@ -5827,6 +5827,32 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P: the use is LIMITED,
       # and note 1(b) states the limit as three gates that must all hold --
@@ -6114,6 +6140,32 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P. Note 1(a) states the
       # limit: a lot of record 6,500 sq ft or smaller with 70 feet of street
@@ -6397,6 +6449,32 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6601,6 +6679,32 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6805,6 +6909,32 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
