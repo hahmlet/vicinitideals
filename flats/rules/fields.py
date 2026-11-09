@@ -144,6 +144,7 @@ _LABELS: dict[str, str] = {
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
+    "parking_front_share_allowed": "parking allowed in front of building within the frontage share",
     "parking_alley_access_required": "vehicle access must be from the alley",
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
@@ -1199,6 +1200,22 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_front_share_allowed",
+        "bool",
+        "True where the code PERMITS a parking court between the building "
+        "and a public street on conditions of its own, so the 2026-11-08 "
+        "ruling for silent codes (no court in the front yard) does not reach "
+        "it. Unincorporated Clackamas ZDO 845.02(D): allowed where a home "
+        "screens it from the street, or where its combined width stays "
+        "within `parking_area_max_frontage_pct` (50) of the frontage (Steph "
+        "2026-11-09, rulings.yaml "
+        "`2026-11-09-clackamas-front-parking-follow-zdo`). Only the width "
+        "limb is measured, on the final drawing, on every street; a line "
+        "not read as a public road keeps the hold. False on the townhouse "
+        "path (845.03(E)(2)(a)).",
+        None,
+    ),
+    FieldDef(
         "parking_alley_access_required",
         "bool",
         "True where the code sends the driveway to the alley on a lot that "
@@ -2140,6 +2157,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_band_ft",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
+        "parking_front_share_allowed",
         "parking_alley_access_required",
         "parking_alley_backout_ft",
         "parking_side_prohibited",

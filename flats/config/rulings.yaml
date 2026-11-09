@@ -2697,7 +2697,8 @@
     every street line. A corner's street side yard is not a front yard, nor
     a private road the yards ignore. Every placement prefers a clear court; a plan
     whose final drawing still stands it there is held out of GREEN
-    (COURT_FRONT_YARD). FOLLOWUPS 142.
+    (COURT_FRONT_YARD). FOLLOWUPS 142. Not unincorporated Clackamas, whose
+    code is not silent: 2026-11-09-clackamas-front-parking-follow-zdo.
   source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md
   encoded_in: [flats/ingest/quadfit.py, flats/fit/draw.py]
 - id: 2026-11-08-washington-plat-age-check-yellow
@@ -2778,3 +2779,30 @@
     to 45 degrees cannot be met by a 90-degree turn. FOLLOWUPS 153.
   source: Steph 2026-11-08 (chat), docs/followups/153-entrance-orientation.md
   encoded_in: [flats/rules/fields.py, flats/score/paper.py]
+- id: 2026-11-09-clackamas-front-parking-follow-zdo
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The 2026-11-08 front-yard ruling (no parking court between the building
+    and a street) was for codes that say nothing. Unincorporated Clackamas
+    ZDO 845.02(D) does say: parking may stand between a building and a
+    public street where a dwelling separates it from the street, or where
+    all of it together is no wider than half the street frontage. Apply the
+    blanket ban there anyway, or follow the county's rule?
+  ruling: >-
+    "Follow the county's rules."
+  effect: >-
+    In unincorporated Clackamas (parking_front_share_allowed), a court the
+    final drawing stands between the building and a front lot line is not
+    held COURT_FRONT_YARD where every such line is read as a public street
+    and the court, measured on that drawing, faces no more than 50 percent
+    of any street's frontage (845.02(D)(2), read on every street). The
+    dwelling-separates-it limb (845.02(D)(1)) is not measured and never
+    opens a lot. A line not read as a public street (a private road the
+    yards count, a street s4 did not read) or an unmeasured share keeps the
+    hold. The townhouse path keeps it too: 845.03(E)(2)(a) keeps parking
+    out from between a townhouse and a public street. Cities in Clackamas
+    keep their own rules.
+  source: Steph 2026-11-09 (chat)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/_unincorporated.yaml, flats/ingest/quadfit.py, flats/rules/fields.py]
