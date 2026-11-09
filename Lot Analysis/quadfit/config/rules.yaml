@@ -1242,6 +1242,15 @@ jurisdictions:
     #   or/multnomah/fairview/19.13.definitions.txt#L255
     #   or/multnomah/fairview/19.140.txt#L79
     alley_is_street: true
+    # The map's FLX is FMC 19.135.030(A)(1)(e)'s "VC flex" area, one lot
+    # (1N3E33AB  -00500, 1700 NE Market Dr): the VC zone with its
+    # first-floor-commercial rule lifted. FLATS rules it an alias of VC
+    # (fairview.yaml zone_rulings FLX, 2026-09-28) and feeds the lot
+    # inside_mapped_use_area; without this line s3 dropped it
+    # zone_not_in_rules and FLATS could only answer LOT-NOT-MEASURED
+    # (FOLLOWUPS 10(a), 84). zone_raw stays FLX, so FLATS still sees the code.
+    zone_aliases:
+      "FLX": "VC"
     zones:
       - zone: R-6
         quadplex_allowed: true
