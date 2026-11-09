@@ -4305,6 +4305,39 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
+    # THE FRONT YARD, read 2026-11-09 off Map 1005-1 (the regulating plan,
+    # stored as flats/config/areas/or/clackamas/_unincorporated/
+    # zdo-map-1005-1-fuller-road-regulating-plan.map-only.pdf). Table 510-2
+    # sends the SCMU setback cells to 1005.09, and 1005.09 prints no front
+    # setback of its own: it keys the facade line to the building frontage
+    # type, and Table 1005-1 keys the frontage types to the street type the
+    # map gives each frontage (1005.09(E), (G)). The map types every street
+    # in the station area: 82nd Avenue and Johnson Creek Boulevard "A",
+    # Fuller Road "C" north of Con Battin and south of Otty and "B" between,
+    # Otty Road "B", Battin Road and the future streets "D", Con Battin "C";
+    # Maloney Pl is drawn and not typed. Which of those a given lot fronts
+    # is not a fact any lot carries, so the number held is the one that
+    # satisfies a permitted frontage on EVERY street type a residential pod
+    # can take: Landscape (A streets only) prints "a minimum of 10 feet and a
+    # maximum of 15 feet" (H)(1), Porch/Stoop/Terrace (B, C, D) "a minimum of
+    # five feet and a maximum of 15 feet" (K)(1). Ten to fifteen is inside
+    # both. Linear and Forecourt (every street, "no minimum", at most five,
+    # (I)(1), (J)(1)) are storefront facades -- 60 percent ground-floor
+    # glazing and awnings (I)(8), (I)(5) -- and are not assumed. A lot on
+    # Maloney Pl, or in Sectors 1-2 before 1005.09(A)'s thresholds, may owe
+    # less; ten is the stricter reading there too.
+    setback_front_ft:
+      value: 10
+      cite: "Clackamas ZDO 1005.09(H)(1), Landscape Building Frontage (Type A streets), front setback minimum 10 feet; Table 1005-1 and Map 1005-1 (street types); Porch/Stoop/Terrace (B, C, D streets) minimum five, 1005.09(K)(1)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L43-L44,L117-L123,L125,L145,L147,L307,L309"
+    setback_front_max_ft:
+      value: 15
+      cite: "Clackamas ZDO 1005.09(H)(1) and (K)(1), Landscape and Porch/Stoop/Terrace Building Frontage, front setback maximum 15 feet; 1005.09(G)(1)-(3), buildings within 40 feet of a typed street and half of each frontage built to a permitted frontage type"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L125,L132,L145,L147,L307,L309"
     setback_side_ft:
       # 1005.09(C): "Five feet, except a zero setback is allowed for attached
       # structures." Read as 5: the zero is for a structure attached to a
@@ -4353,19 +4386,19 @@ zones:
       stay so the ruling can be reversed.
 
 
-      Not encoded: setback_front_ft. Table 510-2 prints "See Subsection
-      1005.09" in all four setback cells of the SCMU column (the table omits
-      SCMU from its header; every data row carries eleven cells, so the SCMU
-      cell sits right after PMU). 1005.09 does not contain a front setback
-      number. It keys the front building line to the street TYPE (A, B, C, D) of
-      each frontage on the regulating plan, Map 1005-1, and to the building
-      frontage type chosen (Linear Building, Porch/Stoop/Terrace and others,
-      1005.09(G)): a Linear Building facade is set back at most 5 feet, a
-      Porch/Stoop/Terrace facade 5 to 15 or 10 to 15 feet by street type, and
-      50 percent of the frontage must be built out. Street type per frontage is
-      not a fact any lot here carries, so no front setback is stated. The
-      expectation that this turns on 1005.02(L) bearing-plane setbacks is
-      wrong: 1005.02(L) applies only to HDR, RCHDR and SHD.
+      Front setback, encoded 2026-11-09 from Map 1005-1 (was unread). Table
+      510-2 prints "See Subsection 1005.09" in all four setback cells of the
+      SCMU column (the table omits SCMU from its header; every data row
+      carries eleven cells, so the SCMU cell sits right after PMU). 1005.09
+      keys the front building line to the street TYPE (A, B, C, D) of each
+      frontage on the regulating plan, Map 1005-1, and to the building
+      frontage type chosen (1005.09(G), Table 1005-1): Landscape 10 to 15 feet
+      on A streets, Porch/Stoop/Terrace 5 to 15 on B, C and D, Linear and
+      Forecourt 0 to 5 on all. The street type per frontage is not a fact any
+      lot carries, so 10 to 15 -- inside a permitted residential frontage on
+      every street type -- is held on every lot. The expectation that this
+      turns on 1005.02(L) bearing-plane setbacks is wrong: 1005.02(L) applies
+      only to HDR, RCHDR and SHD.
 
 
       Also: 1005.09(B)-(M) "do not apply in Sectors 1 and 2, as shown on Map

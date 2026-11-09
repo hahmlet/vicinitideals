@@ -1,37 +1,52 @@
-# 52. Lots dropped before a fit (run 65) -- SHIPPED 2cfd13d6 (POD_CANNOT_FIT red by arithmetic: 10,028 lots yellow -> red, all previously NOT_MEASURED); zone codes read 2026-10-09, LIVE in runs 69/70 (ef4b272f, b9ced2fe, 9eb9f618).
+# 52. Lots dropped before a fit -- the last zone gap (Clackamas SCMU) closed on flats/dropped-lots-fairview 2026-11-08; the rest is parked with a trigger.
 
-52. [Claude] [scan: NO for the leftovers below unless one is built]
-   **Lots dropped before a fit (run 65) -- SHIPPED 2cfd13d6 (POD_CANNOT_FIT red by
-   arithmetic: 10,028 lots yellow -> red, all previously NOT_MEASURED); zone codes read
-   2026-10-09, LIVE in runs 69/70 (ef4b272f, b9ced2fe, 9eb9f618).** GEOM-UNREADABLE is not
-   broken outlines: it is the complex-shape cap (convexity < 0.80, > 10 edges, pole-like);
-   only 357 yellow lots are held yellow by that flag alone -- left as is.
-   Steph 2026-10-09 RULED (register `2026-10-09-milwaukie-dmu-optional-review`,
-   `-clackamas-design-review-zones-red`, `-hillsboro-anx-yellow`,
-   `-gladstone-portland-avenue-yellow`): Milwaukie DMU ALLOWED (design review optional via
-   clear and objective standards); Clackamas MR-1, MR-2, HDR were RED BY RULING (ZDO 1102.01(A)
-   design review; the same sentence reached PMD and VA) and 163 green MR-1/MR-2 lots went red --
-   SUPERSEDED by the 2026-10-14 review tiers: all five zones (MR-1, MR-2, HDR, PMD, VA) stay
-   YELLOW, not red. Steph was told 2026-10-16 and ruled (register
-   `2026-10-16-design-review-default-red`): design review is RED unless a state or county law
-   preempts it, but where the design review checks only clear and measurable standards the
-   2026-10-14 tiers apply -- "this is where the 'design review' was 'clear and measurable'
-   that's fine, yellow it is."; Hillsboro
-   ANX stays yellow; Gladstone C2 Portland Avenue: YELLOW until known -- avenue-facing
-   entrance + 25% ground-floor glass (GMC 17.18.050(3)(b)+(c)) is a fact about the building
-   the catalog does not hold; no assumption about the pod. SHD/RCHDR/VTH stay unencodable
-   (setbacks by compass bearing, ZDO 1005.02(L)) -> item 61. Note: the 2026-10-15 clear-
-   objective ruling (item 85) may reach these design-review reds.
-   TRAP: the splice cannot retire lots a re-run drops from s3 (assign keeps a measured lot's
-   old row): a bound/splice scope must list those lots explicitly, as the 805
-   MR1/MR2/PMD/VA lots were here.
-   Still open (each touches 0 greens today):
-   - OFFERED, not done: read faces_residential_zone_across_street per street line outside
-     Portland so the Milwaukie DMU/GMU street yards can be released (0 lots today, all red).
-   - Tualatin Basalt Creek 50 ft yard measured-zero (2,234 ft to the built parkway;
-     re-measure when the extension is mapped or on annexation); Central Tualatin Overlay
-     blocks (Map 10-3) and RH-HR 45 ft min height DEFERRED (0 lots, all red); 100 ft wetland
-     yard, building separation, MUC 57.400 / Figure 57-1 height check.
-   - Milwaukie Figure 19.304-2, 19.505.5.E.1, DMU 50 ft parking ban.
-   - Fairview TCC Halsey storefront map (44 lots); VC stays because of the FLX alias; SCMU
-     front setback and densities.
+52. [Claude] [scan: YES for SCMU (34 lots, none can go green); NO for the parked rest]
+   **Lots dropped before a fit.** History: POD_CANNOT_FIT red by arithmetic 2cfd13d6 (run 65);
+   zone codes read 2026-10-09, LIVE runs 69/70 (ef4b272f, b9ced2fe, 9eb9f618); design-review rulings
+   in the register (`2026-10-09-*`, `2026-10-14-review-tiers`, `2026-10-16-design-review-default-red`).
+   GEOM-UNREADABLE (complex-shape cap) left as is. TRAP: the splice cannot retire lots a re-run drops
+   from s3 (assign keeps a measured lot's old row): a bound/splice scope must list them explicitly.
+
+   2026-11-08 (flats/dropped-lots-fairview): a whole-corpus audit found ONE zone FLATS opens that
+   quadfit did not hold -- Clackamas SCMU (re-ruled yellow 2026-10-14, after the 2026-10-08 gaps
+   were ported), 34 lots, 30 of them yellow NOT_MEASURED in rel4. Ported with its front yard a
+   PLACEHOLDER (ZDO 1005.09 keys it to Map 1005-1's street types); FLATS answers it UNKNOWN, so
+   none can go green. Lake Oswego's six are ineligible by decision. Separately, Fairview FLX
+   (item 84) was the one alias quadfit lacked. Mirror counts left for the coordinator:
+   UNEXPRESSIBLE entrance_faces_street 55->56, min_building_height_ft 17->18,
+   review_discretion 47->48.
+
+   PARKED, each 0 greens and 0 moves on rel4 (re-checked 2026-11-08); the trigger is when a lot
+   is held by that standard ALONE:
+   - Milwaukie DMU/GMU street yards across a right-of-way (faces_residential_zone_across_street
+     per line, as Portland's street_lines_clear does): DMU 117 / GMU 45 lots, all red -- 69 on
+     the minimum density, ~50 on fit, the rest institutional/roll/arithmetic. Building it moves none.
+   - Milwaukie Figure 19.304-2 (DMU townhouse area, held behind inside_mapped_use_area) and the
+     50 ft Main Street parking ban (no field measures distance to Main St): same DMU lots.
+     19.505.5.E.1/G is read (card `19.505.5`, never).
+   - Tualatin: Basalt Creek Parkway 50 ft yard (re-measure when the extension is mapped or on
+     annexation); RH-HR 45 ft minimum height scope and the 100 ft Wetland Protected Area yard
+     (both Table 44-3, RH-HR only: 6 lots, all red on density/roll/arithmetic); Central Tualatin
+     Overlay lot sizes for Blocks 26/31/33. Building separation is moot (one building). MUC 57.400
+     CLOSED: repealed by Ord. 1438-20 (tualatin.yaml card "57.400"); Figure 57-1 is a 100 ft height
+     figure that can only loosen.
+   - Fairview TCC: DONE on this branch 2026-11-08 (coordinator extra 2), all three together.
+     Figure 19.65.030(B) traced as its complement (flats/config/areas/or/multnomah/fairview/
+     outside-storefront-district.geojson, figure held beside it), condition
+     `fairview_outside_storefront_district` opens row h's P outside the shading; the TCC block
+     carries parking_front_prohibited true (19.65.040(A)(2)(c)(iii) + 19.65.100(A)(2)) and
+     parking_side_prohibited false. Of 45 TCC lots: 3 outside (tiny, 208th Pl), 5 cut (held open,
+     FACT-FAIRVIEW-OUTSIDE-STOREFRONT-DISTRICT), 37 inside or beyond the frame (refusal stands).
+   - SCMU's front yard: Map 1005-1 street types and frontage types (1005.09(G), Table 1005-1),
+     and with it 1005.09's minimum building depth and ground-floor height, which do not apply in
+     Sectors 1-2 (1005.09(A)) -- also a map. SCMU's density is DONE (min 20, FOLLOWUPS 95).
+     2026-11-08 (coordinator extra 1): Map 1005-1 is NOT stored anywhere in the repo (whole-tree
+     find; 1005.09.txt L5, L43-L44 name it). NEEDS A DOWNLOAD: the ZDO Section 1005 PDF that
+     carries Maps 1005-1 and 1005-2, from https://www.clackamas.us/planning/zdo1005 (the HTML
+     page there is text only). Skipped; the 15 ft PLACEHOLDER and FLATS' UNKNOWN stand.
+     2026-11-09: DONE for the front yard. Map 1005-1 downloaded (dochub PDF, stored as
+     flats/config/areas/or/clackamas/_unincorporated/zdo-map-1005-1-fuller-road-regulating-plan
+     .map-only.pdf); it types every station-area street A-D. FLATS holds front 10 / max 15 (the
+     Landscape window, inside Porch/Stoop/Terrace's 5-15 too) on every SCMU lot, since which street
+     a lot fronts is not carried; quadfit's PLACEHOLDER is gone (front 10). Minimum building depth
+     and ground-floor height (Sectors 1-2) remain unread.

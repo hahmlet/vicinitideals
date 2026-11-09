@@ -477,7 +477,11 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # 216 on 2026-11-08 (FOLLOWUPS 155): Portland CI1, measured on RM1's
     # standards since RICAP 11 (2026-11-01). Written corpus to rules.yaml from
     # the zone's `amended: ricap11` block, so the back-port is a dry-run count only.
-    assert dry["stats"]["zones"] == 216
+    #
+    # 217 on 2026-11-09 (rel6, combining flats/ci1-quadfit with FOLLOWUPS 52,
+    # flats/dropped-lots-fairview): Clackamas SCMU, the last zone FLATS opens that
+    # quadfit did not hold (34 lots dropped zone_not_in_rules).
+    assert dry["stats"]["zones"] == 217
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {

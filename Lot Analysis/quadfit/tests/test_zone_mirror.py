@@ -624,6 +624,10 @@ def test_nothing_in_the_screen_is_unquoted(audit_scan) -> None:
     # 16 -> 27 on 2026-10-19: the zones the ORS 197A.400 lane admits (FOLLOWUPS 85).
     # 27 -> 25 on 2026-11-08 (FOLLOWUPS 147, f4ac56b0): Washington County TO:R24-40 and
     # TO:R40-80 front yards are read (Table B(2) prints "None"), no longer placeholders.
+    # 25 -> 26 on 2026-11-08 (FOLLOWUPS 52): Clackamas SCMU's front yard, keyed by ZDO
+    # 1005.09 to Map 1005-1's street types, which nothing reads.
+    # 26 -> 25 on 2026-11-09 (FOLLOWUPS 52): SCMU's front yard read off Map 1005-1
+    # (10 ft, the Landscape minimum), no longer a placeholder.
     assert len(placeholders) == 25
     assert agree > 460, agree
 
@@ -733,9 +737,12 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 #:
 #: 2026-10-14, later: one. The lot-line-bearing lane encoded HDR's dimensions
 #: (FOLLOWUPS 61) and its row is ported; SCMU still waits.
-AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
-    "clackamas_unincorporated": ("SCMU",),
-}
+#:
+#: 2026-11-08: none (FOLLOWUPS 52, flats/dropped-lots-fairview). SCMU is ported
+#: with its front yard a PLACEHOLDER, the way the Washington County and ORS
+#: 197A.400 rows are: FLATS answers its lots UNKNOWN on the unread yard, and
+#: its 34 lots are measured instead of dropped `zone_not_in_rules`.
+AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {}
 
 
 def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
@@ -1065,10 +1072,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: field is read by FLATS alone. (61 for an hour in round 2, while Oregon
     #: City's six residential zones carried their own blocks; round 3 folded
     #: them back into the city default.)
-    # 55 -> 56 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 now pairs with its
-    # RICAP 11 block, which imports RM1's standards whole. (rel6 2026-11-09:
-    # combined with rel4-fixes' entrance_angle_max_deg row below.)
-    "entrance_faces_street": 56,
+    # 55 -> 57 (rel6 2026-11-09, combining two lanes): +1 FOLLOWUPS 155
+    # (flats/ci1-quadfit) Portland CI1 pairs with its RICAP 11 block, which
+    # imports RM1's standards whole; +1 FOLLOWUPS 52 (flats/dropped-lots-fairview)
+    # Clackamas SCMU ported.
+    "entrance_faces_street": 57,
     #: rel4 move-read finding 2 (2026-11-08): the angle a door face may stand
     #: off the street (`entrance_angle_max_deg`, the printed 45 or 0) -- read
     #: by the FLATS facing fitter alone; quadfit has no angle column.
@@ -1083,7 +1091,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "min_landscaped_pct": 61,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
-    "setback_front_max_ft": 104,
+    # 104 -> 105 on 2026-11-09 (FOLLOWUPS 52): Clackamas SCMU's 15 ft maximum, read
+    # off Map 1005-1 with its 10 ft minimum (ZDO 1005.09(H)(1), (K)(1)).
+    "setback_front_max_ft": 105,
     #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
     #: streets, every street, the front) and the share of the facade it binds --
     #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
@@ -1106,7 +1116,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     "max_units": 11,
     "max_height_stories": 25,
     "setback_side_total_ft": 3,
-    "min_building_height_ft": 17,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "min_building_height_ft": 18,
     "front_lot_line_through": 1,
     # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
@@ -1168,11 +1179,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the parking cap read on every street frontage, measured on FLATS's
     #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
     #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
-    "review_discretion": 47,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "review_discretion": 48,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
     "parking_area_frontage_any_street": 4,
+    #: 2026-11-09 (FOLLOWUPS 52 extra 2, flats/dropped-lots-fairview): new, Fairview TCC
+    #: states its own side-parking answer (FMC 19.65.100(A)(2), behind or beside the building).
+    "parking_side_prohibited": 1,
     #: FOLLOWUPS 84 (2026-10-15): Beaverton 60.05.15.6.C's 35 percent is the
     #: driveway inside the ten-foot street strip, not a parking cap -- twelve
     #: blocks move off `parking_area_max_frontage_pct` (17 -> 5).

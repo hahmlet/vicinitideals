@@ -611,13 +611,11 @@ readings:
       line" is a front-parking ban, and this layer's parking_front_prohibited is `exempt` on the
       strength of 19.30.040(E), which is the RESIDENTIAL districts' rule and permits front parking
       subject to a frontage share. So the TCC's ban is a zone-specific tightening the layer
-      default does not carry. It does not reach this building: TCC's quadplex_allowed is false in
-      this file, because 19.65.030 designates a Halsey Street storefront subarea where
-      "residential uses shall be permitted only when part of a mixed use development", the
-      subarea's boundary is a figure this system cannot read, and the conservative reading puts
-      every TCC lot inside it. A stand-alone four-unit townhome is therefore not a permitted
-      building here, and the maximum-setback machinery on the rest of this card falls with it. If
-      TCC is ever opened by a mixed-use variant, this is the sentence to come back for.
+      default does not carry -- and since 2026-11-08 the TCC block carries it itself
+      (parking_front_prohibited true, with 19.65.100(A)(2)), because the storefront figure is
+      traced and the lots outside it take Quadplexes P. The card stays nofield for the rest of the
+      section: L37-L38 reduce parking in front of an EXISTING building being expanded, a different
+      building from a new pod.
     fingerprint: 4f5009894a1e037f
   "19.70.txt#19.70.050":
     queue: nofield
@@ -650,8 +648,8 @@ readings:
     note: >-
       Town Center Commercial block layout -- exceptions to the alley-or-interior-parking-court
       standard, and longer blocks allowed in exchange for a mid-block pedestrian pathway. Block
-      length is decided when land is platted, and the TCC district does not permit this building
-      in any case, for the storefront-subarea reason recorded on the 19.65.040 card.
+      length is decided when land is platted, and this screen draws one building on one existing
+      lot, so the block standards never reach it.
     fingerprint: dd06c965b89d82bd
   "19.70.txt#19.70.030":
     queue: nofield
@@ -2392,9 +2390,14 @@ zones:
     # building in any of Fairview's commercial districts, and the base here is
     # still false. 19.65.030 designates a Halsey Street storefront district as
     # a SUBAREA of this zone, and inside it "residential uses shall be
-    # permitted only when part of a mixed use development". The boundary is a
-    # figure this system cannot read, so whether a given TCC lot sits inside
-    # it is unmeasured, and the conservative reading is that it does.
+    # permitted only when part of a mixed use development". The boundary is
+    # Figure 19.65.030(B), a map, traced 2026-11-08 as the COMPLEMENT of its
+    # shading within its frame (`drawn_areas` outside_storefront_district):
+    # a lot at least 90 percent in the unshaded ground is outside the
+    # district and row h's P stands; a lot the line cuts is unanswered and
+    # held open (FACT-FAIRVIEW-OUTSIDE-STOREFRONT-DISTRICT); a shaded lot, or
+    # one beyond the figure's frame, keeps the refusal. Beyond the frame is
+    # not depicted, so it is never read as outside.
     #
     # Electing the mixed use satisfies the requirement whether or not the lot
     # is in the subarea, so `mixed_use` alone is the variant -- unlike Wood
@@ -2410,6 +2413,10 @@ zones:
         - value: true
           when: [mixed_use]
           quote: "or/multnomah/fairview/19.65.txt#L47-L49,L51-L62,L83-L85,L196-L198,L200-L202,L208-L210,L212-L214"
+        - value: true
+          when: [fairview_outside_storefront_district]
+          cite: FMC Table 19.65.020(A) row 1.h, Quadplexes P; the storefront limits of 19.65.030(D) reach only the district Figure 19.65.030(B) maps
+          quote: "or/multnomah/fairview/19.65.txt#L47-L49,L51-L62,L83-L85,L182-L184,L186-L188,L190,L196-L198"
     # 19.65.100(A)(1), in words: "There is no minimum or maximum residential
     # density standard. Density shall be controlled by the applicable floor
     # area and building height standards." The chapter then states no floor
@@ -2484,6 +2491,35 @@ zones:
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
       quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L20-L22"
+    # WHERE THE PARKING MAY SIT, read 2026-11-08 (FOLLOWUPS 52). Two TCC
+    # sentences, and they agree: 19.65.040(A)(2)(c)(iii) "Parking and vehicle
+    # circulation areas are prohibited in the setback area between the
+    # building and the street lot line", and 19.65.100(A)(2), for every
+    # residential development in the district, "All off-street vehicle
+    # parking ... shall be oriented to alleys, placed underground, placed in
+    # structures above the ground floor, or located in parking areas located
+    # behind or to the side of the building; except that side yards facing a
+    # street (i.e., corner yards) shall not be used for surface parking."
+    # A ban, not the residential districts' 50-percent cap the layer default
+    # carries (19.30.040(E)), so the zone states its own.
+    parking_front_prohibited:
+      value: true
+      cite: "FMC 19.65.040(A)(2)(c)(iii), parking and vehicle circulation prohibited in the setback area between the building and the street lot line; FMC 19.65.100(A)(2), off-street parking behind or to the side of the building, not in corner yards"
+      url: https://ecode360.com/print/FA4439?guid=50509772
+      retrieved: '2026-11-08'
+      quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L45,L47,L63,L65"
+    # The side of the building is one of the four places 19.65.100(A)(2)
+    # sends the parking, so an interior side is open and the ban is settled
+    # no. The corner yard it closes is the side street's ground, and a court
+    # is never offered beside the building on a corner lot here: the side
+    # court asks `parking_front_prohibited` settled no on a corner, and above
+    # it is a ban (flats.score.paper.side_court).
+    parking_side_prohibited:
+      value: false
+      cite: "FMC 19.65.100(A)(2), off-street parking located in parking areas behind or to the side of the building; side yards facing a street (corner yards) not used for surface parking"
+      url: https://ecode360.com/print/FA4439?guid=50509772
+      retrieved: '2026-11-08'
+      quote: "or/multnomah/fairview/19.65/19.65.100.txt#L12-L16,L23-L26"
     notes: >-
       This is the one Fairview district that permits the pod outright, and
       the encoding still opens with a refusal. The reason is a subarea:
@@ -2492,11 +2528,13 @@ zones:
       The chapter is generous about what counts -- 1,000 square feet of
       enclosed commercial space, a food cart pod of four or more carts, or a
       micro retail pod of three retailers in prefabricated buildings under 600
-      square feet each -- but the pod on its own is none of them, and the
-      boundary is Figure 19.65.030(B), a map. A second storefront limit,
+      square feet each -- but the pod on its own is none of them. The
+      boundary is Figure 19.65.030(B), a map, traced 2026-11-08: outside the
+      shading the base table's P stands, inside it the mixed use is owed, and
+      a lot the traced line cuts is held open. A second storefront limit,
       19.65.030(D)(2), caps ground-floor residential at 50 percent of a site's
-      Halsey Street frontage; it needs the same unread map and a frontage
-      measurement besides.
+      Halsey Street frontage; it reaches only the district, where the mixed
+      use variant already holds the lot short of GREEN.
 
 
       What the zone does NOT state is as load-bearing as what it does. There
@@ -2520,9 +2558,9 @@ zones:
       56-foot building cannot approach. And 19.65.100(A)(2) requires off-street
       parking to be oriented to an alley, underground, above the ground floor,
       or behind or beside the building, with corner side yards barred from
-      surface parking -- a siting rule for the stalls rather than a dimension
-      of the lot, and one the geometry layer will have to answer when it can
-      see a parcel's alley and street edges.
+      surface parking -- carried since 2026-11-08 as the zone's own
+      parking_front_prohibited (true, with 19.65.040's ban on parking between
+      the building and the street) and parking_side_prohibited (false).
   VMU:
     # NOT ENCODED: min_landscaped_pct, and the reason is a title. Chapter
     # 19.150 is called "Special Development Standards - VO, VC and VMU Zones"
@@ -3181,6 +3219,35 @@ zone_rulings:
       not thereby outside the area (Figure V-1 is a drawing, not a layer),
       so VC keeps the fact unobserved.
     observes: [inside_mapped_use_area]
+
+drawn_areas:
+  outside_storefront_district:
+    condition: fairview_outside_storefront_district
+    zones: [TCC]
+    file: or/multnomah/fairview/outside-storefront-district.geojson
+    source: >-
+      Traced 2026-11-08 from Figure 19.65.030(B), Storefront District Map,
+      the only statement of the district's boundary (ecode360 attachment
+      334507, held beside the tracing as
+      storefront-district-map-figure-19.65.030B.map-only.png). The grey
+      fill lifted by value, registered to the taxlots by their linework
+      (2.345 ft per pixel, no rotation, 74 percent of line pixels on a
+      taxlot line), and the area is the figure's frame LESS the fill: the
+      ground the map shows and does not shade. The city publishes no
+      storefront layer. Drawn provenance in the file's source block.
+    quote: "or/multnomah/fairview/19.65/19.65.030.txt#L5,L12,L15,L24,L29"
+    cite: FMC 19.65.030(A), (B) and (D)(1), Figure 19.65.030(B); Table 19.65.020(A) row 1.h
+    note: >-
+      Asked of TCC lots only (19.65.030(A): "A subarea of the TCC zone").
+      The complement is traced, not the district, because the variant it
+      answers OPENS the zone: a lot at least 90 percent in the unshaded
+      ground is outside the district and takes Quadplexes P; a lot at most
+      10 percent in it (shaded, or beyond the frame the figure stops at)
+      keeps the refusal and the mixed use variant; a lot the line cuts is
+      unanswered, held open with FACT-FAIRVIEW-OUTSIDE-STOREFRONT-DISTRICT,
+      never GREEN. Ground beyond the frame is not depicted, so it is never
+      read as outside. Of the 45 TCC lots on 2026-11-08, 3 small lots on
+      208th Pl are outside, 37 are not, and 5 are cut.
 
 # Which of this city's zones are "a residential district" for the commercial
 # chapters' "When a building abuts a residential district the minimum
