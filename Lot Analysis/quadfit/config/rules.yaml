@@ -905,9 +905,9 @@ jurisdictions:
       - zone: "DCC"
         quadplex_allowed: true
         setback_front_ft: 10
-        # 10, not 5: the townhouse row's side beside a lower-density zone
-        # (districts chunk 5, 2026-10-29) -- the larger limb, as s5 carves.
-        setback_side_ft: 10
+        # 5 since 2026-11-09 (pagecheck-findings): Table 4.1130's note 11 (10
+        # beside a lower-density district) is not marked on the townhouse row.
+        setback_side_ft: 5
         setback_rear_ft: 10
         setback_alley_ft: 6
         setback_street_side_ft: 10
@@ -923,9 +923,9 @@ jurisdictions:
       - zone: "DTM"
         quadplex_allowed: true
         setback_front_ft: 10
-        # 10, not 5: the townhouse row's side beside a lower-density zone
-        # (districts chunk 5, 2026-10-29) -- the larger limb, as s5 carves.
-        setback_side_ft: 10
+        # 5 since 2026-11-09 (pagecheck-findings): Table 4.1130's note 11 (10
+        # beside a lower-density district) is not marked on the townhouse row.
+        setback_side_ft: 5
         setback_rear_ft: 10
         setback_alley_ft: 6
         setback_street_side_ft: 10
@@ -981,7 +981,7 @@ jurisdictions:
       - zone: "DMU"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 10
+        setback_side_ft: 5
         setback_rear_ft: 10
         # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
         # lower-density district, note 11 -- FLATS reads that per lot).
@@ -999,7 +999,7 @@ jurisdictions:
       - zone: "DEM"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 10
+        setback_side_ft: 5
         setback_rear_ft: 10
         # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
         # lower-density district, note 11 -- FLATS reads that per lot).
@@ -1017,7 +1017,7 @@ jurisdictions:
       - zone: "DCL"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 10
+        setback_side_ft: 5
         setback_rear_ft: 10
         # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
         # lower-density district, note 11 -- FLATS reads that per lot).
