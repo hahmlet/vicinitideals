@@ -1060,13 +1060,17 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: field is read by FLATS alone. (61 for an hour in round 2, while Oregon
     #: City's six residential zones carried their own blocks; round 3 folded
     #: them back into the city default.)
-    "entrance_faces_street": 55,
+    # 55 -> 56 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 now pairs with its
+    # RICAP 11 block, which imports RM1's standards whole.
+    "entrance_faces_street": 56,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
-    "setback_garage_entrance_ft": 125,
-    "min_landscaped_pct": 60,
+    # 125 -> 126 and 60 -> 61 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 on
+    # its RICAP 11 block (RM1's standards).
+    "setback_garage_entrance_ft": 126,
+    "min_landscaped_pct": 61,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
     "setback_front_max_ft": 104,
@@ -1167,9 +1171,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: rescreen-1110): the lot-of-record reliefs of every other layer, with
     #: the floors some print and the conditions (creation date, adjoining
     #: ownership) others ask.
-    "lot_of_record_relief": 94,
+    # 94 -> 95 and 43 -> 44 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 on its
+    # RICAP 11 block takes RM1's lot-of-record relief and condition.
+    "lot_of_record_relief": 95,
     "lot_of_record_floor_sqft": 14,
-    "lot_of_record_condition": 43,
+    "lot_of_record_condition": 44,
     #: 2026-11-08 (FOLLOWUPS 77, tigard-road-land merged into rescreen-1110):
     #: Washington County's R and TO zones and Milwaukie measure the minimum lot
     #: area before the road strip; quadfit takes no strip off the lot area.
