@@ -207,6 +207,47 @@ jurisdictions:
         source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
         confidence: needs_verification
         notes: "Corpus zone or/multnomah/portland/CE, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      # Campus Institutional 1 as RICAP 11 (Ordinance 192213, in force
+      # 2026-11-01) leaves it. Table 150-1 as amended turns Household Living
+      # from N to Y in CI1, and the new 33.150.200 puts a CI1 home on the RM1
+      # zone's development standards (the new 33.266.100.B does the same for
+      # parking):
+      #   "Household Living and Group Living uses in the CI1 zone are subject
+      #    to the development standards that apply in the RM1 zone."
+      #   or/multnomah/portland/amended/ricap11.txt#L1987,L1989,L1991 (Table 150-1)
+      #   or/multnomah/portland/amended/ricap11.txt#L2052-L2054 (33.150.200)
+      #   or/multnomah/portland/amended/ricap11.txt#L2383-L2386 (33.266.100.B)
+      # The corpus holds it as CI1's `amended: ricap11` block, `like: RM1`, so
+      # every number below is the RM1 row's and is mirrored against that block
+      # (`corpus_amendment`), not against the codified Table 150-2 (15 ft
+      # setbacks, 0.5 FAR) that still prints in the chapter. Written by
+      # port_from_flats.amended_zone_row, which is the port's own rule (larger
+      # limb of each setback and minimum, smaller of coverage) run on the
+      # amendment's block.
+      #
+      # RM1's 4,000 sq ft / 33 ft minimum is kept although 33.150.202 still
+      # says the campus zones need no minimum lot size: the two do not say which
+      # wins, and the minimum is the reading that cannot turn a lot GREEN (the
+      # corpus's own note on the amendment).
+      #
+      # NO setback_alley_ft, on purpose. RM1's alley waiver (33.120.220.B.3.g)
+      # reaches a CI1 home through the import, and FLATS applies it per lot; this
+      # file leaves the alley line at the 5 ft rear setback, the side that cannot
+      # draw quadfit's envelope too big.
+      - zone: CI1
+        quadplex_allowed: true
+        corpus_amendment: ricap11
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 4000
+        min_lot_width_ft: 33
+        max_coverage_pct: 50
+        min_density_du_per_acre: 17.424
+        source: "RICAP 11 As-Adopted Report (Ordinance 192213 Exhibit B), MP18 -- Table 150-1 as amended (p. 77), new 33.150.200 Residential Uses in the CI1 Zone (p. 79), new 33.266.100.B (p. 95); RM1 standards, PCC 33.120"
+        source_url: "https://efiles.portlandoregon.gov/record/18006154/file/document"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CI1 as amended by RICAP 11 (in force 2026-11-01): homes allowed on RM1's standards, so this is the RM1 row. needs_verification caps quadfit's own report at review, as on RM1. Before 2026-11-01 FLATS refuses the use on the codified Table 150-1 whatever this row measures."
       - zone: CI2
         quadplex_allowed: true
         setback_front_ft: 10
