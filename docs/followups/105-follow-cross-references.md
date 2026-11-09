@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; rest listed below] [scan: YES (new standards bind)]
+105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, three chapters fetched 2026-11-08 with Steph's OK; Tigard RES-A to RES-C now carry the 5 ft S-3 strip] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -68,5 +68,49 @@ Routing rows read (routing.csv stays open until something is encoded inside the 
 7. **Beaverton, noticed and not chased**: 60.05.20.7.A asks for a 10 ft walkway along an elevation with
    a primary entrance. It reads as commercial (tenant entrances, display windows). Cooper Mountain
    Nature Park 25 ft setback (Table 20.22.15 G.6): already listed NOT ENCODED.
-8. **Not started**: Tigard (34 binding; unmapped, so no lots move), every other place's binding rows,
-   all non-binding rows, and the footnote ledger's "See Section" notes.
+8. **Non-binding rows: not worked.** 1,523 open rows that stand beside no encoded value (round 3
+   read one, Beaverton 60.05.25.13 landscape buffers: N/A for middle housing except the Cooper Mountain
+   NPB-25 already listed). Most are use-specific chapters, procedures and boilerplate; the top of the
+   queue by mentions was skimmed and nothing distance-bearing seen besides that one.
+9. **Tigard 18.420 (landscaping and screening): READ 2026-11-08, encoded.** In RES-A to RES-C,
+   parking at the side or rear of buildings and not in garages must be screened from adjacent
+   properties to the S-3 standard of Table 18.420.2 (18.280.040.txt#L111). That is the pod's rear
+   court. Fetched with Steph's OK (tdc.18.420.landscaping.txt): S-3 is a minimum depth of 5 feet
+   holding a 6 ft sight-obscuring fence or wall and trees (L252-L255). Encoded as
+   `parking_lot_line_buffer_ft` 5 in RES-A, RES-B and RES-C; the interim hold (site fact
+   `tigard_s3_screen_reaches_court`, flag FACT-TIGARD-S3-SCREEN-REACHES-COURT, 61de78f5) is removed.
+   The court now stands 5 ft further off the rear line (the side setback is already 5 ft); a plan
+   that misses only by the strip goes YELLOW on PARKING_STRIP_UNCONFIRMED (Steph 2026-10-04).
+10. **Canby 16.41.060 and Gladstone 17.76: READ 2026-11-08, no change.** Canby: 16.41.060.C.20/.21
+   define the primary street facing facade (east-west streets: 99E, 1st to 4th Avenues) and the
+   secondary (north-south streets, Birch to Locust), and 16.41.050 (A)(4)(a) bans parking in front of
+   both. The screen already refuses a court beside the building on a corner lot wherever
+   `parking_front_prohibited` holds (`paper.side_court`), and the rear court is in front of no
+   facade. Gladstone: every subsection of 17.76 relaxes (projections, heights, front averaging,
+   private-street and flag-access fronts, through-lot front by owner choice); 17.76.040(5) "may" move
+   a flag lot's lines, a discretionary relief. 17.76.030 (an undersized lot of record held to one
+   house) only reaches lots admitted by lot-of-record relief, which no Gladstone zone resolves.
+
+Fetched 2026-11-08 with Steph's OK ("Yes, download"), from the cities' official code sites:
+Tigard CDC Chapter 18.420 (ecode360), Canby CMC 16.41.060 (American Legal), Gladstone GMC Chapter
+17.76 (Code Publishing). Stored in flats/provenance/docs with their .meta.json; declared in each
+city's YAML source list.
+
+## Round 3 (2026-11-08, flats/crossref-follow-2)
+
+Every BINDING crossref row in the corpus is now ruled (21 left open are `fetch` or `later` on
+purpose). Tigard (34 rows): 23 are table and figure captions printed inside the held section that
+cites them (the resolver gap, item 6), each the source of encoded values (`read`); the rest are
+apartments, wireless, industrial, procedures, adjustments and land division, and 18.420.2 (item 9).
+Then Canby (16, eight of them 1984 ordinance numbering in history notes, `misread`), unincorporated
+Multnomah (11: home occupations, signs, lighting, the Gorge review uses GGR2 already refuses),
+Estacada (10), Gladstone (8), Milwaukie (8: variances, nonconforming, the 19.907 Type I path already
+ruled in DMU), Sandy, Wilsonville, Tualatin (57.400 is cited but never enacted: the chapter's section
+list stops at 57.300), King City (18.106.050 is the old numbering of 16.132, which Kingston Terrace
+replaces), Sherwood, and the state layer (OAR 660-046 citing itself). Nothing read tightens a standard
+the screen applies to the pod, so no lot moves.
+
+Footnote "see Section" pass: 283 of the 1,363 dismissed footnotes carry a cross-reference. Their
+reasons were grouped and the 23 on dimensional rows (setback, height, lot, parking, access) read
+against their targets; every one either followed the target (ZDO 845, Gresham 4.1416, Wood Village
+230.335, Tigard 18.650.080.D, Clackamas 1005.02) or is scoped off the pod. No dismissal reopened.

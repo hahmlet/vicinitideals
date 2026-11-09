@@ -1682,6 +1682,16 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# Fetched 2026-11-08 with Steph's OK (FOLLOWUPS 105): the facade definitions
+# 16.41.050 (A)(4)(a) names. Prose guidelines and definitions; read in full.
+- id: "cmc.16.41.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39377
+  title: "CMC 16.41.060 DCO site and design review guidelines."
+  start: "16.41.060 DCO site and design review guidelines."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
 - id: "cmc.16.46.010"
   url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40043
   title: "CMC 16.46.010 Number of units in residential development."
@@ -1842,6 +1852,95 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# READ AND NOT ENCODED (FOLLOWUPS 105, CMC 16.41.060 fetched 2026-11-08 with Steph's OK; was a
+# crossref ruling until it came into the store): 16.41.050 (A)(4)(a) keeps parking and maneuvering
+# from between a building and the street for "primary street facing facades and secondary street
+# facing facades, as defined in Sections 16.41.060.C" (cmc.16.41.050.txt#L78). 16.41.060.C.20 and .21
+# define them by street direction: an east-west street (99E, 1st to 4th Avenues) primary, a
+# north-south street (Birch to Locust) secondary. So on a TC corner lot both street faces carry the
+# ban. The screen already reads it so: on a corner lot it refuses a court beside the building
+# wherever parking_front_prohibited holds (paper.side_court), and the rear court stands behind the
+# rear wall, in front of no facade. A street on neither list owes no ban, which the encoded ban only
+# over-asks. The rest of 16.41.060 is objectives and design vocabulary.
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
+  # Eight of them are the 1984 ordinance's own numbering printed in the history notes.
+  "10.3.05":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 section 10.3.05(B), 1984)"
+      (cmc.16.08.020.txt#L5), the 1984 code's numbering of this section.
+  "10.3.10":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 section 10.3.10(D), 1984)"
+      (cmc.16.10.040.txt#L3).
+  "10.3.18":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "Ord. 740 section 10.3.18" (cmc.16.16.010.txt#L59).
+  "10.3.20":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 sect. 10.3.20 (A), 1984)"
+      (cmc.16.18.010.txt#L7).
+  "10.3.21":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "Ord. 740 section 10.3.21(A), 1984"
+      (cmc.16.20.010.txt#L19).
+  "10.3.25":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "Ord. 740 section 10.3.25(C), 1984"
+      (cmc.16.24.030.txt#L29).
+  "10.3.33":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 section 10.3.33(A), 1984)"
+      (cmc.16.34.010.txt#L5).
+  "16.64.0400":
+    outcome: read
+    note: >-
+      The flag-lot exception to the residential access widths of 16.10.070(B)(8)
+      (cmc.16.10.070.txt#L132) prints "16.64.0400" for 16.64.040, which is held. Its flag-lot
+      standards (cmc.16.64.040.txt#L35-L47) ask an access strip at least twenty feet wide, paved
+      full width, the same 20 ft the encoded 3-to-19-unit access width already asks, and govern the
+      commission's creation of a flag lot.
+  "16.49.040":
+    outcome: design
+    note: >-
+      Table 16.49.040, the site design review menu, is held (cmc.16.49.40.txt#L31-L35): a design
+      passes on 60 percent of 71 possible points, 10 percent of them from low-impact elements, scored
+      on choices like downspouts, drought-tolerant planting, pervious paving, parking behind the
+      building and screened equipment. No item is mandatory and none sizes ground. The review it
+      belongs to was ruled under ORS 197A.400 (Steph 2026-10-15, FOLLOWUPS 85; CLEAR-OBJECTIVE flag
+      on the zones it reaches).
+  "16.49.035":
+    outcome: procedure
+    note: >-
+      The Type II site and design review path (cmc.16.49.40.txt#L3). A process; see 16.49.040.
+  "12.32":
+    outcome: procedure
+    note: >-
+      The city tree ordinance, which decides an application to cut more trees than it allows
+      (cmc.16.49.40.txt#L29). Trees are ignored and entered per lot (Steph 2026-11-01).
+  "16.21.080":
+    outcome: other_building
+    note: >-
+      Cottage cluster development and design standards (cmc.16.16.010.txt#L7).
+  "16.44":
+    outcome: other_building
+    note: >-
+      Manufactured and mobile home parks (cmc.16.16.020.txt#L25).
+  "16.81":
+    outcome: other_building
+    note: >-
+      Duplex standards (cmc.16.16.010.txt#L5).
+  "16.89.030":
+    outcome: other_building
+    note: >-
+      The Type 1 procedure for an accessory dwelling (cmc.16.16.010.txt#L13).
 definitions:
   # Read 2026-10-07 from CMC 16.04, on disk section by section.
   #

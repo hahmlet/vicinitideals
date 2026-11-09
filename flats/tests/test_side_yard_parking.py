@@ -360,7 +360,8 @@ ROUND_3 = [
      "lane_and_court", "none"),
     ("or/clackamas/estacada", "C-2", (), "lane_and_court", "none", None,
      "lane_and_court", "none"),
-    ("or/washington/tigard", "RES-A", (), "lane_and_court", "none", None,
+    # Buffer None -> 5 on 2026-11-08 (FOLLOWUPS 105): the S-3 screen, Table 18.420.2.
+    ("or/washington/tigard", "RES-A", (), "lane_and_court", "none", 5,
      "lane_and_court", "none"),
     ("or/washington/durham", "SDR", (), "lane_and_court", "none", None,
      "lane_and_court", "none"),

@@ -1,5 +1,5 @@
 {
-  "digest": "19568f743cb8ac74ef35f84b13c93dccaa29452ed1b1374b0ea2830cddc5a0dd",
+  "digest": "9311161bc10d06ebfd6b7e589b4f41d1c17a67efff3f08a3e1fee93cfa386310",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -385,7 +385,7 @@
       "gaps": []
     },
     "or/clackamas/milwaukie": {
-      "section_unread": 3,
+      "section_unread": 0,
       "misattributed": [
         {
           "zone": "DMU",
@@ -528,7 +528,7 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 11,
+      "section_unread": 10,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -567,14 +567,6 @@
     "or/multnomah/_unincorporated": {
       "section_unread": 17,
       "misattributed": [
-        {
-          "zone": "(defaults)",
-          "field": "entrance_faces_street",
-          "claimed": "39.4969 39.4990",
-          "found": "39.4975",
-          "quote": "or/multnomah/_unincorporated/39/39.4975.txt#L1-L3",
-          "kind": "heading_other_file"
-        },
         {
           "zone": "CFU",
           "field": "quadplex_allowed",
@@ -1717,7 +1709,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 56,
+      "section_unread": 51,
       "misattributed": [
         {
           "zone": "CC",

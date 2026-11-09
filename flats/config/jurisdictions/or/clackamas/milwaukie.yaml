@@ -711,6 +711,51 @@ readings:
       the height maximum outright for the same reason. Nothing here dimensions a dwelling.
     fingerprint: 1dd4f5232ee58a48
 crossrefs:
+  # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
+  "19.911":
+    outcome: other_path
+    note: >-
+      Variances (Type II and III): "Variances of lot area, lot width, and lot depth standards for
+      flag lots are subject to a Type III variance per Section 19.911" (19.504/19.504.6.txt#L35).
+      The screen takes no variances (Steph 2026-10-02).
+  "19.911.6":
+    outcome: other_path
+    note: >-
+      Building height variance in the Downtown Mixed Use zone (19.304/19.304.4.txt#L64). A relief
+      above the stated height; the two-storey pod never needs it.
+  "19.911.7":
+    outcome: other_path
+    note: >-
+      Building height variance in the General Mixed Use zone, for a fifth storey or more
+      (19.303/19.303.4.txt#L79, L97). The two-storey pod never needs it.
+  "19.800":
+    outcome: other_path
+    note: >-
+      Nonconforming uses and development (19.309/19.309.3.txt#L3). The pod is new development.
+  "19.906":
+    outcome: procedure
+    note: >-
+      Development review, the process for altering a nonconforming use closer to compliance
+      (19.303/19.303.2.txt#L15) and for industrial development near residential zones
+      (19.309/19.309.6.txt#L46). A process; neither path is the pod's.
+  "19.907":
+    outcome: procedure
+    note: >-
+      Downtown design review. 19.508.3.A lets an applicant meeting every downtown design standard
+      take the administrative Type I review (19.508/19.508.3.txt#L3-L11); only a project that does
+      not meet them goes to the discretionary Type II or III. Ruled in the DMU block (the Type I path
+      is the by-right one and its standards are objective). 19.907 itself, the procedure, is not
+      held.
+  "14.16.060":
+    outcome: other_building
+    note: >-
+      Title 14 sign code, Downtown Zones (19.304/19.304.4.txt#L129; signs on awnings,
+      19.508/19.508.4.txt#L1017).
+  "27":
+    outcome: other_building
+    note: >-
+      Oregon Fire Code Chapter 27, hazardous materials: uses that store or manufacture them
+      (19.309/19.309.4.txt#L5).
 
   # --- four references out of the use table, none of them this building ----
   "19.903":

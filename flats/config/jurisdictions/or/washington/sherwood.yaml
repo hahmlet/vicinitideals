@@ -24,6 +24,13 @@ ingest:
 # way that moves a figure the layer holds; the floodplain chapter is the
 # one that can take ground from a lot, and it only narrows.
 crossrefs:
+  "16.134.090":
+    outcome: narrows_only
+    note: >-
+      Floodplain non-elevation design requirements, named in the definition of a lowest floor
+      (16.10/16.10.020.txt#L252). Like 16.134.020, they reach only land inside the floodplain and
+      can only take ground or permission away; the screen's hazard constraints are read from their
+      own layers (FOLLOWUPS 105 round 3, 2026-11-08).
   "16.46":
     outcome: other_building
     note: >-

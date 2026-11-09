@@ -61,6 +61,11 @@ code:
 - id: "tdc.18.410.parking"
   url: https://ecode360.com/print/TI5024?guid=43706464
   title: Chapter 18.410 Off-Street Parking and Loading
+# Fetched 2026-11-08 with Steph's OK (FOLLOWUPS 105): Table 18.420.2, the S-3
+# screen 18.280.040.D.4 asks of rowhouse parking in RES-A through RES-C.
+- id: "tdc.18.420.landscaping"
+  url: https://ecode360.com/print/TI5024?guid=43706534
+  title: Chapter 18.420 Landscaping and Screening
 - id: "tdc.18.620.bridgeport"
   url: https://ecode360.com/print/TI5024?guid=43707414
   title: Chapter 18.620 Bridgeport Village Plan District
@@ -116,6 +121,201 @@ code:
   url: https://ecode360.com/print/TI5024?guid=43709542
   title: Chapter 18.930 Vision Clearance Areas
   allow_thin: true
+# READ AND NOT ENCODED (FOLLOWUPS 105, Chapter 18.420 fetched 2026-11-08 with Steph's OK; these were
+# crossref rulings until the chapter came into the store):
+# - 18.420.050, the screening standards section: roof-mounted equipment screened to S-1
+#   (18.620/18.620.070.txt#L108, 18.620/18.620.080.txt#L30, Bridgeport Village) is a screen on the
+#   roof and takes no ground. Its S-3 row is encoded (parking_lot_line_buffer_ft, RES-A to RES-C).
+# - 18.420.060, site tree canopy (L269 on): trees are ignored and entered per lot (Steph
+#   2026-11-01).
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed. Most are
+  # table and figure captions printed inside the held section that cites them (the resolver gap,
+  # FOLLOWUPS 105 open item 6), each read and already encoded.
+  "18.420.1":
+    outcome: read
+    note: >-
+      Table 18.420.1, the L-1 and L-2 landscaping standards, printed in the held chapter
+      (tdc.18.420.landscaping.txt#L175-L188). It says what a required landscape area is planted
+      with (shrub share, hardscape cap, a tree per 600 sq ft), not how deep or where; the S-3 strip
+      counts toward the minimum landscape area (L161), and min_landscaped_pct is the zones' own row.
+  "18.110.2":
+    outcome: read
+    note: >-
+      Table 18.110.2, the residential use table, is printed in the held section
+      (18.110/18.110.030.txt#L25) and is cited by every residential zone's quadplex_allowed.
+  "18.110.3":
+    outcome: read
+    note: >-
+      Table 18.110.3, residential housing types, is printed in the held section
+      (18.110/18.110.040.txt#L36); rowhouses L[2] is cited by quadplex_allowed.
+  "18.120.1":
+    outcome: read
+    note: >-
+      Table 18.120.1, the commercial use table, is printed in the held section
+      (18.120/18.120.030.txt#L34) and cited by the commercial zones' quadplex_allowed.
+  "18.120.2":
+    outcome: read
+    note: >-
+      Table 18.120.2, commercial-zone housing types, is printed in the held section
+      (18.120/18.120.040.txt#L32) and cited by the commercial zones' quadplex_allowed.
+  "18.130.1":
+    outcome: read
+    note: >-
+      Table 18.130.1, the industrial use table, is printed in the held section
+      (18.130/18.130.030.txt#L29).
+  "18.140.1":
+    outcome: read
+    note: >-
+      Table 18.140.1, the parks and recreation use table, is printed in the held section
+      (18.140/18.140.040.txt#L25).
+  "18.650.1":
+    outcome: read
+    note: >-
+      Table 18.650.1, the downtown (MU-CBD) use table, is printed in the held section
+      (18.650/18.650.050.txt#L25).
+  "18.650.2":
+    outcome: read
+    note: >-
+      Table 18.650.2, MU-CBD housing types, is printed in the held section
+      (18.650/18.650.060.txt#L36) and cited by MU-CBD's quadplex_allowed.
+  "18.650.3":
+    outcome: read
+    note: >-
+      Table 18.650.3, the downtown development standards, is printed in the held section
+      (18.650/18.650.070.txt#L7) and is the source of MU-CBD's encoded dimensions.
+  "18.660.1":
+    outcome: read
+    note: >-
+      Table 18.660.1, the Tigard Triangle's required land use applications, is printed in the held
+      section (18.660/18.660.040.txt#L138-L146). None reaches a by-right rowhouse meeting the
+      standards: transportation mitigation only where a traffic study finds off-site impacts, an
+      adjustment only where a design standard is not met, land division, conditional use only for
+      basic utilities and wireless facilities, sensitive lands (screened as overlays), temporary uses.
+  "18.660.4":
+    outcome: read
+    note: >-
+      Table 18.660.4, the Triangle use table, is printed in the held section
+      (18.660/18.660.060.txt#L55) and cited by TMU's quadplex_allowed.
+  "18.660.7":
+    outcome: read
+    note: >-
+      Table 18.660.7, height by type of story, is printed in the held section
+      (18.660/18.660.080.txt#L15) and is cited by the encoded Triangle story heights.
+  "18.670.2":
+    outcome: read
+    note: >-
+      Table 18.670.2, Washington Square housing types, is printed in the held section
+      (18.670/18.670.060.txt#L36) and cited by the Washington Square zones' quadplex_allowed.
+  "18.280.1":
+    outcome: read
+    note: >-
+      Table 18.280.1, the rowhouse development standards, is printed in the held section
+      (18.280/18.280.040.txt#L18) and is the source of every rowhouse dimension encoded here.
+  "18.280.2":
+    outcome: read
+    note: >-
+      Figure 18.280.2, the shared-access configuration, is printed in the held section
+      (18.280/18.280.040.txt#L74); the 24 ft maximum shared access width beside it is a ceiling the
+      pod's drive stays under (see the layer-wide refusals).
+  "18.410.1":
+    outcome: other_building
+    note: >-
+      Table 18.410.1 is stacking lanes for drive-through facilities (18.410/18.410.030.txt#L83).
+  "18.410.2":
+    outcome: read
+    note: >-
+      Table 18.410.2, parking space and aisle dimensions, is printed in the held section
+      (18.410/18.410.030.txt#L165) and is the source of the encoded stall and aisle sizes.
+  "18.410.3":
+    outcome: read
+    note: >-
+      Table 18.410.3 is printed in the held section (18.410/18.410.060.txt#L3), vehicle and bicycle parking quantities, cited by the
+      encoded parking figures.
+  "18.805.1":
+    outcome: read
+    note: >-
+      Table 18.805.1, residential lot dimensions, is printed in the held section
+      (18.805/18.805.030.txt#L7) and is the source of the encoded lot sizes and widths.
+  "18.910.1":
+    outcome: read
+    note: >-
+      Table 18.910.1, street right-of-way widths, is printed in the held section
+      (18.910/18.910.030.txt#L194) and is the source of the encoded right-of-way to centreline.
+  "18.640.7":
+    outcome: read
+    note: >-
+      Figure 18.640.7, the River Terrace Boulevard cross-section, is printed in the held section
+      (18.640/18.640.080.txt#L5-L8) and cited by row_to_centerline_named_ft.
+  "18.420.2":
+    outcome: read
+    note: >-
+      Table 18.420.2, fetched 2026-11-08 with Steph's OK (tdc.18.420.landscaping.txt#L232-L261).
+      In RES-A to RES-C, parking at the side or rear of buildings and not in garages "must be
+      screened from adjacent properties to the S-3 standard" (18.280/18.280.040.txt#L111): S-3 is
+      a minimum depth of 5 feet holding a 6 ft sight-obscuring fence or wall and trees (L252-L255).
+      Encoded as parking_lot_line_buffer_ft 5 in the three zones. The other citations (S-1
+      service areas and roof equipment, no depth; S-4, 8 ft, parking on Bridgeport and downtown
+      streets) screen what the screen already places or reach zones the pod is screened in by
+      other rules.
+  "18.230":
+    outcome: other_building
+    note: >-
+      Chapter 18.230, Apartments. Apartments exclude rowhouses (18.30), and the pod is a rowhouse
+      development here. A rowhouse applicant MAY elect the apartment standards
+      (18.280/18.280.020.txt#L7), a branch the screen does not take; the River Terrace facade
+      standards apply "in lieu of" 18.230/18.280/18.290 (18.640/18.640.060.txt#L30) and are read
+      where they are encoded.
+  "18.230.040":
+    outcome: other_building
+    note: >-
+      Common space for "all apartment or mixed-use developments" (18.670/18.670.090.txt#L5,
+      18.320/18.320.040.txt#L78). The pod is neither.
+  "18.200":
+    outcome: read
+    note: >-
+      Chapter 18.200, Residential Development Standards, is the series holding Chapter 18.280
+      Rowhouses, which is held and encoded. The citing lines send residential development to the
+      review process of its housing type (18.670/18.670.040.txt#L14) and rowhouse density to the
+      lot-size tables (18.40/18.40.130.txt#L11).
+  "18.450":
+    outcome: other_building
+    note: >-
+      Wireless Communication Facilities, in every use table and in Table 18.660.1.
+  "18.330":
+    outcome: other_building
+    note: >-
+      "The standards for nonresidential development in industrial zones" (18.130/18.130.030.txt#L27).
+  "18.740":
+    outcome: procedure
+    note: >-
+      Conditional use approval process and criteria. Where a use table makes the rowhouse
+      conditional, quadplex_allowed already carries that status from the table; the chapter itself
+      is the process.
+  "18.715":
+    outcome: other_path
+    note: >-
+      Adjustments: a Type II relief from a standard (18.640/18.640.060.txt#L147). The screen takes
+      no adjustments (Steph 2026-10-02, no variances). The River Terrace street lines leave the
+      final street widths to the Public Works Director "using the following standards as
+      guidelines unless the applicant requests a formal adjustment" (18.640/18.640.080.txt#L16).
+  "18.20":
+    outcome: procedure
+    note: >-
+      "Administration and enforcement as provided in Chapter 18.20" (18.660/18.660.030.txt#L18).
+  "18.810":
+    outcome: later
+    note: >-
+      Lot line adjustments and consolidations (18.660/18.660.040.txt#L213, flag lot creation at
+      18.805/18.805.030.txt#L196). Lot creation; binds only when a pod declares a plat.
+  "18.820":
+    outcome: later
+    note: >-
+      Land partitions. Lot creation; binds only when a pod declares a plat.
+  "18.830":
+    outcome: later
+    note: >-
+      Subdivisions. Lot creation; binds only when a pod declares a plat.
 definitions:
   # Read 2026-10-01 from 18.30, which is on disk whole
   # (tdc.18.30.definitions.txt).
@@ -339,11 +539,11 @@ defaults:
 # per two units, 15 ft minimum and 18 ft maximum, 18 ft apart. The pod
 # parks in a shared rear court, which is the shared-access path (D.1.b).
 #
-# NOT ENCODED: S-3 screening of side and rear parking from adjacent
-# properties in RES-A through RES-C (18.280.040.D.4, L159-L161; Table
-# 18.420.2). A planted buffer of a width Chapter 18.420 sets; not stored
-# beyond the chapter, and no field holds a parking-area buffer from an
-# interior lot line. A doubt: on a tight lot it can take court width.
+# ENCODED 2026-11-08 (FOLLOWUPS 105): S-3 screening of side and rear
+# parking from adjacent properties in RES-A through RES-C (18.280.040.D.4,
+# 18.280.040.txt#L111-L112) is Table 18.420.2's 5 ft minimum depth
+# (tdc.18.420.landscaping.txt#L252-L255): `parking_lot_line_buffer_ft` 5 in
+# those three zones. RES-D and RES-E owe no parking screen.
 #
 # NOT ENCODED: detached garages 40 ft from a street (18.280.040.D.3.a,
 # L147-L157). The pod has none.
@@ -509,6 +709,18 @@ zones:
       value: 20
       cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
       quote: "or/washington/tigard/18.280/18.280.040.txt#L88-L90"
+    # 18.280.040.D.4: in RES-A through RES-C, side and rear parking not in
+    # garages is screened from adjacent properties to S-3 on the same site.
+    # Table 18.420.2's S-3 row: minimum depth 5 feet, a 6 ft sight-obscuring
+    # fence or wall and trees. The pod's open rear court is that parking, so
+    # the 5 ft strip stands between it and every line it shares with a
+    # neighbour (FOLLOWUPS 105, read 2026-11-08 with Steph's OK to fetch).
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Tigard CDC 18.280.040.D.4 (RES-A through RES-C, parking at the side or rear of buildings and not in garages screened from adjacent properties to the S-3 standard, on the same site) and Table 18.420.2, S-3 minimum depth 5 feet
+      url: https://ecode360.com/print/TI5024?guid=43706534
+      retrieved: '2026-11-08'
+      quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L238-L239,L252-L255"
     driveway_min_width_two_way_ft:
       value: 20
       cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
@@ -626,6 +838,18 @@ zones:
       value: 20
       cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
       quote: "or/washington/tigard/18.280/18.280.040.txt#L88-L90"
+    # 18.280.040.D.4: in RES-A through RES-C, side and rear parking not in
+    # garages is screened from adjacent properties to S-3 on the same site.
+    # Table 18.420.2's S-3 row: minimum depth 5 feet, a 6 ft sight-obscuring
+    # fence or wall and trees. The pod's open rear court is that parking, so
+    # the 5 ft strip stands between it and every line it shares with a
+    # neighbour (FOLLOWUPS 105, read 2026-11-08 with Steph's OK to fetch).
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Tigard CDC 18.280.040.D.4 (RES-A through RES-C, parking at the side or rear of buildings and not in garages screened from adjacent properties to the S-3 standard, on the same site) and Table 18.420.2, S-3 minimum depth 5 feet
+      url: https://ecode360.com/print/TI5024?guid=43706534
+      retrieved: '2026-11-08'
+      quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L238-L239,L252-L255"
     driveway_min_width_two_way_ft:
       value: 20
       cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet
@@ -743,6 +967,18 @@ zones:
       value: 20
       cite: Tigard CDC 18.280.040.D.2, rowhouse off-street parking areas a minimum of 20 feet from any street property line except alley lines
       quote: "or/washington/tigard/18.280/18.280.040.txt#L88-L90"
+    # 18.280.040.D.4: in RES-A through RES-C, side and rear parking not in
+    # garages is screened from adjacent properties to S-3 on the same site.
+    # Table 18.420.2's S-3 row: minimum depth 5 feet, a 6 ft sight-obscuring
+    # fence or wall and trees. The pod's open rear court is that parking, so
+    # the 5 ft strip stands between it and every line it shares with a
+    # neighbour (FOLLOWUPS 105, read 2026-11-08 with Steph's OK to fetch).
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Tigard CDC 18.280.040.D.4 (RES-A through RES-C, parking at the side or rear of buildings and not in garages screened from adjacent properties to the S-3 standard, on the same site) and Table 18.420.2, S-3 minimum depth 5 feet
+      url: https://ecode360.com/print/TI5024?guid=43706534
+      retrieved: '2026-11-08'
+      quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L238-L239,L252-L255"
     driveway_min_width_two_way_ft:
       value: 20
       cite: Tigard CDC 18.280.040.D.1.b, shared access to parking at the side or rear of a rowhouse development, minimum paved width 20 feet

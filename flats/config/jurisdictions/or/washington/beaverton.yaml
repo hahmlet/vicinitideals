@@ -241,6 +241,15 @@ crossrefs:
     note: >-
       General Landscaping Requirements, held in 60.05/60.05.25.txt#L116: what the 15 percent open
       space of 60.05.25.2 must be planted with. Fills ground already sized by the encoded share.
+  # FOLLOWUPS 105 round 3 (2026-11-08), a non-binding row read for what it could take.
+  "60.05.25.13":
+    outcome: read
+    note: >-
+      Landscape buffers, a subsection of the held 60.05.25 (60.05/60.05.25.txt#L294-L548). Table
+      60.05.25.13.D's Middle Housing proposed-use row reads N/A against every abutting use but the
+      Cooper Mountain Nature Park, where it asks NPB-25, a 25 ft native plantings buffer
+      (60.05/60.05.25.txt#L473-L484; widths in the table notes, L540-L548). That is the Cooper Mountain buffer already
+      listed NOT ENCODED (Table 20.22.15 G.6), not a new standard.
   "60.05.25.17":
     outcome: design
     note: >-

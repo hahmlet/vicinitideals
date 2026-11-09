@@ -285,13 +285,16 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     # 17.21 on 2026-10-29: the Downtown Core Overlay's upper-floor rule along
     # Portland Avenue (FOLLOWUPS 109 chunk 5), refused under the 2026-10-09
     # ruling that holds those lots open.
-    elsewhere = ("17.25", "17.10.065", "17.12.065", "R7.2", "17.21.040")
+    # 17.76 on 2026-11-08: the Exceptions chapter, fetched and read (FOLLOWUPS
+    # 105); every subsection relaxes, so it is a reading, not a refusal of 17.48.
+    elsewhere = ("17.25", "17.10.065", "17.12.065", "R7.2", "17.21.040", "17.76")
     parking = [r for r in mine if not any(x in r.text for x in elsewhere)]
     # 7 -> 6 on 2026-10-02: the side and rear halves of 17.48.040(2)(e)
     # encoded as `parking_lot_line_buffer_ft`.
     assert len(parking) == 6
     # 10 -> 11 on 2026-10-29: 17.21.040(2), above.
-    assert len(mine) == 11
+    # 11 -> 12 on 2026-11-08: 17.76, above.
+    assert len(mine) == 12
     # 7 -> 10 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 10 -> 11 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
     # 11 -> 12 on 2026-10-02: parking_lot_line_buffer_ft.

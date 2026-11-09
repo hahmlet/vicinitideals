@@ -509,6 +509,21 @@ readings:
       split.
     fingerprint: 9d414b7a3a727e69
 crossrefs:
+  # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
+  "57.400":
+    outcome: read
+    note: >-
+      "Additional standards may apply to some uses and situations, see TDC 57.400" (57.muc.txt#L170)
+      points at a section Chapter 57 does not enact. The chapter is held whole (TDC 57.010 to the
+      CHAPTER 58 marker), its section list stops at 57.300 (57.muc.txt#L1-L5), and a whole-chapter
+      grep finds "57.400" only in that sentence. Ord. 1438-20 repealed the former 57.005-57.900
+      (L34-L35) and enacted no 57.400.
+  "39":
+    outcome: other_building
+    note: >-
+      The binding mention is "Retail Commercial Use. See Chapter 39 (Use Categories)"
+      (31/31.060.txt#L151). The pod's own housing type, the townhouse, is defined in the held 31.060
+      (31/31.060.txt#L147).
 
   # --- two use-table rows that are not this building -----------------------
   "34.400":
