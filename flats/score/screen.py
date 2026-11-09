@@ -384,6 +384,12 @@ REAR_COURT_SHORT = "REAR_COURT_SHORT"
 COURT_FRONT_YARD = "COURT_FRONT_YARD"
 #: The ruling :data:`COURT_FRONT_YARD` reads.
 COURT_FRONT_YARD_RULING = "2026-11-08-no-front-yard-parking-silent-codes"
+#: The field whose ``True`` lets the court stand between the building and a
+#: public street on the code's own conditions, so :data:`COURT_FRONT_YARD`
+#: holds only where they are not shown met (Clackamas ZDO 845.02(D); Steph
+#: 2026-11-09, rulings.yaml ``2026-11-09-clackamas-front-parking-follow-zdo``;
+#: :func:`flats.ingest.quadfit.front_parking_allowed`).
+PARKING_FRONT_SHARE = "parking_front_share_allowed"
 #: The drawn court leans on a rear alley that runs only part of the rear line
 #: as its aisle, and stands off the covered stretch (:attr:`LotFacts.
 #: alley_court_off_stretch`; Steph 2026-09-28, FOLLOWUPS 3(c)).

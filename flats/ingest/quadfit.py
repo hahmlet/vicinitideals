@@ -80,7 +80,14 @@ from flats.fit.draw import (
     draw,
     stretch_window,
 )
-from flats.fit.frontage import _runs, _streets_of_run, building_runs, parking_share, street_chains
+from flats.fit.frontage import (
+    _runs,
+    _streets_of_run,
+    building_runs,
+    parking_share,
+    street_chains,
+    street_runs,
+)
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -225,6 +232,7 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    PARKING_FRONT_SHARE,
     BUILDING_SHARE,
     CLOSER_LOOK_SPLIT_ZONE,
     FRONT_MAX,
@@ -2176,6 +2184,7 @@ def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], .
 PARKING_FRONT_BAN = "parking_front_prohibited"
 
 
+
 def court_yard_lines(s: "Screened") -> tuple[tuple[float, float, float, float], ...]:
     """The lines whose yard this plan's parking court may not stand in
     (Steph 2026-11-08, rulings.yaml
@@ -2245,7 +2254,73 @@ def court_in_front_yard(s: "Screened", drawing: Mapping[str, Any] | None = None)
     ring, court = drawing.get("building"), drawing.get("court")
     if not (ring and len(ring) >= 4 and court and len(court) >= 4):
         return False
-    return court_between(Polygon(ring), Polygon(court), court_yard_lines(s))
+    building, parked = Polygon(ring), Polygon(court)
+    lines = court_yard_lines(s)
+    if not court_between(building, parked, lines):
+        return False
+    return not front_parking_allowed(s, building, parked, lines)
+
+
+def front_parking_allowed(
+    s: "Screened",
+    building: Any,
+    court: Any,
+    lines: Sequence[tuple[float, float, float, float]],
+) -> bool:
+    """Whether the code itself lets ``court`` stand between ``building`` and
+    the street lines of :func:`court_yard_lines` it stands in front of
+    (Steph 2026-11-09, rulings.yaml
+    ``2026-11-09-clackamas-front-parking-follow-zdo``: "Follow the county's
+    rules.").
+
+    Clackamas ZDO 845.02(D): garages and off-street parking areas "shall
+    not be located between a building and a public street ... except" where
+    (1) "separated from the street by a dwelling", or (2) "the combined width
+    of all garages and off-street parking areas located between a building
+    and a public street does not exceed a total of 50 percent of the street
+    frontage". True only where the zone says so
+    (``parking_front_share_allowed``), no outright ban stands, EVERY line
+    the court stands in front of is read as a public street
+    (:attr:`flats.geom.edges.Edge.public_road`: a private road the yards
+    count, or a street s4 did not read, keeps the hold), and the court on
+    this drawing faces no more than ``parking_area_max_frontage_pct`` of any
+    one street's frontage (:func:`flats.fit.frontage.street_runs`, every
+    street: Steph 2026-10-14's any-street reading of the same cap). The
+    court's whole ring is the parking measured -- at least the stalls and
+    aisle, never the lane. Limb (1) is never measured, so never opens a lot.
+    Anything unmeasured is False: the hold stays.
+    """
+    import shapely
+
+    from flats.fit.draw import court_between
+
+    rules = s.rules
+    if rules.get(PARKING_FRONT_SHARE) is not True:
+        return False
+    if rules.get(PARKING_FRONT_BAN) is True and PARKING_FRONT_BAN not in set(rules.exempted):
+        return False
+    cap = rules.get("parking_area_max_frontage_pct")
+    edges = getattr(s, "street_edges", None) or s.lot.edges
+    ground = s.lot.lot_geom
+    if cap is None or edges is None or ground is None or ground.is_empty:
+        return False
+    public = {
+        (e.x1, e.y1, e.x2, e.y2)
+        for lot_edges in (s.lot.edges, edges)
+        if lot_edges is not None
+        for e in lot_edges.edges
+        if e.public_road and not e.alley and e.cls in (EdgeClass.front, EdgeClass.street_side)
+    }
+    faced = [line for line in lines if court_between(building, court, (line,))]
+    if not faced or any(line not in public for line in faced):
+        return False
+    parked = shapely.make_valid(court).intersection(ground)
+    if parked.is_empty:
+        return False
+    runs = street_runs(ground, edges, parked, building)
+    if not runs:
+        return False
+    return max(pct for pct, _ in runs) <= float(cap)
 
 
 #: Shortest street lot line whose direction the doors may face
@@ -5776,7 +5851,7 @@ def fire_checked(
             # refused (Steph 2026-11-08; Milwaukie 12E30CD04700, fire_rp5):
             # the listing already holds none, and this reads the drawing
             # itself on the plan's own yards (:func:`court_yard_lines`).
-            if _court_street_side(drawn, court_yard_lines(out)):
+            if court_in_front_yard(out, drawn):
                 continue
             candidate = dataclasses.replace(out, drawing=drawn)
             candidate_route = measure(drawn)
