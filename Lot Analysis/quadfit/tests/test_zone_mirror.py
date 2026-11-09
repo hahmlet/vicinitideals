@@ -1678,3 +1678,30 @@ def test_a_signed_zone_whose_flag_never_flipped_is_reported() -> None:
     hit = [r for r in rows if r.startswith(f"{juris}/{zone_code}:")]
     assert hit, f"a signed {juris}/{zone_code} was not reported: {rows}"
     assert "needs_verification" in hit[0]
+
+
+def test_a_row_written_for_an_amendment_is_mirrored_against_the_amendment() -> None:
+    """Portland CI1 since RICAP 11 (2026-11-01, FOLLOWUPS 155).
+
+    The corpus loads as codified text, where CI1 still refuses the home and
+    prints 15 ft on every line. rules.yaml's CI1 row is written for the law in
+    force -- RM1's standards, by the new 33.150.200 -- and says so with
+    ``corpus_amendment: ricap11``. Held to the codified block it would read as
+    a live permission split and four drifts; held to nothing it would compare
+    nothing. It is held to the amendment, and agrees.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    pairs = {(j, z["zone"]): zl for j, z, zl, _layer in audit._pairs(top, corpus)}
+    ci1 = pairs[("portland", "CI1")]
+    assert ci1.values["quadplex_allowed"].value is True
+    assert ci1.like is not None and ci1.like.zone == "RM1"
+    rm1 = pairs[("portland", "RM1")]
+    for field in ("setback_front_ft", "setback_side_ft", "setback_rear_ft", "min_lot_sqft",
+                  "min_lot_width_ft", "max_coverage_pct", "min_density_du_per_acre"):
+        assert ci1.values[field].value == rm1.values[field].value, field
+    assert not [s for s in audit.permission_splits() if s.startswith("portland/CI1")]
+    diverge, _uncited, _agree = audit.scan()
+    assert not [d for d in diverge if d.zone == "CI1"]
+    with pytest.raises(LookupError):
+        audit.corpus_block(corpus["or/multnomah/portland"].zones["CI1"], "ricap99")

@@ -563,7 +563,14 @@ def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone(truste
             )
             shipped = dw.open_space_sqft_by_zone[zr.zone]
             z = layer.zones.get(zr.zone)
-            read = None if z is None else z.values.get("open_space_min_sqft")
+            values = None if z is None else z.values
+            if z is not None and zr.corpus_amendment:
+                # A row mirroring an adopted amendment (Portland CI1 on
+                # RICAP 11) is held to that block, through its `like:`.
+                from audit_zone_mirror import _effective, corpus_block
+
+                values = _effective(layer, corpus_block(z, zr.corpus_amendment))
+            read = None if values is None else values.get("open_space_min_sqft")
             stated = None if read is None or read.exempt else float(read.value)
             assert shipped == stated, (
                 f"{jurisdiction} {zr.zone}: mirror says {shipped} sq ft and the "
