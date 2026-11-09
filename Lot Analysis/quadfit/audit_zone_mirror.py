@@ -410,8 +410,49 @@ def _pairs(top: dict, corpus: dict):
             zl = layer.zones.get(z.get("zone"))
             if zl is None:
                 continue
-            zl = corpus_block(zl, z.get("corpus_amendment"), where=f"{juris}/{z.get('zone')}")
+            amendment = z.get("corpus_amendment")
+            if amendment:
+                held = amended_layer(layer, amendment, z["zone"], where=f"{juris}/{z['zone']}")
+                zl = held.zones[z["zone"]]
+                yield juris, z, _Effective(zl, _effective(held, zl)), layer
+                continue
             yield juris, z, _Effective(zl, _effective(layer, zl)), layer
+
+
+def amended_layer(layer, amendment: str, zone: str, *, where: str = ""):
+    """``layer`` as the law reads with the adopted amendment ``amendment`` in force.
+
+    Every zone of the layer that carries an ``amended:`` entry by that id is
+    put in its codified block's place -- :func:`flats.rules.loader.law_in_force`
+    restricted to the one amendment -- so a ``like:`` resolves the way the
+    screen resolves it on a date the amendment governs. Gladstone C-1
+    (FOLLOWUPS 156) is why the swap is layer-wide: Ordinance 1545 re-reads
+    R-7.2's table, and C-1 has no table of its own for a dwelling --
+    17.16.040 sends it to 17.10.050 -- so C-1 is changed by an amendment its
+    own block does not carry, through its ``like: R7.2``.
+
+    The row's zone, or a zone on its ``like:`` chain, must carry the id: a name
+    nothing it reads carries is a typo, and holding the row to the codified
+    text instead would read every changed number as drift.
+    """
+    zones = dict(layer.zones)
+    for code, zl in layer.zones.items():
+        for a in getattr(zl, "amended", ()) or ():
+            if a.id == amendment:
+                zones[code] = a.zone
+    held = layer.model_copy(update={"zones": zones})
+    block, seen = held.zones.get(zone), set()
+    while block is not None and block.zone not in seen:
+        seen.add(block.zone)
+        codified = layer.zones.get(block.zone)
+        if any(a.id == amendment for a in getattr(codified, "amended", ()) or ()):
+            return held
+        like = getattr(block, "like", None)
+        block = None if like is None else held.zones.get(like.zone)
+    raise LookupError(
+        f"{where}: rules.yaml names corpus_amendment {amendment!r} and neither the "
+        f"corpus zone nor a zone it adopts by like: carries it"
+    )
 
 
 def corpus_block(zl, amendment: str | None, *, where: str = ""):

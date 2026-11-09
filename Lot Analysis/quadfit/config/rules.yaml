@@ -2900,15 +2900,16 @@ jurisdictions:
     zones:
       - zone: R7.2
         quadplex_allowed: true
+        corpus_amendment: ord1545
         setback_front_ft: 20
         setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 7200
-        source: "Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional standards)"
-        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html"
+        source: "Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional standards), as Ordinance 1545 Exhibit A re-reads them"
+        source_url: "https://www.ci.gladstone.or.us/media/30151"
         confidence: needs_verification
-        notes: "Ord. 1545 (effective 2026-08-13) amends GMC 17.10.050: minimum lot area for duplex, triplex, quadplex, and cottage cluster is 7,200 sq ft; side setback is 5 ft. See Gladstone Ordinance 1545 Exhibit A (pp. 9-5 to 9-6)."
+        notes: "Ord. 1545 (effective 2026-08-13) amends GMC 17.10.050: minimum lot area for duplex, triplex, quadplex, and cottage cluster is 7,200 sq ft; side setback is 5 ft. See Gladstone Ordinance 1545 Exhibit A (pp. 9-5 to 9-6). Mirrored against the corpus's ord1545 block (FOLLOWUPS 156)."
       - zone: R5
         quadplex_allowed: true
         setback_front_ft: 20
@@ -2922,15 +2923,16 @@ jurisdictions:
         notes: "GIS literal 'R5' (code writes 'R-5'). Height 35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft inside Gladstone Town Center overlay. min_lot is the QUADPLEX row of 17.12.050 (7,000) -- detached is 5,000 and duplex/triplex 5,000, so the four-unit building is the one row that asks for more. Street-side read via mirror; confirm 17.12.050."
       - zone: R10
         quadplex_allowed: true
+        corpus_amendment: ord1545
         setback_front_ft: 20
-        setback_side_ft: 7.5
+        setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 20
-        min_lot_sqft: 3600
-        source: "Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2, the lowest-density defined SFD district)"
-        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone17.html"
+        min_lot_sqft: 7200
+        source: "Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2 as Ordinance 1545 Exhibit A re-reads GMC 17.10.050)"
+        source_url: "https://www.ci.gladstone.or.us/media/30151"
         confidence: needs_verification
-        notes: "DISCREPANCY: Gladstone's adopted code defines only R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer polygon carries ZONE='R10'. SFD zone, so HB 2001 attaches. Standards are placeholders copied from R-7.2 pending verification, including its middle-housing minimum lot of 3,600 and the two-side-rows question behind the 7.5 ft side yard."
+        notes: "DISCREPANCY: Gladstone's adopted code defines only R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer polygon carries ZONE='R10'. SFD zone, so HB 2001 attaches. Standards are placeholders copied from R-7.2 as Ord. 1545 (effective 2026-08-13) leaves it: quadplex minimum lot 7,200 sq ft (was 3,600) and one 5 ft side setback (the '7.5 ft or 5 ft' row is gone). Mirrored against the corpus's ord1545 block (FOLLOWUPS 156)."
       # ported 2026-10-08 (zone gaps, FOLLOWUPS 52a) by port_from_flats.zone_row: Gladstone C2 (by right: attached residential outright) and MR (middle housing outright), encoded 2026-10-08; ported so the pod is measured. FLATS keeps the verdict.
       - zone: "C2"
         quadplex_allowed: true
@@ -2958,15 +2960,16 @@ jurisdictions:
       # ported 2026-10-15 (FOLLOWUPS 85) by port_from_flats.zone_row: C1, C3, LI open through a conditional use that ORS 197A.400 reduces to the clear and objective standards inside a UGB (Steph 2026-10-15); ported so the pod is measured. FLATS keeps the verdict.
       - zone: "C1"
         quadplex_allowed: true
+        corpus_amendment: ord1545
         setback_front_ft: 20
         setback_side_ft: 15
         setback_rear_ft: 15
         setback_street_side_ft: 20
-        min_lot_sqft: 3600
+        min_lot_sqft: 7200
         source: "Gladstone Municipal Code 17.16.020 (uses allowed outright), 17.16.040 (conditional uses), 17.16.060 (dimensional standards), Local Commercial District"
         source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1716.html"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/clackamas/gladstone C1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+        notes: "Ported from the FLATS corpus (or/clackamas/gladstone C1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. A dwelling here is held to R-7.2's 17.10.050 (GMC 17.16.040), so Ord. 1545 (effective 2026-08-13) raises its minimum lot from 3,600 to 7,200 sq ft through the corpus's like: R7.2; C-1's own 15 ft side yard (17.16.060, not amended) stands. Mirrored against ord1545 (FOLLOWUPS 156)."
       - zone: "C3"
         quadplex_allowed: true
         setback_front_ft: 20

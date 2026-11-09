@@ -18,8 +18,10 @@ away for nothing. It ran the other way once: Milwaukie R-HD was drawn on a
 figure, where the general standard is 20.
 
 Gladstone Ord. 1545 (effective 2026-08-13) amends R7.2's minimum lot area and
-side setback. The mirror now follows the ordinance; this audit still compares
-the corpus's base zone values, so those two differences are listed below.
+side setback, and with them R10 (a placeholder copying R-7.2) and C1 (whose
+dwellings 17.16.040 sends to R-7.2's table). Those rows say so with
+`corpus_amendment: ord1545` and are compared against the law with it in force
+(FOLLOWUPS 156), so they are no longer listed as differences.
 
 The other remaining differences are not drift, and each kind has its own list
 below because each closes in a different way. Nothing here is a clean bill:
@@ -40,13 +42,11 @@ import pytest
 
 pytestmark = pytest.mark.unit
 
-#: Gladstone Ord. 1545 amends the base values represented in the corpus. The
-#: mirror follows the effective ordinance; the audit does not apply amendment
-#: blocks, so it deliberately reports these two differences.
-KNOWN_DIVERGENT: frozenset[str] = frozenset({
-    "gladstone/R7.2.min_lot_sqft",
-    "gladstone/R7.2.setback_side_ft",
-})
+#: Empty since 2026-11-09 (FOLLOWUPS 156). It held Gladstone R7.2's minimum
+#: lot and side setback, which rules.yaml carried as Ord. 1545 reads them while
+#: the audit compared the codified text. The row now names `corpus_amendment:
+#: ord1545` and is held to the amended block, as are R10 and C1 beside it.
+KNOWN_DIVERGENT: frozenset[str] = frozenset()
 
 #: Empty since 2026-09-02, and it took the feature rather than seven edits.
 #: These were the seven dimensions where rules.yaml held the number the district
@@ -279,9 +279,14 @@ def test_the_quadplex_row_is_the_one_that_gets_read() -> None:
     assert _zone("milwaukie", "R-MD")["min_lot_sqft"] == 3000
 
     # Ord. 1545 amends R7.2's minimum lot and side setback; rules.yaml mirrors
-    # the effective ordinance while the corpus audit compares the base values.
+    # the ordinance (corpus_amendment: ord1545), and so do R10, which copies
+    # R-7.2, and C1, whose dwellings take R-7.2's lot minimum (FOLLOWUPS 156).
     r72 = _zone("gladstone", "R7.2")
     assert (r72["min_lot_sqft"], r72["setback_side_ft"]) == (7200, 5)
+    r10 = _zone("gladstone", "R10")
+    assert (r10["min_lot_sqft"], r10["setback_side_ft"]) == (7200, 5)
+    c1 = _zone("gladstone", "C1")
+    assert (c1["min_lot_sqft"], c1["setback_side_ft"]) == (7200, 15)
     assert _zone("gladstone", "R5")["min_lot_sqft"] == 7000
 
 
@@ -1089,7 +1094,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     # hold Table 4.0430 row C, 0.5 : 1 width/depth. FLATS screens it; this
     # pipeline still compares no ratio of two measurements.
     "max_lot_depth_ratio": 8,
-    "max_units": 14,
+    # 14 -> 11 on 2026-11-09 (FOLLOWUPS 156): Gladstone R7.2, R10 and C1 are
+    # held to Ord. 1545, whose 17.10.050 drops the "not more than four
+    # dwelling units on a lot" sentence the codified table carried, so the
+    # three rows read no unit cap.
+    "max_units": 11,
     "max_height_stories": 25,
     "setback_side_total_ft": 3,
     "min_building_height_ft": 17,
@@ -1711,3 +1720,32 @@ def test_a_row_written_for_an_amendment_is_mirrored_against_the_amendment() -> N
     assert not [d for d in diverge if d.zone == "CI1"]
     with pytest.raises(LookupError):
         audit.corpus_block(corpus["or/multnomah/portland"].zones["CI1"], "ricap99")
+
+
+def test_a_row_reaching_an_amendment_through_like_is_held_to_it() -> None:
+    """Gladstone C1 on Ord. 1545 (FOLLOWUPS 156).
+
+    C-1 prints no lot minimum for a dwelling; 17.16.040 sends one to R-7.2's
+    17.10.050, which the corpus writes as ``like: R7.2``. Ord. 1545 re-reads
+    that table and C1's own block carries no amendment, so the row is held to
+    the layer with ord1545 in force: R-7.2's amended 7,200 sq ft through the
+    ``like:``, C-1's own 15 ft side yard over it. R10, a placeholder copying
+    R-7.2, carries the amendment itself.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    pairs = {(j, z["zone"]): zl for j, z, zl, _layer in audit._pairs(top, corpus)}
+    for zone, side in (("R7.2", 5), ("R10", 5), ("C1", 15)):
+        held = pairs[("gladstone", zone)]
+        assert held.values["min_lot_sqft"].value == 7200, zone
+        assert held.values["setback_side_ft"].value == side, zone
+    diverge, _uncited, _agree = audit.scan()
+    assert not [d for d in diverge if d.jurisdiction == "gladstone"]
+    layer = corpus["or/clackamas/gladstone"]
+    # The codified text is untouched: C1 through R-7.2 still reads 3,600.
+    assert audit._effective(layer, layer.zones["C1"])["min_lot_sqft"].value == 3600
+    # A zone neither carrying the id nor adopting one that does is an error.
+    with pytest.raises(LookupError):
+        audit.amended_layer(layer, "ord1545", "C2")
+    with pytest.raises(LookupError):
+        audit.amended_layer(layer, "ord9999", "C1")

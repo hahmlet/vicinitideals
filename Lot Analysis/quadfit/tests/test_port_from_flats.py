@@ -86,7 +86,14 @@ def test_each_row_takes_the_strict_limb_and_names_its_placeholders(layers) -> No
 #: amendment rather than the codified block (rules.yaml ``corpus_amendment``).
 #: Portland CI1 since RICAP 11 (2026-11-01, FOLLOWUPS 155): a home there is
 #: built to RM1's standards.
-AMENDED_ROWS = {("portland", "CI1"): ("or/multnomah/portland", "ricap11")}
+#: Gladstone R7.2, R10 and C1 on Ord. 1545 (in force 2026-08-13, FOLLOWUPS
+#: 156): R7.2's own amended table, R10 copying it, C1 through its like: R7.2.
+AMENDED_ROWS = {
+    ("portland", "CI1"): ("or/multnomah/portland", "ricap11"),
+    ("gladstone", "R7.2"): ("or/clackamas/gladstone", "ord1545"),
+    ("gladstone", "R10"): ("or/clackamas/gladstone", "ord1545"),
+    ("gladstone", "C1"): ("or/clackamas/gladstone", "ord1545"),
+}
 
 
 def test_a_row_mirroring_an_amendment_is_what_the_port_makes_of_it(layers) -> None:
