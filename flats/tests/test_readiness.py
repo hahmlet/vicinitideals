@@ -1003,3 +1003,18 @@ def test_a_spelled_number_glued_to_the_word_before_it_still_counts() -> None:
     assert _says(text, 20)
     assert _says(text, 15)
     assert not _says("an orchard of twentyfold growth", 20)
+
+
+def test_an_entrance_angle_is_read_as_the_code_says_it() -> None:
+    # rel4 move-read finding 2 (2026-11-08): Oregon City spells the angle
+    # (17.16.060.C.2.b) and Lombard Subdistrict A prints none (33.545.120.C.2).
+    from flats.encode.readiness import states_an_entrance_angle as says
+
+    oc = "b. Be at an angle of up to forty-five degrees from"
+    lombard = "2. Location of main entrance. The main entrance of each primary structure must face the\nstreet lot line."
+    assert says(oc, "entrance_angle_max_deg", 45)
+    assert not says(oc, "entrance_angle_max_deg", 40)
+    assert not says(oc, "min_roof_pitch_in_12", 45)
+    assert says(lombard, "entrance_angle_max_deg [pdx_lombard_subdistrict_a]", 0)
+    assert not says("Entrances may face the street.", "entrance_angle_max_deg", 0)
+    assert not says(oc, "entrance_angle_max_deg", 0)
