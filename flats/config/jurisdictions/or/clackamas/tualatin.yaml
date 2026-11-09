@@ -1457,10 +1457,13 @@ zones:
       cite: TDC 50.300 Table 50-2, Minimum Lot Size, All Uses 10,000 square feet
       quote: "or/clackamas/tualatin/50/50.300.txt#L7-L8"
       variants:
+        # The CO rows only (page 403). With the section's opening lines the
+        # quote began on page 402, where the 25,000 printed is CG's (L23);
+        # re-cited 2026-11-09 (FOLLOWUPS 112 page-check finding).
         - value: 25000
           when: [inside_mapped_use_area]
           cite: TDC 58.800 Table 58-7, Commercial Office (CO), Minimum Lot Size 25,000 square feet
-          quote: "or/clackamas/tualatin/58/58.800.txt#L1-L3,L34,L36"
+          quote: "or/clackamas/tualatin/58/58.800.txt#L34,L36"
         # Table 58-7 hands the townhouse lot size to RH
         # (58/58.800.txt#L34,L36); the figure is printed in RH's table.
         - value: 1400
