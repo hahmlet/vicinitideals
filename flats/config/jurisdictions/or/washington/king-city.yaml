@@ -806,6 +806,10 @@ zones:
       value: 80
       cite: King City KCMC 16.84.040 Table, R-12 column, Maximum coverage of buildings and impervious surfaces (16.24.020 counts driveways and parking)
       quote: "or/washington/king-city/16.84/16.84.040.txt#L4-L6,L34-L36"
+    # 200, as printed: checked 2026-11-09 against the adopted PDF
+    # (PublicationPdfDownload/3913, page 174.68, King City Supp. No. 13,
+    # 1-22), whose text layer is set type, not OCR. No "1,200" appears
+    # anywhere in the stored code (FOLLOWUPS 112 page-check finding).
     open_space_min_sqft:
       per_dwelling: 200
       cite: King City KCMC 16.94.050, Required outdoor area, single-family attached (200 sq ft contiguous rear or side yard on each lot)
