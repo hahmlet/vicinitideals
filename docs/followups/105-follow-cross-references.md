@@ -46,17 +46,17 @@ Routing rows read (routing.csv stays open until something is encoded inside the 
    Figure 70.20.10.6.2 (ask Steph first), trace its Type A streets onto RLIS centrelines the Hillsboro
    way (flats/geom/active_use.py), observe the fact in flats/ingest/quadfit.py, and the held lots off
    Type A streets reopen.
-2. **Corner vision areas** (Washington 418-3; West Linn Chapter 42 kept `fetch`; Beaverton 60.55.35.3,
+2. **Corner vision areas** -- still unmodelled; round 4 collected the legs (below). (Washington 418-3; West Linn Chapter 42, held round 4; Beaverton 60.55.35.3,
    which defers to the Engineering Design Manual). This corpus does not model vision areas anywhere.
    This is the known under-count.
-3. **West Linn Chapter 28** (river protection areas and Habitat Conservation Areas) is kept `fetch`. The
+3. **West Linn Chapter 28**: HELD and read round 4 (below); needs a quadfit overlay. Was: (river protection areas and Habitat Conservation Areas) kept `fetch`. The
    areas are boundaries the screen does not hold (see the 28.040 ruling).
 4. **Washington "improved alley"**: DONE round 2 as a flag. 430-84 lets middle housing take access
    from an alley only where it is improved to 409-3.3 A (not held). `alley_improved_required` on the
    county's defaults raises ALLEY-IMPROVEMENT-UNCONFIRMED (severity 1, no colour change) where the court
    is reached from the alley. Today that is only the East Hillsboro overlay rows, which send the court
-   there; elsewhere the county only permits alley access and the screen keeps the street. Open: fetch
-   409-3.3 A to state the width (the batch 1 note's "16 ft paved" had no stored source and was removed).
+   there; elsewhere the county only permits alley access and the screen keeps the street. Round 4
+   fetched 409: 409-3.3 A prints 16 ft of pavement for an alley of 1-8 units, and the flag now names it.
 5. **Clackamas 1002.02 tree history** (ruled `procedure`): answered by Steph's 2026-11-01 trees
    ruling (trees are ignored and entered per lot). No flag.
 6. **Resolver gap** in flats/encode/crossrefs.py `_resolves`. A held section answers only for printed
@@ -114,3 +114,48 @@ Footnote "see Section" pass: 283 of the 1,363 dismissed footnotes carry a cross-
 reasons were grouped and the 23 on dimensional rows (setback, height, lot, parking, access) read
 against their targets; every one either followed the target (ZDO 845, Gresham 4.1416, Wood Village
 230.335, Tigard 18.650.080.D, Clackamas 1005.02) or is scoped off the pod. No dismissal reopened.
+
+## Round 4 (2026-11-09, flats/crossref-follow-3)
+
+Ledger regenerated on rel5; ten new binding rows ruled (Gresham 10.0200, Beaverton 70.15.05.1 and
+60.05.60.1, Washington 403-3 and 431-5.3, Tigard 18.660.3, Estacada 16.72, 377, 16.80, Gladstone 12.02).
+The 128 open routing rows were read in four batches (Washington; Wilsonville, Cornelius, Hillsboro,
+King City, Tigard; Clackamas cities; Multnomah cities). Fetched under Steph's standing download OK
+(2026-11-09): Washington County CDC 409 (municode publication 3090), West Linn CDC Chapters 42 and 28
+(Code Publishing).
+
+Encoded (zero colour moves: every lot in these four zones is already UNKNOWN, R-9 NB and R-24 NB for
+an unencoded min_lot_sqft, NMU and CCMU for unencoded interior yards):
+- Washington R-9 NB, R-24 NB, NMU, CCMU: `parking_lot_line_buffer_ft` 5 (407-6.4 by 413-4.10; their
+  parking reaches 413 through 390-7 and 392-9.7 A).
+- Washington R-9 NB, R-24 NB: side and rear yards `qualified_by` the new unobserved site fact
+  `washington_county_411_buffer` (flag FACT-WASHINGTON-COUNTY-411-BUFFER). 411 reaches every
+  non-Middle-Housing permit and its 411-5 matrix names no North Bethany district, so the buffer is
+  "to be determined by review authority". NMU and CCMU's 411 widths (15/15/10/0/0/10 and
+  25/15/15/0/0/5 by neighbour column) are written into their yard comment for whoever encodes the yards.
+- Washington alley flag: 16 ft.
+
+Read, not encoded (possible false GREENs, each needs a mechanism or data; listed for the coordinator):
+- **Vision triangles, corpus-wide.** Legs collected: Washington 418-3 20 ft from the road-edge apex;
+  Estacada 15 ft from lot lines; Tigard 18.930 30 ft (35 ft on arterials); Gresham Table 6.04 40/45 ft,
+  no drive or parking inside; Milwaukie 12.24 by AASHTO; Canby 10 ft street-to-driveway, 30 ft
+  street-to-street from curb lines; West Linn 42.040 30 ft at corners and 42.050 a driveway triangle
+  30 ft each way along the street with its apex 30 ft into the lot for every use but a one- or
+  two-family house -- the pod's own driveway. A corner triangle never reaches a building whose front
+  plus street-side setback is at least the leg; the West Linn driveway triangle reaches a pod whose
+  front setback plus offset from the drive centreline is under 30 ft.
+- **Driveway spacing by street class.** Tigard 18.920.030.I.2 (150 ft from a collector or arterial
+  intersection; relief below 150 ft of frontage) and I.3 (200 ft on a collector, 600 ft on an
+  arterial, no relief); Estacada 16.116.010 (D)(2) (50 ft from an intersection, relief where no other
+  access) and Table 16.116.030 (private access 200 ft on a major collector, 100 ft minor). Reaches lots
+  whose every street is a collector or arterial; `local_street` answers that in Tigard, but `when:`
+  cannot negate it.
+- **West Linn Chapter 28.** Inside the Willamette Greenway / Tualatin protection area (city zoning map,
+  not held) a lot holding a Metro HCA needs a quasi-judicial permit; on HCA land the house and its
+  impermeable surfaces may total 5,000 sq ft (28.110.B). Metro Title 13 is laid over Wood Village only
+  in quadfit overlays.yaml.
+- **Washington 418-2 future right-of-way** for R-24 NB, NMU, CCMU (half the TSP maximum width; not
+  for Middle Housing): the TSP design parameters are not held. Zones already UNKNOWN.
+- Cornelius Type I middle housing site review (18.100.030 (A)(2)): ministerial, GREEN tier; no change.
+- Beaverton 70.20.10.6.2 / 70.15.25.1 trace (item 1): not done this round; the hold stands.
+- Lake Oswego 50.06.001.5: not fetched (layer switched off, zero lots).

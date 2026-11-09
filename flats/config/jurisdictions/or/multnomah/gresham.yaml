@@ -1531,6 +1531,14 @@ definitions:
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 
 crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since the max front setback was encoded.
+  "10.0200":
+    outcome: other_building
+    note: >-
+      Accessory structure setbacks. All three mentions send detached accessory structures and
+      patio or deck covers there ("See Section 10.0200 for setbacks of detached accessory
+      structures and for setbacks of attached and detached patio covers", 4/4.0130.txt#L178,
+      L184; 4/4.0132.txt#L5). The pod is a primary building and builds neither.
 
   # --- two procedural chapters cited in the design district use tables -----
   "8.0100":

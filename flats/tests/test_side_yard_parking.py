@@ -470,9 +470,10 @@ ROUND_4 = [
      "lane_and_court", "none"),
     ("or/washington/king-city", "R-9", ("unit_lots",), "lane_and_court", "none", None,
      "lane_and_court", "none"),
-    # LEFT UNSET: off the 430-84 path, Section 411's matrix may govern instead.
-    ("or/washington/_unincorporated", "NMU", (), None, None, None, "none", "none"),
-    ("or/washington/_unincorporated", "R-9 NB", (), None, None, None, "none", "none"),
+    # Off the 430-84 path: still no side-yard reading, but since 2026-11-09 (FOLLOWUPS 105
+    # round 4) the 407-6.4 strip, reached through 390-7 / 392-9.7 A and 413-4.10.
+    ("or/washington/_unincorporated", "NMU", (), None, None, 5, "none", "none"),
+    ("or/washington/_unincorporated", "R-9 NB", (), None, None, 5, "none", "none"),
 ]
 
 

@@ -89,6 +89,24 @@ code:
   allow_thin: true
 
 crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  "16.72":
+    outcome: other_building
+    note: >-
+      Signs: "Signs shall comply with requirements of EMC 16.72 Signs" (16.26/16.26.050.txt and
+      the 16.34, 16.35, 16.38 twins). A sign is not the building.
+  "377":
+    outcome: other_building
+    note: >-
+      ORS Chapter 377, highway signs: "If visible from Hwy 224, signs may require ODOT approval
+      per ORS Chapter 377" (same four files). Signs only.
+  "16.80":
+    outcome: other_building
+    note: >-
+      Temporary dwellings: "Each structure containing a dwelling unit, except temporary dwellings
+      approved pursuant to EMC 16.80, shall include at least three (3) of the following"
+      (16.16/16.16.040.txt#L80). The exception is for a temporary dwelling; the pod is not one, so
+      the design list applies to it as encoded.
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
   "8.12.050":
     outcome: design

@@ -389,7 +389,12 @@ pytestmark = pytest.mark.unit
 # Tigard's S-3 refusal is encoded (-1) and its 18.420.050 ruling became a comment (+1).
 # 165 -> 164 notes on 2026-11-09 (FOLLOWUPS 52): Clackamas SCMU's note no longer refuses the
 # front setback; Map 1005-1 is read and the front window (10-15 ft) is encoded.
-EXPECTED = {"notes": 164, "comments": 292, "tests": 18}
+# 292 -> 294 comments on 2026-11-09 (FOLLOWUPS 105 round 4): West Linn Chapters 42 and 28 were
+# fetched and read, so their `fetch` crossref rulings became one READ AND NOT ENCODED block with two
+# NOT ENCODED readings (vision triangles, river protection).
+# rel6 2026-11-09: both above -- notes 164 (FOLLOWUPS 52, flats/dropped-lots-fairview), comments
+# 294 (FOLLOWUPS 105 round 4, flats/crossref-follow-3).
+EXPECTED = {"notes": 164, "comments": 294, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

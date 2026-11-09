@@ -703,6 +703,8 @@ RULINGS: dict[str, dict[str, str]] = {
         "HOA": "not-a-zone: home owners association, 390/390-19.txt#L19.",
         "HOUSING": "not-a-zone: a table heading word, 375/375-10.txt#L363.",
         "MEASURE": "not-a-zone: a parking table column head, 413/413-6.txt#L10.",
+        # 2026-11-09 (FOLLOWUPS 105 round 4): CDC 409 fetched.
+        "PAVEMENT": "not-a-zone: a column head of the private street standards table (MIN. PAVEMENT WIDTH), cdc.409.private-streets.txt#L80.",
         "MIDDLE": "not-a-zone: a table heading word (Middle Housing), 375/375-10.txt#L362.",
         "ORS 527": "not-a-zone: the Forest Practices Act, named in 342/342-1.txt#L9.",
         "SDC": "not-a-zone: system development charge, 501/501-10.txt#L117.",

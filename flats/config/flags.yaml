@@ -1842,7 +1842,7 @@ types:
     approved_on: null
     raised_from: [UTILITY_EASEMENT_ASSUMED]
   ALLEY-IMPROVEMENT-UNCONFIRMED:
-    description: "The parking is reached from the alley, and the code lets access come from an alley only where it is improved -- built to the county's alley width and pavement standards (Washington County CDC 430-84, citing 409-3.3 A). The alley's width is measured; its paving is not"
+    description: "The parking is reached from the alley, and the code lets access come from an alley only where it is improved -- built to the county's alley width and pavement standards (Washington County CDC 430-84, citing 409-3.3 A: an alley serving 1-8 units paved at least 16 ft wide, curbs only where drainage needs them). The alley's width is measured; its paving is not"
     kind: categorical
     risk: unlikely
     # Informational, never holds a green: below the yellow line (coordinator 2026-11-08, FOLLOWUPS 105).
@@ -1851,7 +1851,7 @@ types:
     resolution: per_lot_review
     scope: per_lot
     key: [lot]
-    path: "Look at the alley (street view or a site visit): paved to the county's alley standard, CDC 409-3.3 A, which is not held -- fetch it to state the width"
+    path: "Look at the alley (street view or a site visit): paved at least 16 ft wide (CDC 409-3.3 A, alleys of 1-8 units; cdc.409.private-streets.txt#L106-L111)"
     priority: later
     status: pending
     approved_by: null
@@ -2087,6 +2087,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Check the lot's street lines against the traced Figure 12.65.930-A (FOLLOWUPS 147): a lot on an Active Use Street and an ordinary street, on both Active Use types, or on a line only partly beside one is held; read the coverage on the Active Use frontage alone, and confirm the street in the approved PUD"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-WASHINGTON-COUNTY-411-BUFFER:
+    description: "Whether Washington County's Section 411 screening and buffering adds a setback to the side and rear yards of a North Bethany R-9 NB or R-24 NB lot; the 411-5 matrix names no North Bethany district, so the width is left to the Review Authority (CDC 411-5, Other row)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Ask Washington County planning which 411-5 row and buffer type the North Bethany districts take (or a ruling that they read as their parent R-9 and R-24 rows); then encode the buffer as a setback variant on the neighbouring district"
     priority: later
     status: pending
     approved_by: null

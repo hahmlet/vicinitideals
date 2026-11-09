@@ -1131,7 +1131,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     # RES-C screen side and rear parking to S-3, a 5 ft strip (Table 18.420.2).
     # 23 -> 24 on 2026-11-08 (FOLLOWUPS 2(a), rel5 merge): Oregon City R-2 restates the strip
     # so Table 17.12.040 note 1 can widen it to 10 ft beside R-10/R-8/R-6.
-    "parking_lot_line_buffer_ft": 24,
+    # 24 -> 28 on 2026-11-09 (FOLLOWUPS 105 round 4): Washington County R-9 NB,
+    # R-24 NB, NMU and CCMU reach 413-4.10 and so 407-6.4's 5 ft strip.
+    "parking_lot_line_buffer_ft": 28,
     "parking_side_yard_allowed": 16,
     "parking_side_yard_stated": 16,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the

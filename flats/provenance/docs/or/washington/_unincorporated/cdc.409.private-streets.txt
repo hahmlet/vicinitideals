@@ -1,0 +1,463 @@
+409-1 Intent and Purpose
+It is the intent of this Section to regulate the development of certain private
+streets to ensure that they are constructed to meet minimum safety and
+structural standards for their intended use, and that maintenance of these
+facilities is provided for.
+409-2 Applicability
+409-2.1 The requirements of Sections 409-3 and 409-4 shall apply to the development
+of private streets inside an urban growth boundary for the following:
+A. Detached and attached homes on separate lots when a private street:
+(1) Exceeds 100 feet in length;
+(2) Serves or will serve three or more lots or units; or
+(3) Serves flag lot(s); and
+B. Commercial, industrial, institutional, and multi-dwelling residential:
+(1) Which provide access to more than one parcel, development, or
+multiple uses on a single parcel or development, and;
+(2) Which is not a parking aisle or parking lot driveway.
+C. Uses described below, except that requirements of Section 409 are limited
+as follows:
+(1) When any Single Detached Dwelling Unit or Duplex fronts a private
+street not described in A, above:
+(a) Drainage shall be addressed as required by Section 410;
+(b) Evidence of easement rights and provisions consistent with
+Section 409-4.1 and 409-4.2 must be provided if the street will
+serve more than one unit.
+(2) When Middle Housing development other than a Duplex fronts a
+private street:
+(a) Written confirmation from the Fire Marshal must be submitted
+with the application, consistent with requirements for "Sufficient
+Infrastructure" as defined in Section 106, that access from a
+public street system to the site via public or private streets
+meets emergency vehicle access standards;
+(b) Drainage shall be addressed as required by Section 410; and
+(c) Evidence of easement rights and provisions consistent with
+Section 409-4.1 and 409-4.2 must be provided.
+409 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:64
+(3) When a Middle Housing Land Division is proposed the following must
+be provided:
+(1) Evidence of compliance with requirements of 409-2.1 C(2)(a);
+and
+(2) All private street frontage, along resulting lots only, shall meet
+street and sidewalk requirements of Section 409.
+409-2.2 The requirements of Section 409-5 shall only apply to private streets outside an
+urban growth boundary.
+409-2.3 In transit oriented districts, all private streets shall meet the requirements of
+Section 431. In the event there is a conflict between the requirements of Section
+431 and this Section, the requirements of Section 431 shall control. (See
+Section 431 for use-specific exclusions).
+(Ord. No. 885A, § 2.1.(Exh. 1, § 16.), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1,
+§ 1.), 2-7-23, eff. 3-9-23)
+409-3 Urban Private Street Standards
+409-3.1 A private street may be permitted when all of the following criteria are met:
+A. The street is not needed to provide access to other properties in the area
+in order to facilitate provisions of the applicable Community Plan(s), the
+Transportation Plan, or Section 431, access spacing, sight distance, and
+circulation standards and requirements, or emergency access standards
+or concerns;
+B. The street is not designated as a proposed facility in the Transportation
+Plan, or is not identified as a public street in the applicable Community
+Plan or by the requirements of Section 431;
+C. The street is not designated as a public street by a previous land use
+action, or by a study adopted by the county;
+D. The street does not serve as a collector or arterial street, or as a Special
+Area Commercial Street; and
+E. In transit oriented districts, the street is permitted as a private street by
+Section 431.
+409-3.2 Notwithstanding the above criteria for access spacing, circulation, emergency
+access, and collector function, the Review Authority may approve a private
+street in conjunction with a proposed development upon adequate findings from
+the applicant that environmental or topographic constraints make construction
+of a public street impractical and that no serious adverse impacts will occur to
+surrounding properties or roads.
+ 409DEVELOPMENT STANDARDS
+IV:65
+409-3.3 All streets proposed to be of private ownership inside the UGB shall conform to
+the following standards:
+A. Local Residential Streets:
+ STRUCTURAL STANDARDS (409-3.6)
+*FUNCTION **MIN.
+PAVEMENT
+WIDTH
+SECTION CURBS SIDEWALKS
+ One-way
+(1) 1-2 units 10 ft. (1) None None
+(2) 3-8 units 15 ft. (2) None None
+(3) 9 or more units 15 ft. (3) Yes Both Sides
+ Two-way
+(4) 1-2 units
+(Less than 150
+feet in length)
+10 ft. (1) None None
+(5) 1-2 units
+(Over 150 feet in
+length)
+15 ft (1) None None
+(6) 3-4 units
+(Less than 150
+feet in length)
+15 ft. (1) None None
+(7) 3-4 units
+(Over 150 feet in
+length)
+20 ft. (1) None None
+(8) 5-8 units 22 ft. (2) One Side One Side
+(9) 9 or more units 24 ft. (3) ****Yes ****Both
+Sides
+ Alleys
+(One-way or
+two-way)
+
+(10) 1-8 units 16 ft. (1) ***Yes None
+(11) 9 or more units 16 ft. (2) ***Yes None
+*Adequate turn around facilities shall be provided pursuant to Section 409-3.7.
+** Minimum pavement width does not include parking. If parking is permitted for
+development of a private street, the paved width of the private street shall be constructed
+to meet the applicable public street width standard.
+***Curbs shall be required only if they are needed for drainage.
+****Sidewalk and curb may be omitted on one side of the street subject to the following:
+•Site width/shape can accommodate new residential lots only along one side of the
+street, and that side of the street shall be provided with curb and sidewalk for its full
+length;
+409 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:66
+•No residential or pedestrian-oriented use (as defined in Section 408-3.6) exists or
+can reasonably be accommodated on-site or abutting the site along the opposite
+side of the street, based on considerations such as topography, land use district, or
+existing development;
+•If curb is needed for drainage where sidewalk is omitted, curb shall be required;
+•The development will meet Neighborhood Circulation requirements of Section
+408.
+B. Private Commercial and Industrial Streets:
+ STRUCTURAL STANDARDS (409-3.6)
+*FUNCTION **MIN.
+PAVEMENT
+WIDTH
+SECTION CURBS SIDEWALKS
+ One-way
+(1) 300 Max ADT 12 ft. (2) Yes Both Sides
+(2) 1500 Max ADT 15 ft. (3) Yes Both Sides
+(3) 3000 Max ADT 15 ft. (4) Yes Both Sides
+(4) 3000 Plus ADT 22 ft. (4) Yes Both Sides
+ Two-way
+(5) 300 Max ADT 22 ft. (2) Yes Both Sides
+(6) 1500 Max ADT 28 ft. (3) Yes Both Sides
+(7) 3000 Max ADT 36 ft. (4) Yes Both Sides
+(8) 3000 Plus ADT 40 ft. (4) Yes Both Sides
+Alleys (One-way or
+two-way)
+
+(9) 1500 Max ADT 16 ft. (3) ***Yes None
+(10) 1500 Plus ADT 16 ft. (4) ***Yes None
+*Adequate turn around facilities shall be provided pursuant to Section 409-3.7.
+** Minimum pavement width does not include parking. If parking is permitted for
+development of a private street, the paved width of the private street shall be constructed
+to meet the applicable public street width standard.
+***Curbs shall be required only if they are needed for drainage.
+C. Private Street Length:
+For the purpose of this Section, private street length shall be measured as
+the distance between the near side curb line of the intersecting street and
+the far edge of pavement of the private road, including any turnaround.
+D. Private Street Width:
+The entire length of the individual private street tract shall maintain the
+required paved width based on the total units or ADT as specified in
+Section 409-3.3 A. or B. Tapering of the private street width is not allowed.
+Emergency turnarounds designed in accordance with approve d Fire
+Marshal standards are exempt from this restriction.
+E. Urban Accessory Dwelling Units (430-2) do not count as units for purposes
+of determining the applicable private street standards.
+ 409DEVELOPMENT STANDARDS
+IV:67Supp. No. 2
+409-3.4 Private Street Design and Construction
+A. Construction Plans
+(1) Construction plans for private streets constructed per Se ctions
+409-3.3 A.(3), A.(8 through 11), or B.(1 through 10) shall be prepared
+by a registered civil engineer. Prior to final approval, wri tten
+certification shall be provided by the engineer that the proposed
+design complies with the applicable requirements of Sections 409-3.3,
+409-3.5 and 409-3.6, any modifications approved pursuant to Section
+409-3.8 and in accordance with the preliminary approval.
+(2) Construction plans for private streets constructed per Se ctions
+409-3.3 A. (1, 2, 4, 5, 6 or 7) are not required to be prepared by a civil
+engineer unless the applicant chooses to construct the street in
+accordance with the County road standards as provided by Section
+409-3.6 A.(1).
+(3) Final construction plans for all private streets shall be submitted prior
+to final approval.
+B. Private Street Construction
+(1) Private streets constructed per Section 409-3.3 A.(3), A.(8 through
+11), or B.(1 through 10) shall be constructed prior to final plat
+approval for Land Divisions; or prior to occupancy or issuance of a
+certificate of occupancy for commercial, industrial, institutional or
+multi-family development, whichever occurs first. The applicant's
+engineer shall provide written certification that the street(s) has been
+constructed in accordance with the certified final construction plans.
+(2) Private streets constructed per Section 409-3.3 A. (1, 2, 4, 5, 6, or 7)
+shall be constructed prior to final plat approval unless approved
+otherwise by the Director. The applicant's engineer or contractor
+shall provide written certification that the street was constructed in
+accordance with the final construction plans prior to final approval, or
+prior to issuance of any building permit within the development when
+the Director permits the street to be constructed after final approval.
+409-3.5 Private Street Tracts
+The pavement width of all private streets, except private streets serving one or
+two single-family residential lots or parcels, shall be located in a tract which
+meets the provisions of Section 409-4. Sidewalks and curbs may be located
+outside a tract on individual lots or parcels when approved by the Review
+Authority provided the following standards are met:
+A. The sidewalk or curb is located in an easement subject to an access and
+maintenance agreement consistent with the criteria in Section 409-4.1;
+and
+409 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:68Supp. No. 2
+B. Except in transit oriented districts, a minimum 20-foot setback to the
+garage vehicle entrance, measured from the sidewalk or easement for
+public travel, whichever is closest shall be provided. In transit oriented
+districts, the minimum setback to the garage vehicle entrance shall be no
+less than the minimum setback required by Section 375 or Section 431.
+409-3.6 Structural Section Key:
+All private streets shall be constructed to the following minimum standards as
+identified in Section 409-3.3:
+A. Structural Section Type:
+(1) Three-inch Type "C" AC over 6 inches compacted crushed rock or in
+accordance with the standards of the Washington County Road
+Design and Construction Standards.
+(2) Three-inch Type "C" AC over 2 inches of three-quarter minus and 6
+inches of 2-inch minus compacted crushed rock or in accordance
+with the standards of the Washington County Road Design and
+Construction Standards.
+(3) Two-inch Type "C" AC over 2-inch Type "B" AC over 2 inches of
+three-quarter minus and 6 inches of 2-inch minus compacted crushed
+rock or in accordance with the standards of the Washington County
+Road Design and Construction Standards.
+(4) Two inches Type "C" AC over 3 inches Type "B" AC over 2 inches of
+three-quarter minus and 6 inches of 2-inch minus compacted crushed
+rock or in accordance with the standards of the Washington County
+Road Design and Construction Standards.
+(5) In lieu of being constructed of asphaltic concrete as described in
+items (1) through (4) above, private streets or driveways may be
+constructed of pervious paving materials when the applican t's
+engineer provides written certification with the applicat ion that
+appropriate site conditions exist for the use of pervious materials and
+that the proposed design and construction will be equal to or superior
+to the structural standards specified in the table in Subsections
+409-3.3 A. and B.
+B. Curb Standards Type:
+(1) Standard curb and gutter, 6 inches exposed (see standard drawings
+of the County Road Standards).
+(2) Mountable curbs (see standard drawing of the County Road
+Standards).
+ 409DEVELOPMENT STANDARDS
+IV:69Supp. No. 2
+(3) When vegetated stormwater management facilities will be used to
+convey and treat street runoff, curb cuts will be allowed for the
+purpose of draining runoff from the private street or driveway.
+C. Sidewalks:
+(1) Concrete sidewalks, minimum 5 feet width (see standard drawings of
+the County Road Standards), and sidewalk ramps at street corners.
+(2) In lieu of being constructed of concrete, as described in (1) above,
+sidewalks may be constructed of pervious paving materials when the
+applicant's engineer provides written certification with the application
+that appropriate site conditions exist for the use of pervious materials
+and that the proposed design and construction will be equal to or
+superior to the structural standards specified in (1) above.
+D. Drainage:
+All roadways shall be drained pursuant to the requirements of the Drainage
+Standards, Section 410.
+E. Additional Street Design Requirements:
+Street design characteristics not otherwise addressed in this section such
+as intersections, sight distance, and vertical and horizontal alignments,
+shall be designed to meet nationally accepted specifications and standards,
+and shall be approved by the appropriate fire district.
+409-3.7 Emergency Service and Solid Waste and Recycling Collection Provider Access:
+A dead-end private street (includes alleys) exceeding 150 feet in length shall
+have an adequate turn around facility designed in accordance with approved
+Fire Marshal standards unless:
+A. The Fire Marshal determines that a turnaround is not needed to provide
+emergency service vehicle access; and
+B. The solid waste coordinator for the Washington County Health & Human
+Services Solid Waste and Recycling Program determines that a turnaround
+is not needed to provide solid waste and recyclable collection vehicle
+access.
+409-3.8 Modification of Private Road Standards
+A variance to the provisions of Section 409-3.3 may be approved by the Review
+Authority in accordance with Section 435 and the following:
+A. The design has been approved by the appropriate Fire Marshal and by the
+solid waste coordinator;
+B. The design has been prepared, submitted and certified by a registered
+engineer (Oregon); and
+409 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:70Supp. No. 2
+C. The design has been documented and references nationally accepted
+specifications or standards.
+(Ord. No. 842, § 2.A.(Exh. 1, § 6), 9-18-18, eff. 11-23-18; Ord. No. 855, § 2.A.(Exh. 1, § 21),
+8-6-19, eff. 11-28-19; Ord. No. 866, § 2.C.(Exh. 3, § 18), 9-1-20, eff. 10-1-20; Ord. No.
+885A, § 2.1.(Exh. 1), 6-28-22, eff. 7-28-22; Ord. No. 889A, § 2.C.(Exh. 3, § 14.), 2-7-23, eff.
+3-9-23; Ord. No. 912A, § 2.B.(Exh. 2, § 1), 4-28-26, eff. 5-28-26)
+409-4 General Provisions For Urban Private Streets
+409-4.1 A recorded document providing for the ownership, use rights, and allocation for
+liability for maintenance of all private streets, including curbs and sidewalks,
+shall be submitted to the Review Authority prior to or in conjunction with final
+approval.
+409-4.2 When streets are proposed to be private, access easements shall be provided
+to all properties needing access to the private street.
+409-4.3 A traffic signing plan shall be provided for proposed private streets. At a
+minimum, the Review Authority shall require a standard "stop sign" at the
+intersection of private and public streets, "No Parking" signs as applicable, and
+a sign stating "private street, not maintained by Washington County" at the
+entrance to the public street. Dead end streets shall be so signed.
+409-4.4 Private streets which access public or county roads shall be located, designed
+and constructed (within the public right-of-way) in accordance with adopted
+standards for county roads.
+409-4.5 Private street access to a county or public road shall be permitted only upon
+issuance of an access permit upon demonstration of compliance with the
+provisions of the county road standards, the standards of this Section and
+Section 501-8.5. Additional sight distance may be required where a safety
+hazard exists.
+409-4.6 Urban private streets providing access to residential dev elopments in a Regional
+or Town Center, Light Rail Station Community, Main Street or Transit Corridor
+shall not be gated except when required by the Director to address an operational
+or safety issue or as permitted by Section 431-4.2E(2). Urban private streets
+outside of these areas that provide access to residential Land Divisions or
+attached unit residential developments from a county or public street may be
+gated when approved by the applicable Fire Marshal and the Washington
+County Traffic Engineering Division. Documentation shall also be obtained from
+affected service providers confirming that the gate will not interfere with their
+provision of services and/or ability to access and maintain their infrastructure.
+(Ord. No. 855, § 2.A.(Exh. 1, § 21), 8-6-19, eff. 11-28-19; Ord. No. 889A, § 2.C.(Exh. 3,
+§ 14.), 2-7-23, eff. 3-9-23; Ord. No. 890A, § 2.A.(Exh. 1, § 1.), 2-7-23, eff. 3-9-23)
+ 409DEVELOPMENT STANDARDS
+IV:71Supp. No. 2
+409-5 Private Streets Outside an Urban Growth Boundary
+409-5.1 Private streets (driveways), or portions thereof, shall demonstrate adequate
+accessibility for emergency vehicles. The private street (driveway) shall comply
+with the access road requirements of the Oregon Fire Code. If new parcels are
+created, Section 409-5.2, below, applies.
+Compliance with the Oregon Fire Code shall be assessed upon submittal of a
+site plan and accompanying narrative illustrating all improvements needed for
+the existing and proposed private driveways longer than 150 feet to meet the
+standards in the current Oregon Fire Code, including:
+(1) Turnaround alternative for dead-end streets/driveways;
+(2) Turnouts for access roads longer than 400 feet;
+(3) Road gradient and road width; and
+(4) Surface and load capacities of the road.
+The Fire Marshal shall have the first opportunity to review private streets
+(driveways), per item A., below. If the Fire Marshal fails to review the private
+street (driveway), or in cases where no Fire Marshal has jurisdiction, approval
+by the Building Official or his designee is required, as outlined under item B.,
+below. In these cases, the applicant shall provide evidence that the Fire Marshal
+waives his review.
+A. Fire Marshal Review
+To demonstrate compliance, the applicant shall provide a site plan signed
+by the Fire Marshal or designee illustrating all required improvements to
+the entire driveway between the development and the public s treet
+providing access. The signature serves to acknowledge that the length of
+the private street (driveway), once improved as shown on the site plan, can
+meet District standards for access for emergency vehicles.
+B. Building Official Review
+(1) For private streets (driveways) or portions thereof outside of Fire
+District boundaries, or which have not previously been reviewed by
+the Fire Marshal, the Building Official shall review the private street
+(driveway) for compliance with the Oregon Fire Code. The Building
+Official's initials on the site plan and narrative serve to acknowledge
+that the length of the private street (driveway), once improved as
+shown on the site plan, can meet Fire Code standards for access for
+emergency vehicles.
+(2) Private streets (driveways) for which existing portions have previously
+been reviewed and approved by the Fire Marshal, the applicant shall
+demonstrate prior approval of the existing portion of the private street
+409 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:72Supp. No. 2
+(driveway) by providing evidence of Fire Marshal approval of the
+constructed street. If the applicant does not provide adequ ate
+evidence of prior Fire Marshal approval, current standards are
+applicable.
+(a) If Building Official review determines that a previously approved
+private street (driveway) still meets the standards under which it
+was originally approved, no changes shall be required to the
+previously approved portion of the street.
+(b) If the Building Official finds that the private street (driveway) no
+longer meets the specifications previously approved by the Fire
+Marshal, he may require that the road be brought up to the
+originally-approved specifications before approving the access.
+409-5.2 All private streets providing access from a public roadway to a proposed Land
+Division shall meet the following standards:
+A. Have a minimum sight distance in compliance with adopted co unty
+standards at any intersection with a public road. Additional sight distance
+may be required where safety hazards exist.
+B. For each private street, there shall be a legal recorded document which
+includes:
+(1) A legal description of the proposed easement;
+(2) Ownership of the street;
+(3) Use rights; and
+(4) A maintenance agreement which includes Fire Marshal approved
+street specifications and turn around area (if required) and the
+allocation and/or method of determining liability for maintenance. For
+new private streets, this agreement shall be a maintenance and
+construction agreement which addresses the above elements.
+C. Each private street shall have a sign stating: "private street, not maintained
+by Washington County." Dead end streets shall be so marked.
+D. Where drainage conditions require it, a private street shall be ditched in
+conformance with the county road standards.
+E. Private streets which access public or county roads shall be located,
+designed and constructed (within the public right-of-way) in accordance
+with adopted standards for county roads.
+F. Prior to establishing a private driveway or a private street, the owner shall
+obtain an access permit for access to the intersecting public road and pay
+ 409DEVELOPMENT STANDARDS
+IV:73Supp. No. 2
+the prescribed fee. As a condition of granting access to a public road, the
+county may require the applicant to clean the ditch serving the parcel and
+remove sight obstructing vegetation in the vicinity of the access.
+G. If an existing driveway or privately maintained street is to be used as an
+access in a proposed Land Division, the applicant shall submit at preliminary
+review a letter from the appropriate Fire Marshal stating that the proposed
+access is satisfactory to serve the proposed parcels, or the letter shall set
+forth the improvements required to make the access satisfactory.
+H. To establish a new private road, the applicant shall submit at preliminary
+review the following information:
+(1) A written statement from the appropriate Fire Marshal setting forth
+the road standards that are applicable to the proposed development;
+(2) Preliminary road construction plans, including right-of-way and road
+surface widths, grading, drainage and surface type (for example,
+asphalt pavement or gravel). Private streets shall comply with the
+grading and drainage standards of Section 410. Final construction
+plans shall be submitted prior to final approval; and
+(3) A statement of the maximum number of dwellings, lots, or parcels the
+street can serve. For purposes of determining the applicable private
+street standards, Accessory Dwelling Units, as allowed under Sections
+430-3 and 430-4, do not count as units.
+I. For private streets created through a Partition, the applicant shall comply
+with one of the following:
+(1) Prior to final approval of the Partition, construct the private street in
+accordance with the plans and specifications approved in th e
+preliminary approval. The appropriate Fire Marshal or, if the Fire
+Marshal fails to review the private street, approval by the Building
+Official or his designee shall inspect and approve the private street
+for conformance to the standards originally approved. A written letter
+of approval shall be provided to the county prior to final approval of
+the Partition; or
+(2) For each vacant parcel that is not served by the completed private
+road execute a restrictive covenant which states:
+"This parcel is ineligible for a building permit except for farm or forest
+structures other than dwellings and shall be limited to farm and forest
+use until such time as the privately maintained road described in
+409 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:74Supp. No. 2
+document #       (Date), has been approved by the
+appropriate Fire Marshal to a point where the parcel can be served.
+This restrictive covenant shall run with the land."
+The Director shall authorize the removal of the restrictive covenant
+after the private street has been constructed to serve any parcel
+subject to the restrictive covenant and the appropriate Fire Marshal
+or, if the Fire Marshal fails to review the private street, approval by the
+Building Official or his designee has certified the private street meets
+the standards specified in the recorded road construction agreement.
+Prior to the issuance of a building permit, the appropriate Fire
+Marshal shall inspect and approve the private street after it has been
+constructed for conformance to the standards originally approved. A
+written letter of approval from the Fire Marshal shall be provided to
+the county prior to issuance of a building permit.
+(Ord. No. 866, § 2.C.(Exh. 3, § 18), 9-1-20, eff. 10-1-20; Ord. No. 890A, § 2.A.(Exh. 1, § 1.),
+2-7-23, eff. 3-9-23; Ord. No. 912A, § 2.B.(Exh. 2, § 8), 4-28-26, eff. 5-28-26)
+410 GRADING AND DRAINAGE
