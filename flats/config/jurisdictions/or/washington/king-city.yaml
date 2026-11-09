@@ -643,62 +643,73 @@ zones:
       per_dwelling: 300
       cite: King City KCMC 16.84.050, Required outdoor area, single-family attached (300 sq ft contiguous rear or side yard on each lot)
       quote: "or/washington/king-city/16.84/16.84.050.txt#L27,L30-L33"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     private_open_space_min_dimension_ft:
       value: 10
       cite: King City KCMC 16.84.050, Required outdoor area (no dimension less than 10 feet)
       quote: "or/washington/king-city/16.84/16.84.050.txt#L27,L30-L33"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     orientation_constraint:
       value: axis_required
       cite: King City KCMC 16.84.050, Main entrance within 8 feet of the longest front building wall, facing the street
       quote: "or/washington/king-city/16.84/16.84.050.txt#L1-L2,L4-L7"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     parking_min_per_unit:
       value: 0
       cite: King City KCMC 16.132.030 A.1 (maximums only; Ord. O-2024-01 deleted the former minimums)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.030.txt#L1-L4,L32-L33"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_max_per_unit:
       value: 1.5
       cite: King City KCMC 16.132.040, Middle Housing, Townhome 1.5 spaces per unit (maximum)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.040.txt#L1-L3,L11,L14"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_width_ft:
       value: 9
       cite: King City KCMC 16.132.050 A.1, 90 degrees, A Stall Width (and C.1, nine feet in width)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_depth_ft:
       value: 18
       cite: King City KCMC 16.132.050 A.1, 90 degrees, B Channel Width (and C.1, eighteen feet in length)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_two_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width, and B.1 (two-direction aisles twenty-four feet)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L21-L22"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_one_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width (one figure for the angle, either direction)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     driveway_min_width_two_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (pavement 24 ft within it)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     driveway_min_width_one_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (the row has no one-way figure)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     notes: >-
       DRAFT. OPENED AS TOWNHOUSES 2026-10-28 (FOLLOWUPS 109 chunk 4,
       FOLLOWUPS 117). The fourplex on one lot is still refused (no
@@ -810,62 +821,73 @@ zones:
       per_dwelling: 200
       cite: King City KCMC 16.94.050, Required outdoor area, single-family attached (200 sq ft contiguous rear or side yard on each lot)
       quote: "or/washington/king-city/16.94/16.94.050.txt#L28,L31-L35"
+      via: "or/washington/king-city/16.94/chapter-16.94.txt#L1-L2"
     private_open_space_min_dimension_ft:
       value: 10
       cite: King City KCMC 16.94.050, Required outdoor area (no dimension less than 10 feet)
       quote: "or/washington/king-city/16.94/16.94.050.txt#L28,L31-L35"
+      via: "or/washington/king-city/16.94/chapter-16.94.txt#L1-L2"
     orientation_constraint:
       value: axis_required
       cite: King City KCMC 16.94.050, Main entrance within 8 feet of the longest front building wall, facing the street
       quote: "or/washington/king-city/16.94/16.94.050.txt#L1-L2,L4-L7"
+      via: "or/washington/king-city/16.94/chapter-16.94.txt#L1-L2"
     parking_min_per_unit:
       value: 0
       cite: King City KCMC 16.132.030 A.1 (maximums only; Ord. O-2024-01 deleted the former minimums)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.030.txt#L1-L4,L32-L33"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_max_per_unit:
       value: 1.5
       cite: King City KCMC 16.132.040, Middle Housing, Townhome 1.5 spaces per unit (maximum)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.040.txt#L1-L3,L11,L14"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_width_ft:
       value: 9
       cite: King City KCMC 16.132.050 A.1, 90 degrees, A Stall Width (and C.1, nine feet in width)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_depth_ft:
       value: 18
       cite: King City KCMC 16.132.050 A.1, 90 degrees, B Channel Width (and C.1, eighteen feet in length)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_two_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width, and B.1 (two-direction aisles twenty-four feet)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L21-L22"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_one_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width (one figure for the angle, either direction)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     driveway_min_width_two_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (pavement 24 ft within it)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     driveway_min_width_one_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (the row has no one-way figure)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     notes: >-
       DRAFT. OPENED AS TOWNHOUSES 2026-10-28 (FOLLOWUPS 109 chunk 4,
       FOLLOWUPS 117). The fourplex on one lot is still refused (no
@@ -966,62 +988,73 @@ zones:
       per_dwelling: 300
       cite: King City KCMC 16.84.050, Required outdoor area, single-family attached (300 sq ft contiguous rear or side yard on each lot)
       quote: "or/washington/king-city/16.84/16.84.050.txt#L27,L30-L33"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     private_open_space_min_dimension_ft:
       value: 10
       cite: King City KCMC 16.84.050, Required outdoor area (no dimension less than 10 feet)
       quote: "or/washington/king-city/16.84/16.84.050.txt#L27,L30-L33"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     orientation_constraint:
       value: axis_required
       cite: King City KCMC 16.84.050, Main entrance within 8 feet of the longest front building wall, facing the street
       quote: "or/washington/king-city/16.84/16.84.050.txt#L1-L2,L4-L7"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     parking_min_per_unit:
       value: 0
       cite: King City KCMC 16.132.030 A.1 (maximums only; Ord. O-2024-01 deleted the former minimums)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.030.txt#L1-L4,L32-L33"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_max_per_unit:
       value: 1.5
       cite: King City KCMC 16.132.040, Middle Housing, Townhome 1.5 spaces per unit (maximum)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.040.txt#L1-L3,L11,L14"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_width_ft:
       value: 9
       cite: King City KCMC 16.132.050 A.1, 90 degrees, A Stall Width (and C.1, nine feet in width)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_depth_ft:
       value: 18
       cite: King City KCMC 16.132.050 A.1, 90 degrees, B Channel Width (and C.1, eighteen feet in length)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_two_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width, and B.1 (two-direction aisles twenty-four feet)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L21-L22"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_one_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width (one figure for the angle, either direction)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     driveway_min_width_two_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (pavement 24 ft within it)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     driveway_min_width_one_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (the row has no one-way figure)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     notes: >-
       DRAFT. OPENED AS TOWNHOUSES 2026-10-28 (FOLLOWUPS 109 chunk 4,
       FOLLOWUPS 117). The fourplex on one lot is still refused (no
@@ -1117,62 +1150,73 @@ zones:
       per_dwelling: 300
       cite: King City KCMC 16.84.050, Required outdoor area, single-family attached (300 sq ft contiguous rear or side yard on each lot)
       quote: "or/washington/king-city/16.84/16.84.050.txt#L27,L30-L33"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     private_open_space_min_dimension_ft:
       value: 10
       cite: King City KCMC 16.84.050, Required outdoor area (no dimension less than 10 feet)
       quote: "or/washington/king-city/16.84/16.84.050.txt#L27,L30-L33"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     orientation_constraint:
       value: axis_required
       cite: King City KCMC 16.84.050, Main entrance within 8 feet of the longest front building wall, facing the street
       quote: "or/washington/king-city/16.84/16.84.050.txt#L1-L2,L4-L7"
+      via: "or/washington/king-city/16.84/16.84.040.txt#L4-L6"
     parking_min_per_unit:
       value: 0
       cite: King City KCMC 16.132.030 A.1 (maximums only; Ord. O-2024-01 deleted the former minimums)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.030.txt#L1-L4,L32-L33"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_max_per_unit:
       value: 1.5
       cite: King City KCMC 16.132.040, Middle Housing, Townhome 1.5 spaces per unit (maximum)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.040.txt#L1-L3,L11,L14"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_width_ft:
       value: 9
       cite: King City KCMC 16.132.050 A.1, 90 degrees, A Stall Width (and C.1, nine feet in width)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_depth_ft:
       value: 18
       cite: King City KCMC 16.132.050 A.1, 90 degrees, B Channel Width (and C.1, eighteen feet in length)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_two_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width, and B.1 (two-direction aisles twenty-four feet)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L21-L22"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_one_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width (one figure for the angle, either direction)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     driveway_min_width_two_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (pavement 24 ft within it)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     driveway_min_width_one_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (the row has no one-way figure)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     notes: >-
       DRAFT. OPENED AS TOWNHOUSES 2026-10-28 (FOLLOWUPS 109 chunk 4,
       FOLLOWUPS 117). The fourplex on one lot is still refused (no
@@ -1301,48 +1345,56 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.030.txt#L1-L4,L32-L33"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_max_per_unit:
       value: 1.5
       cite: King City KCMC 16.132.040, Middle Housing, Townhome 1.5 spaces per unit (maximum)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.040.txt#L1-L3,L11,L14"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_width_ft:
       value: 9
       cite: King City KCMC 16.132.050 A.1, 90 degrees, A Stall Width (and C.1, nine feet in width)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_stall_depth_ft:
       value: 18
       cite: King City KCMC 16.132.050 A.1, 90 degrees, B Channel Width (and C.1, eighteen feet in length)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L24"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_two_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width, and B.1 (two-direction aisles twenty-four feet)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16,L21-L22"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     parking_aisle_one_way_ft:
       value: 24
       cite: King City KCMC 16.132.050 A.1, 90 degrees, C Aisle Width (one figure for the angle, either direction)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.132/16.132.050.txt#L3,L5-L6,L16"
+      via: "or/washington/king-city/16.132/16.132.020.txt#L2"
     driveway_min_width_two_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (pavement 24 ft within it)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     driveway_min_width_one_way_ft:
       value: 30
       cite: King City KCMC 16.136.030 A, attached single-family dwellings on individual lots, 3-6 units, minimum property or easement width 30 ft (the row has no one-way figure)
       url: https://api.municode.com/PublicationPdfDownload/3913
       retrieved: '2026-09-29'
       quote: "or/washington/king-city/16.136/16.136.030.txt#L1-L11,L17-L18"
+      via: "or/washington/king-city/16.136/16.136.020.txt#L2"
     notes: >-
       DRAFT. OPENED AS TOWNHOUSES 2026-10-28 (FOLLOWUPS 109 chunk 4,
       FOLLOWUPS 117). The fourplex on one lot is still refused (no
@@ -1527,22 +1579,27 @@ zones:
       value: true
       cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+      via: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L108-L110"
     min_lot_sqft:
       value: 1500
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size (note 16 read the stricter way)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67-L68"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_width_ft:
       value: 20
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_depth_ft:
       value: 45
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_density_du_per_acre:
       value: 22
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L1-L13"
+      via: "or/washington/king-city/16.114/16.114.100.txt#L20-L21"
       measured_on:
         fact: net_developable_area
         cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
@@ -1558,6 +1615,7 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
       variants:
         # "Corner lot setback -- front yard/side yard, minimum 8": every street
         # line of a corner lot is a front here (front_lot_line_corner), so
@@ -1567,34 +1625,42 @@ zones:
           when: [corner_lot]
           cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
           quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
+          via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_garage_entrance_ft:
       value: 18
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_side_ft:
       value: 3
       cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (0 or 3; note 18, zero only where attached at the line)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L70-L71"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_street_side_ft:
       value: 8
       cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_rear_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_height_ft:
       exempt: true
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height (N/A in Town Center)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L61"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_impervious_pct:
       value: 90
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     orientation_constraint:
       # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
       # further than eight feet behind the building's longest street-facing
@@ -1608,6 +1674,7 @@ zones:
       value: axis_required
       cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
       quote: "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141"
+      via: "or/washington/king-city/16.114/16.114.060.txt#L24-L27"
     notes: >-
       DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
       at least 22 units per net acre; front 10 to 26, garage 18, side 3,
@@ -1622,22 +1689,27 @@ zones:
       value: true
       cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+      via: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L108-L110"
     min_lot_sqft:
       value: 1500
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size (note 16 read the stricter way)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67-L68"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_width_ft:
       value: 20
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_depth_ft:
       value: 45
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_density_du_per_acre:
       value: 18
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L1-L13"
+      via: "or/washington/king-city/16.114/16.114.100.txt#L32-L36"
       measured_on:
         fact: net_developable_area
         cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
@@ -1653,6 +1725,7 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
       variants:
         # "Corner lot setback -- front yard/side yard, minimum 8": every street
         # line of a corner lot is a front here (front_lot_line_corner), so
@@ -1662,34 +1735,42 @@ zones:
           when: [corner_lot]
           cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
           quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
+          via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_garage_entrance_ft:
       value: 18
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_side_ft:
       value: 3
       cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (0 or 3; note 18, zero only where attached at the line)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L70-L71"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_street_side_ft:
       value: 8
       cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_rear_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_height_ft:
       value: 45
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L61"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_impervious_pct:
       value: 90
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     orientation_constraint:
       # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
       # further than eight feet behind the building's longest street-facing
@@ -1703,6 +1784,7 @@ zones:
       value: axis_required
       cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
       quote: "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141"
+      via: "or/washington/king-city/16.114/16.114.060.txt#L24-L27"
     notes: >-
       DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
       at least 18 units per net acre; front 10 to 26, garage 18, side 3,
@@ -1717,22 +1799,27 @@ zones:
       value: true
       cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+      via: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L108-L110"
     min_lot_sqft:
       value: 2400
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_width_ft:
       value: 20
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_depth_ft:
       value: 60
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_density_du_per_acre:
       value: 10
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L1-L13"
+      via: "or/washington/king-city/16.114/16.114.100.txt#L32-L36"
       measured_on:
         fact: net_developable_area
         cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
@@ -1748,6 +1835,7 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
       variants:
         # "Corner lot setback -- front yard/side yard, minimum 8": every street
         # line of a corner lot is a front here (front_lot_line_corner), so
@@ -1757,34 +1845,42 @@ zones:
           when: [corner_lot]
           cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
           quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
+          via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_garage_entrance_ft:
       value: 18
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_side_ft:
       value: 3
       cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (0 or 3; note 18, zero only where attached at the line)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L70-L71"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_street_side_ft:
       value: 8
       cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_rear_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_height_ft:
       value: 35
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L61"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_impervious_pct:
       value: 90
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     orientation_constraint:
       # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
       # further than eight feet behind the building's longest street-facing
@@ -1798,6 +1894,7 @@ zones:
       value: axis_required
       cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
       quote: "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141"
+      via: "or/washington/king-city/16.114/16.114.060.txt#L24-L27"
     notes: >-
       DRAFT. Fourplex allowed outright. 2,400 sq ft lot, 20 wide, 60 deep;
       at least 10 units per net acre; front 10 to 26, garage 18, side 3,
@@ -1812,22 +1909,27 @@ zones:
       value: true
       cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
+      via: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L108-L110"
     min_lot_sqft:
       value: 2400
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_width_ft:
       value: 20
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot width (note 17 read the stricter way)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_lot_depth_ft:
       value: 60
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot depth
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     min_density_du_per_acre:
       value: 8
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L1-L13"
+      via: "or/washington/king-city/16.114/16.114.100.txt#L32-L36"
       measured_on:
         fact: net_developable_area
         cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
@@ -1843,6 +1945,7 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
       variants:
         # "Corner lot setback -- front yard/side yard, minimum 8": every street
         # line of a corner lot is a front here (front_lot_line_corner), so
@@ -1852,34 +1955,42 @@ zones:
           when: [corner_lot]
           cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard, minimum (8)
           quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35"
+          via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_front_max_ft:
       value: 26
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, maximum
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_garage_entrance_ft:
       value: 18
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to garage and corner lot garage setback
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_side_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Side yard interior (5; note 19, 10 feet for two-story structures)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L71"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_street_side_ft:
       value: 8
       cite: King City KCMC 16.114.050 Table 16.114-4, Corner lot setback front yard/side yard (8; side yard to public street 5)
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     setback_rear_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Rear yard to residential building
       quote: "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_height_ft:
       value: 35
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum building height
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L61"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     max_impervious_pct:
       value: 80
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75"
+      via: "or/washington/king-city/16.114/16.114.030.txt#L2-L3"
     orientation_constraint:
       # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
       # further than eight feet behind the building's longest street-facing
@@ -1893,6 +2004,7 @@ zones:
       value: axis_required
       cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
       quote: "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141"
+      via: "or/washington/king-city/16.114/16.114.060.txt#L24-L27"
     notes: >-
       DRAFT. Fourplex allowed outright (multi-dwelling only as a
       conditional use here). 2,400 sq ft lot, 20 wide, 60 deep; at least 8

@@ -64,6 +64,31 @@ def test_numbers_needing_two_sources_are_set_aside(logged_in_page: Page, base_ur
     expect(page.locator("#check-card [data-two-source]").first).to_contain_text("for two sources")
 
 
+def test_the_index_says_how_many_waiting_numbers_have_their_passage_stored(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """FOLLOWUPS 112: of the numbers waiting for two sources, those whose
+    passage tying the zone to the quoted page is stored are counted apart."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check")
+    expect(page.locator("[data-two-source-via]")).to_contain_text("with the passage that sends us there")
+
+
+def test_a_zone_tied_to_its_page_by_a_line_on_that_page_is_boxed_in_purple_there(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Tualatin's density table is headed "RH-HR"; the line that names the
+    zone sits on the cited page, so the card asks it on that one page with the
+    line boxed in purple (FOLLOWUPS 112)."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/flats/check/or/clackamas/tualatin?zone=RH/HR&field=max_density_du_per_acre&when="
+    )
+    here = page.locator("#check-card [data-via-here]").first
+    expect(here).to_contain_text("the passage that ties the zone to this page")
+    expect(here.locator(".check-box-via").first).to_be_visible()
+
+
 def test_the_sidebar_reaches_the_page_check(logged_in_page: Page, base_url: str) -> None:
     page = logged_in_page
     page.goto(f"{base_url}/flats/rules")
@@ -336,7 +361,7 @@ def test_a_number_read_off_another_table_shows_the_note_that_sends_it_there(
 
     via = page.locator("#check-card [data-via]").first
     expect(via).to_contain_text("The passage that sends us to the table below")
-    expect(via.locator(".check-box-line, .check-box-value").first).to_be_visible()
+    expect(via.locator(".check-box-via").first).to_be_visible()
     expect(page.locator("#check-card [data-borrowed]")).to_contain_text("boxed on the first page shown")
     links = page.locator("#check-card [data-boxed-pages] a")
     expect(links.first).to_be_visible()
@@ -403,3 +428,23 @@ def test_a_value_card_offers_this_is_a_footnote(logged_in_page: Page, base_url: 
     page.goto(f"{base_url}/flats/check/{LAYER}?zone=LDR-5&field=setback_rear_ft&when=")
 
     expect(page.locator('#check-card [data-answer="footnote"]')).to_have_text(re.compile("This is a footnote"))
+
+
+def test_a_zone_heading_wrapped_in_its_column_is_asked_on_its_page(logged_in_page: Page, base_url: str) -> None:
+    """Beaverton prints its column heading "CM- CS" wrapped; the card was set
+    aside as though the page never named the zone (FOLLOWUPS 103(c))."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/or/washington/beaverton?zone=CM-CS&field=min_lot_sqft&when=")
+
+    card = page.locator("#check-card")
+    expect(card.locator("[data-answer]").first).to_be_visible()
+    expect(card.locator("[data-borrowed]")).to_have_count(0)
+
+
+def test_a_zone_row_table_cited_whole_boxes_only_that_zones_row(logged_in_page: Page, base_url: str) -> None:
+    """Springwater's Table 4.1508 prints zones down the side; THR-SW's 5 ft
+    side setback was boxed on every zone's row (FOLLOWUPS 103)."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=THR-SW&field=setback_side_ft&when=")
+
+    expect(page.locator("#check-card .check-sheet .check-box-value")).to_have_count(1, timeout=90_000)

@@ -1032,6 +1032,7 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1044,15 +1045,18 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 1200
           when: [oregon_city_park_place]
           cite: OCMC 17.21.040.A, Park Place modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
         - value: 1200
           when: [oregon_city_south_end]
           cite: OCMC 17.22.040.A, South End modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
       # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
@@ -1061,11 +1065,13 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 5
           when: [oregon_city_park_place]
           cite: OCMC 17.21.030.A, Park Place roof design
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
@@ -1193,6 +1199,7 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1205,15 +1212,18 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 1200
           when: [oregon_city_park_place]
           cite: OCMC 17.21.040.A, Park Place modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
         - value: 1200
           when: [oregon_city_south_end]
           cite: OCMC 17.22.040.A, South End modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
       # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
@@ -1222,11 +1232,13 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 5
           when: [oregon_city_park_place]
           cite: OCMC 17.21.030.A, Park Place roof design
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
@@ -1347,6 +1359,7 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1359,15 +1372,18 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 1200
           when: [oregon_city_park_place]
           cite: OCMC 17.21.040.A, Park Place modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
         - value: 1200
           when: [oregon_city_south_end]
           cite: OCMC 17.22.040.A, South End modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
       # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
@@ -1376,11 +1392,13 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 5
           when: [oregon_city_park_place]
           cite: OCMC 17.21.030.A, Park Place roof design
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
@@ -1501,15 +1519,18 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 1200
           when: [oregon_city_park_place]
           cite: OCMC 17.21.040.A, Park Place modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
         - value: 1200
           when: [oregon_city_south_end]
           cite: OCMC 17.22.040.A, South End modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
       # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
@@ -1518,11 +1539,13 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 5
           when: [oregon_city_park_place]
           cite: OCMC 17.21.030.A, Park Place roof design
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4331"
@@ -1664,6 +1687,7 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1676,15 +1700,18 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 1200
           when: [oregon_city_park_place]
           cite: OCMC 17.21.040.A, Park Place modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
         - value: 1200
           when: [oregon_city_south_end]
           cite: OCMC 17.22.040.A, South End modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
       # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
@@ -1693,11 +1720,13 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 5
           when: [oregon_city_park_place]
           cite: OCMC 17.21.030.A, Park Place roof design
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
     min_lot_sqft:
       # Table 17.12.040, the row "Triplex, quadplex and multi-family". The row
       # label wraps across two lines on the page, which is why the quote takes
@@ -1963,6 +1992,7 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1975,15 +2005,18 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 1200
           when: [oregon_city_park_place]
           cite: OCMC 17.21.040.A, Park Place modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
         - value: 1200
           when: [oregon_city_south_end]
           cite: OCMC 17.22.040.A, South End modulation and massing
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
       # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
@@ -1992,11 +2025,13 @@ zones:
       exempt: true
       cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6092-L6093"
       variants:
         - value: 5
           when: [oregon_city_park_place]
           cite: OCMC 17.21.030.A, Park Place roof design
           quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
     setback_front_ft:
       value: 5
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4331"
@@ -2208,6 +2243,7 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     min_lot_sqft:
       # 17.29.050.A: "Minimum lot areas: None." The safe use of `exempt` --
       # the paragraph is printed and states no standard, rather than being
@@ -2231,9 +2267,11 @@ zones:
       # None either way.
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7112-L7113"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7106"
     setback_side_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7112-L7113"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7106"
       variants:
         # 17.29.050.D. The escalator -- "plus one foot additional yard setback
         # for every one foot of building height over thirty-five feet" -- adds
@@ -2246,6 +2284,7 @@ zones:
     setback_rear_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7112-L7113"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7106"
       variants:
         - value: 20
           when: [abuts_residential_zone]
@@ -2285,6 +2324,7 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
     # 17.16.060.D's two width caps open "In residential zones" (FOLLOWUPS 84
     # phase 3; the stated words govern) and do not reach this district, which
     # 17.06.030 files under "Commercial and Mixed Use"; E is this district's
@@ -2307,11 +2347,13 @@ zones:
       exempt: true
       cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
       variants:
         - value: true
           when: [unit_lots]
           cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
           quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L5195-L5197"
     notes: >-
       NOT ENCODED, and both are the same paragraph. 17.29.050.E caps the front
       yard at five feet and 17.29.050.H asks a minimum net density of 17.4
@@ -2411,6 +2453,7 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
     # 17.16.060.D's width caps open "In residential zones"; E governs here
     # and states none (see MUC-1).
     parking_area_max_width_ft:
@@ -2425,11 +2468,13 @@ zones:
       exempt: true
       cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
       variants:
         - value: true
           when: [unit_lots]
           cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
           quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L5195-L5197"
     notes: >-
       NOT ENCODED: the minimum floor area ratio of 0.25 at 17.29.060.B, and it
       is refused on scope rather than for want of a field. 17.29.070.A states
@@ -2494,9 +2539,11 @@ zones:
           when: [oregon_city_historic_overlay]
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7853"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
     min_building_height_ft:
       # 17.34.060.C and 17.34.070.C, word for word the same sentence: "Minimum
       # building height: Twenty-five feet or two stories except for accessory
@@ -2508,33 +2555,42 @@ zones:
       # twice the thousand square feet that would exempt it.
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7855-L7857"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
     max_height_ft:
       value: 58
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7903"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7895-L7897"
     setback_front_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7869-L7870"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
     setback_side_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7869-L7870"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
       variants:
         - value: 20
           when: [abuts_residential_zone]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L7908-L7911"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L7895-L7897"
     setback_rear_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7869-L7870"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
       variants:
         - value: 20
           when: [abuts_residential_zone]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L7908-L7911"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L7895-L7897"
     max_coverage_pct:
       # Building plus parking lot, weakened to building alone -- see MUC-1.
       value: 90
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7881-L7882"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
     min_landscaped_pct:
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7883-L7884"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
     min_density_du_per_acre:
       # 17.34.060.J and 17.34.070.J, identical. MUD's exemption for a
       # standalone residential development of fewer than five units --
@@ -2544,6 +2600,7 @@ zones:
       # decides whether this row binds. It binds.
       value: 17.4
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7885-L7891"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
       measured_on:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
@@ -2558,6 +2615,7 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
     # 17.16.060.D's width caps open "In residential zones"; E governs here
     # and states none (see MUC-1).
     parking_area_max_width_ft:
@@ -2572,11 +2630,13 @@ zones:
       exempt: true
       cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
       variants:
         - value: true
           when: [unit_lots]
           cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
           quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L5195-L5197"
     notes: >-
       NOT ENCODED: the maximum front setback, twenty feet outside the design
       district and ten within it. 17.34.060.K and 17.34.070.K both exempt
@@ -2648,12 +2708,15 @@ zones:
       # Building plus parking lot, weakened to building alone -- see MUC-1.
       value: 85
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7639-L7640"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7473-L7474"
     min_landscaped_pct:
       value: 15
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7641-L7642"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7473-L7474"
     min_density_du_per_acre:
       value: 17.4
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7643-L7646"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L7473-L7474"
       measured_on:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
@@ -2687,6 +2750,7 @@ zones:
           when: [unit_lots]
           cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
           quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L5195-L5197"
     notes: >-
       The general commercial district states the tightest version of this
       chapter's standard shape: a five-foot maximum front setback with no
@@ -2714,11 +2778,13 @@ zones:
       # refusal in the notes.
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8016,L8064-L8065"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8017"
       cite: OCMC 17.35.020.R (permitted uses, Willamette Falls Downtown; the list
         runs across a page break whose running header reads OCMC 17.35.030)
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8190"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3941"
     min_building_height_ft:
       # 17.35.060.C, and this is the district that needed the second field.
       # Everywhere else in Oregon City the sentence reads "twenty-five feet or
@@ -2729,6 +2795,7 @@ zones:
       # serve open space or public assembly.
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8195-L8196"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     min_building_height_stories:
       # The other half of the same conjunction. Encoded separately rather than
       # converted, because a storey is not a length and every conversion is an
@@ -2737,9 +2804,11 @@ zones:
       # "entire" costs nothing here: both of theirs are dwelling floors.
       value: 2
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8195-L8196"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     max_height_ft:
       value: 80
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8201"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     setback_front_ft:
       # 17.35.060.E: "Minimum required setbacks: None." Stated once, with no
       # abutting-a-residential-zone limb at all -- the only district in this
@@ -2747,27 +2816,33 @@ zones:
       # fact.
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8202-L8204"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     setback_side_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8202-L8204"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     setback_rear_ft:
       value: 0
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8202-L8204"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     setback_front_max_ft:
       # 17.35.060.F: "Maximum allowed setbacks: Ten feet." No four-unit
       # exemption in this chapter either.
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8205"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     max_coverage_pct:
       # 17.35.060.G: one hundred percent. Encoded rather than exempted
       # because the paragraph states a number, and the number happens to
       # constrain nothing.
       value: 100
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8206"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8189"
     parking_front_prohibited:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
     # 17.16.060.D's width caps open "In residential zones"; E governs here
     # and states none (see MUC-1).
     parking_area_max_width_ft:
@@ -2782,11 +2857,13 @@ zones:
       exempt: true
       cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3998-L4000"
       variants:
         - value: true
           when: [unit_lots]
           cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
           quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L5195-L5197"
     notes: >-
       NOT ENCODED, and this is the one place in Oregon City where the missing
       field would bite. 17.35.060.B sets a MINIMUM floor area ratio of 1.0 and
@@ -2850,6 +2927,7 @@ zones:
       # the same sentence as MUE.
       value: false
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906,L8741-L8754"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L3937-L3940"
     notes: >-
       Ninety-three lots. The permitted list is at L8741-L8756 and the
       accessory list at L8758-L8770; neither mentions housing of any kind, and
@@ -2920,6 +2998,7 @@ zones:
       # opposite of what it means.
       value: false
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6884-L6891"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L6751-L6752"
     notes: >-
       Thirty-seven lots. This is the clearest case in the corpus of a use
       permitted by name and prohibited in substance, and it is worth the entry

@@ -277,6 +277,26 @@
           {% endfor %}
         </tbody>
       </table>
+      {# What stands on the lot today (FOLLOWUPS 125): a label, never a colour. #}
+      <div id="lot-occupancy" style="margin-top:12px;font-size:12px">
+        <strong>What stands there</strong>
+        {% if occupancy %}
+          <span class="badge badge-gray" data-occupancy="{{ occupancy.label }}">{{ occupancy.short }}</span>
+          <div style="margin-top:4px">{{ occupancy.words }}.</div>
+          {% if occupancy.disagreement %}<div class="muted" style="margin-top:2px">Why unclear: {{ occupancy.disagreement_words }}.</div>{% endif %}
+          <table class="data-table" style="font-size:12px;margin-top:4px">
+            <tbody>
+              <tr><td class="col-muted">Buildings on the footprint map</td><td>{{ occupancy.building_count }}{% if occupancy.building_count %} ({{ "{:,.0f}".format(occupancy.footprint_sqft or 0) }} sq ft, largest {{ "{:,.0f}".format(occupancy.largest_sqft or 0) }}){% endif %}</td></tr>
+              <tr><td class="col-muted">Share of the lot covered</td><td>{% if occupancy.coverage_pct is not none %}{{ occupancy.coverage_pct }}%{% else %}&mdash;{% endif %}</td></tr>
+              <tr><td class="col-muted">Building value on the tax roll</td><td>{% if occupancy.building_value is not none %}${{ "{:,.0f}".format(occupancy.building_value) }}{% if occupancy.total_value %} of ${{ "{:,.0f}".format(occupancy.total_value) }}{% endif %}{% else %}&mdash;{% endif %}</td></tr>
+              {% if occupancy.year_built %}<tr><td class="col-muted">Year built (roll)</td><td>{{ occupancy.year_built }}</td></tr>{% endif %}
+            </tbody>
+          </table>
+          <div class="muted" style="font-size:11px;margin-top:2px">A label only: it never changes the lot's colour.{% if occupancy.source %} Footprints: {{ occupancy.source }}.{% endif %}</div>
+        {% else %}
+          <span class="muted">not measured yet</span>
+        {% endif %}
+      </div>
       {% if source %}<div class="muted" style="font-size:11px;margin-top:6px">Facts read from {{ source }}{% if quadfit_jurisdiction %} ({{ quadfit_jurisdiction }}){% endif %}.</div>{% endif %}
       {% for net in net_land %}
       <div class="net-land" id="net-land-{{ loop.index }}" style="margin-top:12px;font-size:12px">

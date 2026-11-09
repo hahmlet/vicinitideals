@@ -2808,3 +2808,19 @@
     own rules.
   source: Steph 2026-11-09 (chat)
   encoded_in: [flats/config/jurisdictions/or/clackamas/_unincorporated.yaml, flats/ingest/quadfit.py, flats/rules/fields.py]
+- id: 2026-10-19-page-check-market-rate
+  kind: ruling
+  date: 2026-10-19
+  scope: {}
+  question: >-
+    A footnote that loosens a number only for affordable housing (e.g. Gresham
+    Table 4.0130 note 3, minimum density does not apply to affordable
+    housing): does it change the number the page check asks about?
+  ruling: '"an affordability filter is wanted in the future, not now"'
+  effect: >-
+    Page-check answers are given for a market-rate build: an affordable-only
+    footnote is "No, it doesn't change this number" (optionally commented
+    "affordable"). Affordable programs only loosen standards, so leaving them
+    out cannot make a false GREEN. An affordability filter is a later feature
+    (check in with Steph first).
+  source: Steph 2026-10-19 (chat, Gresham page check)

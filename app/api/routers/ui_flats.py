@@ -63,6 +63,7 @@ from app.models.flats import (
     FlatsLotBest,
     FlatsLot,
     FlatsLotMark,
+    FlatsLotOccupancy,
     FlatsLotPrice,
     FlatsLotResult,
     FlatsLotWorksAs,
@@ -105,6 +106,10 @@ from flats.encode.words import STANDINGS as WORD_STANDINGS
 from flats.encode.words import QUEUES as WORD_QUEUES
 from flats.encode.words import Card as WordCard
 from flats.encode.words import feed as word_feed
+from flats.ingest.occupancy import DISAGREEMENT_WORDS as OCCUPANCY_DISAGREEMENT_WORDS
+from flats.ingest.occupancy import LABEL_SHORT as OCCUPANCY_SHORT
+from flats.ingest.occupancy import LABEL_WORDS as OCCUPANCY_WORDS
+from flats.ingest.occupancy import LABELS as OCCUPANCY_LABELS
 from flats.encode.words import orders as word_orders
 from flats.encode.words import tally as word_tally
 from flats.provenance import books, pages as page_map
@@ -3179,6 +3184,40 @@ _FORM_NAMES = {"apartment": "apartment (1 lot)", "townhomes": "townhomes (4 lots
 #: What the Lots filter offers, in the order it offers them.
 _FORM_CHOICES = ("both", "townhomes", "apartment", "neither")
 
+#: What stands on the lot (FOLLOWUPS 125): a label and a filter, never a
+#: colour (ruling 2026-10-14-existing-buildings-stay-green).
+_OCCUPANCY_CHOICES = OCCUPANCY_LABELS
+
+
+async def _lot_occupancy(session: DBSession, lot_id: int) -> dict[str, Any] | None:
+    """The lot's occupancy row in words, or None when it was not measured."""
+    row = await session.get(FlatsLotOccupancy, lot_id)
+    if row is None:
+        return None
+
+    def num(value: Any) -> float | None:
+        return None if value is None else float(value)
+
+    coverage = num(row.coverage)
+    return {
+        "label": row.label,
+        "short": OCCUPANCY_SHORT.get(row.label, row.label),
+        "words": OCCUPANCY_WORDS.get(row.label, row.label),
+        "disagreement": row.disagreement,
+        "disagreement_words": OCCUPANCY_DISAGREEMENT_WORDS.get(row.disagreement or "", row.disagreement),
+        "building_count": row.building_count,
+        "main_count": row.main_count,
+        "footprint_sqft": num(row.footprint_sqft),
+        "largest_sqft": num(row.largest_sqft),
+        "coverage_pct": None if coverage is None else round(coverage * 100, 1),
+        "building_value": num(row.building_value),
+        "total_value": num(row.total_value),
+        "year_built": row.year_built,
+        "roll_building_sqft": num(row.roll_building_sqft),
+        "source": row.source,
+        "never_a_colour": True,
+    }
+
 
 def _form_fails(name: str, form: Mapping[str, Any]) -> str:
     """Why one form does not work, in a sentence: what it misses where it is
@@ -3971,6 +4010,7 @@ def _lots_ctx(
     price: Mapping[str, Any] | None = None,
     cheapest_first: bool = False,
     form: str = "",
+    occupancy: str = "",
 ) -> dict[str, Any]:
     cities = sorted(
         ((layer_id, layer.label) for layer_id, layer in _layers().items()), key=lambda kv: kv[1]
@@ -3989,6 +4029,9 @@ def _lots_ctx(
         # Which of the pod's two forms works (Steph 2026-10-15).
         "form": form if form in _FORM_CHOICES else "",
         "form_choices": _FORM_CHOICES,
+        # What stands on the lot (FOLLOWUPS 125): a filter, never a colour.
+        "occupancy": occupancy if occupancy in _OCCUPANCY_CHOICES else "",
+        "occupancy_choices": [(key, OCCUPANCY_SHORT[key]) for key in _OCCUPANCY_CHOICES],
         "page": page,
         "price_on": bool(price and price["on"]),
         "price_ceiling": f"{price['ceiling_value']:.0f}" if price else "30000",
@@ -4245,6 +4288,7 @@ async def flats_lots(
     road: str = Query(""),
     sort: str = Query(""),
     form: str = Query(""),
+    occupancy: str = Query(""),
     run: int | None = Query(None),
     page: int = Query(1, ge=1, le=100000),
 ) -> HTMLResponse:
@@ -4261,6 +4305,7 @@ async def flats_lots(
         **_lots_ctx(
             runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q,
             tight=tight_only, page=page, price=price, cheapest_first=cheapest, form=form,
+            occupancy=occupancy,
         ),
         "refresh": await _refresh(session),
         "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
@@ -4296,6 +4341,11 @@ async def flats_lots(
             await session.execute(select(FlatsLotWorksAs.lot_id).where(FlatsLotWorksAs.run_id == chosen.id).limit(1))
         ).first() is not None
         conditions.append(lot_id_col.in_(_works_as(chosen.id, picked, form, stored=has_rows)))
+    if occupancy in _OCCUPANCY_CHOICES:
+        # A label filter only: the colours and counts of the lots it keeps are untouched.
+        conditions.append(
+            lot_id_col.in_(select(FlatsLotOccupancy.lot_id).where(FlatsLotOccupancy.label == occupancy))
+        )
     if await _ruled_run(session, chosen.id):
         ctx["colour_words"] = _RULE_COLOUR_WORDS
         ctx["ruled"] = True
@@ -4808,6 +4858,7 @@ async def flats_lot(
             "run_id": chosen.id if chosen else 0,
             "facts": _fact_rows(facts),
             "net_land": _net_land(lot),
+            "occupancy": await _lot_occupancy(session, lot.id),
             "quadfit": _quadfit_words(facts.get("quadfit") or {}),
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
             "outline": _outline(geojson),

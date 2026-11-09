@@ -162,6 +162,9 @@ same suites took ~1.5 h on a shared runner.
     `tests/` suite;
   - anything else runs everything. `--all` forces everything.
 - The integration tests use the VM 114 test database, alongside the FLATS suites.
+- On the ci-runner (LXC 138) at most 2 runs test at once (slot locks `/root/ci/slot.1`,
+  `/root/ci/slot.2`); a third prints "ci_runner: waiting for a free slot" and waits. A
+  run exits 3 with "ci_runner: test Postgres is down" if the test database will not start.
 - The `pre-push` hook (`python scripts/ci_local.py install-hook`, in `.git/hooks`)
   blocks a push to `main` unless a stamp covers it. Commits after the stamp may only
   be bookkeeping. Never bypass it with `--no-verify`.

@@ -72,6 +72,44 @@ def test_king_city_line_end_joins_preserve_printed_characters_and_lines() -> Non
     assert mend.restored_only(trailing, joined, path=path) == []
 
 
+TUALATIN_KERNED = {
+    "52.cr.txt": ("T avern", "Tavern"),
+    "61.mg.txt": ("T ax", "Tax"),
+    "64.mbp.txt": ("T onquin", "Tonquin"),
+    "71.wetlands-protection.txt": ("T ownship", "Township"),
+    "72.natural-resource-overlay.txt": ("T onka", "Tonka"),
+    "73A.020-060.residential-design.txt": ("dup lexes", "duplexes"),
+}
+
+
+def test_tualatin_kerned_capitals_are_mended_in_the_proof_and_its_sections() -> None:
+    # FOLLOWUPS 116 (2026-11-08): a capital kerned off a word the city prints
+    # whole fewer than three times, which the readable cut leaves. The proof
+    # copy carries the mend (a re-fetch makes it too), and so the section.
+    store = ProvenanceStore()
+    for name, (broken, whole) in TUALATIN_KERNED.items():
+        path = f"or/clackamas/tualatin/{name}"
+        for old, new in mend.JOIN_MENDS[path]:
+            assert old.replace(" ", "") == new.replace(" ", "")
+            assert mend.restored_only(old, new, path=path) == []
+        text = store.load(path).text
+        assert broken not in text and whole in text
+        assert mend.restore_joins(path, text) == text
+    sections = [p for p in store.documents_of("or/clackamas/tualatin")]
+    for broken, _whole in TUALATIN_KERNED.values():
+        assert not [p for p in sections if broken in store.load(p).text], broken
+
+
+def test_king_city_decision_making_reads_whole() -> None:
+    store = ProvenanceStore()
+    path = "or/washington/king-city/kcc.16.114.kingston-terrace.txt"
+    assert mend.restore_joins(path, "The decision-mak-\ning authority") == (
+        "The decision-making\nauthority"
+    )
+    section = store.load("or/washington/king-city/16.114/16.114.150.txt").text
+    assert "decision-making authority" in section and "decision-mak-ing" not in section
+
+
 def test_page_extraction_restores_king_city_word_joins(monkeypatch: pytest.MonkeyPatch) -> None:
     import pypdf
 

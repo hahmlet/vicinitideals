@@ -1133,9 +1133,11 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/tualatin/40/40.220.txt#L19"
+      via: "or/clackamas/tualatin/40/40.220.txt#L2"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/tualatin/40/40.300.txt#L71"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
     # NO PARKING SETBACK IN RL, and it is worth saying where the ten feet
     # went. Table 40.300 does state one -- "Parking and vehicular circula-
     # tion areas must be set back a minimum of ten feet from any public
@@ -1149,24 +1151,30 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/clackamas/tualatin/40/40.300.txt#L76"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/tualatin/40/40.300.txt#L79"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/tualatin/40/40.300.txt#L72-L73"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/tualatin/40/40.300.txt#L75"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
     min_lot_sqft:
       value: 6500
       quote: "or/clackamas/tualatin/40/40.300.txt#L38"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
       variants:
         # The same table's townhouse row. Four of these is 5,600 sq ft against
         # the quadplex row's 6,500 — the split plat buys a smaller lot here.
         - value: 1400
           when: [unit_lots]
           quote: "or/clackamas/tualatin/40/40.300.txt#L33"
+          via: "or/clackamas/tualatin/40/40.300.txt#L2"
     lot_of_record_relief:
       # 35.040: a nonconforming lot, one that met the standards when it was
       # created, may be occupied by a permitted use. When it was created and what
@@ -1187,6 +1195,7 @@ zones:
       # nothing measured the fact. A lot not proven on a bulb still owes 50.
       value: 50
       quote: "or/clackamas/tualatin/40/40.300.txt#L56-L57"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
       variants:
         # The cul-de-sac relief, on the same row. A lot WIDTH -- TDC 31.060
         # measures it at the centre of the lot, parallel to the front lot
@@ -1195,6 +1204,7 @@ zones:
         - value: 30
           when: [fronts_cul_de_sac]
           quote: "or/clackamas/tualatin/40/40.300.txt#L58"
+          via: "or/clackamas/tualatin/40/40.300.txt#L2"
         # "T ownhouse None" — the table states no minimum lot width for a
         # townhouse. Encoded as zero rather than left out, because left out
         # would inherit the 50 ft quadplex row, which is the opposite of what
@@ -1202,22 +1212,27 @@ zones:
         - value: 0
           when: [unit_lots]
           quote: "or/clackamas/tualatin/40/40.300.txt#L61"
+          via: "or/clackamas/tualatin/40/40.300.txt#L2"
         # The townhouse row spelled out beside the relief, so a townhome pod
         # on a bulb does not tie two one-condition rows into UNKNOWN. It says
         # what the townhouse row says: the relief cannot tighten "None".
         - value: 0
           when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/tualatin/40/40.300.txt#L61"
+          via: "or/clackamas/tualatin/40/40.300.txt#L2"
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/tualatin/40/40.300.txt#L95"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
       variants:
         - value: 75
           when: [unit_lots]
           quote: "or/clackamas/tualatin/40/40.300.txt#L93"
+          via: "or/clackamas/tualatin/40/40.300.txt#L2"
     max_height_ft:
       value: 35
       quote: "or/clackamas/tualatin/40/40.300.txt#L87"
+      via: "or/clackamas/tualatin/40/40.300.txt#L2"
     notes: 'Every value is now read off the adopted Development Code rather than an aggregator, and
       every one is the quadplex row where the table states standards by housing type — the single-family
       rows differ (45% coverage, and a 6,500 sq ft lot stated as a subdivision average). min_frontage_ft
@@ -1282,6 +1297,7 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/clackamas/tualatin/41/41.300.txt#L79"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     # THE ONE PARKING SETBACK IN THIS CITY, and only half of it fits in a
     # field. Table 41.300's MINIMUM SETBACKS, under "Other Development
     # Types", carries a row of its own: "Parking and Vehicle Circulation
@@ -1294,6 +1310,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1818
       retrieved: '2026-08-30'
       quote: "or/clackamas/tualatin/41/41.300.txt#L93,L99-L101"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     # NOT ENCODED: the same ten feet against the side and rear lot lines,
     # and this refusal is NOT inert -- which makes it the first one in this
     # corpus that is not. RML's side yard for a quadplex is five feet, so a
@@ -1309,22 +1326,28 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/clackamas/tualatin/41/41.300.txt#L81"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     setback_rear_ft:
       value: 10
       quote: "or/clackamas/tualatin/41/41.300.txt#L82"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/tualatin/41/41.300.txt#L91-L92"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/clackamas/tualatin/41/41.300.txt#L80"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     min_lot_sqft:
       value: 4500
       quote: "or/clackamas/tualatin/41/41.300.txt#L38"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
       variants:
         - value: 1400
           when: [unit_lots]
           quote: "or/clackamas/tualatin/41/41.300.txt#L35"
+          via: "or/clackamas/tualatin/41/41.300.txt#L2"
     lot_of_record_relief:
       # 35.040: a nonconforming lot, one that met the standards when it was
       # created, may be occupied by a permitted use. When it was created and what
@@ -1353,33 +1376,40 @@ zones:
       value: 50
       cite: TDC 41.300 Table 41-3, Minimum Average Lot Width
       quote: "or/clackamas/tualatin/41/41.300.txt#L54,L58-L60"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
       variants:
         # The cul-de-sac relief on the quadplex row, since 2026-09-15.
         - value: 30
           when: [fronts_cul_de_sac]
           quote: "or/clackamas/tualatin/41/41.300.txt#L59-L60"
+          via: "or/clackamas/tualatin/41/41.300.txt#L2"
         # The Townhouse row, which is the split-plat path. RL prints "None"
         # here and this zone prints a number, so the two are not the same
         # standard written twice.
         - value: 14
           when: [unit_lots]
           quote: "or/clackamas/tualatin/41/41.300.txt#L54,L57"
+          via: "or/clackamas/tualatin/41/41.300.txt#L2"
         # The townhouse row spelled out beside the relief, so a townhome pod
         # on a bulb does not tie. The relief is printed on the quadplex row
         # and not on this one, so the pair says what the townhouse row says.
         - value: 14
           when: [unit_lots, fronts_cul_de_sac]
           quote: "or/clackamas/tualatin/41/41.300.txt#L54,L57"
+          via: "or/clackamas/tualatin/41/41.300.txt#L2"
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/tualatin/41/41.300.txt#L116"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
       variants:
         - value: 75
           when: [unit_lots]
           quote: "or/clackamas/tualatin/41/41.300.txt#L114"
+          via: "or/clackamas/tualatin/41/41.300.txt#L2"
     max_height_ft:
       value: 35
       quote: "or/clackamas/tualatin/41/41.300.txt#L111"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2"
     notes: 'The RML quadplex minimum lot is 4,500 sq ft, which this file did not carry at all — the
       prior note guessed 3,000 sq ft off the flexible-lot subdivision standard and said to verify it.
       min_lot_width_ft is deliberately absent: RML states a minimum AVERAGE lot width (50 ft for
@@ -1467,6 +1497,7 @@ zones:
           when: [inside_mapped_use_area, unit_lots]
           cite: TDC 58.800 Table 58-7, CO, "Lot sizes for townhouses must conform to the lot size standards of the RH District"; TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
           quote: "or/clackamas/tualatin/43/43.300.txt#L22-L23"
+          via: "or/clackamas/tualatin/58/58.800.txt#L34-L36"
     lot_of_record_relief:
       # 35.040: a nonconforming lot, one that met the standards when it was
       # created, may be occupied by a permitted use. When it was created and what
@@ -1491,6 +1522,7 @@ zones:
       value: 20
       cite: TDC 50.300 Table 50-2, Corner Lots 0-20 feet along each frontage as determined through Architectural Review (top of the range)
       quote: "or/clackamas/tualatin/50/50.300.txt#L24-L25"
+      via: "or/clackamas/tualatin/50/50.300.txt#L2"
     setback_side_ft:
       value: 15
       cite: TDC 50.300 Table 50-2, Side and Rear 0-15 feet as determined through Architectural Review (top of the range)
@@ -1503,10 +1535,12 @@ zones:
       value: 5
       cite: TDC 50.300 Table 50-2, Minimum Setbacks, Parking and Vehicle Circulation Areas 5 feet
       quote: "or/clackamas/tualatin/50/50.300.txt#L29-L31"
+      via: "or/clackamas/tualatin/50/50.300.txt#L2"
     max_height_ft:
       value: 45
       cite: TDC 50.300 Table 50-2, Maximum Structure Height, All Uses 45 feet
       quote: "or/clackamas/tualatin/50/50.300.txt#L34-L35"
+      via: "or/clackamas/tualatin/50/50.300.txt#L2"
     max_coverage_pct:
       exempt: true
       cite: TDC 50.300 Table 50-2 prints no lot coverage standard
@@ -1854,20 +1888,24 @@ zones:
           when: [corner_lot]
           cite: TDC Table 53-2, Minimum Setbacks, Corner Lots 0-20 feet along each frontage
           quote: "or/clackamas/tualatin/53/53.300.txt#L27-L28"
+          via: "or/clackamas/tualatin/53/53.300.txt#L2"
     setback_front_max_ft:
       value: 20
       cite: TDC Table 53-2, Maximum Setback, Front
       quote: "or/clackamas/tualatin/53/53.300.txt#L33-L34"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     setback_front_max_streets:
       value: front
       cite: TDC Table 53-2, Maximum Setback, Front
       quote: "or/clackamas/tualatin/53/53.300.txt#L27,L33-L34"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     setback_side_ft:
       # "Side and Rear 0-20 feet. Determined through Architectural Review
       # Process." A range a review settles, held at its top.
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Side and Rear 0-20 feet (top of the range)
       quote: "or/clackamas/tualatin/53/53.300.txt#L25"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     setback_rear_ft:
       # Two rows reach the rear: "Side and Rear 0-20" and "Rear 0-15", both
       # by Architectural Review. Held at 20, the stricter of the two tops,
@@ -1875,10 +1913,12 @@ zones:
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Side and Rear 0-20 feet and Rear 0-15 feet (the stricter top)
       quote: "or/clackamas/tualatin/53/53.300.txt#L25-L26"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     setback_street_side_ft:
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Corner Lots 0-20 feet along each frontage (top of the range)
       quote: "or/clackamas/tualatin/53/53.300.txt#L27-L28"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Front, residential garage doors facing a public street
@@ -1887,10 +1927,12 @@ zones:
       value: 5
       cite: TDC Table 53-2, Minimum Setbacks, Parking and Vehicle Circulation Areas 5 feet
       quote: "or/clackamas/tualatin/53/53.300.txt#L29-L31"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     max_height_ft:
       value: 45
       cite: TDC Table 53-2, Maximum Structure Height, All Uses
       quote: "or/clackamas/tualatin/53/53.300.txt#L35-L36"
+      via: "or/clackamas/tualatin/53/53.300.txt#L2"
     max_coverage_pct:
       exempt: true
       cite: TDC Table 53-2 states no lot coverage, and Table 58-7 none for CC
@@ -2016,40 +2058,48 @@ zones:
       value: 15
       cite: TDC 42.300 Table 42-3, Front Setback (based on structure height), 25+ feet
       quote: "or/clackamas/tualatin/42/42.300.txt#L51-L55"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Front Setback, Townhouse (or Rowhouse) 0-10 feet as determined through Architectural Review (top of the range)
           quote: "or/clackamas/tualatin/42/42.300.txt#L51-L52,L56"
+          via: "or/clackamas/tualatin/42/42.300.txt#L2"
     setback_street_side_ft:
       # "Corner Lots: the setback is the same as the front yard setback on any
       # side facing a street other than an alley."
       value: 15
       cite: TDC 42.300 Table 42-3, Corner Lots, same as the front yard setback
       quote: "or/clackamas/tualatin/42/42.300.txt#L51-L55,L63"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Corner Lots, same as the Townhouse front setback (0-10 feet, top of the range)
           quote: "or/clackamas/tualatin/42/42.300.txt#L51-L52,L56,L63"
+          via: "or/clackamas/tualatin/42/42.300.txt#L2"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC 42.300 Table 42-3, Front Setback, minimum setback to a garage door 20 feet
       quote: "or/clackamas/tualatin/42/42.300.txt#L53"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
     setback_side_ft:
       value: 12
       cite: TDC 42.300 Table 42-3, Side and Rear Setback (based on structure height), 25+ feet
       quote: "or/clackamas/tualatin/42/42.300.txt#L57-L62"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
     setback_rear_ft:
       value: 12
       cite: TDC 42.300 Table 42-3, Side and Rear Setback (based on structure height), 25+ feet
       quote: "or/clackamas/tualatin/42/42.300.txt#L57-L62"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
     parking_street_setback_ft:
       # "Parking and Vehicle Circulation Areas 10 feet; for Townhouses
       # determined through the Architectural Review process" -- held at 10.
       value: 10
       cite: TDC 42.300 Table 42-3, Minimum Setbacks, Parking and Vehicle Circulation Areas
       quote: "or/clackamas/tualatin/42/42.300.txt#L68-L70"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
     parking_lot_line_buffer_ft:
       # The same row read against the other lot lines, as RML's note left it
       # open: unqualified, so ten feet from any lot line. Larger than the
@@ -2057,19 +2107,23 @@ zones:
       value: 10
       cite: TDC 42.300 Table 42-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
       quote: "or/clackamas/tualatin/42/42.300.txt#L68-L70"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
     max_height_ft:
       value: 35
       cite: TDC 42.300 Table 42-3, Maximum Structure Height, All Uses (50 ft by conditional use permit is not counted)
       quote: "or/clackamas/tualatin/42/42.300.txt#L76-L77"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
     max_coverage_pct:
       value: 40
       cite: TDC 42.300 Table 42-3, Maximum Lot Coverage, All Other Permitted Uses
       quote: "or/clackamas/tualatin/42/42.300.txt#L78,L80"
+      via: "or/clackamas/tualatin/42/42.300.txt#L2"
       variants:
         - value: 90
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Maximum Lot Coverage, Townhouse (or Rowhouse)
           quote: "or/clackamas/tualatin/42/42.300.txt#L78-L79"
+          via: "or/clackamas/tualatin/42/42.300.txt#L2"
     max_density_du_per_acre:
       value: 15
       cite: TDC 42.300 Table 42-3, Maximum Density, Household Living Uses
@@ -2117,11 +2171,13 @@ zones:
       value: 10000
       cite: TDC 43.300 Table 43-3, Minimum Lot Size, All Other Permitted Uses
       quote: "or/clackamas/tualatin/43/43.300.txt#L22,L33"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
       variants:
         - value: 1400
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
           quote: "or/clackamas/tualatin/43/43.300.txt#L22-L23"
+          via: "or/clackamas/tualatin/43/43.300.txt#L2"
     lot_of_record_relief:
       # 35.040: a nonconforming lot, one that met the standards when it was
       # created, may be occupied by a permitted use. When it was created and what
@@ -2135,62 +2191,76 @@ zones:
       value: 75
       cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, All Other Permitted Uses
       quote: "or/clackamas/tualatin/43/43.300.txt#L39,L48"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
       variants:
         - value: 14
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, Townhouses (or Rowhouses)
           quote: "or/clackamas/tualatin/43/43.300.txt#L39-L42"
+          via: "or/clackamas/tualatin/43/43.300.txt#L2"
     setback_front_ft:
       value: 15
       cite: TDC 43.300 Table 43-3, Front Setback (based on structure height), 25+ feet
       quote: "or/clackamas/tualatin/43/43.300.txt#L52-L56"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Front Setback, Townhouse (or Rowhouses) 0-10 feet as determined through Architectural Review (top of the range)
           quote: "or/clackamas/tualatin/43/43.300.txt#L52-L53,L57-L60"
+          via: "or/clackamas/tualatin/43/43.300.txt#L2"
     setback_street_side_ft:
       value: 15
       cite: TDC 43.300 Table 43-3, Corner Lots, same as the front yard setback
       quote: "or/clackamas/tualatin/43/43.300.txt#L52-L56,L70"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Corner Lots, same as the Townhouse front setback (0-10 feet, top of the range)
           quote: "or/clackamas/tualatin/43/43.300.txt#L52-L53,L57-L60,L70"
+          via: "or/clackamas/tualatin/43/43.300.txt#L2"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC 43.300 Table 43-3, Front Setback, minimum setback to a garage door 20 feet
       quote: "or/clackamas/tualatin/43/43.300.txt#L54"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
     setback_side_ft:
       value: 12
       cite: TDC 43.300 Table 43-3, Side and Rear Setback (based on structure height), 25+ feet
       quote: "or/clackamas/tualatin/43/43.300.txt#L64-L69"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
     setback_rear_ft:
       value: 12
       cite: TDC 43.300 Table 43-3, Side and Rear Setback (based on structure height), 25+ feet
       quote: "or/clackamas/tualatin/43/43.300.txt#L64-L69"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
     parking_street_setback_ft:
       value: 10
       cite: TDC 43.300 Table 43-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (Townhouses by Architectural Review, held at 10)
       quote: "or/clackamas/tualatin/43/43.300.txt#L77-L80"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
     parking_lot_line_buffer_ft:
       value: 10
       cite: TDC 43.300 Table 43-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
       quote: "or/clackamas/tualatin/43/43.300.txt#L77-L80"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
     max_height_ft:
       value: 35
       cite: TDC 43.300 Table 43-3, Maximum Structure Height, All Uses (50 ft by conditional use permit is not counted)
       quote: "or/clackamas/tualatin/43/43.300.txt#L86-L87"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
     max_coverage_pct:
       value: 45
       cite: TDC 43.300 Table 43-3, Maximum Lot Coverage, All Other Permitted Uses
       quote: "or/clackamas/tualatin/43/43.300.txt#L88,L90"
+      via: "or/clackamas/tualatin/43/43.300.txt#L2"
       variants:
         - value: 90
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Maximum Lot Coverage, Townhouse (or Rowhouse)
           quote: "or/clackamas/tualatin/43/43.300.txt#L88-L89"
+          via: "or/clackamas/tualatin/43/43.300.txt#L2"
     max_density_du_per_acre:
       value: 25
       cite: TDC 43.300 Table 43-3, Maximum density, Household Living Uses
@@ -2228,11 +2298,13 @@ zones:
       value: false
       cite: TDC 44.220 Table 44-2, Housing Types in the RH-HR Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
       quote: "or/clackamas/tualatin/44/44.220.txt#L4-L15"
+      via: "or/clackamas/tualatin/44/44.220.txt#L2"
       variants:
         - value: true
           when: [unit_lots]
           cite: TDC 44.220 Table 44-2, Townhouse (or Rowhouse) P
           quote: "or/clackamas/tualatin/44/44.220.txt#L6,L9"
+          via: "or/clackamas/tualatin/44/44.220.txt#L2"
     min_lot_sqft:
       # RULED by Steph 2026-10-02: Table 44-3 prints no Townhouse lot size, so
       # townhouses take the "All Other Permitted Uses" row -- one number for
@@ -2240,6 +2312,7 @@ zones:
       value: 10000
       cite: TDC 44.300 Table 44-3, Minimum Lot Size, All Other Permitted Uses (townhouses have no row of their own; Steph's ruling of 2026-10-02)
       quote: "or/clackamas/tualatin/44/44.300.txt#L19,L28"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     lot_of_record_relief:
       # 35.040: a nonconforming lot, one that met the standards when it was
       # created, may be occupied by a permitted use. When it was created and what
@@ -2253,61 +2326,75 @@ zones:
       value: 75
       cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, All Other Permitted Uses
       quote: "or/clackamas/tualatin/44/44.300.txt#L33,L40"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
       variants:
         - value: 14
           when: [unit_lots]
           cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, Townhouses (Rowhouses)
           quote: "or/clackamas/tualatin/44/44.300.txt#L33-L34"
+          via: "or/clackamas/tualatin/44/44.300.txt#L2"
     setback_front_ft:
       # The 25 to 30 ft row (the pod is 26 ft). Table 44-3 has no Townhouse
       # front row; at 30 ft and over the setback goes to Architectural Review.
       value: 15
       cite: TDC 44.300 Table 44-3, Front Setback (based on structure height), 25-30 feet
       quote: "or/clackamas/tualatin/44/44.300.txt#L43-L49"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     setback_street_side_ft:
       value: 15
       cite: TDC 44.300 Table 44-3, Corner Lots, same as the front yard setback
       quote: "or/clackamas/tualatin/44/44.300.txt#L43-L46,L61-L62"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC 44.300 Table 44-3, Front Setback, minimum setback to a garage door 20 feet
       quote: "or/clackamas/tualatin/44/44.300.txt#L43-L45"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     setback_front_max_ft:
       value: 20
       cite: TDC 44.300 Table 44-3, Maximum Setbacks, Front Setback 20 feet (44.315 asks 40 to 50 percent of the site width to meet it)
       quote: "or/clackamas/tualatin/44/44.300.txt#L76-L77"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     setback_side_ft:
       value: 12
       cite: TDC 44.300 Table 44-3, Side and Rear Setback (based on structure height), 25 to under 30 feet
       quote: "or/clackamas/tualatin/44/44.300.txt#L52-L57"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     setback_rear_ft:
       value: 12
       cite: TDC 44.300 Table 44-3, Side and Rear Setback (based on structure height), 25 to under 30 feet
       quote: "or/clackamas/tualatin/44/44.300.txt#L52-L57"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     parking_street_setback_ft:
       value: 10
       cite: TDC 44.300 Table 44-3, Minimum Setbacks, Parking and Vehicle Circulation Areas
       quote: "or/clackamas/tualatin/44/44.300.txt#L67-L68"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     parking_lot_line_buffer_ft:
       value: 10
       cite: TDC 44.300 Table 44-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
       quote: "or/clackamas/tualatin/44/44.300.txt#L67-L68"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     max_height_ft:
       value: 64
       cite: TDC 44.300 Table 44-3, Structure Height, Maximum Height
       quote: "or/clackamas/tualatin/44/44.300.txt#L78,L84"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     max_coverage_pct:
       value: 45
       cite: TDC 44.300 Table 44-3, Maximum Lot Coverage, All Uses
       quote: "or/clackamas/tualatin/44/44.300.txt#L85-L86"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     max_density_du_per_acre:
       value: 30
       cite: TDC 44.300 Table 44-3, Maximum Density, Household Living Uses
       quote: "or/clackamas/tualatin/44/44.300.txt#L9-L11"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     min_density_du_per_acre:
       value: 26
       cite: TDC 44.300 Table 44-3, Maximum Density, Household Living Uses, Minimum
       quote: "or/clackamas/tualatin/44/44.300.txt#L9-L11"
+      via: "or/clackamas/tualatin/44/44.300.txt#L2"
     notes: >-
       High Density High Rise, TDC Chapter 44 (RH-HR); 6 lots. Encoded
       2026-10-08 from Tables 44-2 and 44-3. Same use shape as RH (no Quadplex
@@ -2365,6 +2452,7 @@ zones:
       value: 20
       cite: TDC 57.300 Table 57-3, Maximum Setbacks, Residential Uses, Front/Corner 20 feet
       quote: "or/clackamas/tualatin/57/57.300.txt#L14-L18"
+      via: "or/clackamas/tualatin/57/57.300.txt#L2"
     setback_street_side_ft:
       value: 0
       cite: TDC 57.300 Table 57-3, Minimum Setbacks, Corner None
@@ -2384,22 +2472,27 @@ zones:
       value: 20
       cite: TDC 57.300 Table 57-3, Minimum Structure Height, All uses 20 feet
       quote: "or/clackamas/tualatin/57/57.300.txt#L19-L20"
+      via: "or/clackamas/tualatin/57/57.300.txt#L2"
     max_height_ft:
       value: 70
       cite: TDC 57.300 Table 57-3, Maximum Structure Height, All uses 70 feet (Figure 57-1 is captioned 100-Foot Maximum Structure Height and is not read)
       quote: "or/clackamas/tualatin/57/57.300.txt#L21-L22"
+      via: "or/clackamas/tualatin/57/57.300.txt#L2"
     max_coverage_pct:
       value: 90
       cite: TDC 57.300 Table 57-3, Maximum Lot Coverage, All uses
       quote: "or/clackamas/tualatin/57/57.300.txt#L27-L28"
+      via: "or/clackamas/tualatin/57/57.300.txt#L2"
     max_density_du_per_acre:
       value: 50
       cite: TDC 57.300 Table 57-3, Density, All uses with a residential component 25-50 units per acre
       quote: "or/clackamas/tualatin/57/57.300.txt#L25-L26"
+      via: "or/clackamas/tualatin/57/57.300.txt#L2"
     min_density_du_per_acre:
       value: 25
       cite: TDC 57.300 Table 57-3, Density, All uses with a residential component 25-50 units per acre
       quote: "or/clackamas/tualatin/57/57.300.txt#L25-L26"
+      via: "or/clackamas/tualatin/57/57.300.txt#L2"
     notes: >-
       Mixed Use Commercial, TDC Chapter 57; 19 lots. Encoded 2026-10-08 from
       Tables 57-2 and 57-3. Household Living is P/C by housing type; Table

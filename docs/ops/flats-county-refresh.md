@@ -260,6 +260,21 @@ fabric refresh alone needs T2 only (it re-measures the lots whose shape
 changed). The station distance carries 100 ft of doubt (the station is a
 point mid-platform), so a lot that close to a band's edge is also `unknown`.
 
+### What stands on the lot (FOLLOWUPS 125) -- a label, never a colour
+
+Each lot's vacant / teardown candidate / house / larger / unclear label comes
+from Metro RLIS's Building Footprint Database cut against the copy's lots,
+with the roll's building value beside it (`flats/ingest/occupancy.py`). Like
+transit it is not a stage of the screen and moves no colour (ruling
+2026-10-14-existing-buildings-stay-green); it is rebuilt after each copy is
+loaded, or when the footprint layer has moved (the fetch's `data_last_edit`).
+
+| # | Step | Where | Command | Done when |
+|---|---|---|---|---|
+| O1 | Fetch the footprints | anywhere with the internet | `python scripts/flats_lot_occupancy.py fetch --out data/flats/footprints/<date>` (a new, empty directory; ~5 min, ~60 MB) | `meta.json` `written` within a few of `server_count` (features with no geometry are skipped) |
+| O2 | Build | 137 (or a laptop with the lot table) | `python scripts/flats_lot_occupancy.py build --footprints data/flats/footprints/<date> --lots data/flats/normalized/<snapshot date>/lots.parquet --out data/flats/occupancy/<snapshot date>` | ~7 min for the three counties; `summary.json` labels and disagreements per county and city; `disagreements.csv.gz` lists the lots |
+| O3 | Load | 114 api container | copy the build directory to `/root/stacks/vicinitideals/data/flats/occupancy/<snapshot date>`, then `docker compose run --rm api python scripts/flats_lot_occupancy.py load --build /app/data/flats/occupancy/<snapshot date> --snapshot <flats.snapshots id> [--dry-run]` | `written` equals the snapshot's lot count less `file_rows_without_a_lot`; the Lots page's "What stands there" filter answers |
+
 **Filling the lot pages without a re-screen** (first done 2026-09-30, run
 48): copy the assign dir of the run in use under a new name (`cp -a
 /root/assign_<tag> /root/assign_<tag>_transit` -- the new path is a new

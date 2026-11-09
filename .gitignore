@@ -78,3 +78,7 @@ data/flats/bridge/
 # Washington County tax-lot pulls (flats.ingest.plats): the raw download is
 # untrusted and re-pullable; only the parsed plats.parquet + plats.json are kept.
 data/flats/plats/*/raw.parquet
+# FOLLOWUPS 125: the building footprint downloads and the occupancy builds
+# (scripts/flats_lot_occupancy.py) -- hundreds of MB, refetched on demand.
+data/flats/footprints/
+data/flats/occupancy/

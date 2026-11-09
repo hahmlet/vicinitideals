@@ -114,6 +114,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # Price inputs as plain columns (0143) so the Lots page can filter and
         # sort on price per home without reading the wide lot row.
         "lot_prices",
+        # What stands on each lot (0150, FOLLOWUPS 125): a label and a
+        # filter from the footprint map and the roll, never a colour.
+        "lot_occupancy",
         # Per-lot human marks (0148), separate from the run's own results.
         "lot_marks",
         "lot_results",

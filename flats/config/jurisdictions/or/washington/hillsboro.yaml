@@ -658,6 +658,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.21/12.21.150.txt#L5,L24"
     setback_front_ft:
       value: 20
       cite: Hillsboro CDC Table 12.21.150-1, Minimum Setbacks, front yard
@@ -758,6 +759,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.21/12.21.250.txt#L5,L21"
     setback_front_ft:
       value: 20
       cite: Hillsboro CDC Table 12.21.250-1, Minimum Setbacks, front yard
@@ -864,6 +866,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.21/12.21.350.txt#L5,L21"
     setback_front_ft:
       value: 20
       cite: Hillsboro CDC Table 12.21.350-1, Minimum Setbacks, front yard
@@ -972,6 +975,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.21/12.21.450.txt#L2,L26"
     setback_front_ft:
       # Interior lots: 20 feet to dwelling or garage door. NOT ENCODED: the
       # corner-lot row, "to dwelling 10 feet on 1 frontage; 20 feet on the
@@ -1084,6 +1088,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.50/12.50.110.txt#L36"
     setback_front_ft:
       # Interior lots: 15 feet to dwelling. NOT ENCODED: the corner-lot row,
       # "to dwelling 10 feet on 1 frontage; 15 feet on the other"
@@ -1139,15 +1144,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
       variants:
         - value: 75
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, minimum property line coverage 75%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25,L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
         - value: 70
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, minimum property line coverage 70%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26-L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
     building_frontage_band_ft:
       # The table pairs each coverage with its maximum setback, so the
       # building counts toward the coverage only within it (Figure
@@ -1155,15 +1163,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
       variants:
         - value: 10
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, maximum setback 10 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
         - value: 15
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, maximum setback 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
     min_ground_story_ft:
       # 12.65.850.D.6, Active Use 1 only: at least 60% of the street
       # frontage of each primary building with an internal floor-to-ceiling
@@ -1172,11 +1183,13 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
       variants:
         - value: 15
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC 12.65.850.D.6.a, at least 60% of Active Use 1 Street frontage of each primary building with an internal floor-to-ceiling height of at least 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L75-L77"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L15"
     notes: >-
       DRAFT. Quadplex permitted. 7,000 sq ft quadplex lot, 50 x 80,
       frontage 12; min 8 du/na, max density off for quadplexes; yards 15
@@ -1523,6 +1536,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.40/12.40.160.txt#L10"
     setback_front_ft:
       # 20 feet "on Main Street between 5th and 10th Avenues", 15 feet to a
       # dwelling elsewhere. No condition says which street a lot fronts, so
@@ -1672,6 +1686,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.22/12.22.150.txt#L5,L26"
     setback_front_ft:
       # Interior lots 15 to the structure. Corner lots: "10 feet on 1
       # frontage; 20 feet on the other". Both fronts of a corner lot are
@@ -1733,15 +1748,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
       variants:
         - value: 75
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, minimum property line coverage 75%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25,L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
         - value: 70
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, minimum property line coverage 70%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26-L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
     building_frontage_band_ft:
       # The table pairs each coverage with its maximum setback, so the
       # building counts toward the coverage only within it (Figure
@@ -1749,15 +1767,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
       variants:
         - value: 10
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, maximum setback 10 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
         - value: 15
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, maximum setback 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
     min_ground_story_ft:
       # 12.65.850.D.6, Active Use 1 only: at least 60% of the street
       # frontage of each primary building with an internal floor-to-ceiling
@@ -1766,11 +1787,13 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
       variants:
         - value: 15
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC 12.65.850.D.6.a, at least 60% of Active Use 1 Street frontage of each primary building with an internal floor-to-ceiling height of at least 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L75-L77"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L16"
     notes: >-
       DRAFT. Quadplex permitted. 7,000 sq ft quadplex lot, 50 x 85,
       frontage 12; min 11 du/na, max density off for quadplexes; yards 15
@@ -1788,6 +1811,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       # "6,000 sq. ft.; 2,000 sq. ft. per dwelling unit", read as both, so
       # four units need 8,000, which is more than 6,000. Townhouse lot
@@ -1899,15 +1926,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
       variants:
         - value: 75
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, minimum property line coverage 75%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25,L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
         - value: 70
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, minimum property line coverage 70%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26-L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
     building_frontage_band_ft:
       # The table pairs each coverage with its maximum setback, so the
       # building counts toward the coverage only within it (Figure
@@ -1915,15 +1945,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
       variants:
         - value: 10
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, maximum setback 10 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
         - value: 15
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, maximum setback 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
     min_ground_story_ft:
       # 12.65.850.D.6, Active Use 1 only: at least 60% of the street
       # frontage of each primary building with an internal floor-to-ceiling
@@ -1932,11 +1965,13 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
       variants:
         - value: 15
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC 12.65.850.D.6.a, at least 60% of Active Use 1 Street frontage of each primary building with an internal floor-to-ceiling height of at least 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L75-L77"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L17"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08, which made this zone red): new
@@ -1976,6 +2011,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       # "6,000 sq. ft.; 1,500 sq. ft. per dwelling unit": four units at
       # 1,500 is 6,000, so the two agree for the pod.
@@ -2083,15 +2122,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
       variants:
         - value: 75
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, minimum property line coverage 75%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25,L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
         - value: 70
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, minimum property line coverage 70%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26-L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
     building_frontage_band_ft:
       # The table pairs each coverage with its maximum setback, so the
       # building counts toward the coverage only within it (Figure
@@ -2099,15 +2141,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
       variants:
         - value: 10
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, maximum setback 10 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
         - value: 15
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, maximum setback 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
     min_ground_story_ft:
       # 12.65.850.D.6, Active Use 1 only: at least 60% of the street
       # frontage of each primary building with an internal floor-to-ceiling
@@ -2116,11 +2161,13 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
       variants:
         - value: 15
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC 12.65.850.D.6.a, at least 60% of Active Use 1 Street frontage of each primary building with an internal floor-to-ceiling height of at least 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L75-L77"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L18"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08, which made this zone red): new
@@ -2220,6 +2267,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.40/12.40.160.txt#L10"
     setback_front_ft:
       value: 5
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Setbacks, front yard to dwelling
@@ -2261,6 +2309,7 @@ zones:
       value: one
       cite: Hillsboro CDC 12.50.130 C.3.a, middle housing meets the maximum where at least one facade is within it
       quote: "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"
+      via: "or/washington/hillsboro/12.22/12.22.460.txt#L5,L75-L76,L82"
     min_building_height_stories:
       value: 2
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Building Height
@@ -2290,6 +2339,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       # NOT ENCODED: "Maximum Lot Size 1,800 sq. ft. per unit" (7,200 for
       # four); no field holds a maximum lot size. A doubt: a larger SCR-HD
@@ -2371,6 +2424,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.40/12.40.160.txt#L10"
     setback_front_ft:
       value: 5
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Setbacks, front yard to dwelling
@@ -2585,6 +2639,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Lot Size None
@@ -2730,6 +2788,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Lot Size None
@@ -2878,6 +2940,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       value: 7000
       cite: Hillsboro CDC Table 12.24.160-1, Minimum Lot Size, Quadplex or Cottage Cluster
@@ -2948,6 +3014,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.50/12.50.110.txt#L33,L36"
     setback_front_ft:
       value: 10
       cite: Hillsboro CDC Table 12.24.160-1, Minimum Setbacks, front yard to residential structure
@@ -2979,6 +3046,7 @@ zones:
       value: one
       cite: Hillsboro CDC 12.50.130 C.3.a, middle housing meets the maximum where at least one facade is within it
       quote: "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"
+      via: "or/washington/hillsboro/12.24/12.24.160.txt#L5,L76,L78"
     max_height_ft:
       value: 45
       cite: Hillsboro CDC Table 12.24.160-1, Maximum Building Height
@@ -3048,6 +3116,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Lot Size None
@@ -3099,6 +3171,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/hillsboro/12.50/12.50.110.txt#L33,L36"
     setback_front_ft:
       value: 5
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Setbacks, front yard to residential structure
@@ -3203,6 +3276,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       value: 7000
       cite: Hillsboro CDC Table 12.24.360-1, Minimum Lot Size, Quadplex or Cottage Cluster
@@ -3337,15 +3414,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
       variants:
         - value: 75
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, minimum property line coverage 75%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25,L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
         - value: 70
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, minimum property line coverage 70%, met along Active Use Street frontages (12.65.850.D.1.b)
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26-L27"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
     building_frontage_band_ft:
       # The table pairs each coverage with its maximum setback, so the
       # building counts toward the coverage only within it (Figure
@@ -3353,15 +3433,18 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
       variants:
         - value: 10
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 1 Street, maximum setback 10 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L25"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
         - value: 15
           when: [hillsboro_active_use_2]
           cite: Hillsboro CDC Table 12.65.850-1, Active Use 2 Street, maximum setback 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L21-L24,L26"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
     min_ground_story_ft:
       # 12.65.850.D.6, Active Use 1 only: at least 60% of the street
       # frontage of each primary building with an internal floor-to-ceiling
@@ -3370,11 +3453,13 @@ zones:
       exempt: true
       cite: Hillsboro CDC 12.65.850.B, the Active Use Street design standards apply to all development on lots with frontage on an Active Use Street
       quote: "or/washington/hillsboro/12.65/12.65.850.txt#L16"
+      via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
       variants:
         - value: 15
           when: [hillsboro_active_use_1]
           cite: Hillsboro CDC 12.65.850.D.6.a, at least 60% of Active Use 1 Street frontage of each primary building with an internal floor-to-ceiling height of at least 15 feet
           quote: "or/washington/hillsboro/12.65/12.65.850.txt#L75-L77"
+          via: "or/washington/hillsboro/12.65/12.65.020.txt#L5,L20"
     open_space_min_sqft:
       # The zone table says "Minimum Useable Open Space Variable See Section
       # 12.65.210", and 12.65.210 applies "the standards of Section 12.50.210
@@ -3439,6 +3524,10 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      # The page names no zone: 12.80.040 B.1 asks Development Review of new
+      # development "in any zone excluding the exemptions listed in Subsection D",
+      # and D.1, the middle housing exemption, does not name this one (FOLLOWUPS 112).
+      via: "or/washington/hillsboro/12.80/12.80.040.txt#L11,L23"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, Minimum Lot Size, triplex, quadplex ... None
@@ -3511,6 +3600,7 @@ zones:
       value: one
       cite: Hillsboro CDC 12.50.130 C.3.a, middle housing meets the maximum where at least one facade is within it
       quote: "or/washington/hillsboro/12.50/12.50.130.txt#L33-L34"
+      via: "or/washington/hillsboro/12.24/12.24.460.txt#L5,L83,L85,L91-L92"
     min_building_height_stories:
       # 2 stories within 800 feet of an LRT station, none beyond; held
       # everywhere. The pod is two stories and meets it either way.
@@ -3566,6 +3656,7 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      via: "or/washington/hillsboro/12.64/12.64.020.txt#L42"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Size None
@@ -3701,6 +3792,7 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      via: "or/washington/hillsboro/12.64/12.64.020.txt#L42"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Lot Size None
@@ -3843,6 +3935,7 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      via: "or/washington/hillsboro/12.64/12.64.020.txt#L42"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Lot Size None
@@ -3969,6 +4062,7 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      via: "or/washington/hillsboro/12.64/12.64.020.txt#L42"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.860-1, Minimum Lot Size None
@@ -4089,6 +4183,7 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      via: "or/washington/hillsboro/12.64/12.64.020.txt#L42"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.960-1, Minimum Lot Size None
@@ -4193,6 +4288,7 @@ zones:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
       quote: "or/washington/hillsboro/12.80/12.80.040.txt#L10-L11,L40,L86-L87"
+      via: "or/washington/hillsboro/12.64/12.64.020.txt#L42"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Lot Size None
