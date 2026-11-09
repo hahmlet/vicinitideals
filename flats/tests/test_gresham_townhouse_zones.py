@@ -137,7 +137,11 @@ def test_civic_heights_are_storeys_and_cnrm_takes_the_wallula_limb(gresham: Laye
     assert storeys == {"CNTH": 10, "CNTM": 8, "CNRM": 4}
 
 
-def test_downtown_note_11_tightens_side_and_alley_rear_by_the_neighbour(rules: RuleSet) -> None:
+def test_downtown_townhouse_row_takes_no_note_11(rules: RuleSet) -> None:
+    """Turned 2026-11-09 (FOLLOWUPS 112 page-check finding): note 11's
+    markers sit on Table 4.1130's Commercial and Multi-Family rows, and the
+    townhouse row carries none, so a lower-density neighbour leaves the
+    townhouse row's 5 ft side and 3 ft alley rear as printed."""
     for zone in DOWNTOWN:
         plain = rules.resolve(GRESHAM, zone, ("unit_lots",)).values
         assert plain["setback_side_ft"].value == 5, zone
@@ -147,8 +151,8 @@ def test_downtown_note_11_tightens_side_and_alley_rear_by_the_neighbour(rules: R
         abutting = rules.resolve(
             GRESHAM, zone, ("unit_lots", "alley_at_rear", "abuts_lower_density_zone")
         ).values
-        assert abutting["setback_side_ft"].value == 10, zone
-        assert abutting["setback_rear_ft"].value == 10, zone
+        assert abutting["setback_side_ft"].value == 5, zone
+        assert abutting["setback_rear_ft"].value == 3, zone
 
 
 def test_the_neighbour_list_is_note_11s_six_districts(gresham: Layer) -> None:

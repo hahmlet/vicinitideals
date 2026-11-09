@@ -115,11 +115,12 @@ def test_unit_lots_take_the_townhouse_row(rules, zone) -> None:
     assert v(th, "setback_front_ft") == 10
     assert v(th, "setback_street_side_ft") == 10
     assert v(th, "setback_side_ft") == 5
-    assert v((*th, "abuts_lower_density_zone"), "setback_side_ft") == 10
+    # No note 11 on the townhouse row (2026-11-09).
+    assert v((*th, "abuts_lower_density_zone"), "setback_side_ft") == 5
     assert v(th, "setback_rear_ft") == 10
     assert v((*th, "alley_at_rear"), "setback_rear_ft") == 3
     assert (
-        v((*th, "alley_at_rear", "abuts_lower_density_zone"), "setback_rear_ft") == 10
+        v((*th, "alley_at_rear", "abuts_lower_density_zone"), "setback_rear_ft") == 3
     )
     assert v((), "orientation_constraint") == "axis_required"
     # 4.1152 S6 (2026-11-09): 7.0431 does not list DCC or DTM.
