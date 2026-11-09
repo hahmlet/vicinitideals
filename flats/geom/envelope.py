@@ -2,11 +2,18 @@
 
 Two constructions, chosen by how much the edge classification can be trusted.
 
-*Per-edge strips.* Buffer each lot line inward by its own setback and subtract
-the union. Square caps run each strip past its endpoints so the wedge in every
-corner is covered by one neighbour or the other — the result is never larger
-than the legal envelope, and the error is confined to corner wedges and bounded
-by the difference between adjacent setbacks.
+*Per-edge strips.* Take from the lot every point nearer a lot line than that
+line's setback, and keep the rest. Each strip is exactly that ground for one
+line (:func:`_strip`): the band either side of the line, closed at each end by
+the half-disc around the endpoint -- the ground near the end of a line is near
+the line. So the envelope is the legal one: a building point is kept only if
+it is at least each line's setback from that line. The half-disc is drawn as
+a polygon around the circle, never inside it, so the strip never falls short
+of the setback (by at most ``ARC_SPLITS``' sag, a few hundredths of a foot,
+it reaches past). Until 2026-11-09 the strips had square caps, which ran each
+one a full setback past its ends; at an inward bend in a line that took a
+sliver up to a setback deep beyond the bend (Tigard 2S103BA00137, a 4.5 deg
+front bend, pushed the building to 21.08 ft against a 20 ft front maximum).
 
 *Uniform inward buffer.* For irregular and flag-shaped lots, shrink the whole
 lot by the largest setback. Strictly smaller than the truth, often by a lot, and
@@ -87,13 +94,19 @@ import math
 from dataclasses import dataclass
 
 import shapely
-from shapely.geometry import LineString, MultiPolygon
+from shapely.geometry import MultiPolygon, Polygon
 from shapely.geometry.base import BaseGeometry
 
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
 
 #: Envelope fragments below this hold nothing worth rasterizing.
 MIN_PART_SQFT = 200.0
+
+#: Chords per half-disc at a strip's end (:func:`_strip`). Even, so a chord's
+#: midpoint (not a corner) sits straight off the line's end and the strip
+#: stays inside the old square cap. 32 chords overshoot the circle by
+#: ``1/cos(pi/64) - 1`` = 0.12% of the setback (0.024 ft at 20 ft).
+ARC_SPLITS = 32
 
 
 @dataclass(frozen=True, slots=True)
@@ -277,11 +290,12 @@ def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     neighbour, and a city that calls the alley line a rear lot line (the
     bridge's ``max(side, rear)``) is not relaxed by a stretch it did not
     measure. The rear line is cut the same way: the alley's rear where the
-    rays found it, the larger of it and the ordinary rear elsewhere. Square
-    caps run each piece's strip past its ends, so an
-    uncovered piece bites a few feet into the covered one: never larger
-    than the legal envelope. A cover of ``""`` (none on record) vouches for
-    no stretch, and the whole line takes the larger number.
+    rays found it, the larger of it and the ordinary rear elsewhere. Each
+    piece's strip is closed by the half-disc round its end (:func:`_strip`),
+    so an uncovered piece bites into the covered one as far as its own
+    setback reaches: never larger than the legal envelope. A cover of ``""``
+    (none on record) vouches for no stretch, and the whole line takes the
+    larger number.
     """
     whole_edge: Segment = (edge.x1, edge.y1, edge.x2, edge.y2)
     d = setbacks.for_edge(edge)
@@ -317,6 +331,37 @@ def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     if at < length:
         out.append((seg(at, length), ordinary))
     return out
+
+
+def _strip(x1: float, y1: float, x2: float, y2: float, d: float) -> Polygon:
+    """Every point within ``d`` of the segment, and no more than a sag beyond.
+
+    The band ``d`` either side of the segment, closed at each end by a
+    half-disc of radius ``d`` round the endpoint, drawn with
+    :data:`ARC_SPLITS` chords that touch the circle at their midpoints:
+    the polygon holds the whole circle (never short of the setback) and sits
+    inside the old square cap (never more than it took). A segment of no
+    length is the disc.
+    """
+    dx, dy = x2 - x1, y2 - y1
+    length = math.hypot(dx, dy)
+    ux, uy = (dx / length, dy / length) if length > 0 else (1.0, 0.0)
+    nx, ny = -uy, ux  # the left normal
+    step = math.pi / ARC_SPLITS
+    corner = d / math.cos(step / 2)
+
+    def arc(cx: float, cy: float, sx: float, sy: float, fx: float, fy: float):
+        # The half-disc from side s round through forward f to -s: a
+        # tangent point, the chord corners, a tangent point.
+        pts = [(cx + d * sx, cy + d * sy)]
+        for i in range(ARC_SPLITS):
+            t = (i + 0.5) * step
+            c, si = math.cos(t), math.sin(t)
+            pts.append((cx + corner * (c * sx + si * fx), cy + corner * (c * sy + si * fy)))
+        pts.append((cx - d * sx, cy - d * sy))
+        return pts
+
+    return Polygon(arc(x2, y2, nx, ny, ux, uy) + arc(x1, y1, -nx, -ny, -ux, -uy))
 
 
 def buildable(
@@ -362,11 +407,7 @@ def buildable(
         for (x1, y1, x2, y2), d in _pieces(edge, setbacks):
             if d <= 0:
                 continue
-            strips.append(
-                LineString([(x1, y1), (x2, y2)]).buffer(
-                    d, cap_style="square", join_style="mitre"
-                )
-            )
+            strips.append(_strip(x1, y1, x2, y2, d))
     env = lot.difference(shapely.union_all(strips)) if strips else lot
     env = _by_bearing(lot, env, edges, setbacks)
     return _clean(_less(env, less), min_part_sqft)
