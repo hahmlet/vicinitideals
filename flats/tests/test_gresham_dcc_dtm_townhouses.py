@@ -122,7 +122,8 @@ def test_unit_lots_take_the_townhouse_row(rules, zone) -> None:
         v((*th, "alley_at_rear", "abuts_lower_density_zone"), "setback_rear_ft") == 10
     )
     assert v((), "orientation_constraint") == "axis_required"
-    assert v(th, "orientation_constraint") == "entrance_only"
+    # 4.1152 S6 (2026-11-09): 7.0431 does not list DCC or DTM.
+    assert v(th, "orientation_constraint") == "axis_required"
     assert v(th, "review_discretion") == "judgement"
 
 
