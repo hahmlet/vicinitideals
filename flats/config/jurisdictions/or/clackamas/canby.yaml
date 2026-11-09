@@ -1682,6 +1682,16 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# Fetched 2026-11-08 with Steph's OK (FOLLOWUPS 105): the facade definitions
+# 16.41.050 (A)(4)(a) names. Prose guidelines and definitions; read in full.
+- id: "cmc.16.41.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39377
+  title: "CMC 16.41.060 DCO site and design review guidelines."
+  start: "16.41.060 DCO site and design review guidelines."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
 - id: "cmc.16.46.010"
   url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40043
   title: "CMC 16.46.010 Number of units in residential development."
@@ -1842,6 +1852,16 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# READ AND NOT ENCODED (FOLLOWUPS 105, CMC 16.41.060 fetched 2026-11-08 with Steph's OK; was a
+# crossref ruling until it came into the store): 16.41.050 (A)(4)(a) keeps parking and maneuvering
+# from between a building and the street for "primary street facing facades and secondary street
+# facing facades, as defined in Sections 16.41.060.C" (cmc.16.41.050.txt#L78). 16.41.060.C.20 and .21
+# define them by street direction: an east-west street (99E, 1st to 4th Avenues) primary, a
+# north-south street (Birch to Locust) secondary. So on a TC corner lot both street faces carry the
+# ban. The screen already reads it so: on a corner lot it refuses a court beside the building
+# wherever parking_front_prohibited holds (paper.side_court), and the rear court stands behind the
+# rear wall, in front of no facade. A street on neither list owes no ban, which the encoded ban only
+# over-asks. The rest of 16.41.060 is objectives and design vocabulary.
 crossrefs:
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
   # Eight of them are the 1984 ordinance's own numbering printed in the history notes.
@@ -1905,16 +1925,6 @@ crossrefs:
     note: >-
       The city tree ordinance, which decides an application to cut more trees than it allows
       (cmc.16.49.40.txt#L29). Trees are ignored and entered per lot (Steph 2026-11-01).
-  "16.41.060":
-    outcome: fetch
-    note: >-
-      Not held (16.41.020 to .050 are). In the CC and TC subareas "parking and vehicle maneuvering
-      areas shall not be located between a building and the street. This standard applies to
-      primary street facing facades and secondary street facing facades, as defined in Sections
-      16.41.060.C" (cmc.16.41.050.txt#L78). The front half is encoded (parking_front_prohibited);
-      the secondary (side-street) facade definition is what would say whether a corner lot's court
-      beside the side street is barred. Reaches corner lots in CC and TC only. Fetch 16.41.060
-      (needs Steph's OK).
   "16.21.080":
     outcome: other_building
     note: >-

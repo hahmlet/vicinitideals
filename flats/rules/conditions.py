@@ -523,24 +523,6 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
-        "tigard_s3_screen_reaches_court",
-        "site_fact",
-        "The S-3 screening Tigard asks of the lot's parking takes ground the "
-        "pod's court needs. In RES-A through RES-C, \"off-street parking areas "
-        "provided at the side or rear of buildings and not in garages must be "
-        "screened from adjacent properties to the S-3 standard, as provided "
-        "in Table 18.420.2\", on the same site (18.280.040.D.4, "
-        "18.280/18.280.040.txt#L111-L112). The pod parks in an open court "
-        "behind the building, beside the rear and side lines it shares with "
-        "its neighbours, so the screen is owed on every plan; whether it is "
-        "a planted strip, and how wide, is Table 18.420.2's, and Chapter "
-        "18.420 is not held. Nothing observes the fact, so every lot in a "
-        "zone that turns on it is unanswered -- out of GREEN, never RED -- "
-        "until the chapter is read (FOLLOWUPS 105, coordinator 2026-11-08).",
-        evidence="Tigard CDC Chapter 18.420 (Landscaping and Screening), Table 18.420.2 -- not held; needs fetching",
-        assume=None,
-    ),
-    ConditionDef(
         "hillsboro_center_core",
         "site_fact",
         "The MU-VTC lot lies inside South Hillsboro's Town Center or Village "

@@ -353,24 +353,19 @@ definitions:
     quote: "or/clackamas/gladstone/17.06/17.06.270.txt#L3"
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
+# READ AND NOT ENCODED (FOLLOWUPS 105, Chapter 17.76 fetched 2026-11-08 with Steph's OK; these were
+# crossref rulings until it came into the store): every district's dimensional standards apply
+# "Except as provided in ... Chapter 17.76 (Exceptions)" (17.14/17.14.050.txt#L3). Read in full,
+# every subsection relaxes: projections and height exceptions, front-yard averaging, a 10 ft front on
+# a private street or flag access, the owner naming the front of a through lot, setback exceptions
+# that "may be authorized" (17.76.exceptions.txt#L79-L97). 17.76.040(5) says a flag lot's line
+# designation "may be modified to allow flexibility" (L89-L93), a discretionary relief; the screen
+# measures 17.06.290's line, the stricter default. The one rule that could bind, 17.76.030 (an
+# undersized lot of record held to one single-household dwelling, L71), only bites a lot admitted by
+# lot-of-record relief, and no Gladstone zone resolves lot_of_record_relief, so such a lot is already
+# held to the zone minimum. Reading it can admit lots, never reject one the screen admits.
 crossrefs:
   # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
-  "17.76":
-    outcome: fetch
-    note: >-
-      Chapter 17.76, Exceptions, is not held. Every district's dimensional standards apply "Except
-      as provided in ... Chapter 17.72 (Variances) and Chapter 17.76 (Exceptions)"
-      (17.14/17.14.050.txt#L3), and the design chapter sends nonconforming situations there
-      (17.21.dco.txt#L55). An exceptions chapter is usually reliefs (projections, height
-      exceptions), but one subsection is known to modify a yard: 17.76.040(5) moves the front lot
-      line of a flag lot (17.06/17.06.290.txt#L5), which sets where a flag lot's front setback is
-      measured. Unread, so it is ordered, not dismissed. Fetch Chapter 17.76 (needs Steph's OK).
-  "17.76.040":
-    outcome: fetch
-    note: >-
-      "Except as modified by GMC Section 17.76.040(5), the front lot line of a flag lot ... shall be
-      a line within the boundaries of the lot by a distance equal to the width of the narrow deeded
-      strip" (17.06/17.06.290.txt#L5). The modification is not held. See 17.76.
   "5.22":
     outcome: other_building
     note: >-
@@ -541,6 +536,11 @@ code:
   - id: "17.48.parking"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     title: "Chapter 17.48 - Off-Street Parking and Loading"
+  # Fetched 2026-11-08 with Steph's OK (FOLLOWUPS 105): the Exceptions chapter
+  # every dimensional table defers to.
+  - id: "17.76.exceptions"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1776.html
+    title: "Chapter 17.76 - Exceptions"
   # ---- The four environmental districts, read 2026-09-03 ----
   #
   # Gladstone superimposes four overlay districts on its base zoning, each its

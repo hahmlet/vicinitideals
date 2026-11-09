@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, Tigard RES-A to RES-C held YELLOW; three downloads await Steph (below)] [scan: YES (new standards bind)]
+105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, three chapters fetched 2026-11-08 with Steph's OK; Tigard RES-A to RES-C now carry the 5 ft S-3 strip] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -72,36 +72,29 @@ Routing rows read (routing.csv stays open until something is encoded inside the 
    read one, Beaverton 60.05.25.13 landscape buffers: N/A for middle housing except the Cooper Mountain
    NPB-25 already listed). Most are use-specific chapters, procedures and boilerplate; the top of the
    queue by mentions was skimmed and nothing distance-bearing seen besides that one.
-9. **Tigard 18.420 (landscaping and screening): not held, ordered `fetch`; RES-A to RES-C HELD
-   YELLOW meanwhile.** In RES-A to RES-C, parking at the side or rear of buildings and not in garages
-   must be screened from adjacent properties to the S-3 standard of Table 18.420.2
-   (18.280.040.txt#L111). That is the pod's rear court. If S-3 is a planted strip of set width it
-   takes court ground. Tigard IS mapped and screened (pipeline.yaml `or/washington/tigard: true` since
-   2026-10-07; the round 1 note "unmapped" was wrong). Coordinator 2026-11-08 (standing rules: unread
-   target = unread, conservative default): the three zones' permission is `qualified_by` the
-   unobserved site fact `tigard_s3_screen_reaches_court` (flag FACT-TIGARD-S3-SCREEN-REACHES-COURT,
-   severity 5, reason FACT_UNOBSERVED). Every pod plan parks in an open court behind the building
-   beside the lines it shares with its neighbours, so the screen is owed wherever a plan is drawn:
-   every GREEN there goes YELLOW, nothing goes RED. Once 18.420 is read: a strip of set width becomes
-   `parking_lot_line_buffer_ft` in the three zones and the qualifier goes; a fence or hedge that
-   takes no court ground just drops the qualifier.
-10. **Canby 16.41.060 and Gladstone 17.76 / 17.76.040: not held, ordered `fetch`; no hold needed.**
-   Canby: the secondary (side-street) facade definition that decides whether a TC corner lot's court
-   beside the side street is barred (cmc.16.41.050.txt#L78). It cannot let a lot pass wrongly today:
-   on a corner lot the screen already refuses a court beside the building wherever
-   `parking_front_prohibited` holds (`paper.side_court`, corner branch), and a court behind the building's
-   rear wall stands in front of no facade, whichever facade 16.41.060.C calls secondary. Gladstone:
-   the Exceptions chapter every dimensional table defers to, including 17.76.040(5), which moves a
-   flag lot's front lot line (17.06.290.txt#L5). A pole-shaped lot is quadfit tier C
-   (`s4_edges.py` pole test), which the screen holds out of GREEN on GEOMETRY_UNREADABLE, so the
-   unread modification only reaches lots already held. Left as downloads.
+9. **Tigard 18.420 (landscaping and screening): READ 2026-11-08, encoded.** In RES-A to RES-C,
+   parking at the side or rear of buildings and not in garages must be screened from adjacent
+   properties to the S-3 standard of Table 18.420.2 (18.280.040.txt#L111). That is the pod's rear
+   court. Fetched with Steph's OK (tdc.18.420.landscaping.txt): S-3 is a minimum depth of 5 feet
+   holding a 6 ft sight-obscuring fence or wall and trees (L252-L255). Encoded as
+   `parking_lot_line_buffer_ft` 5 in RES-A, RES-B and RES-C; the interim hold (site fact
+   `tigard_s3_screen_reaches_court`, flag FACT-TIGARD-S3-SCREEN-REACHES-COURT, 61de78f5) is removed.
+   The court now stands 5 ft further off the rear line (the side setback is already 5 ft); a plan
+   that misses only by the strip goes YELLOW on PARKING_STRIP_UNCONFIRMED (Steph 2026-10-04).
+10. **Canby 16.41.060 and Gladstone 17.76: READ 2026-11-08, no change.** Canby: 16.41.060.C.20/.21
+   define the primary street facing facade (east-west streets: 99E, 1st to 4th Avenues) and the
+   secondary (north-south streets, Birch to Locust), and 16.41.050 (A)(4)(a) bans parking in front of
+   both. The screen already refuses a court beside the building on a corner lot wherever
+   `parking_front_prohibited` holds (`paper.side_court`), and the rear court is in front of no
+   facade. Gladstone: every subsection of 17.76 relaxes (projections, heights, front averaging,
+   private-street and flag-access fronts, through-lot front by owner choice); 17.76.040(5) "may" move
+   a flag lot's lines, a discretionary relief. 17.76.030 (an undersized lot of record held to one
+   house) only reaches lots admitted by lot-of-record relief, which no Gladstone zone resolves.
 
-**Downloads awaiting Steph** (all free, on the cities' public code sites):
-- Tigard CDC Chapter 18.420, Landscaping and Screening (Table 18.420.2, the S-3 standard): reopens
-  the held RES-A to RES-C lots.
-- Canby CMC 16.41.060, Downtown Canby Overlay design standards (C, the secondary street facing
-  facade).
-- Gladstone GMC Chapter 17.76, Exceptions (17.76.040(5), flag-lot front lot line).
+Fetched 2026-11-08 with Steph's OK ("Yes, download"), from the cities' official code sites:
+Tigard CDC Chapter 18.420 (ecode360), Canby CMC 16.41.060 (American Legal), Gladstone GMC Chapter
+17.76 (Code Publishing). Stored in flats/provenance/docs with their .meta.json; declared in each
+city's YAML source list.
 
 ## Round 3 (2026-11-08, flats/crossref-follow-2)
 

@@ -243,6 +243,12 @@ OPEN = {
     "or/clackamas/_unincorporated 510.03 -> 510.04",
     "or/clackamas/_unincorporated 511.03 -> 511.04",
     "or/clackamas/_unincorporated 602.03 -> 602.04",
+    # 2026-11-08 (FOLLOWUPS 105 round 3): Gladstone Chapter 17.76, Exceptions,
+    # fetched with Steph's OK and read. Each dimensional table opens "Except as
+    # provided in ... Chapter 17.76"; every subsection relaxes, so no value cites it.
+    "or/clackamas/gladstone 17.14.050 -> 17.76",
+    "or/clackamas/gladstone 17.18.060 -> 17.76",
+    "or/clackamas/gladstone 17.24.060 -> 17.76",
     # 2026-11-05 side-yard chapters fetched (FOLLOWUPS 146).
     # Estacada (FOLLOWUPS 53, 2026-10-07), each read when it was added. The
     # fence lines (16.08.010, and 16.60.010 from the C-2, CMU, R-3 and NCR

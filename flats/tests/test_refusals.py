@@ -384,7 +384,10 @@ pytestmark = pytest.mark.unit
 # 12.65.150.A doubt, so its NOT ENCODED comment goes.
 # 2026-11-06 (FOLLOWUPS 146): comments +3, West Linn, Clackamas and Washington County side-yard strips.
 # 2026-11-07 (rescreen-1110): both together, 288 - 1 + 3 = 290.
-EXPECTED = {"notes": 165, "comments": 290, "tests": 18}
+# 290 -> 292 comments on 2026-11-08 (FOLLOWUPS 105 round 3): Canby 16.41.060 and Gladstone 17.76
+# were fetched and read, so their crossref rulings became READ AND NOT ENCODED comments (+2);
+# Tigard's S-3 refusal is encoded (-1) and its 18.420.050 ruling became a comment (+1).
+EXPECTED = {"notes": 165, "comments": 292, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no
