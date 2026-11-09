@@ -223,6 +223,16 @@ def test_wood_village_confines_the_pod_to_the_street(rule_set: RuleSet) -> None:
     assert not entrance_unsettled(got, POD)
 
 
+def test_hillsboro_takes_the_45_degrees_it_prints(rule_set: RuleSet) -> None:
+    """FOLLOWUPS 158 (Hillsboro 1S206AB10200): 12.50.710.C.1.b.ii lets the
+    entry "be at an angle of no more than 45 degrees from the street"; read
+    as 0 it held the pod parallel to the front, where it stood 20 ft back
+    against a 13 ft maximum."""
+    got = rule_set.resolve("or/washington/hillsboro", "R-7")
+    assert door_limit(got, POD) == 45.0
+    assert got.values["entrance_angle_max_deg"].prov.quote.endswith("design.txt#L46-L47")
+
+
 # --- round 2: the named street, the mapped sub-areas -------------------------------
 
 
