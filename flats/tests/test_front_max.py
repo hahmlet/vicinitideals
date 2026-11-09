@@ -801,7 +801,13 @@ def test_a_turn_too_far_to_snap_is_a_question_never_a_fail_nor_a_pass(corpus, po
     # Turned so the lane's near corner is its outer one: the drive in from the
     # street (flatter._drive_clear) is read from that corner and stays off
     # the building, so the slide alone stands.
-    _turned_by(1.5, monkeypatch)
+    # -1.5 (was 1.5) on 2026-11-08 (rel5): Tigard RES-B now keeps the 5 ft S-3
+    # strip off its side lines (FOLLOWUPS 105 round 3), so the first drawing
+    # stands its lane on the EAST side of the building, not in the west side
+    # yard; turned the old way the lane's inner corner led and its drive crossed
+    # the building, so the slide was rightly refused. Turned the other way the
+    # outer corner leads again, which is what this test is about.
+    _turned_by(-1.5, monkeypatch)
     s = screened(corpus, policies)
     ((_, near, far, _),) = s.facts.front_max_streets
     assert near <= 21.0 < far  # the near corner within, the far end past
