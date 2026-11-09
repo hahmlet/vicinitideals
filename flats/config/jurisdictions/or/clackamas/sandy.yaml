@@ -379,6 +379,25 @@ defaults:
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/sdc.17.90.txt#L2222-L2252"
+  entrance_angle_max_deg:
+    # FOLLOWUPS 159. Every path Sandy's entrance rules take prints 45
+    # degrees: 17.10.30's definition, "Facing (building elevation): A
+    # building elevation that is parallel to, or at an angle of up to 45
+    # degrees from, a specific reference point such as a public street"
+    # (L323), which reads 17.90.160 B.2's "face a public street" for a
+    # multi-family pod; 17.90.150 D.3.b "Be at an angle up to 45 degrees
+    # from the street" (17.90.150.txt L77-L79, single family, SROs up to six
+    # units, duplex halves); 17.82.20 A "oriented toward ... at an angle of
+    # up to 45 degrees" (sdc.17.82.txt L30-L34, transit streets); and the
+    # Bornstedt Village overlay (sdc.17.54.txt L456). It binds only once
+    # entrance_faces_street is settled as required: while it reads
+    # `unclear` (the pedestrian-way alternative) the screen already holds a
+    # fit turned past 45 degrees (ENTRANCE_TURN_DEG), so nothing moves now.
+    value: 45
+    cite: "Sandy SDC 17.10.30, Facing (building elevation): \"parallel to, or at an angle of up to 45 degrees from, a specific reference point such as a public street\"; also 17.90.150 D.3.b, 17.82.20 A and the Bornstedt Village overlay (FOLLOWUPS 159)"
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.10DE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.10/17.10.30.txt#L323"
   # PARKING COUNT. 17.98.40 table: single family detached/attached 2 per
   # dwelling unit (L157); multi-family 1.5 per studio or one-bedroom unit and
   # 2.0 per two-bedroom unit or greater (L160). The catalog holds no bedroom

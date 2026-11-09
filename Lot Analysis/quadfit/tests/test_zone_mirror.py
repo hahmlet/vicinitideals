@@ -1082,7 +1082,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: by the FLATS facing fitter alone; quadfit has no angle column.
     # 25 -> 26 on 2026-11-09 (rel6: ci1-quadfit x rel4-fixes): CI1 is `like: RM1`
     # and so carries RM1's door angle.
-    "entrance_angle_max_deg": 26,
+    #: FOLLOWUPS 159 (2026-11-09): +1, Tigard TMU 45 (18.660.080.C.2).
+    # 26 -> 27 on 2026-11-09 (rel6: CI1 +1 and FOLLOWUPS 159 Tigard TMU +1).
+    "entrance_angle_max_deg": 27,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and

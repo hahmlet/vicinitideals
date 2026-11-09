@@ -233,6 +233,26 @@ def test_hillsboro_takes_the_45_degrees_it_prints(rule_set: RuleSet) -> None:
     assert got.values["entrance_angle_max_deg"].prov.quote.endswith("design.txt#L46-L47")
 
 
+def test_tigard_tmu_residence_doors_take_45_degrees(rule_set: RuleSet) -> None:
+    """FOLLOWUPS 159: 18.660.080.C.2 holds a required entrance within 45
+    degrees "except for entrances to individual residences" (looser: 90
+    onto a porch or stoop). The pod's doors are those (18.30 "Residence" --
+    see "Dwelling unit"), so 45 is a bound the code never undercuts."""
+    got = rule_set.resolve("or/washington/tigard", "TMU")
+    assert door_limit(got, POD) == 45.0
+    assert got.values["entrance_angle_max_deg"].prov.quote.endswith("18.660.080.txt#L54-L55")
+
+
+def test_sandy_stores_its_45_degrees_but_stays_unsettled(rule_set: RuleSet) -> None:
+    """FOLLOWUPS 159: Sandy's "Facing" (17.10.30) is up to 45 degrees, but
+    entrance_faces_street stays `unclear` (the pedestrian-way alternative),
+    so the angle does not reach door_limit and nothing moves."""
+    got = rule_set.resolve("or/clackamas/sandy", "R-2")
+    assert got.get("entrance_angle_max_deg") == 45
+    assert door_limit(got, POD) is None
+    assert entrance_unsettled(got, POD)
+
+
 # --- round 2: the named street, the mapped sub-areas -------------------------------
 
 
