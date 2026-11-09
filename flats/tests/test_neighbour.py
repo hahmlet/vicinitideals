@@ -273,6 +273,9 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         # SDC 17.98.50 A and TDC 9.095 A (FOLLOWUPS 150).
         ("or/clackamas/sandy", "abuts_lower_density_zone"),
         ("or/multnomah/troutdale", "abuts_lower_density_zone"),
+        # 2026-11-09: BDC 10.25 Residential Districts; Downtown 70.15.10 (FOLLOWUPS 2(c)).
+        ("or/washington/beaverton", "abuts_residential_zone"),
+        ("or/washington/beaverton", "abuts_nonresidential_zone"),
     }
 
 
@@ -342,6 +345,43 @@ def test_oregon_city_r2_keeps_ten_feet_clear_against_a_single_family_neighbour(c
     assert observed_neighbours(beside_r8, corpus[lid].neighbours, juris)["abuts_lower_density_zone"] is True
     assert observed_neighbours(beside_r5, corpus[lid].neighbours, juris)["abuts_lower_density_zone"] is False
     assert "abuts_lower_density_zone" not in observed_neighbours(one_unread, corpus[lid].neighbours, juris)
+
+
+def test_beaverton_reads_its_lot_lines_against_the_10_25_classification(corpus: dict) -> None:
+    """FOLLOWUPS 2(c), 2026-11-09: Beaverton's commercial, Cooper Mountain and
+    Downtown yards turned on the two facts with no lists, so 1,754 lots leaned
+    on an unknown. The six Residential Districts of BDC 10.25 are residential
+    (20.22 note 9 says so in terms); the High Density Residential districts are
+    Multiple Use Districts there, and on neither side of Downtown's relaxing
+    list, which Chapter 70 does not define."""
+    lid = "or/washington/beaverton"
+    n = corpus[lid].neighbours
+    res, nonres = n["abuts_residential_zone"], n["abuts_nonresidential_zone"]
+    assert set(res.true_for) == {"MR", "CM-MR", "RMA", "RMB", "RMC", "CM-RM"}
+    assert {"RC-DT", "SC-HDR", "TC-HDR", "CM-HDR", "CS", "GC"} <= set(res.false_for)
+    # Downtown's 0 needs every line clear of residential AND of RC-DT.
+    assert set(res.true_for) | {"RC-DT"} == set(nonres.false_for)
+    for code in ("RC-DT", "SC-HDR", "TC-HDR", "CM-HDR", "ROW", "WAcnty"):
+        assert code not in nonres.true_for, code
+    for code in ("ROW", "WAcnty"):
+        assert code not in res.true_for and code not in res.false_for, code
+
+    rules = RuleSet(corpus)
+    assert rules.resolve(lid, "NS", {"abuts_residential_zone"}).values["setback_rear_ft"].value == 15
+    assert rules.resolve(lid, "RC-BC").values["setback_side_ft"].value == 10
+    assert rules.resolve(lid, "RC-BC", {"abuts_nonresidential_zone"}).values["setback_side_ft"].value == 0
+
+    j = "beaverton"
+    beside_rmc = [Line(zones=((j, "RMC"),), unresolved=0), Line(zones=((j, "CS"),), unresolved=0)]
+    beside_shops = [Line(zones=((j, "CS"),), unresolved=0), Line(zones=((j, "RC-OT"),), unresolved=0)]
+    beside_dt = [Line(zones=((j, "RC-BC"),), unresolved=0), Line(zones=((j, "RC-DT"),), unresolved=0)]
+    beside_hdr = [Line(zones=((j, "RC-BC"),), unresolved=0), Line(zones=((j, "SC-HDR"),), unresolved=0)]
+    county = [Line(zones=((j, "CS"),), unresolved=0), Line(zones=(("washington_unincorporated", "R-5"),), unresolved=0)]
+    assert observed_neighbours(beside_rmc, n, j) == {"abuts_residential_zone": True, "abuts_nonresidential_zone": False}
+    assert observed_neighbours(beside_shops, n, j) == {"abuts_residential_zone": False, "abuts_nonresidential_zone": True}
+    assert observed_neighbours(beside_dt, n, j) == {"abuts_residential_zone": False, "abuts_nonresidential_zone": False}
+    assert observed_neighbours(beside_hdr, n, j) == {"abuts_residential_zone": False}
+    assert observed_neighbours(county, n, j) == {}
 
 
 def test_every_neighbour_quote_resolves_and_every_code_is_the_layers_own(corpus: dict) -> None:
