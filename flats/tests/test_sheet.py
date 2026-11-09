@@ -801,6 +801,52 @@ def test_a_zone_named_where_the_row_label_wraps_gets_its_own_note(tmp_path: Path
     assert [m.mark for m in S.markers(sheet, row, spans, "TLDR")] == ["9"]
 
 
+def test_a_lettered_row_name_wrapping_down_its_cell_keeps_its_note(tmp_path: Path):
+    """Gresham Table 4.0430 prints "E. Minimum / Residential / Net Density¹⁵"
+    with the numbers on the first line, so note 15 reached no card (Steph
+    2026-10-20, checks 742 and 752). The next lettered row's note is its own,
+    and an ordinal's "st" (RTC's "181st Ave.") is no note."""
+    runs = [
+        (72, 700, 9, "E. Minimum"),
+        (220, 700, 9, "10"),
+        (72, 691, 9, "Residential"),
+        (72, 682, 9, "Net Density"),
+        (124, 686, 5, "15"),
+        (72, 673, 9, "181"),
+        (87, 677, 5, "st"),
+        (98, 673, 9, "Ave."),
+        (72, 661, 9, "F. Maximum"),
+        (220, 661, 9, "20"),
+        (72, 652, 9, "Density"),
+        (110, 656, 5, "16"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "E. Minimum 10")
+
+    assert [(m.mark, m.on) for m in S.markers(sheet, row, S.hits(row, 10, sheet.aspect), "CMF")] == [("15", "row")]
+
+
+def test_a_stored_lettered_row_is_never_found_on_another_letter(tmp_path: Path):
+    """Gresham Table 4.0430 prints row G's name apart from its cells, and row
+    H's line, which repeats G's cells, scored closer: the CMF and RTC setback
+    cards boxed the maximum setbacks (FOLLOWUPS 112). A row's letter is its name."""
+    runs = [
+        (72, 700, 9, "G. Minimum Setbacks"),
+        (72, 691, 9, "front 5 ft. side 5 ft."),
+        (72, 680, 9, "H. Maximum Setbacks front 5 ft. side 5 ft."),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+
+    assert S.find(sheet, "G. Minimum Setbacks front 5 ft. side 5 ft.") is None
+    found = S.find(sheet, "front 5 ft. side 5 ft.", before="G. Minimum Setbacks")
+    assert found is not None
+    assert [w.text for w in found.words][0] == "front"
+
+
 #: Gresham Table 4.1415B (Pleasant Valley) in miniature: the zones down the
 #: side, and every column heading printed turned, reading up the page. A
 #: turned heading's letters stack one above another, so read as upright
