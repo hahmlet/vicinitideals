@@ -1,5 +1,5 @@
 {
-  "digest": "5f401f3efb019a02f9f39564c2ab97b930c7792867d9c4ba935cf686de983395",
+  "digest": "ec3ed16b20e3ab5778edee93caed0a9f667698d4b206be9e57e5a0f40987fd9c",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -385,7 +385,7 @@
       "gaps": []
     },
     "or/clackamas/milwaukie": {
-      "section_unread": 0,
+      "section_unread": 3,
       "misattributed": [
         {
           "zone": "DMU",
@@ -528,7 +528,7 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 10,
+      "section_unread": 11,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -567,6 +567,14 @@
     "or/multnomah/_unincorporated": {
       "section_unread": 17,
       "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "entrance_faces_street",
+          "claimed": "39.4969 39.4990",
+          "found": "39.4975",
+          "quote": "or/multnomah/_unincorporated/39/39.4975.txt#L1-L3",
+          "kind": "heading_other_file"
+        },
         {
           "zone": "CFU",
           "field": "quadplex_allowed",
@@ -938,6 +946,38 @@
           "kind": "heading_other_file"
         },
         {
+          "zone": "LDR-5",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
+        },
+        {
           "zone": "MDR-12",
           "field": "building_frontage_basis",
           "claimed": "7.0420 7.0512 3.0100",
@@ -1184,6 +1224,38 @@
           "found": "4.1508 4.1532 4.1534",
           "quote": "or/multnomah/gresham/4.1500.springwater.txt#L304-L309,L314,L816-L818,L829-L831",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
         }
       ],
       "label": "Gresham",
@@ -1709,7 +1781,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 51,
+      "section_unread": 56,
       "misattributed": [
         {
           "zone": "CC",
