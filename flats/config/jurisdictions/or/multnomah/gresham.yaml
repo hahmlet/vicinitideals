@@ -6030,6 +6030,27 @@ zones:
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L74-L79"
+    # MAXIMUM FRONT SETBACK, read 2026-11-09 (pagecheck-findings; DMU, DEM
+    # and DCL already held the townhouse row's). Table 4.1130's "Maximum
+    # Building Setbacks" rows, by street type (Map 4.1140; no field carries a
+    # per-line type, so the smallest is taken): the quadplex row (L94) prints
+    # 20, 20, 15, N/A, N/A, 20 (L109) and the "Townhouse in DCC, DMU, DTM,
+    # DEM, and DCL" row (L77) prints 10, 10, 15, 15, 20 (L91). Note 12 exempts
+    # the part of a courtyard development behind its courtyard, which the
+    # pod is not; note 16 lifts the maximum once the street type's minimum
+    # building frontage is met, which nothing measures, so the maximum is
+    # held (conservative).
+    setback_front_max_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4/4.1130.txt#L74-L76,L94-L95,L109,L163,L167-L168"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L109,L164"
     setback_side_ft:
       # NOT ENCODED: a party-wall zero, and this district is the plainer of the
       # two cases. The 0 came from the cell at L504 reading "Common
@@ -6409,6 +6430,27 @@ zones:
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L74-L79"
+    # MAXIMUM FRONT SETBACK, read 2026-11-09 (pagecheck-findings; DMU, DEM
+    # and DCL already held the townhouse row's). Table 4.1130's "Maximum
+    # Building Setbacks" rows, by street type (Map 4.1140; no field carries a
+    # per-line type, so the smallest is taken): the quadplex row (L94) prints
+    # 20, 20, 15, N/A, N/A, 20 (L109) and the "Townhouse in DCC, DMU, DTM,
+    # DEM, and DCL" row (L77) prints 10, 10, 15, 15, 20 (L91). Note 12 exempts
+    # the part of a courtyard development behind its courtyard, which the
+    # pod is not; note 16 lifts the maximum once the street type's minimum
+    # building frontage is met, which nothing measures, so the maximum is
+    # held (conservative).
+    setback_front_max_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4/4.1130.txt#L74-L76,L94-L95,L109,L163,L167-L168"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L109,L164"
     setback_side_ft:
       # NOT ENCODED: a party-wall zero, and this district is the plainer of the
       # two cases. The 0 came from the cell at L504 reading "Common

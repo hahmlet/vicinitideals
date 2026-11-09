@@ -126,6 +126,37 @@ def test_unit_lots_take_the_townhouse_row(rules, zone) -> None:
     # 4.1152 S6 (2026-11-09): 7.0431 does not list DCC or DTM.
     assert v(th, "orientation_constraint") == "axis_required"
     assert v(th, "review_discretion") == "judgement"
+    # Table 4.1130 maximum front (2026-11-09): the smallest street-type
+    # figure of each row, 15 on the plex row and 10 on the townhouse row.
+    assert v((), "setback_front_max_ft") == 15
+    assert v(th, "setback_front_max_ft") == 10
+    assert v(th, "setback_front_max_streets") == "front"
+
+
+DOWNTOWN_CORE = ("DCC", "DTM", "DMU", "DEM", "DCL")
+TOWNHOUSE_ACCESS = (
+    "parking_alley_access_required",
+    "driveway_approach_max_width_ft",
+    "parking_maneuvering_max_width_ft",
+    "parking_side_prohibited",
+    "parking_required_yard_prohibited",
+    "corner_access_street",
+)
+
+
+@pytest.mark.parametrize("zone", DOWNTOWN_CORE)
+def test_downtown_townhouse_access_cites_4_1152_at_the_city_values(rules, zone) -> None:
+    """2026-11-09: 7.0431 names DRL-1 and DRL-2, not these five; the 4.1152
+    Townhouse heading reaches them and states the same access and parking
+    standards (S11-S14), so the values match the city default and the
+    quote is 4.1152's."""
+    for active in (("unit_lots",), ("unit_lots", "alley_at_rear")):
+        here = rules.resolve(GRESHAM, zone, active, {"lot_sqft": 9000.0}).values
+        city = rules.resolve(GRESHAM, "DRL-1", active, {"lot_sqft": 9000.0}).values
+        for field in TOWNHOUSE_ACCESS:
+            assert here[field].value == city[field].value, (zone, field, active)
+            assert "4.1152" in (here[field].prov.quote or ""), (zone, field, active)
+
 
 
 def test_the_traced_street_types_answer_dcc_and_dtm() -> None:
