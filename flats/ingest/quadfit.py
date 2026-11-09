@@ -2262,40 +2262,6 @@ def door_bearings(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tuple[f
     return tuple(out)
 
 
-#: How far off one of the lot's clustered front bearings (s4's
-#: ``front_bearings``) a straight part of its front lot line may run and still
-#: be tried as that street's own direction where the code makes the building
-#: face the street (:func:`front_parts`).
-FRONT_PART_TOL_DEG = 10.0
-
-
-def front_parts(lot: "QuadfitLot") -> tuple[float, ...]:
-    """The directions of the straight parts of ``lot``'s front lot line --
-    each front edge, not an alley, at least :data:`DOOR_LINE_MIN_FT` long --
-    that run within :data:`FRONT_PART_TOL_DEG` of a clustered front bearing
-    and are not that bearing already.
-
-    s4 clusters a bent front into one bearing, between its parts. Where the
-    code makes the building face the street (``axis_required``) that was the
-    one angle searched, so a building could stand parallel to neither part,
-    its near corner over the bend a foot back from where the envelope lets
-    it stand (Tigard 2S103BA00137, front bending 4.5 degrees: 21.08 ft
-    against a 20 ft maximum, rel4 move-read finding 4). A building parallel
-    to a part of the front line faces the street as squarely as one
-    parallel to the cluster."""
-    if lot.edges is None or not lot.front_bearings:
-        return ()
-    out: list[float] = []
-    for e in lot.edges.of_class(EdgeClass.front):
-        if e.alley or e.length_ft < DOOR_LINE_MIN_FT:
-            continue
-        b = normalize(float(e.bearing_deg))
-        near = min(bearing_delta(b, f) for f in lot.front_bearings)
-        if 1e-6 < near <= FRONT_PART_TOL_DEG and all(bearing_delta(b, x) > 1e-6 for x in out):
-            out.append(b)
-    return tuple(out)
-
-
 def _door_lines(lot: "QuadfitLot") -> tuple[tuple[float, float, float, float], ...]:
     """The street lot lines the doors may face, as drawn: every front and
     side-street line not on an alley (:func:`door_bearings`)."""
@@ -4604,10 +4570,6 @@ def _screen_lot_once(
             axis_required=bool(streets) and not free,
             step_deg=step_deg,
         )
-    if axis_required and lot.front_bearings:
-        # A bent front's parts, each the street's own direction (rel4
-        # move-read finding 4): the building may stand parallel to either.
-        angles = tuple(sorted(set(angles) | set(front_parts(lot))))
 
     out: list[Screened] = []
     for design, config, got in resolved:
