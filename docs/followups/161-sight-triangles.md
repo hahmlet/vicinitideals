@@ -20,3 +20,8 @@ Waiting on Steph (asked 2026-11-09):
 2. Until we map curb positions: assume worst (curb at lot line) or a typical sidewalk width?
 3. Does the four-unit pod count as "single-family" under West Linn's driveway triangle (85 lots)?
 Leftover readings: Tigard + King City building wording, Tualatin 200 ft rule (in the scoping file).
+
+Manual fetch 2026-11-09 (../vicinitideals-worktrees/sight-manuals.findings.md; files in gitignored data/flats/books/sight-manuals/):
+Beaverton 15 ft legs, bars structures (EDM 210.18.1, edition doubt 2019 vs 2025); Milwaukie defers size to AASHTO
+(paid book -- Steph: buy?); Oregon City/Wood Village partial; Hillsboro, Gladstone blocked by site bot checks
+(not bypassed) -- fetch by hand or via Steph's Chrome only after Steph says go on the build.
