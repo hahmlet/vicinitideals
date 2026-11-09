@@ -1418,6 +1418,12 @@ def test_a_zone_tied_to_its_page_by_a_line_on_that_page_is_asked_on_that_page(mo
         check, "_placed",
         lambda row: sheet.Placed(status="boxed", pages=[cited], boxes={cited: [(_BOX, "value")]}),
     )
+    # The via passage is boxed off the book PDF, which a clean checkout (GitHub
+    # CI) does not hold; place it on the cited page as the book would.
+    monkeypatch.setattr(
+        check, "_placed_cached",
+        lambda *a, **k: sheet.Placed(status="boxed", pages=[cited], boxes={cited: [(_BOX, "via")]}),
+    )
     sheets = check._card(check._layers()[layer_id], check._Ask(row, "value"))["sheets"]
     here = next(s for s in sheets if s["page"] == cited)
     assert here.get("via_here") and here.get("via")
