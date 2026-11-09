@@ -737,6 +737,11 @@ siteplan:
         CR: 192
         CX: null
         EX: null
+        # CI1 since RICAP 11 (2026-11-01): a home there is built to RM1's
+        # standards (new 33.150.200), so it owes RM1's Table 120-4 outdoor
+        # area. The corpus holds it on RM1 and CI1's ricap11 block imports it
+        # (`like: RM1`); rules.yaml's CI1 row names that block.
+        CI1: 192
         CI2: null
         IR: null
       front_lot_line_corner: shortest

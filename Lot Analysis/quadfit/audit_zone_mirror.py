@@ -410,7 +410,31 @@ def _pairs(top: dict, corpus: dict):
             zl = layer.zones.get(z.get("zone"))
             if zl is None:
                 continue
+            zl = corpus_block(zl, z.get("corpus_amendment"), where=f"{juris}/{z.get('zone')}")
             yield juris, z, _Effective(zl, _effective(layer, zl)), layer
+
+
+def corpus_block(zl, amendment: str | None, *, where: str = ""):
+    """The corpus block a rules.yaml row mirrors: the codified one, or the
+    adopted amendment the row names in ``corpus_amendment``.
+
+    The corpus loads as codified text (``load_rules()`` with no date) so the
+    ledgers do not move with the calendar. A row written for the law in force
+    after an amendment -- Portland CI1 on RICAP 11's RM1 standards -- says so by
+    id, and is held to that amendment's block, ``like:`` and all. A name the
+    corpus zone does not carry is an error, not a fallback: comparing such a row
+    against the codified block would read every number as drift, and skipping it
+    would compare nothing.
+    """
+    if not amendment:
+        return zl
+    for a in getattr(zl, "amended", ()) or ():
+        if a.id == amendment:
+            return a.zone
+    raise LookupError(
+        f"{where}: rules.yaml names corpus_amendment {amendment!r} and the corpus "
+        f"zone carries {[a.id for a in getattr(zl, 'amended', ()) or ()]}"
+    )
 
 
 #: Standards the corpus reads off the page that reach the pipeline somewhere

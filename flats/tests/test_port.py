@@ -473,7 +473,11 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     #
     # 215 on 2026-10-30 (districts chunk 6): Tualatin CO, ported so its
     # Block 1 townhouse lots are measured rather than left "not measured".
-    assert dry["stats"]["zones"] == 215
+    #
+    # 216 on 2026-11-08 (FOLLOWUPS 155): Portland CI1, measured on RM1's
+    # standards since RICAP 11 (2026-11-01). Written corpus to rules.yaml from
+    # the zone's `amended: ricap11` block, so the back-port is a dry-run count only.
+    assert dry["stats"]["zones"] == 216
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {

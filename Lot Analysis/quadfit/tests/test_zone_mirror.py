@@ -1060,7 +1060,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: field is read by FLATS alone. (61 for an hour in round 2, while Oregon
     #: City's six residential zones carried their own blocks; round 3 folded
     #: them back into the city default.)
-    "entrance_faces_street": 55,
+    # 55 -> 56 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 now pairs with its
+    # RICAP 11 block, which imports RM1's standards whole. (rel6 2026-11-09:
+    # combined with rel4-fixes' entrance_angle_max_deg row below.)
+    "entrance_faces_street": 56,
     #: rel4 move-read finding 2 (2026-11-08): the angle a door face may stand
     #: off the street (`entrance_angle_max_deg`, the printed 45 or 0) -- read
     #: by the FLATS facing fitter alone; quadfit has no angle column.
@@ -1069,8 +1072,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
-    "setback_garage_entrance_ft": 125,
-    "min_landscaped_pct": 60,
+    # 125 -> 126 and 60 -> 61 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 on
+    # its RICAP 11 block (RM1's standards).
+    "setback_garage_entrance_ft": 126,
+    "min_landscaped_pct": 61,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
     "setback_front_max_ft": 104,
@@ -1171,9 +1176,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: rescreen-1110): the lot-of-record reliefs of every other layer, with
     #: the floors some print and the conditions (creation date, adjoining
     #: ownership) others ask.
-    "lot_of_record_relief": 94,
+    # 94 -> 95 and 43 -> 44 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 on its
+    # RICAP 11 block takes RM1's lot-of-record relief and condition.
+    "lot_of_record_relief": 95,
     "lot_of_record_floor_sqft": 14,
-    "lot_of_record_condition": 43,
+    "lot_of_record_condition": 44,
     #: 2026-11-08 (FOLLOWUPS 77, tigard-road-land merged into rescreen-1110):
     #: Washington County's R and TO zones and Milwaukie measure the minimum lot
     #: area before the road strip; quadfit takes no strip off the lot area.
@@ -1682,3 +1689,30 @@ def test_a_signed_zone_whose_flag_never_flipped_is_reported() -> None:
     hit = [r for r in rows if r.startswith(f"{juris}/{zone_code}:")]
     assert hit, f"a signed {juris}/{zone_code} was not reported: {rows}"
     assert "needs_verification" in hit[0]
+
+
+def test_a_row_written_for_an_amendment_is_mirrored_against_the_amendment() -> None:
+    """Portland CI1 since RICAP 11 (2026-11-01, FOLLOWUPS 155).
+
+    The corpus loads as codified text, where CI1 still refuses the home and
+    prints 15 ft on every line. rules.yaml's CI1 row is written for the law in
+    force -- RM1's standards, by the new 33.150.200 -- and says so with
+    ``corpus_amendment: ricap11``. Held to the codified block it would read as
+    a live permission split and four drifts; held to nothing it would compare
+    nothing. It is held to the amendment, and agrees.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    pairs = {(j, z["zone"]): zl for j, z, zl, _layer in audit._pairs(top, corpus)}
+    ci1 = pairs[("portland", "CI1")]
+    assert ci1.values["quadplex_allowed"].value is True
+    assert ci1.like is not None and ci1.like.zone == "RM1"
+    rm1 = pairs[("portland", "RM1")]
+    for field in ("setback_front_ft", "setback_side_ft", "setback_rear_ft", "min_lot_sqft",
+                  "min_lot_width_ft", "max_coverage_pct", "min_density_du_per_acre"):
+        assert ci1.values[field].value == rm1.values[field].value, field
+    assert not [s for s in audit.permission_splits() if s.startswith("portland/CI1")]
+    diverge, _uncited, _agree = audit.scan()
+    assert not [d for d in diverge if d.zone == "CI1"]
+    with pytest.raises(LookupError):
+        audit.corpus_block(corpus["or/multnomah/portland"].zones["CI1"], "ricap99")

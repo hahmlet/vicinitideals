@@ -311,7 +311,9 @@ def port_zone(row: dict[str, Any], retrieved: str) -> tuple[dict[str, Any], list
         out["cite_default"] = {"cite": src, "url": url, "retrieved": retrieved}
 
     for key, value in row.items():
-        if key in ("zone", "source", "source_url", "confidence", "notes"):
+        # `corpus_amendment` names the corpus block a FLATS-first row was
+        # written from (Portland CI1, RICAP 11); it is provenance, not a standard.
+        if key in ("zone", "source", "source_url", "confidence", "notes", "corpus_amendment"):
             continue
         if key in BACKPORTED:
             continue
