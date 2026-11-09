@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import math
 from pathlib import Path
 
 import pandas as pd
@@ -982,7 +983,9 @@ def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
     # abutting an alley"; where the alley runs the front half of the east
     # line and stops, the rear half faces the neighbour and keeps its 5 ft.
     # Rays 2.5 ft in and 5 ft apart: the last one on the alley is 47.5 ft
-    # up the line, and the 5 ft strip beyond it runs a square cap 5 ft back.
+    # up the line, and the 5 ft strip beyond it ends in a 5 ft half-disc
+    # (2026-11-09, envelope-caps: was a square cap, which also took the
+    # 25 * (1 - pi/4) sq ft corner more than 5 ft from the strip).
     waived = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15, setback_alley_side_ft=0)
 
     def area(cover: str | None) -> float:
@@ -990,7 +993,9 @@ def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
         return envelope_for(lot, waived).sqft  # type: ignore[arg-type]
 
     assert area(BESIDE_WHOLE) == pytest.approx(45 * 75)
-    assert area(BESIDE_STUB) == pytest.approx(45 * (42.5 - 10) + 40 * (85 - 42.5))
+    assert area(BESIDE_STUB) == pytest.approx(
+        45 * (42.5 - 10) + 40 * (85 - 42.5) + 25 * (1 - math.pi / 4), abs=0.1
+    )
     # Nothing measured the stretch: none of it is vouched for.
     assert area(None) == pytest.approx(40 * 75)
     # A city with no alley-side number (the alley line is a rear lot line)
