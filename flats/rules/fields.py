@@ -2192,6 +2192,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # turned fit out of GREEN in the screen (ENTRANCE-TURNED) rather
         # than counting the zone short of a required field.
         "entrance_faces_street",
+        # Absent, the fit reads nought -- the door face parallel to a street
+        # line, the conservative reading of a code that prints no angle
+        # (flats.score.paper.door_limit; rel4 move-read finding 2).
+        "entrance_angle_max_deg",
         # The review path, not a dimension (Steph 2026-10-14, FOLLOWUPS 79).
         # A zone silent on it has a review on measurable standards, or none,
         # and is not incomplete.
