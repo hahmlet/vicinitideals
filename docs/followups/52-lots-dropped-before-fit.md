@@ -37,3 +37,7 @@
    - SCMU's front yard: Map 1005-1 street types and frontage types (1005.09(G), Table 1005-1),
      and with it 1005.09's minimum building depth and ground-floor height, which do not apply in
      Sectors 1-2 (1005.09(A)) -- also a map. SCMU's density is DONE (min 20, FOLLOWUPS 95).
+     2026-11-08 (coordinator extra 1): Map 1005-1 is NOT stored anywhere in the repo (whole-tree
+     find; 1005.09.txt L5, L43-L44 name it). NEEDS A DOWNLOAD: the ZDO Section 1005 PDF that
+     carries Maps 1005-1 and 1005-2, from https://www.clackamas.us/planning/zdo1005 (the HTML
+     page there is text only). Skipped; the 15 ft PLACEHOLDER and FLATS' UNKNOWN stand.
