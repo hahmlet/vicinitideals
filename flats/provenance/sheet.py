@@ -806,6 +806,13 @@ def markers(
                     _states_number_over(ln, box) for ln in above[max(0, at - 2) : at + 1]
                 ):
                     continue
+                # ... and it reaches its own block's rows, not the next
+                # block's: Springwater's "G. Maximum Building Height³" sits
+                # over the floor area ratio row of block I (FOLLOWUPS 103).
+                if _heads_its_row(printed, word) and any(
+                    ln.words and _LETTERED.match(ln.words[0].text) for ln in above[at + 1 :]
+                ):
+                    continue
                 out += [Marker(m, "column", word.box) for m in _marks(word.text)]
     out += _title_markers(sheet, line, before)
     seen: set[str] = set()
@@ -836,6 +843,9 @@ def _caption(line: Line) -> str:
         return ""
     first = body[0].strip(":").lower()
     if first in {"notes", "footnotes"}:
+        return "notes"
+    # Troutdale heads its notes "Table Notes", with no number.
+    if first == "table" and len(body) >= 2 and body[1].strip(":").lower() in {"notes", "footnotes"}:
         return "notes"
     if first != "table" or len(body) < 2 or not any(ch.isdigit() for ch in body[1]):
         return ""
@@ -1076,8 +1086,9 @@ def _heading_band(above: Sequence[Line]) -> list[int]:
 
     From the table's caption on this page down to its first data row: the
     first line printing a figure. With no caption above the row on this page,
-    or a table's notes heading met first, there is no band to go by and the
-    scans keep to the lines just above the row.
+    the band runs from the top of the page instead (a table continued from
+    the page before). With a table's notes heading met first there is no band
+    to go by and the scans keep to the lines just above the row.
     """
     start = None
     for at in range(len(above) - 1, -1, -1):
@@ -1087,14 +1098,33 @@ def _heading_band(above: Sequence[Line]) -> list[int]:
         if kind == "title":
             start = at + 1
             break
-    if start is None:
-        return []
+    carried = start is None
+    if carried:
+        # A table run on from the page before repeats its headings at the
+        # top of this page, under no caption: the band is the top of the
+        # page, where nothing above the row states a figure before them.
+        # A heading note more than a few lines over the row reached no card
+        # (FOLLOWUPS 103). A running head ("Page 12") is passed over.
+        start = 0
+        while start < len(above) and above[start].box.y1 < _MARGIN and _states_figure(above[start]):
+            start += 1
     band = []
     for at in range(start, len(above)):
-        if any(not w.sup and numeral(w.text) and any(ch.isdigit() for ch in w.text) for w in above[at].words):
+        if _states_figure(above[at]):
+            break
+        # Overleaf, a lettered row ("G. Maximum Building Height³") opens the
+        # table's body: its note is its rows', not a column's -- Springwater's
+        # floor area ratio was asked the height note.
+        words = above[at].words
+        if carried and words and _LETTERED.match(words[0].text):
             break
         band.append(at)
     return band
+
+
+def _states_figure(line: Line) -> bool:
+    """Whether a line prints a figure in digits (not a superscript)."""
+    return any(not w.sup and numeral(w.text) and any(ch.isdigit() for ch in w.text) for w in line.words)
 
 
 def _spanning_markers(above: Sequence[Line], box: Box, band: Sequence[int] = ()) -> list[Marker]:
@@ -1162,9 +1192,15 @@ def _group_markers(above: Sequence[Line], line: Line) -> list[Marker]:
             continue
         if body[0].box.x0 > left + 0.005:
             continue
-        if body[0].box.x0 > left - 0.008:
+        heads_block = _LETTERED.match(body[0].text) and not any(_says_nothing(w) for w in body)
+        if body[0].box.x0 > left - 0.008 and not heads_block:
             # A sibling standard set flush with this one (Beaverton's and
-            # Gresham's flat tables), not a heading over it.
+            # Gresham's flat tables), not a heading over it. A lettered
+            # heading set flush heads the rows under it all the same:
+            # Springwater prints "G. Maximum Building Height³" over "All Uses
+            # 40 ft. 35 ft. 45 ft.", and only VLDR-SW's cell, under the ³,
+            # was asked note 3 (FOLLOWUPS 103). A lettered line stating cells
+            # ("D. Maximum Residential Density²⁶ N/A N/A") is a row itself.
             return []
         return [
             Marker(m, "row", w.box)
@@ -1217,6 +1253,7 @@ PLACED = {
     "boxed": "the box is where we read the number",
     "column": "the number is printed more than once on the quoted line -- the box is the one under this zone's heading",
     "several": "the number is printed more than once on the quoted line -- every one is boxed",
+    "rows": "each quoted row prints the number once -- each is boxed",
     "lines": "the number is not printed as a numeral on the quoted line -- the whole line is marked",
     "unfound": "we could not find the quoted line on the printed page -- the page is shown unmarked",
     "no_map": "this document has no page map yet, so there is no page to show",
@@ -1225,23 +1262,29 @@ PLACED = {
 
 
 def under_heading(
-    sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]], zone: str
+    sheet: Sheet,
+    line: Line,
+    spans: Sequence[tuple[int, int]],
+    zone: str,
+    carried: Sequence[Line] = (),
 ) -> list[tuple[int, int]]:
     """The hits printed under this zone's column heading, where there is one.
 
     Most dimensional tables print one column per zone, so a row states the
     same number several times and only one of them is this zone's. The
-    heading is looked for above the row on the same page; a hit belongs to it
-    when the two overlap horizontally. Where the table prints zones as rows
-    instead, no heading is found and every hit stays boxed -- the reviewer
-    reads the column off the page, which is the check.
+    heading is looked for above the row on the same page, then on the
+    ``carried`` heading rows of a table run on from the page before
+    (:func:`_carried_heads`); a hit belongs to it when the two overlap
+    horizontally. Where the table prints zones as rows instead, no heading is
+    found and every hit stays boxed -- the reviewer reads the column off the
+    page, which is the check.
     """
     want = squash(zone)
     if not want or want.startswith("("):
         return list(spans)
     boxes = [(span, span_box(line, span)) for span in spans]
     above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0]
-    for printed in reversed(above[-30:]):
+    for printed in [*reversed(above[-30:]), *carried]:
         for word in printed.words:
             if word.sup or squash(word.text).strip(",;:*") != want:
                 continue
@@ -1260,6 +1303,77 @@ def under_heading(
                 if len(mine) == 1:
                     return mine
     return list(spans)
+
+
+def _zone_row(line: Line) -> bool:
+    """A heading row: a label, then zone codes and nothing else.
+
+    "LDR-PV MDR-PV HDR-PV", "Residential Zone- VLDR PUD LDR MDRL MDRH HDR";
+    not "Townhouse in DCC, DMU, DTM, DEM, and DCL", a sentence.
+    """
+    body = [w for w in line.words if not w.sup]
+    first = next((k for k, w in enumerate(body) if _zone_like(w)), len(body))
+    return len(body) - first >= 2 and all(_zone_like(w) for w in body[first:])
+
+
+def _carried_heads(
+    sheets: dict[int, Sheet],
+    page: int,
+    line: Line,
+    zone: str,
+    earlier: Callable[[int], Sheet | None] | None,
+) -> tuple[Line, ...]:
+    """The zone heading rows of a table run on from the page before, nearest first.
+
+    Gresham Table 4.1415A heads its columns "LDR-PV MDR-PV HDR-PV" on page 7
+    and prints its floor area rows on page 8 under no heading at all, so every
+    "N/A" on the row was boxed for each zone (FOLLOWUPS 103). Only where no
+    caption sits above the row on its own page (the table is the one carried
+    over), from the pages before up to the first caption met: a table's notes
+    met first means the table ended there, and nothing is carried -- Troutdale
+    3.235's prose yards, two pages past its MU table and its "Table Notes",
+    were boxed under the MU-1 heading.
+
+    A page that names the zone above the row heads its own columns, however
+    far up: Sherwood's "Residential Zone- VLDR PUD LDR MDRL ..." sits forty
+    lines over the rear yard row, and the page before, laid out differently,
+    put LDR's box under MDRL. Its own heading row is returned, or nothing
+    where the zone is named only in a sentence (Gresham's downtown "Townhouse
+    in DCC, DMU, DTM ...").
+    """
+    above = [ln for ln in sheets[page].lines if ln.box.y1 <= line.box.y0]
+    captions = [k for k, ln in enumerate(above) if _caption(ln)]
+    # Below the nearest caption: a heading over another table is not this one's.
+    table = above[captions[-1] + 1 :] if captions else above
+    named = [ln for ln in reversed(table) if any(not w.sup and _is_zone(w, zone) for w in ln.words)]
+    if named:
+        return tuple(ln for ln in named if _zone_row(ln))
+    if captions:
+        return ()
+    for back in range(1, _TITLE_REACH + 1):
+        n = page - back
+        if n < 1:
+            return ()
+        try:
+            prev = sheets.get(n) or (earlier(n) if earlier else None)
+        except Exception:  # noqa: BLE001 -- no page before is no heading
+            return ()
+        if prev is None:
+            return ()
+        heads: list[Line] = []
+        for printed in reversed(prev.lines):
+            kind = _caption(printed)
+            if kind == "notes":
+                return ()
+            if kind == "title":
+                return tuple(heads)
+            # Only a row naming this zone heads its column: a running head
+            # in capitals ("3.230 TROUTDALE DEVELOPMENT CODE") is no heading.
+            if _zone_row(printed) and any(not w.sup and _is_zone(w, zone) for w in printed.words):
+                heads.append(printed)
+        if heads:
+            return tuple(heads)
+    return ()
 
 
 #: The heading words a column of standards is named by, where a table prints
@@ -1456,6 +1570,10 @@ def place(
         narrowed = False
         if sheet and printed and len(spans) > 1:
             under = under_heading(sheet, printed, spans, zone)
+            if len(under) == len(spans):
+                under = under_heading(
+                    sheet, printed, spans, zone, _carried_heads(sheets, page, printed, zone, earlier)
+                )
             if len(under) > 1:
                 under = under_field_heading(sheet, printed, under, field, when)
             narrowed = len(under) < len(spans)
@@ -1463,6 +1581,8 @@ def place(
         columned = columned or narrowed
         found.append(Found(line_no, page, printed, spans))
     found, dropped = _off_heading(sheets, found, field, when)
+    columned = columned or dropped
+    found, dropped = _other_zones_rows(found, zone)
     columned = columned or dropped
 
     pages = sorted({f.page for f in found})
@@ -1479,7 +1599,15 @@ def place(
             kind_boxes.append((f.line.box.pad(0.002), "line"))
     if with_hits:
         total = sum(len(f.hits) for f in with_hits)
-        placed.status = ("column" if columned else "boxed") if total == 1 else "several"
+        rows = {(f.page, f.line.box.y0) for f in with_hits if f.line is not None}
+        if total == 1:
+            placed.status = "column" if columned else "boxed"
+        elif all(len(f.hits) == 1 for f in with_hits) and len(rows) == total:
+            # One cell on each of several quoted rows: Springwater's frontage
+            # prints 20 ft. for the interior lot and again for the corner lot.
+            placed.status = "rows"
+        else:
+            placed.status = "several"
         first = with_hits[0]
         placed.markers = markers(
             sheets[first.page],
@@ -1492,6 +1620,34 @@ def place(
     elif any(f.line for f in found):
         placed.status = "lines"
     return placed
+
+
+def _other_zones_rows(found: list[Found], zone: str) -> tuple[list[Found], bool]:
+    """Hits on a row another zone labels, dropped where this zone labels one.
+
+    A table printing zones down the side (Gresham Table 4.1508: "VLDR-SW",
+    "LDR-SW", "THR-SW") is cited whole, and THR-SW's 5 ft. side setback was
+    boxed on all three rows (FOLLOWUPS 103). Once a quoted row opens with this
+    zone's name and states the number, a quoted row opening with another
+    zone's name keeps its quote-line mark only.
+    """
+    if not zone or zone.startswith("("):
+        return found, False
+
+    def label(f: Found) -> Word | None:
+        return next((w for w in f.line.words if not w.sup), None) if f.line is not None else None
+
+    if not any(f.hits and (w := label(f)) is not None and _is_zone(w, zone) for f in found):
+        return found, False
+    out, dropped = [], False
+    for f in found:
+        w = label(f)
+        if f.hits and w is not None and _zone_like(w) and not _is_zone(w, zone):
+            out.append(Found(f.line_no, f.page, f.line, ()))
+            dropped = True
+        else:
+            out.append(f)
+    return out, dropped
 
 
 def _off_heading(

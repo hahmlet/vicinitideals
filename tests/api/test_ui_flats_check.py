@@ -1192,6 +1192,21 @@ def test_a_borrowed_number_is_read_under_the_zone_it_borrows():
     assert check._column_zone(rows[("TLDR", "max_height_ft", "")]) == "TLDR"
 
 
+def test_a_zone_whose_heading_wraps_in_its_column_is_on_the_page():
+    """Beaverton prints "CM- CS", Washington County "TO:R24- 40", Gresham
+    "DRL      -1": headings wrapped in a narrow column. Those cards said the
+    zone was not on the page and were set aside (FOLLOWUPS 103(c))."""
+    assert not check._zone_off_page("or/washington/beaverton/20.22/20.22.15.txt", 23, "CM-CS")
+    assert not check._zone_off_page("or/washington/_unincorporated/375/375-10.txt", 403, "TO:R24-40")
+    assert not check._zone_off_page("or/multnomah/gresham/7.0400.middle-housing-design.txt", 411, "DRL-1")
+    # The corridor CMF is still not printed on the residential table's page.
+    layer = check._layers()["or/multnomah/gresham"]
+    row = next(
+        r for r in check._rows(layer, set()) if (r["zone"], r["field"], r["when"]) == ("CMF", "max_height_ft", "civic_corridor")
+    )
+    assert check._zone_off_page(row["document"], row["line"], "CMF")
+
+
 def test_a_number_held_from_a_note_shows_the_note():
     """MDR-24's minimum density is waived under 11,000 sq ft by note 5, which
     Gresham prints on the next page; the card shows the note's words

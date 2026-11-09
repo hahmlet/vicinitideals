@@ -343,9 +343,12 @@ def _zone_off_page(document: str, line: int, zone: str) -> bool:
     lines = sheet.lines_of(_store(), document)[page.line - 1 : (min(later) - 1) if later else None]
     # Superscripts are stored inline -- "LDR-54" is LDR-5 with its note 4 --
     # so a digit may follow the name; a letter may not. "PDR6" is printed
-    # "PDR-6": a hyphen or space may part letters from digits or not.
+    # "PDR-6": a hyphen or space may part letters from digits or not. A
+    # heading wrapped in its column parts a name further -- Beaverton prints
+    # "CM- CS", Washington County "TO:R12- 18", Gresham "DRL      -1" -- and
+    # those cards said the zone was not on the page (FOLLOWUPS 103(c)).
     parts = re.findall(r"[A-Za-z]+|\d+|[^\sA-Za-z\d-]", zone)
-    name = r"[\s\-\u2010-\u2013]?".join(re.escape(p) for p in parts)
+    name = r"[\s\-\u2010-\u2014]*".join(re.escape(p) for p in parts)
     return re.search(rf"(?<![A-Za-z0-9]){name}(?![A-Za-z])", " ".join(lines), re.IGNORECASE) is None
 
 

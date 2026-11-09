@@ -1052,3 +1052,216 @@ def test_a_section_citation_is_boxed_on_its_books_printed_lines():
     assert by_section.status == "boxed"
     assert by_section.pages == by_proof.pages
     assert by_section.boxes == by_proof.boxes
+
+
+def test_a_heading_note_reaches_a_far_row_on_a_page_the_table_runs_onto(tmp_path: Path):
+    """A table continued from the page before repeats its headings at the
+    top of the page under no caption, and a note on one of them reached only
+    the rows a few lines under it (FOLLOWUPS 103). The top of the page, past
+    its running head, is the heading band."""
+    runs = [
+        (72, 760, 8, "City Development Code Page 12"),
+        (220, 720, 9, "Detached"),
+        (300, 720, 9, "Attached"),
+        (338, 724, 5, "3"),
+        *[(72, 700 - 12 * k, 9, f"Standard {k}") for k in range(14)],
+        (72, 520, 9, "Maximum height"),
+        (220, 520, 9, "35 ft."),
+        (300, 520, 9, "35 ft."),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "Maximum height 35 ft. 35 ft.")
+    detached, attached = S.hits(row, 35, sheet.aspect)
+
+    assert {m.mark: m.on for m in S.markers(sheet, row, [attached], "")}.get("3") == "column"
+    assert "3" not in [m.mark for m in S.markers(sheet, row, [detached], "")]
+
+
+PV_HEADED = [
+    (72, 720, 10, "Table 4.1415A: Development Standards in Pleasant Valley"),
+    (200, 700, 9, "LDR-PV"),
+    (300, 700, 9, "MDR-PV"),
+    (400, 700, 9, "HDR-PV"),
+    (72, 680, 9, "Lot size"),
+    (200, 680, 9, "5,000 sq. ft."),
+    (300, 680, 9, "3,000 sq. ft."),
+    (400, 680, 9, "2,000 sq. ft."),
+]
+
+
+def _page(tmp_path: Path, name: str, runs: list[tuple], n: int) -> S.Sheet:
+    from dataclasses import replace
+
+    path = tmp_path / name
+    path.write_bytes(_pdf(runs))
+    return replace(S.read(path, 1), n=n)
+
+
+def test_a_table_run_onto_the_next_page_boxes_the_column_its_zone_heads_overleaf(tmp_path: Path):
+    """Gresham Table 4.1415A heads its zones on page 7 and prints its floor
+    area rows on page 8 under no heading, so every cell on the row was boxed
+    for each zone (FOLLOWUPS 103). The zone headings carried from the page
+    before settle the column."""
+    from dataclasses import replace
+
+    before = _page(tmp_path, "p1.pdf", PV_HEADED, 1)
+    overleaf = _page(
+        tmp_path,
+        "p2.pdf",
+        [(72, 700, 9, "Height"), (200, 700, 9, "35 ft."), (300, 700, 9, "35 ft."), (400, 700, 9, "45 ft.")],
+        2,
+    )
+    cited = [(40, 2, "Height 35 ft. 35 ft. 45 ft.", "", "")]
+
+    placed = S.place({2: overleaf}, cited, 35, zone="MDR-PV", earlier={1: before}.get)
+
+    assert placed.status == "column"
+    (box, _kind), = placed.boxes[2]
+    assert 0.45 < box.x0 < 0.55  # MDR-PV's column, x=300 on a 612-wide page
+    # Without the page before, nothing is guessed.
+    assert S.place({2: overleaf}, cited, 35, zone="MDR-PV").status == "several"
+    # A table that closed with its notes on the page before is not carried.
+    closed = _page(tmp_path, "p1b.pdf", [*PV_HEADED, (72, 600, 10, "Table 4.1415A Notes:")], 1)
+    assert S.place({2: overleaf}, cited, 35, zone="MDR-PV", earlier={1: closed}.get).status == "several"
+    # ... nor one whose notes, headed "Table Notes" with no number, fill the
+    # page between (Troutdale 3.235's prose yards, two pages past its table).
+    notes = _page(tmp_path, "p2n.pdf", [(72, 720, 10, "Table Notes"), (72, 700, 9, "1. A note.")], 2)
+    later = replace(overleaf, n=3)
+    cited_3 = [(40, 3, "Height 35 ft. 35 ft. 45 ft.", "", "")]
+    assert S.place({3: later}, cited_3, 35, zone="MDR-PV", earlier={1: before, 2: notes}.get).status == "several"
+    # A running head in capitals is not a zone heading: a page before that
+    # prints only "3.230 TROUTDALE DEVELOPMENT CODE" carries nothing.
+    head = _page(tmp_path, "p1h.pdf", [(72, 760, 9, "3.230 TROUTDALE DEVELOPMENT CODE")], 1)
+    assert S.place({2: overleaf}, cited, 35, zone="MDR-PV", earlier={1: head}.get).status == "several"
+    # A caption on the page itself is another table: nothing carried.
+    captioned = _page(
+        tmp_path,
+        "p2b.pdf",
+        [(72, 720, 10, "Table 4.1415B: Setbacks"), (72, 700, 9, "Height"), (200, 700, 9, "35 ft."), (300, 700, 9, "35 ft.")],
+        2,
+    )
+    cited_b = [(40, 2, "Height 35 ft. 35 ft.", "", "")]
+    assert S.place({2: captioned}, cited_b, 35, zone="MDR-PV", earlier={1: before}.get).status == "several"
+
+
+ZONE_ROWS = [
+    (72, 720, 10, "Table 4.1508 (continued): Minimum Setbacks"),
+    (200, 700, 9, "Front"),
+    (300, 700, 9, "Side"),
+    (400, 700, 9, "Rear"),
+    (72, 680, 9, "VLDR-SW"),
+    (200, 680, 9, "20 ft."),
+    (300, 680, 9, "5 ft."),
+    (400, 680, 9, "20 ft."),
+    (72, 665, 9, "LDR-SW"),
+    (200, 665, 9, "10 ft."),
+    (300, 665, 9, "5 ft."),
+    (400, 665, 9, "15 ft."),
+    (72, 650, 9, "THR-SW"),
+    (200, 650, 9, "6 ft."),
+    (300, 650, 9, "5 ft."),
+    (400, 650, 9, "20 ft."),
+]
+
+
+def test_a_table_of_zone_rows_cited_whole_boxes_only_this_zones_row(tmp_path: Path):
+    """Gresham Table 4.1508 prints its zones down the side and is cited
+    whole; THR-SW's 5 ft. side setback was boxed on all three rows
+    (FOLLOWUPS 103). A number stated once on each quoted row says so."""
+    sheet = _page(tmp_path, "rows.pdf", ZONE_ROWS, 1)
+    cited = [
+        (10, 1, "VLDR-SW 20 ft. 5 ft. 20 ft.", "", ""),
+        (11, 1, "LDR-SW 10 ft. 5 ft. 15 ft.", "", ""),
+        (12, 1, "THR-SW 6 ft. 5 ft. 20 ft.", "", ""),
+    ]
+
+    placed = S.place({1: sheet}, cited, 5, zone="THR-SW", field="setback_side_ft")
+
+    assert placed.status == "column"
+    (box, _kind), = [b for b in placed.boxes[1] if b[1] == "value"]
+    assert abs(box.y0 - (1 - 650 / 792)) < 0.03
+    # The other zones' rows keep their quote-line mark.
+    assert [k for _b, k in placed.boxes[1]].count("line") == 2
+    # Read for no zone, each row states it once: every one is boxed, and the
+    # card says it is one per row, not several on one line.
+    assert S.place({1: sheet}, cited, 5, zone="(layer defaults)").status == "rows"
+    # A row that names no zone is left alone.
+    unlabelled = [(13, 1, "Front Side Rear", "", ""), *cited[2:]]
+    assert S.place({1: sheet}, unlabelled, 5, zone="THR-SW").status == "boxed"
+
+
+def test_a_note_on_a_lettered_heading_set_flush_reaches_every_cell_under_it(tmp_path: Path):
+    """Springwater prints "G. Maximum Building Height³" flush with the "All
+    Uses" row under it; only the cell under the ³ was asked note 3
+    (FOLLOWUPS 103). A flush heading with no letter is a sibling standard."""
+    runs = [
+        (200, 720, 9, "VLDR-SW"),
+        (300, 720, 9, "LDR-SW"),
+        (400, 720, 9, "THR-SW"),
+        (72, 700, 9, "G. Maximum Building Height"),
+        (202, 704, 5, "3"),
+        (72, 685, 9, "All Uses"),
+        (200, 685, 9, "40 ft."),
+        (300, 685, 9, "35 ft."),
+        (400, 685, 9, "45 ft."),
+        (72, 665, 9, "Lot coverage"),
+        (300, 669, 5, "4"),
+        (72, 650, 9, "Rear yard"),
+        (200, 650, 9, "15 ft."),
+        (300, 650, 9, "10 ft."),
+        (72, 630, 9, "I. Maximum Floor Area Ratio"),
+        (72, 615, 9, "Single Detached"),
+        (200, 615, 9, "0.7"),
+        (300, 615, 9, "1.0"),
+        (72, 595, 9, "D. Maximum Residential Density"),
+        (210, 599, 5, "26"),
+        (300, 595, 9, "N/A"),
+        (72, 580, 9, "G.1.a. Front Minimum"),
+        (200, 580, 9, "0"),
+        (300, 580, 9, "10"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "All Uses 40 ft. 35 ft. 45 ft.")
+    for value in (40, 35, 45):
+        assert {m.mark: m.on for m in S.markers(sheet, row, S.hits(row, value, sheet.aspect), "")}.get("3") == "row"
+    rear = _line(sheet, "Rear yard 15 ft. 10 ft.")
+    assert "4" not in [m.mark for m in S.markers(sheet, rear, S.hits(rear, 15, sheet.aspect), "")]
+    # The height's note is not the next block's: the band over a table run
+    # on from the page before stops at its first lettered row.
+    far = _line(sheet, "Single Detached 0.7 1.0")
+    assert "3" not in [m.mark for m in S.markers(sheet, far, S.hits(far, 0.7, sheet.aspect), "")]
+    # A lettered line stating cells is a row, not a heading over the next.
+    front = _line(sheet, "G.1.a. Front Minimum 0 10")
+    assert "26" not in [m.mark for m in S.markers(sheet, front, S.hits(front, 10, sheet.aspect), "")]
+
+
+def test_a_page_heading_its_own_zones_far_up_is_not_read_off_the_page_before(tmp_path: Path):
+    """Sherwood heads its zones forty lines over the rear yard row; the page
+    before, laid out differently, put LDR's box under MDRL (FOLLOWUPS 103)."""
+    before = _page(tmp_path, "p1.pdf", [(72, 700, 9, "Zone"), (200, 700, 9, "VLDR"), (300, 700, 9, "MDRL"), (400, 700, 9, "LDR")], 1)
+    runs = [
+        (72, 760, 9, "Residential Zone-"),
+        (200, 760, 9, "VLDR"),
+        (300, 760, 9, "LDR"),
+        (400, 760, 9, "MDRL"),
+        *[(72, 740 - 12 * k, 9, f"Standard {k}") for k in range(35)],
+        (72, 300, 9, "Rear yard"),
+        (200, 300, 9, "20"),
+        (300, 300, 9, "20"),
+        (400, 300, 9, "20"),
+    ]
+    page = _page(tmp_path, "p2.pdf", runs, 2)
+    cited = [(40, 2, "Rear yard 20 20 20", "", "")]
+
+    placed = S.place({2: page}, cited, 20, zone="LDR", earlier={1: before}.get)
+
+    (box, _kind), = placed.boxes[2]
+    assert 0.45 < box.x0 < 0.55  # LDR's column on this page, x=300
+    # A page naming its zones only in a sentence ("Townhouse in DCC, DMU,
+    # DTM ...") heads nothing, and the page before is not read for it.
+    prose = _page(tmp_path, "p3.pdf", [(72, 760, 9, "Townhouse in VLDR, LDR, and MDRL"), *runs[4:]], 2)
+    assert S.place({2: prose}, cited, 20, zone="LDR", earlier={1: before}.get).status == "several"
