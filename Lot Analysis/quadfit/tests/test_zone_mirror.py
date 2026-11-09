@@ -1076,7 +1076,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     # (flats/ci1-quadfit) Portland CI1 pairs with its RICAP 11 block, which
     # imports RM1's standards whole; +1 FOLLOWUPS 52 (flats/dropped-lots-fairview)
     # Clackamas SCMU ported.
-    "entrance_faces_street": 57,
+    # 57 -> 65 on 2026-11-09 (FOLLOWUPS 162, flats/tigard-entrances): Tigard RES-A to
+    # RES-E, MUR, MUC (18.280.040.H) and MU-CBD (18.650.080.A) record `required`.
+    "entrance_faces_street": 65,
     #: rel4 move-read finding 2 (2026-11-08): the angle a door face may stand
     #: off the street (`entrance_angle_max_deg`, the printed 45 or 0) -- read
     #: by the FLATS facing fitter alone; quadfit has no angle column.
