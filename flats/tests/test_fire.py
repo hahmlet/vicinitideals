@@ -1209,3 +1209,69 @@ def test_a_moved_plan_holds_no_more_frontage_than_where_it_stands(corpus, polici
         policy=policies[0], relief=policies[1],
     )
     assert far.facts.building_frontage_pct == (0.0,)
+
+
+def _held_share(corpus, policies, share: float = 90.0):
+    """The retry fixture holding ``share`` percent of its street, more than
+    its 56 ft building can fill of 200 ft: any re-measure reads less."""
+    import dataclasses
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    facts = dataclasses.replace(s.facts, building_frontage_pct=(share,))
+    return lot, dataclasses.replace(s, facts=facts), fitter
+
+
+def test_a_turned_court_holds_no_more_frontage_than_where_it_stands(
+    corpus, policies, monkeypatch
+) -> None:
+    """FOLLOWUPS 160: :func:`court_turned` stands the building at another
+    angle where its first drawing put the court in a front yard. The share of
+    the frontage read on the fit's first placement is measured again where
+    the turned building stands, and never read higher."""
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _held_share(corpus, policies)
+    turned = {**_lifted(s.drawing, 6.0), "lane": s.drawing.get("lane") or [[0, 0]] * 4}
+    monkeypatch.setattr(quadfit, "court_in_front_yard", lambda _s, drawn=None: drawn is None)
+    monkeypatch.setattr(quadfit, "_lane_in_from_street", lambda _s: True)
+    monkeypatch.setattr(quadfit, "_drive_clear", lambda *_a: True)
+    monkeypatch.setattr(quadfit, "drawn_door_turned", lambda *_a: False)
+    monkeypatch.setattr(quadfit, "_flatter_angles", lambda *_a: [s.fit.angle_deg, 0.0])
+    monkeypatch.setattr(quadfit, "drawing_for", lambda *_a, **_k: turned)
+    s = _with_drawing(s, {**s.drawing, "lane": turned["lane"]})
+
+    got = quadfit.court_turned(s, fitter, policy=policies[0], relief=policies[1])
+
+    assert got.drawing is turned
+    (share,) = got.facts.building_frontage_pct
+    assert 0.0 < share < 90.0
+
+
+def test_a_front_max_slide_holds_no_more_frontage_than_where_it_stands(
+    corpus, policies, monkeypatch
+) -> None:
+    """FOLLOWUPS 160: :func:`front_max_checked` slides or redraws a building
+    standing past the maximum; the slid plan is measured again on every
+    drawn-plan check, its share of the frontage too, never read higher."""
+    from flats.ingest import quadfit
+    from flats.score.screen import FRONT_MAX
+
+    lot, s, fitter = _held_share(corpus, policies)
+    past = _with_drawing(s, {**_lifted(s.drawing, 14.0), "lane": None})
+    slid = {**_lifted(s.drawing, 6.0), "lane": None}
+    monkeypatch.setattr(quadfit, "_front_max_flush", lambda *_a, **_k: slid)
+    before = quadfit._front_max_screened(past, policy=policies[0], relief=policies[1])
+    assert any(c.check == FRONT_MAX for c in before.signed.binds)
+
+    got = quadfit.front_max_checked(past, fitter, policy=policies[0], relief=policies[1])
+
+    assert got.drawing is slid
+    assert quadfit._front_max_clear(got)
+    (share,) = got.facts.building_frontage_pct
+    assert 0.0 < share < 90.0
+
+
+def _with_drawing(s, drawing):
+    import dataclasses
+
+    return dataclasses.replace(s, drawing=drawing)

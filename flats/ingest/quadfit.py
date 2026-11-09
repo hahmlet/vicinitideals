@@ -3271,7 +3271,9 @@ def rear_court_checked(
 COURT_TURN_MAX = 6
 
 
-def court_turned(s: Screened, fitter: Fitter | None) -> Screened:
+def court_turned(
+    s: Screened, fitter: Fitter | None, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
     """``s`` drawn at another angle where its first drawing stands the court
     in a front yard (Steph 2026-11-08; :func:`court_yard_lines`) and another
     angle keeps it out.
@@ -3290,7 +3292,10 @@ def court_turned(s: Screened, fitter: Fitter | None) -> Screened:
     in the drawing does not place. Runs before anything measures the
     drawing (the maximum front setback, the hose, the grade), so each reads
     the plan where it now stands. Changes no verdict:
-    :func:`court_yard_checked` reads the drawing finally kept."""
+    :func:`court_yard_checked` reads the drawing finally kept -- but the
+    building's share of the frontage, read on the fit's first placement, is
+    measured again where the turned building stands, never higher
+    (:func:`_share_redrawn`, FOLLOWUPS 160)."""
     drawing = s.drawing or {}
     if fitter is None or s.fit.angle_deg is None or not court_in_front_yard(s):
         return s
@@ -3311,7 +3316,9 @@ def court_turned(s: Screened, fitter: Fitter | None) -> Screened:
             # (FOLLOWUPS 153): one hold traded for another, and the drawing
             # shown worse; the fit's own placement stays.
             continue
-        return dataclasses.replace(s, drawing=drawn)
+        return _share_redrawn(
+            dataclasses.replace(s, drawing=drawn), policy=policy, relief=relief
+        )
     return s
 
 
@@ -4691,7 +4698,7 @@ def _screen_lot_once(
             out.append(_rank_unknown(won) if ask_rank else won)
             continue
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
-        won = court_turned(won, fitter)
+        won = court_turned(won, fitter, policy=policy, relief=relief)
         won = front_max_checked(won, fitter, policy=policy, relief=relief)
         placed = won.drawing
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
@@ -5392,9 +5399,9 @@ def front_max_checked(
                 # street, where the drawing did not (rel4: FOLLOWUPS 142,
                 # 3(c), 153 hold with 147).
                 continue
-            cand = _front_max_screened(
-                dataclasses.replace(s, drawing=slid), policy=policy, relief=relief
-            )
+            # Measured where it now stands on every drawn-plan check, the
+            # building's share of the frontage too (FOLLOWUPS 160).
+            cand = _redrawn(s, slid, policy=policy, relief=relief)
             if _front_max_clear(cand) and _no_worse_but_front(out, cand):
                 return cand
             if (
@@ -5435,9 +5442,7 @@ def front_max_checked(
                 continue
             if not _drive_clear(drawn, at, street):
                 continue
-            cand = _front_max_screened(
-                dataclasses.replace(s, drawing=drawn), policy=policy, relief=relief
-            )
+            cand = _redrawn(s, drawn, policy=policy, relief=relief)
             if _front_max_clear(cand) and _no_worse_but_front(out, cand):
                 return cand
     return fallback
