@@ -1427,17 +1427,18 @@ _C: tuple[ConditionDef, ...] = (
         "slope-class density for land divisions (33.537.140.E) or the Flood "
         "Risk Area's limits on land divisions (33.537.160), which "
         "pdx_johnson_creek_land_division answers and configure() folds in "
-        "(LAND_DIVISION_FOLDS). Nothing records which lot line abuts the "
-        "corridor, the slope classes or the Flood Risk Area's share of the "
-        "site, so the lot stays in review. Assumed unknown: it decides the "
+        "(LAND_DIVISION_FOLDS). The screen does not set the buffer on the "
+        "one lot line that abuts the corridor, and nothing records the slope "
+        "classes or the Flood Risk Area's share of the site, so the lot stays "
+        "in review. Assumed unknown: it decides the "
         "colour.",
         # 33.537.125 (tree removal) no longer holds a lot: Steph's ruling
         # 2026-11-01-trees-ignored-entered-per-lot, FOLLOWUPS 140.
         evidence=(
-            "every lot within 100 ft of the Springwater Corridor Trail line "
-            "or touching a taxlot the trail crosses, and what else the "
-            "2026-11-08 tracing held but the South subdistrict and the Flood "
-            "Risk Area alone -- held as Portland's drawn_areas"
+            "every lot that abuts, or lies within 25 ft of, the Springwater "
+            "Corridor parcel (Portland Parks property 679, Portland Maps "
+            "Parks_Misc layer 2, fetched 2026-11-09), and the corridor's own "
+            "lots -- held as Portland's drawn_areas"
         ),
         assume=None,
     ),

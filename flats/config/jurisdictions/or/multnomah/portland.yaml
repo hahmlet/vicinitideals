@@ -6869,28 +6869,29 @@ drawn_areas:
     zones: [R20, R10, R7, R5, R2.5, RM1, RM2, CR, CM1, CM2, CM3, CE, CI1]
     file: or/multnomah/portland/johnson-creek-unmeasured-lots.geojson
     source: >-
-      The South subdistrict part of the johnson_creek_impervious tracing, the
-      Johnson Creek Flood Risk Area subdistrict (plan-subdistricts.geojson),
-      and the Springwater Corridor Trail (Portland Maps BPS_Zoning_Code_Layers
-      layer 2, fetched 2026-11-01) against the taxlots the screen reads; the
-      lots only 33.537.125 reached taken out 2026-11-08 (ruling
-      2026-11-01-trees-ignored-entered-per-lot, FOLLOWUPS 140), and the lots
+      The Springwater Corridor's own land, Portland Parks property
+      "Springwater Corridor" (springwater-corridor.geojson, Portland Maps
+      Parks_Misc layer 2, fetched 2026-11-09), against the taxlots the screen
+      reads; Map 537-1 draws the corridor only as its trail line, which runs
+      inside that parcel the whole way through the plan district. Re-traced
+      2026-11-09 (FOLLOWUPS 58) from the trail-distance reach of 2026-11-01
+      (lots only 33.537.125 reached taken out 2026-11-08, FOLLOWUPS 140; lots
       only South or the Flood Risk Area reached moved to
-      johnson_creek_land_division the same day (FOLLOWUPS 58). Drawn
-      provenance in the file's source block.
+      johnson_creek_land_division 2026-11-08). Drawn provenance in the file's
+      source block.
     quote: "or/multnomah/portland/33.537.txt#L42-L53,L223-L248"
     cite: PCC 33.537.130
     note: >-
-      Inside means a lot the Springwater Corridor standards reach: every lot
-      within 100 ft of the trail line or touching a non-street taxlot the
-      trail runs through (the corridor is about 100 ft wide, so 100 ft from
-      its centre line covers the abutting lots and those within 20 ft of it).
-      The corridor parcels themselves are left out. Split 2026-11-08
-      (FOLLOWUPS 58): the lots only the South subdistrict or the Flood Risk
-      Area reached moved to johnson_creek_land_division, because 140.E and
-      160 govern land divisions only and so reach the townhouse form and not
-      the one-lot one; everything else the tracing held, partly covered lots
-      included, stays here and holds both forms.
+      Inside means a lot the Springwater Corridor standards reach, on either
+      form: a lot that abuts the corridor parcel (33.537.130.B "sites that
+      abut the Springwater Corridor"), any lot within 25 ft of it (not shown
+      to be apart), and the corridor's own lots. A lot across a street from
+      the corridor does not abut it and is not held. What stays open is the
+      fit with the 20 ft (R) or 10 ft (C) landscaped buffer and the 20 ft
+      vehicle-area setback on the one lot line that abuts the corridor,
+      which the screen does not set per line. The South subdistrict and
+      Flood Risk Area reach is johnson_creek_land_division (townhouse form
+      only, FOLLOWUPS 58).
   johnson_creek_land_division:
     condition: pdx_johnson_creek_land_division
     zones: [R20, R10, R7, R5, R2.5, RM1, RM2, CR, CM1, CM2, CM3, CE, CI1]

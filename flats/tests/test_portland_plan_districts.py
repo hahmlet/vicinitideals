@@ -202,6 +202,37 @@ def test_the_land_division_quote_says_land_division() -> None:
     assert "Land Divisions" in density
 
 
+CORRIDOR = "or/multnomah/portland/springwater-corridor.geojson"
+
+
+def test_the_corridor_is_the_citys_own_parcel() -> None:
+    # Map 537-1 draws the corridor as a trail line; its land is the Parks
+    # property the trail runs inside (FOLLOWUPS 58, 2026-11-09).
+    from flats.rules import loader
+
+    data = json.loads((loader.AREAS_ROOT / CORRIDOR).read_text(encoding="utf-8"))
+    assert "Parks_Misc/MapServer/2" in data["source"]["url"]
+    (feature,) = data["features"]
+    assert feature["properties"]["NAME"] == "Springwater Corridor"
+    assert 250 < load_area(CORRIDOR).area / 43_560 < 280
+
+
+def test_every_corridor_hold_lies_against_the_corridor() -> None:
+    # Held: lots that abut the parcel, lots within 25 ft of it, and its own.
+    corridor, held = load_area(CORRIDOR), load_area(FILES[UNMEASURED])
+    reach = corridor.buffer(26)
+    for piece in getattr(held, "geoms", [held]):
+        assert piece.intersects(reach), piece.representative_point()
+
+
+def test_a_land_division_lot_away_from_the_corridor_holds_one_form() -> None:
+    far = load_area(FILES[LAND]).difference(load_area(CORRIDOR).buffer(1_000)).buffer(-10)
+    piece = max(getattr(far, "geoms", [far]), key=lambda g: g.area)
+    facts = _facts("R5", piece.representative_point().buffer(5))
+    assert facts[LAND] is True
+    assert facts[UNMEASURED] is False
+
+
 def _tree_only():
     """Where only 33.537.125 reached: the cap's flood-hazard lots outside
     South, the Flood Risk Area and the corridor reach."""

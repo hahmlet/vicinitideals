@@ -2225,7 +2225,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Which lot line abuts the Springwater Corridor, the slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area"
+    path: "The fit with the landscaped buffer and vehicle-area setback set on the lot line that abuts the Springwater Corridor parcel (springwater-corridor.geojson), the slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area"
     priority: later
     status: pending
     approved_by: null

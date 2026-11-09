@@ -30,6 +30,14 @@ lots only they reach are a new tracing, `johnson_creek_land_division`, that hold
 townhouse form alone (`fold_land_division`); the one-lot apartment form makes no land
 division. The Springwater corridor reach (130) still holds both forms. Expected: about 72
 single-held lots go yellow -> green as an apartment, the townhouse form stays yellow.
-STILL YELLOW: the Springwater lots, because no data says which lot line abuts the
-corridor (Map 537-1 would answer it). 403 lots near corridor parcels were never in the
-tracing; worth a look when the map is fetched.
+Pass 3b (2026-11-09, Steph: "you may always download maps"): Map 537-1 draws the
+corridor only as its trail line; its land is the Portland Parks property "Springwater
+Corridor" (Parks_Misc layer 2, stored as springwater-corridor.geojson), and the trail runs
+inside it the whole way through the plan district. The corridor tracing was re-traced on
+that parcel: held = lots that abut it, lots within 25 ft, and its own lots (365). Of the 30
+single-held corridor yellows, 12 abut and stay yellow; 17 do not (14 South lots, green as
+an apartment only; 3 across a street, green on both forms). The 403 lots beside corridor
+parcels: 49 lots newly held across the whole check, none green in rel4.
+STILL YELLOW: the abutting lots. The screen cannot set the 20 ft (R) / 10 ft (C) buffer
+and 20 ft vehicle setback on the one lot line that faces the corridor; that needs a
+per-line setback (a build, not data).
