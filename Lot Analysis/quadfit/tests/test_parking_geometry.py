@@ -621,8 +621,12 @@ def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in(trust
 #: Table 53-2 says 5 ft for parking, while the ported building setbacks are the tops of
 #: 0-20 ranges. Tualatin RMH/RH/RH-HR: Tables 42-3/43-3/44-3 print 10 ft for parking against
 #: a 15 ft building front. Tualatin CO: Table 50-2 says 5 ft for parking against a 20 ft
-#: building front.
+#: building front. Multnomah unincorporated R7/R10/R20 (the Portland pockets, 2026-11-09):
+#: PCC 33.266.120.C.2.a prints 10 ft for parking spaces against a 15/20 ft building front.
 STATES_ITS_OWN_FIGURE = {
+    ("multnomah_unincorporated", "R7"),
+    ("multnomah_unincorporated", "R10"),
+    ("multnomah_unincorporated", "R20"),
     ("tualatin", "CC"),
     ("tualatin", "CO"),
     ("tualatin", "RMH"),

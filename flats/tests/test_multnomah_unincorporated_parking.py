@@ -40,8 +40,11 @@ PARKING = "or/multnomah/_unincorporated/39.parking.txt"
 REVIEW = "or/multnomah/_unincorporated/39.design-review.txt"
 DEFINITIONS = "or/multnomah/_unincorporated/39.2000.definitions.txt"
 
-#: Every zone the pod could stand in that now borrows its parking setback.
-BORROWERS = ("MR4", "R5", "R7", "R10", "R20", "LR7")
+#: Every zone the pod could stand in that now borrows its parking setback. The
+#: Portland pockets (R5, R7, R10, R20) left this list on 2026-11-09: Title 33
+#: governs them, and PCC 33.266.120.C.2.a prints its own ten feet
+#: (test_multnomah_pockets_title33).
+BORROWERS = ("MR4", "LR7")
 
 
 @pytest.fixture(scope="module")

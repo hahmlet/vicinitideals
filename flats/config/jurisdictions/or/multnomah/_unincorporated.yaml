@@ -3154,15 +3154,21 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
-    # 39.6580(A), stated as equal to the building setback -- see the note in
-    # `defaults:`. `same_as` resolves against the front setback above it, and
-    # the sentence carries no figure of its own for anything to be typed from.
+    # PCC 33.266.120.C.2.a, from this layer's own copy of Title 33 (the same
+    # file, hash for hash, as the Portland layer's). Re-read 2026-11-09
+    # (FOLLOWUPS 112(b), the page-check card that cited the county): this is a
+    # Portland-administered pocket, the county has adopted Title 33 as its own
+    # code for it, and the county's 39.6580(A) -- which made this equal to the
+    # front setback -- is written for the county's zones (see `notes:`). The
+    # sentence is stated of SPACES, so a driveway may cross the first ten
+    # feet; vehicle area between the building and the street is barred on its
+    # own by 33.266.120.C.1.a (`parking_front_prohibited` below).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
-      url: https://multco.us/file/chapter_39_-_zoning_code/download
-      retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
+      value: 10
+      cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3276,15 +3282,21 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
-    # 39.6580(A), stated as equal to the building setback -- see the note in
-    # `defaults:`. `same_as` resolves against the front setback above it, and
-    # the sentence carries no figure of its own for anything to be typed from.
+    # PCC 33.266.120.C.2.a, from this layer's own copy of Title 33 (the same
+    # file, hash for hash, as the Portland layer's). Re-read 2026-11-09
+    # (FOLLOWUPS 112(b), the page-check card that cited the county): this is a
+    # Portland-administered pocket, the county has adopted Title 33 as its own
+    # code for it, and the county's 39.6580(A) -- which made this equal to the
+    # front setback -- is written for the county's zones (see `notes:`). The
+    # sentence is stated of SPACES, so a driveway may cross the first ten
+    # feet; vehicle area between the building and the street is barred on its
+    # own by 33.266.120.C.1.a (`parking_front_prohibited` below).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
-      url: https://multco.us/file/chapter_39_-_zoning_code/download
-      retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
+      value: 10
+      cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3463,15 +3475,21 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
-    # 39.6580(A), stated as equal to the building setback -- see the note in
-    # `defaults:`. `same_as` resolves against the front setback above it, and
-    # the sentence carries no figure of its own for anything to be typed from.
+    # PCC 33.266.120.C.2.a, from this layer's own copy of Title 33 (the same
+    # file, hash for hash, as the Portland layer's). Re-read 2026-11-09
+    # (FOLLOWUPS 112(b), the page-check card that cited the county): this is a
+    # Portland-administered pocket, the county has adopted Title 33 as its own
+    # code for it, and the county's 39.6580(A) -- which made this equal to the
+    # front setback -- is written for the county's zones (see `notes:`). The
+    # sentence is stated of SPACES, so a driveway may cross the first ten
+    # feet; vehicle area between the building and the street is barred on its
+    # own by 33.266.120.C.1.a (`parking_front_prohibited` below).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
-      url: https://multco.us/file/chapter_39_-_zoning_code/download
-      retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
+      value: 10
+      cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3627,15 +3645,21 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
-    # 39.6580(A), stated as equal to the building setback -- see the note in
-    # `defaults:`. `same_as` resolves against the front setback above it, and
-    # the sentence carries no figure of its own for anything to be typed from.
+    # PCC 33.266.120.C.2.a, from this layer's own copy of Title 33 (the same
+    # file, hash for hash, as the Portland layer's). Re-read 2026-11-09
+    # (FOLLOWUPS 112(b), the page-check card that cited the county): this is a
+    # Portland-administered pocket, the county has adopted Title 33 as its own
+    # code for it, and the county's 39.6580(A) -- which made this equal to the
+    # front setback -- is written for the county's zones (see `notes:`). The
+    # sentence is stated of SPACES, so a driveway may cross the first ten
+    # feet; vehicle area between the building and the street is barred on its
+    # own by 33.266.120.C.1.a (`parking_front_prohibited` below).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
-      url: https://multco.us/file/chapter_39_-_zoning_code/download
-      retrieved: '2026-08-30'
-      quote: "or/multnomah/_unincorporated/39/39.6580.txt#L1-L3"
+      value: 10
+      cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
