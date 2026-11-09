@@ -1849,6 +1849,27 @@ def drive_at_street(
     return drive_width(rules, parking.lane_ft)
 
 
+def drive_in_side_street_yard(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    beside: "Beside | None" = None,
+) -> float:
+    """Width of the pod's driveway across a corner lot's STREET-SIDE yard, in
+    feet: what a cap on that yard's share in vehicle area
+    (``parking_side_street_yard_max_pct``, Portland 33.266.120.C.1.b) is
+    measured against. The drive a corner lot takes off the side street
+    (:func:`side_street_fed`) crosses it; a drive off the front runs down
+    the building's flank inside the envelope, since a corner lot lends no
+    side yard to the lane or the court (:func:`side_yard_lane_overlap_ft`),
+    and leaves the street-side yard unpaved. 0.0 off a corner lot."""
+    if not corner or beside is not None or not side_street_fed(rules, alley, corner):
+        return 0.0
+    return drive_at_street(design, rules, alley, corner=corner, beside=beside) or 0.0
+
+
 def drive_in_front_yard(
     design: Design,
     rules: "ZoneResolution",

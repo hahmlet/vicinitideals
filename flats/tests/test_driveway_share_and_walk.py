@@ -455,3 +455,64 @@ def test_drive_lines_never_reach_a_city_outside_the_three() -> None:
     second = _hv_lot().second
     assert second is not None
     assert _driveway_cap_frontages(rules(), second.facts) == pytest.approx((23.08,), abs=0.05)
+
+
+# --- a corner's street-side yard share (FOLLOWUPS 6(b), 2026-11-09) ------------
+#
+# Portland 33.266.120.C.1.b, second sentence: 20 percent of the land between
+# the side street lot line and the side street building line. The drive a
+# corner lot's court takes off the side street crosses it; which street is
+# the side street is not known, so a pass is read off the shortest and a fail
+# off the longest, and between them the share is unchecked.
+
+
+def side(street_min: float | None, street_max: float | None = None, *, corner: bool = True,
+         access: str = "side"):
+    zone = rules(parking_side_street_yard_max_pct=20, corner_access_street=access)
+    lane = court_across(DESIGN, zone, corner=corner).lane_ft
+    result = screen(
+        zone,
+        LotFacts(lot_sqft=12000, frontage_ft=100.0, lot_width_ft=100.0, corner=corner,
+                 street_line_min_ft=street_min,
+                 street_line_max_ft=street_max if street_max is not None else street_min),
+        DESIGN, fit(lane), policy=POLICY,
+    )
+    return (
+        next((c for c in result.checks if c.check == "side_street_yard_vehicle_share"), None),
+        result,
+    )
+
+
+def test_the_side_street_share_is_a_check_that_names_its_field() -> None:
+    assert CHECK_FIELD["side_street_yard_vehicle_share"] == "parking_side_street_yard_max_pct"
+
+
+def test_the_drive_off_the_side_street_is_held_to_the_share() -> None:
+    zone = rules(parking_side_street_yard_max_pct=20, corner_access_street="side")
+    drive = drive_at_street(DESIGN, zone, corner=True)
+    assert drive
+    got, _ = side(drive / 0.2 + 1)
+    assert got is not None and got.verdict is Verdict.passes
+    got, _ = side(drive / 0.2 - 3)
+    assert got is not None and got.verdict is Verdict.fails
+
+
+def test_a_drive_that_fits_only_the_longer_street_is_a_question() -> None:
+    zone = rules(parking_side_street_yard_max_pct=20, corner_access_street="side")
+    drive = drive_at_street(DESIGN, zone, corner=True)
+    got, result = side(drive / 0.2 - 3, drive / 0.2 + 10)
+    assert got is None
+    assert "side_street_yard_vehicle_share" in result.unchecked
+
+
+def test_a_drive_off_the_front_or_an_interior_lot_is_not_asked() -> None:
+    got, result = side(40.0, access="front")
+    assert got is None and "side_street_yard_vehicle_share" not in result.unchecked
+    got, result = side(40.0, corner=False)
+    assert got is None and "side_street_yard_vehicle_share" not in result.unchecked
+
+
+def test_an_unmeasured_street_leaves_the_side_share_unchecked() -> None:
+    got, result = side(None)
+    assert got is None
+    assert "side_street_yard_vehicle_share" in result.unchecked

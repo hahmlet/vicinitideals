@@ -84,6 +84,7 @@ from flats.score.paper import (
     court_depth,
     drive_at_street,
     drive_in_front_yard,
+    drive_in_side_street_yard,
     door_limit,
     door_turned,
     entrance_street_named,
@@ -495,6 +496,7 @@ CHECK_FIELD: dict[str, str] = {
     "building_frontage_other_share": "building_frontage_other_pct",
     "front_setback_max_ft": "setback_front_max_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
+    "side_street_yard_vehicle_share": "parking_side_street_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
     "min_lot_depth_ft": "min_lot_depth_ft",
@@ -1559,6 +1561,39 @@ def _checks(
                 front_share / 100.0 * lot.lot_width_ft,
                 is_maximum=True,
             )
+    # The same share in a corner lot's street-side yard (Portland
+    # 33.266.120.C.1.b, 20 percent "between the side street lot line and the
+    # side street building line"). The strip's depth cancels as the front's
+    # does: the drive crossing it against the side street's length. Which of
+    # the lot's streets is the side street the screen does not say, so the
+    # drive passes where it clears the SHORTEST street (``street_line_min_ft``)
+    # and fails where it misses even the LONGEST (``street_line_max_ft``);
+    # between the two, and where the streets are unmeasured, it is unchecked
+    # -- never a pass read off the longer street, never a fail off the shorter.
+    side_share = rules.get("parking_side_street_yard_max_pct")
+    if side_share is not None and lot.corner:
+        across_side = drive_in_side_street_yard(
+            design, rules, lot.alley, corner=lot.corner, beside=beside
+        )
+        least, most = lot.street_line_min_ft, lot.street_line_max_ft
+        if not across_side:
+            pass
+        elif least is not None and across_side <= side_share / 100.0 * least:
+            check(
+                "side_street_yard_vehicle_share",
+                across_side,
+                side_share / 100.0 * least,
+                is_maximum=True,
+            )
+        elif most is not None and across_side > side_share / 100.0 * most:
+            check(
+                "side_street_yard_vehicle_share",
+                across_side,
+                side_share / 100.0 * most,
+                is_maximum=True,
+            )
+        else:
+            unchecked.append("side_street_yard_vehicle_share")
     min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=design.units
     )

@@ -155,6 +155,7 @@ _LABELS: dict[str, str] = {
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
+    "parking_side_street_yard_max_pct": "max. vehicle share of a corner's street-side yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
     "parking_max_per_unit": "max. parking per unit",
     "parking_min_per_unit": "min. parking per unit",
@@ -1183,6 +1184,16 @@ _F: tuple[FieldDef, ...] = (
         True,
     ),
     FieldDef(
+        "parking_side_street_yard_max_pct",
+        "percent",
+        "Most of the ground between a corner lot's side street lot line and "
+        "the side street building line that may be paved or used as vehicle "
+        "area: Portland 20 percent (33.266.120.C.1.b, the sentence after the "
+        "front yard's 40). Measured as the drive the court takes off the side "
+        "street against the lot's shortest street line (FOLLOWUPS 6(b)).",
+        True,
+    ),
+    FieldDef(
         "parking_front_prohibited",
         "bool",
         "True where the code bans PARKING between the primary building and "
@@ -2158,6 +2169,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_corner",
         "building_frontage_band_ft",
         "parking_front_yard_max_pct",
+        "parking_side_street_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",
         "parking_alley_backout_ft",
