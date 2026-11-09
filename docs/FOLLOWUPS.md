@@ -142,7 +142,9 @@ the full one.)
 155. [Claude] [scan: YES] **Portland CI1 lots unmeasured in quadfit** -- BUILT daf84c90 (flats/ci1-quadfit), rides the big package. [file](followups/155-portland-ci1-quadfit.md)
 156. [Claude] [scan: YES (envelopes only)] **Gladstone quadfit rules follow the old code, not Ordinance 1545** -- found by 155; no false green. [file](followups/156-gladstone-ordinance-1545.md)
 157. [Claude] [scan: YES -- toward green] **Building pushed back at an inward bend in the front lot line (square setback caps)** -- found by rel4-fixes (Tigard 2S103BA00137: 21.08 ft vs 20 ft max); lane envelope-caps BUILDING off rel5, rides rel6. [file](followups/157-envelope-square-caps.md)
-158. [Claude] [scan: YES] **17 fire-reach / front-max reds left after rel4-fixes** -- building further back at the same angle (not the corner tie); RED is the safe side; read, then a fix lane stacked on rel4-fixes. [file](followups/158-fire-front-max-17-reds.md)
+158. [Claude] [scan: YES] **17 fire-reach / front-max reds left after rel4-fixes** -- building further back at the same angle (not the corner tie); RED is the safe side; read, then a fix lane stacked on rel4-fixes. [file](followups/158-fire-front-max-17-reds.md) -- lane DONE 89aa02bd (Hillsboro 45 deg door angle; 16 stay red, read), rides rel6
+159. [Claude] [scan: YES -- toward green] **Tigard mixed-use and Sandy 45-degree entrance angle** -- both codes print 45 degrees like Hillsboro (158); Tigard excludes "entrances to individual residences"; lane tigard-sandy-angle BUILDING. [file](followups/159-tigard-sandy-entrance-angle.md)
+160. [Claude] [scan: YES -- toward red, false-GREEN risk] **Placement retry never checks the maximum front setback** -- found by fire-reds-158; lane retry-front-max BUILDING. [file](followups/160-retry-front-max.md)
 
 ## 2. Waiting on Steph
 
