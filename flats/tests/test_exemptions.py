@@ -184,6 +184,13 @@ pytestmark = pytest.mark.unit
 # owe no maximum front setback but Table 4.0131 note 5's, at the end of a Minor Access Street.
 # The exempt base quotes the table title ("Minimum Setbacks", L146) and note 5 (L179), whose
 # 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
+# 206 -> 205 numeric on 2026-11-09 (pagecheck-findings): Gresham RTC's townhouse exemption
+# from the 7.0420(J)(1)(a) frontage share rested on 7.0431, which does not list RTC; removed.
+# 205 -> 215 numeric on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+# restate the city's exempt parent-lot bases for parking_maneuvering_max_width_ft and
+# parking_side_prohibited (5 x 2) so their townhouse variants can cite 4.1152 S13/S14.
+# rel6 2026-11-09, combining: the FOLLOWUPS 68 lines below (486 stated, 219 numeric) plus
+# flats/pagecheck-findings' net +9 numeric above (206 -> 215) = 486 stated, 228 numeric.
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
@@ -205,7 +212,7 @@ pytestmark = pytest.mark.unit
 # rel6 2026-11-09, combining two lanes: 478 -> 486 stated and 206 + 13 = 219 numeric --
 # rel5's 478/206 (above) plus flats/pdx-map-120's Maps 120-2/120-3 rows (+13 numeric; +8 stated:
 # its +12 less the four corner-and-depth variants its round 3 removed).
-EXPECTED = {"stated": 486, "numeric": 219, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 486, "numeric": 228, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

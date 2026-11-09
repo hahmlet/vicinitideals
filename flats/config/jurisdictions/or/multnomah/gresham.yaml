@@ -883,7 +883,15 @@ readings:
       driveway-approach cap of 18 feet or 34 percent of frontage, parking no closer than eight
       feet to the right-of-way -- and every one of them is declined on the same one sentence
       rather than on six separate arguments. If Gresham ever deletes that bullet, this card is the
-      place the whole list comes back.
+      place the whole list comes back. Written for the one-lot plex. Since 2026-10-29 DCC, DTM,
+      DMU, DEM and DCL take the pod as townhouses on the Townhouse P of Table 4.1120, and
+      4.1102(C) exempts only DRL-1 and DRL-2 townhouses, so the Townhouse heading (L7) reaches
+      that form: S6's orientation is encoded on DCC and DTM (2026-11-09). Its garage, driveway and
+      parking standards were read against it the same day: S11 (alley), S12(b) (18-foot approach),
+      S13(a)(iv) (12-foot parking and maneuvering) and S14(a) (rear yard only, side approach on a
+      corner) restate 7.0431(B)(1)-(3) and now cite 4.1152 on all five zones at the same values;
+      S13's 15-foot frontage gate conditions a front-access path the rear court does not take, and
+      S9, S10 and S13(a)(v) govern garages the pod does not have.
     fingerprint: c570624a4e9b345c
   "4.1100.downtown.txt#4.1100":
     queue: condition
@@ -5863,6 +5871,137 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
+    # THE TOWNHOUSE REAR-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S14(a) governs "townhouse projects that do not meet all of the
+    # standards in Section 4.1152(A)(4)(S13)", which a shared rear court does
+    # not by construction -- the same branch, in the same words, as 7.0431
+    # (B)(3)(b), and 7.0431 does not reach this zone (L3-L5 name DRL-1 and
+    # DRL-2). (a)(i): parking accessed on the back facade or in the rear yard,
+    # none in the front or side yard; (a)(ii): a project with a corner lot takes
+    # access from a single approach on the side of the corner lot; (a)(iii):
+    # otherwise one consolidated driveway, not between any front facade and
+    # front lot line; (b): a project whose units all take access from a rear
+    # alley is exempt from (a). Values unchanged from the city default; the
+    # townhouse citation moves to the section that applies.
+    parking_side_prohibited:
+      exempt: true
+      cite: GDC 7.0420(B)(5)(c), which puts parking in the front or street side yard setback and states no side-yard ban
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), no off-street parking in the front yard or side yard of a townhouse
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) puts townhouse parking in the rear yard (see
+    # parking_side_prohibited above); the parent-lot base is the city default's.
+    parking_required_yard_prohibited:
+      value: true
+      cite: GDC 7.0420(B)(5)(c), quadplex parking spaces allowed in a driveway, the front or street side yard setback, or the rear yard setback only when there is an alley
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      variants:
+        - value: false
+          when: [alley_at_rear]
+          cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
+          quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+        - value: false
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+        - value: false
+          when: [unit_lots, alley_at_rear]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) bans townhouse parking in the side yard; a driveway
+    # may still pass through it (9.0822).
+    parking_side_yard_stated:
+      value: none
+      cite: GDC 3.0100 and 7.0420, yard definitions and no parking-side permission stated for quadplexes
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      variants:
+        - value: lane
+          when: [unit_lots]
+          cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
+          quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+    # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
+    # from a single approach on the side of the corner lot.
+    corner_access_street:
+      value: any
+      cite: Gresham PWS 6.03, under which a corner lot may be limited to one street at the engineer's discretion, and GDC 7.0420, which names no street
+      url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      variants:
+        - value: side
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(ii), a townhouse project with a corner lot takes access from a single driveway approach on the side of the corner lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L721,L727"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P: the use is LIMITED,
       # and note 1(b) states the limit as three gates that must all hold --
@@ -5966,6 +6105,27 @@ zones:
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L74-L79"
+    # MAXIMUM FRONT SETBACK, read 2026-11-09 (pagecheck-findings; DMU, DEM
+    # and DCL already held the townhouse row's). Table 4.1130's "Maximum
+    # Building Setbacks" rows, by street type (Map 4.1140; no field carries a
+    # per-line type, so the smallest is taken): the quadplex row (L94) prints
+    # 20, 20, 15, N/A, N/A, 20 (L109) and the "Townhouse in DCC, DMU, DTM,
+    # DEM, and DCL" row (L77) prints 10, 10, 15, 15, 20 (L91). Note 12 exempts
+    # the part of a courtyard development behind its courtyard, which the
+    # pod is not; note 16 lifts the maximum once the street type's minimum
+    # building frontage is met, which nothing measures, so the maximum is
+    # held (conservative).
+    setback_front_max_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4/4.1130.txt#L74-L76,L94-L95,L109,L163,L167-L168"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L109,L164"
     setback_side_ft:
       # NOT ENCODED: a party-wall zero, and this district is the plainer of the
       # two cases. The 0 came from the cell at L504 reading "Common
@@ -5982,15 +6142,14 @@ zones:
       value: 5
       quote: "or/multnomah/gresham/4/4.1130.txt#L94,L100"
       variants:
-        # The townhouse row: interior 5 (L84); note 11 raises it to 10 where
-        # the side yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR, read
-        # off the layer's `neighbours:` block as in DMU.
+        # The townhouse row: interior 5 (L84). Note 11 (10 ft beside DRL-1,
+        # DRL-2, LDR-5, LDR-7, TR or TLDR) does not reach it: its markers sit
+        # on the Commercial and Multi-Family rows' side and rear cells
+        # (L57-L58, L65-L66) and the townhouse row (L74-L91) carries none.
+        # Removed 2026-11-09 (FOLLOWUPS 112 page-check finding).
         - value: 5
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L84"
-        - value: 10
-          when: [unit_lots, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L94,L107"
@@ -5998,17 +6157,14 @@ zones:
         - value: 6
           when: [alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L94,L108"
-        # The townhouse row: no alley 10, alley 3 (L89-L90); note 11 keeps
-        # 10 where the rear yard abuts a lower-density district.
+        # The townhouse row: no alley 10, alley 3 (L89-L90). No note 11 marker
+        # on it (see the side setback).
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88-L89"
         - value: 3
           when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88,L90"
-        - value: 10
-          when: [unit_lots, alley_at_rear, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L94,L101"
@@ -6090,12 +6246,20 @@ zones:
       quote: "or/multnomah/gresham/7/7.0420.txt#L165-L170"
       via: "or/multnomah/gresham/3/3.0103.txt#L220-L221"
       variants:
-        # The townhouse form, read as DRL-1 reads it: J.1 names "single
-        # detached dwellings and plexes" only, and townhouses go to 7.0431,
-        # whose entry orientation binds each entrance and not the long axis.
-        - value: entrance_only
+        # The townhouse form. J.1 names "single detached dwellings and
+        # plexes" only, and 7.0431 does not reach it either: its district
+        # list (7.0400.middle-housing-design.txt L434-L436) names DRL-1 and
+        # DRL-2 and no other Downtown district. 4.1102(C) sends only DRL-1
+        # and DRL-2 townhouses out of 4.1152, so a townhouse here takes
+        # 4.1152's Townhouse heading (L7), and S6.f says "Townhouse units are
+        # required to be located adjacent to streets and alleys and oriented
+        # to streets", with S6.a barring unit fronts that face the
+        # non-street sides or rear of the site: the row of four keeps its
+        # long face to the street (read 2026-11-09, FOLLOWUPS 112 page-check
+        # finding; it was entrance_only on 7.0431, which does not apply).
+        - value: axis_required
           when: [unit_lots]
-          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+          quote: "or/multnomah/gresham/4/4.1152.txt#L3,L7,L286-L290,L310"
     review_discretion:
       # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
       # permitted without permission of the City and shall be allowed only
@@ -6106,13 +6270,144 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
-    notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5 (10 beside a lower-density district), rear 10 (3 on an alley), entrance orientation, the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. The Downtown Commercial Core is the largest unencoded district in Gresham and it screens closed, which is worth stating precisely because the reason is narrow. A quadplex is not prohibited here; it is allowed on a small legacy lot -- 7,600 sq ft or less, 70 feet of frontage or less, north of NE 8th Street -- and two of those three gates are facts nobody has measured. The lot-area gate is measured and rides on the variant as a band, so the day frontage and that street line are computed the permission opens on the right lots rather than on all of them. Every dimensional standard comes from the Table 4.1130 row headed "Single-detached, duplex, triplex, and quadplex dwellings in any district" (L492): its numbers are identical across all six street-type columns, so nothing here turns on which street the lot fronts. Height 85 and floor area ratio 3.0 are the DCC column of a table whose second column is not a district but the N Main Avenue strip -- 45 feet and 1.5 -- and note 1 sends any part of a site within 110 feet of that centre line to it. Both of those numbers still clear a 26 ft pod, so the strip is ruled in the footnote ledger rather than encoded as a variant. The MAXIMUM front setback of this row (L508) is 20 feet on four street types and 15 on Beech; not encoded, for the same reason it is not encoded on DRL-1 and DRL-2, and the same blind spot.'
+    notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5, rear 10 (3 on an alley), the row''s long face to the street (4.1152 S6; 7.0431 does not list DCC or DTM), the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. The Downtown Commercial Core is the largest unencoded district in Gresham and it screens closed, which is worth stating precisely because the reason is narrow. A quadplex is not prohibited here; it is allowed on a small legacy lot -- 7,600 sq ft or less, 70 feet of frontage or less, north of NE 8th Street -- and two of those three gates are facts nobody has measured. The lot-area gate is measured and rides on the variant as a band, so the day frontage and that street line are computed the permission opens on the right lots rather than on all of them. Every dimensional standard comes from the Table 4.1130 row headed "Single-detached, duplex, triplex, and quadplex dwellings in any district" (L492): its numbers are identical across all six street-type columns, so nothing here turns on which street the lot fronts. Height 85 and floor area ratio 3.0 are the DCC column of a table whose second column is not a district but the N Main Avenue strip -- 45 feet and 1.5 -- and note 1 sends any part of a site within 110 feet of that centre line to it. Both of those numbers still clear a 26 ft pod, so the strip is ruled in the footnote ledger rather than encoded as a variant. The MAXIMUM front setback of this row (L508) is 20 feet on four street types and 15 on Beech; not encoded, for the same reason it is not encoded on DRL-1 and DRL-2, and the same blind spot.'
   DTM:
     section: ["4.11", "7.042"]
     cite_default:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
+    # THE TOWNHOUSE REAR-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S14(a) governs "townhouse projects that do not meet all of the
+    # standards in Section 4.1152(A)(4)(S13)", which a shared rear court does
+    # not by construction -- the same branch, in the same words, as 7.0431
+    # (B)(3)(b), and 7.0431 does not reach this zone (L3-L5 name DRL-1 and
+    # DRL-2). (a)(i): parking accessed on the back facade or in the rear yard,
+    # none in the front or side yard; (a)(ii): a project with a corner lot takes
+    # access from a single approach on the side of the corner lot; (a)(iii):
+    # otherwise one consolidated driveway, not between any front facade and
+    # front lot line; (b): a project whose units all take access from a rear
+    # alley is exempt from (a). Values unchanged from the city default; the
+    # townhouse citation moves to the section that applies.
+    parking_side_prohibited:
+      exempt: true
+      cite: GDC 7.0420(B)(5)(c), which puts parking in the front or street side yard setback and states no side-yard ban
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), no off-street parking in the front yard or side yard of a townhouse
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) puts townhouse parking in the rear yard (see
+    # parking_side_prohibited above); the parent-lot base is the city default's.
+    parking_required_yard_prohibited:
+      value: true
+      cite: GDC 7.0420(B)(5)(c), quadplex parking spaces allowed in a driveway, the front or street side yard setback, or the rear yard setback only when there is an alley
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      variants:
+        - value: false
+          when: [alley_at_rear]
+          cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
+          quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+        - value: false
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+        - value: false
+          when: [unit_lots, alley_at_rear]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) bans townhouse parking in the side yard; a driveway
+    # may still pass through it (9.0822).
+    parking_side_yard_stated:
+      value: none
+      cite: GDC 3.0100 and 7.0420, yard definitions and no parking-side permission stated for quadplexes
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      variants:
+        - value: lane
+          when: [unit_lots]
+          cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
+          quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+    # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
+    # from a single approach on the side of the corner lot.
+    corner_access_street:
+      value: any
+      cite: Gresham PWS 6.03, under which a corner lot may be limited to one street at the engineer's discretion, and GDC 7.0420, which names no street
+      url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      variants:
+        - value: side
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(ii), a townhouse project with a corner lot takes access from a single driveway approach on the side of the corner lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L721,L727"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P. Note 1(a) states the
       # limit: a lot of record 6,500 sq ft or smaller with 70 feet of street
@@ -6212,6 +6507,27 @@ zones:
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L74-L79"
+    # MAXIMUM FRONT SETBACK, read 2026-11-09 (pagecheck-findings; DMU, DEM
+    # and DCL already held the townhouse row's). Table 4.1130's "Maximum
+    # Building Setbacks" rows, by street type (Map 4.1140; no field carries a
+    # per-line type, so the smallest is taken): the quadplex row (L94) prints
+    # 20, 20, 15, N/A, N/A, 20 (L109) and the "Townhouse in DCC, DMU, DTM,
+    # DEM, and DCL" row (L77) prints 10, 10, 15, 15, 20 (L91). Note 12 exempts
+    # the part of a courtyard development behind its courtyard, which the
+    # pod is not; note 16 lifts the maximum once the street type's minimum
+    # building frontage is met, which nothing measures, so the maximum is
+    # held (conservative).
+    setback_front_max_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4/4.1130.txt#L74-L76,L94-L95,L109,L163,L167-L168"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.1130.txt#L74-L77,L91,L163,L167-L168"
+    setback_front_max_streets:
+      value: front
+      cite: Gresham Development Code Table 4.1130, maximum front setback; townhouse street-façade and garage side setbacks follow the applicable street-type front setback
+      quote: "or/multnomah/gresham/4/4.1130.txt#L91,L109,L164"
     setback_side_ft:
       # NOT ENCODED: a party-wall zero, and this district is the plainer of the
       # two cases. The 0 came from the cell at L504 reading "Common
@@ -6228,15 +6544,14 @@ zones:
       value: 5
       quote: "or/multnomah/gresham/4/4.1130.txt#L94,L100"
       variants:
-        # The townhouse row: interior 5 (L84); note 11 raises it to 10 where
-        # the side yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR, read
-        # off the layer's `neighbours:` block as in DMU.
+        # The townhouse row: interior 5 (L84). Note 11 (10 ft beside DRL-1,
+        # DRL-2, LDR-5, LDR-7, TR or TLDR) does not reach it: its markers sit
+        # on the Commercial and Multi-Family rows' side and rear cells
+        # (L57-L58, L65-L66) and the townhouse row (L74-L91) carries none.
+        # Removed 2026-11-09 (FOLLOWUPS 112 page-check finding).
         - value: 5
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L84"
-        - value: 10
-          when: [unit_lots, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L94,L107"
@@ -6244,17 +6559,14 @@ zones:
         - value: 6
           when: [alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L94,L108"
-        # The townhouse row: no alley 10, alley 3 (L89-L90); note 11 keeps
-        # 10 where the rear yard abuts a lower-density district.
+        # The townhouse row: no alley 10, alley 3 (L89-L90). No note 11 marker
+        # on it (see the side setback).
         - value: 10
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88-L89"
         - value: 3
           when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88,L90"
-        - value: 10
-          when: [unit_lots, alley_at_rear, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L94,L101"
@@ -6336,12 +6648,20 @@ zones:
       quote: "or/multnomah/gresham/7/7.0420.txt#L165-L170"
       via: "or/multnomah/gresham/3/3.0103.txt#L220-L221"
       variants:
-        # The townhouse form, read as DRL-1 reads it: J.1 names "single
-        # detached dwellings and plexes" only, and townhouses go to 7.0431,
-        # whose entry orientation binds each entrance and not the long axis.
-        - value: entrance_only
+        # The townhouse form. J.1 names "single detached dwellings and
+        # plexes" only, and 7.0431 does not reach it either: its district
+        # list (7.0400.middle-housing-design.txt L434-L436) names DRL-1 and
+        # DRL-2 and no other Downtown district. 4.1102(C) sends only DRL-1
+        # and DRL-2 townhouses out of 4.1152, so a townhouse here takes
+        # 4.1152's Townhouse heading (L7), and S6.f says "Townhouse units are
+        # required to be located adjacent to streets and alleys and oriented
+        # to streets", with S6.a barring unit fronts that face the
+        # non-street sides or rear of the site: the row of four keeps its
+        # long face to the street (read 2026-11-09, FOLLOWUPS 112 page-check
+        # finding; it was entrance_only on 7.0431, which does not apply).
+        - value: axis_required
           when: [unit_lots]
-          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+          quote: "or/multnomah/gresham/4/4.1152.txt#L3,L7,L286-L290,L310"
     review_discretion:
       # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
       # permitted without permission of the City and shall be allowed only
@@ -6352,13 +6672,144 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
-    notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5 (10 beside a lower-density district), rear 10 (3 on an alley), entrance orientation, the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. Downtown Transit Mid-Rise, and the same L1 limitation as DCC without the geography: a quadplex is allowed on a lot of record 6,500 sq ft or smaller with 70 feet of street frontage or less. The lot-area half is measured and rides on the variant as a band; the frontage maximum is not, so the base false binds. Read together with the minimum lot size the same table states for this building -- 5,000 sq ft -- the permission is a window rather than a threshold: between 5,000 and 6,500 sq ft, and nothing outside it. That is the shape a screen gets wrong by taking either number alone. Height 85 and floor area ratio 3.0 from the DTM column; minimum net density 20 units per acre, which four units clear on any lot small enough to qualify. Dimensional standards from the L492 row, identical across every street type.'
+    notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5, rear 10 (3 on an alley), the row''s long face to the street (4.1152 S6; 7.0431 does not list DCC or DTM), the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. Downtown Transit Mid-Rise, and the same L1 limitation as DCC without the geography: a quadplex is allowed on a lot of record 6,500 sq ft or smaller with 70 feet of street frontage or less. The lot-area half is measured and rides on the variant as a band; the frontage maximum is not, so the base false binds. Read together with the minimum lot size the same table states for this building -- 5,000 sq ft -- the permission is a window rather than a threshold: between 5,000 and 6,500 sq ft, and nothing outside it. That is the shape a screen gets wrong by taking either number alone. Height 85 and floor area ratio 3.0 from the DTM column; minimum net density 20 units per acre, which four units clear on any lot small enough to qualify. Dimensional standards from the L492 row, identical across every street type.'
   DMU:
     section: ["4.11"]
     cite_default:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
+    # THE TOWNHOUSE REAR-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S14(a) governs "townhouse projects that do not meet all of the
+    # standards in Section 4.1152(A)(4)(S13)", which a shared rear court does
+    # not by construction -- the same branch, in the same words, as 7.0431
+    # (B)(3)(b), and 7.0431 does not reach this zone (L3-L5 name DRL-1 and
+    # DRL-2). (a)(i): parking accessed on the back facade or in the rear yard,
+    # none in the front or side yard; (a)(ii): a project with a corner lot takes
+    # access from a single approach on the side of the corner lot; (a)(iii):
+    # otherwise one consolidated driveway, not between any front facade and
+    # front lot line; (b): a project whose units all take access from a rear
+    # alley is exempt from (a). Values unchanged from the city default; the
+    # townhouse citation moves to the section that applies.
+    parking_side_prohibited:
+      exempt: true
+      cite: GDC 7.0420(B)(5)(c), which puts parking in the front or street side yard setback and states no side-yard ban
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), no off-street parking in the front yard or side yard of a townhouse
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) puts townhouse parking in the rear yard (see
+    # parking_side_prohibited above); the parent-lot base is the city default's.
+    parking_required_yard_prohibited:
+      value: true
+      cite: GDC 7.0420(B)(5)(c), quadplex parking spaces allowed in a driveway, the front or street side yard setback, or the rear yard setback only when there is an alley
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      variants:
+        - value: false
+          when: [alley_at_rear]
+          cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
+          quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+        - value: false
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+        - value: false
+          when: [unit_lots, alley_at_rear]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) bans townhouse parking in the side yard; a driveway
+    # may still pass through it (9.0822).
+    parking_side_yard_stated:
+      value: none
+      cite: GDC 3.0100 and 7.0420, yard definitions and no parking-side permission stated for quadplexes
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      variants:
+        - value: lane
+          when: [unit_lots]
+          cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
+          quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+    # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
+    # from a single approach on the side of the corner lot.
+    corner_access_street:
+      value: any
+      cite: Gresham PWS 6.03, under which a corner lot may be limited to one street at the engineer's discretion, and GDC 7.0420, which names no street
+      url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      variants:
+        - value: side
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(ii), a townhouse project with a corner lot takes access from a single driveway approach on the side of the corner lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L721,L727"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6481,14 +6932,11 @@ zones:
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L85,L164"
     setback_side_ft:
       value: 5
+      # Note 11 (10 ft beside DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR) does
+      # not reach this row: its markers sit on the Commercial and
+      # Multi-Family rows (L57-L58, L65-L66), not the townhouse row
+      # (L74-L91). Removed 2026-11-09 (FOLLOWUPS 112 page-check finding).
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L84"
-      variants:
-        # Note 11: 10 ft where the side yard abuts DRL-1, DRL-2, LDR-5,
-        # LDR-7, TR or TLDR. Read off the lot's neighbours (the layer's
-        # `neighbours:` block) and applied to every side when any line abuts.
-        - value: 10
-          when: [abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88-L89"
@@ -6496,9 +6944,6 @@ zones:
         - value: 3
           when: [alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88,L90"
-        - value: 10
-          when: [alley_at_rear, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     review_discretion:
       # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
       # permitted without permission of the City and shall be allowed only
@@ -6535,6 +6980,137 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
+    # THE TOWNHOUSE REAR-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S14(a) governs "townhouse projects that do not meet all of the
+    # standards in Section 4.1152(A)(4)(S13)", which a shared rear court does
+    # not by construction -- the same branch, in the same words, as 7.0431
+    # (B)(3)(b), and 7.0431 does not reach this zone (L3-L5 name DRL-1 and
+    # DRL-2). (a)(i): parking accessed on the back facade or in the rear yard,
+    # none in the front or side yard; (a)(ii): a project with a corner lot takes
+    # access from a single approach on the side of the corner lot; (a)(iii):
+    # otherwise one consolidated driveway, not between any front facade and
+    # front lot line; (b): a project whose units all take access from a rear
+    # alley is exempt from (a). Values unchanged from the city default; the
+    # townhouse citation moves to the section that applies.
+    parking_side_prohibited:
+      exempt: true
+      cite: GDC 7.0420(B)(5)(c), which puts parking in the front or street side yard setback and states no side-yard ban
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), no off-street parking in the front yard or side yard of a townhouse
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) puts townhouse parking in the rear yard (see
+    # parking_side_prohibited above); the parent-lot base is the city default's.
+    parking_required_yard_prohibited:
+      value: true
+      cite: GDC 7.0420(B)(5)(c), quadplex parking spaces allowed in a driveway, the front or street side yard setback, or the rear yard setback only when there is an alley
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      variants:
+        - value: false
+          when: [alley_at_rear]
+          cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
+          quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+        - value: false
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+        - value: false
+          when: [unit_lots, alley_at_rear]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) bans townhouse parking in the side yard; a driveway
+    # may still pass through it (9.0822).
+    parking_side_yard_stated:
+      value: none
+      cite: GDC 3.0100 and 7.0420, yard definitions and no parking-side permission stated for quadplexes
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      variants:
+        - value: lane
+          when: [unit_lots]
+          cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
+          quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+    # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
+    # from a single approach on the side of the corner lot.
+    corner_access_street:
+      value: any
+      cite: Gresham PWS 6.03, under which a corner lot may be limited to one street at the engineer's discretion, and GDC 7.0420, which names no street
+      url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      variants:
+        - value: side
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(ii), a townhouse project with a corner lot takes access from a single driveway approach on the side of the corner lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L721,L727"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6657,14 +7233,11 @@ zones:
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L85,L164"
     setback_side_ft:
       value: 5
+      # Note 11 (10 ft beside DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR) does
+      # not reach this row: its markers sit on the Commercial and
+      # Multi-Family rows (L57-L58, L65-L66), not the townhouse row
+      # (L74-L91). Removed 2026-11-09 (FOLLOWUPS 112 page-check finding).
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L84"
-      variants:
-        # Note 11: 10 ft where the side yard abuts DRL-1, DRL-2, LDR-5,
-        # LDR-7, TR or TLDR. Read off the lot's neighbours (the layer's
-        # `neighbours:` block) and applied to every side when any line abuts.
-        - value: 10
-          when: [abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88-L89"
@@ -6672,9 +7245,6 @@ zones:
         - value: 3
           when: [alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88,L90"
-        - value: 10
-          when: [alley_at_rear, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     review_discretion:
       # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
       # permitted without permission of the City and shall be allowed only
@@ -6711,6 +7281,137 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
+    # THE TOWNHOUSE FRONT-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S13(a) allows front-facade garages, front-yard parking and
+    # driveways in front of a townhouse only if all five of its standards hold:
+    # no improved alley; each townhouse lot with at least 15 feet of frontage
+    # on a Downtown street type that does not restrict driveway access (4.1142);
+    # one approach per townhouse; outdoor parking and maneuvering no wider than
+    # 12 feet on any lot; a garage no wider than 12 feet. It is 7.0431(B)(3)(a)
+    # with the street-type gate in place of "minor access or local street".
+    # The 12 is held as the city default holds 7.0431's, on every unit lot.
+    # NOT ENCODED: the 15-foot frontage gate (ii). It is a condition of the
+    # front-access path, which the pod's shared rear court does not take -- the
+    # court fails (iv) by construction and so stands on S14 (see
+    # parking_side_prohibited) -- and this zone's unit-lot frontage minimum is
+    # 16 already (Table 4.1130), so the figure binds nothing a lot here can
+    # fail. No garage, so S9, S10 and (v) bind nothing either.
+    parking_maneuvering_max_width_ft:
+      exempt: true
+      cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      variants:
+        - value: 12
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S13)(a)(iv), outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any townhouse lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L698-L704,L709"
+    # THE TOWNHOUSE REAR-ACCESS PATH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S14(a) governs "townhouse projects that do not meet all of the
+    # standards in Section 4.1152(A)(4)(S13)", which a shared rear court does
+    # not by construction -- the same branch, in the same words, as 7.0431
+    # (B)(3)(b), and 7.0431 does not reach this zone (L3-L5 name DRL-1 and
+    # DRL-2). (a)(i): parking accessed on the back facade or in the rear yard,
+    # none in the front or side yard; (a)(ii): a project with a corner lot takes
+    # access from a single approach on the side of the corner lot; (a)(iii):
+    # otherwise one consolidated driveway, not between any front facade and
+    # front lot line; (b): a project whose units all take access from a rear
+    # alley is exempt from (a). Values unchanged from the city default; the
+    # townhouse citation moves to the section that applies.
+    parking_side_prohibited:
+      exempt: true
+      cite: GDC 7.0420(B)(5)(c), which puts parking in the front or street side yard setback and states no side-yard ban
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), no off-street parking in the front yard or side yard of a townhouse
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) puts townhouse parking in the rear yard (see
+    # parking_side_prohibited above); the parent-lot base is the city default's.
+    parking_required_yard_prohibited:
+      value: true
+      cite: GDC 7.0420(B)(5)(c), quadplex parking spaces allowed in a driveway, the front or street side yard setback, or the rear yard setback only when there is an alley
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      variants:
+        - value: false
+          when: [alley_at_rear]
+          cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
+          quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+        - value: false
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+        - value: false
+          when: [unit_lots, alley_at_rear]
+          cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L726"
+    # 4.1152 S14(a)(i) bans townhouse parking in the side yard; a driveway
+    # may still pass through it (9.0822).
+    parking_side_yard_stated:
+      value: none
+      cite: GDC 3.0100 and 7.0420, yard definitions and no parking-side permission stated for quadplexes
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      variants:
+        - value: lane
+          when: [unit_lots]
+          cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
+          quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+    # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
+    # from a single approach on the side of the corner lot.
+    corner_access_street:
+      value: any
+      cite: Gresham PWS 6.03, under which a corner lot may be limited to one street at the engineer's discretion, and GDC 7.0420, which names no street
+      url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      variants:
+        - value: side
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S14)(a)(ii), a townhouse project with a corner lot takes access from a single driveway approach on the side of the corner lot
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L715,L718-L721,L727"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6834,14 +7535,11 @@ zones:
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L85,L164"
     setback_side_ft:
       value: 5
+      # Note 11 (10 ft beside DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR) does
+      # not reach this row: its markers sit on the Commercial and
+      # Multi-Family rows (L57-L58, L65-L66), not the townhouse row
+      # (L74-L91). Removed 2026-11-09 (FOLLOWUPS 112 page-check finding).
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L83-L84"
-      variants:
-        # Note 11: 10 ft where the side yard abuts DRL-1, DRL-2, LDR-5,
-        # LDR-7, TR or TLDR. Read off the lot's neighbours (the layer's
-        # `neighbours:` block) and applied to every side when any line abuts.
-        - value: 10
-          when: [abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88-L89"
@@ -6849,9 +7547,6 @@ zones:
         - value: 3
           when: [alley_at_rear]
           quote: "or/multnomah/gresham/4/4.1130.txt#L77,L88,L90"
-        - value: 10
-          when: [alley_at_rear, abuts_lower_density_zone]
-          quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     review_discretion:
       # 4.1142(B)(7), the Downtown Local street type: "No curb cuts are
       # permitted without permission of the City and shall be allowed only
@@ -8089,19 +8784,19 @@ zones:
       # "between the minimum and maximum front setback". J.1 scopes it to
       # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
       # and these are Corridor districts.
+      #
+      # The townhouse form keeps it, as in SC and SC-RJ: 7.0431 does not list
+      # RTC (7.0400.middle-housing-design.txt L434-L436), so there is no
+      # entrance-only townhouse rule to take here. It was entrance_only on
+      # 7.0431 until 2026-11-09 (FOLLOWUPS 112 page-check finding). Harmless
+      # so far only because every screened RTC lot is inside Rockwood (237 of
+      # 237 on assign_rescreen_1110 carry rockwood_design_district; the other
+      # 13 are red before the zone is read); a lot outside it now takes the
+      # stricter plex reading rather than a section that does not apply.
       value: axis_required
       quote: "or/multnomah/gresham/7/7.0420.txt#L165-L170"
       via: "or/multnomah/gresham/3/3.0103.txt#L226-L228"
       variants:
-        # The townhouse form: J.1 names "single detached dwellings and plexes"
-        # only, and townhouses go to 7.0431, which asks no frontage share
-        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
-        # binds each entrance -- facing the street, at 45 degrees, onto a
-        # porch, or onto an internal drive treated as the street -- and not
-        # the long axis.
-        - value: entrance_only
-          when: [unit_lots]
-          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
         # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
         # for townhouses in so many words (below): kept as it was.
         - value: axis_required
@@ -8124,12 +8819,8 @@ zones:
       quote: "or/multnomah/gresham/7/7.0420.txt#L165-L170"
       via: "or/multnomah/gresham/3/3.0103.txt#L226-L228"
       variants:
-        # The townhouse form owes none outside Rockwood: J.1 names plexes
-        # only, and 7.0431 states no share.
-        - exempt: true
-          when: [unit_lots]
-          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
-          via: "or/multnomah/gresham/3/3.0103.txt#L226-L228"
+        # No townhouse exemption outside Rockwood (it rested on 7.0431, which
+        # does not list RTC; removed 2026-11-09, as SC and SC-RJ have none).
         # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
         # leaves townhouses out "unless otherwise stated", and S2 states it:
         # "For Residential development (multi-family, townhouse, and townhouse
@@ -8532,7 +9223,11 @@ neighbours:
     quote: "or/multnomah/gresham/4/4.1130.txt#L161-L162"
     cite: GDC Table 4.1130 note 11, side and rear setbacks of 10 feet where the yard abuts DRL-1, DRL-2, LDR-5, LDR-7, TR or TLDR
     note: >-
-      Read only by the Downtown townhouse rows (DCC, DTM, DMU, DEM, DCL): note 11
+      Read by no zone since 2026-11-09: note 11's markers sit on Table 4.1130's
+      Commercial and Multi-Family rows (L57-L58, L65-L66), and the Downtown
+      townhouse row (L74-L91) carries none, so its variants were removed from
+      DCC, DTM, DMU, DEM and DCL (FOLLOWUPS 112 page-check finding). Kept so
+      the facts stay measured. As first written: read only by the Downtown townhouse rows (DCC, DTM, DMU, DEM, DCL): note 11
       raises the side setback to 10 ft, and the rear to 10 ft where an alley
       would have allowed 3, when the yard abuts one of the six districts it
       names. The true side is those six and the false side is every other

@@ -491,7 +491,9 @@ def test_gresham_measures_the_plex_share_and_only_rockwood_asks_it_of_townhouses
     assert "townhouse" in quoted(rock.values["building_frontage_min_pct"].prov.quote)
 
 
-@pytest.mark.parametrize("zone", ("SC", "SC-RJ"))
+# RTC joined 2026-11-09: its townhouse exemption rested on 7.0431, which
+# does not list it either (FOLLOWUPS 112 page-check finding).
+@pytest.mark.parametrize("zone", ("SC", "SC-RJ", "RTC"))
 def test_gresham_station_centers_keep_the_share_on_both_forms(corpus: RuleSet, zone: str) -> None:
     # Not in 7.0431's list: the townhouse form keeps the share everywhere.
     town = corpus.resolve(GRESHAM, zone, ("unit_lots",))

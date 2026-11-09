@@ -392,9 +392,15 @@ pytestmark = pytest.mark.unit
 # 292 -> 294 comments on 2026-11-09 (FOLLOWUPS 105 round 4): West Linn Chapters 42 and 28 were
 # fetched and read, so their `fetch` crossref rulings became one READ AND NOT ENCODED block with two
 # NOT ENCODED readings (vision triangles, river protection).
-# rel6 2026-11-09: both above -- notes 164 (FOLLOWUPS 52, flats/dropped-lots-fairview), comments
-# 294 (FOLLOWUPS 105 round 4, flats/crossref-follow-3).
-EXPECTED = {"notes": 164, "comments": 294, "tests": 18}
+# 292 -> 293 comments on 2026-11-09 (pagecheck-findings): Wilsonville OTR's garage line is
+# the design book's (4 ft behind the front building line), which no field holds as printed,
+# so 4.113's 20 ft came out and a NOT ENCODED comment went in.
+# 293 -> 294 comments on 2026-11-09 (pagecheck-findings): Gresham Downtown's 4.1152 S13(a)(ii)
+# 15-foot townhouse-lot frontage gate is NOT ENCODED with the reading written down (it
+# conditions the front-access path the rear court does not take; unit-lot minimum is 16).
+# rel6 2026-11-09: notes 164 (FOLLOWUPS 52); comments 292 + 2 (FOLLOWUPS 105 round 4,
+# flats/crossref-follow-3) + 2 (FOLLOWUPS 112, flats/pagecheck-findings) = 296.
+EXPECTED = {"notes": 164, "comments": 296, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

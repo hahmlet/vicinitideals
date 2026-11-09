@@ -79,7 +79,8 @@ IN_STORIES = {
     "SCR-LD": 2.5, "SCR-DNC": 2.5, "MR-1": 2.5, "SCR-OTC": 2,
 }
 #: One-lot zones whose only variant refuses a flag lot.
-FLAG_LOT_REFUSED = ("SCR-OTC", "MU-VTC")
+# UC-RM and UC-MU joined 2026-11-09: AmberGlen 12.64.550 D (FOLLOWUPS 112).
+FLAG_LOT_REFUSED = ("SCR-OTC", "MU-VTC", "UC-RM", "UC-MU")
 #: The Retail Focus Frontage Area refusal (Figure 12.64.640-A).
 RETAIL_FRONTAGE = ("UC-AC", "UC-NC", "UC-OR")
 #: Quadplex N in the zone's own Housing Types table.
@@ -128,7 +129,9 @@ def test_the_retail_frontage_zones_admit_only_outside_it(hillsboro: Layer) -> No
         use = _use(hillsboro, zone)
         assert use.value is False, zone
         assert [(v.value, v.when) for v in use.variants] == [
-            (True, ("inside_mapped_use_area",))
+            (True, ("inside_mapped_use_area",)),
+            # AmberGlen 12.64.550 D, added 2026-11-09 (FOLLOWUPS 112).
+            (False, ("inside_mapped_use_area", "flag_lot")),
         ], zone
         text = " ".join(store.quote(use.prov.quote).split())
         assert "Retail Focus Frontage" in text, zone
@@ -139,10 +142,12 @@ def test_the_retail_frontage_zones_admit_only_outside_it(hillsboro: Layer) -> No
     [
         ("SCR-OTC", "flag lots not permitted"),
         ("MU-VTC", "flag lots are prohibited within the Mixed-Use"),
+        ("UC-RM", "Flag lots are Not Permitted"),
+        ("UC-MU", "Flag lots are Not Permitted"),
     ],
 )
-def test_two_zones_refuse_a_flag_lot(hillsboro: Layer, zone: str, words: str) -> None:
-    assert set(FLAG_LOT_REFUSED) == {"SCR-OTC", "MU-VTC"}
+def test_four_zones_refuse_a_flag_lot(hillsboro: Layer, zone: str, words: str) -> None:
+    assert set(FLAG_LOT_REFUSED) == {"SCR-OTC", "MU-VTC", "UC-RM", "UC-MU"}
     use = _use(hillsboro, zone)
     assert use.value is True
     assert [(v.value, v.when) for v in use.variants] == [(False, ("flag_lot",))]

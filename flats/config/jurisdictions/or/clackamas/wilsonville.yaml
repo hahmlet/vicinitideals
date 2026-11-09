@@ -1814,17 +1814,16 @@ zones:
       value: 40
       cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Lot Coverage"
       quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L456,L458-L459"
-    # The garage line stays 4.113's 20 feet (4 off an alley). The book puts
-    # a garage 4 feet behind the front building line (15 + 4 = 19) and an
-    # alley garage 3 to 5 feet off the alley line; 20 is the stricter street
-    # figure and 4 sits inside the alley range.
-    setback_garage_entrance_ft:
-      value: 20
-      quote: "or/clackamas/wilsonville/4/4.113.txt#L63-L64"
-      variants:
-        - value: 4
-          when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4/4.113.txt#L64-L65"
+    # NOT ENCODED: the garage line. 4.113(.02)'s 20 feet (4 off an alley)
+    # was held here until 2026-11-09 (FOLLOWUPS 112 page-check finding), but
+    # 4.138(.04)A puts the book ahead of the code's setbacks, and the book
+    # prints its own: "Minimum front setback for any and all garages and/or
+    # accessory buildings is 4 feet from the front building line, not
+    # including the front porch", and off an alley "a minimum of 3 feet and
+    # maximum of 5 feet from the property line adjoining the alley"
+    # (old-town-residential-design-standards.txt L503-L508). The street
+    # figure is measured from the building, not a lot line, so no field holds
+    # it as printed, and the pod has no garage (as Milwaukie's D.4.c is read).
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/wilsonville/4/4.123.txt#L25-L28"

@@ -1085,19 +1085,26 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
-    # 125 -> 126 and 60 -> 61 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 on
-    # its RICAP 11 block (RM1's standards).
-    "setback_garage_entrance_ft": 126,
+    # 125 -> 125 and 60 -> 61 (rel6 2026-11-09, combining two lanes): +1 garage and +1
+    # landscaped for FOLLOWUPS 155 (flats/ci1-quadfit), Portland CI1 on its RICAP 11 block
+    # (RM1's standards); -1 garage for FOLLOWUPS 112 (flats/pagecheck-findings), Wilsonville
+    # OTR's garage setback NOT ENCODED (the OTR book measures it from the front building
+    # line, which no field holds; 4.138(.04)A puts the book first).
+    "setback_garage_entrance_ft": 125,
     "min_landscaped_pct": 61,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
-    # 104 -> 105 on 2026-11-09 (FOLLOWUPS 52): Clackamas SCMU's 15 ft maximum, read
-    # off Map 1005-1 with its 10 ft minimum (ZDO 1005.09(H)(1), (K)(1)).
-    "setback_front_max_ft": 105,
+    # 104 -> 107 (rel6 2026-11-09, combining two lanes): +1 FOLLOWUPS 52
+    # (flats/dropped-lots-fairview), Clackamas SCMU's 15 ft maximum off Map 1005-1
+    # (ZDO 1005.09(H)(1), (K)(1)); +2 FOLLOWUPS 112 (flats/pagecheck-findings), Gresham
+    # DCC and DTM hold Table 4.1130's maximum front.
+    "setback_front_max_ft": 107,
     #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
     #: streets, every street, the front) and the share of the facade it binds --
     #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
-    "setback_front_max_streets": 34,
+    # 34 -> 36 on 2026-11-09 (pagecheck-findings): Gresham DCC and DTM hold Table
+    # 4.1130's maximum front.
+    "setback_front_max_streets": 36,
     "setback_front_max_facade_pct": 10,
     #: FOLLOWUPS 131: Tualatin CO prints no base density (Table 50-2); its 25 is
     #: a Block 1 variant now, so CO leaves the count.
@@ -1135,12 +1142,16 @@ UNEXPRESSIBLE: dict[str, int] = {
     # R-24 NB, NMU and CCMU reach 413-4.10 and so 407-6.4's 5 ft strip.
     "parking_lot_line_buffer_ft": 28,
     "parking_side_yard_allowed": 16,
-    "parking_side_yard_stated": 16,
+    # 16 -> 21 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S14(a)(i).
+    "parking_side_yard_stated": 21,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
     # doubtful larger court buffer (20 ft, TDC 3.130.A, when the adjoining district
     # is unknown) as a question; quadfit has no neighbour fact.
     "parking_lot_line_buffer_doubt_ft": 7,
-    "parking_required_yard_prohibited": 1,
+    # 1 -> 6 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S14(a)(i).
+    "parking_required_yard_prohibited": 6,
     #: FOLLOWUPS 68 (2026-11-01): Portland RM1-RM4 and RX owe 33.120.206's
     #: 90 ft on ONE street, on Map 120-2 only; this pipeline sums frontage.
     "min_frontage_one_street": 5,
@@ -1148,8 +1159,12 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_area_max_frontage_pct": 6,
     "parking_aisle_two_way_ft": 17,
     "parking_aisle_one_way_ft": 17,
-    "driveway_approach_max_width_ft": 10,
-    "corner_access_street": 4,
+    # 10 -> 15 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S12(b).
+    "driveway_approach_max_width_ft": 15,
+    # 4 -> 9 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S14(a)(ii).
+    "corner_access_street": 9,
     "max_impervious_pct": 20,
     "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
