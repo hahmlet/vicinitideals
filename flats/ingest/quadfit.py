@@ -4107,8 +4107,7 @@ def _bounded(
     if s.facts is not None and not s.facts.fire_route_tried:
         placed = s.drawing
         s = fire_checked(s, lot, roads, policy=policy, relief=relief, fitter=fitter, green=True)
-        if s.drawing is not placed:
-            s = front_max_checked(s, None, policy=policy, relief=relief)
+        s = moved_checked(s, placed, policy=policy, relief=relief)
     return dataclasses.replace(
         s,
         screening=dataclasses.replace(s.screening, flags=zeroed(s.screening.flags)),
@@ -4704,10 +4703,10 @@ def _screen_lot_once(
             won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
             step_deg=step_deg, roads=roads,
         )
-        if won.drawing is not placed:
-            # The fire route or a flatter spot stood the building elsewhere:
-            # its distance from the street is measured again where it stands.
-            won = front_max_checked(won, None, policy=policy, relief=relief)
+        # The fire route or a flatter spot stood the building elsewhere: its
+        # distance from the street and its share of the frontage are measured
+        # again where it stands.
+        won = moved_checked(won, placed, policy=policy, relief=relief)
         if _coarse_blocked(won, lot):
             # Eliminated on the coarse map's steep ground alone: screened
             # again, the whole way, as though it were not there, and flagged
@@ -5470,6 +5469,120 @@ def _no_worse_but_front(base: Screened, cand: Screened, *, question: bool = Fals
         return dataclasses.replace(s, screening=one(s.screening), signed=one(s.signed))
 
     return _no_worse(strip(base), strip(cand) if question else cand)
+
+
+#: The checks measured on the drawn plan itself: a building moved after the
+#: first drawing is measured again on them (:func:`_redrawn`).
+DRAWN_CHECKS: frozenset[str] = frozenset({FRONT_MAX, BUILDING_SHARE})
+
+
+def _drawn_share(s: Screened) -> tuple[float, ...] | None:
+    """The building's share of each street frontage measured on ``s``'s own
+    drawing (:func:`flats.fit.frontage.building_runs`, as
+    :func:`building_frontage` measures it), never more on a street than the
+    share already held (:attr:`LotFacts.building_frontage_pct`, measured on
+    the fit's first placement): a building moved back from the street can
+    only lose frontage, and a move is not a reason to read more. None where
+    no share is held, or it cannot be measured here -- held out of GREEN
+    (FOLLOWUPS 160)."""
+    from shapely.geometry import Polygon
+
+    held = s.facts.building_frontage_pct if s.facts is not None else None
+    if held is None:
+        return None
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    streets = getattr(s, "street_edges", None) or s.lot.edges
+    band = share_band(s.rules)
+    if (
+        s.lot.lot_geom is None
+        or streets is None
+        or band is None
+        or not (drawing.get("fits") and ring and len(ring) >= 4)
+    ):
+        return None
+    lane_ring = drawing.get("lane")
+    lane = (
+        Polygon(lane_ring)
+        if s.rules.get("building_frontage_less_drive") is True and lane_ring and len(lane_ring) >= 4
+        else None
+    )
+    runs = building_runs(s.lot.lot_geom, streets, Polygon(ring), band, lane=lane)
+    if not runs or len(runs) != len(held):
+        return None
+    return tuple(min(was, pct) for was, (pct, _) in zip(held, runs))
+
+
+def _share_redrawn(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
+    """``s`` re-screened on the building share measured on its own drawing
+    (:func:`_drawn_share`), where it holds one."""
+    if s.facts is None or s.facts.building_frontage_pct is None:
+        return s
+    share = _drawn_share(s)
+    if share == s.facts.building_frontage_pct:
+        return s
+    facts = dataclasses.replace(s.facts, building_frontage_pct=share)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def _redrawn(
+    s: Screened, drawing: dict[str, Any] | None, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` with ``drawing`` as its plan, re-screened on every fact measured
+    on the drawn plan (:data:`DRAWN_CHECKS`): its distance from each street
+    against a stated maximum front setback, by the measure the first drawing
+    took (:func:`_front_max_screened`), and the building's share of the
+    frontage (:func:`_drawn_share`). A placement the fire route moves to is
+    held to both (FOLLOWUPS 160): the retry had kept the first drawing's
+    answers for a building standing elsewhere."""
+    moved = dataclasses.replace(s, drawing=drawing)
+    if moved.facts is None:
+        return moved
+    if s.rules.get("setback_front_max_ft") is not None:
+        moved = _front_max_screened(moved, policy=policy, relief=relief)
+    return _share_redrawn(moved, policy=policy, relief=relief)
+
+
+def _kept_checks(screening: Screening) -> tuple[Any, ...]:
+    """``screening``'s checks bar the hose's, as the fire retry compares a
+    moved plan with the plan it moves (:func:`fire_checked`): every check as
+    it was, but a drawn-plan check (:data:`DRAWN_CHECKS`) by its verdict
+    alone -- a building moved stands at another distance, and is held only
+    to standing within the same answer."""
+    return tuple(
+        (c.check, c.verdict) if c.check in DRAWN_CHECKS else c
+        for c in screening.checks
+        if c.check != "fire_access_ft"
+    )
+
+
+def _no_new_drawn_fail(base: Screened, cand: Screened) -> bool:
+    """Whether ``cand`` fails no drawn-plan check (:data:`DRAWN_CHECKS`) that
+    ``base`` does not, under either reading. A question it raises instead
+    holds it out of GREEN by its own flags, so is not refused here."""
+    for b, c in ((base.screening, cand.screening), (base.signed, cand.signed)):
+        if {x.check for x in c.binds if x.check in DRAWN_CHECKS} - {x.check for x in b.binds}:
+            return False
+    return True
+
+
+def moved_checked(
+    s: Screened, placed: dict[str, Any] | None, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` measured again where a step after the first drawing (the fire
+    route, a flatter spot) stood its building elsewhere than ``placed``: its
+    distance from the street (:func:`front_max_checked`) and its share of the
+    frontage (:func:`_share_redrawn`, FOLLOWUPS 160)."""
+    if s.drawing is placed:
+        return s
+    s = front_max_checked(s, None, policy=policy, relief=relief)
+    return _share_redrawn(s, policy=policy, relief=relief)
+
+
 FIRE_RETRY_MAX_PLACEMENTS = 24
 # Drawing every listed placement at once can exhaust a worker on a large lot.
 FIRE_RETRY_MAX_ACRES = 3.0
@@ -5532,7 +5645,9 @@ def fire_checked(
     building's distance from the front and at most
     ``FIRE_RETRY_MAX_PLACEMENTS`` are drawn, only on lots no larger than
     ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
-    measured-parking-share guard still apply; the first that reaches and keeps
+    measured-parking-share guard still apply, and each placement is measured
+    again where it stands on every drawn-plan check (:func:`_redrawn`,
+    FOLLOWUPS 160); the first that reaches and keeps
     every other check unchanged is kept, never one that stands its court
     in a yard :func:`court_yard_lines` names (:func:`_court_street_side`).
     If none passes, the existing other-angle
@@ -5593,7 +5708,11 @@ def fire_checked(
             if again is not None and court_in_front_yard(s, drawn) and not court_in_front_yard(s):
                 again = None
             if again is not None and (route is None or again < route):
-                s, route = dataclasses.replace(s, drawing=drawn), again
+                # Measured again where it now stands (FOLLOWUPS 160), and
+                # kept only where that fails nothing the plan did not.
+                cand = _redrawn(s, drawn, policy=policy, relief=relief)
+                if _no_new_drawn_fail(s, cand):
+                    s, route = cand, again
     green = green or Triage.green in (s.screening.triage, s.signed.triage) or _map_green(s)
     if route is None and not green:
         return s
@@ -5746,18 +5865,21 @@ def fire_checked(
             # itself on the plan's own yards (:func:`court_yard_lines`).
             if _court_street_side(drawn, court_yard_lines(out)):
                 continue
-            candidate = dataclasses.replace(out, drawing=drawn)
             candidate_route = measure(drawn)
             if candidate_route is None or candidate_route > limit:
                 continue
+            # Measured where it now stands, as the first drawing was: its
+            # distance from each street against the maximum and its share of
+            # the frontage (FOLLOWUPS 160). The listing bounds the building's
+            # distance from the nearest street only, and the screen holds it
+            # to every street the code names.
+            candidate = _redrawn(out, drawn, policy=policy, relief=relief)
             candidate = screened(candidate, candidate_route)
             if not fire_passed(candidate.screening) or not fire_passed(candidate.signed):
                 continue
             if (
-                tuple(c for c in candidate.screening.checks if c.check != "fire_access_ft")
-                != tuple(c for c in out.screening.checks if c.check != "fire_access_ft")
-                or tuple(c for c in candidate.signed.checks if c.check != "fire_access_ft")
-                != tuple(c for c in out.signed.checks if c.check != "fire_access_ft")
+                _kept_checks(candidate.screening) != _kept_checks(out.screening)
+                or _kept_checks(candidate.signed) != _kept_checks(out.signed)
             ):
                 continue
             return candidate
@@ -5772,7 +5894,12 @@ def fire_checked(
     # angle drawn for nothing (run on a 7-acre lot: 13 s to 233 s). The plan
     # stays out of GREEN, unobserved.
     if fitter is not None and alone:
-        turned, again = _turned_for_fire(s, fitter, measure, route, limit, street=at)
+        turned, again = _turned_for_fire(
+            s, fitter, measure, route, limit, street=at,
+            keep=lambda drawn: _no_new_drawn_fail(
+                s, _redrawn(s, drawn, policy=policy, relief=relief)
+            ),
+        )
         if turned is not s:
             out = screened(turned, again)
     return out
@@ -5817,6 +5944,7 @@ def _turned_for_fire(
     limit: float,
     *,
     street: tuple[tuple[float, float, float, float], ...] | None = None,
+    keep: Callable[[dict[str, Any]], bool] | None = None,
 ) -> tuple[Screened, float | None]:
     """``s`` drawn at the angle the hose reaches soonest, and that route
     (FOLLOWUPS 39, Steph 2026-10-04).
@@ -5831,7 +5959,9 @@ def _turned_for_fire(
     shortest that beats ``route``. Only a drawing whose room holds the building and its court on
     ground counts (``measure``), so the placement kept is one the fit would
     have passed: a red lifted, never a green invented. ``street`` is the
-    fronts a truck can reach where the caller narrowed them.
+    fronts a truck can reach where the caller narrowed them. ``keep`` refuses
+    a drawing the caller will not take (:func:`fire_checked`: one that fails
+    a drawn-plan check the plan did not, FOLLOWUPS 160).
     """
     if s.fit.angle_deg is None:
         return s, route
@@ -5862,6 +5992,10 @@ def _turned_for_fire(
         if kept_out and court_in_front_yard(s, drawn):
             continue
         got = measure(drawn) if drawn and drawn.get("fits") else None
+        if got is not None and keep is not None and not keep(drawn):
+            # Fails a check measured on the drawn plan that the plan did
+            # not: past the maximum front setback (FOLLOWUPS 160).
+            continue
         if got is not None and (best is None or got < best[0]):
             best = (got, drawn)
             if got <= limit:
