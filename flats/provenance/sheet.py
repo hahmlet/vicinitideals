@@ -645,8 +645,20 @@ def find(sheet: Sheet, stored: str, before: str = "", after: str = "") -> Line |
     if len(want) < 3:
         return None
     lines = list(sheet.lines)
+    # A lettered row's own letter, and the letter of the row the line before
+    # it opens: the second line of row G is not the second line of row H.
+    letter = _row_letter(stored.split())
+    above = _row_letter(before.rpartition("\n")[2].split()) if before else ""
     scored = sorted(
-        ((_ratio(want, line.key), i) for i, line in enumerate(lines)),
+        (
+            (
+                0.0
+                if _other_row(letter, line) or (i and _other_row(above, lines[i - 1]))
+                else _ratio(want, line.key),
+                i,
+            )
+            for i, line in enumerate(lines)
+        ),
         reverse=True,
     )
     if not scored or scored[0][0] < _MATCH:
@@ -680,6 +692,23 @@ def find(sheet: Sheet, stored: str, before: str = "", after: str = "") -> Line |
         if around[0][0] - around[1][0] >= 0.2:
             return lines[around[0][1]]
     return None
+
+
+def _row_letter(words: Sequence[str]) -> str:
+    """The lettered row a line opens ("G." of "G. Minimum Setbacks ..."), or ""."""
+    return words[0] if words and _LETTERED.match(words[0]) else ""
+
+
+def _other_row(letter: str, line: Line) -> bool:
+    """Whether a printed line opens a lettered row other than ``letter``.
+
+    Gresham Table 4.0430 prints row G's label apart from its cells, and row
+    H -- "H. Maximum Setbacks at Setbacks at ..." against "G. Minimum
+    Setbacks at Setbacks at ..." -- scored closer than any piece of G: the
+    minimum setback cards boxed the maximum's row. A row's letter is its name.
+    """
+    other = _row_letter([w.text for w in line.words if not w.sup])
+    return bool(letter) and bool(other) and other != letter
 
 
 @dataclass(frozen=True, slots=True)
@@ -738,13 +767,36 @@ def markers(
     # TR⁴". TLDR's card points at TLDR's 4, not LDR-5's (Steph 2026-10-20);
     # another zone's marker is that zone's.
     named = _names_zone(label, zone)
+    edge = words[first_numeral].box.x0 if first_numeral < len(words) else 1.0
     if zone and not named:
         # The label wraps: "TLDR⁴, and TR⁴" is printed under "LDR-5⁴, LDR-7⁴,",
         # and TLDR's card circled LDR-5's 4 (Steph 2026-10-20).
-        edge = words[first_numeral].box.x0 if first_numeral < len(words) else 1.0
         wrapped = _label_below(sheet, line, edge)
         if _names_zone(wrapped, zone):
             label, named = [*label, *wrapped], True
+    opens = next((w for w in label if not w.sup), None)
+    if not named and opens is not None and _LETTERED.match(opens.text):
+        # A lettered standard's name wraps down its own cell, and its marker
+        # with it: Gresham Table 4.0430 prints "E. Minimum / Residential / Net
+        # Density¹⁵" with the numbers on the first line, so note 15 reached no
+        # card (Steph 2026-10-20, checks 742 and 752). Down to the next
+        # lettered row, whose name is its own. A cell with no numeral on the
+        # first line sits left of ``edge`` too -- RTC's "Stark/Burnside/
+        # 181st Ave." -- so only a note number counts, and not one printed
+        # on a numeral: the "st" of 181st is no note.
+        wrapped = _label_below(sheet, line, edge, lettered=True)
+        label = [
+            *label,
+            *(
+                w
+                for k, w in enumerate(wrapped)
+                if not w.sup
+                or (
+                    w.text.replace(",", "").replace(" ", "").isdigit()
+                    and not (k and not wrapped[k - 1].sup and numeral(wrapped[k - 1].text))
+                )
+            ),
+        ]
     for k, word in enumerate(label):
         if not word.sup:
             continue
@@ -889,8 +941,12 @@ def _title_markers(
     return []
 
 
-def _label_below(sheet: Sheet, line: Line, edge: float) -> list[Word]:
-    """The row label's words wrapped onto the lines under it, left of ``edge``."""
+def _label_below(sheet: Sheet, line: Line, edge: float, *, lettered: bool = False) -> list[Word]:
+    """The row label's words wrapped onto the lines under it, left of ``edge``.
+
+    ``lettered``: the label is a lettered standard's ("E. Minimum"), and a
+    line opening the next letter ("F. Maximum") is the next row's, not this one's.
+    """
     out: list[Word] = []
     bottom = line.box.y1
     height = line.box.y1 - line.box.y0
@@ -900,7 +956,7 @@ def _label_below(sheet: Sheet, line: Line, edge: float) -> list[Word]:
         if printed.box.y0 - bottom > height * 1.5:
             break
         left = [w for w in printed.words if w.box.x1 <= edge]
-        if not left:
+        if not left or (lettered and _LETTERED.match(left[0].text)):
             break
         out += left
         bottom = printed.box.y1

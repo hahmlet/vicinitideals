@@ -2352,6 +2352,9 @@ zones:
       exempt: true
       cite: "TDC 3.140.B.4 (maximum density standards do not apply to a quadplex) and 3.140.B.3.c (a townhouse project, 25 units per net acre)"
       quote: "or/multnomah/troutdale/3/3.140.txt#L11,L21-L22"
+      # 3.140 names no zone. The HDR column of 3.130 B, "Triplex and quadplex
+      # dwellings", reads N/A on its density row (FOLLOWUPS 112).
+      via: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L52"
       # The acre this rate is per is a net one.
       # 3.140 states density "on a dwelling units per net acre
       # calculation" throughout. Net acre is the lot less what the code
@@ -2678,6 +2681,9 @@ zones:
       exempt: true
       cite: TDC 3.140.A (minimum density, 80 percent of the maximum per net acre) and 3.140.B.4 (no maximum for a quadplex)
       quote: "or/multnomah/troutdale/3/3.140.txt#L3,L5,L8-L9,L21-L22"
+      # 3.140 names no zone. The HDR column of 3.130 B, "Triplex and quadplex
+      # dwellings", reads N/A on its density row (FOLLOWUPS 112).
+      via: "or/multnomah/troutdale/3/3.130.txt#L35,L37-L38,L52"
       measured_on:
         fact: net_developable_area
         cite: TDC 1.020 "Net Area"
