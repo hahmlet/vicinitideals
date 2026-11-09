@@ -2218,8 +2218,9 @@ defaults:
   # street building line may be paved or used for vehicle areas." A corner
   # lot's court is fed off the side street here (`corner_access_street`
   # any), so its drive crosses that strip: 20 ft of drive needs 100 ft of
-  # side street. Measured against the lot's shortest street, never the
-  # longer, so it never reads low. Stored as printed.
+  # side street. Which street is the side street is not recorded, so a
+  # drive that fits the shortest street passes, one too wide for the
+  # longest fails, and one between is left a question. Stored as printed.
   parking_side_street_yard_max_pct:
     value: 20
     cite: PCC 33.266.120.C.1.b, on corner lots the share of the land between the side street lot line and the side street building line usable as vehicle area
