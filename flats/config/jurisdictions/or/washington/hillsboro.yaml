@@ -519,6 +519,9 @@ defaults:
 # below that states a minimum frontage under 25 feet carries a
 # `flag_lot` variant of 25; a zone whose table states no frontage row does
 # not, which is a doubt.
+# AmberGlen's 12.64.550 D, "Flag lots are Not Permitted", reaches UC-RM, UC-MU,
+# UC-AC, UC-NC and UC-OR through 12.64.520 A, and those five refuse a flag lot
+# on quadplex_allowed (2026-11-09).
 #
 # NOT ENCODED: variation of lot areas, widths and yards "permitted in some
 # subdivisions" (12.50.110, 12.50.130 E). A land-division proceeding, not a
@@ -3562,6 +3565,18 @@ zones:
       value: true
       cite: Hillsboro CDC Table 12.24.520-1, Housing Types Permitted in the UC-RM Zone (Quadplex P)
       quote: "or/washington/hillsboro/12.24/12.24.520.txt#L4-L5,L11"
+      variants:
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3697,6 +3712,18 @@ zones:
       value: true
       cite: Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)
       quote: "or/washington/hillsboro/12.24/12.24.620.txt#L4-L5,L10"
+      variants:
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3839,6 +3866,17 @@ zones:
           when: [inside_mapped_use_area]
           cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
           quote: "or/washington/hillsboro/12.24/12.24.720.txt#L4-L5,L9"
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [inside_mapped_use_area, flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3965,6 +4003,17 @@ zones:
           when: [inside_mapped_use_area]
           cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
           quote: "or/washington/hillsboro/12.24/12.24.820.txt#L4-L5,L9"
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [inside_mapped_use_area, flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4085,6 +4134,17 @@ zones:
           when: [inside_mapped_use_area]
           cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
           quote: "or/washington/hillsboro/12.24/12.24.920.txt#L4-L5,L9"
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [inside_mapped_use_area, flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
