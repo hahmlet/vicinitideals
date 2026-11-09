@@ -184,7 +184,9 @@ pytestmark = pytest.mark.unit
 # owe no maximum front setback but Table 4.0131 note 5's, at the end of a Minor Access Street.
 # The exempt base quotes the table title ("Minimum Setbacks", L146) and note 5 (L179), whose
 # 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
-EXPECTED = {"stated": 478, "numeric": 206, "marker": 0, "dash": 2, "silent": 8}
+# 206 -> 205 numeric on 2026-11-09 (pagecheck-findings): Gresham RTC's townhouse exemption
+# from the 7.0420(J)(1)(a) frontage share rested on 7.0431, which does not list RTC; removed.
+EXPECTED = {"stated": 478, "numeric": 205, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
