@@ -4703,20 +4703,27 @@ def _screen_lot_once(
                 access_log.append(access_record(got, used, plan_edges, front))
             tried.append(shot)
         # Drawn for the winner only: one more window search per design.
+        first: dict[str, Any] | None = None
         if worst:
             # The worse reading: the lower colour, the tighter fit, and on a
             # tie (the pod's slack is often measured across the lot, which
             # the ends do not touch) the smaller envelope.
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
-        else:
+        elif fit_only:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        else:
+            # The front the applicant would choose, and on a tie the court
+            # least exposed to a street (Steph 2026-09-19, step 3).
+            won, fitter, first = least_exposed(tried, lot)
         ask_rank = unranked[next(i for i, t in enumerate(tried) if t[0] is won)]
         if access_log and len(access_log) == len(tried):
             won = dataclasses.replace(won, access=_access_won(access_log, tried, won))
         if fit_only:
             out.append(_rank_unknown(won) if ask_rank else won)
             continue
-        won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
+        if first is None:
+            first = drawing_for(won, fitter)
+        won = dataclasses.replace(won, drawing=first)
         won = court_turned(won, fitter)
         won = front_max_checked(won, fitter, policy=policy, relief=relief)
         placed = won.drawing
@@ -6686,13 +6693,94 @@ def _access_won(
     )
 
 
+#: The court's street exposure is compared to the nearest this many feet:
+#: less than a stall's width apart is the raster's corner cells, not a
+#: preference (quadfit s6s ``_plan_rank``, the same five feet).
+EXPOSURE_STEP_FT = 5.0
+#: How far past the street setback a court's edge still stands on the
+#: street: a raster cell and the drawing's rounding.
+EXPOSURE_TOL_FT = 2.0
+
+
+def court_street_ft(
+    s: Screened, drawing: Mapping[str, Any] | None, lot: QuadfitLot
+) -> float | None:
+    """Feet of the drawn court's edge that stand on a street: its exposure,
+    step 3 of Steph's ruling of 2026-09-19 (HUMAN_TODO 21, rulings.yaml
+    ``2026-09-19-orientation-choice-order``): "the side that has the least
+    exposure to street".
+
+    Measured as quadfit's s6s measures it (``_street_exposure``): the court's
+    edge inside the strip along every street lot line of ``lot`` (front and
+    street side alike, never an alley) as deep as the street setback the
+    plan's envelope was cut with, plus :data:`EXPOSURE_TOL_FT`. A court
+    behind the building on an interior lot scores zero; on a corner, the side
+    along the side street scores its run. 0.0 where the plan draws no court;
+    None where nothing fitting is drawn, which ranks last."""
+    import shapely
+
+    if not drawing or not drawing.get("fits"):
+        return None
+    ring = drawing.get("court")
+    if not ring or len(ring) < 4:
+        return 0.0
+    if lot.edges is None:
+        return 0.0
+    lines = [
+        shapely.LineString([(e.x1, e.y1), (e.x2, e.y2)])
+        for e in lot.edges.edges
+        if e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley
+    ]
+    if not lines:
+        return 0.0
+    sb = s.envelope.setbacks if s.envelope is not None else None
+    deep = 0.0
+    if sb is not None:
+        deep = max(sb.front_ft, sb.street_side_ft if sb.street_side_ft is not None else 0.0)
+    strip = shapely.union_all(
+        [ln.buffer(deep + EXPOSURE_TOL_FT, cap_style="flat") for ln in lines]
+    )
+    court = shapely.Polygon(ring)
+    return float(court.boundary.intersection(strip).length)
+
+
+def least_exposed(
+    tried: Sequence[tuple[Screened, Fitter]], lot: QuadfitLot
+) -> tuple[Screened, Fitter, dict[str, Any] | None]:
+    """The plan the applicant would choose where the code leaves the front
+    to them, and its drawing.
+
+    :func:`_front_rank` first -- the colour, then the stall band (Steph
+    2026-09-19 steps 1 and 2). Among the plans level on those, the one whose
+    drawn court is least exposed to a street (step 3, :func:`court_street_ft`,
+    to :data:`EXPOSURE_STEP_FT`), then the rest of :func:`_front_rank`. Only
+    a tie is drawn: one window search per tied plan. The drawing comes back
+    so the winner's is not searched twice; None where only one plan led."""
+    ranked = [(_front_rank(t[0]), i) for i, t in enumerate(tried)]
+    head = min(ranked)[0][:4]
+    level = [i for r, i in ranked if r[:4] == head]
+    if len(level) < 2:
+        i = min(ranked)[1]
+        return tried[i][0], tried[i][1], None
+    scored = []
+    for i in level:
+        s, fitter = tried[i]
+        drawing = drawing_for(s, fitter)
+        ft = court_street_ft(s, drawing, lot)
+        step = math.inf if ft is None else round(ft / EXPOSURE_STEP_FT)
+        scored.append(((step, _front_rank(s), i), drawing))
+    (_, _, i), drawing = min(scored, key=lambda t: t[0])
+    return tried[i][0], tried[i][1], drawing
+
+
 def _front_rank(s: Screened) -> tuple[int, int, int, int, float]:
     """Which of a corner lot's fronts the applicant would choose.
 
     Steph's ruling of 2026-09-19 (HUMAN_TODO 21): the front that turns the
-    lot green, then the one reaching the preferred stall band, then -- where
-    quadfit compares the court's exposure to the streets, which the screen
-    does not draw -- the one with more room to spare. The colour once signed
+    lot green, then the one reaching the preferred stall band, then the one
+    with more room to spare -- the court's exposure to the streets, the
+    ruling's third step, comes between the band and the room where the
+    plans are drawn (:func:`least_exposed`). The colour once signed
     first, as the Lots pages show it (the flag plan's, where a miss is red
     -- FOLLOWUPS 44: on the triage a miss with a variance path read yellow
     and outranked a front that fits but waits on an open fact), then its
