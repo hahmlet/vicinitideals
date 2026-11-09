@@ -75,6 +75,7 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         # Hayden Island and Lombard Subdistrict A main entrances (FOLLOWUPS 153).
         "pdx_hayden_island",
         "pdx_johnson_creek_impervious",
+        "pdx_johnson_creek_land_division",
         "pdx_johnson_creek_unmeasured",
         "pdx_lombard_subdistrict_a",
         # Batch B: Northwest Map 562-2 (FOLLOWUPS 109, 2026-11-04).

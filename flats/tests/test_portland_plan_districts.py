@@ -7,7 +7,11 @@ the plan-district GREEN lots on run 109:
 * Johnson Creek Basin (33.537). South subdistrict and flood-hazard sites take
   a 50 percent impervious-surface cap (140.D, 150.E), and the Springwater
   Corridor buffer (130), South land-class density (140.E) and Flood Risk Area
-  (160) reach lots nothing measures, so those lots are held. The tree limits
+  (160) reach lots nothing measures, so those lots are held. 140.E and 160
+  govern land divisions only, so since 2026-11-08 (FOLLOWUPS 58) the lots
+  only they reach are traced apart (johnson_creek_land_division) and held on
+  the townhouse form alone; the one-lot apartment form makes no land
+  division. The corridor reach holds either form. The tree limits
   (125) no longer hold a lot (ruling 2026-11-01-trees-ignored-entered-per-lot,
   FOLLOWUPS 140): the lots only they reached were taken out of the tracing.
 * Laurelhurst/Eastmoreland (33.540). Its setbacks are only on maps held at the
@@ -46,13 +50,15 @@ pytestmark = pytest.mark.unit
 PORTLAND = "or/multnomah/portland"
 IMPERVIOUS = "pdx_johnson_creek_impervious"
 UNMEASURED = "pdx_johnson_creek_unmeasured"
+LAND = "pdx_johnson_creek_land_division"
 SETBACK = "pdx_special_building_setback"
-FACTS = (IMPERVIOUS, UNMEASURED, SETBACK)
+FACTS = (IMPERVIOUS, UNMEASURED, LAND, SETBACK)
 JC_ZONES = {"R20", "R10", "R7", "R5", "R2.5", "RM1", "RM2", "CR", "CM1", "CM2", "CM3", "CE"}
 LE_ZONES = {"R7", "R5", "RM1", "CM1", "CM3"}
 FILES = {
     IMPERVIOUS: "or/multnomah/portland/johnson-creek-impervious-lots.geojson",
     UNMEASURED: "or/multnomah/portland/johnson-creek-unmeasured-lots.geojson",
+    LAND: "or/multnomah/portland/johnson-creek-land-division-lots.geojson",
     SETBACK: "or/multnomah/portland/laurelhurst-eastmoreland.geojson",
 }
 POD = ("multi_story", "attached_wall")
@@ -88,6 +94,7 @@ def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
     # CI1 because RICAP 11 builds a CI1 home to RM1's standards, holds included.
     assert set(by_fact[IMPERVIOUS].zones) == JC_ZONES | {"CI1"}
     assert set(by_fact[UNMEASURED].zones) == JC_ZONES | {"CI1"}
+    assert set(by_fact[LAND].zones) == JC_ZONES | {"CI1"}
     assert set(by_fact[SETBACK].zones) == LE_ZONES | {"CI1"}
 
 
@@ -163,18 +170,42 @@ def _subdistrict(name: str):
     )
 
 
+def _held():
+    """Every lot either Johnson Creek hold reaches, on the townhouse form."""
+    return load_area(FILES[UNMEASURED]).union(load_area(FILES[LAND]))
+
+
 @pytest.mark.parametrize("name", ["SOUTH", "FLOOD RISK"])
 def test_the_hold_still_covers_south_and_the_flood_risk_area(name: str) -> None:
-    # 140.E (South density) and 160 (Flood Risk Area) still hold their lots.
-    sub, held = _subdistrict(name), load_area(FILES[UNMEASURED])
+    # 140.E (South density) and 160 (Flood Risk Area) still hold their lots,
+    # on the townhouse form, through the two tracings together.
+    sub, held = _subdistrict(name), _held()
     assert not sub.is_empty
     assert sub.difference(held).area < 0.001 * sub.area
+
+
+def test_the_lots_only_land_division_reaches_left_the_corridor_tracing() -> None:
+    # The split (FOLLOWUPS 58): a lot both reaches touch is in both tracings
+    # and stays held on either form; the lots only South or the Flood Risk
+    # Area reach (most of the land-division tracing) left the corridor one,
+    # which keeps the Springwater lots (about half its area).
+    one, two = load_area(FILES[UNMEASURED]), load_area(FILES[LAND])
+    assert two.difference(one).area > 0.7 * two.area
+    assert one.difference(two).area > 0.3 * one.area
+
+
+def test_the_land_division_quote_says_land_division() -> None:
+    store = ProvenanceStore()
+    purpose = store.quote("or/multnomah/portland/33.537.txt#L29-L30")
+    assert "land division" in purpose
+    density = store.quote("or/multnomah/portland/33.537.txt#L274-L306")
+    assert "Land Divisions" in density
 
 
 def _tree_only():
     """Where only 33.537.125 reached: the cap's flood-hazard lots outside
     South, the Flood Risk Area and the corridor reach."""
-    cap, held = load_area(FILES[IMPERVIOUS]), load_area(FILES[UNMEASURED])
+    cap, held = load_area(FILES[IMPERVIOUS]), _held()
     reach = shapely.union_all([_subdistrict("SOUTH"), _subdistrict("FLOOD RISK")]).buffer(5)
     return cap.difference(held).difference(reach)
 
@@ -185,7 +216,7 @@ def test_trees_alone_no_longer_hold_a_lot() -> None:
     gone = _tree_only()
     assert gone.area / 43_560 > 300
     # What is left of the hold is the three other reaches, not a new one.
-    held, cap = load_area(FILES[UNMEASURED]), load_area(FILES[IMPERVIOUS])
+    held, cap = _held(), load_area(FILES[IMPERVIOUS])
     assert held.area < cap.union(_subdistrict("FLOOD RISK")).area + 2_000 * 43_560
 
 
@@ -196,6 +227,7 @@ def test_a_tree_only_lot_keeps_the_cap_but_not_the_hold() -> None:
     facts = _facts("R5", lot)
     assert facts[IMPERVIOUS] is True
     assert facts[UNMEASURED] is False
+    assert facts[LAND] is False
 
 
 def test_the_held_reason_names_no_trees() -> None:
@@ -203,13 +235,15 @@ def test_the_held_reason_names_no_trees() -> None:
 
     from flats.rules import loader
 
-    texts = [
-        CONDITIONS[UNMEASURED].describe,
-        CONDITIONS[UNMEASURED].evidence,
-        flag_plan.registry().types[fact_code(UNMEASURED)].description,
-    ]
-    area = json.loads((loader.AREAS_ROOT / FILES[UNMEASURED]).read_text(encoding="utf-8"))
-    texts.append(area["source"]["says"])
+    texts = []
+    for fact in (UNMEASURED, LAND):
+        texts += [
+            CONDITIONS[fact].describe,
+            CONDITIONS[fact].evidence,
+            flag_plan.registry().types[fact_code(fact)].description,
+        ]
+        area = json.loads((loader.AREAS_ROOT / FILES[fact]).read_text(encoding="utf-8"))
+        texts.append(area["source"]["says"])
 
     def walk(node):
         if isinstance(node, dict):
@@ -290,7 +324,7 @@ def _lot(corpus, w: float = 100.0, d: float = 200.0):
     return lot_from_row(r, corpus.layers)
 
 
-def _screen(corpus, lot):
+def _screened(corpus, lot):
     (s,) = screen_lot(
         lot,
         [load_catalog().latest("pod56x36")],
@@ -299,7 +333,11 @@ def _screen(corpus, lot):
         relief=relief.load_policy(),
         step_deg=30.0,
     )
-    return s.signed
+    return s
+
+
+def _screen(corpus, lot):
+    return _screened(corpus, lot).signed
 
 
 def _answered(lot, **facts):
@@ -323,6 +361,59 @@ def test_a_held_lot_cannot_be_green_and_says_why(corpus, fact: str) -> None:
     assert fact_code(fact) in {f.code for f in held.flags}
 
 
+def test_the_land_division_reach_holds_the_townhouse_form_only(corpus) -> None:
+    # 140.E and 160 govern land divisions: the four unit lots make one, the
+    # one apartment building on the one lot does not (FOLLOWUPS 58).
+    got = _screened(corpus, _answered(_clear(corpus), **{LAND: True}))
+    assert got.signed.colour is flag_plan.Colour.green
+    assert got.forms["works_as"] == "apartment"
+    assert got.forms["kept"] == "apartment"
+    townhomes = got.forms["townhomes"]
+    assert townhomes.get("screened", True) is True
+    assert townhomes["colour"] == "yellow"
+    assert fact_code(UNMEASURED) in {f["code"] for f in townhomes["flags"]}
+
+
+def test_an_unknown_land_division_reach_holds_the_townhouse_form_only(corpus) -> None:
+    # A lot the tracing cuts (neither in nor out) is unknown: only the
+    # townhouse form is held, and that form is never GREEN.
+    lot = _clear(corpus)
+    seen = {k: v for k, v in lot.observed.items() if k != LAND}
+    got = _screened(corpus, dataclasses.replace(lot, observed=seen))
+    assert got.signed.colour is flag_plan.Colour.green
+    assert got.forms["townhomes"]["colour"] != "green"
+
+
+def test_the_corridor_reach_holds_both_forms(corpus) -> None:
+    got = _screened(corpus, _answered(_clear(corpus), **{UNMEASURED: True}))
+    assert got.signed.colour is flag_plan.Colour.yellow
+    assert got.forms["works_as"] == "neither"
+
+
+@pytest.mark.parametrize(
+    ("kid", "mum", "two"),
+    [
+        (True, False, True),
+        (False, True, True),
+        (True, None, True),
+        (False, False, False),
+        (False, None, None),
+        (None, False, None),
+        (None, None, None),
+    ],
+)
+def test_the_fold(kid, mum, two) -> None:
+    from flats.rules.conditions import fold_land_division
+
+    seen = {k: v for k, v in ((LAND, kid), (UNMEASURED, mum)) if v is not None}
+    one = fold_land_division(seen, unit_lots=False)
+    assert LAND not in one
+    assert one.get(UNMEASURED) is mum
+    two_lots = fold_land_division(seen, unit_lots=True)
+    assert LAND not in two_lots
+    assert two_lots.get(UNMEASURED) is two
+
+
 def test_the_cap_is_checked_only_where_it_reaches(corpus) -> None:
     lot = _clear(corpus)
     off = [c for c in _screen(corpus, lot).checks if c.check == "impervious_pct"]
@@ -338,6 +429,7 @@ def test_the_flags_read_in_plain_english() -> None:
     types = flag_plan.registry().types
     assert "33.537.140.D" in types[fact_code(IMPERVIOUS)].description
     assert "Springwater" in types[fact_code(UNMEASURED)].description
+    assert "townhouse" in types[fact_code(LAND)].description
     assert "Development Services Center" in types[fact_code(SETBACK)].description
     for fact in FACTS:
         assert types[fact_code(fact)].severity >= flag_plan.colour_rules().yellow_at_severity
