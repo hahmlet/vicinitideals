@@ -146,6 +146,8 @@ the full one.)
 159. [Claude] [scan: YES -- toward green] **Tigard mixed-use and Sandy 45-degree entrance angle** -- both codes print 45 degrees like Hillsboro (158); Tigard excludes "entrances to individual residences"; lane DONE 6686d6a1 (Tigard TMU 45; Sandy stored, 0 moves), rides rel6. [file](followups/159-tigard-sandy-entrance-angle.md)
 160. [Claude] [scan: YES -- toward red, false-GREEN risk] **Placement retry never checks the maximum front setback** -- found by fire-reds-158; lane DONE 366153a5+f7b57aa6 (share re-measured after every move), rides rel6; left: retry at drawing's angle (toward green). [file](followups/160-retry-front-max.md)
 161. [Claude] [Steph] [scan: YES -- toward red, false-GREEN risk] **Sight triangles (clear-vision areas) at corners and driveways** -- scoped 2026-11-09: ~9-90 corner GREENs at risk (+~133 where manuals are missing); driveway side waits on 3 Steph questions; manuals being fetched. [file](followups/161-sight-triangles.md)
+162. [Claude] [scan: YES -- toward red, false-GREEN risk] **Tigard entrance rules outside TMU** -- other mixed-use zones + RES-A..E have no entrance rule encoded; two chapters print 45 deg, rowhouse chapter (18.280) requires doors to face the street; lane tigard-entrances BUILDING on rel6 (rides rel7). [file](followups/162-tigard-entrances.md)
+163. [Claude] [scan: YES -- toward green] **Fire retry at the drawing's angle** -- retry lists placements at the fit's angle even when the drawing stands at another; rescues fire REDs; lane retry-drawing-angle BUILDING on rel6 (rides rel7). [file](followups/163-retry-drawing-angle.md)
 
 ## 2. Waiting on Steph
 
