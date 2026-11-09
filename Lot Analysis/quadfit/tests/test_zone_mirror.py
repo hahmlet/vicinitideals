@@ -1065,7 +1065,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: field is read by FLATS alone. (61 for an hour in round 2, while Oregon
     #: City's six residential zones carried their own blocks; round 3 folded
     #: them back into the city default.)
-    "entrance_faces_street": 55,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "entrance_faces_street": 56,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
@@ -1093,7 +1094,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     "max_units": 14,
     "max_height_stories": 25,
     "setback_side_total_ft": 3,
-    "min_building_height_ft": 17,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "min_building_height_ft": 18,
     "front_lot_line_through": 1,
     # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
@@ -1155,7 +1157,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the parking cap read on every street frontage, measured on FLATS's
     #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
     #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
-    "review_discretion": 47,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "review_discretion": 48,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
