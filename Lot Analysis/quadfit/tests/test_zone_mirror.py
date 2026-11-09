@@ -1163,6 +1163,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
     "parking_area_frontage_any_street": 4,
+    #: 2026-11-09 (FOLLOWUPS 52 extra 2, flats/dropped-lots-fairview): new, Fairview TCC
+    #: states its own side-parking answer (FMC 19.65.100(A)(2), behind or beside the building).
+    "parking_side_prohibited": 1,
     #: FOLLOWUPS 84 (2026-10-15): Beaverton 60.05.15.6.C's 35 percent is the
     #: driveway inside the ten-foot street strip, not a parking cap -- twelve
     #: blocks move off `parking_area_max_frontage_pct` (17 -> 5).
