@@ -3144,6 +3144,18 @@ zones:
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/_unincorporated/33.110.txt#L305-L306"
+      # PLAN DISTRICTS, held (2026-11-09). Title 33 governs this pocket, so a
+      # Portland plan district mapped over it controls over the base zone
+      # (33.500.040). Johnson Creek Basin, Northwest Hills and Pleasant Valley
+      # reach pocket lots, and none of the Portland layer's lot-by-lot traces
+      # covers them; Pleasant Valley's chapter is not stored at all. Unread is
+      # the conservative answer: a lot the plan district outline touches is
+      # held YELLOW, and the hold lifts only where the drawn area says the lot
+      # is out of every plan district.
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
+        quote: "or/multnomah/portland/33.500.txt#L32-L36"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -3421,6 +3433,18 @@ zones:
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/_unincorporated/33.110.txt#L305-L306"
+      # PLAN DISTRICTS, held (2026-11-09). Title 33 governs this pocket, so a
+      # Portland plan district mapped over it controls over the base zone
+      # (33.500.040). Johnson Creek Basin, Northwest Hills and Pleasant Valley
+      # reach pocket lots, and none of the Portland layer's lot-by-lot traces
+      # covers them; Pleasant Valley's chapter is not stored at all. Unread is
+      # the conservative answer: a lot the plan district outline touches is
+      # held YELLOW, and the hold lifts only where the drawn area says the lot
+      # is out of every plan district.
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
+        quote: "or/multnomah/portland/33.500.txt#L32-L36"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -3763,6 +3787,18 @@ zones:
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/_unincorporated/33.110.txt#L305-L306"
+      # PLAN DISTRICTS, held (2026-11-09). Title 33 governs this pocket, so a
+      # Portland plan district mapped over it controls over the base zone
+      # (33.500.040). Johnson Creek Basin, Northwest Hills and Pleasant Valley
+      # reach pocket lots, and none of the Portland layer's lot-by-lot traces
+      # covers them; Pleasant Valley's chapter is not stored at all. Unread is
+      # the conservative answer: a lot the plan district outline touches is
+      # held YELLOW, and the hold lifts only where the drawn area says the lot
+      # is out of every plan district.
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
+        quote: "or/multnomah/portland/33.500.txt#L32-L36"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -4058,6 +4094,18 @@ zones:
           when: [constrained_sites_overlay, attached_house_division]
           cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
           quote: "or/multnomah/_unincorporated/33.110.txt#L305-L306"
+      # PLAN DISTRICTS, held (2026-11-09). Title 33 governs this pocket, so a
+      # Portland plan district mapped over it controls over the base zone
+      # (33.500.040). Johnson Creek Basin, Northwest Hills and Pleasant Valley
+      # reach pocket lots, and none of the Portland layer's lot-by-lot traces
+      # covers them; Pleasant Valley's chapter is not stored at all. Unread is
+      # the conservative answer: a lot the plan district outline touches is
+      # held YELLOW, and the hold lifts only where the drawn area says the lot
+      # is out of every plan district.
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
+        quote: "or/multnomah/portland/33.500.txt#L32-L36"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -4739,3 +4787,31 @@ private_drives:
     is not a part of a lot" (L42); the front lot line separates the lot "from
     the street or accessway" (L846). A private driveway serving one lot is part
     of it.
+drawn_areas:
+  # Portland's plan district outlines over the Portland-administered pockets
+  # (2026-11-09, FOLLOWUPS 112(b)). Whole districts, not the Portland layer's
+  # traced lots: the plan district rules have not been read for any pocket lot.
+  plan_district_unmeasured:
+    condition: pdx_plan_district_unmeasured
+    zones: [R20, R10, R7, R5]
+    file: or/multnomah/portland/plan-districts.geojson
+    source: >-
+      Portland Maps Public/BPS_Zoning_Code_Layers MapServer layer 0 (Plan
+      Districts), fetched 2026-10-22 for the Portland layer and used here as
+      drawn: every polygon, every district. Matched 2026-11-09 against bridge
+      run 122's pocket lots: Johnson Creek Basin (JC), Northwest Hills (NH) and
+      Pleasant Valley (PV) reach them.
+    quote: "or/multnomah/portland/33.500.txt#L32-L36"
+    cite: PCC 33.500.040, plan district regulations control over the base zone, overlay zones and other regulations of Title 33
+    note: >-
+      Under the 2002 Portland/Multnomah County planning IGA the county adopted
+      Title 33 as its own code for the unincorporated land inside Portland's
+      Urban Services Boundary, and Title 33 includes its plan districts, which
+      33.500.040 puts above the base zone. Portland holds its own lots on the
+      rules a district states that nothing measures, traced lot by lot
+      (plan-district-unmeasured-lots.geojson), and the pocket lots were never
+      in that trace -- the Portland layer only screens Portland's own lots.
+      Until each district's rules are read for the pockets, a pocket lot the
+      outline reaches is held: at least nine tenths inside is held, one the
+      line cuts is unanswered and held, and only a lot at most a tenth inside
+      is answered out. Pleasant Valley's chapter is not in this corpus at all.

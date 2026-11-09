@@ -159,3 +159,26 @@ def test_the_pockets_owe_table_110_4s_outdoor_area_per_lot(
         got = corpus.resolve(COUNTY, zone)
         assert got.get("open_space_min_sqft") == 250
         assert got.get("open_space_min_dimension_ft") == 12
+
+
+def test_a_pocket_inside_a_portland_plan_district_is_held(
+    county: Layer, store: ProvenanceStore
+) -> None:
+    """33.500.040 puts the plan district above the base zone, and it is unread here.
+
+    Johnson Creek Basin, Northwest Hills and Pleasant Valley reach pocket lots.
+    The Portland layer's lot-by-lot plan-district trace never included them,
+    so the whole outline holds the lot until the districts are read for it.
+    """
+    lines = _lines(store, f"{PORTLAND}/33.500.txt")
+    assert lines[31].strip().startswith("33.500.040 Relationship to Other Regulations")
+    assert "the plan district regulations control" in lines[33]
+
+    area = county.drawn_areas["plan_district_unmeasured"]
+    assert area.condition == "pdx_plan_district_unmeasured"
+    assert set(area.zones) == set(POCKETS)
+    assert area.file == "or/multnomah/portland/plan-districts.geojson"
+    for zone in POCKETS:
+        held = county.zones[zone].values["quadplex_allowed"].qualified_by
+        assert held == "pdx_plan_district_unmeasured"
+    assert county.zones["RF"].values["quadplex_allowed"].qualified_by is None
