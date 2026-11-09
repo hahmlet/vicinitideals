@@ -25,3 +25,11 @@ Manual fetch 2026-11-09 (../vicinitideals-worktrees/sight-manuals.findings.md; f
 Beaverton 15 ft legs, bars structures (EDM 210.18.1, edition doubt 2019 vs 2025); Milwaukie defers size to AASHTO
 (paid book -- Steph: buy?); Oregon City/Wood Village partial; Hillsboro, Gladstone blocked by site bot checks
 (not bypassed) -- fetch by hand or via Steph's Chrome only after Steph says go on the build.
+
+Curb scout 2026-11-09 (../vicinitideals-worktrees/curb-layer.findings.md): Portland PBOT Curbs layer 74 (118k lines,
+weekly, 'shoulder' = pavement edge) covers 62.7% of GREENs; saved gitignored data/flats/sources/2026-11-09-curb/.
+Oregon City edge-of-pavement (partial), Hillsboro roadway polygons; Gresham NONE (Metro ROW polygons only).
+NEXT (after rel6 bound frees 137): measure Portland curb-to-lot-line offsets on GREEN lots -> real numbers for Q2/Q3.
+Explained all questions to Steph in plain English 2026-11-09; recommendations: build corners; Portland driveway = warning
+(yellow+note); curb = middle way; West Linn = single-family; Hillsboro/Gladstone via Steph's Chrome; Milwaukie email not buy;
+extend Portland aisle + alley rulings to Multnomah pockets.
