@@ -1065,7 +1065,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
-    "setback_garage_entrance_ft": 125,
+    # 125 -> 124 on 2026-11-09 (pagecheck-findings): Wilsonville OTR's garage
+    # setback is NOT ENCODED -- the OTR book's garage line is measured from the
+    # front building line, which no field holds (4.138(.04)A puts the book first).
+    "setback_garage_entrance_ft": 124,
     "min_landscaped_pct": 60,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
