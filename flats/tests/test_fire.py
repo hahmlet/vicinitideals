@@ -671,7 +671,10 @@ def test_fire_only_red_uses_the_next_fitting_placement_within_reach(
     maximum: measured where it stands (FOLLOWUPS 160), none is taken and the
     plan stays RED on the hose -- before, the first was kept YELLOW and the
     screen's later re-measure turned it RED on the maximum. With the fit
-    square to the street, the next placement within the maximum is kept."""
+    square to the street, the next placement within the maximum is kept.
+    (This fitter holds the fit's angle alone; one that holds the drawing's
+    angle lists there first: FOLLOWUPS 163,
+    :func:`test_fire_retry_lists_placements_at_the_drawing_angle`.)"""
     import dataclasses
 
     from flats.fit.rectangle import Fitter
@@ -1275,3 +1278,168 @@ def _with_drawing(s, drawing):
     import dataclasses
 
     return dataclasses.replace(s, drawing=drawing)
+
+
+# --- FOLLOWUPS 163: the retry lists placements at the drawing's own angle ------
+
+
+def _turned_case(corpus, policies):
+    """The retry fixture with a fitter that holds, beside the fit's own 30
+    degrees, the angle its drawing stands at (square to the street: the
+    maximum front setback's search turned it), as the screen's fitter does."""
+    from flats.fit.rectangle import Fitter
+    from flats.ingest import quadfit
+
+    lot, s, _ = _placement_retry_case(corpus, policies)
+    assert not math.isclose(s.fit.angle_deg, 0.0, abs_tol=1e-6)
+    fitter = Fitter(s.envelope.geom, (s.fit.angle_deg, 0.0), ground=s.envelope.ground)
+    assert quadfit._drawn_angle(s, fitter) == 0.0
+    return lot, s, fitter
+
+
+def test_the_drawn_angle_is_read_off_the_drawn_building(corpus, policies) -> None:
+    """:func:`_drawn_angle` names the fitter's angle the drawn building
+    stands at, and nothing where that is the fit's own, the fitter does not
+    hold it, or nothing is drawn."""
+    from flats.fit.rectangle import Fitter
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _turned_case(corpus, policies)
+    at_fit = quadfit.drawing_for(s, fitter)
+    assert at_fit and at_fit["fits"]
+    assert quadfit._drawn_angle(_with_drawing(s, at_fit), fitter) is None
+    only_fit = Fitter(s.envelope.geom, (s.fit.angle_deg,), ground=s.envelope.ground)
+    assert quadfit._drawn_angle(s, only_fit) is None
+    assert quadfit._drawn_angle(_with_drawing(s, None), fitter) is None
+
+
+def test_fire_retry_lists_placements_at_the_drawing_angle(corpus, policies, monkeypatch) -> None:
+    """FOLLOWUPS 163: the drawing stands square to the street while the fit
+    stands 30 degrees off it. Listed at the fit's angle, every placement
+    stands the far end of its wall past Portland CE's 10 ft maximum, and the
+    lot stayed RED on the hose. Listed at the angle the drawing stands at,
+    the next placement within the maximum the hose reaches is kept -- and it
+    is measured the whole way: the maximum measured again afterwards, as the
+    screen does, changes nothing."""
+    from flats.ingest import quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _turned_case(corpus, policies)
+    first = Polygon(s.drawing["building"])
+    monkeypatch.setattr(
+        fire, "route_ft", lambda b, *_a, **_k: 190.0 if b.equals(first) else 120.0
+    )
+    # The other-angle turn is not what moves it.
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+    base = _coloured(s, Triage.green)
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+
+    assert got.signed.colour is Colour.yellow
+    assert got.drawing["building"] != s.drawing["building"]
+    assert quadfit._drawn_angle(got, fitter) == 0.0
+    assert got.facts.fire_route_ft == 120.0
+    assert all(
+        c.verdict is Verdict.passes for c in got.screening.checks if c.check != "fire_access_ft"
+    )
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.passes
+    again = quadfit.moved_checked(got, base.drawing, policy=policies[0], relief=policies[1])
+    assert again.signed.colour is got.signed.colour
+    assert again.screening.colour is got.screening.colour
+
+
+@pytest.mark.parametrize("hold", ["drive", "door", "stretch"])
+def test_a_placement_at_the_drawing_angle_keeps_what_kept_the_drawing_there(
+    corpus, policies, monkeypatch, hold
+) -> None:
+    """FOLLOWUPS 163: a placement listed at the drawing's own angle is held
+    to what the steps that turned the drawing hold theirs to: a drive in
+    from the street left clear, and no court moved off its alley stretch or
+    doors turned off the street where the drawing had neither. Refused, the
+    lot stays as it was."""
+    from flats.ingest import quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _turned_case(corpus, policies)
+    first = Polygon(s.drawing["building"])
+    monkeypatch.setattr(
+        fire, "route_ft", lambda b, *_a, **_k: 190.0 if b.equals(first) else 120.0
+    )
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+    real_drawing_for = quadfit.drawing_for
+    turned_listed: list[bool] = []
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        got = real_drawing_for(screened, fitter, listing=listing, where=where, **kwargs)
+        if listing is not None:
+            turned_listed.append(math.isclose(screened.fit.angle_deg, 0.0, abs_tol=1e-6))
+            # Only the drawing's angle lists anything here.
+            if not turned_listed[-1]:
+                listing.clear()
+        if where is not None and got:
+            got = {**got, "lane": got.get("lane") or [[0, 0], [1, 0], [1, 1], [0, 0]]}
+        return got
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    if hold == "drive":
+        monkeypatch.setattr(quadfit, "_lane_in_from_street", lambda _s: True)
+        monkeypatch.setattr(quadfit, "_drive_clear", lambda *_a: False)
+    elif hold == "door":
+        monkeypatch.setattr(quadfit, "drawn_door_turned", lambda _s, drawing=None: drawing is not None)
+    else:
+        monkeypatch.setattr(quadfit, "court_off_stretch", lambda _s, drawing=None: drawing is not None)
+    base = _coloured(s, Triage.green)
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+
+    assert turned_listed == [True, False]
+    assert got.drawing == base.drawing
+    assert got.facts.fire_route_ft == 190.0
+    assert got.signed.colour is Colour.red
+
+
+def test_a_turned_drawing_failing_another_check_is_not_retried(
+    corpus, policies, monkeypatch
+) -> None:
+    """Portland 1S2E07BC  -12600 (fire-reds-158 experiment A, withdrawn):
+    the retry runs only where the hose is all that fails. A turned drawing
+    that fails something else -- there, a minimum density; here, the fit --
+    lists nothing at any angle and is not moved."""
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _turned_case(corpus, policies)
+    original_screen = quadfit.screen
+
+    def fit_fails(*args, **kwargs):
+        result = original_screen(*args, **kwargs)
+        checks = tuple(
+            dataclasses.replace(c, verdict=Verdict.fails) if c.check == "fit_ft" else c
+            for c in result.checks
+        )
+        return dataclasses.replace(result, triage=Triage.red, checks=checks)
+
+    listings = 0
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, **kwargs):
+        nonlocal listings
+        if listing is not None:
+            listings += 1
+        return real_drawing_for(screened, fitter, listing=listing, **kwargs)
+
+    monkeypatch.setattr(quadfit, "screen", fit_fails)
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    base = _coloured(s, Triage.green)
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+
+    assert listings == 0
+    assert got.drawing == base.drawing
+    assert check(got.screening, "fit_ft").verdict is Verdict.fails

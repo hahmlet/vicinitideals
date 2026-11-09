@@ -5984,7 +5984,10 @@ def fire_checked(
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
     build at. Where the selected placement misses only on fire reach, the bounded
-    fitting placements already produced for that angle are ranked by the
+    fitting placements are listed at the angle the drawing stands at, where a
+    step before this one turned it off the fit's (:func:`_drawn_angle`,
+    FOLLOWUPS 163; held there to what kept the drawing at that angle,
+    :func:`_retry_kept`), then at the fit's own angle; each listing is ranked by the
     building's distance from the front and at most
     ``FIRE_RETRY_MAX_PLACEMENTS`` are drawn, only on lots no larger than
     ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
@@ -6108,18 +6111,13 @@ def fire_checked(
         from shapely import affinity
 
         max_front_ft = flatter._max_front_ft(out, _street_lines(lot))
-        placements: list[Any] = []
-        drawing_for(
-            out, fitter, street=at, listing=placements, max_front_ft=max_front_ft
-        )
         front_lines = MultiLineString(
             [[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in streets]
         )
         current = out.drawing or {}
         current_building = current.get("building")
 
-        def placement_rank(index: int) -> tuple[float, float, int]:
-            where = placements[index]
+        def placement_rank(where: Any, index: int) -> tuple[float, float, int]:
             grid = getattr(where, "grid", None)
             if grid is None:
                 return math.inf, 0.0, index
@@ -6196,36 +6194,31 @@ def fire_checked(
             court = rounded(affinity.rotate(court_local, grid.angle_deg, origin=grid.origin))
             return building_distance, -court.distance(front_lines), index
 
-        ranked = sorted(range(len(placements)), key=placement_rank)
-        for index in ranked[:FIRE_RETRY_MAX_PLACEMENTS]:
-            where = placements[index]
-            drawn = drawing_for(out, fitter, street=at, where=where)
-            if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
-                continue
-            # A move that stands the court in a yard it may not use is
-            # refused (Steph 2026-11-08; Milwaukie 12E30CD04700, fire_rp5):
-            # the listing already holds none, and this reads the drawing
-            # itself on the plan's own yards (:func:`court_yard_lines`).
-            if court_in_front_yard(out, drawn):
-                continue
-            candidate_route = measure(drawn)
-            if candidate_route is None or candidate_route > limit:
-                continue
-            # Measured where it now stands, as the first drawing was: its
-            # distance from each street against the maximum and its share of
-            # the frontage (FOLLOWUPS 160). The listing bounds the building's
-            # distance from the nearest street only, and the screen holds it
-            # to every street the code names.
-            candidate = _redrawn(out, drawn, policy=policy, relief=relief)
-            candidate = screened(candidate, candidate_route)
-            if not fire_passed(candidate.screening) or not fire_passed(candidate.signed):
-                continue
-            if (
-                _kept_checks(candidate.screening) != _kept_checks(out.screening)
-                or _kept_checks(candidate.signed) != _kept_checks(out.signed)
-            ):
-                continue
-            return candidate
+        # The drawing's own angle first, where a step before this one (the
+        # court's turn, the maximum front setback's search) stood the
+        # building at an angle other than the fit's (FOLLOWUPS 163): the
+        # placements nearest it are listed where it stands. Then the fit's
+        # own angle, as before.
+        turned_to = _drawn_angle(out, fitter)
+        for angle in (() if turned_to is None else (turned_to,)) + (None,):
+            here = out if angle is None else dataclasses.replace(
+                out, fit=dataclasses.replace(out.fit, angle_deg=angle)
+            )
+            placements: list[Any] = []
+            drawing_for(
+                here, fitter, street=at, listing=placements, max_front_ft=max_front_ft
+            )
+            ranked = sorted(
+                range(len(placements)), key=lambda i: placement_rank(placements[i], i)
+            )
+            for index in ranked[:FIRE_RETRY_MAX_PLACEMENTS]:
+                drawn = drawing_for(here, fitter, street=at, where=placements[index])
+                kept = _retry_kept(
+                    out, here, drawn, current_building, measure, limit, screened,
+                    fire_passed, turned=angle is not None, policy=policy, relief=relief,
+                )
+                if kept is not None:
+                    return kept
 
     binds = out.signed.binds
     alone = route is not None and bool(binds) and all(b.check == "fire_access_ft" for b in binds)
@@ -6246,6 +6239,123 @@ def fire_checked(
         if turned is not s:
             out = screened(turned, again)
     return out
+
+
+#: Degrees within which a drawn building's wall is read as standing at one
+#: of the fitter's angles (:func:`_drawn_angle`): the rings are rounded to a
+#: tenth of a foot, a few hundredths of a degree on the pod's walls.
+DRAWN_ANGLE_TOL_DEG = 0.5
+
+
+def _drawn_angle(s: Screened, fitter: Fitter) -> float | None:
+    """The fitter's angle ``s``'s drawing stands its building at, where that
+    is not the fit's own (FOLLOWUPS 163); None where it is the fit's, or
+    cannot be read.
+
+    The court's turn (:func:`court_turned`) and the maximum front setback's
+    search and slide (:func:`front_max_checked`) keep the fit and replace
+    only the drawing, so the building shown can stand at another of the
+    fitter's angles. The fire retry lists placements at the angle the
+    building stands at. The drawn wall as long as the building is across
+    (the design's width, or its depth where the fit faces it depth-on) runs
+    along the grid's angle (:func:`flats.fit.draw.draw`); the fitter's angle
+    nearest it within :data:`DRAWN_ANGLE_TOL_DEG` is the drawing's. A wall
+    of neither length -- a tight fit drawn short -- reads nothing, and the
+    retry lists at the fit's angle alone, as before."""
+    from flats.designs.model import Orientation
+
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    if s.fit.angle_deg is None or not (drawing.get("fits") and ring and len(ring) >= 4):
+        return None
+    pts = [tuple(p) for p in ring]
+    if pts[0] == pts[-1]:
+        pts = pts[:-1]
+    if s.fit.orientation is Orientation.depth_facing:
+        across = s.design.footprint.depth_ft
+    else:
+        across = s.design.footprint.width_ft
+    walls = [
+        bearing_deg(a[0], a[1], b[0], b[1])
+        for a, b in zip(pts, pts[1:] + pts[:1])
+        if abs(math.hypot(b[0] - a[0], b[1] - a[1]) - across) <= 1.0
+    ]
+    if not walls or any(
+        bearing_delta(w, s.fit.angle_deg) <= DRAWN_ANGLE_TOL_DEG for w in walls
+    ):
+        return None
+    near = [
+        (min(bearing_delta(g.angle_deg, w) for w in walls), g.angle_deg)
+        for g in fitter.grids
+    ]
+    near = [(d, a) for d, a in near if d <= DRAWN_ANGLE_TOL_DEG]
+    return min(near)[1] if near else None
+
+
+def _retry_kept(
+    out: Screened,
+    here: Screened,
+    drawn: dict[str, Any] | None,
+    current_building: Any,
+    measure: Any,
+    limit: float,
+    screened: Callable[[Screened, float | None], Screened],
+    fire_passed: Callable[[Screening], bool],
+    *,
+    turned: bool,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> Screened | None:
+    """``out`` stood at ``drawn``, one placement the fire retry listed
+    (:func:`fire_checked`), where the hose reaches it and it keeps every
+    other check; None where it is refused.
+
+    ``here`` is ``out`` at the angle the placement was listed at; ``turned``
+    says that is the drawing's own angle, not the fit's (FOLLOWUPS 163). A
+    placement at the drawing's angle is held to what kept the drawing there
+    as well: a court reached down a lane from the street keeps its drive in
+    clear (:func:`flats.ingest.flatter._drive_clear`, as the court's turn and
+    the maximum front setback's search require), and the move stands the
+    court off the alley stretch that is its aisle, or the doors off the
+    street, only where the drawing already did."""
+    if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
+        return None
+    # A move that stands the court in a yard it may not use is
+    # refused (Steph 2026-11-08; Milwaukie 12E30CD04700, fire_rp5):
+    # the listing already holds none, and this reads the drawing
+    # itself on the plan's own yards (:func:`court_yard_lines`).
+    if court_in_front_yard(out, drawn):
+        return None
+    if turned:
+        if (
+            drawn.get("lane")
+            and _lane_in_from_street(out)
+            and not _drive_clear(drawn, here, _street_lines(out.lot))
+        ):
+            return None
+        if any(
+            held(out, drawn) and not held(out)
+            for held in (court_off_stretch, drawn_door_turned)
+        ):
+            return None
+    candidate_route = measure(drawn)
+    if candidate_route is None or candidate_route > limit:
+        return None
+    # Measured where it now stands, as the first drawing was: its
+    # distance from each street against the maximum and its share of
+    # the frontage (FOLLOWUPS 160). The listing bounds the building's
+    # distance from the nearest street only, and the screen holds it
+    # to every street the code names.
+    candidate = _redrawn(out, drawn, policy=policy, relief=relief)
+    candidate = screened(candidate, candidate_route)
+    if not fire_passed(candidate.screening) or not fire_passed(candidate.signed):
+        return None
+    if (
+        _kept_checks(candidate.screening) != _kept_checks(out.screening)
+        or _kept_checks(candidate.signed) != _kept_checks(out.signed)
+    ):
+        return None
+    return candidate
 
 
 def _fire_why(
