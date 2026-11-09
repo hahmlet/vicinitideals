@@ -108,6 +108,11 @@ REASONS: tuple[str, ...] = (LISTED_REASON, UNSETTLED_REASON)
 
 REPORT_NAME = "historic_lists.csv"
 
+#: The note :mod:`scripts.flats_historic_state_build` writes on a row the
+#: matcher has not yet seen. Every row the matcher reads gets its own note,
+#: matched or not, so a row still saying this was never matched at all.
+NOT_YET_MATCHED = "Not yet matched."
+
 
 @dataclass(frozen=True, slots=True)
 class Listing:
@@ -299,6 +304,35 @@ def listings_on(tlid: object) -> tuple[Listing, ...]:
 def unmatched() -> tuple[Listing, ...]:
     """The rows that name no lot yet: reported, never dropped."""
     return tuple(x for x in load_lists() if not x.tlids)
+
+
+def never_matched(paths: Iterable[Path] | None = None) -> dict[str, int]:
+    """Rows of each list file the matcher has never been run over, by file.
+
+    ``scripts/flats_match_historic.py --write`` gives every row it reads a
+    note of its own, so a row still carrying :data:`NOT_YET_MATCHED` is one
+    no lot was ever looked for -- not one that was looked for and not found.
+    A bridge on such a tree screens the listed buildings as unlisted (rel4:
+    matched state listings fell 2,921 -> 186 and ~114 lots went falsely
+    GREEN), so :func:`require_matched` refuses it."""
+    files = list(paths) if paths is not None else [*sorted(LISTS_DIR.glob("*.csv")), *state_files()]
+    out: dict[str, int] = {}
+    for path in files:
+        n = sum(row.get("match_note", "").strip() == NOT_YET_MATCHED for row in read_rows(path))
+        if n:
+            out[str(path.relative_to(LISTS_DIR)) if path.is_relative_to(LISTS_DIR) else str(path)] = n
+    return out
+
+
+def require_matched(paths: Iterable[Path] | None = None) -> None:
+    """Refuse a run whose historic lists were never matched to lots
+    (:func:`never_matched`): match and commit them first."""
+    if left := never_matched(paths):
+        raise RuntimeError(
+            f"historic listings never matched to a lot: {left}; run "
+            "scripts/flats_match_historic.py <s1_lots.parquet> --write and commit the lists "
+            "before bridging (a never-matched listing screens its building as unlisted)"
+        )
 
 
 # --- the check ---------------------------------------------------------------

@@ -6981,6 +6981,9 @@ def run(
     from flats.geom.curbs import missing as curbs_missing
     from flats.ingest import batch
 
+    # A tree whose historic lists were never matched screens every listed
+    # building as unlisted: refused before anything is read (rel4 finding 1).
+    historic_lists.require_matched()
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
     curbs = curbs if curbs is not None else sources
     if not roads.exists():
