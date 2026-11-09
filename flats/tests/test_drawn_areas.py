@@ -50,6 +50,9 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "bethany_asc_3",
         # East Hillsboro's Reedville and TV Highway R-5 lots, Hillsboro's standards laid over (FOLLOWUPS 138).
         "east_hillsboro_city_standards",
+        # Fairview TCC outside the Halsey storefront district, Figure 19.65.030(B),
+        # the complement of its shading (FOLLOWUPS 52, 2026-11-08).
+        "fairview_outside_storefront_district",
         "gladstone_parking_exception_area",
         "gladstone_town_center",
         # South Hillsboro's Town and Village Center Core Areas, Figure 12.65.930-A

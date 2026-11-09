@@ -4,9 +4,11 @@ Table 19.65.020(A) reads `h. Quadplexes P`. No other commercial or industrial
 district in this city admits the building at all, and the base value here is
 still false, because 19.65.030 draws a Halsey Street storefront district
 INSIDE the zone and requires every development in it to include a
-nonresidential use. The boundary is Figure 19.65.030(B) -- a map -- so whether
-a given TCC lot sits inside the subarea is unmeasured, and the conservative
-reading is that it does.
+nonresidential use. The boundary is Figure 19.65.030(B) -- a map -- traced
+2026-11-08 as the complement of its shading within its frame
+(``drawn_areas`` outside_storefront_district): a lot at least 90 percent in
+the unshaded ground takes row h's P, a lot the traced line cuts is held open,
+and a shaded lot or one beyond the frame keeps the refusal.
 
 `mixed_use` alone reopens it. Wood Village's NC zone across the city line
 needs a conditional use as well, because its table never permits the building
@@ -54,7 +56,52 @@ def test_the_only_outright_permission_in_the_city_still_reads_false(
 ) -> None:
     held = fairview.zones["TCC"].values["quadplex_allowed"]
     assert held.value is False
-    assert {v.when for v in held.variants} == {("mixed_use",)}
+    assert {v.when for v in held.variants} == {
+        ("mixed_use",),
+        ("fairview_outside_storefront_district",),
+    }
+
+
+def test_outside_the_storefront_district_row_h_stands(rules: RuleSet) -> None:
+    """Off the figure's shading the P is the table's own, with nothing owed."""
+    outside = rules.resolve(FAIRVIEW, "TCC", (*POD, "fairview_outside_storefront_district"))
+    assert outside.values["quadplex_allowed"].value is True
+
+
+@pytest.mark.parametrize(
+    ("label", "x", "y", "expected"),
+    [
+        # 1N3E28CD -01238 on 208th Pl, west of the shading.
+        ("208th Pl", 7702862, 686708, True),
+        # 1N3E33AB -00100, the big Halsey lot west of 223rd, shaded.
+        ("Halsey west of 223rd", 7705427, 686667, False),
+        # 1N3E27CD -02600, east of the figure's frame: not depicted, not outside.
+        ("beyond the frame", 7707978, 687001, False),
+    ],
+)
+def test_the_tracing_reads_the_figure(label: str, x: float, y: float, expected: bool) -> None:
+    from shapely.geometry import box
+
+    from flats.geom.drawn import load_area, observed_drawn
+
+    area = load_area(fairview_layer().drawn_areas["outside_storefront_district"].file)
+    assert observed_drawn(box(x - 15, y - 15, x + 15, y + 15), area) is expected, label
+
+
+def test_a_lot_the_figure_shades_only_along_halsey_is_unanswered() -> None:
+    """1N3E33BA -00100 runs 1,000 ft south of Halsey and the figure shades
+    its Halsey end only: cut, so held open rather than called outside."""
+    from shapely.geometry import box
+
+    from flats.geom.drawn import load_area, observed_drawn
+
+    area = load_area(fairview_layer().drawn_areas["outside_storefront_district"].file)
+    lot = box(7702894, 685583, 7703344, 686601)
+    assert observed_drawn(lot, area) is None
+
+
+def fairview_layer() -> Layer:
+    return load_rules()[FAIRVIEW]
 
 
 def test_the_mixed_use_election_is_what_reopens_it(rules: RuleSet) -> None:
@@ -203,16 +250,27 @@ def test_the_design_standards_reach_unit_lots_and_not_this_building(
     assert "unit lots" in notes
 
 
-def test_the_parking_siting_rule_is_handed_to_the_geometry_layer(
+def test_the_parking_siting_rule_is_the_zones_own(
     fairview: Layer,
 ) -> None:
     """19.65.100(A)(2) is a rule about where the stalls go, not how many.
 
     Oriented to an alley, underground, above the ground floor, or behind or
-    beside the building, and never in a corner side yard. Nothing in the
-    value model can hold that; the note is the handoff.
+    beside the building, and never in a corner side yard; 19.65.040 bans
+    parking and circulation between the building and the street. A ban in
+    front, the side open (2026-11-08), each quoted from its own sentence.
     """
-    assert "19.65.100(A)(2)" in (fairview.zones["TCC"].notes or "")
+    zone = fairview.zones["TCC"]
+    front = zone.values["parking_front_prohibited"]
+    side = zone.values["parking_side_prohibited"]
+    assert front.value is True
+    assert side.value is False
+    store = ProvenanceStore()
+    assert "prohibited in the setback area between the building and the street lot line" in (
+        store.quote(front.prov.quote)
+    )
+    assert "behind or to the side of the building" in store.quote(side.prov.quote)
+    assert "19.65.100(A)(2)" in (zone.notes or "")
 
 
 def test_the_town_center_citations_all_point_at_their_own_sentence(

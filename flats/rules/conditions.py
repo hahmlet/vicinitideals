@@ -1073,6 +1073,23 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "fairview_outside_storefront_district",
+        "site_fact",
+        "The lot lies in Fairview's Town Center Commercial (TCC) zone OUTSIDE "
+        "its Halsey Street storefront district, a subarea whose boundary is "
+        "Figure 19.65.030(B) and nothing else (FMC 19.65.030(A)-(B)). Inside "
+        "the district residential uses are permitted only as part of a mixed "
+        "use development (19.65.030(D)(1)); outside it Table 19.65.020(A) row "
+        "1.h permits Quadplexes outright. The city publishes no layer; the "
+        "area is the figure's unshaded ground within its frame, traced, so a "
+        "lot beyond the frame reads False.",
+        evidence=(
+            "Figure 19.65.030(B) traced and registered to the taxlots -- held "
+            "as Fairview's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "gladstone_town_center",
         "site_fact",
         "The lot lies inside the Gladstone Town Center adopted by Ordinance "
@@ -1858,6 +1875,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "bethany_asc_1a",
     "bethany_asc_3",
     "east_hillsboro_city_standards",
+    "fairview_outside_storefront_district",
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "hillsboro_center_core",

@@ -1555,6 +1555,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-FAIRVIEW-OUTSIDE-STOREFRONT-DISTRICT:
+    description: "Storefront district edge unconfirmed: whether the Fairview TCC lot lies outside the Halsey Street storefront district (Figure 19.65.030(B), traced); the line cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A city map of the storefront district boundary, or a planner's word on which side of it the lot falls"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-GLADSTONE-TOWN-CENTER:
     description: "Town Center edge unconfirmed: whether the lot lies inside the Gladstone Town Center (Ordinance 1539 map, traced); the line cuts this lot"
     kind: categorical

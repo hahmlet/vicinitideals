@@ -30,10 +30,13 @@
      Overlay lot sizes for Blocks 26/31/33. Building separation is moot (one building). MUC 57.400
      CLOSED: repealed by Ord. 1438-20 (tualatin.yaml card "57.400"); Figure 57-1 is a 100 ft height
      figure that can only loosen.
-   - Fairview TCC (45 lots, all red on permission: the base is false for the Halsey storefront
-     subarea, the only variant needs a mixed use). Opening it needs THREE things together, or it is
-     a false GREEN: Figure 19.65.030(B) traced (a map; not stored), the TCC front-parking ban
-     (19.65.040, card `19.65.txt#19.65.040`) and 19.65.100(A)(2)'s parking siting encoded.
+   - Fairview TCC: DONE on this branch 2026-11-08 (coordinator extra 2), all three together.
+     Figure 19.65.030(B) traced as its complement (flats/config/areas/or/multnomah/fairview/
+     outside-storefront-district.geojson, figure held beside it), condition
+     `fairview_outside_storefront_district` opens row h's P outside the shading; the TCC block
+     carries parking_front_prohibited true (19.65.040(A)(2)(c)(iii) + 19.65.100(A)(2)) and
+     parking_side_prohibited false. Of 45 TCC lots: 3 outside (tiny, 208th Pl), 5 cut (held open,
+     FACT-FAIRVIEW-OUTSIDE-STOREFRONT-DISTRICT), 37 inside or beyond the frame (refusal stands).
    - SCMU's front yard: Map 1005-1 street types and frontage types (1005.09(G), Table 1005-1),
      and with it 1005.09's minimum building depth and ground-floor height, which do not apply in
      Sectors 1-2 (1005.09(A)) -- also a map. SCMU's density is DONE (min 20, FOLLOWUPS 95).
