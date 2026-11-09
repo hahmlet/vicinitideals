@@ -159,4 +159,3 @@ Read, not encoded (possible false GREENs, each needs a mechanism or data; listed
 - Cornelius Type I middle housing site review (18.100.030 (A)(2)): ministerial, GREEN tier; no change.
 - Beaverton 70.20.10.6.2 / 70.15.25.1 trace (item 1): not done this round; the hold stands.
 - Lake Oswego 50.06.001.5: not fetched (layer switched off, zero lots).
-
