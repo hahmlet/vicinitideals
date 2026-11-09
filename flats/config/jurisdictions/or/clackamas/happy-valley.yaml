@@ -3345,6 +3345,7 @@ zones:
           when: [state_middle_housing]
           cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
           quote: "or/hb.2138.2025.txt#L62-L71"
+          via: "or/clackamas/happy-valley/16.22/16.22.010.txt#L22-L27"
     # Table 16.22.010-2, read 2026-10-01 once the state path opened the use
     # (FOLLOWUPS 21(b)): a row on a refused zone acts on nothing, a row on a
     # zone the state opens decides the lot. Every standard below is the one
