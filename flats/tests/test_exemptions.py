@@ -186,7 +186,10 @@ pytestmark = pytest.mark.unit
 # 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
 # 206 -> 205 numeric on 2026-11-09 (pagecheck-findings): Gresham RTC's townhouse exemption
 # from the 7.0420(J)(1)(a) frontage share rested on 7.0431, which does not list RTC; removed.
-EXPECTED = {"stated": 478, "numeric": 205, "marker": 0, "dash": 2, "silent": 8}
+# 205 -> 215 numeric on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+# restate the city's exempt parent-lot bases for parking_maneuvering_max_width_ft and
+# parking_side_prohibited (5 x 2) so their townhouse variants can cite 4.1152 S13/S14.
+EXPECTED = {"stated": 478, "numeric": 215, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
