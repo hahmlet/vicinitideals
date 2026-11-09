@@ -179,11 +179,11 @@ def commands(root: Path, base: str, need: set[str]) -> dict[str, list[str]]:
         "flats": uv + ["pytest", "flats/tests", "-q", "-n", "auto", "-p", "no:cacheprovider"],
         "quadfit": uv + ["pytest", "Lot Analysis/quadfit/tests", "-q", "-n", "auto",
                          "-p", "no:cacheprovider"],
-        "app_all": uv + ["pytest", "tests/", "-q", "-rs", "--timeout=120",
+        "app_all": uv + ["pytest", "tests/", "-q", "-rs", "--timeout=300",
                          "--ignore=tests/e2e", "-p", "no:cacheprovider"],
     }
     if "app_flats" in need:
-        cmds["app_flats"] = uv + ["pytest", "-q", "-rs", "--timeout=120",
+        cmds["app_flats"] = uv + ["pytest", "-q", "-rs", "--timeout=300",
                                   "-p", "no:cacheprovider", *flats_test_files(root)]
     # Each pytest process makes its own throwaway database (tests/conftest.py,
     # uuid-named), so the app suite can be sharded where the database sits beside
@@ -287,7 +287,9 @@ def run_suites(root: Path, base: str, need: set[str], head: str) -> int:
     # Serial, the app suite is DB-bound and the FLATS suites CPU-bound and
     # sharded: run it alongside the rest instead of after it. Sharded (the
     # runner) it is CPU-bound too, and alongside them its slowest tests passed
-    # the 120 s timeout -- so there it runs after them, on the whole machine.
+    # the 120 s timeout -- so there it runs after them, on the whole machine. The
+    # timeout is 300 s: the runner shares a host with 137, whose bridge runs can
+    # push the word-card tests past 120 s (2026-11-08, three gates in a row).
     results: dict[str, dict] = {}
     procs: dict[str, tuple[subprocess.Popen, float, Path]] = {}
     app = [n for n in ("app_all", "app_flats") if n in cmds]
