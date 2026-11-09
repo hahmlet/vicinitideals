@@ -46,6 +46,19 @@ if TYPE_CHECKING:  # pragma: no cover - typing only
 BY_MIN_LOT = "min_lot_sqft"
 BY_COVERAGE = "max_coverage_pct"
 BY_ENVELOPE = "envelope"
+#: The lot the building, its pavement and the open space or landscaping the
+#: code asks to be left over add up to (FOLLOWUPS 7): the screen's
+#: ``landscaped_pct`` / ``open_space_pct`` / ``open_space_sqft`` checks read
+#: backwards into an area.
+BY_LEFTOVER = "leftover"
+
+#: The leftover standards the paper lot is charged for, as (field, share):
+#: a share is a percent of the whole lot, an area is square feet.
+_LEFTOVER_FIELDS: tuple[tuple[str, bool], ...] = (
+    ("min_landscaped_pct", True),
+    ("open_space_min_pct", True),
+    ("open_space_min_sqft", False),
+)
 
 #: What sets the width, for the same reason. The building with the lane
 #: beside it, the row of stalls behind it, or a lot-width standard above both.
@@ -1517,9 +1530,16 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     per_unit = design.plat is Plat.unit_lots
     lots = design.units
 
-    front = _number(rules, "setback_front_ft")
-    rear = _number(rules, "setback_rear_ft")
-    side = _number(rules, "setback_side_ft")
+    # A setback the code waives (``exempt: true``) is zero feet, not an
+    # unknown one: until 2026-11-08 the paper fit read it as unstated, so a
+    # zone with no side or rear yard -- Fairview VA, 19.125.040(F) -- never
+    # costed its envelope and reported the coverage floor alone, 3,102 sq ft
+    # for a pod that needs a drive and a court behind it (FOLLOWUPS 7). The
+    # combined side figure stays as stated: a waived total says nothing of
+    # an unread per-side yard.
+    front = _yard(rules, "setback_front_ft")
+    rear = _yard(rules, "setback_rear_ft")
+    side = _yard(rules, "setback_side_ft")
     side_total = _number(rules, "setback_side_total_ft")
     min_lot, lot_answered = lot_standard(rules, "min_lot_sqft", per_unit=per_unit, lots=lots)
     min_width, width_answered = lot_standard(
@@ -1597,6 +1617,12 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         )
         if got is not None
     ]
+    leftovers = [
+        (name, float(got), share)
+        for name, share in _LEFTOVER_FIELDS
+        if isinstance(got := rules.get(name), (int, float)) and not isinstance(got, bool)
+    ]
+    used += [name for name, _, _ in leftovers]
     unsigned = tuple(name for name in used if name in rules.untrusted)
 
     best: PaperFit | None = None
@@ -1637,6 +1663,24 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             floors.append((design.ground_sqft * 100.0 / coverage, BY_COVERAGE))
         if needed_width is not None and needed_depth is not None:
             floors.append((needed_width * needed_depth, BY_ENVELOPE))
+        # What has to be left over (FOLLOWUPS 7): the lot less the building
+        # and less the least pavement a legal plan lays (`paved`, the lane
+        # running the front yard and this orientation's depth) must hold the
+        # share or the area the code asks, the screen's own arithmetic read
+        # backwards. Pavement nothing here draws leaves the building alone
+        # -- a smaller lot than the truth -- and the standard is named among
+        # the unknowns, as a lower bound.
+        short: tuple[str, ...] = ()
+        if leftovers:
+            pavement = paved(design, rules, deep_ft=depth_ft)
+            taken = design.ground_sqft + (pavement or 0.0)
+            for name, value, share in leftovers:
+                if share and value < 100.0:
+                    floors.append((taken * 100.0 / (100.0 - value), BY_LEFTOVER))
+                elif not share:
+                    floors.append((taken + value, BY_LEFTOVER))
+            if pavement is None:
+                short = tuple(name for name, _, _ in leftovers)
 
         area, binding = max(floors, default=(None, ""))
         candidate = PaperFit(
@@ -1655,7 +1699,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             height_ok=_height_ok(design, height, min_height, min_stories, min_ground),
             orientation=orientation.value,
             plat=design.plat.value,
-            unknown=unknown,
+            unknown=unknown + short,
             unsigned=unsigned,
             excluded=(
                 "setback_street_side_ft (corner lots only)",
