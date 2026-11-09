@@ -218,6 +218,7 @@ from flats.score.paper import (
     lot_line_buffer_doubt_ft,
     lot_line_buffer_ft,
     side_column,
+    side_column_across,
     side_court,
     side_yard_court_overlap_ft,
     side_yard_lane_overlap_ft,
@@ -2135,6 +2136,30 @@ def _side_street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, floa
         for e in lot.edges.of_class(EdgeClass.street_side)
         if not e.alley
     )
+
+
+def _side_alley_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
+    """The lot's side lines on an alley: the side a column of stalls along a
+    side alley stands at (:func:`flats.fit.draw.draw`'s ``alley_lines``;
+    FOLLOWUPS 5). Empty without edges."""
+    if lot.edges is None:
+        return ()
+    return tuple(
+        (e.x1, e.y1, e.x2, e.y2) for e in lot.edges.of_class(EdgeClass.side) if e.alley
+    )
+
+
+def _column_draw(
+    design: Design, got: ZoneResolution, alley: Any, fit: Fit, lot: QuadfitLot
+) -> dict[str, Any]:
+    """The column keywords :func:`flats.fit.draw.draw` takes for ``fit``:
+    nothing unless the fit stood its stalls in a column along a side alley."""
+    if not fit.column:
+        return {}
+    across = side_column_across(design, got, alley)
+    if across is None:
+        return {}
+    return {"column_across_ft": across, "alley_lines": _side_alley_lines(lot)}
 
 
 def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
@@ -6241,6 +6266,7 @@ def _court_drawn(
         paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
         gap_ft=gap,
         side_drive=side_drive,
+        **_column_draw(design, got, alley, fit, here),
     )
 
 
@@ -6634,6 +6660,7 @@ def drawing_for(
         yard=yard,
         yard_moves=_lane_in_from_street(s),
         stretch=stretch,
+        **_column_draw(s.design, s.rules, alley, s.fit, s.lot),
     )
     if got is None:
         return None

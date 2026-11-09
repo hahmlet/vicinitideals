@@ -778,6 +778,38 @@ def side_column(
     ``stalls`` is the count to stand in the column; the charged floor
     (:func:`court_across`) when omitted.
     """
+    frame = _column_frame(design, rules, alley)
+    if frame is None:
+        return None
+    gap, _, used = frame
+    # Not driven (:func:`court_across`): the stalls back straight out into
+    # the alley, so the column is the stalls as drawn.
+    across = court_across(design, rules, alley, turning=False)
+    count = across.stalls if stalls is None else stalls
+    if not count:
+        return None
+    return gap + count * across.stall_ft, tuple(used + list(across.from_code))
+
+
+def side_column_across(
+    design: Design, rules: "ZoneResolution", alley: Alley | None
+) -> float | None:
+    """How far across the lot a side alley's column of stalls stands
+    (:func:`side_column`): one stall's depth plus the back-out room the alley
+    leaves short, measured in from the alley's side of the plan. ``None``
+    where :func:`side_column` offers no column. What the drawing stands the
+    column in (FOLLOWUPS 5): the strip of the court along the alley, not the
+    room's whole width."""
+    frame = _column_frame(design, rules, alley)
+    return None if frame is None else frame[1]
+
+
+def _column_frame(
+    design: Design, rules: "ZoneResolution", alley: Alley | None
+) -> tuple[float, float, list[str]] | None:
+    """:func:`side_column`'s standoff off the rear wall, its crossing (one
+    stall's depth plus the back-out shortfall) and the fields read for them;
+    ``None`` where the alley offers no column."""
     if (
         alley is None
         or not alley.at_side
@@ -800,13 +832,7 @@ def side_column(
     narrow = min(design.footprint.width_ft, design.footprint.depth_ft)
     if stall + shortfall > narrow:
         return None
-    # Not driven (:func:`court_across`): the stalls back straight out into
-    # the alley, so the column is the stalls as drawn.
-    across = court_across(design, rules, alley, turning=False)
-    count = across.stalls if stalls is None else stalls
-    if not count:
-        return None
-    return gap + count * across.stall_ft, tuple(used + list(across.from_code))
+    return gap, stall + shortfall, used
 
 
 def _row_ft(
