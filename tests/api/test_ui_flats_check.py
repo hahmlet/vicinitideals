@@ -1395,3 +1395,60 @@ def test_a_number_that_needs_two_sources_is_not_asked_on_one_page(monkeypatch):
     assert [(a.row["zone"], a.row["when"]) for a in check._questions(layer, rows, {})] == [("A", "")]
     counts = check._counts(layer, rows, {})
     assert (counts["numbers"], counts["two_source"]) == (1, 3)
+    assert counts["two_source_via"] == 1
+
+
+def _row(layer_id: str, zone: str, field: str, when: str = "") -> dict:
+    return next(
+        r for r in check._rows(check._layers()[layer_id], set())
+        if r["zone"] == zone and r["field"] == field and r["when"] == when
+    )
+
+
+def test_a_zone_tied_to_its_page_by_a_line_on_that_page_is_asked_on_that_page(monkeypatch):
+    """FOLLOWUPS 112. Tualatin's density table is headed "RH-HR", not RH/HR;
+    the line naming the zone is on the cited page, so one page answers the
+    card. The line is boxed there, in purple, not shown as a page of its own."""
+    layer_id = "or/clackamas/tualatin"
+    row = _row(layer_id, "RH/HR", "max_density_du_per_acre")
+    assert row["via"] == "or/clackamas/tualatin/44/44.300.txt#L2"
+    assert row["two_source"] == ""
+    cited = check._page_index(row["document"]).at(row["line"]).n
+    monkeypatch.setattr(
+        check, "_placed",
+        lambda row: sheet.Placed(status="boxed", pages=[cited], boxes={cited: [(_BOX, "value")]}),
+    )
+    sheets = check._card(check._layers()[layer_id], check._Ask(row, "value"))["sheets"]
+    here = next(s for s in sheets if s["page"] == cited)
+    assert here.get("via_here") and here.get("via")
+    assert {b["kind"] for b in here["boxes"]} == {"value", "via"}
+    assert sum(s["page"] == cited for s in sheets) == 1
+
+
+def test_a_number_read_off_another_page_keeps_its_passage_and_waits_for_two_sources():
+    """FOLLOWUPS 112: Wilsonville's PDR-3 front setback is read off the
+    general planned-development table; 4.124 names the zone and sends us
+    there. Stored, and still set aside for the two-source check (113)."""
+    row = _row("or/clackamas/wilsonville", "PDR3", "setback_front_ft")
+    assert row["via"] == "or/clackamas/wilsonville/4/4.124.txt#L101-L103"
+    assert row["two_source"] == "via"
+
+
+def test_a_zone_name_broken_by_a_stray_space_is_still_on_the_page():
+    # Beaverton Table 20.20.20 prints "TC- MU": the zone is on the page.
+    row = _row("or/washington/beaverton", "TC-MU", "quadplex_allowed")
+    assert row["two_source"] == ""
+
+
+def test_a_quote_over_a_page_break_finds_its_zone_on_either_page():
+    # Beaverton Table 20.20.15: the title is on one page, the column heads
+    # naming RC-E on the next. The zone is on a page the quote is printed on.
+    row = _row("or/washington/beaverton", "RC-E", "setback_front_ft")
+    assert not check._zone_off_quote(row["document"], row["quote"], row["zone"])
+    assert row["two_source"] == ""
+
+
+async def test_the_index_counts_the_waiting_numbers_whose_passage_is_stored(client, session):
+    await _login(client, session)
+    page = (await client.get("/flats/check")).text
+    assert "data-two-source-via>" in page and "with the passage that sends us there" in page

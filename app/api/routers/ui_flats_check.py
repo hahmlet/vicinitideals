@@ -343,10 +343,35 @@ def _zone_off_page(document: str, line: int, zone: str) -> bool:
     lines = sheet.lines_of(_store(), document)[page.line - 1 : (min(later) - 1) if later else None]
     # Superscripts are stored inline -- "LDR-54" is LDR-5 with its note 4 --
     # so a digit may follow the name; a letter may not. "PDR6" is printed
-    # "PDR-6": a hyphen or space may part letters from digits or not.
+    # "PDR-6": a hyphen or space may part letters from digits or not. A
+    # column heading set narrow breaks "TC-MU" after its hyphen, and the
+    # stored text reads "TC- MU" (Beaverton Table 20.20.20, FOLLOWUPS 112).
     parts = re.findall(r"[A-Za-z]+|\d+|[^\sA-Za-z\d-]", zone)
-    name = r"[\s\-\u2010-\u2013]?".join(re.escape(p) for p in parts)
+    name = r"[\s\-\u2010-\u2013]{0,2}".join(re.escape(p) for p in parts)
     return re.search(rf"(?<![A-Za-z0-9]){name}(?![A-Za-z])", " ".join(lines), re.IGNORECASE) is None
+
+
+def _zone_off_quote(document: str, quote: str, zone: str) -> bool:
+    """Whether no page a quote is printed on names its zone.
+
+    A quote can run over a page break -- Beaverton's Table 20.20.15 starts
+    with its title at the foot of one page and its column headings on the
+    next -- and the card shows every page the quote is boxed on, so the
+    zone printed on any of them is on the card (FOLLOWUPS 112).
+    """
+    index = _page_index(document)
+    spans = _ranges(quote)
+    if index is None or not spans:
+        return _zone_off_page(document, spans[0][0] if spans else 0, zone)
+    starts = []
+    for first, last in spans:
+        a, b = index.at(first), index.at(last)
+        if a is None or b is None:
+            continue
+        starts += [p.line for p in index.pages if a.n <= p.n <= b.n]
+    if not starts:
+        return _zone_off_page(document, spans[0][0], zone)
+    return all(_zone_off_page(document, line, zone) for line in starts)
 
 
 @lru_cache(maxsize=1024)
@@ -698,19 +723,38 @@ def _two_source(row: dict[str, Any], parent: dict[str, Any] | None) -> str:
     page can answer.
 
     - ``via``: a cross-reference sends the reader to the quoted text (CMF's
-      corridor values, Table 4.0430 note 14 adopting 4.0131).
+      corridor values, Table 4.0430 note 14 adopting 4.0131). A `via` printed
+      on the quote's own page is not a second source: the page names the zone
+      under another spelling (Wilsonville's "PF-C" for PFC, Tualatin's
+      "RH-HR" for RH/HR), and one page answers the card, with that line boxed
+      (FOLLOWUPS 112).
     - ``borrowed``: the page never names the zone, so what ties the zone to
       the page lives somewhere else.
     - ``modified``: an exception read from another document than the
       zone's own number -- a district or overlay changing the base rule.
     """
     if row.get("via"):
-        return "via"
-    if not row["web"] and _zone_off_page(row["document"], row["line"], row["zone"]):
+        if not _via_on_page(row):
+            return "via"
+    elif not row["web"] and _zone_off_quote(row["document"], row["quote"] or "", row["zone"]):
         return "borrowed"
     if row["when"] and parent is not None and parent["document"] and parent["document"] != row["document"]:
         return "modified"
     return ""
+
+
+def _via_on_page(row: dict[str, Any]) -> bool:
+    """Whether a number's `via` is printed on the page its quote is (:func:`_two_source`)."""
+    via = row.get("via") or ""
+    document = via.partition("#L")[0]
+    spans = _ranges(via)
+    if not spans or document != row.get("document") or row.get("web"):
+        return False
+    index = _page_index(document)
+    if index is None:
+        return False
+    here, there = index.at(row["line"]), index.at(spans[0][0])
+    return here is not None and there is not None and here.n == there.n
 
 
 def _single(row: dict[str, Any]) -> bool:
@@ -1587,8 +1631,11 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
             card["value"] = READING_WORDS.get((row["field"], row["value"]), row["value"])
         card["because"] = row["cite"] if card["yes_no"] or card["reading"] else ""
         card["exempt"] = _exempt(layer, row)
-        if not web and _zone_off_page(document, row["line"], row["zone"]):
+        if not web and _zone_off_quote(document, row["quote"] or "", row["zone"]):
             card["borrowed"] = row["cite"]
+            # The line that ties the zone here is on this same page: the
+            # zone under another spelling, boxed (FOLLOWUPS 112).
+            card["via_here"] = _via_on_page(row)
         printed = row.get("printed", row["value"])
         if printed != row["value"] and isinstance(printed, (int, float)) and not isinstance(printed, bool):
             # Asked about what the page prints; told what we make of it.
@@ -1609,7 +1656,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         if card["sheets"] and calling is not None and calling not in {sh["page"] for sh in card["sheets"]}:
             card["sheets"].append({**_sheet_view(document, calling, [], row["mark"]), "context": "that calls the note"})
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
-        card["sheets"] = _via_sheets(row) + card["sheets"]
+        card["sheets"] = _with_via(row, card["sheets"])
         card["via"] = any(sh.get("via") for sh in card["sheets"])
         return card
 
@@ -1659,6 +1706,25 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     return card
 
 
+def _with_via(row: dict[str, Any], sheets: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """The card's pages with the passage that ties the zone to them boxed.
+
+    A passage printed on a page the card already shows is boxed there; one
+    printed elsewhere is its own page, first, above the table.
+    """
+    shown = {sh["page"]: sh for sh in sheets} if (row.get("via") or "").partition("#L")[0] == row.get("document") else {}
+    ahead = []
+    for sh in _via_sheets(row):
+        here = shown.get(sh["page"])
+        if here is None:
+            ahead.append(sh)
+            continue
+        here["boxes"] = here["boxes"] + sh["boxes"]
+        here["via"] = True
+        here["via_here"] = True
+    return ahead + sheets
+
+
 def _via_sheets(row: dict[str, Any]) -> list[dict[str, Any]]:
     """The pages of the passage that sends the reader to the quoted table, boxed.
 
@@ -1673,7 +1739,7 @@ def _via_sheets(row: dict[str, Any]) -> list[dict[str, Any]]:
         return []
     placed = _placed_cached(document, tuple(_ranges(via)), "null", "")
     return [
-        {**_sheet_view(document, page, boxes, row["mark"]), "via": True}
+        {**_sheet_view(document, page, [(box, "via") for box, _kind in boxes], row["mark"]), "via": True}
         for page, boxes in placed.boxes.items()
         if boxes
     ][:2]
@@ -1706,6 +1772,9 @@ def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, Flats
     checked = problems = 0
     replies = _replies(answers)
     two = sum(not _single(r) for r in rows)
+    # Of those, the ones whose passage sending us to the quote is stored:
+    # what the two-source check needs before it can ask (FOLLOWUPS 112, 113).
+    two_via = sum(r.get("two_source") == "via" for r in rows)
     rows = [r for r in rows if _single(r)]
     for row in rows:
         said = _standing(
@@ -1723,6 +1792,7 @@ def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, Flats
         "left": len(rows) - checked,
         "problems": problems,
         "two_source": two,
+        "two_source_via": two_via,
     }
 
 
@@ -1971,7 +2041,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
 
     def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]], list[dict[str, Any]]]:
         layers = _layers()
-        table, totals, problems = [], {"numbers": 0, "checked": 0, "problems": 0, "two_source": 0, "no_map": 0, "html": 0}, []
+        table, totals, problems = [], {"numbers": 0, "checked": 0, "problems": 0, "two_source": 0, "two_source_via": 0, "no_map": 0, "html": 0}, []
         answered: list[dict[str, Any]] = []
         for layer_id, layer in sorted(layers.items()):
             rows = _rows(layer, signed)
@@ -1986,7 +2056,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
             table.append(
                 {"id": layer_id, "label": _layer_label(layer), **counts, **elsewhere, "colours": colours.get(layer_id)}
             )
-            for key in ("numbers", "checked", "problems", "two_source"):
+            for key in ("numbers", "checked", "problems", "two_source", "two_source_via"):
                 totals[key] += counts[key]
             for key in ("no_map", "html"):
                 totals[key] += elsewhere[key]

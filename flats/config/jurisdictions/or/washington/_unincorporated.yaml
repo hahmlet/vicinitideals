@@ -879,18 +879,22 @@ zones:
       value: 25
       cite: Washington County CDC 302-2.14 C(1)(a), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/302/302-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.302.r-5.txt#L1"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 302-2.14 C(1)(b), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/302/302-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.302.r-5.txt#L1"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 302-2.14 C(1)(c), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/302/302-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.302.r-5.txt#L1"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 302-2.14 C(1)(d), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/302/302-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.302.r-5.txt#L1"
     quadplex_allowed:
       # 302-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 302-3 takes the rest through Type II; both
@@ -906,10 +910,12 @@ zones:
       value: 16500
       cite: 'Washington County CDC 302-2.14 A and 302-3.15 A, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L87-L93,L124-L129,L174-L179"
+      via: "or/washington/_unincorporated/cdc.302.r-5.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 4
       cite: Washington County CDC 302-2.14 A and 302-3.15 A, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L87-L93,L124-L129,L174-L179"
+      via: "or/washington/_unincorporated/cdc.302.r-5.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 302-6.1 A(3), Quadplex - maximum four units per lot
@@ -930,6 +936,7 @@ zones:
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), maximum density for townhouses, the lowest of the Low Density Residential zones"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L17"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_density_du_per_acre:
       exempt: true
       cite: Washington County CDC 302-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
@@ -939,6 +946,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.450-1 (R-6), minimum density, the highest of the Low Density Residential zones (read on the whole lot, which can only ask more of a floor than net acres would)"
           quote: "or/washington/hillsboro/12.21/12.21.450.txt#L4,L16"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_lot_sqft:
       # 302-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -955,10 +963,12 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), minimum lot size, the largest of the Low Density Residential zones"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4-L5,L7"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
         - value: 1500
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), townhouse lots average minimum lot size (the county says the same, 302-7.1 A(5))"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L7-L8"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     setback_front_ft:
       # To the front building wall. The 12-foot figure for a porch or
       # other covered or enclosed entryway is one of the layer-wide refusals
@@ -971,6 +981,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), minimum front setback (20 in every Low Density Residential zone)"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L29,L37"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
       qualified_by:
         fact: washington_local_street_connectivity
         cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
@@ -1005,23 +1016,28 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), minimum side setback, the largest of the Low Density Residential zones"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L29,L38"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
         - value: 10
           when: [east_hillsboro_city_standards, attached_wall]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10) states one side setback and no zero for an attached wall"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L29,L38"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     setback_rear_ft:
       value: 15
       cite: Washington County CDC 302-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
       quote: "or/washington/_unincorporated/302/302-7.txt#L35-L36"
+      via: "or/washington/_unincorporated/302/302-7.txt#L2"
       variants:
         - value: 20
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), minimum rear setback (20 in R-10, R-8.5, R-7 and R-6)"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L29,L39"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_building_separation_ft:
       value: 6
       cite: Washington County CDC 302-7.1 C, separation between buildings on the same lot
       quote: "or/washington/_unincorporated/302/302-7.txt#L42"
+      via: "or/washington/_unincorporated/302/302-7.txt#L2"
     max_height_ft:
       value: 35
       cite: Washington County CDC 302-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
@@ -1035,6 +1051,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Maximum Building Height, 2 1/2 stories or 35 feet, whichever is less (the same in every Low Density Residential zone)"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L42,L45"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 302-7.1 E(2), all other Middle Housing - no minimum
@@ -1048,10 +1065,12 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), minimum frontage (12 in every Low Density Residential zone)"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L19,L28"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
         - value: 25
           when: [east_hillsboro_city_standards, flag_lot]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot"
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
         - value: 15
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "Washington County CDC 302-7.1 E(1), 15 feet for each townhouse lot, more than the 12 Hillsboro asks (FOLLOWUPS 138 overlay)"
@@ -1060,6 +1079,7 @@ zones:
           when: [east_hillsboro_city_standards, unit_lots, flag_lot]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, a 25-foot flagpole, more than the county 15"
           quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     # EAST HILLSBORO OVERLAY (FOLLOWUPS 138; rulings.yaml
     # 2026-10-31-east-hillsboro-city-standards-are-an-overlay). The plan's
     # Reedville and TV Highway design elements make development proposals
@@ -1080,51 +1100,61 @@ zones:
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Minimum Lot Dimensions, width at front building plane, the widest of the Low Density Residential zones"
       quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L19,L26"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_lot_depth_ft:
       value: 90
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Minimum Lot Dimensions, depth (90 in R-10, R-8.5 and R-7)"
       quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L19,L27"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     max_coverage_pct:
       value: 40
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Maximum Lot Coverage, interior lot, the lowest of the Low Density Residential zones"
       quote: "or/washington/hillsboro/12.21/12.21.150.txt#L42,L49"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
       variants:
         - value: 45
           when: [corner_lot]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Maximum Lot Coverage, corner lot, the lowest of the Low Density Residential zones"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L42,L49-L50"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_lot_line_buffer_ft:
       value: 4
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
       quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_max_per_unit:
       value: 2
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.50.320-1, Quadplex maximum (Zone A)"
       quote: "or/washington/hillsboro/12.50/12.50.320.txt#L8,L18-L24,L36"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_area_max_frontage_pct:
       value: 50
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.50.715 C.1, garages and parking areas no more than 50% of any street frontage"
       quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L4,L7-L8"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_area_frontage_any_street:
       value: true
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.50.715 C.1, any street frontage (Steph 2026-10-14, FOLLOWUPS 80(a): front, side and rear streets)"
       quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L4,L7-L8"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_alley_access_required:
       value: true
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.50.715 C.2.c.i, access must be taken from an improved abutting alley"
       quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L7,L16-L18"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     front_lot_line_corner:
       value: both
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.01.500, Lot Line, Front (corner lots have 2 front lot lines), stricter than the county narrowest frontage"
       quote: "or/washington/hillsboro/12.01/12.01.500.txt#L349-L351,L354-L357"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     notes: >-
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
@@ -1138,18 +1168,22 @@ zones:
       value: 25
       cite: Washington County CDC 303-2.14 C(1)(a), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/303/303-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.303.r-6.txt#L1"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 303-2.14 C(1)(b), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/303/303-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.303.r-6.txt#L1"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 303-2.14 C(1)(c), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/303/303-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.303.r-6.txt#L1"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 303-2.14 C(1)(d), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/303/303-2.txt#L47-L53"
+      via: "or/washington/_unincorporated/cdc.303.r-6.txt#L1"
     quadplex_allowed:
       # 303-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 303-3 takes the rest through Type II; both
@@ -1165,10 +1199,12 @@ zones:
       value: 13100
       cite: 'Washington County CDC 303-2.14 and 303-3.20, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L86-L92,L123-L127,L179"
+      via: "or/washington/_unincorporated/cdc.303.r-6.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 5
       cite: Washington County CDC 303-2.14 and 303-3.20, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L86-L92,L123-L127,L179"
+      via: "or/washington/_unincorporated/cdc.303.r-6.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 303-6.1 A(3), Quadplex - maximum four units per lot
@@ -1208,6 +1244,7 @@ zones:
       value: 15
       cite: Washington County CDC 303-7.1 B(1), front yard to front building wall
       quote: "or/washington/_unincorporated/303/303-7.txt#L10-L11,L13-L14"
+      via: "or/washington/_unincorporated/303/303-7.txt#L2"
       qualified_by:
         fact: washington_local_street_connectivity
         cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
@@ -1216,6 +1253,7 @@ zones:
       value: 20
       cite: Washington County CDC 303-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/303/303-7.txt#L16-L17"
+      via: "or/washington/_unincorporated/303/303-7.txt#L2"
       qualified_by:
         fact: washington_plan_rule_unmeasured
         cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
@@ -1224,6 +1262,7 @@ zones:
       value: 8
       cite: Washington County CDC 303-7.1 B(3), street side yard
       quote: "or/washington/_unincorporated/303/303-7.txt#L19"
+      via: "or/washington/_unincorporated/303/303-7.txt#L2"
     setback_side_ft:
       # Five feet where the yard abuts offsite land, which on the pod's own
       # lot every side line does. The three-foot figure in B(4)(c) is for a
@@ -1233,11 +1272,13 @@ zones:
       value: 5
       cite: Washington County CDC 303-7.1 B(4)(b), non-street side yard abutting offsite land
       quote: "or/washington/_unincorporated/303/303-7.txt#L20,L22-L23"
+      via: "or/washington/_unincorporated/303/303-7.txt#L2"
       variants:
         - value: 0
           when: [attached_wall]
           cite: Washington County CDC 303-7.1 B(4)(a), zero feet where units attach
           quote: "or/washington/_unincorporated/303/303-7.txt#L20-L21"
+          via: "or/washington/_unincorporated/303/303-7.txt#L2"
     setback_rear_ft:
       value: 15
       cite: Washington County CDC 303-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
@@ -1272,18 +1313,22 @@ zones:
       value: 25
       cite: Washington County CDC 304-2.14 C(1)(a), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/304/304-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 304-2.14 C(1)(b), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/304/304-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 304-2.14 C(1)(c), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/304/304-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 304-2.14 C(1)(d), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/304/304-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     quadplex_allowed:
       # 304-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 304-3 takes the rest through Type II; both
@@ -1295,18 +1340,22 @@ zones:
       value: true
       cite: Washington County CDC 304-2 and 304-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L17,L92-L100,L131,L185-L194"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     type_i_max_buildable_sqft:
       value: 10000
       cite: 'Washington County CDC 304-2.14 and 304-3.20, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L92-L100,L131-L135,L185"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 7
       cite: Washington County CDC 304-2.14 and 304-3.20, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L92-L100,L131-L135,L185"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     type_i_standard_plat_required:
       value: true
       cite: Washington County CDC 304-2.14, Type I only on a lot "approved for the construction of a Single Detached Dwelling Unit through a Standard Subdivision or Standard Partition" plat; no site fact holds how a lot was made, so every lot is flagged
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L92-L100,L131-L135,L185"
+      via: "or/washington/_unincorporated/cdc.304.r-9.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 304-6.1 A(3), Quadplex - maximum four units per lot
@@ -1380,6 +1429,7 @@ zones:
       value: 15
       cite: Washington County CDC 304-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
       quote: "or/washington/_unincorporated/304/304-7.txt#L34-L35"
+      via: "or/washington/_unincorporated/304/304-7.txt#L2"
     min_building_separation_ft:
       value: 6
       cite: Washington County CDC 304-7.1 C, separation between buildings on the same lot
@@ -1410,18 +1460,22 @@ zones:
       value: 25
       cite: Washington County CDC 305-2.14 C(1)(a), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/305/305-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 305-2.14 C(1)(b), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/305/305-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 305-2.14 C(1)(c), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/305/305-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 305-2.14 C(1)(d), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/305/305-2.txt#L50-L56"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     quadplex_allowed:
       # 305-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 305-3 takes the rest through Type II; both
@@ -1437,14 +1491,17 @@ zones:
       value: 10000
       cite: 'Washington County CDC 305-2.14 and 305-3, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L88-L95,L127-L131"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 12
       cite: Washington County CDC 305-2.14 and 305-3, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L88-L95,L127-L131"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     type_i_standard_plat_required:
       value: true
       cite: Washington County CDC 305-2.14, Type I only on a lot approved through a Standard Subdivision or Standard Partition plat; no site fact holds how a lot was made, so every lot is flagged
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L88-L95,L127-L131"
+      via: "or/washington/_unincorporated/cdc.305.r-15.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 305-6.1 A(3), Quadplex - maximum four units per lot
@@ -1492,6 +1549,7 @@ zones:
       value: 20
       cite: Washington County CDC 305-7.1 B(2)(a), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/305/305-7.txt#L16-L17"
+      via: "or/washington/_unincorporated/305/305-7.txt#L2"
       qualified_by:
         fact: washington_plan_rule_unmeasured
         cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany, Metzger - Progress and East Hillsboro Community Plans (CDC 300-1), access-point caps and access bars on named streets, the commercial-strip Type 1 buffer, old case conditions, the city of Hillsboro's development standards, Area of Special Concern outlines whose rule the text does not name and pedestrian connectivity facilities that bind a pod and that nothing measures -- held only on the lots the plan maps put them on (drawn_areas washington_plan_rule_unmeasured)
@@ -1500,6 +1558,7 @@ zones:
       value: 8
       cite: Washington County CDC 305-7.1 B(3), street side yard
       quote: "or/washington/_unincorporated/305/305-7.txt#L19"
+      via: "or/washington/_unincorporated/305/305-7.txt#L2"
     setback_side_ft:
       # Five feet where the yard abuts offsite land, which on the pod's own
       # lot every side line does. The three-foot figure in B(4)(c) is for a
@@ -1509,15 +1568,18 @@ zones:
       value: 5
       cite: Washington County CDC 305-7.1 B(4)(b), non-street side yard abutting offsite land
       quote: "or/washington/_unincorporated/305/305-7.txt#L20,L22-L23"
+      via: "or/washington/_unincorporated/305/305-7.txt#L2"
       variants:
         - value: 0
           when: [attached_wall]
           cite: Washington County CDC 305-7.1 B(4)(a), zero feet where units attach
           quote: "or/washington/_unincorporated/305/305-7.txt#L20-L21"
+          via: "or/washington/_unincorporated/305/305-7.txt#L2"
     setback_rear_ft:
       value: 12
       cite: Washington County CDC 305-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
       quote: "or/washington/_unincorporated/305/305-7.txt#L35-L36"
+      via: "or/washington/_unincorporated/305/305-7.txt#L2"
     min_building_separation_ft:
       value: 6
       cite: Washington County CDC 305-7.1 C, separation between buildings on the same lot
@@ -1548,18 +1610,22 @@ zones:
       value: 25
       cite: Washington County CDC 306-2.14 C(1)(a), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/306/306-2.txt#L49-L55"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 306-2.14 C(1)(b), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/306/306-2.txt#L49-L55"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 306-2.14 C(1)(c), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/306/306-2.txt#L49-L55"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 306-2.14 C(1)(d), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/306/306-2.txt#L49-L55"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     quadplex_allowed:
       # 306-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 306-3 takes the rest through Type II; both
@@ -1575,14 +1641,17 @@ zones:
       value: 10000
       cite: 'Washington County CDC 306-2.14 and 306-3, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L87-L94,L125-L129"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 19
       cite: Washington County CDC 306-2.14 and 306-3, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L87-L94,L125-L129"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     type_i_standard_plat_required:
       value: true
       cite: Washington County CDC 306-2.14, Type I only on a lot approved through a Standard Subdivision or Standard Partition plat; no site fact holds how a lot was made, so every lot is flagged
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L87-L94,L125-L129"
+      via: "or/washington/_unincorporated/cdc.306.r-24.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 306-6.1 A(3), Quadplex - maximum four units per lot
@@ -1606,6 +1675,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Density, with no quadplex exemption"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L14"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
           measured_on:
             fact: net_developable_area
             cite: Hillsboro CDC 12.01.500, Acreage, Net
@@ -1621,6 +1691,7 @@ zones:
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Density, below the county 25 for townhouses"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L14"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
           measured_on:
             fact: net_developable_area
             cite: Hillsboro CDC 12.01.500, Acreage, Net
@@ -1641,6 +1712,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Density"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L13"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
           measured_on:
             fact: net_developable_area
             cite: Hillsboro CDC 12.01.500, Acreage, Net
@@ -1668,10 +1740,12 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Size, 2,000 sq. ft. per dwelling unit (8,000 for four, more than the county 7,000)"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4-L9"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
         - per_dwelling: 2000
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), 2,000 sq. ft. per dwelling unit; the townhouse 'Exceptions to lot areas' state no figure, so the stated one governs (as in Hillsboro's own MR-2), more than the county 1,300 average"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4-L11"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     setback_front_ft:
       # To the front building wall. The 6-foot figure for a porch or
       # other covered or enclosed entryway is one of the layer-wide refusals
@@ -1684,6 +1758,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Setbacks, front yard to structure"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L26,L30-L32"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
       qualified_by:
         fact: washington_local_street_connectivity
         cite: Raleigh Hills - Garden Home, Bull Mountain, Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill, Sunset West, Bethany and Metzger - Progress Community Plans (CDC 300-1), Local Street Connectivity -- development on the lands each plan's Local Street Connectivity map shows provides on-site streets connecting to the existing system, which take ground nothing measures; held only on those lands (drawn_areas washington_local_street_connectivity, coordinator ruling 2026-10-30)
@@ -1718,14 +1793,17 @@ zones:
           when: [east_hillsboro_city_standards, attached_wall]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), side yard 5 feet; the common-wall setback 'may be waived for townhouses', a waiver the review may refuse, so the 5 holds (as in Hillsboro's own MR-2)"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L26,L28-L29,L35"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     setback_rear_ft:
       value: 12
       cite: Washington County CDC 306-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
       quote: "or/washington/_unincorporated/306/306-7.txt#L34-L35"
+      via: "or/washington/_unincorporated/306/306-7.txt#L2"
     min_building_separation_ft:
       value: 6
       cite: Washington County CDC 306-7.1 C, separation between buildings on the same lot
       quote: "or/washington/_unincorporated/306/306-7.txt#L44"
+      via: "or/washington/_unincorporated/306/306-7.txt#L2"
     max_height_ft:
       value: 35
       cite: Washington County CDC 306-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
@@ -1739,6 +1817,7 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Building Height, 3 stories or 40 feet, whichever is less (30 feet at the 10-foot story, below the county 35)"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L43"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 306-7.1 E(2), all other Middle Housing - no minimum
@@ -1752,10 +1831,12 @@ zones:
           when: [east_hillsboro_city_standards]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Dimensions, frontage (25, the same as Table 12.40.160-1 asks of a quadplex on a flag lot)"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L25"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
         - value: 25
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), frontage 25; the townhouse 'Exceptions to lot dimensions' state no figure, so the stated one governs (as in Hillsboro's own MR-2), more than the county 15"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16-L18,L25"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     # EAST HILLSBORO OVERLAY (FOLLOWUPS 138; rulings.yaml
     # 2026-10-31-east-hillsboro-city-standards-are-an-overlay and
     # 2026-10-31-east-hillsboro-r24-zone-unsettled-yellow-with-flag). The
@@ -1784,51 +1865,61 @@ zones:
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Dimensions, width at front building plane (applies to the parent lot for townhouses)"
       quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L20,L23"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     min_lot_depth_ft:
       value: 85
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Minimum Lot Dimensions, depth"
       quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L24"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     max_coverage_pct:
       value: 50
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Lot Coverage, duplexes, triplexes, quadplexes"
       quote: "or/washington/hillsboro/12.22/12.22.250.txt#L44,L47-L49"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
       variants:
         - value: 75
           when: [unit_lots]
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Lot Coverage, townhouse on individual lot"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L44,L47,L50"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_lot_line_buffer_ft:
       value: 4
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
       quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_max_per_unit:
       value: 2
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.50.320-1, Quadplex maximum (Zone A)"
       quote: "or/washington/hillsboro/12.50/12.50.320.txt#L8,L18-L24,L36"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_area_max_frontage_pct:
       value: 50
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.715 C.1, garages and parking areas no more than 50% of any street frontage"
       quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L4,L7-L8"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_area_frontage_any_street:
       value: true
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.715 C.1, any street frontage (Steph 2026-10-14, FOLLOWUPS 80(a): front, side and rear streets)"
       quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L4,L7-L8"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_alley_access_required:
       value: true
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.715 C.2.c.i, access must be taken from an improved abutting alley"
       quote: "or/washington/hillsboro/12.50/12.50.715.txt#L1,L7,L16-L18"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     front_lot_line_corner:
       value: both
       only_when: [east_hillsboro_city_standards]
       cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.01.500, Lot Line, Front (corner lots have 2 front lot lines), stricter than the county narrowest frontage"
       quote: "or/washington/hillsboro/12.01/12.01.500.txt#L349-L351,L354-L357"
+      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     notes: >-
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
@@ -1845,18 +1936,22 @@ zones:
       value: 25
       cite: Washington County CDC 307-2.13 C(1), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/307/307-2.txt#L49-L57"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 307-2.13 C(1), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/307/307-2.txt#L49-L57"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 307-2.13 C(1), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/307/307-2.txt#L49-L57"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 307-2.13 C(1), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/307/307-2.txt#L49-L57"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     quadplex_allowed:
       # 307-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 307-3 takes the rest through Type II; both
@@ -1872,14 +1967,17 @@ zones:
       value: 10000
       cite: 'Washington County CDC 307-2.13 and 307-3, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L87-L94,L126-L130"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 20
       cite: Washington County CDC 307-2.13 and 307-3, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L87-L94,L126-L130"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     type_i_standard_plat_required:
       value: true
       cite: Washington County CDC 307-2.13, Type I only on a lot approved through a Standard Subdivision or Standard Partition plat; no site fact holds how a lot was made, so every lot is flagged
       quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L87-L94,L126-L130"
+      via: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 307-6.1 A(3), Quadplex - maximum four units per lot
@@ -1949,10 +2047,12 @@ zones:
       value: 12
       cite: Washington County CDC 307-7.1 B(5)(a), rear yard for a Quadplex or Townhouse
       quote: "or/washington/_unincorporated/307/307-7.txt#L32-L33"
+      via: "or/washington/_unincorporated/307/307-7.txt#L2"
     min_building_separation_ft:
       value: 6
       cite: Washington County CDC 307-7.1 C, separation between buildings on the same lot
       quote: "or/washington/_unincorporated/307/307-7.txt#L42"
+      via: "or/washington/_unincorporated/307/307-7.txt#L2"
     max_height_ft:
       value: 35
       cite: Washington County CDC 307-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
@@ -2025,10 +2125,12 @@ zones:
       value: 13100
       cite: 'Washington County CDC 390-8.2 E and 390-8.3 B, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/390/390-8.txt#L38-L41,L70-L73,L75-L79"
+      via: "or/washington/_unincorporated/390/390-8.txt#L1"
     type_i_density_escape_du_per_acre:
       value: 5
       cite: Washington County CDC 390-8.2 E and 390-8.3 B, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/390/390-8.txt#L38-L41,L70-L73,L75-L79"
+      via: "or/washington/_unincorporated/390/390-8.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 390-8.5 A(1)(c), Quadplex - maximum four units per lot
@@ -2054,6 +2156,7 @@ zones:
       value: 20
       cite: Washington County CDC 303-7.1 B(2)(a) (by 390-8.7), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/303/303-7.txt#L16-L17"
+      via: "or/washington/_unincorporated/390/390-8.txt#L158-L159"
       qualified_by:
         fact: north_bethany_park_blocks
         cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access from the Park Blocks to residential property adjacent to them, and no parking lot between the street and the building -- held only on the ASC 5 lots where either reaches the pod (drawn_areas north_bethany_park_blocks_asc_5)
@@ -2107,6 +2210,7 @@ zones:
       value: conditions
       cite: 'Washington County CDC 390-9.3, the Attached Dwelling Units this zone is read through are a Type II use; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/390/390-9.txt#L72-L75"
+      via: "or/washington/_unincorporated/390/390-9.txt#L1"
     max_density_du_per_acre:
       # The Planned Development bonus in B(2) is a Type III application and
       # is not carried.
@@ -2130,10 +2234,12 @@ zones:
       value: 12
       cite: Washington County CDC 304-7.2 B(1) (by 390-9.6), front yard to the front building wall
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L60-L63"
+      via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
     setback_garage_entrance_ft:
       value: 20
       cite: Washington County CDC 304-7.2 B(2) (by 390-9.6), front or street side yard to garage vehicle entrance
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L64-L66"
+      via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
       qualified_by:
         fact: north_bethany_park_blocks
         cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access from the Park Blocks to residential property adjacent to them, and no parking lot between the street and the building -- held only on the ASC 5 lots where either reaches the pod (drawn_areas north_bethany_park_blocks_asc_5)
@@ -2142,6 +2248,7 @@ zones:
       value: 10
       cite: Washington County CDC 304-7.2 B(3) (by 390-9.6), street side yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L67"
+      via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
     setback_side_ft:
       # The reduction to zero in B(4) is for a lot created by a land division
       # beside another lot of the same site, with a six-foot combined yard
@@ -2149,10 +2256,12 @@ zones:
       value: 5
       cite: Washington County CDC 304-7.2 B(4) (by 390-9.6), five-foot side yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L68"
+      via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
     setback_rear_ft:
       value: 15
       cite: Washington County CDC 304-7.2 B(5) (by 390-9.6), fifteen-foot rear yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L75-L76"
+      via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
     max_height_ft:
       # C(1)'s 35 feet is for "detached dwelling units and attached dwelling
       # units on individual lots"; attached units sharing a lot are "all
@@ -2160,11 +2269,13 @@ zones:
       value: 40
       cite: Washington County CDC 304-7.2 C(3) (by 390-9.6), all other structures
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L86,L89"
+      via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
       variants:
         - value: 35
           when: [unit_lots]
           cite: Washington County CDC 304-7.2 C(1), attached dwelling units on individual lots
           quote: "or/washington/_unincorporated/304/304-7.txt#L86-L87"
+          via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
     notes: >-
       DRAFT. North Bethany R-9, read as other housing (Attached Dwelling
       Units, Type II): 7 to 9 units per acre, yards 12 front / 5 side /
@@ -2194,10 +2305,12 @@ zones:
       value: 12
       cite: Washington County CDC 390-10.2 K and 390-10.3 B, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
       quote: "or/washington/_unincorporated/390/390-10.txt#L43-L45,L58-L66"
+      via: "or/washington/_unincorporated/390/390-10.txt#L1"
     type_i_standard_plat_required:
       value: false
       cite: Washington County CDC 390-10.2 K, the Type I Middle Housing path in R-15 NB states no plat condition (overrides R-15)
       quote: "or/washington/_unincorporated/390/390-10.txt#L43-L45,L58-L66"
+      via: "or/washington/_unincorporated/390/390-10.txt#L1"
     max_units:
       value: 4
       cite: Washington County CDC 390-10.5 A(1)(c), Quadplex - maximum four units per lot
@@ -2230,6 +2343,7 @@ zones:
       value: 10
       cite: Washington County CDC 305-7.1 B(1) (by 390-10.6), front yard to front building wall
       quote: "or/washington/_unincorporated/305/305-7.txt#L10-L11,L13-L14"
+      via: "or/washington/_unincorporated/390/390-10.txt#L126-L127"
       variants:
         - value: 5
           when: [north_bethany_special_setbacks]
@@ -2239,6 +2353,7 @@ zones:
       exempt: true
       cite: Washington County CDC 305-7.1 B (by 390-10.6) states a minimum front yard and no maximum; Sections 305 and 390 print no maximum yard for this district
       quote: "or/washington/_unincorporated/305/305-7.txt#L10-L11,L13-L14"
+      via: "or/washington/_unincorporated/390/390-10.txt#L126-L127"
       variants:
         - value: 15
           when: [north_bethany_special_setbacks]
@@ -2248,6 +2363,7 @@ zones:
       value: 20
       cite: Washington County CDC 305-7.1 B(2)(a) (by 390-10.6), garage vehicle entrance from front or street side yard
       quote: "or/washington/_unincorporated/305/305-7.txt#L16-L17"
+      via: "or/washington/_unincorporated/390/390-10.txt#L126-L127"
       qualified_by:
         fact: north_bethany_park_blocks
         cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access from the Park Blocks to residential property adjacent to them, and no parking lot between the street and the building -- held only on the ASC 5 lots where either reaches the pod (drawn_areas north_bethany_park_blocks_asc_5)
@@ -2269,10 +2385,12 @@ zones:
       value: true
       cite: Washington County CDC 390-11.3 A (Attached Dwelling Units, Type II) + 390-16.2 + 106-70.1 B
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L887,L893,L1525-L1530"
+      via: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L847"
     review_discretion:
       value: conditions
       cite: 'Washington County CDC 390-11.3 A, Attached Dwelling Units are a Type II use; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
       quote: "or/washington/_unincorporated/390/390-11.txt#L29-L33"
+      via: "or/washington/_unincorporated/390/390-11.txt#L1"
     max_density_du_per_acre:
       value: 24
       cite: Washington County CDC 390-11.5, no more than 24 units per acre
@@ -2306,6 +2424,7 @@ zones:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(a) (by 390-11.6), front yard 20 feet except 10 feet in North Bethany
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L60-L61,L111-L112"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
       variants:
         - value: 5
           when: [north_bethany_special_setbacks]
@@ -2319,6 +2438,7 @@ zones:
       exempt: true
       cite: Washington County CDC 306-7.2 B(4) (by 390-11.6) states minimum yards and no maximum; Sections 306 and 390 print no maximum yard for this district outside ASC 2
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111-L112"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
       variants:
         - value: 15
           when: [north_bethany_special_setbacks]
@@ -2341,6 +2461,7 @@ zones:
       value: 20
       cite: Washington County CDC 306-7.2 B(4)(b) (by 390-11.6), yard to garage vehicle entrance
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111-L113"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
       qualified_by:
         fact: north_bethany_park_blocks
         cite: North Bethany Subarea Plan ASC 5 items 4 and 5 (CDC 390-3), no vehicle access from the Park Blocks to residential property adjacent to them, and no parking lot between the street and the building -- held only on the ASC 5 lots where either reaches the pod (drawn_areas north_bethany_park_blocks_asc_5)
@@ -2349,6 +2470,7 @@ zones:
       value: 20
       cite: Washington County CDC 306-7.2 B(4)(c) (by 390-11.6), rear yard
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111,L114"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
       variants:
         - value: 12
           when: [north_bethany_special_setbacks]
@@ -2364,10 +2486,12 @@ zones:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(d)(ii) and (vii) (by 390-11.6), side yard
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111,L115-L117,L122-L123"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
     setback_street_side_ft:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(d)(vi) (by 390-11.6), street side yard
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111,L121"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
       variants:
         - value: 8
           when: [north_bethany_special_setbacks]
@@ -2377,6 +2501,7 @@ zones:
       value: 50
       cite: Washington County CDC 306-7.2 C(3) (by 390-11.6), all other structures
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L127,L130"
+      via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
     notes: >-
       DRAFT. North Bethany R-24 is not a Middle Housing district; the pod is
       Attached Dwelling Units (Type II): 19 to 24 units per acre, yards
@@ -2416,6 +2541,7 @@ zones:
       value: false
       cite: Washington County CDC 390-6.2 C + 390-13.3 H (upper-floor dwellings over non-residential ground floor)
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L98-L99,L104-L106,L1116,L1137-L1141"
+      via: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L1071"
     notes: >-
       DRAFT. Dwellings only above a non-residential ground floor.
   NCMU NB:
@@ -2431,6 +2557,7 @@ zones:
       value: false
       cite: Washington County CDC 390-6.2 C + 390-14.3 G and K + 390-16.7
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L98-L99,L104-L106,L1258,L1278-L1282,L1289,L1717-L1723"
+      via: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L1217"
     notes: >-
       DRAFT. Dwellings only above a non-residential ground floor, or as
       Live/Work units.
@@ -2443,6 +2570,7 @@ zones:
       value: false
       cite: Washington County CDC 390-6.2 C, new residential uses prohibited in nonresidential NB districts
       quote: "or/washington/_unincorporated/390/390-6.txt#L16,L20-L22"
+      via: "or/washington/_unincorporated/390/390-15.txt#L1"
     notes: >-
       DRAFT. No residential use.
   # --- Transit Oriented Districts (Section 375) ----------------------------
@@ -2506,18 +2634,22 @@ zones:
       value: 25
       cite: Washington County CDC 375 Table A, 30.c(ii), local street, 25 feet to centerline
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+      via: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L681,L697-L700"
     row_to_centerline_neighborhood_route_ft:
       value: 30
       cite: Washington County CDC 375 Table A, 30.c(ii), neighborhood route, 30 feet to centerline
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+      via: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L681,L697-L700"
     row_to_centerline_collector_ft:
       value: 37
       cite: Washington County CDC 375 Table A, 30.c(ii), collector, 37 feet to centerline
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+      via: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L681,L697-L700"
     row_to_centerline_arterial_ft:
       value: 45
       cite: Washington County CDC 375 Table A, 30.c(ii), arterial, 45 feet to centerline
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+      via: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L681,L697-L700"
     quadplex_allowed:
       # Table A, "Middle Housing - Section 430-84 (Use is distinct from
       # others in this table) (30.c.)": I/II in TO:R9-12, TO:R12-18 and
@@ -3119,10 +3251,12 @@ zones:
       value: true
       cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
       quote: "or/washington/_unincorporated/392/392-9.txt#L150,L154-L155"
+      via: "or/washington/_unincorporated/392/392-3.txt#L2-L4"
     parking_street_setback_ft:
       value: 5
       cite: Washington County CDC 392-9.7 C(2)(a), 5-foot setback between surface parking and right-of-way
       quote: "or/washington/_unincorporated/392/392-9.txt#L158,L163-L164"
+      via: "or/washington/_unincorporated/392/392-3.txt#L2-L4"
     # setback_side_ft and setback_rear_ft owed; see the block comment above.
     building_frontage_min_pct:
       # 392-8 Street Frontage Occupancy, within the 20-foot maximum setback
@@ -3146,6 +3280,7 @@ zones:
       value: true
       cite: "Washington County CDC 392-9.5 B(1), a through lot: at least one frontage must meet the street frontage occupancy requirements"
       quote: "or/washington/_unincorporated/392/392-9.txt#L107-L108"
+      via: "or/washington/_unincorporated/392/392-3.txt#L2-L4"
     building_frontage_basis:
       # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
       # as-coded): 392-8 asks it of "a site's street frontage(s)", and 106-60
@@ -3155,6 +3290,7 @@ zones:
       value: site
       cite: "Washington County CDC 392-8 (a site's street frontage(s)) and 106-60, Development Site: a lot or parcel or combination of lots or parcels"
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L402-L403"
+      via: "or/washington/_unincorporated/392/392-8.txt#L9,L31-L33"
     notes: >-
       DRAFT. Neighborhood mixed use: attached dwellings Type II, 6,000 sq ft,
       85 ft average width, 65 ft, 10 ft front and street side (20 ft max),
@@ -3231,10 +3367,12 @@ zones:
       value: true
       cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
       quote: "or/washington/_unincorporated/392/392-9.txt#L150,L154-L155"
+      via: "or/washington/_unincorporated/392/392-3.txt#L2-L4"
     parking_street_setback_ft:
       value: 5
       cite: Washington County CDC 392-9.7 C(2)(a), 5-foot setback between surface parking and right-of-way
       quote: "or/washington/_unincorporated/392/392-9.txt#L158,L163-L164"
+      via: "or/washington/_unincorporated/392/392-3.txt#L2-L4"
     # setback_side_ft and setback_rear_ft owed; see the NMU block comment.
     building_frontage_min_pct:
       # 392-8 Street Frontage Occupancy, within the 20-foot maximum setback
@@ -3258,6 +3396,7 @@ zones:
       value: true
       cite: "Washington County CDC 392-9.5 B(1), a through lot: at least one frontage must meet the street frontage occupancy requirements"
       quote: "or/washington/_unincorporated/392/392-9.txt#L107-L108"
+      via: "or/washington/_unincorporated/392/392-3.txt#L2-L4"
     building_frontage_basis:
       # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
       # as-coded): 392-8 asks it of "a site's street frontage(s)", and 106-60
@@ -3267,6 +3406,7 @@ zones:
       value: site
       cite: "Washington County CDC 392-8 (a site's street frontage(s)) and 106-60, Development Site: a lot or parcel or combination of lots or parcels"
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L402-L403"
+      via: "or/washington/_unincorporated/392/392-8.txt#L9,L31-L33"
     notes: >-
       DRAFT. Community-center mixed use: attached dwellings Type II, 6,000
       sq ft, 85 ft average width, 100 ft, 10 ft front and street side (20 ft
@@ -3289,15 +3429,18 @@ zones:
       value: false
       cite: Washington County CDC 313-5.3, new dwelling units except pursuant to 313-3.40
       quote: "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L147,L212"
+      via: "or/washington/_unincorporated/cdc.313.cbd.txt#L162"
       variants:
         - value: true
           when: [planned_development]
           cite: Washington County CDC 313-3.40 A(1), Residential Dwelling Units through a Type II Planned Development
           quote: "or/washington/_unincorporated/313/313-3.txt#L59-L63"
+          via: "or/washington/_unincorporated/313/313-3.txt#L69"
     min_density_du_per_acre:
       value: 20
       cite: Washington County CDC 313-3.40 A(1), density of 20 to 40 units per acre
       quote: "or/washington/_unincorporated/313/313-3.txt#L59-L62"
+      via: "or/washington/_unincorporated/313/313-3.txt#L69"
       measured_on:
         fact: net_developable_area
         cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
@@ -3315,6 +3458,7 @@ zones:
       value: 40
       cite: Washington County CDC 313-3.40 A(1), density of 20 to 40 units per acre
       quote: "or/washington/_unincorporated/313/313-3.txt#L59-L62"
+      via: "or/washington/_unincorporated/313/313-3.txt#L69"
     # Every dimension is owed. 313-3.40 A(1) says "The standards of Sections
     # 307-7 through 307-10 shall apply" (the R-25+ district's dimensional
     # and development standards, L150-L151), and 313-6 prints the
@@ -3338,6 +3482,7 @@ zones:
       value: false
       cite: Washington County CDC 311-3.6 A + 311-5.4
       quote: "or/washington/_unincorporated/cdc.311.nc.txt#L56,L71-L75,L165-L166"
+      via: "or/washington/_unincorporated/cdc.309.fd-10.txt#L196"
     notes: >-
       DRAFT. Dwellings only over a commercial ground floor.
   OC:
@@ -3354,6 +3499,7 @@ zones:
       value: false
       cite: Washington County CDC 312-4.4 B + 312-5.3
       quote: "or/washington/_unincorporated/cdc.312.oc.txt#L166,L178,L184-L187,L207"
+      via: "or/washington/_unincorporated/cdc.311.nc.txt#L211"
     notes: >-
       DRAFT. Dwellings only inside a Type III mixed-use office Planned
       Development.
@@ -3366,6 +3512,7 @@ zones:
       value: false
       cite: Washington County CDC 314-5.3, New dwelling units prohibited
       quote: "or/washington/_unincorporated/314/314-5.txt#L1,L4"
+      via: "or/washington/_unincorporated/313/313-7.txt#L4"
     notes: >-
       DRAFT. New dwelling units prohibited.
   IND:
@@ -3379,6 +3526,7 @@ zones:
       value: false
       cite: Washington County CDC 320-5.3, New dwellings except as provided in this District
       quote: "or/washington/_unincorporated/320/320-5.txt#L1,L4"
+      via: "or/washington/_unincorporated/314/314-7.txt#L4"
     notes: >-
       DRAFT. New dwellings prohibited beyond caretaker quarters.
   INST:
@@ -3393,6 +3541,7 @@ zones:
       value: false
       cite: Washington County CDC 330-6.2, New dwelling units prohibited
       quote: "or/washington/_unincorporated/330/330-6.txt#L1,L3-L4"
+      via: "or/washington/_unincorporated/320/320-7.txt#L4"
     notes: >-
       DRAFT. New dwelling units prohibited.
   SID:
@@ -3404,6 +3553,7 @@ zones:
       value: false
       cite: Washington County CDC 377-1.3, development limited to industrial, office and industrial-park uses
       quote: "or/washington/_unincorporated/377/377-1.txt#L10-L13"
+      via: "or/washington/_unincorporated/377/377-1.txt#L2"
     notes: >-
       DRAFT. Industrial, office and industrial-park uses only.
   # --- Future Development holding districts (Sections 308, 309) ----------
@@ -3452,6 +3602,7 @@ zones:
       value: false
       cite: Washington County CDC 340-4.1 G (one nonfarm detached dwelling) + 340-7.1
       quote: "or/washington/_unincorporated/cdc.340.efu.txt#L82-L86,L434-L435"
+      via: "or/washington/_unincorporated/cdc.330.inst.txt#L240"
     notes: >-
       DRAFT. Farm district: one dwelling at most.
   EFC:
@@ -3474,6 +3625,7 @@ zones:
       value: false
       cite: Washington County CDC 344-4.1 G (one nonfarm detached dwelling) + 344-7.1
       quote: "or/washington/_unincorporated/cdc.344.af-20.txt#L82-L86,L432-L433"
+      via: "or/washington/_unincorporated/cdc.342.efc.txt#L349"
     notes: >-
       DRAFT. Farm and forest district: one dwelling at most.
   AF-10:
@@ -3485,6 +3637,7 @@ zones:
       value: false
       cite: Washington County CDC 346-2.3 (Detached Dwelling Unit, one) + 346-5.1
       quote: "or/washington/_unincorporated/cdc.346.af-10.txt#L26,L143-L144"
+      via: "or/washington/_unincorporated/cdc.344.af-20.txt#L531"
     notes: >-
       DRAFT. Rural district: one detached dwelling.
   AF-5:
@@ -3496,6 +3649,7 @@ zones:
       value: false
       cite: Washington County CDC 348-2.3 (Detached Dwelling Unit, one) + 348-5.1
       quote: "or/washington/_unincorporated/cdc.348.af-5.txt#L24,L141-L142"
+      via: "or/washington/_unincorporated/cdc.346.af-10.txt#L222"
     notes: >-
       DRAFT. Rural district: one detached dwelling.
   RR-5:
@@ -3507,6 +3661,7 @@ zones:
       value: false
       cite: Washington County CDC 350-2.2 (Detached Dwelling Unit, one) + 350-5.1
       quote: "or/washington/_unincorporated/cdc.350.rr-5.txt#L14,L120-L121"
+      via: "or/washington/_unincorporated/cdc.350.rr-5.txt#L2"
     notes: >-
       DRAFT. Rural residential: one detached dwelling.
   R-COM:
@@ -3518,6 +3673,7 @@ zones:
       value: false
       cite: Washington County CDC 352-2.3 (residence with a commercial use, one dwelling structure) + 352-5.1
       quote: "or/washington/_unincorporated/cdc.352.r-com.txt#L17-L20,L172-L173"
+      via: "or/washington/_unincorporated/cdc.352.r-com.txt#L2"
     notes: >-
       DRAFT. Rural commercial: one residence with a commercial use.
   R-IND:
@@ -3529,6 +3685,7 @@ zones:
       value: false
       cite: Washington County CDC 354-2.1 B (caretaker residence) + 354-5.2
       quote: "or/washington/_unincorporated/cdc.354.r-ind.txt#L21-L25,L179-L181"
+      via: "or/washington/_unincorporated/cdc.352.r-com.txt#L230"
     notes: >-
       DRAFT. Rural industrial: caretaker residence only.
   MA-E:

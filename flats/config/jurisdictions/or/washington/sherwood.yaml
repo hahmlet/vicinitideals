@@ -610,6 +610,7 @@ zones:
       cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
       url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
       quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 A.1 and F, middle housing excepted from the district's density
@@ -686,6 +687,7 @@ zones:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in VLDR) and 16.40.050 A (Residential PUD uses)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      via: "or/washington/sherwood/16.40/16.40.050.txt#L7"
       qualified_by:
         fact: site_specific_limitation
         cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
@@ -695,46 +697,57 @@ zones:
       cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex, VLDR-PUD column (Ordinance 2022-004 Exhibit 1)
       url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
       quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 A.2 and F, middle housing excepted from the PUD density
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L19-L24,L88-L93"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L19-L21"
     max_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+      via: "or/washington/sherwood/16.40/16.40.050.txt#L12"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L134-L135"
     min_lot_width_ft:
       value: 60
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at building line (Quadplex)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L134-L135"
     min_lot_depth_ft:
       value: 80
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot Depth
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L134-L135"
     max_height_ft:
       value: 30
       cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L134-L135"
     max_height_stories:
       value: 2
       cite: Sherwood SZCDC 16.12.030 C, Maximum Height, all other dwelling types (note 3, the lesser of feet or stories)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L134-L135"
     setback_front_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L259"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L255-L256"
     setback_garage_entrance_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Face of garage
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L263"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L255-L256"
     setback_side_ft:
       value: 5
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Interior side yard (Quadplex; note 6, no adjustments or variances)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L264-L270,L454-L455"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L255-L256"
       step_back:
         height_ft: 24
         rise_per_ft: 2
@@ -744,10 +757,12 @@ zones:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L255-L256"
     setback_rear_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Rear yard
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L255-L256"
     notes: >-
       DRAFT. VLDR under a Planned Unit Development: quadplex permitted as
       the approved plan allows (UNKNOWN until it is read). 10,000 sq ft lot,
@@ -767,6 +782,7 @@ zones:
       cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
       url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
       quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 B and F, middle housing excepted from the district's density
@@ -843,6 +859,7 @@ zones:
       cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
       url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
       quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 C and F, middle housing excepted from the district's density
@@ -919,6 +936,7 @@ zones:
       cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
       url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
       quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 D and F, middle housing excepted from the district's density
@@ -994,6 +1012,7 @@ zones:
       cite: Sherwood SZCDC 16.12.030 C, Minimum lot areas, Quadplex (Ordinance 2022-004 Exhibit 1)
       url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/03/ordinance-2022-004-amending-code-housing-choices.pdf
       quote: "or/washington/sherwood/ord.2022-004.16.12.030-c.txt#L1-L2,L8"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_density_du_per_acre:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 E and F, middle housing excepted from the district's density
@@ -1082,6 +1101,7 @@ zones:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in LDR) and 16.40.050 A (Residential PUD uses)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      via: "or/washington/sherwood/16.40/16.40.050.txt#L7"
       qualified_by:
         fact: site_specific_limitation
         cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
@@ -1104,6 +1124,7 @@ zones:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRL) and 16.40.050 A (Residential PUD uses)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      via: "or/washington/sherwood/16.40/16.40.050.txt#L7"
       qualified_by:
         fact: site_specific_limitation
         cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
@@ -1126,6 +1147,7 @@ zones:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRH) and 16.40.050 A (Residential PUD uses)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      via: "or/washington/sherwood/16.40/16.40.050.txt#L7"
       qualified_by:
         fact: site_specific_limitation
         cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
@@ -1148,6 +1170,7 @@ zones:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in HDR) and 16.40.050 A (Residential PUD uses)
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L104-L112"
+      via: "or/washington/sherwood/16.40/16.40.050.txt#L7"
       qualified_by:
         fact: site_specific_limitation
         cite: "Sherwood SZCDC 16.40.050 A and 16.40.040 C, PUD uses as approved in the Final Development Plan; a change of use is a major change"
@@ -1180,6 +1203,7 @@ zones:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
       quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
+      via: "or/washington/sherwood/16.22/16.22.020.txt#L7"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   OC_PUD:
@@ -1191,6 +1215,7 @@ zones:
       value: false
       cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (OC, which lists no triplex or quadplex)
       quote: "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10"
+      via: "or/washington/sherwood/16.40/16.40.020.txt#L52"
     notes: >-
       DRAFT. Refuses: OC's uses; a waiver of dwelling type is the approved
       plan's, not the lot's.
@@ -1203,6 +1228,7 @@ zones:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
       quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
+      via: "or/washington/sherwood/16.22/16.22.020.txt#L7"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   RC:
@@ -1214,6 +1240,7 @@ zones:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
       quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
+      via: "or/washington/sherwood/16.22/16.22.020.txt#L7"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   RC_PUD:
@@ -1225,6 +1252,7 @@ zones:
       value: false
       cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (RC, which lists no triplex or quadplex)
       quote: "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10"
+      via: "or/washington/sherwood/16.40/16.40.020.txt#L52"
     notes: >-
       DRAFT. Refuses: RC's uses; a waiver of dwelling type is the approved
       plan's, not the lot's.
@@ -1259,6 +1287,7 @@ zones:
       value: false
       cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (LI, which lists one security dwelling only)
       quote: "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10"
+      via: "or/washington/sherwood/16.40/16.40.020.txt#L52"
     notes: >-
       DRAFT. Refuses: LI's uses; a waiver of dwelling type is the approved
       plan's, not the lot's.

@@ -1008,6 +1008,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
+      via: "or/multnomah/troutdale/9/9.095.txt#L3"
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
         dimensional standards) (Municode, through Ord. 899)
@@ -1067,6 +1068,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.230.txt#L30-L35"
     setback_garage_entrance_ft:
       value: 20
       quote: "or/multnomah/troutdale/3/3.230.txt#L25,L30-L35"
@@ -1150,6 +1152,7 @@ zones:
       exempt: true
       cite: TDC 3.140.A (minimum density, 80 percent of the maximum per net acre) and 3.140.B.4 (no maximum for a quadplex)
       quote: "or/multnomah/troutdale/3/3.140.txt#L3,L5,L8-L9,L21-L22"
+      via: "or/multnomah/troutdale/3/3.230.txt#L50"
       measured_on:
         fact: net_developable_area
         cite: TDC 1.020 "Net Area"
@@ -1164,6 +1167,7 @@ zones:
           when: [unit_lots]
           cite: "TDC 3.140.A.2 (80 percent of the maximum per net acre) read at 3.140.B.3.c's printed maximum of 25 per net acre for a townhouse project (tightest reading)"
           quote: "or/multnomah/troutdale/3/3.140.txt#L3,L5,L8-L9,L17,L20"
+          via: "or/multnomah/troutdale/3/3.230.txt#L50"
     # 8.130.B.2.b: "The minimum number of required off-street parking spaces
     # for a townhouse project is one (1) space per unit." The townhouse door
     # is the only one into this zone, so this replaces the quadplex bands in
@@ -1174,12 +1178,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-10-15'
       quote: "or/multnomah/troutdale/8/8.130.txt#L1,L25,L27-L29"
+      via: "or/multnomah/troutdale/3/3.220.txt#L16"
       variants:
         - exempt: true
           when: [troutdale_cfec_parking_area]
           cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+          via: "or/multnomah/troutdale/3/3.211.txt#L3"
     notes: >-
       3.220's Quadplex row reads N in MU-1 and P in MU-2 and MU-3, so the one of the three mixed-use districts that refuses this building is the one named first. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
 
@@ -1289,6 +1295,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
+      via: "or/multnomah/troutdale/9/9.095.txt#L3"
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
         dimensional standards) (Municode, through Ord. 899)
@@ -1365,6 +1372,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.230.txt#L30-L35"
     setback_garage_entrance_ft:
       # 20 feet "to the garage door of units with a driveway", stated only on
       # the without-alley-access line. The with-alley block prints a façade and
@@ -1510,6 +1518,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/3/3.130.txt#L13,L16,L20,L25,L32-L33"
+      via: "or/multnomah/troutdale/9/9.095.txt#L3"
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.A and 3.230.B (residential uses), 3.235
         (Municode, through Ord. 899)
@@ -1570,6 +1579,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.230.txt#L13-L16"
     setback_side_ft:
       value: 20
       quote: "or/multnomah/troutdale/3/3.230.txt#L10,L13-L16,L25,L30"
@@ -1797,6 +1807,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.130.txt#L44"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L46"
@@ -1964,6 +1975,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.130.txt#L44"
     # 9.095 A on a quadplex SIDE (FOLLOWUPS 150, read 2026-11-05; the
     # parking_required_yard_prohibited default has the reading): the court
     # meets the building setback of the most restrictive adjoining
@@ -2188,6 +2200,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.130.txt#L44"
     # 9.095 A on a quadplex SIDE (FOLLOWUPS 150, read 2026-11-05; the
     # parking_required_yard_prohibited default has the reading): the court
     # meets the building setback of the most restrictive adjoining
@@ -2255,42 +2268,50 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.010.txt#L13,L18,L23-L24"
+      via: "or/multnomah/troutdale/9/9.005.txt#L8"
       variants:
         - spaces_total: 1
           band: {measure: lot_sqft, less_than: 3000}
           cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size of less than 3,000 sq. ft.
           quote: "or/multnomah/troutdale/9/9.010.txt#L18-L19"
+          via: "or/multnomah/troutdale/9/9.005.txt#L8"
         - spaces_total: 2
           band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
           cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size of less than 5,000 sq. ft.
           quote: "or/multnomah/troutdale/9/9.010.txt#L18,L20"
+          via: "or/multnomah/troutdale/9/9.005.txt#L8"
         - spaces_total: 3
           band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
           cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size between 5,000 and 6,999 sq. ft.
           quote: "or/multnomah/troutdale/9/9.010.txt#L18,L21-L22"
+          via: "or/multnomah/troutdale/9/9.005.txt#L8"
         - exempt: true
           when: [troutdale_cfec_parking_area]
           cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+          via: "or/multnomah/troutdale/3/3.113.txt#L9"
         - exempt: true
           when: [troutdale_cfec_parking_area]
           band: {measure: lot_sqft, less_than: 3000}
           cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+          via: "or/multnomah/troutdale/3/3.113.txt#L9"
         - exempt: true
           when: [troutdale_cfec_parking_area]
           band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
           cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+          via: "or/multnomah/troutdale/3/3.113.txt#L9"
         - exempt: true
           when: [troutdale_cfec_parking_area]
           band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
           cite: TDC 9.035, no off-street parking is required for developments on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (1/4) mile from the district boundary line (OAR 660-012-0435, Climate Friendly Areas)
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+          via: "or/multnomah/troutdale/3/3.113.txt#L9"
     max_height_ft:
       value: 35
       quote: "or/multnomah/troutdale/3/3.130.txt#L37-L38,L51"
@@ -2355,6 +2376,7 @@ zones:
         - value: 25
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3/3.140.txt#L11,L20"
+          via: "or/multnomah/troutdale/3/3.130.txt#L73-L78"
     section: ["3.114", "3.120", "3.130", "8.120"]
     parking_lot_line_buffer_doubt_ft:
       value: 20
@@ -2670,6 +2692,7 @@ zones:
           when: [unit_lots]
           cite: "TDC 3.140.A.2 (80 percent of the maximum per net acre) read at 3.140.B.3.c's printed maximum of 25 per net acre for a townhouse project (tightest reading)"
           quote: "or/multnomah/troutdale/3/3.140.txt#L3,L5,L8-L9,L17,L20"
+          via: "or/multnomah/troutdale/3/3.130.txt#L73-L78"
     # 8.130.B.2.b: "The minimum number of required off-street parking spaces
     # for a townhouse project is one (1) space per unit." The townhouse door
     # is the only one into this zone, so this replaces the quadplex bands in
@@ -2680,6 +2703,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-10-15'
       quote: "or/multnomah/troutdale/8/8.130.txt#L1,L25,L27-L29"
+      via: "or/multnomah/troutdale/3/3.120.txt#L18"
       variants:
         # 9.035 (districts chunk 5, 2026-10-29): "no off-street parking is
         # required for developments on a lot or parcel within the Town Center
@@ -2691,6 +2715,7 @@ zones:
           url: https://api.municode.com/PublicationPdfDownload/1813
           retrieved: '2026-10-29'
           quote: "or/multnomah/troutdale/9/9.035.txt#L1,L4"
+          via: "or/multnomah/troutdale/3/3.114.txt#L7"
     # 9.095(D), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the only figure the sentence carries is an industrial floor that does
@@ -2701,6 +2726,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1813
       retrieved: '2026-08-29'
       quote: "or/multnomah/troutdale/9/9.095.txt#L1,L5,L11"
+      via: "or/multnomah/troutdale/3/3.130.txt#L131"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/troutdale/3/3.130.txt#L66"
