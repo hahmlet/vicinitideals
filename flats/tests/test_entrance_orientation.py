@@ -431,11 +431,9 @@ def test_facing_takes_the_angle_the_code_prints() -> None:
         0.0,
         30.0,
     )
-    # End-on to the only street, the lane would run along a side lot line:
-    # never searched, whatever the angle.
-    assert fitter.facing((0.0,), 45.0).door_angles(Orientation.depth_facing) == ()
-    assert fitter.facing((0.0,), 0.0).door_angles(Orientation.depth_facing) == ()
-    # On a corner, end-on to either street with the doors to the other.
+    # Stood depth_facing, the long face runs a quarter turn off the grid.
+    assert fitter.facing((0.0,), 45.0).door_angles(Orientation.depth_facing) == (60.0, 90.0)
+    assert fitter.facing((0.0,), 0.0).door_angles(Orientation.depth_facing) == (90.0,)
     assert fitter.facing((0.0, 90.0), 0.0).door_angles(Orientation.depth_facing) == (0.0, 90.0)
     # And the view's narrowed search carries the doors.
     assert fitter.facing((0.0,), 0.0).only((0.0, 90.0)).doors == ((0.0,), 0.0)

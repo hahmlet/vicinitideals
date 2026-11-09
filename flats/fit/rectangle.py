@@ -217,13 +217,12 @@ class Fitter:
         of the streets the lot abuts (:func:`flats.score.paper.door_limit`;
         FOLLOWUPS 153, rel4 move-read finding 2). Standing ``width_facing``
         at angle ``a`` that face runs at ``a``; ``depth_facing``, at
-        ``a + 90``. Either way the grid's across side -- where the lane
-        comes in beside the building -- runs along a street too (within
-        ``tol_deg``): turned end-on, the building stands end-on to one
-        street with its doors to another, a corner's side street, never
-        end-on to a side lot line with its lane running nowhere. An
-        orientation no grid angle stands that way is not searched. The
-        same rasters and ground, no new work."""
+        ``a + 90``: either way the long face stands along the street, the
+        lane beside the building (``width_facing``) or along its back or
+        front (``depth_facing``), as the free search drew pods whose doors
+        faced the street before rel4 (rel4 move-read finding 2: 2,187 lots
+        lost). An orientation no grid angle stands that way is not
+        searched. The same rasters and ground, no new work."""
         out = self.only(self.angles)
         out.grids = self.grids
         out.doors = (tuple(normalize(b) for b in bearings), max(0.0, float(tol_deg)))
@@ -244,7 +243,7 @@ class Fitter:
         def near(x: float) -> bool:
             return any(bearing_delta(x, b) <= tol + 1e-6 for b in bearings)
 
-        return tuple(a for a in pool if near(a + turn) and near(a))
+        return tuple(a for a in pool if near(a + turn))
 
     def _grids(self, angles: Iterable[float] | None) -> list[Grid]:
         """The grids at these angles (folded into [0, 180)); all where None."""
