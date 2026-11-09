@@ -320,6 +320,12 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L11-L14,L40-L53"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Hillsboro CDC 12.50.710.C.1.b.ii: \"The entry shall either, face the street, be at an angle of no more than 45 / degrees from the street, or open to a porch.\" -- the angle the main entrance may stand off the street (FOLLOWUPS 158; missed by rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L44-L45"
   # PARKING COUNT. 12.50.310 A.2: "The City of Hillsboro does not have
   # standards which require mandate the provision of parking" (the doubled
   # verb is the code's). Encoded as zero rather than left out, because an
