@@ -998,6 +998,40 @@ def states_a_roof_rule(text: str, field: str, value) -> bool:
     return bool(re.search(rf"\b{spelled}[-\s]+twelfths?\b", text, re.I))
 
 
+#: A main entrance that must face the street and prints no angle. Portland's
+#: Lombard Subdistrict A: "The main entrance of each primary structure must
+#: face the street lot line" (33.545.120.C.2). The angle field holds that as
+#: nought -- the door face parallel to the street line -- so the line has no
+#: figure to show. Narrow on purpose: the sentence has to make the entrance
+#: face the street in so many words.
+_ENTRANCE_MUST_FACE = re.compile(
+    r"\bentrances?\b[^.]{0,80}?\b(?:must|shall)\s+face\s+the\s+street\b", re.I
+)
+
+
+def states_an_entrance_angle(text: str, field: str, value) -> bool:
+    """Whether the line states an entrance angle in a code's own words.
+
+    Oregon City spells it, "at an angle of up to forty-five degrees from the
+    street" (17.16.060.C.2.b), and a code that makes the entrance face the
+    street with no angle is held as 0 (see :data:`_ENTRANCE_MUST_FACE`). Only
+    ``entrance_angle_max_deg`` (rel4 move-read finding 2, 2026-11-08).
+    """
+    # A variant's row is named "<field> [<conditions>]".
+    if field.split(" ", 1)[0] != "entrance_angle_max_deg" or isinstance(value, bool):
+        return False
+    if not isinstance(value, (int, float)):
+        return False
+    flat = re.sub(r"\s+", " ", _dehyphenate(text))
+    if value == 0:
+        return bool(_ENTRANCE_MUST_FACE.search(flat))
+    word = _spelled(float(value))
+    if not word:
+        return False
+    spelled = r"[-\s]+".join(re.escape(p) for p in re.split(r"[- ]", word) if p)
+    return bool(re.search(rf"\b{spelled}\s+degrees?\b", flat, re.I))
+
+
 def states_as_share_word(text: str, field: str, value) -> bool:
     """Whether the line writes a percent field's value as a word.
 
@@ -1111,7 +1145,9 @@ def readiness_for(
             cited, number, spaced=doc_id in spaced, glued=doc_id in glued
         ) or states_as_percent(cited, name, number) or states_as_share_word(
             cited, name, number
-        ) or states_a_roof_rule(cited, name, number)
+        ) or states_a_roof_rule(cited, name, number) or states_an_entrance_angle(
+            cited, name, number
+        )
         if not states or cites_a_different_unit(cited, name, number):
             misquoted.append((zone_code, name))
 
