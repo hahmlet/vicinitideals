@@ -358,16 +358,38 @@ def faces_the_street(rules: "ZoneResolution", design: Design) -> bool:
     """
     if rules.get("orientation_constraint") == "axis_required":
         return True
-    if design.door_face == "width" and rules.get("entrance_faces_street") in (
-        "required",
-        "required_named",
-    ):
-        # FOLLOWUPS 153: the code makes the main entrance face the street
-        # and offers nothing a building turned end-on meets, and every door
-        # of this design is on its long face -- so the long face is the one
-        # that must face the street.
-        return True
     return design.plat is Plat.unit_lots and townhouse_lots(rules)
+
+
+#: The field holding the angle a zone's main-entrance standard lets the
+#: doors stand off the street (``entrance_angle_max_deg``).
+ENTRANCE_ANGLE_FIELD = "entrance_angle_max_deg"
+
+
+def door_limit(rules: "ZoneResolution", design: Design) -> float | None:
+    """How far, in degrees, the face carrying ``design``'s doors may stand
+    off a street the lot abuts, where the zone's main-entrance standard
+    makes the doors face the street (``entrance_faces_street`` ``required``
+    or ``required_named``; FOLLOWUPS 153, rulings.yaml
+    ``2026-11-08-no-porch-end-door``); ``None`` where no such standard
+    binds, or the building is already made to face the street
+    (:func:`faces_the_street`).
+
+    The doors face A street: any street the lot abuts -- its front, or a
+    corner's side street (``entrance_faces_street``'s "facing either street
+    counts"; Portland 33.110.230.B.3 lets the applicant choose the
+    frontage) -- so the fit may stand the building end-on to the front with
+    its doors to the side street (rel4 move-read finding 2, 1N2E22BD
+    -06800). The angle is the one the code prints
+    (``entrance_angle_max_deg``: "be at an angle of up to 45 degrees from
+    the street"); unread, nought -- the doors parallel to a street line.
+    """
+    if design.door_face != "width" or faces_the_street(rules, design):
+        return None
+    if rules.get("entrance_faces_street") not in ("required", "required_named"):
+        return None
+    got = rules.get(ENTRANCE_ANGLE_FIELD)
+    return float(got) if isinstance(got, (int, float)) and got > 0 else 0.0
 
 
 #: How far the door face may turn from a street before the doors no longer
@@ -386,7 +408,8 @@ def entrance_unsettled(rules: "ZoneResolution", design: Design) -> bool:
     is not already made to face the street, and the zone's
     ``entrance_faces_street`` is ``unclear`` or was never read (FOLLOWUPS
     153). ``alternative`` and ``not_required`` let the turned fit stand;
-    ``required`` never searches it (:func:`faces_the_street`)."""
+    ``required`` searches only fits whose doors face a street
+    (:func:`door_limit`)."""
     if design.door_face is None or faces_the_street(rules, design):
         return False
     return rules.get("entrance_faces_street") in (None, "unclear")
@@ -1542,8 +1565,9 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     min_stories = _number(rules, "min_building_height_stories")
     min_ground = _number(rules, "min_ground_story_ft")
     # A code that makes the building face the street has taken one of the
-    # two orientations away, and the cheaper lot may have been that one.
-    axis = faces_the_street(rules, design)
+    # two orientations away, and the cheaper lot may have been that one. So
+    # has an entrance standard on paper: the lot drawn here has one street.
+    axis = faces_the_street(rules, design) or door_limit(rules, design) is not None
 
     # What the two side yards take off the width together. Where the code
     # states a combined figure it governs, and a per-side floor can only make

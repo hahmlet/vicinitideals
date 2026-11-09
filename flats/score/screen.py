@@ -84,6 +84,7 @@ from flats.score.paper import (
     court_depth,
     drive_at_street,
     drive_in_front_yard,
+    door_limit,
     door_turned,
     entrance_street_named,
     entrance_unsettled,
@@ -451,6 +452,17 @@ ENTRANCE_TURNED = "entrance_faces_street"
 #: (FOLLOWUPS 153 round 2). Joins ``_checks``'s ``unmeasured``: the fit
 #: faces a street, but nothing read says it is the one the code names.
 ENTRANCE_STREET = "entrance_named_street"
+
+#: The front doors as drawn, where the code makes them face a street
+#: (``entrance_faces_street`` ``required`` or ``required_named``,
+#: :func:`flats.score.paper.door_limit`): the fit stands the door face
+#: along a street the lot abuts, but the building drawn does not hold it
+#: toward one -- its doors line up with a street far across the lot while
+#: its end sits on the near one (rel4 move-read finding 2, Hillsboro
+#: 1N227DD17200; :func:`flats.ingest.quadfit.drawn_door_turned`). Joins
+#: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``: no
+#: drawing shows the doors facing the street, and none is read as a pass.
+ENTRANCE_DRAWN = "entrance_drawn_facing"
 
 #: The shape a code asks the open space to take (a square that fits inside
 #: it, a patio off each home) where the fit's window does not prove it and
@@ -1964,6 +1976,14 @@ def _checks(
         door_turned(design, fit, lot.street_bearings) or lot.entrance_drawn_turned
     ):
         unmeasured.add(ENTRANCE_TURNED)
+    # The doors the code makes face a street, drawn away from every street
+    # the lot abuts (rel4 move-read finding 2).
+    if (
+        fit.fits
+        and lot.entrance_drawn_turned
+        and door_limit(rules, design) is not None
+    ):
+        unmeasured.add(ENTRANCE_DRAWN)
     # The street they face (FOLLOWUPS 153 round 2): where the code names
     # one of several streets, a lot with more than one -- or one whose
     # streets nobody measured -- cannot be shown to face the named one.
@@ -2571,7 +2591,7 @@ def seats(
     }
     column = side_column(design, rules, alley) is not None
     best = 0
-    for _orientation, side, deep in design.oriented(axis_required=axis_required):
+    for orientation, side, deep in design.oriented(axis_required=axis_required):
         seated = 0
         held: tuple[float, float, float] | None = None
         for n in range(across.stalls, across.most + 1):
@@ -2588,7 +2608,9 @@ def seats(
                 deep + behind[n],
                 over[n],
             )
-            if ask != held and not fitter.holds(ask[0], ask[1], over_ft=ask[2]):
+            if ask != held and not fitter.holds(
+                ask[0], ask[1], over_ft=ask[2], orientation=orientation
+            ):
                 break
             held = ask
             seated = n
@@ -2602,7 +2624,10 @@ def seats(
                     rules, across.lane_ft, corner=corner
                 )
                 if not fitter.holds(
-                    side + across.lane_ft - lane_overlap, along, over_ft=run
+                    side + across.lane_ft - lane_overlap,
+                    along,
+                    over_ft=run,
+                    orientation=orientation,
                 ):
                     break
                 seated = n
@@ -2619,6 +2644,7 @@ def seats(
                 deep + extra,
                 angles=street_deg,
                 over_ft=_beside_over(row, deep, rules, carved_rear_ft),
+                orientation=orientation,
             ):
                 break
             seated = n
@@ -2825,6 +2851,12 @@ def fit_for(
     # takes, on a Fitter it confined to the street's directions (FOLLOWUPS
     # 153, an entrance standard nobody has settled).
     axis_required = face_street or faces_the_street(rules, design)
+    if door_limit(rules, design) is not None and fitter.doors is None:
+        # The code makes the doors face a street and the caller did not say
+        # which streets the lot abuts (:meth:`Fitter.facing`, which the
+        # bridge does): the building is searched facing the front only, as
+        # before rel4's move-read -- never a turned fit taken unread.
+        axis_required = True
     fit: Fit | None = None
     best_room = -math.inf
     for option in menu if menu is not None else (across.fixes or (across.fix,)):
@@ -3841,6 +3873,7 @@ _MEASURED_FLAG: dict[str, str] = {
     FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",
     ENTRANCE_TURNED: "ENTRANCE-TURNED",
     ENTRANCE_STREET: "ENTRANCE-STREET",
+    ENTRANCE_DRAWN: "ENTRANCE-DRAWN",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

@@ -30,6 +30,7 @@ from shapely.geometry.base import BaseGeometry
 
 from flats.designs.model import Design, Orientation
 from flats.fit.angles import angles_for, normalize
+from flats.geom.edges import bearing_delta
 from flats.fit.raster import (
     GRID_FT,
     MAX_CELLS,
@@ -178,6 +179,9 @@ class Fitter:
         self.res = res
         self.ground = ground
         self._grounds: dict[int, Ground] = {}
+        #: The street directions the doors must face, and how far off them
+        #: (:meth:`facing`); None where nothing binds the doors.
+        self.doors: tuple[tuple[float, ...], float] | None = None
         if envelope is None or envelope.is_empty:
             return
         self.res = res_for(envelope, res)
@@ -203,7 +207,44 @@ class Fitter:
         out.res = self.res
         out.ground = self.ground
         out._grounds = self._grounds
+        out.doors = self.doors
         return out
+
+    def facing(self, bearings: Iterable[float], tol_deg: float) -> "Fitter":
+        """This Fitter with the doors bound to face a street: every fit it
+        finds stands the face carrying the doors -- the design's ``width``
+        side -- within ``tol_deg`` of one of ``bearings``, the directions
+        of the streets the lot abuts (:func:`flats.score.paper.door_limit`;
+        FOLLOWUPS 153, rel4 move-read finding 2). Standing ``width_facing``
+        at angle ``a`` that face runs at ``a``; ``depth_facing``, at
+        ``a + 90``. Either way the grid's across side -- where the lane
+        comes in beside the building -- runs along a street too (within
+        ``tol_deg``): turned end-on, the building stands end-on to one
+        street with its doors to another, a corner's side street, never
+        end-on to a side lot line with its lane running nowhere. An
+        orientation no grid angle stands that way is not searched. The
+        same rasters and ground, no new work."""
+        out = self.only(self.angles)
+        out.grids = self.grids
+        out.doors = (tuple(normalize(b) for b in bearings), max(0.0, float(tol_deg)))
+        return out
+
+    def door_angles(
+        self, orientation: Orientation, angles: Iterable[float] | None = None
+    ) -> tuple[float, ...] | None:
+        """The angles ``orientation`` may be searched at under :meth:`facing`
+        (of ``angles``, or this Fitter's own); ``angles`` itself (None: all)
+        where nothing binds the doors."""
+        if self.doors is None:
+            return None if angles is None else tuple(angles)
+        bearings, tol = self.doors
+        turn = 0.0 if orientation is Orientation.width_facing else 90.0
+        pool = self.angles if angles is None else tuple(angles)
+
+        def near(x: float) -> bool:
+            return any(bearing_delta(x, b) <= tol + 1e-6 for b in bearings)
+
+        return tuple(a for a in pool if near(a + turn) and near(a))
 
     def _grids(self, angles: Iterable[float] | None) -> list[Grid]:
         """The grids at these angles (folded into [0, 180)); all where None."""
@@ -321,6 +362,7 @@ class Fitter:
         *,
         angles: Iterable[float] | None = None,
         over_ft: float = 0.0,
+        orientation: Orientation | None = None,
     ) -> bool:
         """Whether a rectangle this wide and this deep fits at any angle.
 
@@ -329,8 +371,12 @@ class Fitter:
         run. That is what makes it cheap enough to ask several times per lot
         -- the screen asks it once per stall it counts beyond the floor.
         ``angles`` confines it to the grids at those angles; ``over_ft`` asks
-        the court's run past the far end too.
+        the court's run past the far end too. ``orientation`` names the way
+        the building stands, which confines it further where the doors are
+        bound to face a street (:meth:`facing`).
         """
+        if orientation is not None:
+            angles = self.door_angles(orientation, angles)
         w_cells, d_cells = cells_for(across_ft, self.res), cells_for(depth_ft, self.res)
         over = self._over_cells(over_ft)
         return any(self._has(grid, d_cells, w_cells, over) for grid in self._grids(angles))
@@ -381,7 +427,12 @@ class Fitter:
         return best * self.res
 
     def _width_short_and_depth(
-        self, got_ft: float, across_ft: float, depth_ft: float, over_ft: float
+        self,
+        got_ft: float,
+        across_ft: float,
+        depth_ft: float,
+        over_ft: float,
+        angles: Iterable[float] | None = None,
     ) -> tuple[float | None, float | None]:
         """The width shortfall and depth at that narrower width.
 
@@ -393,10 +444,13 @@ class Fitter:
         """
         if got_ft > 0 or depth_ft <= 0:
             return None, None
-        short = max(self.res, across_ft - self.widest(depth_ft, over_ft=over_ft))
+        angles = None if angles is None else tuple(angles)
+        short = max(self.res, across_ft - self.widest(depth_ft, angles=angles, over_ft=over_ft))
         # No window at all at the building's depth: no narrower width to measure.
         narrower_ft = across_ft - short
-        depth_at_short_width_ft = self._best(narrower_ft, over_ft=over_ft)[0] if narrower_ft > 0 else 0.0
+        depth_at_short_width_ft = (
+            self._best(narrower_ft, angles, over_ft=over_ft)[0] if narrower_ft > 0 else 0.0
+        )
         return short, depth_at_short_width_ft
 
     def fit(
@@ -434,10 +488,17 @@ class Fitter:
 
         best: Fit | None = None
         best_grid: Grid | None = None
+        if self.doors is not None:
+            # The doors bound to a street (:meth:`facing`): an orientation
+            # no angle stands that way is not searched at all.
+            options = [o for o in options if self.door_angles(o[0])] or options[:1]
         for orientation, across_ft, d_ft in options:
-            got_ft, grid = self._best(across_ft, over_ft=over_ft)
+            angles = self.door_angles(orientation)
+            got_ft, grid = self._best(across_ft, angles, over_ft=over_ft)
             slack = got_ft - d_ft
-            short, depth_at_short = self._width_short_and_depth(got_ft, across_ft, d_ft, over_ft)
+            short, depth_at_short = self._width_short_and_depth(
+                got_ft, across_ft, d_ft, over_ft, angles
+            )
             if (
                 best is None
                 or (
@@ -536,9 +597,14 @@ class Fitter:
                 continue
             run = 0.0 if over is None else over(deep)
             across_ft = side + band_ft
-            got_ft, grid = self._best(across_ft, angles, over_ft=run)
+            these = self.door_angles(orientation, angles)
+            if not these:
+                continue
+            got_ft, grid = self._best(across_ft, these, over_ft=run)
             room = got_ft - deep - extra
-            short, depth_at_short = self._width_short_and_depth(got_ft, across_ft, deep, run)
+            short, depth_at_short = self._width_short_and_depth(
+                got_ft, across_ft, deep, run, these
+            )
             if best is None or (
                 short < best[1].width_short_ft
                 if short is not None and best[1].width_short_ft is not None

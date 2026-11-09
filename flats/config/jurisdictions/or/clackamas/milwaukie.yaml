@@ -899,6 +899,12 @@ defaults:
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.505/19.505.1.txt#L55-L58,L228-L255"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Milwaukie MMC 19.505.1 middle housing main entrance: \"Face the street, be at an angle of up to 45 degrees from the street, or open onto a porch.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.505/19.505.1.txt#L238"
   # ADDITIONAL YARD ON MAJOR STREETS. 19.501.2.A: "buildings along certain
   # major streets are subject to additional yard requirements ... the
   # minimum distance from the center line of the right-of-way to the closest
@@ -2092,6 +2098,12 @@ zones:
       url: https://ecode360.com/print/MI4969?guid=43861924
       retrieved: '2026-08-27'
       quote: "or/clackamas/milwaukie/19.508/19.508.4.txt#L522-L523"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Milwaukie MMC 19.508.4 downtown design standards: \"For purposes of this standard, 'facing' means within 45 degrees of the street property line.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://ecode360.com/print/MI4969?guid=43861924
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/milwaukie/19.508/19.508.4.txt#L523"
     section: ["19.304"]
     cite_default:
       cite: MMC 19.304 Downtown Zones, Tables 19.304.2 and 19.304.4, DMU column

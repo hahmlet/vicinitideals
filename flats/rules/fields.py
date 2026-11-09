@@ -1683,10 +1683,12 @@ _F: tuple[FieldDef, ...] = (
         "its 30 ft end to the street and every front door facing a side yard "
         "(FOLLOWUPS 153; Steph 2026-11-08: \"Each muni will have a standard "
         "typically\"). `required`: the entrance must face the street (or "
-        "within 45 degrees of it) and nothing the turned building can do "
-        "meets it, so a design whose doors are on its long face is searched "
-        "only facing the street, as `orientation_constraint: axis_required` "
-        "is (flats.score.paper.faces_the_street). `alternative`: required, "
+        "within the angle it prints, `entrance_angle_max_deg`) and nothing "
+        "the turned building can do meets it, so a design whose doors are on "
+        "its long face is searched only with that face toward a street the "
+        "lot abuts -- the front, or a corner's side street -- and drawn "
+        "with it toward that street (flats.score.paper.door_limit; rel4 "
+        "move-read finding 2). `alternative`: required, "
         "but the code offers a way the turned building meets with a design "
         "detail -- a porch of a stated size, the end home's door within a "
         "stated distance of the street wall -- which the pod can be adapted "
@@ -1709,6 +1711,23 @@ _F: tuple[FieldDef, ...] = (
         "building_orientation",
         choices=("required", "required_named", "alternative", "not_required", "unclear"),
         label="front-door orientation rule",
+    ),
+    FieldDef(
+        "entrance_angle_max_deg",
+        "count",
+        "The angle, in degrees, the main-entrance standard lets the entrance "
+        "stand off the street, where `entrance_faces_street` is `required` "
+        "or `required_named`: the Large Cities Model Code's \"be at an angle "
+        "of up to 45 degrees from the street\" and the codes copied from it "
+        "(OAR 660-046 Exhibit B C.2.b.ii; Portland 33.110.230.C, Milwaukie "
+        "19.508.4's \"'facing' means within 45 degrees of the street property "
+        "line\"). The fit may stand the door face up to this far off a street "
+        "the lot abuts (flats.score.paper.door_limit). Absent: nought, the "
+        "door face parallel to a street line -- the conservative reading of "
+        "a code that prints no angle. rel4 move-read finding 2, 2026-11-08.",
+        True,
+        "building_orientation",
+        label="max. entrance angle from the street",
     ),
     FieldDef(
         "front_lot_line_corner",

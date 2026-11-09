@@ -30,6 +30,7 @@ from flats.rules.resolver import RuleSet
 from flats.score import relief, slack
 from flats.score.flags import Colour
 from flats.score.paper import (
+    door_limit,
     door_turn_deg,
     door_turned,
     entrance_street_named,
@@ -82,12 +83,24 @@ def test_the_screened_pod_has_its_doors_on_the_wide_face() -> None:
     assert OLD.door_face is None
 
 
-def test_required_makes_the_wide_face_face_the_street() -> None:
-    assert faces_the_street(rules(entrance_faces_street="required"), POD)
-    for value in ("alternative", "not_required", "unclear", None):
+def test_required_binds_the_doors_to_a_street_not_the_axis() -> None:
+    # rel4 move-read finding 2: `required` binds the door face to a street
+    # the lot abuts, within the angle the code prints -- it no longer locks
+    # the building's axis to the front (a corner's side street counts).
+    for value in ("required", "required_named"):
         assert not faces_the_street(rules(entrance_faces_street=value), POD)
+        assert door_limit(rules(entrance_faces_street=value), POD) == 0.0
+        assert door_limit(
+            rules(entrance_faces_street=value, entrance_angle_max_deg=45), POD
+        ) == 45.0
+    for value in ("alternative", "not_required", "unclear", None):
+        assert door_limit(rules(entrance_faces_street=value), POD) is None
     # A design with no stated door face is not confined by the doors.
-    assert not faces_the_street(rules(entrance_faces_street="required"), OLD)
+    assert door_limit(rules(entrance_faces_street="required"), OLD) is None
+    # A building already made to face the street is not bound twice.
+    assert door_limit(
+        rules(entrance_faces_street="required", orientation_constraint="axis_required"), POD
+    ) is None
 
 
 def test_unread_and_unclear_are_unsettled_the_rest_are_not() -> None:
@@ -205,7 +218,8 @@ def test_each_place_reads_its_own_rule(rule_set: RuleSet, where: str, zone: str,
 
 def test_wood_village_confines_the_pod_to_the_street(rule_set: RuleSet) -> None:
     got = rule_set.resolve("or/multnomah/wood-village", "LR 7.5")
-    assert faces_the_street(got, POD)
+    # 210.375: "or be at an angle of up to forty-five (45) degrees".
+    assert door_limit(got, POD) == 45.0
     assert not entrance_unsettled(got, POD)
 
 
@@ -243,7 +257,7 @@ def test_plain_required_does_not_ask_which_street() -> None:
 def test_required_named_also_confines_the_pod_to_the_street(rule_set: RuleSet) -> None:
     for where, zone in (("or/multnomah/wood-village", "MR 2"), ("or/clackamas/estacada", "D")):
         got = rule_set.resolve(where, zone)
-        assert faces_the_street(got, POD)
+        assert door_limit(got, POD) is not None
         assert entrance_street_named(got, POD)
         assert not entrance_unsettled(got, POD)
         assert not entrance_street_named(got, POD.model_copy(update={"door_face": None}))
@@ -360,9 +374,12 @@ def test_where_only_the_turned_building_fits_and_the_doors_must_face_the_street_
 ) -> None:
     # Portland R5 is `required` since round 3 (rulings.yaml
     # 2026-11-08-no-porch-end-door): 95 ft of lot, 85 ft of envelope, and the
-    # pod stands only end-on -- which the code no longer lets it.
+    # pod stands only end-on -- which the code no longer lets it. Its 45
+    # degrees (33.110.230.C.2.b) do not reach a quarter turn either.
     s = _bridge(corpus, policies, 95.0, 200.0)
-    assert not s.fit.fits
+    assert not s.fit.fits or not door_turned(POD, s.fit, s.lot.front_bearings)
+    if s.fit.fits:
+        assert door_turn_deg(s.fit, s.lot.front_bearings) <= 45.0 + 1e-6
 
 
 def test_where_only_the_turned_building_fits_the_turned_fit_stands(corpus, policies, monkeypatch) -> None:
@@ -374,7 +391,71 @@ def test_where_only_the_turned_building_fits_the_turned_fit_stands(corpus, polic
     monkeypatch.setattr(quadfit, "entrance_unsettled", lambda rules, design: True)
     monkeypatch.setattr(quadfit, "faces_the_street", lambda rules, design: False)
     monkeypatch.setattr(screen_mod, "faces_the_street", lambda rules, design: False)
+    monkeypatch.setattr(quadfit, "door_limit", lambda rules, design: None)
+    monkeypatch.setattr(screen_mod, "door_limit", lambda rules, design: None)
     # 95 ft of lot, 85 ft of envelope: the pod stands only end-on.
     s = _bridge(corpus, policies, 95.0, 200.0)
     assert s.fit.fits
     assert door_turned(POD, s.fit, s.lot.front_bearings)
+
+
+# --- rel4 move-read finding 2: the doors face A street the lot abuts ------------
+
+
+def test_facing_lets_the_doors_face_a_corners_side_street() -> None:
+    # 1N2E22BD  -06800 (Portland RM1): a 50 x 150 ft corner lot, its front the
+    # short north line, the long east line a side street. The pod fits only
+    # end-on to the front, its doors to the side street -- which the code
+    # allows ("facing either street counts"; 33.110.230.B.3). Either way the
+    # fitter names it (width_facing at 90, depth_facing at 0), the door face
+    # runs along the side street.
+    envelope = box(0, 0, 40, 140)
+    fitter = Fitter(envelope, angles=(0.0, 90.0))
+    lane = 12.0
+    both = fitter.facing((0.0, 90.0), 0.0)
+    got = both.fit(80.0, 30.0, lane_ft=lane, placement=False)
+    assert got.fits
+    face = got.angle_deg + (0.0 if got.orientation is Orientation.width_facing else 90.0)
+    assert door_turn_deg(got, (90.0,)) == pytest.approx(0.0)
+    assert face % 180.0 == pytest.approx(90.0)
+    # With the front alone a street, end-on is never searched, so no fit.
+    front = fitter.facing((0.0,), 0.0)
+    assert not front.fit(80.0, 30.0, lane_ft=lane, placement=False).fits
+
+
+def test_facing_takes_the_angle_the_code_prints() -> None:
+    fitter = Fitter(box(0, 0, 200, 200), angles=(0.0, 30.0, 60.0, 90.0))
+    assert fitter.facing((0.0,), 0.0).door_angles(Orientation.width_facing) == (0.0,)
+    # Thirty degrees off the street is within 45; sixty is not.
+    assert fitter.facing((0.0,), 45.0).door_angles(Orientation.width_facing, (0.0, 30.0)) == (
+        0.0,
+        30.0,
+    )
+    # End-on to the only street, the lane would run along a side lot line:
+    # never searched, whatever the angle.
+    assert fitter.facing((0.0,), 45.0).door_angles(Orientation.depth_facing) == ()
+    assert fitter.facing((0.0,), 0.0).door_angles(Orientation.depth_facing) == ()
+    # On a corner, end-on to either street with the doors to the other.
+    assert fitter.facing((0.0, 90.0), 0.0).door_angles(Orientation.depth_facing) == (0.0, 90.0)
+    # And the view's narrowed search carries the doors.
+    assert fitter.facing((0.0,), 0.0).only((0.0, 90.0)).doors == ((0.0,), 0.0)
+
+
+def test_doors_lined_up_with_a_far_street_do_not_face_it() -> None:
+    # Hillsboro 1N227DD17200: the building's end sits on the near street (a
+    # vertical line at x = 0) while its long walls line up with a street
+    # 360 ft away. That is not facing the street; turned so a long wall
+    # stands along the near street, it is.
+    from flats.ingest.quadfit import _doors_face_a_street
+
+    near = (0.0, -50.0, 0.0, 450.0)
+    far = (0.0, 400.0, 600.0, 400.0)
+    end_on = box(5, 10, 85, 40)
+    along = box(5, 10, 35, 90)
+    ring = lambda g: [list(p) for p in g.exterior.coords]  # noqa: E731
+    assert not _doors_face_a_street(ring(end_on), 80.0, (near, far), 45.0)
+    assert _doors_face_a_street(ring(along), 80.0, (near, far), 0.0)
+    # A corner building in its corner faces either street.
+    corner = (0.0, 0.0, 600.0, 0.0)
+    flush = box(5, 10, 85, 40)
+    assert _doors_face_a_street(ring(flush), 80.0, (near, corner), 0.0)

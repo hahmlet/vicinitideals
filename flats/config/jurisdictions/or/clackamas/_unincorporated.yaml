@@ -1148,6 +1148,12 @@ defaults:
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-09-27'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L25-L41"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Clackamas County ZDO 845.02(B) Entry orientation (845.03(B) for townhouses): \"2 Be at an angle of up to 45 degrees from the street (see Figure 845-3, Entrance at 45-Degree Angle from the Street);\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L33"
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
   # is the section Table 315-1's note 8 sends this building to for everything.
   # Unincorporated Clackamas is Fairview's shape almost word for word, because

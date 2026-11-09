@@ -595,6 +595,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-DRAWN:
+    description: "The code makes the front doors face a street; the building fits facing one of this lot's street directions, but no drawing shows it standing with its doors toward a street the lot touches"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the building with its front doors toward a street the lot abuts, or confirm none fits (rel4 move-read finding 2)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   ENTRANCE-STREET:
     description: "The front doors must face the street the code names (the address street, the busiest street or a mapped access street), and this lot has more than one street"
     kind: categorical

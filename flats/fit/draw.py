@@ -43,6 +43,7 @@ from shapely.geometry.base import BaseGeometry
 from flats.designs.model import Orientation
 from flats.fit.raster import Grid, cells_for
 from flats.fit.rectangle import Fit, Fitter
+from flats.geom.edges import PARALLEL_TOL_DEG
 
 #: Coordinates are stored to a tenth of a foot: finer than a county lot line
 #: is good to, coarse enough to keep a lot's drawing a few hundred bytes.
@@ -145,6 +146,78 @@ def _along(lines: Iterable[tuple[float, float, float, float]]) -> np.ndarray:
         t = np.linspace(0.0, 1.0, n + 1)
         out.append(np.column_stack((x1 + (x2 - x1) * t, y1 + (y2 - y1) * t)))
     return np.concatenate(out) if out else np.empty((0, 2))
+
+
+def _street_groups(lines: Iterable[tuple[float, float, float, float]]) -> list[np.ndarray]:
+    """The front lines' points (:func:`_along`), one array per street
+    direction: lines whose bearings (either way along) lie within
+    :data:`flats.geom.edges.PARALLEL_TOL_DEG` of each other are one street.
+
+    A corner lot's two fronts are two groups; an interior lot's front, or a
+    through lot's two parallel fronts, one. :func:`_place` adds the
+    building's distance to each group to break the tie between windows that
+    stand equally near *a* street: on a corner every window flush with
+    either street ties at nought, and which one won used to be the grid's
+    scan order -- so turning the fit angle half a turn (rel4, the entrance
+    the code requires facing a front) moved corner buildings off the side
+    street (1N1E29DD  -05600, rel4 move-read finding 3).
+    """
+    groups: list[tuple[float, list[tuple[float, float, float, float]]]] = []
+    for line in lines:
+        x1, y1, x2, y2 = line
+        if math.hypot(x2 - x1, y2 - y1) <= 0:
+            continue
+        b = math.degrees(math.atan2(y2 - y1, x2 - x1)) % 180.0
+        for g in groups:
+            d = abs(b - g[0]) % 180.0
+            if min(d, 180.0 - d) <= PARALLEL_TOL_DEG:
+                g[1].append(line)
+                break
+        else:
+            groups.append((b, [line]))
+    return [_along(g[1]) for g in groups]
+
+
+def _near_tie(d: np.ndarray, res: float) -> np.ndarray:
+    """``d`` with every distance within one cell (``res``) of the nearest
+    read as the nearest: a fit stood a hair off the street's bearing (rel4's
+    179.94 degrees on a lot whose front runs at 180) puts one end of a flush
+    row of windows a tenth of a foot nearer the street than the other, and
+    that tenth -- not the side street -- used to pick the window
+    (1N1E29DD  -05600, rel4 move-read finding 3). Within the cell the tie
+    goes to :func:`_spread`."""
+    finite = d[np.isfinite(d)]
+    if not len(finite):
+        return d
+    m = float(finite.min())
+    return np.where(d <= m + res + 1e-9, m, d)
+
+
+def _pick_near(held: list[tuple], res: float) -> tuple | None:
+    """Of ``held`` -- keys ``(distance, spread, ...)`` with the placement
+    last -- the one with the least ``(spread, ...)`` among those within one
+    cell (``res``) of the nearest distance: the grid-wide tie
+    :func:`_near_tie` makes within one scan, made across every grid, end
+    of the window and flank."""
+    if not held:
+        return None
+    m = min(k[0] for k in held)
+    near = [k for k in held if k[0] <= m + res + 1e-9]
+    return min(near, key=lambda k: k[1:-1])
+
+
+def _spread(
+    x0: np.ndarray, y0: np.ndarray, x1: np.ndarray, y1: np.ndarray,
+    groups: Sequence[np.ndarray],
+) -> np.ndarray:
+    """The boxes' summed distance to each street direction
+    (:func:`_street_groups`); nought everywhere with fewer than two."""
+    out = np.zeros(len(x0))
+    if len(groups) < 2:
+        return out
+    for g in groups:
+        out += _box_distance(x0, y0, x1, y1, g)
+    return out
 
 
 #: Largest box-by-point array :func:`_box_distance` builds at once (about
@@ -629,14 +702,17 @@ def _place(
     yard: Iterable[tuple[float, float, float, float]] = (),
     yard_moves: bool = True,
     stretch: AlleyStretch | None = None,
+    groups: Sequence[np.ndarray] = (),
 ) -> _Placed | None:
     """The window of this size, and the way round, that puts the building
     nearest the street.
 
     Every window that fits is a candidate, each four ways (street at either
     end, lane on either side); the one whose building is nearest the front
-    lines wins, the court's distance from them breaking a tie the other way
-    -- the parking stands behind, not in front. Without front lines, the
+    lines wins; between windows equally near, the one nearest every street
+    direction in ``groups`` (:func:`_street_groups`: a corner building in
+    the corner), then the court's distance from them the other way -- the
+    parking stands behind, not in front. Without front lines, the
     first window, street at its low end.
 
     ``over_ft`` is how far the court runs past the window's far end; with
@@ -659,8 +735,8 @@ def _place(
     across a side yard, along an alley) is not moved back from the street.
     """
     yard = tuple(yard)
-    best: tuple[float, float, _Placed] | None = None
-    fallback: tuple[float, float, _Placed] | None = None
+    bests: list[tuple[float, float, float, _Placed]] = []
+    fallbacks: list[tuple[float, float, float, _Placed]] = []
     for grid in grids:
         if fitter is not None:
             masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
@@ -680,6 +756,7 @@ def _place(
         if len(hits) > MAX_CANDIDATES:
             hits = hits[np.linspace(0, len(hits) - 1, MAX_CANDIDATES).astype(int)]
         pts = _local(street, grid)
+        gpts = [_local(g, grid) for g in groups]
         yard_local = _lines_local(yard, grid) if court is not None else np.empty((0, 4))
         segs = _lines_local(stretch.lines, grid) if stretch is not None else np.empty((0, 4))
         res = grid.res
@@ -697,6 +774,7 @@ def _place(
             for left in ((False,) if lane_outside else (True, False)):
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
                 building = np.where(way, _box_distance(bx0, by0, bx1, by1, pts), np.inf)
+                spread = _spread(bx0, by0, bx1, by1, gpts)
                 bad = _yard_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=court, yard=yard_local,
@@ -706,18 +784,17 @@ def _place(
                 )
                 for clear in (True, False):
                     ranked = np.where(bad, np.inf, building) if clear else building
-                    i = int(np.lexsort((-court_ft, ranked))[0])
+                    ranked = _near_tie(ranked, res)
+                    i = int(np.lexsort((-court_ft, spread, ranked))[0])
                     if not math.isfinite(float(ranked[i])):
                         continue
-                    key = (float(ranked[i]), -float(court_ft[i]))
-                    held = best if clear else fallback
-                    if held is None or key < held[:2]:
-                        hit = hits[i]
-                        got = (*key, _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
-                        if clear:
-                            best = got
-                        else:
-                            fallback = got
+                    key = (float(building[i]), float(spread[i]), -float(court_ft[i]))
+                    hit = hits[i]
+                    got = (*key, _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
+                    (bests if clear else fallbacks).append(got)
+    cell = max((g.res for g in grids), default=0.0)
+    best = _pick_near(bests, cell)
+    fallback = _pick_near(fallbacks, cell)
     if (
         # A court the partial alley feeds is reached from the alley: moving
         # the plan back toward it is how it reaches the stretch.
@@ -729,7 +806,7 @@ def _place(
     ):
         best = None
     held = best or fallback
-    return None if held is None else held[2]
+    return None if held is None else held[3]
 
 
 #: At most this many windows are kept per grid when the alternatives are
@@ -756,6 +833,7 @@ def _options(
     court: _Court | None = None,
     yard: Iterable[tuple[float, float, float, float]] = (),
     stretch: AlleyStretch | None = None,
+    groups: Sequence[np.ndarray] = (),
 ) -> list[_Placed]:
     """Every way the window can stand on the lot with the building toward
     the street and the court behind it, thinned to a lattice
@@ -764,7 +842,9 @@ def _options(
     The building must stand nearer the front lines than the court does, and
     no further from them than ``max_front_ft`` where the code sets a
     maximum front setback. When requested, the nearest valid window is kept
-    ahead of the thinned lattice so a boundary-flush option is not skipped.
+    ahead of the thinned lattice so a boundary-flush option is not skipped
+    (between equally near ones, the nearest every street direction in
+    ``groups``, as :func:`_place`).
     Nothing is ranked here: the caller grades them. With ``yard`` and
     ``court`` (:func:`_place`), a window whose court stands between its
     building and a yard line is not listed at all: the placements the fire,
@@ -776,7 +856,7 @@ def _options(
     out: list[_Placed] = []
     yard = tuple(yard)
     spec = court
-    frontmost: tuple[float, _Placed] | None = None
+    fronts: list[tuple[float, float, _Placed]] = []
     if not len(street):
         return out
     for grid in grids:
@@ -825,6 +905,7 @@ def _options(
                     out.append(_Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
         if include_frontmost and max_front_ft is not None:
             pts = _local(street, grid)
+            gpts = [_local(g, grid) for g in groups]
             res = grid.res
             wx0 = grid.minx + all_hits[:, 1] * res
             wy0 = grid.miny + all_hits[:, 0] * res
@@ -857,13 +938,19 @@ def _options(
                     candidates = np.nonzero(valid)[0]
                     if not len(candidates):
                         continue
-                    i = candidates[int(np.argmin(building[candidates]))]
+                    spread = _spread(
+                        bx0[candidates], by0[candidates], bx1[candidates], by1[candidates], gpts
+                    )
+                    j = int(
+                        np.lexsort((spread, _near_tie(building[candidates], grid.res)))[0]
+                    )
+                    i = candidates[j]
                     hit = all_hits[i]
                     placed = _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left)
-                    if frontmost is None or building[i] < frontmost[0]:
-                        frontmost = (float(building[i]), placed)
+                    fronts.append((float(building[i]), float(spread[j]), placed))
+    frontmost = _pick_near(fronts, max((g.res for g in grids), default=0.0))
     if frontmost is not None:
-        out.insert(0, frontmost[1])
+        out.insert(0, frontmost[2])
     return out
 
 
@@ -877,6 +964,7 @@ def draw(
     court_depth_ft: float,
     court_beyond_ft: float,
     street: Iterable[tuple[float, float, float, float]] = (),
+    side_streets: Iterable[tuple[float, float, float, float]] = (),
     beside_band_ft: float = 0.0,
     beside_len_ft: float = 0.0,
     paved_across_ft: float | None = None,
@@ -900,7 +988,11 @@ def draw(
     whole court behind the wall (gap, stalls, aisle), ``court_beyond_ft`` the
     part of it the envelope has to hold (the rest stands in the rear yard).
     ``street`` is the lot's front lines, ``(x1, y1, x2, y2)``. ``None`` where
-    the search found no room at the fit's width at all.
+    the search found no room at the fit's width at all. ``side_streets`` is
+    a corner's side-street lines: never what the building is set toward,
+    only what breaks a tie between windows equally near the front -- the
+    one nearest every street direction wins (:func:`_street_groups`; rel4
+    move-read finding 3).
 
     ``beside_band_ft`` draws a court BESIDE the building instead
     (:attr:`flats.fit.rectangle.Fit.beside`): the band on the building's
@@ -954,7 +1046,9 @@ def draw(
     res = grids[0].res
     w_cells = cells_for(fit.across_ft, res)
     need = cells_for(deep_b + max(court_beyond_ft, 0.0), res)
+    street = tuple(street)
     pts = _along(street)
+    groups = _street_groups(street + tuple(side_streets))
 
     # The room: the window the fit needs where one exists; otherwise the
     # deepest the lot holds at that width.
@@ -987,6 +1081,7 @@ def draw(
                 court=spec,
                 yard=yard,
                 stretch=stretch,
+                groups=groups,
             )
         )
         return None
@@ -1008,6 +1103,7 @@ def draw(
         yard=yard,
         yard_moves=yard_moves,
         stretch=stretch,
+        groups=groups,
     )
     tight = False
     if placed is None and short_ft > 0:
@@ -1027,6 +1123,7 @@ def draw(
                 yard=yard,
                 yard_moves=yard_moves,
                 stretch=stretch,
+                groups=groups,
             )
             tight = placed is not None
     fits = placed is not None
@@ -1042,6 +1139,7 @@ def draw(
             deep_b=min(deep_b, d_cells * res),
             street=pts,
             lane_outside=lane_outside,
+            groups=groups,
         )
         if placed is None:
             return None
