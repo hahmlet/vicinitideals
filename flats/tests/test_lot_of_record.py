@@ -251,7 +251,10 @@ CONDITIONAL = [
     ("or/washington/beaverton", ["MR", "RMA", "RMB", "RMC", "CM-RM", "CM-MR", "NS"], "lot_width", "adjoining_ownership"),
     ("or/clackamas/happy-valley", ["R40", "R20", "R15", "R10", "R8.5", "R7", "R5", "MURS", "SFA", "MURA", "VTH"], "lot_area_width_depth", "creation_date"),
     ("or/clackamas/canby", ["R-1.5", "R-2", "C-R", "C-1"], "lot_width", "creation_date"),
-    ("or/multnomah/portland", ["RM1", "RM2", "RM3", "RM4", "RMP", "RX"], "lot_standards", "adjoining_ownership"),
+    # rel6 2026-11-09: RM1-RM4 narrowed to Table 120-3's area and width, so the lot-of-record
+    # route does not lift 33.120.206's 90 ft site frontage (flats/pdx-map-120, FOLLOWUPS 68).
+    ("or/multnomah/portland", ["RM1", "RM2", "RM3", "RM4"], "lot_area_width_depth", "adjoining_ownership"),
+    ("or/multnomah/portland", ["RMP", "RX"], "lot_standards", "adjoining_ownership"),
     ("or/multnomah/_unincorporated", ["LR5", "LR7", "LR10", "MR4"], "lot_area_frontage", "creation_date"),
 ]
 #: Read and left: the code's words reach no four-unit building on an existing lot.

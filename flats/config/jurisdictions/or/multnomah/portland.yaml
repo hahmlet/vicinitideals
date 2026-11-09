@@ -3531,7 +3531,11 @@ zones:
       # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
       # has not abutted land under the same ownership since July 26, 1979 needs
       # neither. The ownership history is not held. YELLOW, not GREEN.
-      value: lot_standards
+      # rel6 2026-11-09: lot_standards -> lot_area_width_depth. C.3 lets a lot of
+      # record off Table 120-3 only (33 ft wide, 4,000 sq ft; no depth row);
+      # min_frontage_ft here is 33.120.206's 90 ft (flats/pdx-map-120,
+      # FOLLOWUPS 68), a separate section C.3 does not reach.
+      value: lot_area_width_depth
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     lot_of_record_condition:
       value: adjoining_ownership
@@ -3826,7 +3830,11 @@ zones:
       # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
       # has not abutted land under the same ownership since July 26, 1979 needs
       # neither. The ownership history is not held. YELLOW, not GREEN.
-      value: lot_standards
+      # rel6 2026-11-09: lot_standards -> lot_area_width_depth. C.3 lets a lot of
+      # record off Table 120-3 only (33 ft wide, 4,000 sq ft; no depth row);
+      # min_frontage_ft here is 33.120.206's 90 ft (flats/pdx-map-120,
+      # FOLLOWUPS 68), a separate section C.3 does not reach.
+      value: lot_area_width_depth
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     lot_of_record_condition:
       value: adjoining_ownership
@@ -4125,7 +4133,11 @@ zones:
       # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
       # has not abutted land under the same ownership since July 26, 1979 needs
       # neither. The ownership history is not held. YELLOW, not GREEN.
-      value: lot_standards
+      # rel6 2026-11-09: lot_standards -> lot_area_width_depth. C.3 lets a lot of
+      # record off Table 120-3 only (33 ft wide, 4,000 sq ft; no depth row);
+      # min_frontage_ft here is 33.120.206's 90 ft (flats/pdx-map-120,
+      # FOLLOWUPS 68), a separate section C.3 does not reach.
+      value: lot_area_width_depth
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     lot_of_record_condition:
       value: adjoining_ownership
@@ -4429,7 +4441,11 @@ zones:
       # 33.120.205 C.3: Table 120-3 binds only C.4 and C.5; a lot of record that
       # has not abutted land under the same ownership since July 26, 1979 needs
       # neither. The ownership history is not held. YELLOW, not GREEN.
-      value: lot_standards
+      # rel6 2026-11-09: lot_standards -> lot_area_width_depth. C.3 lets a lot of
+      # record off Table 120-3 only (33 ft wide, 4,000 sq ft; no depth row);
+      # min_frontage_ft here is 33.120.206's 90 ft (flats/pdx-map-120,
+      # FOLLOWUPS 68), a separate section C.3 does not reach.
+      value: lot_area_width_depth
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
     lot_of_record_condition:
       value: adjoining_ownership
