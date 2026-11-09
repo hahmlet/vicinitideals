@@ -180,7 +180,11 @@ pytestmark = pytest.mark.unit
 # 17.52.060.C parking strip so Table 17.12.040 note 1 can widen it, and the townhouse
 # plat's variant is exempt as the defaults' `unless` was -- 17.52.010 says the parking
 # chapter "does not apply to ... townhouses" (17.zoning.txt#L14791-L14797).
-EXPECTED = {"stated": 478, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
+# 202 -> 206 numeric on 2026-11-08 (FOLLOWUPS 37 iii, rel5 merge): Gresham LDR-5, LDR-7, TLDR and TR
+# owe no maximum front setback but Table 4.0131 note 5's, at the end of a Minor Access Street.
+# The exempt base quotes the table title ("Minimum Setbacks", L146) and note 5 (L179), whose
+# 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
+EXPECTED = {"stated": 478, "numeric": 206, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1

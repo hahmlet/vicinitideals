@@ -1,6 +1,6 @@
 # 37. Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) -- slices 1-(e) BUILT and LIVE
 
-37. [Claude] [scan: YES for (iii); NO for (f)] **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
+37. [Claude] [scan: YES for (iii)] **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
    slices 1-(e) BUILT and LIVE** (34963899 slice 1 + approval page;
    6eb14ffe measure + lot page; 85712ad6 severity 0; flags tables
    0139-0142; cbc47269; check margins 7dc34722; room each way f3408efa).
@@ -26,11 +26,19 @@
    `scripts/flats_flags.py sync` then `check` on 114 (nightly sync 10:30
    UTC). An ambiguous rule set binds nothing, so ~0.07% of rows stay yellow
    despite a 50+ ft fit miss (Wilsonville R, Hillsboro SCR-V) -- by design.
-   OPEN: (iii) Gresham note 5 "end of a Minor Access Street" held on
-   `local_street` (wrong fact) -- re-point + measure dead ends; worth little
-   while sidewalk_easement holds the same Gresham lots. (e) extending
-   severity 0 = encode each capped footnote's direction (most fact flags
-   sit on footnotes with no stated direction). Unknown facts needing a
-   title report: utility_easement 28k, sidewalk_easement 20k (run 63
+   (iii) BUILT on flats/flag-leftovers (2026-11-08, awaiting bound): Gresham
+   note 5 re-pointed to `at_street_end` + dead ends measured (8fbae177,
+   a530e67c, 2026-10-04); now ENCODED at its worst reading -- 25 ft max
+   front setback, no street named (every street line), on the True answer
+   in LDR-5/LDR-7/TLDR/TR; MDR-12/MDR-24/OFR/CMF already hold a stricter
+   20 ft max; the 5 ft min is never stricter. caps.json drops at_street_end,
+   so the severity-0 bound tries both answers (sidewalk_easement no longer
+   holds those lots since 972caa17). (e) OPEN: note 5 is the first capped
+   footnote given its direction; the other 29 `unmeasured` notes turn on
+   data nobody holds (easements, water features, LO net developable area,
+   site-specific limits) and have no figure to bound. Unknown facts needing
+   a title report: utility_easement 28k, sidewalk_easement 20k (run 63
    yellow lots). Plan gaps: flag history across county refreshes; bulk
-   writes through the loader. (f) Phase 4 pod spec, deferred by the plan.
+   writes through the loader. (f) CLOSED 2026-11-08: the screen runs one
+   fixed design (pod80x30, 0f2620b3), so no pod spec is owed; FLATS_PLAN
+   Phase 4 set access is FOLLOWUPS 145.

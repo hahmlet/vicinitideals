@@ -2439,6 +2439,29 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (L179): "For townhouses, single detached
+      # dwellings, and plexes, the maximum setback from the end of a Minor
+      # Access Street is 25 feet." Table 4.0131 is "Minimum Setbacks in
+      # Residential Districts" (L146) and prints no maximum for this
+      # district otherwise (note 7's maximum reaches MDR-12, MDR-24 and OFR
+      # only), so the base is the absence and the note's figure rides on
+      # at_street_end -- answered False where no street ends within 200 ft,
+      # unknown near an end, never True (flats.geom.street_end). No street
+      # is named (setback_front_max_streets unset = unheld): which lot line
+      # is "the end of" the street is drawn nowhere, so at the True answer
+      # the building must stand within 25 ft of every street line. The
+      # note's 5 ft minimum is never the stricter figure (every street-line
+      # setback this table prints is 8 ft or more), so it is not held.
+      # FOLLOWUPS 37 (iii), 2026-11-08.
+      exempt: true
+      cite: GDC Table 4.0131, Minimum Setbacks in Residential Districts; its only maximum for this district is note 5's, from the end of a Minor Access Street
+      quote: "or/multnomah/gresham/4/4.0130.txt#L146,L179"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
+          quote: "or/multnomah/gresham/4/4.0130.txt#L179"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2635,6 +2658,29 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (L179): "For townhouses, single detached
+      # dwellings, and plexes, the maximum setback from the end of a Minor
+      # Access Street is 25 feet." Table 4.0131 is "Minimum Setbacks in
+      # Residential Districts" (L146) and prints no maximum for this
+      # district otherwise (note 7's maximum reaches MDR-12, MDR-24 and OFR
+      # only), so the base is the absence and the note's figure rides on
+      # at_street_end -- answered False where no street ends within 200 ft,
+      # unknown near an end, never True (flats.geom.street_end). No street
+      # is named (setback_front_max_streets unset = unheld): which lot line
+      # is "the end of" the street is drawn nowhere, so at the True answer
+      # the building must stand within 25 ft of every street line. The
+      # note's 5 ft minimum is never the stricter figure (every street-line
+      # setback this table prints is 8 ft or more), so it is not held.
+      # FOLLOWUPS 37 (iii), 2026-11-08.
+      exempt: true
+      cite: GDC Table 4.0131, Minimum Setbacks in Residential Districts; its only maximum for this district is note 5's, from the end of a Minor Access Street
+      quote: "or/multnomah/gresham/4/4.0130.txt#L146,L179"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
+          quote: "or/multnomah/gresham/4/4.0130.txt#L179"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2830,6 +2876,29 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (L179): "For townhouses, single detached
+      # dwellings, and plexes, the maximum setback from the end of a Minor
+      # Access Street is 25 feet." Table 4.0131 is "Minimum Setbacks in
+      # Residential Districts" (L146) and prints no maximum for this
+      # district otherwise (note 7's maximum reaches MDR-12, MDR-24 and OFR
+      # only), so the base is the absence and the note's figure rides on
+      # at_street_end -- answered False where no street ends within 200 ft,
+      # unknown near an end, never True (flats.geom.street_end). No street
+      # is named (setback_front_max_streets unset = unheld): which lot line
+      # is "the end of" the street is drawn nowhere, so at the True answer
+      # the building must stand within 25 ft of every street line. The
+      # note's 5 ft minimum is never the stricter figure (every street-line
+      # setback this table prints is 8 ft or more), so it is not held.
+      # FOLLOWUPS 37 (iii), 2026-11-08.
+      exempt: true
+      cite: GDC Table 4.0131, Minimum Setbacks in Residential Districts; its only maximum for this district is note 5's, from the end of a Minor Access Street
+      quote: "or/multnomah/gresham/4/4.0130.txt#L146,L179"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
+          quote: "or/multnomah/gresham/4/4.0130.txt#L179"
     min_density_du_per_acre:
       # Table 4.0130 row C, "All uses except Manufactured Dwelling
       # Parks". A floor, and the pod is four units against it.
@@ -3015,6 +3084,29 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
+    setback_front_max_ft:
+      # Table 4.0131 note 5 (L179): "For townhouses, single detached
+      # dwellings, and plexes, the maximum setback from the end of a Minor
+      # Access Street is 25 feet." Table 4.0131 is "Minimum Setbacks in
+      # Residential Districts" (L146) and prints no maximum for this
+      # district otherwise (note 7's maximum reaches MDR-12, MDR-24 and OFR
+      # only), so the base is the absence and the note's figure rides on
+      # at_street_end -- answered False where no street ends within 200 ft,
+      # unknown near an end, never True (flats.geom.street_end). No street
+      # is named (setback_front_max_streets unset = unheld): which lot line
+      # is "the end of" the street is drawn nowhere, so at the True answer
+      # the building must stand within 25 ft of every street line. The
+      # note's 5 ft minimum is never the stricter figure (every street-line
+      # setback this table prints is 8 ft or more), so it is not held.
+      # FOLLOWUPS 37 (iii), 2026-11-08.
+      exempt: true
+      cite: GDC Table 4.0131, Minimum Setbacks in Residential Districts; its only maximum for this district is note 5's, from the end of a Minor Access Street
+      quote: "or/multnomah/gresham/4/4.0130.txt#L146,L179"
+      variants:
+        - value: 25
+          when: [at_street_end]
+          cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
+          quote: "or/multnomah/gresham/4/4.0130.txt#L179"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be

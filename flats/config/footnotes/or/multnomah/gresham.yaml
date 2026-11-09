@@ -370,16 +370,32 @@ notes:
 
   - quote: "or/multnomah/gresham/4/4.0130.txt#L179-L180"
     digest: "f733ca818d64"
-    state: unmeasured
-    fact: at_street_end
+    state: encoded
+    encoded_as: >-
+      setback_front_max_ft 25 when [at_street_end] on LDR-5, LDR-7, TLDR and
+      TR (no maximum otherwise: exempt base); in MDR-12, MDR-24, OFR and CMF
+      the 20 ft maximum already held on every street line is the stricter
+      figure, so the note adds nothing there
     reason: >-
       states a 25-foot maximum and a 5-foot minimum setback from the end of a
-      Minor Access Street, and neither number is encoded. The note turns on
-      the END of a street, not on the class of the one a lot fronts (it was
-      held against `local_street` until 2026-10-04): a lot no street ends
-      near is not at the end of a Minor Access Street, and the bridge answers
-      `at_street_end` False there (flats.geom.street_end). Never True, so a
-      lot near an end keeps the cap
+      Minor Access Street. The note turns on the END of a street, not on the
+      class of the one a lot fronts (it was held against `local_street` until
+      2026-10-04): a lot no street ends near is not at the end of a Minor
+      Access Street, and the bridge answers `at_street_end` False there
+      (flats.geom.street_end); near an end the fact stays unknown (never
+      True). Encoded 2026-11-08 (FOLLOWUPS 37 iii) at its worst reading, so
+      the severity-0 bound can try both answers instead of the note capping
+      every setback with no number: (1) the 5 ft minimum is never the
+      stricter figure -- every street-line setback Table 4.0131 prints for
+      these rows is 8 ft or more (L155-L157, L159-L160) -- so the table's own
+      minimums stand on both answers; (2) the 25 ft maximum is held as a
+      maximum front setback with no street named
+      (`setback_front_max_streets` unset, read as `unheld`: it passes only
+      where the building stands within 25 ft of EVERY street line), because
+      which lot line is "the end of" the street is not drawn anywhere. A lot
+      near an end turns GREEN only where it clears at both answers; one that
+      misses the 25 ft at the True answer keeps FACT-AT-STREET-END and stays
+      out of GREEN, never RED on that alone
 
   - quote: "or/multnomah/gresham/4/4.0130.txt#L145"
     digest: "69581d2a6fa6"

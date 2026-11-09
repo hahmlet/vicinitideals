@@ -150,8 +150,14 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     side yard and parking strip variants on `abuts_lower_density_zone`
     (FOLLOWUPS 2(a)). It sat `unmeasured` while note 2's easement cap held
     the same values; Steph's easement ruling answers that one now.
+
+    94 -> 95 on 2026-11-08 (rel5 merge), Gresham (FOLLOWUPS 37 iii): Table 4.0131 note 5,
+    the 25 ft maximum setback from the end of a Minor Access Street, taken as
+    setback_front_max_ft 25 on at_street_end in LDR-5, LDR-7, TLDR and TR.
+    It sat `unmeasured` with no number; the 5 ft minimum is never the
+    stricter figure, and MDR-12, MDR-24, OFR and CMF hold a 20 ft maximum.
     """
-    assert len(rows) == 94
+    assert len(rows) == 95
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:
