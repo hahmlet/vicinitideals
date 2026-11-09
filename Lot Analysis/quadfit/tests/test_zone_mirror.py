@@ -1080,7 +1080,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: rel4 move-read finding 2 (2026-11-08): the angle a door face may stand
     #: off the street (`entrance_angle_max_deg`, the printed 45 or 0) -- read
     #: by the FLATS facing fitter alone; quadfit has no angle column.
-    "entrance_angle_max_deg": 25,
+    # 25 -> 26 on 2026-11-09 (rel6: ci1-quadfit x rel4-fixes): CI1 is `like: RM1`
+    # and so carries RM1's door angle.
+    "entrance_angle_max_deg": 26,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
@@ -1154,7 +1156,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_required_yard_prohibited": 6,
     #: FOLLOWUPS 68 (2026-11-01): Portland RM1-RM4 and RX owe 33.120.206's
     #: 90 ft on ONE street, on Map 120-2 only; this pipeline sums frontage.
-    "min_frontage_one_street": 5,
+    # 5 -> 6 on 2026-11-09 (rel6: ci1-quadfit x pdx-map-120): CI1 is `like: RM1`
+    # and so carries RM1's 33.120.206 one-street frontage.
+    "min_frontage_one_street": 6,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,
     "parking_aisle_two_way_ft": 17,
