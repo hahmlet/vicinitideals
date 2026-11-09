@@ -40,8 +40,11 @@ PARKING = "or/multnomah/_unincorporated/39.parking.txt"
 REVIEW = "or/multnomah/_unincorporated/39.design-review.txt"
 DEFINITIONS = "or/multnomah/_unincorporated/39.2000.definitions.txt"
 
-#: Every zone the pod could stand in that now borrows its parking setback.
-BORROWERS = ("MR4", "R5", "R7", "R10", "R20", "LR7")
+#: Every zone the pod could stand in that now borrows its parking setback. The
+#: Portland pockets (R5, R7, R10, R20) left this list on 2026-11-09: Title 33
+#: governs them, and PCC 33.266.120.C.2.a prints its own ten feet
+#: (test_multnomah_pockets_title33).
+BORROWERS = ("MR4", "LR7")
 
 
 @pytest.fixture(scope="module")
@@ -128,7 +131,9 @@ def test_six_spaces_asked_and_four_allowed_and_the_gap_is_a_state_rule(
     asked = 1.5 * DWELLINGS
     assert asked == 6
 
-    for zone in ("LR7", "R20", "MR4"):
+    # R20 left this loop 2026-11-09: the Portland pockets owe Title 33, which
+    # requires no parking at all (test_multnomah_pockets_title33).
+    for zone in ("LR7", "MR4"):
         allowed = corpus.resolve(COUNTY, zone).get("parking_min_per_unit")
         assert allowed * DWELLINGS == 4, (
             f"{zone}: the state cap should clip the county's six to four"
@@ -349,8 +354,11 @@ def test_lr7_owes_an_open_space_reserve_because_of_how_its_use_is_approved(
     assert reserve.per_dwelling == 300
     assert reserve.value == 1200
 
-    for elsewhere in ("MR4", "R5", "R7", "R10", "R20"):
-        assert "open_space_min_sqft" not in county.zones[elsewhere].values
+    assert "open_space_min_sqft" not in county.zones["MR4"].values
+    # The pockets owe Title 33's outdoor area instead (2026-11-09), never this one.
+    for pocket in ("R5", "R7", "R10", "R20"):
+        assert county.zones[pocket].values["open_space_min_sqft"].value == 250
+        assert county.zones[pocket].values["open_space_min_sqft"].per_dwelling is None
 
 
 def test_the_loading_space_rounds_itself_out_of_existence(

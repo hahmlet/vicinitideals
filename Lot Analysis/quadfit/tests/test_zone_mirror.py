@@ -1129,7 +1129,14 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_side_total_ft": 3,
     #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
     "min_building_height_ft": 18,
-    "front_lot_line_through": 1,
+    # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
+    # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
+    # Portland-administered pockets): stall, driveway, side-yard reach, corner street,
+    # 33.910's front lot lines, the 40% front paving cap and the outdoor square -- +4 on
+    # each of those keys. Their footprints.yaml row stays the county's (per jurisdiction).
+    "front_lot_line_through": 5,
+    "front_lot_line_corner": 4,
+    "parking_front_yard_max_pct": 4,
     # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
     # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
@@ -1145,10 +1152,12 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 24 -> 28 on 2026-11-09 (FOLLOWUPS 105 round 4): Washington County R-9 NB,
     # R-24 NB, NMU and CCMU reach 413-4.10 and so 407-6.4's 5 ft strip.
     "parking_lot_line_buffer_ft": 28,
-    "parking_side_yard_allowed": 16,
+    # 16 -> 20 on 2026-11-09 (multco-pockets: Multnomah R5/R7/R10/R20 +4).
+    "parking_side_yard_allowed": 20,
     # 16 -> 21 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
     # restate the field so the townhouse variant cites 4.1152 S14(a)(i).
-    "parking_side_yard_stated": 21,
+    # 21 -> 25 on 2026-11-09 (rel6: pagecheck-findings 16 -> 21 plus multco-pockets +4).
+    "parking_side_yard_stated": 25,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
     # doubtful larger court buffer (20 ft, TDC 3.130.A, when the adjoining district
     # is unknown) as a question; quadfit has no neighbour fact.
@@ -1170,21 +1179,22 @@ UNEXPRESSIBLE: dict[str, int] = {
     "driveway_approach_max_width_ft": 15,
     # 4 -> 9 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
     # restate the field so the townhouse variant cites 4.1152 S14(a)(ii).
-    "corner_access_street": 9,
+    # 9 -> 13 on 2026-11-09 (rel6: pagecheck-findings 4 -> 9 plus multco-pockets +4).
+    "corner_access_street": 13,
     "max_impervious_pct": 20,
     "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
-    "open_space_min_dimension_ft": 6,
-    "driveway_min_width_one_way_ft": 17,
-    "driveway_min_width_two_way_ft": 17,
+    "open_space_min_dimension_ft": 10,
+    "driveway_min_width_one_way_ft": 21,
+    "driveway_min_width_two_way_ft": 21,
     "driveway_one_lane_ft": 1,
     "min_ground_story_ft": 2,
     "parking_covered_required": 5,
-    "parking_stall_depth_ft": 14,
-    "parking_stall_width_ft": 14,
+    "parking_stall_depth_ft": 18,
+    "parking_stall_width_ft": 18,
     "solar_shade_limit": 2,
     #: Road land to a distance from the street's centre line (FOLLOWUPS 67/77):
     #: per street lot line, measured by the FLATS bridge

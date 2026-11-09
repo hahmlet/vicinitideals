@@ -630,8 +630,12 @@ def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in(trust
 #: Table 53-2 says 5 ft for parking, while the ported building setbacks are the tops of
 #: 0-20 ranges. Tualatin RMH/RH/RH-HR: Tables 42-3/43-3/44-3 print 10 ft for parking against
 #: a 15 ft building front. Tualatin CO: Table 50-2 says 5 ft for parking against a 20 ft
-#: building front.
+#: building front. Multnomah unincorporated R7/R10/R20 (the Portland pockets, 2026-11-09):
+#: PCC 33.266.120.C.2.a prints 10 ft for parking spaces against a 15/20 ft building front.
 STATES_ITS_OWN_FIGURE = {
+    ("multnomah_unincorporated", "R7"),
+    ("multnomah_unincorporated", "R10"),
+    ("multnomah_unincorporated", "R20"),
     ("tualatin", "CC"),
     ("tualatin", "CO"),
     ("tualatin", "RMH"),
@@ -786,7 +790,8 @@ def test_the_open_space_column_prints_each_citys_own_figures():
     For as long as Portland held the only per-zone open-space reserve in the
     file, s7 printed the literal string "by zone (250 / 200 sq ft)" for any
     city with a per-zone map. Unincorporated Multnomah arrived with a map of
-    its own -- 1,200 square feet on LR-7 and nothing anywhere else -- and the
+    its own -- 1,200 square feet on LR-7 and, until the pockets were read on
+    Title 33 on 2026-11-09, nothing anywhere else -- and the
     published summary told a reader the county reserves 250. The reserve is
     law; a report that states it wrong is worse than one that omits it.
 
@@ -809,8 +814,9 @@ def test_the_open_space_column_prints_each_citys_own_figures():
     sp = load_footprints().siteplan
     assert open_space_label(sp.driveway_for("portland")) == (
         "by zone (250 / 200 / 192 sq ft)")
+    # 2026-11-09: the four Portland pockets read Table 110-4's 250 into the county row.
     assert open_space_label(sp.driveway_for("multnomah_unincorporated")) == (
-        "by zone (1200 sq ft)")
+        "by zone (1200 / 250 sq ft)")
     assert open_space_label(sp.driveway_for("gresham")) == "15% of lot"
     assert open_space_label(sp.driveway_for("troutdale")) == "**none stated**"
     assert open_space_label(None) == "*not read*"

@@ -191,6 +191,14 @@ pytestmark = pytest.mark.unit
 # parking_side_prohibited (5 x 2) so their townhouse variants can cite 4.1152 S13/S14.
 # rel6 2026-11-09, combining: the FOLLOWUPS 68 lines below (486 stated, 219 numeric) plus
 # flats/pagecheck-findings' net +9 numeric above (206 -> 215) = 486 stated, 228 numeric.
+# 206 -> 226 numeric on 2026-11-09 (FOLLOWUPS 112(b), Multnomah pockets on Title 33): R5, R7,
+# R10 and R20 each restate five county parking defaults as PCC 33.266.120 states them -- no
+# minimum (the chapter's section list, 33.266.txt#L8-L17), no aisle and no perimeter buffer
+# (120 never prints either; 130.B keeps Table 266-4 and 130's landscaping off this building,
+# L385-L386), and an open interior side yard (C.1.a(1)) -- read, and the same encoding the
+# Portland layer holds for the same sentences.
+# rel6 2026-11-09, combining: 486 stated / 228 numeric above plus multco-pockets' +20 numeric
+# (206 -> 226 on its base) = 486 stated, 248 numeric.
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
@@ -212,7 +220,7 @@ pytestmark = pytest.mark.unit
 # rel6 2026-11-09, combining two lanes: 478 -> 486 stated and 206 + 13 = 219 numeric --
 # rel5's 478/206 (above) plus flats/pdx-map-120's Maps 120-2/120-3 rows (+13 numeric; +8 stated:
 # its +12 less the four corner-and-depth variants its round 3 removed).
-EXPECTED = {"stated": 486, "numeric": 228, "marker": 0, "dash": 2, "silent": 8}
+EXPECTED = {"stated": 486, "numeric": 248, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
