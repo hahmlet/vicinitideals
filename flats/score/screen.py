@@ -2999,8 +2999,32 @@ def fit_for(
         stated_rules = _with_side_yard_mode(rules, stated_mode)
         allowed_paper = paper_fit(design, rules)
         stated_paper = paper_fit(design, stated_rules)
+        # The paper lot reports one orientation, and the one it reports can
+        # be the one the side-yard reading does not touch (an end-on pod
+        # whose court is wider than the building and its lane) while the lot
+        # itself fits broadside. So the two readings are also compared where
+        # they act -- the lane and the court let into the side yard -- and
+        # either difference sends the lot to the stated fit (FOLLOWUPS 7,
+        # 2026-11-08: once the paper fit costed waived yards as 0 ft,
+        # Fairview VMU's paper answer turned end-on and hid the difference).
+        paper_across = court_across(design, rules)
+        overlap_differs = side_yard_lane_overlap_ft(
+            rules, paper_across.lane_ft
+        ) != side_yard_lane_overlap_ft(stated_rules, paper_across.lane_ft) or (
+            side_yard_court_overlap_ft(
+                rules, paper_across.width_ft, lane_ft=paper_across.lane_ft
+            )
+            != side_yard_court_overlap_ft(
+                stated_rules, paper_across.width_ft, lane_ft=paper_across.lane_ft
+            )
+        )
         if (
-            allowed_paper.min_width_ft != stated_paper.min_width_ft
+            overlap_differs
+            or allowed_paper.min_width_ft != stated_paper.min_width_ft
+            # The depth too: since FOLLOWUPS 7 the paper area can be set by
+            # what must be left over, which would hide an envelope that
+            # differs between the two readings.
+            or allowed_paper.min_depth_ft != stated_paper.min_depth_ft
             or allowed_paper.min_area_sqft != stated_paper.min_area_sqft
         ):
             result = dataclasses.replace(

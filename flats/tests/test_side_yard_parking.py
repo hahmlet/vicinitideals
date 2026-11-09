@@ -194,6 +194,30 @@ def test_fit_relying_on_silent_side_yard_is_yellow_with_ruling_flag() -> None:
     assert any(flag.code == "SIDE-YARD-PARKING-SILENT" for flag in got.flags)
 
 
+def test_a_paper_answer_blind_to_the_side_yard_still_sends_the_lot_to_the_stated_fit(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # FOLLOWUPS 7, 2026-11-08: the paper lot reports one orientation, and an
+    # end-on pod whose court is wider than the building and its lane is the
+    # same lot under both side-yard readings -- Fairview VMU's paper answer
+    # turned end-on once waived yards were costed as 0 ft. The lot itself may
+    # fit broadside, where the reading matters, so the lane and court let
+    # into the side yard are compared too.
+    import flats.score.screen as screen_module
+
+    silent = screen_rules(
+        parking_min_per_unit=1.5,
+        parking_stall_width_ft=12,
+        setback_rear_ft=40,
+        **{FIELD: "lane_and_court"},
+    )
+    same = paper_fit(DESIGN, silent)
+    monkeypatch.setattr(screen_module, "paper_fit", lambda design, rules: same)
+    fit = fit_for(Fitter(box(5, 5, 72, 55)), DESIGN, silent, carved_rear_ft=40)
+    assert fit.fits and fit.side_yard_stated_fit is not None
+    assert not fit.side_yard_stated_fit.fits
+
+
 def test_a_failed_fit_on_steep_ground_does_not_crash_the_side_yard_check() -> None:
     # The fit's check is named steep_ground there, so looking for fit_ft alone
     # stopped the whole bridge on the first such lot (size_full, 2026-11-06).

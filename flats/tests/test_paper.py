@@ -23,10 +23,12 @@ from flats.score.paper import (
     ACROSS_MIN_WIDTH,
     BY_COVERAGE,
     BY_ENVELOPE,
+    BY_LEFTOVER,
     BY_MIN_LOT,
     _pair,
     court_across,
     paper_fit,
+    paved,
 )
 from flats.tests.signing import sign_encoded
 
@@ -794,3 +796,52 @@ def test_every_approach_maximum_admits_one_car() -> None:
     assert found, "no approach maximum found -- the walk is reading nothing"
     narrow = [(where, value) for where, value in found if value < 9.0]
     assert narrow == []
+
+
+# --- what has to be left over (FOLLOWUPS 7, 2026-11-08) ---------------
+
+
+def test_a_landscaping_share_sets_the_lot_the_leftover_needs(tmp_path: Path) -> None:
+    # The screen asks the lot less the building and less the pavement to hold
+    # the share; the paper lot is that sum read backwards. At 50 percent the
+    # lot is twice what the building and the least pavement take.
+    zone = rules(tmp_path, "", {"min_landscaped_pct": 50}).resolve(GRESHAM, "R5", POD.conditions)
+    got = paper_fit(POD, zone)
+    depth = next(d for o, _, d in POD.oriented() if o.value == got.orientation)
+    pavement = paved(POD, zone, deep_ft=depth)
+    assert pavement is not None and pavement > 0
+    assert got.binding == BY_LEFTOVER
+    assert got.min_area_sqft == pytest.approx((POD.ground_sqft + pavement) * 2.0)
+
+
+def test_an_open_space_area_is_added_to_what_the_plan_takes(tmp_path: Path) -> None:
+    plain = fit(tmp_path / "a")
+    big = fit(tmp_path / "b", open_space_min_sqft=20000)
+    assert big.binding == BY_LEFTOVER
+    assert big.min_area_sqft > plain.min_area_sqft
+    assert big.min_area_sqft > POD.ground_sqft + 20000
+
+
+def test_no_leftover_standard_leaves_the_floor_as_it_was(tmp_path: Path) -> None:
+    assert fit(tmp_path).binding != BY_LEFTOVER
+
+
+def test_fairview_va_costs_its_waived_yards_and_its_landscaping() -> None:
+    # FOLLOWUPS 7: Fairview VA waives the side and rear yards (19.125.040(F),
+    # ``exempt: true``) and asks 25 percent landscaped (19.145.070). The paper
+    # fit read the waived yards as unstated, never costed the envelope and
+    # reported 3,102 sq ft -- the coverage floor alone, 2,016 / 0.65, a lot
+    # with no room for the drive or the court. A waived yard is zero feet,
+    # and what is left over must hold the quarter.
+    from flats.designs.model import load_catalog
+
+    ruleset = RuleSet(load_rules())
+    design = next(d for d in load_catalog() if d.key.startswith("pod56x36"))
+    zone = ruleset.resolve("or/multnomah/fairview", "VA", design.conditions)
+    assert "setback_side_ft" in zone.exempted and "setback_rear_ft" in zone.exempted
+    got = paper_fit(design, zone)
+    assert "setback_side_ft" not in got.unknown
+    assert "setback_rear_ft" not in got.unknown
+    assert got.min_width_ft is not None and got.min_depth_ft is not None
+    assert got.min_area_sqft > design.ground_sqft * 100.0 / 65.0 + 1000
+    assert got.binding == BY_LEFTOVER
