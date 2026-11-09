@@ -17,6 +17,7 @@ Real lots, read off quadfit's s4 of 2026-09-29 (state-plane feet).
 from __future__ import annotations
 
 import json
+import math
 
 import pytest
 import shapely
@@ -142,10 +143,14 @@ def test_the_covered_stretch_is_waived_and_the_rest_keeps_the_rear(corpus) -> No
     # The whole-line cut kept 5 ft everywhere.
     assert before.geom.distance(point_along(25.0)) >= 5.0 - 1e-6
     # The gain is the 5 ft strip behind the covered stretch, less the side
-    # yard at the south end and the cap at the north: never more.
+    # yard at the south end and the cap at the north: never more. The cap is
+    # the quarter-disc of 5 ft round the end of the uncovered stretch, not
+    # the 5 x 5 square the square cap took (2026-11-09, envelope-caps): the
+    # corner it leaves, 25 * (1 - pi/4) = 5.4 sq ft, is more than 5 ft from
+    # the uncovered stretch.
     gain = after.sqft - before.sqft
     assert 0 < gain <= 5.0 * (COVERED_FT - 5.0) + 0.5
-    assert gain == pytest.approx(5.0 * (COVERED_FT - 5.0 - 5.0), abs=2.0)
+    assert gain == pytest.approx(5.0 * (COVERED_FT - 5.0 - 5.0) + 25 * (1 - math.pi / 4), abs=2.0)
     # The court is charged against the strip the envelope lost there: none.
     assert after.rear_cut_ft == 0 and before.rear_cut_ft is None
     assert after.geom.contains(before.geom.buffer(-0.01))
@@ -226,9 +231,13 @@ def test_the_cut_on_a_plain_rectangle() -> None:
     )
     yards = Setbacks(front_ft=10, side_ft=5, rear_ft=15, alley_rear_ft=5)
     env = buildable(lot, edges, yards)
-    # x 5..95 wide, y 10..85 deep, plus 10 ft more behind x 5..32.5 (the
-    # 15 ft piece's square cap reaches 15 ft back from 47.5).
-    assert env.area == pytest.approx(90 * 75 + (47.5 - 15 - 5) * 10)
+    # x 5..95 wide, y 10..85 deep, plus 10 ft more behind x 5..32.5, plus
+    # the part of x 32.5..47.5, y 85..95 more than 15 ft from the 15 ft
+    # piece's end at (47.5, 100). 2026-11-09 (envelope-caps): the piece's
+    # strip ends in a half-disc, not a square cap that took all 150 sq ft of
+    # that box. Inside the disc: the integral of sqrt(225 - v^2), v 5..15.
+    in_disc = 112.5 * math.pi / 2 - (2.5 * math.sqrt(200) + 112.5 * math.asin(1 / 3))
+    assert env.area == pytest.approx(90 * 75 + (47.5 - 15 - 5) * 10 + 150 - in_disc, abs=0.5)
 
 
 def test_setbacks_for_takes_the_alleys_rear_from_the_second_resolution() -> None:

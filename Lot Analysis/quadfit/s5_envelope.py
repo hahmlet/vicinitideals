@@ -1,10 +1,18 @@
 """s5 — buildable envelope per lot: lot minus per-edge setback strips.
 
-Tier A/B: envelope = lot − ⋃ edge.buffer(setback_for_class, square caps).
-Square caps extend each strip past its endpoints, so corner wedges between
-adjacent edges are always covered — the result is conservative (never larger
-than the legal envelope; error bounded by the setback delta between adjacent
-edges, confined to corner wedges).
+Tier A/B: envelope = lot − ⋃ setback_strip(edge, setback_for_class): every
+point nearer a lot line than that line's setback. Each strip is the band
+either side of the line closed by a half-disc round each end, drawn as a
+polygon AROUND the circle (`setback_strip`), so it is never short of the
+setback -- never larger than the legal envelope -- and it overshoots by at
+most 0.12% of the setback. Until 2026-11-09 the strips had square caps,
+which ran a full setback past each end: at an inward bend in a lot line they
+took a sliver up to a setback long and ~1.5 ft deep past the bend (Tigard
+2S103BA00137's 4.5 deg front bend), and at an obtuse corner the deeper
+line's number ran along the shallower line's yard. The half-disc sits inside
+the old square cap, so the envelope only grew back toward the legal one. The
+same construction as FLATS' `flats.geom.envelope._strip`, kept here as its
+own copy so a quadfit run does not move with FLATS' geometry.
 
 Tier C (irregular/flag): uniform inward buffer by the max setback — strictly
 conservative fallback. Tier D lots are excluded from fitting (envelope empty).
@@ -45,6 +53,11 @@ sys.path.insert(0, str(TOOL_DIR))
 from common import load_rules, read_stage, write_stage
 
 MIN_PART_SQFT = 200.0
+
+#: Chords per half-disc at a strip's end. Even, so a chord's midpoint (not a
+#: corner) sits straight off the line's end and the strip stays inside the
+#: old square cap; 32 chords overshoot the circle by 1/cos(pi/64) - 1 = 0.12%.
+ARC_SPLITS = 32
 
 SETBACK_FOR_CLASS = {"F": "setback_front_ft", "R": "setback_rear_ft", "S": "setback_side_ft"}
 
@@ -90,10 +103,45 @@ def cuts_made(setbacks: dict[str, float], edges: list, tier: str) -> dict[str, f
     return {cls: round(float(d), 2) for cls, d in setbacks.items()}
 
 
+def setback_strip(x1: float, y1: float, x2: float, y2: float, d: float):
+    """Every point within ``d`` of the segment, and no more than a sag beyond.
+
+    The band ``d`` either side of the segment, closed at each end by a
+    half-disc of radius ``d`` round the endpoint, drawn with `ARC_SPLITS`
+    chords that touch the circle at their midpoints: the polygon holds the
+    whole circle (never short of the setback) and sits inside the square
+    cap this replaced (never more than it took). A segment of no length is
+    the disc.
+    """
+    import math
+
+    from shapely.geometry import Polygon
+
+    dx, dy = x2 - x1, y2 - y1
+    length = math.hypot(dx, dy)
+    ux, uy = (dx / length, dy / length) if length > 0 else (1.0, 0.0)
+    nx, ny = -uy, ux  # the left normal
+    step = math.pi / ARC_SPLITS
+    corner = d / math.cos(step / 2)
+
+    def arc(cx, cy, sx, sy, fx, fy):
+        # The half-disc from side s round through forward f to -s: a
+        # tangent point, the chord corners, a tangent point.
+        pts = [(cx + d * sx, cy + d * sy)]
+        for i in range(ARC_SPLITS):
+            t = (i + 0.5) * step
+            c, si = math.cos(t), math.sin(t)
+            pts.append((cx + corner * (c * sx + si * fx), cy + corner * (c * sy + si * fy)))
+        pts.append((cx - d * sx, cy - d * sy))
+        return pts
+
+    return Polygon(arc(x2, y2, nx, ny, ux, uy) + arc(x1, y1, -nx, -ny, -ux, -uy))
+
+
 def build_envelope(geom, edges: list, setbacks: dict[str, float], tier: str):
     """Returns MultiPolygon envelope (possibly empty)."""
     import shapely
-    from shapely.geometry import LineString, MultiPolygon
+    from shapely.geometry import MultiPolygon
 
     if tier == "D":
         return MultiPolygon([])
@@ -105,11 +153,7 @@ def build_envelope(geom, edges: list, setbacks: dict[str, float], tier: str):
             d = setbacks[cls]
             if d <= 0:
                 continue
-            strips.append(
-                LineString([(x1, y1), (x2, y2)]).buffer(
-                    d, cap_style="square", join_style="mitre"
-                )
-            )
+            strips.append(setback_strip(x1, y1, x2, y2, d))
         env = geom.difference(shapely.union_all(strips)) if strips else geom
     parts = [
         p for p in shapely.get_parts(env)
