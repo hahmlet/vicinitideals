@@ -2232,7 +2232,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-JOHNSON-CREEK-UNMEASURED:
-    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (PCC 33.537.130), the South subdistrict's slope-class density for land divisions (33.537.140.E) or the Flood Risk Area's limits on land divisions (33.537.160)"
+    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (PCC 33.537.130), the South subdistrict's slope-class density for land divisions (33.537.140.E) or the Flood Risk Area's limits on land divisions (33.537.160); the last two only on the townhouse form (four unit lots), since built as one building on the one lot the pod makes no land division"
     kind: categorical
     risk: possible
     severity: 5
@@ -2240,7 +2240,22 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Which lot line abuts the Springwater Corridor, the slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area"
+    path: "The fit with the landscaped buffer and vehicle-area setback set on the lot line that abuts the Springwater Corridor parcel (springwater-corridor.geojson), the slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-JOHNSON-CREEK-LAND-DIVISION:
+    description: "Whether the lot lies where a Johnson Creek Basin land-division rule reaches: the South subdistrict's slope-class density (PCC 33.537.140.E) or the Flood Risk Area's limits (33.537.160). Both govern land divisions only, so they reach the pod as four townhouses on unit lots and not as one building on the one lot; on the townhouse form the lot is held under FACT-PDX-JOHNSON-CREEK-UNMEASURED"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area, before a land division into unit lots"
     priority: later
     status: pending
     approved_by: null

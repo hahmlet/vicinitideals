@@ -32,6 +32,7 @@ W, D = 100.0, 200.0
 OFF_PLAN_DISTRICTS = dict.fromkeys(
     (
         "pdx_johnson_creek_impervious",
+        "pdx_johnson_creek_land_division",
         "pdx_johnson_creek_unmeasured",
         "pdx_special_building_setback",
         "pdx_glendoveer_lr75",

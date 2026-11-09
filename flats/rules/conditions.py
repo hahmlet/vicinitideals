@@ -1422,19 +1422,48 @@ _C: tuple[ConditionDef, ...] = (
         "site_fact",
         "The site is one a Johnson Creek Basin rule reaches that the screen "
         "does not measure: the Springwater Corridor's 20 ft landscaped "
-        "buffer and vehicle-area setback (33.537.130), the South "
-        "subdistrict's slope-class density for land divisions (33.537.140.E) "
-        "or the Flood Risk Area's limits on land divisions (33.537.160). "
-        "Nothing records which lot line abuts the corridor, the slope "
-        "classes or the Flood Risk Area's share of the site, so the lot "
-        "stays in review. Assumed unknown: it decides the colour.",
+        "buffer and vehicle-area setback (33.537.130), on either form of the "
+        "pod; and, on the townhouse form only, the South subdistrict's "
+        "slope-class density for land divisions (33.537.140.E) or the Flood "
+        "Risk Area's limits on land divisions (33.537.160), which "
+        "pdx_johnson_creek_land_division answers and configure() folds in "
+        "(LAND_DIVISION_FOLDS). The screen does not set the buffer on the "
+        "one lot line that abuts the corridor, and nothing records the slope "
+        "classes or the Flood Risk Area's share of the site, so the lot stays "
+        "in review. Assumed unknown: it decides the "
+        "colour.",
         # 33.537.125 (tree removal) no longer holds a lot: Steph's ruling
         # 2026-11-01-trees-ignored-entered-per-lot, FOLLOWUPS 140.
         evidence=(
+            "every lot that abuts, or lies within 25 ft of, the Springwater "
+            "Corridor parcel (Portland Parks property 679, Portland Maps "
+            "Parks_Misc layer 2, fetched 2026-11-09), and the corridor's own "
+            "lots -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_johnson_creek_land_division",
+        "site_fact",
+        "The site is one a Johnson Creek Basin land-division rule reaches: any "
+        "of it in the South subdistrict, whose land divisions and planned "
+        "developments take a density cut by the slope class of their land "
+        "(33.537.140.E), or in the Flood Risk Area, where a land division is "
+        "prohibited (the whole site) or must put that part in a tract "
+        "(33.537.160). Both rules govern land divisions and planned "
+        "developments only (33.537.010: density 'is limited by applying "
+        "special regulations to new land division proposals'), so they reach "
+        "the pod as four townhouses on four unit lots and not as one "
+        "building on the one lot it stands on (ruling "
+        "2026-10-15-townhomes-separate-lots). It holds no standard of its "
+        "own: on the townhouse form configure() folds it into "
+        "pdx_johnson_creek_unmeasured (LAND_DIVISION_FOLDS); on the one-lot "
+        "form it is not asked. Assumed unknown.",
+        evidence=(
             "the South subdistrict and every lot touching it, the Flood Risk "
-            "Area and every lot touching it, and every lot within 100 ft of "
-            "the Springwater Corridor Trail line or touching a taxlot the "
-            "trail crosses -- held as Portland's drawn_areas"
+            "Area and every lot touching it -- split 2026-11-08 (FOLLOWUPS 58) "
+            "from the Johnson Creek unmeasured tracing, held as Portland's "
+            "drawn_areas"
         ),
         assume=None,
     ),
@@ -1826,6 +1855,45 @@ def close_entailed(observed: Mapping[str, bool]) -> dict[str, bool]:
             out[child] = False
     return out
 
+#: Site facts that answer a rule reaching only a LAND DIVISION, each with the
+#: fact that holds the lot for it. A land-division rule does not reach the pod
+#: built as one building on the one lot it stands on; it reaches the pod as
+#: four townhouses on four unit lots, which is a land division (ruling
+#: 2026-10-15-townhomes-separate-lots). The child names no standard of its
+#: own: ``configure`` folds it into the parent on the townhouse form (the
+#: parent becomes True where either is, unknown where neither is True and
+#: either is unknown) and leaves it out on the one-lot form. The bridge
+#: screens the townhouse twin wherever a child is not answered False
+#: (``flats.ingest.quadfit._plat_matters``), so the twin's colour is its own.
+#: Johnson Creek's South subdistrict (33.537.140.E) and Flood Risk Area
+#: (33.537.160) are the case (FOLLOWUPS 58, 2026-11-08).
+LAND_DIVISION_FOLDS: dict[str, str] = {
+    "pdx_johnson_creek_land_division": "pdx_johnson_creek_unmeasured",
+}
+
+
+def fold_land_division(observed: Mapping[str, bool], *, unit_lots: bool) -> dict[str, bool]:
+    """``observed`` with each :data:`LAND_DIVISION_FOLDS` child folded into
+    its parent on the townhouse form, and dropped on the one-lot form.
+
+    A name absent from ``observed`` is unknown, as in ``configure``: on the
+    townhouse form a parent stays absent unless either fact is True or both
+    are False."""
+    out = dict(observed)
+    for child, parent in LAND_DIVISION_FOLDS.items():
+        kid = out.pop(child, None)
+        if not unit_lots:
+            continue
+        mum = out.get(parent)
+        if kid is True or mum is True:
+            out[parent] = True
+        elif kid is False and mum is False:
+            out[parent] = False
+        else:
+            out.pop(parent, None)
+    return out
+
+
 #: Conditions whose truth we assert rather than observe. A configuration
 #: leaning on one of these cannot be GREEN — it is our belief, not a fact.
 ASSUMED = frozenset(c.name for c in _C if c.kind == "site_fact" and c.assume is not None)
@@ -1875,6 +1943,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "pdx_glendoveer_lr75",
     "pdx_hayden_island",
     "pdx_johnson_creek_impervious",
+    "pdx_johnson_creek_land_division",
     "pdx_johnson_creek_unmeasured",
     "pdx_lombard_subdistrict_a",
     "pdx_nw_residential_limited",
@@ -1959,6 +2028,7 @@ __all__ = [
     "CONDITIONS",
     "DRAWN_CONDITIONS",
     "ENTAILS",
+    "LAND_DIVISION_FOLDS",
     "NEIGHBOUR_ZONE_CONDITIONS",
     "PARK_CONDITIONS",
     "ConditionDef",
@@ -1969,6 +2039,7 @@ __all__ = [
     "deepest",
     "design_facts",
     "electives",
+    "fold_land_division",
     "of_kind",
     "reliefs",
     "site_facts",

@@ -40,7 +40,7 @@ from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING, Collection, Mapping
 
 from flats.designs.model import Design
-from flats.rules.conditions import CONDITIONS, close_entailed, condition
+from flats.rules.conditions import CONDITIONS, close_entailed, condition, fold_land_division
 from flats.rules.model import LOT_MEASURES, TRANSIT_MEASURES
 
 if TYPE_CHECKING:  # screen imports this module, so the arrow points one way
@@ -94,7 +94,9 @@ def configure(
     Observations are closed under :data:`flats.rules.conditions.ENTAILS`
     before anything else: ``{"alley_at_rear": True}`` holds ``abuts_alley``
     too, ``{"abuts_alley": False}`` settles both per-line facts, and a child
-    True beside a parent False is refused.
+    True beside a parent False is refused. Then each land-division fact
+    (:data:`flats.rules.conditions.LAND_DIVISION_FOLDS`) is folded into its
+    parent where ``design`` is platted on unit lots, and dropped where not.
     """
     seen = dict(observed or {})
     for name in seen:
@@ -109,6 +111,11 @@ def configure(
     # registry's assumption never fills a slot the observation already
     # settled, and a contradiction is refused rather than resolved twice.
     seen = close_entailed(seen)
+    # A rule that reaches only land divisions reaches the townhouse form (four
+    # unit lots) and not the one-lot form: its fact is folded into the fact
+    # that holds the lot on the first and left unasked on the second
+    # (:data:`flats.rules.conditions.LAND_DIVISION_FOLDS`).
+    seen = fold_land_division(seen, unit_lots="unit_lots" in design.conditions)
     for name in elect:
         kind = condition(name).kind
         if kind != "elective":

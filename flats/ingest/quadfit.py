@@ -197,7 +197,7 @@ from flats.ingest.flatter import (
     flatter_checked,
 )
 from flats.ingest.normalize import zone_for
-from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.conditions import ACROSS_STREET_CONDITIONS, LAND_DIVISION_FOLDS, fold_land_division
 from flats.rules.fields import BEARING_FIELDS
 from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
@@ -4242,8 +4242,13 @@ def _plat_matters(lot: QuadfitLot, s: Screened, rules: RuleSet) -> bool:
     keeps shut (a farm zone whose parking rules differ for townhouses).
     Always on a lot in Portland's Centers Main Street overlay, where 33.415.300.B
     bars attached houses near a transit street and the townhouse form is
-    asked about it (:data:`flats.geom.pdx_overlays.MAIN_STREET_TRANSIT_FLAG`)."""
+    asked about it (:data:`flats.geom.pdx_overlays.MAIN_STREET_TRANSIT_FLAG`).
+    Always where a land-division fact folds into its parent differently on
+    the two forms (:data:`flats.rules.conditions.LAND_DIVISION_FOLDS`): the
+    rule reaches the unit lots and not the one lot, so the twin is asked."""
     if lot.pdx_overlays is not None and lot.pdx_overlays.main_street:
+        return True
+    if _land_division_reaches(lot.observed):
         return True
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
     one = configure(lot.facts, s.design, observed=lot.observed)
@@ -4263,6 +4268,15 @@ def _plat_matters(lot: QuadfitLot, s: Screened, rules: RuleSet) -> bool:
         and use_a.relief == use_b.relief
     )
     return not (shut_alike and any(x.check == "use" for x in s.signed.binds))
+
+
+def _land_division_reaches(observed: Mapping[str, bool] | None) -> bool:
+    """Whether folding the land-division facts answers a parent differently
+    on the townhouse form than on the one-lot form (absent is unknown)."""
+    seen = dict(observed or {})
+    two = fold_land_division(seen, unit_lots=True)
+    one = fold_land_division(seen, unit_lots=False)
+    return any(two.get(p) != one.get(p) for p in set(LAND_DIVISION_FOLDS.values()))
 
 
 def land_division_flagged(s: Screened) -> Screened:
