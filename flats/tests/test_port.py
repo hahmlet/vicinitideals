@@ -473,7 +473,10 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     #
     # 215 on 2026-10-30 (districts chunk 6): Tualatin CO, ported so its
     # Block 1 townhouse lots are measured rather than left "not measured".
-    assert dry["stats"]["zones"] == 215
+    #
+    # 216 on 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): Clackamas SCMU, the
+    # last zone FLATS opens that quadfit did not hold (34 lots dropped zone_not_in_rules).
+    assert dry["stats"]["zones"] == 216
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {

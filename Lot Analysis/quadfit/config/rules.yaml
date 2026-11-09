@@ -2202,6 +2202,18 @@ jurisdictions:
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
         notes: "YELLOW in FLATS, RE-RULED 2026-10-14 (Steph's review rule): design review (ZDO 1102.01(A)) holds the quadplex to Section 1005, whose judgement words FLATS flags REVIEW-CONDITIONS; needs_verification caps the row at review here. Was red by ruling 2026-10-09. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 37 lots. Reads as RCHDR (Table 510-1 note 13). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      # ported 2026-11-08 (FOLLOWUPS 52, the last zone gap) by port_from_flats.zone_row: SCMU, the Fuller Road Station Community Mixed Use district, re-ruled YELLOW 2026-10-14 (it was red by ruling when the 2026-10-08 gaps were ported, so it never reached this file and s3 dropped its 34 lots zone_not_in_rules). Ported so the pod is measured. The front yard is a PLACEHOLDER: ZDO 1005.09 keys it to Map 1005-1's street types and FLATS answers the lot UNKNOWN on it. FLATS keeps the verdict.
+      - zone: "SCMU"
+        quadplex_allowed: true
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 7000
+        min_density_du_per_acre: 20
+        setback_front_ft: 15
+        source: "Clackamas ZDO Table 510-1, Quadplexes row, SCMU column (P)"
+        source_url: "https://www.clackamas.us/planning/zdo510"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/_unincorporated SCMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
 
   happy_valley:
     eligible: true

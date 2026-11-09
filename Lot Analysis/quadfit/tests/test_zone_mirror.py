@@ -619,7 +619,9 @@ def test_nothing_in_the_screen_is_unquoted(audit_scan) -> None:
     # 16 -> 27 on 2026-10-19: the zones the ORS 197A.400 lane admits (FOLLOWUPS 85).
     # 27 -> 25 on 2026-11-08 (FOLLOWUPS 147, f4ac56b0): Washington County TO:R24-40 and
     # TO:R40-80 front yards are read (Table B(2) prints "None"), no longer placeholders.
-    assert len(placeholders) == 25
+    # 25 -> 26 on 2026-11-08 (FOLLOWUPS 52): Clackamas SCMU's front yard, keyed by ZDO
+    # 1005.09 to Map 1005-1's street types, which nothing reads.
+    assert len(placeholders) == 26
     assert agree > 460, agree
 
 
@@ -728,9 +730,12 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 #:
 #: 2026-10-14, later: one. The lot-line-bearing lane encoded HDR's dimensions
 #: (FOLLOWUPS 61) and its row is ported; SCMU still waits.
-AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
-    "clackamas_unincorporated": ("SCMU",),
-}
+#:
+#: 2026-11-08: none (FOLLOWUPS 52, flats/dropped-lots-fairview). SCMU is ported
+#: with its front yard a PLACEHOLDER, the way the Washington County and ORS
+#: 197A.400 rows are: FLATS answers its lots UNKNOWN on the unread yard, and
+#: its 34 lots are measured instead of dropped `zone_not_in_rules`.
+AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {}
 
 
 def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
