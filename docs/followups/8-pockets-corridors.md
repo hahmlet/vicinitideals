@@ -17,3 +17,11 @@
    loosened.
    Done: (c) 1ff23bdb Map 130-1 maximum 20 ft (no screen reads a maximum,
    HUMAN_TODO 12); (d) fa693288 per-line corridor minimum, run 39.
+- 2026-11-09 BOTH CHECKS DONE (flats/leftovers-a, read-only on 137 /root/assign_rescreen_1110):
+  (a) the 8 pocket lots s3 re-homes (Clackamas R-MD -> Milwaukie 3, Happy Valley VR57 -> county 1,
+  UPAR-10 -> Troutdale LDR-1 4; plus 215 King City WashCo pockets) all reach the screen (red/yellow),
+  none NOT_MEASURED; NOT_MEASURED is now 67 (Clackamas SCMU 30, Portland CI1 36, Fairview VC 1), no
+  pocket among them. (e) Portland CM2/CM3/CE/CX: 963 GREEN lots, 1,420 street lines, 513 not clear
+  across (a residential RF-RM2/RMP ray, or a ray unread); 0 buildings drawn within 5 ft of one.
+  Only (b) is left: ZONE_POCKET is 66 lots now (rulings on Troutdale NSA, Oregon City County and,
+  since, Beaverton WAcnty).

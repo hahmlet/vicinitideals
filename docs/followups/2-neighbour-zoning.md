@@ -35,3 +35,13 @@
    most 13 MU lots see an HDR neighbour, the unread half only relaxes
    (7.5/15 -> 5), and reading it needs a fourth neighbour fact ("every line
    non-residential OR HDR"); recommend leaving it unless those lots come up.
+- 2026-11-09 (flats/leftovers-a): (a) merged into flats/rel5 (9057467b + e354dc4c via c0705462),
+  awaits the rel5 bound. (c) RE-COUNTED on rescreen-1110: 5,102 lots lean on an unknown neighbour
+  fact (177 green, 3,944 red, 981 yellow). ORCA IS acquired (rlis_orca in snapshots 2026-09-18,
+  10-01, 10-07; s4 park_across_json filled on 432,992 of 447,705 lots; nothing leans on abuts_park).
+  The biggest block was Beaverton, whose yards turn on both facts with NO lists declared: BUILT
+  a14f4e43 -- lists off BDC 10.25 (residential = its six Residential Districts, as 20.22 note 9
+  states; HDR districts multiple-use; Downtown's relaxing 0 keeps HDR, RC-DT, ROW, WAcnty off).
+  On Beaverton's 1,754 leaning lots 1,276 answers settle (928 relaxing, 348 tightening); rides
+  the next bound. Left: the blank/split/other-city points everywhere else. (d) on hold (only if CI2's cap
+  lifts). (e) parked as the item recommends (<=13 lots, relaxing only, needs a fourth fact).
