@@ -216,14 +216,16 @@ async def test_a_correction_without_both_words_is_handed_back_not_logged(client,
 
 
 async def test_a_misread_word_is_squiggled_where_it_stands(client, session):
-    # Tualatin 52.200 prints "T avern": the extraction split the capital off.
+    # Tualatin 71.900 prints "feetto": the PDF sets the two words with no
+    # space between them, so the stored text keeps it as printed. ("T avern"
+    # in 52.200, the example until 2026-11-08, is mended: FOLLOWUPS 116.)
     await _login(client, session)
-    page = await client.get(f"/flats/code/{CITY}/52/52.200.txt")
+    page = await client.get(f"/flats/code/{CITY}/71/71.900.txt")
     assert page.status_code == 200
     odd = re.findall(r'<span class="odd" title="[^"]*">([^<]+)</span>', page.text)
-    assert "avern" in odd
-    row = page.text.split('id="L34"', 1)[1].split("</tr>", 1)[0]
-    assert '<span class="odd"' in row and "avern" in row
+    assert "feetto" in odd
+    row = page.text.split('id="L151"', 1)[1].split("</tr>", 1)[0]
+    assert '<span class="odd"' in row and "feetto" in row
     assert "data-odd-count" in page.text
 
 
