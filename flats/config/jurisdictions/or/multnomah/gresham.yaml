@@ -7989,18 +7989,18 @@ zones:
       # "between the minimum and maximum front setback". J.1 scopes it to
       # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
       # and these are Corridor districts.
+      #
+      # The townhouse form keeps it, as in SC and SC-RJ: 7.0431 does not list
+      # RTC (7.0400.middle-housing-design.txt L434-L436), so there is no
+      # entrance-only townhouse rule to take here. It was entrance_only on
+      # 7.0431 until 2026-11-09 (FOLLOWUPS 112 page-check finding). Harmless
+      # so far only because every screened RTC lot is inside Rockwood (237 of
+      # 237 on assign_rescreen_1110 carry rockwood_design_district; the other
+      # 13 are red before the zone is read); a lot outside it now takes the
+      # stricter plex reading rather than a section that does not apply.
       value: axis_required
       quote: "or/multnomah/gresham/7/7.0420.txt#L165-L170"
       variants:
-        # The townhouse form: J.1 names "single detached dwellings and plexes"
-        # only, and townhouses go to 7.0431, which asks no frontage share
-        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
-        # binds each entrance -- facing the street, at 45 degrees, onto a
-        # porch, or onto an internal drive treated as the street -- and not
-        # the long axis.
-        - value: entrance_only
-          when: [unit_lots]
-          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
         # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
         # for townhouses in so many words (below): kept as it was.
         - value: axis_required
@@ -8021,11 +8021,8 @@ zones:
       cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
       quote: "or/multnomah/gresham/7/7.0420.txt#L165-L170"
       variants:
-        # The townhouse form owes none outside Rockwood: J.1 names plexes
-        # only, and 7.0431 states no share.
-        - exempt: true
-          when: [unit_lots]
-          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # No townhouse exemption outside Rockwood (it rested on 7.0431, which
+        # does not list RTC; removed 2026-11-09, as SC and SC-RJ have none).
         # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
         # leaves townhouses out "unless otherwise stated", and S2 states it:
         # "For Residential development (multi-family, townhouse, and townhouse
