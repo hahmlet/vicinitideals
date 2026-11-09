@@ -145,6 +145,7 @@ the full one.)
 158. [Claude] [scan: YES] **17 fire-reach / front-max reds left after rel4-fixes** -- building further back at the same angle (not the corner tie); RED is the safe side; read, then a fix lane stacked on rel4-fixes. [file](followups/158-fire-front-max-17-reds.md) -- lane DONE 89aa02bd (Hillsboro 45 deg door angle; 16 stay red, read), rides rel6
 159. [Claude] [scan: YES -- toward green] **Tigard mixed-use and Sandy 45-degree entrance angle** -- both codes print 45 degrees like Hillsboro (158); Tigard excludes "entrances to individual residences"; lane tigard-sandy-angle BUILDING. [file](followups/159-tigard-sandy-entrance-angle.md)
 160. [Claude] [scan: YES -- toward red, false-GREEN risk] **Placement retry never checks the maximum front setback** -- found by fire-reds-158; lane retry-front-max BUILDING. [file](followups/160-retry-front-max.md)
+161. [Claude] [Steph] [scan: YES -- toward red, false-GREEN risk] **Sight triangles (clear-vision areas) at corners and driveways** -- scoped 2026-11-09: ~9-90 corner GREENs at risk (+~133 where manuals are missing); driveway side waits on 3 Steph questions; manuals being fetched. [file](followups/161-sight-triangles.md)
 
 ## 2. Waiting on Steph
 
