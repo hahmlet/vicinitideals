@@ -13,6 +13,24 @@ ingest:
   - UNINCORPORATED
   - ''
 crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  # Read in CDC publication 3090 (data/flats/books/3a6be7e1266dc607.pdf, PDF pages 627-628).
+  "403-3":
+    outcome: procedure
+    note: >-
+      Additional Standards Inside the UGB: "all Master Plan and Site Analysis applications shall
+      address the requirements of Sections 404-419, 421-423, 427 and 429", and 403-3.1 lets a
+      Type III development be denied on property values, character and public interest. Middle
+      housing is a Type I or II use here, and 403-3.4 A excludes "Type I or II applications
+      reviewed at a Type III proceeding" from 403-3.1. The sections it lists are the ones this
+      layer already reads one by one (413, 418, 419 among them).
+  "431-5.3":
+    outcome: other_building
+    note: >-
+      Garage width: "The width of an attached garage may exceed the dimensional requirement of
+      A, B, or C above when the applicant demonstrates compliance with the principles of" 431-5.3
+      (390/390-20.txt and the 304 to 307 twins). The pod has no garage (ruling
+      2026-09-08-pod-has-no-garage).
   # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed one layer
   # down, read in CDC publication 3090 (the PDF this layer is sliced from). Several targets
   # are HELD (431-8, 431-3.8, 407-6, 407-1.6, 307-7.5): crossrefs.py credits a document only

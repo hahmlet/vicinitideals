@@ -129,6 +129,15 @@ code:
 # - 18.420.060, site tree canopy (L269 on): trees are ignored and entered per lot (Steph
 #   2026-11-01).
 crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  "18.660.3":
+    outcome: misread
+    note: >-
+      Not a reference out: "Weather protection standards are shown in Figures 18.660.3 and
+      18.660.4" (18.660/18.660.080.txt#L67) names two figure captions of the held 18.660, the
+      same family as the table captions above (Table 18.660.3 is printed at
+      18.660/18.660.050.txt#L86). Weather protection is a design detail the screen does not
+      check (ruling 2026-10-14-unchecked-design-details).
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed. Most are
   # table and figure captions printed inside the held section that cites them (the resolver gap,
   # FOLLOWUPS 105 open item 6), each read and already encoded.

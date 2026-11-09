@@ -365,6 +365,14 @@ definitions:
 # lot-of-record relief, and no Gladstone zone resolves lot_of_record_relief, so such a lot is already
 # held to the zone minimum. Reading it can admit lots, never reject one the screen admits.
 crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  "12.02":
+    outcome: procedure
+    note: >-
+      Street Excavation Requirements: "Improvements installed by a developer shall conform to the
+      standards of this title, GMC Chapter 12.02 (Street Excavation Requirements) and to any
+      supplemental design and construction specifications" (17.10/17.10.060.txt#L18). How work
+      in the street is permitted and built; it sets nothing on the lot.
   # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
   "5.22":
     outcome: other_building
