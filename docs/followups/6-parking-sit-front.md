@@ -59,3 +59,25 @@
    minimum lot depth is met in one direction only (needs depth both ways).
    ((a) struck 2026-09-27; (c) `lowest_class` now reads street class, item
    41.)
+   FLATS check 2026-11-09 (flats/leftovers-b; the lettered parts above are
+   quadfit s6s's site plan unless named):
+   - Ruling step 3 (court least exposed to a street) was unbuilt in FLATS --
+     the front choice fell from the band straight to room to spare. BUILT
+     98d63e36: tied fronts are drawn and the court's edge on the street
+     strips decides (court_street_ft, 5 ft steps as s6s). Steps 1-2 and the
+     "more parking is not a goal" half were already in _front_rank.
+   - (b) Portland 33.266.120.C.1.b corner 20 % of the street-side yard:
+     BUILT on flats/leftovers-b (parking_side_street_yard_max_pct, check
+     side_street_yard_vehicle_share: the side-street drive passes on the
+     shortest street, fails only on the longest, a question between).
+     "Behind the side street building line" (C.1.a(1)) is consistent by
+     construction in FLATS: a corner lends no side yard to the court and a
+     side-fed court is drawn across the building's own width.
+   - (d) Fairview 19.30.050(D)(2)(a): DONE 605de374 (FOLLOWUPS 146 round 3:
+     the court is not offered the Fairview side yard; the lane is a
+     question, yellow at best).
+   - (e) Gresham 3.0100 front by minimum depth: DONE f437ebd1
+     (`front_lot_line_corner: depth`, FOLLOWUPS 102).
+   - (f) WAITS ON STEPH (side court vs rear court for a 2nd pod).
+   - (g), (h), (j)-(n): s6s (quadfit) drawing work, not FLATS; FLATS draws
+     one row, and its alley court is already only the row plus back-out.

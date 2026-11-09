@@ -26,7 +26,9 @@ street end is the end nearer the lot's front lines, and the lane is drawn on
 one flank; quadfit's s6s chooses among placements and this does not. Where
 the stalls stand in a column along a side alley
 (:attr:`flats.fit.rectangle.Fit.column`) the court is drawn behind the
-building at the column's depth -- the column's side is not known here.
+building at the column's depth, as a strip along the alley's side of the
+room (``column_across_ft``, ``alley_lines``); where the alley's side is not
+given, across the room's whole width -- every place the column could stand.
 """
 
 from __future__ import annotations
@@ -675,6 +677,30 @@ def stretch_window(
     return False
 
 
+def _column_side(
+    alley_lines: Iterable[tuple[float, float, float, float]],
+    grid: Grid,
+    x0: float,
+    x1: float,
+    across_ft: float,
+) -> tuple[float, float] | None:
+    """The strip ``across_ft`` wide at the side of ``[x0, x1]`` (the court's
+    span in the grid's frame) nearer the side alley's lines: where a column
+    of stalls along the alley stands (FOLLOWUPS 5). ``None`` where there is
+    no column, no alley line, or the column fills the span."""
+    if across_ft <= 0 or across_ft >= x1 - x0:
+        return None
+    local = _lines_local(alley_lines, grid)
+    if not len(local):
+        return None
+    mid = (local[:, 0] + local[:, 2]) / 2.0
+    weight = np.hypot(local[:, 2] - local[:, 0], local[:, 3] - local[:, 1])
+    ax = float(np.average(mid, weights=weight)) if weight.sum() > 0 else float(mid.mean())
+    if ax <= (x0 + x1) / 2.0:
+        return x0, x0 + across_ft
+    return x1 - across_ft, x1
+
+
 @dataclass(frozen=True, slots=True)
 class _Placed:
     grid: Grid
@@ -980,6 +1006,8 @@ def draw(
     yard: Iterable[tuple[float, float, float, float]] = (),
     yard_moves: bool = True,
     stretch: AlleyStretch | None = None,
+    column_across_ft: float = 0.0,
+    alley_lines: Iterable[tuple[float, float, float, float]] = (),
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -1033,6 +1061,13 @@ def draw(
     (:class:`AlleyStretch`, FOLLOWUPS 3(c)): the court is drawn against the
     covered stretch wherever a window allows, and a listing holds only those
     windows; the caller reads the drawing with :func:`court_on_stretch`.
+
+    ``column_across_ft`` draws a column of stalls along a side alley
+    (:attr:`flats.fit.rectangle.Fit.column`; :func:`flats.score.paper.
+    side_column_across`): the court ``court_depth_ft`` deep behind the
+    building but only this wide, against the room's side nearer
+    ``alley_lines`` (the side alley's lot lines). Without ``alley_lines``,
+    or where the column is as wide as the room, the court spans the room.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -1166,12 +1201,11 @@ def draw(
     if beside_band_ft > 0:
         court = band(0.0, beside_len_ft, lx0, lx0 + beside_band_ft)
     elif court_depth_ft > 0:
-        court = band(
-            deep_b,
-            deep_b + court_depth_ft,
-            x0 - court_overlap_ft,
-            x0 + across,
-        )
+        cx0, cx1 = x0 - court_overlap_ft, x0 + across
+        at = _column_side(alley_lines, grid, cx0, cx1, column_across_ft)
+        if at is not None:
+            cx0, cx1 = at
+        court = band(deep_b, deep_b + court_depth_ft, cx0, cx1)
     else:
         court = None
 

@@ -2889,6 +2889,7 @@ _CHECK_WORDS = {
     "parking_frontage_share": "the parking faces more of a street frontage than allowed (front, side or rear street)",
     "parking_frontage_width": "the parking faces a longer stretch of a street than the feet allowed (front, side or rear street)",
     "front_yard_vehicle_share": "parking takes more of the front yard than allowed",
+    "side_street_yard_vehicle_share": "the driveway takes more of the corner's side-street yard than allowed",
     "building_frontage_share": "the building fills less of the street frontage than the code asks (one pod on a wide lot)",
     "building_frontage_other_share": "the building fills less of the side or far street frontage than the code asks",
     "institutional_share": "institutional land, never a pod site",

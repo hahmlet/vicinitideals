@@ -204,3 +204,27 @@ def test_a_through_lot_keeps_its_one_street_direction() -> None:
     assert got is not None and got.fits
     b = got.building.bounds
     assert b[1] == pytest.approx(0.0, abs=0.6) or b[3] == pytest.approx(120.0, abs=0.6)
+
+
+@pytest.mark.parametrize("alley_x", [-5.0, 65.0])
+def test_a_side_alley_column_stands_along_the_alley(alley_x) -> None:
+    """FOLLOWUPS 5: a column of stalls along a side alley is drawn as a
+    strip on the alley's side of the room, as wide as one stall plus the
+    back-out shortfall -- not as a row across the room behind the building."""
+    fitter = Fitter(ENVELOPE, angles=(0.0,))
+    fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
+    alley = ((alley_x, 0.0, alley_x, 120.0),)
+    got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=40.0,
+               court_beyond_ft=10.0, street=SOUTH, column_across_ft=18.0, alley_lines=alley)
+    assert got is not None and got.fits
+    room, court = got.room.bounds, got.court.bounds
+    assert court[2] - court[0] == pytest.approx(18.0)
+    assert court[1] == pytest.approx(got.building.bounds[3])
+    if alley_x < 0:
+        assert court[0] == pytest.approx(room[0])
+    else:
+        assert court[2] == pytest.approx(room[2])
+    # Without the alley's side the court keeps the room's whole width.
+    plain = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=40.0,
+                 court_beyond_ft=10.0, street=SOUTH, column_across_ft=18.0)
+    assert plain.court.bounds[2] - plain.court.bounds[0] == pytest.approx(fit.across_ft)

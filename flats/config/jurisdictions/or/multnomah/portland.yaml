@@ -2202,17 +2202,31 @@ defaults:
   # building and the drive that reaches it may pave up to two fifths of the
   # ground in front of it.
   #
-  # NOT ENCODED, in the same sentence: 20 percent between a side street lot
-  # line and the side street building line on a corner lot, which is a corner
-  # standard this screen holds no field for; and the flag-lot exception
-  # allowing "at least a 12-foot wide vehicle area", which is a lot shape
-  # nothing measures.
+  # The corner half of the same subparagraph, 20 percent between the side
+  # street lot line and the side street building line, is
+  # `parking_side_street_yard_max_pct` below (FOLLOWUPS 6(b), 2026-11-09).
+  # NOT ENCODED: the flag-lot exception allowing "at least a 12-foot wide
+  # vehicle area", which is a lot shape nothing measures and only loosens.
   parking_front_yard_max_pct:
     value: 40
     cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266/33.266.120.txt#L19-L23"
+  # 33.266.120.C.1.b, second sentence: "On corner lots, no more than 20
+  # percent of the land area between the side street lot line and the side
+  # street building line may be paved or used for vehicle areas." A corner
+  # lot's court is fed off the side street here (`corner_access_street`
+  # any), so its drive crosses that strip: 20 ft of drive needs 100 ft of
+  # side street. Which street is the side street is not recorded, so a
+  # drive that fits the shortest street passes, one too wide for the
+  # longest fails, and one between is left a question. Stored as printed.
+  parking_side_street_yard_max_pct:
+    value: 20
+    cite: PCC 33.266.120.C.1.b, on corner lots the share of the land between the side street lot line and the side street building line usable as vehicle area
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L21"
   # 33.266.120.C.2.a: "Generally, parking spaces are not allowed within the
   # first 10 feet from a front lot line, and on corner lots, parking spaces
   # are not allowed within the side street setback." Stated of SPACES, where
