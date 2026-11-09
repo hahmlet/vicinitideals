@@ -684,14 +684,12 @@
     },
     "R-2": {
       "max_coverage_pct": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "max_density_du_per_acre": [
         "protected_water_feature"
       ],
       "max_height_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "max_mass_footprint_sqft": [
@@ -701,51 +699,40 @@
         "protected_water_feature"
       ],
       "min_landscaped_pct": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_depth_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_sqft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_width_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_roof_pitch_in_12": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [
-        "abuts_lower_density_zone",
         "protected_water_feature",
         "utility_easement"
       ],
       "setback_front_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_front_max_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_front_max_streets": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_rear_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_side_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_street_side_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ]
     },

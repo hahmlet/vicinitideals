@@ -1100,7 +1100,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     # permission itself has no column here either.
     # 20 -> 23 on 2026-11-08 (FOLLOWUPS 105 round 3): Tigard RES-A, RES-B and
     # RES-C screen side and rear parking to S-3, a 5 ft strip (Table 18.420.2).
-    "parking_lot_line_buffer_ft": 23,
+    # 23 -> 24 on 2026-11-08 (FOLLOWUPS 2(a), rel5 merge): Oregon City R-2 restates the strip
+    # so Table 17.12.040 note 1 can widen it to 10 ft beside R-10/R-8/R-6.
+    "parking_lot_line_buffer_ft": 24,
     "parking_side_yard_allowed": 16,
     "parking_side_yard_stated": 16,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the

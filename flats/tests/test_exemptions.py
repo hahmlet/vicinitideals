@@ -176,7 +176,11 @@ pytestmark = pytest.mark.unit
 # RC-MU and RC-DT state no ground-floor minimum off the streets of Figure
 # 70.20.10.6.2 (70.20.10.6.D.1, 70.20.10.txt#L486-L489); the 16 ft Type A floor is
 # the variant behind the unobserved beaverton_type_a_frontage fact -- a hold.
-EXPECTED = {"stated": 477, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
+# 477 -> 478 stated on 2026-11-08 (FOLLOWUPS 2(a), rel5 merge): Oregon City R-2 restates the layer's
+# 17.52.060.C parking strip so Table 17.12.040 note 1 can widen it, and the townhouse
+# plat's variant is exempt as the defaults' `unless` was -- 17.52.010 says the parking
+# chapter "does not apply to ... townhouses" (17.zoning.txt#L14791-L14797).
+EXPECTED = {"stated": 478, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1

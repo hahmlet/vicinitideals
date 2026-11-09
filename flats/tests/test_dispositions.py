@@ -275,7 +275,9 @@ def test_a_fact_with_an_assumption_is_encodable_not_unmeasured(config: Path) -> 
 def test_unmeasured_stops_blocking_and_goes_on_capping() -> None:
     # No config fixture: this one is about the rulings actually shipped.
     ruled = [row for row in notes("or/clackamas/oregon-city") if row.state == "unmeasured"]
-    assert len(ruled) == 7, "Oregon City's seven unmeasured notes moved"
+    # 7 -> 6 on 2026-11-08: Table 17.12.040 note 1 (R-2 beside R-10/R-8/R-6)
+    # is encoded as variants on abuts_lower_density_zone (FOLLOWUPS 2(a)).
+    assert len(ruled) == 6, "Oregon City's six unmeasured notes moved"
     assert not any(row.blocking for row in ruled), (
         "an unmeasured note has been read, so it cannot go on blocking the encoding"
     )
