@@ -42,3 +42,7 @@
    writes through the loader. (f) CLOSED 2026-11-08: the screen runs one
    fixed design (pod80x30, 0f2620b3), so no pod spec is owed; FLATS_PLAN
    Phase 4 set access is FOLLOWUPS 145.
+- 2026-11-09 (flats/leftovers-a): (iii) merged into flats/rel5 (c37b8b54 via 4d9e7666), awaits the
+  rel5 bound. (e) nothing buildable: the 29 notes turn on data no source holds (no figure to
+  bound); "flag history across county refreshes" and "bulk writes through the loader" are
+  unspecified plan gaps, a feature to scope with Steph first. (f) closed.
