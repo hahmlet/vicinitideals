@@ -1204,6 +1204,19 @@ defaults:
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55,L121,L193-L197"
+    # THE TOWNHOUSE PATH BANS IT (Steph 2026-11-09, "Follow the county's
+    # rules"; coordinator 2026-11-09). 845.03(E)(1) lets parking stand between
+    # a townhouse and a public street only with one driveway entry per
+    # townhouse and parking no wider than 12 feet on each lot; the pod's one
+    # shared court meets neither, so (E)(2)(a) governs: "Off-street parking
+    # areas shall not be located between a townhouse and a public street" --
+    # ANY public street, a corner's side street and a through lot's far end
+    # included, as Portland's and Milwaukie's bans read.
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: Clackamas ZDO 845.03(E)(2)(a), off-street parking areas shall not be located between a townhouse and a public street where 845.03(E)(1) is not met
+        quote: "or/clackamas/_unincorporated/845/845.03.txt#L46-L60"
   # FOLLOW THE COUNTY'S RULE, not the silent-codes ban (Steph 2026-11-09,
   # rulings.yaml 2026-11-09-clackamas-front-parking-follow-zdo: "Follow the
   # county's rules."). 845.02(D) lets a quadplex's parking stand between the

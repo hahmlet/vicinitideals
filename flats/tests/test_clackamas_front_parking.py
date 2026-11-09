@@ -21,7 +21,7 @@ import yaml
 import math
 
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
-from flats.ingest.quadfit import court_in_front_yard, front_parking_allowed
+from flats.ingest.quadfit import court_in_front_yard, court_yard_lines, front_parking_allowed
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 
@@ -193,6 +193,54 @@ def test_unincorporated_clackamas_states_the_conditions(corpus, zone) -> None:
     assert town["parking_front_share_allowed"].value is False
     text = _quoted(town["parking_front_share_allowed"].prov.quote)
     assert "Off-street parking areas shall not be located between a townhouse and a public street" in text
+
+
+def test_the_townhouse_route_bans_parking_toward_any_public_street(corpus) -> None:
+    """845.03(E)(2)(a): the pod's shared court meets none of (E)(1), so
+    "Off-street parking areas shall not be located between a townhouse and a
+    public street" -- every street, as an outright ban (coordinator
+    2026-11-09: the silent-codes front-yard hold was looser on a corner's
+    side street). The quadplex route keeps 845.02(D)."""
+    town = corpus.resolve(CLACKAMAS, "R7", ("unit_lots",))
+    assert town.get("parking_front_prohibited") is True
+    assert "parking_front_prohibited" not in set(town.exempted)
+    text = _quoted(town.values["parking_front_prohibited"].prov.quote)
+    assert "Off-street parking areas shall not be located between a townhouse and a public street" in text
+    quad = corpus.resolve(CLACKAMAS, "R7")
+    assert "parking_front_prohibited" in set(quad.exempted)
+
+
+def _corner_plan(rules, court):
+    """A 100 x 200 corner lot: front along y = 0, side street along x = 100,
+    both public; the building in the middle."""
+    corner = _edges(
+        (0, 0, 100, 0, F, True), (100, 0, 100, 200, SS, True),
+        (100, 200, 0, 200, R, False), (0, 200, 0, 0, S, False), bearings=(0.0, 90.0),
+    )
+    s = _plan(court, edges=corner)
+    s.rules = rules
+    return s
+
+
+def test_a_townhouse_court_toward_the_side_street_is_held(corpus) -> None:
+    """Beside the building toward the side street: a street side yard, which
+    the silent-codes ruling leaves open, is a public street the townhouse
+    ban reaches. The quadplex route leaves it open (and the court faces 20
+    of 200 ft of that street)."""
+    toward_side = shapely.box(92, 35, 99, 55)
+    town = _corner_plan(corpus.resolve(CLACKAMAS, "R7", ("unit_lots",)), toward_side)
+    assert (100, 0, 100, 200) in court_yard_lines(town)
+    assert court_in_front_yard(town)
+    quad = _corner_plan(corpus.resolve(CLACKAMAS, "R7"), toward_side)
+    assert (100, 0, 100, 200) not in court_yard_lines(quad)
+    assert not court_in_front_yard(quad)
+
+
+def test_a_townhouse_court_in_front_is_held_however_narrow(corpus) -> None:
+    town = _corner_plan(corpus.resolve(CLACKAMAS, "R7", ("unit_lots",)), NARROW)
+    assert court_in_front_yard(town)
+    quad = _corner_plan(corpus.resolve(CLACKAMAS, "R7"), NARROW)
+    assert not court_in_front_yard(quad)
 
 
 def test_cities_in_clackamas_keep_their_own_rules(corpus) -> None:

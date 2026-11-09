@@ -2801,8 +2801,10 @@
     dwelling-separates-it limb (845.02(D)(1)) is not measured and never
     opens a lot. A line not read as a public street (a private road the
     yards count, a street s4 did not read) or an unmeasured share keeps the
-    hold. The townhouse path keeps it too: 845.03(E)(2)(a) keeps parking
-    out from between a townhouse and a public street. Cities in Clackamas
-    keep their own rules.
+    hold. The townhouse path (unit_lots) follows 845.03(E)(2)(a), "Off-street
+    parking areas shall not be located between a townhouse and a public
+    street": an outright ban (parking_front_prohibited) on EVERY public
+    street, a corner's side street included. Cities in Clackamas keep their
+    own rules.
   source: Steph 2026-11-09 (chat)
   encoded_in: [flats/config/jurisdictions/or/clackamas/_unincorporated.yaml, flats/ingest/quadfit.py, flats/rules/fields.py]
