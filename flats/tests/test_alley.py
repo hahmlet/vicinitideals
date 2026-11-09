@@ -444,7 +444,11 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # plan district's 15 ft rear (33.530.040.A) kept where an alley is at the
     # rear, because the base zone's alley sentence relaxes the base zone's
     # figure, not the plan district's. It tightens; nothing is waived.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4 + 1
+    # - 5 on 2026-11-09 (pagecheck-findings): the Gresham Downtown townhouse rows
+    # (DCC, DTM, DMU, DEM, DCL) no longer take note 11's 10 ft rear against a
+    # lower-density district -- Table 4.1130 puts the marker on the other rows,
+    # not the townhouse row. The 3 ft alley rear stays, keyed to the rear line.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4 + 1 - 5
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:
