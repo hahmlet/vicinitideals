@@ -345,9 +345,14 @@ def _zone_off_page(document: str, line: int, zone: str) -> bool:
     # so a digit may follow the name; a letter may not. "PDR6" is printed
     # "PDR-6": a hyphen or space may part letters from digits or not. A
     # column heading set narrow breaks "TC-MU" after its hyphen, and the
-    # stored text reads "TC- MU" (Beaverton Table 20.20.20, FOLLOWUPS 112).
+    # stored text reads "TC- MU" (Beaverton Table 20.20.20, FOLLOWUPS 112). A
+    # heading wrapped in its column parts a name further -- Beaverton prints
+    # "CM- CS", Washington County "TO:R12- 18", Gresham "DRL      -1" -- and
+    # those cards said the zone was not on the page (FOLLOWUPS 103(c)). So
+    # any run of spaces, but at most one dash (an em dash included): spaces
+    # only pad a split name, while a second dash would be other punctuation.
     parts = re.findall(r"[A-Za-z]+|\d+|[^\sA-Za-z\d-]", zone)
-    name = r"[\s\-\u2010-\u2013]{0,2}".join(re.escape(p) for p in parts)
+    name = r"\s*[\-\u2010-\u2014]?\s*".join(re.escape(p) for p in parts)
     return re.search(rf"(?<![A-Za-z0-9]){name}(?![A-Za-z])", " ".join(lines), re.IGNORECASE) is None
 
 

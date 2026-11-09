@@ -428,3 +428,23 @@ def test_a_value_card_offers_this_is_a_footnote(logged_in_page: Page, base_url: 
     page.goto(f"{base_url}/flats/check/{LAYER}?zone=LDR-5&field=setback_rear_ft&when=")
 
     expect(page.locator('#check-card [data-answer="footnote"]')).to_have_text(re.compile("This is a footnote"))
+
+
+def test_a_zone_heading_wrapped_in_its_column_is_asked_on_its_page(logged_in_page: Page, base_url: str) -> None:
+    """Beaverton prints its column heading "CM- CS" wrapped; the card was set
+    aside as though the page never named the zone (FOLLOWUPS 103(c))."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/or/washington/beaverton?zone=CM-CS&field=min_lot_sqft&when=")
+
+    card = page.locator("#check-card")
+    expect(card.locator("[data-answer]").first).to_be_visible()
+    expect(card.locator("[data-borrowed]")).to_have_count(0)
+
+
+def test_a_zone_row_table_cited_whole_boxes_only_that_zones_row(logged_in_page: Page, base_url: str) -> None:
+    """Springwater's Table 4.1508 prints zones down the side; THR-SW's 5 ft
+    side setback was boxed on every zone's row (FOLLOWUPS 103)."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=THR-SW&field=setback_side_ft&when=")
+
+    expect(page.locator("#check-card .check-sheet .check-box-value")).to_have_count(1, timeout=90_000)
