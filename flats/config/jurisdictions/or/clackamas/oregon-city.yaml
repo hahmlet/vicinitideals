@@ -471,6 +471,12 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
     quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): \"b. Be at an angle of up to forty-five degrees from\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5409"
   # RIGHT-OF-WAY DEDICATION. 16.12.011.B: "All single-family detached
   # residential and middle housing units shall provide any necessary
   # dedications, easements or agreements as identified in the

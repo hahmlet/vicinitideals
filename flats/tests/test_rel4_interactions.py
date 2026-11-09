@@ -74,12 +74,10 @@ def test_the_kept_drawing_turned_holds_a_green_out_and_lifts(corpus) -> None:  #
     assert lifted.screening.triage is Triage.green
 
 
-@pytest.mark.parametrize("value", ["required", "alternative", "not_required"])
+@pytest.mark.parametrize("value", ["alternative", "not_required"])
 def test_a_settled_standard_leaves_the_drawing_to_the_fit(corpus, value) -> None:  # noqa: F811
-    """Round 3 (rulings.yaml 2026-11-08-no-porch-end-door) made most places
-    ``required``: there the fitter holds only the street bearings, so no step
-    can draw the building turned, and the drawn net stays out of it, as it
-    does where the standard lets a turned building stand."""
+    """Where the standard lets a turned building stand, the drawn net stays
+    out of it. (``required`` reads the drawing: below.)"""
     from flats.score.paper import entrance_unsettled
 
     s, _ = _plan(corpus)
@@ -97,3 +95,33 @@ def test_a_settled_standard_leaves_the_drawing_to_the_fit(corpus, value) -> None
     assert settled.rules.get("entrance_faces_street") == value
     assert not entrance_unsettled(turned.rules, turned.design)
     assert not drawn_door_turned(turned)
+
+
+@pytest.mark.parametrize("value", ["required", "required_named"])
+def test_a_required_entrance_reads_the_drawing_for_a_street(corpus, value) -> None:  # noqa: F811
+    """rel4 move-read finding 2: where the doors must face a street, a
+    drawing that stands them off every street the lot abuts is held out of
+    GREEN on ENTRANCE-DRAWN, never failed; the facing drawing is not."""
+    from flats.score.screen import ENTRANCE_DRAWN
+
+    s, policy = _plan(corpus)
+    sample = next(iter(s.rules.values.values()))
+    values = {
+        **s.rules.values,
+        "entrance_faces_street": dataclasses.replace(
+            sample, name="entrance_faces_street", value=value
+        ),
+    }
+    settled = dataclasses.replace(s, rules=dataclasses.replace(s.rules, values=values))
+    w, d = s.design.footprint.width_ft, s.design.footprint.depth_ft
+    facing = shapely.box(X0 + 2, Y0 + 15, X0 + 2 + w, Y0 + 15 + d)
+    turned = _with_building(settled, affinity.rotate(facing, 90.0, origin="centroid"))
+    assert drawn_door_turned(turned)
+    assert not drawn_door_turned(_with_building(settled, facing))
+    out = entrance_drawn_checked(turned, policy=policy, relief=None)
+    assert out.facts.entrance_drawn_turned
+    assert out.screening.triage is not Triage.green
+    assert out.screening.triage is not Triage.red
+    assert ENTRANCE_DRAWN in out.screening.unchecked or any(
+        f.code == "ENTRANCE-DRAWN" for f in out.screening.flags
+    )

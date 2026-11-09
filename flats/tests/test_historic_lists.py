@@ -26,14 +26,17 @@ HISTORIC_DIR = ROOT / "flats" / "config" / "historic"
 # 2026-11-06, round 2: Gresham's five placed by the state's own record of each
 # (protection.yaml state_points). The state files matched on the local table, so
 # their Clackamas and Washington rows wait on the same 137 step.
+# 2026-11-08 (rel4-fixes): the state files as --write leaves them on the
+# rescreen_1110 lot table, committed (the rel4 bound ran on a tree without
+# them). Tigard 3 -> 2: a row placed by the state's own record (state_points).
 UNMATCHED: dict[str, int] = {
     "gresham": 0,
-    "tigard": 3,
+    "tigard": 2,
     "troutdale": 3,
     "washington-county": 0,
     "west-linn": 0,
-    "nps-2026-11-06": 95,
-    "shpo-2026-11-06": 4543,
+    "nps-2026-11-06": 1,
+    "shpo-2026-11-06": 84,
 }
 
 WASHCO_LOT = "1S123AA00100"
@@ -124,6 +127,38 @@ def test_a_list_row_with_no_lot_is_reported_not_dropped(tmp_path) -> None:
         rows = list(csv.DictReader(source))
     assert len(rows) == len(hl.load_lists())
     assert {r["status"] for r in rows} == {"on_lot", "not_in_run", "unmatched"}
+
+
+def test_every_committed_list_row_has_been_matched() -> None:
+    # rel4 bridged a tree whose state lists were never matched: 2,921 matched
+    # listings fell to 186 and ~114 lots went falsely GREEN.
+    assert hl.never_matched() == {}
+    hl.require_matched()
+
+
+def test_a_bridge_on_never_matched_lists_is_refused(tmp_path) -> None:
+    source = hl.state_files()[0]
+    rows = hl.read_rows(source)
+    rows[0] = rows[0] | {"tlid": "", "match_method": "none", "match_note": hl.NOT_YET_MATCHED}
+    path = tmp_path / "listings.csv"
+    with path.open("w", encoding="utf-8", newline="") as out:
+        writer = csv.DictWriter(out, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    assert hl.never_matched([path]) == {str(path): 1}
+    with pytest.raises(RuntimeError, match="never matched"):
+        hl.require_matched([path])
+
+
+def test_the_bridge_refuses_never_matched_lists(monkeypatch, tmp_path) -> None:
+    from flats.ingest import quadfit
+
+    def refuse(paths=None):
+        raise RuntimeError("historic listings never matched to a lot")
+
+    monkeypatch.setattr(quadfit.historic_lists, "require_matched", refuse)
+    with pytest.raises(RuntimeError, match="never matched"):
+        quadfit.run(tmp_path / "out", s4=tmp_path / "s4.parquet")
 
 
 def test_multnomah_listed_tlids_exist_in_the_local_lot_table() -> None:

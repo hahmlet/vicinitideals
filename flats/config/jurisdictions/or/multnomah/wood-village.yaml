@@ -1330,6 +1330,12 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/210.375
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/210.375.txt#L60-L64,L90-L92"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 210.375(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L64"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1466,6 +1472,12 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/210.375
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/210.375.txt#L60-L64,L90-L92"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 210.375(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L64"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1602,6 +1614,12 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/220.355
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/220.355.txt#L60-L64"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 220.355(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L64"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
@@ -1727,6 +1745,12 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/220.355
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/220.355.txt#L60-L64"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 220.355(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L64"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),

@@ -553,6 +553,12 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-27'
     quote: "or/multnomah/troutdale/8/8.120.txt#L38-L55"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Troutdale TDC 8.120 middle housing entry orientation (townhouse 8.130): \"ii. Be at an angle of up to forty-five (45) degrees from the street (see Figure 8.120.C.2.b.ii at the end of this Section);\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/troutdale/8/8.120.txt#L47"
   # PARKING AND VEHICLE ACCESS, read 2026-08-29 out of TDC Chapter 9,
   # Off-Street Parking and Loading, and the off-street parking subsections of
   # 8.120, Triplex and Quadplex Dwellings. Chapter 3 sends every zone here --

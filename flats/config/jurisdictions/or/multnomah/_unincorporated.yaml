@@ -3110,6 +3110,12 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: \"b. Be at an angle of up to 45 degrees from the street; or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L830"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets);
         33.418
@@ -3415,6 +3421,12 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: \"b. Be at an angle of up to 45 degrees from the street; or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L830"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered
         pockets); 33.110.205
@@ -3560,6 +3572,12 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: \"b. Be at an angle of up to 45 degrees from the street; or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L830"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf

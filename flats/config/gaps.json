@@ -1,5 +1,5 @@
 {
-  "digest": "ec3ed16b20e3ab5778edee93caed0a9f667698d4b206be9e57e5a0f40987fd9c",
+  "digest": "484b6519491deb06b508d4d9924d6e797f3d8144681c492f3e4acdc032fb35e4",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -1781,7 +1781,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 56,
+      "section_unread": 60,
       "misattributed": [
         {
           "zone": "CC",

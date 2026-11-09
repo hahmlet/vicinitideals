@@ -508,9 +508,16 @@ def oc_screened(corpus, across):
     return s
 
 
-def test_an_otherwise_green_lot_stays_green_with_the_flag_beside_it(corpus) -> None:
+def test_an_otherwise_green_lot_stays_green_with_the_flag_beside_it(corpus, monkeypatch) -> None:
     """Steph 2026-10-14: the stand-in flag must leave the lot GREEN."""
+    from flats.geom import historic_lists
     from flats.score import flags as flag_plan
+
+    # 22E32CB08800 itself is on the state survey (shpo-32032, 409 Roosevelt
+    # St, surveyed-eligible), so the real lot is yellow on that alone once
+    # the matched listings are held (rel4 move-read finding 1, 2026-11-08).
+    # "Otherwise green" is the lot with no listing on it.
+    monkeypatch.setattr(historic_lists, "checked", lambda won, tlid: won)
 
     widest = oc_screened(corpus, None)
     standin = oc_screened(corpus, city("R-8"))

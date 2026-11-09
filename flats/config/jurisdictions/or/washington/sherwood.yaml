@@ -364,6 +364,12 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/3865
     retrieved: '2026-09-29'
     quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L70-L104"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Sherwood SZCDC 16.14 residential design: \"b. Be at an angle of up to 45 degrees from the street;\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L88"
   # ADDITIONAL SETBACK FROM THE CENTRE LINE (16.106.030 D; see the
   # right-of-way note above the zones). The street's class comes from the
   # city's TSP web map (registry street_class_sherwood, Kittelson's

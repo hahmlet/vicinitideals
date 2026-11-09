@@ -377,6 +377,9 @@
   },
   "or/clackamas/oregon-city": {
     "(defaults)": {
+      "entrance_angle_max_deg": [
+        "protected_water_feature"
+      ],
       "entrance_faces_street": [
         "protected_water_feature"
       ],
