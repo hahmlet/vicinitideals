@@ -40,3 +40,8 @@
    4.001(157)(2) / MCC 39.2000 pathway corners: HUMAN_TODO 24.
    (`steep_slope` struck 2026-09-27: no standard in the corpus is
    conditioned on it; the hillside rules ride the overlay layers.)
+- 2026-11-09 (flats/leftovers-a): (a) and (e)(ii)/(iii) are court/alley work, left to the
+  court-alley lane. (c) and (d) need no FLATS change: the screen is the stricter or the truer
+  reading (the z overlay IS screened, 33.418 constrained_sites_overlay; sewer is observed; the
+  180-angle sweep is deliberate) -- a quadfit-side decision if anyone wants the map to agree.
+  (e)(iv) and (v) never changed a colour: strike.
