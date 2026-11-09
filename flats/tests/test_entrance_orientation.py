@@ -230,7 +230,7 @@ def test_hillsboro_takes_the_45_degrees_it_prints(rule_set: RuleSet) -> None:
     against a 13 ft maximum."""
     got = rule_set.resolve("or/washington/hillsboro", "R-7")
     assert door_limit(got, POD) == 45.0
-    assert got.values["entrance_angle_max_deg"].prov.quote.endswith("design.txt#L44-L45")
+    assert got.values["entrance_angle_max_deg"].prov.quote.endswith("design.txt#L46-L47")
 
 
 # --- round 2: the named street, the mapped sub-areas -------------------------------
