@@ -91,3 +91,57 @@ def test_rf_keeps_its_county_card_until_steph_rules(county: Layer) -> None:
     held = county.zones["RF"].values["parking_street_setback_ft"]
     assert held.same_as == "setback_front_ft"
     assert held.prov.cite.startswith("MCC 39.6580(A)")
+
+
+def test_every_county_parking_default_is_overridden_in_the_pockets(
+    county: Layer, corpus: RuleSet
+) -> None:
+    """No pocket answer may fall through to MCC 39.6500-39.6600.
+
+    A default the pocket does not restate would be the county's sentence on
+    Portland's land -- the exact card the page check flagged. So every parking
+    and front-line field `defaults:` holds is restated in each pocket.
+    """
+    parking = {
+        name
+        for name in county.defaults
+        if name.startswith(("parking_", "driveway_", "corner_access", "front_lot_line_"))
+    }
+    assert parking, "the county defaults hold no parking fields any more"
+    for zone in POCKETS:
+        missing = parking - set(county.zones[zone].values)
+        assert not missing, f"{zone} falls through to the county for {sorted(missing)}"
+
+
+def test_the_pockets_read_120_and_never_table_266_4(
+    county: Layer, store: ProvenanceStore, corpus: RuleSet
+) -> None:
+    """Rectangle, driveway, front ban and paving cap as 33.266.120 prints them."""
+    lines = _lines(store, TITLE33_PARKING)
+    assert "A parking space must be at least 9 feet by 18 feet." in lines[317]
+    assert "The minimum driveway width on private property is 9 feet." in lines[318]
+    assert "Vehicle area is prohibited between the primary structure and the street" in lines[281]
+    assert "No more than 40 percent of the land area between the front lot line and the" in lines[293]
+    assert "If the lot abuts an alley, all parking and vehicle access to the site" in lines[312]
+    assert "except for residential vehicle" in lines[385]
+    section_120 = " ".join(lines[267:348]).lower()
+    assert "aisle" not in section_120
+
+    for zone in POCKETS:
+        got = corpus.resolve(COUNTY, zone)
+        assert got.get("parking_stall_width_ft") == 9
+        assert got.get("parking_stall_depth_ft") == 18
+        assert got.get("driveway_min_width_two_way_ft") == 9
+        assert got.get("driveway_min_width_one_way_ft") == 9
+        assert got.get("parking_front_prohibited") is True
+        assert got.get("parking_front_yard_max_pct") == 40
+        assert got.get("parking_alley_access_required") is True
+        values = county.zones[zone].values
+        for absent in (
+            "parking_min_per_unit",
+            "parking_aisle_one_way_ft",
+            "parking_aisle_two_way_ft",
+            "parking_lot_line_buffer_ft",
+            "parking_side_prohibited",
+        ):
+            assert values[absent].exempt, f"{zone}.{absent} should be read as stated-none"

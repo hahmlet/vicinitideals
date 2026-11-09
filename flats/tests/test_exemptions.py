@@ -184,7 +184,13 @@ pytestmark = pytest.mark.unit
 # owe no maximum front setback but Table 4.0131 note 5's, at the end of a Minor Access Street.
 # The exempt base quotes the table title ("Minimum Setbacks", L146) and note 5 (L179), whose
 # 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
-EXPECTED = {"stated": 478, "numeric": 206, "marker": 0, "dash": 2, "silent": 8}
+# 206 -> 226 numeric on 2026-11-09 (FOLLOWUPS 112(b), Multnomah pockets on Title 33): R5, R7,
+# R10 and R20 each restate five county parking defaults as PCC 33.266.120 states them -- no
+# minimum (the chapter's section list, 33.266.txt#L8-L17), no aisle and no perimeter buffer
+# (120 never prints either; 130.B keeps Table 266-4 and 130's landscaping off this building,
+# L385-L386), and an open interior side yard (C.1.a(1)) -- read, and the same encoding the
+# Portland layer holds for the same sentences.
+EXPECTED = {"stated": 478, "numeric": 226, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1

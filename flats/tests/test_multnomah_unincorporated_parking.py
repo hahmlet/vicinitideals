@@ -131,7 +131,9 @@ def test_six_spaces_asked_and_four_allowed_and_the_gap_is_a_state_rule(
     asked = 1.5 * DWELLINGS
     assert asked == 6
 
-    for zone in ("LR7", "R20", "MR4"):
+    # R20 left this loop 2026-11-09: the Portland pockets owe Title 33, which
+    # requires no parking at all (test_multnomah_pockets_title33).
+    for zone in ("LR7", "MR4"):
         allowed = corpus.resolve(COUNTY, zone).get("parking_min_per_unit")
         assert allowed * DWELLINGS == 4, (
             f"{zone}: the state cap should clip the county's six to four"
