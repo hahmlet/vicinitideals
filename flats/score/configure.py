@@ -140,6 +140,15 @@ def configure(
     measures = {"lot_sqft": float(lot.lot_sqft)}
     if lot.lot_width_ft is not None:
         measures["lot_width_ft"] = float(lot.lot_width_ft)
+    # The depth too (FOLLOWUPS 68): PCC 33.120.206 and 33.120.220.B.2 band on
+    # it, and a band on a measure nobody passes refuses every lot it reaches.
+    # Where nothing measured it, a reading of it the caller is trying
+    # (``depth_reading_ft``, flats.ingest.quadfit.depth_checked).
+    depth = getattr(lot, "lot_depth_ft", None)
+    if depth is None:
+        depth = getattr(lot, "depth_reading_ft", None)
+    if depth is not None:
+        measures["lot_depth_ft"] = float(depth)
     measures = {k: v for k, v in measures.items() if k in LOT_MEASURES and v > 0}
     # A distance of 0 is a measurement (the lot touches the stop), not a
     # missing one, so the transit distances keep it.

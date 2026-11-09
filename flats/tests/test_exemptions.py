@@ -184,7 +184,6 @@ pytestmark = pytest.mark.unit
 # owe no maximum front setback but Table 4.0131 note 5's, at the end of a Minor Access Street.
 # The exempt base quotes the table title ("Minimum Setbacks", L146) and note 5 (L179), whose
 # 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
-EXPECTED = {"stated": 478, "numeric": 206, "marker": 0, "dash": 2, "silent": 8}
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
@@ -195,6 +194,18 @@ EXPECTED = {"stated": 478, "numeric": 206, "marker": 0, "dash": 2, "silent": 8}
 # frontage on one (12.65/12.65.850.txt#L16), and the code grepped whole for "property line
 # coverage" and "building frontage" states no other share for these zones -- with Table
 # 12.65.850-1 and D.6 as variants behind the traced Figure 12.65.930-A's facts.
+# 470 -> 482 stated and 173 -> 186 numeric on 2026-11-01 (FOLLOWUPS 68, Portland Maps 120-2
+# and 120-3). Numeric: the 90 ft site frontage of RM1-RM4 (three exempt variants each: 160 ft
+# deep or less, 33.120.206.txt#L10; the C.2.b neighbour exception, #L15-L18, a fact nothing
+# measures; both) and RX's neighbour exception. Stated: the Eastern Pattern Area's 50% vehicle
+# share of the rear setback, exempt for corner lots and sites up to 100 ft deep
+# (33.120.220.txt#L28). Those variants are all gated by only_when, so none opens a lot outside
+# its map. Round 3 removes the four redundant corner-and-depth exemption variants, one per RM
+# zone: corners are exempt at every depth.
+# rel6 2026-11-09, combining two lanes: 478 -> 486 stated and 206 + 13 = 219 numeric --
+# rel5's 478/206 (above) plus flats/pdx-map-120's Maps 120-2/120-3 rows (+13 numeric; +8 stated:
+# its +12 less the four corner-and-depth variants its round 3 removed).
+EXPECTED = {"stated": 486, "numeric": 219, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

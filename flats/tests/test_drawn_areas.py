@@ -71,8 +71,10 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         # part 2 batch A: Glendoveer (33.530) and the one hold for the rules nothing measures
         # (FOLLOWUPS 109, 2026-11-03).
         # pd2c: the Gateway and East Corridor minimum-FAR map areas (2026-11-04).
+        # Portland Zoning Code Maps 120-3 and 120-2 (FOLLOWUPS 68, 2026-11-01).
         "pdx_east_corridor_min_far_half",
         "pdx_east_corridor_min_far_one",
+        "pdx_eastern_pattern_area",
         "pdx_gateway_min_far",
         "pdx_glendoveer_lr75",
         # Hayden Island and Lombard Subdistrict A main entrances (FOLLOWUPS 153).
@@ -81,6 +83,7 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "pdx_johnson_creek_land_division",
         "pdx_johnson_creek_unmeasured",
         "pdx_lombard_subdistrict_a",
+        "pdx_min_site_frontage_area",
         # Batch B: Northwest Map 562-2 (FOLLOWUPS 109, 2026-11-04).
         "pdx_nw_residential_limited",
         "pdx_plan_district_unmeasured",

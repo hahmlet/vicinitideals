@@ -166,7 +166,7 @@ def _parse_values(
             problems.append(f"{where}: {exc.args[0]}")
             continue
 
-        if isinstance(node, dict) and "pct_of_lot_width" in node:
+        if isinstance(node, dict) and ({"pct_of_lot_width", "pct_of_lot_depth"} & set(node)):
             # A share of the lot's width is a number only once a lot is in
             # hand, and a base standard is read with none -- the rules table
             # and the paper lot both print it. WDC 4.113(.02)A.2 states its
@@ -954,6 +954,7 @@ def _parse_variants(
                 "sqft_per_unit",
                 "spaces_total",
                 "pct_of_lot_width",
+                "pct_of_lot_depth",
                 "stories",
             }
             & set(node)
@@ -968,6 +969,16 @@ def _parse_variants(
         value = body.pop("value", None)
         exempt = bool(body.pop("exempt", False))
         pct_of_width = body.pop("pct_of_lot_width", None)
+        pct_of_depth = body.pop("pct_of_lot_depth", None)
+        share_of = "lot_width_ft"
+        if pct_of_depth is not None:
+            # PCC 33.120.220.B.2.a: "25 percent of the total depth of the
+            # site" -- the same form on the lot's other axis.
+            if pct_of_width is not None:
+                problems.append(f"{at}: a variant states one share, of the width or of the depth")
+                continue
+            pct_of_width, share_of = pct_of_depth, "lot_depth_ft"
+        share_key = "pct_of_lot_depth" if share_of == "lot_depth_ft" else "pct_of_lot_width"
         floor_ft = body.pop("floor_ft", None)
         if pct_of_width is not None:
             if value is not None:
@@ -979,7 +990,7 @@ def _parse_variants(
             if not isinstance(pct_of_width, (int, float)) or isinstance(
                 pct_of_width, bool
             ):
-                problems.append(f"{at}: 'pct_of_lot_width' expects a number")
+                problems.append(f"{at}: '{share_key}' expects a number")
                 continue
             if floor_ft is not None and (
                 not isinstance(floor_ft, (int, float)) or isinstance(floor_ft, bool)
@@ -994,6 +1005,7 @@ def _parse_variants(
                 value = LotWidthShare(
                     pct=float(pct_of_width),
                     floor_ft=None if floor_ft is None else float(floor_ft),
+                    of=share_of,
                 )
             except Exception as exc:
                 problems.append(f"{at}: {_terse(exc)}")
@@ -1214,6 +1226,14 @@ def _parse_variants(
         if not isinstance(when, list):
             problems.append(f"{at}: 'when' must list the condition(s) this applies under")
             continue
+        unless = body.pop("unless", None)
+        if isinstance(unless, str):
+            unless = [unless]
+        if unless is None:
+            unless = []
+        if not isinstance(unless, list):
+            problems.append(f"{at}: 'unless' must list the condition(s) that exclude this")
+            continue
         raw_band = body.pop("band", None)
         bands: list[Band] = []
         if raw_band is not None:
@@ -1298,6 +1318,7 @@ def _parse_variants(
                     ),
                     when=tuple(str(c) for c in when),
                     bands=tuple(bands),
+                    unless=tuple(str(c) for c in unless),
                     prov=Provenance(**_prov_args(merged)),
                     status=Status(declared),
                     reviewer=body.get("reviewer"),

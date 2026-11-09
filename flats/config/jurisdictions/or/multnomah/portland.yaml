@@ -3539,6 +3539,43 @@ zones:
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    min_frontage_ft:
+      # Table 120-3 states a lot width and no frontage for RM1 to RM4; the one
+      # frontage rule in 33.120 is 33.120.206, and it reaches only the sites
+      # on Map 120-2. Silent everywhere else.
+      only_when: [pdx_min_site_frontage_area]
+      value: 90
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L8,L10"
+      variants:
+        # PCC 33.120.206 (FOLLOWUPS 68). Only on sites shown on Map 120-2
+        # (drawn_areas min_site_frontage), and only on a site more than 160
+        # ft deep, measured from the midpoints of opposite lot lines
+        # (33.930.103, the lot_depth_ft the screen reads): "new dwelling units
+        # are prohibited unless the site has at least 90 feet of frontage on a
+        # street", owed on one street (min_frontage_one_street). C.2.b lets
+        # development through when every lot sharing a side lot line is not
+        # multi-dwelling, meets its minimum density or holds three homes;
+        # nothing reads the neighbours' homes, so the exception is an
+        # unanswered fact and a short lot is held, never refused. Declined:
+        # the 10 percent adjustment (discretionary, and prohibited from
+        # 2032), the ADU exception (C.2.a, not this building) and Planned
+        # Development Review (C.2.c, discretionary).
+        # Base 90 inside the map, so a lot with no measured depth is refused
+        # rather than let through; a site up to 160 ft deep, or one the
+        # neighbour exception admits, owes none.
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L15-L18"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10,L15-L18"
+    min_frontage_one_street:
+      value: true
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
@@ -3562,6 +3599,27 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
+        # PCC 33.120.220.B.2 (FOLLOWUPS 68): in the Eastern Pattern Area
+        # (Map 120-3, drawn_areas eastern_pattern_area) the far rear line(s)
+        # take a rear setback that is
+        # "an amount equal to 25 percent of the total depth of the site",
+        # the depth measured from the midpoints of opposite lot lines
+        # (33.930.103, the screen's lot_depth_ft). Corner lots and lots up to
+        # 100 ft deep are exempt and take Table 120-4's figure (B.2.b(1)).
+        # Declined: the outdoor common area exemption (B.2.b(2), 10 percent
+        # of the site in areas 30 ft in all directions, a site plan nothing
+        # here draws) and cottage clusters (B.2.b(3), not this building).
+        # Outranks the alley exemption on purpose: the larger yard is the
+        # safe reading where a general exception meets the Eastern rule.
+        - pct_of_lot_depth: 25
+          when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
+          band: {measure: lot_depth_ft, more_than: 100}
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
+        - value: 5
+          when: [pdx_eastern_pattern_area, corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
+          via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
       qualified_by:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
@@ -3580,6 +3638,22 @@ zones:
           when: [pdx_johnson_creek_impervious]
           cite: PCC 33.537.140.D and 33.537.150.E, no more than 50 percent of any site may be developed in impervious surface; building eaves are included
           quote: "or/multnomah/portland/33.537.txt#L272-L273,L324-L325"
+    parking_rear_yard_max_pct:
+      # 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
+      # rear setback can be vehicle area." Only where that setback applies:
+      # inside the area, on a lot more than 100 ft deep that is not a corner
+      # lot (B.2.b(1)); silent everywhere else.
+      only_when: [pdx_eastern_pattern_area]
+      value: 50
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L24"
+      variants:
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
@@ -3616,7 +3690,7 @@ zones:
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
-    notes: 'Lowest-intensity multi-dwelling zone, and the only one that still allows cottage clusters and manufactured dwelling parks. Side and rear are a flat 5 ft here: the 5/10 step in 33.120.220.B.1 is written for RM3 and RM4 only. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    notes: 'Lowest-intensity multi-dwelling zone, and the only one that still allows cottage clusters and manufactured dwelling parks. Side and rear are a flat 5 ft here: the 5/10 step in 33.120.220.B.1 is written for RM3 and RM4 only. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. ENCODED 2026-11-01 (FOLLOWUPS 68), both on the City''s own maps: the minimum site frontage of 33.120.206 (#L491-L495; 90 ft on one street for a site more than 160 ft deep on Map 120-2, a short lot held for the unread neighbour exception) and the Eastern Pattern Area rear setback of 33.120.220.B.2 (25 percent of the site depth on Map 120-3, half of it at most vehicle area; corner lots and lots up to 100 ft deep exempt).'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
@@ -3760,6 +3834,43 @@ zones:
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    min_frontage_ft:
+      # Table 120-3 states a lot width and no frontage for RM1 to RM4; the one
+      # frontage rule in 33.120 is 33.120.206, and it reaches only the sites
+      # on Map 120-2. Silent everywhere else.
+      only_when: [pdx_min_site_frontage_area]
+      value: 90
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L8,L10"
+      variants:
+        # PCC 33.120.206 (FOLLOWUPS 68). Only on sites shown on Map 120-2
+        # (drawn_areas min_site_frontage), and only on a site more than 160
+        # ft deep, measured from the midpoints of opposite lot lines
+        # (33.930.103, the lot_depth_ft the screen reads): "new dwelling units
+        # are prohibited unless the site has at least 90 feet of frontage on a
+        # street", owed on one street (min_frontage_one_street). C.2.b lets
+        # development through when every lot sharing a side lot line is not
+        # multi-dwelling, meets its minimum density or holds three homes;
+        # nothing reads the neighbours' homes, so the exception is an
+        # unanswered fact and a short lot is held, never refused. Declined:
+        # the 10 percent adjustment (discretionary, and prohibited from
+        # 2032), the ADU exception (C.2.a, not this building) and Planned
+        # Development Review (C.2.c, discretionary).
+        # Base 90 inside the map, so a lot with no measured depth is refused
+        # rather than let through; a site up to 160 ft deep, or one the
+        # neighbour exception admits, owes none.
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L15-L18"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10,L15-L18"
+    min_frontage_one_street:
+      value: true
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
@@ -3774,6 +3885,26 @@ zones:
         - exempt: true
           when: [alley_at_rear]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
+        # PCC 33.120.220.B.2 (FOLLOWUPS 68): in the Eastern Pattern Area
+        # (Map 120-3, drawn_areas eastern_pattern_area) the rear setback is
+        # "an amount equal to 25 percent of the total depth of the site",
+        # the depth measured from the midpoints of opposite lot lines
+        # (33.930.103, the screen's lot_depth_ft). Corner lots and lots up to
+        # 100 ft deep are exempt and take Table 120-4's figure (B.2.b(1)).
+        # Declined: the outdoor common area exemption (B.2.b(2), 10 percent
+        # of the site in areas 30 ft in all directions, a site plan nothing
+        # here draws) and cottage clusters (B.2.b(3), not this building).
+        # Outranks the alley exemption on purpose: the larger yard is the
+        # safe reading where a general exception meets the Eastern rule.
+        - pct_of_lot_depth: 25
+          when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
+          band: {measure: lot_depth_ft, more_than: 100}
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
+        - value: 5
+          when: [pdx_eastern_pattern_area, corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"
+          via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
       qualified_by:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
@@ -3792,6 +3923,22 @@ zones:
           when: [pdx_johnson_creek_impervious]
           cite: PCC 33.537.140.D and 33.537.150.E, no more than 50 percent of any site may be developed in impervious surface; building eaves are included
           quote: "or/multnomah/portland/33.537.txt#L272-L273,L324-L325"
+    parking_rear_yard_max_pct:
+      # 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
+      # rear setback can be vehicle area." Only where that setback applies:
+      # inside the area, on a lot more than 100 ft deep that is not a corner
+      # lot (B.2.b(1)); silent everywhere else.
+      only_when: [pdx_eastern_pattern_area]
+      value: 50
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L24"
+      variants:
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
@@ -3852,7 +3999,7 @@ zones:
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
-    notes: 'Table 120-4 prints coverage as "60/70%". 33.120.225.B splits it: 70 percent on a site abutting a Civic or Neighborhood Corridor shown on Map 120-1, 60 on every other RM2 site. 60 is the base and 70 the civic_corridor variant, answered from the city''s corridor layer by flats/geom/corridor.py; a lot the map cannot answer keeps 60, the half that cannot turn a lot green by mistake. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    notes: 'Table 120-4 prints coverage as "60/70%". 33.120.225.B splits it: 70 percent on a site abutting a Civic or Neighborhood Corridor shown on Map 120-1, 60 on every other RM2 site. 60 is the base and 70 the civic_corridor variant, answered from the city''s corridor layer by flats/geom/corridor.py; a lot the map cannot answer keeps 60, the half that cannot turn a lot green by mistake. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. ENCODED 2026-11-01 (FOLLOWUPS 68), both on the City''s own maps: the minimum site frontage of 33.120.206 (#L491-L495; 90 ft on one street for a site more than 160 ft deep on Map 120-2, a short lot held for the unread neighbour exception) and the Eastern Pattern Area rear setback of 33.120.220.B.2 (25 percent of the site depth on Map 120-3, half of it at most vehicle area; corner lots and lots up to 100 ft deep exempt).'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
@@ -3986,6 +4133,43 @@ zones:
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    min_frontage_ft:
+      # Table 120-3 states a lot width and no frontage for RM1 to RM4; the one
+      # frontage rule in 33.120 is 33.120.206, and it reaches only the sites
+      # on Map 120-2. Silent everywhere else.
+      only_when: [pdx_min_site_frontage_area]
+      value: 90
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L8,L10"
+      variants:
+        # PCC 33.120.206 (FOLLOWUPS 68). Only on sites shown on Map 120-2
+        # (drawn_areas min_site_frontage), and only on a site more than 160
+        # ft deep, measured from the midpoints of opposite lot lines
+        # (33.930.103, the lot_depth_ft the screen reads): "new dwelling units
+        # are prohibited unless the site has at least 90 feet of frontage on a
+        # street", owed on one street (min_frontage_one_street). C.2.b lets
+        # development through when every lot sharing a side lot line is not
+        # multi-dwelling, meets its minimum density or holds three homes;
+        # nothing reads the neighbours' homes, so the exception is an
+        # unanswered fact and a short lot is held, never refused. Declined:
+        # the 10 percent adjustment (discretionary, and prohibited from
+        # 2032), the ADU exception (C.2.a, not this building) and Planned
+        # Development Review (C.2.c, discretionary).
+        # Base 90 inside the map, so a lot with no measured depth is refused
+        # rather than let through; a site up to 160 ft deep, or one the
+        # neighbour exception admits, owes none.
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L15-L18"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10,L15-L18"
+    min_frontage_one_street:
+      value: true
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
@@ -4016,6 +4200,51 @@ zones:
         - exempt: true
           when: [low_rise, alley_at_rear]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
+        # PCC 33.120.220.B.2 (FOLLOWUPS 68): in the Eastern Pattern Area
+        # (Map 120-3, drawn_areas eastern_pattern_area) the rear setback is
+        # "an amount equal to 25 percent of the total depth of the site",
+        # the depth measured from the midpoints of opposite lot lines
+        # (33.930.103, the screen's lot_depth_ft). Corner lots and lots up to
+        # 100 ft deep are exempt and take Table 120-4's figure (B.2.b(1)).
+        # Declined: the outdoor common area exemption (B.2.b(2), 10 percent
+        # of the site in areas 30 ft in all directions, a site plan nothing
+        # here draws) and cottage clusters (B.2.b(3), not this building).
+        # Outranks the alley exemption on purpose: the larger yard is the
+        # safe reading where a general exception meets the Eastern rule.
+        - pct_of_lot_depth: 25
+          when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
+          band: {measure: lot_depth_ft, more_than: 100}
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
+        - pct_of_lot_depth: 25
+          when: [pdx_eastern_pattern_area, low_rise]
+          unless: [corner_lot]
+          band: {measure: lot_depth_ft, more_than: 100}
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
+        - value: 10
+          when: [pdx_eastern_pattern_area, corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
+        - value: 5
+          when: [pdx_eastern_pattern_area, corner_lot, low_rise]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
+    parking_rear_yard_max_pct:
+      # 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
+      # rear setback can be vehicle area." Only where that setback applies:
+      # inside the area, on a lot more than 100 ft deep that is not a corner
+      # lot (B.2.b(1)); silent everywhere else.
+      only_when: [pdx_eastern_pattern_area]
+      value: 50
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L24"
+      variants:
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
@@ -4074,7 +4303,7 @@ zones:
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
-    notes: 'Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    notes: 'Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. ENCODED 2026-11-01 (FOLLOWUPS 68), both on the City''s own maps: the minimum site frontage of 33.120.206 (#L491-L495; 90 ft on one street for a site more than 160 ft deep on Map 120-2, a short lot held for the unread neighbour exception) and the Eastern Pattern Area rear setback of 33.120.220.B.2 (25 percent of the site depth on Map 120-3, half of it at most vehicle area; corner lots and lots up to 100 ft deep exempt).'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
@@ -4208,6 +4437,43 @@ zones:
     min_lot_width_ft:
       value: 33
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L23-L25"
+    min_frontage_ft:
+      # Table 120-3 states a lot width and no frontage for RM1 to RM4; the one
+      # frontage rule in 33.120 is 33.120.206, and it reaches only the sites
+      # on Map 120-2. Silent everywhere else.
+      only_when: [pdx_min_site_frontage_area]
+      value: 90
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L8,L10"
+      variants:
+        # PCC 33.120.206 (FOLLOWUPS 68). Only on sites shown on Map 120-2
+        # (drawn_areas min_site_frontage), and only on a site more than 160
+        # ft deep, measured from the midpoints of opposite lot lines
+        # (33.930.103, the lot_depth_ft the screen reads): "new dwelling units
+        # are prohibited unless the site has at least 90 feet of frontage on a
+        # street", owed on one street (min_frontage_one_street). C.2.b lets
+        # development through when every lot sharing a side lot line is not
+        # multi-dwelling, meets its minimum density or holds three homes;
+        # nothing reads the neighbours' homes, so the exception is an
+        # unanswered fact and a short lot is held, never refused. Declined:
+        # the 10 percent adjustment (discretionary, and prohibited from
+        # 2032), the ADU exception (C.2.a, not this building) and Planned
+        # Development Review (C.2.c, discretionary).
+        # Base 90 inside the map, so a lot with no measured depth is refused
+        # rather than let through; a site up to 160 ft deep, or one the
+        # neighbour exception admits, owes none.
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L15-L18"
+        - exempt: true
+          when: [pdx_site_frontage_neighbour_exception]
+          band: {measure: lot_depth_ft, at_most: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L10,L15-L18"
+    min_frontage_one_street:
+      value: true
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
     setback_front_ft:
       value: 5
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
@@ -4238,6 +4504,51 @@ zones:
         - exempt: true
           when: [low_rise, alley_at_rear]
           quote: "or/multnomah/portland/33.120/33.120.220.txt#L54"
+        # PCC 33.120.220.B.2 (FOLLOWUPS 68): in the Eastern Pattern Area
+        # (Map 120-3, drawn_areas eastern_pattern_area) the rear setback is
+        # "an amount equal to 25 percent of the total depth of the site",
+        # the depth measured from the midpoints of opposite lot lines
+        # (33.930.103, the screen's lot_depth_ft). Corner lots and lots up to
+        # 100 ft deep are exempt and take Table 120-4's figure (B.2.b(1)).
+        # Declined: the outdoor common area exemption (B.2.b(2), 10 percent
+        # of the site in areas 30 ft in all directions, a site plan nothing
+        # here draws) and cottage clusters (B.2.b(3), not this building).
+        # Outranks the alley exemption on purpose: the larger yard is the
+        # safe reading where a general exception meets the Eastern rule.
+        - pct_of_lot_depth: 25
+          when: [pdx_eastern_pattern_area]
+          unless: [corner_lot]
+          band: {measure: lot_depth_ft, more_than: 100}
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
+        - pct_of_lot_depth: 25
+          when: [pdx_eastern_pattern_area, low_rise]
+          unless: [corner_lot]
+          band: {measure: lot_depth_ft, more_than: 100}
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L23,L25"
+        - value: 10
+          when: [pdx_eastern_pattern_area, corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
+        - value: 5
+          when: [pdx_eastern_pattern_area, corner_lot, low_rise]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L16-L20"
+          via: "or/multnomah/portland/33.120/33.120.220.txt#L27-L28"
+    parking_rear_yard_max_pct:
+      # 33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
+      # rear setback can be vehicle area." Only where that setback applies:
+      # inside the area, on a lot more than 100 ft deep that is not a corner
+      # lot (B.2.b(1)); silent everywhere else.
+      only_when: [pdx_eastern_pattern_area]
+      value: 50
+      quote: "or/multnomah/portland/33.120/33.120.220.txt#L24"
+      variants:
+        - exempt: true
+          band: {measure: lot_depth_ft, at_most: 100}
+          unless: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/portland/33.120/33.120.220.txt#L28"
     setback_alley_side_ft:
       # The SIDE half of the alley sentence quoted on the rear setback above,
       # on the one line it is about: no side setback from a side lot line
@@ -4314,7 +4625,7 @@ zones:
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
-    notes: 'Table 120-4 prints FAR as "4 to 1 or 3 to 1" and base height as "75/100 ft.". 33.120.210.B gives 4 to 1 except in Historic and Conservation Districts, where it is 3 to 1; 33.120.215.B.1 gives a base height of 75 ft, raised to 100 within 500 ft of a 20-minute transit street or 1,000 ft of a transit station. Both encode the tighter half. Neither binds a two-storey pod, so neither is worth a condition until something downstream reads them. Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    notes: 'Table 120-4 prints FAR as "4 to 1 or 3 to 1" and base height as "75/100 ft.". 33.120.210.B gives 4 to 1 except in Historic and Conservation Districts, where it is 3 to 1; 33.120.215.B.1 gives a base height of 75 ft, raised to 100 within 500 ft of a 20-minute transit street or 1,000 ft of a transit station. Both encode the tighter half. Neither binds a two-storey pod, so neither is worth a condition until something downstream reads them. Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. ENCODED 2026-11-01 (FOLLOWUPS 68), both on the City''s own maps: the minimum site frontage of 33.120.206 (#L491-L495; 90 ft on one street for a site more than 160 ft deep on Map 120-2, a short lot held for the unread neighbour exception) and the Eastern Pattern Area rear setback of 33.120.220.B.2 (25 percent of the site depth on Map 120-3, half of it at most vehicle area; corner lots and lots up to 100 ft deep exempt).'
   RX:
     entrance_faces_street:
       value: required
@@ -4390,6 +4701,31 @@ zones:
     min_frontage_ft:
       value: 10
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L28-L31"
+      variants:
+        # PCC 33.120.206 (FOLLOWUPS 68). Only on sites shown on Map 120-2
+        # (drawn_areas min_site_frontage), and only on a site more than 160
+        # ft deep, measured from the midpoints of opposite lot lines
+        # (33.930.103, the lot_depth_ft the screen reads): "new dwelling units
+        # are prohibited unless the site has at least 90 feet of frontage on a
+        # street", owed on one street (min_frontage_one_street). C.2.b lets
+        # development through when every lot sharing a side lot line is not
+        # multi-dwelling, meets its minimum density or holds three homes;
+        # nothing reads the neighbours' homes, so the exception is an
+        # unanswered fact and a short lot is held, never refused. Declined:
+        # the 10 percent adjustment (discretionary, and prohibited from
+        # 2032), the ADU exception (C.2.a, not this building) and Planned
+        # Development Review (C.2.c, discretionary).
+        - value: 90
+          when: [pdx_min_site_frontage_area]
+          band: {measure: lot_depth_ft, more_than: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L8,L10"
+        - exempt: true
+          when: [pdx_min_site_frontage_area, pdx_site_frontage_neighbour_exception]
+          band: {measure: lot_depth_ft, more_than: 160}
+          quote: "or/multnomah/portland/33.120/33.120.206.txt#L15-L18"
+    min_frontage_one_street:
+      value: true
+      quote: "or/multnomah/portland/33.120/33.120.206.txt#L10"
     setback_front_ft:
       value: 0
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
@@ -4458,7 +4794,7 @@ zones:
     max_density_du_per_acre:
       exempt: true
       quote: "or/multnomah/portland/33.120.txt#L519,L810-L811"
-    notes: 'Central-city residential. The zeroes are read off the table, not placeholders: Table 120-3 states no minimum area for RX at all, only a 10-foot front lot line, and Table 120-4 states 0 ft setbacks, 100 percent coverage and no landscaped area. Nothing dimensional in this zone can fail a fourplex, so a RED here will come from somewhere other than the zone. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+    notes: 'Central-city residential. The zeroes are read off the table, not placeholders: Table 120-3 states no minimum area for RX at all, only a 10-foot front lot line, and Table 120-4 states 0 ft setbacks, 100 percent coverage and no landscaped area. Nothing dimensional in this zone can fail a fourplex, so a RED here will come from somewhere other than the zone. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. Minimum density is now encoded: Table 120-4 states it as an area per unit and `sqft_per_unit` carries that figure, so what is checked against the table is the printed operand and not the units-per-acre quotient nothing prints. The comparison is continuous rather than rounded, which is the conservative reading of a floor -- it never asks for fewer units than the ratio does. Three reliefs in 33.120.213.B are declined, and each lowers a floor: two units off when adding to an existing residential building, the Table 120-7 tree-preservation reduction, and the subtraction of Environmental-zone land from the site area. Group living is exempt and the pod is not group living. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. ENCODED 2026-11-01 (FOLLOWUPS 68): the minimum site frontage of 33.120.206 (#L491-L495; 90 ft on one street for a site more than 160 ft deep on Map 120-2, a short lot held for the unread neighbour exception).'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
@@ -7034,6 +7370,45 @@ drawn_areas:
       what each figure is measured from, so the setback is unread and every
       lot inside is held in review, never green. The zones listed are the
       ones with lots inside on run 109.
+  min_site_frontage:
+    condition: pdx_min_site_frontage_area
+    zones: [RM1, RM2, RM3, RM4, RX, CI1]
+    file: or/multnomah/portland/map-120-2-site-frontage-areas.geojson
+    source: >-
+      Zoning Code Map 120-2, the City's Minimum Required Site Frontage Areas
+      (Portland Maps COP_OpenData_ZoningCode MapServer layer 1278, whose own
+      description is "Zone code map 120-2"; fetched 2026-11-01): Rosewood/
+      Glenfair, Midway, Jade District and 122nd/Hazelwood, copied unchanged.
+    quote: "or/multnomah/portland/33.120/33.120.206.txt#L8"
+    cite: PCC 33.120.206.B
+    note: >-
+      "The minimum required site frontage standard applies in the
+      multi-dwelling zones to sites shown on Map 120-2." Inside means at least
+      nine tenths of the lot inside the outline; a lot the outline cuts is
+      unanswered and held. RMP is left out because it refuses the fourplex
+      outright (Table 120-2), so nothing turns on the map there. CI1 is listed
+      because from 2026-11-01 a home in CI1 takes RM1's standards whole
+      (`amended: ricap11`).
+  eastern_pattern_area:
+    condition: pdx_eastern_pattern_area
+    zones: [RM1, RM2, RM3, RM4, CI1]
+    file: or/multnomah/portland/eastern-pattern-area.geojson
+    source: >-
+      Zoning Code Map 120-3, the Eastern Neighborhoods polygon of the City's
+      Pattern Areas layer (Portland Maps COP_OpenData_ZoningCode MapServer
+      layer 1279, fetched 2026-11-01, map-120-3-pattern-areas.geojson),
+      copied unchanged. The layer's other features are other pattern areas.
+    quote: "or/multnomah/portland/33.120/33.120.220.txt#L23-L25"
+    cite: PCC 33.120.220.B.2.a
+    note: >-
+      "In the RM1, RM2, RM3 and RM4 zones in the Eastern Pattern Area the
+      required minimum rear building setback is an amount equal to 25 percent
+      of the total depth of the site ... The Eastern Pattern Area is shown on
+      Map 120-3." The layer holds one Eastern Neighborhoods polygon and no
+      Eastern slivers; its slivers (0 to 3,275 sq ft) are Inner and Western
+      and are left out. Inside means at least nine tenths of the lot inside;
+      a lot the outline cuts is unanswered and held. RX and RMP are not named
+      by the sentence. CI1 as on min_site_frontage.
   glendoveer_lr75:
     condition: pdx_glendoveer_lr75
     zones: [R7]

@@ -99,10 +99,13 @@ def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
     # Batch B (2026-11-04) adds Northwest Map 562-2, test_portland_plan_districts_3;
     # FOLLOWUPS 153 round 2 (2026-11-08) the Hayden Island and Lombard Subdistrict A
     # main-entrance outlines, test_entrance_orientation.
+    # Maps 120-2 and 120-3 (FOLLOWUPS 68) are base-zone maps held beside them.
     assert set(by_fact) == set(FACTS) | set(PART_1) | set(MIN_FAR) | {
         "pdx_nw_residential_limited",
         "pdx_hayden_island",
         "pdx_lombard_subdistrict_a",
+        "pdx_eastern_pattern_area",
+        "pdx_min_site_frontage_area",
     }
     for fact in FACTS:
         assert by_fact[fact].file == FILES[fact]

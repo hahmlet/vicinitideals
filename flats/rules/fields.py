@@ -114,6 +114,7 @@ _LABELS: dict[str, str] = {
     "min_density_du_per_acre": "min. density (units/acre)",
     "min_density_trigger_lot_sqft": "lot size that triggers min. density",
     "min_frontage_ft": "min. frontage",
+    "min_frontage_one_street": "min. frontage is on one street",
     "min_landscaped_pct": "min. landscaping %",
     "min_lot_depth_ft": "min. lot depth",
     "min_average_lot_width_ft": "min. average lot width",
@@ -156,6 +157,7 @@ _LABELS: dict[str, str] = {
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
+    "parking_rear_yard_max_pct": "max. vehicle share of rear setback",
     "parking_side_street_yard_max_pct": "max. vehicle share of a corner's street-side yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
     "parking_max_per_unit": "max. parking per unit",
@@ -542,6 +544,17 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef("min_frontage_ft", "length_ft", "Minimum street frontage.", False, "min_frontage"),
+    FieldDef(
+        "min_frontage_one_street",
+        "bool",
+        "True where the frontage minimum is owed on ONE street, not summed "
+        "over every street the lot touches. PCC 33.120.206.C.1: \"unless the "
+        "site has at least 90 feet of frontage on a street\" -- a through lot "
+        "50 ft wide on each of two streets has 100 ft of frontage and 50 on "
+        "any street. The screen then reads `min_frontage_ft` against the "
+        "longest of the lot's streets (`LotFacts.street_lines_ft`), and "
+        "leaves it unchecked where the streets were not measured.",
+    ),
     FieldDef(
         "min_lot_depth_ft",
         "length_ft",
@@ -1182,6 +1195,19 @@ _F: tuple[FieldDef, ...] = (
         "(19.607.1.D). An area share, not a frontage share -- a 12-foot drive "
         "down one side of a deep front yard passes this and can still fail "
         "`parking_area_max_frontage_pct` on a narrow lot.",
+        True,
+    ),
+    FieldDef(
+        "parking_rear_yard_max_pct",
+        "percent",
+        "Most of the required rear setback that may be vehicle area. PCC "
+        "33.120.220.B.2.a, in the Eastern Pattern Area: \"No more than 50 "
+        "percent of the Eastern Pattern Area rear setback can be vehicle "
+        "area.\" Everywhere else the rear court shares the rear yard whole "
+        "(`paper.behind_wall_ft`); here only this share of the yard's depth "
+        "may carry it, the rest standing behind the court. Read on depth, "
+        "not area, which is conservative: the court is taken to run the "
+        "yard's whole width.",
         True,
     ),
     FieldDef(
@@ -2193,6 +2219,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_alley_backout_ft",
         "parking_side_prohibited",
         "parking_required_yard_prohibited",
+        "parking_rear_yard_max_pct",
+        "min_frontage_one_street",
         "parking_covered_required",
         "solar_shade_limit",
         "alley_improved_required",

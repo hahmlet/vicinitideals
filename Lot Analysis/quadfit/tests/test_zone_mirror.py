@@ -1139,6 +1139,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     # is unknown) as a question; quadfit has no neighbour fact.
     "parking_lot_line_buffer_doubt_ft": 7,
     "parking_required_yard_prohibited": 1,
+    #: FOLLOWUPS 68 (2026-11-01): Portland RM1-RM4 and RX owe 33.120.206's
+    #: 90 ft on ONE street, on Map 120-2 only; this pipeline sums frontage.
+    "min_frontage_one_street": 5,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,
     "parking_aisle_two_way_ft": 17,

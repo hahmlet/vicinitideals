@@ -113,6 +113,10 @@ class Resolved:
     #: active. This is what a batch view offers as a toggle: a lever is worth
     #: showing only where flipping it changes a number some lot is bound by.
     levers: frozenset[str] = frozenset()
+    #: The levers under which a variant exempts the lot from this standard
+    #: outright (:attr:`flats.rules.model.Value.waivers`). The screen reads
+    #: it to keep a miss from binding while such a fact is unanswered.
+    waived_by: frozenset[str] = frozenset()
     #: Populated when two exceptions applied equally well. The number carried is
     #: the base, and nothing may treat it as an answer.
     ambiguous: tuple[str, ...] = ()
@@ -514,7 +518,7 @@ class RuleSet:
                         resolved[name] = Resolved(
                             name, eff.value, eff.status, eff.prov, layer, origin,
                             via=via, when=eff.when, levers=val.levers,
-                            ambiguous=eff.ambiguous,
+                            waived_by=val.waivers, ambiguous=eff.ambiguous,
                             measured_on=eff.measured_on or val.measured_on,
                             net_area=eff.net_area if eff.measured_on else val.net_area,
                             relief=_relief_of(val), whole_project=eff.whole_project,
@@ -529,7 +533,8 @@ class RuleSet:
                     resolved[name] = Resolved(
                         prev.name, prev.value, prev.status, prev.prov, prev.layer,
                         prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
-                        when=prev.when, levers=prev.levers, ambiguous=prev.ambiguous,
+                        when=prev.when, levers=prev.levers, waived_by=prev.waived_by,
+                        ambiguous=prev.ambiguous,
                         measured_on=prev.measured_on, net_area=prev.net_area,
                         relief=prev.relief, unencoded=prev.unencoded,
                     )
@@ -544,6 +549,7 @@ class RuleSet:
                     via=via,
                     when=eff.when,
                     levers=val.levers,
+                    waived_by=val.waivers,
                     ambiguous=eff.ambiguous,
                     measured_on=eff.measured_on or val.measured_on,
                     net_area=eff.net_area if eff.measured_on else val.net_area,

@@ -241,6 +241,7 @@ _DERIVED_VARIANT = (
     ("times", "the page states the figure this is a multiple of"),
     ("spaces_total", _DERIVED[3][1]),
     ("pct_of_lot_width", "the page states a share of the lot's width, and we hold what that comes to"),
+    ("pct_of_lot_depth", "the page states a share of the lot's depth, and we hold what that comes to"),
     ("reduce_pct", "the page states a reduction by this share, and we hold the number it leaves"),
 )
 
@@ -291,6 +292,7 @@ _PRINTED_AS: dict[str, str | None] = {
     "from_top_degrees": "{n} degrees",
     "reduce_pct": "{n}% less",
     "pct_of_lot_width": "{n}% of the lot's width",
+    "pct_of_lot_depth": "{n}% of the lot's depth",
     "width_to_depth": "{n} : 1",
     # Two figures each, said by :func:`_printed_said` itself.
     "times": "",

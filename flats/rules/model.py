@@ -964,6 +964,14 @@ def _num(v: float) -> str:
     return str(int(v)) if float(v).is_integer() else str(v)
 
 
+#: The lot measures a setback may be stated as a share of, and the rule-file
+#: key each is written under.
+SHARE_MEASURES: dict[str, str] = {
+    "lot_width_ft": "pct_of_lot_width",
+    "lot_depth_ft": "pct_of_lot_depth",
+}
+
+
 class LotWidthShare(BaseModel):
     """A setback stated as a share of the lot's own width, with a floor.
 
@@ -992,17 +1000,34 @@ class LotWidthShare(BaseModel):
     pct: float
     #: The least the yard may be, in feet, where the sentence states one.
     floor_ft: float | None = None
+    #: The lot measure the share is of. The lot's width by default; PCC
+    #: 33.120.220.B.2.a states the Eastern Pattern Area rear setback as "an
+    #: amount equal to 25 percent of the total depth of the site", the same
+    #: bargain on the other axis (``pct_of_lot_depth`` in a rule file). The
+    #: depth is the one :data:`LOT_MEASURES` already carries for bands.
+    of: str = "lot_width_ft"
 
     @model_validator(mode="after")
     def _a_share_is_a_percentage(self) -> LotWidthShare:
+        if self.of not in SHARE_MEASURES:
+            raise ValueError(f"a share of {self.of!r}: one of {', '.join(SHARE_MEASURES)}")
         if isinstance(self.pct, bool) or not 0 < self.pct <= 100:
-            raise ValueError(f"pct_of_lot_width {self.pct} is not a percentage of the lot width")
+            raise ValueError(f"{self.key} {self.pct} is not a percentage of the {self.noun}")
         if self.floor_ft is not None and (isinstance(self.floor_ft, bool) or self.floor_ft < 0):
             raise ValueError(f"floor_ft {self.floor_ft} is not a length")
         return self
 
+    @property
+    def key(self) -> str:
+        """The rule-file key this share is written under."""
+        return SHARE_MEASURES[self.of]
+
+    @property
+    def noun(self) -> str:
+        return "lot depth" if self.of == "lot_depth_ft" else "lot width"
+
     def feet(self, width_ft: float) -> float:
-        """What this lot owes: the share of its width, never under the floor.
+        """What this lot owes: the share of its width (or depth), never under the floor.
 
         Rounded the way `_reduced` rounds a cut base, so 20 percent of 78 ft
         reads 15.6 and not 15.600000000000001.
@@ -1013,7 +1038,7 @@ class LotWidthShare(BaseModel):
         # Deterministic, because the signing fingerprint and the gaps digest
         # both hash `str(value)`; and readable, because the why-page prints it.
         floor = f", not less than {_num(self.floor_ft)} ft" if self.floor_ft is not None else ""
-        return f"{_num(self.pct)}% of lot width{floor}"
+        return f"{_num(self.pct)}% of {self.noun}{floor}"
 
 
 class Variant(BaseModel):
@@ -1139,6 +1164,10 @@ class Variant(BaseModel):
     #: than 100 feet in width" -- and every band must hold. The common case
     #: is still written `band:`, singular, and folded in below.
     bands: tuple[Band, ...] = ()
+    #: Conditions that exclude this variant even when its `when` and bands
+    #: match. Used where the code states a standard for every lot except a
+    #: named configuration.
+    unless: tuple[str, ...] = ()
     prov: Provenance
     status: Status = Status.draft
     reviewer: str | None = None
@@ -1176,7 +1205,15 @@ class Variant(BaseModel):
     def pct_of_lot_width(self) -> float | None:
         """The share the code prints, where this number is one -- the figure
         the citation check looks for on the page."""
-        return self.value.pct if isinstance(self.value, LotWidthShare) else None
+        v = self.value
+        return v.pct if isinstance(v, LotWidthShare) and v.of == "lot_width_ft" else None
+
+    @property
+    def pct_of_lot_depth(self) -> float | None:
+        """The share of the lot's depth the code prints, where this number is
+        one (PCC 33.120.220.B.2.a's 25 percent)."""
+        v = self.value
+        return v.pct if isinstance(v, LotWidthShare) and v.of == "lot_depth_ft" else None
 
     @property
     def floor_ft(self) -> float | None:
@@ -1192,7 +1229,11 @@ class Variant(BaseModel):
         conditions alone, and a banded variant carrying none of them would
         have addressed as the base.
         """
-        names = self.when + tuple(b.token for b in self.bands)
+        names = (
+            self.when
+            + tuple(b.token for b in self.bands)
+            + tuple(f"unless:{name}" for name in self.unless)
+        )
         return tuple(sorted(names))
 
     @model_validator(mode="after")
@@ -1210,7 +1251,7 @@ class Variant(BaseModel):
     def _conditions_are_registered(self) -> Variant:
         # Same refusal as the field registry: an unregistered name is a typo
         # that would become a second lever nobody can satisfy.
-        for name in self.when:
+        for name in (*self.when, *self.unless):
             try:
                 condition(name)
             except KeyError as exc:
@@ -1218,6 +1259,9 @@ class Variant(BaseModel):
                 # other problem in the file instead of aborting the load on the
                 # first typo. Porting a jurisdiction should surface all of them.
                 raise ValueError(exc.args[0]) from None
+        overlap = set(self.when) & set(self.unless)
+        if overlap:
+            raise ValueError(f"a variant both requires and excludes {sorted(overlap)}")
         return self
 
     @model_validator(mode="after")
@@ -2211,8 +2255,18 @@ class Value(BaseModel):
         What makes the batch view possible: a lever is worth offering only when
         flipping it moves a number some lot in the selection is bound by.
         """
-        held = frozenset(c for variant in self.variants for c in variant.when)
+        held = frozenset(
+            c for variant in self.variants for c in (*variant.when, *variant.unless)
+        )
         return held | ({self.qualified_by} if self.qualified_by else frozenset())
+
+    @property
+    def waivers(self) -> frozenset[str]:
+        """Conditions under which some variant says the standard does not
+        exist here (an ``exempt: true`` variant). A lot that misses the
+        number while one of these went unanswered has not missed a standard
+        that certainly applies to it (PCC 33.120.206.C.2.b, FOLLOWUPS 68)."""
+        return frozenset(c for v in self.variants if v.exempt for c in v.when)
 
 
 
@@ -2269,6 +2323,8 @@ class Value(BaseModel):
         for v in self.variants:
             if not set(v.when) <= held:
                 continue
+            if not set(v.unless).isdisjoint(held):
+                continue
             verdicts = [(b, b.holds(lot)) for b in v.bands]
             if any(h is False for _, h in verdicts):
                 # Outside one of its bands, so not this variant -- whatever
@@ -2314,7 +2370,8 @@ class Value(BaseModel):
             )
         winner = best[0]
         if isinstance(winner.value, LotWidthShare):
-            width = None if lot is None else lot.get("lot_width_ft")
+            measure = winner.value.of
+            width = None if lot is None else lot.get(measure)
             if width is None:
                 # The sentence selected this lot and the number it states is
                 # a share of a width nobody measured. Same refusal as an
@@ -2326,7 +2383,7 @@ class Value(BaseModel):
                     self.status,
                     self.reviewer,
                     self.reviewed,
-                    ambiguous=("lot_width_ft:unmeasured",),
+                    ambiguous=(f"{measure}:unmeasured",),
                     exempt=self.exempt,
                 )
             return Effective(
@@ -2377,7 +2434,7 @@ def _bands_overlap(a: Band, b: Band) -> bool:
 
 def _depth(v: Variant) -> int:
     """How specific a variant is — every thing that had to be true to pick it."""
-    return len(v.when) + len(v.bands)
+    return len(v.when) + len(v.bands) + len(v.unless)
 
 
 def check_kind(name: str, v: Any) -> None:

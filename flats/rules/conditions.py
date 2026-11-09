@@ -1499,6 +1499,20 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_min_site_frontage_area",
+        "site_fact",
+        "The parcel is in one of the Eastern Portland centres shown on Map "
+        "120-2, where a multi-dwelling site more than 160 ft deep may take "
+        "new homes only with at least 90 ft of frontage on a street (PCC "
+        "33.120.206). Assumed unknown: it decides the colour.",
+        evidence=(
+            "Zoning Code Map 120-2, the City's Minimum Required Site Frontage "
+            "Areas layer (Portland Maps COP_OpenData_ZoningCode layer 1278) -- "
+            "held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_east_corridor_min_far_half",
         "site_fact",
         "The lot is in an East Corridor plan district area that Map 521-3 "
@@ -1552,6 +1566,23 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_site_frontage_neighbour_exception",
+        "site_fact",
+        "Every lot that shares a side lot line with the site is zoned other "
+        "than multi-dwelling, or is multi-dwelling and meets its zone's "
+        "minimum density or holds at least three homes -- the exception PCC "
+        "33.120.206.C.2.b makes to the 90 ft frontage rule. Nothing here "
+        "counts the homes on the neighbouring lots, so a deep, narrow lot "
+        "inside Map 120-2 is held for review rather than refused. Assumed "
+        "unknown: it decides the colour.",
+        evidence=(
+            "nothing yet: the neighbouring lots' homes and density are not "
+            "read (the per-line neighbour zoning could answer the first test "
+            "alone)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_hayden_island",
         "site_fact",
         "The lot is in Portland's Hayden Island plan district. In its "
@@ -1587,6 +1618,21 @@ _C: tuple[ConditionDef, ...] = (
         evidence=(
             "the Map 562-2 area as Portland Maps publishes it (Limited Use "
             "Areas, layer 157) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_eastern_pattern_area",
+        "site_fact",
+        "The parcel is in Portland's Eastern Pattern Area (Map 120-3), where "
+        "the multi-dwelling zones' rear setback is a quarter of the site's "
+        "depth, no more than half of it vehicle area, on lots deeper than "
+        "100 ft that are not corner lots (PCC 33.120.220.B.2). Assumed "
+        "unknown: it decides the colour.",
+        evidence=(
+            "Zoning Code Map 120-3, the Eastern Neighborhoods polygon of the "
+            "City's Pattern Areas layer (Portland Maps COP_OpenData_ZoningCode "
+            "layer 1279) -- held as Portland's drawn_areas"
         ),
         assume=None,
     ),
@@ -1957,6 +2003,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_south_end",
     "pdx_east_corridor_min_far_half",
     "pdx_east_corridor_min_far_one",
+    "pdx_eastern_pattern_area",
     "pdx_gateway_min_far",
     "pdx_glendoveer_lr75",
     "pdx_hayden_island",
@@ -1964,6 +2011,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "pdx_johnson_creek_land_division",
     "pdx_johnson_creek_unmeasured",
     "pdx_lombard_subdistrict_a",
+    "pdx_min_site_frontage_area",
     "pdx_nw_residential_limited",
     "pdx_plan_district_unmeasured",
     "pdx_special_building_setback",
