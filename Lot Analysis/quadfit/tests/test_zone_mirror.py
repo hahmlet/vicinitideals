@@ -1061,6 +1061,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: City's six residential zones carried their own blocks; round 3 folded
     #: them back into the city default.)
     "entrance_faces_street": 55,
+    #: rel4 move-read finding 2 (2026-11-08): the angle a door face may stand
+    #: off the street (`entrance_angle_max_deg`, the printed 45 or 0) -- read
+    #: by the FLATS facing fitter alone; quadfit has no angle column.
+    "entrance_angle_max_deg": 25,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
