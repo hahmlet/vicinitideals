@@ -44,3 +44,9 @@
      find; 1005.09.txt L5, L43-L44 name it). NEEDS A DOWNLOAD: the ZDO Section 1005 PDF that
      carries Maps 1005-1 and 1005-2, from https://www.clackamas.us/planning/zdo1005 (the HTML
      page there is text only). Skipped; the 15 ft PLACEHOLDER and FLATS' UNKNOWN stand.
+     2026-11-09: DONE for the front yard. Map 1005-1 downloaded (dochub PDF, stored as
+     flats/config/areas/or/clackamas/_unincorporated/zdo-map-1005-1-fuller-road-regulating-plan
+     .map-only.pdf); it types every station-area street A-D. FLATS holds front 10 / max 15 (the
+     Landscape window, inside Porch/Stoop/Terrace's 5-15 too) on every SCMU lot, since which street
+     a lot fronts is not carried; quadfit's PLACEHOLDER is gone (front 10). Minimum building depth
+     and ground-floor height (Sectors 1-2) remain unread.

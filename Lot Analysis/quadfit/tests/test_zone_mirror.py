@@ -621,7 +621,9 @@ def test_nothing_in_the_screen_is_unquoted(audit_scan) -> None:
     # TO:R40-80 front yards are read (Table B(2) prints "None"), no longer placeholders.
     # 25 -> 26 on 2026-11-08 (FOLLOWUPS 52): Clackamas SCMU's front yard, keyed by ZDO
     # 1005.09 to Map 1005-1's street types, which nothing reads.
-    assert len(placeholders) == 26
+    # 26 -> 25 on 2026-11-09 (FOLLOWUPS 52): SCMU's front yard read off Map 1005-1
+    # (10 ft, the Landscape minimum), no longer a placeholder.
+    assert len(placeholders) == 25
     assert agree > 460, agree
 
 
@@ -1075,7 +1077,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "min_landscaped_pct": 60,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
-    "setback_front_max_ft": 104,
+    # 104 -> 105 on 2026-11-09 (FOLLOWUPS 52): Clackamas SCMU's 15 ft maximum, read
+    # off Map 1005-1 with its 10 ft minimum (ZDO 1005.09(H)(1), (K)(1)).
+    "setback_front_max_ft": 105,
     #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
     #: streets, every street, the front) and the share of the facade it binds --
     #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
