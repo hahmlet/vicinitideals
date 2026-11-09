@@ -1045,9 +1045,10 @@ siteplan:
     # 39.8045(A)(2): 300 square feet per unit of shared outdoor recreation for
     # an apartment development of three-bedroom units, which is 1,200 for this
     # pod. MR-4 permits the pod outright so review never starts, and the four
-    # Portland pockets are governed by PCC, where Table 110-4 asks 250 -- not
-    # mirrored here, because the corpus reads that number into the Portland
-    # layer and not into this one.
+    # Portland pockets are governed by PCC, where Table 110-4 asks 250 per lot
+    # -- mirrored here since 2026-11-09, when the corpus read it into this
+    # layer off its own copy of 33.110 (Title 33 is the pockets' code under
+    # the 2002 county/city planning IGA). RF waits on Steph.
     #
     # No approach ceiling, no frontage share, no maneuvering cap and no front
     # parking ban: read and absent. 39.6580(C) comes closest -- "not more than
@@ -1076,15 +1077,15 @@ siteplan:
         # 2026-10-01: LR-10's front is 30 (39.4878(F)).
         LR10: 30
       open_space_sqft_by_zone:
-        R20: null
-        R10: null
-        R7: null
+        R20: 250
+        R10: 250
+        R7: 250
         LR7: 1200
-        # Null for the same reason the R zones are: 39.8045(A)(2)'s shared
+        # Null because 39.8045(A)(2)'s shared
         # outdoor recreation area rides on LR-7's design review and reaches no
         # other district. An absence read, not a field left blank.
         MR4: null
-        R5: null
+        R5: 250
         # 2026-09-30: neither states an outdoor area; the shared recreation
         # area of 39.8045(A)(2) rides on LR-7's design review only.
         RF: null

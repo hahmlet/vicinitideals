@@ -354,8 +354,11 @@ def test_lr7_owes_an_open_space_reserve_because_of_how_its_use_is_approved(
     assert reserve.per_dwelling == 300
     assert reserve.value == 1200
 
-    for elsewhere in ("MR4", "R5", "R7", "R10", "R20"):
-        assert "open_space_min_sqft" not in county.zones[elsewhere].values
+    assert "open_space_min_sqft" not in county.zones["MR4"].values
+    # The pockets owe Title 33's outdoor area instead (2026-11-09), never this one.
+    for pocket in ("R5", "R7", "R10", "R20"):
+        assert county.zones[pocket].values["open_space_min_sqft"].value == 250
+        assert county.zones[pocket].values["open_space_min_sqft"].per_dwelling is None
 
 
 def test_the_loading_space_rounds_itself_out_of_existence(

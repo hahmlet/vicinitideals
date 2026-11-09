@@ -145,3 +145,17 @@ def test_the_pockets_read_120_and_never_table_266_4(
             "parking_side_prohibited",
         ):
             assert values[absent].exempt, f"{zone}.{absent} should be read as stated-none"
+
+
+def test_the_pockets_owe_table_110_4s_outdoor_area_per_lot(
+    county: Layer, store: ProvenanceStore, corpus: RuleSet
+) -> None:
+    """250 square feet and a 12-foot square, per lot, RF through R5."""
+    lines = _lines(store, f"{COUNTY}/33.110.txt")
+    assert lines[434].split()[:6] == ["Standard", "RF", "R20", "R10", "R7", "R5"]
+    assert lines[470].count("250 sq. ft.") == 5
+    assert "per lot" in lines[902]
+    for zone in POCKETS:
+        got = corpus.resolve(COUNTY, zone)
+        assert got.get("open_space_min_sqft") == 250
+        assert got.get("open_space_min_dimension_ft") == 12

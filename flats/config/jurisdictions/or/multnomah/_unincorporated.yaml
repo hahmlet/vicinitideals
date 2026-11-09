@@ -3305,6 +3305,23 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+    # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
+    # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
+    # square must fit inside it. The quadfit mirror used to leave this out
+    # because the corpus held it only on the Portland layer; it is now read here
+    # off this layer's own copy of 33.110, the same text at the same lines.
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3565,6 +3582,23 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+    # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
+    # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
+    # square must fit inside it. The quadfit mirror used to leave this out
+    # because the corpus held it only on the Portland layer; it is now read here
+    # off this layer's own copy of 33.110, the same text at the same lines.
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -3890,6 +3924,23 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+    # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
+    # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
+    # square must fit inside it. The quadfit mirror used to leave this out
+    # because the corpus held it only on the Portland layer; it is now read here
+    # off this layer's own copy of 33.110, the same text at the same lines.
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -4192,6 +4243,23 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+    # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
+    # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
+    # square must fit inside it. The quadfit mirror used to leave this out
+    # because the corpus held it only on the Portland layer; it is now read here
+    # off this layer's own copy of 33.110, the same text at the same lines.
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
+    open_space_min_dimension_ft:
+      value: 12
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
