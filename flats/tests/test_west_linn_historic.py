@@ -253,7 +253,9 @@ def test_the_binding_references_are_ruled_rather_than_still_asking(
     conditional-use lot size for a use that is permitted outright, a declined
     variance, a road, an exemption inside a definition, and a commercial design
     district this building is the other half of."""
-    for ref in ("34", "60.070", "75", "60.090", "28.040", "58"):
+    # 28.040 left the map 2026-11-09 (FOLLOWUPS 105 round 4): Chapter 28 is held, so the
+    # reference resolves and its reading is a comment above the crossrefs block.
+    for ref in ("34", "60.070", "75", "60.090", "58"):
         assert ref in west_linn.crossrefs, ref
         assert len(west_linn.crossrefs[ref]) > 100, ref
 

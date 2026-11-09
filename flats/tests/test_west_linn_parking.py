@@ -289,7 +289,9 @@ def test_the_three_standards_this_model_cannot_hold_are_still_refused(
         r for r in refusals() if r.kind == "comments" and "west-linn" in r.where
     ]
     # 2026-11-06 (FOLLOWUPS 146): five, with 54.020(B)'s street strip and landscaped area.
-    assert len(mine) == 5, [r.text[:60] for r in mine]
+    # 2026-11-09 (FOLLOWUPS 105 round 4): eight, with Chapters 42 and 28 read and not encoded
+    # (the block header, the vision triangle, the river protection cap).
+    assert len(mine) == 8, [r.text[:60] for r in mine]
     subjects = " ".join(r.text.lower() for r in mine)
     assert "curb cut spacing" in subjects
     assert "alley" not in subjects
