@@ -5809,6 +5809,24 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P: the use is LIMITED,
       # and note 1(b) states the limit as three gates that must all hold --
@@ -6078,6 +6096,24 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P. Note 1(a) states the
       # limit: a lot of record 6,500 sq ft or smaller with 70 feet of street
@@ -6343,6 +6379,24 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6529,6 +6583,24 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6715,6 +6787,24 @@ zones:
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
           quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
+    # THE TOWNHOUSE DRIVEWAY APPROACH, read 2026-11-09 (pagecheck-findings).
+    # 4.1152 S12(b) is 7.0431(B)(2)(b) word for word, read under the Townhouse
+    # heading that reaches this zone (7.0431 does not: L3-L5 name DRL-1 and
+    # DRL-2). The 18 limb is held, as in the city default; 34 percent only
+    # exceeds it above 53 feet of frontage, so a wider lot is screened tighter
+    # than the code asks, never looser. S12(c) sends the approach to Public
+    # Works, whose 9-foot minimum the city default already holds.
+    driveway_approach_max_width_ft:
+      value: 10
+      cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S12)(b), for each set of attached townhouse units the total width of all driveway approaches on one street frontage, 18 feet or 34 percent of that frontage, whichever is greater (the 18 limb)
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L684,L687,L692-L693"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
