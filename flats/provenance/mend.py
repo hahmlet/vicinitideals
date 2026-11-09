@@ -161,6 +161,32 @@ JOIN_MENDS: dict[str, tuple[tuple[str, str], ...]] = {
     "or/clackamas/canby/cmc.16.76.010.txt": (
         ("such abonus.", "such a bonus."),
     ),
+    # A capital kerned off its word ("T avern"), which the readable cut mends
+    # only for a word the city prints whole three times; these it prints
+    # fewer. pdfplumber reads each whole on its page (FOLLOWUPS 116).
+    "or/clackamas/tualatin/52.cr.txt": (("• T avern or", "• Tavern or"),),
+    "or/clackamas/tualatin/61.mg.txt": (("Leveton T ax Increment", "Leveton Tax Increment"),),
+    "or/clackamas/tualatin/64.mbp.txt": (("the T onquin Light", "the Tonquin Light"),),
+    "or/clackamas/tualatin/71.wetlands-protection.txt": (
+        ("T ownship 2 South", "Township 2 South"),
+        ("the T own of Tualatin", "the Town of Tualatin"),
+        ("said T own,", "said Town,"),
+    ),
+    "or/clackamas/tualatin/72.natural-resource-overlay.txt": (
+        ("the T onquin Scablands", "the Tonquin Scablands"),
+        ("T ax Lot 100", "Tax Lot 100"),
+        ("County T ax Map", "County Tax Map"),
+        ("SW T onka Street", "SW Tonka Street"),
+    ),
+    # A space inside a word where the PDF prints none.
+    "or/clackamas/tualatin/73A.020-060.residential-design.txt": (
+        ("dwellings, dup lexes,", "dwellings, duplexes,"),
+    ),
+    # "decision-mak-" / "ing": a margin hyphen the readable cut kept, so the
+    # section read "decision-mak-ing". The word goes whole on the first line.
+    "or/washington/king-city/kcc.16.114.kingston-terrace.txt": (
+        ("decision-mak-\ning", "decision-making\n"),
+    ),
 }
 
 
