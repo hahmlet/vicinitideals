@@ -5792,6 +5792,23 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P: the use is LIMITED,
       # and note 1(b) states the limit as three gates that must all hold --
@@ -6044,6 +6061,23 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
     quadplex_allowed:
       # Table 4.1120 reads L1 in this column, not P. Note 1(a) states the
       # limit: a lot of record 6,500 sq ft or smaller with 70 feet of street
@@ -6292,6 +6326,23 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6461,6 +6512,23 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
@@ -6630,6 +6698,23 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
+    # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
+    # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
+    # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
+    # its S11 says the same thing in the same words, so the value does not move;
+    # the citation does. The parent-lot base is the city default's, unchanged.
+    parking_alley_access_required:
+      value: true
+      cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: GDC 4.1152(A)(4)(S11), Additional Standards for Townhouse -- for lots abutting an alley, auto access to parking areas shall be taken from the alley
+          quote: "or/multnomah/gresham/4/4.1152.txt#L7,L670,L673-L674"
     quadplex_allowed:
       # Table 4.1120: Quadplex NP in this column (L246), Townhouse P (L247).
       # Steph 2026-10-15 (rulings.yaml 2026-10-15-townhomes-separate-lots):
