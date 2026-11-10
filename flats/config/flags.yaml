@@ -597,6 +597,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-FRONTAGE-LINE:
+    description: "The lot clears the minimum street frontage on its streets added together, or on its longest street, and not on its shortest street alone; the code does not settle which street the minimum is owed on (or, measured from the end of the corner curve, the curve end was not taken)"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone, design]
+    path: "Read which street line the zone's minimum frontage is owed on and set min_frontage_line or min_frontage_one_street (FOLLOWUPS 175)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-FRONT-MAX-DRAWN:
     description: "The zone states a maximum front setback and no fitting building, or no street line, was drawn to measure the building's distance from the street on"
     kind: categorical

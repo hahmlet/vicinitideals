@@ -2585,6 +2585,10 @@ zones:
       the step-back binds and the relief is recorded rather than encoded --
       the lever would need a variant per existing variant and a condition
       nobody can answer.
+    # Table 4.0130 G.2: the corner row's 40 ft carries note 10, "As measured from the\ncorner radius end point to the property corner" -- one street, without its\nshare of the rounded corner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83,L142"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L80"
@@ -2985,6 +2989,10 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L92"
+    # Table 4.0130 G.2: "40 ft. as measured from the corner radius end point to\nthe property corner" -- one street, without its share of the rounded\ncorner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83-L87"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L80"
@@ -3233,6 +3241,10 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L92"
+    # Table 4.0130 G.2: "40 ft. as measured from the corner radius end point to\nthe property corner" -- one street, without its share of the rounded\ncorner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0130.txt#L81,L83-L87"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L80"
@@ -4668,6 +4680,10 @@ zones:
       cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
       quote: "or/multnomah/gresham/3/3.0103.txt#L1049-L1050"
       via: "or/multnomah/gresham/7/7.0420.txt#L166"
+    # Table 4.0130 G.2 note 10, the townhouse corner row: "As measured from the\ncorner radius end point to the property corner" (FOLLOWUPS 175). The\nplex corner 45 ft states no measure; this reading is the stricter one there.
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0130.txt#L81-L82,L142"
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4/4.0130.txt#L80"
@@ -5543,6 +5559,10 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4/4.1130.txt#L118"
+    # 4.1130: "corner lots shall be 40 feet as measured from the corner radius end\npoint to the property corner" -- one street, without its share of the\nrounded corner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.1130.txt#L118-L119"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.1130.txt#L118"
@@ -5769,6 +5789,10 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4/4.1130.txt#L118"
+    # 4.1130: "corner lots shall be 40 feet as measured from the corner radius end\npoint to the property corner" -- one street, without its share of the\nrounded corner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.1130.txt#L118-L119"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.1130.txt#L118"
@@ -6210,6 +6234,10 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4/4.1130.txt#L118"
+    # 4.1130: "corner lots shall be 40 feet as measured from the corner radius end\npoint to the property corner" -- one street, without its share of the\nrounded corner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.1130.txt#L118-L119"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.1130.txt#L118"
@@ -6612,6 +6640,10 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4/4.1130.txt#L118"
+    # 4.1130: "corner lots shall be 40 feet as measured from the corner radius end\npoint to the property corner" -- one street, without its share of the\nrounded corner (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.1130.txt#L118-L119"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.1130.txt#L118"
@@ -7800,6 +7832,10 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.0430.txt#L134"
+    # Table 4.0430 notes 8 and 11: corner lots "as measured from the corner\nradius end point to the property corner" (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4/4.0430.txt#L14-L15"
@@ -8021,6 +8057,10 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.0430.txt#L134"
+    # Table 4.0430 notes 8 and 11: corner lots "as measured from the corner\nradius end point to the property corner" (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18"
@@ -8243,6 +8283,10 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.0430.txt#L134"
           via: "or/multnomah/gresham/4/4.0430.txt#L8-L13"
+    # Table 4.0430 notes 8 and 11: corner lots "as measured from the corner\nradius end point to the property corner" (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18"
@@ -8458,6 +8502,10 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.0430.txt#L134"
+    # Table 4.0430 notes 8 and 11: corner lots "as measured from the corner\nradius end point to the property corner" (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18"
@@ -8677,6 +8725,10 @@ zones:
           when: [unit_lots]
           quote: "or/multnomah/gresham/4/4.0430.txt#L134"
           via: "or/multnomah/gresham/4/4.0430.txt#L8-L13"
+    # Table 4.0430 notes 8 and 11: corner lots "as measured from the corner\nradius end point to the property corner" (FOLLOWUPS 175).
+    min_frontage_line:
+      value: radius_end
+      quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
     min_frontage_ft:
       # Row B: 100 ft for residential. Note 11 rewrites it for townhouses --
       # 16 ft interior, 32 ft on a corner without an alley or shared access,

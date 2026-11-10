@@ -601,6 +601,16 @@ COURT_UNDRIVEN = "court_undriven"
 #: need not cross, and never a pass.
 DRIVE_STREET = "drive_street"
 
+#: A minimum street frontage the lot clears on a lenient reading and not on
+#: the strictest (FOLLOWUPS 175, :func:`frontage_readings`): its streets added
+#: together, or its longest street, clear the number and its shortest street
+#: alone does not, and the code does not settle which it means -- or, where
+#: the code measures a corner lot's frontage from the end of the corner curve
+#: (Gresham), that measurement was not taken. Joins ``_checks``'s
+#: ``unmeasured``, so it reports as ``FACT_UNOBSERVED``: a question, never a
+#: pass, and never a red while some reading clears it.
+FRONTAGE_LINE = "min_frontage_line"
+
 #: The drawn building against a stated maximum front setback
 #: (``setback_front_max_ft``, FOLLOWUPS 147), in a zone that asks no building
 #: share of the frontage (where one is asked, :func:`_building_frontage`
@@ -807,6 +817,13 @@ class LotFacts:
     #: order: what a building share of each street's frontage is read
     #: against (FOLLOWUPS 109). Empty where nothing measured the streets.
     street_lines_ft: tuple[float, ...] = ()
+    #: The same streets in the same order, each measured only to where the
+    #: rounded corner it shares with another street begins
+    #: (:func:`flats.fit.frontage.street_lines_to_curve_ft`): a corner-lot
+    #: frontage minimum the code measures "from the corner radius end point
+    #: to the property corner" (Gresham, ``min_frontage_line: radius_end``).
+    #: Empty where nothing measured the streets.
+    street_lines_curve_end_ft: tuple[float, ...] = ()
     #: Each of those streets' class rank off the city's TSP map, on the same
     #: chains in the same order (:func:`flats.ingest.quadfit.street_line_ranks`;
     #: 0 the lowest, an order within one city's map). None on a street whose
@@ -1258,6 +1275,57 @@ def _driveway_cap_frontages(rules: ZoneResolution, lot: LotFacts) -> tuple[float
     return (bounded(frontage),) if longest is None else (bounded(frontage), bounded(longest))
 
 
+def frontage_readings(rules: ZoneResolution, lot: LotFacts) -> tuple[float | None, float | None]:
+    """The lot's street frontage on the strictest and on the most lenient
+    reading of the code's minimum, in feet (FOLLOWUPS 175). None where that
+    reading went unmeasured.
+
+    A lot with one street has one frontage, and both are ``frontage_ft``.
+    With more than one street (a corner, a through lot) the minimum was read
+    against every street line added together, and most codes state it as
+    one street's (Gresham's corner row, "from the corner radius end point to
+    the property corner"). So, by what the code says:
+
+    * ``min_frontage_one_street`` -- owed on ANY one street ("at least 90
+      feet of frontage on a street", PCC 33.120.206.C.1): the longest street,
+      on both readings.
+    * ``min_frontage_line: front`` -- owed on the front line ("Minimum Front
+      Lot Line Length", MCC 39.4245; Hillsboro 12.01.500 "the length of the
+      front lot line"): the shortest street on the strict reading and the
+      longest on the lenient one, unless the code fixes a corner lot's front
+      as its shortest street line (``front_lot_line_corner: shortest``),
+      where the shortest is the answer.
+    * ``min_frontage_line: radius_end`` -- one street, measured on a corner
+      lot only to where the rounded corner begins
+      (:attr:`LotFacts.street_lines_curve_end_ft`): the shortest such
+      street strict, the longest lenient; the strict one unmeasured where
+      the curve ends were not taken.
+    * unstated -- one street or all of them; the code does not say: the
+      shortest street strict, the summed frontage lenient.
+    """
+    streets = [float(x) for x in lot.street_lines_ft if x and x > 0]
+    if rules.get("min_frontage_one_street") is True:
+        most = max(streets) if streets else None
+        return most, most
+    line = rules.get("min_frontage_line")
+    if line == "radius_end" and lot.corner:
+        ends = [float(x) for x in lot.street_lines_curve_end_ft if x and x > 0]
+        if ends and len(lot.street_lines_curve_end_ft) == len(lot.street_lines_ft):
+            return min(ends), max(ends)
+        return None, (max(streets) if streets else None)
+    if len(streets) < 2:
+        if lot.corner and not streets:
+            # Two streets and neither measured: the sum is the lenient side.
+            return None, (lot.frontage_ft if lot.frontage_ft > 0 else None)
+        return lot.frontage_ft, lot.frontage_ft
+    least, most = min(streets), max(streets)
+    if line in ("front", "radius_end"):
+        if lot.corner and rules.get("front_lot_line_corner") == "shortest":
+            return least, least
+        return least, most
+    return least, max(most, lot.frontage_ft)
+
+
 def _checks(
     rules: ZoneResolution,
     lot: LotFacts,
@@ -1529,14 +1597,30 @@ def _checks(
         # Owed on ONE street where the code says so (PCC 33.120.206.C.1, "at
         # least 90 feet of frontage on a street"): the longest of the lot's
         # streets, not their sum, and unchecked where they went unmeasured.
-        frontage = lot.frontage_ft
-        if rules.get("min_frontage_one_street") is True and min_front is not None:
-            streets = [float(x) for x in lot.street_lines_ft if x and x > 0]
-            frontage = max(streets) if streets else None
-        if front_answered and frontage is not None:
-            lot_check("min_frontage_ft", frontage, min_front)
-        else:
+        # On a lot with more than one street the code's words pick the
+        # reading (:func:`frontage_readings`, FOLLOWUPS 175): GREEN only on
+        # the strictest, a question where only a lenient one clears it, and a
+        # fail only where every reading fails.
+        strict, lenient = frontage_readings(rules, lot)
+        if not front_answered or min_front is None or (strict is None and lenient is None):
             unchecked.append("min_frontage_ft")
+        elif "min_frontage_ft" in relieved and strict is not None:
+            lot_check("min_frontage_ft", strict, min_front)
+        else:
+            got = None
+            if strict is not None:
+                got = policy.evaluate(
+                    "min_frontage_ft", strict, min_front, is_maximum=False, jurisdiction=where
+                )
+            if got is not None and got.verdict is Verdict.passes:
+                out.append(got)
+            elif lenient is not None and lenient >= min_front:
+                unchecked.append("min_frontage_ft")
+                unmeasured.add(FRONTAGE_LINE)
+            elif lenient is not None:
+                lot_check("min_frontage_ft", lenient, min_front)
+            else:
+                unchecked.append("min_frontage_ft")
     # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
     # "Total width of all driveways shall not exceed 50 percent of the street
     # frontage"). The pod has one drive, so its width at the street against
@@ -4139,6 +4223,7 @@ _MEASURED_FLAG: dict[str, str] = {
     LOT_OF_RECORD_CONDITION: "MEASURE-LOT-OF-RECORD",
     BUILDING_FRONTAGE: "MEASURE-BUILDING-FRONTAGE",
     FRONTAGE_STREET: "MEASURE-FRONTAGE-STREET",
+    FRONTAGE_LINE: "MEASURE-FRONTAGE-LINE",
     MORE_BUILDINGS: "FRONTAGE-MORE-BUILDINGS",
     FRONT_MAX_DRAWN: "MEASURE-FRONT-MAX-DRAWN",
     FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",

@@ -1868,6 +1868,10 @@ zones:
       value: 35
       cite: Washington County CDC 303-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/303/303-7.txt#L44,L46"
+    # "Minimum frontage on a public or private street": owed on one street, any\nof them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or\nR-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/303/303-7.txt#L49-L50"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 303-7.1 E(2), all other Middle Housing - no minimum
@@ -2041,6 +2045,10 @@ zones:
       value: 35
       cite: Washington County CDC 304-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/304/304-7.txt#L46,L48"
+    # "Minimum frontage on a public or private street": owed on one street, any\nof them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or\nR-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/304/304-7.txt#L51-L52"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 304-7.1 E(2), all other Middle Housing - no minimum
@@ -2217,6 +2225,10 @@ zones:
       value: 35
       cite: Washington County CDC 305-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/305/305-7.txt#L47,L49"
+    # "Minimum frontage on a public or private street": owed on one street, any\nof them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or\nR-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/305/305-7.txt#L52-L53"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 305-7.1 E(2), all other Middle Housing - no minimum
@@ -2738,6 +2750,10 @@ zones:
       value: 35
       cite: Washington County CDC 307-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/307/307-7.txt#L44,L46"
+    # "Minimum frontage on a public or private street": owed on one street, any\nof them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or\nR-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/307/307-7.txt#L49-L50"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 307-7.1 E(2), all other Middle Housing - no minimum
@@ -3474,6 +3490,11 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 375 Table B(1), Townhouses minimum average 1,500 sq ft in TO:R9-12 and TO:R12-18
           quote: "or/washington/_unincorporated/375/375-10.txt#L278-L282"
+    # "Minimum frontage on a public or private street": owed on one street, any
+    # of them (FOLLOWUPS 175; the Portland 33.120.206 reading).
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/375/375-10.txt#L288-L291"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 375 Table B(1), minimum frontage N/A for plexes

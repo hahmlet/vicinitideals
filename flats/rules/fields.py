@@ -115,6 +115,7 @@ _LABELS: dict[str, str] = {
     "min_density_trigger_lot_sqft": "lot size that triggers min. density",
     "min_frontage_ft": "min. frontage",
     "min_frontage_one_street": "min. frontage is on one street",
+    "min_frontage_line": "which line the min. frontage is on",
     "min_landscaped_pct": "min. landscaping %",
     "min_lot_depth_ft": "min. lot depth",
     "min_average_lot_width_ft": "min. average lot width",
@@ -554,6 +555,26 @@ _F: tuple[FieldDef, ...] = (
         "any street. The screen then reads `min_frontage_ft` against the "
         "longest of the lot's streets (`LotFacts.street_lines_ft`), and "
         "leaves it unchecked where the streets were not measured.",
+    ),
+    FieldDef(
+        "min_frontage_line",
+        "enum",
+        "Which line a minimum street frontage is owed on, where the code "
+        "says (FOLLOWUPS 175). On a lot with one street it changes nothing. "
+        "On a corner or through lot, unstated, the screen passes the lot "
+        "only on its SHORTEST street and holds it as a question where only "
+        "its streets added together clear the number. `front`: the front "
+        "lot line (MCC 39.4245 \"Minimum Front Lot Line Length\"; Hillsboro "
+        "12.01.500 \"the length of the front lot line\"), so never the sum: "
+        "the shortest street passes, the longest is a question, both short "
+        "fails -- and where `front_lot_line_corner` is `shortest` the "
+        "shortest is the answer. `radius_end`: one street, and on a corner "
+        "lot measured \"from the corner radius end point to the property "
+        "corner\" (Gresham Table 4.0130 G.2, 4.0430 notes 8 and 11, 4.1130) "
+        "-- each street without its share of the rounded corner "
+        "(`LotFacts.street_lines_curve_end_ft`).",
+        None,
+        choices=("front", "radius_end"),
     ),
     FieldDef(
         "min_lot_depth_ft",
@@ -2221,6 +2242,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_required_yard_prohibited",
         "parking_rear_yard_max_pct",
         "min_frontage_one_street",
+        "min_frontage_line",
         "parking_covered_required",
         "solar_shade_limit",
         "alley_improved_required",

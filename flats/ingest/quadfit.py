@@ -86,6 +86,7 @@ from flats.fit.frontage import (
     building_runs,
     parking_share,
     street_chains,
+    street_lines_to_curve_ft,
     street_runs,
 )
 from flats.fit.outdoor import largest_square, open_ground
@@ -2024,6 +2025,10 @@ def lot_from_row(
         # Every street's line, for a building share of each street's
         # frontage (FOLLOWUPS 109).
         street_lines_ft=street_lines_ft(edges),
+        # The same streets each measured only to where the rounded corner
+        # begins: Gresham's corner frontage, "from the corner radius end
+        # point to the property corner" (FOLLOWUPS 175).
+        street_lines_curve_end_ft=street_lines_to_curve_ft(edges) if edges is not None else (),
         # Each of those streets' class rank, on the same chains in the same
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
