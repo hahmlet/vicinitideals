@@ -425,7 +425,7 @@ def test_the_street_off_the_corridor_is_quoted_from_the_plain_street_row(zone: s
     if zone in LOW_ZONES:
         assert value.value == 0
         # 33.130.txt#L618,L640 until the cut (FOLLOWUPS 123).
-        assert value.prov.quote == "or/multnomah/portland/33.130/33.130.210.txt#L78,L99"
+        assert value.prov.quote == "or/multnomah/portland/33.130/33.130.210.txt#L65,L86"
     else:
         # Off the corridor a line can still face an R zone across a local
         # street: the across-the-street row, 5 ft.

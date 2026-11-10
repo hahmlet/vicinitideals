@@ -306,7 +306,7 @@ def test_assumed_corner_is_held_but_measured_noncorner_still_fails(corpus) -> No
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
     s = "or/multnomah/portland/33.120/"
-    rear_line = store.quote("or/multnomah/portland/33.910/33.910.030.txt#L535-L536")
+    rear_line = store.quote("or/multnomah/portland/33.910/33.910.030.txt#L549-L551")
     assert (
         "For other irregularly shaped lots, the rear lot line is all lot lines that are "
         "most nearly opposite the front lot line."

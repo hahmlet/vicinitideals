@@ -1554,12 +1554,12 @@ code:
 # S-1) and RR (MCC 39.4350) cite the Multnomah County Code, which still
 # needs its own declared source.
 - id: "33.110"
-  url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+  url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
   title: Chapter 33.110 Single-Dwelling Zones (Portland-administered pockets)
 # The Constrained Sites overlay over the same pockets: Portland's zoning map
 # carries the "z" letter into the UNINC areas it administers (FOLLOWUPS 42(a)).
 - id: "33.418"
-  url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+  url: https://www.portland.gov/sites/default/files/code/418-constrained_0.pdf
   title: Chapter 33.418 Constrained Sites Overlay Zone (Portland-administered pockets)
 # The county serves MCC Chapter 39 as one 476-page PDF; the slice keeps the
 # LR-7 article (39.4848-39.4862, dimensional requirements at 39.4862). LR7's
@@ -1624,10 +1624,10 @@ code:
 # area carries Portland's label, so the standards come from Portland's code and
 # the document is fetched into this layer rather than borrowed from that one.
 - id: "33.100"
-  url: https://www.portland.gov/sites/default/files/code/100-os-zone_0.pdf
+  url: https://www.portland.gov/sites/default/files/code/100-os-zone.pdf
   title: PCC Chapter 33.100 Open Space Zone
 - id: "33.140"
-  url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
+  url: https://www.portland.gov/sites/default/files/code/140-ind-zones_2.pdf
   title: PCC Chapter 33.140 Employment and Industrial Zones
 # The other half of the pocket read. 33.110 gave R20/R10/R7/R5/RF their
 # dimensions in the port; their PARKING chapter is this one, and until
@@ -1636,7 +1636,7 @@ code:
 # this layer rather than borrowed from the Portland one for the reason stated
 # above 33.100: a document is evidence in the layer that cites it.
 - id: "33.266"
-  url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+  url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
   title: PCC Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management
 - id: "39.or"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
@@ -2152,7 +2152,7 @@ zones:
     section: ["33.140"]
     cite_default:
       cite: PCC 33.140 Table 140-1 (33.140.100 Primary Uses) and 33.140.100.B.1
-      url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
+      url: https://www.portland.gov/sites/default/files/code/140-ind-zones_2.pdf
       retrieved: '2026-08-20'
     quadplex_allowed:
       # Table 140-1 gives Household Living an L[1] in the EG2 column, and
@@ -2176,7 +2176,7 @@ zones:
     section: ["33.140"]
     cite_default:
       cite: PCC 33.140 Table 140-1 (33.140.100 Primary Uses) and 33.140.100.B.2
-      url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
+      url: https://www.portland.gov/sites/default/files/code/140-ind-zones_2.pdf
       retrieved: '2026-08-20'
     quadplex_allowed:
       # Table 140-1 gives Household Living a CU [2] in the IG2 column, which
@@ -2202,7 +2202,7 @@ zones:
     section: ["33.100"]
     cite_default:
       cite: PCC 33.100 Table 100-1 (33.100.100 Primary Uses)
-      url: https://www.portland.gov/sites/default/files/code/100-os-zone_0.pdf
+      url: https://www.portland.gov/sites/default/files/code/100-os-zone.pdf
       retrieved: '2026-08-20'
     quadplex_allowed:
       # Table 100-1 gives Household Living a bare N in the zone's single
@@ -3155,19 +3155,19 @@ zones:
     entrance_faces_street:
       value: required
       cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
     entrance_angle_max_deg:
       value: 45
       cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: \"b. Be at an angle of up to 45 degrees from the street; or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L830"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets);
         33.418
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
@@ -3184,7 +3184,7 @@ zones:
         - value: false
           when: [constrained_sites_overlay]
           cite: PCC 33.418.030 and 33.418.040.B
-          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_0.pdf
           retrieved: '2026-10-04'
           quote: "or/multnomah/_unincorporated/33.418.txt#L20-L22,L43-L48"
         # The way round, logged and not taken (Steph 2026-10-04, "red, way in
@@ -3205,7 +3205,7 @@ zones:
       qualified_by:
         fact: pdx_plan_district_unmeasured
         cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
-        quote: "or/multnomah/portland/33.500.txt#L32-L36"
+        quote: "or/multnomah/portland/33.500.txt#L33-L37"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -3232,7 +3232,7 @@ zones:
     parking_street_setback_ft:
       value: 10
       cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     # TITLE 33 PARKING FOR THIS POCKET (2026-11-09; see `notes:` for whose code
@@ -3247,20 +3247,20 @@ zones:
     parking_min_per_unit:
       exempt: true
       cite: PCC 33.266, the chapter's own section list -- no minimum-parking section
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L8-L17"
     # D.1, the same rectangle the county states, now cited to the code that governs.
     parking_stall_width_ft:
       value: 9
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     parking_stall_depth_ft:
       value: 18
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
@@ -3272,26 +3272,26 @@ zones:
     parking_aisle_one_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     parking_aisle_two_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     # D.2: one figure for both directions.
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     driveway_min_width_two_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     # C.1.a: vehicle area barred between the primary structure and the street;
@@ -3301,47 +3301,47 @@ zones:
     parking_front_prohibited:
       value: true
       cite: PCC 33.266.120.C.1.a, vehicle area prohibited between the primary structure and the street
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L282-L284,L290-L293"
     # C.1.b: no more than 40 percent of the land between the front lot line and the front building line paved.
     parking_front_yard_max_pct:
       value: 40
       cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L294-L295"
     # C.3: where the lot abuts an alley, all parking and vehicle access is from it.
     parking_alley_access_required:
       value: true
       cite: PCC 33.266.120.C.3, all parking and vehicle access from the alley where the lot abuts one
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
       cite: PCC 33.266.120.C.1.a(1), parking spaces behind the front and side street building lines allowed, which leaves the interior side yard open
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L291"
     parking_side_yard_allowed:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     parking_side_yard_stated:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     # C.3 names the alley and no street otherwise (the Portland layer's whole-folder grep, 2026-09-19, same text).
     corner_access_street:
       value: any
       cite: PCC 33.266.120.C.3, access from the alley where the lot abuts one, and no street named otherwise
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # NO PERIMETER BUFFER. The county's five feet is 39.8045 reached through
@@ -3351,7 +3351,7 @@ zones:
     parking_lot_line_buffer_ft:
       exempt: true
       cite: PCC 33.266.120 states no parking-area landscaping for this building; 33.266.130.B excludes it from 130's perimeter standard
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L278,L385-L386"
     # Which line is the front: PCC 33.910, Front Lot Line (the Portland layer's stored copy of the same definitions chapter).
@@ -3360,13 +3360,13 @@ zones:
       cite: PCC 33.910, Front Lot Line, the shortest street lot line on a corner lot
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L526-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L541-L546"
     front_lot_line_through:
       value: both
       cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L543-L546"
     # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
     # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
     # square must fit inside it. The quadfit mirror used to leave this out
@@ -3375,13 +3375,13 @@ zones:
     open_space_min_sqft:
       value: 250
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
     open_space_min_dimension_ft:
       value: 12
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
@@ -3453,13 +3453,13 @@ zones:
     entrance_faces_street:
       value: not_required
       cite: "Portland Zoning Code 33.110.230.B.1 as Multnomah applies it: the main entrance standards apply in the R10 through R2.5 zones (FOLLOWUPS 153)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Dunthorpe-Riverdale is largely
         R20); 33.418
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
@@ -3476,7 +3476,7 @@ zones:
         - value: false
           when: [constrained_sites_overlay]
           cite: PCC 33.418.030 and 33.418.040.B
-          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_0.pdf
           retrieved: '2026-10-04'
           quote: "or/multnomah/_unincorporated/33.418.txt#L20-L22,L43-L48"
         # The way round, logged and not taken (Steph 2026-10-04, "red, way in
@@ -3497,7 +3497,7 @@ zones:
       qualified_by:
         fact: pdx_plan_district_unmeasured
         cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
-        quote: "or/multnomah/portland/33.500.txt#L32-L36"
+        quote: "or/multnomah/portland/33.500.txt#L33-L37"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -3524,7 +3524,7 @@ zones:
     parking_street_setback_ft:
       value: 10
       cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     # TITLE 33 PARKING FOR THIS POCKET (2026-11-09; see `notes:` for whose code
@@ -3539,20 +3539,20 @@ zones:
     parking_min_per_unit:
       exempt: true
       cite: PCC 33.266, the chapter's own section list -- no minimum-parking section
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L8-L17"
     # D.1, the same rectangle the county states, now cited to the code that governs.
     parking_stall_width_ft:
       value: 9
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     parking_stall_depth_ft:
       value: 18
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
@@ -3564,26 +3564,26 @@ zones:
     parking_aisle_one_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     parking_aisle_two_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     # D.2: one figure for both directions.
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     driveway_min_width_two_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     # C.1.a: vehicle area barred between the primary structure and the street;
@@ -3593,47 +3593,47 @@ zones:
     parking_front_prohibited:
       value: true
       cite: PCC 33.266.120.C.1.a, vehicle area prohibited between the primary structure and the street
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L282-L284,L290-L293"
     # C.1.b: no more than 40 percent of the land between the front lot line and the front building line paved.
     parking_front_yard_max_pct:
       value: 40
       cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L294-L295"
     # C.3: where the lot abuts an alley, all parking and vehicle access is from it.
     parking_alley_access_required:
       value: true
       cite: PCC 33.266.120.C.3, all parking and vehicle access from the alley where the lot abuts one
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
       cite: PCC 33.266.120.C.1.a(1), parking spaces behind the front and side street building lines allowed, which leaves the interior side yard open
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L291"
     parking_side_yard_allowed:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     parking_side_yard_stated:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     # C.3 names the alley and no street otherwise (the Portland layer's whole-folder grep, 2026-09-19, same text).
     corner_access_street:
       value: any
       cite: PCC 33.266.120.C.3, access from the alley where the lot abuts one, and no street named otherwise
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # NO PERIMETER BUFFER. The county's five feet is 39.8045 reached through
@@ -3643,7 +3643,7 @@ zones:
     parking_lot_line_buffer_ft:
       exempt: true
       cite: PCC 33.266.120 states no parking-area landscaping for this building; 33.266.130.B excludes it from 130's perimeter standard
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L278,L385-L386"
     # Which line is the front: PCC 33.910, Front Lot Line (the Portland layer's stored copy of the same definitions chapter).
@@ -3652,13 +3652,13 @@ zones:
       cite: PCC 33.910, Front Lot Line, the shortest street lot line on a corner lot
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L526-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L541-L546"
     front_lot_line_through:
       value: both
       cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L543-L546"
     # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
     # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
     # square must fit inside it. The quadfit mirror used to leave this out
@@ -3667,13 +3667,13 @@ zones:
     open_space_min_sqft:
       value: 250
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
     open_space_min_dimension_ft:
       value: 12
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
@@ -3731,7 +3731,7 @@ zones:
   RF:
     cite_default:
       cite: Portland Zoning Code 33.110 Table 110-2 — fourplex prohibited in RF
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       # PCC Table 110-2, Fourplex row, RF column: No. Same table prints Yes for
@@ -3810,19 +3810,19 @@ zones:
     entrance_faces_street:
       value: required
       cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
     entrance_angle_max_deg:
       value: 45
       cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: \"b. Be at an angle of up to 45 degrees from the street; or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L830"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered
         pockets); 33.110.205
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-20'
     quadplex_allowed:
       # Table 110-2, Fourplex row, R5 column: Yes. The fifth of the six
@@ -3843,7 +3843,7 @@ zones:
         - value: false
           when: [constrained_sites_overlay]
           cite: PCC 33.418.030 and 33.418.040.B
-          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_0.pdf
           retrieved: '2026-10-04'
           quote: "or/multnomah/_unincorporated/33.418.txt#L20-L22,L43-L48"
         # The way round, logged and not taken (Steph 2026-10-04, "red, way in
@@ -3864,7 +3864,7 @@ zones:
       qualified_by:
         fact: pdx_plan_district_unmeasured
         cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
-        quote: "or/multnomah/portland/33.500.txt#L32-L36"
+        quote: "or/multnomah/portland/33.500.txt#L33-L37"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -3891,7 +3891,7 @@ zones:
     parking_street_setback_ft:
       value: 10
       cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     # TITLE 33 PARKING FOR THIS POCKET (2026-11-09; see `notes:` for whose code
@@ -3906,20 +3906,20 @@ zones:
     parking_min_per_unit:
       exempt: true
       cite: PCC 33.266, the chapter's own section list -- no minimum-parking section
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L8-L17"
     # D.1, the same rectangle the county states, now cited to the code that governs.
     parking_stall_width_ft:
       value: 9
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     parking_stall_depth_ft:
       value: 18
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
@@ -3931,26 +3931,26 @@ zones:
     parking_aisle_one_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     parking_aisle_two_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     # D.2: one figure for both directions.
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     driveway_min_width_two_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     # C.1.a: vehicle area barred between the primary structure and the street;
@@ -3960,47 +3960,47 @@ zones:
     parking_front_prohibited:
       value: true
       cite: PCC 33.266.120.C.1.a, vehicle area prohibited between the primary structure and the street
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L282-L284,L290-L293"
     # C.1.b: no more than 40 percent of the land between the front lot line and the front building line paved.
     parking_front_yard_max_pct:
       value: 40
       cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L294-L295"
     # C.3: where the lot abuts an alley, all parking and vehicle access is from it.
     parking_alley_access_required:
       value: true
       cite: PCC 33.266.120.C.3, all parking and vehicle access from the alley where the lot abuts one
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
       cite: PCC 33.266.120.C.1.a(1), parking spaces behind the front and side street building lines allowed, which leaves the interior side yard open
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L291"
     parking_side_yard_allowed:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     parking_side_yard_stated:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     # C.3 names the alley and no street otherwise (the Portland layer's whole-folder grep, 2026-09-19, same text).
     corner_access_street:
       value: any
       cite: PCC 33.266.120.C.3, access from the alley where the lot abuts one, and no street named otherwise
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # NO PERIMETER BUFFER. The county's five feet is 39.8045 reached through
@@ -4010,7 +4010,7 @@ zones:
     parking_lot_line_buffer_ft:
       exempt: true
       cite: PCC 33.266.120 states no parking-area landscaping for this building; 33.266.130.B excludes it from 130's perimeter standard
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L278,L385-L386"
     # Which line is the front: PCC 33.910, Front Lot Line (the Portland layer's stored copy of the same definitions chapter).
@@ -4019,13 +4019,13 @@ zones:
       cite: PCC 33.910, Front Lot Line, the shortest street lot line on a corner lot
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L526-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L541-L546"
     front_lot_line_through:
       value: both
       cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L543-L546"
     # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
     # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
     # square must fit inside it. The quadfit mirror used to leave this out
@@ -4034,13 +4034,13 @@ zones:
     open_space_min_sqft:
       value: 250
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
     open_space_min_dimension_ft:
       value: 12
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
@@ -4132,18 +4132,18 @@ zones:
     entrance_faces_street:
       value: required
       cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: at least one main entrance within 8 feet of the longest street-facing wall, facing the street, at up to 45 degrees, or opening onto a porch (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L804-L805,L819-L854"
     entrance_angle_max_deg:
       value: 45
       cite: "Portland Zoning Code 33.110.230 as Multnomah applies it: \"b. Be at an angle of up to 45 degrees from the street; or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L830"
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
@@ -4160,7 +4160,7 @@ zones:
         - value: false
           when: [constrained_sites_overlay]
           cite: PCC 33.418.030 and 33.418.040.B
-          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_0.pdf
           retrieved: '2026-10-04'
           quote: "or/multnomah/_unincorporated/33.418.txt#L20-L22,L43-L48"
         # The way round, logged and not taken (Steph 2026-10-04, "red, way in
@@ -4181,7 +4181,7 @@ zones:
       qualified_by:
         fact: pdx_plan_district_unmeasured
         cite: PCC 33.500.040 (plan district regulations control over the base zone) -- Johnson Creek Basin (33.537), Northwest Hills (33.563) and Pleasant Valley plan districts over the Portland-administered pockets, not read for these lots
-        quote: "or/multnomah/portland/33.500.txt#L32-L36"
+        quote: "or/multnomah/portland/33.500.txt#L33-L37"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -4232,7 +4232,7 @@ zones:
     parking_street_setback_ft:
       value: 10
       cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L303-L305"
     # TITLE 33 PARKING FOR THIS POCKET (2026-11-09; see `notes:` for whose code
@@ -4247,20 +4247,20 @@ zones:
     parking_min_per_unit:
       exempt: true
       cite: PCC 33.266, the chapter's own section list -- no minimum-parking section
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L8-L17"
     # D.1, the same rectangle the county states, now cited to the code that governs.
     parking_stall_width_ft:
       value: 9
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     parking_stall_depth_ft:
       value: 18
       cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
     # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
@@ -4272,26 +4272,26 @@ zones:
     parking_aisle_one_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     parking_aisle_two_way_ft:
       exempt: true
       cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
     # D.2: one figure for both directions.
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     driveway_min_width_two_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L319"
     # C.1.a: vehicle area barred between the primary structure and the street;
@@ -4301,47 +4301,47 @@ zones:
     parking_front_prohibited:
       value: true
       cite: PCC 33.266.120.C.1.a, vehicle area prohibited between the primary structure and the street
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L282-L284,L290-L293"
     # C.1.b: no more than 40 percent of the land between the front lot line and the front building line paved.
     parking_front_yard_max_pct:
       value: 40
       cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L294-L295"
     # C.3: where the lot abuts an alley, all parking and vehicle access is from it.
     parking_alley_access_required:
       value: true
       cite: PCC 33.266.120.C.3, all parking and vehicle access from the alley where the lot abuts one
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
       cite: PCC 33.266.120.C.1.a(1), parking spaces behind the front and side street building lines allowed, which leaves the interior side yard open
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L291"
     parking_side_yard_allowed:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     parking_side_yard_stated:
       value: lane_and_court
       cite: PCC 33.266.120.C.1.a(1), parking spaces and driveways behind the front and side street building lines are allowed
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L290-L293"
     # C.3 names the alley and no street otherwise (the Portland layer's whole-folder grep, 2026-09-19, same text).
     corner_access_street:
       value: any
       cite: PCC 33.266.120.C.3, access from the alley where the lot abuts one, and no street named otherwise
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
     # NO PERIMETER BUFFER. The county's five feet is 39.8045 reached through
@@ -4351,7 +4351,7 @@ zones:
     parking_lot_line_buffer_ft:
       exempt: true
       cite: PCC 33.266.120 states no parking-area landscaping for this building; 33.266.130.B excludes it from 130's perimeter standard
-      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L278,L385-L386"
     # Which line is the front: PCC 33.910, Front Lot Line (the Portland layer's stored copy of the same definitions chapter).
@@ -4360,13 +4360,13 @@ zones:
       cite: PCC 33.910, Front Lot Line, the shortest street lot line on a corner lot
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L526-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L541-L546"
     front_lot_line_through:
       value: both
       cite: PCC 33.910, Front Lot Line, a through lot has two front lot lines
       url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
       retrieved: '2026-08-27'
-      quote: "or/multnomah/portland/33.910/33.910.030.txt#L529-L531"
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L543-L546"
     # REQUIRED OUTDOOR AREA, Title 33's (2026-11-09). Table 110-4 prints 250 sq ft
     # per lot and a 12 by 12 square for RF through R5, and 33.110.240.B says the
     # square must fit inside it. The quadfit mirror used to leave this out
@@ -4375,13 +4375,13 @@ zones:
     open_space_min_sqft:
       value: 250
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240 (Title 33 as the county adopted it for the Portland-administered pockets)
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L432-L435,L470-L474,L895-L916"
     open_space_min_dimension_ft:
       value: 12
       cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum dimension), RF through R5 columns; 33.110.240.B
-      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_3.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/_unincorporated/33.110.txt#L470-L474,L903-L905"
     setback_side_ft:
@@ -4905,7 +4905,7 @@ drawn_areas:
       drawn: every polygon, every district. Matched 2026-11-09 against bridge
       run 122's pocket lots: Johnson Creek Basin (JC), Northwest Hills (NH) and
       Pleasant Valley (PV) reach them.
-    quote: "or/multnomah/portland/33.500.txt#L32-L36"
+    quote: "or/multnomah/portland/33.500.txt#L33-L37"
     cite: PCC 33.500.040, plan district regulations control over the base zone, overlay zones and other regulations of Title 33
     note: >-
       Under the 2002 Portland/Multnomah County planning IGA the county adopted

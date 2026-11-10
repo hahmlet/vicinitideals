@@ -3,15 +3,16 @@
 Portland Council adopted RICAP 11 on 2026-08-06 (Ordinance 192213), effective
 2026-11-01. It turns Table 150-1's N for Household Living in CI1 into a Y and
 puts homes there on the RM1 zone's standards (new 33.150.200, new
-33.266.100.B). Title 33 as we hold it predates it, and an ordinance governs
-from its effective date whether or not the chapter has been reprinted.
+33.266.100.B). From 2026-10-15 until Title 33 was reprinted the zone carried
+an ``amended:`` entry -- the zone as it would read -- and the loader put it
+in place from the effective date (:func:`flats.rules.loader.law_in_force`).
 
-So the zone carries an ``amended:`` entry -- the zone as it will read -- and
-the loader puts it in place for any date on or after the effective date
-(:func:`flats.rules.loader.law_in_force`). Pinned here: (a) before the date a
-CI1 lot screens exactly as it does today; (b) from the date it screens under
-the new rule, which is RM1's, with nobody editing anything; (c) no other zone
-moves; and that the dates, the quotes and the pages are the exhibit's own.
+The 11/1/26 reprint prints the change, so on 2026-11-09 (pdx-drift, FOLLOWUPS
+165) the entry was taken off and the CI1 block now quotes the chapter itself.
+Pinned here: CI1 reads as RM1 with the use allowed, quoted from the reprinted
+33.150; no entry is left pending, so nothing moves on the effective date any
+more; the exhibit stays stored with its pages as the record of the change;
+and the mechanism itself, on a layer of its own.
 """
 
 from __future__ import annotations
@@ -38,8 +39,9 @@ from flats.rules.resolver import RuleSet
 pytestmark = pytest.mark.unit
 
 PORTLAND = "or/multnomah/portland"
+GLADSTONE = "or/clackamas/gladstone"
 EXHIBIT = "or/multnomah/portland/amended/ricap11.txt"
-ADOPTED = date(2026, 8, 6)
+CHAPTER = "or/multnomah/portland/33.150.txt"
 EFFECTIVE = date(2026, 11, 1)
 DAY_BEFORE = date(2026, 10, 31)
 
@@ -81,49 +83,80 @@ def _said(s) -> tuple:
     )
 
 
-# --- the amendment as encoded --------------------------------------------------
+# --- RICAP 11, codified ---------------------------------------------------------
 
 
-def test_ci1_carries_ricap_11_with_the_exhibit_s_dates(written) -> None:
-    (a,) = written[PORTLAND].zones["CI1"].amended
-    assert (a.id, a.adopted, a.effective) == ("ricap11", ADOPTED, EFFECTIVE)
-    assert a.prov.url == "https://efiles.portlandoregon.gov/record/18006154/file/document"
-    assert a.prov.quote.startswith(EXHIBIT + "#")
-    assert "RM1" in a.effect
+def test_ci1_carries_no_pending_amendment_now_the_chapter_is_reprinted(written, after) -> None:
+    zone = written[PORTLAND].zones["CI1"]
+    assert zone.amended == ()
+    assert zone.in_force is None
+    assert [a for a in amendments_in_force(after) if a.startswith(PORTLAND)] == []
 
 
-def test_every_quote_in_the_amendment_lands_on_the_exhibit_page_it_names(written) -> None:
-    """Page 12 says when, page 77 the Y, page 79 the RM1 sentence, page 95 the
-    parking sentence -- and the stored text says the words, not just the lines."""
+def test_ci1_reads_as_rm1_and_allows_the_use_from_the_reprinted_chapter(written) -> None:
     from flats.tests.test_frontage_caps import quoted
 
-    (a,) = written[PORTLAND].zones["CI1"].amended
+    rules = RuleSet(written)
+    ci1 = rules.resolve(PORTLAND, "CI1")
+    rm1 = rules.resolve(PORTLAND, "RM1")
+    use = ci1.values["quadplex_allowed"]
+    assert use.value is True and use.via is None
+    assert use.prov.quote.startswith(CHAPTER + "#")
+    words = quoted(use.prov.quote)
+    assert words.startswith("Use Categories CI1 CI2 IR Household Living Y Y Y"), words
+    assert ci1.borrowed_from == ("RM1",)
+    like = written[PORTLAND].zones["CI1"].like
+    assert (like.zone, like.wins) == ("RM1", "local")
+    assert like.prov.quote.startswith(CHAPTER + "#")
+    assert "subject to the development standards that apply in the RM1 zone" in quoted(like.prov.quote)
+    # Every standard but the use is RM1's, with RM1's own citation and levers:
+    # 33.150.200 imports the RM1 standards whole and 33.266.100.B the parking.
+    for name, value in rm1.values.items():
+        if name == "quadplex_allowed":
+            continue
+        mine = ci1.values[name]
+        assert (mine.value, mine.levers, mine.prov.quote) == (value.value, value.levers, value.prov.quote), name
+    assert set(ci1.values) == set(rm1.values)
+    assert ci1.exempted == rm1.exempted
+    assert ci1.values["min_lot_sqft"].value == 4000  # RM1's, not 33.150.202's "no minimum"
+    assert ci1.values["parking_max_per_unit"].value == 1.35
+
+
+def test_the_parking_chapter_says_the_same_for_ci1_homes() -> None:
+    """33.266.100.B, cited in the zone's comment beside `like:`."""
+    from flats.tests.test_frontage_caps import quoted
+
+    words = quoted("or/multnomah/portland/33.266.txt#L38-L40")
+    assert "Household Living and Group Living uses in the CI1 zone" in words
+    assert "subject to the regulations in the chapter that apply in the RM1 zone" in words
+
+
+def test_table_150_2_s_caps_do_not_reach_a_ci1_home(written) -> None:
+    """Table 150-2's notes capped CI1's own figures; a home on RM1 standards
+    is not under Table 150-2. The borrowed values keep RM1's caps."""
+    got = RuleSet(written).resolve(PORTLAND, "CI1").values
+    assert not any(
+        "site_specific_limitation" in v.levers for name, v in got.items() if name != "quadplex_allowed"
+    )
+
+
+def test_a_ci1_lot_screens_as_the_same_lot_in_rm1(written) -> None:
+    ci1 = _screen(written, "CI1")
+    rm1 = _screen(written, "RM1")
+    assert "USE_PROHIBITED" not in ci1.signed.reasons
+    assert _said(ci1) == _said(rm1)
+
+
+def test_the_exhibit_stays_stored_with_its_pages() -> None:
+    """The record of the change: page 12 says when, page 77 the Y."""
+    from flats.tests.test_frontage_caps import quoted
+
     pages = read_pages(ProvenanceStore(), EXHIBIT)
     assert pages is not None
-
-    def on(quote: str) -> set[int]:
-        spans = quote.partition("#")[2].split(",")
-        out = set()
-        for span in spans:
-            start, _, end = span.lstrip("L").partition("-L")
-            out |= {p.n for p in pages.span(int(start), int(end or start))}
-        return out
-
-    assert on(a.prov.quote) == {12}
-    assert "on August 6, 2026" in quoted(a.prov.quote)
-    assert "go into effect on November 1, 2026" in quoted(a.prov.quote)
-
-    use = a.zone.values["quadplex_allowed"]
-    assert use.value is True
-    assert on(use.prov.quote) == {77}
-    assert "Household Living NY" in quoted(use.prov.quote)
-
-    like = a.zone.like
-    assert (like.zone, like.wins) == ("RM1", "local")
-    assert on(like.prov.quote) == {79, 95}
-    words = quoted(like.prov.quote)
-    assert "subject to the development standards that apply in the RM1 zone" in words
-    assert "subject to the regulations in the chapter that apply in the RM1 zone" in words
+    assert {p.n for p in pages.span(344, 349)} == {12}
+    words = quoted(EXHIBIT + "#L344-L346,L348-L349")
+    assert "on August 6, 2026" in words and "go into effect on November 1, 2026" in words
+    assert "Household Living NY" in quoted(EXHIBIT + "#L1987,L1989,L1991")
 
 
 def test_the_exhibit_s_pages_are_labelled_by_its_own_footer() -> None:
@@ -136,89 +169,13 @@ def test_the_exhibit_s_pages_are_labelled_by_its_own_footer() -> None:
     assert _label(["Page 76   RICAP 11--As-Adopted   August 2026", "x", "266 Parking  266-1"]) == "76"
 
 
-
-
-# --- (a) before the date: as today ---------------------------------------------
-
-
-def test_before_the_date_ci1_is_the_codified_zone(written, before) -> None:
-    """The day before, the loader changes nothing: the block is the one Title
-    33 prints, the RICAP entry rides along as pending, and the resolution is
-    the same as reading the file with no date at all."""
-    zone = before[PORTLAND].zones["CI1"]
-    assert zone == written[PORTLAND].zones["CI1"]
-    assert zone.in_force is None
-    assert [a.id for a in zone.pending(DAY_BEFORE)] == ["ricap11"]
-    assert [a for a in amendments_in_force(before) if a.startswith(PORTLAND)] == []
-
-    got = RuleSet(before).resolve(PORTLAND, "CI1").values
-    assert got["quadplex_allowed"].value is False
-    assert (got["setback_front_ft"].value, got["max_far"].value, got["max_height_ft"].value) == (15, 0.5, 75)
-
-
-def test_a_ci1_lot_before_the_date_screens_as_today(written, before) -> None:
-    today = _screen(written, "CI1")
-    day_before = _screen(before, "CI1")
-    assert _said(day_before) == _said(today)
-    # RED at the use gate once signed -- the answer CI1 has always had.
-    assert day_before.signed.colour.value == "red"
-    assert "USE_PROHIBITED" in day_before.signed.reasons
-
-
-# --- (b) from the date: the new rule, with no edit -----------------------------
-
-
-def test_from_the_date_ci1_reads_as_rm1_and_allows_the_use(after) -> None:
-    zone = after[PORTLAND].zones["CI1"]
-    assert zone.in_force == "ricap11"
-    assert [a.id for a in zone.amended] == ["ricap11"]
-    assert [a for a in amendments_in_force(after) if a.startswith(PORTLAND)] == [f"{PORTLAND}:CI1:ricap11"]
-
-    rules = RuleSet(after)
-    ci1 = rules.resolve(PORTLAND, "CI1")
-    rm1 = rules.resolve(PORTLAND, "RM1")
-    assert ci1.values["quadplex_allowed"].value is True
-    assert ci1.borrowed_from == ("RM1",)
-    # Every standard but the use is RM1's, with RM1's own citation and levers:
-    # 33.150.200 imports the RM1 standards whole and 33.266.100.B the parking.
-    assert ci1.values["quadplex_allowed"].via is None
-    assert ci1.values["quadplex_allowed"].prov.quote.startswith(EXHIBIT)
-    for name, value in rm1.values.items():
-        if name == "quadplex_allowed":
-            continue
-        mine = ci1.values[name]
-        assert (mine.value, mine.levers, mine.prov.quote) == (value.value, value.levers, value.prov.quote), name
-    assert set(ci1.values) == set(rm1.values)
-    assert ci1.exempted == rm1.exempted
-    assert ci1.values["min_lot_sqft"].value == 4000  # RM1's, not 33.150.202's "no minimum"
-    assert ci1.values["parking_max_per_unit"].value == 1.35
-
-
-def test_the_codified_block_s_footnote_caps_do_not_follow_the_amendment(written, after) -> None:
-    """Table 150-2 note [3] capped CI1's own figures; a home on RM1 standards
-    is not under Table 150-2, and nothing in the exhibit's Table 150-1 row
-    carries a bracket. The borrowed values keep RM1's caps."""
-    old = RuleSet(written).resolve(PORTLAND, "CI1").values
-    assert "site_specific_limitation" in old["max_far"].levers
-    new = RuleSet(after).resolve(PORTLAND, "CI1").values
-    assert not any("site_specific_limitation" in v.levers for v in new.values())
-
-
-def test_a_ci1_lot_from_the_date_screens_under_the_new_rule(after) -> None:
-    ci1 = _screen(after, "CI1")
-    rm1 = _screen(after, "RM1")
-    assert "USE_PROHIBITED" not in ci1.signed.reasons
-    # The same lot in RM1, the same answer: the zone IS RM1 for this building.
-    assert _said(ci1) == _said(rm1)
-
-
 def test_the_date_comes_from_the_calendar_or_the_pin(monkeypatch) -> None:
     monkeypatch.delenv(LAW_ON_ENV, raising=False)
     assert law_on(DAY_BEFORE) == DAY_BEFORE
     monkeypatch.setenv(LAW_ON_ENV, "2026-11-01")
     assert law_on(DAY_BEFORE) == EFFECTIVE
     layers = load_rules(on=law_on())
-    assert layers[PORTLAND].zones["CI1"].in_force == "ricap11"
+    assert layers[GLADSTONE].zones["R7.2"].in_force == "ord1545"
 
 
 def test_the_answer_cache_does_not_replay_old_law_under_new(tmp_path: Path) -> None:
@@ -233,28 +190,18 @@ def test_the_answer_cache_does_not_replay_old_law_under_new(tmp_path: Path) -> N
     assert batch.run_key(step_deg=1.0, inputs={}, package=pkg) == old
 
 
-# --- (c) nothing else moves ----------------------------------------------------
+# --- nothing moves on the date any more ---------------------------------------
 
 
-def test_no_other_zone_moves_on_the_date(before, after) -> None:
-    moved = {
-        (layer_id, code)
-        for layer_id in after
-        for code in after[layer_id].zones
-        if after[layer_id].zones[code] != before[layer_id].zones.get(code)
-    }
-    assert moved == {(PORTLAND, "CI1")}
-    # Every other layer is the same on both days. (Equal, not identical: a
-    # layer with an amendment already in force on both sides -- Gladstone's
-    # Ordinance 1545 -- is rebuilt each time.)
-    assert all(after[k] == before[k] for k in after if k != PORTLAND)
+def test_nothing_moves_on_ricap_11_s_date_now_it_is_codified(before, after) -> None:
+    # Equal, not identical: a layer with an amendment already in force on both
+    # sides -- Gladstone's Ordinance 1545 -- is rebuilt each time.
+    assert all(after[k] == before[k] for k in after)
 
 
-def test_no_other_portland_zone_resolves_differently(before, after) -> None:
+def test_no_portland_zone_resolves_differently_across_the_date(before, after) -> None:
     old, new = RuleSet(before), RuleSet(after)
     for code in sorted(after[PORTLAND].zones):
-        if code == "CI1":
-            continue
         a, b = old.resolve(PORTLAND, code), new.resolve(PORTLAND, code)
         assert {k: (v.value, v.levers) for k, v in a.values.items()} == {
             k: (v.value, v.levers) for k, v in b.values.items()
@@ -262,8 +209,8 @@ def test_no_other_portland_zone_resolves_differently(before, after) -> None:
         assert (a.verdict, a.reason) == (b.verdict, b.reason), code
 
 
-def test_a_neighbouring_zone_s_lot_screens_the_same_on_both_sides_of_the_date(before, after) -> None:
-    for zone in ("CI2", "RM1", "R5"):
+def test_a_lot_screens_the_same_on_both_sides_of_the_date(before, after) -> None:
+    for zone in ("CI1", "CI2", "RM1", "R5"):
         assert _said(_screen(before, zone)) == _said(_screen(after, zone)), zone
 
 

@@ -1,9 +1,10 @@
-Title 33, Planning and Zoning Chapter 33.563
+Title 33, Planning and Zoning
 1/1/25
+Chapter 33.563
+
 563-1
 33.563 Northwest Hills Plan District
 563
-
 Sections:
 General
 33.563.010 Purpose
@@ -49,7 +50,6 @@ Chapter 33.563 Title 33, Planning and Zoning
 Northwest Hills Plan District  1/1/25
 
 563-2
-
 A. Sending sites. Sites in the single-dwelling zones that are entirely within the Environmental
 Protection overlay zone may transfer development rights.
 B. Receiving sites. Sites in the RF zone inside the Urban Growth Boundary may receive
@@ -110,7 +110,6 @@ unforested area.
 2. Parks and Open Areas and Agriculture uses are exempt from this standard.
 D. Land divisions. All required closed canopy forest areas in land divisions and Planned
 Developments must be within an environmental resource tract.
-
 33.563.120 Additional Approval Criterion. In addition to the applicable approval criteria of Section
 33.430.250, an environmental review application will be approved if the review body finds that the
 location, quantity, and quality of forest and contiguous forest cover will be sufficient to provide habitat
@@ -122,7 +121,6 @@ Within environmental zones in the Forest Park subdistrict, activities which expo
 with stormwater between October 1 and April 30 are prohibited. Exceptions to this prohibition are
 planting of native plants with hand-held equipment, emergency repair of existing structures, and
 emergency procedures necessary for the protection of life, health, safety, or property.
-
 33.563.210 Additional Approval Criteria
 In addition to the applicable approval criteria of Section 33.430.250, an environmental review
 application will be approved if the review body finds that all of the following approval criteria are met:
@@ -133,7 +131,6 @@ Chapter 33.563 Title 33, Planning and Zoning
 Northwest Hills Plan District  1/1/25
 
 563-4
-
 legged frog. Standards to meet this criteria are in the applicable Habitat Evaluation Procedure
 developed by the United States Fish and Wildlife Service;
 B. Parks and Open Space. Overall scenic, recreational, educational and open space values of
@@ -176,7 +173,6 @@ Title 33, Planning and Zoning Chapter 33.563
 563-5
 3. There are no minimum lot area or width standards for the lot of record, lot remnant, or
 combination thereof described in Subsection C;
-
 Table 563-1
 Minimum Area Standards
 Zone  Minimum Area
@@ -188,8 +184,8 @@ R5 5,000 square feet
 R2.5 2,500 square feet
 Skyline Subdistrict
 33.563.400 Zoning Map Amendments
-All requests for quasi-judicial Zoning Map Amendments within the Skyline subdistrict must meet
-the following:
+All requests for quasi-judicial Zoning Map Amendments within the Skyline subdistrict must meet the
+following:
 A. Zoning Map Amendments may only be requested in conjunction with a land division or Planned
 Development. Application and review of the Zoning Map Amendment and the land division or
 Planned Development may be concurrent; and
@@ -218,7 +214,6 @@ Chapter 33.563 Title 33, Planning and Zoning
 Northwest Hills Plan District  1/1/25
 
 563-6
-
 1. Public sewer and water service must be available to the site; and
 2. The applicant must either:
 a. Show that the existing public transportation is adequate; or
@@ -232,7 +227,15 @@ effective 7/24/15; Ord. No.
 190851, effective 6/30/22; Ord. No. 191779, effective 10/1/24; Ord. No. 191848, effective 10/1/24; Ord.
 No. 191942, effective 1/1/25.)
 
+The City of Portland is committed to providing meaningful access. To request translation, interpretation,
+modifications, accommodations, or other auxiliary aids or services, contact 311, Relay: 711.
+503-823-4000:  Traducción e Interpretación  |  Biên Dịch và Thông Dịch  |  अनुवादन तथा  ा ा
+口笔译服务  |  Устный и письменный перевод  |  Turjumaad iyo Fasiraad
+Письмовий і усний переклад  |  Traducere și interpretariat  |   Chiaku me Awewen Kapas
+www.portland.gov/bps/accommodation
+
 563-7
+Attention: Jasvioocrjh Bh~llar, Cht et ,D~: isi n, of Trame Operatio-rni
 
 563-8
 

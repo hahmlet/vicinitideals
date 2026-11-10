@@ -9,7 +9,7 @@
  },
  "source": {
   "map": "City of Portland Hayden Island plan district (PCC 33.532, Map 532-1), as Portland Maps publishes it",
-  "quote": "or/multnomah/portland/33.532.txt#L48-L49,L233-L238",
+  "quote": "or/multnomah/portland/33.532.txt#L47-L48,L232-L237",
   "says": "The Hayden Island main entrance standard (33.532.250) applies to sites in commercial/mixed use zones in the plan district",
   "inputs": {
    "plan_district": "plan-districts.geojson, PLDIST HI (BPS_Zoning_Code_Layers layer 0, fetched 2026-10-22)"

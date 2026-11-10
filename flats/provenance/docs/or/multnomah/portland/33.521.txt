@@ -1,10 +1,9 @@
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-1
 33.521 East Corridor Plan District
- 521
-
+521
 Sections:
 General
 33.521.010 Purpose
@@ -44,7 +43,7 @@ through enhanced building design and site layout standards;
 experience and access to and from light rail service; and
 • Encourage connectivity for vehicles, bicycles, and pedestrians on large sites.
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-2
 33.521.020 Where These Regulations Apply
@@ -85,7 +84,7 @@ A. Purpose. These regulations encourage high density development within Pedestri
 Districts while ensuring that single-dwelling zones outside Pedestrian Districts are not
 adversely affected by the higher density development.
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-3
 B. Maximum building height. Maximum building heights are shown on Map 521-2 at the end
@@ -110,7 +109,7 @@ height is the same as the residential zone across the street; and
 b. On the portion of the site that is more than 25 feet but within 50 feet of the
 street lot line, the maximum building height is 50 feet.
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-4
 Figure 521-1
@@ -133,8 +132,9 @@ base zone bonus regulations apply. Adjustments to this Subsection, or to the amo
 maximum floor area allowed through the bonuses in this Subsection, are prohibited:
 1. Maximum increase in FAR. On sites located outside of the Ventura Park Pedestrian
 District, an increase in FAR through the use of bonuses of more than 1 to 1 is
+
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-5
 prohibited. An increase of more than 2 to 1 is prohibited on sites located inside the
@@ -179,7 +179,7 @@ C. Regulations.
 of-way and extent and timing of street improvements based on a master street plan in
 the Transportation Element of the Comprehensive Plan or based on Chapter 17.88.
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-6
 2. Proposed development that may obstruct new street alignments are identified in a
@@ -223,7 +223,7 @@ A. Purpose. These regulations ensure that at least one of the main entrances int
 and each tenant space in a building that faces a street, be oriented to public streets or light
 rail. This requirement enhances pedestrian access from the sidewalk to adjacent buildings.
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-7
 Together with the building design and pedestrian standards, these standards ensure that
@@ -265,7 +265,7 @@ transit streets cross another City Walkway or transit street:
 a. The street-facing façade of primary structures must be within 12 feet of the
 street lot line.
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-8
 b. Street-facing exterior façades must be at least 40 feet long and 16 feet high.
@@ -279,9 +279,7 @@ adjacent street. Developments that are more than 80 percent residential are exem
 from this requirement.
 33.521.270 Exterior Display and Storage
 Exterior display and storage are prohibited in Pedestrian Districts and on the portion of a site within
-100 feet of a light rail alignment, except for outdoor seating for restaurants and pedestrian-oriented
-accessory uses, including flower, food, or drink stands. Temporary open-air markets and carnivals
-are also allowed.
+100 feet of a light rail alignment, except for the display of plants and produce.
 33.521.280 Drive-Through Facilities.
 Drive-through facilities are prohibited in Pedestrian Districts and on the portion of a site within 100
 feet of a light rail alignment.
@@ -306,12 +304,12 @@ C. Location of vehicle areas.
 except as follows:
 a. Sites with through lots or with three frontages may have parking and loading
 areas between a primary structure and one Local Service Transit Street.
-Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
-
-521-9
 b. Sites on full blocks may have parking and loading areas between a primary
 structure and two Local Service Transit Streets.
+Title 33, Planning and Zoning Chapter 33.521
+11/1/26 East Corridor Plan District
+
+521-9
 2. For sites with frontage on a light rail alignment, parking and loading areas are not
 allowed on the portion of the site within 100 feet of a light rail alignment, except
 as follows:
@@ -339,7 +337,7 @@ parking or loading area, whichever is less.
 c. Driveways are allowed in all locations where parking and loading areas
 are allowed.
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-10
 Figure 521-2
@@ -367,7 +365,7 @@ area may be used for exterior storage. Modifications of these standards may be
 requested through Design Review; adjustments are prohibited.
 
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-11
 3. Setbacks and landscaping.
@@ -385,7 +383,6 @@ primary structures must be within 24 feet of the street lot line.
 b. Main entrances. The main entrance must meet the standards of Section
 33.521.250, Entrances, except the entrance must be within 25 feet of the street
 it faces.
-
 Table 521-1
 Minimum Setbacks and Landscaping for Exterior Display and Storage
 
@@ -436,7 +433,7 @@ do not have to meet this standard.
 [2] Exterior storage areas separated from the street by areas  used for parking or exterior display
 do not have to meet this standard.
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-12
 c. Exterior display between a building and a street. Exterior display areas may be
@@ -463,8 +460,9 @@ Transit Street Site Frontage for Exterior Display, Exterior Storage, and Vehicle
 5. Nonconforming exterior display and exterior storage. Alterations to exterior display
 and exterior storage areas that are nonconforming because they are located where
 exterior display and exterior storage is prohibited are allowed as follows:
+
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-13
 a. The area that is nonconforming may be moved to another location on the site
@@ -505,7 +503,7 @@ conjunction with other uses it may result in the consolidation of auto trips and
 allow sites to be used more efficiently. Some of the negative impacts of such
 development may be mitigated by providing additional landscaping, both as a buffer
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-14
 and to soften the entire site, and ensuring that other elements of design improve the
@@ -535,7 +533,7 @@ listed below must be brought into conformance:
 f. The proposed development must be approved through design review; the Design
 overlay zone design standards in 33.420.050 may not be used.
 Title 33, Planning and Zoning Chapter 33.521
-6/1/25 East Corridor Plan District
+11/1/26 East Corridor Plan District
 
 521-15
 Figure 521-4
@@ -546,8 +544,17 @@ No. 179980, effective 4/22/06; Ord. No. 180372, effective 9/30/06 and 7/1/07; Or
 effective 5/10/13; Ord. No. 186639, effective 7/11/14; Ord. No. 187216, effective 7/24/15; Ord. No.
 188177, effective 5/24/18; Ord. No. 188958, effective 5/24/18; Ord. No. 189805, effective 3/1/20;
 Ord. No. 190477, effective 8/1/21; Ord. No. 190851, effective 6/30/22; Ord. No. 191310, effective
-6/30/23; Ord. No. 192000, effective 6/1/25.)
+6/30/23; Ord. No. 192000, effective 6/1/25; Ord. 192213, effective 11/1/26.)
+
+The City of Portland is committed to providing meaningful access. To request translation,
+interpretation, modifications, accommodations, or other auxiliary aids or services, contact 311,
+Relay: 711.
+503-823-4000:  Traducción e Interpretación  |  Biên Dịch và Thông Dịch  |  अनुवादन तथा व्याख्या
+口笔译服务  |  Устный и письменный перевод  |  Turjumaad iyo Fasiraad
+Письмовий і усний переклад  |  Traducere și interpretariat  |   Chiaku me Awewen Kapas
+www.portland.gov/bps/accommodation
+
 Chapter 33.521 Title 33, Planning and Zoning
-East Corridor Plan District 6/1/25
+East Corridor Plan District 11/1/26
 
 521-16

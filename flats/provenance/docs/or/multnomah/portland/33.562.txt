@@ -1,10 +1,9 @@
-Title 33, Planning and Zoning Chapter 33.562
-6/1/25 Northwest Plan District
-
-562-1
+Title 33, Planning and Zoning
+6/1/25
+Chapter 33.562
+Northwest Plan District
 33.562 Northwest Plan District
 562
-
 Sections:
 General
 33.562.010 Purpose
@@ -44,9 +43,9 @@ regulations of this chapter:
 • Enhance the pedestrian experience;
 • Encourage a mixed-use environment, with transit supportive levels of development and a
 concentration of commercial uses, along main streets and the streetcar alignment; and
+562-1
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-2
 • Minimize conflicts between the mixed-uses of the plan district and the industrial uses of the
 adjacent Guild’s Lake Industrial Sanctuary.
 33.562.020 Where These Regulations Apply
@@ -83,10 +82,9 @@ for each use on the remainder of the site.
 A. Purpose. These regulations allow a limited amount of Commercial Parking in Multi-
 Dwelling zones to address the scarcity of off-street parking in an area where busy
 commercial main streets are adjacent to high-density residential areas.
+562-2
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-3
 B. Where these regulations apply. The regulations of this Section apply to type A, B and C
 parking sites shown on Map 562-3.
 1. Type A and B sites. Applicants for Commercial Parking on a Type A or Type B parking
@@ -113,7 +111,6 @@ containing Commercial Parking are stated in Table 562-1. These minimums may not 
 increased as part of a land use review except as specified in Subsection F, but may be
 reduced through an adjustment or modification. The site numbers refer to numbers on
 Map 562-3.
-
 Table 562-1
 Parking Structure Setbacks From Lot Lines Abutting an R Zone
 Site No. Setback from
@@ -121,18 +118,16 @@ the side lot line
 of an R-zoned
 lot
 Setback from the rear lot line of an R-zoned lot
-
 2, 3 Regulations of the RM3 and RM4 zones apply
 4 Regulations of the CM2 Zone apply; See Table 130-4
 5, 6, 1 None None
-
 E. Allowed use. Commercial Parking on Type A and B sites that meets the following standards
 is allowed. The entire site must meet the following standards including any portion of the
 site that is in a C zone. Adjustments to this subsection are prohibited.
 1. All of the parking must be structured parking except as allowed by Sub-section G;
+562-3
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-4
 2. Maximum number of parking spaces allowed per site.
 a. Type A parking sites. A maximum of 75 parking spaces, including accessory
 parking, are allowed on each Type A parking site; and
@@ -167,10 +162,9 @@ Parking spaces may be added to these sites if the requirements of 562.130 are me
 H. Split zoned sites. When the zoning of a Type A, B, or C parking site is split between a Multi-
 Dwelling zone and the CM2 zone, the development standards of the CM2 zone apply to the
 whole site, except as specified in this chapter.
+562-4
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-5
 Development Standards
 33.562.200 Purpose
 These development standards foster a transit-supportive, mixed-use urban character with a high
@@ -207,15 +201,15 @@ B. General regulations.
 1. More than one bonus allowed. More than one bonus option may be used.
 2. Maximum bonus floor area allowed. The maximum bonus floor area increase that may
 be earned on a site through the bonus options is 3 to 1.
+562-5
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-6
 C. Floor area ratio bonus options for small site residential proposals. In bonus areas A, B and
 C shown on Map 562-6, residential developments on small sites receive floor area bonuses.
 To qualify for this bonus, the site must be 20,000 square feet or less and at least 50 percent
 of the gross building area must be in residential uses. Areas shared by residential and
 nonresidential uses are included in nonresidential floor area.
- The amount of the bonus varies with the size of the site as follows:
+The amount of the bonus varies with the size of the site as follows:
 1. Where the site is 10,000 square feet or less, the floor area ratio is increased by 2;
 2. Where the site is larger than 10,000 square feet and up to 20,000 square feet, the
 floor area ratio is increased by 1.
@@ -252,10 +246,9 @@ to apply for a land use review; or
 Fund. For each square foot purchased a fee must be paid to the Portland
 Housing Bureau (PHB). The Portland Housing Bureau collects and
 administers the Affordable Housing Fund, and PHB determines the fee per
+562-6
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-7
 square foot and updates the fee at least every three years. The fee schedule
 is available from Portland Permitting & Development. To qualify for this
 bonus option, the applicant must provide a letter from the PHB
@@ -276,10 +269,10 @@ maximum of the total floor area that is allowed on the site. The total floor are
 the site is regulated by Section 33.562.220, Floor Area Ratios, and Subsections A through F
 of this section. The amount of the contribution required for each square foot of additional
 floor area is in Chapter 17.19, Northwest Transportation Fund.
- This bonus allows additional floor area to be in nonresidential uses; it does not increase the
+This bonus allows additional floor area to be in nonresidential uses; it does not increase the
 total amount of floor area in any use that is allowed on the site, and does not count
 towards the maximum specified in B.2, above.
- The NWTF is to be collected and administered by the Portland Bureau of Transportation.
+The NWTF is to be collected and administered by the Portland Bureau of Transportation.
 The funds collected may be used only to make transportation improvements in the area
 that will be most affected by the bonus, which is generally bounded by NW Pettygrove
 Street, NW Nicolai Street, I-405, and NW 27th Avenue.
@@ -297,9 +290,9 @@ main street or the streetcar alignment, windows must cover at least 15 percent o
 of the street-facing façade above the ground floor wall area. This requirement is in addition
 to any required ground floor windows. Ground floor wall areas include all exterior wall
 areas up to 9 feet above grade.
+562-7
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-8
 D. Ground floor active use standard In order to accommodate active uses, such as residential,
 retail, or office, the ground floor of buildings must be designed and constructed as follows.
 This standard must be met along at least 50 percent of the ground floor of walls that are at
@@ -338,15 +331,13 @@ streetcar alignment.
 B. Drive-through facilities. Drive-through facilities are prohibited on the portion of a site
 within 200 feet of a streetcar alignment, shown on Map 562-7. This prohibition includes
 curb cuts and driveways used to approach and leave the drive-through facility, stacking
+562-8
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-9
 areas for waiting vehicles, and the facility itself, such as a drive-up window or gas
 pump island.
 Figure 562-1
 Location of Parking
-
 33.562.260 Mechanical Equipment in the CM3 Zone
 A. Purpose. These regulations reduce the negative visual and noise impacts of mechanical
 equipment in areas that allow a mix of residential, commercial, and industrial uses to
@@ -366,15 +357,14 @@ site area, but it is not larger than 1,000 square feet, the equipment must be
 completely screened from the sidewalk by walls, fences, or landscaping; or
 c. All other mechanical equipment must be within a building that is completely
 enclosed on all sides;
+562-9
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-10
 2. If mechanical equipment is more than nine feet above the grade of the adjacent
 sidewalk, the equipment must be completely screened from the sidewalk by walls,
 fences, or landscaping.
 Figure 562-2
 Mechanical Equipment Within 9 Feet of Sidewalk Grade
-
 33.562.270 Minimum Active Floor Area
 A. Purpose. Requiring a transit-supportive level of activity and intensity near the streetcar
 alignment helps to decrease reliance on automobile travel and increases opportunities for
@@ -395,10 +385,9 @@ uses are:
 4. Manufacturing And Production;
 5. Industrial Service;
 6. Community Service;
+562-10
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-11
 7. Schools;
 8. Colleges;
 9. Medical Centers;
@@ -435,9 +424,9 @@ adopted by the Director of PBOT. If this advisory body is no longer active or ab
 fulfill this role, then PBOT will be the sole permitting and monitoring body. The
 commercial parking must comply with the requirements of Paragraphs C.2 and C.3,
 below.
+562-11
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-12
 2. Accessory parking operated as Commercial Parking. Commercial parking on sites with
 at least 5 eligible parking spaces is allowed, including short term and monthly rental
 arrangements.
@@ -453,7 +442,7 @@ Approval Letter; and
 e. A statement that the owner or owners of the site have agreed to manage the
 parking approved under the program so that adequate parking for the primary
 use as served by the accessory parking is maintained.
-4.  Administrative Rules. The Director of PBOT shall adopt administrative rules to
+4. Administrative Rules. The Director of PBOT shall adopt administrative rules to
 implement the process for permitting and monitoring accessory parking for
 commercial parking as allowed by this Section.
 33.562.300 Northwest Master Plan
@@ -477,10 +466,9 @@ pedestrian routes;
 connections and emulates levels of connectivity similar to the adjacent block pattern;
 • Transportation and parking demand management strategies that decrease reliance on
 the automobile;
+562-12
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-13
 • Development that is integrated into the broader urban fabric;
 • Transitions to adjacent areas with different uses and intensities through use, height,
 and massing of new development, considering historic resources, and the character of
@@ -519,9 +507,9 @@ right-of-way.
 2. Overall scheme. An overall scheme, including both written and graphic elements, that
 describes and ties together existing, proposed, and possible development and uses,
 height and massing of development, phasing of development, review procedures for
+562-13
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-14
 each development or phase, and what standards, guidelines, and approval criteria will
 be used to evaluate each development or phase.
 3. Uses and activities. A description of present uses, affiliated uses, proposed uses,
@@ -562,10 +550,9 @@ from the Northwest Master Plan area. This may include incentives for
 employees to live within walking distance of the area;
 c. Planned improvements to the routes used by transit patrons between transit
 stops and buildings in the Northwest Master Plan area;
+562-14
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-15
 d. A street plan for the Northwest Master Plan area that provides multimodal street
 connections to match the surrounding street grid pattern where feasible;
 e. A multi-modal transportation impact study. The study must follow the guidelines
@@ -592,7 +579,7 @@ reviewed by the Land Use Hearings Officer. The Design Commission also reviews No
 Master Plans, and makes a recommendation to the Hearings Officer on the approval
 criteria in Paragraph G.2, below. The Hearings Officer may approve, deny, or apply
 conditions of approval to the Northwest Master Plan.
-  Applicants are encouraged to work with surrounding property owners, residents,
+Applicants are encouraged to work with surrounding property owners, residents,
 recognized organizations, and City bureaus during the formulation of a Northwest
 Master Plan.
 F. Amendments to a Northwest Master Plan.
@@ -604,9 +591,9 @@ b. Increases in floor area or exterior improvements area of more than 1,500 squa
 feet. Fences, handicap access ramps, and on-site pedestrian circulation systems
 are exempt from this limitation;
 c. Increases or decreases in the amount of parking;
+562-15
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-16
 d. Changes to the Northwest Master Plan boundary, or the text of the Northwest
 Master Plan; and
 e. Any other development, operations, or activities which are not in conformance
@@ -647,11 +634,9 @@ good or better than that achieved through conventional design review. The
 guidelines and standards proposed, including existing guidelines and
 standards, must be appropriate for the Northwest Master Plan area and the
 type of development anticipated by the purpose statement of this section.
-
+562-16
 Title 33, Planning and Zoning Chapter 33.562
 6/1/25 Northwest Plan District
-
-562-17
 3. Transportation.
 a. The Northwest Master Plan must comply with the policies, street classifications,
 and street designations of the Transportation Element of the Portland
@@ -693,9 +678,9 @@ historic resources, and the character of the area anticipated as a result of the
 Northwest District Plan process; and
 e. A proposed Retail Sales And Service use or development of larger scale or
 intensity equally or better meets the purpose of this section.
+562-17
 Chapter 33.562 Title 33, Planning and Zoning
 Northwest Plan District 6/1/25
-562-18
 H. Duration of the Northwest Master Plan. The Northwest Master Plan must include
 proposed uses and possible future uses that might be proposed for at least 3 years and up
 to 10 years. An approved Northwest Master Plan remains in effect for 10 years, unless the
@@ -710,7 +695,6 @@ code, unless exempted by the plan. If the Northwest Master Plan does not specify
 standard, approval criterion, or procedure in the Northwest Master Plan supersedes a
 similar regulation in the Portland City Code, the regulation in the Portland City
 Code applies.
-
 (Added by: Ord. No. 175877, effective 9/21/01. Amended by: Ord. No. 177920, effective 11/8/03;
 Ord. No 178020, effective 12/20/03; Ord. No. 183269, effective 10/21/09; Ord. No. 183598, effective
 4/24/10; Ord. No. 183916, effective 7/17/10; Ord. No. 186639, effective 7/11/14; Ord. No. 187889,
@@ -718,3 +702,4 @@ effective 8/12/16; Ord. No. 188259, effective 3/31/17; Ord. No. 188177, effectiv
 188958, effective 5/24/18; Ord. No. 189805, effective 3/1/20; Ord. No. 190076, effective 8/10/20;
 Ord. No. 190477, effective 8/1/21; Ord. No. 191310, effective 6/30/23; Ord. No. 191609, effective
 3/1/24; Ord. No. 191942, effective 1/1/25; Ord. No. 192000, effective 6/1/25.)
+562-18
