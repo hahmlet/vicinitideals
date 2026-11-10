@@ -163,6 +163,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
+181. [Claude] [Steph] [scan: YES -- false greens only] **Roof sweep: Clackamas unincorporated pitched-roof rule** -- BUILT flats/roof-ban (2e675fee, f4072a52); Steph: Clackamas red / yellow+flag / exempt? [file](followups/181-roof-sweep-clackamas.md)
 180. [Claude] [Steph] [scan: YES -- false greens only] **Narrow-street fire rule: SW 56th record + 22 vs 24 ft** -- BUILT flats/narrow-row (af369260, eb2b9f5e); ~13 greens to yellow; two questions for Steph. [file](followups/180-narrow-row-questions.md)
 179. [Claude] [Steph] [scan: YES if adopted] **End-door variant: windows needed** -- typical 15% = 9 windows + door on the 30 ft end; ~10,500 lots back; state rule checked: does not reach a single pod; Steph to decide. [file](followups/179-end-door-variant.md)
 178. [Claude] [Steph] [scan: YES] **False-green round 4 findings** -- Wood Village roof ban ~108 false greens (lane roof-ban); fg4-fixes lane; Steph: Portland 9 ft drive? narrow 20 ft streets? no-sewer lots? Tigard cornice? [file](followups/178-fg-round4-questions.md)
