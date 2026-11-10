@@ -12,8 +12,10 @@ wall (reverses the 2026-11-08 no-end-door choice). Study:
   Village 20% (12; flat-roof ban anyway), E shopfront glass (6-23), F
   optional menu (0), G Tualatin/Tigard 12% but end door doesn't help, H none.
 - ~10,500 of the 11,264 door losses come back if adopted (estimate, 93%).
-Open: a state rule effective 2026-05-18 (2025 law) may bar some residential
-design standards inside the UGB -- research lane state-design-bar running; it
-could void the door and window rules outright.
+State bar CHECKED 11-10 (../vicinitideals-worktrees/state-design-bar.md): SB 974
+(2025 ch.330 s.8, OAR 660-046-0226) bars design standards only on 20+ unit
+applications; a single pod (4) is exempt, and the list covers door/window
+finishes, not orientation or glass share. Door + window rules stand; Wood
+Village roof ban stands. Only relevant if 5+ pods filed as one project.
 Steph to decide whether to adopt the end-door variant (a design choice); if yes,
 a lane encodes per-place window counts as a design check (flag-level).
