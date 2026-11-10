@@ -152,6 +152,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom import trail as trails_geom
 from flats.geom import historic_lists
 from flats.geom import pdx_overlays as pdx
 from flats.geom import split_zone as split_zones
@@ -413,6 +414,8 @@ OBSERVABLE: tuple[str, ...] = (
     LOCAL_STREET,
     *NEIGHBOUR_FACTS,
     *PARK_FACTS,
+    # Tigard's lots only, off Metro's trails layer (flats.geom.trail).
+    trails_geom.TRAIL_FACT,
     *CORRIDOR_FACTS,
     # Gresham RTC lots only: True touching SE Stark (corridors.yaml).
     "rockwood_stark_frontage",
@@ -649,6 +652,7 @@ def observed_facts(
     out.update(observed_avenue(_finite(row.get("avenue_ft"))))
     if isinstance(row.get("local_street_obs"), bool):
         out[LOCAL_STREET] = row["local_street_obs"]
+    out.update(trails_geom.observed_trail(row.get("trail_abuts_obs")))
     out.update(observed_sidewalk_easement(_finite(row.get("sidewalk_easement_ft"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
@@ -2924,6 +2928,37 @@ def with_sidewalk_easement(rows: list[dict[str, Any]], sources: Path | None) -> 
             row["sidewalk_easement_ft"] = got
             taken += 1
     return taken
+
+
+def with_trails(rows: list[dict[str, Any]], sources: Path | None) -> int:
+    """Answer ``abuts_trail`` on every row of a layer whose code screens
+    parking beside a trail (:mod:`flats.geom.trail`), in place
+    (``trail_abuts_obs``: True, False, or absent), and say how many.
+
+    Only with the snapshot's trails layer in hand: without it no row is
+    answered and the lever stays open, so the lot holds out of GREEN.
+    """
+    if sources is None:
+        return 0
+    asked = [row for row in rows if _layer_id(row) in trails_geom.SERVES]
+    edges = {id(row): json.loads(row.get("edges_json") or "[]") for row in asked}
+    box = trails_geom.bounds_of(edges.values())
+    if box is None:
+        return 0
+    lines = trails_geom.load(sources, box)
+    if lines is None:
+        return 0
+    import shapely
+
+    answered = 0
+    for row in asked:
+        lot_wkb = row.get("lot_wkb")
+        lot = shapely.from_wkb(lot_wkb) if lot_wkb else None
+        got = trails_geom.abuts(lot, edges[id(row)], lines)
+        if got is not None:
+            row["trail_abuts_obs"] = got
+            answered += 1
+    return answered
 
 
 def with_split_zones(rows: list[dict[str, Any]], stage_dir: Path, layers: Mapping[str, Layer]) -> int:
@@ -8277,6 +8312,9 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
+    trailed = with_trails(rows, sources)
+    if trailed:
+        log(f"bridge: trails read beside {trailed:,} lots")
     marked = pdx.with_overlays(rows, sources)
     log(f"bridge: Portland's main street overlay or a protected historic resource on {marked:,} lots")
     placed = historic_lists.write_report(rows, out)

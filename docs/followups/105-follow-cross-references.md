@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, three chapters fetched 2026-11-08 with Steph's OK; Tigard RES-A to RES-C now carry the 5 ft S-3 strip; round 5 (references into the three chapters) on flats/crossref-3: Tigard MU-CBD 8 ft S-4 on alley and park lines, Canby 16.41.070 fetched, no change] [scan: YES (new standards bind)]
+105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, three chapters fetched 2026-11-08 with Steph's OK; Tigard RES-A to RES-C now carry the 5 ft S-3 strip; round 5 (references into the three chapters) on flats/crossref-3: Tigard MU-CBD 8 ft S-4 on alley, park and trail lines, Canby 16.41.070 fetched, no change] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -168,8 +168,11 @@ References into and out of the three chapters fetched in round 3, each read one 
   tdc.18.420.landscaping.txt#L256-L257). Encoded as `parking_lot_line_buffer_ft` exempt on an
   ordinary line, 8 under `abuts_alley`, `abuts_park` or both. Tigard gained a `parks:` block
   (Park true; HOA and School Land false; Natural Area, Other, Golf Course, Cemetery unstated).
-  Residual: a trail easement over private land is not mapped; the strip is charged on every
-  non-street line once any line abuts.
+  The trail is read off Metro's regional trails layer (RLIS TRANSIT/trails.shp, registered as
+  `rlis_trails`, release 2026_11, RLIS Open Database licence; flats/geom/trail.py): a counted
+  trail crossing the lot or within 15 ft of a non-street line answers `abuts_trail` True. Without
+  the layer in the snapshot the fact is unanswered and the lot holds out of GREEN. The strip is
+  charged on every non-street line once any line abuts.
 - **Tigard S-4 in Bridgeport (18.640), (c).** Lies inside MUC's 20 ft parking street setback; the
   one Bridgeport lot is stopped by the density floor.
 - **Tigard S-1 (service areas, roof equipment), (c).** No depth.

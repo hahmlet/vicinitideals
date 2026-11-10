@@ -286,7 +286,8 @@ crossrefs:
       stopped by the density floor. Downtown, 18.650.070.B.3 reaches further than the street
       (18.650/18.650.070.txt#L53): a public right-of-way, a trail in a public easement or a
       public park. The street line is held by the 10 ft setback; round 5 (2026-11-10) encoded
-      the alley and the park as MU-CBD's parking_lot_line_buffer_ft 8.
+      the alley, the park and the trail (Metro's trails layer, abuts_trail) as MU-CBD's
+      parking_lot_line_buffer_ft 8.
   "18.230":
     outcome: other_building
     note: >-
@@ -1765,8 +1766,14 @@ zones:
     # area, a trail parcel -- leaves the fact unstated and the lot out of
     # GREEN. The field charges every non-street line, so a park behind the
     # lot also widens the sides to 8: over-asked, never under. A trail in a
-    # public easement over private land is in no layer held: the one
-    # residual. B.4 (no landscaping between two parking areas) only loosens.
+    # public easement is read off Metro's regional trails layer (RLIS
+    # TRANSIT/trails.shp, pipeline key rlis_trails; flats/geom/trail.py): a
+    # counted trail crossing the lot or within 15 ft of a non-street line
+    # settles abuts_trail True. Without the layer in the snapshot the fact is
+    # unanswered and the lot holds out of GREEN. Any one of the three facts
+    # gives 8; each combination is its own variant so two that hold together
+    # are not ambiguous. B.4 (no landscaping between two parking areas) only
+    # loosens.
     parking_lot_line_buffer_ft:
       exempt: true
       cite: Tigard CDC 18.650.070.B.3, S-4 screening only where parking abuts a public right-of-way, a trail in a public easement or a public park; no strip on other lot lines
@@ -1785,6 +1792,26 @@ zones:
         - value: 8
           when: [abuts_alley, abuts_park]
           cite: Tigard CDC 18.650.070.B.3 and Table 18.420.2, S-4 minimum depth 8 feet, on both the alley and the park line
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
+        - value: 8
+          when: [abuts_trail]
+          cite: Tigard CDC 18.650.070.B.3, parking abutting a pedestrian path or trail in a public easement screened to S-4, and Table 18.420.2, S-4 minimum depth 8 feet
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
+        - value: 8
+          when: [abuts_alley, abuts_trail]
+          cite: Tigard CDC 18.650.070.B.3 and Table 18.420.2, S-4 minimum depth 8 feet, on both the alley and the trail line
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
+        - value: 8
+          when: [abuts_park, abuts_trail]
+          cite: Tigard CDC 18.650.070.B.3 and Table 18.420.2, S-4 minimum depth 8 feet, on both the park and the trail line
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
+        - value: 8
+          when: [abuts_alley, abuts_park, abuts_trail]
+          cite: Tigard CDC 18.650.070.B.3 and Table 18.420.2, S-4 minimum depth 8 feet, on the alley, the park and the trail line
           quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
           via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
     parking_stall_width_ft:

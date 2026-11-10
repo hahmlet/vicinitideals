@@ -163,6 +163,29 @@ datasets:
       The sibling LAND/orca_sites.shp is the same land dissolved into named
       sites; the unit layer is the one that carries UNITTYPE per parcel.
 
+  rlis_trails:
+    kind: rlis_zip
+    label: Metro RLIS regional trails
+    provides: overlay
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: TRANSIT/trails.shp
+    geometry: polyline
+    serves: [or/washington/tigard]
+    fields: [TRAILNAME, SYSTEMNAME, SYSTEMTYPE, STATUS, TRLSURFACE, WIDTH, AGENCYNAME, AGENCYTYPE, LAST_EDIT]
+    notes: >-
+      Metro's regional trails, every segment in the three counties (open,
+      planned, conceptual, private, on-street), registered to the taxlots
+      (+/- 5 ft in Tigard's planning area). The 2026-11-03 release holds
+      28,924 segments; STATUS and SYSTEMTYPE are defined in the member's own
+      metadata (TRANSIT/trails.shp.xml). Licence: RLIS Open Database End User
+      License Agreement, as the rest of the bundle. The bridge reads it into
+      `abuts_trail` (flats/geom/trail.py) for Tigard's downtown standard,
+      18.650.070.B.3: parking "abutting ... pedestrian paths and trails in a
+      public easement" is screened to S-4 (8 ft). Conceptual and
+      decommissioned segments and the off-ground "Other" connectors are not
+      counted; planned and private ones are. Without it in the snapshot the
+      fact stays unanswered and the lot holds out of GREEN.
+
   osm_land_use:
     kind: overpass
     label: OpenStreetMap -- institutional, utility and transport land

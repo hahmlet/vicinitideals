@@ -5,8 +5,9 @@ Steph's OK, read with every reference into and out of them.
   3. Its S-4 row (8 ft) reaches the pod in MU-CBD, where 18.650.070.B.3 screens
   parking "When abutting a public right-of-way, pedestrian paths and trails in
   a public easement, or a public park". The street line is already 10 ft; the
-  alley and the park lines now carry the 8 ft strip, the park read from ORCA
-  through a Tigard ``parks:`` block.
+  alley, park and trail lines now carry the 8 ft strip, the park read from ORCA
+  through a Tigard ``parks:`` block and the trail from Metro's regional trails
+  layer (``rlis_trails``, :mod:`flats.geom.trail`).
 * Canby 16.41.070 (DCO design standards), fetched 2026-11-10 as the next layer
   of 16.41.050 and 16.41.060: measurable design details and commercial-only
   rows. Nothing encoded; a flat roof is allowed.
@@ -21,13 +22,18 @@ from pathlib import Path
 
 import pytest
 
+import shapely
+
 from flats.encode.load import load_trusted
-from flats.ingest.quadfit import observed_facts
+from flats.geom import trail
+from flats.ingest.quadfit import observed_facts, with_trails
+from flats.ingest.sources import load_pipeline
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
+from flats.rules.conditions import CONDITIONS
 from flats.rules.model import ORCA_UNIT_TYPES
 from flats.rules.resolver import RuleSet
-from flats.tests.test_quadfit_bridge import row
+from flats.tests.test_quadfit_bridge import EDGES, X0, Y0, row
 
 pytestmark = pytest.mark.unit
 
@@ -52,9 +58,17 @@ def lines(path: str) -> list[str]:
 
 @pytest.mark.parametrize(
     "held",
-    (("abuts_alley",), ("abuts_park",), ("abuts_alley", "abuts_park")),
+    (
+        ("abuts_alley",),
+        ("abuts_park",),
+        ("abuts_trail",),
+        ("abuts_alley", "abuts_park"),
+        ("abuts_alley", "abuts_trail"),
+        ("abuts_park", "abuts_trail"),
+        ("abuts_alley", "abuts_park", "abuts_trail"),
+    ),
 )
-def test_mu_cbd_keeps_parking_8_ft_off_an_alley_or_a_park(corpus: RuleSet, held: tuple) -> None:
+def test_mu_cbd_keeps_parking_8_ft_off_an_alley_a_park_or_a_trail(corpus: RuleSet, held: tuple) -> None:
     resolved = corpus.resolve(TIGARD, "MU-CBD", held)
     value = resolved.values[FIELD]
     assert value.value == 8
@@ -64,8 +78,9 @@ def test_mu_cbd_keeps_parking_8_ft_off_an_alley_or_a_park(corpus: RuleSet, held:
 def test_mu_cbd_owes_no_strip_on_an_ordinary_lot_line(corpus: RuleSet) -> None:
     resolved = corpus.resolve(TIGARD, "MU-CBD", ())
     assert resolved.get(FIELD) is None
-    # Both facts move it, so a lot where either is unanswered is not certified.
-    assert {"abuts_alley", "abuts_park"} <= resolved.levers
+    # Each fact moves it, so a lot where any is unanswered is not certified --
+    # a lot read without the trails layer holds out of GREEN.
+    assert {"abuts_alley", "abuts_park", "abuts_trail"} <= resolved.levers
 
 
 def test_the_street_line_already_holds_the_8_ft(corpus: RuleSet) -> None:
@@ -88,12 +103,24 @@ def test_the_variants_quote_the_printed_8_and_carry_b3_as_via(corpus: RuleSet) -
         assert variant.value == 8
         assert "8 feet" in store.quote(variant.prov.quote)
         assert "a public park" in store.quote(variant.prov.via)
+        assert "trails in a public easement" in store.quote(variant.prov.via)
 
 
-def test_no_other_tigard_zone_reads_the_park(corpus: RuleSet) -> None:
+def test_no_other_tigard_zone_reads_the_park_or_the_trail(corpus: RuleSet) -> None:
     for zone in corpus.layers[TIGARD].zones:
         if zone != "MU-CBD":
-            assert "abuts_park" not in corpus.resolve(TIGARD, zone, ()).levers, zone
+            levers = corpus.resolve(TIGARD, zone, ()).levers
+            assert not {"abuts_park", "abuts_trail"} & levers, zone
+
+
+def test_only_the_layers_the_trails_serve_have_a_trail_lever(corpus: RuleSet) -> None:
+    reading = {
+        layer_id
+        for layer_id, layer in corpus.layers.items()
+        for zone in layer.zones
+        if "abuts_trail" in corpus.resolve(layer_id, zone, ()).levers
+    }
+    assert reading == set(trail.SERVES)
 
 
 def test_bridgeport_s4_sits_inside_the_20_ft_street_setback(corpus: RuleSet) -> None:
@@ -178,3 +205,110 @@ def test_gladstone_17_76_holds_four_sections_and_no_height_exception() -> None:
         "17.76.030 Lot size requirements.",
         "17.76.040 Setback requirements.",
     ]
+
+
+# --- Tigard's trail ------------------------------------------------------------------
+
+
+def test_the_trails_layer_is_registered_from_the_rlis_bundle() -> None:
+    ds = load_pipeline().datasets[trail.TRAILS_KEY]
+    assert ds.member == "TRANSIT/trails.shp"
+    assert ds.kind.value == "rlis_zip"
+    assert {"STATUS", "SYSTEMTYPE"} <= set(ds.fields)
+    assert set(trail.SERVES) <= set(ds.serves)
+
+
+def test_abuts_trail_is_a_registered_site_fact() -> None:
+    assert CONDITIONS[trail.TRAIL_FACT].kind == "site_fact"
+
+
+@pytest.mark.parametrize(
+    ("status", "kind", "counted"),
+    (
+        ("Open", "Community", True),
+        ("Open_Fee", "Local", True),
+        ("Planned", "Regional", True),
+        ("Restricted_Private", "Local", True),
+        ("Under construction", "Local", True),
+        ("Unknown", "Local", True),
+        ("On-Street", "Regional", True),
+        ("Conceptual", "Regional", False),
+        ("Decommissioned", "Local", False),
+        ("Open", "Other", False),
+    ),
+)
+def test_which_trail_records_count(status: str, kind: str, counted: bool) -> None:
+    assert trail.counts({"STATUS": status, "SYSTEMTYPE": kind}) is counted
+
+
+LOT = shapely.box(X0, Y0, X0 + 50, Y0 + 100)
+
+
+def along_rear(offset: float):
+    """A trail running along the rear line (y = Y0 + 100), ``offset`` ft out."""
+    y = Y0 + 100 + offset
+    return shapely.LineString([(X0 - 100, y), (X0 + 150, y)])
+
+
+def along_front(offset: float):
+    """A trail in the street, ``offset`` ft in front of the street line."""
+    y = Y0 - offset
+    return shapely.LineString([(X0 + 20, y), (X0 + 30, y)])
+
+
+@pytest.mark.parametrize(
+    ("line", "expected"),
+    (
+        (along_rear(10.0), True),
+        (along_rear(trail.REACH_FT), True),
+        (along_rear(trail.REACH_FT + 5.0), False),
+        (shapely.LineString([(X0 + 25, Y0 - 20), (X0 + 25, Y0 + 120)]), True),  # crosses the lot
+        (along_front(10.0), False),  # in the street: the street setback holds it
+    ),
+)
+def test_a_trail_abuts_where_it_crosses_or_runs_beside_a_non_street_line(line, expected: bool) -> None:
+    assert trail.abuts(LOT, EDGES, trail.build([line])) is expected
+
+
+def test_a_lot_without_outline_or_edges_is_not_answered() -> None:
+    lines_ = trail.build([along_rear(5.0)])
+    assert trail.abuts(None, EDGES, lines_) is None
+    assert trail.abuts(LOT, [], lines_) is None
+
+
+def snapshot(tmp_path: Path, *features: tuple) -> Path:
+    fc = {
+        "type": "FeatureCollection",
+        "features": [
+            {"type": "Feature", "properties": {"STATUS": status, "SYSTEMTYPE": "Local"},
+             "geometry": shapely.geometry.mapping(geom)}
+            for geom, status in features
+        ],
+    }
+    (tmp_path / "rlis_trails.geojson").write_text(json.dumps(fc), encoding="utf-8")
+    return tmp_path
+
+
+def downtown(**over) -> dict:
+    return row(jurisdiction="tigard", zone="MU-CBD", lot_wkb=shapely.to_wkb(LOT), **over)
+
+
+def test_the_bridge_reads_a_trail_behind_a_downtown_lot(tmp_path: Path, layers) -> None:
+    rows = [downtown(), row(lot_wkb=shapely.to_wkb(LOT))]  # a Portland lot is not asked
+    assert with_trails(rows, snapshot(tmp_path, (along_rear(6.0), "Open"))) == 1
+    assert rows[0]["trail_abuts_obs"] is True
+    assert "trail_abuts_obs" not in rows[1]
+    assert observed_facts(rows[0], layers)["abuts_trail"] is True
+
+
+def test_a_conceptual_trail_leaves_the_lot_clear(tmp_path: Path, layers) -> None:
+    rows = [downtown()]
+    assert with_trails(rows, snapshot(tmp_path, (along_rear(6.0), "Conceptual"))) == 1
+    assert observed_facts(rows[0], layers)["abuts_trail"] is False
+
+
+def test_without_the_trails_layer_the_lot_is_not_answered(tmp_path: Path, layers) -> None:
+    rows = [downtown()]
+    assert with_trails(rows, tmp_path) == 0  # a snapshot without rlis_trails
+    assert with_trails(rows, None) == 0  # no snapshot at all
+    assert "abuts_trail" not in observed_facts(rows[0], layers)

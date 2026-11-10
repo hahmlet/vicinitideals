@@ -974,6 +974,24 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_trail",
+        "site_fact",
+        "A pedestrian path or trail runs across the lot or beside a lot line "
+        "that is not a street lot line. Tigard's downtown standard "
+        "(18.650.070.B.3) screens parking to S-4 \"when abutting a public "
+        "right-of-way, pedestrian paths and trails in a public easement, or a "
+        "public park\". True where a mapped trail (any status but conceptual "
+        "or decommissioned) crosses the lot or comes within 15 feet of a "
+        "non-street line; False where none does. Unanswered without the "
+        "trails layer.",
+        evidence=(
+            "Metro RLIS regional trails (TRANSIT/trails.shp, STATUS, "
+            "SYSTEMTYPE), read against the lot outline and s4's non-street "
+            "edges by the bridge (flats.geom.trail)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "protected_water_feature",
         "site_fact",
         "A stream, wetland or water body whose vegetated corridor eats the "
