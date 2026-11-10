@@ -21,3 +21,6 @@ Asked of Steph 2026-11-10. Lanes are built the strict way meanwhile (never a fal
 **Cornelius street types (lane arterial-spacing, 19193db1)**
 - (g) Cornelius publishes no street-type map, so all 308 of its GREENs go YELLOW under the spacing check. Washington County's map draws Cornelius roads. May we use the county's map for Cornelius? Built: all YELLOW until answered.
 - Decided by Claude: Tualatin keeps the strict pre-2045 map reading; Durham's spacing miss follows the global YELLOW ruling (not a new question).
+
+**Canby fire dead end (lane fire-road, cf2b11d9)**
+- (h) Canby Fire District's construction guide says dead ends may run 300 ft (the state code says 150 ft), but calls it district practice, not an adopted rule. Give Canby lots 300 ft? A few Canby YELLOWs would go GREEN. Built: 150 ft.
