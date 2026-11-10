@@ -8,3 +8,4 @@ Wilsonville 20, Clackamas 12, Hillsboro 3, Troutdale 3) on parking/driveway % ca
 is lenient for building-fill % rules (none flip today).
 ASKED Steph 2026-11-09: 1 keep / 2 stop at curve / 3 corner point / 4 keep + YELLOW 'rounded corner' where the choice
 changes the answer, city wording where given (Gresham) -- recommended 4.
+RULED 2026-11-09 (Steph): 'keep todays split' (option 1, no rounded-corner yellow). Nothing to build; remove at next tidy.

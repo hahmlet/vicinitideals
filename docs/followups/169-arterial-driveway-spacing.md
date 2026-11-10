@@ -13,3 +13,4 @@ on 'no practical alternative' + OAR 660-046-0220 parity). No driveway layer exis
 Re-ASKED Steph with detail: yes=YELLOW / no=RED / YELLOW whether or not a driveway exists (recommended). Tualatin townhouse/4-unit
 exemption from one corner-distance rule -> passed to the arterial-spacing lane.
 RULED 2026-11-09 (Steph): RED -- "they don't want new driveways ... not push it". Every frontage fails spacing -> RED. Lane told.
+REPLACED 2026-11-09 (Steph: 'ignore my last comment ... New ruling: Yellow with flag'): spacing miss on every frontage = YELLOW + flag. Lane told.

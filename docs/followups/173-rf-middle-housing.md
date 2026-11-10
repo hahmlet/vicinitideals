@@ -12,3 +12,4 @@ Two encoding nits (no colour effect): portland.yaml comment says RF 'not primari
 attached to the 71 out-of-UGB lots.
 ASKED Steph 2026-11-09: A farm land, no state route (recommended; store Ord 192241, fix nits, unblock the pocket RF card) /
 B keep today's setup / C treat as open under state law.
+RULED 2026-11-09 (Steph): 'farm land' (option A). Lane rf-farm-land: store Ord 192241, fix the two nits, unblock the pocket RF card.
