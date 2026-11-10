@@ -178,6 +178,7 @@ _LABELS: dict[str, str] = {
     "setback_rear_ft": "rear setback",
     "setback_side_ft": "interior side setback",
     "setback_side_total_ft": "combined side setbacks",
+    "setback_side_max_ft": "max. side setback",
     "setback_street_side_ft": "corner side yard (street side) setback",
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
@@ -241,6 +242,20 @@ _F: tuple[FieldDef, ...] = (
         "the floor says where the building may sit on what is left.",
         False,
         "side_setback",
+    ),
+    FieldDef(
+        "setback_side_max_ft",
+        "length_ft",
+        "MAXIMUM side setback, read as holding EVERY side wall to the side "
+        "lot line it faces: Hillsboro Tables 12.22.460-1 and 12.22.560-1, "
+        "\"Side Yard (all structures) 5 feet\" (SCR-MD, SCR-HD; Steph "
+        "2026-11-09, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both), "
+        "and Table 12.21.850-1's 15 ft (SCR-DNC; Steph 2026-11-10). "
+        "The screen measures the drawn building's distance from each side lot "
+        "line: within it on every one passes; beyond it on any is held out "
+        "of GREEN (MEASURE-SIDE-MAX-BOTH), never failed, because the code may "
+        "yet be read as one wall (FOLLOWUPS 170). Absent, no side maximum.",
+        True,
     ),
     FieldDef("setback_rear_ft", "length_ft", "Minimum rear setback.", False, "rear_setback"),
     FieldDef(
@@ -2136,6 +2151,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
+        # One city states a maximum side setback (Hillsboro SCR-MD, SCR-HD, SCR-DNC).
+        "setback_side_max_ft",
         "setback_front_max_ft",
         "setback_front_max_streets",
         "setback_front_max_facade_pct",

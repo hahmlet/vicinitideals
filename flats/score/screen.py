@@ -529,6 +529,7 @@ CHECK_FIELD: dict[str, str] = {
     "building_frontage_share": "building_frontage_min_pct",
     "building_frontage_other_share": "building_frontage_other_pct",
     "front_setback_max_ft": "setback_front_max_ft",
+    "side_setback_max_ft": "setback_side_max_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "side_street_yard_vehicle_share": "parking_side_street_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
@@ -626,6 +627,18 @@ FRONTAGE_LINE = "min_frontage_line"
 FRONT_MAX = "front_setback_max_ft"
 FRONT_MAX_DRAWN = "front_max_drawn"
 FRONT_MAX_STREET = "front_max_street"
+
+#: The drawn building against a stated maximum side setback
+#: (``setback_side_max_ft``), read as holding every side wall (Hillsboro
+#: SCR-MD and SCR-HD, "Side Yard (all structures) 5 feet"; Steph 2026-11-09,
+#: rulings.yaml ``2026-11-09-hillsboro-scr-side-max-both``, FOLLOWUPS 170).
+#: The check's name, and the one quantity that holds a lot out of GREEN
+#: without failing it: ``SIDE_MAX_BOTH``, the building stands beyond the
+#: maximum from at least one side lot line, or nothing was drawn to measure
+#: -- it fits only on the one-wall reading, which the city has not ruled out.
+#: Joins ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
+SIDE_MAX = "side_setback_max_ft"
+SIDE_MAX_BOTH = "side_max_both"
 #: Feet past the maximum a drawn building may stand and still be read as
 #: within it: the raster the drawing stands the building on is cut in
 #: half-foot cells (:data:`flats.fit.raster.GRID_FT`) and keeps a building
@@ -874,6 +887,15 @@ class LotFacts:
     #: bridge), and the check goes unrun.
     front_max_streets: tuple[tuple[bool, float, float, float], ...] | None = None
     front_max_tried: bool = False
+    #: The drawn building's nearest distance from each side lot line, one per
+    #: unbroken run of side-class lot line, in the order the lot ring meets
+    #: them (:func:`flats.ingest.quadfit.side_max_gaps`). Measured by the
+    #: bridge on the plan's final drawing where the zone states a maximum
+    #: side setback; ``side_max_tried`` with nothing here means it looked and
+    #: had no fitting building -- held out of GREEN; neither set means nobody
+    #: measured, and the check goes unrun, as for the front maximum.
+    side_max_gaps: tuple[float, ...] | None = None
+    side_max_tried: bool = False
     #: The lot's named streets are two, and one unbroken run of lot line turns
     #: from one onto the other (:func:`flats.ingest.quadfit.front_max_corner`).
     #: A corner whatever the angle between them, where ``corner`` -- the
@@ -2150,6 +2172,8 @@ def _checks(
     # The building's distance from the street against a stated maximum
     # front setback (FOLLOWUPS 147).
     _front_max(rules, lot, check, unchecked, unmeasured)
+    # Each side wall against a stated maximum side setback (FOLLOWUPS 170).
+    _side_max(rules, lot, check, unchecked, unmeasured)
 
     # The fall across the ground the plan stands on (Steph 2026-10-04). Over
     # the red line on the fine model is a miss; on the coarse model alone it
@@ -3783,6 +3807,48 @@ def _front_max(
         unmeasured.add(FRONT_MAX_STREET)
 
 
+def _side_max(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    check: Callable[..., None],
+    unchecked: list[str],
+    unmeasured: set[str],
+) -> None:
+    """The drawn building against a stated maximum side setback, held to
+    every side lot line (FOLLOWUPS 170; Steph 2026-11-09, "I'd say it's
+    both ... I'm good with yellow and ask").
+
+    Passes where the building stands within the maximum of every side lot
+    line, each wall allowed the raster's cell (:data:`FRONT_MAX_DRAWN_TOL_FT`,
+    a slide toward that line the drawing could still make), and where two
+    side lines face each other the two distances together within twice the
+    maximum with no allowance: a slide toward one line is a slide away from
+    the other, so no placement can bring both nearer than their sum allows.
+    Anything else -- beyond on a side line, or nothing drawn -- is
+    :data:`SIDE_MAX_BOTH`: held out of GREEN, never failed, because the code
+    may yet be read as one wall (12.50.130 C.3.a's "at least 1 façade"), the
+    reading the lot fits on. A lot with no side lot line owes none."""
+    cap = _pct(rules, "setback_side_max_ft")
+    if cap is None:
+        return
+    gaps = lot.side_max_gaps
+    if gaps is None:
+        unchecked.append(SIDE_MAX)
+        if lot.side_max_tried:
+            unmeasured.add(SIDE_MAX_BOTH)
+        return
+    if not gaps:
+        return
+    worst = max(gaps)
+    pair = sum(sorted(gaps)[-2:]) if len(gaps) > 1 else None
+    if worst <= cap + FRONT_MAX_DRAWN_TOL_FT and (pair is None or pair <= 2 * cap):
+        # Within the raster's allowance reads as on the line.
+        check(SIDE_MAX, min(worst, cap), cap, is_maximum=True)
+        return
+    unchecked.append(SIDE_MAX)
+    unmeasured.add(SIDE_MAX_BOTH)
+
+
 def _pct(rules: ZoneResolution, name: str) -> float | None:
     got = rules.get(name)
     if isinstance(got, bool) or not isinstance(got, (int, float)):
@@ -4227,6 +4293,7 @@ _MEASURED_FLAG: dict[str, str] = {
     MORE_BUILDINGS: "FRONTAGE-MORE-BUILDINGS",
     FRONT_MAX_DRAWN: "MEASURE-FRONT-MAX-DRAWN",
     FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",
+    SIDE_MAX_BOTH: "MEASURE-SIDE-MAX-BOTH",
     ENTRANCE_TURNED: "ENTRANCE-TURNED",
     ENTRANCE_STREET: "ENTRANCE-STREET",
     ENTRANCE_DRAWN: "ENTRANCE-DRAWN",
