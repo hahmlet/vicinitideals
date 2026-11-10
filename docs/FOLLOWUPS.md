@@ -163,6 +163,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
+182. [Claude] [Steph] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- BUILT flats/no-sewer 2a52ec1b (rel8, ~398 greens red); Steph: red / note / yellow? [file](followups/182-no-sewer-street-pipe.md)
 181. [Claude] [Steph] [scan: YES -- false greens only] **Roof sweep: Clackamas unincorporated pitched-roof rule** -- BUILT flats/roof-ban (2e675fee, f4072a52); Steph: Clackamas red / yellow+flag / exempt? [file](followups/181-roof-sweep-clackamas.md)
 180. [Claude] [Steph] [scan: YES -- false greens only] **Narrow-street fire rule: SW 56th record + 22 vs 24 ft** -- BUILT flats/narrow-row (af369260, eb2b9f5e); ~13 greens to yellow; two questions for Steph. [file](followups/180-narrow-row-questions.md)
 179. [Claude] [Steph] [scan: YES if adopted] **End-door variant: windows needed** -- typical 15% = 9 windows + door on the 30 ft end; ~10,500 lots back; state rule checked: does not reach a single pod; Steph to decide. [file](followups/179-end-door-variant.md)
