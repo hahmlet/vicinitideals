@@ -2954,6 +2954,8 @@ _REASON_WORDS = {
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_RANK_UNKNOWN": "closer look: the lot's parking works off only one of its two streets, and a street has no class on file, so it is not known the street that works is the quieter one the code sends the driveway to",
     "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
+    "DRIVEWAY_SPACING_BLOCKED": "every street the lot fronts is one where the city keeps a new driveway farther from corners or other driveways than the lot allows, so a new driveway needs the city's (or ODOT's) agreement; worth a call about access",
+    "DRIVEWAY_SPACING_UNREAD": "the city keeps new driveways a set distance from corners by street type, and the street types or corners here could not be read to show the driveway clears",
     "PARKING_SETBACK_DOUBT": "fits the neighbour district's quadplex setback but the parking court may also owe the larger single-house setback, a question still open",
     "REAR_COURT_SHORT": "the parking court as drawn stands closer to the line opposite the front than the rear yard the city keeps parking out of",
     "COURT_FRONT_YARD": "the parking court as drawn stands in a front yard, between the building and the street, and no other spot tried keeps it out",

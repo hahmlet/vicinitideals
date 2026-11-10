@@ -1049,6 +1049,17 @@ code:
   end: "SECTION 330 - COMMERCIAL, INDUSTRIAL AND MULTIFAMILY DRIVEWAYS"
   # 71 lines: one section of a 300-page manual, sliced to the parking part.
   allow_thin: true
+# Section 220's access spacing (Table 2-1 and its notes), read for the
+# driveway spacing from intersections and along collectors and arterials
+# (flats/config/driveway_spacing.yaml, FOLLOWUPS 169). Read 2026-11-09.
+- id: roadway.220
+  url: https://dochub.clackamas.us/documents/drupal/fc5951b3-7eab-424c-a4d2-b484220a3ffb
+  title: Clackamas County Roadway Standards Section 220 - Access Standards
+  start: "220.1 General"
+  # The contents list the heading first.
+  nth: 2
+  end: "220.5 Roadway Intersection Management"
+  allow_thin: true
 # And Section 320 hands them on again, to two CAD sheets. Both are stored and
 # both store three lines, because a drawing's only extractable text is its
 # title block. That title block is not nothing -- it carries the stall size,

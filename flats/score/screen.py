@@ -355,6 +355,18 @@ COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 #: is too big, and the corner, the lane and the side-street driveway it
 #: grants are not there. A person has to look at the lot (FOLLOWUPS 4).
 STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
+#: Every street the lot fronts is one where the code spaces a new driveway
+#: from other driveways (a collector or arterial; no map holds driveways), or
+#: is measured short of the code's distance from a street intersection at
+#: every placement (FOLLOWUPS 169, flats/config/driveway_spacing.yaml).
+#: YELLOW with a flag, never GREEN and never RED on this ground alone,
+#: whether or not a driveway is there today (Steph 2026-11-09, rulings.yaml
+#: 2026-11-09-busy-road-driveway-spacing-yellow).
+DRIVEWAY_SPACING_BLOCKED = "DRIVEWAY_SPACING_BLOCKED"
+#: The code spaces driveways by street class here, and the reading could not
+#: show a place on the frontage that clears it: a street class no map reads,
+#: intersections not found, or a placement between the two bounds.
+DRIVEWAY_SPACING_UNREAD = "DRIVEWAY_SPACING_UNREAD"
 #: A corner lot whose parking works off one street but not off the other,
 #: where a street line carries no class: nothing says the street that works
 #: is the quieter one the code sends the driveway to. A closer look, not a
@@ -791,6 +803,12 @@ class LotFacts:
     #: allowances, or a centerline clearance proving failure. None if unmeasured
     #: or between those bounds (:data:`DRIVEWAY_NEAR_INTERSECTION_100FT`).
     durham_apron_clearance_ft: float | None = None
+    #: Driveway spacing (FOLLOWUPS 169): ``"clear"``, ``"blocked"`` or
+    #: ``"unread"`` (:mod:`flats.geom.driveway_spacing`); None where nothing
+    #: read it, which on a layer with spacing rules is unread.
+    driveway_spacing: str | None = None
+    #: The reading's short account per frontage.
+    driveway_spacing_why: str = ""
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
     #: the building seen from the street within the maximum front setback.
@@ -3440,6 +3458,8 @@ def screen(
         reasons.append(GEOMETRY_UNREADABLE)
     if lot.street_unconfirmed:
         reasons.append(STREET_UNCONFIRMED)
+    if (spacing := _driveway_spacing_reason(rules, lot)) is not None:
+        reasons.append(spacing)
     if lot.strip_waived:
         reasons.append(PARKING_STRIP_UNCONFIRMED)
     if lot.rear_court_short:
@@ -4050,6 +4070,16 @@ _VERDICT_FLAG: dict[RuleVerdict, str] = {
 }
 
 
+def _driveway_spacing_reason(rules: ZoneResolution, lot: LotFacts) -> str | None:
+    """The driveway-spacing reason a lot carries (FOLLOWUPS 169): none where
+    the layer holds no spacing rule or the reading cleared the lot."""
+    from flats.geom.driveway_spacing import BLOCKED, CLEAR, load_rules
+
+    if rules.jurisdiction not in load_rules() or lot.driveway_spacing == CLEAR:
+        return None
+    return DRIVEWAY_SPACING_BLOCKED if lot.driveway_spacing == BLOCKED else DRIVEWAY_SPACING_UNREAD
+
+
 def held_open(
     rules: ZoneResolution, config: Configuration | None, lot: LotFacts | None = None
 ) -> tuple[str, ...]:
@@ -4201,6 +4231,11 @@ def _account(
         flag("GEOM-UNREADABLE", GEOMETRY_UNREADABLE)
     if lot.street_unconfirmed:
         flag("ACCESS-STREET-UNCONFIRMED", STREET_UNCONFIRMED)
+    spacing = _driveway_spacing_reason(rules, lot)
+    if spacing == DRIVEWAY_SPACING_BLOCKED:
+        flag("ACCESS-DRIVEWAY-SPACING", spacing, source=lot.driveway_spacing_why)
+    elif spacing == DRIVEWAY_SPACING_UNREAD:
+        flag("ACCESS-DRIVEWAY-SPACING-UNREAD", spacing, source=lot.driveway_spacing_why)
     if lot.strip_waived:
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if lot.rear_court_short:
@@ -4440,6 +4475,8 @@ __all__ = [
     "STANDARD_NOT_ENCODED",
     "STREET_RANK_UNKNOWN",
     "STREET_UNCONFIRMED",
+    "DRIVEWAY_SPACING_BLOCKED",
+    "DRIVEWAY_SPACING_UNREAD",
     "STRIP_FIELD",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",
