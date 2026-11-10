@@ -1090,6 +1090,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "hillsboro_downtown_plan_district",
+        "site_fact",
+        "The lot lies inside Hillsboro's Downtown Plan District, whose "
+        "boundary is Figure 12.61.200-A and nothing else (CDC 12.61.200). The "
+        "SCR-LD, SCR-MD and SCR-HD zones lie both inside and outside it, and "
+        "inside it 12.61.800 binds new residential construction to a pitched "
+        "roof (\"Flat roofs are not permitted as the primary roof form\", "
+        "4/12 hipped, 6/12 gabled), which the flat-roofed pod fails. The city "
+        "publishes no plan-district layer (Community_Development FeatureServer "
+        "holds zoning, natural resources and the comprehensive plan only, "
+        "checked 2026-11-10), and the figure is not traced, so it is "
+        "unmeasured: a lot in those three zones stays off GREEN on it.",
+        evidence=(
+            "Figure 12.61.200-A, Downtown Plan District Boundaries -- to be "
+            "traced as Hillsboro's drawn_areas; not held yet"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "fairview_outside_storefront_district",
         "site_fact",
         "The lot lies in Fairview's Town Center Commercial (TCC) zone OUTSIDE "

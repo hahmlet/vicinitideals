@@ -208,6 +208,11 @@ readings:
     queue: chapter
     outcome: nothing_here
     note: >-
+      CORRECTED 2026-11-10 (false-green round 4, fg-rate-C): this reading missed B(3), "Roof pitch
+      shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not
+      permitted" (#L86). That is a ban the flat-roofed pod fails (rulings.yaml
+      2026-10-21-pod-roof-flat), now encoded as min_roof_pitch_in_12 5 on LR 7.5 and LR 12. The card
+      stays closed because the work it orders is done. The original reading follows.
       Design Review for all residential development in the LR7.5 and LR12 zones, and it does reach
       this building -- "all residential development", Type I, no housing-type exception. It closes
       on WHAT it asks rather than WHO it asks. Two required elements: the main entry of every
@@ -228,6 +233,10 @@ readings:
     queue: chapter
     outcome: nothing_here
     note: >-
+      CORRECTED 2026-11-10 (false-green round 4, fg-rate-C): like 210.375, this reading missed
+      B(3), the 5:12 minimum roof pitch with "Flat or shed style roof designs are not permitted"
+      (#L86), a ban the flat-roofed pod fails; now encoded as min_roof_pitch_in_12 5 on MR 2 and MR
+      4. The original reading follows.
       The MR2 and MR4 twin of 210.375, word for word: the same entry orientation within 45 degrees
       of the street, the same 20 percent of street-facing wall area in windows or doors, and the
       same "at least four of the following" menu of dormers, bay windows, recessed and covered
@@ -1162,6 +1171,16 @@ zones:
       wins: local
       cite: WVDC 235.300 Table 235-2, "Lot size and dimensions" and "Maximum lot coverage" rows
       quote: "or/multnomah/wood-village/235.300.txt#L68-L71,L77"
+    min_roof_pitch_in_12:
+      # Stated here because `like: MR 2` has no field list, and MR 2 holds
+      # 220.355's 5:12 roof (2026-11-10). The Town Center has its own roof rule,
+      # 235.440.E: "Buildings must have either a sloped roof with a pitch no
+      # flatter than 4:12 or a flat roof with a cornice". A flat roof is
+      # allowed; the cornice is an unchecked design detail the pod can take on
+      # (rulings.yaml 2026-10-14-unchecked-design-details). No pitch floor.
+      exempt: true
+      cite: "WVDC 235.440.E: a sloped roof no flatter than 4:12 or a flat roof with a cornice"
+      quote: "or/multnomah/wood-village/235.440.txt#L62,L72"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/wood-village/235.200.txt#L60,L66,L68"
@@ -1336,6 +1355,21 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/210.375
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/210.375.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 210.375(B)(3) binds "All
+      # residential development in the LR7.5 and LR12 zones" (210.375(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 210.375(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/210.375.txt#L60,L86"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1478,6 +1512,21 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/210.375
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/210.375.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 210.375(B)(3) binds "All
+      # residential development in the LR7.5 and LR12 zones" (210.375(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 210.375(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/210.375.txt#L60,L86"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1620,6 +1669,21 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/220.355
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/220.355.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 220.355(B)(3) binds "All
+      # residential development in the MR2 and MR4 zones" (220.355(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 220.355(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/220.355.txt#L60,L86"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
@@ -1751,6 +1815,21 @@ zones:
       url: https://woodvillage.municipal.codes/WVDC/220.355
       retrieved: '2026-08-27'
       quote: "or/multnomah/wood-village/220.355.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 220.355(B)(3) binds "All
+      # residential development in the MR2 and MR4 zones" (220.355(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 220.355(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/220.355.txt#L60,L86"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),

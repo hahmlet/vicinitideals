@@ -1337,6 +1337,11 @@ readings:
     queue: nofield
     outcome: other_building
     note: >-
+      CORRECTED 2026-11-10 (roof sweep, roof-ban): 4.0136 is FLAG LOT STANDARDS for LDR-5, LDR-7,
+      LDR-PV, TLDR and TR (#L1, #L4), not accessory structures, and its height ladder binds the
+      pod: "roofs with a pitch less than 1 foot for each 4 feet of horizontal distance: 22 feet"
+      (#L12). The pod is flat and 26 ft, so it fails on a flag lot; encoded as a max_height_ft
+      variant of 22 on flag_lot in those five zones. The original reading follows.
       Accessory structures in the residential districts: front and side 10 feet, rear 10 with no
       alley and 6 with one, a 22-foot ceiling on butterfly and mansard roofs and 30 feet where the
       roof pitches more than 1 foot in 4. A shed, a detached garage, an accessory building -- none
@@ -2435,6 +2440,20 @@ zones:
       value: 35
       cite: Gresham Development Code Table 4.0130 H; 4.0133
       quote: "or/multnomah/gresham/4/4.0130.txt#L90,L92"
+      variants:
+        # Roof sweep (roof-ban, 2026-11-10). 4.0136.A.3 caps a flag lot's
+        # structures by roof form: "Structures with roofs with a pitch less
+        # than 1 foot for each 4 feet of horizontal distance: 22 feet". The
+        # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat) and it
+        # stands 26 ft, so a flag lot here fails. The cap binds every
+        # structure, detached houses included; OAR 660-046-0220(2)(d)'s
+        # "25 feet or two stories" floor is not lifted on the lenient limb
+        # (_state.yaml). The ledger card for 4.0136 had misread the section
+        # as accessory structures.
+        - value: 22
+          when: [flag_lot]
+          cite: "Gresham Development Code 4.0136.A.3.a, flag lots in LDR-5, LDR-7, LDR-PV, TLDR and TR: roofs pitched less than 1 in 4, 22 feet"
+          quote: "or/multnomah/gresham/4/4.0136.txt#L1,L4,L11-L12"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4/4.0130.txt#L155"
@@ -2816,6 +2835,20 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L92"
+      variants:
+        # Roof sweep (roof-ban, 2026-11-10). 4.0136.A.3 caps a flag lot's
+        # structures by roof form: "Structures with roofs with a pitch less
+        # than 1 foot for each 4 feet of horizontal distance: 22 feet". The
+        # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat) and it
+        # stands 26 ft, so a flag lot here fails. The cap binds every
+        # structure, detached houses included; OAR 660-046-0220(2)(d)'s
+        # "25 feet or two stories" floor is not lifted on the lenient limb
+        # (_state.yaml). The ledger card for 4.0136 had misread the section
+        # as accessory structures.
+        - value: 22
+          when: [flag_lot]
+          cite: "Gresham Development Code 4.0136.A.3.a, flag lots in LDR-5, LDR-7, LDR-PV, TLDR and TR: roofs pitched less than 1 in 4, 22 feet"
+          quote: "or/multnomah/gresham/4/4.0136.txt#L1,L4,L11-L12"
     min_frontage_ft:
       value: 40
       quote: "or/multnomah/gresham/4/4.0130.txt#L80"
@@ -2994,6 +3027,20 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L92"
+      variants:
+        # Roof sweep (roof-ban, 2026-11-10). 4.0136.A.3 caps a flag lot's
+        # structures by roof form: "Structures with roofs with a pitch less
+        # than 1 foot for each 4 feet of horizontal distance: 22 feet". The
+        # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat) and it
+        # stands 26 ft, so a flag lot here fails. The cap binds every
+        # structure, detached houses included; OAR 660-046-0220(2)(d)'s
+        # "25 feet or two stories" floor is not lifted on the lenient limb
+        # (_state.yaml). The ledger card for 4.0136 had misread the section
+        # as accessory structures.
+        - value: 22
+          when: [flag_lot]
+          cite: "Gresham Development Code 4.0136.A.3.a, flag lots in LDR-5, LDR-7, LDR-PV, TLDR and TR: roofs pitched less than 1 in 4, 22 feet"
+          quote: "or/multnomah/gresham/4/4.0136.txt#L1,L4,L11-L12"
     # Table 4.0130 G.2: "40 ft. as measured from the corner radius end point to
     # the property corner" -- one street, without its share of the rounded
     # corner (FOLLOWUPS 175).
@@ -3248,6 +3295,20 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.0130.txt#L92"
+      variants:
+        # Roof sweep (roof-ban, 2026-11-10). 4.0136.A.3 caps a flag lot's
+        # structures by roof form: "Structures with roofs with a pitch less
+        # than 1 foot for each 4 feet of horizontal distance: 22 feet". The
+        # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat) and it
+        # stands 26 ft, so a flag lot here fails. The cap binds every
+        # structure, detached houses included; OAR 660-046-0220(2)(d)'s
+        # "25 feet or two stories" floor is not lifted on the lenient limb
+        # (_state.yaml). The ledger card for 4.0136 had misread the section
+        # as accessory structures.
+        - value: 22
+          when: [flag_lot]
+          cite: "Gresham Development Code 4.0136.A.3.a, flag lots in LDR-5, LDR-7, LDR-PV, TLDR and TR: roofs pitched less than 1 in 4, 22 feet"
+          quote: "or/multnomah/gresham/4/4.0136.txt#L1,L4,L11-L12"
     # Table 4.0130 G.2: "40 ft. as measured from the corner radius end point to
     # the property corner" -- one street, without its share of the rounded
     # corner (FOLLOWUPS 175).
@@ -3450,6 +3511,20 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4/4.1415.txt#L55"
+      variants:
+        # Roof sweep (roof-ban, 2026-11-10). 4.0136.A.3 caps a flag lot's
+        # structures by roof form: "Structures with roofs with a pitch less
+        # than 1 foot for each 4 feet of horizontal distance: 22 feet". The
+        # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat) and it
+        # stands 26 ft, so a flag lot here fails. The cap binds every
+        # structure, detached houses included; OAR 660-046-0220(2)(d)'s
+        # "25 feet or two stories" floor is not lifted on the lenient limb
+        # (_state.yaml). The ledger card for 4.0136 had misread the section
+        # as accessory structures.
+        - value: 22
+          when: [flag_lot]
+          cite: "Gresham Development Code 4.0136.A.3.a, flag lots in LDR-5, LDR-7, LDR-PV, TLDR and TR: roofs pitched less than 1 in 4, 22 feet"
+          quote: "or/multnomah/gresham/4/4.0136.txt#L1,L4,L11-L12"
     max_far:
       value: 1.0
       quote: "or/multnomah/gresham/4/4.1415.txt#L61-L65"

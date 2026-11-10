@@ -1692,6 +1692,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-DOWNTOWN-PLAN-DISTRICT:
+    description: "Whether the lot lies inside Hillsboro's Downtown Plan District (Figure 12.61.200-A), where 12.61.800 refuses a flat primary roof (4/12 hipped, 6/12 gabled) and the flat-roofed pod is RED"
+    kind: categorical
+    risk: possible
+    severity: 9
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Trace Figure 12.61.200-A (CDC 12.61.200) as Hillsboro's drawn_areas; the city publishes no plan-district layer"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-TROUTDALE-TOWN-CENTER:
     description: "Whether the lot lies inside Troutdale's Town Center Overlay District"
     kind: categorical
