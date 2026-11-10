@@ -30,3 +30,7 @@
    `2026-10-14-existing-buildings-stay-green`) that occupied buildings STAY GREEN; the
    2026-10-10 question "should a lot whose pod sits on a working building's parking or yard
    stay green?" reads as answered by it -- confirm with Steph only if a case differs.
+
+Round 3 (2026-11-09, live run 122, seed 64, 100 lots): A Multnomah 1/50 wrong + 1 doubtful (2.0%);
+B Wash+Clack 3/50 wrong + 3 doubtful (6.0%, ~4% after rel6). Pooled ~4%, unchanged. New classes -> FOLLOWUPS 168,169,171,172.
+Reports: ../vicinitideals-worktrees/fg-rate-A.md, fg-rate-B.md. Next round: sample rel6's greens (single 80x30 design).

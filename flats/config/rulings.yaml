@@ -188,8 +188,12 @@
   effect: >-
     The alley setback applies only to the stretch the alley covers; the rest
     of the line keeps the ordinary setback. A partial alley counts as the
-    court's travel lane only when the covered run is long enough.
+    court's travel lane only when the covered run is long enough, and only
+    for a court that stands against that covered run (FOLLOWUPS 3(c),
+    2026-11-08): where no window does, the court keeps its own aisle, and a
+    final drawing with the court off the stretch is held out of GREEN.
   source: Steph 2026-09-28 (memory feedback_partial_alley_ruling.md), commit 59533da1
+  encoded_in: [flats/geom/alley.py, flats/score/paper.py, flats/fit/draw.py, flats/ingest/quadfit.py]
 
 - id: 2026-09-29-stated-number-governs
   kind: ruling
@@ -904,11 +908,20 @@
     contributing resource in a Portland conservation district)?
   ruling: RED.
   effect: >-
-    A lot holding a protected historic resource is RED. Built so far from
-    Portland's historic resource map (Portland and Multnomah
-    unincorporated).
+    A lot holding a protected historic resource is RED. Built from Portland's
+    historic resource map (Portland and Multnomah unincorporated) and, since
+    FOLLOWUPS 87, from the lists in flats/config/historic: RED where the
+    code clearly protects a listed building (Gresham, West Linn, Troutdale)
+    and for a National Register building or a contributing one in a National
+    Register district, whose demolition OAR 660-023-0200(8) makes wait on a
+    hearing that can deny it; YELLOW with HISTORIC-LISTING-UNSETTLED where
+    that is not settled (Tigard, Washington County, objects, near-address
+    matches and see 2026-11-06-historic-surveyed-yellow).
   source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md; flats/config/pipeline.yaml)
-  encoded_in: [flats/config/pipeline.yaml]
+  encoded_in:
+    - flats/config/pipeline.yaml
+    - flats/config/historic/protection.yaml
+    - flats/geom/historic_lists.py
 
 - id: 2026-11-06-historic-surveyed-yellow
   kind: ruling
@@ -1009,14 +1022,32 @@
     lot-of-record relief it is encoded as lot_of_record_relief and applied on
     the one-lot path only: the unit-lots plat makes new lots, and they meet
     the lot standards. Gresham first (corridor CMF, SC, SC-RJ, CMU:
-    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area); the
-    other cities wait for their own sweep (docs/FOLLOWUPS.md item 108).
+    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area). The
+    sweep of every other layer (FOLLOWUPS 108, 2026-11-06) took Milwaukie,
+    Oregon City, West Linn MU, Hillsboro and Troutdale outright. The ruling
+    says a lot is legal, not when it was made or who owned next door: where a
+    relief asks either (Tualatin, Beaverton, Happy Valley, Canby, Portland's
+    multi-dwelling zones, MCC LR/MR) or leaves its reach open (Estacada's area
+    per dwelling), a lot let off it is YELLOW with MEASURE-LOT-OF-RECORD
+    (lot_of_record_condition).
   source: Steph 2026-10-21 (chat, via the FLATS coordinator), docs/FOLLOWUPS.md item 108
   encoded_in:
     - flats/rules/fields.py
     - flats/score/screen.py
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/config/footnotes/or/multnomah/gresham.yaml
+    - flats/config/jurisdictions/or/clackamas/milwaukie.yaml
+    - flats/config/jurisdictions/or/clackamas/oregon-city.yaml
+    - flats/config/jurisdictions/or/clackamas/west-linn.yaml
+    - flats/config/jurisdictions/or/washington/hillsboro.yaml
+    - flats/config/jurisdictions/or/multnomah/troutdale.yaml
+    - flats/config/jurisdictions/or/clackamas/estacada.yaml
+    - flats/config/jurisdictions/or/clackamas/tualatin.yaml
+    - flats/config/jurisdictions/or/washington/beaverton.yaml
+    - flats/config/jurisdictions/or/clackamas/happy-valley.yaml
+    - flats/config/jurisdictions/or/clackamas/canby.yaml
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
 
 - id: 2026-11-01-trees-ignored-entered-per-lot
   kind: ruling
@@ -2769,6 +2800,38 @@
     not RED on this ground alone. FOLLOWUPS 177.
   source: Steph 2026-11-10 (chat), docs/followups/177-door-rule-green-loss.md
   encoded_in: [flats/score/paper.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
+- id: 2026-11-10-hillsboro-corner-side-parking-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    Hillsboro 12.50.130 I.5: on corner lots the city MAY approve parking
+    beside the building (past the side maximum). YELLOW, or GREEN with a
+    warning?
+  ruling: >-
+    "Yellow (as built)"
+  effect: >-
+    Corner lots that need the city's discretionary approval stay YELLOW.
+    FOLLOWUPS 176(c).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-cornelius-county-street-map
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: cornelius}
+  question: >-
+    Cornelius publishes no street-type map, so every Cornelius GREEN goes
+    YELLOW under the driveway-spacing check. Use Washington County's map,
+    which draws Cornelius roads?
+  ruling: >-
+    "County map, but using it just for business" -- clarified: "Only for busy
+    roads"
+  effect: >-
+    Washington County's functional-class map is used for Cornelius only to
+    tell which streets are busy (collector/arterial) for the driveway-spacing
+    check; it is used for nothing else in Cornelius. FOLLOWUPS 176(g).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py]
 - id: 2026-11-09-clackamas-front-parking-follow-zdo
   kind: ruling
   date: 2026-11-09
@@ -2814,6 +2877,7 @@
     yet read takes the conservative default (the triangle bars buildings), so
     its corner lots near the zone are YELLOW, never GREEN, until read.
   source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/geom/sight_triangle.py, flats/ingest/quadfit.py, flats/rules/loader.py]
 - id: 2026-11-09-portland-driveway-clear-zone-note
   kind: ruling
   date: 2026-11-09
@@ -2830,6 +2894,7 @@
     (check PBOT TRN-10.40 before relying on the driveway). Portland corner
     clear vision stays right-of-way only.
   source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml, flats/ingest/quadfit.py, flats/config/flags.yaml]
 - id: 2026-11-09-curb-position-middle-way
   kind: ruling
   date: 2026-11-09
@@ -2845,6 +2910,7 @@
     YELLOW with a "check where the curb is" flag. A real curb layer (e.g.
     Portland PBOT curbs) replaces the assumption where it exists.
   source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/geom/sight_triangle.py, flats/ingest/quadfit.py]
 - id: 2026-11-09-west-linn-pod-single-family
   kind: ruling
   date: 2026-11-09
@@ -2859,6 +2925,7 @@
     the West Linn driveway clear-vision area (state middle-housing siting
     parity).
   source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/west-linn.yaml]
 - id: 2026-11-09-multco-pockets-portland-parking
   kind: ruling
   date: 2026-11-09
@@ -2938,6 +3005,7 @@
     Canby Fire District Conditions of Construction (rev 10.28). A few Canby
     YELLOWs may go GREEN. FOLLOWUPS 176(h).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/fire_roads.yaml, flats/provenance/sources.py]
 - id: 2026-11-09-busy-road-driveway-spacing-yellow
   kind: ruling
   date: 2026-11-09
@@ -3016,6 +3084,7 @@
     (e.g. Gresham corner minimum frontage to the radius end point). No
     "rounded corner" yellow. FOLLOWUPS 174.
   source: Steph 2026-11-09 (chat), docs/followups/174-corner-frontage.md, ../vicinitideals-worktrees/corner-frontage.findings.md
+  encoded_in: [flats/score/screen.py, flats/fit/frontage.py, flats/ingest/quadfit.py, flats/config/jurisdictions/or/multnomah/gresham.yaml]
 - id: 2026-11-10-fire-long-dead-end-yellow
   kind: ruling
   date: 2026-11-10
@@ -3034,6 +3103,7 @@
     GREEN. Lanes under 20 ft and other fire-reach failures are unchanged.
     FOLLOWUPS 168.
   source: Steph 2026-11-10 (chat), docs/followups/168-fire-road-width.md, ../vicinitideals-worktrees/fire-road.handoff.md
+  encoded_in: [flats/config/fire_roads.yaml, flats/fit/fire_roads.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
 - id: 2026-11-10-milwaukie-clear-vision-aashto-held
   kind: ruling
   date: 2026-11-10
@@ -3050,6 +3120,7 @@
     25 mph, driver point 14.5 ft back), with the curb middle way
     (2026-11-09-curb-position-middle-way). No purchase. FOLLOWUPS 161.
   source: Steph 2026-11-10 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/milwaukie.yaml]
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19
