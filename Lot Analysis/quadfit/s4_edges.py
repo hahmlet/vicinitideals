@@ -7,7 +7,11 @@ centerline. Edges within street_threshold_ft are frontage. Rear = non-front
 edges roughly parallel (±30° mod 180) to a front bearing; sides = the rest.
 
 Edge classes:
-  F  street frontage -- within the threshold of a street centerline
+  F  street frontage -- within the threshold of a street centerline, and
+     only along the stretch the street really abuts: with the taxlot
+     fabric given, a street line is cut where a neighbour's private lot
+     stands across it instead, and that stretch is a side line
+     (`_street_touch`, FOLLOWUPS 172)
   A  alley -- within the threshold of an alley and of no street, AND with
      the alley actually across it (`_alley_width`: the gap between this
      lot and the first private lot beyond, with the alley's centreline
@@ -175,6 +179,19 @@ DRIVE_TRACT_MAX_BLDGVAL = 5000.0
 #: turnaround bulb wider than this reads as other land and is screened both
 #: ways, the conservative side.
 DRIVE_TRACT_MAX_WIDTH_FT = 40.0
+#: Where along a street edge the street really is (`_street_touch`,
+#: FOLLOWUPS 172): one point this often along the edge, `NEIGHBOUR_OFFSET_FT`
+#: out of the lot. A point on a neighbour's private land is a stretch of the
+#: line that abuts that neighbour, not the street.
+STREET_TOUCH_STEP_FT = 1.0
+#: A neighbour stretch shorter than this is a corner's geometry or a sliver
+#: of fabric overlap (a point near the end of a street line can stand on the
+#: lot next door where the corner is not square), and the line is read whole.
+STREET_TOUCH_MIN_NEIGHBOUR_FT = 3.0
+#: A street stretch shorter than this between or beside neighbour stretches
+#: is a point that fell in a gap between two neighbours' polygons, not a
+#: street: it joins the neighbour stretch.
+STREET_TOUCH_MIN_STREET_FT = 2.0
 
 
 def bearing_deg(x1: float, y1: float, x2: float, y2: float) -> float:
@@ -357,6 +374,79 @@ def _alley_cover(x1: float, y1: float, x2: float, y2: float, outward: float,
     )
 
 
+def _street_touch(x1: float, y1: float, x2: float, y2: float, outward: float,
+                  lot_tree, lot_geoms, lot_private, ways) -> list[tuple[float, float, bool]]:
+    """Which stretches of one street (``F``) edge the street really abuts
+    (FOLLOWUPS 172): ``(start_ft, end_ft, on_street)`` runs in order from
+    the edge's first point, covering the whole edge.
+
+    `classify_lot` makes a line a street line when its MIDPOINT is within the
+    threshold of a centreline, and a centreline that ends near a line -- a
+    street stub, the end of a right-of-way -- makes the whole line a street
+    line though most of it abuts the lot next door. 1N2E35DC -09200 (13214
+    SE Ankeny Ct, Portland R5): the 30.7 ft west line read as a side street
+    and fed the court, and 6.3 ft of it touches the end of SE Ash St; the
+    other 24.4 ft borders 13143 SE Ash St, and the drawn drive crossed into
+    that lot. So a point every `STREET_TOUCH_STEP_FT` along the edge, two
+    feet out (past the simplification tolerance, as `neighbour_zones`
+    samples), is looked up in the fabric: on a private polygon that is not
+    this lot nor stacked on it (that polygon also holds the point two feet
+    in) and that no street or alley centreline in ``ways`` crosses (a
+    private road's own tract carries its street) the line abuts a
+    neighbour there; anywhere else -- a right-of-way polygon, a gap in the
+    fabric, a road tract -- it abuts the street. Runs too short to be what
+    they say (`STREET_TOUCH_MIN_NEIGHBOUR_FT`, `STREET_TOUCH_MIN_STREET_FT`)
+    join the run beside them, so a line with no real neighbour stretch
+    comes back as one street run and is left exactly as it was.
+    """
+    import shapely
+
+    ln = math.hypot(x2 - x1, y2 - y1)
+    n = max(1, round(ln / STREET_TOUCH_STEP_FT))
+    ex, ey = (x2 - x1) / ln, (y2 - y1) / ln
+    nx, ny = outward * ey, -outward * ex
+    at = [(k + 0.5) * ln / n for k in range(n)]
+    d = NEIGHBOUR_OFFSET_FT
+    outs = shapely.points([(x1 + t * ex + d * nx, y1 + t * ey + d * ny) for t in at])
+    ins = shapely.points([(x1 + t * ex - d * nx, y1 + t * ey - d * ny) for t in at])
+    po, go = lot_tree.query(outs, predicate="within")
+    pi, gi = lot_tree.query(ins, predicate="within")
+    own = set(zip(pi.tolist(), gi.tolist()))
+    road: dict[int, bool] = {}
+    street = [True] * n
+    for p, j in zip(po.tolist(), go.tolist()):
+        if not lot_private[j] or (p, j) in own or not street[p]:
+            continue
+        if j not in road:
+            road[j] = any(
+                tree is not None and len(tree.query(lot_geoms[j], predicate="intersects"))
+                for tree in ways
+            )
+        if not road[j]:
+            street[p] = False
+    step = ln / n
+
+    def runs() -> list[list]:
+        out: list[list] = []
+        for k, s in enumerate(street):
+            if out and out[-1][2] == s:
+                out[-1][1] = k + 1
+            else:
+                out.append([k, k + 1, s])
+        return out
+
+    # The short neighbour stretches go first, so a gap point inside a
+    # neighbour stretch cannot split it before the stretch is weighed.
+    for floor, kind in ((STREET_TOUCH_MIN_NEIGHBOUR_FT, False), (STREET_TOUCH_MIN_STREET_FT, True)):
+        rs = runs()
+        if len(rs) == 1:
+            break
+        for a, b, s in rs:
+            if s is kind and (b - a) * step < floor:
+                street[a:b] = [not kind] * (b - a)
+    return [(a * step, b * step, s) for a, b, s in runs()]
+
+
 def dead_ends(street_geoms) -> list:
     """Where the streets end: every centreline endpoint, snapped to the foot,
     that exactly one segment touches, as shapely Points.
@@ -493,6 +583,44 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     if not any(front_flags) and any(alley_flags):
         front_flags, alley_flags = alley_flags, [False] * len(edges)
 
+    # A street line is a street line only where the street is (FOLLOWUPS
+    # 172, `_street_touch`): with the fabric in hand each one is cut where it
+    # stops abutting the street and starts abutting a neighbour, and the
+    # neighbour stretch is an ordinary lot line -- a side, whatever its
+    # bearing: it is neither the front nor the line opposite it (Portland
+    # 33.910 "Lot line, side": "any lot line which is not a front or rear lot
+    # line"). The frontage, the street bearings, the street's rays and the
+    # neighbour samples below are all read off the cut edges. A line the
+    # street runs the whole of is left exactly as it was.
+    beside = [False] * len(edges)
+    if lot_tree is not None and any(front_flags):
+        ways = (street_tree, alley_tree)
+        cut, cut_front, cut_alley, cut_width, cut_beside = [], [], [], [], []
+        for e, is_front, is_alley, width in zip(edges, front_flags, alley_flags, alley_widths):
+            x1, y1, x2, y2, ln, b = e
+            parts = (
+                _street_touch(x1, y1, x2, y2, outward, lot_tree, lot_geoms, lot_private, ways)
+                if is_front else [(0.0, ln, True)]
+            )
+            if len(parts) == 1:
+                cut.append(e)
+                cut_front.append(is_front and parts[0][2])
+                cut_alley.append(is_alley)
+                cut_width.append(width)
+                cut_beside.append(is_front and not parts[0][2])
+                continue
+            for t0, t1, on_street in parts:
+                px1, py1 = x1 + (x2 - x1) * t0 / ln, y1 + (y2 - y1) * t0 / ln
+                px2, py2 = x1 + (x2 - x1) * t1 / ln, y1 + (y2 - y1) * t1 / ln
+                cut.append((px1, py1, px2, py2, t1 - t0, b))
+                cut_front.append(on_street)
+                cut_alley.append(False)
+                cut_width.append(None)
+                cut_beside.append(not on_street)
+        edges, front_flags, alley_flags, alley_widths, beside = (
+            cut, cut_front, cut_alley, cut_width, cut_beside
+        )
+
     if not any(front_flags):
         return {**none, "alley_edges_demoted": demoted}
     alley_width = min((w for w, a in zip(alley_widths, alley_flags) if a and w is not None),
@@ -505,13 +633,15 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
 
     # Edge classes.
     classed = []
-    for (x1, y1, x2, y2, ln, b), is_front, is_alley in zip(
-        edges, front_flags, alley_flags
+    for (x1, y1, x2, y2, ln, b), is_front, is_alley, is_beside in zip(
+        edges, front_flags, alley_flags, beside
     ):
         if is_front:
             cls = "F"
         elif is_alley:
             cls = "A"
+        elif is_beside:
+            cls = "S"
         elif any(bearing_delta(b, fb) <= PARALLEL_TOL_DEG for fb in front_bearings):
             cls = "R"
         else:
@@ -1156,7 +1286,12 @@ def main() -> None:
     results = []
     for n, (geom, juris) in enumerate(zip(lots["geom"], lots["jurisdiction"])):
         if alley_is_street.get(juris, False):
-            results.append(classify_lot(geom, tree_all, all_geoms, thr, tol))
+            # No alley is told apart here, but the street lines are still
+            # cut where they stop abutting the street (`_street_touch`).
+            results.append(classify_lot(
+                geom, tree_all, all_geoms, thr, tol,
+                lot_tree=tree_lots, lot_geoms=lot_geoms, lot_private=lot_private,
+            ))
         else:
             results.append(classify_lot(
                 geom, tree_streets, street_geoms, thr, tol,

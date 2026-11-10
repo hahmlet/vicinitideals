@@ -85,6 +85,7 @@ from flats.fit.frontage import (
     _streets_of_run,
     building_runs,
     parking_share,
+    side_street_takes_drive,
     street_chains,
     street_runs,
 )
@@ -221,6 +222,7 @@ from flats.score.paper import (
     court_depth,
     door_limit,
     door_turned,
+    drive_width,
     entrance_unsettled,
     faces_the_street,
     front_lot_line_rule,
@@ -4933,6 +4935,16 @@ def _screen_lot_once(
             here = lot
             if plan_edges is not lot.edges:
                 here = dataclasses.replace(lot, edges=plan_edges)
+            # The side street feeds the court only where it meets the lot along
+            # a drive's width (FOLLOWUPS 172): a few feet of a street's end
+            # beside a lot line that otherwise abuts a neighbour carries no
+            # drive, and the court is reached by the lane from the front.
+            if here.facts.corner and not side_street_takes_drive(
+                plan_edges, drive_width(got, design.parking.lane_width_ft)
+            ):
+                here = dataclasses.replace(
+                    here, facts=dataclasses.replace(here.facts, corner=False)
+                )
             if guessed:
                 here = dataclasses.replace(
                     here, facts=dataclasses.replace(here.facts, through_front_guessed=True)

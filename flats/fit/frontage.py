@@ -95,6 +95,37 @@ def street_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
     return tuple(tuple(ring[i] for i in c) for c in chains)
 
 
+def side_street_takes_drive(edges: LotEdges | None, width_ft: float) -> bool:
+    """Whether a corner lot's side street touches the lot along enough line
+    for a ``width_ft`` drive to reach the court from it (FOLLOWUPS 172).
+
+    s4 cuts each street line where it stops abutting the street
+    (``_street_touch``), so a street's run of line here is only the stretch
+    the right-of-way really meets. A drive crosses the lot line inside that
+    stretch or not at all: 1N2E35DC -09200 (13214 SE Ankeny Ct) touches the
+    end of SE Ash St along 6.3 ft, and Portland asks 9 ft of the narrowest
+    driveway on private property ("The minimum driveway width on private
+    property is 9 feet", ``portland/33.266.txt#L319``); the pod's lane is 12.
+
+    With a front named, the side streets are the ``street_side`` runs and
+    one of them must be ``width_ft`` long. With none named (a code that
+    makes every street a front, an alley lot), the court is fed from
+    whichever street the building does not face, so two streets must be.
+    No edges: False -- nothing measured a side street to drive from.
+    """
+    if edges is None:
+        return False
+    chains = street_chains(edges)
+    sides = [
+        sum(e.length_ft for e in c if e.cls is EdgeClass.street_side)
+        for c in chains
+        if any(e.cls is EdgeClass.street_side for e in c)
+    ]
+    if sides:
+        return max(sides) >= width_ft
+    return sum(1 for c in chains if sum(e.length_ft for e in c) >= width_ft) >= 2
+
+
 def _runs(on: Sequence[bool]) -> list[list[int]]:
     """The runs of street lines next to one another around the ring, as
     indices. The walk starts just after a break, so a street that wraps past
