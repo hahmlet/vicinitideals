@@ -132,6 +132,36 @@ def test_the_pod_takes_the_named_row_and_the_row_has_no_ceiling(
     assert "exempt from the maximum parking ratios" in lines[120]
 
 
+ORD1545 = "or/clackamas/gladstone/amended/ord1545.txt"
+
+
+def test_ordinance_1545_splits_the_row_and_one_per_unit_is_still_printed(
+    gladstone: Layer, store: ProvenanceStore
+) -> None:
+    """FOLLOWUPS 156 (2026-11-10): the counts cite the table Ord. 1545 reprints.
+
+    The codified row lumped duplex to cottage at one per unit. The reprint
+    gives the townhouse its own row at "1 space per unit" and bands the
+    quadplex by lot size, four spaces total over 6,999 sq ft. One per unit is
+    the printed figure on both, and the smaller bands are the state cap's.
+    """
+    lines = _lines(store, ORD1545)
+
+    assert lines[1617] == "17.48.030 Table 1"
+    assert lines[1631] == "Townhouse"
+    assert lines[1632] == "1 space per unit Not Applicable Not Applicable"
+    assert lines[1633] == "(b) Triplex or Quadplex Lots 3,000-4,999 sf: 2"
+    assert lines[1638] == "6,999 sf: 4 spaces total"
+    assert lines[1639:1642] == ["Min: None", "Max: None", "Not Applicable"]
+
+    floor = gladstone.defaults["parking_min_per_unit"]
+    ceiling = gladstone.defaults["parking_max_per_unit"]
+    assert floor.value == 1
+    assert floor.prov.quote.startswith(ORD1545 + "#")
+    assert ceiling.exempt is True
+    assert ceiling.prov.quote.startswith(ORD1545 + "#")
+
+
 def test_nine_and_a_half_feet_is_the_widest_stall_in_the_corpus(
     gladstone: Layer, store: ProvenanceStore
 ) -> None:
