@@ -9290,3 +9290,29 @@ private_drives:
     and front lot line inherit it. Table 4.0131 note 2 (4.0100.residential.txt
     L421-L422) says it outright for a double-frontage lot: where "one of the
     frontages is an alley or private accessway ... that yard will be the rear".
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 40
+    basis: back_of_curb
+    quote: or/multnomah/gresham/pws.6.03-6.04.txt#L84-L112
+    says: Street Intersections (Including Railroads) 40
+    cite: Gresham PWS 6.04, Table 6.04; GCDC 9.0200
+    note: '''two sides of which are the back of the street curb'', extended on a rounded corner; ''No
+      fence, wall, landscaping, sign, structure, or parked vehicle'' (L69-L71). Back-of-curb basis: the
+      middle way. ''No driveway or off-street parking area'' in it is not checked (the court is not carved).'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 20
+    basis: back_of_curb
+    quote: or/multnomah/gresham/pws.6.03-6.04.txt#L97-L118
+    says: Housing Sites 20
+    cite: Gresham PWS 6.04, Table 6.04
+    note: '''on both sides of the driveway, one side of which is the edge of the driveway as extended
+      to the street curb, and one side is the back of the street curb''; 20 ft for detached and middle
+      housing. The engineer may waive it downtown, Civic and Rockwood: not assumed.'
+    ruling: 2026-11-09-curb-position-middle-way

@@ -658,3 +658,10 @@ zones:
     notes: >-
       DRAFT. Refuses: uses only as part of a Planned Residential Development
       of three acres or more.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: none
+    cite: Durham (landscaping in the right of way)
+    note: 'Durham''s sight rule governs landscaping in the right of way only: nothing kept off the lot.'

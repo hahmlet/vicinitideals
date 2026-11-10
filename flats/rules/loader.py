@@ -57,7 +57,9 @@ from flats.rules.model import (
     NeighbourRule,
     ORCA_UNIT_TYPES,
     ParkRule,
+    ClearVision,
     PrivateDriveRuling,
+    SightRule,
     SetAside,
     ZoneRuling,
     READING_OUTCOMES,
@@ -2047,6 +2049,170 @@ def _parse_private_drives(
     )
 
 
+_SIGHT_KEYS = frozenset({
+    "status", "kind", "legs_ft", "base_ft", "depth_ft", "depth_from", "sight_ft",
+    "eye_back_ft", "basis", "except_zones", "unsettled_zones", "exempt_no_setback",
+    "exempt_at_lot_line", "note_only", "quote", "says", "source", "cite", "ruling", "note",
+    "zone_legs_ft",
+})
+_SIGHT_KINDS = {"corner": ("triangle", "asymmetric", "wedge"), "driveway": ("edge", "apex", "wedge")}
+
+
+def _feet(raw: object) -> tuple[float, ...] | None:
+    """A figure or a list of figures (options), each a positive number."""
+    vals = raw if isinstance(raw, list) else [raw]
+    out: list[float] = []
+    for v in vals:
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v <= 0:
+            return None
+        out.append(float(v))
+    return tuple(out)
+
+
+def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) -> SightRule | None:
+    from flats.rules.model import CLEAR_VISION_BASES, CLEAR_VISION_STATUSES
+
+    if not isinstance(raw, dict):
+        problems.append(f"{at}: expected status, legs_ft, basis, quote and note")
+        return None
+    extra = set(raw) - _SIGHT_KEYS
+    if extra:
+        problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
+        return None
+    status = raw.get("status")
+    if status not in CLEAR_VISION_STATUSES:
+        problems.append(f"{at}.status: one of {', '.join(CLEAR_VISION_STATUSES)}")
+        return None
+    kind = raw.get("kind", _SIGHT_KINDS[which][0])
+    if kind not in _SIGHT_KINDS[which]:
+        problems.append(f"{at}.kind: one of {', '.join(_SIGHT_KINDS[which])}")
+        return None
+    basis = raw.get("basis", "lot_line")
+    if basis not in CLEAR_VISION_BASES:
+        problems.append(f"{at}.basis: one of {', '.join(CLEAR_VISION_BASES)}")
+        return None
+    note = raw.get("note")
+    if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+        problems.append(f"{at}: a note of at least {MIN_RULING} characters")
+        return None
+    quote, says, source = raw.get("quote"), raw.get("says"), raw.get("source")
+    if quote is not None and (not isinstance(quote, str) or "#L" not in quote):
+        problems.append(f"{at}.quote: a store pointer, path#Lnn")
+        return None
+    if quote is not None and (not isinstance(says, str) or not says.strip()):
+        problems.append(f"{at}.says: the words the quoted line holds")
+        return None
+    if source is not None and (not isinstance(source, str) or "#L" not in source):
+        problems.append(f"{at}.source: a manual pointer, path#Lnn")
+        return None
+    if status == "read" and quote is None and source is None:
+        problems.append(f"{at}: a read rule needs a quote or a source")
+        return None
+    nums: dict[str, object] = {}
+    for key in ("legs_ft", "sight_ft"):
+        if key in raw:
+            got = _feet(raw[key])
+            if got is None:
+                problems.append(f"{at}.{key}: a positive figure or a list of them")
+                return None
+            nums[key] = got
+    for key in ("base_ft", "depth_ft", "eye_back_ft"):
+        if key in raw:
+            got = _feet(raw[key])
+            if got is None or len(got) != 1:
+                problems.append(f"{at}.{key}: one positive figure")
+                return None
+            nums[key] = got[0]
+    if status != "none":
+        need = {"triangle": "legs_ft", "asymmetric": "legs_ft", "edge": "legs_ft",
+                "wedge": "sight_ft", "apex": "base_ft"}[kind]
+        if need not in nums:
+            problems.append(f"{at}.{need}: required for a {kind}")
+            return None
+        if kind == "asymmetric" and len(nums["legs_ft"]) != 2:  # type: ignore[arg-type]
+            problems.append(f"{at}.legs_ft: [through street, other street]")
+            return None
+        if kind == "wedge" and "eye_back_ft" not in nums:
+            problems.append(f"{at}.eye_back_ft: required for a wedge")
+            return None
+        if kind == "apex" and ("depth_ft" not in nums and raw.get("depth_from") != "front_setback"):
+            problems.append(f"{at}.depth_ft: required for an apex (or depth_from: front_setback)")
+            return None
+    depth_from = raw.get("depth_from")
+    if depth_from is not None and depth_from not in ("curb", "lot_line", "front_setback"):
+        problems.append(f"{at}.depth_from: curb, lot_line or front_setback")
+        return None
+    flags = {}
+    for key in ("exempt_no_setback", "exempt_at_lot_line", "note_only"):
+        v = raw.get(key, False)
+        if not isinstance(v, bool):
+            problems.append(f"{at}.{key}: true or false")
+            return None
+        flags[key] = v
+    zones = {}
+    for key in ("except_zones", "unsettled_zones"):
+        v = raw.get(key, [])
+        if not isinstance(v, list) or not all(isinstance(z, str) for z in v):
+            problems.append(f"{at}.{key}: a list of zone codes")
+            return None
+        zones[key] = tuple(v)
+    zone_legs: dict[str, tuple[float, ...]] = {}
+    for z, v in (raw.get("zone_legs_ft") or {}).items():
+        got = _feet(v)
+        if got is None:
+            problems.append(f"{at}.zone_legs_ft.{z}: a positive figure or a list of them")
+            return None
+        zone_legs[str(z)] = got
+    return SightRule(
+        zone_legs_ft=zone_legs,
+        status=status, kind=kind, basis=basis, depth_from=depth_from,
+        quote=None if quote is None else quote.strip(),
+        says=None if says is None else str(says).strip(),
+        source=None if source is None else source.strip(),
+        cite=str(raw.get("cite") or ""), ruling=raw.get("ruling"), note=note.strip(),
+        **nums, **flags, **zones,  # type: ignore[arg-type]
+    )
+
+
+def _parse_clear_vision(
+    raw: object, *, where: str, problems: list[str]
+) -> ClearVision | None:
+    """The corner and driveway clear-vision areas (FOLLOWUPS 161)::
+
+        clear_vision:
+          corner:
+            status: read
+            legs_ft: 30
+            basis: lot_line
+            quote: "or/washington/tigard/tdc.18.930.vision-clearance.txt#L61"
+            says: "..."
+            cite: TDC 18.930.030
+            note: >-
+              ...
+          driveway: {...}
+
+    Figures are stored as printed; :mod:`flats.geom.sight_triangle` draws
+    them. Absent: the layer is not checked (a test holds every eligible
+    layer to declaring one).
+    """
+    if raw is None:
+        return None
+    at = f"{where}.clear_vision"
+    if not isinstance(raw, dict) or set(raw) - {"corner", "driveway"}:
+        problems.append(f"{at}: expected corner and/or driveway")
+        return None
+    rules: dict[str, SightRule | None] = {}
+    for which in ("corner", "driveway"):
+        if raw.get(which) is None:
+            rules[which] = None
+            continue
+        got = _parse_sight_rule(raw[which], at=f"{at}.{which}", which=which, problems=problems)
+        if got is None:
+            return None
+        rules[which] = got
+    return ClearVision(**rules)
+
+
 def _parse_parks(
     raw: object, *, where: str, problems: list[str]
 ) -> dict[str, ParkRule]:
@@ -2734,6 +2900,9 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             parks=_parse_parks(raw.get("parks"), where=where, problems=problems),
             private_drives=_parse_private_drives(
                 raw.get("private_drives"), where=where, problems=problems
+            ),
+            clear_vision=_parse_clear_vision(
+                raw.get("clear_vision"), where=where, problems=problems
             ),
             drawn_areas=_parse_drawn_areas(
                 raw.get("drawn_areas"), zones, where=where, problems=problems

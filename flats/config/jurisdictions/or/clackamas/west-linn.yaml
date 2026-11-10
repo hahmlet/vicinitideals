@@ -2737,3 +2737,27 @@ private_drives:
     which is under private ownership" (L780). Front lot line (L626), exterior
     side lot line (L638) and corner lot (L177) read "street" other than an
     alley.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 30
+    basis: lot_line
+    source: data/flats/books/sight-manuals/west-linn/42.txt#L14-L16
+    cite: CDC 42.040; 42.020(B)
+    note: '''the triangular area formed by the right-of-way or property lines ... 30 feet distant from
+      the intersection of the right-of-way line''; 42.020(B) bars ''planting, fence, wall, structure''.
+      The 42.030 Willamette General Commercial exception is not applied (conservative).'
+  driveway:
+    status: read
+    kind: apex
+    base_ft: 30
+    depth_from: front_setback
+    basis: lot_line
+    source: data/flats/books/sight-manuals/west-linn/42.txt#L18
+    cite: CDC 42.050
+    ruling: 2026-11-09-west-linn-pod-single-family
+    note: 'Accessway under 24 ft: base 30 ft each way along the right-of-way line from the drive''s centre,
+      apex ''at the front setback line of a single-family and two-family residence''; the pod takes that
+      reading (rulings.yaml 2026-11-09-west-linn-pod-single-family).'

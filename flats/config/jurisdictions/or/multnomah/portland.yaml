@@ -7761,3 +7761,25 @@ private_drives:
     line. A shared driveway on an easement across a neighbour is a driveway
     (33.266), not a right-of-way: s4 reads that as a drive on other land and it
     is screened both ways.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: none
+    source: data/flats/books/sight-manuals/portland/trn_2_09.txt#L12
+    cite: PBOT TRN-2.09
+    note: 'Portland''s corner sight rule keeps the right of way clear only; nothing on the lot (rulings.yaml
+      2026-11-09-portland-driveway-clear-zone-note: corners stay right-of-way only).'
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 15
+    basis: pavement_edge
+    note_only: true
+    exempt_at_lot_line: true
+    source: data/flats/books/sight-manuals/portland/trn_10_40_full.txt#L112-L116
+    cite: PBOT TRN-10.40 7.a
+    ruling: 2026-11-09-portland-driveway-clear-zone-note
+    note: '''a 15-foot by 15-foot clear sight triangle ... on each side of the driveway surface, measured
+      along the near edge of the pavement''; ''buildings built at the property line'' exempt. A street-permit
+      rule: GREEN with a note, colour unchanged (Steph 2026-11-09).'

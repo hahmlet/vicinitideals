@@ -1501,3 +1501,27 @@ zone_rulings:
       (16.04.010.txt L3-L18). Unannexed land is regulated under
       the Urban Planning Area Agreement by 16.04.040 (L50-L59); nothing
       here zones it.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 20
+    basis: lot_line
+    exempt_no_setback: true
+    quote: or/washington/sherwood/sdc.16.58.vision-clearance.txt#L4-L26
+    says: In all zones, the minimum distance shall be twenty (20) feet.
+    cite: SDC 16.58.010
+    note: '''two (2) sides of which are lot lines'', extended on a rounded corner; no ''structure'' over
+      2.5 ft; ''Where no setbacks are required, buildings may be constructed within the clear vision area.'''
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 20
+    basis: lot_line
+    exempt_no_setback: true
+    quote: or/washington/sherwood/sdc.16.58.vision-clearance.txt#L4-L26
+    says: alley or private driveway
+    cite: SDC 16.58.010(A)
+    note: 16.58.010(A) keeps the same 20 ft area at a private driveway; the 25 ft corner-to-driveway spacing
+      is not checked here.

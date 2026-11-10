@@ -450,6 +450,95 @@ class PrivateDriveRuling(BaseModel):
     note: str | None = None
 
 
+#: How a clear-vision area's legs are measured (FOLLOWUPS 161). ``lot_line``
+#: -- along the lot lines (or the right-of-way lines, which are the lot
+#: lines), from where they meet or, on a rounded corner, where they meet
+#: extended. ``curb`` / ``back_of_curb`` / ``pavement_edge`` /
+#: ``travel_lane`` -- from a street edge the maps do not hold, so the curb
+#: middle way applies (rulings.yaml 2026-11-09-curb-position-middle-way).
+#: ``unstated`` -- the code gives no basis: read both ways, as ``curb``.
+CLEAR_VISION_BASES = (
+    "lot_line", "curb", "back_of_curb", "pavement_edge", "travel_lane", "unstated",
+)
+#: ``read`` -- the figure and the basis are stated and read. ``unsettled``
+#: -- not read, or read and unclear (whether it bars a building, which
+#: figure): the conservative default (rulings.yaml
+#: 2026-11-09-sight-triangle-corner-check) -- it bars buildings, at the
+#: largest plausible size, and a lot it reaches is YELLOW, never GREEN and
+#: never RED on it. ``none`` -- the rule keeps nothing off the lot (it
+#: covers the right of way only, or bars no building).
+CLEAR_VISION_STATUSES = ("read", "unsettled", "none")
+
+
+class SightRule(BaseModel):
+    """One clear-vision area this code keeps clear of buildings, as printed
+    (FOLLOWUPS 161; :mod:`flats.geom.sight_triangle` draws it).
+
+    ``kind`` -- ``triangle``: legs ``legs_ft`` along both lines from the
+    corner; several figures are OPTIONS the screen cannot choose between
+    (a street class nobody mapped), the smallest the area surely kept and
+    the largest the area that may be. ``asymmetric``: ``legs_ft`` is
+    ``[along the through street, along the other]``, and which street is
+    which is not mapped: both ways. ``wedge``: a sight-distance rule -- the
+    driver's eye ``eye_back_ft`` behind the near travel lane's edge, seeing
+    ``sight_ft`` along the street; the area is what lies between that line
+    and the corner. ``apex`` (driveways): a triangle whose base runs
+    ``base_ft`` each way along the street line from the drive's centre and
+    whose apex is on the drive's centre ``depth_ft`` in from ``depth_from``
+    (``curb``, ``lot_line`` or ``front_setback``). ``edge`` (driveways):
+    legs ``legs_ft`` along the drive's edge and the street line, both
+    sides of the drive.
+
+    ``quote`` is a store pointer (``path#Lnn``) whose lines hold ``says``;
+    ``source`` points into a manual held outside the store
+    (``data/flats/books/...``), where the figure is not in stored code.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    status: str
+    kind: str = "triangle"
+    legs_ft: tuple[float, ...] = ()
+    #: Zones whose figure differs (Canby's C-1, 15 ft against 30).
+    zone_legs_ft: dict[str, tuple[float, ...]] = {}
+    base_ft: float | None = None
+    depth_ft: float | None = None
+    depth_from: str | None = None
+    sight_ft: tuple[float, ...] = ()
+    eye_back_ft: float | None = None
+    basis: str = "lot_line"
+    #: Zones the rule does not reach (Tigard's MU-CBD, Cornelius's CMU).
+    except_zones: tuple[str, ...] = ()
+    #: Zones where it reaches case by case (Beaverton's centers): unsettled.
+    unsettled_zones: tuple[str, ...] = ()
+    #: "Where no setbacks are required, buildings may be constructed within
+    #: the clear vision area" (Sherwood 16.58.010(3), Troutdale 5.040 D.9).
+    exempt_no_setback: bool = False
+    #: Portland TRN-10.40: "buildings built at the property line" are exempt.
+    exempt_at_lot_line: bool = False
+    #: Colour untouched, a note only (Portland, rulings.yaml
+    #: 2026-11-09-portland-driveway-clear-zone-note).
+    note_only: bool = False
+    quote: str | None = None
+    says: str | None = None
+    source: str | None = None
+    cite: str = ""
+    ruling: str | None = None
+    note: str = ""
+
+
+class ClearVision(BaseModel):
+    """The clear-vision areas a code keeps buildings out of, per layer
+    (``clear_vision:`` in a jurisdiction YAML; FOLLOWUPS 161). A layer that
+    declares none is not checked; every eligible layer declares one, and
+    a test holds it to that."""
+
+    model_config = ConfigDict(frozen=True)
+
+    corner: SightRule | None = None
+    driveway: SightRule | None = None
+
+
 class DrawnArea(BaseModel):
     """A boundary the code draws inside a zone, traced here because nobody
     publishes it as data, and the site fact a lot holds when it lies inside.
@@ -643,6 +732,9 @@ LAYER_META = frozenset(
         # Whether a private drive the lot abuts is a street here, for the
         # lot lines, the corner and the yards (`PrivateDriveRuling`).
         "private_drives",
+        # The clear-vision areas at corners and driveways the code keeps
+        # buildings out of (`ClearVision`, FOLLOWUPS 161).
+        "clear_vision",
         # Boundaries the code draws inside a zone that no GIS publishes,
         # traced here, for `inside_mapped_use_area` (`DrawnArea`).
         "drawn_areas",
@@ -2901,6 +2993,9 @@ class Layer(BaseModel):
     #: Whether a private drive the lot abuts is a street here (see
     #: :class:`PrivateDriveRuling`); None where the code is silent.
     private_drives: PrivateDriveRuling | None = None
+    #: The corner and driveway clear-vision areas (see :class:`ClearVision`);
+    #: None where the layer declares none.
+    clear_vision: ClearVision | None = None
     #: Areas the code draws inside a zone, traced here -- see
     #: :class:`DrawnArea`. Keyed by the area's name.
     drawn_areas: dict[str, DrawnArea] = Field(default_factory=dict)

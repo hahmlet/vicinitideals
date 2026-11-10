@@ -1029,3 +1029,18 @@ drawn_areas:
       kept (29 of them small enough, at or under 10,890 sq ft, for four
       homes to reach sixteen an acre). Lots touching Currin or Acacia are
       dropped for 16.26.040 (H)(2), whose access plan is not stored.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: unstated
+    quote: or/clackamas/estacada/16.08/16.08.010.txt#L99
+    says: two sides of which are lines measured from the corner intersection to a distance of fifteen
+      (15) feet
+    cite: EMC 16.08.010; 16.60.010
+    note: '16.60.010(2) (16.60/16.60.010.txt#L5): ''no planting, fence, wall, sign, banner, structure''
+      over 2.5 ft. ''The corner intersection'' is not said to be of the lot lines or the curbs: read both
+      ways, the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way

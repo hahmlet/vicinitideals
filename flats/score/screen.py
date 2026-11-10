@@ -375,6 +375,34 @@ STRIP_FIELD = "parking_lot_line_buffer_ft"
 #: A lot fits the encoded setback but not the stricter single-house reading.
 PARKING_SETBACK_DOUBT = "PARKING_SETBACK_DOUBT"
 PARKING_SETBACK_DOUBT_RULING = "2026-11-05-troutdale-parking-abutting-setback"
+#: The building clears the corner clear-vision area only if the street's curb
+#: stands back from the lot line (FOLLOWUPS 161): the code measures the area
+#: from a curb or pavement edge the maps do not hold, and the fit is blocked
+#: with the curb at the lot line but clear at a generous offset. YELLOW with
+#: a flag, "check where the curb is" (rulings.yaml
+#: 2026-11-09-curb-position-middle-way).
+SIGHT_CORNER_CURB = "SIGHT_CORNER_CURB"
+#: The building stands where this city's corner clear-vision area might
+#: reach, and the area is not settled here: the size, its basis, or whether
+#: it bars a building is unread or unclear, so it was taken at its largest
+#: plausible (rulings.yaml 2026-11-09-sight-triangle-corner-check). YELLOW
+#: until the city's rule is read; never RED on it.
+SIGHT_CORNER_UNSETTLED = "SIGHT_CORNER_UNSETTLED"
+#: The drawn building stands inside the clear-vision area this city keeps
+#: at the mouth of the drive (FOLLOWUPS 161), at least with the curb at the
+#: lot line. The drive's place is not searched, so never RED: YELLOW with a
+#: flag.
+SIGHT_DRIVEWAY = "SIGHT_DRIVEWAY"
+#: Portland's driveway clear zone (PBOT TRN-10.40) reaches the drawn
+#: building: a note only, the colour unchanged (rulings.yaml
+#: 2026-11-09-portland-driveway-clear-zone-note).
+SIGHT_DRIVEWAY_NOTE = "SIGHT_DRIVEWAY_NOTE"
+SIGHT_RULINGS = {
+    SIGHT_CORNER_CURB: "2026-11-09-curb-position-middle-way",
+    SIGHT_CORNER_UNSETTLED: "2026-11-09-sight-triangle-corner-check",
+    SIGHT_DRIVEWAY: "2026-11-09-curb-position-middle-way",
+    SIGHT_DRIVEWAY_NOTE: "2026-11-09-portland-driveway-clear-zone-note",
+}
 #: The drawn court stands closer to the line opposite the front than the rear
 #: yard the code keeps parking out of (:attr:`LotFacts.rear_court_short`).
 REAR_COURT_SHORT = "REAR_COURT_SHORT"
@@ -947,6 +975,18 @@ class LotFacts:
     #: 33(c)), so the court the fit passed may stand in a front or side yard.
     #: Holds the lot out of GREEN. False where nothing measured it.
     court_ground_unread: bool = False
+    #: Why the corner clear-vision area holds this lot out of GREEN
+    #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`), set by
+    #: the bridge when the fit stands only on the smaller of the two areas
+    #: (:mod:`flats.geom.sight_triangle`). None: clear, or not checked.
+    sight_corner_doubt: str | None = None
+    #: The drive's clear-vision area reaches the drawn building
+    #: (:data:`SIGHT_DRIVEWAY`), or, where the city's zone is a note only,
+    #: :attr:`sight_driveway_note` (:data:`SIGHT_DRIVEWAY_NOTE`).
+    sight_driveway_doubt: bool = False
+    sight_driveway_note: bool = False
+    #: The code the sight area was read from, for the flag.
+    sight_cite: str | None = None
     #: The drawing finally kept stands the building with its door face more
     #: than :data:`flats.score.paper.ENTRANCE_TURN_DEG` off every street,
     #: though the fit itself faced one: a later step (the court's turn, the
@@ -3492,6 +3532,10 @@ def screen(
         closer = (*closer, PARKING_SETBACK_DOUBT)
     if stated_fit_fails:
         closer = (*closer, SIDE_YARD_PARKING_SILENT)
+    if lot.sight_corner_doubt:
+        closer = (*closer, lot.sight_corner_doubt)
+    if lot.sight_driveway_doubt:
+        closer = (*closer, SIGHT_DRIVEWAY)
 
     if min_far_no_room or apron_failed:
         return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
@@ -4215,6 +4259,21 @@ def _account(
         )
     if lot.court_ground_unread:
         flag("PARKING-COURT-GROUND-UNREAD", COURT_GROUND_UNREAD)
+    # The clear-vision areas (FOLLOWUPS 161): "check where the curb is" or
+    # "read the city's rule" holds a green; Portland's driveway zone is a note.
+    sight = {
+        SIGHT_CORNER_CURB: "SIGHT-CORNER-CURB",
+        SIGHT_CORNER_UNSETTLED: "SIGHT-CORNER-UNSETTLED",
+    }
+    if lot.sight_corner_doubt in sight:
+        flag(
+            sight[lot.sight_corner_doubt], lot.sight_corner_doubt,
+            source=lot.sight_cite or SIGHT_RULINGS[lot.sight_corner_doubt],
+        )
+    if lot.sight_driveway_doubt:
+        flag("SIGHT-DRIVEWAY", SIGHT_DRIVEWAY, source=lot.sight_cite or SIGHT_RULINGS[SIGHT_DRIVEWAY])
+    if lot.sight_driveway_note:
+        flag("SIGHT-DRIVEWAY-NOTE", SIGHT_DRIVEWAY_NOTE, source=SIGHT_RULINGS[SIGHT_DRIVEWAY_NOTE])
     if parking_setback_doubt:
         flag(
             "PARKING-SETBACK-DOUBT",
@@ -4412,6 +4471,10 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 
 
 __all__ = [
+    "SIGHT_CORNER_CURB",
+    "SIGHT_CORNER_UNSETTLED",
+    "SIGHT_DRIVEWAY",
+    "SIGHT_DRIVEWAY_NOTE",
     "ALLEY_COURT_OFF_STRETCH",
     "ALLEY_COURT_OFF_STRETCH_RULING",
     "COURT_GROUND_UNREAD",

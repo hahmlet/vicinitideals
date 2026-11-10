@@ -1095,6 +1095,10 @@ class QuadfitLot:
     #: historic resources say about the lot (:mod:`flats.geom.pdx_overlays`,
     #: FOLLOWUPS 78); None where nothing read it.
     pdx_overlays: pdx.Reading | None = None
+    #: The lot's code's clear-vision areas (``Layer.clear_vision``,
+    #: FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`); None where no layer
+    #: was in hand or the layer declares none -- nothing is then checked.
+    clear_vision: Any = None
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -2077,7 +2081,16 @@ def lot_from_row(
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
         split=split_zones.decode(row.get(split_zones.ROW_KEY)),
         pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
+        clear_vision=_clear_vision(row, layers),
     )
+
+
+def _clear_vision(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> Any:
+    """The home layer's ``clear_vision`` block, or None."""
+    if not layers:
+        return None
+    home = _home_layer(row, layers)
+    return None if home is None else home.clear_vision
 
 
 def _with_access(lot: QuadfitLot, row: Mapping[str, Any]) -> QuadfitLot:
@@ -3441,6 +3454,158 @@ def court_turned(
             dataclasses.replace(s, drawing=drawn), policy=policy, relief=relief
         )
     return s
+
+
+def _no_street_yards(env: Envelope) -> bool:
+    """Whether the rules here keep no yard off the street lines (a code
+    that lets a building into the clear-vision area where no setbacks are
+    required: Sherwood 16.58.010(C)(3), Troutdale 5.040(D)(9))."""
+    sb = env.setbacks
+    return sb is not None and not sb.front_ft and not (sb.street_side_ft or 0.0)
+
+
+def sight_cut(
+    here: QuadfitLot, lot: QuadfitLot, env: Envelope
+) -> list[tuple[Envelope, QuadfitLot]]:
+    """``env`` with the lot's corner clear-vision areas off its building
+    ground (FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`), each with the
+    reading of ``here`` it is screened on.
+
+    The area the rule surely keeps (``low``) comes off always. Where the
+    larger area it may be (``high``: the curb at the lot line, the largest
+    figure, every reading) still reaches the ground left, the lot is tried
+    twice and the better kept: cut by ``high`` as it stands, and cut by
+    ``low`` with ``sight_corner_doubt`` set, which holds a fit there YELLOW
+    (rulings.yaml 2026-11-09-curb-position-middle-way and
+    2026-11-09-sight-triangle-corner-check). So a lot is GREEN only clear
+    of ``high`` and RED on the area only inside ``low``. Only the
+    building's ground is cut; the court's (``ground``) is not. The streets
+    are ``lot``'s, as they lie."""
+    from flats.geom import sight_triangle as sight
+    from flats.geom.envelope import MIN_PART_SQFT, _clean
+
+    cv = lot.clear_vision
+    rule = None if cv is None else cv.corner
+    if rule is None or env.geom is None or env.geom.is_empty or lot.lot_geom is None:
+        return [(env, here)]
+    if rule.exempt_no_setback and _no_street_yards(env):
+        return [(env, here)]
+    areas = sight.corner_areas(lot.lot_geom, lot.edges, rule, lot.zone)
+    if areas is None:
+        return [(env, here)]
+
+    def carved(area: Any) -> Envelope:
+        if area is None or area.is_empty:
+            return env
+        return dataclasses.replace(env, geom=_clean(env.geom.difference(area), MIN_PART_SQFT))
+
+    low = carved(areas.low)
+    if low.geom.is_empty or low.geom.intersection(areas.high).area <= sight.OVERLAP_SQFT:
+        return [(low, here)]
+    doubt = dataclasses.replace(
+        here,
+        facts=dataclasses.replace(
+            here.facts, sight_corner_doubt=areas.reason, sight_cite=areas.cite or None
+        ),
+    )
+    return [(carved(areas.high), here), (low, doubt)]
+
+
+def _curb_ft(x: float, y: float, roads: Any) -> float | None:
+    """The drawn curb's distance from this street lot line point, where the
+    curb layer holds one (``Source.curb``, :mod:`flats.geom.curbs`); None
+    where it does not -- a width-placed curb is not taken."""
+    if not roads or len(roads) < 3 or roads[2] is None or roads[0] is None:
+        return None
+    import numpy as np
+    import shapely
+
+    from flats.geom.curbs import Source
+
+    tree, geoms, edges = roads[0], roads[1], roads[2]
+    if not len(geoms):
+        return None
+    pts = shapely.points(np.array([[x, y]]))
+    lines = np.asarray(geoms, dtype=object)[tree.nearest(pts)]
+    feet = shapely.get_coordinates(shapely.shortest_line(pts, lines)).reshape(-1, 2, 2)[:, 1]
+    near, src = edges.near(np.array([[x, y]], dtype=float), feet, lines)
+    if src[0] != Source.curb or not np.isfinite(near[0]):
+        return None
+    return float(near[0])
+
+
+def sight_driveway_checked(
+    s: Screened,
+    lot: QuadfitLot,
+    roads: Any = None,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> Screened:
+    """``s`` answered on whether the drive's clear-vision area reaches the
+    drawn building (FOLLOWUPS 161; ``clear_vision.driveway``).
+
+    Read on the drawing finally kept, where the plan's lane comes in off a
+    street: the area is drawn at the lane's mouth with the curb at the lot
+    line, or, where the curb layer holds the curb, at the curb. A building
+    it reaches is held YELLOW (``sight_driveway_doubt``) -- never RED: the
+    drive's place along the frontage is not searched, and moving it may
+    clear the area. Where the city's zone is a note only (Portland
+    TRN-10.40, rulings.yaml 2026-11-09-portland-driveway-clear-zone-note)
+    the colour stands and the note is raised. A plan RED both ways is not
+    read."""
+    from shapely.geometry import LineString, Polygon
+
+    from flats.geom import sight_triangle as sight
+
+    cv = lot.clear_vision
+    rule = None if cv is None else cv.driveway
+    if s.facts is None or rule is None or rule.status == "none":
+        return s
+    if lot.zone in rule.except_zones or lot.lot_geom is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    if rule.exempt_no_setback and s.envelope is not None and _no_street_yards(s.envelope):
+        return s
+    drawing = s.drawing or {}
+    lane, ring = drawing.get("lane"), drawing.get("building")
+    if not (drawing.get("fits") and lane and len(lane) >= 4 and ring and len(ring) >= 4):
+        return s
+    if not _lane_in_from_street(s):
+        return s
+    building = Polygon(ring)
+    mouth = sight.drive_mouth(Polygon(lane), lot.lot_geom, lot.edges)
+    if mouth is None:
+        return s
+    if rule.exempt_at_lot_line:
+        line = LineString([
+            (mouth.cx - mouth.tx * 500, mouth.cy - mouth.ty * 500),
+            (mouth.cx + mouth.tx * 500, mouth.cy + mouth.ty * 500),
+        ])
+        if building.distance(line) <= 0.5:
+            return s
+    d = 0.0
+    if rule.basis != "lot_line":
+        d = _curb_ft(mouth.cx, mouth.cy, roads) or 0.0
+    front = None
+    if s.envelope is not None and s.envelope.setbacks is not None:
+        front = s.envelope.setbacks.front_ft
+    area = sight.driveway_area(mouth, rule, d, front_setback_ft=front)
+    held = sight.reaches(area, building, lot.lot_geom)
+    if rule.note_only:
+        if held == s.facts.sight_driveway_note:
+            return s
+        facts = dataclasses.replace(s.facts, sight_driveway_note=held)
+    else:
+        if held == s.facts.sight_driveway_doubt:
+            return s
+        facts = dataclasses.replace(s.facts, sight_driveway_doubt=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
 def court_yard_checked(
@@ -4990,16 +5155,22 @@ def _screen_lot_once(
                 )
                 if cut.setbacks != envs[0].setbacks:
                     envs.append(cut)
+            # The corner clear-vision areas come off the building's ground
+            # (FOLLOWUPS 161): the area surely kept always, and, where the
+            # larger area it may be bites too, both cuts are tried -- the
+            # larger clear, or the smaller held YELLOW (`sight_cut`).
+            cuts = [cut for env in envs for cut in sight_cut(here, lot, env)]
             # The better of the envelope cuts for this reading of the lot;
             # the readings are ranked against each other below.
             by_access = [
                 (variant, min(
                     (
                         _screen_on(
-                            here, design, config, variant, env, front, row_angles, fitters, step_deg,
-                            policy=policy, relief=relief, plan=plan_key, streets=lot.edges,
+                            sighted, design, config, variant, env, front, row_angles, fitters,
+                            step_deg, policy=policy, relief=relief, plan=plan_key,
+                            streets=lot.edges,
                         )
-                        for env in envs
+                        for env, sighted in cuts
                     ),
                     key=lambda t: _front_rank(t[0]),
                 ))
@@ -5078,6 +5249,7 @@ def _screen_lot_once(
         won = rear_court_checked(won, policy=policy, relief=relief)
         won = court_yard_checked(won, policy=policy, relief=relief)
         won = alley_court_checked(won, policy=policy, relief=relief)
+        won = sight_driveway_checked(won, lot, roads, policy=policy, relief=relief)
         won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
