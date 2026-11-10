@@ -3033,7 +3033,7 @@ class Layer(BaseModel):
 
         Directory names carry a Census GEOID prefix so two Springfields can sit
         side by side; the store drops it, because a quote is a thing a person
-        reads in a review queue and ``or/multnomah/portland/33.110.txt#L454``
+        reads in a review queue and ``or/multnomah/portland/33.110.txt#L445``
         is legible in a way the GEOID form is not.
         """
         return "/".join(part.split("-", 1)[-1] if _GEOID.match(part) else part

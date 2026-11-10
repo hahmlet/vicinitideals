@@ -291,160 +291,160 @@ FLAGS: Mapping[str, str] = {
 CITES: Mapping[str, tuple[str, str, str]] = {
     "min_far_inner": (
         "PCC 33.415.310.A",
-        "or/multnomah/portland/33.415.txt#L79-L81",
+        "or/multnomah/portland/33.415.txt#L71",
         "In the Inner Pattern Area the minimum floor area ratio (FAR) for all new development is 0.5",
     ),
     "min_far_outer": (
         "PCC 33.415.310.B",
-        "or/multnomah/portland/33.415.txt#L82-L83",
+        "or/multnomah/portland/33.415.txt#L73-L74",
         "In the Eastern and Western Pattern Area the minimum floor area ratio (FAR) for all new",
     ),
     "historic_district": (
         "PCC 33.445.200.E.1",
-        "or/multnomah/portland/33.445.txt#L1184-L1185",
+        "or/multnomah/portland/33.445.txt#L1058-L1059",
         "of a contributing resource in a Historic District is subject to demolition review",
     ),
     "conservation_district": (
         "PCC 33.445.210.E.1",
-        "or/multnomah/portland/33.445.txt#L1593-L1594",
+        "or/multnomah/portland/33.445.txt#L1400-L1401",
         "of a contributing resource in a Conservation District is subject to demolition review",
     ),
     "nr_district": (
         "PCC 33.445.220.E.1",
-        "or/multnomah/portland/33.445.txt#L1697-L1699",
+        "or/multnomah/portland/33.445.txt#L1491-L1493",
         "of a contributing resource in a National Register District is subject to demolition",
     ),
     "nr_district_approval": (
         "PCC 33.445.220.E.3",
-        "or/multnomah/portland/33.445.txt#L1743-L1744",
+        "or/multnomah/portland/33.445.txt#L1528-L1529",
         "If the review body approves demolition of the resource",
     ),
     "split_site": (
         "PCC 33.700.070.F",
-        "or/multnomah/portland/33.700.txt#L385-L386",
+        "or/multnomah/portland/33.700.txt#L329-L330",
         "When a site is in more than one zone, the development standards of each zone apply to "
         "the portion of the site in that zone",
     ),
     "historic landmark": (
         "PCC 33.445.100.E.1",
-        "or/multnomah/portland/33.445.txt#L360-L362",
+        "or/multnomah/portland/33.445.txt#L353-L355",
         "of a Historic Landmark and demolition of a contributing resource is subject to",
     ),
     "conservation landmark": (
         "PCC 33.445.110.E.1",
-        "or/multnomah/portland/33.445.txt#L654-L656",
+        "or/multnomah/portland/33.445.txt#L595-L597",
         "of a Conservation Landmark and demolition of a contributing resource is subject to",
     ),
     "national register landmark": (
         "PCC 33.445.120.E.1",
-        "or/multnomah/portland/33.445.txt#L754-L756",
+        "or/multnomah/portland/33.445.txt#L683-L685",
         "of a National Register Landmark and demolition of a contributing resource is subject",
     ),
     # --- the rest of the Centers Main Street overlay (FOLLOWUPS 109) -------
     "transit_ban": (
         "PCC 33.415.300.B",
-        "or/multnomah/portland/33.415.txt#L73-L77",
-        "The following development is prohibited within 100 feet of a transit street : "
+        "or/multnomah/portland/33.415.txt#L67-L69",
+        "The following development is prohibited within 100 feet of a transit street: "
         "A. Drive-through facilities; and B. Houses, attached houses, and duplexes.",
     ),
     "attached_house": (
         "PCC 33.910 (Residential Structure Types)",
-        "or/multnomah/portland/33.910.definitions.txt#L1072-L1073",
+        "or/multnomah/portland/33.910.definitions.txt#L1086-L1087",
         "Attached House. Except for individual dwelling units on lots created through a middle "
         "housing land division, a dwelling unit, located on its own lot",
     ),
     "transit_street": (
         "PCC 33.910 (Street Types)",
-        "or/multnomah/portland/33.910.definitions.txt#L1378-L1379",
+        "or/multnomah/portland/33.910.definitions.txt#L1393-L1394",
         "Transit Street. A street that is classified in the Transportation System Plan as:",
     ),
     "vehicle_area_inner": (
         "PCC 33.415.330.B.1",
-        "or/multnomah/portland/33.415.txt#L105-L106",
+        "or/multnomah/portland/33.415.txt#L94-L95",
         "In the Inner Pattern area, no more than 30 percent of any transit street frontage may "
         "be used for vehicle areas",
     ),
     "vehicle_area_outer": (
         "PCC 33.415.330.B.2",
-        "or/multnomah/portland/33.415.txt#L107-L108",
+        "or/multnomah/portland/33.415.txt#L96-L97",
         "In the Eastern and Western Pattern areas, no more than 50 percent of any transit "
         "street frontage may be used for vehicle areas",
     ),
     "vehicle_areas": (
         "PCC 33.910 (Vehicle Areas)",
-        "or/multnomah/portland/33.910.definitions.txt#L1490-L1491",
+        "or/multnomah/portland/33.910.definitions.txt#L1505-L1506",
         "Vehicle Areas. All the area on a site where vehicles may circulate or park including "
         "parking areas, driveways",
     ),
     "max_setback": (
         "PCC 33.415.320",
-        "or/multnomah/portland/33.415.txt#L86-L87",
+        "or/multnomah/portland/33.415.txt#L77",
         "of the building must meet the maximum building setback standard of the base zone.",
     ),
     "active_use": (
         "PCC 33.415.200",
-        "or/multnomah/portland/33.415.txt#L53-L55",
+        "or/multnomah/portland/33.415.txt#L47-L49",
         "On sites with frontage on a transit street, at least 25 percent of the ground level "
         "floor area located within 100 feet of the transit street must be in one of the "
-        "following active uses . Development that includes a residential use is exempt from "
+        "following active uses. Development that includes a residential use is exempt from "
         "this standard until January 1, 2029.",
     ),
     "active_use_windows": (
         "PCC 33.415.340",
-        "or/multnomah/portland/33.415.txt#L115-L116",
+        "or/multnomah/portland/33.415.txt#L103-L104",
         "Until January 1, 2029, the increase to 60 percent for 33.130.230.B.2.a(1) does not "
         "apply to development that includes a residential use.",
     ),
     "street_facing_facade": (
         "PCC 33.910 (Street-facing Facade)",
-        "or/multnomah/portland/33.910.definitions.txt#L1324-L1325",
+        "or/multnomah/portland/33.910.definitions.txt#L1338-L1339",
         "All the wall planes of a structure as seen from one side or view that are at an "
         "angle of 45 degrees or less from a street lot line.",
     ),
     # --- Historic and Conservation Districts --------------------------------
     "historic_district_review": (
         "PCC 33.445.200.D.1.b",
-        "or/multnomah/portland/33.445.txt#L868-L872",
+        "or/multnomah/portland/33.445.txt#L787-L790",
         "following proposals in a Historic District are subject to historic resource review: "
         "a. Exterior alterations; b. Building a new structure;",
     ),
     "conservation_district_review": (
         "PCC 33.445.210.D",
-        "or/multnomah/portland/33.445.txt#L1282-L1290",
+        "or/multnomah/portland/33.445.txt#L1142-L1148",
         "When historic resource review is required, the Community Design Standards may be used "
         "as an alternative for some proposals.",
     ),
     "historic_compatibility": (
         "PCC 33.846.060.G.8",
-        "or/multnomah/portland/33.846.txt#L887-L888",
+        "or/multnomah/portland/33.846.txt#L814-L815",
         "Architectural compatibility. New additions, exterior alterations, or new construction "
         "will be compatible with the massing, size, scale, and",
     ),
     "community_design_standards": (
         "PCC 33.445.500",
-        "or/multnomah/portland/33.445.txt#L2000-L2001",
+        "or/multnomah/portland/33.445.txt#L1768-L1769",
         "The Community Design Standards provide a clear and objective alternative to historic "
         "resource review",
     ),
     "community_design_central_city": (
         "PCC 33.445.510.A",
-        "or/multnomah/portland/33.445.txt#L2019-L2021",
+        "or/multnomah/portland/33.445.txt#L1788-L1790",
         "Proposals affecting a Conservation Landmark or Conservation District in the Central City "
         "plan district are not eligible to use the Community Design Standards",
     ),
     "community_design_setback": (
         "PCC 33.218.100.B",
-        "or/multnomah/portland/33.218.txt#L102-L109",
+        "or/multnomah/portland/33.218.txt#L93-L100",
         "In any case, the structure may not be set back from the front lot line more than 25 feet.",
     ),
     "community_design_alley": (
         "PCC 33.218.100.F.1",
-        "or/multnomah/portland/33.218.txt#L165-L165",
+        "or/multnomah/portland/33.218.txt#L155",
         "If the site is served by an alley, access for motor vehicles must be from the",
     ),
     "nr_district_no_review": (
         "PCC 33.445.220.D",
-        "or/multnomah/portland/33.445.txt#L1682-L1683",
+        "or/multnomah/portland/33.445.txt#L1476-L1477",
         "Historic resource review is not required for development within the boundary of a "
         "National Register District",
     ),
@@ -463,7 +463,7 @@ CITES: Mapping[str, tuple[str, str, str]] = {
     ),
     "design_exempt_zones": (
         "PCC 33.420.045.A.2.d",
-        "or/multnomah/portland/33.420.txt#L85-L85",
+        "or/multnomah/portland/33.420.txt#L85",
         "d. The site is not zoned RX, EX, or CX;",
     ),
     "design_not_in_districts": (
@@ -474,22 +474,22 @@ CITES: Mapping[str, tuple[str, str, str]] = {
     ),
     "design_standards_central_city": (
         "PCC 33.420.050.B.1",
-        "or/multnomah/portland/33.420.txt#L255-L256",
+        "or/multnomah/portland/33.420.txt#L256-L257",
         "1. In the Central City plan district.",
     ),
     "design_standards_residential": (
         "PCC 33.420 Table 420-1 note [1]",
-        "or/multnomah/portland/33.420.txt#L253-L253",
+        "or/multnomah/portland/33.420.txt#L254",
         "There are no maximum limits for proposals where any of the floor area is in residential use.",
     ),
     "design_standards_gateway": (
         "PCC 33.420.050.B.2.a",
-        "or/multnomah/portland/33.420.txt#L258-L259",
+        "or/multnomah/portland/33.420.txt#L259-L260",
         "any portion of the new development or alteration exceeds 35 feet in height",
     ),
     "design_standards_height": (
         "PCC 33.420.050.B.3",
-        "or/multnomah/portland/33.420.txt#L267-L268",
+        "or/multnomah/portland/33.420.txt#L268-L269",
         "New buildings or additions when any portion of the new building or addition exceeds "
         "75 feet in height",
     ),
@@ -506,12 +506,12 @@ CITES: Mapping[str, tuple[str, str, str]] = {
     ),
     "cx_design": (
         "PCC 33.130.030.F",
-        "or/multnomah/portland/33.130.txt#L163-L164",
+        "or/multnomah/portland/33.130.txt#L158-L159",
         "The Design overlay zone is applied to this zone.",
     ),
     "gateway_open_area": (
         "PCC 33.526.240.C",
-        "or/multnomah/portland/33.526.txt#L362-L363",
+        "or/multnomah/portland/33.526.txt#L338-L339",
         "The requirements of this section apply to sites 5 acres or more in area.",
     ),
 }

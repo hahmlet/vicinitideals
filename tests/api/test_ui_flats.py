@@ -2307,7 +2307,7 @@ async def test_a_triage_mention_links_to_text_that_resolves(
 
     # Portland 33.100 has no page map — the document that produced the bare
     # error page — and its stored lines come back regardless.
-    lines, error = _cited_lines("or/multnomah/portland/33.100.txt#L229")
+    lines, error = _cited_lines("or/multnomah/portland/33.100.txt#L230")
     assert not error
     assert lines
 

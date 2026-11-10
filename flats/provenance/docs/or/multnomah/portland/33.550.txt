@@ -1,10 +1,9 @@
-Title 33, Planning and Zoning Chapter 33.550
-6/1/25 Macadam Plan District
-
-550-1
+Title 33, Planning and Zoning
+6/1/25
+Chapter 33.550
+Macadam Plan District
 33.550 Macadam Plan District
 550
-
 Sections:
 General
 33.550.010 Purpose
@@ -38,11 +37,9 @@ Use Regulations
 The following additional use categories are prohibited in the Macadam plan district:
 A. Quick Vehicle Servicing; and
 B. Vehicle Repair, excluding boat repair which is allowed.
-
+550-1
 Chapter 33.550 Title 33, Planning and Zoning
 Macadam Plan District 6/1/25
-
-550-2
 Development Standards
 33.550.200 Floor Area Ratio
 A. Maximum FAR. The maximum floor area ratio is 2 to 1 for all uses.
@@ -78,11 +75,9 @@ bonus option, the applicant must provide a letter from the PHB
 documenting the amount that has been contributed to the AHF. The letter is
 required to be submitted before a building permit can be issued for the
 development, but it is not required in order to apply for a land use review.
-
+550-2
 Title 33, Planning and Zoning Chapter 33.550
 6/1/25 Macadam Plan District
-
-550-3
 33.550.210 Building Height
 Building heights may not exceed the maximum and average building heights shown on Map 550-1.
 33.550.220 Building Setbacks
@@ -92,7 +87,6 @@ prevent a canyon effect along SW Macadam Ave.
 A. Setbacks from lot lines. The minimum building setbacks from all lot lines are based on the
 area of the plane of the building wall and are stated in Table 550-1. These setbacks do not
 apply to nonstreet lot lines on sites of 15,000 square feet or less.
-
 Table 550-1
 Building Setbacks From Lot Lines
 If the area of the plane of the building wall is: [1] The required setback is:
@@ -109,8 +103,7 @@ If the area of the plane of the building wall is: [1] The required setback is:
 Notes:
 [1] Measurement of the area of the plane of the building wall is described in Chapter 33.930,
 Measurements.
-
-B. Future light rail line setback. Buildings that abut the future light rail facility are subject to
+B. Future light rail line setback. Buildings that about the future light rail facility are subject to
 special setbacks. The setbacks are listed below. The future light rail alignment is shown on
 Map 550-1 at the end of this chapter.
 1. Residential buildings. Residential buildings must be set back at least 40 feet from the
@@ -124,29 +117,30 @@ Commercial uses are not allowed on the ground floor.
 Subsection A. or B. applies.
 33.550.230 Building Coverage
 The maximum building coverage is 75 percent of the site area.
+550-3
 Chapter 33.550 Title 33, Planning and Zoning
 Macadam Plan District 6/1/25
-
-550-4
 33.550.240 Building Length
 A. Length. The maximum length of any building facade is 200 feet.
 B. Uninterrupted wall. An exterior wall of a building adjacent to a street may not continue
-along an uninterrupted plane for more than 100 feet. An uninterrupted plane is a wall
+a
+long an uninterrupted plane for more than 100 feet. An uninterrupted plane is a wall
 which has no variation in exterior surface along its length. An offset of less than 3 feet in
 the plane of a building wall is considered an uninterrupted plane.
 33.550.250 View Corridors
 A. Ground level view corridors must be maintained along the rights-of-way of SW Miles, SW
-Nevada, SW California, SW Vermont, SW Nebraska, SW Pendleton, and SW Richardson
+N
+evada, SW California, SW Vermont, SW Nebraska, SW Pendleton, and SW Richardson
 Streets. These view corridors must be preserved by maintaining open space from SW
-Macadam Ave to the ordinary high water line of the Willamette river and are measured 30
+Macadam Ave to the ordinary high-water line of the Willamette River and are measured 30
 feet from each side of the center line of these streets. Houses within the SW Miles Street
-view corridor are exempt from these regulations. A 60-foot wide view corridor at ground
+view corridor are exempt from these regulations. A 60-foot-wide view corridor at ground
 level must also be maintained at SW Carolina Street. This view corridor is directed
 northeasterly beginning at the intersection of SW Macadam Ave and SW Carolina Street
 and extending so that the extension of the northern edge of the view corridor meets the
 intersection of the mean low water line and the north property line of River Lot 6, Southern
 Portland Addition.
-B. The view corridors are shown on Map 550-1 at the end of this chapter.
+B. The view  corridors are shown on Map 550 -1 at the end of this chapter.
 33.550.260 Exterior Display and Storage
 Exterior display and storage, except of boats, is not allowed.
 33.550.270 Drive-Through Facilities
@@ -157,3 +151,53 @@ The sign standards are stated in Title 32, Signs and Related Regulations.
 (Amended by: Ord. No. 167650, effective 6/10/94; Ord.173528, effective 7/30/99; Ord. No. 175204,
 effective 3/1/01; Ord. No. 186639, effective 7/11/14; Ord. No. 188177, effective 5/24/18; Ord. No.
 188958, effective 5/24/18; Ord. No. 190477, effective 8/1/21; Ord. No. 192000, effective 6/1/25.)
+
+The City of Portland is committed to providing meaningful access. To request translation,
+in
+terpretation, modifications, accommodations, or other auxiliary aids or services, contact 311,
+Relay: 711.
+503-823-4000:  Traducción e Interpretación  |  Biên Dịch và Thông Dịch  |   अनुवादन तथा  ा ा
+口笔译服务  |  Уст ный и письменный перевод   |  Turjumaad iyo Fasiraad
+Письмовий і усний переклад  |  Tra ducere și interpretariat   |   Chiaku me Awewen Kapas
+www.portland.gov/bps/accommodation
+550-4
+
+Macadam Avenue
+Plan District
+Allowable Building Height
+(A) Except for (B) below, within
+the Macadam Plan District, a
+building may be built to a
+maximum height of 45 feet so
+long as the total average
+height of the building does
+not exceed 35 feet.
+(B) Within the John's Landing
+mid-rise area, a building may
+be built to a maximum height
+of 75 feet so long as the
+average height of the building
+does not exceed 65 feet.
+D Plan District Boundary
+John's Landing Midrise area
+{65' average height limit;
+75' maximum height limit}
+'Z.
+%
+3
+(';)
+';!.
+---1►• View Corridor
+Center Line for Potential
+Light Rail Facility
+ro
+':,:)
+< ro
+--
+Map 550-1
+Map Revised July 8, 2016
+~ NORTH
+0 1,2 00 2,400
+Scale in Feet
+Bureau of Planning and Sustainability
+Portland, Oregon

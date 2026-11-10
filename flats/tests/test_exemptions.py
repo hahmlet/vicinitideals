@@ -241,7 +241,11 @@ pytestmark = pytest.mark.unit
 # parking_side_prohibited re-cites 16.43.030.D/H, whose words now state the
 # subject, moving it from `silent` to `stated` (one more): stated nets to 486.
 # 485 / 246 / silent 7: the sum above plus drift-clack's silent 8 -> 7 (stated nets to zero) (rel7 assembly, 2026-11-10, with drift-clack).
-EXPECTED = {"stated": 485, "numeric": 246, "marker": 0, "dash": 2, "silent": 7}
+# 2026-11-10 (flats/pdx-drift, FOLLOWUPS 165): stated 486 -> 485. CI1's own "no minimum lot
+# size" exemption (33.150.202) left with the reprint; CI1 now reads as RM1 (33.150.200) and
+# takes RM1's 4,000 sq ft minimum -- one exemption fewer, the conservative direction.
+# 484 / 246 / silent 7: the sum above plus pdx-drift's stated -1 (CI1 reads as RM1) (rel7 assembly, 2026-11-10, with pdx-drift).
+EXPECTED = {"stated": 484, "numeric": 246, "marker": 0, "dash": 2, "silent": 7}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

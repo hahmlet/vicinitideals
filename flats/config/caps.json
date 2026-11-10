@@ -1358,35 +1358,6 @@
     }
   },
   "or/multnomah/portland": {
-    "CI1": {
-      "max_coverage_pct": [
-        "site_specific_limitation"
-      ],
-      "max_far": [
-        "site_specific_limitation"
-      ],
-      "max_height_ft": [
-        "site_specific_limitation"
-      ],
-      "min_landscaped_pct": [
-        "site_specific_limitation"
-      ],
-      "min_lot_sqft": [
-        "site_specific_limitation"
-      ],
-      "quadplex_allowed": [
-        "site_specific_limitation"
-      ],
-      "setback_front_ft": [
-        "site_specific_limitation"
-      ],
-      "setback_rear_ft": [
-        "site_specific_limitation"
-      ],
-      "setback_side_ft": [
-        "site_specific_limitation"
-      ]
-    },
     "CI2": {
       "max_coverage_pct": [
         "site_specific_limitation"

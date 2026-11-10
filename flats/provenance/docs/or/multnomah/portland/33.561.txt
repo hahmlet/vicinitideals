@@ -1,10 +1,9 @@
 Title 33, Planning and Zoning Chapter 33.561
-3/1/25 North Interstate Plan District
+11/1/26 North Interstate Plan District
 
 561-1
 33.561 North Interstate Plan District
 561
-
 Sections:
 General
 33.561.010 Purpose
@@ -43,13 +42,13 @@ platforms and at identified focal points;
 neighborhood context and allow buildings to take greater advantage of views to the
 east over the freeway; and
 Chapter 33.561 Title 33, Planning and Zoning
-North Interstate Plan District 3/1/25
+North Interstate Plan District 11/1/26
 561-2
 
 • Increase opportunities for creative design, encourage quality construction, and foster
 provision of neighborhood amenities such as underground parking and ground level
-open space by allowing additional height in special areas with additional
-design requirements.
+open space by allowing additional height in special areas with additional design
+requirements.
 B. Maximum building heights.
 1. Generally. The maximum building heights are shown on Map 561-2, except as
 specified in Section 33.561.230. Except as follows, adjustments to maximum heights
@@ -85,7 +84,7 @@ maximum floor area allowed through the bonuses in this Subsection, are prohibite
 than 1 to 1 is prohibited.
 2. FAR bonus options:
 Title 33, Planning and Zoning Chapter 33.561
-3/1/25 North Interstate Plan District
+11/1/26 North Interstate Plan District
 
 561-3
 a. Mandatory inclusionary housing bonus option. Bonus FAR is allowed for
@@ -128,7 +127,7 @@ on the portion of the site within 15 feet of the lot line across the street from
 zoned RF-RM2, the maximum building height is the same as the residential zone
 across the street. See Figure 561-2.
 Chapter 33.561 Title 33, Planning and Zoning
-North Interstate Plan District 3/1/25
+North Interstate Plan District 11/1/26
 561-4
 
 Figure 561-1
@@ -138,9 +137,8 @@ Figure 561-2
 Height limits on sites across a street from RF – RM2 zones
 
 33.561.250 Exterior Display and Storage
-In the RM3, RM4, and CM3 zones, exterior display and storage are prohibited except for outdoor
-seating for restaurants and pedestrian-oriented accessory uses, including flower, food, or drink
-stands. Temporary open-air markets and carnivals are also allowed.
+In the RM3, RM4, and CM3 zones, exterior display and storage are prohibited except for the display
+of plants and produce.
 33.561.270 Required Building Lines
 A. Purpose. The Required Building line standard works together with the Active Building Use
 Areas, Ground Floor Windows, and Motor Vehicle Access standards to ensure a vibrant and
@@ -151,8 +149,9 @@ B. Where these regulations apply. These regulations apply to new development on 
 frontage on the streets shown on Map 561-4. Development in the multi-dwelling
 residential zones and alterations or exterior improvements to existing development are
 exempt from these regulations.
+
 Title 33, Planning and Zoning Chapter 33.561
-3/1/25 North Interstate Plan District
+11/1/26 North Interstate Plan District
 
 561-5
 C. Building line standards. Exterior walls of buildings designed to meet these requirements
@@ -180,12 +179,11 @@ C. Active building use area required. Buildings must be designed and constructed
 accommodate active uses, such as lobbies, residential, retail, commercial, or office. This
 standard must be met along at least 50 percent of the ground floor of that are at an angle
 of 45 degrees or less from the street lot line of a street shown on Map 561-4.
- Areas designed to accommodate active building uses must meet the following standards:
+Areas designed to accommodate active building uses must meet the following standards:
 1. The distance from the finished floor to the bottom of the structure above must be at
 least 12 feet. The bottom of the structure above includes supporting beams;
 2. The area must be at least 25 feet deep, measured from the street-facing façade;
 3. The area may be designed to accommodate a single tenant or multiple tenants;
-
 4. The street-facing facade must include windows and doors; and
 5. Parking is not allowed in the active building use areas.
 33.561.300 Motor Vehicle Access
@@ -193,7 +191,7 @@ A. Purpose. To encourage a transit-supportive, pedestrian-oriented environment w
 continuous frontage of buildings and active uses along Interstate Avenue, motor vehicle
 access should be limited when possible.
 Chapter 33.561 Title 33, Planning and Zoning
-North Interstate Plan District 3/1/25
+North Interstate Plan District 11/1/26
 561-6
 
 B. Parking access restricted. Motor vehicle access to a vehicle area or structure is not allowed
@@ -222,8 +220,8 @@ covered area provided by the balcony must be at least 48 square feet, a
 minimum of 8 feet wide and no more than 15 feet above grade. The covered
 balcony must be accessible from the interior living space of the house.
 3. Parking areas in the front setback. Parking areas are not allowed in the front setback.
-4. Exterior finish materials. The standards of this subsection must be met on all
-building facades:
+4. Exterior finish materials. The standards of this subsection must be met on all building
+facades:
 a. Plain concrete block, plain concrete, corrugated metal, plywood, composite
 materials manufactured from wood or other products, and sheet pressboard may
 not be used as exterior finish material, except as secondary finishes if they cover
@@ -234,7 +232,7 @@ inches wide.
 c. Where wood products are used for siding, the siding must be shingles, or
 horizontal siding, not shakes.
 Title 33, Planning and Zoning Chapter 33.561
-3/1/25 North Interstate Plan District
+11/1/26 North Interstate Plan District
 
 561-7
 d. Where horizontal siding is used, it must be shiplap or clapboard siding composed
@@ -245,7 +243,17 @@ in width.
 (Added by: Ord. No. 182072, effective 8/22/08; Amended by: Ord. No. 186639, effective 7/11/14;
 Ord. No. 188177, effective 5/24/18; Ord. No. 188958, effective 5/24/18; Ord. No. 189805, effective
 3/1/20; Ord. No. 190477, effective 8/1/21; Ord. No. 190851, effective 6/30/22; Ord. No. 191609,
-effective 3/1/24; Ord. No. 191942, effective 1/1/25; Ord. No. 191961, effective 3/1/25.)
+effective 3/1/24; Ord. No. 191942, effective 1/1/25; Ord. No. 191961, effective 3/1/25; Ord. 192213,
+effective 11/1/26.)
+
+The City of Portland is committed to providing meaningful access. To request translation,
+interpretation, modifications, accommodations, or other auxiliary aids or services, contact 311,
+Relay: 711.
+503-823-4000:  Traducción e Interpretación  |  Biên Dịch và Thông Dịch  |  अनुवादन तथा व्याख्या
+口笔译服务  |  Устный и письменный перевод  |  Turjumaad iyo Fasiraad
+Письмовий і усний переклад  |  Traducere și interpretariat  |   Chiaku me Awewen Kapas
+www.portland.gov/bps/accommodation
+
 Chapter 33.561 Title 33, Planning and Zoning
 North Interstate Plan District 3/1/25
 561-8

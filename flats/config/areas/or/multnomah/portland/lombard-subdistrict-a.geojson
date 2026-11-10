@@ -9,7 +9,7 @@
  },
  "source": {
   "map": "City of Portland Lombard Street plan district Subdistrict A (PCC 33.545, Map 545-1), as Portland Maps publishes it",
-  "quote": "or/multnomah/portland/33.545.txt#L63-L65",
+  "quote": "or/multnomah/portland/33.545.txt#L64-L66",
   "says": "The RM2 standards of 33.545.120, the main entrance location among them, apply to sites in Subdistrict A zoned RM2",
   "inputs": {
    "subdistricts": "plan-subdistricts.geojson, PLDIST LB, SUBDIST SUBDISTRICT A (BPS_Zoning_Code_Layers layer 1, fetched 2026-10-22)"

@@ -306,7 +306,7 @@ def test_assumed_corner_is_held_but_measured_noncorner_still_fails(corpus) -> No
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
     s = "or/multnomah/portland/33.120/"
-    rear_line = store.quote("or/multnomah/portland/33.910/33.910.030.txt#L535-L536")
+    rear_line = store.quote("or/multnomah/portland/33.910/33.910.030.txt#L549-L551")
     assert (
         "For other irregularly shaped lots, the rear lot line is all lot lines that are "
         "most nearly opposite the front lot line."
@@ -315,13 +315,13 @@ def test_the_quotes_say_what_the_rules_say() -> None:
     rule = store.quote(s + "33.120.206.txt#L10")
     assert "more than 160 feet deep" in rule and "90 feet of frontage on a street" in rule
     assert "share a side lot line" in store.quote(s + "33.120.206.txt#L15-L18")
-    eastern = store.quote(s + "33.120.220.txt#L23,L25")
+    eastern = store.quote(s + "33.120.220.txt#L26,L28")
     assert "25 percent of the total depth of the site" in eastern and "Map 120-3" in eastern
-    assert "No more than 50 percent" in store.quote(s + "33.120.220.txt#L24")
+    assert "No more than 50 percent" in store.quote(s + "33.120.220.txt#L27")
     assert (
         "Corner lots and lots that are up to 100 feet deep are exempt from the Eastern Pattern "
         "Area minimum rear building setback"
-    ) in store.quote(s + "33.120.220.txt#L28")
+    ) in store.quote(s + "33.120.220.txt#L31")
 
 
 # --- the screen ---------------------------------------------------------------

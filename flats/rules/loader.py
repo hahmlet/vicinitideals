@@ -1920,7 +1920,7 @@ def _parse_neighbours(
           abuts_nonresidential_zone:
             true_for: [OS, RX, CR, CM1, CM2, CM3, CE, CX, EG1, EG2, EX, IG1, IG2, IH]
             false_for: [RF, R20, R10, R7, R5, R2.5, RM1, RM2, RM3, RM4, RMP, IR]
-            quote: "or/multnomah/portland/33.130.txt#L871-L876"
+            quote: "or/multnomah/portland/33.130.txt#L832-L836"
             cite: PCC 33.130.215.B.2
             note: >-
               "no minimum setback ... from a lot line that abuts an OS, RX,

@@ -84,12 +84,12 @@ def test_each_row_takes_the_strict_limb_and_names_its_placeholders(layers) -> No
 
 #: Rows placed by hand outside the ported region that mirror an adopted
 #: amendment rather than the codified block (rules.yaml ``corpus_amendment``).
-#: Portland CI1 since RICAP 11 (2026-11-01, FOLLOWUPS 155): a home there is
-#: built to RM1's standards.
+#: Portland CI1 was one (RICAP 11, FOLLOWUPS 155) until the 11/1/26 Title 33
+#: reprint printed the change and the corpus took the entry off (pdx-drift,
+#: FOLLOWUPS 165, 2026-11-09); its row now mirrors the codified block.
 #: Gladstone R7.2, R10 and C1 on Ord. 1545 (in force 2026-08-13, FOLLOWUPS
 #: 156): R7.2's own amended table, R10 copying it, C1 through its like: R7.2.
 AMENDED_ROWS = {
-    ("portland", "CI1"): ("or/multnomah/portland", "ricap11"),
     ("gladstone", "R7.2"): ("or/clackamas/gladstone", "ord1545"),
     ("gladstone", "R10"): ("or/clackamas/gladstone", "ord1545"),
     ("gladstone", "C1"): ("or/clackamas/gladstone", "ord1545"),
@@ -97,11 +97,9 @@ AMENDED_ROWS = {
 
 
 def test_a_row_mirroring_an_amendment_is_what_the_port_makes_of_it(layers) -> None:
-    """The CI1 row is the port's rule run on RICAP 11's block, number for number.
-
-    The codified CI1 block still refuses the home and prints 15 ft setbacks;
-    a row read off it would measure the wrong envelope or none. The amended
-    block adopts RM1 whole, so the row must come out as RM1's.
+    """Each amended row is the port's rule run on its amendment's block,
+    number for number; and Portland CI1, codified since the 11/1/26 reprint,
+    is the port's rule run on the codified block, which adopts RM1 whole.
     """
     import yaml
 
@@ -117,17 +115,17 @@ def test_a_row_mirroring_an_amendment_is_what_the_port_makes_of_it(layers) -> No
         want = pf.amended_zone_row(layers[layer_id], zone, layer_id, amendment)
         for key in ("quadplex_allowed", "corpus_amendment", *pf.MIRRORED):
             assert shipped.get(key) == want.get(key), (slug, zone, key)
-    ci1 = pf.amended_zone_row(layers["or/multnomah/portland"], "CI1", "or/multnomah/portland", "ricap11")
-    rm1 = pf.zone_row(layers["or/multnomah/portland"], "RM1", "or/multnomah/portland",
-                      pf.largest_yards(layers["or/multnomah/portland"]))
+    pdx = layers["or/multnomah/portland"]
+    ci1 = pf.zone_row(pdx, "CI1", "or/multnomah/portland", pf.largest_yards(pdx))
+    rm1 = pf.zone_row(pdx, "RM1", "or/multnomah/portland", pf.largest_yards(pdx))
     assert {k: ci1.get(k) for k in pf.MIRRORED} == {k: rm1.get(k) for k in pf.MIRRORED}
     assert ci1["quadplex_allowed"] is True
-    # The codified block is still the codified block: refused, 15 ft yards.
-    codified = pf.zone_row(layers["or/multnomah/portland"], "CI1", "or/multnomah/portland",
-                           pf.largest_yards(layers["or/multnomah/portland"]))
-    assert codified["quadplex_allowed"] is False
+    shipped = next(z for z in top["portland"]["zones"] if z["zone"] == "CI1")
+    assert "corpus_amendment" not in shipped
+    for key in ("quadplex_allowed", *pf.MIRRORED):
+        assert shipped.get(key) == ci1.get(key), ("portland", "CI1", key)
 
 
 def test_an_amendment_the_corpus_does_not_carry_is_an_error(layers) -> None:
     with pytest.raises(LookupError):
-        pf.amended_zone_row(layers["or/multnomah/portland"], "CI1", "or/multnomah/portland", "ricap99")
+        pf.amended_zone_row(layers["or/multnomah/portland"], "CI1", "or/multnomah/portland", "ricap11")

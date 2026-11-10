@@ -37,12 +37,13 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 CONFIG = REPO_ROOT / "flats" / "config" / "jurisdictions"
 #: Portland's alley sentence ("No side, rear, or garage entrance setback is
 #: required from a lot line abutting an alley"), 33.110.220.B.9 and
-#: 33.120.220.B.3.g, at their section-file addresses -- and at L746 of the
+#: 33.120.220.B.3.g, at their section-file addresses -- and at L710 (L746 before
+#: the 11/1/26 reprint, FOLLOWUPS 165) of the
 #: county pockets' own copy of 33.110 as fetched.
-ALLEY_LINES = ("33.110.220.txt#L102", "33.120.220.txt#L54", "33.110.txt#L746")
+ALLEY_LINES = ("33.110.220.txt#L88", "33.120.220.txt#L57", "33.110.txt#L710")
 #: ... and the multi-dwelling garage entrance sentence, 33.120.220 (proof copy
 #: 33.120.txt L1228 until the cut).
-GARAGE_ALLEY_LINES = ("33.120.220.txt#L173-L174",)
+GARAGE_ALLEY_LINES = ("33.120.220.txt#L179-L180",)
 
 
 @pytest.fixture(scope="module")
@@ -477,6 +478,8 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # 216 on 2026-11-08 (FOLLOWUPS 155): Portland CI1, measured on RM1's
     # standards since RICAP 11 (2026-11-01). Written corpus to rules.yaml from
     # the zone's `amended: ricap11` block, so the back-port is a dry-run count only.
+    # Since 2026-11-09 (pdx-drift, FOLLOWUPS 165) that block is the reprinted
+    # 33.150's own (`like: RM1`); the count does not change.
     #
     # 217 on 2026-11-09 (rel6, combining flats/ci1-quadfit with FOLLOWUPS 52,
     # flats/dropped-lots-fairview): Clackamas SCMU, the last zone FLATS opens that
@@ -1203,7 +1206,7 @@ def test_a_schedule_and_an_enum_are_values_too() -> None:
         curve = rules.resolve("or/multnomah/_unincorporated", zone).values["coverage_curve"]
         assert curve.value[0] == [0, 0, 50]
         assert curve.value[-1] == [20000, 4500, 7.5]
-        assert "33.110.txt#L781-L786" in curve.prov.quote
+        assert "33.110.txt#L745-L751" in curve.prov.quote
 
     # Gresham's design districts require half the frontage built out in the
     # band between the minimum and maximum front setback, which is an axis.

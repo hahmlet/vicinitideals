@@ -42,7 +42,7 @@ def rule(condition: str, true_for: tuple[str, ...], false_for: tuple[str, ...]) 
         condition=condition,
         true_for=true_for,
         false_for=false_for,
-        quote="or/multnomah/portland/33.130.txt#L869-L875",
+        quote="or/multnomah/portland/33.130.txt#L829-L835",
         note="a test list, long enough to pass for a ruling's argument",
     )
 
@@ -191,7 +191,7 @@ BLOCK = (
     "  abuts_nonresidential_zone:\n"
     "    true_for: [OS, CM2]\n"
     "    false_for: [R5, RM1]\n"
-    '    quote: "or/multnomah/portland/33.130.txt#L869-L875"\n'
+    '    quote: "or/multnomah/portland/33.130.txt#L829-L835"\n'
     "    cite: PCC 33.130.215.B.2\n"
     "    note: >-\n"
     "      The commercial chapter's two rows, none against OS and the C zones,\n"
@@ -215,7 +215,7 @@ def test_the_block_loads_as_the_layers_lists(root: Path) -> None:
         (("    false_for: [R5, RM1]\n", ""), "false_for: a non-empty list"),
         (("    false_for: [R5, RM1]\n", "    false_for: []\n"), "false_for: a non-empty list"),
         (("    false_for: [R5, RM1]\n", "    false_for: [R5, CM2]\n"), "on both sides of the line: CM2"),
-        (('    quote: "or/multnomah/portland/33.130.txt#L869-L875"\n', ""), "a quote of the sentence"),
+        (('    quote: "or/multnomah/portland/33.130.txt#L829-L835"\n', ""), "a quote of the sentence"),
         (
             (
                 "      The commercial chapter's two rows, none against OS and the C zones,\n"
@@ -416,20 +416,22 @@ def test_portlands_os_on_the_relaxing_side_is_safe_only_while_ci_never_certifies
     """33.150 Table 150-2 gives a CI lot ten feet against an OS lot where the
     commercial chapters give none. One layer-wide list cannot say both, so
     OS sits on the relaxing side and the CI zones must stay capped on
-    site_specific_limitation until CI gets a list of its own."""
+    site_specific_limitation until CI gets a list of its own. CI1 left the
+    list when RICAP 11 put its homes on RM1's standards (33.150.200, codified
+    2026-11-09): it states no setback of its own any more."""
     r = corpus["or/multnomah/portland"].neighbours["abuts_nonresidential_zone"]
     if "OS" not in r.true_for:
         return
-    for zone in ("CI1", "CI2"):
+    for zone in ("CI2",):
         capped = caps_for("or/multnomah/portland", zone)
         for field in ("setback_side_ft", "setback_rear_ft"):
             assert "site_specific_limitation" in capped.get(field, ()), (zone, field)
 
 
 def test_no_ci_value_the_screen_resolves_turns_on_the_shared_list_uncapped(corpus: dict) -> None:
-    """The guard above reads the caps ledger, which is keyed by the CODIFIED
-    zone block; from 2026-11-01 RICAP 11 puts a new CI1 block in its place
-    (`amended: ricap11`, like: RM1) and the codified block's caps do not
+    """The guard above reads the caps ledger, keyed by the zone block; since
+    2026-11-01 RICAP 11 puts CI1 on RM1's standards (33.150.200, like: RM1;
+    an `amended:` entry until the 11/1/26 reprint) and Table 150-2's caps do not
     follow it (FOLLOWUPS 2(d), checked 2026-11-08). So resolve both CI zones
     the way the screen does, on the law in force on each side of that date,
     and require what the guard is for: no CI value may relax on

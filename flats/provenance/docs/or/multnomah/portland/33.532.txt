@@ -1,10 +1,9 @@
 Title 33, Planning and Zoning Chapter 33.532
-3/1/20 Hayden Island Plan District
+11/1/26 Hayden Island Plan District
 
 532-1
 33.532 Hayden Island Plan District
 532
-
 Sections:
 General
 33.532.010 Purpose
@@ -41,7 +40,7 @@ transportation system.
 The environmental zoning that applies to much of the plan district will preserve and restore the
 unique and valuable natural resources of the island, such as the shallow water habitat.
 Chapter 33.532 Title 33, Planning and Zoning
-Hayden Island Plan District 3/1/20
+Hayden Island Plan District 11/1/26
 
 532-2
 33.532.020 Where These Regulations Apply
@@ -83,16 +82,16 @@ potential for visually interesting development to welcome visitors and residents
 mitigating for potential impacts through excellent design, articulation and step-backs,
 and the use of quality materials.
 Title 33, Planning and Zoning Chapter 33.532
-1/1/25 Hayden Island Plan District
+11/1/26 Hayden Island Plan District
 
 532-3
 B.  Maximum building heights.
 1.  Generally. The maximum building heights are shown on Map 532-2.
 2.  Height Opportunity Areas. In the Height Opportunity Areas shown on Map 532-2:
-a.  Height may be increased to 90 feet if the maximum building coverage is 20
-percent or less;
-b.  Height may be increased to 80 feet if the maximum building coverage is 25
-percent or less;
+a.  Area A. Within Height Opportunity Area A, height may be increased to 90 feet if
+the maximum building coverage is 20 percent or less;
+b.  Area B. Within Height Opportunity Area B, height may be increased to 80 feet if
+the maximum building coverage is 25 percent or less;
 c.  Except as follows, adjustments and modifications to the standards of this
 paragraph are prohibited. Until January 2, 2032, adjustments to the height
 opportunity area height limits shown on Map 532-2 may be requested for new
@@ -114,9 +113,8 @@ C.  Maximum FAR in the Jantzen Beach subdistrict
 parking is not counted toward maximum FAR. Transfers of floor area between the
 West and East subareas are prohibited.
 2.  Inclusionary housing bonuses.  The following inclusionary housing bonus options are
-allowed. An increase in FAR of more than 3 to 1 on a site that is outside the pedestrian
-district is not allowed. An increase in FAR of more than .75 to 1 on a site that is inside
-the pedestrian district is not allowed.
+allowed. An increase in FAR of more than .75 to 1 on a site that is inside the
+pedestrian district is not allowed.
 a. Mandatory inclusionary housing bonus option. Bonus FAR is allowed for
 development that triggers 33.245, Inclusionary Housing. The amount of bonus
 floor area earned is an amount equal to the net building area of the building that
@@ -126,7 +124,7 @@ been met.
 b. Voluntary inclusionary housing. Bonus FAR is allowed when one of the following
 voluntary bonus options is met:
 Chapter 33.532 Title 33, Planning and Zoning
-Hayden Island Plan District 1/1/25
+Hayden Island Plan District 11/1/26
 
 532-4
 (1) Bonus FAR is allowed for projects that voluntarily comply with the standards
@@ -172,7 +170,7 @@ this chapter.
 recorded with the deed of each lot, parcel, and tract. The covenant must identify the
 minimum and maximum floor area designated for each lot, parcel and tract.
 Title 33, Planning and Zoning Chapter 33.532
-1/1/25 Hayden Island Plan District
+11/1/26 Hayden Island Plan District
 
 532-5
 33. 532.230 Transition Between Zones
@@ -198,8 +196,9 @@ D.  Required windows above the ground floor.
 1.  Sites abutting a residential zone. On the portion of a site within 30 feet of a residential
 zone, at least 15 percent of the area of the façade above the ground level must be
 windows. This requirement is in addition to any required ground floor windows.
+
 Chapter 33.532 Title 33, Planning and Zoning
-Hayden Island Plan District 1/1/25
+Hayden Island Plan District 11/1/26
 
 532-6
 2.  Sites across a street from a residential zone. On the portion of a site within 15 feet of
@@ -241,7 +240,7 @@ C.  Location. For each building, at least one main entrance must:
 2.  Allow pedestrians to both enter and exit the building; and
 3.  Either:
 Title 33, Planning and Zoning Chapter 33.532
-1/1/25 Hayden Island Plan District
+11/1/26 Hayden Island Plan District
 
 532-7
 a.  Face the street; or
@@ -267,8 +266,9 @@ C.  Building regulations. Buildings which front on an internal accessway are exe
 maximum building setback, ground floor windows and transit street main entrance
 standards of the base zone and the Hayden Island plan district if the buildings meet the
 base zone standard for maximum building setback, ground floor windows and transit street
+
 Chapter 33.532 Title 33, Planning and Zoning
-Hayden Island Plan District 1/1/25
+Hayden Island Plan District 11/1/26
 
 532-8
 main entrance along an internal accessway. The internal accessway must meet the
@@ -307,14 +307,14 @@ Master Street Plan in the Transportation Element of the Comprehensive Plan.
 2.  New street alignments as identified in the Hayden Island Master Street Plan are
 regulated by Chapter 17.88.
 Title 33, Planning and Zoning Chapter 33.532
-1/1/25 Hayden Island Plan District
+11/1/26 Hayden Island Plan District
 
 532-9
 Figure 532-4
 Buildings On Internal Accessways
 
 Chapter 33.532 Title 33, Planning and Zoning
-Hayden Island Plan District 1/1/25
+Hayden Island Plan District 11/1/26
 
 532-10
 33.532.270 Drive-Through Facilities
@@ -337,4 +337,12 @@ otherwise limited to particular streets.
 
 (Added by Ord. No. 183124, effective 9/18/09. Amended by: Ord. No. 187216, effective 7/24/15; Ord.
 No. 188177, effective 5/24/18; Ord. No. 188958, effective 5/24/18; Ord. No. 189805, effective
-3/1/20; Ord. No. 191942, effective 1/1/25.)
+3/1/20; Ord. No. 191942, effective 1/1/25; Ord. 192213, effective 11/1/26.)
+
+The City of Portland is committed to providing meaningful access. To request translation,
+interpretation, modifications, accommodations, or other auxiliary aids or services, contact 311,
+Relay: 711.
+503-823-4000:  Traducción e Interpretación  |  Biên Dịch và Thông Dịch  |  अनुवादन तथा व्याख्या
+口笔译服务  |  Устный и письменный перевод  |  Turjumaad iyo Fasiraad
+Письмовий і усний переклад  |  Traducere și interpretariat  |   Chiaku me Awewen Kapas
+www.portland.gov/bps/accommodation
