@@ -487,6 +487,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  FIRE-NARROW-STREET:
+    description: "Narrow street: the fire truck reaches the lot only along a street whose right-of-way is too narrow to hold a 20 ft fire road and its curbs (under 22 ft), and its paved width is not measured; fire review often refuses such a street (Steph 2026-11-10)"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the street's paved width (20 ft clear needed, OFC 503.2.1) or ask the fire marshal whether a truck may use it (FOLLOWUPS 178(b))"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   FIRE-HOSE-START:
     description: "Red only because the fire hose is measured from 10 ft out from the curb; measured from the curb itself it reaches -- where no street width is measured, at the curb of the narrowest street a truck may use (Steph 2026-10-05)"
     kind: parametric

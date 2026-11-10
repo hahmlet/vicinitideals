@@ -611,6 +611,13 @@ FIRE_ROUTE = "fire_route"
 #: rulings.yaml 2026-11-10-fire-long-dead-end-yellow). Joins ``_checks``'s
 #: ``unmeasured``: the fire marshal's answer, held YELLOW, never GREEN.
 FIRE_DEAD_END = "fire_dead_end"
+#: The hose misses on the code's reading and on the dead-end reading, and
+#: reaches only if the truck may also drive a street whose right-of-way is
+#: too narrow to hold the 20 ft road and its curbs, its pavement unmeasured
+#: (:attr:`LotFacts.fire_route_row_ft`; rulings.yaml
+#: 2026-11-10-narrow-street-fire-yellow). Joins ``_checks``'s
+#: ``unmeasured``: held YELLOW, never GREEN.
+FIRE_NARROW_STREET = "fire_narrow_street"
 
 #: The grade under a plan the bridge measured for and could not read --
 #: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
@@ -948,6 +955,12 @@ class LotFacts:
     #: lot is held YELLOW with FIRE-DEAD-END (Steph 2026-11-10: "Yellow."),
     #: never cleared on it.
     fire_route_freed_ft: float | None = None
+    #: The same route with the streets too narrow for the road and its
+    #: curbs driven as well (:attr:`flats.fit.fire_roads.Piece.row`). Set
+    #: only where the route misses on both readings above and this reaches:
+    #: the lot is held YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10:
+    #: "Very narrow, yes."), never cleared on it.
+    fire_route_row_ft: float | None = None
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -2215,12 +2228,19 @@ def _checks(
     reach = rules.get("fire_access_max_ft")
     if reach is not None:
         freed = lot.fire_route_freed_ft
+        wide = lot.fire_route_row_ft
         missed = lot.fire_route_ft is None or lot.fire_route_ft > float(reach)
         if lot.fire_route_tried and missed and freed is not None and freed <= float(reach):
             # Reached only up a long dead end with no turnaround seen
             # (FOLLOWUPS 168): the fire marshal's question, not a miss.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_DEAD_END)
+        elif lot.fire_route_tried and missed and wide is not None and wide <= float(reach):
+            # Reached only by a street too narrow for the road and its
+            # curbs, its pavement unmeasured (FOLLOWUPS 178(b)): a common
+            # fire-review refusal, held YELLOW.
+            unchecked.append("fire_access_ft")
+            unmeasured.add(FIRE_NARROW_STREET)
         elif lot.fire_route_ft is not None:
             check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
         else:
@@ -4359,6 +4379,7 @@ _MEASURED_FLAG: dict[str, str] = {
     UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
     FIRE_DEAD_END: "FIRE-DEAD-END",
+    FIRE_NARROW_STREET: "FIRE-NARROW-STREET",
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
