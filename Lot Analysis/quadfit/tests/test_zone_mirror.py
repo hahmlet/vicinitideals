@@ -1153,7 +1153,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     # so Table 17.12.040 note 1 can widen it to 10 ft beside R-10/R-8/R-6.
     # 24 -> 28 on 2026-11-09 (FOLLOWUPS 105 round 4): Washington County R-9 NB,
     # R-24 NB, NMU and CCMU reach 413-4.10 and so 407-6.4's 5 ft strip.
-    "parking_lot_line_buffer_ft": 28,
+    # 28 -> 36 on 2026-11-09 (FOLLOWUPS 171, flats/pdx-cm-buffer): Portland CR, CM1, CM2,
+    # CM3, CE and CX keep 33.130.215.B.2.b's 10 ft L3 strip beside RF-RM4/RMP/IR, EX Table
+    # 140-3's 5 ft, IR Table 150-2's 10 ft; quadfit has no neighbour fact.
+    "parking_lot_line_buffer_ft": 36,
     # 16 -> 20 on 2026-11-09 (multco-pockets: Multnomah R5/R7/R10/R20 +4).
     "parking_side_yard_allowed": 20,
     # 16 -> 21 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL

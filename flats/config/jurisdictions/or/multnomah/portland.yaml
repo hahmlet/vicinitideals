@@ -5231,6 +5231,28 @@ zones:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
         quote: "or/multnomah/portland/33.537.txt#L29-L30,L49-L53,L223-L224,L229-L230,L238-L248,L274-L306,L326-L331"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). 33.130.215.B.2.b: the 10 ft setback from a
+      # lot line abutting an RF through RM4, RMP or IR zone "must be landscaped
+      # to the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees, and
+      # ground cover over the rest), and only "areas paved for pedestrian or
+      # bicycle use" may stand in it -- so no court, stall or drive aisle.
+      # Table 130-2 prints the same strip for all six zones, "Landscape Buffer
+      # Abutting an RF - RM4 or RMP Zoned Lot ... 10 ft. @ L3"; the row leaves
+      # IR out and the text puts it in, and the text is the wider. Neither
+      # exception lifts it: (2) is for buildings 15 ft or less (the pod is
+      # 26), and (3) keeps the first 10 ft landscaped under both. Same fact
+      # as the side and rear setbacks: 0 only where EVERY non-street line is
+      # read and nothing across it is residential; one residential or unread
+      # line keeps the strip on every non-street line, the tightening way to
+      # be coarse until the strip is read per line.
+      value: 10
+      quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L120-L121"
+      via: "or/multnomah/portland/33.130/33.130.215.txt#L48-L50,L54-L55"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.130/33.130.215.txt#L45"
     # PCC 33.537 (Johnson Creek Basin plan district, FOLLOWUPS 109 part 1):
     # the base zone caps building coverage only; 33.537.140.D and 150.E cap
     # impervious surface (buildings and paving, eaves included) at 50 percent
@@ -5502,6 +5524,28 @@ zones:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
         quote: "or/multnomah/portland/33.537.txt#L29-L30,L49-L53,L223-L224,L229-L230,L238-L248,L274-L306,L326-L331"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). 33.130.215.B.2.b: the 10 ft setback from a
+      # lot line abutting an RF through RM4, RMP or IR zone "must be landscaped
+      # to the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees, and
+      # ground cover over the rest), and only "areas paved for pedestrian or
+      # bicycle use" may stand in it -- so no court, stall or drive aisle.
+      # Table 130-2 prints the same strip for all six zones, "Landscape Buffer
+      # Abutting an RF - RM4 or RMP Zoned Lot ... 10 ft. @ L3"; the row leaves
+      # IR out and the text puts it in, and the text is the wider. Neither
+      # exception lifts it: (2) is for buildings 15 ft or less (the pod is
+      # 26), and (3) keeps the first 10 ft landscaped under both. Same fact
+      # as the side and rear setbacks: 0 only where EVERY non-street line is
+      # read and nothing across it is residential; one residential or unread
+      # line keeps the strip on every non-street line, the tightening way to
+      # be coarse until the strip is read per line.
+      value: 10
+      quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L120-L121"
+      via: "or/multnomah/portland/33.130/33.130.215.txt#L48-L50,L54-L55"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.130/33.130.215.txt#L45"
     # PCC 33.537 (Johnson Creek Basin plan district, FOLLOWUPS 109 part 1):
     # the base zone caps building coverage only; 33.537.140.D and 150.E cap
     # impervious surface (buildings and paving, eaves included) at 50 percent
@@ -5813,6 +5857,28 @@ zones:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
         quote: "or/multnomah/portland/33.537.txt#L29-L30,L49-L53,L223-L224,L229-L230,L238-L248,L274-L306,L326-L331"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). 33.130.215.B.2.b: the 10 ft setback from a
+      # lot line abutting an RF through RM4, RMP or IR zone "must be landscaped
+      # to the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees, and
+      # ground cover over the rest), and only "areas paved for pedestrian or
+      # bicycle use" may stand in it -- so no court, stall or drive aisle.
+      # Table 130-2 prints the same strip for all six zones, "Landscape Buffer
+      # Abutting an RF - RM4 or RMP Zoned Lot ... 10 ft. @ L3"; the row leaves
+      # IR out and the text puts it in, and the text is the wider. Neither
+      # exception lifts it: (2) is for buildings 15 ft or less (the pod is
+      # 26), and (3) keeps the first 10 ft landscaped under both. Same fact
+      # as the side and rear setbacks: 0 only where EVERY non-street line is
+      # read and nothing across it is residential; one residential or unread
+      # line keeps the strip on every non-street line, the tightening way to
+      # be coarse until the strip is read per line.
+      value: 10
+      quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L120-L121"
+      via: "or/multnomah/portland/33.130/33.130.215.txt#L48-L50,L54-L55"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.130/33.130.215.txt#L45"
     # PCC 33.537 (Johnson Creek Basin plan district, FOLLOWUPS 109 part 1):
     # the base zone caps building coverage only; 33.537.140.D and 150.E cap
     # impervious surface (buildings and paving, eaves included) at 50 percent
@@ -6150,6 +6216,28 @@ zones:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
         quote: "or/multnomah/portland/33.537.txt#L29-L30,L49-L53,L223-L224,L229-L230,L238-L248,L274-L306,L326-L331"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). 33.130.215.B.2.b: the 10 ft setback from a
+      # lot line abutting an RF through RM4, RMP or IR zone "must be landscaped
+      # to the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees, and
+      # ground cover over the rest), and only "areas paved for pedestrian or
+      # bicycle use" may stand in it -- so no court, stall or drive aisle.
+      # Table 130-2 prints the same strip for all six zones, "Landscape Buffer
+      # Abutting an RF - RM4 or RMP Zoned Lot ... 10 ft. @ L3"; the row leaves
+      # IR out and the text puts it in, and the text is the wider. Neither
+      # exception lifts it: (2) is for buildings 15 ft or less (the pod is
+      # 26), and (3) keeps the first 10 ft landscaped under both. Same fact
+      # as the side and rear setbacks: 0 only where EVERY non-street line is
+      # read and nothing across it is residential; one residential or unread
+      # line keeps the strip on every non-street line, the tightening way to
+      # be coarse until the strip is read per line.
+      value: 10
+      quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L120-L121"
+      via: "or/multnomah/portland/33.130/33.130.215.txt#L48-L50,L54-L55"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.130/33.130.215.txt#L45"
     # PCC 33.537 (Johnson Creek Basin plan district, FOLLOWUPS 109 part 1):
     # the base zone caps building coverage only; 33.537.140.D and 150.E cap
     # impervious surface (buildings and paving, eaves included) at 50 percent
@@ -6460,6 +6548,28 @@ zones:
         fact: pdx_johnson_creek_unmeasured
         cite: PCC 33.537.130, 33.537.140.E and 33.537.160 (Johnson Creek Basin plan district, which controls over the base zone, 33.500.040) -- along a lot line abutting the Springwater Corridor a 20 ft landscaped buffer (10 ft in C zones) with no building, parking or paving in it, and no vehicle area within 20 ft of that line; in the South subdistrict a land division's density is cut by the slope class of its land; and where any of a site is in the Flood Risk Area a land division is prohibited (the whole site) or must put that part in a tract. Nothing measures which line abuts the corridor, the slope classes or the Flood Risk Area's share of the site; held on the lots drawn_areas johnson_creek_unmeasured traces (the corridor reach), and on the townhouse form also on those johnson_creek_land_division traces, since 140.E and 160 govern land divisions and planned developments only (33.537.010, density "is limited by applying special regulations to new land division proposals"), so they reach the pod as four unit lots and not as one building on the one lot (FOLLOWUPS 58, 2026-11-08)
         quote: "or/multnomah/portland/33.537.txt#L29-L30,L49-L53,L223-L224,L229-L230,L238-L248,L274-L306,L326-L331"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). 33.130.215.B.2.b: the 10 ft setback from a
+      # lot line abutting an RF through RM4, RMP or IR zone "must be landscaped
+      # to the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees, and
+      # ground cover over the rest), and only "areas paved for pedestrian or
+      # bicycle use" may stand in it -- so no court, stall or drive aisle.
+      # Table 130-2 prints the same strip for all six zones, "Landscape Buffer
+      # Abutting an RF - RM4 or RMP Zoned Lot ... 10 ft. @ L3"; the row leaves
+      # IR out and the text puts it in, and the text is the wider. Neither
+      # exception lifts it: (2) is for buildings 15 ft or less (the pod is
+      # 26), and (3) keeps the first 10 ft landscaped under both. Same fact
+      # as the side and rear setbacks: 0 only where EVERY non-street line is
+      # read and nothing across it is residential; one residential or unread
+      # line keeps the strip on every non-street line, the tightening way to
+      # be coarse until the strip is read per line.
+      value: 10
+      quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L120-L121"
+      via: "or/multnomah/portland/33.130/33.130.215.txt#L48-L50,L54-L55"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.130/33.130.215.txt#L45"
     # PCC 33.537 (Johnson Creek Basin plan district, FOLLOWUPS 109 part 1):
     # the base zone caps building coverage only; 33.537.140.D and 150.E cap
     # impervious surface (buildings and paving, eaves included) at 50 percent
@@ -6708,6 +6818,28 @@ zones:
         - value: 0
           when: [abuts_nonresidential_zone]
           quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L106"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). 33.130.215.B.2.b: the 10 ft setback from a
+      # lot line abutting an RF through RM4, RMP or IR zone "must be landscaped
+      # to the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees, and
+      # ground cover over the rest), and only "areas paved for pedestrian or
+      # bicycle use" may stand in it -- so no court, stall or drive aisle.
+      # Table 130-2 prints the same strip for all six zones, "Landscape Buffer
+      # Abutting an RF - RM4 or RMP Zoned Lot ... 10 ft. @ L3"; the row leaves
+      # IR out and the text puts it in, and the text is the wider. Neither
+      # exception lifts it: (2) is for buildings 15 ft or less (the pod is
+      # 26), and (3) keeps the first 10 ft landscaped under both. Same fact
+      # as the side and rear setbacks: 0 only where EVERY non-street line is
+      # read and nothing across it is residential; one residential or unread
+      # line keeps the strip on every non-street line, the tightening way to
+      # be coarse until the strip is read per line.
+      value: 10
+      quote: "or/multnomah/portland/33.130/33.130.210.txt#L78,L120-L121"
+      via: "or/multnomah/portland/33.130/33.130.215.txt#L48-L50,L54-L55"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.130/33.130.215.txt#L45"
     max_height_ft:
       # Table 130-2, "Base Height". The row prints all six cells on one line,
       # so the header is quoted with it and position is what names the column
@@ -6872,6 +7004,22 @@ zones:
       # setback_rear_ft (FOLLOWUPS 12(c)).
       value: 10
       quote: "or/multnomah/portland/33.140/33.140.210.txt#L62-L65"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.140/33.140.210.txt#L29,L41-L42"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). Table 140-3, the EG1/EX/IG1 row, "16 or
+      # more" band (the pod is 26 ft): 10 ft of building setback and "5 ft. @
+      # L3" of landscape buffer against a side or rear lot line of an R zoned
+      # lot; 33.140.215.B.2, "Required landscaped areas must comply with at
+      # least the L3 standard" (33.248.020.C: a 6 ft evergreen screen, trees,
+      # ground cover over the rest) -- no court or drive aisle in it. Note [1]
+      # disapplies the table against RX, which the neighbour list already
+      # puts on the relaxing side; nothing from an OS, C, E or I lot.
+      value: 5
+      quote: "or/multnomah/portland/33.140/33.140.210.txt#L60,L64-L65,L68"
+      via: "or/multnomah/portland/33.140/33.140.215.txt#L12-L15"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
@@ -7329,6 +7477,18 @@ zones:
       per_height_ft: 2
       floor_ft: 10
       quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
+    parking_lot_line_buffer_ft:
+      # FOLLOWUPS 171 (2026-11-09). Table 150-2, IR column, "Landscaping
+      # Abutting an R zoned lot ... 10 ft. @L3", and 33.150.240.C:
+      # "Landscaping is required in minimum building setbacks from lot lines
+      # abutting ... a residential zoned lot" (L3, 33.248.020.C: a 6 ft
+      # evergreen screen, trees, ground cover over the rest) -- no court or
+      # drive aisle in it. No variant: "R zoned" is not the neighbour list
+      # this layer declares (that list puts RX on the relaxing side, and RX
+      # is a residential zone), so the strip stays on every non-street line.
+      value: 10
+      quote: "or/multnomah/portland/33.150.txt#L531,L554-L555"
+      via: "or/multnomah/portland/33.150.txt#L679-L681"
     max_height_ft:
       value: 75
       quote: "or/multnomah/portland/33.150.txt#L531,L536-L537"
