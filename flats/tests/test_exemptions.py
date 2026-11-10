@@ -220,7 +220,9 @@ pytestmark = pytest.mark.unit
 # rel6 2026-11-09, combining two lanes: 478 -> 486 stated and 206 + 13 = 219 numeric --
 # rel5's 478/206 (above) plus flats/pdx-map-120's Maps 120-2/120-3 rows (+13 numeric; +8 stated:
 # its +12 less the four corner-and-depth variants its round 3 removed).
-EXPECTED = {"stated": 486, "numeric": 248, "marker": 0, "dash": 2, "silent": 8}
+# 248 -> 240 numeric on 2026-11-09 (pockets-parking, ruling 2026-11-09-multco-pockets-portland-
+# parking): R5, R7, R10 and R20's two exempt aisle fields (8) became Steph's 20 ft value.
+EXPECTED = {"stated": 486, "numeric": 240, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
