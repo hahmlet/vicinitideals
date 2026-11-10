@@ -133,11 +133,14 @@ def test_the_parking_chapter_says_the_same_for_ci1_homes() -> None:
 
 def test_table_150_2_s_caps_do_not_reach_a_ci1_home(written) -> None:
     """Table 150-2's notes capped CI1's own figures; a home on RM1 standards
-    is not under Table 150-2. The borrowed values keep RM1's caps."""
+    is not under Table 150-2. The borrowed values keep RM1's caps, and the
+    use permission, quoted from Table 150-1, is not under note [3] either: the
+    ruling is narrowed to CI2 and IR, where it was before."""
     got = RuleSet(written).resolve(PORTLAND, "CI1").values
-    assert not any(
-        "site_specific_limitation" in v.levers for name, v in got.items() if name != "quadplex_allowed"
-    )
+    assert not any("site_specific_limitation" in v.levers for v in got.values())
+    for zone in ("CI2", "IR"):
+        kept = RuleSet(written).resolve(PORTLAND, zone).values
+        assert "site_specific_limitation" in kept["quadplex_allowed"].levers, zone
 
 
 def test_a_ci1_lot_screens_as_the_same_lot_in_rm1(written) -> None:

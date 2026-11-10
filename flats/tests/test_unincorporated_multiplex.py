@@ -261,7 +261,7 @@ def test_the_last_portland_pocket_reads_the_same_table_row_as_the_others(
     the check that the same row was read the same way rather than four times
     from memory.
     """
-    row = "or/multnomah/_unincorporated/33.110.txt#L313"
+    row = "or/multnomah/_unincorporated/33.110.txt#L310"
     for zone in ("R20", "R10", "R7", "R5"):
         held = uninc.zones[zone].values["quadplex_allowed"]
         assert held.value is True, zone

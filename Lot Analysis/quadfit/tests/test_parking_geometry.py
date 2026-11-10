@@ -564,13 +564,14 @@ def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone(truste
             shipped = dw.open_space_sqft_by_zone[zr.zone]
             z = layer.zones.get(zr.zone)
             values = None if z is None else z.values
-            if z is not None and zr.corpus_amendment:
-                # A row mirroring an adopted amendment (Portland CI1 on
-                # RICAP 11, Gladstone R7.2/R10/C1 on Ord. 1545) is held to the
-                # law with it in force, through its `like:`.
+            if z is not None and (zr.corpus_amendment or z.like is not None):
+                # A row mirroring an adopted amendment (Gladstone R7.2/R10/C1
+                # on Ord. 1545) is held to the law with it in force, and a zone
+                # that adopts another's standards (Portland CI1, `like: RM1`
+                # since the 11/1/26 reprint) to what it adopts.
                 from audit_zone_mirror import _effective, amended_layer
 
-                held = amended_layer(layer, zr.corpus_amendment, zr.zone)
+                held = amended_layer(layer, zr.corpus_amendment, zr.zone) if zr.corpus_amendment else layer
                 values = _effective(held, held.zones[zr.zone])
             read = None if values is None else values.get("open_space_min_sqft")
             stated = None if read is None or read.exempt else float(read.value)

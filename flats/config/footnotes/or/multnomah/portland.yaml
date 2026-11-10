@@ -59,7 +59,7 @@ notes:
   # Five notes, all of them grandfathering or measurement. They govern the
   # single-dwelling zones' `quadplex_allowed`, which is read a page earlier.
   - quote: "or/multnomah/portland/33.110/33.110.202.txt#L39"
-    digest: "e209d90b8439"
+    digest: "c2c45f6a0253"
     state: dismissed
     reason: >-
       a primary structure stays allowed on a lot that met Table 110-3 until a
@@ -71,7 +71,7 @@ notes:
       ended on the page stamp "110-8"
 
   - quote: "or/multnomah/portland/33.110/33.110.202.txt#L42"
-    digest: "00088d83a572"
+    digest: "738fe4739951"
     state: dismissed
     reason: >-
       the R5 minimums for adjusted lots and lot remnants approved through a
@@ -168,7 +168,7 @@ notes:
       relaxation of the institutional table's minimum landscaped area
 
   - quote: "or/multnomah/portland/33.110/33.110.270.txt#L92"
-    digest: "f5fe0824e9ba"
+    digest: "87c2a41f08cd"
     state: dismissed
     reason: >-
       vehicle areas are subject to the parking lot setback and landscaping
@@ -213,7 +213,7 @@ notes:
 
   # --- 33.120 Table 120-1, the use table ----------------------------
   - quote: "or/multnomah/portland/33.120/33.120.200.txt#L31"
-    digest: "a9ffcddba0a4"
+    digest: "50d13b9a608b"
     state: dismissed
     reason: >-
       the only multi-dwelling development allowed in RMP is manufactured
@@ -239,7 +239,7 @@ notes:
       only raise it
 
   - quote: "or/multnomah/portland/33.120/33.120.211.txt#L37"
-    digest: "05356b149648"
+    digest: "2c947f98e074"
     state: dismissed
     reason: >-
       names the other bonuses -- Inclusionary Housing, Three-Bedroom Units,
@@ -304,7 +304,7 @@ notes:
       stays
 
   - quote: "or/multnomah/portland/33.130/33.130.212.txt#L35"
-    digest: "b05a55a3a9f8"
+    digest: "85df9ba20ec5"
     state: dismissed
     reason: >-
       bonus height in CM2 is allowed only inside a Historic District,
@@ -367,7 +367,7 @@ notes:
   # a mapped condition that makes a standard TIGHTER, which is the shape every
   # other Portland note has managed to avoid.
   - quote: "or/multnomah/portland/33.150.txt#L571"
-    digest: "0f6941d0781c"
+    digest: "e5d7f2951fa8"
     state: dismissed
     reason: >-
       for Colleges and Medical Centers the entire CI zone counts as one site
@@ -379,7 +379,7 @@ notes:
       a campus do
 
   - quote: "or/multnomah/portland/33.150.txt#L575"
-    digest: "8e4715494aec"
+    digest: "6582bd74cbbd"
     state: dismissed
     reason: >-
       maximum FAR inside the Legacy Good Samaritan campus boundary on Map
@@ -388,9 +388,18 @@ notes:
       it
 
   - quote: "or/multnomah/portland/33.150.txt#L577"
-    digest: "b0b1dfa3fbb5"
+    digest: "01136b941dc7"
     state: unmeasured
     fact: site_specific_limitation
+    # Narrowed 2026-11-09 (pdx-drift, FOLLOWUPS 165). The [3] prints in the
+    # CI2 column only (33.150.txt#L539-L541); IR is kept under it as before,
+    # the side that cannot open a lot. CI1 is taken out: since RICAP 11 a CI1
+    # home is on RM1's standards (33.150.200, `like: RM1`), so no Table 150-2
+    # figure reaches it, and its Table 150-1 Y carries no bracket. Left
+    # unnarrowed, the notes block put this cap on CI1's use permission once
+    # that permission was quoted from the reprinted chapter rather than the
+    # RICAP 11 exhibit -- a cap the note's words do not reach.
+    zones: [CI2, IR]
     reason: >-
       maximum FAR inside the PCC Sylvania campus boundary on Map 150-5 is
       .75 to 1, not 3 to 1 -- a quarter of the zone's own ceiling, and the
@@ -468,7 +477,7 @@ notes:
       another row of the same table
 
   - quote: "or/multnomah/portland/33.100/33.100.100.txt#L35"
-    digest: "780e5351d9ab"
+    digest: "3b864c63ca4a"
     state: dismissed
     reason: >-
       note 5 treats Basic Utilities serving a development site as
@@ -518,7 +527,7 @@ notes:
       the same table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L21-L23"
-    digest: "8127f5b36788"
+    digest: "3117b87f2052"
     state: dismissed
     reason: >-
       note 2 makes Utility Scale Energy Production and Industrial
@@ -529,7 +538,7 @@ notes:
       table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L32-L34"
-    digest: "ae45d4cf52a5"
+    digest: "ff1d6fb5d5cc"
     state: dismissed
     reason: >-
       note 3 sends Self-Service Storage to the special regulations in
@@ -539,7 +548,7 @@ notes:
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words name Chapter 33.284, Self-Service Storage; still that use only.
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L36-L38"
-    digest: "1e44764605fa"
+    digest: "178ab4196c5d"
     state: dismissed
     reason: >-
       note 4 prohibits exterior display or storage of industrial
@@ -550,7 +559,7 @@ notes:
       the same table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L39"
-    digest: "a7096be65790"
+    digest: "3acb4fa50b2c"
     state: dismissed
     reason: >-
       note 5 allows most Community Service uses by right and sends
@@ -570,13 +579,13 @@ notes:
       another row of the same table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L46"
-    digest: "0d8fc2144aec"
+    digest: "afed80017c95"
     state: dismissed
     reason: >-
-      note 7 makes public safety facilities carrying transmission
-      equipment a conditional use, treats small scale energy production
-      as accessory within limits, and allows all other Basic Utilities.
-      a limitation on a use this screen does not place. It is governed
+      note 7 sends public safety facilities carrying transmission
+      equipment to Chapter 33.274 (a conditional use before the 11/1/26
+      reprint), treats small scale energy production as accessory within
+      limits, and allows all other Basic Utilities. a limitation on a use this screen does not place. It is governed
       here because Table 130-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
@@ -612,7 +621,7 @@ notes:
       table
 
   - quote: "or/multnomah/portland/33.130/33.130.100.txt#L71-L74"
-    digest: "3f24d3ba0562"
+    digest: "2b2105aea66d"
     state: dismissed
     reason: >-
       note 11 makes outdoor Agriculture a conditional use in CM3 and CE
@@ -659,7 +668,7 @@ notes:
       than a conditional
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L27-L28"
-    digest: "1387a31d0e82"
+    digest: "5eb67cc6d307"
     state: dismissed
     reason: >-
       note 3 caps Retail Sales And Service in the EG zones at 20,000
@@ -698,7 +707,7 @@ notes:
       same table
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L78-L80"
-    digest: "b120be263ba1"
+    digest: "1ed84bd59cc3"
     state: dismissed
     reason: >-
       note 7 sends Self-Service Storage to its special regulations. a
@@ -708,7 +717,7 @@ notes:
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words name Chapter 33.284, Self-Service Storage; still that use only.
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L82-L83"
-    digest: "ad4ea777fa0d"
+    digest: "9a179d59bf65"
     state: dismissed
     reason: >-
       note 8 makes Waste-Related uses conditional unless Metro has
@@ -729,7 +738,7 @@ notes:
       row of the same table
 
   - quote: "or/multnomah/portland/33.140/33.140.100.txt#L159-L160"
-    digest: "057df714bf5d"
+    digest: "58f6158ea2dd"
     state: dismissed
     reason: >-
       note 10 prohibits short term and mass shelters in the I zones and
@@ -802,7 +811,7 @@ notes:
   # --- 33.150, the campus institutional table, answered in prose ---
 
   - quote: "or/multnomah/portland/33.150.txt#L179"
-    digest: "2b114eefe29b"
+    digest: "2eeae802b25c"
     state: dismissed
     reason: >-
       note 1 allows up to 10,000 square feet of Retail Sales And Service
@@ -823,7 +832,7 @@ notes:
       and the note sits on another row of the same table
 
   - quote: "or/multnomah/portland/33.150.txt#L194"
-    digest: "5556aba78db6"
+    digest: "44fe099e096e"
     state: dismissed
     reason: >-
       note 3 treats site-serving Basic Utilities and small scale energy
@@ -895,7 +904,7 @@ notes:
       IR as a bare Y with no bracket on it
 
   - quote: "or/multnomah/portland/33.150.txt#L248"
-    digest: "aae2b91755b4"
+    digest: "9d50e085663a"
     state: dismissed
     reason: >-
       note 10 allows Retail Sales And Service and Office uses on an
@@ -956,7 +965,7 @@ notes:
       dimensions and 33.110.100.A rather than from this table
 
   - quote: "or/multnomah/portland/33.110/33.110.100.txt#L21"
-    digest: "d010b0bf0016"
+    digest: "3f429e864cc7"
     state: dismissed
     reason: >-
       note 4 treats site-serving Basic Utilities and small scale energy
@@ -993,12 +1002,12 @@ notes:
       33.110.100.A rather than from this table
 
   - quote: "or/multnomah/portland/33.110/33.110.100.txt#L44-L45"
-    digest: "fcc9556e5d4e"
+    digest: "bfb21b1f52f9"
     state: dismissed
     reason: >-
       note 7 allows Daycare by right inside a building that contains or
-      contained a College, Medical Center, School, Religious Institution
-      or Community Service use. a limitation on a use this screen does
+      contained a College, Medical Center, School, Religious Institution,
+      Daycare (added in the 11/1/26 reprint) or Community Service use. a limitation on a use this screen does
       not place. Table 110-1's Household Living row carries no bracket
       at all in the zones this layer holds, and the permission for a
       four-unit building is read from Table 110-3's lot dimensions and
@@ -1077,7 +1086,7 @@ notes:
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words point Commercial Parking to Chapter 33.510 inside the Central City and keep ground-floor retail rules on that use; still nothing on Household Living.
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L39"
-    digest: "24d89d6f33ea"
+    digest: "7739bf1299b3"
     state: dismissed
     reason: >-
       note 3 sends most Community Service and Schools uses in RX to
@@ -1102,7 +1111,7 @@ notes:
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words send shelters to Chapter 33.285; still Community Service only.
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L55-L57"
-    digest: "2b225d2cb75d"
+    digest: "81771c9e39ba"
     state: dismissed
     reason: >-
       note 5 allows Parks And Open Areas by right and sends its
@@ -1174,7 +1183,7 @@ notes:
   # encodes no buffering field, so nothing turned on it.
 
   - quote: "or/multnomah/portland/33.266/33.266.130.txt#L143-L145"
-    digest: "a844d11adf13"
+    digest: "493542bc9c36"
     state: dismissed
     reason: >-
       the driveway and parking area green features standard, which
@@ -1184,7 +1193,7 @@ notes:
       canopy and pervious paving options it offers never come into play
 
   - quote: "or/multnomah/portland/33.266/33.266.130.txt#L164"
-    digest: "1e60cb016760"
+    digest: "b4fc574e6c9a"
     state: dismissed
     reason: >-
       33.266.130's paragraph 6, large parking areas in R, C, E, IR and CI
@@ -1194,7 +1203,10 @@ notes:
       than 125,000 square feet. Same reason as paragraph 5's 21,780 square
       foot threshold: the pod parks four stalls, orders of magnitude under
       either, so it can never govern a pod lot (coordinator ruling
-      2026-10-29, on paragraph 5's precedent)
+      2026-10-29, on paragraph 5's precedent). RICAP 11's reprint (11/1/26)
+      splits it into new areas of 125,000 square feet or more and expansions
+      past that size, and adds the elements as a list; the threshold, and so
+      the answer, is unchanged
 
   # --- 33.266, the parking chapter's last thirteen ----------------------
   #
@@ -1222,7 +1234,7 @@ notes:
   # L1125, and does not need it here.
 
   - quote: "or/multnomah/portland/33.266/33.266.115.txt#L136"
-    digest: "abfcd5ca687c"
+    digest: "ff45ce858b18"
     state: dismissed
     reason: >-
       note 1 on the maximum-parking table lets a use subject to Conditional
@@ -1252,6 +1264,17 @@ notes:
       reach a fourplex: 33.266.130.B hands residential vehicle areas to
       33.266.120
 
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L89"
+    digest: "d9acaf4878d0"
+    state: dismissed
+    reason: >-
+      note 3, new in the 11/1/26 reprint (RICAP 11), exempts detached
+      accessory structures from the same vehicle-area location table. A
+      relief, and on a table that does not reach this building for the same
+      reason as notes 1 and 2: 33.266.130.B still applies its standards to all
+      vehicle areas "except for residential vehicle areas subject to the
+      standards of 33.266.120" (33.266.130.txt#L25)
+
   - quote: "or/multnomah/portland/33.266/33.266.130.txt#L133"
     digest: "151190f32738"
     state: dismissed
@@ -1264,7 +1287,7 @@ notes:
       out against this note would be half a foot per stall too narrow
 
   - quote: "or/multnomah/portland/33.266/33.266.130.txt#L134"
-    digest: "522db176f1ba"
+    digest: "404939938cec"
     state: dismissed
     reason: >-
       note 2 on Table 266-4 sends the reader to 33.266.130.F.3 for accessible
@@ -1282,7 +1305,7 @@ notes:
       this building's to resolve
 
   - quote: "or/multnomah/portland/33.266/33.266.200.txt#L121-L122"
-    digest: "a378f5e47a61"
+    digest: "5f8adb5855ee"
     state: dismissed
     reason: >-
       note 2 defines the restricted-tenancy Group Living units that get a
@@ -1319,7 +1342,7 @@ notes:
       at five units on site
 
   - quote: "or/multnomah/portland/33.266/33.266.210.txt#L46"
-    digest: "7411e1099f71"
+    digest: "53154af02f50"
     state: dismissed
     reason: >-
       note 1 on the bicycle parking space dimensions table points at Figures
@@ -1457,7 +1480,7 @@ notes:
       the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
 
   - quote: "or/multnomah/portland/33.846.txt#L447"
-    digest: "2b27167b7fdb"
+    digest: "d2aa3970e896"
     state: dismissed
     reason: >-
       a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it. Its tail (item 4, run into the note by the page) sends Conservation District proposals that are not exempt to Table 846-4 for their procedure -- again which procedure, not whether; the Conservation District answer is in flats/geom/pdx_overlays.py
@@ -1491,7 +1514,7 @@ notes:
   # same reasons; nothing new is ruled.
 
   - quote: "or/multnomah/portland/33.266.txt#L542"
-    digest: "dad3f678cd04"
+    digest: "b42dc9f80786"
     state: dismissed
     reason: >-
       note 2 on Table 266-4 sends the reader to 33.266.130.F.3 for accessible
@@ -1499,7 +1522,7 @@ notes:
       development, and a fourplex's parking is 33.266.120's
 
   - quote: "or/multnomah/portland/33.266.txt#L554"
-    digest: "3cdabb102d7d"
+    digest: "eb962a7248a0"
     state: dismissed
     reason: >-
       the driveway and parking area green features standard, which
@@ -1556,7 +1579,7 @@ notes:
       the ratios in Table 510-2 are per 1,000 sq ft of building except where the table says otherwise, and Household Living's row says 1.2 per dwelling unit; the pod's 4 stalls for 4 homes is 1.0, under the maximum, and every Central City lot sits in the plan_district_unmeasured hold
 
   - quote: "or/multnomah/portland/33.510.txt#L2643"
-    digest: "18ae44687221"
+    digest: "a2e35e0394b7"
     state: dismissed
     reason: >-
       defines anchor retail (a store over 50,000 sq ft) and lists who may apply for Preservation parking; neither is a home, and the pod's parking is under the Household Living maximum

@@ -42,7 +42,7 @@ def rule(condition: str, true_for: tuple[str, ...], false_for: tuple[str, ...]) 
         condition=condition,
         true_for=true_for,
         false_for=false_for,
-        quote="or/multnomah/portland/33.130.txt#L869-L875",
+        quote="or/multnomah/portland/33.130.txt#L829-L835",
         note="a test list, long enough to pass for a ruling's argument",
     )
 
@@ -191,7 +191,7 @@ BLOCK = (
     "  abuts_nonresidential_zone:\n"
     "    true_for: [OS, CM2]\n"
     "    false_for: [R5, RM1]\n"
-    '    quote: "or/multnomah/portland/33.130.txt#L869-L875"\n'
+    '    quote: "or/multnomah/portland/33.130.txt#L829-L835"\n'
     "    cite: PCC 33.130.215.B.2\n"
     "    note: >-\n"
     "      The commercial chapter's two rows, none against OS and the C zones,\n"
@@ -215,7 +215,7 @@ def test_the_block_loads_as_the_layers_lists(root: Path) -> None:
         (("    false_for: [R5, RM1]\n", ""), "false_for: a non-empty list"),
         (("    false_for: [R5, RM1]\n", "    false_for: []\n"), "false_for: a non-empty list"),
         (("    false_for: [R5, RM1]\n", "    false_for: [R5, CM2]\n"), "on both sides of the line: CM2"),
-        (('    quote: "or/multnomah/portland/33.130.txt#L869-L875"\n', ""), "a quote of the sentence"),
+        (('    quote: "or/multnomah/portland/33.130.txt#L829-L835"\n', ""), "a quote of the sentence"),
         (
             (
                 "      The commercial chapter's two rows, none against OS and the C zones,\n"

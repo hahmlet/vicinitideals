@@ -477,6 +477,8 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # 216 on 2026-11-08 (FOLLOWUPS 155): Portland CI1, measured on RM1's
     # standards since RICAP 11 (2026-11-01). Written corpus to rules.yaml from
     # the zone's `amended: ricap11` block, so the back-port is a dry-run count only.
+    # Since 2026-11-09 (pdx-drift, FOLLOWUPS 165) that block is the reprinted
+    # 33.150's own (`like: RM1`); the count does not change.
     #
     # 217 on 2026-11-09 (rel6, combining flats/ci1-quadfit with FOLLOWUPS 52,
     # flats/dropped-lots-fairview): Clackamas SCMU, the last zone FLATS opens that

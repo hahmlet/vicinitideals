@@ -135,12 +135,12 @@ def test_r5_resolves_both_holds() -> None:
 
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
-    cap = store.quote("or/multnomah/portland/33.537.txt#L272-L273,L324-L325")
+    cap = store.quote("or/multnomah/portland/33.537.txt#L323-L325,L384-L386")
     assert cap.count("No more than 50 percent of any site") == 2
     assert "eaves are included" in cap
-    maps = store.quote("or/multnomah/portland/33.540.txt#L22-L24")
+    maps = store.quote("or/multnomah/portland/33.540.txt#L23-L25")
     assert "Special Building Setbacks maps" in maps and "Development Services Center" in maps
-    control = store.quote("or/multnomah/portland/33.500.txt#L32-L35")
+    control = store.quote("or/multnomah/portland/33.500.txt#L33-L36")
     assert "plan district regulations control" in control
 
 
@@ -196,7 +196,7 @@ def test_the_lots_only_land_division_reaches_left_the_corridor_tracing() -> None
 
 def test_the_land_division_quote_says_land_division() -> None:
     store = ProvenanceStore()
-    purpose = store.quote("or/multnomah/portland/33.537.txt#L29-L30")
+    purpose = store.quote("or/multnomah/portland/33.537.txt#L30-L31")
     assert "land division" in purpose
     density = store.quote("or/multnomah/portland/33.537.txt#L274-L306")
     assert "Land Divisions" in density

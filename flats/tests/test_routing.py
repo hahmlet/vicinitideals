@@ -769,7 +769,7 @@ def test_the_ledger_speaks_on_the_state_the_corpus_was_actually_in() -> None:
         update={
             "variants": (),
             "prov": stall.prov.model_copy(
-                update={"quote": "or/multnomah/portland/33.266.txt#L317-L318"}
+                update={"quote": "or/multnomah/portland/33.266.txt#L330-L331"}
             ),
         }
     )

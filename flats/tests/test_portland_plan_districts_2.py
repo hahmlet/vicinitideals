@@ -187,16 +187,16 @@ def test_no_r7_figure_turns_on_the_flag_lot_fact() -> None:
 
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
-    gl = store.quote("or/multnomah/portland/33.530.txt#L31,L33")
+    gl = store.quote("or/multnomah/portland/33.530.txt#L32,L34")
     assert "Front setback 30 feet" in gl
-    assert "Side setback 10 feet" in store.quote("or/multnomah/portland/33.530.txt#L31,L34,L36-L39")
-    assert "Rear setback 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L31,L35")
-    assert "required setbacks are 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L60-L61")
-    assert "flag lots is 25 feet" in store.quote("or/multnomah/portland/33.530.txt#L62")
-    assert "formerly zoned LR7.5" in store.quote("or/multnomah/portland/33.530.txt#L20-L23")
-    far = store.quote("or/multnomah/portland/33.521.txt#L127-L128")
+    assert "Side setback 10 feet" in store.quote("or/multnomah/portland/33.530.txt#L32,L35,L37-L40")
+    assert "Rear setback 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L32,L36")
+    assert "required setbacks are 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L61-L62")
+    assert "flag lots is 25 feet" in store.quote("or/multnomah/portland/33.530.txt#L63")
+    assert "formerly zoned LR7.5" in store.quote("or/multnomah/portland/33.530.txt#L21-L24")
+    far = store.quote("or/multnomah/portland/33.521.txt#L126-L127")
     assert "minimum floor area ratios (FAR) for all new development" in far and "Map 521-3" in far
-    hold = store.quote("or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449")
+    hold = store.quote("or/multnomah/portland/33.595.txt#L89,L171-L174,L393-L397,L438-L449")
     assert "Residential uses are prohibited in the Employment Focus Area" in hold
     assert "1.5 to 1" in hold and "30 percent" in hold and "25 percent of the total depth" in hold
 

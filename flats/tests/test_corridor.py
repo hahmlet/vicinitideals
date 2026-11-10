@@ -313,7 +313,7 @@ def test_the_twenty_is_quoted_from_the_corridor_row_and_the_sentence(zone: str) 
     (variant,) = value.variants
     assert variant.value == 20
     assert tuple(variant.when) == (EVERY,)
-    assert variant.prov.quote == "or/multnomah/portland/33.130.txt#L618,L653-L654,L957-L959"
+    assert variant.prov.quote == "or/multnomah/portland/33.130.txt#L587,L622-L623,L900-L902"
 
 
 def test_the_minimum_never_passes_the_maximum_on_a_stretch(pdx_rules) -> None:
@@ -430,7 +430,7 @@ def test_the_street_off_the_corridor_is_quoted_from_the_plain_street_row(zone: s
         # Off the corridor a line can still face an R zone across a local
         # street: the across-the-street row, 5 ft.
         assert value.value == 5
-        assert value.prov.quote == "or/multnomah/portland/33.130.txt#L618,L643-L644,L836-L842"
+        assert value.prov.quote == "or/multnomah/portland/33.130.txt#L587,L612-L613,L799-L805"
 
 
 @pytest.mark.parametrize("zone", C_ZONES)

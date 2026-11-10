@@ -30,7 +30,7 @@ pytestmark = pytest.mark.unit
 PORTLAND = Definition(
     term="corner_lot",
     test="intersecting_frontages",
-    quote="or/multnomah/portland/33.910.definitions.txt#L701-L705",
+    quote="or/multnomah/portland/33.910.definitions.txt#L714-L719",
     cite="PCC 33.910 Lot-Related Definitions, Corner Lot",
     curve_at_or_below_deg=120.0,
 )

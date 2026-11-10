@@ -156,21 +156,21 @@ def test_the_tracing_says_what_batch_b_added() -> None:
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
     q = store.quote
-    nw_far = q("or/multnomah/portland/33.562.txt#L186-L192")
+    nw_far = q("or/multnomah/portland/33.562.txt#L180-L186")
     assert "1.5 to 1" in nw_far and "Map 562-7" in nw_far
-    assert "20 percent" in q("or/multnomah/portland/33.562.txt#L63-L64")
-    nw_e = q("or/multnomah/portland/33.562.txt#L317-L320")
+    assert "20 percent" in q("or/multnomah/portland/33.562.txt#L62-L63")
+    nw_e = q("or/multnomah/portland/33.562.txt#L310-L313")
     assert "10,000 square feet" in nw_e
-    ga = q("or/multnomah/portland/33.526.txt#L761-L773")
+    ga = q("or/multnomah/portland/33.526.txt#L714-L726")
     assert "between a primary structure and any street" in ga and "light rail alignment" in ga
-    assert "Map 526-3" in q("or/multnomah/portland/33.526.txt#L194-L197")
+    assert "Map 526-3" in q("or/multnomah/portland/33.526.txt#L173-L180")
     assert "Parallel to Sandy Boulevard" in q("or/multnomah/portland/33.575.txt#L62-L69")
     pb = q("or/multnomah/portland/33.567.txt#L23-L38")
     assert "minimum of 8 feet high" in pb
     assert "15 foot deep area" in q("or/multnomah/portland/33.580.txt#L47-L58")
     cc = q("or/multnomah/portland/33.510.txt#L678-L684")
     assert "the minimum FAR is 1 to 1" in cc
-    hi = q("or/multnomah/portland/33.532.txt#L184-L191")
+    hi = q("or/multnomah/portland/33.532.txt#L182-L189")
     assert "maximum building height is 25 feet" in hi
     assert "Map 515-3" in q("or/multnomah/portland/33.515.txt#L472-L476")
 
@@ -205,7 +205,7 @@ NW_FILE = "or/multnomah/portland/northwest-residential-limited.geojson"
 def test_the_map_562_2_area_is_the_citys_own_layer_copied_unchanged() -> None:
     data = json.loads((loader.AREAS_ROOT / NW_FILE).read_text(encoding="utf-8"))
     assert "COP_OpenData_ZoningCode/MapServer/157" in data["source"]["map"]
-    assert data["source"]["quote"] == "or/multnomah/portland/33.562.txt#L63-L64"
+    assert data["source"]["quote"] == "or/multnomah/portland/33.562.txt#L62-L63"
     src = json.loads((loader.AREAS_ROOT / f"{PORTLAND}/limited-use-areas.geojson").read_text(encoding="utf-8"))
     (city,) = [f for f in src["features"] if f["properties"]["PLDIST"] == "NP" and f["properties"]["RESLIMIT"] == "YES"]
     assert shape(city["geometry"]).equals(load_area(NW_FILE))

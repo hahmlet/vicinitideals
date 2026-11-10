@@ -1751,15 +1751,15 @@ def test_a_signed_zone_whose_flag_never_flipped_is_reported() -> None:
     assert "needs_verification" in hit[0]
 
 
-def test_a_row_written_for_an_amendment_is_mirrored_against_the_amendment() -> None:
+def test_ci1_is_mirrored_against_its_reprinted_block() -> None:
     """Portland CI1 since RICAP 11 (2026-11-01, FOLLOWUPS 155).
 
-    The corpus loads as codified text, where CI1 still refuses the home and
-    prints 15 ft on every line. rules.yaml's CI1 row is written for the law in
-    force -- RM1's standards, by the new 33.150.200 -- and says so with
-    ``corpus_amendment: ricap11``. Held to the codified block it would read as
-    a live permission split and four drifts; held to nothing it would compare
-    nothing. It is held to the amendment, and agrees.
+    Until the 11/1/26 Title 33 reprint the corpus loaded CI1 as the old
+    codified text (the home refused, 15 ft on every line) and rules.yaml's row
+    named ``corpus_amendment: ricap11`` to be held to the amendment. The
+    reprint prints the change, the corpus took the entry off (pdx-drift,
+    FOLLOWUPS 165, 2026-11-09), and the codified block is now `like: RM1`. The
+    row names no amendment, is held to the codified block, and agrees.
     """
     audit = _audit()
     top, corpus = audit._load()
@@ -1775,7 +1775,7 @@ def test_a_row_written_for_an_amendment_is_mirrored_against_the_amendment() -> N
     diverge, _uncited, _agree = audit.scan()
     assert not [d for d in diverge if d.zone == "CI1"]
     with pytest.raises(LookupError):
-        audit.corpus_block(corpus["or/multnomah/portland"].zones["CI1"], "ricap99")
+        audit.corpus_block(corpus["or/multnomah/portland"].zones["CI1"], "ricap11")
 
 
 def test_a_row_reaching_an_amendment_through_like_is_held_to_it() -> None:
