@@ -5052,6 +5052,9 @@ def _screen_lot_once(
         # distance from the street and its share of the frontage are measured
         # again where it stands.
         won = moved_checked(won, placed, policy=policy, relief=relief)
+        # Every side wall against a maximum side setback, on the drawing the
+        # plan now stands in (FOLLOWUPS 170).
+        won = side_max_checked(won, policy=policy, relief=relief)
         if _coarse_blocked(won, lot):
             # Eliminated on the coarse map's steep ground alone: screened
             # again, the whole way, as though it were not there, and flagged
@@ -5924,6 +5927,68 @@ def moved_checked(
         return s
     s = front_max_checked(s, None, policy=policy, relief=relief)
     return _share_redrawn(s, policy=policy, relief=relief)
+
+
+def side_max_gaps(s: Screened) -> tuple[float, ...] | None:
+    """The drawn building's nearest distance from each side lot line
+    (:attr:`LotFacts.side_max_gaps`, FOLLOWUPS 170), or None where no fitting
+    building is drawn or the lot has no classified lines.
+
+    A side lot line is an unbroken run of side-class edges around the lot's
+    ring (:attr:`flats.geom.edges.EdgeClass.side`), so a side line drawn in
+    several pieces is one line and the two sides of an ordinary lot are two.
+    An alley along a side is still a side lot line: the tables exempt only the
+    "Rear (including alley)"."""
+    from shapely.geometry import MultiLineString, Polygon
+
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    edges = getattr(s.lot, "edges", None)
+    if not (drawing.get("fits") and ring and len(ring) >= 4) or edges is None:
+        return None
+    lines = tuple(edges.edges)
+    side = [e.cls is EdgeClass.side for e in lines]
+    if not any(side):
+        return ()
+    runs: list[list[Edge]] = []
+    if all(side):
+        runs = [list(lines)]
+    else:
+        # Start just after a non-side edge, so a run that wraps the ring's
+        # start is read as one.
+        start = next(i for i, x in enumerate(side) if not x) + 1
+        current: list[Edge] = []
+        for k in range(len(lines)):
+            i = (start + k) % len(lines)
+            if side[i]:
+                current.append(lines[i])
+            elif current:
+                runs.append(current)
+                current = []
+        if current:
+            runs.append(current)
+    building = Polygon(ring)
+    return tuple(
+        round(building.distance(MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in run])), 2)
+        for run in runs
+    )
+
+
+def side_max_checked(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
+    """``s`` re-screened with its drawn building measured from each side lot
+    line, where the zone states a maximum side setback (FOLLOWUPS 170,
+    :func:`flats.score.screen._side_max`). Measured on the plan's final
+    drawing, after the fire route and the flatter spot have stood it where it
+    stays; nothing after this step moves the building. Where nothing is drawn
+    the plan is held out of GREEN, never passed."""
+    if s.facts is None or s.rules.get("setback_side_max_ft") is None:
+        return s
+    facts = dataclasses.replace(s.facts, side_max_gaps=side_max_gaps(s), side_max_tried=True)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
 FIRE_RETRY_MAX_PLACEMENTS = 24

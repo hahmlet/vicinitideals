@@ -2293,24 +2293,29 @@ zones:
       value: 10
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Setbacks, rear yard to dwelling
       quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L69-L71"
+    setback_side_max_ft:
+      # RULED 2026-11-09 (Steph, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both;
+      # FOLLOWUPS 170): BOTH side walls. Read 2026-10-14 (FOLLOWUPS 80(b)) as one
+      # wall, on 12.50.130 C.3.a "at least 1 façade" (12.50.130.txt#L33-L34); but
+      # "façade" is a wall "facing the street" (12.01.500.txt#L170), so C.3.a
+      # meets a front maximum, and the townhouse common-wall exemption in the
+      # same cell can only matter if every side wall counts. First checked
+      # 2026-11-09, by whole-chapter grep, that no clause lets a driveway or
+      # parking stand in the side yard so the building may stand farther off:
+      # the exceptions to maximum setbacks (12.50.130.txt#L98-L113) reach
+      # parking only on corner lots and only as the Review Authority "may
+      # approve" (L99, L112); an increase otherwise needs an Adjustment under
+      # 12.80.158.B-C (12.80.158.txt#L13-L25) on a Development Review or PUD;
+      # three-plus townhouses not on an alley or front drives keep parking out
+      # of the side yard (12.50.715.txt#L47-L49); the light rail parking rules
+      # (12.50.350.txt#L19-L47) reach non-residential parking. So a lot the
+      # drawn pod fits only with one side wall within 5 ft is YELLOW (asked of
+      # the city), never GREEN, never RED on this alone
+      # (flats.score.screen._side_max).
+      value: 5
+      cite: Hillsboro CDC Table 12.22.460-1, Maximum Setbacks, side yard (all structures)
+      quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L75,L86"
     setback_front_max_ft:
-      # The 5-foot maximum side setback for all structures (L1132).
-      # READ 2026-10-14 (FOLLOWUPS 80(b)), held as ONE WALL WITHIN 5 FT: the
-      # table says "Side Yard (all structures) 5 feet", and 12.50.130 C.3.a says a
-      # maximum setback "is considered met" for middle housing "where at least 1
-      # facade, including a porch, is located no farther from the property line
-      # than the setback specified" (12.50.130.txt#L32-L34).
-      # The search that did not settle it: for BOTH side walls, "(all
-      # structures)", the exemption for townhouse common walls (a wall that
-      # could only matter if both sides counted), other Hillsboro zones that
-      # limit the side maximum to street sides, and the 12.22 drawings; for ONE
-      # wall, C.3.a's "at least 1 facade" and Carlie Court (PUD-007-18), a
-      # middle-housing plan that needed no side adjustment. The research lean was
-      # both walls, at moderate confidence; nothing in the text decides it, so by
-      # the instruction for this case the one-wall reading stands: the pod can
-      # always stand one side wall within 5 ft of a side line, so no lot moves
-      # and no field is needed. If the city reads it as both walls, nearly every
-      # SCR-MD and SCR-HD green is red.
       value: 13
       cite: Hillsboro CDC Table 12.22.460-1, Maximum Setbacks, front yard, middle housing
       quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L75-L76,L82"
@@ -2452,24 +2457,16 @@ zones:
       quote: "or/washington/hillsboro/12.22/12.22.560.txt#L15,L47,L55-L57"
     # NOT ENCODED: the maximum front setback. The rows are Duplex 13,
     # Townhouse 13 and Multiple dwelling structure 15 (L1410-L1423), with no
-    # row for a triplex or quadplex; a doubt. The 5-foot maximum side
-    # setback (L1424):
-    # READ 2026-10-14 (FOLLOWUPS 80(b)), held as ONE WALL WITHIN 5 FT: the
-    # table says "Side Yard (all structures) 5 feet", and 12.50.130 C.3.a says a
-    # maximum setback "is considered met" for middle housing "where at least 1
-    # facade, including a porch, is located no farther from the property line
-    # than the setback specified" (12.50.130.txt#L32-L34).
-    # The search that did not settle it: for BOTH side walls, "(all
-    # structures)", the exemption for townhouse common walls (a wall that
-    # could only matter if both sides counted), other Hillsboro zones that
-    # limit the side maximum to street sides, and the 12.22 drawings; for ONE
-    # wall, C.3.a's "at least 1 facade" and Carlie Court (PUD-007-18), a
-    # middle-housing plan that needed no side adjustment. The research lean was
-    # both walls, at moderate confidence; nothing in the text decides it, so by
-    # the instruction for this case the one-wall reading stands: the pod can
-    # always stand one side wall within 5 ft of a side line, so no lot moves
-    # and no field is needed. If the city reads it as both walls, nearly every
-    # SCR-MD and SCR-HD green is red.
+    # row for a triplex or quadplex; a doubt.
+    setback_side_max_ft:
+      # The 5-foot maximum side setback, BOTH side walls, as SCR-MD's above
+      # (Steph 2026-11-09; FOLLOWUPS 170). The SCR-HD minimum side row's
+      # "Adjustments to side setbacks permitted for townhouses allowed under
+      # Table 12.21.520-1" (L54) points at R-4.5's housing-type table and
+      # reaches the minimum, not this maximum.
+      value: 5
+      cite: Hillsboro CDC Table 12.22.560-1, Maximum Setbacks, side yard (all structures)
+      quote: "or/washington/hillsboro/12.22/12.22.560.txt#L61,L64,L77"
     min_building_height_stories:
       value: 2
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Building Height
