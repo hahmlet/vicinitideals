@@ -3020,3 +3020,34 @@ private_drives:
     L522) and the front lot line (L548) read "street". The code says nothing of
     a shared driveway; s4 reads one across a neighbour as a drive on other land,
     screened both ways.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    kind: asymmetric
+    legs_ft:
+    - 110
+    - 15
+    basis: curb
+    exempt_no_setback: true
+    source: data/flats/books/sight-manuals/troutdale/tdc_full.txt#L6336-L6342
+    cite: TDC 5.040(B)(1), Figure 5.040(A); 5.040(D)(9)
+    note: 'The curb lines extended, measured as Figure 5.040(A) draws (110 ft by 15 ft; which street takes
+      which is unmapped, so both); 5.040(C) bars ''structure''; 5.040(D)(9) exempts ''Lots for which no
+      setback is required'' (tdc_full.txt#L6394). Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: apex
+    base_ft: 110
+    depth_ft: 15
+    depth_from: curb
+    basis: curb
+    exempt_no_setback: true
+    source: data/flats/books/sight-manuals/troutdale/tdc_full.txt#L6344-L6349
+    cite: TDC 5.040(B)(2)
+    note: '''base measured along the face of curb ... one hundred ten (110) feet in both directions from
+      the center of the driveway'', apex ''in the center of the driveway fifteen (15) feet from the street
+      curb line''.'
+    ruling: 2026-11-09-curb-position-middle-way

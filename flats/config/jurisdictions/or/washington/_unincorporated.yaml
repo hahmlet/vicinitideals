@@ -4879,3 +4879,18 @@ drawn_areas:
       #L1376-L1380); their lands reach R-24 and R-25+ lots too, so the hold
       sits on those front yards as well. Much of the land their maps shade
       has been divided and built since; it is held all the same.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 20
+    basis: pavement_edge
+    quote: or/washington/_unincorporated/cdc.418-419.setbacks-height.txt#L57-L70
+    says: a distance of 20 feet along each street side
+    cite: CDC 418-3
+    note: '''street corner is defined as that point where the extended edge of the road surface of two
+      intersecting streets meet''; ''Sight obstructions include ... structures''. Pavement-edge basis:
+      the middle way. 418-4.2''s driveway square bars fences only, and not for middle housing: no driveway
+      check.'
+    ruling: 2026-11-09-curb-position-middle-way

@@ -303,6 +303,68 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [COURT_GROUND_UNREAD]
+  SIGHT-CORNER-CURB:
+    description: "Check where the curb is: the building clears the corner clear-vision area only if the curb stands back from the lot line, and the code measures that area from the curb, which the maps do not hold (FOLLOWUPS 161; middle way, Steph 2026-11-09)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the curb at the corner (site visit, aerial, or the city's curb layer) and measure the clear-vision triangle from it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_CURB]
+  SIGHT-CORNER-UNSETTLED:
+    description: "The building stands where the city's corner clear-vision area might reach, and that rule is unread or unclear here, so it was taken at its largest plausible size (Steph 2026-11-09)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Read the city's clear-vision rule (its size, how it is measured, whether it bars a building) into clear_vision in the jurisdiction file"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_UNSETTLED]
+  SIGHT-DRIVEWAY:
+    description: "The drawn building stands inside the clear-vision area the city keeps where the drive meets the street, at least with the curb at the lot line; moving the drive or the curb's real place may clear it (FOLLOWUPS 161)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Place the drive and find the curb; draw the driveway clear-vision area from them and check the building stands outside it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_DRIVEWAY]
+  SIGHT-DRIVEWAY-NOTE:
+    description: "Portland's driveway clear zone (PBOT TRN-10.40, 15 ft by 15 ft from the pavement edge) may reach the drawn building; a note for the street permit, the colour unchanged (Steph 2026-11-09)"
+    kind: categorical
+    risk: unlikely
+    # A note only (rulings.yaml 2026-11-09-portland-driveway-clear-zone-note):
+    # below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "At the driveway permit: place the drive so its clear zone misses the building, or build at the property line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_DRIVEWAY_NOTE]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical

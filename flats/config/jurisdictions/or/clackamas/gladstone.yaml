@@ -1915,3 +1915,22 @@ private_drives:
     or egress for persons to one or more lots", naming "drive" and "court";
     front lot line (L881) and corner lot (L841) read "street" other than an
     alley. A flag lot's access strip or easement is not its street (L865, L881).
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    legs_ft:
+    - 20
+    - 30
+    - 40
+    basis: lot_line
+    source: data/flats/books/sight-manuals/gladstone/gmc-17.54-clear-vision.txt#L17-L40
+    cite: GMC 17.54.020
+    note: 'Measured along the property lines, 20/30/40 ft for an 80/60/50-or-less ft right of way (unmapped).
+      Bars ''any sign, fence, hedge, shrubbery, natural growth or other obstructions'': whether a building
+      is one is unclear, leaning yes. Not in the stored code. Unsettled: the conservative default (rulings.yaml
+      2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest plausible size,
+      measured with the curb at the lot line; a corner lot it reaches is YELLOW, never GREEN and never
+      RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check

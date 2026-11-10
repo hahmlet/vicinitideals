@@ -2567,3 +2567,43 @@ private_drives:
     than an alley" (L435). A back lot reached by an easement is fronted from the
     street it takes access from (L470): the easement is not the street, and s4
     reads it as a drive on other land.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    quote: or/clackamas/milwaukie/12.24.clear-vision.txt#L48-L70
+    says: AASHTO Policy on Geometric Design of Highways and Streets
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: MMC 12.24.040; AASHTO ISD as reproduced in the Clackamas County Roadway Standards
+    ruling: 2026-11-10-milwaukie-clear-vision-aashto-held
+    note: >-
+      The size is 'that area described in the most recent edition of the AASHTO
+      Policy'. Steph 2026-11-10 ("For the book, use the numbers we have"): the
+      AASHTO intersection sight distance figures held from Clackamas County's
+      reproduction -- 280 ft at 25 mph, the driver 14.5 ft back from the edge of
+      the nearest travel lane -- with the curb middle way. 12.24.030 bars
+      'planting, fence, wall, structure'. Speed unmapped: 280 ft the sure figure
+      (25 mph), 450 ft the largest plausible.
+  driveway:
+    status: read
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    quote: or/clackamas/milwaukie/12.24.clear-vision.txt#L48-L70
+    says: The clear vision area for all driveway accessways to streets
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: MMC 12.24.040
+    ruling: 2026-11-10-milwaukie-clear-vision-aashto-held
+    note: >-
+      12.24.040(A) covers driveway accessways too: the same held AASHTO figures,
+      the driver on the drive 14.5 ft back from the near travel lane's edge.

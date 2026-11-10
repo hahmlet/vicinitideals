@@ -2703,3 +2703,34 @@ zone_rulings:
     note: >-
       "M2", the regional zoning layer's spelling of Canby's M-2, Heavy
       Industrial (CMC 16.34), on 2026-10-07. The block is M-2.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 30
+    zone_legs_ft:
+      C-1: 15
+    basis: curb
+    quote: or/clackamas/canby/cmc.16.16.030.txt#L71
+    says: thirty feet from a street to any other street
+    cite: CMC 16.04.670; 16.16-16.34 .030; 16.22.030 (C-1)
+    note: '16.04.670 (cmc.16.04.670.txt#L3): measured ''from the corner intersection of the existing or
+      proposed curb lines'', extended on a rounded corner; ''No plantings, structures, or temporary or
+      permanent obstructions shall be located within a vision clearance area''. 30 ft in R-1/R-1.5/R-2
+      and the other zones (16.24-16.34 .030, 16.46.020); C-1 15 ft (cmc.16.22.030.txt#L27). Curb basis:
+      the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: edge
+    legs_ft:
+    - 10
+    - 15
+    basis: curb
+    quote: or/clackamas/canby/cmc.16.16.030.txt#L71
+    says: ten feet from a street to an alley or a street to a driveway
+    cite: CMC 16.16.030; 16.28-16.34 .030
+    note: Residential zones 10 ft from a street to a driveway; 16.28-16.34 .030 say 15 ft 'from any alley
+      or driveway'. The larger is drawn (the driveway check is never RED).
+    ruling: 2026-11-09-curb-position-middle-way

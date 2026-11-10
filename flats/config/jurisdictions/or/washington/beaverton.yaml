@@ -4536,3 +4536,34 @@ zone_rulings:
       (10.35.txt L1,L3), so the code zones a
       street as the land beside it and prints no ROW district. No lot
       stands on a street; nothing to screen.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: lot_line
+    unsettled_zones: &id001
+    - RC-BC
+    - RC-DT
+    - RC-E
+    - RC-MU
+    - RC-OT
+    - TC-HDR
+    - TC-MU
+    quote: or/washington/beaverton/bdc.60.55.transportation.txt#L428-L434
+    says: The sight clearance area requirements for Town Centers and Regional Centers
+    source: data/flats/books/sight-manuals/beaverton/edm-ch2.txt#L1213-L1216
+    cite: BDC 60.55.35.3; EDM 210.18
+    note: 'EDM: ''a triangular area measuring 15 feet along the right-of-way or private access''; no structure.
+      The 2025 file is a public review draft but its figure equals the 2019 text. Regional and Town Centers
+      are case by case: unsettled there.'
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 15
+    basis: lot_line
+    unsettled_zones: *id001
+    source: data/flats/books/sight-manuals/beaverton/edm-ch2.txt#L1213-L1216
+    cite: EDM 210.18
+    note: The same 15 ft triangle at driveways, each side of the drive.

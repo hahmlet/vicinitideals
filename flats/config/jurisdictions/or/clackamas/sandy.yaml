@@ -1270,3 +1270,17 @@ drawn_areas:
       a lot the tracing might misplace is held, not released. Cascadia
       Village subdivisions 1 to 6, exempt from 17.54.70-17.54.110
       (17.54.60), are read inside: the stricter side.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 30
+    basis: curb
+    quote: or/clackamas/sandy/17.74/17.74.30.txt#L6-L17
+    says: Intersection of a street and another street
+    cite: SDC 17.74.30
+    note: '''a triangular area formed by the intersection of the curb lines'' (edge of asphalt where none),
+      30 ft along the curb line street to street; bars ''sign, structure, solid fence, or vegetation''.
+      Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way

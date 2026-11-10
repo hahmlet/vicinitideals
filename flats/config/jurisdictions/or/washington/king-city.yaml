@@ -2145,3 +2145,33 @@ zone_rulings:
       kept on annexed land under 16.80.050 A (kcc.16.80.general.txt L84-L99);
       no King City district has the code. See the comment above
       zone_rulings.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    legs_ft:
+    - 15
+    - 20
+    - 35
+    basis: curb
+    quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
+    says: formed using the curb line or pavement edge
+    cite: KCC 16.144.030
+    note: '15 ft (35 on six named streets, 20 in Kingston Terrace) from the curb or pavement edge; (B)
+      bars a ''vehicle, hedge, planting, fence, wall, sign or any similar permanent obstruction'', (C)
+      names buildings only on curves: whether a building is barred is unclear. Unsettled: the conservative
+      default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest
+      plausible size, measured with the curb at the lot line; a corner lot it reaches is YELLOW, never
+      GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check
+  driveway:
+    status: unsettled
+    kind: edge
+    legs_ft: 15
+    basis: curb
+    quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
+    says: or a driveway pro-
+    cite: KCC 16.144.030(A)(3)
+    note: 15 ft at a driveway; whether a building is barred is unclear, as at corners.
+    ruling: 2026-11-09-sight-triangle-corner-check

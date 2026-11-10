@@ -4682,3 +4682,34 @@ drawn_areas:
       unanswered: held out of GREEN on hillsboro_center_core. The figure is
       illustrative and the final boundary is set at the PUD, so every
       MU-VTC lot, inside or out, carries HILLSBORO-CENTER-CORE-ILLUSTRATIVE.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/hillsboro/dcs-2025-combined.txt#L3013-L3031
+    cite: Hillsboro DCS 230.5.1, Figure 230.3
+    note: '''The Engineer shall evaluate safe intersection sight distance using ... AASHTO'', applying
+      ''to the placement of any object located within or behind the public right-of-way''; nothing over
+      30 in. Figure 12.50.360-A unread. The wedge at 450 ft contains Figure 230.3''s 25 ft corner. Unsettled:
+      the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings
+      at its largest plausible size, measured with the curb at the lot line; a corner lot it reaches is
+      YELLOW, never GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check
+  driveway:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/hillsboro/dcs-2025-combined.txt#L3013-L3031
+    cite: Hillsboro DCS 230.5.1
+    note: '230.5.1(A) applies ''to the design of new streets and driveways'': AASHTO, unread. Largest
+      plausible.'
+    ruling: 2026-11-09-sight-triangle-corner-check

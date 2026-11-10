@@ -3285,3 +3285,26 @@ neighbours:
       is true of a lot only when EVERY non-street line is fully read and
       everything across it is on the true_for side; one residential point
       settles it false.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: curb
+    quote: or/multnomah/fairview/19.162.txt#L213
+    says: No signs, structures or vegetation in excess of three feet
+    cite: FDC 19.162.020(O), Figure 19.162.020.O
+    note: 'The figure (books fairview/fig_67.png) draws 15 ft by 15 ft from the curb at corners and driveways;
+      structures barred. Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 15
+    basis: curb
+    quote: or/multnomah/fairview/19.162.txt#L213
+    says: No signs, structures or vegetation in excess of three feet
+    cite: FDC 19.162.020(O)
+    note: 'The same figure''s driveway panel: 15 ft by 15 ft each side, from the curb.'
+    ruling: 2026-11-09-curb-position-middle-way

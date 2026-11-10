@@ -5137,3 +5137,36 @@ zone_rulings:
       fabric carries them as Milwaukie R-MD, Moderate Density Residential,
       which Milwaukie's layer holds; the assessor's roll still calls the
       lots unincorporated.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: Clackamas County Roadway Standards 240; CCC 7.03
+    note: 'A sight-DISTANCE rule, not a triangle: no object on private property may limit the intersection
+      sight distance of Tables 2-6 to 2-10 (280/240/205 ft at 25 mph), measured 14.5 ft back from the
+      edge of the nearest travel lane. The street''s speed is not mapped; 450 ft is taken as the largest
+      plausible (a 45 mph road). Unsettled: the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check):
+      the area bars buildings at its largest plausible size, measured with the curb at the lot line; a
+      corner lot it reaches is YELLOW, never GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check
+  driveway:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: Clackamas County Roadway Standards 240.2(c)
+    note: '240.2(c): ISD and SSD ''shall be provided at all proposed accesses ... subject to land use
+      approval''. Same wedge as the corner, the eye on the drive. Speed unmapped: largest plausible.'
+    ruling: 2026-11-09-sight-triangle-corner-check

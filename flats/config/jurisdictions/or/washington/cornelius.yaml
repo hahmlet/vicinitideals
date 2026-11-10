@@ -1693,3 +1693,30 @@ zone_rulings:
       of about 0.8 acres on Metro's zoning layer under CITY 'Cornelius' on
       2026-09-30. Not a Cornelius district (18.05.030.txt L3-L24);
       unencodable for the reason given for FD-20.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: curb
+    except_zones:
+    - CMU
+    quote: or/washington/cornelius/cmc.18.150.special-use.txt#L207-L211
+    says: extending 15 feet along the leg of each intersection
+    cite: CMC 18.150
+    note: '''beginning at the intersection of the projected curb lines''; no ''wall, hedge or other planting
+      or structure''; except the CMU district. Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 15
+    basis: curb
+    except_zones:
+    - CMU
+    quote: or/washington/cornelius/cmc.18.150.special-use.txt#L207-L211
+    says: a driveway providing vehicular access to a public street
+    cite: CMC 18.150
+    note: The same 15 ft zone at a driveway onto a public street, each side.
+    ruling: 2026-11-09-curb-position-middle-way

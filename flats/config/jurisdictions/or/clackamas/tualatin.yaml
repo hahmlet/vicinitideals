@@ -2587,3 +2587,29 @@ private_drives:
     abuts "two intersecting streets other than an alley". A private street
     (Chapter 36, L33-L43) is allowed where public frontage is impractical but is
     not made a street. Chapter 74.060 is not in the store.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft:
+    - 10
+    - 25
+    basis: lot_line
+    source: data/flats/books/sight-manuals/tualatin/tdc.txt#L20887-L20898
+    cite: TDC 75.020(8)
+    note: 'Along the right-of-way lines: 10 ft for local streets, 25 ft where a collector or arterial
+      meets (street class unmapped here, so a fit between is YELLOW). ''Vision clearance area'' (tdc.txt#L2174)
+      bars structures. Not in the stored code; the TDC is held in data/flats/books.'
+  driveway:
+    status: read
+    kind: edge
+    legs_ft:
+    - 10
+    - 25
+    basis: lot_line
+    source: data/flats/books/sight-manuals/tualatin/tdc.txt#L20887-L20898
+    cite: TDC 75.020(8)
+    note: Local street and driveway 10 ft; at a collector/arterial 25 ft along the right of way and 10
+      ft along the driveway. The 25 ft is drawn both ways (never RED). The 200 ft Table 75-1 spacing is
+      not checked.

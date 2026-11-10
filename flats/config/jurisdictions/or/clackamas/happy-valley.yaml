@@ -3928,3 +3928,27 @@ private_drives:
     "separating the lot from a public or private road" (L712). A shared driveway
     on an easement is not a tract: s4 reads it as a drive on other land,
     screened both ways.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 25
+    basis: lot_line
+    source: data/flats/books/sight-manuals/happy-valley/edm.txt#L1642-L1646
+    cite: Happy Valley EDM; HVMC 16.50
+    note: '''the triangular area beginning at the intersection of the projected right-of-way lines and
+      extending 25 feet along each leg''; ''No fence, berm, wall, vehicle, hedge or other planting or
+      structure''. Not in the stored code: the manual is held in data/flats/books.'
+  driveway:
+    status: read
+    kind: wedge
+    sight_ft:
+    - 280
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/happy-valley/edm.txt#L1959-L1983
+    cite: Happy Valley EDM ISD
+    note: 'Intersection sight distance at driveways, 280 ft at 25 mph, the eye 14.5 ft from the edge of
+      the nearest travel lane. The near lane''s edge is not mapped: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
