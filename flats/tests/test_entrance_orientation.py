@@ -400,12 +400,17 @@ def test_where_the_rule_is_unsettled_the_bridge_reads_the_building_facing_the_st
 
 
 def test_where_only_the_turned_building_fits_and_the_doors_must_face_the_street_it_fails(
-    corpus, policies
+    corpus, policies, monkeypatch
 ) -> None:
+    from flats.ingest import quadfit
+
     # Portland R5 is `required` since round 3 (rulings.yaml
     # 2026-11-08-no-porch-end-door): 95 ft of lot, 85 ft of envelope, and the
     # pod stands only end-on -- which the code no longer lets it. Its 45
-    # degrees (33.110.230.C.2.b) do not reach a quarter turn either.
+    # degrees (33.110.230.C.2.b) do not reach a quarter turn either. The
+    # street-facing search alone (the side-door second search,
+    # 2026-11-10-side-door-fit-yellow, is test_side_door.py's).
+    monkeypatch.setattr(quadfit, "side_door_checked", lambda lot, designs, got, **kw: got)
     s = _bridge(corpus, policies, 95.0, 200.0)
     assert not s.fit.fits or not door_turned(POD, s.fit, s.lot.front_bearings)
     if s.fit.fits:

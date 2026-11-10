@@ -2779,6 +2779,27 @@
     to 45 degrees cannot be met by a 90-degree turn. FOLLOWUPS 153.
   source: Steph 2026-11-08 (chat), docs/followups/153-entrance-orientation.md
   encoded_in: [flats/rules/fields.py, flats/score/paper.py]
+- id: 2026-11-10-side-door-fit-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {}
+  question: >-
+    The 2026-11-08 no-end-door ruling (no street-facing door on the end home)
+    made entrance orientation required in 31 places, so the pod may only stand
+    with its long door face to the street. On lots under ~90 ft wide the
+    parking court then no longer fits, turning ~10,500 GREEN and ~4,500 YELLOW
+    lots RED (rel6 bound; FOLLOWUPS 177). Keep them RED, or YELLOW?
+  ruling: >-
+    "Yellow: design change" (picked from: yellow with a design-change note /
+    red as ruled / revisit the end door)
+  effect: >-
+    The end-door ruling stands for the design. Where a place requires
+    street-facing entrances and the pod fits only turned sideways (doors to a
+    side yard), the lot is YELLOW with a flag "fits only with doors facing the
+    side; needs a street-facing end door (design change)" -- never GREEN, and
+    not RED on this ground alone. FOLLOWUPS 177.
+  source: Steph 2026-11-10 (chat), docs/followups/177-door-rule-green-loss.md
+  encoded_in: [flats/score/paper.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
 - id: 2026-11-09-clackamas-front-parking-follow-zdo
   kind: ruling
   date: 2026-11-09

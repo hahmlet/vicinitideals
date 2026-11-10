@@ -29,7 +29,10 @@ built on draft encoding is legible as one rather than mistaken for a verdict.
 
 from __future__ import annotations
 
+import contextlib
+import contextvars
 import math
+from collections.abc import Iterator
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
@@ -396,13 +399,55 @@ def door_limit(rules: "ZoneResolution", design: Design) -> float | None:
     -06800). The angle is the one the code prints
     (``entrance_angle_max_deg``: "be at an angle of up to 45 degrees from
     the street"); unread, nought -- the doors parallel to a street line.
+
+    ``None`` too inside :func:`doors_to_the_side`: the second search for a
+    lot that fits only with its doors to a side yard (rulings.yaml
+    ``2026-11-10-side-door-fit-yellow``); :func:`door_rule` says whether
+    the standard binds whatever that search.
     """
+    if _DOORS_TO_THE_SIDE.get():
+        return None
+    return door_rule(rules, design)
+
+
+def door_rule(rules: "ZoneResolution", design: Design) -> float | None:
+    """:func:`door_limit` as the code states it, whether or not the search
+    for a side-door fit (:func:`doors_to_the_side`) is under way."""
     if design.door_face != "width" or faces_the_street(rules, design):
         return None
     if rules.get("entrance_faces_street") not in ("required", "required_named"):
         return None
     got = rules.get(ENTRANCE_ANGLE_FIELD)
     return float(got) if isinstance(got, (int, float)) and got > 0 else 0.0
+
+
+#: Set while a lot is searched with its doors free to face a side yard
+#: (:func:`doors_to_the_side`); read only by :func:`door_limit`.
+_DOORS_TO_THE_SIDE: contextvars.ContextVar[bool] = contextvars.ContextVar(
+    "doors_to_the_side", default=False
+)
+
+
+@contextlib.contextmanager
+def doors_to_the_side() -> Iterator[None]:
+    """Search the pod with its door face free to stand to a side yard, as
+    though no entrance standard bound it (:func:`door_limit` returns
+    ``None``), for the duration of the block.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-side-door-fit-yellow``,
+    FOLLOWUPS 177): the 2026-11-08 ruling stands for the design -- no
+    street-facing door on the end home -- but where a code makes the doors
+    face the street and the pod fits only turned sideways, the lot is
+    YELLOW ("fits only with doors facing the side; needs a street-facing
+    end door (design change)"), never GREEN and not RED on that ground
+    alone. The caller (:func:`flats.ingest.quadfit.side_door_checked`)
+    marks the lot so every screen in the block holds it out of GREEN
+    (:attr:`flats.score.screen.LotFacts.entrance_side_fit`)."""
+    token = _DOORS_TO_THE_SIDE.set(True)
+    try:
+        yield
+    finally:
+        _DOORS_TO_THE_SIDE.reset(token)
 
 
 #: How far the door face may turn from a street before the doors no longer

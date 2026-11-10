@@ -219,6 +219,12 @@ CLOSER_LOOK_RESOURCE = "CLOSER_LOOK_RESOURCE"
 #: (``coarse_red_is_closer_look``). Steph 2026-10-07: "yellow with flag. 7
 #: severity" -- the 1 m lidar, or a survey, settles it.
 CLOSER_LOOK_STEEP_COARSE = "CLOSER_LOOK_STEEP_COARSE"
+#: The code makes the front doors face the street, the pod does not fit with
+#: its door face toward one, and it fits turned sideways, its doors to a side
+#: yard (:attr:`LotFacts.entrance_side_fit`). Steph 2026-11-10 (rulings.yaml
+#: ``2026-11-10-side-door-fit-yellow``): YELLOW, "needs a street-facing end
+#: door (design change)" -- never GREEN, not RED on this ground alone.
+CLOSER_LOOK_ENTRANCE_SIDE = "CLOSER_LOOK_ENTRANCE_SIDE"
 #: The lot lies in more than one zoning district and its plan stands on
 #: another's ground, where the city's code has no rule that puts the whole lot
 #: in one (:func:`flats.ingest.quadfit.split_zone_checked`, FOLLOWUPS 76(b)).
@@ -955,6 +961,13 @@ class LotFacts:
     #: rel4, FOLLOWUPS 153 with 142). Read only where the entrance standard
     #: is unsettled, as the fit's own turn is. False where nothing measured it.
     entrance_drawn_turned: bool = False
+    #: The code makes the doors face a street and the pod missed its fit
+    #: facing one, so the lot was searched again with the doors free to face
+    #: a side yard (:func:`flats.ingest.quadfit.side_door_checked`, Steph
+    #: 2026-11-10): the street-facing fit's (observed, threshold) feet, which
+    #: the flag ENTRANCE-SIDE-DOOR reports. Holds the lot out of GREEN
+    #: (:data:`CLOSER_LOOK_ENTRANCE_SIDE`). None on every other screen.
+    entrance_side_fit: tuple[float, float] | None = None
     #: The lot area the road strips take where the code states a distance to
     #: the street's centre line (:func:`flats.geom.dedication.strip_sqft`,
     #: FOLLOWUPS 77). The minimum lot area and the coverage cap are measured
@@ -3480,6 +3493,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_RESOURCE)
     if lot.steep_unconfirmed:
         closer = (*closer, CLOSER_LOOK_STEEP_COARSE)
+    if lot.entrance_side_fit is not None:
+        closer = (*closer, CLOSER_LOOK_ENTRANCE_SIDE)
     if review is not None and not reach:
         # Where ORS 197A.400 reaches, a condition the review adds must itself
         # be clear and objective (Steph 2026-10-15): flagged, not yellow.
@@ -4286,6 +4301,16 @@ def _account(
         flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
     if lot.steep_unconfirmed:
         flag("SLOPE-STEEP-COARSE", CLOSER_LOOK_STEEP_COARSE, source=lot.steep_source or "")
+    if lot.entrance_side_fit is not None:
+        # The street-facing miss, reported honestly: the fit the code's
+        # entrance standard allows, against what it needed (Steph 2026-11-10).
+        observed, threshold = lot.entrance_side_fit
+        flag(
+            "ENTRANCE-SIDE-DOOR",
+            CLOSER_LOOK_ENTRANCE_SIDE,
+            bounds=(min(observed, threshold), max(observed, threshold)),
+            source=_cite(rules, "entrance_faces_street"),
+        )
     if review is not None:
         # ORS 197A.400 reaching the lot turns the review's yellow into a
         # record below the yellow line (Steph 2026-10-15).
@@ -4426,6 +4451,7 @@ __all__ = [
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_STEEP_COARSE",
+    "CLOSER_LOOK_ENTRANCE_SIDE",
     "CLOSER_LOOK_REVIEW_CONDITIONS",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",
