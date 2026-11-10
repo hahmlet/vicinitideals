@@ -2671,6 +2671,51 @@
     these lots are YELLOW with an "ask the city" flag (not GREEN, not RED)
     until Hillsboro answers. FOLLOWUPS 170.
   source: Steph 2026-11-09 (chat), docs/followups/170-hillsboro-side-max.md
+- id: 2026-11-10-hillsboro-scr-alley-lots-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    Under the both-walls reading of the 5 ft side maximum, an alley lot fits
+    only when it is exactly pod width + 10 ft, so most alley GREENs go YELLOW.
+    Keep alley lots to that strict measure, or keep them GREEN?
+  ruling: >-
+    "Yellow"
+  effect: >-
+    Alley lots in SCR-MD/SCR-HD are measured like every other lot against the
+    both-walls 5 ft side maximum; a lot that fits only with one wall inside
+    5 ft is YELLOW with the ask-the-city flag. FOLLOWUPS 176(a).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+- id: 2026-11-10-hillsboro-scr-dnc-side-max-both
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-DNC]}
+  question: >-
+    SCR-DNC has a 15 ft maximum side setback with the same one-wall-or-both
+    question as SCR-MD/HD. Apply the both-walls reading there too?
+  ruling: >-
+    "Yes"
+  effect: >-
+    The 15 ft SCR-DNC side maximum is read as both side walls, built the same
+    way as 2026-11-09-hillsboro-scr-side-max-both (parking-encroach check
+    first, then YELLOW + ask the city, never RED on this alone).
+    FOLLOWUPS 176(b).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+- id: 2026-11-10-canby-fire-dead-end-300
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: clackamas, city: canby}
+  question: >-
+    Canby Fire District's Conditions of Construction say a dead-end access road
+    may run 300 ft before a turnaround, but call it district practice, not an
+    adopted rule (the state fire code prints 150 ft). Give Canby lots 300 ft?
+  ruling: >-
+    "300"
+  effect: >-
+    Canby dead ends run 300 ft before a turnaround is needed, cited to the
+    Canby Fire District Conditions of Construction (rev 10.28). A few Canby
+    YELLOWs may go GREEN. FOLLOWUPS 176(h).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
 - id: 2026-11-09-busy-road-driveway-spacing-yellow
   kind: ruling
   date: 2026-11-09

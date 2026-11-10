@@ -24,3 +24,5 @@ Asked of Steph 2026-11-10. Lanes are built the strict way meanwhile (never a fal
 
 **Canby fire dead end (lane fire-road, cf2b11d9)**
 - (h) Canby Fire District's construction guide says dead ends may run 300 ft (the state code says 150 ft), but calls it district practice, not an adopted rule. Give Canby lots 300 ft? A few Canby YELLOWs would go GREEN. Built: 150 ft.
+
+**Answers 2026-11-10:** (a) alley lots YELLOW; (b) SCR-DNC YES both walls; (c) corner "Yes" -- ambiguous, re-asked; (d) Steph wants the links (given in chat: Sandy municode Title 17, Hillsboro CivicWeb search 6514/6516); (g) "County map, but using it just for business" -- meaning re-asked; (h) Canby 300 ft. Rulings: 2026-11-10-hillsboro-scr-alley-lots-yellow, -scr-dnc-side-max-both, -canby-fire-dead-end-300. Lanes told (hillsboro-side-max, fire-road).
