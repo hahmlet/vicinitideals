@@ -778,7 +778,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
   MEASURE-STREET-DIRECTION:
-    description: "The code makes the building or its front doors face the street, and nothing measured which way this lot's street runs, so the plan's orientation cannot be checked"
+    description: "The code makes the building or its front doors face the street, and nothing measured which way this lot's street line runs, so the plan's orientation cannot be checked"
     kind: categorical
     risk: possible
     severity: 6

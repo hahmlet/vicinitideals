@@ -10,11 +10,11 @@ fit took. Found by tigard-entrances (d35ef11a, "Left out"): the turned pod
 went through unflagged.
 
 Such a fit is held out of GREEN on MEASURE-STREET-DIRECTION
-(``FACT_UNOBSERVED``), never failed on this ground alone. In a door zone the
-bridge no longer binds the doors to no street at all (which no fit meets,
-a RED on ground nobody measured, then a side-door YELLOW under the wrong
-flag): it searches the lot free, as the side-door search would, and the
-screen holds it.
+(``FACT_UNOBSERVED``), never failed on this ground alone -- where the lot has
+a street line whose direction was not measured. A lot with no street line at
+all keeps today's answer, RED on access or fit (coordinator 2026-11-10: no
+ruling opens landlocked lots): neither this hold nor the side-door search
+reaches it (:func:`flats.ingest.quadfit.side_door_checked`).
 """
 
 from __future__ import annotations
@@ -115,12 +115,15 @@ def test_door_required_with_no_bearing_is_held_yellow_and_flagged() -> None:
     assert FLAG in _codes(got)
 
 
-def test_a_landlocked_lot_is_held_whatever_angle_the_fit_names() -> None:
-    fit = _fit(None, Orientation.width_facing)
+def test_a_lot_with_no_street_line_gets_no_hold_and_no_green() -> None:
     lot = facts(lot_sqft=12000, geometry=GeometryTier.landlocked)
-    got = screen(rules(**AXIS), lot, POD, fit, policy=POLICY, relief=relief.load_policy())
-    assert got.colour is not Colour.green
-    assert FLAG in _codes(got)
+    for angle in (37.0, None):
+        got = screen(
+            rules(**AXIS), lot, POD, _fit(angle, Orientation.width_facing),
+            policy=POLICY, relief=relief.load_policy(),
+        )
+        assert FLAG not in _codes(got)
+        assert got.colour is not Colour.green  # NO_FRONTAGE holds it as before
 
 
 def test_a_zone_with_no_orientation_rule_is_unchanged() -> None:
@@ -189,15 +192,11 @@ def _landlocked(corpus, policies, wide: float, deep: float):
 
 
 @pytest.mark.parametrize(("wide", "deep"), [(95.0, 200.0), (140.0, 140.0)])
-def test_a_door_zone_lot_with_no_street_is_searched_free_and_held(corpus, policies, wide, deep) -> None:
-    s = _landlocked(corpus, policies, wide, deep)
+def test_a_door_zone_lot_with_no_street_line_keeps_its_answer(corpus, policies, wide, deep) -> None:
     from flats.score.paper import door_rule
 
+    s = _landlocked(corpus, policies, wide, deep)
     assert door_rule(s.rules, POD) is not None  # Portland R5 binds the doors
-    assert s.fit.fits
-    assert s.signed.colour is Colour.yellow
-    assert s.screening.colour is not Colour.green
-    codes = {f.code for f in s.signed.flags}
-    assert FLAG in codes
-    # Not the side-door hold: nobody showed the street-facing fit missed.
-    assert "ENTRANCE-SIDE-DOOR" not in codes
+    assert s.lot.facts.landlocked and not s.lot.front_bearings
+    assert s.signed.colour is not Colour.green
+    assert FLAG not in {f.code for f in s.signed.flags}
