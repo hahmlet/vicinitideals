@@ -152,6 +152,9 @@ the full one.)
 165. [Claude] [scan: YES -- both ways] **Portland stored code is dated 1/1/25; RICAP 11 parking amendments in force** -- found by multco-pockets; lane pdx-drift BUILDING off rel6 (rides rel7). [file](followups/165-portland-drift.md)
 166. [Claude] [scan: YES -- both ways] **Code drift sweep: every stored city code vs its current online version** -- lanes drift-wash, drift-clack, drift-multco BUILDING off rel6 (ride rel7). [file](followups/166-drift-sweep.md)
 167. [Claude] [scan: YES] **Small fixes off rel6** -- Sandy entrance 'unclear' walkway alternative; Gresham duplicate allow_thin key; RX Map 120-2 broad lot-of-record relief; Portland 33.537 stored URL repoint; lane small-fixes-7 BUILDING. [file](followups/167-small-fixes-7.md)
+168. [Claude] [scan: YES -- toward red, FALSE GREEN] **Fire truck assumed on streets too narrow or dead ends without turnaround** -- fg-rate-B 21E02DC10300 (Rocky Ln 16 ft, 300 ft dead end); lane fire-road BUILDING off rel6. [file](followups/168-fire-road-width.md)
+169. [Claude] [Steph: existing-driveway question] [scan: YES -- toward red, FALSE GREEN] **Driveway spacing on arterials and collectors** -- fg-rate-B 2S110DB01500 (Tigard 99W, 600 ft rule 18.920.030.I.3); class-dependent spacing needs cross-street class; lane arterial-spacing BUILDING off rel6. [file](followups/169-arterial-driveway-spacing.md)
+170. [Claude] [scan: YES if read the other way] **Hillsboro SCR 5 ft maximum side setback: one wall or both?** -- our own reading (one wall) carries nearly every SCR-MD green; reading lane hillsboro-side-max. [file](followups/170-hillsboro-side-max.md)
 
 ## 2. Waiting on Steph
 
