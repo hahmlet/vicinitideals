@@ -1104,7 +1104,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     # (flats/dropped-lots-fairview), Clackamas SCMU's 15 ft maximum off Map 1005-1
     # (ZDO 1005.09(H)(1), (K)(1)); +2 FOLLOWUPS 112 (flats/pagecheck-findings), Gresham
     # DCC and DTM hold Table 4.1130's maximum front.
-    "setback_front_max_ft": 107,
+    # 107 -> 108 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
+    "setback_front_max_ft": 108,
     #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
     #: streets, every street, the front) and the share of the facade it binds --
     #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
@@ -1127,7 +1128,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     # dwelling units on a lot" sentence the codified table carried, so the
     # three rows read no unit cap.
     "max_units": 11,
-    "max_height_stories": 25,
+    # 25 -> 26 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
+    "max_height_stories": 26,
     "setback_side_total_ft": 3,
     #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
     "min_building_height_ft": 18,
@@ -1136,9 +1138,12 @@ UNEXPRESSIBLE: dict[str, int] = {
     # Portland-administered pockets): stall, driveway, side-yard reach, corner street,
     # 33.910's front lot lines, the 40% front paving cap and the outdoor square -- +4 on
     # each of those keys. Their footprints.yaml row stays the county's (per jurisdiction).
-    "front_lot_line_through": 5,
-    "front_lot_line_corner": 4,
-    "parking_front_yard_max_pct": 4,
+    # 5 -> 6 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "front_lot_line_through": 6,
+    # 4 -> 5 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "front_lot_line_corner": 5,
+    # 4 -> 5 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_front_yard_max_pct": 5,
     # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
     # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
@@ -1158,11 +1163,13 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 140-3's 5 ft, IR Table 150-2's 10 ft; quadfit has no neighbour fact.
     "parking_lot_line_buffer_ft": 36,
     # 16 -> 20 on 2026-11-09 (multco-pockets: Multnomah R5/R7/R10/R20 +4).
-    "parking_side_yard_allowed": 20,
+    # 20 -> 21 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_side_yard_allowed": 21,
     # 16 -> 21 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
     # restate the field so the townhouse variant cites 4.1152 S14(a)(i).
     # 21 -> 25 on 2026-11-09 (rel6: pagecheck-findings 16 -> 21 plus multco-pockets +4).
-    "parking_side_yard_stated": 25,
+    # 25 -> 26 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_side_yard_stated": 26,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
     # doubtful larger court buffer (20 ft, TDC 3.130.A, when the adjoining district
     # is unknown) as a question; quadfit has no neighbour fact.
@@ -1174,32 +1181,42 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: 90 ft on ONE street, on Map 120-2 only; this pipeline sums frontage.
     # 5 -> 6 on 2026-11-09 (rel6: ci1-quadfit x pdx-map-120): CI1 is `like: RM1`
     # and so carries RM1's 33.120.206 one-street frontage.
-    "min_frontage_one_street": 6,
+    # 6 -> 16 on 2026-11-10 (rel7 assembly): flats/corner-min-frontage (FOLLOWUPS 175): Durham SDR and the WashCo "on a public or private street" zones read one street.
+    "min_frontage_one_street": 16,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,
-    "parking_aisle_two_way_ft": 17,
-    "parking_aisle_one_way_ft": 17,
+    # 17 -> 21 on 2026-11-10 (rel7 assembly): flats/pockets-parking: Steph's 20 ft aisle in the pockets' R5, R7, R10, R20 (was exempt).
+    "parking_aisle_two_way_ft": 21,
+    # 17 -> 21 on 2026-11-10 (rel7 assembly): flats/pockets-parking: Steph's 20 ft aisle in the pockets' R5, R7, R10, R20 (was exempt).
+    "parking_aisle_one_way_ft": 21,
     # 10 -> 15 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
     # restate the field so the townhouse variant cites 4.1152 S12(b).
     "driveway_approach_max_width_ft": 15,
     # 4 -> 9 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
     # restate the field so the townhouse variant cites 4.1152 S14(a)(ii).
     # 9 -> 13 on 2026-11-09 (rel6: pagecheck-findings 4 -> 9 plus multco-pockets +4).
-    "corner_access_street": 13,
+    # 13 -> 14 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "corner_access_street": 14,
     "max_impervious_pct": 20,
     "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
-    "open_space_min_dimension_ft": 10,
-    "driveway_min_width_one_way_ft": 21,
-    "driveway_min_width_two_way_ft": 21,
+    # 10 -> 11 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "open_space_min_dimension_ft": 11,
+    # 21 -> 22 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "driveway_min_width_one_way_ft": 22,
+    # 21 -> 22 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "driveway_min_width_two_way_ft": 22,
     "driveway_one_lane_ft": 1,
     "min_ground_story_ft": 2,
-    "parking_covered_required": 5,
-    "parking_stall_depth_ft": 18,
-    "parking_stall_width_ft": 18,
+    # 5 -> 4 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Ord. 2026-06 struck GMU's covered-parking rule.
+    "parking_covered_required": 4,
+    # 18 -> 19 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_stall_depth_ft": 19,
+    # 18 -> 19 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_stall_width_ft": 19,
     "solar_shade_limit": 2,
     #: Road land to a distance from the street's centre line (FOLLOWUPS 67/77):
     #: per street lot line, measured by the FLATS bridge
@@ -1250,6 +1267,14 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: 120-3's 10 ft only, not 33.120.206's 90 ft variant; quadfit has no
     #: relief to narrow.
     "lot_of_record_relief_base_only": 1,
+    #: New on 2026-11-10 (rel7 assembly), standards quadfit has no column for:
+    #: flats/corner-min-frontage (FOLLOWUPS 175) -- which street line a minimum
+    #: frontage is read on (front, radius_end); flats/hillsboro-side-max
+    #: (FOLLOWUPS 170) -- Hillsboro SCR-MD, SCR-HD, SCR-DNC side maximum;
+    #: flats/pockets-parking -- the pockets' alley back-out (R5-R20).
+    "min_frontage_line": 29,
+    "setback_side_max_ft": 3,
+    "parking_alley_backout_ft": 4,
     #: 2026-11-08 (FOLLOWUPS 77, tigard-road-land merged into rescreen-1110):
     #: Washington County's R and TO zones and Milwaukie measure the minimum lot
     #: area before the road strip; quadfit takes no strip off the lot area.

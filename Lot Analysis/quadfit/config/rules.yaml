@@ -81,7 +81,9 @@ jurisdictions:
       # it as allowed only through the `state_middle_housing` relief, so the
       # row is measured and capped at review, never green.
       - zone: RF
-        quadplex_allowed: true
+        # Closed 2026-11-10: RF is farm land outside the state middle housing
+        # law (rulings.yaml 2026-11-09-rf-is-farm-land). PCC Table 110-2 No.
+        quadplex_allowed: false
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
@@ -208,27 +210,24 @@ jurisdictions:
         confidence: needs_verification
         notes: "Corpus zone or/multnomah/portland/CE, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
       # Campus Institutional 1 as RICAP 11 (Ordinance 192213, in force
-      # 2026-11-01) leaves it. Table 150-1 as amended turns Household Living
-      # from N to Y in CI1, and the new 33.150.200 puts a CI1 home on the RM1
-      # zone's development standards (the new 33.266.100.B does the same for
-      # parking):
+      # 2026-11-01) leaves it, now printed in the 11/1/26 Title 33 reprint.
+      # Table 150-1 gives Household Living a Y in CI1, and 33.150.200 puts a
+      # CI1 home on the RM1 zone's development standards (33.266.100.B does the
+      # same for parking):
       #   "Household Living and Group Living uses in the CI1 zone are subject
       #    to the development standards that apply in the RM1 zone."
-      #   or/multnomah/portland/amended/ricap11.txt#L1987,L1989,L1991 (Table 150-1)
-      #   or/multnomah/portland/amended/ricap11.txt#L2052-L2054 (33.150.200)
-      #   or/multnomah/portland/amended/ricap11.txt#L2383-L2386 (33.266.100.B)
-      # The corpus holds it as CI1's `amended: ricap11` block, `like: RM1`, so
-      # every number below is the RM1 row's and is mirrored against that block
-      # (`corpus_amendment`), not against the codified Table 150-2 (15 ft
-      # setbacks, 0.5 FAR) that still prints in the chapter. Written by
-      # port_from_flats.amended_zone_row, which is the port's own rule (larger
-      # limb of each setback and minimum, smaller of coverage) run on the
-      # amendment's block.
+      #   or/multnomah/portland/33.150.txt#L342,L344 (Table 150-1)
+      #   or/multnomah/portland/33.150.txt#L402-L404 (33.150.200)
+      #   or/multnomah/portland/33.266.txt#L38-L40 (33.266.100.B)
+      # The corpus's codified CI1 block is `like: RM1` since the reprint
+      # (pdx-drift, FOLLOWUPS 165, 2026-11-09), so this row mirrors that block
+      # directly; it no longer names `corpus_amendment: ricap11`. Every number
+      # below is the RM1 row's.
       #
       # RM1's 4,000 sq ft / 33 ft minimum is kept although 33.150.202 still
       # says the campus zones need no minimum lot size: the two do not say which
       # wins, and the minimum is the reading that cannot turn a lot GREEN (the
-      # corpus's own note on the amendment).
+      # corpus's own note on the zone).
       #
       # NO setback_alley_ft, on purpose. RM1's alley waiver (33.120.220.B.3.g)
       # reaches a CI1 home through the import, and FLATS applies it per lot; this
@@ -236,7 +235,6 @@ jurisdictions:
       # draw quadfit's envelope too big.
       - zone: CI1
         quadplex_allowed: true
-        corpus_amendment: ricap11
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
@@ -244,10 +242,10 @@ jurisdictions:
         min_lot_width_ft: 33
         max_coverage_pct: 50
         min_density_du_per_acre: 17.424
-        source: "RICAP 11 As-Adopted Report (Ordinance 192213 Exhibit B), MP18 -- Table 150-1 as amended (p. 77), new 33.150.200 Residential Uses in the CI1 Zone (p. 79), new 33.266.100.B (p. 95); RM1 standards, PCC 33.120"
-        source_url: "https://efiles.portlandoregon.gov/record/18006154/file/document"
+        source: "PCC 33.150 -- Table 150-1 (33.150.100 Primary Uses), 33.150.200 Residential Uses in the CI1 Zone; PCC 33.266.100.B; RM1 standards, PCC 33.120"
+        source_url: "https://www.portland.gov/sites/default/files/code/150-campus-inst-zones_0.pdf"
         confidence: needs_verification
-        notes: "Corpus zone or/multnomah/portland/CI1 as amended by RICAP 11 (in force 2026-11-01): homes allowed on RM1's standards, so this is the RM1 row. needs_verification caps quadfit's own report at review, as on RM1. Before 2026-11-01 FLATS refuses the use on the codified Table 150-1 whatever this row measures."
+        notes: "Corpus zone or/multnomah/portland/CI1 as the 11/1/26 reprint prints it (RICAP 11, in force 2026-11-01): homes allowed on RM1's standards, so this is the RM1 row. needs_verification caps quadfit's own report at review, as on RM1."
       - zone: CI2
         quadplex_allowed: true
         setback_front_ft: 10
@@ -1638,7 +1636,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 6000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
@@ -1654,7 +1652,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 12000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
@@ -1669,11 +1667,13 @@ jurisdictions:
       # answers these lots UNKNOWN until it is. Measured now so the sewer
       # layer is all that is left.
       - zone: RF
-        quadplex_allowed: true
+        # Closed 2026-11-10: RF is farm land outside the state middle housing
+        # law (rulings.yaml 2026-11-09-rf-is-farm-land). PCC Table 110-2 No.
+        quadplex_allowed: false
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "Portland Zoning Code 33.110 Table 110-2 (fourplex prohibited in RF); ORS 197A.420 / 197A.015(12) (state middle housing path, urban unincorporated land)"
@@ -1726,7 +1726,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 4200
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
@@ -1801,7 +1801,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 3000
         source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets); 33.110.205"
@@ -5788,11 +5788,10 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 5
         setback_rear_ft: 10
-        min_lot_sqft: 2000
         min_lot_width_ft: 20
-        min_density_du_per_acre: 18
-        source: "Cornelius CMC 18.75.020 (H)-(I) and 18.75.040 (multi-family and single-family attached only; the fourplex is not multi-family, Steph 2026-10-01)"
-        source_url: "https://ecode360.com/print/CO4396?guid=47338473"
+        min_density_du_per_acre: 14
+        source: "Cornelius CMC 18.75.020 (H)-(I) and 18.75.040 as amended by Ord. 2026-06 (multi-family and single-family attached only; the fourplex is not multi-family, Steph 2026-10-01)"
+        source_url: "https://ecode360.com/CO4396/laws/LF2862187.pdf"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/cornelius GMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "LI"
