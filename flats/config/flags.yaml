@@ -566,7 +566,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
   MEASURE-SIDE-MAX-BOTH:
-    description: "Hillsboro's 5 ft side limit read as both sides; ask the city. The zone's maximum side setback is read as holding every side wall, and the drawn building stands farther than that from at least one side lot line (or nothing was drawn to measure): the plan fits only on the one-wall reading"
+    description: "Hillsboro's 5 ft side limit read as both sides; ask the city (15 ft in SCR-DNC). The zone's maximum side setback is read as holding every side wall, and the drawn building stands farther than that from at least one side lot line (or nothing was drawn to measure): the plan fits only on the one-wall reading"
     kind: categorical
     risk: possible
     severity: 6
@@ -574,7 +574,7 @@ types:
     resolution: external_inquiry
     scope: per_lot
     key: [lot, design]
-    path: "Ask Hillsboro whether the 5 ft maximum side setback in SCR-MD and SCR-HD holds both side walls or one (Steph 2026-11-09, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both; FOLLOWUPS 170)"
+    path: "Ask Hillsboro whether the maximum side setback (5 ft in SCR-MD and SCR-HD, 15 ft in SCR-DNC) holds both side walls or one (Steph 2026-11-09 and 2026-11-10, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both, 2026-11-10-hillsboro-scr-dnc-side-max-both; FOLLOWUPS 170, 176)"
     priority: next
     status: pending
     approved_by: null

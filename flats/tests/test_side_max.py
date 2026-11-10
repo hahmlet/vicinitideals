@@ -73,6 +73,24 @@ def test_the_lot_with_its_drive_beside_the_building_is_yellow_and_asks() -> None
     assert got.colour is Colour.yellow
 
 
+@pytest.mark.parametrize(
+    ("gaps", "asks"),
+    [
+        # SCR-DNC: 10 ft minimum held, 15 ft maximum. A drive beside the
+        # building inside 15 ft passes; one that pushes the wall past it asks.
+        ((10.0, 14.5), False),
+        ((10.0, 22.0), True),
+        # Each wall within 15 but the pair 31 apart: no placement holds both.
+        ((15.5, 15.5), True),
+    ],
+)
+def test_the_scr_dnc_15_ft_maximum_reads_the_same_way(gaps, asks) -> None:
+    dnc = {"setback_side_max_ft": 15, "setback_side_ft": 10}
+    got = run(facts(side_max_gaps=gaps, side_max_tried=True), rules(**dnc))
+    assert ("MEASURE-SIDE-MAX-BOTH" in codes(got)) is asks
+    assert got.colour is (Colour.yellow if asks else Colour.green)
+
+
 def test_a_wall_far_beyond_the_maximum_is_never_red() -> None:
     got = run(facts(side_max_gaps=(40.0, 40.0), side_max_tried=True), rules(**MAX))
     assert got.colour is Colour.yellow
@@ -170,9 +188,15 @@ def test_hillsboro_station_zones_state_the_5_ft_side_maximum(corpus, zone) -> No
     assert got.get("setback_side_ft") == 5
 
 
-@pytest.mark.parametrize("zone", ["SCR-LD", "SCR-DNC"])
-def test_the_other_station_zones_are_not_encoded_with_one_yet(corpus, zone) -> None:
-    assert corpus.resolve(HILLSBORO, zone).get("setback_side_max_ft") is None
+def test_scr_dnc_states_the_15_ft_side_maximum_on_both_walls(corpus) -> None:
+    # Steph 2026-11-10, rulings.yaml 2026-11-10-hillsboro-scr-dnc-side-max-both.
+    assert corpus.resolve(HILLSBORO, "SCR-DNC").get("setback_side_max_ft") == 15
+
+
+def test_scr_ld_is_not_encoded_with_one(corpus) -> None:
+    # "interior lot line None; along Street or Alley 5 feet": a street-side
+    # maximum, not the both-walls question.
+    assert corpus.resolve(HILLSBORO, "SCR-LD").get("setback_side_max_ft") is None
 
 
 # --- the bridge ---------------------------------------------------------------

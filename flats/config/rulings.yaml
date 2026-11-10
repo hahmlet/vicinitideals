@@ -2672,6 +2672,138 @@
     until Hillsboro answers. FOLLOWUPS 170.
   source: Steph 2026-11-09 (chat), docs/followups/170-hillsboro-side-max.md
   encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-hillsboro-scr-alley-lots-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    Under the both-walls reading of the 5 ft side maximum, an alley lot fits
+    only when it is exactly pod width + 10 ft, so most alley GREENs go YELLOW.
+    Keep alley lots to that strict measure, or keep them GREEN?
+  ruling: >-
+    "Yellow"
+  effect: >-
+    Alley lots in SCR-MD/SCR-HD are measured like every other lot against the
+    both-walls 5 ft side maximum; a lot that fits only with one wall inside
+    5 ft is YELLOW with the ask-the-city flag. FOLLOWUPS 176(a).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-hillsboro-scr-dnc-side-max-both
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-DNC]}
+  question: >-
+    SCR-DNC has a 15 ft maximum side setback with the same one-wall-or-both
+    question as SCR-MD/HD. Apply the both-walls reading there too?
+  ruling: >-
+    "Yes"
+  effect: >-
+    The 15 ft SCR-DNC side maximum is read as both side walls, built the same
+    way as 2026-11-09-hillsboro-scr-side-max-both (parking-encroach check
+    first, then YELLOW + ask the city, never RED on this alone).
+    FOLLOWUPS 176(b).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-canby-fire-dead-end-300
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: clackamas, city: canby}
+  question: >-
+    Canby Fire District's Conditions of Construction say a dead-end access road
+    may run 300 ft before a turnaround, but call it district practice, not an
+    adopted rule (the state fire code prints 150 ft). Give Canby lots 300 ft?
+  ruling: >-
+    "300"
+  effect: >-
+    Canby dead ends run 300 ft before a turnaround is needed, cited to the
+    Canby Fire District Conditions of Construction (rev 10.28). A few Canby
+    YELLOWs may go GREEN. FOLLOWUPS 176(h).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+- id: 2026-11-09-busy-road-driveway-spacing-yellow
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    A lot whose only frontage is a highway or busy road where the driveway
+    spacing rule blocks a NEW driveway, but the lot already has one: may the
+    four homes use the existing driveway (YELLOW, call the city) or not (RED)?
+    Research found every code has a no-other-access way out and ODOT would not
+    count one house to four as a change of use.
+  ruling: '"Yellow with flag"'
+  effect: >-
+    A lot whose every street frontage fails the driveway spacing rule (distance
+    from an intersection or between driveways, by street class) is YELLOW with
+    a flag (call the city / ODOT about access), never GREEN, whether or not a
+    driveway exists today (no driveway layer exists). A lot with another
+    frontage that passes takes its driveway there. Steph first said RED, then
+    replaced it the same evening with this ruling. FOLLOWUPS 169.
+  source: Steph 2026-11-09 (chat), docs/followups/169-arterial-driveway-spacing.md, ../vicinitideals-worktrees/hwy-driveway.findings.md
+- id: 2026-11-09-rf-is-farm-land
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: portland, zones: [RF]}
+  question: >-
+    Residential Farm/Forest (RF): can the state middle-housing (fourplex) route
+    be used there, or is it farm land outside that law?
+  ruling: '"farm land"'
+  effect: >-
+    RF is treated as agricultural land outside ORS 197A.420 / HB 2138 (PCC
+    33.110 purpose; Portland Ordinance 192241, adopted 2026-10-21, effective
+    2027-01-01). No state middle-housing route is offered on RF lots in Portland
+    or the Portland-administered pockets; the reason reads "the city treats RF
+    as farm land, outside the state law". All 859 RF lots were red before and
+    stay red. FOLLOWUPS 173.
+  source: Steph 2026-11-09 (chat), docs/followups/173-rf-middle-housing.md, ../vicinitideals-worktrees/rf-middle-housing.findings.md
+- id: 2026-11-09-corner-frontage-keep-split
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    At a rounded or cut-off property corner, does each street's frontage stop
+    where the curve starts, run to the corner point, or keep today's split of
+    the curve at its midpoint?
+  ruling: '"keep todays split"'
+  effect: >-
+    The curve keeps being split between the two streets at its midpoint for
+    frontage measures (share-of-frontage caps, building-fill rules), except
+    where a city's code states its own measuring rule for a particular standard
+    (e.g. Gresham corner minimum frontage to the radius end point). No
+    "rounded corner" yellow. FOLLOWUPS 174.
+  source: Steph 2026-11-09 (chat), docs/followups/174-corner-frontage.md, ../vicinitideals-worktrees/corner-frontage.findings.md
+- id: 2026-11-10-fire-long-dead-end-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {}
+  question: >-
+    About 1,100 GREEN lots sit on long EXISTING public dead-end streets with no
+    visible turnaround. The fire code wants a turnaround past 150 ft (Portland's
+    own code: past 300 ft); in practice crews often back in and the fire marshal
+    decides. RED (code as written) or YELLOW?
+  ruling: '"Yellow."'
+  effect: >-
+    A lot that fails fire reach only because the truck cannot use an existing
+    public dead end beyond the turnaround length (city amendment where adopted,
+    e.g. Portland PCC 31.30.010.B 300 ft; else OFC 150 ft) is YELLOW with a flag
+    (long dead end, no turnaround seen; check with the fire marshal), never
+    GREEN. Lanes under 20 ft and other fire-reach failures are unchanged.
+    FOLLOWUPS 168.
+  source: Steph 2026-11-10 (chat), docs/followups/168-fire-road-width.md, ../vicinitideals-worktrees/fire-road.handoff.md
+- id: 2026-11-10-milwaukie-clear-vision-aashto-held
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    Milwaukie MMC 12.24.040 sizes its clear vision area by the latest AASHTO
+    Green Book (paid). Buy it, email the city, hold the 5-8 lots yellow, or use
+    the AASHTO intersection-sight-distance figures already held (as reproduced
+    in Clackamas County's code)?
+  ruling: '"For the book, use the numbers we have"'
+  effect: >-
+    Milwaukie's clear vision area uses the AASHTO intersection sight distance
+    figures already held from the Clackamas County reproduction (e.g. 280 ft at
+    25 mph, driver point 14.5 ft back), with the curb middle way
+    (2026-11-09-curb-position-middle-way). No purchase. FOLLOWUPS 161.
+  source: Steph 2026-11-10 (chat), docs/followups/161-sight-triangles.md
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19

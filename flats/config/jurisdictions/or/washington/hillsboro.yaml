@@ -1575,9 +1575,26 @@ zones:
       value: 10
       cite: Hillsboro CDC Table 12.21.850-1, Minimum Setbacks, rear yard to structure
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L67-L69"
+    setback_side_max_ft:
+      # RULED 2026-11-10 (Steph, rulings.yaml 2026-11-10-hillsboro-scr-dnc-side-
+      # max-both; FOLLOWUPS 176(b)): BOTH side walls, as SCR-MD/HD's 5 ft
+      # maximum (2026-11-09-hillsboro-scr-side-max-both). Parking-encroach check
+      # first, 2026-11-10: nothing here lets a driveway or parking stand in the
+      # side yard past it. The SCR-DNC table and its Downtown Plan District
+      # sections (12.21.850, 12.21.860, 12.61.700, 12.61.800) give no parking
+      # siting relief: 12.61.700 F.6 (12.61.700.txt#L23-L24) is residential-
+      # business parking "inside, beside or behind" and moves no setback;
+      # 12.61.700 G.4 (L35) keeps the zone's side yards; 12.61.800 B.1 (L8) is
+      # a garage offset. The citywide routes are as SCR-MD's: 12.50.130 I.5
+      # corner lots only, "may approve"; an Adjustment (12.21.860, 12.80.158
+      # B-C); 12.50.715 D.2.c no townhouse parking in a side yard. So a lot the
+      # drawn pod fits only with one side wall within 15 ft is YELLOW, never
+      # RED on this alone (flats.score.screen._side_max).
+      value: 15
+      cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, side yard
+      quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L73,L79"
     setback_front_max_ft:
-      # NOT ENCODED: the 15-foot maximum side yard (L2213), no field; the
-      # front-yard averaging of 12.61.700.E, a relief.
+      # NOT ENCODED: the front-yard averaging of 12.61.700.E, a relief.
       value: 25
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, front yard
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L73-L74"
