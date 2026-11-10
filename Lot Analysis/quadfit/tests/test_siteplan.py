@@ -628,24 +628,26 @@ def test_happy_valleys_own_numbers_cost_it_nothing():
     rather than against a number typed here: the rule is real, it is wired up,
     and it takes no lot away.
     """
-    from common import load_footprints
+    from common import load_footprints, load_rules
 
     sp = load_footprints().siteplan
+    hv = load_rules().jurisdictions["happy_valley"]
     s6s = _sp_setup_cities()
     env, fe, area, _ = _rect_lot(95.0, 120.0)
 
     for zone in ("R40", "R5", "R20CC"):
         asks = sp.parking_street_setback_for("happy_valley", zone)
-        assert asks is not None and asks >= 20
-        # The envelope this stage is handed was cut to that same setback, so
-        # `front_setback_ft` is the parking setback -- that identity IS the
-        # rule, and passing FRONT_S here would be testing a lot Happy Valley
-        # does not have.
+        # 2026-11-10 (drift-clack, FOLLOWUPS 166; rel7 assembly): Ord. 603's
+        # 16.43.030.D.2 states its own 10 ft, no longer the building setback.
+        # Every one of these zones sets the building back further, so the court
+        # in an envelope cut to the building setback still clears it for free.
+        front = hv.rule_for(zone).setback_front_ft
+        assert asks == 10 and front is not None and front >= asks
         with_rule = _run(s6s, env, fe, area, jurisdiction="happy_valley",
                          zone=zone, parking_setback_ft=asks,
-                         front_setback_ft=asks)
+                         front_setback_ft=front)
         without = _run(s6s, env, fe, area, jurisdiction="happy_valley",
-                       zone=zone, front_setback_ft=asks)
+                       zone=zone, front_setback_ft=front)
         assert with_rule["site_plan_ok"] == without["site_plan_ok"]
         assert with_rule["stalls_provided"] == without["stalls_provided"]
 
