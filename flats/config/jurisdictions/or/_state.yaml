@@ -544,13 +544,20 @@ crossrefs:
     outcome: other_path
     note: >-
       Turnarounds on a dead-end fire road over 150 feet. The screen never
-      builds a fire road on a lot: a lot the street cannot reach is RED.
+      builds a fire road on a lot: a lot the street cannot reach is RED. It
+      reads the street the same way (FOLLOWUPS 168, flats.fit.fire_roads):
+      past 150 feet into a dead end whose right-of-way has no room to turn
+      the truck (no bulb, no hammerhead's room; L134, L137-L139), the truck
+      stays 150 feet from the intersection and the hose walks the rest.
   "503.2.1":
     outcome: other_path
     note: >-
       Fire road width (20 ft) and clearance, for a fire road on the site. The
-      screen builds none; the 20 feet is used only to place the truck no
-      nearer the lot than half a minimum road (flats.fit.fire.HALF_ROAD_FT).
+      screen builds none; the 20 feet places the truck no nearer the lot
+      than half a minimum road (flats.fit.fire.HALF_ROAD_FT), and a street
+      less than 20 feet between its private lots is no road the truck can
+      stand on: the hose walks it from where the truck can (FOLLOWUPS 168,
+      flats.fit.fire_roads; L167-L171).
   "503.2.4":
     outcome: other_path
     note: Turning radii on a fire road on the site -- the screen builds none.
