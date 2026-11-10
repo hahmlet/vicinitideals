@@ -99,8 +99,10 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "multnomah_unincorporated/LR10",
     "multnomah_unincorporated/LR5",
     "multnomah_unincorporated/LR7",
-    "multnomah_unincorporated/RF",
-    "portland/RF",
+    # 2026-11-10: Portland RF and the county's RF are off this list. Steph
+    # ruled RF farm land outside the state middle housing law (rulings.yaml
+    # 2026-11-09-rf-is-farm-land); the corpus closes both outright and
+    # rules.yaml's two RF rows say quadplex_allowed: false to match.
     # 2026-10-14: Sandy R-1 back on this list -- the review rule admits it
     # again, on individual lots only (17.36.10 A.4); rules.yaml says yes so
     # the lots are measured at all.
