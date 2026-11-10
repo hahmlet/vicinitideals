@@ -777,6 +777,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-STREET-DIRECTION:
+    description: "The code makes the building or its front doors face the street, and nothing measured which way this lot's street runs, so the plan's orientation cannot be checked"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the lot's street line (the map, the plat or the access easement) and check the building stands the way the code asks (FOLLOWUPS 164)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric

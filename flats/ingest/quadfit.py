@@ -3876,11 +3876,16 @@ def _screen_on(
         fitters[key] = Fitter(env.geom, angles, ground=env.ground)
     fitter = fitters[key]
     limit = door_limit(got, design)
-    if limit is not None:
+    doors = door_bearings(here, streets) if limit is not None else ()
+    if doors:
         # The code makes the doors face a street: every fit, here and in
         # the searches after it, stands the door face along a street the
-        # lot abuts (rel4 move-read finding 2).
-        fitter = fitter.facing(door_bearings(here, streets), limit)
+        # lot abuts (rel4 move-read finding 2). A lot with no street
+        # direction measured is not bound to none (which no fit meets, a RED
+        # on ground nobody measured): it is searched free, as the side-door
+        # search would, and the screen holds it out of GREEN
+        # (MEASURE-STREET-DIRECTION, FOLLOWUPS 164).
+        fitter = fitter.facing(doors, limit)
     if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
         # A rear alley along PART of the rear line is the court's
         # aisle only where the stretch it runs, with this envelope
