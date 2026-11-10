@@ -2615,535 +2615,640 @@ All new buildings must have at least 1 primary entrance facing an abutting publi
 
 § 19.309. Manufacturing Zone M
 
-(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2071 § 5, 2013; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2234 § 2, 2023)
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2071 § 5, 2013; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2234 § 2, 2023; Ord. 2265, 9/1/2026)
 
 § 19.309.1. Purpose.
 
-The M Zone is intended to promote clean, employee-intensive industries which may also include related accessory uses, such as commercial and office uses, which serve the industrial area.
+The M Zone is intended to promote clean, employee-intensive industries, which may also include related supporting and accessory uses, such as commercial and office uses, that serve the industrial area.
 
-§ 19.309.2. Permitted Uses.
-
-Permitted uses are limited to industrial uses meeting the following criteria:
+§ 19.309.2. Uses.
 
 A.
 
-Any combination of manufacturing, office, and/or commercial uses are allowed when at least 25% of the total project involves an industrial use as described under Subsection 19.309.2.B.
+Permitted Uses.
+
+Uses allowed outright are listed in Table 19.309.2 with a "P". These uses are allowed if they comply with the development and design standards and other regulations of this title.
 
 B.
 
-A use which involves the collection and assembly of durable goods, warehousing of goods, transshipment of goods from other sources, and/or the assembly of goods from products which have been processed elsewhere, general manufacturing, and production.
+Limited Uses.
+
+Uses listed in Table 19.309.2 as "L" are permitted only as limited uses.
 
 C.
 
-Commercial and office uses which are accessory to the industrial use(s). Such uses may include gymnasium, health club, secretarial services, sandwich deli, small restaurant, and retail/wholesale commercial use and showroom.
+Accessory Uses.
+
+Uses listed in Table 19.309.2 as "ACC" are permitted only as uses accessory to a primary use.
 
 D.
 
-May produce small amounts of noise, dust, vibration, or glare, but may not produce off-site impacts that create a nuisance, as defined by DEQ or the City Noise Ordinance.
+Community Service Uses.
+
+Uses listed in Table 19.309.2 as "CSU" are permitted only as community service uses in conformance with Section 19.904.
 
 E.
 
-A permitted use may require outside storage areas. These storage areas shall be screened with a sight-obscuring fence or dense plantings from any adjoining residential uses or public streets.
+Conditional Uses.
+
+Uses listed in Table 19.309.2 as "CU" are permitted only as conditional uses in conformance with Section 19.905.
 
 F.
 
-Warehouse use which is accessory to an industrial use.
+Nonconforming Uses, Structures, and Development.
+
+Existing structures and uses that do not meet the standards of this zone may continue in existence. Except where otherwise stated in this section, the Provisions of Chapter 19.800 Nonconforming Uses and Development apply.
 
 G.
 
-Marijuana retailers are allowed as a commercial use under Subsection 19.309.2.A. and subject to the special development standards set forth in Subsection 19.509.1.
+Prohibited Uses.
+
+Uses listed in Table 19.309.2 as "N" or not listed in Table 19.309.2 or determined to be similar pursuant to Subsections 19.310.2G below, are prohibited.
 
 H.
 
-The following uses are allowed outright and do not need to be part of a project involving an industrial use as described under Subsection 19.309.2.B.
+Similar Uses.
 
-1.
+The Planning Manager, through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.309.2. The unlisted use will be subject to the standards applicable to the similar example use.
 
-Construction: Contractors and Related Businesses
+Table 19.309.2
+Uses Allowed in the Manufactured Zone
+Table 19.309.2
+Uses Allowed in the Manufactured Zone
+Table 19.309.2
+Uses Allowed in the Manufactured Zone
+Uses and Use Categories
+M
+Additional Provisions
+Commercial
+Commercial
+Commercial
+Child care centers
+Provision of child care to children who are not the provider's own, in a facility that is certified or recorded by the State of Oregon pursuant to ORS Chapter 329A and that is not a family child care home.
+Examples include certified child care facilities, preschools, school-age programs, parent cooperatives, and before-and after-school programs.
+P
+Eating establishments
+Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
+Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
+L[1]
+High-impact commercial uses
+A commercial use that generates substantial traffic, noise, light, irregular hours, or other negative impact on the community. Examples include, but are not limited to: drinking establishments, commercial recreation, adult entertainment businesses, theaters, hotels, and motels.
+CU
+Section 19.905.9 Standards Governing Conditional Uses
+Office
+1. Production-related office
+ACC
+2. Professional and administrative office
+ACC
+Retail-oriented sales
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
+Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
+L[1]
+Industrial, Manufacturing, and Production
+Industrial, Manufacturing, and Production
+Industrial, Manufacturing, and Production
+Construction: Contractors and related businesses
+This category comprises businesses whose primary activity is performing specific building or other construction-related work, on- or off-site.
+Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies. Any associated on-site office use must be accessory to the primary construction business.
+P
+Creative space
+Industrial/manufacturing space specifically for artist-type uses.
+Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.), makerspaces, creative reuse and upcycling, sound stage and/or film production, set design and production, and music studio/production.
+P
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+N
+Manufacturing and production
+This category comprises establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts.
+Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
+P
+Repair and service
+This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or byproducts. Auto service and repair shops for personal vehicles are allowed in the M Zone.
+Examples include: welding shops; machine shops; after market vehicle service shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and large-scale laundry, dry-cleaning, and carpet cleaning plants.
+P
+Trade schools and training facilities
+This category comprises establishments whose primary purpose is to provide training for industrial needs and job-specific certification.
+Examples include: electronic equipment repair training, truck-driving school, welding school, training for repair of industrial machinery, and other industrial skills training.
+P
+Waste management
+This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance.
+Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
+CU
+Wholesale trade, warehousing, distribution
+This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise.
+Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
+Examples include: operating warehousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer. Includes fleet parking.
+Mini-storage facilities (generally used by many individual customers to store personal property) are not considered industrial warehousing and storage and are not permitted.
+P
+Any use which has a primary function of storing, utilizing, or manufacturing explosive materials or other hazardous material as defined by the Oregon Fire Code.
+N
+Community Service Uses
+Community Service Uses
+Community Service Uses
+Schools (public or private)
+N
+Religious institutions
+N
+Other community service uses
+CSU
+Section 19.904 Community Service Uses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana retailers
+P
+Subsection 19.509.1 Standards for Marijuana Retailers
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+Marijuana processing, testing, research, and warehousing
+P
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+Marijuana production facilities
+P
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+Subsection 19.509.3 Marijuana Production Limitations
+Psilocybin cultivation facilities as defined in ORS 475A, including planting, growing, harvesting, and propagation
+P
+Subsection 19.509.4 Psilocybin Cultivation Limitations
 
-This category comprises businesses whose primary activity is performing specific building or other construction-related work, on-or off-site. Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies. Any associated on-site office use must be accessory to the primary construction business.
+Notes:
+P = Permitted
+L = Limited
+ACC = Accessory
+CSU = Permitted with community service use approval subject to provisions of Section 19.904.
+CU = Permitted with conditional use approval subject to the provisions of Section 19.905 and where there the use provides a needed service/product in the district.
+N = Not Permitted
+1. Use is limited to 4,000 sq ft maximum. No more than five retail-oriented sales and/or eating establishments are permitted on a single site.
 
-2.
+§ 19.309.3. Development Standards.
 
-Repair and Service
+In the Manufacturing Zone, the development standards in Table 19.309.3 apply. Notes and/or cross references to other applicable code sections are listed in the "Standards/Additional Provisions" column. Additional standards are provided in Subsection 19.309.4.
 
-This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or byproducts. Examples include: welding shops; machine shops; tool, electric motor, and Industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and Building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and large-scale laundry, dry-cleaning, and carpet cleaning plants. Auto service and repair shops for personal vehicles are allowed in the M Zone.
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
 
-3.
+Table 19.309.3 Manufacturing Zone—Summary of Development Standards  Table 19.309.3 Manufacturing Zone—Summary of Development Standards  Table 19.309.3 Manufacturing Zone—Summary of Development Standards
+Standards                                                           M                                                                   Standards/Additional Provisions
+A. Lot Standards                                                    A. Lot Standards                                                    A. Lot Standards
+1. Minimum lot size (sq ft)                                         None
+2. Minimum street frontage (ft)                                     None
+B. Development Standards                                            B. Development Standards                                            B. Development Standards
+Minimum yard requirements (ft)                                                                                                          Subsection 19.504.4 Transition Area Measures Subsection 19.309.4.B Transition Area Subsection 19.501.2 Yard exceptions
+Front yard Side yard Street side yard Rear yard                     20 None[1] 10 None[1]                                               Subsection 19.504.4 Transition Area Measures Subsection 19.309.4.B Transition Area Subsection 19.501.2 Yard exceptions
+Maximum building height (ft)                                        45
+Minimum vegetation                                                  15%                                                                 Subsection 19.504.5 Minimum Vegetation
 
-Trade Schools
+Notes:
+1. When abutting a residential district, the minimum yard requirement must match the respective yard requirement of that district.
 
-This category comprises establishments whose primary purpose is to provide training for industrial needs and job-specific certification. Examples include: electronic equipment repair training, truck-driving school, welding school, training for repair of industrial machinery, and other industrial skills training.
-
-I.
-
-Marijuana and psilocybin production and cultivation facilities are subject to the regulations in Section 19.509.
-
-§ 19.309.3. Preexisting Uses and Developments.
-
-Notwithstanding the provisions of Chapter 19.800 Nonconforming Uses and Development, prohibited uses and structures located in any mapped "employment" or "industrial" area, as shown on the Milwaukie Comprehensive Plan Title 4 Lands Map, that were lawfully in existence prior to May 6, 1999, and would be impacted by amendments prohibiting retail uses in excess of 60,000 sq ft, are considered to be approved uses and structures for the purposes of this section. If such a preexisting use or development is damaged or destroyed by fire, earthquake, or other natural force, then the use will retain its preexisting status under this provision, so long as it is substantially reestablished within 3 years of the date of the loss.
-
-Notwithstanding the provisions of Chapter 19.800 Nonconforming Uses and Development, prohibited uses and structures located in any mapped "industrial" area, as shown on the Milwaukie Comprehensive Plan Title 4 Lands Map, that were lawfully in existence prior to March 17, 2009, may continue and expand to add up to 20% more floor area and 10% more land area than exists on the above-stated date. This expansion requires a conditional use review.
-
-§ 19.309.4. Specific Prohibited Uses.
-
-A.
-
-Any use which has a primary function of storing, utilizing, or manufacturing explosive materials or other hazardous material as defined by the Oregon Fire Code, Chapter 27.
-
-B.
-
-New residential, religious institutions, or public schools.
-
-C.
-
-Retail uses greater than 60,000 sq ft gross floor area per building or business are prohibited on all lots included in mapped "Employment" or "Industrial" areas as shown on Milwaukie Comprehensive Plan Title 4 Lands Map, April 6, 1999.
-
-D.
-
-All lots included in mapped "Industrial" areas, as shown on Milwaukie Comprehensive Plan Title 4 Lands Map, April 6, 1999, carry the following additional restrictions:
-
-1.
-
-Individual retail trade uses greater than 5,000 sq ft gross floor area per building or business are prohibited.
-
-2.
-
-Multiple retail trade uses that occupy more than 20,000 sq ft gross floor area are prohibited, whether in a single building or in multiple buildings within the same project.
-
-3.
-
-Facilities whose primary purpose is to provide training to meet industrial needs are exempted from this prohibition.
-
-§ 19.309.5. Standards for Conditional Uses.
-
-A.
-
-Natural Resource Extraction
-
-1.
-
-Open pit and gravel excavating or processing shall not be permitted nearer than 50 ft to the boundary of an adjoining property line, unless written consent of the owner of such property is first obtained. Excavating or processing shall not be permitted closer than 30 ft to the right-of-way line of an existing platted street or an existing public utility right-of-Way.
-
-2.
-
-An open pit or sand and gravel operation shall be enclosed by a fence suitable to prevent unauthorized access.
-
-3.
-
-A rock crusher, washer, or sorter shall not be located nearer than 500 ft to a residential or commercial zone. Surface mining equipment and necessary access roads shall be constructed, maintained, and operated in such a manner as to eliminate, as far as is practicable, noise, vibration, or dust which is injurious or substantially annoying to persons living in the vicinity.
-
-B.
-
-High-Impact Commercial Uses
-
-When considering a high-impact commercial use, the Commission shall consider the following:
-
-1.
-
-Nearness to dwellings, churches, hospitals, or other uses which require a quiet environment.
-
-2.
-
-Building entrances, lighting, exterior signs, and other features which could generate or be conducive to noise or other disturbance for adjoining uses.
-
-3.
-
-Parking vehicles and pedestrian access and circulation could contribute to noise or attract habitual assembly or unruly persons.
-
-4.
-
-Hours of operation.
-
-5.
-
-In addition to consideration of the above with respect to building and site design, the Planning Commission may attach conditions or standards of performance and impact, and methods for monitoring and evaluating these, to ensure that such establishments do not become unduly or unnecessarily disruptive.
-
-6.
-
-In addition, when considering an adult entertainment business, the following criteria shall be used:
-
-a.
-
-The proposed location of an adult entertainment business shall not be within 500 ft of an existing or previously approved adult entertainment business or within 500 ft of either a public park, a church, a day-care center, a primary, elementary, junior high, or high school, or any residentially zoned property.
-
-b.
-
-Distances shall be measured in a straight line, without regard to intervening structures, between the closest structural wall of the adult entertainment business and either the closest property line of the applicable property or the closest structural wall of any preexisting or previously approved adult entertainment business.
-
-§ 19.309.6. Development Standards for All Uses.
+§ 19.309.4. Additional Development Standards.
 
 The following development standards apply to all uses in the M Zone.
 
 A.
 
-Setbacks (Minimum)
+Outdoor Storage.
 
-Front: 20 ft Side: None*
-
-Corner side yard: 10 ft Rear: None*
-
-* Except when abutting a residential district, in which case the setback shall match the abutting property.
+A permitted use may require outside storage areas. These storage areas must be screened with a 6-ft high sight-obscuring fence or dense plantings from any adjoining residential uses or public streets. Vegetation used to screen outdoor storage areas must be of such species, number, and spacing to provide the required screening within one year after planting. All plantings used to screen outdoor uses must be maintained on an ongoing basis and must be replaced if vegetation is diseased, dying, or dead.
 
 B.
 
-Height (Maximum)
+Transition area.
 
-45 ft
-
-C.
-
-Parking and Loading
-
-See Chapter 19.600.
-
-D.
-
-Landscaping
-
-15% landscaping of the site is required. A variety of trees, shrubbery, and ground cover is encouraged. Street trees are required along street frontages and within parking lots to help delineate entrances, provide shade, and permeable areas for storm water runoff. A bond or a financial guarantee of performance will be required.
-
-E.
-
-Site Access
-
-1 curb cut (45 ft maximum) per 150 ft of street frontage.
-
-F.
-
-Transition Area
-
-Industrial development adjacent to and within 120 ft of areas zoned for residential uses is subject to Type I or II review per Section 19.906 Development Review. The following characteristics will be considered:
+Industrial development within 120 ft of areas zoned for residential uses is subject to Type II review per Section 19.906 Development Review. The review authority may attach conditions to reduce any potentially adverse impacts to residential properties. The following characteristics will be considered:
 
 1.
 
-Noise
+Lighting – On-site lighting should not extend beyond the property line, nor should it point towards the residential zone.
 
 2.
 
-Lighting
+Hours of operation – Operating characteristics between 10:00 p.m. and 7:00 a.m. should be reviewed to mitigate impacts.
 
 3.
 
-Hours of operation
+Delivery and shipping – To the extent practicable, delivery and shipping doors should be oriented away from the residential zone.
 
 4.
 
-Delivery and shipping
+Distance to residential zone boundary – The potential for impacts and mitigation should include consideration of the yard size between the building and the residential zone boundary.
 
-5.
+C.
 
-Height of structure
-
-6.
-
-Distance to residential zone boundary
-
-The review authority may attach conditions to reduce any potentially adverse impacts to residential properties.
-
-G.
-
-Public Facility Improvements
-
-As specified in Chapter 19.700.
-
-H.
-
-Additional Standards
-
-Chapter 19.500 Supplementary Development Regulations contains additional standards that may apply.
-
-§ 19.309.7. Special Development Standards.
-
-The following development standards apply to specified uses in the M Zone.
-
-A.
-
-Marijuana Businesses
-
-1.
-
-Marijuana retailers shall be subject to the standards of Subsection 19.509.1.
-
-2.
-
-Marijuana production, processing, testing, research, and warehousing shall be subject to the security and odor control standards of Subsection 19.509.2.
-
-3.
-
-Marijuana production facilities located in the M-Manufacturing zone shall be subject to the Marijuana Production Limitations set forth in Subsection 19.509.3.
+Uses must not be of a type or intensity that produces dust, odor, smoke, fumes, noise, glare, heat, vibrations, or other similar impacts that are incompatible with other uses allowed in this zone. In addition, the use must not produce off-site impacts that create nuisances as defined by the Oregon Department of Environmental Quality (D.E.Q.) or the noise control standards established in Chapter 8.08.
 
 § 19.310. Business Industrial Zone BI
 
-(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2134 § 2, 2016; Ord. 2140 § 2, 2017; Ord. 2168 § 2, 2019; Ord. 2243, 5/21/2024)
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2134 § 2, 2016; Ord. 2140 § 2, 2017; Ord. 2168 § 2, 2019; Ord. 2243, 5/21/2024; Ord. 2265, 9/1/2026)
 
 § 19.310.1. Purpose.
 
 This section is adopted to implement the policies of the Comprehensive Plan for industrial land uses providing a mix of clean, employee-intensive, industrial and office uses, with associated services, in locations supportive of mass transit and the regional transportation network.
 
-§ 19.310.2. Uses Permitted Outright.
+§ 19.310.2. Uses.
 
 A.
 
-The following business and industrial uses are allowed outright, subject to the standards of Subsection 19.310.6.
+Permitted Uses.
 
-1.
-
-Experimental, research, film, or testing laboratories, provided no operation shall be conducted or equipment used which would create hazards and/or nuisances off the site (marijuana testing or research shall also be subject to the security and odor control standards of Subsection 19.509.2);
-
-2.
-
-Manufacturing, processing, fabrication, packaging, or assembly of products from previously prepared materials;
-
-3.
-
-Printing, publishing, bookbinding, graphic or photographic reproduction, blueprinting or photo processing;
-
-4.
-
-Trade schools primarily serving the business community within the area.
+Uses allowed outright are listed in Table 19.310.2 with a "P". These uses are allowed if they comply with the development and design standards and other regulations of this title.
 
 B.
 
-Business and professional offices, including product design, sales, service, packaging; corporate headquarters or regional offices.
+Limited Uses.
+
+Uses listed in Table 19.310.2 as "L" are permitted only as limited uses in conformance with Section 19.310.3.
 
 C.
 
-Warehousing and distribution (marijuana warehousing shall be subject to the security and odor control standards of Subsection 19.509.2).
+Community Service Uses.
+
+Uses listed in Table 19.310.2 as "CSU" are permitted only as community service uses in conformance with Section 19.904.
 
 D.
 
-Contractors and Related Businesses. Businesses whose primary activity is performing specific building or other construction-related work, on-or off-site. Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies.
+Conditional Uses.
+
+Uses listed in Table 19.310.2 as "CU" are permitted only as conditional uses in conformance with Section 19.905.
 
 E.
 
-Any other use similar to the above uses but not listed elsewhere.
+Nonconforming Uses, Structures, and Development.
 
-§ 19.310.3. Accessory Uses.
-
-Uses accessory to and in conjunction with uses permitted outright may include the following:
-
-A.
-
-Employee lounges and dining rooms, employee day-care facilities, conference rooms for tenant use, newsstands, central mail room and self-service postal and banking facilities, and product information and display areas;
-
-B.
-
-Executive, administrative, design, or product showroom offices provided in conjunction with uses listed under Subsection 19.310.2 of this section;
-
-C.
-
-Indoor and outdoor recreational facilities, such as swimming pools, saunas, game and craft rooms, exercise and dance studios, community meeting rooms, lounges, playgrounds, tennis and other courts, bike and walking trails, and pedestrian plazas and courts, which are provided in association with uses listed in Subsection 19.310.2 of this section;
-
-D.
-
-Rental and development information offices, handyman and maintenance services, and other business offices and services in association with allowed uses in the development;
-
-E.
-
-Recycling center, provided that any storage of materials shall be adequately screened;
+Existing structures and uses that do not meet the standards of this zone may continue in existence. Except where otherwise stated in this section, the Provisions of Chapter 19.800 Nonconforming Uses and Development apply.
 
 F.
 
-Accessory uses and structures not otherwise prohibited which are customarily accessory and incidental to any use permitted outright or limited use;
+Prohibited Uses.
+
+Uses not listed in Table 19.310.2 or determined to be similar pursuant to Subsection 19.310.2H below, are prohibited.
 
 G.
 
-Temporary buildings for uses incidental to construction work, which buildings shall be removed upon the completion or abandonment of the construction work;
+Similar Uses.
 
-H.
+The Planning Manager, through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.310.2. The unlisted use will be subject to the standards applicable to the similar example use.
 
-Retail outlets associated with manufacturing uses as outlined in Subsection 19.310.2.A.2 of this section. Products sold at the accessory retail outlet shall be primarily those assembled or manufactured onsite. The accessory retail outlet shall be located within the associated Manufacturing building and occupy up to a maximum of 25% of the floor area of the associated manufacturing building or 4,000 sq ft, whichever is less.
+Table 19.310.2
+Uses Allowed in the Business Industrial Zone
+Table 19.310.2
+Uses Allowed in the Business Industrial Zone
+Table 19.310.2
+Uses Allowed in the Business Industrial Zone
+Uses and Use Categories
+BI
+Additional Provisions
+Commercial
+Commercial
+Commercial
+Bank or other financial institution
+L
+Section 19.310.3
+Limited Use Standards
+Child care center
+Provision of child care to children who are not the provider's own, in a facility that is certified or recorded by the State of Oregon pursuant to ORS Chapter 329A and that is not a family child care home.
+Examples include certified child care facilities, preschools, school-age programs, parent cooperatives, and before- and after-school programs.
+P
+Eating establishments
+Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
+Examples include restaurants, delicatessens, retail bakeries, and coffee shops. Drive-in or drive-through service is not permitted.
+L
+Section 19.310.3
+Limited Use Standards
+Indoor/outdoor recreation
+L/CU
+Section 19.310.3
+Limited Use Standards
+Section 19.905
+Conditional Uses
+Office
+1. Production-related office
+P
+2. Professional and administrative office
+P
+Personal/Business Services
+Personal service firms are involved in providing consumer services.
+Examples include: barbershop, hair salon, tailor, equipment rental, shoe repair shop, self-service laundry, dry cleaning, office equipment service, photographer, and instruction studios.
+L
+Section 19.310.3
+Limited Use Standards
+Section 19.905
+Conditional Uses
+Retail-oriented sales
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public. Products sold must be primarily those assembled or manufactured or produced onsite. The accessory retail outlet or showroom must be located within the associated manufacturing or production building.
+L
+Section 19.310.3
+Limited Use Standards
+Industrial, Manufacturing, and Production
+Industrial, Manufacturing, and Production
+Industrial, Manufacturing, and Production
+Construction: contractors and related businesses.
+This category comprises businesses whose primary activity is performing specific building or other construction-related work, on- or off-site.
+Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies.
+P
+Creative space
+Industrial/manufacturing space specifically for artist-type uses.
+Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.), makerspaces, creative reuse and upcycling, sound stage and/or film production, set design and production, and music studio/production.
+P
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+N
+Manufacturing and production
+This category comprises establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts.
+Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
+P
+Self-storage
+Mini-warehousing, mini-storage, public storage, and similar commercial facilities that lease storage space to the general public.
+CU
+Section 19.905
+Conditional Uses
+Trade schools and training facilities[1]
+This category comprises establishments whose primary purpose is to provide training for industrial needs and job specific certification.
+Examples include: electronic equipment repair training, truck-driving school, welding school, training for repair of industrial machinery, job skills training classrooms, and other industrial/employment skills training.
+P
+Wholesale trade, warehousing, and distribution
+This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise. Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
+Examples include: operating warehousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer. Includes fleet parking. Fulfillment centers engaged in selling and/or distributing merchandise to individual consumers are not included in this category.
+P
+Community Service Uses
+Community Service Uses
+Community Service Uses
+Schools (public or private)
+N
+Religious institutions
+N
+Other community service uses
+CSU
+Section 19.904
+Community Service Uses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana producers and processors subject to the standards of Subsection 19.509.2 and 19.509.3.
+CU
+Subsection 19.509.2
+Security and Odor Control for Certain Marijuana Businesses
+Subsection 19.509.3
+Marijuana Production Limitations
+Section 19.905
+Conditional Uses
+Marijuana testing and research subject to the standards of Subsection 19.509.2.
+P
+Subsection 19.509.2
+Security and Odor Control for Certain Marijuana Businesses
+Marijuana warehousing subject to the standards of Subsection 19.509.2.
+P
+Subsection 19.509.2
+Security and Odor Control for Certain Marijuana Businesses
+Psilocybin cultivation facilities as defined in ORS 475A, including planting, growing, harvesting, and propagation
+CU
+Subsection 19.509.4
+Psilocybin Cultivation Limitations
 
-§ 19.310.4. Limited Uses.
+Notes:
+P = Permitted
+L = Limited
+ACC = Accessory
+CSU = Permitted with community service use approval subject to provisions of Section 19.904
+CU = Permitted with conditional use approval subject to the provisions of Section 19.905
+1. All activities related to trade schools must be conducted inside an enclosed building
+2. Outdoor storage of waste or recycling materials is prohibited
+
+§ 19.310.3. Limited Uses.
+
+Limited uses are subject to the following limitations and conditions:
 
 A.
 
-Limited retail or service uses may be allowed that primarily service the needs of BI Zone clients, employees, and businesses, as opposed to the general public. These uses, subject to the provisions of Subsection 19.310.4.B below, shall include:
-
-1.
-
-A restaurant or deli, offering at least breakfast and/or lunch items, without a drive-in or drive-through service;
-
-2.
-
-Office supply and equipment, sales, or service;
-
-3.
-
-Personal/business services such as a barber, beauty parlor, tailor, dressmaking, shoe repair shop, self-service laundry, dry cleaning, photographer, instruction studios, or similar uses;
-
-4.
-
-A bank or other financial institution;
-
-5.
-
-A computer or other similar small electronic office machines store, sales and service; and
-
-6.
-
-Any other use similar and compatible to the above-listed uses.
+Limited uses may occupy up to a maximum of 25% of the square footage of a building. A limited use that is to be located in a building and exceeds 25% of the building's square footage must be reviewed as a conditional use;
 
 B.
 
-Limitations and conditions on the development of the limited uses itemized above shall be as follows:
-
-1.
-
-All limited uses shall be located, arranged, and integrated within the district to serve primarily the shopping and service needs of clients, businesses, and employees of the district;
-
-2.
-
-Limited uses may occupy up to a maximum of 25% of the square footage of a building. A limited use that is to be located in a building and exceeds 25% of the building's square footage shall be reviewed as a conditional use;
-
-3.
-
-Maximum floor area for a limited use shall be 4,000 sq ft;
-
-4.
-
-All limited uses shall comply with the standards under Subsection 19.310.6.
-
-§ 19.310.5. Conditional Uses.
-
-A.
-
-Conditional uses may be established in a business industrial district subject to review and action on the specific proposal, pursuant to Section 19.905 Conditional Uses. Approval shall not be granted unless the proposal satisfies the criteria in Section 19.905; and in addition, the proposed use:
-
-1.
-
-Will have minimal adverse impact on the appropriate development of uses permitted outright on abutting properties and the surrounding area considering location, size, design, and operating characteristics of the use;
-
-2.
-
-Is compatible with the character and scale of uses allowed within the district and on a site no larger than necessary for the use and operational requirements of the use;
-
-3.
-
-Will provide vehicular and pedestrian access, circulation, and loading areas which are compatible with uses on the same site or adjacent sites; and
-
-4.
-
-Is a needed service/product in the district, considering the mix of potential clientele and the need to maintain high-quality development in a highly visible area.
-
-B.
-
-Uses allowed subject to the above conditions are:
-
-1.
-
-Public and private community buildings, indoor and outdoor recreational facilities, such as swimming pools, racquetball clubs, athletic clubs, health and exercise spas, gymnasiums, tennis courts, playground, and other similar uses, developed to serve primarily the recreational needs of clients and employees of the district;
-
-2.
-
-Mini-warehousing, mini-storage, public storage, and similar commercial facilities that lease storage space to the general public;
-
-3.
-
-A limited use or uses that exceed 25% of the building's square footage as per SubSection 19.310.4.B.2 above.
-
-4.
-
-Marijuana producers and processors. Marijuana producers and processors shall be subject to the security and odor control standards of Section 19.509.
-
-§ 19.310.6. Standards.
-
-In the BI district, the following standards shall apply to all uses:
-
-A.
-
-Lot size. None, except that lots created shall be of a size sufficient to fulfill the applicable standards of this district.
-
-B.
-
-Front yard. A front yard shall be at least 20 ft unless additional setback is required in SubSection 19.501.2.A.
+The maximum floor area for a limited use is 4,000 sq ft;
 
 C.
 
-Side yard. No side yard shall be required except on corner lots where a side yard shall be at least 10 ft on the side abutting the street, unless additional setback is required in Subsection 19.501.2.A.
+Limited uses must comply with all other standards in Section 19.310.
 
-D.
+§ 19.310.4. Development Standards.
 
-Rear yard. No rear yard shall be required except as provided in Subsection 19.501.2.A.
+These development standards are intended to ensure that new development is appropriate in terms of building mass and scale, how the building addresses the street, and where buildings are located on a site.
 
-E.
+Table 19.310.4 Business Industrial Development Standards  Table 19.310.4 Business Industrial Development Standards  Table 19.310.4 Business Industrial Development Standards
+Standard                                                  BI                                                        Standards/Additional Provisions
+Lot Standards                                             Lot Standards                                             Lot Standards
+1. Minimum lot size (sq ft)                               None
+2. Minimum street frontage (ft)                           None
+Development Standards                                     Development Standards                                     Development Standards
+1. Setbacks (ft)                                                                                                    Subsection 19.501.2 Yard exceptions
+a. Minimum front yard setback                             20                                                        Subsection 19.501.2 Yard exceptions
+b. Minimum street side yard setback                       10                                                        Subsection 19.501.2 Yard exceptions
+c. Side and rear yard setback                             10/None[1]                                                Subsection 19.501.2 Yard exceptions
+2. Maximum building height (ft)                           45
+3. Minimum landscaping                                    15%[2]                                                    Subsection 19.504.5 Minimum Vegetation
 
-Off-street parking and loading. As specified in Chapter 19.600.
+Notes:
+1. Side and rear lot lines abutting a residential zone have a minimum 10-ft setback. Side and rear lot lines not abutting a residential zone have no required setback.
+2. Sites adjacent to Hwy. 224 are required to provide a minimum of 20% site landscaping.
 
-F.
+§ 19.310.5. Detailed Development Standards.
 
-Site Access
+The following detailed development standards describe additional allowances, restrictions, and exemptions related to the development standards of Table 19.310.4.
 
-One curb cut (45 ft maximum) per 150 ft of street frontage, or fraction thereof, for Industrial uses; and 1 curb cut per 100 ft of street frontage or fraction thereof, for business park, limited or conditional uses.
+A.
 
-G.
+Screening of Outdoor Uses.
 
-Height restriction. Maximum height of a structure shall be 3 stories or 45 ft, whichever is less.
-
-H.
-
-Landscaping
-
-15% of the site must be landscaped, except for sites adjacent to Hwy. 224, which shall provide landscaping to 20% of the site. This should consist of a variety of lawn, trees, shrubbery, and ground cover. Street trees must be provided along street frontages and within off-street parking lots to help delineate entrances, provide shade, and permeable areas for stormwater runoff. A bond or financial guarantee for landscape completion shall be required.
-
-I.
-
-Screening and Outside Storage
-
-Outside storage adjacent to International Way, Freeman Way, 37th Ave., Lake Road, or Hwy. 224 is prohibited. Outside storage in side or rear yards is allowed, provided it is enclosed by a sight-obscuring fence or vegetative screen.
-
-J.
-
-Building Siting and Design
-
-Buildings and sites shall be designed using the following principles:
+Outdoor uses must be screened as follows:
 
 1.
 
-Sites shall be developed to the maximum extent practicable, so that buildings have solar access and utilize other natural features in their design.
+Outside storage is permitted in side or rear yards. Outside storage adjacent to International Way, Freeman Way, 37th Ave., Lake Road, or Hwy. 224 is prohibited.
 
 2.
 
-Assure that building placement and orientation and landscaping allow ease of security surveillance.
+All outdoor storage areas must be screened from adjacent properties and public streets by a 6-ft-high sight-obscuring fence or wall or by the use of vegetation. Vegetation used to screen outdoor storage areas must be of such species, number, and spacing to provide the required screening within one year after planting.
 
 3.
 
-Design buildings with shapes, colors, materials, textures, lines, and other architectural design features which enhance the character of the district and complement the surrounding area and development, considering, but not limited to, the following techniques:
+All plantings used to screen outdoor uses must be maintained on an ongoing basis and shall be replaced if vegetation is diseased, dying, or dead.
+
+4.
+
+All roof-mounted mechanical equipment, except solar collection apparatus, must be screened or masked from view from adjacent major streets (Hwy 224, International Way, Harmony Road, and 37th Avenue).
+
+B.
+
+Nuisances.
+
+The use must not be of a type or intensity that produces dust, odor, smoke, fumes, noise, glare, heat, vibrations, or other similar impacts that are incompatible with other uses allowed in this zone. In addition, the use must not produce off-site impacts that create nuisances as defined by the Oregon Department of Environmental Quality (DEQ) or the noise control standards established in Chapter 8.08.
+
+§ 19.310.6. Design Standards.
+
+A.
+
+Definitions.
+
+1.
+
+New Construction.
+
+For the purposes of this subsection, new construction means new structures or development on a site that was previously undeveloped or from which previously existing structures have been demolished.
+
+2.
+
+Major Exterior Alterations.
+
+Major exterior alterations include any of the following:
 
 a.
 
-Use color, materials, and architectural design to visually reduce the scale and impact of large buildings;
+Alterations that do not qualify as "exterior maintenance and repair" or "minor exterior alterations."
 
 b.
 
-Use building materials and features that are durable and consistent with the proposed use of the building, level of exposure to public view, and exposure to natural elements.
+Demolition or replacement of more than 50% of the surface area of any exterior wall. For the purposes of this subsection, a wall is considered the entire wall plane if the change in wall plane is less than 24 in.
+
+c.
+
+Additions that increase floor area by more than 75% of the existing floor area, or demolition or replacement of 50% or more of the existing floor area.
+
+3.
+
+Minor Exterior Alterations.
+
+Minor exterior alterations include, but are not limited to, the application or installation of finish building treatments, including windows and other glazing, doors, lintels, copings, awnings, other vertical and horizontal projections, and exterior sheathing and wall cladding materials.
 
 4.
 
-To the extent possible, screen or mask roof-mounted mechanical equipment, except solar collection apparatus, from view.
+Exterior Maintenance and Repair.
+
+Exterior maintenance and repair includes refurbishing, painting, and weatherproofing of deteriorated materials, and in-kind restoration or replacement of damaged materials. Exterior maintenance and repair does not include replacement of materials due to obsolescence or replacement undertaken as part of a minor or major exterior renovation, as defined below.
 
 5.
 
-Orient major service activity areas (e.g., loading, delivery, and garbage collection, etc.) of the development away from major streets.
+Major Interior Alterations.
+
+Major interior alterations are interior alterations which include demolition or replacement of 50% or more of the existing floor area.
 
 6.
 
-Arrange use and buildings to maximize opportunities for shared circulation, access, parking, loading, pedestrian walkways and plazas, recreation areas, and transit-related facilities.
+Change in Use.
 
-7.
+For the purposes of this subsection, change in use means a change in the primary use from one use to another.
 
-Provisions for bus shelters, bike racks, street furniture, kiosks, drinking fountains, art sculptures, and/or other pedestrian and transit amenities as required by Chapter 19.700.
+B.
 
-K.
+Applicability of Standards.
 
-Nuisances
+The site design standards contained in this subsection apply to all properties in the BI Zone. The building design standards in this subsection apply to the street-facing facades of buildings when the closest wall of the street-facing facade is within 50 ft of a front or street-side lot line. Existing buildings that do not comply with the site or building design standards may continue and may be modified in accordance with this subsection.
 
-The use shall not be of a type or intensity which produces dust, odor, smoke, fumes, noise, glare, heat, or vibrations which are incompatible with other uses allowed in this zone; and the use does not produce off-site impacts that create nuisance as defined by the Oregon D.E.Q. and the City Noise Ordinance.
+Except as provided for major interior alterations, applicable standards only apply to the proposed modification and not to the nonmodified portion of the existing building. Exterior maintenance and repair, minor exterior alterations, and changes in use are exempt from these standards. Subsection 19.310.6A defines new construction, exterior maintenance and repair, and major/minor exterior and interior alterations, and changes in use for the purposes of this subsection.
 
-§ 19.310.7. Validity of Uses.
+1.
 
-In the BI Zone, uses that are subject to the provisions of this zone and were legally established/occupied on or prior to the effective date of the zone, shall be considered as legally Approved permitted, limited, or conditional uses as described by the BI Zone.
+New Construction.
+
+All design elements apply to the construction of new primary structures. New accessory structures are exempt from the Access and Main Entrance element in Table 19.310.6.D.1 but all other design elements apply.
+
+2.
+
+Major Exterior Alterations.
+
+All design elements apply to major exterior alterations. However, major exterior alterations that do not add or modify building entrances are exempt from the Access and Main Entrance element in Table 19.310.6.D.1.
+
+3.
+
+Major Interior Alterations.
+
+Major interior alterations are exempt from the Orientation of Service Activity element in Table 19.310.6.D.2. All other design elements apply.
+
+C.
+
+Review Process.
+
+An applicant may choose between two review processes available for review of development in the BI zone: objective and discretionary. Regardless of the review process, the applicant must demonstrate how the applicable standards or guidelines are being met. Applicants can address design review requirements through a combination of satisfying certain design standards and, in instances where they elect not to utilize design standards, satisfying the applicable design guideline instead. In such a case, the project will be reviewed using the Type II Development Review process outlined in Subsection 19.310.6C.2.
+
+1.
+
+Objective process: uses clear objective standards that do not require the use of discretionary decision-making. Developments reviewed against these standards will be processed with Type I Development Review per Subsection 19.906.2A.1.
+
+2.
+
+Discretionary process: uses design guidelines that are more discretionary in nature and are intended to provide the applicant with more design flexibility. Developments reviewed against these guidelines will be processed with Type II Development Review per Subsection 19.906.2B.1.
+
+D.
+
+Building and Site Design Guidelines and Standards.
+
+Applicable guidelines and standards for the BI zone are located in Table 19.310.6.D. These standards should not be interpreted as requiring a specific architectural style. Table 19.310.6.D.1 specifies the primary, secondary, and prohibited material types referenced in Table 19.310.6.D.
+
+Table 19.310.6.D
+Building and Site Design Guidelines and Standards
+Table 19.310.6.D
+Building and Site Design Guidelines and Standards
+Table 19.310.6.D
+Building and Site Design Guidelines and Standards
+Design Element
+Design Guidelines
+(Discretionary Process)
+Design Standard (Objective Process)
+Site Design
+Site Design
+Site Design
+1. Pedestrian Experience and Access
+Arrange site to provide for safe pedestrian access and connections as well as weather protection.
+All buildings must have at least one primary building entrance (e.g., dwelling entrance, customer entrance, tenant entrance, lobby entrance, or breezeway/courtyard entrance) facing an adjoining street (i.e., within 45 degrees of the street property line). If the building entrance is turned more than 45 degrees from the street (e.g., front door is on a side wall), the primary entrance must not be more than 40 ft from a public sidewalk. In all cases, a walkway must connect the primary entrance to the sidewalk. In cases where there is no sidewalk within the adjacent right of way (ROW), a walkway must connect the primary entrance to the ROW.
+All pedestrian entrances must include an awning, canopy, recess, or some other form of shelter to provide weather protection for users. Features used for weather protection must have a minimum depth of 4 ft for primary entrances and a minimum depth of 12 in for all other entrances.
+2. Orientation of Major Service Activity
+Orient major service activity areas of the development away from major streets.
+Major service activity (e.g., loading, delivery, and garbage collection, etc.) must not be located on a facade that faces an adjoining major street (i.e., within 45 degrees of the street property line). Major streets in the BI zone are: Hwy 224, International Way, Harmony Road, and 37th Avenue.
+Building facades more than 200 ft from a property line along a major street may include major service activity provided there is a continuous 4-ft wide landscape buffer or another building which separates the entire length of the service activity area from the street.
+Building Design
+Building Design
+Building Design
+3. Building Facade Design
+Use color, materials, and architectural design to visually reduce the scale and impact of large buildings.
+All buildings must incorporate design elements that break up all street-facing façades. For every 60 ft of street-facing facade, a minimum of one of the following elements must be provided:
+a. A recess of the building by a minimum of 2 ft deep and 6 ft long.
+b. A covered walkway or recessed entry a minimum of 5 ft deep and 6 ft long.
+c. A roof line offset of at least 5 ft from the top surface of one roof to the top surface of the other.
+d. Extending an architectural bay at least 2 ft from the primary street-facing facade.
+Exterior wall-mounted mechanical equipment is prohibited on street-facing facades.
+4. Building Materials
+Use building materials and features that are durable and consistent with the proposed use of the building, level of exposure to public view, and exposure to natural elements. Prohibited materials listed as (N) in Table 19.310.6.D.1 are not permitted.
+All buildings must utilize the following building materials on exterior walls of street-facing facades. See Table 19.310.6.D.1 for the primary, secondary, and prohibited material types referenced in this standard.
+a. Buildings must utilize primary materials for at least 60% of the applicable building facades.
+b. Secondary materials are permitted on no greater than 40% of each applicable building facade.
+c. Accent materials are permitted on no greater than 10% of each applicable building facade as trims or accents (e.g., flashing, projecting features, ornamentation, etc.)
+d. Buildings must not utilize materials listed as prohibited materials (N).
+e. For existing development, facade modifications that affect more than 50% of the facade must comply with standards in this subsection. The Planning Manager may waive this requirement if application of the standards would create an incongruous appearance of existing and new materials.
+
+Table 19.310.6.D.1 Exterior Building Materials                                                                             Table 19.310.6.D.1 Exterior Building Materials
+Material                                                                                                                   Material Type
+Brick                                                                                                                      P
+Stone/masonry                                                                                                              P
+Stucco, when installed over concrete                                                                                       P
+Glass (transparent, spandrel)                                                                                              P
+Concrete (poured in place or precast)                                                                                      P
+Finished wood, wood veneers, and wood siding                                                                               P
+Finished metal panels—such as anodized aluminum, stainless steel, or copper—featuring polished, brushed, or patina finish  S
+Concrete blocks with integral color (ground, polished, or split-face finish)                                               S
+Fiber-reinforced cement siding and panels                                                                                  S
+Ceramic tile                                                                                                               S
+Concrete blocks with integral color (glazed finish)                                                                        A
+Standing seam and corrugated metal                                                                                         A
+Glass block                                                                                                                A
+Vegetated wall panels or trellises                                                                                         A
+Vinyl siding                                                                                                               N
+Exterior insulation finishing system (EIFS)                                                                                N
+Plywood paneling                                                                                                           N
+
+Notes:
+P = Primary material
+S = Secondary material
+A = Accent material
+N = Prohibited material
 
 § 19.311. Planned Development Zone PD
 
@@ -3459,7 +3564,7 @@ Extensions to the approved time schedule are permitted subject to Subsection 19.
 
 § 19.312. North Milwaukie Innovation Area
 
-(Ord. 2071 § 5, 2013; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2163 § 2, 2018; Ord. 2234 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2243, 5/21/2024; Ord. 2262, 3/3/2026)
+(Ord. 2071 § 5, 2013; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2163 § 2, 2018; Ord. 2234 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2243, 5/21/2024; Ord. 2262, 3/3/2026; Ord. 2265, 9/1/2026)
 
 § 19.312.1. Purpose.
 
@@ -3644,13 +3749,21 @@ Subsection 19.312.4.B.1 Standards for Limited Uses
 Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
 Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
 Construction: contractors and related businesses
-This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
+This category comprises businesses whose primary activity is performing specific building or other construction related work, on- or off-site.
 Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
 Construction: contractors and related businesses
-This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
+This category comprises businesses whose primary activity is performing specific building or other construction related work, on- or off-site.
 Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
 P
 P
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+N
+N
 Wholesale trade, warehousing, distribution
 This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise. Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
 Examples include: operating wareHousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer. Includes fleet parking.

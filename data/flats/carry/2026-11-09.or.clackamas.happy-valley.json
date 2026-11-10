@@ -1,0 +1,12 @@
+[
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "bd07b42ba32b4f236aa8d045161f55cccaaf054c7c79948888f5e1d5d1ff0ef0",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L642-L646",
+  "old_fingerprint": "2002bb61f778aa67500cfa4015035f75d06fb9b49b4f06f2ba83c53e7b6542fe",
+  "old_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L624-L628",
+  "when_key": "",
+  "zone": "VTH"
+ }
+]

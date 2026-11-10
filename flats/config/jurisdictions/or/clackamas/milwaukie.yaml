@@ -579,24 +579,18 @@ readings:
       A floorplate cap on office space in the Downtown Mixed Use zone -- a zone this layer does
       not carry, and a use the pod does not contain.
     fingerprint: 2729cb577f401c14
-  "19.309.6.txt#19.309.6":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      The MANUFACTURING ZONE M's development standards: front 20 feet with no side setback, corner
-      side 10 feet with no rear, a 45-foot height, and one curb cut of up to 45 feet per 150 feet
-      of street frontage. An industrial zone, which does not permit dwellings and is not among the
-      two zones this layer carries. The curb-cut allowance is also the loosest access rule in this
-      corpus and would be an amnesty rather than a constraint if it were ever borrowed sideways.
-    fingerprint: 5d069548e056b148
   "19.310.4.txt#19.310.4":
     queue: nofield
     outcome: other_building
     note: >-
-      "Maximum floor area for a limited use shall be 4,000 sq ft" in the Business Industrial Zone
-      BI -- a cap on how large a secondary use may be inside an industrial district. A different
-      zone and a different building, and a maximum in any case.
-    fingerprint: b949ffd0dcff5c79
+      The Business Industrial Zone BI's development standards, re-printed by Ord. 2265 (9/1/2026;
+      re-fetched 2026-11-09, FOLLOWUPS 166) as Table 19.310.4: no minimum lot size or frontage,
+      front 20 feet, street side 10 feet, side and rear 10 feet against a residential zone and
+      none otherwise, a 45-foot height and 15 percent landscaping. An industrial zone whose use
+      table (19.310.2.F) prohibits anything not listed, and it lists no dwelling, so the layer
+      refuses the zone and these numbers govern no building FLATS places. (This key held the
+      limited-use floor-area cap before Ord. 2265; that is now 19.310.3.)
+    fingerprint: d1d62affb4ba09bb
   "19.300.base-zones.txt#19.500":
     queue: nofield
     outcome: design
@@ -710,6 +704,27 @@ readings:
       rather than a footprint, and the county's MCC 39.4782(G) exempts chimneys and antennae from
       the height maximum outright for the same reason. Nothing here dimensions a dwelling.
     fingerprint: 1dd4f5232ee58a48
+  "19.309.3.txt#19.309.3":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The MANUFACTURING ZONE M's development standards, re-printed by Ord. 2265 (9/1/2026;
+      re-fetched 2026-11-09, FOLLOWUPS 166) as Table 19.309.3 (formerly 19.309.6): front 20 feet,
+      no side yard, street side 10 feet, no rear yard (a yard abutting a residential district
+      matches that district's), a 45-foot height and 15 percent vegetation. An industrial zone
+      whose use table (19.309.2.G) prohibits anything not listed, and it lists no dwelling, so the
+      layer refuses the zone and these numbers govern no building FLATS places. The old
+      one-curb-cut-per-150-feet allowance is no longer in this table.
+    fingerprint: c9df20dc615a1b59
+  "19.310.3.txt#19.310.3":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "The maximum floor area for a limited use is 4,000 sq ft" in the Business Industrial Zone BI
+      (19.310.4 before Ord. 2265, 9/1/2026; re-fetched 2026-11-09, FOLLOWUPS 166) -- a cap on how
+      large a secondary use may be inside an industrial district. A different zone and a different
+      building, and a maximum in any case.
+    fingerprint: 7986e09682f5f655
 crossrefs:
   # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
   "19.911":
@@ -731,13 +746,13 @@ crossrefs:
   "19.800":
     outcome: other_path
     note: >-
-      Nonconforming uses and development (19.309/19.309.3.txt#L3). The pod is new development.
+      Nonconforming uses and development (19.309/19.309.2.txt#L39). The pod is new development.
   "19.906":
     outcome: procedure
     note: >-
       Development review, the process for altering a nonconforming use closer to compliance
       (19.303/19.303.2.txt#L15) and for industrial development near residential zones
-      (19.309/19.309.6.txt#L46). A process; neither path is the pod's.
+      (19.309/19.309.4.txt#L18). A process; neither path is the pod's.
   "19.907":
     outcome: procedure
     note: >-
@@ -755,7 +770,8 @@ crossrefs:
     outcome: other_building
     note: >-
       Oregon Fire Code Chapter 27, hazardous materials: uses that store or manufacture them
-      (19.309/19.309.4.txt#L5).
+      (19.312/19.312.3.txt#L3; 19.309.2 dropped the chapter number in Ord. 2265, re-fetched
+      2026-11-09).
 
   # --- four references out of the use table, none of them this building ----
   "19.903":
@@ -1918,7 +1934,7 @@ zones:
       # definition and the city lists the two as separate rows wherever it
       # lists both. Not listed here, so 19.312.2.E answers. 80 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370"
+      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L374-L378"
     notes: >-
       Encoded 2026-09-20 from Table 19.312.2. The closest call among the
       seven: the zone's purpose sentence names housing as a primary use and
@@ -1945,7 +1961,7 @@ zones:
       # Live/work units N -- and 19.312.2.E prohibits what the table lists
       # with an N. 57 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370"
+      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L374-L378"
     notes: >-
       Encoded 2026-09-20 from Table 19.312.2. The one column of the pair that
       needs no argument about what multifamily means: the cells are N.
@@ -1968,8 +1984,14 @@ zones:
       # townhouse, apartment: the only hit is "residential and
       # nonresidential building construction" as an example of a
       # contractor's business (L2916). 74 lots.
+      # Ord. 2265 (9/1/2026; re-fetched 2026-11-09, FOLLOWUPS 166) recast
+      # the four lists as Table 19.310.2, whose categories are Commercial,
+      # Industrial/Manufacturing/Production and community services, with
+      # "Uses not listed in Table 19.310.2 ... are prohibited" (19.310.2.F).
+      # Same grep of the new 19.310: the only hit is still "residential and
+      # nonresidential building construction" (19.310.2.txt#L107). Unchanged.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2884-L2892,L2958-L2962,L3008-L3012,L3032-L3048"
+      quote: "or/clackamas/milwaukie/19.310/19.310.2.txt#L1,L37-L39,L48-L49,L57"
     notes: >-
       Encoded 2026-09-20. Refused on silence, and the silence is the ordinary
       kind: an older-style zone written as lists of what is allowed, with a
@@ -1979,17 +2001,26 @@ zones:
   M:
     section: ["19.309"]
     cite_default:
-      cite: MMC 19.309.2 (permitted uses are limited to industrial uses) and
-        19.309.4.B, Specific Prohibited Uses, Manufacturing Zone
+      cite: MMC 19.309.2.G (uses listed as "N" or not listed in Table
+        19.309.2 are prohibited) and Table 19.309.2, Manufacturing Zone
+        (Ord. 2265, 9/1/2026)
       url: https://ecode360.com/print/MI4969?guid=43860500
-      retrieved: '2026-09-20'
+      retrieved: '2026-11-09'
     quadplex_allowed:
-      # Manufacturing. Refuses in its own words: 19.309.4 Specific Prohibited
-      # Uses, "B. New residential, religious institutions, or public
-      # schools." 19.309.2 opens "Permitted uses are limited to industrial
-      # uses meeting the following criteria". 74 lots.
+      # Manufacturing. Until Ord. 2265 (9/1/2026) it refused in its own
+      # words: 19.309.4 Specific Prohibited Uses, "B. New residential,
+      # religious institutions, or public schools." The ordinance (re-fetched
+      # 2026-11-09, FOLLOWUPS 166) replaced the lists with Table 19.309.2,
+      # whose categories are Commercial, Manufacturing and production and
+      # community service uses, and 19.309.2.G: "Uses listed in Table 19.309.2
+      # as "N" or not listed in Table 19.309.2 ... are prohibited." No
+      # residential row; whole-section grep of the new 19.309 for dwelling,
+      # residential, housing, quadplex, townhouse, apartment finds only
+      # "residential and nonresidential building construction" as a
+      # contractor example (19.309.2.txt#L94). Still refused, now on the
+      # closed table rather than the named prohibition. 74 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2624-L2626,L2688-L2696"
+      quote: "or/clackamas/milwaukie/19.309/19.309.2.txt#L1,L43-L45,L54-L55,L63"
     notes: >-
       Encoded 2026-09-20. The clearest of the seven -- a flat prohibition of
       new residential use, the shape Oregon City GI has in its caretaker

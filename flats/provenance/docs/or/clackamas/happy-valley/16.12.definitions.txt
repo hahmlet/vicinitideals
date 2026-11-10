@@ -408,6 +408,23 @@ Calendar days, unless specifically stated as working days. Working days include 
 Debris.
 For the purposes of Chapter 16.34, discarded manmade objects that would not occur in an undeveloped stream corridor or wetland. "Debris" includes, but is not limited to, tires, vehicles, litter, scrap metal, construction waste, lumber, plastic or styrofoam. Debris does not include objects necessary to a use allowed by this chapter, or ornamental and recreational structures. Debris does not include existing natural plant materials or natural plant materials which are left after flooding, downed or standing dead trees or trees which have fallen into protected water features.
 
+Decorative rock.
+"Decorative rock" means clean, washed, durable stone placed as a surface landscape ground cover that:
+
+1.
+
+Consists of washed river rock or fractured basalt;
+
+2.
+
+Has a minimum size of 1 1/2 inches; and
+
+3.
+
+A minimum of 80 percent of the material is within two inches in diameter of each other.
+
+Decorative rock shall not include crushed surfacing rock, maintenance rock, gravel, pea gravel, or decomposed granite. The City Engineer may approve of an alternative.
+
 Dedication.
 The designation of land by its owner for any public use as shown on a subdivision plat or deed. The term may also be used for dedications to a private homeowners' association.
 
@@ -709,7 +726,7 @@ Front of structure.
 The portion of building parallel or adjacent to the front property line, or the side on which the front door of the building is located.
 
 Front property line.
-Any boundary line separating the lot from a public or private road.
+See lot line, front.
 
 Frontage.
 Generally, the dimension of a property line abutting a public or private street. However, for the purposes of Section 16.42.070, "frontage" specifically means the length of property abutting a street benefited by street lighting.
@@ -880,13 +897,13 @@ Lot line adjustment.
 The relocation of a single common property line between two abutting properties, in conformance with ORS 92.010(11).
 
 Lot line, front.
-Front lot line is a lot line, or segment of a lot line, that abuts a street. On a corner lot, the applicant or property owner can choose which lot line is to be the front lot line. On a through lot the applicant or property owner can choose which lot line is to be the front lot line and which lot line is to be the rear lot line, regardless of whether the street lot lines are of equal or unequal length. On a flag lot, the applicant or property owner can choose which lot line is to be the front lot line, so long as it is one of the lot lines that makes up the flag portion of the lot, and the rear lot line is the property line most distant from, and opposite from, the chosen front lot line.
+Front lot line is a lot line, or segment of a lot line, that abuts a street. On a corner lot, the applicant or property owner can choose which lot line is to be the front lot line. On a through lot the applicant or property owner can choose which street lot line is to be the front lot line and which lot line is to be the rear lot line, regardless of whether the street lot lines are of equal or unequal length. On a flag lot, the applicant or property owner can choose which lot line is to be the front lot line, so long as it is one of the lot lines that makes up the flag portion of the lot, and the rear lot line is the property line most distant from, and opposite from, the chosen front lot line.
 
 Lot line, rear.
 The property line most distant from, and opposite from, the front lot line. A triangular lot has two side lot lines but no rear lot line. For other irregularly shaped lots, the rear lot line is all lot lines that are most nearly opposite the front lot line.
 
 Lot line, side.
-A lot line that connects front and rear lot lines. On a corner lot, the longer lot line that abuts a street is a side lot line.
+A lot line that connects front and rear lot lines.
 
 Lot line, street.
 A lot line, or segment of a lot line, that abuts a street. Street lot line does not include lot lines that abut an alley. On a corner lot, there are two (or more) street lot lines. Street lot line can include front lot lines and side lot lines.
@@ -1912,4 +1929,4 @@ The area defined by setbacks (i.e., between the setback line and nearest propert
 Zero-lot line house.
 A single-family detached dwelling with one "zero" side yard setback.
 
-(Ord. 389 § 1(Exh. A), 2009; Ord. 395 § 2, 2009; Ord. 398 § 1, 2010; Ord. 411 § 1, 2011; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 468 § 1, 2014; Ord. 474 § 1, 2015; Ord. 481 § 1, 2015; Ord. 491 § 1, 2016; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 507 § 1, 2016; Ord. 521 § 3, 2017; Ord. 539 § 1, 2018; Ord. 545 § 1, 2019; Ord. 550 § 1, 2020; Ord. 552 § 1, 2020; Ord. 556 § 1, 2021; Ord. 561 § 1, 2022; Ord. 567 § 1, 2023; Ord. 572 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 593, 6/17/2025)
+(Ord. 389 § 1(Exh. A), 2009; Ord. 395 § 2, 2009; Ord. 398 § 1, 2010; Ord. 411 § 1, 2011; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 468 § 1, 2014; Ord. 474 § 1, 2015; Ord. 481 § 1, 2015; Ord. 491 § 1, 2016; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 507 § 1, 2016; Ord. 521 § 3, 2017; Ord. 539 § 1, 2018; Ord. 545 § 1, 2019; Ord. 550 § 1, 2020; Ord. 552 § 1, 2020; Ord. 556 § 1, 2021; Ord. 561 § 1, 2022; Ord. 567 § 1, 2023; Ord. 572 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 593, 6/17/2025; Ord. 603, 8/18/2026)

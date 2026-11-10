@@ -156,8 +156,15 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     setback_front_max_ft 25 on at_street_end in LDR-5, LDR-7, TLDR and TR.
     It sat `unmeasured` with no number; the 5 ft minimum is never the
     stricter figure, and MDR-12, MDR-24, OFR and CMF hold a 20 ft maximum.
+
+    95 -> 94 on 2026-11-09 (FOLLOWUPS 166, drift-clack), Happy Valley: Ord.
+    603 deleted Table 16.43.030-1's old note 4 ("Parking maximums apply only
+    to multifamily units in town centers ..."), which was ruled `encoded` as
+    the layer's parking_max_per_unit exemption. The table now prints the
+    maximum in the quadplex row (2.0 per non-studio unit), held as a value,
+    and the new note 4 (non-surface parking may be exempted) is dismissed.
     """
-    assert len(rows) == 95
+    assert len(rows) == 94
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

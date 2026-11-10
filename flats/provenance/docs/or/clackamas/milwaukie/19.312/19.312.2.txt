@@ -179,13 +179,21 @@ Manufacturing may also include high-tech and research and development companies.
 Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication.
 Manufacturing may also include high-tech and research and development companies.
 Construction: contractors and related businesses
-This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
+This category comprises businesses whose primary activity is performing specific building or other construction related work, on- or off-site.
 Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
 Construction: contractors and related businesses
-This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
+This category comprises businesses whose primary activity is performing specific building or other construction related work, on- or off-site.
 Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
 P
 P
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+N
+N
 Wholesale trade, warehousing, distribution
 This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise.
 Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.

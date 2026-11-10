@@ -472,30 +472,38 @@ notes:
 # Chapter 16.43 was fetched 2026-08-27, and its five notes arrived with it.
 # Happy Valley is the first city in this corpus to answer the whole parking
 # question in one chapter -- a minimum, a stall, an aisle and a placement rule
-# -- so these five sit over the two quantity values rather than over a
-# dimensional table, and four of the five are about who the maximum column
-# reaches. Only note 4 changes anything this layer carries.
-  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L444"
-    digest: "6ee22a1d3b4e"
+# -- so these notes sit over the two quantity values rather than over a
+# dimensional table. Ord. 603 (8/18/2026; re-fetched 2026-11-09, FOLLOWUPS
+# 166) rewrote them: the Zone A / Zone B note and the old note 4 ("Parking
+# maximums apply only to multifamily units in town centers ...") are gone,
+# the 750-square-foot exemption moved from note 5 to note 1, and a new note 4
+# lets non-surface parking be left out of the calculations. The rulings
+# below are re-read against the new words; none of them loosens anything.
+  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L445-L446"
+    digest: "2d79c52d1e24"
     state: dismissed
     reason: >-
-      note 1 explains the Zone A and Zone B columns of the maximum: they come
-      from Metro's Regional Transportation Functional Plan Title 2 and its
-      Regional Parking Ratio Table, and the zones are drawn by transit access.
-      The row this building sits on prints "None required" across both zone
-      columns, so the note explains a pair of cells that are empty for us.
-      Nothing to encode and nothing to lose by declining it
+      note 1 (note 5 before Ord. 603, same words) exempts single-room occupancy
+      housing, "residential units smaller than 750 square feet", affordable
+      housing under OAR 660-039-0010 and publicly supported housing under ORS
+      456.250 from the minimum. Three of the four limbs are elections or
+      programmes rather than facts about the lot, and the fourth is a fact
+      about the design: this pod is 56 by 36 feet over two storeys, about a
+      thousand square feet a unit, so the size limb does not reach it.
+      Encoding the affordable limb would forgive a requirement that applies
+      to the building we are actually screening. It is also marked on the
+      maximum column's header, where it states no maximum of its own
 
-  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L448"
-    digest: "fdff5f9d8c60"
+  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L451-L452"
+    digest: "b13553368545"
     state: dismissed
     reason: >-
       note 2 counts enclosed outdoor seating as floor area for restaurants,
       coffee shops and food-beverage carts without a drive-through. A
       different row of the same table and a use this screen does not place
 
-  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L450"
-    digest: "9184593ae379"
+  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L457-L458"
+    digest: "1ead42bf48b2"
     state: dismissed
     reason: >-
       note 3 waives additional parking for housing type CONVERSIONS -- its own
@@ -504,31 +512,18 @@ notes:
       so the waiver does not reach it. Declining it is also the conservative
       direction: it can only ever reduce a requirement
 
-  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L452"
-    digest: "e2a12de95a10"
-    state: encoded
-    encoded_as: "parking_max_per_unit exempt in the layer's defaults"
-    reason: >-
-      note 4 is what makes the maximum an absence rather than an omission:
-      "Parking maximums apply only to multifamily units in town centers,
-      regional centers, and the transit areas in LDC Section 16.43.030.B.12.a
-      through b." A quadplex is not a multifamily unit in this table -- the
-      table gives multifamily its own row, for buildings of five or more units
-      -- and the three named places are geographic. So the "None required" in
-      the maximum column of our row is the rule and not a gap in the table
-
-  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L454"
-    digest: "7aab09608faa"
+  - quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L463-L464"
+    digest: "6cceb2812c52"
     state: dismissed
     reason: >-
-      note 5 exempts single-room occupancy housing, "residential units smaller
-      than 750 square feet", affordable housing under OAR 660-039-0010 and
-      publicly supported housing under ORS 456.250 from the minimum. Three of
-      the four limbs are elections or programmes rather than facts about the
-      lot, and the fourth is a fact about the design: this pod is 56 by 36
-      feet over two storeys, about a thousand square feet a unit, so the size
-      limb does not reach it. Encoding the affordable limb would forgive a
-      requirement that applies to the building we are actually screening
+      note 4 (new in Ord. 603) lets "Non-surface parking, such as tuck-under
+      parking, underground and subsurface parking, and parking structures" be
+      exempted from the calculations; it is marked on the multifamily,
+      quadplex and cottage-cluster maximums (1.2 and 2.0 per unit). This pod
+      parks on the surface, so the exemption is not its, and it could only
+      ever lift a maximum the pod does not reach (2.0 per unit is eight
+      spaces on four homes). The maximum is encoded at 2.0 in the layer's
+      defaults without it
 
   # --- Chapters 16.23, 16.24 and 16.25: the commercial, institutional and
   # industrial use tables the September 2026 map made this layer read,
@@ -545,41 +540,41 @@ notes:
   # the 20-percent accessory note) and a ruling binds to the words, so
   # each is written once -------------------------------------------------
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L112"
-    digest: "d1ae8bab4c50"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L113-L114"
+    digest: "b54606481d38"
     state: dismissed
     reason: >-
       note 1 on Table 16.23.030-1 sends RCMU uses to the additional standards of 16.23.010.D. Additional standards on a use the table permits cannot permit a use it does not, and the RCMU column's dwelling rows are the refusal's whole ground
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L113-L114"
-    digest: "bfb21825704d"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L115-L117"
+    digest: "74649d9d1b32"
     state: encoded
     encoded_as: >-
       MUC, MUE and RCMU quadplex_allowed: value false, quoting notes 2 and 3 among their lines
     reason: >-
       the note is the residential door in this use table, and it opens only for a building this is not: residential uses on the upper floors of a mixed-use building. A four-unit residential building on its own lot has a ground floor that is all dwelling and no commercial floor to sit above
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L115-L116"
-    digest: "238700ac3f6c"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L118-L120"
+    digest: "c63c279acaeb"
     state: encoded
     encoded_as: >-
       MUC, MUE and RCMU quadplex_allowed: value false, quoting notes 2 and 3 among their lines
     reason: >-
-      the note is the residential door in this use table, and it opens only for a building this is not: a freestanding residential use in the MUC zone only when nonresidential uses occupy the street side of the same parcel and within 25 percent of the parcel's MUC-zoned area. A pod on its own lot is the whole parcel and has no nonresidential use on its street side; the condition names a mixed-use development, not a lever a residential building could pull. Read once and written as the refusal's own reason
+      the note is the residential door in this use table, and it opens only for a building this is not: a freestanding residential use in the MUC zone only when nonresidential uses occupy the street side of the same parcel and within 50 percent of the parcel's MUC-zoned area (25 until Ord. 603, 8/18/2026; re-read 2026-11-09, FOLLOWUPS 166). A pod on its own lot is the whole parcel and has no nonresidential use on its street side; the condition names a mixed-use development, not a lever a residential building could pull. Read once and written as the refusal's own reason
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L118"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L123-L124"
     digest: "d1415d9639fa"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L119"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L125-L126"
     digest: "0c4c0b42b43c"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L120-L121"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L127-L129"
     digest: "a8865af7d3a1"
     state: dismissed
     reason: >-
@@ -597,43 +592,43 @@ notes:
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L106-L107"
-    digest: "8349ee570e56"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L107-L109"
+    digest: "9c186ff6fab9"
     state: encoded
     encoded_as: >-
       CCC and MCC quadplex_allowed: value false, quoting notes 1 to 3 among their lines
     reason: >-
       the note is the residential door in this use table, and it opens only for a building this is not: residential uses on the upper floors of a mixed-use building, and where that applies notes 2 and 3 do not. A four-unit residential building has no commercial ground floor to be above
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L108-L109"
-    digest: "d3d87f01be4b"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L110-L118"
+    digest: "e2f6a17003b2"
     state: encoded
     encoded_as: >-
       CCC and MCC quadplex_allowed: value false, quoting notes 1 to 3 among their lines
     reason: >-
-      the note is the residential door in this use table, and it opens only for a building this is not: a freestanding residential use in the CCC zone only when nonresidential uses occupy the street side of the same parcel and within 25 percent of its CCC-zoned area, or in the Rock Creek Employment Center with a nonresidential use on one street side occupying at least 18 percent of the ground floor footprints. Both are conditions on a mixed-use parcel; a pod alone on a lot is the whole parcel and is all residential. This is the reading Steph may want to see: the door exists, and it is written for a development this building is a part of, not one it is
+      the note is the residential door in this use table, and it opens only for a building this is not: a freestanding residential use in the CCC zone only when nonresidential uses occupy the street side of the same parcel and within 50 percent of its CCC-zoned area (25 until Ord. 603, 8/18/2026; re-read 2026-11-09, FOLLOWUPS 166), or in the Rock Creek Employment Center with a nonresidential use on one street side occupying at least 18 percent of the ground floor footprints. Both are conditions on a mixed-use parcel; a pod alone on a lot is the whole parcel and is all residential. This is the reading Steph may want to see: the door exists, and it is written for a development this building is a part of, not one it is
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L112-L113"
-    digest: "5befc9581ee7"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L119-L121"
+    digest: "0c9f984b1fb3"
     state: encoded
     encoded_as: >-
       CCC and MCC quadplex_allowed: value false, quoting notes 1 to 3 among their lines
     reason: >-
       the note is the residential door in this use table, and it opens only for a building this is not: residential uses at MUR-M2 densities in conjunction with nonresidential uses, the freestanding footprint within 25 percent of the parcel's MCC-zoned area. The same condition as note 2 for the MCC column -- a residential building beside a nonresidential use on the same parcel -- and a pod on its own lot has no nonresidential use to be in conjunction with
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L114"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L122-L123"
     digest: "d06eb0e149d1"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L117-L118"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L128-L130"
     digest: "ea3ce6edd339"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L119"
+  - quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L131"
     digest: "5498cd3a41f1"
     state: dismissed
     reason: >-
@@ -699,58 +694,87 @@ notes:
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L139-L141"
-    digest: "c189418fb5af"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L143-L152"
+    digest: "f2a1a4b0f7d1"
     state: encoded
     encoded_as: >-
       EC and IC quadplex_allowed: value false, quoting note 1 among their lines
     reason: >-
       the note is the residential door in this use table, and it opens only for a building this is not: residential uses on the upper floors of a mixed-use building, and in the Rock Creek Employment District a ground-floor residential use provided residential and its ancillary uses occupy no more than 80 percent of the site's interior square footage and no ground-floor residential use is within 20 feet of a transit street. A four-unit residential building alone on a lot is 100 percent of its site's interior, so even the Rock Creek door needs a nonresidential fifth of the site this building does not bring
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L142-L144"
-    digest: "2843e89f7b12"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L153-L162"
+    digest: "0f9b7e49a22a"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L145"
-    digest: "3836c6b988e8"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L163-L176"
+    digest: "066e40f4f3a1"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L150"
-    digest: "692b3cfdd529"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L177-L180"
+    digest: "431261707bf9"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L151"
-    digest: "159f26188f4d"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L181-L184"
+    digest: "1c27ab89ebef"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L153"
-    digest: "f006a2b7be1b"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L189-L192"
+    digest: "adb038331c52"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L154"
-    digest: "e8f6fc7ac86c"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L193-L196"
+    digest: "613f3d206759"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L155"
-    digest: "63e8b32e92a0"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L197-L200"
+    digest: "2e937ec9e8fb"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
 
-  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L156"
-    digest: "cc40a4d19428"
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L201-L204"
+    digest: "e7bd298a700a"
+    state: dismissed
+    reason: >-
+      a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
+
+  # Re-fetched 2026-11-09 (FOLLOWUPS 166): 16.25.010's notes now print as a
+  # table, and the extractor repeats a spanned cell in every column it
+  # covers, so each note reads three times over. The words are unchanged;
+  # these four no longer share a digest with the same note elsewhere.
+
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L185-L188"
+    digest: "825541d6347e"
+    state: dismissed
+    reason: >-
+      a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
+
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L205-L208"
+    digest: "18d3cf30d21d"
+    state: dismissed
+    reason: >-
+      a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
+
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L209-L212"
+    digest: "f1b3f4ace2c0"
+    state: dismissed
+    reason: >-
+      a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes
+
+  - quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L213-L216"
+    digest: "331b7e44afa4"
     state: dismissed
     reason: >-
       a note on a nonresidential row of a use table this layer quotes to show that no row names this building. The zone's refusal rests on the table's dwelling rows -- or their absence -- and on the sentence that makes an unlisted use a prohibited one, not on this row; the note qualifies a use this building is not, and can neither open nor close a door for it. Governed here because the refusal quotes lines this block's region covers, which is the region the census reads and is meant to read -- a notes block governs its whole table, and the table is what the refusal quotes

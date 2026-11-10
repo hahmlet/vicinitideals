@@ -1,30 +1,42 @@
-§ 19.309.4. Specific Prohibited Uses.
+§ 19.309.4. Additional Development Standards.
+
+The following development standards apply to all uses in the M Zone.
 
 A.
 
-Any use which has a primary function of storing, utilizing, or manufacturing explosive materials or other hazardous material as defined by the Oregon Fire Code, Chapter 27.
+Outdoor Storage.
+
+A permitted use may require outside storage areas.
+These storage areas must be screened with a 6-ft high sight-obscuring fence or dense plantings from any adjoining residential uses or public streets.
+Vegetation used to screen outdoor storage areas must be of such species, number, and spacing to provide the required screening within one year after planting.
+All plantings used to screen outdoor uses must be maintained on an ongoing basis and must be replaced if vegetation is diseased, dying, or dead.
 
 B.
 
-New residential, religious institutions, or public schools.
+Transition area.
 
-C.
-
-Retail uses greater than 60,000 sq ft gross floor area per building or business are prohibited on all lots included in mapped "Employment" or "Industrial" areas as shown on Milwaukie Comprehensive Plan Title 4 Lands Map, April 6, 1999.
-
-D.
-
-All lots included in mapped "Industrial" areas, as shown on Milwaukie Comprehensive Plan Title 4 Lands Map, April 6, 1999, carry the following additional restrictions:
+Industrial development within 120 ft of areas zoned for residential uses is subject to Type II review per Section 19.906 Development Review.
+The review authority may attach conditions to reduce any potentially adverse impacts to residential properties.
+The following characteristics will be considered:
 
 1.
 
-Individual retail trade uses greater than 5,000 sq ft gross floor area per building or business are prohibited.
+Lighting – On-site lighting should not extend beyond the property line, nor should it point towards the residential zone.
 
 2.
 
-Multiple retail trade uses that occupy more than 20,000 sq ft gross floor area are prohibited, whether in a single building or in multiple buildings within the same project.
+Hours of operation – Operating characteristics between 10:00 p.m. and 7:00 a.m. should be reviewed to mitigate impacts.
 
 3.
 
-Facilities whose primary purpose is to provide training to meet industrial needs are exempted from this prohibition.
+Delivery and shipping – To the extent practicable, delivery and shipping doors should be oriented away from the residential zone.
+
+4.
+
+Distance to residential zone boundary – The potential for impacts and mitigation should include consideration of the yard size between the building and the residential zone boundary.
+
+C.
+
+Uses must not be of a type or intensity that produces dust, odor, smoke, fumes, noise, glare, heat, vibrations, or other similar impacts that are incompatible with other uses allowed in this zone.
+In addition, the use must not produce off-site impacts that create nuisances as defined by the Oregon Department of Environmental Quality (D.E.Q.) or the noise control standards established in Chapter 8.08.
 

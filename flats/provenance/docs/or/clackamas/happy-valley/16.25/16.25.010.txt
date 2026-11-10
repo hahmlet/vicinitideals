@@ -71,92 +71,149 @@ B.
 
 Permitted Uses. Table 16.25.010-1 identifies the land uses that are allowed in the EC and IC Districts.
 
-Table 16.25.010-1 Industrial (EC, IC) Permitted Uses                                                                                                                    Table 16.25.010-1 Industrial (EC, IC) Permitted Uses  Table 16.25.010-1 Industrial (EC, IC) Permitted Uses
-P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                            P=Permitted; C=Conditional Use; X=Prohibited          P=Permitted; C=Conditional Use; X=Prohibited
-Land Use                                                                                                                                                                EC                                                    IC
-Residential                                                                                                                                                             Residential                                           Residential
-Pre-existing dwellings. Preexisting dwellings may be allowed to remodel or expand and shall not be subject to the provisions of Chapter 16.72                           P                                                     P
-Home occupations in pre-existing dwellings                                                                                                                              P                                                     P
-New residential uses                                                                                                                                                    P[1]                                                  X
-Commercial—Retail                                                                                                                                                       Commercial—Retail                                     Commercial—Retail
-Commercial day care                                                                                                                                                     C                                                     C
-Entertainment, major event                                                                                                                                              X                                                     X
-Hotels                                                                                                                                                                  C                                                     X
-Indoor health and recreation facilities, such as racquetball court, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities    C                                                     C
-Mobile food units                                                                                                                                                       P[3,12]                                               P[3,12]
-Outdoor recreation, commercial                                                                                                                                          X/C[9]                                                X
-Parking lot (when not an accessory use)                                                                                                                                 X                                                     C/X[7]
-Quick vehicle servicing or vehicle repair                                                                                                                               C                                                     P
-Retail sales—Includes used homes, trailers, motor homes and recreational vehicles                                                                                       P[2,7]                                                P[3,7]
-Commercial service                                                                                                                                                      P[2]                                                  P[3]
-Self-service storage—Includes mini-storage and recreational vehicle storage facilities                                                                                  X                                                     P/X[7]
-Marijuana retailing                                                                                                                                                     X                                                     X
-Psilocybin service center                                                                                                                                               X                                                     X
-Commercial—Office                                                                                                                                                       Commercial—Office                                     Commercial—Office
-Offices                                                                                                                                                                 P                                                     P[4]
+Table 16.25.010-1 Industrial (EC, IC) Permitted Uses                                                                                                                                              Table 16.25.010-1 Industrial (EC, IC) Permitted Uses  Table 16.25.010-1 Industrial (EC, IC) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                                                      P=Permitted; C=Conditional Use; X=Prohibited          P=Permitted; C=Conditional Use; X=Prohibited
+Land Use                                                                                                                                                                                          EC                                                    IC
+Residential                                                                                                                                                                                       Residential                                           Residential
+Pre-existing dwellings. Preexisting dwellings may be allowed to remodel or expand and shall not be subject to the provisions of Chapter 16.72                                                     P                                                     P
+Home occupations in pre-existing dwellings                                                                                                                                                        P                                                     P
+New residential uses                                                                                                                                                                              P[1]                                                  X
+Commercial—Retail                                                                                                                                                                                 Commercial—Retail                                     Commercial—Retail
+Commercial day care                                                                                                                                                                               C                                                     C
+Entertainment, major event                                                                                                                                                                        X                                                     X
+Hotels                                                                                                                                                                                            C                                                     X
+Indoor health and recreation facilities, such as racquetball court, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities                              C                                                     C
+Mobile food units                                                                                                                                                                                 P[3,12]                                               P[3,12]
+Outdoor recreation, commercial                                                                                                                                                                    X/C[9]                                                X
+Parking lot (when not an accessory use)                                                                                                                                                           X                                                     C/X[7]
+Quick vehicle servicing or vehicle repair                                                                                                                                                         C                                                     P
+Retail sales—Includes used homes, trailers, motor homes and recreational vehicles                                                                                                                 p[2,7]                                                p[3,7]
+Commercial service                                                                                                                                                                                p[2]                                                  P[3]
+Self-service storage—Includes mini-storage and recreational vehicle storage facilities                                                                                                            X                                                     P/X[7]
+Marijuana retailing                                                                                                                                                                               X                                                     X
+Psilocybin service center                                                                                                                                                                         X                                                     X
+Commercial—Office                                                                                                                                                                                 Commercial—Office                                     Commercial—Office
+Offices                                                                                                                                                                                           P                                                     P[4]
 Industrial[5]
-Industrial services—Fully enclosed                                                                                                                                      P                                                     P
-Industrial services—Not enclosed                                                                                                                                        C                                                     P
-Manufacturing and production and fabrication and assembly—Fully enclosed                                                                                                P                                                     P
-Research and development activities and laboratories—Fully enclosed                                                                                                     P                                                     P
-Research and development activities and laboratories—Not fully enclosed                                                                                                 C[5]                                                  P[5]
-Repair, finishing and testing—Fully enclosed                                                                                                                            P                                                     P
-Repair, finishing and testing—Not fully enclosed                                                                                                                        C[5]                                                  P[5]
-Distribution center and warehouse                                                                                                                                       P[6]                                                  P[8]
-Waste-related                                                                                                                                                           X                                                     C/X[7]
-Helipads or heliports[11]                                                                                                                                               P                                                     P
-Transfer station                                                                                                                                                        C                                                     P[7]
-Wholesale activities                                                                                                                                                    P[2]                                                  P[3]
-Institutional                                                                                                                                                           Institutional                                         Institutional
-Basic utilities                                                                                                                                                         P                                                     P
-Colleges                                                                                                                                                                C[2]                                                  X
-Institutional uses; educational institutes and trade schools; art, music, or dance studios; radio and television studios, excluding transmission towers                 C[2]                                                  C
-Public parks and open space—Pedestrian amenities                                                                                                                        P                                                     P
-Public parks and open space—Parks and recreation facilities                                                                                                             C                                                     P
-Public parks, usable open space                                                                                                                                         P                                                     P
+Industrial services—Fully enclosed                                                                                                                                                                P                                                     P
+Industrial services—Not enclosed                                                                                                                                                                  C                                                     P
+Manufacturing and production and fabrication and assembly—Fully enclosed                                                                                                                          P                                                     P
+Research and development activities and laboratories—Fully enclosed                                                                                                                               P                                                     P
+Research and development activities and laboratories—Not fully enclosed                                                                                                                           C[5]                                                  P[5]
+Repair, finishing and testing—Fully enclosed                                                                                                                                                      P                                                     P
+Repair, finishing and testing—Not fully enclosed                                                                                                                                                  C[5]                                                  P[5]
+Distribution center and warehouse                                                                                                                                                                 P[6]                                                  P[8]
+Waste-related                                                                                                                                                                                     X                                                     C/X[7]
+Helipads or heliports[11]                                                                                                                                                                         P                                                     P
+Transfer station                                                                                                                                                                                  C                                                     P[7]
+Wholesale activities                                                                                                                                                                              P[2]                                                  P[3]
+Institutional                                                                                                                                                                                     Institutional                                         Institutional
+Basic utilities such as utility substations; water, sanitary sewer and wastewater pump stations; public works facilities; police and fire facilities; including associated structures and yards.
+P                                                     P
+Colleges                                                                                                                                                                                          C[2]                                                  X
+Institutional uses; educational institutes and trade schools; art, music, or dance studios; radio and television studios, excluding transmission towers                                           C[2]                                                  C
+Public parks and open space—Pedestrian amenities                                                                                                                                                  P                                                     P
+Public parks and open space—Parks and recreation facilities                                                                                                                                       C                                                     P
+Public parks, usable open space                                                                                                                                                                   P                                                     P
 Churches, synagogues, temples or places of worship, library, post office, community center, etc.
 C[2]                                                  X
-Public and private schools (includes commercial day care, dancing and music schools)                                                                                    X/C[2,7]                                              X
-Other                                                                                                                                                                   Other                                                 Other
-Agriculture—Animals, when an existing use as of May 5, 2009                                                                                                             P                                                     P
-Agriculture—Animals, when accessory to a permitted industrial use                                                                                                       X                                                     P
-Agriculture—Animals, when new use                                                                                                                                       X                                                     X
-Agriculture—Nurseries and similar horticulture (See also wholesale and retail uses)                                                                                     C                                                     P
-Agriculture—Vegetative processing/recycling, log processing—Not enclosed                                                                                                C                                                     C
-Buildings and structures exceeding the height limits in Table 16.25.010-2                                                                                               C                                                     C
-Marijuana processing, production and wholesaling                                                                                                                        P[10,13]                                              P[10,13]
-Psilocybin processing, production and wholesaling                                                                                                                       P[10,13]                                              P[10,13]
-Radio frequency transmission facilities—Within height limit of district                                                                                                 P                                                     P
-Radio frequency transmission facilities—Exceeds height limit (freestanding or building-mounted facilities)                                                              C                                                     C
-Rail lines and utility corridors                                                                                                                                        P                                                     P
-Temporary uses (limited to "P" and "C" uses), per Section 16.69.010                                                                                                     C                                                     C
-Transportation facilities (operation, maintenance, preservation, and construction in accordance with the City's Transportation System Plan)                             P                                                     P
-Wireless telecommunication facilities: wireless telecommunication facilities are subject to the requirements of Section 16.44.020 (Wireless Communications Facilities)  P/C                                                   P/C
-Any accessory use or structure, not otherwise prohibited, that the Planning Official or designee finds to be customarily accessory and incidental to a permitted use    P                                                     P
-Any use that the Planning Official or designee finds to be similar to one or more of those specified above                                                              P/C                                                   P/C
+Public and private schools (includes commercial day care, dancing and music schools)                                                                                                              X/C[2,7]                                              X
+Other                                                                                                                                                                                             Other                                                 Other
+Agriculture—Animals, when an existing use as of May 5, 2009                                                                                                                                       P                                                     P
+Agriculture—Animals, when accessory to a permitted industrial use                                                                                                                                 X                                                     P
+Agriculture—Animals, when new use                                                                                                                                                                 X                                                     X
+Agriculture—Nurseries and similar horticulture (See also wholesale and retail uses)                                                                                                               C                                                     P
+Agriculture—Vegetative processing/recycling, log processing—Not enclosed                                                                                                                          C                                                     C
+Buildings and structures exceeding the height limits in Table 16.25.010-2                                                                                                                         C                                                     C
+Marijuana processing, production and wholesaling                                                                                                                                                  P[10,13]                                              P[10,13]
+Psilocybin processing, production and wholesaling                                                                                                                                                 P[10,13]                                              P[10,13]
+Radio frequency transmission facilities—Within height limit of district                                                                                                                           P                                                     P
+Radio frequency transmission facilities—Exceeds height limit (freestanding or building-mounted facilities)                                                                                        C                                                     C
+Rail lines and utility corridors                                                                                                                                                                  P                                                     P
+Temporary uses (limited to "P" and "C" uses), per Section 16.69.010                                                                                                                               C                                                     C
+Transportation facilities (operation, maintenance, preservation, and construction in accordance with the City's Transportation System Plan)                                                       P                                                     P
+Wireless telecommunication facilities: wireless telecommunication facilities are subject to the requirements of Section 16.44.020 (Wireless Communications Facilities)                            P/C                                                   P/C
+Any accessory use or structure, not otherwise prohibited, that the Planning Official or designee finds to be customarily accessory and incidental to a permitted use                              P                                                     P
+Any use that the Planning Official or designee finds to be similar to one or more of those specified above                                                                                        P/C                                                   P/C
 
 NOTES:
-[1] Residential uses on upper floors of mixed use buildings are permitted.
+NOTES:
+NOTES:
+NOTES:
+[1]
+Residential uses on upper floors of mixed-use buildings are permitted.
 In the Rock Creek Employment District, the ground floor may contain a residential use (including ancillary residential uses within the same tenant space such as lobbies, day care, community rooms, exercise facilities, office, and activity spaces), provided that residential uses, accessory and ancillary uses, whether shared with commercial uses or separate occupy no more than 80% of the overall interior square footage of the site.
 No ground floor residential use may be within 20 feet of a transit street.
-[2] New commercial retail uses shall not exceed 60,000 square feet gross leasable area on a single lot or parcel or contiguous lots or parcels.
+Residential uses on upper floors of mixed-use buildings are permitted.
+In the Rock Creek Employment District, the ground floor may contain a residential use (including ancillary residential uses within the same tenant space such as lobbies, day care, community rooms, exercise facilities, office, and activity spaces), provided that residential uses, accessory and ancillary uses, whether shared with commercial uses or separate occupy no more than 80% of the overall interior square footage of the site.
+No ground floor residential use may be within 20 feet of a transit street.
+Residential uses on upper floors of mixed-use buildings are permitted.
+In the Rock Creek Employment District, the ground floor may contain a residential use (including ancillary residential uses within the same tenant space such as lobbies, day care, community rooms, exercise facilities, office, and activity spaces), provided that residential uses, accessory and ancillary uses, whether shared with commercial uses or separate occupy no more than 80% of the overall interior square footage of the site.
+No ground floor residential use may be within 20 feet of a transit street.
+[2]
+New commercial retail uses shall not exceed 60,000 square feet gross leasable area on a single lot or parcel or contiguous lots or parcels.
 For the purposes of this limitation, parcels or lots separated by only a transportation right-of-way are considered to be contiguous.
 The use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
-[3] Uses are subject to the following limitations:
-a. New uses:
-1. No single store, branch, agency or other outlet shall exceed 5,000 square feet in area (including buildings and outdoor storage and sales areas); and
-2. On sites with multiple outlets, the cumulative area dedicated to these uses shall not exceed 20,000 square feet (including buildings and outdoor storage and sales areas);
-b. Existing uses and buildings: Notwithstanding subsection (a) above, the use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
-[4] Permitted as an accessory use—Executive and administrative offices must relate to the operation of the industrial use and may not exceed 40% of the total gross floor area.
-[5] If not fully enclosed, must be located more than 200 feet from residential districts and petroleum storage and refining.
-[6] Permitted as an accessory use—May not exceed 20% of the total site area.
-[7] All uses are prohibited within the Rock Creek Employment Center Subdistrict as defined in subsection F. Specific to retail sales, prohibition is on sale of used homes, trailers, motor homes and recreational vehicles.
-[8] Within the Rock Creek Employment Center Subdistrict as defined in subsection F, use is permitted only as an accessory use—May not exceed 20% of the total site area except as noted in subsection F.3.
-[9] Outdoor recreation facilities without permanent buildings are allowed as a conditional use within the EC zone.
-[10] Use is prohibited within the Rock Creek Employment Center Subdistrict as defined in Section 16.25.010.F.
-[11] Subject to applicable FAA rules and regulations.
-[12] Pursuant to Section 16.69.030.
-[13] Pursuant to Chapter 16.49.
+New commercial retail uses shall not exceed 60,000 square feet gross leasable area on a single lot or parcel or contiguous lots or parcels.
+For the purposes of this limitation, parcels or lots separated by only a transportation right-of-way are considered to be contiguous.
+The use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+New commercial retail uses shall not exceed 60,000 square feet gross leasable area on a single lot or parcel or contiguous lots or parcels.
+For the purposes of this limitation, parcels or lots separated by only a transportation right-of-way are considered to be contiguous.
+The use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+[3]
+Uses are subject to the following limitations:
+Uses are subject to the following limitations:
+Uses are subject to the following limitations:
+a.
+New uses:
+New uses:
+1.
+No single store, branch, agency or other outlet shall exceed 5,000 square feet in area (including buildings and outdoor storage and sales areas); and
+2.
+On sites with multiple outlets, the cumulative area dedicated to these uses shall not exceed 20,000 square feet (including buildings and outdoor storage and sales areas);
+b.
+Existing uses and buildings: Notwithstanding subsection (a) above, the use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+Existing uses and buildings: Notwithstanding subsection (a) above, the use of any building, structure or land that was existing on or before July 17, 2012 or which was a legal use at the time of annexation may continue and may expand to add up to 20% more floor area and 10% more land area on a site.
+[4]
+Permitted as an accessory use—Executive and administrative offices must relate to the operation of the industrial use and may not exceed 40% of the total gross floor area.
+Permitted as an accessory use—Executive and administrative offices must relate to the operation of the industrial use and may not exceed 40% of the total gross floor area.
+Permitted as an accessory use—Executive and administrative offices must relate to the operation of the industrial use and may not exceed 40% of the total gross floor area.
+[5]
+If not fully enclosed, must be located more than 200 feet from residential districts and petroleum storage and refining.
+If not fully enclosed, must be located more than 200 feet from residential districts and petroleum storage and refining.
+If not fully enclosed, must be located more than 200 feet from residential districts and petroleum storage and refining.
+[6]
+Permitted as an accessory use—May not exceed 20% of the total site area.
+Permitted as an accessory use—May not exceed 20% of the total site area.
+Permitted as an accessory use—May not exceed 20% of the total site area.
+[7]
+All uses are prohibited within the Rock Creek Employment Center Subdistrict as defined in subsection F. Specific to retail sales, prohibition is on sale of used homes, trailers, motor homes and recreational vehicles.
+All uses are prohibited within the Rock Creek Employment Center Subdistrict as defined in subsection F. Specific to retail sales, prohibition is on sale of used homes, trailers, motor homes and recreational vehicles.
+All uses are prohibited within the Rock Creek Employment Center Subdistrict as defined in subsection F. Specific to retail sales, prohibition is on sale of used homes, trailers, motor homes and recreational vehicles.
+[8]
+Within the Rock Creek Employment Center Subdistrict as defined in subsection F, use is permitted only as an accessory use—May not exceed 20% of the total site area except as noted in subsection F.3.
+Within the Rock Creek Employment Center Subdistrict as defined in subsection F, use is permitted only as an accessory use—May not exceed 20% of the total site area except as noted in subsection F.3.
+Within the Rock Creek Employment Center Subdistrict as defined in subsection F, use is permitted only as an accessory use—May not exceed 20% of the total site area except as noted in subsection F.3.
+[9]
+Outdoor recreation facilities without permanent buildings are allowed as a conditional use within the EC zone.
+Outdoor recreation facilities without permanent buildings are allowed as a conditional use within the EC zone.
+Outdoor recreation facilities without permanent buildings are allowed as a conditional use within the EC zone.
+[10]
+Use is prohibited within the Rock Creek Employment Center Subdistrict as defined in Section 16.25.010.F.
+Use is prohibited within the Rock Creek Employment Center Subdistrict as defined in Section 16.25.010.F.
+Use is prohibited within the Rock Creek Employment Center Subdistrict as defined in Section 16.25.010.F.
+[11]
+Subject to applicable FAA rules and regulations.
+Subject to applicable FAA rules and regulations.
+Subject to applicable FAA rules and regulations.
+[12]
+Pursuant to Section 16.69.030.
+Pursuant to Section 16.69.030.
+Pursuant to Section 16.69.030.
+[13]
+Pursuant to Chapter 16.49.
+Pursuant to Chapter 16.49.
+Pursuant to Chapter 16.49.
 
 C.
 
@@ -286,4 +343,4 @@ No maneuvering or parking of commercial vehicles is permitted within the minimum
 
 Figure 16.25.010-1 Rock Creek Employment Center Subdistrict
 
-(Ord. 389 § 1(Exh. A), 2009; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 443 § 1, 2013; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 491 § 1, 2016; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 526 § 1, 2017; Ord. 545 § 1, 2019; Ord. 556 § 1, 2021; Ord. 572 § 1, 2023; Ord. 573 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 598, 10/7/2025)
+(Ord. 389 § 1(Exh. A), 2009; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 443 § 1, 2013; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 491 § 1, 2016; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 526 § 1, 2017; Ord. 545 § 1, 2019; Ord. 556 § 1, 2021; Ord. 572 § 1, 2023; Ord. 573 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 598, 10/7/2025; Ord. 603, 8/18/2026)

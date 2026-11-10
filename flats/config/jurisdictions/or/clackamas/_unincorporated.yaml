@@ -138,8 +138,9 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   standards of the RCHDR District (RCC, RCO) or of the HDR District (RTL, CC, C-3, OC).
   Freestanding is the only kind this building is. So 896 lots of commercial land depend on
   two residential districts this layer has never encoded, and encoding them is the whole of
-  the remaining work here. SCMU is a third shape: Table 510-2 omits it from the header while
-  every data row carries eleven cells, and its eighth cell is not a number but "See
+  the remaining work here. SCMU is a third shape: Table 510-2 omitted it from the header while
+  every data row carried eleven cells (the county repaired the header; re-fetched 2026-11-09,
+  FOLLOWUPS 166), and its eighth cell is not a number but "See
   Subsection 1005.09", the Fuller Road Station Community standards. PMU is a fourth -- Table
   510-3 states its requirements site by site, six sites with six different minimum lot sizes.
 
@@ -306,8 +307,11 @@ readings:
       for eleven columns of cells, having dropped SCMU from between PMU and OA. Counting into that
       header read SCMU's "100 feet" minimum street frontage as OA's -- a number for a district
       whose own cell is blank, with a citation pointing at exactly the right line. The table
-      reader now refuses a row wider than its header rather than shifting it, so nothing can be
-      encoded off this table by counting until the header is repaired at the source. Encoding
+      reader now refuses a row wider than its header rather than shifting it, so nothing could be
+      encoded off this table by counting until the header was repaired at the source. It was:
+      the copy re-fetched 2026-11-09 (FOLLOWUPS 166) prints SCMU between PMU and OA, eleven names
+      for eleven columns, and no cell changed. Nothing is encoded from the table yet, so no value
+      moves; counting is now possible, but the by-hand reading below is still the job. Encoding
       these eleven districts by hand, against the applicability clause in 510.02 rather than
       against the header, is the job this card is holding open.
     fingerprint: 859334521615ea1b
@@ -4255,7 +4259,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, SCMU cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1489,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1490,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4359,7 +4363,7 @@ zones:
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, SCMU cell ("None"); 1005.09 states no maximum
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1453"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1446,L1454"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -4442,23 +4446,23 @@ zones:
       quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     setback_front_ft:
       value: 0
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1409,L1416"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1410,L1417"
     setback_side_ft:
       # Table 510-2 PMU side cell is "0[8,15]". Note 15: "If the side lot line
       # abuts a residential zoning district, the minimum shall be 15 feet."
       # This layer declares no abuts_residential_zone fact, so the 15 is held
       # on every lot, the stricter reading.
       value: 15
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1433,L1440,L1551"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1434,L1441,L1552"
     setback_rear_ft:
       # "0[8,10]"; note 10: 15 feet if the rear lot line abuts a residential
       # zoning district. Held at 15 for the same reason as the side.
       value: 15
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1421,L1428,L1537"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1422,L1429,L1538"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, PMU cell ("None")
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1452"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1446,L1453"
     notes: >-
       RED, RE-RULED 2026-10-14 under Steph's review rule (replacing the
       by-right-only ruling of 2026-10-08): the pod misses the measured site
@@ -4504,7 +4508,7 @@ zones:
     min_lot_sqft:
       # Table 510-2: "PMU2: 2 acres" = 87,120 square feet.
       acres: 2
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1376"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1369,L1377"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as PMU1). Table 510-3 for
       PMU2 to PMU5 requires 50 percent of the site in office or residential
@@ -4534,7 +4538,7 @@ zones:
     min_lot_sqft:
       # Table 510-2: "PMU3: 3 acres" = 130,680 square feet.
       acres: 3
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1377"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1369,L1378"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as PMU1), and the same Table 510-3
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
@@ -4557,7 +4561,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RTL cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1485,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1486,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4633,7 +4637,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, CC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1486,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1487,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4709,7 +4713,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, C-3 cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1487,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1488,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4785,7 +4789,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, OC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1491,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1492,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4864,7 +4868,7 @@ zones:
       # definitions are read (conservative default).
       value: 30
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1484,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1485,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4943,7 +4947,7 @@ zones:
       # definitions are read (conservative default).
       value: 30
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCO cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1492,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1493,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,

@@ -236,7 +236,9 @@ def test_a_bare_code_needs_the_equals_sign_under_it() -> None:
 
 
 def test_the_second_use_table_answers_its_own_four(base_zones) -> None:
-    block = next(b for b in base_zones.blocks if b.head == 3785)
+    # 3785 -> 3898 on 2026-11-09 (FOLLOWUPS 166): Ord. 2265 rewrote 19.309
+    # and 19.310 above it as tables, 113 lines longer.
+    block = next(b for b in base_zones.blocks if b.head == 3898)
     assert [b.mark for b in block.bodies] == ["1", "2", "3", "4"]
 
 
@@ -251,13 +253,22 @@ def test_the_use_table_answers_its_own_eight(base_zones) -> None:
 def test_the_lettered_subsections_are_not_blocks(base_zones) -> None:
     """51, 424 and 1571 are legends whose next content is a section heading.
     Read as blocks they contributed marks A, B and C from the subsections
-    below them."""
+    below them.
+
+    2026-11-09 (FOLLOWUPS 166): Ord. 2265 recast the M and BI zones' uses and
+    standards as Tables 19.309.2, 19.309.3, 19.310.2 and 19.310.4, each with a
+    "Notes:" block of its own -- four honest blocks (2774, 2800, 3008, 3050),
+    not subsections -- and pushed the GMU-area table from 3785 to 3898."""
     assert sorted(b.head for b in base_zones.blocks) == [
         279,
         509,
         911,
         1070,
-        3785,
+        2774,
+        2800,
+        3008,
+        3050,
+        3898,
     ]
 
 
@@ -274,7 +285,9 @@ def test_the_orphans_the_blocks_were_hiding(base_zones) -> None:
     setback of ten to thirty feet under note 1; the store used to hold
     "10-301", where the marker was invisible and the range was wrong.
     """
-    assert [m.line for m in base_zones.unbodied] == [3924, 3925, 3927, 3928]
+    # +113 on 2026-11-09 (FOLLOWUPS 166): the same four, below Ord. 2265's
+    # longer 19.309 and 19.310.
+    assert [m.line for m in base_zones.unbodied] == [4037, 4038, 4040, 4041]
 
 
 def test_the_four_consecutive_townhouse_limit(base_zones) -> None:
@@ -302,7 +315,9 @@ def test_every_new_note_is_ruled_and_none_blocks() -> None:
     ruled = {row.quote: row for row in dispositions(MILWAUKIE)}
     for path, lines in (
         ("19.303/19.303.2.txt", (263, 266, 268, 271, 274, 276, 278, 280)),
-        ("19.312/19.312.2.txt", (366, 371, 378, 381)),
+        # +8 on 2026-11-09 (FOLLOWUPS 166), words unchanged: Ord. 2265
+        # lengthened the head of 19.312.2.
+        ("19.312/19.312.2.txt", (374, 379, 386, 389)),
     ):
         for line in lines:
             assert ruled[f"{MILWAUKIE}/{path}#L{line}"].state == "dismissed"

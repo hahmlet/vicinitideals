@@ -1,8 +1,22 @@
-§ 19.309.3. Preexisting Uses and Developments.
+§ 19.309.3. Development Standards.
 
-Notwithstanding the provisions of Chapter 19.800 Nonconforming Uses and Development, prohibited uses and structures located in any mapped "employment" or "industrial" area, as shown on the Milwaukie Comprehensive Plan Title 4 Lands Map, that were lawfully in existence prior to May 6, 1999, and would be impacted by amendments prohibiting retail uses in excess of 60,000 sq ft, are considered to be approved uses and structures for the purposes of this section.
-If such a preexisting use or development is damaged or destroyed by fire, earthquake, or other natural force, then the use will retain its preexisting status under this provision, so long as it is substantially reestablished within 3 years of the date of the loss.
+In the Manufacturing Zone, the development standards in Table 19.309.3 apply.
+Notes and/or cross references to other applicable code sections are listed in the "Standards/Additional Provisions" column.
+Additional standards are provided in Subsection 19.309.4.
 
-Notwithstanding the provisions of Chapter 19.800 Nonconforming Uses and Development, prohibited uses and structures located in any mapped "industrial" area, as shown on the Milwaukie Comprehensive Plan Title 4 Lands Map, that were lawfully in existence prior to March 17, 2009, may continue and expand to add up to 20% more floor area and 10% more land area than exists on the above-stated date.
-This expansion requires a conditional use review.
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
+
+Table 19.309.3 Manufacturing Zone—Summary of Development Standards  Table 19.309.3 Manufacturing Zone—Summary of Development Standards  Table 19.309.3 Manufacturing Zone—Summary of Development Standards
+Standards                                                           M                                                                   Standards/Additional Provisions
+A. Lot Standards                                                    A. Lot Standards                                                    A. Lot Standards
+1. Minimum lot size (sq ft)                                         None
+2. Minimum street frontage (ft)                                     None
+B. Development Standards                                            B. Development Standards                                            B. Development Standards
+Minimum yard requirements (ft)                                                                                                          Subsection 19.504.4 Transition Area Measures Subsection 19.309.4.B Transition Area Subsection 19.501.2 Yard exceptions
+Front yard Side yard Street side yard Rear yard                     20 None[1] 10 None[1]                                               Subsection 19.504.4 Transition Area Measures Subsection 19.309.4.B Transition Area Subsection 19.501.2 Yard exceptions
+Maximum building height (ft)                                        45
+Minimum vegetation                                                  15%                                                                 Subsection 19.504.5 Minimum Vegetation
+
+Notes:
+1. When abutting a residential district, the minimum yard requirement must match the respective yard requirement of that district.
 
