@@ -89,16 +89,32 @@ def test_the_closed_up_stamp_needs_the_rest_of_the_frame() -> None:
 def test_the_institutional_table_keeps_its_notes_across_the_page_break(
     store: ProvenanceStore,
 ) -> None:
+    # 2026-11-10 (FOLLOWUPS 165): the 11/1/26 reprint prints Table 120-8's
+    # notes [1]-[4] only; the two Buffering rows still carry a [5] whose note
+    # the city dropped (33.120.txt L1994-L1995). And 33.120.100.B's paragraphs
+    # 6-9 now name markers [7]-[10] while Table 120-1 prints [6]-[9]. Both are
+    # the city's misprints, both reach institutional or non-household uses the
+    # pod never is, and both stay listed here so the next reprint shows up.
     got = _chapter(store, "33.120")
-    block = next(b for b in got.blocks if b.head == 1936)
+    block = next(b for b in got.blocks if b.head == 2001)
     assert [(b.line, b.mark) for b in block.bodies] == [
-        (1937, "1"),
-        (1939, "2"),
-        (1942, "3"),
-        (1949, "4"),
-        (1951, "5"),
+        (2002, "1"),
+        (2004, "2"),
+        (2007, "3"),
+        (2009, "4"),
     ]
-    assert got.unbodied == ()
+    assert {(m.line, m.mark) for m in got.unbodied} == {
+        (275, "7"),
+        (277, "8"),
+        (296, "9"),
+        (300, "10"),
+        (329, "9"),
+        (346, "7"),
+        (355, "8"),
+        (360, "6"),
+        (1994, "5"),
+        (1995, "5"),
+    }
 
 
 def test_five_notes_stop_carrying_the_page_they_were_printed_on(
@@ -107,11 +123,11 @@ def test_five_notes_stop_carrying_the_page_they_were_printed_on(
     def body(name: str, line: int) -> str:
         return next(b for b in _chapter(store, name).bodies if b.line == line).text
 
-    assert body("33.110", 396).endswith("public agency for right -of-way.")
-    assert body("33.110", 477).endswith("See 33.110.265.F.")
-    assert body("33.120", 1942).endswith("comply with the setback standard.")
-    assert body("33.140", 631).endswith("See 33.140.215.B.")
-    assert body("33.150", 574).endswith("there is no minimum setback.")
+    assert body("33.110", 387).endswith("public agency for right-of-way.")
+    assert body("33.110", 468).endswith("See 33.110.265.F.")
+    assert body("33.120", 2007).endswith("comply with the setback standard.")
+    assert body("33.140", 632).endswith("See 33.140.215.B.")
+    assert body("33.150", 580).endswith("there is no minimum setback.")
 
 
 def test_and_one_of_them_now_runs_on_into_a_caption(store: ProvenanceStore) -> None:
@@ -121,7 +137,7 @@ def test_and_one_of_them_now_runs_on_into_a_caption(store: ProvenanceStore) -> N
     obvious cure and it is wrong: it cost sixteen bodies in Gresham's downtown
     chapter and three in Troutdale, where lists carry on after the break
     without renumbering. Recorded, not fixed."""
-    text = next(b for b in _chapter(store, "33.130").bodies if b.line == 668).text
+    text = next(b for b in _chapter(store, "33.130").bodies if b.line == 637).text
     assert "1 unit per 2,500 square feet of site area." in text
     assert "Example Illustration" in text
 
@@ -131,5 +147,5 @@ def test_every_note_the_frame_was_hiding_is_ruled_and_none_blocks() -> None:
     # Proof copy 33.120.txt L1951 and 33.266.txt L540 until Portland was cut
     # into sections (FOLLOWUPS 73, batch 6).
     assert ruled[f"{PORTLAND}/33.120/33.120.275.txt#L62"].state == "dismissed"
-    assert ruled[f"{PORTLAND}/33.266/33.266.130.txt#L140"].state == "dismissed"
+    assert ruled[f"{PORTLAND}/33.266/33.266.130.txt#L143"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

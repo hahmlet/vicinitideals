@@ -220,7 +220,10 @@ pytestmark = pytest.mark.unit
 # rel6 2026-11-09, combining two lanes: 478 -> 486 stated and 206 + 13 = 219 numeric --
 # rel5's 478/206 (above) plus flats/pdx-map-120's Maps 120-2/120-3 rows (+13 numeric; +8 stated:
 # its +12 less the four corner-and-depth variants its round 3 removed).
-EXPECTED = {"stated": 486, "numeric": 248, "marker": 0, "dash": 2, "silent": 8}
+# 2026-11-10 (flats/pdx-drift, FOLLOWUPS 165): stated 486 -> 485. CI1's own "no minimum lot
+# size" exemption (33.150.202) left with the reprint; CI1 now reads as RM1 (33.150.200) and
+# takes RM1's 4,000 sq ft minimum -- one exemption fewer, the conservative direction.
+EXPECTED = {"stated": 485, "numeric": 248, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

@@ -242,7 +242,11 @@ OPEN = {
     # 2026-11-01 while the hold quoted it; Steph's ruling
     # 2026-11-01-trees-ignored-entered-per-lot took trees out of the screen, the
     # hold no longer quotes 125, so the rows are open again (read and set aside).
-    "or/multnomah/portland 33.537.130 -> 33.537.125",
+    # 2026-11-10 (FOLLOWUPS 165): 33.537.130 -> 33.537.125 left the ledger with
+    # the 11/1/26 reprint. The redirect still stands (33.537.txt L279-L281), but
+    # the reprint's text layer prints "a" / "re subject to" on two lines, so the
+    # "are subject to" pattern no longer sees it. Set aside as before (trees out
+    # of the screen, ruling 2026-11-01-trees-ignored-entered-per-lot).
     "or/multnomah/portland 33.537.140 -> 33.537.125",
     "or/multnomah/portland 33.537.150 -> 33.537.125",
     "or/clackamas/_unincorporated 401.04 -> 401.07",
@@ -375,7 +379,9 @@ OPEN = {
     "or/multnomah/gresham 4.1413 -> 4.1414",
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
-    "or/multnomah/portland 33.130.215 -> 33.120.280",
+    # 2026-11-10 (FOLLOWUPS 165): 33.130.215 -> 33.120.280 closed. The 11/1/26
+    # reprint deleted 215.B.4's pointer; detached accessory setbacks are now
+    # "stated in 33.130.265" (33.130.txt L792-L793), a shed's rule, not the pod's.
     "or/multnomah/portland 33.140.210 -> 33.140.215",
     # 2026-10-29 (FOLLOWUPS 73 batch 6): newly visible when Portland was cut into
     # sections, listed and not yet read -- RM max FAR's bonus options (33.120.210

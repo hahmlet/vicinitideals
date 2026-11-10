@@ -107,7 +107,9 @@ def maps(tmp_path):
 def test_every_cite_quotes_the_stored_chapter(name) -> None:
     _, where, quote = pdx.CITES[name]
     doc, lines = where.split("#")
-    first, last = (int(n) for n in re.findall(r"\d+", lines))
+    # One line ("#L71") or a range; the 11/1/26 reprint reflowed five to one line.
+    nums = [int(n) for n in re.findall(r"\d+", lines)]
+    first, last = nums[0], nums[-1]
     text = (DOCS / doc).read_text(encoding="utf-8").splitlines()[first - 1 : last]
 
     def flat(s: str) -> str:

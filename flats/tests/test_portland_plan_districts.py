@@ -198,7 +198,7 @@ def test_the_land_division_quote_says_land_division() -> None:
     store = ProvenanceStore()
     purpose = store.quote("or/multnomah/portland/33.537.txt#L30-L31")
     assert "land division" in purpose
-    density = store.quote("or/multnomah/portland/33.537.txt#L274-L306")
+    density = store.quote("or/multnomah/portland/33.537.txt#L326-L363")
     assert "Land Divisions" in density
 
 

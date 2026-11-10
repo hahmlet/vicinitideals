@@ -5227,16 +5227,16 @@ zones:
     # NO `setback_alley_side_ft` in the six commercial zones, on purpose
     # (FOLLOWUPS 12(c), read 2026-09-28). The residential chapters waive the
     # setback from an alley line in so many words (33.110.220.D.9
-    # 33.110.220.txt#L102, 33.120.220.B.3.g 33.120.220.txt#L54) and hold
+    # 33.110.220.txt#L88, 33.120.220.B.3.g 33.120.220.txt#L57) and hold
     # it on that field. This chapter has no such sentence: "alley" appears in
     # 33.130 only in the step-down height across a street or alley from a
-    # residential zone (33.130.210.txt#L35-L39), a height rule. 33.140 (EX),
+    # residential zone (33.130.210.txt#L30-L33), a height rule. 33.140 (EX),
     # 33.150 (CI2, IR) and 33.100 (OS) never say "alley" at all -- a
     # whole-document grep of every Portland chapter in the store; the plan
     # districts were not part of that grep and could still say more. What
     # governs the line instead: a street lot line "does not include lot lines
-    # that abut an alley" (33.910.030.txt#L544-L547) and a street
-    # "does not include alleys" (#L1374-L1375), so an alley line is "a lot
+    # that abut an alley" (33.910.030.txt#L559-L562) and a street
+    # "does not include alleys" (#L1011), so an alley line is "a lot
     # line that is not a street lot line", and 33.130.215.B.2 sets its
     # setback by the zone it abuts -- the side/rear pair above, one number
     # for either. Where this field is absent the screen cuts a side alley
@@ -6992,7 +6992,7 @@ zones:
       zone: RM1
       wins: local
       cite: PCC 33.150.200 Residential Uses in the CI1 Zone; 33.266.100.B Residential uses in the CI1 zone
-      quote: "or/multnomah/portland/33.150.txt#L402-L403"
+      quote: "or/multnomah/portland/33.150.txt#L402-L404"
     quadplex_allowed:
       # Table 150-1, "Household Living": Y in CI1, as in CI2 and IR. A bare Y,
       # no bracketed limitation. A four-unit building is four Household

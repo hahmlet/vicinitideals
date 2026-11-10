@@ -493,11 +493,17 @@ def test_the_county_pockets_carry_portland_s_rulings() -> None:
     to hold once the layer it adopts has read it. Adding a chapter to a store
     is the ordinary way this number moves, and the count is pinned so it moves
     on purpose.
+
+    Seventy on 2026-11-10 (FOLLOWUPS 165), when the pockets took Portland's
+    11/1/26 reprint: 33.266.130.B now carries "Detached accessory structures
+    are not subject to these regulations." as a numbered item, ruled
+    dismissed against `or/multnomah/portland` the same day -- a shed is not
+    the pod.
     """
     rows = notes("or/multnomah/_unincorporated")
     docs = {row.doc.rsplit("/", 1)[-1] for row in rows}
 
-    assert len(rows) == 69
+    assert len(rows) == 70
     assert docs == {"33.100.txt", "33.110.txt", "33.140.txt", "33.266.txt"}
     assert not any(row.blocking for row in rows)
     assert not [row for row in rows if row.state == "unread"]
