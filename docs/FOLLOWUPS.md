@@ -157,6 +157,7 @@ the full one.)
 170. [Claude] [Steph] [scan: YES if read the other way] **Hillsboro SCR 5 ft maximum side setback: one wall or both?** -- text leans both walls, city record silent; ~300 GREEN at stake; RULED 11-09: both walls -- first check whether a driveway/parking may sit in the side area; if not, YELLOW + ask the city. [file](followups/170-hillsboro-side-max.md)
 171. [Claude] [scan: YES -- toward red, FALSE GREEN] **Portland commercial zones: 10 ft L3 landscaped strip beside residential lots** -- fg-rate-A 1S1E26AB -01200 (CM2, court through the strip, 33.130 Table 130-2); 923 live greens touch a residential lot; lane pdx-cm-buffer BUILDING off rel6. [file](followups/171-pdx-cm-buffer.md)
 172. [Claude] [scan: YES -- toward red, FALSE GREEN] **A lot line read as a street when only a few feet touch a street end** -- fg-rate-A 1N2E35DC -09200 (6.3 ft of a 30.7 ft line touches SE Ash St stub; drive drawn across the neighbour); lane street-touch BUILDING off rel6. [file](followups/172-street-touch.md)
+173. [Claude] [Steph] [scan: NO colour change] **RF (Residential Farm/Forest): state fourplex route or farm land?** -- researched 11-09: Portland Ord 192241 (adopted 2026-10-21, eff 2027-01-01) keeps RF out of HB 2138; all 859 RF lots red either way; ASKED Steph A farm land / B keep / C open. [file](followups/173-rf-middle-housing.md)
 
 ## 2. Waiting on Steph
 
