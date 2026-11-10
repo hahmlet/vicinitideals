@@ -3040,6 +3040,24 @@
   encoded_in:
     - flats/score/screen.py
     - flats/config/jurisdictions/or/washington/tigard.yaml
+- id: 2026-11-10-narrow-street-fire-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {}
+  question: >-
+    A street whose whole public right-of-way is only about 20 ft wide almost
+    surely has under 20 ft of paving, too narrow for a fire truck. Treat it as
+    too narrow (YELLOW) before the paving is measured?
+  ruling: >-
+    "Very narrow, yes. This is a common Fire and Safety shoot down point on a
+    permit."
+  effect: >-
+    Where the fire route depends on a street whose right-of-way is too narrow
+    to hold 20 ft of clear paving and the paving width is unmeasured, the lot
+    is YELLOW with the fire-access flag (never GREEN on that route).
+    FOLLOWUPS 178(b).
+  source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in: [flats/config/fire_roads.yaml, flats/fit/fire_roads.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
 - id: 2026-11-09-busy-road-driveway-spacing-yellow
   kind: ruling
   date: 2026-11-09
