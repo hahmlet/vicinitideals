@@ -678,9 +678,12 @@ def test_fire_only_red_uses_the_next_fitting_placement_within_reach(
     from flats.score.flags import Colour
 
     lot, s, fitter = _placement_retry_case(corpus, policies)
-    if square:
-        s = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=0.0))
-        fitter = Fitter(s.envelope.geom, (0.0,), ground=s.envelope.ground)
+    # The fixture's own fit used to stand at 30 degrees; since pdx-cm-buffer
+    # (FOLLOWUPS 171) CE's parking buffer reshapes the envelope and the fit comes
+    # out square, so both cases now set the angle they test (rel7 assembly, 2026-11-10).
+    angle = 0.0 if square else 30.0
+    s = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
+    fitter = Fitter(s.envelope.geom, (angle,), ground=s.envelope.ground)
     first = Polygon(s.drawing["building"])
 
     def route(building, *_args, **_kwargs):

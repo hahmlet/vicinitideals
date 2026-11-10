@@ -611,7 +611,9 @@ def test_the_fields_are_carried_into_the_ledger(
     # the rear-setback citation it stood beside spans two sections, so it
     # stays on the proof copy and 7/7.0410.txt holds no value near it.
     row = next(r for r in back if r["ref"] == "10.0420")
-    assert row["fields"] == "quadplex_allowed min_frontage_ft min_lot_width_ft"
+    # min_frontage_line joined 2026-11-10 (corner-min-frontage, FOLLOWUPS 175:
+    # which line the frontage minimum is measured on; rel7 assembly).
+    assert row["fields"] == "quadplex_allowed min_frontage_ft min_frontage_line min_lot_width_ft"
     assert row["slack_fields"] == "min_frontage_ft min_lot_width_ft"
     assert row["outcome"] == "other_building"
 
@@ -715,6 +717,9 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/clackamas/tualatin/appendix-b.figures.txt",
         # An ordinance's adopted exhibit, cited by page, not a codified chapter.
         "or/multnomah/portland/amended/ricap11.txt",
+        # Ordinance 192241, stored by rf-farm-land (FOLLOWUPS 173) for the RF
+        # farm-land reading; an ordinance, not a codified chapter (rel7, 2026-11-10).
+        "or/multnomah/portland/amended/ord192241.txt",
         "or/clackamas/gladstone/amended/ord1545.txt",
         # Ordinance 1539, which adopts the Gladstone Town Center map
         # (districts chunk 5, 2026-10-29); cited for its Section 1 and the

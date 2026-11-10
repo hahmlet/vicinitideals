@@ -552,6 +552,9 @@ def _when_parts(when: str) -> tuple[str | None, str]:
             who.append(_WHO[key])
         elif key in _WHERE:
             where.append(_WHERE[key])
+        elif key.startswith("unless:"):
+            # A variant's `unless:` condition (Variant.key) reads as its exception.
+            where.append("except where " + _condition_words(key.removeprefix("unless:"))[0])
         else:
             where.append(_band_phrase(key) or "where " + _condition_words(key)[0])
     said = where[0] if len(where) == 1 else ", ".join(where[:-1]) + " and " + where[-1] if where else ""

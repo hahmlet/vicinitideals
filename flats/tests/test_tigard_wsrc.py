@@ -186,6 +186,10 @@ def _row(
         wkb=shapely.to_wkb(box(x0 + 5, y0 + 10, x0 + width - 5, y0 + depth - 5)),
         lot_wkb=shapely.to_wkb(box(x0, y0, x0 + width, y0 + depth)),
         **NO_OVERLAYS,
+        # Driveway spacing measured clear: these tests are about the WSRC
+        # subdistricts, and Tigard holds an unread spacing at YELLOW since
+        # arterial-spacing (FOLLOWUPS 169; rel7 assembly, 2026-11-10).
+        driveway_spacing="clear",
     )
 
 

@@ -642,6 +642,22 @@ STATES_ITS_OWN_FIGURE = {
     ("tualatin", "RMH"),
     ("tualatin", "RH"),
     ("tualatin", "RH/HR"),
+    # 2026-11-10 (drift-clack, FOLLOWUPS 166; rel7 assembly): Happy Valley Ord. 603
+    # replaced the borrowed 16.43.030.E.4 with D.2's own figure, "a minimum of 10
+    # feet from the public right-of-way", in every zone.
+    ("happy_valley", "R40"),
+    ("happy_valley", "R20"),
+    ("happy_valley", "R15"),
+    ("happy_valley", "R10"),
+    ("happy_valley", "R8.5"),
+    ("happy_valley", "R7"),
+    ("happy_valley", "R5"),
+    ("happy_valley", "MURS"),
+    ("happy_valley", "R20CC"),
+    ("happy_valley", "MURA"),
+    ("happy_valley", "SFA"),
+    ("happy_valley", "VTH"),
+    ("happy_valley", "FU10"),
 }
 
 

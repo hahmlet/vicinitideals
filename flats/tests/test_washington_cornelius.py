@@ -200,7 +200,11 @@ def test_an_r7_lot_clearing_everything_else_is_green_with_the_sun_warning() -> N
     same warning."""
     rules = load_trusted(strict=False).rules
     design = load_catalog().latest("pod56x36")
-    lot = LotFacts(lot_sqft=12000, frontage_ft=100, lot_width_ft=100, lot_depth_ft=120)
+    # Driveway spacing measured clear: Cornelius holds an unread spacing at
+    # YELLOW since arterial-spacing (FOLLOWUPS 169; rel7 assembly, 2026-11-10).
+    lot = LotFacts(
+        lot_sqft=12000, frontage_ft=100, lot_width_ft=100, lot_depth_ft=120, driveway_spacing="clear"
+    )
     config = configure(lot, design)
     draft = rules.resolve(CORNELIUS, "R-7", config.conditions, lot=config.measures)
     assert draft.verdict is RuleVerdict.unverified

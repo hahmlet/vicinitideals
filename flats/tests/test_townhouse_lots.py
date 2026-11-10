@@ -217,14 +217,23 @@ def test_a_fairview_village_lot_passes_as_townhouses_with_the_flag(corpus, polic
 
     assert got.design.plat is Plat.unit_lots
     assert got.design.key == pod().key  # the pod's own row, not a new design
-    assert got.signed.colour is Colour.green
     (flag,) = land_division(got)
     assert "land division into 4 unit lots" in flag.source
-
     forms = got.forms
-    assert forms["works_as"] == "townhomes"
     assert forms["kept"] == "townhomes"
-    assert forms["townhomes"] == {"colour": "green"}
+    if zone == "VMU":
+        # VMU's shallow front yard puts the building inside Fairview's 15 ft
+        # driveway clear-vision triangle (FDC 19.162.020(O)) under the middle-way
+        # curb ruling: held YELLOW on that alone, never on the use (sight-triangles,
+        # FOLLOWUPS 161; rel7 assembly, 2026-11-10).
+        assert got.signed.colour is Colour.yellow
+        assert set(got.signed.reasons) == {"SIGHT_DRIVEWAY"}
+        assert forms["townhomes"]["colour"] == "yellow"
+        assert forms["works_as"] == "neither"
+    else:
+        assert got.signed.colour is Colour.green
+        assert forms["works_as"] == "townhomes"
+        assert forms["townhomes"] == {"colour": "green"}
     assert forms["apartment"]["colour"] == "red"
     assert [b["check"] for b in forms["apartment"]["binds"]] == ["use"]
 
@@ -375,7 +384,9 @@ def test_the_record_rides_into_the_bridge_row(corpus, policies) -> None:
     from flats.ingest.assign import ROW_COLUMNS
     from scripts.flats_load_bridge import result_checks
 
-    _, got = both(corpus, policies, row("fairview", "VMU"), design=pitched(pod()))
+    # VA, not VMU: a VMU lot is held YELLOW on the driveway clear-vision area
+    # since sight-triangles (FOLLOWUPS 161; rel7 assembly, 2026-11-10).
+    _, got = both(corpus, policies, row("fairview", "VA"), design=pitched(pod()))
     written = quadfit.row_for(got)
     assert "forms" in ROW_COLUMNS  # a synthetic row carries the column too
     assert json.loads(written["forms"])["works_as"] == "townhomes"

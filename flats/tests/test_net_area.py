@@ -186,7 +186,10 @@ def test_beaverton_and_cornelius_take_the_drive_and_the_floodplain_for_certain(
         and DRIVE_AISLE in (*value.net_area.less, *value.net_area.may_less)
     ]
 
-    assert len(lists) >= 30
+    # 30 -> 29 on 2026-11-10 (drift-wash, FOLLOWUPS 166; rel7 assembly): Cornelius
+    # Ord 2026-06 re-encoded GMU, whose new minimum density is "per acre", measured
+    # on the gross lot, so its rate carries no net-area list at all.
+    assert len(lists) >= 29
     assert all({DRIVE_AISLE, FLOODPLAIN} <= set(net.less) for net in lists)
 
 

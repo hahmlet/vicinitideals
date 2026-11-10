@@ -346,6 +346,9 @@ def test_every_scan_reads_the_land_itself_and_assign_answers_red(tmp_path: Path,
     monkeypatch.setattr(qf, "_init_worker", lambda *a, **k: None)
     monkeypatch.setattr(qf, "_work_chunk", lambda chunk: [{"TLID": r["TLID"], "design": "d1", "triage": "green", "if_signed": "green"} for r in chunk if not seen.append(r["TLID"])])
     monkeypatch.setattr("flats.geom.curbs.missing", lambda _c: [])
+    # arterial-spacing (FOLLOWUPS 169) made the bridge refuse a snapshot without the
+    # street-type maps; this scan is about institutional land (rel7 assembly, 2026-11-10).
+    monkeypatch.setattr("flats.geom.driveway_spacing.missing", lambda _s: [])
     monkeypatch.setattr(qf, "build_fire_roads", lambda *a, **k: None)
     roads = tmp_path / "s1_streets.parquet"
     roads.write_bytes(b"")
