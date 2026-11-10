@@ -4799,6 +4799,12 @@ def side_door_checked(
     if lot.facts.entrance_side_fit is not None:
         # Already the side-door search: it is never searched a third time.
         return out
+    if lot.facts.landlocked or not door_bearings(lot):
+        # No street line at all: no street-facing fit could be searched, so
+        # its miss says nothing about the doors. The lot keeps its answer
+        # (NO_FRONTAGE, RED on access or fit; coordinator 2026-11-10, no
+        # ruling opens landlocked lots).
+        return out
     for i, (design, s) in enumerate(zip(designs, got)):
         missed = _street_fit_missed(s, design)
         if missed is None:

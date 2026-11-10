@@ -148,3 +148,60 @@ def test_a_lot_that_fits_neither_way_stays_red_unchanged(corpus, policies, monke
     assert s.screening.fit_slack_ft == street.screening.fit_slack_ft
     assert s.screening.head == street.screening.head
     assert _codes(s) == _codes(street)
+
+
+# --- a lot with no street line at all ------------------------------------------------
+
+
+def _no_street(corpus, policies, wide: float, deep: float):
+    """A Portland R5 lot on which s4 found no street line (tier D, no street
+    bearing, every edge a side)."""
+    import json
+
+    import shapely
+    from shapely.geometry import box
+
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.tests.test_fire import X0, Y0, bridge_row
+
+    edges = [
+        [X0, Y0, X0 + wide, Y0, "S"],
+        [X0 + wide, Y0, X0 + wide, Y0 + deep, "S"],
+        [X0 + wide, Y0 + deep, X0, Y0 + deep, "S"],
+        [X0, Y0 + deep, X0, Y0, "S"],
+    ]
+    row = bridge_row(
+        TLID="1S2E20AA  -99177",
+        zone="R5",
+        tier="D",
+        front_bearings_json="[]",
+        area_sqft=wide * deep,
+        lot_depth_ft=deep,
+        frontage_ft=0.0,
+        lot_width_ft=wide,
+        edges_json=json.dumps(edges),
+        wkb=shapely.to_wkb(box(X0 + 5, Y0 + 5, X0 + wide - 5, Y0 + deep - 5)),
+        lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + wide, Y0 + deep)),
+    )
+    lot = lot_from_row(row, corpus.layers)
+    assert lot.facts.landlocked and not lot.front_bearings
+    (s,) = screen_lot(lot, [POD], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    return s
+
+
+@pytest.mark.parametrize(("wide", "deep"), [(95.0, 200.0), (140.0, 140.0)])
+def test_a_lot_with_no_street_line_gets_no_side_door_search(
+    corpus, policies, monkeypatch, wide, deep
+) -> None:
+    # Coordinator 2026-11-10: a lot with no street line keeps today's answer;
+    # the side-door search must not turn it RED -> YELLOW.
+    s = _no_street(corpus, policies, wide, deep)
+    assert door_rule(s.rules, POD) is not None
+    assert s.signed.colour is Colour.red
+    assert FLAG not in _codes(s)
+    _street_only(monkeypatch)
+    street = _no_street(corpus, policies, wide, deep)
+    assert s.signed.colour is street.signed.colour
+    assert s.screening.head == street.screening.head
+    assert _codes(s) == _codes(street)
+
