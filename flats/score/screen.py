@@ -336,6 +336,12 @@ def area_review(config: Configuration | None) -> str | None:
 #: spacing, offset from the lot line and count per frontage are FOLLOWUPS 25
 #: -- so the lot is a closer look, never GREEN, and never a miss.
 CLOSER_LOOK_SECOND_APPROACH = "CLOSER_LOOK_SECOND_APPROACH"
+#: A pitched roof is the rule and a flat one is allowed only with a cornice of
+#: a printed height (Tigard 18.280.040.J: 12 inches), and the pod's roof is
+#: flat with no cornice in its catalog. Steph 2026-11-10 (rulings.yaml
+#: ``2026-11-10-tigard-cornice-yellow``): YELLOW with flag ROOF-CORNICE, a
+#: design detail to confirm -- never GREEN, not RED on this alone.
+CLOSER_LOOK_ROOF_CORNICE = "CLOSER_LOOK_ROOF_CORNICE"
 SIDE_YARD_PARKING_SILENT = (
     "The code neither allows nor forbids parking in the side yard; "
     "see rulings.yaml 2026-11-05-side-yard-parking-silent-codes."
@@ -2288,6 +2294,20 @@ def _min_far_cannot_fit(checks: Sequence[CheckResult], lot: LotFacts, design: De
     )
 
 
+def cornice_owed(rules: ZoneResolution, design: Design) -> float | None:
+    """The cornice height, inches, a flat roof needs here and the pod does not
+    show (``flat_roof_cornice_min_in``); None where the code asks none or the
+    pod's roof is pitched. A design that states no roof owes it too: nothing
+    shows the roof is not flat."""
+    need = rules.get("flat_roof_cornice_min_in")
+    if need is None or isinstance(need, bool):
+        return None
+    pitch = design.roof_pitch_in_12
+    if pitch is not None and pitch > 0:
+        return None
+    return float(need)
+
+
 def approaches_missing(rules: ZoneResolution, design: Design) -> int:
     """How many driveway approaches the code asks beyond the one the plan
     draws: ``ceil(units / driveway_units_per_approach) - PLAN_APPROACHES``,
@@ -3699,6 +3719,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
+    if cornice_owed(rules, design) is not None:
+        closer = (*closer, CLOSER_LOOK_ROOF_CORNICE)
     if parking_setback_doubt:
         closer = (*closer, PARKING_SETBACK_DOUBT)
     if stated_fit_fails:
@@ -4612,6 +4634,14 @@ def _account(
     for name, (code, by) in sorted(LEVER_FLAGS.items()):
         if name in rules.levers:
             flag(code, by, fact=name, source="drawn")
+    cornice = cornice_owed(rules, design)
+    if cornice is not None:
+        flag(
+            "ROOF-CORNICE",
+            CLOSER_LOOK_ROOF_CORNICE,
+            bounds=(0.0, cornice),
+            source=_cite(rules, "flat_roof_cornice_min_in"),
+        )
     missing = approaches_missing(rules, design)
     if missing:
         flag(
@@ -4742,6 +4772,7 @@ __all__ = [
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_SECOND_APPROACH",
+    "CLOSER_LOOK_ROOF_CORNICE",
     "CLOSER_LOOK_STEEP_COARSE",
     "CLOSER_LOOK_ENTRANCE_SIDE",
     "CLOSER_LOOK_REVIEW_CONDITIONS",

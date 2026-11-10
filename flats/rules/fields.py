@@ -98,6 +98,7 @@ _LABELS: dict[str, str] = {
     "max_building_width_ft": "max. building width",
     "max_mass_footprint_sqft": "max. footprint under one roof",
     "min_roof_pitch_in_12": "min. roof pitch (rise in 12)",
+    "flat_roof_cornice_min_in": "flat roof allowed with a cornice at least (inches)",
     "max_coverage_pct": "max. lot coverage %",
     "max_impervious_pct": "max. coverage of buildings and paving %",
     "max_density_du_per_acre": "max. density (units/acre)",
@@ -754,6 +755,21 @@ _F: tuple[FieldDef, ...] = (
         "is to. So this would be a red flag\"), pitch 0, so it misses "
         "every instance (`roof_pitch`). A design that states no roof is not "
         "measured. Optional: absent means no roof rule was read.",
+        False,
+    ),
+    FieldDef(
+        "flat_roof_cornice_min_in",
+        "count",
+        "A pitched roof is the rule and a FLAT roof is allowed only with a "
+        "cornice at least this many INCHES tall, as printed: Tigard 18.280.040.J "
+        "\"a roof may be flat if ... The roof line includes a cornice that "
+        "extends at least six inches from the facade and is a minimum of 12 "
+        "inches in height\". The pod's roof is flat and its catalog states no "
+        "cornice, so a lot this reaches is YELLOW with ROOF-CORNICE (Steph "
+        "2026-11-10, rulings.yaml `2026-11-10-tigard-cornice-yellow`: "
+        "\"tigard, yellow with flag\"), never RED on it and never GREEN. Not "
+        "a pitch floor: a zone holding one is RED on `min_roof_pitch_in_12` "
+        "first. Optional: absent means no such rule was read.",
         False,
     ),
     FieldDef(
@@ -2199,6 +2215,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # 3): a handful of districts state them and most zones state none.
         "max_mass_footprint_sqft",
         "min_roof_pitch_in_12",
+        "flat_roof_cornice_min_in",
         "land_division_parent_standards",
         "max_far",
         # A floor on the amount of building: Canby's Downtown Overlay alone.

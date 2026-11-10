@@ -3006,6 +3006,24 @@
     YELLOWs may go GREEN. FOLLOWUPS 176(h).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
   encoded_in: [flats/config/fire_roads.yaml, flats/provenance/sources.py]
+- id: 2026-11-10-tigard-cornice-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: tigard}
+  question: >-
+    Tigard allows a flat rowhouse roof only with a cornice at least 12 inches
+    tall. Can the pod carry one? If not, Tigard townhouse greens go RED under
+    the flat-roof ruling.
+  ruling: >-
+    "tigard, yellow with flag"
+  effect: >-
+    Tigard lots held only by the 12 in cornice requirement on a flat roof are
+    YELLOW with a flag that the pod needs a cornice at least 12 in tall (a
+    design detail to confirm), not RED. FOLLOWUPS 178(d).
+  source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in:
+    - flats/score/screen.py
+    - flats/config/jurisdictions/or/washington/tigard.yaml
 - id: 2026-11-09-busy-road-driveway-spacing-yellow
   kind: ruling
   date: 2026-11-09

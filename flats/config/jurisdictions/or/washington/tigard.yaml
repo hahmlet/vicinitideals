@@ -656,6 +656,22 @@ zones:
       cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
       url: https://ecode360.com/print/TI5024?guid=43706147
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-A and 18.110.040 Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
@@ -785,6 +801,22 @@ zones:
       cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
       url: https://ecode360.com/print/TI5024?guid=43706147
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-B and 18.110.040 Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
@@ -914,6 +946,22 @@ zones:
       cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
       url: https://ecode360.com/print/TI5024?guid=43706147
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-C and 18.110.040 Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
@@ -1043,6 +1091,22 @@ zones:
       cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
       url: https://ecode360.com/print/TI5024?guid=43706147
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-D and 18.110.040 Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
@@ -1160,6 +1224,22 @@ zones:
       cite: Tigard CDC 18.110 (Residential Zones), 18.280 (Rowhouses) and 18.805 (Lot Standards)
       url: https://ecode360.com/print/TI5024?guid=43706147
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-E and 18.110.040 Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
@@ -1295,6 +1375,22 @@ zones:
       cite: Tigard CDC 18.120 (Commercial Zones), 18.280 (Rowhouses), 18.805 (Lot Standards) and 18.670 (Washington Square Regional Center)
       url: https://ecode360.com/print/TI5024?guid=43706147
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.120.020 (zone list), 18.120.030 Table 18.120.1, Residential Use A in MUR, and 18.120.040 Table 18.120.2, Rowhouses Y in MUR
@@ -1452,6 +1548,22 @@ zones:
       cite: Tigard CDC 18.120 (Commercial Zones), 18.280 (Rowhouses) and 18.670 (Washington Square Regional Center)
       url: https://ecode360.com/print/TI5024?guid=43705535
       retrieved: '2026-09-30'
+    flat_roof_cornice_min_in:
+      # Roof sweep (roof-ban, 2026-11-10). 18.280.040.J binds rowhouse
+      # development in this zone (18.280.020.A), and the pod is one here:
+      # "Roofs must be sloped, with a minimum pitch of 4/12 ... except that a
+      # roof may be flat if" it is a deck of no more than 150 sq ft or "The
+      # roof line includes a cornice that extends at least six inches from the
+      # facade and is a minimum of 12 inches in height". Steph 2026-11-10
+      # (rulings.yaml 2026-11-10-tigard-cornice-yellow): "tigard, yellow with
+      # flag" -- YELLOW with ROOF-CORNICE, not RED. Not set in MU-CBD or TMU
+      # (18.280.020 omits them). MUC's Bridgeport Village sits under 18.620
+      # instead, so a Bridgeport lot here is a false YELLOW, never a false GREEN.
+      value: 12
+      cite: "Tigard CDC 18.280.040.J: roofs sloped 4/12 to 14/12, or flat with a cornice at least 12 inches tall (or a deck of 150 sq ft or less)"
+      retrieved: '2026-11-10'
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L187,L191,L195"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     quadplex_allowed:
       value: true
       cite: Tigard CDC 18.120.020 (zone list), 18.120.030 Table 18.120.1, Residential Use A in MUC, 18.120.040 Table 18.120.2, Rowhouses Y in MUC, and 18.280.020.A

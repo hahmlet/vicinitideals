@@ -1035,6 +1035,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SECOND_APPROACH]
+  ROOF-CORNICE:
+    description: "The code wants a sloped roof and allows a flat one only with a cornice of a printed height (Tigard 18.280.040.J: extending at least 6 in from the facade and at least 12 in tall) or a roof deck of no more than 150 sq ft; the pod's roof is flat and its catalog shows no cornice. Steph 2026-11-10 (rulings.yaml 2026-11-10-tigard-cornice-yellow): YELLOW with this flag, not RED (the bounds are the cornice the pod shows and the height asked, inches)"
+    kind: parametric
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, design]
+    path: "Confirm the pod's flat roof can carry a cornice at least 12 in tall projecting at least 6 in (or a roof deck under 150 sq ft), and add it to the design catalog"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ROOF_CORNICE]
   DRIVEWAY-STATE-OVERRIDE:
     description: "The city's code asks one driveway approach for every N dwelling units (Oregon City 16.12.035.F: every two, which is two for the four-unit pod), and state law overrides it: a Large City may not scale a design standard, driveways included, by the number of dwelling units (OAR 660-046-0225(1)(c), 660-046-0020(4)), so the plan's one shared drive stands. A record of the city's rule, below the yellow line; it returns as DRIVEWAY-SECOND-APPROACH if the override is ever removed"
     kind: parametric
