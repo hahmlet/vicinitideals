@@ -432,18 +432,15 @@ OPEN = {
     #   (quoted in the layer's comments, not by a value); 18.100.070 is the
     #   menu of design features, not placement. CR's 18.100.030(C) Type III
     #   path is for multi-unit dwellings, five or more units.
-    # - 18.75.065 -> 18.75.060, .070: GMU's ground-floor residential
-    #   standards stand "In lieu of" the zone's general ones. GMU refuses
-    #   the one-lot pod; its townhouse path (Steph, 2026-10-01) is held
-    #   behind an unmapped subdistrict figure. The .050 row closed: see
-    #   FOLLOWED.
+    # - 18.75.065 -> 18.75.060, .070 stood here until 2026-11-09 (FOLLOWUPS
+    #   166): Ordinance 2026-06 struck old 065 "In lieu of" whole, and GMU
+    #   now cites the ordinance, so no GMU citation lands in the codified
+    #   18.75 sections and the rows are gone.
     "or/washington/cornelius 18.145.010 -> 18.145.020",
     "or/washington/cornelius 18.35.050 -> 18.150.010",
     "or/washington/cornelius 18.70.050 -> 18.150.010",
     "or/washington/cornelius 18.70.060 -> 18.100.030",
     "or/washington/cornelius 18.70.060 -> 18.100.070",
-    "or/washington/cornelius 18.75.065 -> 18.75.060",
-    "or/washington/cornelius 18.75.065 -> 18.75.070",
     # Tigard, a draft from a cloud session, 2026-10-01. Each read:
     # 18.140.040 -> .030 lists the PR zone's restricted uses; PR prohibits
     # Residential Use. 18.280.040 -> 18.920.030 is the tandem-driveway path
@@ -630,14 +627,9 @@ FOLLOWED = {
     # Density and Intensity Standards" read as a heading. Readable text joins
     # the wrap, and 70.15.10.5 is a subsection of the section that points at
     # it, so there is no row left to follow.
-    # 2026-10-01, Cornelius GMU (a worktree draft). 065 stands "In lieu of"
-    # 050, and 050 was read to know what it replaces: lot size, setbacks,
-    # height, landscaping. The citation that lands there is 050 (A)'s "No
-    # minimum lot size is required", held as the one-lot default under the
-    # townhouse lot size and width -- moot, because the one-lot path is
-    # refused on the use row. Followed in the sense the ledger asks; no
-    # 050 standard is applied to a townhouse.
-    "or/washington/cornelius 18.75.065 -> 18.75.050",
+    # "or/washington/cornelius 18.75.065 -> 18.75.050" stood here until
+    # 2026-11-09 (FOLLOWUPS 166): Ordinance 2026-06 struck old 065, and GMU
+    # now cites the ordinance, not the codified 18.75 sections.
     # Tigard, 2026-10-01 (draft). 18.660.080 -> 18.30 is TMU's height in
     # storeys (L943), whose basements are "as defined in Chapter 18.30"; the
     # layer reads 18.30 whole. 18.660.060 -> .040 is a WIRELESS FACILITY

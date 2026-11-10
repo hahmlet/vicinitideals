@@ -230,7 +230,12 @@ pytestmark = pytest.mark.unit
 # gate, so none of them is reached by a screen.
 # 240 + 5 = 245 numeric on 2026-11-10 (rel7 assembly): both lanes above land together, the
 # pockets-parking -8 and rf-farm-land +5 from rel6's 248.
-EXPECTED = {"stated": 486, "numeric": 245, "marker": 0, "dash": 2, "silent": 8}
+# 486 -> 485 stated and 248 -> 249 numeric on 2026-11-09 (FOLLOWUPS 166, drift-wash):
+# Cornelius Ordinance 2026-06 struck GMU's "There is no maximum density" (old 18.75.065 (C)),
+# so max_density is held exempt on the chapter's silence (grepped whole) and quoted from
+# 020 (I)'s "at least 14 dwelling units per acre": a numeral in the quote, so numeric.
+# 485 stated / 246 numeric: rel6 486/248, pockets-parking -8, rf-farm-land +5, drift-wash -1 stated +1 numeric (rel7 assembly, 2026-11-10, with drift-wash).
+EXPECTED = {"stated": 485, "numeric": 246, "marker": 0, "dash": 2, "silent": 8}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

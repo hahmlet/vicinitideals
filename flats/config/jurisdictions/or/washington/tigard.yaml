@@ -84,6 +84,14 @@ code:
 - id: "tdc.18.720.annexations"
   url: https://ecode360.com/print/TI5024?guid=43708692
   title: Chapter 18.720 Annexations
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): stored 2026-11-06 with no
+# `code:` entry, so the corpus watch never re-fetched it. The URL serves all
+# of Part 18.700; these markers reproduce the stored chapter byte for byte.
+- id: "tdc.18.755.historic-resources"
+  url: https://ecode360.com/print/TI5024?guid=43708427
+  title: Chapter 18.755 Historic Resources
+  start: "Chapter 18.755. Historic Resources"
+  end: "Chapter 18.760. Home Occupations"
 - id: "tdc.18.805.lot-standards"
   url: https://ecode360.com/print/TI5024?guid=43709103
   title: Chapter 18.805 Lot Standards

@@ -666,6 +666,17 @@ code:
   start: "356-1 Intent and Purpose"
   end: "373-1 Intent and Purpose"
   extraction: plain
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): stored 2026-11-01 with no
+# `code:` entry, so the corpus watch never re-fetched it. These markers
+# reproduce the stored text byte for byte from the current PDF.
+- id: "cdc.373.historic-cultural-resource-overlay"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 373 - Historic and Cultural Resource Overlay District"
+  start: "373-1 Intent and Purpose"
+  end: "375-1 Intent and Purpose"
+  extraction: plain
+  # The CDC writes "373-2.1", which fetch._SECTION_NO does not count.
+  allow_thin: true
 - id: "cdc.375.transit-oriented"
   url: https://api.municode.com/PublicationPdfDownload/3090
   title: "CDC Section 375 - Transit Oriented Districts"
@@ -709,6 +720,19 @@ code:
   start: "392-1 Intent and Purpose"
   end: "ARTICLE IV"
   extraction: plain
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): 407 and 411 were stored
+# 2026-11-05 (FOLLOWUPS 146) with no `code:` entry, so the corpus watch never
+# re-fetched them although 407-6.4 is cited. These markers reproduce the
+# stored text byte for byte from the current PDF; 407 was stored from the
+# layout extraction, so its markers carry the layout's spacing.
+- id: "cdc.407.landscape-design"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 407 - Landscape Design"
+  start: "407-1        Minimum Landscape Standards"
+  end: "408           NEIGHBORHOOD CIRCULATION"
+  extraction: layout
+  # The CDC writes "407-6.4", which fetch._SECTION_NO does not count.
+  allow_thin: true
 # Fetched 2026-11-09 (FOLLOWUPS 105 round 4, Steph's standing download OK of
 # 2026-11-09): the alley width and pavement standards 430-84 cites for an
 # improved alley (409-3.3 A rows 10-11).
@@ -719,6 +743,14 @@ code:
   end: "410-1 General Provisions"
   extraction: plain
   # The CDC writes "409-3.3", which fetch._SECTION_NO does not count.
+  allow_thin: true
+- id: "cdc.411.screening-buffering"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 411 - Screening and Buffering"
+  start: "411-1 Applicability"
+  end: "413 PARKING AND LOADING"
+  extraction: plain
+  # The CDC writes "411-5", which fetch._SECTION_NO does not count.
   allow_thin: true
 - id: "cdc.413.parking"
   url: https://api.municode.com/PublicationPdfDownload/3090
