@@ -285,9 +285,11 @@ OPEN = {
     # lot to 19.506, which the pod is not.
     "or/clackamas/estacada 16.16.040 -> 16.60.010",
     "or/clackamas/milwaukie 19.505.1 -> 19.506",
-    "or/clackamas/milwaukie 19.309.2 -> 19.509",
-    "or/clackamas/milwaukie 19.310.2 -> 19.509.2",
-    "or/clackamas/milwaukie 19.310.5 -> 19.509",
+    # Milwaukie's three M and BI rows (19.309.2 and 19.310.2/.5 -> 19.509)
+    # left on 2026-11-09 (FOLLOWUPS 166): Ord. 2265 recast both use lists as
+    # Tables 19.309.2 and 19.310.2, the refusals now quote the closed-list
+    # clauses (19.309.2.G, 19.310.2.F), and the marijuana pointers sit in a
+    # Standards column beside no quoted line.
     "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
     # 2026-10-08, Milwaukie GMU (draft). Table 19.303.2 note 1 (L922): "The

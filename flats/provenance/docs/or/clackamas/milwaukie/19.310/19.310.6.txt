@@ -1,99 +1,192 @@
-§ 19.310.6. Standards.
-
-In the BI district, the following standards shall apply to all uses:
+§ 19.310.6. Design Standards.
 
 A.
 
-Lot size. None, except that lots created shall be of a size sufficient to fulfill the applicable standards of this district.
-
-B.
-
-Front yard. A front yard shall be at least 20 ft unless additional setback is required in SubSection 19.501.2.A.
-
-C.
-
-Side yard. No side yard shall be required except on corner lots where a side yard shall be at least 10 ft on the side abutting the street, unless additional setback is required in Subsection 19.501.2.A.
-
-D.
-
-Rear yard. No rear yard shall be required except as provided in Subsection 19.501.2.A.
-
-E.
-
-Off-street parking and loading.
-As specified in Chapter 19.600.
-
-F.
-
-Site Access
-
-One curb cut (45 ft maximum) per 150 ft of street frontage, or fraction thereof, for Industrial uses; and 1 curb cut per 100 ft of street frontage or fraction thereof, for business park, limited or conditional uses.
-
-G.
-
-Height restriction. Maximum height of a structure shall be 3 stories or 45 ft, whichever is less.
-
-H.
-
-Landscaping
-
-15% of the site must be landscaped, except for sites adjacent to Hwy. 224, which shall provide landscaping to 20% of the site.
-This should consist of a variety of lawn, trees, shrubbery, and ground cover.
-Street trees must be provided along street frontages and within off-street parking lots to help delineate entrances, provide shade, and permeable areas for stormwater runoff.
-A bond or financial guarantee for landscape completion shall be required.
-
-I.
-
-Screening and Outside Storage
-
-Outside storage adjacent to International Way, Freeman Way, 37th Ave., Lake Road, or Hwy. 224 is prohibited.
-Outside storage in side or rear yards is allowed, provided it is enclosed by a sight-obscuring fence or vegetative screen.
-
-J.
-
-Building Siting and Design
-
-Buildings and sites shall be designed using the following principles:
+Definitions.
 
 1.
 
-Sites shall be developed to the maximum extent practicable, so that buildings have solar access and utilize other natural features in their design.
+New Construction.
+
+For the purposes of this subsection, new construction means new structures or development on a site that was previously undeveloped or from which previously existing structures have been demolished.
 
 2.
 
-Assure that building placement and orientation and landscaping allow ease of security surveillance.
+Major Exterior Alterations.
 
-3.
-
-Design buildings with shapes, colors, materials, textures, lines, and other architectural design features which enhance the character of the district and complement the surrounding area and development, considering, but not limited to, the following techniques:
+Major exterior alterations include any of the following:
 
 a.
 
-Use color, materials, and architectural design to visually reduce the scale and impact of large buildings;
+Alterations that do not qualify as "exterior maintenance and repair" or "minor exterior alterations."
 
 b.
 
-Use building materials and features that are durable and consistent with the proposed use of the building, level of exposure to public view, and exposure to natural elements.
+Demolition or replacement of more than 50% of the surface area of any exterior wall.
+For the purposes of this subsection, a wall is considered the entire wall plane if the change in wall plane is less than 24 in.
+
+c.
+
+Additions that increase floor area by more than 75% of the existing floor area, or demolition or replacement of 50% or more of the existing floor area.
+
+3.
+
+Minor Exterior Alterations.
+
+Minor exterior alterations include, but are not limited to, the application or installation of finish building treatments, including windows and other glazing, doors, lintels, copings, awnings, other vertical and horizontal projections, and exterior sheathing and wall cladding materials.
 
 4.
 
-To the extent possible, screen or mask roof-mounted mechanical equipment, except solar collection apparatus, from view.
+Exterior Maintenance and Repair.
+
+Exterior maintenance and repair includes refurbishing, painting, and weatherproofing of deteriorated materials, and in-kind restoration or replacement of damaged materials.
+Exterior maintenance and repair does not include replacement of materials due to obsolescence or replacement undertaken as part of a minor or major exterior renovation, as defined below.
 
 5.
 
-Orient major service activity areas (e.g., loading, delivery, and garbage collection, etc.) of the development away from major streets.
+Major Interior Alterations.
+
+Major interior alterations are interior alterations which include demolition or replacement of 50% or more of the existing floor area.
 
 6.
 
-Arrange use and buildings to maximize opportunities for shared circulation, access, parking, loading, pedestrian walkways and plazas, recreation areas, and transit-related facilities.
+Change in Use.
 
-7.
+For the purposes of this subsection, change in use means a change in the primary use from one use to another.
 
-Provisions for bus shelters, bike racks, street furniture, kiosks, drinking fountains, art sculptures, and/or other pedestrian and transit amenities as required by Chapter 19.700.
+B.
 
-K.
+Applicability of Standards.
 
-Nuisances
+The site design standards contained in this subsection apply to all properties in the BI Zone.
+The building design standards in this subsection apply to the street-facing facades of buildings when the closest wall of the street-facing facade is within 50 ft of a front or street-side lot line.
+Existing buildings that do not comply with the site or building design standards may continue and may be modified in accordance with this subsection.
 
-The use shall not be of a type or intensity which produces dust, odor, smoke, fumes, noise, glare, heat, or vibrations which are incompatible with other uses allowed in this zone; and the use does not produce off-site impacts that create nuisance as defined by the Oregon D.E.Q. and the City Noise Ordinance.
+Except as provided for major interior alterations, applicable standards only apply to the proposed modification and not to the nonmodified portion of the existing building.
+Exterior maintenance and repair, minor exterior alterations, and changes in use are exempt from these standards.
+Subsection 19.310.6A defines new construction, exterior maintenance and repair, and major/minor exterior and interior alterations, and changes in use for the purposes of this subsection.
+
+1.
+
+New Construction.
+
+All design elements apply to the construction of new primary structures.
+New accessory structures are exempt from the Access and Main Entrance element in Table 19.310.6.D.1 but all other design elements apply.
+
+2.
+
+Major Exterior Alterations.
+
+All design elements apply to major exterior alterations.
+However, major exterior alterations that do not add or modify building entrances are exempt from the Access and Main Entrance element in Table 19.310.6.D.1.
+
+3.
+
+Major Interior Alterations.
+
+Major interior alterations are exempt from the Orientation of Service Activity element in Table 19.310.6.D.2.
+All other design elements apply.
+
+C.
+
+Review Process.
+
+An applicant may choose between two review processes available for review of development in the BI zone: objective and discretionary.
+Regardless of the review process, the applicant must demonstrate how the applicable standards or guidelines are being met.
+Applicants can address design review requirements through a combination of satisfying certain design standards and, in instances where they elect not to utilize design standards, satisfying the applicable design guideline instead.
+In such a case, the project will be reviewed using the Type II Development Review process outlined in Subsection 19.310.6C.2.
+
+1.
+
+Objective process: uses clear objective standards that do not require the use of discretionary decision-making.
+Developments reviewed against these standards will be processed with Type I Development Review per Subsection 19.906.2A.1.
+
+2.
+
+Discretionary process: uses design guidelines that are more discretionary in nature and are intended to provide the applicant with more design flexibility.
+Developments reviewed against these guidelines will be processed with Type II Development Review per Subsection 19.906.2B.1.
+
+D.
+
+Building and Site Design Guidelines and Standards.
+
+Applicable guidelines and standards for the BI zone are located in Table 19.310.6.D.
+These standards should not be interpreted as requiring a specific architectural style.
+Table 19.310.6.D.1 specifies the primary, secondary, and prohibited material types referenced in Table 19.310.6.D.
+
+Table 19.310.6.D
+Building and Site Design Guidelines and Standards
+Table 19.310.6.D
+Building and Site Design Guidelines and Standards
+Table 19.310.6.D
+Building and Site Design Guidelines and Standards
+Design Element
+Design Guidelines
+(Discretionary Process)
+Design Standard (Objective Process)
+Site Design
+Site Design
+Site Design
+1. Pedestrian Experience and Access
+Arrange site to provide for safe pedestrian access and connections as well as weather protection.
+All buildings must have at least one primary building entrance (e.g., dwelling entrance, customer entrance, tenant entrance, lobby entrance, or breezeway/courtyard entrance) facing an adjoining street (i.e., within 45 degrees of the street property line).
+If the building entrance is turned more than 45 degrees from the street (e.g., front door is on a side wall), the primary entrance must not be more than 40 ft from a public sidewalk.
+In all cases, a walkway must connect the primary entrance to the sidewalk.
+In cases where there is no sidewalk within the adjacent right of way (ROW), a walkway must connect the primary entrance to the ROW.
+All pedestrian entrances must include an awning, canopy, recess, or some other form of shelter to provide weather protection for users.
+Features used for weather protection must have a minimum depth of 4 ft for primary entrances and a minimum depth of 12 in for all other entrances.
+2. Orientation of Major Service Activity
+Orient major service activity areas of the development away from major streets.
+Major service activity (e.g., loading, delivery, and garbage collection, etc.) must not be located on a facade that faces an adjoining major street (i.e., within 45 degrees of the street property line).
+Major streets in the BI zone are: Hwy 224, International Way, Harmony Road, and 37th Avenue.
+Building facades more than 200 ft from a property line along a major street may include major service activity provided there is a continuous 4-ft wide landscape buffer or another building which separates the entire length of the service activity area from the street.
+Building Design
+Building Design
+Building Design
+3. Building Facade Design
+Use color, materials, and architectural design to visually reduce the scale and impact of large buildings.
+All buildings must incorporate design elements that break up all street-facing façades.
+For every 60 ft of street-facing facade, a minimum of one of the following elements must be provided:
+a. A recess of the building by a minimum of 2 ft deep and 6 ft long.
+b. A covered walkway or recessed entry a minimum of 5 ft deep and 6 ft long.
+c. A roof line offset of at least 5 ft from the top surface of one roof to the top surface of the other.
+d. Extending an architectural bay at least 2 ft from the primary street-facing facade.
+Exterior wall-mounted mechanical equipment is prohibited on street-facing facades.
+4. Building Materials
+Use building materials and features that are durable and consistent with the proposed use of the building, level of exposure to public view, and exposure to natural elements.
+Prohibited materials listed as (N) in Table 19.310.6.D.1 are not permitted.
+All buildings must utilize the following building materials on exterior walls of street-facing facades.
+See Table 19.310.6.D.1 for the primary, secondary, and prohibited material types referenced in this standard.
+a. Buildings must utilize primary materials for at least 60% of the applicable building facades.
+b. Secondary materials are permitted on no greater than 40% of each applicable building facade.
+c. Accent materials are permitted on no greater than 10% of each applicable building facade as trims or accents (e.g., flashing, projecting features, ornamentation, etc.)
+d. Buildings must not utilize materials listed as prohibited materials (N).
+e. For existing development, facade modifications that affect more than 50% of the facade must comply with standards in this subsection.
+The Planning Manager may waive this requirement if application of the standards would create an incongruous appearance of existing and new materials.
+
+Table 19.310.6.D.1 Exterior Building Materials                                                                             Table 19.310.6.D.1 Exterior Building Materials
+Material                                                                                                                   Material Type
+Brick                                                                                                                      P
+Stone/masonry                                                                                                              P
+Stucco, when installed over concrete                                                                                       P
+Glass (transparent, spandrel)                                                                                              P
+Concrete (poured in place or precast)                                                                                      P
+Finished wood, wood veneers, and wood siding                                                                               P
+Finished metal panels—such as anodized aluminum, stainless steel, or copper—featuring polished, brushed, or patina finish  S
+Concrete blocks with integral color (ground, polished, or split-face finish)                                               S
+Fiber-reinforced cement siding and panels                                                                                  S
+Ceramic tile                                                                                                               S
+Concrete blocks with integral color (glazed finish)                                                                        A
+Standing seam and corrugated metal                                                                                         A
+Glass block                                                                                                                A
+Vegetated wall panels or trellises                                                                                         A
+Vinyl siding                                                                                                               N
+Exterior insulation finishing system (EIFS)                                                                                N
+Plywood paneling                                                                                                           N
+
+Notes:
+P = Primary material
+S = Secondary material
+A = Accent material
+N = Prohibited material
 

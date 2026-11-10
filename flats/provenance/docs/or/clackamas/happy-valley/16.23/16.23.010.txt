@@ -43,7 +43,7 @@ Bed and breakfast inns                                                          
 Bicycle sales, supplies, repair service                                                                                                                                 P                                                                      P                                                                      P
 Book stores                                                                                                                                                             P                                                                      P                                                                      P
 Camera stores                                                                                                                                                           P                                                                      P                                                                      P
-Coffee shops, cafés, sandwich shops and delicatessens                                                                                                                   P                                                                      P                                                                      P
+Coffee shops, cafes, sandwich shops and delicatessens                                                                                                                   P                                                                      P                                                                      P
 Drug stores                                                                                                                                                             P                                                                      P                                                                      P
 Dry cleaners and tailors                                                                                                                                                P                                                                      P                                                                      P
 Florists                                                                                                                                                                P                                                                      P                                                                      P
@@ -64,7 +64,7 @@ Photo finishing, photography studios                                            
 Psilocybin service center                                                                                                                                               P[6]                                                                   P[6]                                                                   X
 Rental stores, without outdoor storage                                                                                                                                  P                                                                      P                                                                      P
 Restaurants full service                                                                                                                                                P                                                                      P                                                                      P
-Restaurants—Drive-through                                                                                                                                               P                                                                      C                                                                      P
+Restaurants-Drive-through                                                                                                                                               P                                                                      C                                                                      P
 Apparel and secondhand stores                                                                                                                                           P                                                                      P                                                                      P
 Shoe sales and repair stores                                                                                                                                            P                                                                      P                                                                      P
 Sporting goods, sales and service                                                                                                                                       P                                                                      P                                                                      P
@@ -109,15 +109,23 @@ Self-storage facilities                                                         
 Wireless communication facilities                                                                                                                                       Per Section 16.44.020                                                  Per Section 16.44.020                                                  Per Section 16.44.020
 
 NOTES:
-[1] Uses in the RCMU district are subject to additional standards in Section 16.23.010.D.
-[2] Residential uses on upper floors of mixed use buildings are permitted.
+NOTES:
+[1]
+Uses in the RCMU district are subject to additional standards in Section 16.23.010D.
+[2]
+Residential uses on upper floors of mixed-use buildings are permitted.
 In such cases, Note 3 below does not apply.
-[3] Freestanding residential uses at densities greater than the minimum SFA density of 10 du/acre and not to exceed the maximum MUR-M2 density of 34 du/acre (10 to 34 du/acre) may be permitted in the MUC zone when nonresidential uses occupy the street side(s) of the parcel.
-The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 25% of the MUC zoned area of the parcel or subject property.
-[4] Subject to applicable FAA rules and regulations.
-[5] Pursuant to Section 16.69.030.
-[6] Pursuant to Chapter 16.49.
-[7] Self-storage facilities shall be limited to a single vertical mixed-use building with office or commercial uses on the ground floor facing the higher classification roadway and where individual storage units are only accessed from within the building and are constructed within a single structure.
+[3]
+Freestanding residential uses at densities greater than the minimum SFA density of 10 du/acre and not to exceed the maximum MUR-M2 density of 34 du/acre (10 to 34 du/acre) may be permitted in the MUC zone when nonresidential uses occupy the street side(s) of the parcel.
+The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 50% of the MUC zoned area of the parcel or subject property.
+[4]
+Subject to applicable FAA rules and regulations.
+[5]
+Pursuant to Section 16.69.030.
+[6]
+Pursuant to Chapter 16.49.
+[7]
+Self-storage facilities shall be limited to a single vertical mixed-use building with office or commercial uses on the ground floor facing the higher classification roadway and where individual storage units are only accessed from within the building and are constructed within a single structure.
 Not more than one self-storage facility, limited to 80,000 square feet of gross floor area, shall be permitted within the MUC zone, and only on lots or parcels at the intersection of a major arterial facility and a local facility or higher classification.
 
 C.
@@ -437,5 +445,5 @@ n.
 
 Design Review. New development in the district shall be subject to Chapter 16.62, Land Use and Design Review (including Section 16.46.010 and Appendix B, Happy Valley Style).
 
-(Ord. 389 § 1(Exh. A), 2009; Ord. 398 § 1, 2010; Ord. 406 § 1, 2010; Ord. 424 § 1, 2012; Ord. 427 § 1, 2012; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 527 § 1, 2017; Ord. 533 § 1, 2017; Ord. 545 § 1, 2019; Ord. 572 § 1, 2023; Ord. 592, 6/3/2025)
+(Ord. 389 § 1(Exh. A), 2009; Ord. 398 § 1, 2010; Ord. 406 § 1, 2010; Ord. 424 § 1, 2012; Ord. 427 § 1, 2012; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 527 § 1, 2017; Ord. 533 § 1, 2017; Ord. 545 § 1, 2019; Ord. 572 § 1, 2023; Ord. 592, 6/3/2025; Ord. 603, 8/18/2026)
 

@@ -399,6 +399,18 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: the North Milwaukie Innovation Area Plan, named at "
             "MMC 19.312.1.A as what MUTSA and NME implement."
         ),
+        # 2026-11-09 (FOLLOWUPS 166): two tokens Ord. 2265 printed when it
+        # recast the M and BI zones as tables.
+        "ACC": (
+            "not-a-zone: the legend code \"ACC = Accessory\" under Tables "
+            "19.309.2 and 19.310.2 (19.309.2.txt L163, 19.310.2.txt L176), "
+            "a use-table cell value, not a district."
+        ),
+        "D.E.Q": (
+            "not-a-zone: the Oregon Department of Environmental Quality, "
+            "named in MMC 19.309.4 (L41) as the agency whose nuisance "
+            "definitions an M-zone use must not breach."
+        ),
     },
     "or/clackamas/oregon-city": {
         # Four rulings stood here until 2026-09-08 -- MUC-1, MUC-2, MUD and

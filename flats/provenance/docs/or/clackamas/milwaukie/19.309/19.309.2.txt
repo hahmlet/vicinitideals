@@ -1,65 +1,169 @@
-§ 19.309.2. Permitted Uses.
-
-Permitted uses are limited to industrial uses meeting the following criteria:
+§ 19.309.2. Uses.
 
 A.
 
-Any combination of manufacturing, office, and/or commercial uses are allowed when at least 25% of the total project involves an industrial use as described under Subsection 19.309.2.B.
+Permitted Uses.
+
+Uses allowed outright are listed in Table 19.309.2 with a "P".
+These uses are allowed if they comply with the development and design standards and other regulations of this title.
 
 B.
 
-A use which involves the collection and assembly of durable goods, warehousing of goods, transshipment of goods from other sources, and/or the assembly of goods from products which have been processed elsewhere, general manufacturing, and production.
+Limited Uses.
+
+Uses listed in Table 19.309.2 as "L" are permitted only as limited uses.
 
 C.
 
-Commercial and office uses which are accessory to the industrial use(s).
-Such uses may include gymnasium, health club, secretarial services, sandwich deli, small restaurant, and retail/wholesale commercial use and showroom.
+Accessory Uses.
+
+Uses listed in Table 19.309.2 as "ACC" are permitted only as uses accessory to a primary use.
 
 D.
 
-May produce small amounts of noise, dust, vibration, or glare, but may not produce off-site impacts that create a nuisance, as defined by DEQ or the City Noise Ordinance.
+Community Service Uses.
+
+Uses listed in Table 19.309.2 as "CSU" are permitted only as community service uses in conformance with Section 19.904.
 
 E.
 
-A permitted use may require outside storage areas.
-These storage areas shall be screened with a sight-obscuring fence or dense plantings from any adjoining residential uses or public streets.
+Conditional Uses.
+
+Uses listed in Table 19.309.2 as "CU" are permitted only as conditional uses in conformance with Section 19.905.
 
 F.
 
-Warehouse use which is accessory to an industrial use.
+Nonconforming Uses, Structures, and Development.
+
+Existing structures and uses that do not meet the standards of this zone may continue in existence.
+Except where otherwise stated in this section, the Provisions of Chapter 19.800 Nonconforming Uses and Development apply.
 
 G.
 
-Marijuana retailers are allowed as a commercial use under Subsection 19.309.2.A. and subject to the special development standards set forth in Subsection 19.509.1.
+Prohibited Uses.
+
+Uses listed in Table 19.309.2 as "N" or not listed in Table 19.309.2 or determined to be similar pursuant to Subsections 19.310.2G below, are prohibited.
 
 H.
 
-The following uses are allowed outright and do not need to be part of a project involving an industrial use as described under Subsection 19.309.2.B.
+Similar Uses.
 
-1.
+The Planning Manager, through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.309.2.
+The unlisted use will be subject to the standards applicable to the similar example use.
 
-Construction: Contractors and Related Businesses
-
-This category comprises businesses whose primary activity is performing specific building or other construction-related work, on-or off-site.
+Table 19.309.2
+Uses Allowed in the Manufactured Zone
+Table 19.309.2
+Uses Allowed in the Manufactured Zone
+Table 19.309.2
+Uses Allowed in the Manufactured Zone
+Uses and Use Categories
+M
+Additional Provisions
+Commercial
+Commercial
+Commercial
+Child care centers
+Provision of child care to children who are not the provider's own, in a facility that is certified or recorded by the State of Oregon pursuant to ORS Chapter 329A and that is not a family child care home.
+Examples include certified child care facilities, preschools, school-age programs, parent cooperatives, and before-and after-school programs.
+P
+Eating establishments
+Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout.
+Eating establishments may include incidental sales of alcoholic beverages.
+Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
+L[1]
+High-impact commercial uses
+A commercial use that generates substantial traffic, noise, light, irregular hours, or other negative impact on the community.
+Examples include, but are not limited to: drinking establishments, commercial recreation, adult entertainment businesses, theaters, hotels, and motels.
+CU
+Section 19.905.9 Standards Governing Conditional Uses
+Office
+1. Production-related office
+ACC
+2. Professional and administrative office
+ACC
+Retail-oriented sales
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
+Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
+L[1]
+Industrial, Manufacturing, and Production
+Industrial, Manufacturing, and Production
+Industrial, Manufacturing, and Production
+Construction: Contractors and related businesses
+This category comprises businesses whose primary activity is performing specific building or other construction-related work, on- or off-site.
 Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies.
 Any associated on-site office use must be accessory to the primary construction business.
-
-2.
-
-Repair and Service
-
+P
+Creative space
+Industrial/manufacturing space specifically for artist-type uses.
+Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.), makerspaces, creative reuse and upcycling, sound stage and/or film production, set design and production, and music studio/production.
+P
+Data Center
+This category comprises establishments, facilities, or firms primarily engaged in the storage, management, transmission, or dissemination of data and digital information using electronic equipment.
+Examples include: Facilities housing electronic equipment for remote IT infrastructure resources, networked servers, cloud computing services, and training artificial intelligence.
+N
+Manufacturing and production
+This category comprises establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts.
+Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication.
+Manufacturing may also include high-tech and research and development companies.
+P
+Repair and service
 This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or byproducts.
-Examples include: welding shops; machine shops; tool, electric motor, and Industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and Building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and large-scale laundry, dry-cleaning, and carpet cleaning plants.
 Auto service and repair shops for personal vehicles are allowed in the M Zone.
-
-3.
-
-Trade Schools
-
+Examples include: welding shops; machine shops; after market vehicle service shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and large-scale laundry, dry-cleaning, and carpet cleaning plants.
+P
+Trade schools and training facilities
 This category comprises establishments whose primary purpose is to provide training for industrial needs and job-specific certification.
 Examples include: electronic equipment repair training, truck-driving school, welding school, training for repair of industrial machinery, and other industrial skills training.
+P
+Waste management
+This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance.
+Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
+CU
+Wholesale trade, warehousing, distribution
+This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise.
+Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
+Examples include: operating warehousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer.
+Includes fleet parking.
+Mini-storage facilities (generally used by many individual customers to store personal property) are not considered industrial warehousing and storage and are not permitted.
+P
+Any use which has a primary function of storing, utilizing, or manufacturing explosive materials or other hazardous material as defined by the Oregon Fire Code.
+N
+Community Service Uses
+Community Service Uses
+Community Service Uses
+Schools (public or private)
+N
+Religious institutions
+N
+Other community service uses
+CSU
+Section 19.904 Community Service Uses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana retailers
+P
+Subsection 19.509.1 Standards for Marijuana Retailers
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+Marijuana processing, testing, research, and warehousing
+P
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+Marijuana production facilities
+P
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+Subsection 19.509.3 Marijuana Production Limitations
+Psilocybin cultivation facilities as defined in ORS 475A, including planting, growing, harvesting, and propagation
+P
+Subsection 19.509.4 Psilocybin Cultivation Limitations
 
-I.
-
-Marijuana and psilocybin production and cultivation facilities are subject to the regulations in Section 19.509.
+Notes:
+P = Permitted
+L = Limited
+ACC = Accessory
+CSU = Permitted with community service use approval subject to provisions of Section 19.904.
+CU = Permitted with conditional use approval subject to the provisions of Section 19.905 and where there the use provides a needed service/product in the district.
+N = Not Permitted
+1. Use is limited to 4,000 sq ft maximum.
+No more than five retail-oriented sales and/or eating establishments are permitted on a single site.
 
