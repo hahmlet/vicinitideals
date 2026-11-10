@@ -1,5 +1,5 @@
 {
-  "digest": "fc6163b9869fb326402a829035dba1e0cd0b37d8b242e035f1d1880ec434f984",
+  "digest": "aaabf7b7e0412b2328dc94fc4b9cb4553b82c8a8eb08e95305fb3408d29df0d9",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -584,6 +584,14 @@
           "kind": "header_or_xref"
         },
         {
+          "zone": "EFU",
+          "field": "min_frontage_line",
+          "claimed": "39.4215 39.4225 39.4265",
+          "found": "39.4245",
+          "quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7,L13",
+          "kind": "heading_other_file"
+        },
+        {
           "zone": "LR10",
           "field": "lot_of_record_condition",
           "claimed": "39.4870 39.4872 39.4876",
@@ -605,6 +613,14 @@
           "claimed": "39.4870 39.4872 39.4876",
           "found": "39.3140",
           "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR10",
+          "field": "min_frontage_line",
+          "claimed": "39.4870 39.4872 39.4876",
+          "found": "39.4878",
+          "quote": "or/multnomah/_unincorporated/39/39.4878.txt#L6",
           "kind": "heading_other_file"
         },
         {
@@ -677,6 +693,14 @@
           "claimed": "39.4970 39.4975 39.4990",
           "found": "39.3140",
           "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "RR",
+          "field": "min_frontage_line",
+          "claimed": "39.4350",
+          "found": "39.4375",
+          "quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10,L15",
           "kind": "heading_other_file"
         }
       ],
@@ -1259,9 +1283,9 @@
         {
           "zone": "CI2",
           "field": "min_far",
-          "claimed": "33.150 33.150.100 33.150.200 33.150.215 33.150.220 33.150.240",
+          "claimed": "33.150 33.150.100 33.150.202 33.150.215 33.150.220 33.150.240",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1269,7 +1293,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1277,7 +1301,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -1285,7 +1309,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -1293,7 +1317,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1301,15 +1325,15 @@
           "field": "min_far",
           "claimed": "33.140 33.140.100 33.140.100 33.140.200",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
           "zone": "IR",
           "field": "min_far",
-          "claimed": "33.150 33.150.100 33.150.200 33.150.215 33.150.220 33.150.240",
+          "claimed": "33.150 33.150.100 33.150.202 33.150.215 33.150.220 33.150.240",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1317,7 +1341,7 @@
           "field": "min_far",
           "claimed": "33.110 33.110.265",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1325,7 +1349,7 @@
           "field": "min_far",
           "claimed": "33.110 33.110.265",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1333,7 +1357,7 @@
           "field": "min_far",
           "claimed": "33.110 33.110.265",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -1341,7 +1365,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -1349,7 +1373,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -1357,7 +1381,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -1365,7 +1389,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         }
       ],
@@ -1837,8 +1861,17 @@
       "gaps": []
     },
     "or/washington/cornelius": {
-      "section_unread": 4,
-      "misattributed": [],
+      "section_unread": 8,
+      "misattributed": [
+        {
+          "zone": "GMU",
+          "field": "quadplex_allowed [inside_mapped_use_area+unit_lots]",
+          "claimed": "18.75.020 18.75.045 18.75.045",
+          "found": "18.75.020 18.75.040",
+          "quote": "or/washington/cornelius/ord.2026-06.18.75.txt#L24,L47-L48,L99-L107",
+          "kind": "header_or_xref"
+        }
+      ],
       "label": "Cornelius",
       "counts": {},
       "gaps": []

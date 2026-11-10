@@ -1062,6 +1062,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_depth_ft": [
         "north_of_marine_drive"
       ],
@@ -1194,6 +1197,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_sqft": [
         "north_of_marine_drive"
       ],
@@ -1283,6 +1289,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_sqft": [
         "north_of_marine_drive"
       ],
@@ -1324,6 +1333,9 @@
         "north_of_marine_drive"
       ],
       "min_frontage_ft": [
+        "north_of_marine_drive"
+      ],
+      "min_frontage_line": [
         "north_of_marine_drive"
       ],
       "min_lot_depth_ft": [
@@ -1407,6 +1419,9 @@
         "site_specific_limitation"
       ],
       "min_lot_sqft": [
+        "site_specific_limitation"
+      ],
+      "parking_lot_line_buffer_ft": [
         "site_specific_limitation"
       ],
       "quadplex_allowed": [
