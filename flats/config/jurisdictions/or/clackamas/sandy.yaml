@@ -374,6 +374,28 @@ private_drives:
 
 defaults:
   entrance_faces_street:
+    # FOLLOWUPS 167 item 1 (2026-11-09): the walkway alternative read in full
+    # and left `unclear`. Four units on one lot are a multi-family dwelling
+    # (17.10.30 L166), so 17.90.160 B.2-B.3 (17.90/17.90.160.txt L29-L30)
+    # binds every ground-floor entry: face a public street (within 45 degrees,
+    # 17.10.30 L323) and be visible from it, OR face a "designated pedestrian
+    # way that is connected to a public street", no more than 20 ft longer or
+    # 120 percent of the straight-line distance to the street. A pedestrian
+    # way may be private (17.10.30 L698-L700). Why not `alternative`: (1) the
+    # way out is a paved route on the lot's own ground, not a design detail of
+    # the building, so 2026-10-14-unchecked-design-details does not reach it,
+    # and the screen neither draws the path nor measures its length against
+    # the straight line; (2) "designated" does not say by whom (17.90.130 L109
+    # uses it for an on-site way, which favours the site plan, but nothing
+    # defines it). Where it does not reach: 17.82.20 A-B (sdc.17.82.txt
+    # L30-L42, 17.82.10 L20) on a transit street asks an entrance oriented toward that
+    # street within 25 ft, with no walkway route (B's walkway is only for a
+    # site not adjacent to one, and the chapter applies only to sites that are);
+    # 17.90.150 D.3 (single-family dwellings, B at L26) has none either, and
+    # 2026-10-22-sandy-row-houses-not-multi-family keeps 17.90.160 off the
+    # unit-lots path. The Bornstedt Village boulevards (sdc.17.54.txt L456)
+    # define "oriented toward" only. Open question for Steph in the 167
+    # hand-off.
     value: unclear
     cite: "Sandy SDC 17.90 entrance orientation with a pedestrian-way alternative the screen does not measure; 17.82 transit-street rules (sdc.17.82.txt L18-L22, L36-L43) (FOLLOWUPS 153)"
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
