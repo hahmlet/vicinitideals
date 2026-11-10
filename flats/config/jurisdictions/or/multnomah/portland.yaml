@@ -1846,6 +1846,17 @@ code:
     extraction: plain
     allow_thin: true
   - id: "33.537"
+    # Not repointed (FOLLOWUPS 167 item 4, 2026-11-09). This URL now 404s;
+    # the chapter lives at .../code/537-johnson-creek-basin-pd.pdf, the same
+    # 3/1/24 edition with Map 537-1 bound in. But that file (Acrobat
+    # PDFMaker 26, 2026-08) breaks the first letters of many lines onto a
+    # line of their own ("S" / "pringwater Corridor"), in plain and layout
+    # mode and under any pypdf. Refreshing onto it, even with --repoint
+    # --loose, strands 27 of the 39 citations into this chapter and would
+    # store damaged words. The stored text stays the read text; the drift
+    # watch reports the dead URL, which is the true state. Repoint when
+    # Portland republishes a clean text layer, or when fetch learns a
+    # declared repair for split line starts.
     url: https://www.portland.gov/sites/default/files/code/537-johnson-creek-basin-pd_0.pdf
     title: "Chapter 33.537 Johnson Creek Basin Plan District"
     extraction: plain
@@ -4748,6 +4759,14 @@ zones:
       # neither. The ownership history is not held. YELLOW, not GREEN.
       value: lot_standards
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"
+    lot_of_record_relief_base_only:
+      # FOLLOWUPS 167 item 3 (2026-11-09), as rel6 did for RM1-RM4. C.3 lets a
+      # lot of record off Table 120-3 only (L13, L20); RX's row there is the
+      # 10 ft front lot line (L28-L29), min_frontage_ft's base. The 90 ft
+      # variant below is 33.120.206 on Map 120-2 sites, a separate section C.3
+      # does not reach, so it binds a lot of record like any other lot.
+      value: true
+      quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20,L28-L29"
     lot_of_record_condition:
       value: adjoining_ownership
       quote: "or/multnomah/portland/33.120/33.120.205.txt#L13,L20"

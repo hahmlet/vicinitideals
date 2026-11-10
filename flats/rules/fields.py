@@ -618,6 +618,19 @@ _F: tuple[FieldDef, ...] = (
         label="lot-of-record relief floor",
     ),
     FieldDef(
+        "lot_of_record_relief_base_only",
+        "bool",
+        "True where the code's lot-of-record relief reaches only the zone's "
+        "own lot-size table, and a number a variant of the same field brings "
+        "in from another section still binds. PCC 33.120.205 C.3 lets a lot "
+        "of record off Table 120-3, and in RX that table's row is the 10 ft "
+        "front lot line (`min_frontage_ft`'s base); 33.120.206's 90 ft on "
+        "Map 120-2 sites is a variant of the same field and a separate "
+        "section C.3 does not reach. The screen then lets a lot off a "
+        "standard only where the base number was the one it was held to.",
+        label="lot-of-record relief reaches the table only",
+    ),
+    FieldDef(
         "lot_of_record_condition",
         "enum",
         "What the code's lot-of-record relief depends on that the data does "
@@ -2139,6 +2152,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "lot_of_record_relief",
         "lot_of_record_floor_sqft",
         "lot_of_record_condition",
+        "lot_of_record_relief_base_only",
         # One jurisdiction in the corpus caps building width, and only inside
         # a historic district. A zone that is silent about it is not an
         # incomplete zone.

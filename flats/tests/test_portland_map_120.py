@@ -545,3 +545,29 @@ def test_a_reading_is_never_measured_against(corpus) -> None:
     lot = _undepthed(_lot(corpus, "RM1", 60, 166))
     read = dataclasses.replace(lot.facts, depth_reading_ft=1.0)
     assert read.lot_depth_ft is None
+
+
+# FOLLOWUPS 167 item 3 (2026-11-09): 33.120.205 C.3 lets a lot of record off
+# Table 120-3 only. RX's row there is the 10 ft front lot line; the 90 ft is
+# 33.120.206's, so a lot of record owes it like any other lot (as rel6 did for
+# RM1-RM4 by narrowing their relief).
+
+
+def test_rx_relief_reaches_table_120_3_only(rules: RuleSet) -> None:
+    deep = rules.resolve(PORTLAND, "RX", (*POD, FRONTAGE), lot={"lot_depth_ft": 166})
+    shallow = rules.resolve(PORTLAND, "RX", (*POD, FRONTAGE), lot={"lot_depth_ft": 160})
+    assert deep.get("lot_of_record_relief_base_only") is True
+    # the 90 ft arrives by a variant, the 10 ft is the table's own number
+    assert deep.values["min_frontage_ft"].value == 90 and deep.values["min_frontage_ft"].when
+    assert shallow.values["min_frontage_ft"].value == 10 and not shallow.values["min_frontage_ft"].when
+
+
+def test_an_rx_lot_of_record_owes_the_ninety_feet(corpus) -> None:
+    lot = _lot(corpus, "RX", 60, 166)
+    bare = _screen(corpus, _answered(lot, **{FRONTAGE: True, EASTERN: False, NEIGHBOURS: False}))
+    held = _screen(corpus, _answered(lot, **{FRONTAGE: True, EASTERN: False}))
+    # Before: the lot-of-record relief let the 60 ft off and held it YELLOW.
+    assert bare.colour is flag_plan.Colour.red
+    (front,) = [c for c in bare.checks if c.check == "min_frontage_ft"]
+    assert front.observed == 60 and front.threshold == 90
+    assert held.colour is not flag_plan.Colour.green
