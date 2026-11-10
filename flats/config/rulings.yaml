@@ -2716,6 +2716,56 @@
     Canby Fire District Conditions of Construction (rev 10.28). A few Canby
     YELLOWs may go GREEN. FOLLOWUPS 176(h).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+- id: 2026-11-10-side-door-fit-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {}
+  question: >-
+    The 2026-11-08 no-end-door ruling (no street-facing door on the end home)
+    made entrance orientation required in 31 places, so the pod may only stand
+    with its long door face to the street. On lots under ~90 ft wide the
+    parking court then no longer fits, turning ~10,500 GREEN and ~4,500 YELLOW
+    lots RED (rel6 bound; FOLLOWUPS 177). Keep them RED, or YELLOW?
+  ruling: >-
+    "Yellow: design change" (picked from: yellow with a design-change note /
+    red as ruled / revisit the end door)
+  effect: >-
+    The end-door ruling stands for the design. Where a place requires
+    street-facing entrances and the pod fits only turned sideways (doors to a
+    side yard), the lot is YELLOW with a flag "fits only with doors facing the
+    side; needs a street-facing end door (design change)" -- never GREEN, and
+    not RED on this ground alone. FOLLOWUPS 177.
+  source: Steph 2026-11-10 (chat), docs/followups/177-door-rule-green-loss.md
+- id: 2026-11-10-hillsboro-corner-side-parking-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    Hillsboro 12.50.130 I.5: on corner lots the city MAY approve parking
+    beside the building (past the side maximum). YELLOW, or GREEN with a
+    warning?
+  ruling: >-
+    "Yellow (as built)"
+  effect: >-
+    Corner lots that need the city's discretionary approval stay YELLOW.
+    FOLLOWUPS 176(c).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+- id: 2026-11-10-cornelius-county-street-map
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: cornelius}
+  question: >-
+    Cornelius publishes no street-type map, so every Cornelius GREEN goes
+    YELLOW under the driveway-spacing check. Use Washington County's map,
+    which draws Cornelius roads?
+  ruling: >-
+    "County map, but using it just for business" -- clarified: "Only for busy
+    roads"
+  effect: >-
+    Washington County's functional-class map is used for Cornelius only to
+    tell which streets are busy (collector/arterial) for the driveway-spacing
+    check; it is used for nothing else in Cornelius. FOLLOWUPS 176(g).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
 - id: 2026-11-09-busy-road-driveway-spacing-yellow
   kind: ruling
   date: 2026-11-09

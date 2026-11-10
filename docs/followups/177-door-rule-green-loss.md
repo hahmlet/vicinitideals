@@ -22,3 +22,5 @@ Decision for Steph:
 
 rel6 is HELD until answered. Also open: Hillsboro corner lots (176 c) and
 Cornelius "just for business" (176 g) re-asked.
+
+**RULED 2026-11-10:** "Yellow: design change" (2026-11-10-side-door-fit-yellow). Lane door-yellow off rel6 rides rel7; rel6 is NOT released alone -- folded into the rel7 package and one bound.
