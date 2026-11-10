@@ -154,7 +154,7 @@ the full one.)
 167. [Claude] [scan: YES] **Small fixes off rel6** -- Sandy entrance 'unclear' walkway alternative; Gresham duplicate allow_thin key; RX Map 120-2 broad lot-of-record relief; Portland 33.537 stored URL repoint; lane small-fixes-7 BUILDING. [file](followups/167-small-fixes-7.md)
 168. [Claude] [scan: YES -- toward red, FALSE GREEN] **Fire truck assumed on streets too narrow or dead ends without turnaround** -- fg-rate-B 21E02DC10300 (Rocky Ln 16 ft, 300 ft dead end); lane fire-road BUILDING off rel6. [file](followups/168-fire-road-width.md)
 169. [Claude] [Steph: existing-driveway question] [scan: YES -- toward red, FALSE GREEN] **Driveway spacing on arterials and collectors** -- fg-rate-B 2S110DB01500 (Tigard 99W, 600 ft rule 18.920.030.I.3); class-dependent spacing needs cross-street class; lane arterial-spacing BUILDING off rel6. [file](followups/169-arterial-driveway-spacing.md)
-170. [Claude] [scan: YES if read the other way] **Hillsboro SCR 5 ft maximum side setback: one wall or both?** -- our own reading (one wall) carries nearly every SCR-MD green; reading lane hillsboro-side-max. [file](followups/170-hillsboro-side-max.md)
+170. [Claude] [Steph] [scan: YES if read the other way] **Hillsboro SCR 5 ft maximum side setback: one wall or both?** -- text leans both walls, city record silent; ~300 GREEN at stake; ASKED Steph 11-09 (keep / yellow+ask city / red). [file](followups/170-hillsboro-side-max.md)
 
 ## 2. Waiting on Steph
 
