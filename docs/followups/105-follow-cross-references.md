@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, three chapters fetched 2026-11-08 with Steph's OK; Tigard RES-A to RES-C now carry the 5 ft S-3 strip] [scan: YES (new standards bind)]
+105. [Claude] [batch 1 + round 2 DONE 2026-11-08 on flats/crossref-follow; round 3 (every binding row) DONE on flats/crossref-follow-2, three chapters fetched 2026-11-08 with Steph's OK; Tigard RES-A to RES-C now carry the 5 ft S-3 strip; round 5 (references into the three chapters) on flats/crossref-3: Tigard MU-CBD 8 ft S-4 on alley and park lines, Canby 16.41.070 fetched, no change] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -159,3 +159,34 @@ Read, not encoded (possible false GREENs, each needs a mechanism or data; listed
 - Cornelius Type I middle housing site review (18.100.030 (A)(2)): ministerial, GREEN tier; no change.
 - Beaverton 70.20.10.6.2 / 70.15.25.1 trace (item 1): not done this round; the hold stands.
 - Lake Oswego 50.06.001.5: not fetched (layer switched off, zero lots).
+
+## Round 5 (2026-11-10, flats/crossref-3)
+
+References into and out of the three chapters fetched in round 3, each read one layer down.
+- **Tigard MU-CBD, (a) ENCODED.** 18.650.070.B.3 screens downtown parking that abuts a public
+  right-of-way, a trail in a public easement or a public park to S-4 (Table 18.420.2: 8 ft,
+  tdc.18.420.landscaping.txt#L256-L257). Encoded as `parking_lot_line_buffer_ft` exempt on an
+  ordinary line, 8 under `abuts_alley`, `abuts_park` or both. Tigard gained a `parks:` block
+  (Park true; HOA and School Land false; Natural Area, Other, Golf Course, Cemetery unstated).
+  Residual: a trail easement over private land is not mapped; the strip is charged on every
+  non-street line once any line abuts.
+- **Tigard S-4 in Bridgeport (18.640), (c).** Lies inside MUC's 20 ft parking street setback; the
+  one Bridgeport lot is stopped by the density floor.
+- **Tigard S-1 (service areas, roof equipment), (c).** No depth.
+- **Tigard 18.420.020.C canopy / 18.420.060 fee in lieu, (c).** Reaches land divisions,
+  apartments, nonresidential, wireless, mobile home parks (L73-L93), not a pod on a lot of record;
+  trees are ignored (ruling 2026-11-01). Table 18.420.1 L-1/L-2 is planting make-up.
+- **Tigard 18.320.040, 18.670.070, (c).** Nonresidential / mixed-use and WSRC; no MUC lot there
+  admits the pod.
+- **Canby 16.41.070 (DCO site and design review), FETCHED and read, (c) under
+  2026-10-14-unchecked-design-details.** Awnings, an entry per unit to the sidewalk
+  (`entrance_faces_street` already required), 50% windows, banding, materials. The roof allows flat
+  with a cornice or a 24 in parapet (L261-L275), so the flat-roof ruling does not refuse it. The
+  12-16 ft ground floor and bays are commercial/mixed only (L207-L210). The alternative (intent)
+  path is optional, (b) with a clear path beside it. Canby 16.41.050 (A)(4)(b)(2)'s 5 ft strip is
+  side parking only, which the screen never offers in Canby.
+- **Gladstone 17.76, (c), item 10 corrected.** Four sections; 17.76.020 is nonconforming
+  buildings, where 17.21 DCO and 17.22 OP send existing buildings; the pod is a new conforming
+  building. 17.76.040(7)'s 20 ft is garage/carport only. Item 10's "projections" was wrong.
+Expected moves: Tigard MU-CBD only, GREEN to not-GREEN (alley or park lots, or an unstated park
+line). Canby and Gladstone: none.

@@ -133,7 +133,16 @@ code:
 # crossref rulings until the chapter came into the store):
 # - 18.420.050, the screening standards section: roof-mounted equipment screened to S-1
 #   (18.620/18.620.070.txt#L108, 18.620/18.620.080.txt#L30, Bridgeport Village) is a screen on the
-#   roof and takes no ground. Its S-3 row is encoded (parking_lot_line_buffer_ft, RES-A to RES-C).
+#   roof and takes no ground. Its S-3 row is encoded (parking_lot_line_buffer_ft, RES-A to RES-C),
+#   and its S-4 row on MU-CBD's alley and park lines (round 5, 2026-11-10).
+# - 18.420.020.C: site tree canopy reaches land divisions, apartments, nonresidential, wireless
+#   and mobile home parks (L73-L93), not a pod on its lot of record; 18.420.060.C.1 (L325) lets the
+#   applicant pay a fee in lieu where the canopy is short. Street trees stand in the right-of-way.
+# - 18.420.040 / Table 18.420.1 (L-1, L-2): what a required landscape area is planted with;
+#   min_landscaped_pct is the zones' own row.
+# - 18.320.040 and 18.670.070 (tree canopy, "Landscaping and screening are required as
+#   follows"): Table 18.320.1's nonresidential and mixed-use development, and WSRC, where no
+#   MUC lot admits the two-storey pod.
 # - 18.420.060, site tree canopy (L269 on): trees are ignored and entered per lot (Steph
 #   2026-11-01).
 crossrefs:
@@ -271,10 +280,13 @@ crossrefs:
       In RES-A to RES-C, parking at the side or rear of buildings and not in garages "must be
       screened from adjacent properties to the S-3 standard" (18.280/18.280.040.txt#L111): S-3 is
       a minimum depth of 5 feet holding a 6 ft sight-obscuring fence or wall and trees (L252-L255).
-      Encoded as parking_lot_line_buffer_ft 5 in the three zones. The other citations (S-1
-      service areas and roof equipment, no depth; S-4, 8 ft, parking on Bridgeport and downtown
-      streets) screen what the screen already places or reach zones the pod is screened in by
-      other rules.
+      Encoded as parking_lot_line_buffer_ft 5 in the three zones. The other citations: S-1
+      (service areas, roof and wall equipment) has no depth; S-4 (8 ft, L256-L257) on Bridgeport
+      streets sits inside MUC's 20 ft parking street setback, and its one Bridgeport lot is
+      stopped by the density floor. Downtown, 18.650.070.B.3 reaches further than the street
+      (18.650/18.650.070.txt#L53): a public right-of-way, a trail in a public easement or a
+      public park. The street line is held by the 10 ft setback; round 5 (2026-11-10) encoded
+      the alley and the park as MU-CBD's parking_lot_line_buffer_ft 8.
   "18.230":
     outcome: other_building
     note: >-
@@ -1739,6 +1751,42 @@ zones:
       value: 10
       cite: Tigard CDC 18.650.070.B.2, parking areas set back a minimum of 10 feet from a street property line
       quote: "or/washington/tigard/18.650/18.650.070.txt#L40,L49"
+    # THE S-4 STRIP (FOLLOWUPS 105 round 5, 2026-11-10). 18.650.070.B.3: "When
+    # abutting a public right-of-way, pedestrian paths and trails in a public
+    # easement, or a public park, parking areas must be screened to the S-4
+    # standard" (L53), and Table 18.420.2's S-4 row is a minimum depth of
+    # 8 feet (tdc.18.420.landscaping.txt#L256-L257). A street line already
+    # stands the parking 10 ft off (above), which holds the 8. Two lines it
+    # does not reach: an alley (a public right-of-way, and a lot line to this
+    # field, so no stall backs into the alley across the strip), and a park,
+    # read from Metro's ORCA land the way Troutdale's is (`parks:` below;
+    # "Park" is 18.30's "set apart and devoted to ... recreation ... for the
+    # general public"). A line across ORCA land on neither list -- a natural
+    # area, a trail parcel -- leaves the fact unstated and the lot out of
+    # GREEN. The field charges every non-street line, so a park behind the
+    # lot also widens the sides to 8: over-asked, never under. A trail in a
+    # public easement over private land is in no layer held: the one
+    # residual. B.4 (no landscaping between two parking areas) only loosens.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Tigard CDC 18.650.070.B.3, S-4 screening only where parking abuts a public right-of-way, a trail in a public easement or a public park; no strip on other lot lines
+      quote: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53,L57"
+      variants:
+        - value: 8
+          when: [abuts_alley]
+          cite: Tigard CDC 18.650.070.B.3, parking abutting a public right-of-way screened to S-4, and Table 18.420.2, S-4 minimum depth 8 feet
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
+        - value: 8
+          when: [abuts_park]
+          cite: Tigard CDC 18.650.070.B.3, parking abutting a public park screened to S-4, and Table 18.420.2, S-4 minimum depth 8 feet
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
+        - value: 8
+          when: [abuts_alley, abuts_park]
+          cite: Tigard CDC 18.650.070.B.3 and Table 18.420.2, S-4 minimum depth 8 feet, on both the alley and the park line
+          quote: "or/washington/tigard/tdc.18.420.landscaping.txt#L232-L233,L238-L239,L256-L257"
+          via: "or/washington/tigard/18.650/18.650.070.txt#L40,L51,L53"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.650 applies in addition to the rest of the title, 18.650.020.A)
@@ -1988,6 +2036,31 @@ zone_rulings:
       as Cornelius treats its county codes. Both lots are public land on the
       Washington roll (code 990) and were already RED in run 73, so this
       ruling moves no lot.
+
+# Which of Metro's ORCA open-land types this code calls "a public park", for
+# MU-CBD's S-4 strip (18.650.070.B.3; FOLLOWUPS 105 round 5, 2026-11-10) --
+# quadfit's s4 park_across_json, turned into `abuts_park` by flats/geom/park.py.
+parks:
+  abuts_park:
+    true_for: [Park]
+    false_for: [Home Owners Association, School Land]
+    quote: "or/washington/tigard/tdc.18.30.definitions.txt#L1397-L1398"
+    cite: Tigard CDC 18.30.020 ("Park"); 18.650.070.B.3 ("a public park")
+    note: >-
+      18.30 defines a park as "Any unit of land set apart and devoted to the
+      purposes of pleasure, recreation, ornament, light, and air for the
+      general public", and B.3 asks for a public one. ORCA's Park -- a
+      recreation area "primarily intended for recreational uses by the
+      public" -- is read True; reading a county or Metro park as one charges
+      8 ft where the code may charge none, the tightening way to be wrong.
+      Home Owners Association land is private and School Land is held for a
+      school, neither set apart for the general public: False. Cemetery
+      ("ornament, light, and air" may reach a public one), Golf Course (may
+      be a public one), Natural Area (Fanno Creek's greenway is city land)
+      and Other (trail and path parcels -- B.3 names "pedestrian paths and
+      trails in a public easement" too) are on neither list: a line across
+      one leaves the fact unstated and the lot out of GREEN. A point in no
+      ORCA unit is read as no park, the reading's one assumption.
 
 # THE PLAN DISTRICTS THE ZONING LAYER DOES NOT CARRY (FOLLOWUPS 109, districts
 # chunk 5, 2026-10-29). Metro's layer prints MUR and MUC; whether a lot is in

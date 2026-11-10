@@ -1,0 +1,429 @@
+16.41.070 DCO site and design review standards.
+
+The following design standards provide a framework for how a building should look, function, and feel. The standards are organized by topic and consist of the following elements:
+
+∙ Intent Statement - the big idea or the goal to be accomplished (ex. “protect pedestrians from sun, wind, and rain”). In addition to providing context for specific standards, these statements are used to evaluate applications as part of an alternative review process administered by the City’s Design Review Board (see Section 16.49.035).
+
+∙ Standards which provide clear, objective guidance related to specific design elements, in many cases providing options for how to meet a specific goal, and varying by sub-area.
+
+∙ Illustrative graphics, including photos and diagrams, with an emphasis on examples of good design found in Canby and other communities.
+
+A. Pedestrian oriented ground floor design standards.
+
+1. Intent. Design standards in this section are intended to help create an active, inviting street and sidewalk-facing storefronts and entryways that are friendly and easily accessible to passersby. They also will help ensure that the ground floor promotes a sense of interaction between activities in the building and activities in the public realm.
+
+2. Design standards and applicability.
+
+Standards                                                                                                                                                                                               Applicability
+1. Ground floor windows
+a. Visible transmittance. All commercial ground floor windows must have a Visible Transmittance (VT) of 0.6 or higher, with the exception of medical and dental offices which may have tinted windows.  CC, TC, OHC
+
+b. Primary Street facing façade - primary façade coverage. Transparent windows shall be used along a minimum of x% of the length of the ground-level primary street-facing façade, and along x% ground-level primary street-facing wall area (See Figure 34). Ground level walls include all exterior wall areas up to 10 feet above the finished grade. Primary and secondary street facing facades are defined in section 16.41.060.
+OHC: x=50% for buildings with less than 6,000 square feet of floor area and 25% for buildings with more than 6,000 square feet of floor area or located more than 75 feet from a lot line.
+c. Secondary Street facing façade – secondary façade coverage. Transparent windows shall be used along a minimum of x% of the length of the ground-level secondary street-facing façade, and along x% of the overall secondary street-facing wall area (See Figure 35). Ground level walls include all exterior wall areas up to 10 feet above the finished grade.CC: x=50%TC: x=45%OHC: x=40% for buildings with less than 6,000 square feet of floor area; 25% for buildings with more than 6,000 square feet of floor area or located more than 75 feet from a lot line.
+CC: x=60%
+TC: x=50%
+d. Alley facing façade coverage. Facades facing alleys shall provide windows along x% of the length of the alley-facing façade and along y% of the overall wall area of the alley-facing façade. Wall area shall be measured to a height of 10’-0” above the finished grade.
+CC, TC: x=50%; y=25%
+OHC: x=30%; y=20%
+
+Figure 34 Primary and secondary street façade definition
+
+Figure 35 Illustration of percent transparency requirement
+
+Standards
+Standards
+Applicability
+2. Building entries and doors
+2. Building entries and doors
+a. Orientation. All buildings shall have a prominent entry oriented to and directly connected to the sidewalk. When buildings are set back from the sidewalk, a direct, perpendicular connection between the building and the sidewalk is required. Additional customer entries may be provided and serve as principal entries (e.g., oriented to parking areas to the side or rear of buildings) and treatment of these entrances with awnings, lighting, signage, etc. is required. (See Figure 36)
+a. Orientation. All buildings shall have a prominent entry oriented to and directly connected to the sidewalk. When buildings are set back from the sidewalk, a direct, perpendicular connection between the building and the sidewalk is required. Additional customer entries may be provided and serve as principal entries (e.g., oriented to parking areas to the side or rear of buildings) and treatment of these entrances with awnings, lighting, signage, etc. is required. (See Figure 36)
+CC, TC
+b. Transparency. The street-facing building entry door on all buildings should be comprised of at least 40% transparent glass. The entry door includes any flanking or transom windows. (See Figure 37)
+b. Transparency. The street-facing building entry door on all buildings should be comprised of at least 40% transparent glass. The entry door includes any flanking or transom windows. (See Figure 37)
+CC, TC, OHC
+c. Flanking or transom windows. Commercial and mixed-use building doors shall include flanking glass windows on either side of the principal door and/or clerestory/transom windows. (See Figure 38).
+c. Flanking or transom windows. Commercial and mixed-use building doors shall include flanking glass windows on either side of the principal door and/or clerestory/transom windows. (See Figure 38).
+CC, TC, OHC
+d. Design features. Commercial and mixed-use building entries must comply with at least x of the following:
+d. Design features. Commercial and mixed-use building entries must comply with at least x of the following:
+CC: x=3;
+TC: x=2;
+OHC: x=2
+(1) Recessed entries. If recessed, principal entries shall be recessed a minimum of 3 feet into the building façade (see Figure 39).
+(2) Awnings or canopies. These may be used to provide weather protection and a visual element and meet standards (see Figure 40).
+(3) Architectural features. Principal entries may be reinforced with prominent architectural features such as towers, turrets, increased heights, articulated parapets, large storefront windows and doors, or entry awnings (see Figure 41).
+(4) Decorative features. Entries may be reinforced through the use of decorative exterior light fixtures (i.e., wall sconces) or decorative features (see Figure 42).
+(5) Engaged columns or piers may be used to reinforce and highlight entries (see Figure 43).
+(6)Use of blade signs.
+CC: x=3;
+TC: x=2;
+OHC: x=2
+
+Figure 36 Example of principal entry with direct sidewalk connection
+
+Figure 37 Example of entry that meets transparency standards
+
+Figure 38 Example of entry with transom and flanking glass
+
+Figure 39 Recessed entry
+
+Figure 40 Awning or canopy
+
+Figure 41 Entry with awning and increased mass/decorative features
+
+Figure 42 Recessed entry with lighting and accent material
+
+Figure 43 Entry flanked by engaged columns and lighting
+
+Standards
+Standards
+Applicability
+3. Transition areas. One of the following design elements (a or b) is required for buildings that span more than 75% of a city block or 350 feet. The City encourages smaller property owners to work together to collaboratively provide similar features in other areas.
+3. Transition areas. One of the following design elements (a or b) is required for buildings that span more than 75% of a city block or 350 feet. The City encourages smaller property owners to work together to collaboratively provide similar features in other areas.
+CC only;
+Encouraged but not required in the TC or OHC
+a. Arcades as defined in section 16.41.060 and that meet all of the following standards:
+a. Arcades as defined in section 16.41.060 and that meet all of the following standards:
+CC only;
+Encouraged but not required in the TC or OHC
+(1) Front entries must be set back a minimum of 6’ (clear) behind an arcade that is located at the front property line or the adjusted property line.
+(2) Spacing between columns and/or posts along building be a minimum of 10’ (clear) and a maximum of 25’ (clear). (See Figure 44)
+CC only;
+Encouraged but not required in the TC or OHC
+b. Courtyards or plazas that meet all of the following standards (see Figure 45):
+b. Courtyards or plazas that meet all of the following standards (see Figure 45):
+CC only;
+Encouraged but not required in the TC or OHC
+(1) Courtyards or plazas shall be located along the sidewalk-facing façade of the building within the front setback. Internal courtyards may be provided but will not satisfy these requirements.
+(2) Courtyard-facing facades shall include windows along a minimum of 50% of the length of the ground level courtyard-facing façade, and along 25% of the overall courtyard-facing wall area.
+(3) Courtyards/ plazas shall incorporate special paving (see Figure 46) and/or landscaping.
+(4) Courtyards/plazas shall provide seating, including but not limited to benches, tables, planter boxes, and other design elements.
+CC only;
+Encouraged but not required in the TC or OHC
+
+Figure 44 Arcades create a semi-public transition from the sidewalk to the building
+
+Figure 45 Courtyards or plazas
+
+Figure 46 Entry with special paving
+
+Standards
+Applicability
+4. Additional standards for residential-only buildings.
+TC
+a. Weather protected entries. Residential only buildings with ground floor units must provide covered, weather-protected front entries for individual units on the ground floor. Weather-protected entries may take the form of awnings, canopies, or building overhangs such as eaves extending over front doors, covered front porches, or inset front doors (see Figure 47). Awnings or canopies must be a minimum of 5 feet deep.
+TC
+b. Entries or porches. Ground floor units in residential buildings shall include individual entry or porches for each unit which are oriented to the sidewalk.
+TC
+c. Connection to sidewalk. Ground floor residential units must include a direct, perpendicular pedestrian connection to the sidewalk.
+TC
+d. Lobby entrances. All lobbies leading to residential units must orient the principal lobby entrance to the sidewalk, and maintain a direct perpendicular connection to the sidewalk.
+TC
+e. Window coverage. Transparent windows shall be used along a minimum of 50% of the length of the ground-level primary and secondary street-facing façades, and along 50% of the overall street-facing wall area. Ground level walls include all exterior wall areas up to 10 feet above the finished grade.
+TC
+
+Figure 47 Residential development that conforms to design standards
+
+B. Cohesive architectural elements standards.
+
+1. Intent. Build upon downtown Canby’s traditional architectural vernacular by incorporating cohesive and repetitive architectural elements into the ground floor of street facing facades.
+
+2. Design standards and applicability.
+
+Standards
+Standards
+Applicability
+
+Standards
+Standards
+Applicability
+1. Architectural bays
+1. Architectural bays
+a. Bay divisions. Ground floors of commercial and mixed-use buildings shall be divided into distinct street-facing architectural bays that are no more than x feet on center. (See Figure 48). For the purpose of this standard, an architectural bay is defined as the zone between the centerlines of two columns. Applicants are encouraged (but not required) to divide the ground floor into an odd (rather than even) number of architectural bays.
+a. Bay divisions. Ground floors of commercial and mixed-use buildings shall be divided into distinct street-facing architectural bays that are no more than x feet on center. (See Figure 48). For the purpose of this standard, an architectural bay is defined as the zone between the centerlines of two columns. Applicants are encouraged (but not required) to divide the ground floor into an odd (rather than even) number of architectural bays.
+CC, TC: x=30;
+OHC: x=50
+b. Height of bays. For large single-story buildings (greater than 6,000 square feet), taller than 16 feet, design and decorative elements required in sections 3, 4 and 5 will extend to the top of the ground floor (i.e., just below the roof, cornice or parapet).
+b. Height of bays. For large single-story buildings (greater than 6,000 square feet), taller than 16 feet, design and decorative elements required in sections 3, 4 and 5 will extend to the top of the ground floor (i.e., just below the roof, cornice or parapet).
+OHC
+c. Design elements. Each architectural bay within a commercial or mixed-use building shall incorporate at least x of the following elements (see Figure 49):
+c. Design elements. Each architectural bay within a commercial or mixed-use building shall incorporate at least x of the following elements (see Figure 49):
+CC: x=3;
+TC: x=2;
+OHC: x=2
+(1) Engaged columns or piers.
+(2) Transom windows over doorways.
+(3) Storefront cornice or beltcourse
+(4) Canopies, awnings, or overhangs provided along a minimum of 50 percent of the overall street-facing building length.
+(5) Storefront frieze or sign band.
+(6) Bulkheads.
+CC: x=3;
+TC: x=2;
+OHC: x=2
+d. Decorative accents. Each architectural bay within a commercial or mixed-use building shall incorporate at least x of the following elements (See Figure 50):
+d. Decorative accents. Each architectural bay within a commercial or mixed-use building shall incorporate at least x of the following elements (See Figure 50):
+CC: x=3;
+TC: x=2;
+OHC: x=2
+(1) Projecting window sills (12 to 24 feet above grade).
+(2) Window mullions.
+(3) Building lighting (minimum of 2 lights), including wall sconces, pendants, gooseneck fixtures, or lighting recessed into awnings. Wall-mounted fluorescent lights and internally lit awnings are not permitted.
+(4) Medallions (minimum of 2).
+(5) Projecting or blade signs (8 to 12 foot clearance from bottom of sidewalk).
+CC: x=3;
+TC: x=2;
+OHC: x=2
+
+Figure 48 Illustration of replicating bays
+
+Figure 49 Design elements for bays
+
+Figure 50 Decorative accents in bays
+
+C. Integrated building façade standards.
+
+1. Intent. Build upon Canby’s traditional downtown architecture by creating an attractive and unified building façade that celebrates ground floor activities, the top of the building (where the edifice meets the sky), and everything in between.
+
+2. Design standards and applicability.
+
+Standards
+Standards
+Applicability
+
+Standards
+Standards
+Applicability
+1. Distinct base, middle, and top of building
+1. Distinct base, middle, and top of building
+a. All buildings (regardless of height or number of stories) shall have a clear and distinct base, middle and top to break up vertical mass. (See Figure 51). Buildings must utilize horizontal bands and/or changes in color, material, form and/or pattern to differentiate the base, middle, and top of the building subject to the following requirements. These elements are required on all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+a. All buildings (regardless of height or number of stories) shall have a clear and distinct base, middle and top to break up vertical mass. (See Figure 51). Buildings must utilize horizontal bands and/or changes in color, material, form and/or pattern to differentiate the base, middle, and top of the building subject to the following requirements. These elements are required on all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+CC, TC, OHC
+(1) Horizontal bands or other changes in pattern or material shall be a minimum of 8 inches high (the length of a standard brick), and must project a minimum of 3/4 to one inch from the building face.
+(2) Changes in building massing and form may also be used to differentiate a building’s base, middle, and top. This may include architectural setbacks or projections, measuring a minimum of 3 inches (see Figure 52).
+CC, TC, OHC
+2. Ground floor design elements
+2. Ground floor design elements
+a. The ground floor of the building shall range from 12 feet to 16 feet in height and shall be broken up into three distinct areas – a base/bulkhead, middle, and top (See Figure 53). This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+a. The ground floor of the building shall range from 12 feet to 16 feet in height and shall be broken up into three distinct areas – a base/bulkhead, middle, and top (See Figure 53). This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+CC , TC;
+(commercial and mixed use buildings only)
+b. Ground floor “bulkhead/base”. The “base” of the ground floor facade extends from the top of the finished grade or sidewalk to the bottom of the window sill. It shall contain at least x of the following elements (See Figure 54): This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+b. Ground floor “bulkhead/base”. The “base” of the ground floor facade extends from the top of the finished grade or sidewalk to the bottom of the window sill. It shall contain at least x of the following elements (See Figure 54): This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+CC: x=2;
+TC: X=1;
+(commercial and mixed use buildings only)
+(1) Projected window sills, 12 to 24 inches above.
+(2) Bulkhead (the area directly below the projected window sill) should typically be constructed of concrete, brick, or stone. This element serves to anchor the facade to the ground, and with the exception of the entry door, this element usually extends the length of the elevation.
+CC: x=2;
+TC: X=1;
+(commercial and mixed use buildings only)
+c. Ground floor “middle”. The middle of the ground floor is typically comprised of storefront windows and shall contain at least x of the following elements (see Figure 55): This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+c. Ground floor “middle”. The middle of the ground floor is typically comprised of storefront windows and shall contain at least x of the following elements (see Figure 55): This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+CC: x=2;
+TC: x=1;
+(commercial and mixed use buildings only)
+(1) Integrated window mullions.
+(2) Window plant box (minimum of one pair).
+(3) Decorative building light fixtures, sconces, or medallion (minimum of one pair).
+CC: x=2;
+TC: x=1;
+(commercial and mixed use buildings only)
+d. Ground floor “top”. For a multi-story building, the “top” of the ground floor facade is the area between the storefront and the upper stories of the building and shall contain at least x of the following elements (See Figure 56): This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+d. Ground floor “top”. For a multi-story building, the “top” of the ground floor facade is the area between the storefront and the upper stories of the building and shall contain at least x of the following elements (See Figure 56): This requirement applies to all street facing facades and the side of the building on which the primary entrance is located if it does not face a street.
+CC: x=3;
+TC: x=2;
+(commercial and mixed use buildings only)
+(1) A marquee or projecting or blade sign that extends in a minimum of 5 feet perpendicular manner from the building façade (the bottom of the marquee or sign shall be 8 to 12 feet above grade).
+(2) Sign frieze.
+(3) Storefront awning or canopy. The bottom of the awning or canopy shall be 8 to 12 feet above grade.
+(4) Storefront cornice or belt course.
+(5) Transom window(s).
+CC: x=3;
+TC: x=2;
+(commercial and mixed use buildings only)
+3. Middle of building design elements
+3. Middle of building design elements
+a. The middle of the building should be differentiated from the bottom and top by at least x of the following design elements (see Figure 57):
+a. The middle of the building should be differentiated from the bottom and top by at least x of the following design elements (see Figure 57):
+CC: x=2;
+TC: x=1;
+(buildings of 2 or more stories only)
+(1) Residential windows, which are smaller than ground floor windows, and oriented vertically at a ratio of approximately 2:1. Individual vertical windows may be organized into larger window assemblies.
+(2) Balcony.
+(3) Step back.
+(4) Signage band.
+CC: x=2;
+TC: x=1;
+(buildings of 2 or more stories only)
+4. Top of building design elements.
+4. Top of building design elements.
+a. Roof forms may be flat or sloped. Requirements for chosen roof forms are as follows:
+a. Roof forms may be flat or sloped. Requirements for chosen roof forms are as follows:
+CC, TC, OHC
+b. Flat roofs. All flat roofs shall employ a detailed, projecting cornice or projecting parapet to visually “cap” the building and meet all of the following requirements:
+b. Flat roofs. All flat roofs shall employ a detailed, projecting cornice or projecting parapet to visually “cap” the building and meet all of the following requirements:
+CC; TC; OHC
+(1) Cornices shall project horizontally a maximum of 3 feet (see Figure 58).
+(2) Parapets must be a minimum of 24 inches in height. Parapets must include a cornice, molding, trim, or variations in brick coursing (see Figure 59).
+(3) Cornices and parapets shall wrap around all sides of the building visible from any adjacent street or parking area.
+CC; TC; OHC
+c. Sloped roofs must meet all of the following requirements:
+c. Sloped roofs must meet all of the following requirements:
+CC; TC; OHC
+(1) All sloped roofs shall provide a minimum 1-foot overhang.
+(2) All sloped roofs must have a minimum slope of 4:12 (see Figures 14 and 60).
+CC; TC; OHC
+d. Roof top gardens are encouraged on flat roofs, as they help to manage stormwater run-off that would otherwise go into storm sewers, and eventually rivers and streams. Roof gardens with plant materials that are visible from the sidewalk and the street are particularly encouraged. (See Figure 61).
+d. Roof top gardens are encouraged on flat roofs, as they help to manage stormwater run-off that would otherwise go into storm sewers, and eventually rivers and streams. Roof gardens with plant materials that are visible from the sidewalk and the street are particularly encouraged. (See Figure 61).
+CC; TC; OHC
+
+Figure 51 Example of distinct bottom, middle & top of building
+
+Figure 52 Example of change in height of roofline or top of building
+
+Figure 53 Elements of the bottom of the building
+
+Figure 54 Building base elements
+
+Figure 55 Middle and top of ground floor elements
+
+Figure 56 Top of building elements and treatments
+
+Figure 57 Middle of building elements
+
+Figure 58 Cornice used on flat roof
+
+Figure 59 Parapet used on flat roof
+
+Figure 60 Varying sloped rooflines are used on this building
+
+Figure 61 Examples of rooftop gardens
+
+D. Corner intersection standards.
+
+1. Intent. Create a strong architectural statement at street corners to create a strong identity. Establish visual landmarks and enhance visual variety.
+
+2. Design standards and applicability.
+
+Standards
+Standards
+Applicability
+1. Corners
+1. Corners
+a. Commercial and mixed-use buildings located on corner lots must address the corner by employing one of the following:
+a. Commercial and mixed-use buildings located on corner lots must address the corner by employing one of the following:
+CC
+(1) Chamfer the corner of the building (i.e., cut the building at a 45 degree angle for a minimum of 10 feet) (see Figure 62).
+(2) Incorporate an arcade at the corner as a way of creating a semi-public zone (see Figure 62).
+(3) Using special paving, plantings, or lighting, create a formal gathering space at the corner by notching the building so it operates as an extension of the sidewalk (see Figure 63).
+(4) Employ prominent architectural elements within 25 feet of the corner to highlight the corner of the building, such as increased building height or massing, turrets, cupolas, a pitched roof, or other prominent features (see Figure 63).
+CC
+
+Figure 62 Corner options
+
+Figure 63 Corner of building elements
+
+E. Materials standards.
+
+1. Intent. Use building materials that evoke a sense of permanence and are compatible with Canby’s business areas and the surrounding built environment.
+
+2. Design standards and applicability. Materials allowed in the CC, TC and OHC sub-areas are summarized in the following table in terms of primary, secondary and accent materials. Other materials may be permitted through the design review process described in Chapter 16.49.
+
+Standards
+CC
+TC
+OHC
+Primary materials – 70% or more of building façade, excluding windows and transparent doors.
+Brick
+Stone
+Stucco/EIFS
+Brick
+Stone
+Stucco/EIFS
+Wood siding
+Hardy Plank
+Brick
+Stone
+Stucco/EIFS
+Wood siding
+Hardy Plank
+Split-face CMU
+Tilt-up concrete
+Spandrel glass curtain walls
+Secondary materials – up to 25% of building façade, excluding windows and transparent doors.
+Brick
+Stone
+Stucco/EIFS
+CMU (split and ground face)
+Concrete
+Wood siding
+Hardy Plank
+Spandrel glass curtain walls
+Brick
+Stone
+Stucco/EIFS
+CMU (split and ground face)
+Concrete
+Wood siding
+Hardy Plank
+Spandrel glass curtain walls
+Brick
+Stone
+Stucco/EIFS
+CMU (split and ground face)
+Concrete
+Wood siding
+Hardy Plank
+Spandrel glass curtain walls
+Accent materials – up to 10% of building façade, excluding windows and transparent doors.
+Brick
+Stone
+Stucco/EIFS
+CMU (split and ground face)
+Concrete
+Wood siding
+Hardy Plank
+Spandrel glass curtain walls
+Metal
+Ceramic tile
+Wood, vinyl and/or metal for trim
+Brick
+Stone
+Stucco/EIFS
+CMU (split and ground face)
+Concrete
+Wood siding
+Hardy Plank
+Spandrel glass curtain walls
+Metal
+Ceramic tile
+Wood, vinyl and/or metal for trim
+Brick
+Stone
+Stucco/EIFS
+CMU (split and ground face)
+Concrete
+Wood siding
+Hardy Plank
+Spandrel glass curtain walls
+Metal
+Ceramic tile
+Wood, vinyl and/or metal for trim
+Roof materials (sloped roofs only)
+Metal
+Wood shingles
+Tile
+Metal
+Wood shingles
+Tile
+Asphalt shingles
+Metal
+Wood shingles
+Tile
+
+F. Color palette
+
+1. Intent. Use colors on buildings that are generally compatible with Canby’s business areas and the surrounding built environment.
+
+2. Design standards and applicability. Applicants are strongly encouraged to use colors from, or consistent with, the Sherwin-Williams Arts and Crafts color palette (i.e. with the same paint color codes). Additional information about this color palette is available from the City of Canby, Canby Business Development and/or the Sherwin-Williams Web site. (Ord. 1296, 2008)

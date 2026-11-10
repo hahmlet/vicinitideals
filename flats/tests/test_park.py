@@ -185,9 +185,13 @@ def test_troutdale_is_the_one_layer_that_reads_parks(corpus: dict) -> None:
     chapter this corpus reads and holds nothing from), Wilsonville 4.127(.18) (a Frog Pond design
     standard, zone refuses the building), Tualatin's lot-size variance
     criteria, and the manufactured-dwelling "parks" of Gresham, Fairview and
-    Portland are not setbacks this screen holds."""
+    Portland are not setbacks this screen holds.
+
+    2026-11-10 (FOLLOWUPS 105 round 5): Tigard joins. 18.650.070.B.3 screens
+    MU-CBD parking "abutting ... a public park" to S-4, whose 8 ft depth is
+    Table 18.420.2's (flats/tests/test_crossref_round5.py)."""
     got = {(lid, name) for lid, layer in corpus.items() for name in layer.parks}
-    assert got == {(TROUTDALE, "abuts_park")}
+    assert got == {(TROUTDALE, "abuts_park"), ("or/washington/tigard", "abuts_park")}
 
 
 def test_troutdales_park_is_the_citys_recreation_land(corpus: dict) -> None:

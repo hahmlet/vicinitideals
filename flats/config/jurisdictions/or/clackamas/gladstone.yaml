@@ -356,7 +356,7 @@ definitions:
 # READ AND NOT ENCODED (FOLLOWUPS 105, Chapter 17.76 fetched 2026-11-08 with Steph's OK; these were
 # crossref rulings until it came into the store): every district's dimensional standards apply
 # "Except as provided in ... Chapter 17.76 (Exceptions)" (17.14/17.14.050.txt#L3). Read in full,
-# every subsection relaxes: projections and height exceptions, front-yard averaging, a 10 ft front on
+# every subsection relaxes: front-yard averaging, a 10 ft front on
 # a private street or flag access, the owner naming the front of a through lot, setback exceptions
 # that "may be authorized" (17.76.exceptions.txt#L79-L97). 17.76.040(5) says a flag lot's line
 # designation "may be modified to allow flexibility" (L89-L93), a discretionary relief; the screen
@@ -364,6 +364,13 @@ definitions:
 # undersized lot of record held to one single-household dwelling, L71), only bites a lot admitted by
 # lot-of-record relief, and no Gladstone zone resolves lot_of_record_relief, so such a lot is already
 # held to the zone minimum. Reading it can admit lots, never reject one the screen admits.
+# Re-read in round 5 (2026-11-10), with every reference into it: the chapter holds four sections
+# (L7-L13), no projection or height exception. 17.76.020, nonconforming uses and developments
+# (L23-L63), is what 17.21's DCO (17.21.dco.txt#L53-L55) and 17.22's OP (17.22/17.22.050.txt#L15)
+# send existing buildings to: the pod is a new conforming building, not the alteration of a
+# nonconforming one, so it reaches nothing placed. 17.76.040(7)'s 20 ft (L97) is between a
+# street and a garage vehicle entrance or carport, which the pod has neither of. 17.06.290 cites
+# 17.76.040(5) (the flag-lot relief above). Nothing moves.
 crossrefs:
   # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
   "12.02":

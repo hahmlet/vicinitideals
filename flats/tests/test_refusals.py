@@ -403,7 +403,9 @@ pytestmark = pytest.mark.unit
 # 2026-11-10 (flats/pdx-drift, FOLLOWUPS 165): notes 164 -> 163. The 11/1/26 reprint puts
 # CI1 household living under RM1's standards (33.150.200), so CI1 no longer carries its own
 # "NOT ENCODED, on purpose: Maps 150-1 through 150-5" note; CI2 and IR keep theirs.
-EXPECTED = {"notes": 163, "comments": 296, "tests": 18}
+# 296 -> 297 comments on 2026-11-10 (FOLLOWUPS 105 round 5, flats/crossref-3): Canby 16.41.070
+# was fetched and read; its READ AND NOT ENCODED block says none of it refuses the flat roof.
+EXPECTED = {"notes": 163, "comments": 297, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

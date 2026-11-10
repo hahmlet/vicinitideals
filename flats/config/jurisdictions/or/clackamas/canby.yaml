@@ -1692,6 +1692,16 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# Fetched 2026-11-10 under Steph's standing download OK (FOLLOWUPS 105 round 5): the DCO
+# design standards 16.41.050 (A)(3)(b) and 16.41.060 (B)(1)(a) send the reader to. Read in full.
+- id: "cmc.16.41.070"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39463
+  title: "CMC 16.41.070 DCO site and design review standards."
+  start: "16.41.070 DCO site and design review standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
 - id: "cmc.16.46.010"
   url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40043
   title: "CMC 16.46.010 Number of units in residential development."
@@ -1871,6 +1881,22 @@ code:
 # wherever parking_front_prohibited holds (paper.side_court), and the rear court stands behind the
 # rear wall, in front of no facade. A street on neither list owes no ban, which the encoded ban only
 # over-asks. The rest of 16.41.060 is objectives and design vocabulary.
+# READ AND NOT ENCODED (FOLLOWUPS 105 round 5, CMC 16.41.070 fetched 2026-11-10): the DCO design
+# standards, reached from 16.41.050 (A)(3)(b) (screening materials, "16.41.070.E and
+# 16.41.070.F") and 16.41.060 (B)(1)(a). Clear and objective standards with an optional
+# intent-based alternative before the Design Review Board (cmc.16.41.070.txt#L5-L7, 16.49.035):
+# the clear path is the pod's, so the alternative changes nothing. What reaches a residential-only
+# building in TC (L113-L123): weather-protected entries (awnings 5 ft deep), an entry or porch per
+# ground-floor unit oriented to the sidewalk (entrance_faces_street is already `required` in
+# defaults), a direct walk to the sidewalk, and 50 percent street-facade windows; with A.1 the
+# alley-facade windows (L26), C.1 the base/middle/top banding (L199), C.4 the roof (L261-L275:
+# "Roof forms may be flat or sloped", a flat roof capped by a cornice or a parapet of at least
+# 24 inches; with the pod's 26 ft that stands under R-2's 35) and E's material palette (L331,
+# others by design review). Every one is a measurable design detail the screen does not check,
+# which does not hold a lot off GREEN (rulings.yaml 2026-10-14-unchecked-design-details), and
+# none refuses the flat roof (2026-10-21-pod-roof-flat). The 12-16 ft ground floor (C.2.a, L207)
+# and the bay, transom and storefront rows are "commercial and mixed use buildings only" (L210);
+# the transition areas and corner chamfers are CC only. Nothing here moves a lot.
 crossrefs:
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
   # Eight of them are the 1984 ordinance's own numbering printed in the history notes.

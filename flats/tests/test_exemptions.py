@@ -245,7 +245,11 @@ pytestmark = pytest.mark.unit
 # size" exemption (33.150.202) left with the reprint; CI1 now reads as RM1 (33.150.200) and
 # takes RM1's 4,000 sq ft minimum -- one exemption fewer, the conservative direction.
 # 484 / 246 / silent 7: the sum above plus pdx-drift's stated -1 (CI1 reads as RM1) (rel7 assembly, 2026-11-10, with pdx-drift).
-EXPECTED = {"stated": 484, "numeric": 246, "marker": 0, "dash": 2, "silent": 7}
+# 484 -> 485 stated on 2026-11-10 (FOLLOWUPS 105 round 5, flats/crossref-3): Tigard MU-CBD's
+# parking_lot_line_buffer_ft is exempt on an ordinary lot line, quoted on 18.650.070.B.3, which
+# screens parking only where it abuts a right-of-way, a public trail easement or a public park;
+# the alley and park lines carry Table 18.420.2's 8 ft S-4 as variants.
+EXPECTED = {"stated": 485, "numeric": 246, "marker": 0, "dash": 2, "silent": 7}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

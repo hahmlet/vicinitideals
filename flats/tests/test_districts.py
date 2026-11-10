@@ -237,6 +237,18 @@ RULINGS: dict[str, dict[str, str]] = {
             "code, not a map layer; the C-1 block's notes carry the doubt "
             "(multi-family on R-2 standards is outright there)."
         ),
+        # 2026-11-10 (FOLLOWUPS 105 round 5): CMC 16.41.070 came into the store,
+        # and its applicability columns print the other two sub-areas.
+        "CC": (
+            "overlay: the Core Commercial sub-area of the Downtown Canby "
+            "Overlay, CMC 16.41.020 A.1 (cmc.16.41.020 L9). C-1 outside TC "
+            "admits housing only in mixed use (16.22.010 A), refused."
+        ),
+        "OHC": (
+            "overlay: the Outer Highway Commercial sub-area of the Downtown "
+            "Canby Overlay, CMC 16.41.020 A.3 (cmc.16.41.020 L17), along 99E "
+            "in C-1 and C-2; neither admits the pod outside TC."
+        ),
         "NRDCP": (
             "not-a-zone: the North Redwood Development Concept Plan, which "
             "CMC 16.13.010 (cmc.16.13.010 L5) says the North Redwood Plan "
