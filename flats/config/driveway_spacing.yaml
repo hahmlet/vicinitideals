@@ -188,10 +188,22 @@ jurisdictions:
         quote: or/clackamas/tualatin/75.access-management.txt#L166-L168
 
   or/washington/cornelius:
-    # No city TSP layer is published (scouted 2026-11-09); every frontage
-    # is unread until one is loaded.
-    map: null
-    classes: {}
+    # No city TSP layer is published (scouted 2026-11-09). Washington
+    # County's map draws Cornelius roads and is read here ONLY to tell which
+    # streets are busy (Steph 2026-11-10, rulings.yaml
+    # 2026-11-10-cornelius-county-street-map: "Only for busy roads"); it is
+    # read for nothing else in Cornelius (its pipeline entry does not serve
+    # the city). FClass2 4 Collector, 3 Arterial, 2 Principal Arterial name
+    # the code's busy streets. No `unlisted` and no Neighborhood Route: a
+    # street the county map does not draw, or draws as a Neighborhood Route,
+    # is not read as local, so a frontage on it stays unread (YELLOW) and
+    # the local-street rules below are not reached until a city map is.
+    map: street_class_washington
+    map_ruling: 2026-11-10-cornelius-county-street-map
+    classes:
+      '4': collector
+      '3': arterial
+      '2': arterial
     frontage:
       arterial:
         figure_ft: 100

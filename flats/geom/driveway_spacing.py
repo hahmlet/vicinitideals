@@ -143,6 +143,9 @@ class SpacingRules:
     frontage: Mapping[str, FrontageRule]
     intersections: tuple[IntersectionRule, ...]
     applies: Applies | None = None
+    #: The ruling that lets a map serve a place its registry entry does not
+    #: (Cornelius reads Washington County's for busy streets only).
+    map_ruling: str | None = None
 
     def quotes(self) -> list[tuple[str, float | None, str]]:
         """Every ``(quote, printed figure or None, cite)`` the entry holds."""
@@ -218,6 +221,7 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
         frontage=frontage,
         intersections=tuple(rules),
         applies=applies,
+        map_ruling=raw.get("map_ruling"),
     )
 
 
