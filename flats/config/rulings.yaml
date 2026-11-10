@@ -910,6 +910,28 @@
   source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md; flats/config/pipeline.yaml)
   encoded_in: [flats/config/pipeline.yaml]
 
+- id: 2026-11-06-historic-surveyed-yellow
+  kind: ruling
+  date: 2026-11-06
+  scope: {}
+  question: >-
+    The state's Historic Sites layer is an inventory, not a list of designations.
+    What colour is a lot holding a building the state only surveyed?
+  ruling: >-
+    Steph accepted that surveyed-only entries may hold some lots back. A surveyed-only
+    or doubtful entry on a lot gives YELLOW with a flag, never RED, and a covered
+    city's own list stays the authority.
+  effect: >-
+    Inventory entries are YELLOW with HISTORIC-LISTING-UNSETTLED where no city list is
+    held. Where one is held (Gresham, West Linn, Troutdale, Tigard) an entry the state
+    only surveyed adds nothing, and a National Register building the list does not carry
+    is YELLOW, except in Troutdale, whose own code reaches National Register resources.
+    Portland keeps its map.
+  source: Steph 2026-11-06, relayed by the coordinator on FOLLOWUPS 87
+  encoded_in:
+    - flats/config/historic/protection.yaml
+    - flats/geom/historic_lists.py
+
 - id: 2026-10-14-frontage-cap-any-street
   kind: ruling
   date: 2026-10-14
@@ -2580,6 +2602,181 @@
     is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
     FOLLOWUPS 68.
   source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
+- id: 2026-11-07-national-register-district-contributing-red
+  kind: ruling
+  date: 2026-11-07
+  scope: {}
+  question: >-
+    Outside Portland, a house that is a contributing resource in a National
+    Register historic district (about 520 lots, nearly all Oak Hills,
+    unincorporated Washington County) but not individually listed: RED like
+    an individually listed building, or YELLOW?
+  ruling: '"red."'
+  effect: >-
+    A contributing resource in a National Register district is RED on a sure
+    match, the same as an individually listed National Register building
+    (OAR 660-023-0200(8)(a) protects National Register resources whether or
+    not the local government designated them). FOLLOWUPS 87.
+  source: Steph 2026-11-07 (chat), docs/followups/87-historic-outside-portland.md
+- id: 2026-11-06-estacada-lot-of-record-per-home-figure
+  kind: ruling
+  date: 2026-11-06
+  scope: {county: clackamas, city: estacada}
+  question: >-
+    Estacada EMC 16.84.040 lets an existing undersized lot be built on. Does
+    that relief also lift the 2,500 sq ft per home figure, which limits how
+    many homes fit? The code does not say. Stay yellow, go green, or ask the
+    city?
+  ruling: >-
+    "Stay yellow"
+  effect: >-
+    A lot that passes only through this relief (C-2, CMU, NCR, R-3) is YELLOW
+    with a flag, never GREEN, until the city answers. FOLLOWUPS 108.
+  source: Steph 2026-11-06 (chat), docs/followups/108-legal-lots.md
+- id: 2026-11-08-oregon-city-dedication-below-minimum
+  kind: ruling
+  date: 2026-11-08
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    When an existing Oregon City lot must give up a strip of land for the
+    road and is left smaller than the zone's minimum lot size, does it still
+    count as a lot that meets the minimum (existing-lot relief, OCMC
+    17.58.020)?
+  ruling: '"no"'
+  effect: >-
+    The lot area after the road strip is measured against the zone minimum
+    with no existing-lot relief for the shortfall the dedication causes; a
+    lot left below the minimum misses it. FOLLOWUPS 77.
+  source: Steph 2026-11-08 (chat), docs/followups/77-city-road-dedication.md
+- id: 2026-11-08-no-front-yard-parking-silent-codes
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    In a code that says nothing about it, may the parking court sit between
+    the building and the street (in the front yard)?
+  ruling: >-
+    "no"
+  effect: >-
+    The court must not sit between the building and a front lot line (the
+    front yard: both ends of a through lot whose code makes each a front,
+    every street of a corner whose front is not named, a private road only
+    where the city counts it as a front lot line); where the code bans
+    parking between the building and the street (parking_front_prohibited),
+    every street line. A corner's street side yard is not a front yard, nor
+    a private road the yards ignore. Every placement prefers a clear court; a plan
+    whose final drawing still stands it there is held out of GREEN
+    (COURT_FRONT_YARD). FOLLOWUPS 142. Not unincorporated Clackamas, whose
+    code is not silent: 2026-11-09-clackamas-front-parking-follow-zdo.
+  source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md
+  encoded_in: [flats/ingest/quadfit.py, flats/fit/draw.py]
+- id: 2026-11-08-washington-plat-age-check-yellow
+  kind: ruling
+  date: 2026-11-08
+  scope: {county: washington}
+  question: >-
+    Washington County's Type I middle-housing gate needs a lot made by a
+    standard subdivision or partition plat, not a Middle Housing Land Division
+    (CDC 304-2.14 .. 307-2.13, 106-107). A plat's title need not say it was a
+    middle housing division, and those began in 2022, so a plat passes only
+    when provably older: a partition plat's year, or a named subdivision whose
+    houses were built in three or more different years before 2022. Tract
+    subdivisions built out in one or two years (917 pod-sized lots) cannot be
+    dated that way. Pass them, or keep them yellow?
+  ruling: '"yellow"'
+  effect: >-
+    No change: a plat the tax roll cannot date before 2022 is unread and the
+    lot keeps REVIEW-CONDITIONS (standard_plat), or CLEAR-OBJECTIVE where
+    ORS 197A.400 reaches it. FOLLOWUPS 83.
+  source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
+  encoded_in: [flats/ingest/plats.py]
+- id: 2026-11-08-washington-whole-lots-and-vacated-street-platted
+  kind: ruling
+  date: 2026-11-08
+  scope: {county: washington}
+  question: >-
+    For the same gate, does a tax lot count as made by a plat when it is one
+    whole platted lot plus part of a vacated street, road or alley, or two or
+    more whole platted lots together?
+  ruling: '"yes to both"'
+  effect: >-
+    Both read as made by a plat (still subject to the pre-2022 plat-age
+    check). Part of a lot, a vacated tract, a tract and a second plat in the
+    description still do not pass. FOLLOWUPS 83.
+  source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
+  encoded_in: [flats/ingest/plats.py]
+- id: 2026-11-08-single-design-80x30
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    The screen tries every lot with two pod sizes (4 x 14 ft homes, 56 x 36,
+    and 4 x 20 ft homes, 80 x 25) and the sizing study measured five more.
+    Which building should FLATS screen?
+  ruling: >-
+    One design only: 4 attached townhomes in a row, each 20 ft wide x 30 ft
+    deep (600 sq ft ground floor), 2 storeys, front door on each home's 20 ft
+    wall, so the building is 80 x 30 with every door along the 80 ft face.
+    Parking stays exactly as today. Retire every other size.
+  effect: >-
+    New runs screen pod80x30 alone (flats/config/pods/pod80x30.yaml), with
+    pod80x25's height, storeys, roof and parking bands. pod56x36 and pod80x25
+    are archived: still loadable so results that name them read, never run.
+    The study sizes were never in the catalog. FOLLOWUPS 149.
+  encoded_in: [flats/config/pods/pod80x30.yaml, flats/ingest/quadfit.py]
+  source: Steph 2026-11-08 (chat, executive decision), docs/followups/149-pod-unit-width.md
+- id: 2026-11-08-no-porch-end-door
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    Most codes let the front doors face away from the street if one home's door
+    sits near the street end of the building and opens onto a covered porch (or
+    the end wall carries windows). Can the product take that change, so the
+    building can stand turned, its 30 ft end to the street?
+  ruling: >-
+    No. The building's doors stay on the 80 ft face; no end-home porch door or
+    street-end windows to meet an entrance-orientation alternative. Where a code
+    requires the main entrance to face the street (with or without a porch or
+    angle alternative), the turned placement fails.
+  effect: >-
+    Every place read as `alternative` (facing the street, up to 45 degrees, a
+    common open space or a porch: the Large Cities Model Code cities, Portland,
+    Gresham, Beaverton RMA/RMB/RMC/CM-RM and the rest) is `required`, and
+    Hillsboro's 12.50.710.C.1.b too: the pod is searched facing the street only,
+    and a lot that fit only turned no longer passes. An angle alternative of up
+    to 45 degrees cannot be met by a 90-degree turn. FOLLOWUPS 153.
+  source: Steph 2026-11-08 (chat), docs/followups/153-entrance-orientation.md
+  encoded_in: [flats/rules/fields.py, flats/score/paper.py]
+- id: 2026-11-09-clackamas-front-parking-follow-zdo
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The 2026-11-08 front-yard ruling (no parking court between the building
+    and a street) was for codes that say nothing. Unincorporated Clackamas
+    ZDO 845.02(D) does say: parking may stand between a building and a
+    public street where a dwelling separates it from the street, or where
+    all of it together is no wider than half the street frontage. Apply the
+    blanket ban there anyway, or follow the county's rule?
+  ruling: >-
+    "Follow the county's rules."
+  effect: >-
+    In unincorporated Clackamas (parking_front_share_allowed), a court the
+    final drawing stands between the building and a front lot line is not
+    held COURT_FRONT_YARD where every such line is read as a public street
+    and the court, measured on that drawing, faces no more than 50 percent
+    of any street's frontage (845.02(D)(2), read on every street). The
+    dwelling-separates-it limb (845.02(D)(1)) is not measured and never
+    opens a lot. A line not read as a public street (a private road the
+    yards count, a street s4 did not read) or an unmeasured share keeps the
+    hold. The townhouse path (unit_lots) follows 845.03(E)(2)(a), "Off-street
+    parking areas shall not be located between a townhouse and a public
+    street": an outright ban (parking_front_prohibited) on EVERY public
+    street, a corner's side street included. Cities in Clackamas keep their
+    own rules.
+  source: Steph 2026-11-09 (chat)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/_unincorporated.yaml, flats/ingest/quadfit.py, flats/rules/fields.py]
 - id: 2026-11-09-sight-triangle-corner-check
   kind: ruling
   date: 2026-11-09
@@ -2644,7 +2841,7 @@
 - id: 2026-11-09-multco-pockets-portland-parking
   kind: ruling
   date: 2026-11-09
-  scope: {county: multnomah, city: _unincorporated}
+  scope: {county: multnomah, city: _unincorporated, zones: [R5, R7, R10, R20]}
   question: >-
     The Portland-administered unincorporated pockets now take Portland Title
     33. Should Steph's Portland parking rulings (20 ft aisle; the alley is the
@@ -2655,6 +2852,7 @@
     (as 2026-09-30-portland-aisle-20ft) and an alley-fed plan treats the alley
     as the aisle with 20 ft back-out (as 2026-09-13-portland-alley-is-aisle).
   source: Steph 2026-11-09 (chat), ../vicinitideals-worktrees/multco-pockets.handoff.md item 1
+  encoded_in: [flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
 - id: 2026-11-09-hillsboro-scr-side-max-both
   kind: ruling
   date: 2026-11-09
@@ -2753,6 +2951,32 @@
     or the Portland-administered pockets; the reason reads "the city treats RF
     as farm land, outside the state law". All 859 RF lots were red before and
     stay red. FOLLOWUPS 173.
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
+    - flats/provenance/docs/or/multnomah/portland/amended/ord192241.txt
+  source: Steph 2026-11-09 (chat), docs/followups/173-rf-middle-housing.md, ../vicinitideals-worktrees/rf-middle-housing.findings.md
+- id: 2026-11-09-rf-is-farm-land-pockets
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: _unincorporated, zones: [RF]}
+  question: >-
+    Residential Farm/Forest (RF) in the Portland-administered unincorporated
+    pockets: can the state middle-housing (fourplex) route be used there, or is
+    it farm land outside that law?
+  ruling: '"farm land"'
+  effect: >-
+    The pocket half of 2026-11-09-rf-is-farm-land (one ruling; a zone scope
+    names one city file, so the register holds it twice). Pocket RF is
+    Portland's RF zone administered under Title 33: farm land outside ORS
+    197A.420 / HB 2138, no state middle-housing route, the reason reads "the
+    city treats RF as farm land, outside the state law". With the route closed
+    nothing keeps the county's chapter on it, so its parking and outdoor-area
+    card is Title 33's, as in the pockets' R5-R20. All pocket RF lots were red
+    before and stay red. FOLLOWUPS 173.
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
+    - flats/provenance/docs/or/multnomah/portland/amended/ord192241.txt
   source: Steph 2026-11-09 (chat), docs/followups/173-rf-middle-housing.md, ../vicinitideals-worktrees/rf-middle-housing.findings.md
 - id: 2026-11-09-corner-frontage-keep-split
   kind: ruling
@@ -2820,18 +3044,3 @@
     out cannot make a false GREEN. An affordability filter is a later feature
     (check in with Steph first).
   source: Steph 2026-10-19 (chat, Gresham page check)
-- id: 2026-11-09-multco-pockets-portland-parking
-  kind: ruling
-  date: 2026-11-09
-  scope: {county: multnomah, city: _unincorporated, zones: [R5, R7, R10, R20]}
-  question: >-
-    The Portland-administered unincorporated pockets now take Portland Title
-    33. Should Steph's Portland parking rulings (20 ft aisle; the alley is the
-    aisle with 20 ft back-out) also cover the pockets?
-  ruling: '"Extend both"'
-  effect: >-
-    In the Portland-administered pockets the court is drawn with a 20 ft aisle
-    (as 2026-09-30-portland-aisle-20ft) and an alley-fed plan treats the alley
-    as the aisle with 20 ft back-out (as 2026-09-13-portland-alley-is-aisle).
-  source: Steph 2026-11-09 (chat), ../vicinitideals-worktrees/multco-pockets.handoff.md item 1
-  encoded_in: [flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]

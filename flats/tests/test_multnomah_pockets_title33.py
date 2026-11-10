@@ -14,8 +14,11 @@ pursuant to intergovernmental agreement".
 
 So the pockets' parking is PCC 33.266, not MCC 39.6500 to 39.6600 -- which is
 what the page check found when it saw a county sentence on a card for a zone
-the county's code never names. RF is left as it was: whether the state
-middle-housing path reaches it is a question still waiting on Steph.
+the county's code never names. RF joined them on 2026-11-09, when Steph
+ruled it farm land outside the state middle-housing law in the city and the
+pockets alike (rulings.yaml 2026-11-09-rf-is-farm-land): a Title 33 zone that
+refuses the pod at the use gate, with nothing left to hold the county's
+chapter on it.
 """
 
 from __future__ import annotations
@@ -34,9 +37,12 @@ COUNTY = "or/multnomah/_unincorporated"
 PORTLAND = "or/multnomah/portland"
 TITLE33_PARKING = f"{COUNTY}/33.266.txt"
 
-#: The Portland-administered pockets this layer screens on Title 33. RF is
-#: Portland-administered too, and deliberately absent until Steph rules on it.
+#: The Portland-administered pockets this layer screens on Title 33 that
+#: allow the pod, and so carry the plan-district hold.
 POCKETS = ("R5", "R7", "R10", "R20")
+#: Every Portland-administered pocket zone, parking and outdoor area included.
+#: RF refuses the pod at the use gate but still owes no county sentence.
+TITLE33_ZONES = POCKETS + ("RF",)
 
 
 @pytest.fixture(scope="module")
@@ -78,7 +84,7 @@ def test_the_pocket_parking_setback_is_title_33s_ten_feet(
     assert "fourplexes" in lines[271]
     assert "parking spaces are not allowed within the first 10 feet from a front lot" in lines[302]
 
-    for zone in POCKETS:
+    for zone in TITLE33_ZONES:
         held = county.zones[zone].values["parking_street_setback_ft"]
         assert held.same_as is None
         assert held.value == 10
@@ -86,11 +92,22 @@ def test_the_pocket_parking_setback_is_title_33s_ten_feet(
         assert corpus.resolve(COUNTY, zone).get("parking_street_setback_ft") == 10
 
 
-def test_rf_keeps_its_county_card_until_steph_rules(county: Layer) -> None:
-    """Not a reading -- a hold. RF waits on the middle-housing question."""
+def test_rf_takes_the_title_33_card_after_the_farm_land_ruling(
+    county: Layer, corpus: RuleSet
+) -> None:
+    """Steph 2026-11-09: RF is farm land, in the pockets as in the city.
+
+    The county card was a hold while the state middle-housing route was an
+    open question. With the route closed, pocket RF is Portland's RF zone
+    administered under Title 33, and its parking card is 33.266.120's.
+    """
     held = county.zones["RF"].values["parking_street_setback_ft"]
-    assert held.same_as == "setback_front_ft"
-    assert held.prov.cite.startswith("MCC 39.6580(A)")
+    assert held.same_as is None
+    assert held.value == 10
+    assert held.prov.quote.startswith(TITLE33_PARKING)
+    got = corpus.resolve(COUNTY, "RF")
+    assert got.get("quadplex_allowed") is False
+    assert got.values["quadplex_allowed"].relief == ()
 
 
 def test_every_county_parking_default_is_overridden_in_the_pockets(
@@ -108,7 +125,7 @@ def test_every_county_parking_default_is_overridden_in_the_pockets(
         if name.startswith(("parking_", "driveway_", "corner_access", "front_lot_line_"))
     }
     assert parking, "the county defaults hold no parking fields any more"
-    for zone in POCKETS:
+    for zone in TITLE33_ZONES:
         missing = parking - set(county.zones[zone].values)
         assert not missing, f"{zone} falls through to the county for {sorted(missing)}"
 
@@ -131,7 +148,7 @@ def test_the_pockets_read_120_for_the_rectangle_and_the_drive(
     section_120 = " ".join(lines[267:348]).lower()
     assert "aisle" not in section_120
 
-    for zone in POCKETS:
+    for zone in TITLE33_ZONES:
         got = corpus.resolve(COUNTY, zone)
         assert got.get("parking_stall_width_ft") == 9
         assert got.get("parking_stall_depth_ft") == 18
@@ -157,7 +174,7 @@ def test_the_pockets_owe_table_110_4s_outdoor_area_per_lot(
     assert lines[434].split()[:6] == ["Standard", "RF", "R20", "R10", "R7", "R5"]
     assert lines[470].count("250 sq. ft.") == 5
     assert "per lot" in lines[902]
-    for zone in POCKETS:
+    for zone in TITLE33_ZONES:
         got = corpus.resolve(COUNTY, zone)
         assert got.get("open_space_min_sqft") == 250
         assert got.get("open_space_min_dimension_ft") == 12

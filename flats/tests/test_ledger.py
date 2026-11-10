@@ -329,8 +329,8 @@ def test_a_zone_that_forbids_the_building_asks_for_no_dimensions() -> None:
     reason, which is how an encoding queue quietly fills with lookups nobody
     should do. Clackamas County's FU-10 is the plain case: a holding zone the
     state's middle housing law does not reach (ORS 197A.015(12)(e)), so no
-    path opens it. (Portland's RF was, until 2026-09-30: the state law's
-    path now asks for its minimum lot.)
+    path opens it. Portland's RF is the other case since 2026-11-09: farm land
+    the state law does not reach (rulings.yaml 2026-11-09-rf-is-farm-land).
     """
     rules = RuleSet(load_rules())
     resolved = rules.resolve("or/clackamas/_unincorporated", "FU10")

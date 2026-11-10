@@ -2403,33 +2403,45 @@ zones:
       retrieved: '2026-08-27'
       quote: "or/multnomah/portland/33.110.txt#L470-L474,L903-L905"
     quadplex_allowed:
+      # Table 110-2, Fourplex row, RF column: No. No state middle-housing path
+      # (Steph 2026-11-09, rulings.yaml 2026-11-09-rf-is-farm-land, FOLLOWUPS
+      # 173): ORS 197A.420(1)(j)(D) leaves out land "zoned primarily for ...
+      # agricultural" uses, and RF is that land on the city's own words.
+      # 33.110.020 says the zone "is intended to generally be an agricultural
+      # zone, but has been named Residential Farm/Forest to allow for ease of
+      # reference", and Ordinance 192241 (the city's HB 2138 compliance act,
+      # adopted 2026-10-21, effective 2027-01-01) keeps the No and says why, three
+      # times: RF "is generally an agricultural zone and not subject to
+      # ORS197A.420" (As Adopted p. 12), "not subject to ORS 197A.420 or HB 2138"
+      # (p. 30), "not subject to HB 2138" (p. 58). Its amended Table 110-2 (p. 31)
+      # still prints No for duplex, triplex and fourplex in RF. Because the city
+      # has acted, OAR 660-046-0040(4)'s model-code backstop does not reach it.
+      # The ordinance is the `via`: the reason the No is read with no state
+      # override. Until 2026-11-09 this field carried a state_middle_housing
+      # variant on a reading of (1)(j) that called RF not primarily
+      # agricultural; that reading contradicted 33.110.020 and is withdrawn.
+      # Revisit only if a LUBA appeal of Ord. 192241 or a DLCD objection
+      # naming RF turns up.
       value: false
+      cite: PCC 33.110 Table 110-2, fourplex not allowed in RF -- the city treats RF as farm land, outside the state law (PCC 33.110.020; Ordinance 192241, As Adopted pp. 12, 30, 58)
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
       quote: "or/multnomah/portland/33.110/33.110.200.txt#L9-L20"
-      variants:
-        # State law over the city's table (Steph 2026-09-30, FOLLOWUPS 21(b)):
-        # ORS 197A.420(2) has a city over 1,000 inside Metro allow every
-        # middle housing type "on each lot or parcel zoned for residential
-        # use", and this zone is that by (1)(j) -- inside the UGB, residential,
-        # a detached house allowed, not primarily commercial, industrial,
-        # agricultural or public, incorporated. No exception in OAR 660-046-
-        # 0010(3) is zone-wide here; overlays still screen as overlays. The
-        # city's own code still says no, so it is relief, never GREEN.
-        - value: true
-          when: [state_middle_housing]
-          cite: ORS 197A.420(1)(j) and (2) as amended by HB 2138 (2025) section 1
-          quote: "or/hb.2138.2025.txt#L62-L71"
+      via: "or/multnomah/portland/amended/ord192241.txt#L317-L319,L940-L941,L1835-L1836"
       qualified_by:
         fact: pdx_plan_district_unmeasured
         cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
         quote: "or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449"
     notes: 'quadfit confidence: verified | Only house/ADU/manufactured home/houseboat/congregate allowed.'
     min_lot_sqft:
-      # The house's minimum, which is the fourplex's on the state path: Table
-      # 110-3 lets a house stand on an RF lot that "meets the minimum lot area
-      # requirement for all other lots stated in Table 610-2", 52,000 sq ft
-      # in RF, and OAR 660-046-0220(2)(a)(B) caps a quadplex's minimum lot at
-      # the detached house's. No reduction is carried: 33.610.200.B's 10
-      # percent adjustment is for a land division, not for building on a lot.
+      # The house's minimum: Table 110-3 lets a house stand on an RF lot that
+      # "meets the minimum lot area requirement for all other lots stated in
+      # Table 610-2", 52,000 sq ft in RF. Encoded 2026-09-30 for the state
+      # middle-housing path, which the 2026-11-09 farm-land ruling closed; the
+      # use gate above now refuses the pod before this is read, and the number
+      # is kept because it is a true reading of the house minimum. No reduction
+      # is carried: 33.610.200.B's 10 percent adjustment is for a land
+      # division, not for building on a lot.
       value: 52000
       cite: PCC 33.110 Table 110-3; 33.610 Table 610-2 (All other lots, RF)
       url: https://www.portland.gov/sites/default/files/code/610-rf-r2.5-lots_0.pdf
