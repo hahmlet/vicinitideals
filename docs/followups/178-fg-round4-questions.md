@@ -21,3 +21,16 @@ Questions for Steph (asked 2026-11-10):
 - (b) Streets whose whole public strip is ~20 ft: treat as too narrow for
   a fire truck (YELLOW) before paving is measured? 1 sample lot
   (1S1E19CA  -07700). Recommend YES (unmeasured = conservative).
+
+Batch D (Wash+Clack, 60 lots): 17 wrong / 2 doubtful / 41 right (28%); rel7 fixes
+16 -> ~2% after rel7. No new kind. Report ../vicinitideals-worktrees/fg-rate-D.md.
+Lane fg4-fixes off rel7 (cherry-pick before release): Beaverton driveway spacing
+missing from rel7's table (false green), Clackamas building-frontage share (noted
+2026-09-09, never encoded), Beaverton front court behind the 10 ft yard (code read;
+Claude decides by the text), rel7 risk notes (Clackamas R-zone 5 ft strip,
+turning circles missed).
+More questions for Steph:
+- (c) Lots with no public sewer (Lake Oswego edge; FLATS ignores sewer): YELLOW
+  (check service) or RED? Recommend YELLOW.
+- (d) Tigard rowhouse flat roof allowed only with a 12 in+ cornice: can the pod
+  carry one? If not, Tigard townhouse greens go RED under the flat-roof ruling.

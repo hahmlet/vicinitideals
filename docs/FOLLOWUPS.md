@@ -163,7 +163,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
-178. [Claude] [Steph] [scan: YES] **False-green round 4 findings** -- Wood Village roof ban ~108 false greens (lane roof-ban); Steph: Portland 9 ft drive? narrow 20 ft streets = fire yellow? [file](followups/178-fg-round4-questions.md)
+178. [Claude] [Steph] [scan: YES] **False-green round 4 findings** -- Wood Village roof ban ~108 false greens (lane roof-ban); fg4-fixes lane; Steph: Portland 9 ft drive? narrow 20 ft streets? no-sewer lots? Tigard cornice? [file](followups/178-fg-round4-questions.md)
 177. [Claude] [Steph] [scan: YES] **Front-door ruling halves the greens** -- RULED 11-10 soften to YELLOW (design-change flag); lane door-yellow; rel6 folds into rel7. [file](followups/177-door-rule-green-loss.md)
 176. [Claude] [Steph] [scan: YES if loose] **Questions the rel7 lanes raised** -- Hillsboro alley lots / SCR-DNC / corner lots; Sandy walkway entrance; Cornelius street map; Canby fire dead-end length; Sandy + Hillsboro ordinances blocked to automated fetch; built strict meanwhile. [file](followups/176-lane-questions-1110.md)
 149. [Claude] [Steph] **Pod unit width** -- 14 ft homes (pod56x36) too narrow for 2 bedrooms side by side; COUNTED: 20,032 of 44,641 greens need it; Steph: one-time sizing study 14-20 ft by 1 ft at 500 sq ft/floor ~Mon 11-09; prep built 958ebe29 (flats/sizing-study, pushed: 5 study pods, scope + report scripts; curve dropped, no stored frontier); trial DONE 11-05 (works; ~0.5 s/lot); Steph: run every lot with a chance -> FULL RUN 267,544 lots x 7 sizes queued on 137 (chain8, after held re-bounds), RESULTS IN 11-07 (14 ft 45.9k greens ... 20 ft 27.4k; new sizes add 3.5k lots); waits on Steph to pick the width [file](followups/149-pod-unit-width.md)
