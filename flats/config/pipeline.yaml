@@ -333,7 +333,6 @@ datasets:
       column (18,258 polygons, Forest Grove to Canby); the where clause keeps
       Gladstone's 35. Without it the first acquire snapshot (2026-09-18) took
       312 MB of other cities' zoning under Gladstone's name.
-    notes: >-
       Oregon City hosts this on Gladstone's behalf and the service is
       countywide. Gladstone lots pick their own polygons in the majority-area
       join because they sit inside the city.

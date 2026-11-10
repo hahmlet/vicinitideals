@@ -1243,6 +1243,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     "lot_of_record_relief": 95,
     "lot_of_record_floor_sqft": 14,
     "lot_of_record_condition": 44,
+    #: 2026-11-09 (FOLLOWUPS 167 item 3): Portland RX's relief reaches Table
+    #: 120-3's 10 ft only, not 33.120.206's 90 ft variant; quadfit has no
+    #: relief to narrow.
+    "lot_of_record_relief_base_only": 1,
     #: 2026-11-08 (FOLLOWUPS 77, tigard-road-land merged into rescreen-1110):
     #: Washington County's R and TO zones and Milwaukie measure the minimum lot
     #: area before the road strip; quadfit takes no strip off the lot area.

@@ -1564,9 +1564,15 @@ def _checks(
     if relief_floor is not None and lot.lot_sqft < relief_floor:
         relieved = relieved - {"min_lot_area_sqft"}
     relief_condition = rules.get("lot_of_record_condition") not in (None, "none")
+    # Where the relief reaches only the zone's lot-size table (PCC 33.120.205
+    # C.3 in RX: Table 120-3's 10 ft front lot line), a number a variant
+    # selected from another section (33.120.206's 90 ft on Map 120-2) binds.
+    base_only = rules.get("lot_of_record_relief_base_only") is True
 
     def lot_check(name: str, observed: float, threshold: float | None) -> None:
-        if name in relieved and threshold is not None:
+        held = rules.values.get(CHECK_FIELD.get(name, name))
+        from_variant = bool(getattr(held, "when", ()))
+        if name in relieved and threshold is not None and not (base_only and from_variant):
             result = policy.evaluate(name, observed, threshold, is_maximum=name in _LOT_MAXIMA, jurisdiction=where)
             if result.verdict is Verdict.fails:
                 let_off.append(name)
