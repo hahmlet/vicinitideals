@@ -314,6 +314,17 @@ private_drives:
     these.
 
 defaults:
+  # MINIMUM FRONTAGE LINE (FOLLOWUPS 175). 12.01.500: "Frontage. The length of
+  # the front lot line of a lot ... which abuts a public street", and
+  # 12.50.110 D.1 sends "lot frontage" there: the front line, never the
+  # streets added together. A corner lot has two front lot lines here, so
+  # its shortest street passes it and only its longest is a question.
+  min_frontage_line:
+    value: front
+    cite: Hillsboro CDC 12.01.500, Frontage ("The length of the front lot line"); 12.50.110 D.1
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.01/12.01.500.txt#L220"
   entrance_faces_street:
     value: required
     cite: "Hillsboro CDC 12.50.710.C.1.b, housing types with individual entries: at least one main entrance to a dwelling unit no further than 8 feet behind the longest street-facing wall, and facing the street, at no more than 45 degrees from it, or opening to a porch with an entry facing the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"

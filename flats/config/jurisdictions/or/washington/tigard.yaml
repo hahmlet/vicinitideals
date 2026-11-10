@@ -374,6 +374,15 @@ private_drives:
     public or private right-of-way" in the same words.
 
 defaults:
+  # MINIMUM FRONTAGE LINE (FOLLOWUPS 175). 18.40.060 B: "Lot frontage is
+  # measured along the front lot line" -- never the streets added together;
+  # a corner lot's front is its shortest street line (front_lot_line_corner).
+  min_frontage_line:
+    value: front
+    cite: Tigard CDC 18.40.060 B (lot frontage is measured along the front lot line)
+    url: https://ecode360.com/print/TI5024?guid=43705126
+    retrieved: '2026-09-30'
+    quote: "or/washington/tigard/18.40/18.40.060.txt#L11"
   # PARKING COUNT. Tigard prints vehicle parking MAXIMUMS only: 18.410.030.A
   # "The ratios for the maximum number of off-street vehicle parking spaces
   # allowed are provided in Table 18.410.3" (L77-L81), and the table's

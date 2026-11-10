@@ -295,6 +295,74 @@ def along(chain: Sequence[Edge], bearing: float) -> bool:
     return on > 0.5 * sum(e.length_ft for e in chain)
 
 
+#: How far a piece of street line may turn off its street's direction and
+#: still be the straight line rather than the rounded corner, degrees
+#: (:func:`street_lines_to_curve_ft`). Tight on purpose: a chord read as
+#: curve makes the street shorter (the strict side), a chord of the curve
+#: read as straight makes it longer (the lenient side).
+CURVE_TOL_DEG = 3.0
+
+
+def _point(e: Edge, end: bool) -> tuple[float, float]:
+    return (e.x2, e.y2) if end else (e.x1, e.y1)
+
+
+def _touches(a: tuple[float, float], b: tuple[float, float]) -> bool:
+    return abs(a[0] - b[0]) <= 0.01 and abs(a[1] - b[1]) <= 0.01
+
+
+def street_lines_to_curve_ft(edges: LotEdges) -> tuple[float, ...]:
+    """Every street's line measured only to where the rounded corner it
+    shares with another street begins, in feet, in :func:`street_chains`
+    order -- Gresham's "as measured from the corner radius end point to the
+    property corner" (CDC Table 4.0130 G.2 and note 10, 4.0430 notes 8 and
+    11, 4.1130).
+
+    :func:`street_chains` splits a rounded corner between its two streets
+    where its turn crosses over. Here each street gives its share back: from
+    the end where it meets the other street, every piece that turns more
+    than :data:`CURVE_TOL_DEG` off the street's own direction is curve and
+    is not counted, up to the first piece that runs along the street. An end
+    that meets no other street (a property corner) is measured as drawn. A
+    lot with one street, or two that do not meet (a through lot), measures
+    the same as :func:`street_chains`."""
+    chains = street_chains(edges)
+    bearings = [float(b) for b in edges.front_bearings[:2]]
+    out: list[float] = []
+    for c, chain in enumerate(chains):
+        total = sum(e.length_ft for e in chain)
+        others = [o for k, o in enumerate(chains) if k != c and o]
+        if not chain or not others:
+            out.append(total)
+            continue
+        longest = max(chain, key=lambda e: e.length_ft).bearing_deg
+        street = [b for b in bearings if along(chain, b)]
+
+        def turns(e: Edge) -> bool:
+            dev = bearing_delta(e.bearing_deg, longest)
+            for b in street:
+                dev = min(dev, bearing_delta(e.bearing_deg, b))
+            return dev > CURVE_TOL_DEG
+
+        head = _point(chain[0], end=False)
+        tail = _point(chain[-1], end=True)
+        meets_head = any(_touches(head, _point(o[-1], end=True)) for o in others)
+        meets_tail = any(_touches(tail, _point(o[0], end=False)) for o in others)
+        cut: set[int] = set()
+        if meets_head:
+            for i, e in enumerate(chain):
+                if not turns(e):
+                    break
+                cut.add(i)
+        if meets_tail:
+            for i in range(len(chain) - 1, -1, -1):
+                if not turns(chain[i]):
+                    break
+                cut.add(i)
+        out.append(total - sum(chain[i].length_ft for i in cut))
+    return tuple(out)
+
+
 def street_runs(
     lot: BaseGeometry,
     edges: LotEdges,
@@ -327,7 +395,7 @@ def street_runs(
         frontage = sum(math.hypot(e.x2 - e.x1, e.y2 - e.y1) for e in chain)
         if frontage <= 0:
             continue
-        pts, lines, piece = _looks(lot, chain, reach)
+        pts, lines, _ = _looks(lot, chain, reach)
         if not len(pts):
             continue
         street = shapely.multilinestrings([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
@@ -335,8 +403,15 @@ def street_runs(
         parked = _first_seen(pts, lines, rows)
         built = _first_seen(pts, lines, building)
         seen = (parked < built) & (parked < far_wall)
-        run = min(frontage, float(seen.sum()) * piece)
-        out.append((100.0 * run / frontage, run))
+        # The share is the looks that see parking over all the looks: each
+        # look stands for an equal piece of its line (``piece`` their mean),
+        # so the count is the measurement. Taken as feet over feet, the
+        # same 40 looks of 80 came out 50.00000000000001 percent and failed
+        # a 50 percent cap they meet (FOLLOWUPS 175 side check).
+        looked = len(pts)
+        share = 100.0 * float(seen.sum()) / looked
+        run = frontage * float(seen.sum()) / looked
+        out.append((share, run))
     return tuple(out)
 
 
@@ -425,18 +500,23 @@ def building_runs(
         frontage = sum(math.hypot(e.x2 - e.x1, e.y2 - e.y1) for e in chain)
         if frontage <= 0:
             continue
-        pts, lines, piece = _looks(lot, chain, reach)
+        pts, lines, _ = _looks(lot, chain, reach)
         if not len(pts):
             continue
         built = _first_seen(pts, lines, building)
         held = built <= band_ft + BAND_TOL_FT
-        net = frontage
+        # Counted in looks, as :func:`street_runs` counts its share: each
+        # look stands for an equal piece of the line, and feet over feet put
+        # float dust on a share that is exactly the minimum.
+        looked = len(pts)
+        kept = looked
         if lane is not None and not lane.is_empty:
             drive = _first_seen(pts, lines, lane)
             crossing = (drive <= DRIVE_AT_LINE_FT) & (drive < built)
-            net = max(frontage - float(crossing.sum()) * piece, 0.0)
-        run = min(net, float(held.sum()) * piece)
-        out.append((100.0 * run / net if net > 0 else 100.0, net))
+            kept = looked - int(crossing.sum())
+        net = frontage * kept / looked
+        share = 100.0 * min(int(held.sum()), kept) / kept if kept > 0 else 100.0
+        out.append((share, net))
     return tuple(out)
 
 
