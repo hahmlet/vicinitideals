@@ -192,6 +192,7 @@ from flats.geom.durham_apron import (
     maximum_clearance_ft,
 )
 from flats.geom import driveway_spacing
+from flats.geom import sewer
 from flats.ingest.flatter import (
     _angles as _flatter_angles,
     _drive_clear,
@@ -1101,6 +1102,9 @@ class QuadfitLot:
     #: historic resources say about the lot (:mod:`flats.geom.pdx_overlays`,
     #: FOLLOWUPS 78); None where nothing read it.
     pdx_overlays: pdx.Reading | None = None
+    #: Whether the lot lies outside public sewer service (Steph 2026-11-10,
+    #: :mod:`flats.geom.sewer`); None where nothing read it.
+    sewer: sewer.Reading | None = None
     #: The lot's code's clear-vision areas (``Layer.clear_vision``,
     #: FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`); None where no layer
     #: was in hand or the layer declares none -- nothing is then checked.
@@ -2095,6 +2099,7 @@ def lot_from_row(
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
         split=split_zones.decode(row.get(split_zones.ROW_KEY)),
         pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
+        sewer=sewer.reading_of(row),
         clear_vision=_clear_vision(row, layers),
     )
 
@@ -5414,6 +5419,9 @@ def _screen_lot_once(
         # midnight on a dated provision's day screens every lot alike.
         won = pdx.checked(won, lot.pdx_overlays, on=_WORKER.get("law_on"))
         won = historic_lists.checked(won, lot.tlid)
+        # Outside public sewer is RED; no data for the place is a flag only
+        # (Steph 2026-11-10, rulings.yaml 2026-11-10-no-public-sewer-red).
+        won = sewer.checked(won, lot.sewer)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -8223,6 +8231,13 @@ def run(
         raise FileNotFoundError(
             f"no {', '.join(lacking)} for driveway spacing in {sources}: run acquire (FOLLOWUPS 169)"
         )
+    # A snapshot without the sewer layers would pass every lot outside public
+    # sewer GREEN unread (Steph 2026-11-10: "red with no public sewer.").
+    if sources is not None and (lacking := sewer.missing(sources)):
+        raise FileNotFoundError(
+            f"no {', '.join(lacking)} for public sewer service in {sources}: run acquire --keys "
+            f"{' '.join(lacking)} (rulings.yaml 2026-11-10-no-public-sewer-red)"
+        )
     institutional = _institutional_source(institutional, sources)
     fabric = fabric if fabric is not None else s4.parent / "s1_lots.parquet"
     if not fabric.exists():
@@ -8279,6 +8294,11 @@ def run(
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
     marked = pdx.with_overlays(rows, sources)
     log(f"bridge: Portland's main street overlay or a protected historic resource on {marked:,} lots")
+    sewered = sewer.with_sewer(rows, sources, _layer_id)
+    log(
+        f"bridge: public sewer: {sewered[sewer.OUTSIDE]:,} lots outside it (red), "
+        f"{sewered[sewer.UNMEASURED]:,} unmeasured (flag), {sewered[sewer.SERVED]:,} served"
+    )
     placed = historic_lists.write_report(rows, out)
     log(
         f"bridge: historic lists: {placed['on_lot']:,} listings on a lot of this run, "

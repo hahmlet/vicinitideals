@@ -176,6 +176,17 @@ code:
 - id: ofc.2022.applications-guide
   url: https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf
   title: Oregon Fire Code Applications Guide, based on the 2022 OFC (Clackamas Fire, revised 2023-06-21)
+# When public sewer is "available" to a lot (Steph 2026-11-10, rulings.yaml
+# 2026-11-10-no-public-sewer-red): DEQ denies an onsite (septic) permit where a
+# sewerage connection point is within 200 ft times the number of dwellings, so
+# 800 ft for the pod's four (flats/config/sewer.yaml reach_ft). The Secretary
+# of State's own copy (viewSingleRule.action?ruleVrsnRsn=327532) answers this
+# fetcher with its security page, so the text is oregon.public.law's; the SOS
+# text read 2026-11-10 carries the same 200 ft multiple at (4)(f)(A)(iii).
+- id: oar.340-071-0160
+  url: https://oregon.public.law/rules/oar_340-071-0160
+  title: OAR 340-071-0160 Permit Application Procedures (onsite systems; sewerage availability)
+  allow_thin: true
 defaults:
   # Steph 2026-10-15 (FOLLOWUPS 85): inside an urban growth boundary a city
   # or county "may adopt and apply only clear and objective standards,

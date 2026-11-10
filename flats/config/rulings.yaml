@@ -3121,6 +3121,26 @@
     (2026-11-09-curb-position-middle-way). No purchase. FOLLOWUPS 161.
   source: Steph 2026-11-10 (chat), docs/followups/161-sight-triangles.md
   encoded_in: [flats/config/jurisdictions/or/clackamas/milwaukie.yaml]
+- id: 2026-11-10-no-public-sewer-red
+  kind: ruling
+  date: 2026-11-10
+  scope: {}
+  question: >-
+    Lots with no public sewer available (e.g. the Lake Oswego edge; FLATS has
+    ignored sewer): YELLOW (check service with the city) or RED?
+  ruling: >-
+    "red with no public sewer."
+  effect: >-
+    A lot shown to lie outside public sewer service is RED. Where sewer
+    service data is missing for a place, the lot is not RED on this ground
+    (it carries an unmeasured-sewer flag instead). FOLLOWUPS 178(c).
+    Encoded (no-sewer lane): outside = no public main of the lot's own
+    provider within 800 ft (OAR 340-071-0160: 200 ft per dwelling) and outside
+    every sewer service area and district, in a place whose sewer is mapped
+    (flats/config/sewer.yaml); another provider's main in the lot's street
+    leaves it unmeasured, not RED.
+  source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in: [flats/config/sewer.yaml, flats/geom/sewer.py, flats/ingest/quadfit.py, flats/config/pipeline.yaml, flats/config/flags.yaml]
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19

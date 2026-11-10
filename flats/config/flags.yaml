@@ -960,6 +960,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [PDX_MAIN_STREET_ACTIVE_USE]
+  SEWER-UNMEASURED:
+    description: "Whether public sewer serves the lot is not mapped: the place has no sewer service layer this screen holds (Canby, Estacada, unincorporated Multnomah outside its one district), or the lot is outside every sewer district but another provider's main runs in its street, and no layer says whether that provider serves it. Steph 2026-11-10 (rulings.yaml 2026-11-10-no-public-sewer-red): a lot shown outside public sewer is red; where the data is missing it is not red on this ground and carries this flag. Below the yellow line, so the colour does not move."
+    kind: categorical
+    risk: possible
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Acquire the place's sewer service area or public mains (flats/config/sewer.yaml), or ask the provider whether it serves the lot; a lot outside service goes red"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SEWER_UNMEASURED]
   HISTORIC-LISTING-UNSETTLED:
     description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
     kind: categorical
