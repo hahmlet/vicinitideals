@@ -45,3 +45,4 @@ RULED 2026-11-09 (Steph, rulings.yaml): 1 build the corner check YES; 2 Portland
 (colour unchanged, flag); 3 curb position = middle way (green if clear at lot-line curb, red if blocked at a generous offset,
 yellow+flag between); 4 West Linn pod = single-family apex; 6 Multnomah pockets take both Portland parking rulings.
 Still open: Q5 Milwaukie (buy AASHTO / email city; hold yellow meanwhile).
+RULED 2026-11-10 (Steph): Milwaukie uses the AASHTO figures already held (Clackamas reproduction); no purchase.

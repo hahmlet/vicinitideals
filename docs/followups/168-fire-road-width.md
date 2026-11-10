@@ -8,3 +8,4 @@ gaps, networks reached only through them, dead ends >150 ft with no turnaround (
 ~1,170 GREEN->RED (~1,110 dead ends), ~100 GREEN->YELLOW, ~870 YELLOW->RED. Coordinator: use Portland PCC 31.30.010.B 300 ft
 (local amendment governs) + other cities' amendments; re-estimate. ASKED Steph 2026-11-09: long EXISTING public dead ends with no
 visible turnaround -> RED (code as written) or YELLOW (crews back in; fire marshal decides)? Recommended YELLOW + flag.
+RULED 2026-11-10 (Steph): long existing dead end with no turnaround = YELLOW + flag.

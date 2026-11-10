@@ -2722,6 +2722,40 @@
     (e.g. Gresham corner minimum frontage to the radius end point). No
     "rounded corner" yellow. FOLLOWUPS 174.
   source: Steph 2026-11-09 (chat), docs/followups/174-corner-frontage.md, ../vicinitideals-worktrees/corner-frontage.findings.md
+- id: 2026-11-10-fire-long-dead-end-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {}
+  question: >-
+    About 1,100 GREEN lots sit on long EXISTING public dead-end streets with no
+    visible turnaround. The fire code wants a turnaround past 150 ft (Portland's
+    own code: past 300 ft); in practice crews often back in and the fire marshal
+    decides. RED (code as written) or YELLOW?
+  ruling: '"Yellow."'
+  effect: >-
+    A lot that fails fire reach only because the truck cannot use an existing
+    public dead end beyond the turnaround length (city amendment where adopted,
+    e.g. Portland PCC 31.30.010.B 300 ft; else OFC 150 ft) is YELLOW with a flag
+    (long dead end, no turnaround seen; check with the fire marshal), never
+    GREEN. Lanes under 20 ft and other fire-reach failures are unchanged.
+    FOLLOWUPS 168.
+  source: Steph 2026-11-10 (chat), docs/followups/168-fire-road-width.md, ../vicinitideals-worktrees/fire-road.handoff.md
+- id: 2026-11-10-milwaukie-clear-vision-aashto-held
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    Milwaukie MMC 12.24.040 sizes its clear vision area by the latest AASHTO
+    Green Book (paid). Buy it, email the city, hold the 5-8 lots yellow, or use
+    the AASHTO intersection-sight-distance figures already held (as reproduced
+    in Clackamas County's code)?
+  ruling: '"For the book, use the numbers we have"'
+  effect: >-
+    Milwaukie's clear vision area uses the AASHTO intersection sight distance
+    figures already held from the Clackamas County reproduction (e.g. 280 ft at
+    25 mph, driver point 14.5 ft back), with the curb middle way
+    (2026-11-09-curb-position-middle-way). No purchase. FOLLOWUPS 161.
+  source: Steph 2026-11-10 (chat), docs/followups/161-sight-triangles.md
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19
