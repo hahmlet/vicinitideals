@@ -548,7 +548,12 @@ crossrefs:
       reads the street the same way (FOLLOWUPS 168, flats.fit.fire_roads):
       past 150 feet into a dead end whose right-of-way has no room to turn
       the truck (no bulb, no hammerhead's room; L134, L137-L139), the truck
-      stays 150 feet from the intersection and the hose walks the rest.
+      stays 150 feet from the intersection and the hose walks the rest --
+      or the length a city's adopted amendment states (Portland PCC
+      31.30.010.B, 300 feet; flats/config/fire_roads.yaml). A lot the hose
+      reaches only with such a dead end driven to its end is YELLOW with
+      FIRE-DEAD-END, the fire marshal's question (Steph 2026-11-10,
+      rulings.yaml 2026-11-10-fire-long-dead-end-yellow).
   "503.2.1":
     outcome: other_path
     note: >-

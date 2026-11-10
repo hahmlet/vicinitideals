@@ -555,6 +555,12 @@ def _active_levers(rules: ZoneResolution) -> frozenset[str]:
 #: and not found (:func:`flats.fit.fire.route_ft` returned None). Joins
 #: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
 FIRE_ROUTE = "fire_route"
+#: The hose misses on the code's reading only because the truck may not
+#: drive an existing dead end past the length its place states with no
+#: turnaround seen, and reaches if it may (:attr:`LotFacts.fire_route_freed_ft`;
+#: rulings.yaml 2026-11-10-fire-long-dead-end-yellow). Joins ``_checks``'s
+#: ``unmeasured``: the fire marshal's answer, held YELLOW, never GREEN.
+FIRE_DEAD_END = "fire_dead_end"
 
 #: The grade under a plan the bridge measured for and could not read --
 #: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
@@ -842,6 +848,12 @@ class LotFacts:
     #: width is published for the street; read only to flag a lot red on
     #: the stricter reading alone (FIRE-HOSE-START), never as a pass.
     fire_route_curb_ft: float | None = None
+    #: The same route with every existing dead end the register releases
+    #: driven to its end (:attr:`flats.fit.fire_roads.Piece.free`,
+    #: FOLLOWUPS 168). Set only where the route misses and this reaches: the
+    #: lot is held YELLOW with FIRE-DEAD-END (Steph 2026-11-10: "Yellow."),
+    #: never cleared on it.
+    fire_route_freed_ft: float | None = None
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -2016,7 +2028,14 @@ def _checks(
     # and could not find is a fact nobody observed, never a pass.
     reach = rules.get("fire_access_max_ft")
     if reach is not None:
-        if lot.fire_route_ft is not None:
+        freed = lot.fire_route_freed_ft
+        missed = lot.fire_route_ft is None or lot.fire_route_ft > float(reach)
+        if lot.fire_route_tried and missed and freed is not None and freed <= float(reach):
+            # Reached only up a long dead end with no turnaround seen
+            # (FOLLOWUPS 168): the fire marshal's question, not a miss.
+            unchecked.append("fire_access_ft")
+            unmeasured.add(FIRE_DEAD_END)
+        elif lot.fire_route_ft is not None:
             check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
         else:
             unchecked.append("fire_access_ft")
@@ -4089,6 +4108,7 @@ _MEASURED_FLAG: dict[str, str] = {
     UNPAVED: "MEASURE-PAVEMENT",
     UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
+    FIRE_DEAD_END: "FIRE-DEAD-END",
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",

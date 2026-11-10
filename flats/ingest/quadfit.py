@@ -6018,6 +6018,15 @@ def fire_checked(
     # A private road the yards do not count is still a road the truck may
     # stand on (where it is one: the offset keeps only truck roads).
     streets += tuple(a for a in lot.access if a not in streets)
+    # The truck roads at the length the lot's place states for a dead end
+    # with no turnaround (FOLLOWUPS 168), and the same roads with the long
+    # dead ends driven -- a reading only the fire marshal can grant (Steph
+    # 2026-11-10: "Yellow.").
+    freed_offset = None
+    if roads is not None and hasattr(roads, "at"):
+        net = roads.at(lot.layer_id)
+        freed_offset = fire.point_offset(net.tree, net.geoms, roads.edges, net.freed)
+        roads = (net.tree, net.geoms, roads.edges, net.walks)
     offset = fire.point_offset(*roads) if roads is not None else None
     # The hose measured from the curb itself (FOLLOWUPS 29): only to flag a
     # red the stricter reading alone makes.
@@ -6071,6 +6080,25 @@ def fire_checked(
             s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
         )
         return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+    def freed(out: Screened) -> Screened:
+        # A plan the hose misses on the code's reading but reaches with the
+        # long dead ends driven to their ends (FOLLOWUPS 168): held YELLOW
+        # with a flag, never GREEN (rulings.yaml
+        # 2026-11-10-fire-long-dead-end-yellow).
+        if freed_offset is None or out.facts is None or not out.facts.fire_route_tried:
+            return out
+        if out.facts.fire_route_ft is not None and out.facts.fire_route_ft <= limit:
+            return out
+        loose = measure(out.drawing, freed_offset)
+        if loose is None or loose > limit:
+            return out
+        facts = dataclasses.replace(out.facts, fire_route_freed_ft=loose)
+        result = screen(out.rules, facts, out.design, out.fit, policy=policy, relief=relief, config=out.config)
+        shadow = _if_signed(
+            out.rules, facts, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
+        )
+        return dataclasses.replace(out, screening=result, signed=shadow, facts=facts)
 
     out = screened(s, route)
     def fire_only(screening: Screening) -> bool:
@@ -6247,7 +6275,7 @@ def fire_checked(
         )
         if turned is not s:
             out = screened(turned, again)
-    return out
+    return freed(out)
 
 
 def _fire_why(
@@ -7374,8 +7402,9 @@ def _init_worker(
     if fire_roads is not None and roads is not None:
         from flats.fit import fire_roads as fire_roads_mod
 
-        tree, geoms, walks = fire_roads_mod.load(fire_roads)
-        _WORKER["roads"] = (tree, geoms, street_edges, walks)
+        _WORKER["roads"] = fire_roads_mod.Network(
+            fire_roads_mod.load_all(fire_roads), fire_roads_mod.rules(), street_edges
+        )
     else:
         _WORKER["roads"] = (
             (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
@@ -7407,6 +7436,7 @@ def build_fire_roads(
     kept = None
     if keep is not None:
         code = b"".join(Path(m.__file__).read_bytes() for m in (fire, fire_roads))
+        code += fire_roads.CONFIG.read_bytes()
         digest = hashlib.sha256(
             code + "|".join(str(_input_digest(p)) for p in (roads, fabric, curbs)).encode("utf-8")
         ).hexdigest()
@@ -7424,16 +7454,22 @@ def build_fire_roads(
     frame = pd.read_parquet(fabric, columns=["TLID", "wkb"])
     polys = shapely.from_wkb(frame["wkb"].to_numpy())
     private = ~frame["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE.pattern, regex=True).to_numpy()
-    pieces = fire_roads.build(lines, kinds, links, polys, private)
-    walked: dict[str, int] = {}
-    for piece in pieces:
-        if not piece.stand:
-            walked[piece.why] = walked.get(piece.why, 0) + 1
-    log(
-        f"bridge: fire roads -- {len(lines):,} truck centrelines in {len(pieces):,} pieces; "
-        f"walked: {', '.join(f'{k} {v:,}' for k, v in sorted(walked.items())) or 'none'}"
+    # One cut of the network per dead-end length a place states (the
+    # state's 150 ft, Portland's 300 ft: flats/config/fire_roads.yaml).
+    ruled = fire_roads.rules()
+    by_ft = fire_roads.build_all(
+        lines, kinds, links, polys, private, lengths=ruled.lengths, release=ruled.release
     )
-    fire_roads.write(pieces, out)
+    for ft, pieces in by_ft.items():
+        walked: dict[str, int] = {}
+        for piece in pieces:
+            if not piece.stand:
+                walked[piece.why] = walked.get(piece.why, 0) + 1
+        log(
+            f"bridge: fire roads at {ft:g} ft dead ends -- {len(lines):,} truck centrelines in "
+            f"{len(pieces):,} pieces; walked: {', '.join(f'{k} {v:,}' for k, v in sorted(walked.items())) or 'none'}"
+        )
+    fire_roads.write(by_ft, out)
     if kept is not None:
         kept.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(out, kept)
