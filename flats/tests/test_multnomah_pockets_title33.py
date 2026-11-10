@@ -113,10 +113,14 @@ def test_every_county_parking_default_is_overridden_in_the_pockets(
         assert not missing, f"{zone} falls through to the county for {sorted(missing)}"
 
 
-def test_the_pockets_read_120_and_never_table_266_4(
+def test_the_pockets_read_120_for_the_rectangle_and_the_drive(
     county: Layer, store: ProvenanceStore, corpus: RuleSet
 ) -> None:
-    """Rectangle, driveway, front ban and paving cap as 33.266.120 prints them."""
+    """Rectangle, driveway, front ban and paving cap as 33.266.120 prints them.
+
+    The aisle is NOT here: 120 states none, and since 2026-11-09 the pockets
+    take Steph's 20 ft (below), as Portland does.
+    """
     lines = _lines(store, TITLE33_PARKING)
     assert "A parking space must be at least 9 feet by 18 feet." in lines[317]
     assert "The minimum driveway width on private property is 9 feet." in lines[318]
@@ -139,8 +143,6 @@ def test_the_pockets_read_120_and_never_table_266_4(
         values = county.zones[zone].values
         for absent in (
             "parking_min_per_unit",
-            "parking_aisle_one_way_ft",
-            "parking_aisle_two_way_ft",
             "parking_lot_line_buffer_ft",
             "parking_side_prohibited",
         ):
@@ -182,3 +184,65 @@ def test_a_pocket_inside_a_portland_plan_district_is_held(
         held = county.zones[zone].values["quadplex_allowed"].qualified_by
         assert held == "pdx_plan_district_unmeasured"
     assert county.zones["RF"].values["quadplex_allowed"].qualified_by is None
+
+
+def test_the_pockets_take_stephs_portland_parking_rulings(
+    county: Layer, store: ProvenanceStore, corpus: RuleSet
+) -> None:
+    """2026-11-09, "Extend both" (rulings.yaml 2026-11-09-multco-pockets-portland-parking).
+
+    The court is drawn on a 20 ft aisle (2026-09-30-portland-aisle-20ft, Table
+    266-4 at 90 degrees) and an alley-fed plan backs out into the alley with
+    20 ft of room (2026-09-13-portland-alley-is-aisle, 33.266.130.F.1.b(2)),
+    the same values the Portland layer holds. RF keeps the county's chapter.
+    """
+    lines = _lines(store, TITLE33_PARKING)
+    assert lines[515].strip() == "Table 266-4"
+    row = lines[524].split()
+    assert row[0] == "90°" and row.count("20") == 2
+    assert "vehicles back out into an alley" in lines[484]
+    assert "maneuvering area of at least 20 feet" in lines[485]
+
+    portland = load_rules()[PORTLAND].defaults
+    for zone in POCKETS:
+        values = county.zones[zone].values
+        got = corpus.resolve(COUNTY, zone)
+        for field in (
+            "parking_aisle_one_way_ft",
+            "parking_aisle_two_way_ft",
+            "parking_alley_backout_ft",
+        ):
+            assert values[field].value == portland[field].value == 20, f"{zone}.{field}"
+            assert values[field].prov.quote.startswith(TITLE33_PARKING)
+            assert "Steph" in values[field].prov.cite
+            assert got.get(field) == 20
+
+    rf = corpus.resolve(COUNTY, "RF")
+    assert rf.get("parking_aisle_two_way_ft") == 25
+    assert rf.get("parking_alley_backout_ft") is None
+
+
+def test_a_pocket_court_is_drawn_as_portlands_is(corpus: RuleSet) -> None:
+    """A pocket fixture: the court the screen charges, street-fed and alley-fed.
+
+    Street-fed it is a stall and a 20 ft aisle, not the design's 24. On a lot
+    whose alley runs the whole rear line it is a stall plus what a 14 ft alley
+    leaves short of 20 ft of back-out (6 ft). Both match Portland's lot for lot.
+    """
+    from flats.designs.model import load_catalog
+    from flats.score.paper import Alley, court_depth
+
+    design = load_catalog().latest("pod56x36")
+    alley = Alley(width_ft=14.0, at_rear=True, rear_whole=True)
+    city = corpus.resolve(PORTLAND, "R5")
+    for zone in POCKETS:
+        got = corpus.resolve(COUNTY, zone)
+        street, used = court_depth(design, got)
+        assert "parking_aisle_two_way_ft" in used
+        assert street == court_depth(design, city)[0]
+        assert street < design.parking.court_depth_ft
+
+        fed, used = court_depth(design, got, alley)
+        assert "parking_alley_backout_ft" in used
+        assert fed == court_depth(design, city, alley)[0]
+        assert fed == pytest.approx(street - 20.0 + 6.0)
