@@ -1786,6 +1786,10 @@ code:
   - id: "9.0200.clear-vision"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0200.pdf
     title: "Section 9.0200 - Clear Vision Areas"
+    # Two paragraphs and no dimension (9.0201-9.0202 send every figure to PWS
+    # 6.04), so the thinness guard reads it as a landing page and the corpus
+    # watch re-refused it every sweep. Read 2026-08-26; unchanged 2026-11-09.
+    allow_thin: true
   # The chapter Table 4.0130's height cell points at. Every district column in
   # that table prints its maximum height with note 12 stuck to the number --
   # "35 ft.12" -- and note 12 sends a shoreline lot here. The footnote ledger
