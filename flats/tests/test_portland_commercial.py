@@ -269,12 +269,21 @@ def test_the_zones_that_were_unread_are_no_longer_unread(portland: Layer) -> Non
 
 
 def test_the_campus_zones_split_three_ways(portland: Layer, store: ProvenanceStore) -> None:
-    """One table row, three answers. CI1 is written to sit against
-    single-family neighbourhoods and says N; CI2 and IR say Y. Portland now
-    carries every zone its GIS reports."""
-    assert portland.zones["CI1"].values["quadplex_allowed"].value is False
-    assert portland.zones["CI2"].values["quadplex_allowed"].value is True
-    assert portland.zones["IR"].values["quadplex_allowed"].value is True
+    """One table row, and since RICAP 11 one answer. CI1 used to say N, being
+    written to sit against single-family neighbourhoods; CI2 and IR say Y.
+    Portland carries every zone its GIS reports.
+
+    2026-11-10 (b): RICAP 11 (Ord. 192213, in force 2026-11-01, codified by
+    the 11/1/26 reprint, FOLLOWUPS 165) made CI1 Household Living Y, on RM1's
+    standards (rulings.yaml 2026-08-06-portland-ricap11-ci1-housing). The
+    table row no longer splits; the three zones now differ in whose
+    standards a home takes (CI1: RM1's; CI2, IR: Table 150-2's)."""
+    for zone in ("CI1", "CI2", "IR"):
+        assert portland.zones[zone].values["quadplex_allowed"].value is True, zone
+    assert portland.zones["CI1"].like.zone == "RM1"
+    assert portland.zones["CI2"].like is None and portland.zones["IR"].like is None
+    ci1 = store.quote(portland.zones["CI1"].values["quadplex_allowed"].prov.quote)
+    assert "Household Living" in ci1
 
     text = store.quote(portland.zones["CI2"].values["quadplex_allowed"].prov.quote)
     assert "CI1" in text and "IR" in text
@@ -306,10 +315,23 @@ def test_the_one_setback_measured_off_the_building_states_its_ratio(
         assert held.value == 13, field
 
 
-def test_a_zone_decided_at_the_use_gate_still_owes_its_dimensions(
+def test_ci1_is_no_longer_decided_at_the_use_gate(
     portland: Layer,
 ) -> None:
-    """This test used to assert the opposite, and the opposite was wrong.
+    """2026-11-10 (b): renamed from
+    test_a_zone_decided_at_the_use_gate_still_owes_its_dimensions. Since
+    RICAP 11 (codified by the 11/1/26 reprint, FOLLOWUPS 165) CI1 is not
+    decided at the use gate: Household Living is Y, and 33.150.200 puts a
+    home on RM1's development standards. So the zone holds its use alone and
+    imports every dimension from RM1 (`like: RM1`, local wins); Table 150-2's
+    0.5 FAR and 15 ft setbacks no longer reach a home, and RM1's 4,000 sq ft
+    minimum is kept over 33.150.202's "no minimum" (rulings.yaml
+    2026-08-06-portland-ricap11-ci1-housing). The shut-but-unsettled case
+    this test was about now lives in test_unsettled_gates on another zone.
+
+    What it used to say, kept for the record:
+
+    This test used to assert the opposite, and the opposite was wrong.
 
     CI1 reads a bare N for Household Living, so the screen returns RED at the
     use gate and never reads a setback -- which is why the zone carried the use
@@ -320,11 +342,11 @@ def test_a_zone_decided_at_the_use_gate_still_owes_its_dimensions(
 
     Encoded 2026-08-21, one column over from IR. See test_unsettled_gates."""
     held = portland.zones["CI1"].values
-
-    assert held["quadplex_allowed"].value is False
-    assert set(held) > {"quadplex_allowed"}
-    assert held["max_far"].value == 0.5
-    # Not a lever, an absence: CI1's maximum building setback reads None, so
-    # note [5] -- no minimum setback where a maximum applies -- never fires
-    # here, and the field is not encoded at all.
-    assert "setback_front_max_ft" not in held
+    assert held["quadplex_allowed"].value is True
+    assert set(held) == {"quadplex_allowed"}
+    got = RuleSet({"or/multnomah/portland": portland}).resolve("or/multnomah/portland", "CI1")
+    assert got.borrowed_from == ("RM1",)
+    assert got.values["max_far"].value == 1.0
+    assert got.values["min_lot_sqft"].value == 4000
+    # RM1 states no maximum front setback either, so note [5] still never fires.
+    assert "setback_front_max_ft" not in got.values

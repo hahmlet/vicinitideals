@@ -9,7 +9,8 @@ allows is not a legal placement however neatly it fits.
 
 The number that matters is 1.35 per unit, which is five stalls for a fourplex
 and not six, against a catalog target of 1.5. Thirteen of Portland's
-twenty-eight zones are under a cap the pod's target is over -- and since
+twenty-eight zones (fourteen since RICAP 11 put CI1 homes on RM1's rules,
+2026-11-10) are under a cap the pod's target is over -- and since
 2026-09-18 the screen charges the pod's floor of one per home, which no cap
 here reaches, so what the cap does in those thirteen is stop the seat count
 reported beside the colour at five.
@@ -44,12 +45,20 @@ MULTI_DWELLING = ("RM1", "RM2", "RM3", "RM4", "RX", "RMP")
 COMMERCIAL = ("CR", "CM1", "CM2", "CM3", "CE", "CX")
 CAPPED = MULTI_DWELLING + COMMERCIAL
 
+#: 2026-11-10 (b): CI1 left UNCAPPED. RICAP 11 (in force 2026-11-01, codified
+#: by the 11/1/26 reprint, FOLLOWUPS 165) put Household Living in CI1 under
+#: "the regulations in the chapter that apply in the RM1 zone" (33.266.100.B,
+#: or/multnomah/portland/33.266.txt#L38-L40), so a CI1 home takes RM1's
+#: 1.35 through `like: RM1` (rulings.yaml 2026-08-06-portland-ricap11-ci1-housing).
+#: It is not a member of either class Table 266-2 names; it borrows one.
+LIKE_RM1 = ("CI1",)
+
 #: Everything else Portland zones. Table 266-1 sends all of them to Standard B
 #: and Standard B opens "No maximum" -- the exception reaches only the twelve
-#: above, so these fifteen have no ceiling at all.
+#: above, so these fourteen have no ceiling at all.
 UNCAPPED = (
     "RF", "R20", "R10", "R7", "R5", "R2.5",
-    "OS", "EG1", "EG2", "IG1", "IG2", "IH", "IR", "CI1", "CI2",
+    "OS", "EG1", "EG2", "IG1", "IG2", "IH", "IR", "CI2",
 )
 
 
@@ -72,7 +81,18 @@ def test_the_twelve_zones_inside_the_exception_carry_it(rules: RuleSet) -> None:
         assert held.value == 1.35, zone
 
 
-def test_and_the_other_fifteen_have_no_ceiling_at_all(rules: RuleSet) -> None:
+def test_a_ci1_home_carries_rm1s_cap(rules: RuleSet) -> None:
+    """33.266.100.B sends CI1 homes to the RM1 zone's parking rules (2026-11-10)."""
+    rm1 = rules.resolve(PORTLAND, "RM1").values["parking_max_per_unit"]
+    for zone in LIKE_RM1:
+        got = rules.resolve(PORTLAND, zone)
+        held = got.values["parking_max_per_unit"]
+        assert got.borrowed_from == ("RM1",), zone
+        assert (held.value, held.prov.quote) == (1.35, rm1.prov.quote), zone
+
+
+def test_and_the_other_fourteen_have_no_ceiling_at_all(rules: RuleSet) -> None:
+    # 2026-11-10 (b): renamed from ..._other_fifteen_...; CI1 moved to LIKE_RM1.
     """Exempt, not absent. The layer default states it once with the sentence
     that says so, and an exempt value does not appear in a resolution -- the
     same way a zone with no density cap carries none."""
@@ -90,8 +110,9 @@ def test_the_zone_lists_are_the_chapters_own(rules: RuleSet) -> None:
     buckets, this is what says so."""
     zones = set(load_rules()[PORTLAND].zones)
 
-    assert set(CAPPED) | set(UNCAPPED) | {"EX"} == zones
+    assert set(CAPPED) | set(UNCAPPED) | set(LIKE_RM1) | {"EX"} == zones
     assert not set(CAPPED) & set(UNCAPPED)
+    assert not set(LIKE_RM1) & (set(CAPPED) | set(UNCAPPED))
     assert "EX" not in set(CAPPED) | set(UNCAPPED)
 
 
@@ -131,8 +152,13 @@ def test_splitting_the_pod_onto_unit_lots_lifts_the_1_35() -> None:
     assert layer.zones["EX"].values["parking_max_per_unit"].variants == ()
 
 
-def test_the_catalog_pods_target_is_over_the_cap_in_thirteen_zones(rules: RuleSet) -> None:
+def test_the_catalog_pods_target_is_over_the_cap_in_fourteen_zones(rules: RuleSet) -> None:
     """The finding, stated as a number rather than as a worry.
+
+    2026-11-10 (b): renamed from ..._in_thirteen_zones. CI1 joined the twelve
+    at 1.35 when RICAP 11 put its homes on RM1's parking rules (LIKE_RM1
+    above); the floor of one per home still reaches no cap but EX's, so no
+    colour turns on it.
 
     Both catalog entries sell at 1.5 stalls per unit and are built with one.
     The screen charges the one (Steph, 2026-09-18: "4 is enough to sell"),
@@ -155,8 +181,8 @@ def test_the_catalog_pods_target_is_over_the_cap_in_thirteen_zones(rules: RuleSe
     }
     over = [zone for zone, cap in caps.items() if cap < bands.target]
 
-    assert sorted(over) == sorted((*CAPPED, "EX"))
-    assert len(over) == 13
+    assert sorted(over) == sorted((*CAPPED, *LIKE_RM1, "EX"))
+    assert len(over) == 14
     assert [zone for zone, cap in caps.items() if cap < bands.floor] == ["EX"]
 
 
