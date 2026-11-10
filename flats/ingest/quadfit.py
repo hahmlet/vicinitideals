@@ -6327,6 +6327,15 @@ def fire_checked(
     # A private road the yards do not count is still a road the truck may
     # stand on (where it is one: the offset keeps only truck roads).
     streets += tuple(a for a in lot.access if a not in streets)
+    # The truck roads at the length the lot's place states for a dead end
+    # with no turnaround (FOLLOWUPS 168), and the same roads with the long
+    # dead ends driven -- a reading only the fire marshal can grant (Steph
+    # 2026-11-10: "Yellow.").
+    freed_offset = None
+    if roads is not None and hasattr(roads, "at"):
+        net = roads.at(lot.layer_id)
+        freed_offset = fire.point_offset(net.tree, net.geoms, roads.edges, net.freed)
+        roads = (net.tree, net.geoms, roads.edges, net.walks)
     offset = fire.point_offset(*roads) if roads is not None else None
     # The hose measured from the curb itself (FOLLOWUPS 29): only to flag a
     # red the stricter reading alone makes.
@@ -6348,7 +6357,9 @@ def fire_checked(
     at = None
     if (route is None or route > limit) and fitter is not None:
         fronts = _street_lines(s.lot)
-        served = fire.reachable(fronts, offset)
+        # A front whose hose would start past the limit serves nothing: a
+        # street the truck cannot stand on, walked (FOLLOWUPS 168).
+        served = fire.reachable(fronts, offset, within=limit)
         if served and len(served) < len(fronts):
             at = served
             drawn = drawing_for(s, fitter, street=served)
@@ -6378,6 +6389,25 @@ def fire_checked(
             s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
         )
         return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+    def freed(out: Screened) -> Screened:
+        # A plan the hose misses on the code's reading but reaches with the
+        # long dead ends driven to their ends (FOLLOWUPS 168): held YELLOW
+        # with a flag, never GREEN (rulings.yaml
+        # 2026-11-10-fire-long-dead-end-yellow).
+        if freed_offset is None or out.facts is None or not out.facts.fire_route_tried:
+            return out
+        if out.facts.fire_route_ft is not None and out.facts.fire_route_ft <= limit:
+            return out
+        loose = measure(out.drawing, freed_offset)
+        if loose is None or loose > limit:
+            return out
+        facts = dataclasses.replace(out.facts, fire_route_freed_ft=loose)
+        result = screen(out.rules, facts, out.design, out.fit, policy=policy, relief=relief, config=out.config)
+        shadow = _if_signed(
+            out.rules, facts, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
+        )
+        return dataclasses.replace(out, screening=result, signed=shadow, facts=facts)
 
     out = screened(s, route)
     def fire_only(screening: Screening) -> bool:
@@ -6554,7 +6584,7 @@ def fire_checked(
         )
         if turned is not s:
             out = screened(turned, again)
-    return out
+    return freed(out)
 
 
 def _fire_why(
@@ -7642,6 +7672,7 @@ def _init_worker(
     dem: Path | None = None,
     curbs: Path | None = None,
     law_on: str | None = None,
+    fire_roads: Path | None = None,
 ) -> None:
     """Load the corpus, catalog, policies, corridor maps, the street
     centrelines the fire route is measured to (with the curbs and widths
@@ -7650,7 +7681,12 @@ def _init_worker(
 
     ``law_on`` is the ISO date whose law the run applies, fixed once when
     the run starts (:func:`run`) so a run that crosses midnight on the day
-    an amendment takes effect does not screen half its lots under each."""
+    an amendment takes effect does not screen half its lots under each.
+
+    ``fire_roads`` is the file :func:`build_fire_roads` wrote for the run:
+    the truck roads in pieces, each standing or walked (FOLLOWUPS 168).
+    Given, it is the index the fire route is measured to in place of the
+    bare centrelines of ``roads``."""
     from datetime import date
 
     from flats.designs.model import load_catalog
@@ -7672,10 +7708,81 @@ def _init_worker(
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
     street_edges = load_street_edges(curbs) if curbs is not None and roads is not None else None
-    _WORKER["roads"] = (
-        (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
-    )
+    if fire_roads is not None and roads is not None:
+        from flats.fit import fire_roads as fire_roads_mod
+
+        _WORKER["roads"] = fire_roads_mod.Network(
+            fire_roads_mod.load_all(fire_roads), fire_roads_mod.rules(), street_edges
+        )
+    else:
+        _WORKER["roads"] = (
+            (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
+        )
     _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
+
+
+def build_fire_roads(
+    roads: Path, fabric: Path, curbs: Path | None, out: Path, *, keep: Path | None = None,
+    log: Any = print,
+) -> Path:
+    """Write the truck roads of ``roads`` in pieces, each standing or walked
+    (:func:`flats.fit.fire_roads.build`), measured against the taxlot
+    ``fabric``; the same roads :func:`_init_worker` would index, with the
+    paved unimproved streets of ``curbs``' widths.
+
+    Some four minutes for the three counties, so ``keep`` (the answer
+    cache's directory) holds each one built, under the inputs and the code
+    that built it, and a run on the same inputs copies it instead."""
+    import hashlib
+    import shutil
+
+    import pandas as pd
+    import shapely
+
+    from flats.fit import fire, fire_roads
+    from flats.ingest.batch import _input_digest
+
+    kept = None
+    if keep is not None:
+        code = b"".join(Path(m.__file__).read_bytes() for m in (fire, fire_roads))
+        code += fire_roads.CONFIG.read_bytes()
+        digest = hashlib.sha256(
+            code + "|".join(str(_input_digest(p)) for p in (roads, fabric, curbs)).encode("utf-8")
+        ).hexdigest()
+        kept = keep / "fire_roads" / f"{digest}.parquet"
+        if kept.is_file():
+            shutil.copyfile(kept, out)
+            log(f"bridge: fire roads read from {kept}")
+            return out
+    from flats.geom.curbs import load as load_street_edges
+    from flats.ingest.normalize import NOT_A_TAXLOT_RE
+
+    edges = load_street_edges(curbs) if curbs is not None else None
+    lines, kinds = fire.truck_lines(roads, edges)
+    links = fire.link_lines(roads)
+    frame = pd.read_parquet(fabric, columns=["TLID", "wkb"])
+    polys = shapely.from_wkb(frame["wkb"].to_numpy())
+    private = ~frame["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE.pattern, regex=True).to_numpy()
+    # One cut of the network per dead-end length a place states (the
+    # state's 150 ft, Portland's 300 ft: flats/config/fire_roads.yaml).
+    ruled = fire_roads.rules()
+    by_ft = fire_roads.build_all(
+        lines, kinds, links, polys, private, lengths=ruled.lengths, release=ruled.release
+    )
+    for ft, pieces in by_ft.items():
+        walked: dict[str, int] = {}
+        for piece in pieces:
+            if not piece.stand:
+                walked[piece.why] = walked.get(piece.why, 0) + 1
+        log(
+            f"bridge: fire roads at {ft:g} ft dead ends -- {len(lines):,} truck centrelines in "
+            f"{len(pieces):,} pieces; walked: {', '.join(f'{k} {v:,}' for k, v in sorted(walked.items())) or 'none'}"
+        )
+    fire_roads.write(by_ft, out)
+    if kept is not None:
+        kept.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(out, kept)
+    return out
 
 
 def terrain_at(raw: Path) -> Any:
@@ -7951,6 +8058,7 @@ def run(
     institutional: Path | None = None,
     cache: Path | None = None,
     plats: Path | None = None,
+    fabric: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -7988,7 +8096,12 @@ def run(
     hospitals, utilities -- are left out of the scan and assign answers them
     RED (Steph 2026-10-06, FOLLOWUPS 47: "flagged out of scans for any
     reason" -- every scan, a test scan included), and a run with neither is
-    refused.
+    refused. ``fabric`` is the whole taxlot file (quadfit s1's
+    ``s1_lots.parquet``, the default beside ``s4``): the right-of-way
+    between its private lots says which streets are too narrow for a fire
+    truck and which dead ends have no room to turn one (FOLLOWUPS 168,
+    :func:`build_fire_roads`), and a run without it is refused -- every
+    mapped street would be taken as one a truck can drive.
 
     The lots run costliest first and ``timings.parquet`` says what each
     cost (:mod:`flats.ingest.batch`). ``cache`` is a directory of answers
@@ -8029,6 +8142,11 @@ def run(
             f"no {', '.join(lacking)} for driveway spacing in {sources}: run acquire (FOLLOWUPS 169)"
         )
     institutional = _institutional_source(institutional, sources)
+    fabric = fabric if fabric is not None else s4.parent / "s1_lots.parquet"
+    if not fabric.exists():
+        raise FileNotFoundError(
+            f"no taxlot fabric for the fire road widths and dead ends: {fabric} (FOLLOWUPS 168)"
+        )
     if plats is None:
         from flats.ingest.plats import CURRENT
 
@@ -8102,6 +8220,10 @@ def run(
     split = with_split_zones(rows, s4.parent, corpus)
     if split:
         log(f"bridge: the other districts of {split:,} split-zoned lots read off the zoning maps")
+    # Which streets a fire truck can stand on, read once for the run
+    # (FOLLOWUPS 168): too narrow between its lots, or a dead end past 150 ft
+    # with no room to turn, and the hose walks from where it can.
+    fire_roads = build_fire_roads(roads, fabric, curbs, out / "fire_roads.parquet", keep=cache, log=log)
     # Costliest lots first, started as free memory allows, and the answers a
     # cache already holds not screened again (FOLLOWUPS 46): the same
     # records in the same order as lot by lot in file order.
@@ -8112,7 +8234,7 @@ def run(
             cache,
             batch.run_key(
                 step_deg=step_deg,
-                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs},
+                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs, "fabric": fabric},
                 law=law,
             ),
         )
@@ -8128,7 +8250,7 @@ def run(
         processes=processes,
         chunk_size=chunk_size,
         init=screened._init_worker,
-        initargs=(step_deg, sources, roads, dem, curbs, on.isoformat()),
+        initargs=(step_deg, sources, roads, dem, curbs, on.isoformat(), fire_roads),
         cache=answers,
         step_deg=step_deg,
         log=log,
@@ -8155,6 +8277,7 @@ def run(
         "roads": str(roads),
         "dem": str(dem),
         "curbs": str(curbs) if curbs is not None else None,
+        "fabric": str(fabric),
         "institutional": str(institutional),
         "institutional_skipped": skipped,
         "law_on": on.isoformat(),
@@ -8232,6 +8355,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="snapshot dir holding the curb lines and pavement widths (default: --sources)",
     )
     ap.add_argument(
+        "--fabric",
+        type=Path,
+        help="the whole taxlot file, for the fire road widths and dead ends (default: s1_lots beside --s4)",
+    )
+    ap.add_argument(
         "--institutional",
         type=Path,
         help="institutional.parquet (or its directory) from flats.ingest.institutional, or a snapshot "
@@ -8276,6 +8404,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         curbs=args.curbs,
         institutional=args.institutional,
         cache=cache,
+        fabric=args.fabric,
     )
     return 0
 

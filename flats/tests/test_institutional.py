@@ -312,8 +312,10 @@ def test_the_bridge_leaves_institutional_lots_out_of_the_scan(tmp_path: Path, mo
     monkeypatch.setattr(qf, "_init_worker", lambda *a, **k: None)
     monkeypatch.setattr(qf, "_work_chunk", lambda chunk: [{"TLID": r["TLID"], "design": "d1"} for r in chunk if not seen.append(r["TLID"])])
     monkeypatch.setattr("flats.geom.curbs.missing", lambda _c: [])
+    monkeypatch.setattr(qf, "build_fire_roads", lambda *a, **k: None)
     roads = tmp_path / "s1_streets.parquet"
     roads.write_bytes(b"")
+    (tmp_path / "s1_lots.parquet").write_bytes(b"")
     dem = tmp_path / "raw"
     (dem / "dem").mkdir(parents=True)
     (dem / "dem" / "t.tif").write_bytes(b"")
@@ -344,8 +346,10 @@ def test_every_scan_reads_the_land_itself_and_assign_answers_red(tmp_path: Path,
     monkeypatch.setattr(qf, "_init_worker", lambda *a, **k: None)
     monkeypatch.setattr(qf, "_work_chunk", lambda chunk: [{"TLID": r["TLID"], "design": "d1", "triage": "green", "if_signed": "green"} for r in chunk if not seen.append(r["TLID"])])
     monkeypatch.setattr("flats.geom.curbs.missing", lambda _c: [])
+    monkeypatch.setattr(qf, "build_fire_roads", lambda *a, **k: None)
     roads = tmp_path / "s1_streets.parquet"
     roads.write_bytes(b"")
+    (tmp_path / "s1_lots.parquet").write_bytes(b"")
     dem = tmp_path / "raw"
     (dem / "dem").mkdir(parents=True)
     (dem / "dem" / "t.tif").write_bytes(b"")

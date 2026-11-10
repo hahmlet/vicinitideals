@@ -1833,6 +1833,18 @@ code:
     title: Chapter 11.50 Trees in Development Situations
     start: "11.50.010 Purpose."
     end: "Upcoming and recent changes"
+  # Title 31, the city's fire regulations (FOLLOWUPS 168). Read for one
+  # sentence: 31.30.010.B sets the dead-end length past which a fire truck
+  # needs a turnaround at 300 ft, where the state's OFC 503.2.5 says 150 ft.
+  # The city's stated number governs its lots (flats/config/fire_roads.yaml).
+  # City code: it reaches the city, not the Portland-administered county
+  # pockets, which keep the OFC 150 ft. Sliced at the chapter's first and
+  # last section headings, like 11.50.
+  - id: "31.30"
+    url: https://www.portland.gov/code/31/30
+    title: Chapter 31.30 Development and Building Requirements (Title 31 Fire Regulations)
+    start: "31.30.010 Fire Chief Authorized to Establish Access Standards."
+    end: "Upcoming and recent changes"
   # Plan districts (FOLLOWUPS 109, Portland part 1, 2026-11-01). 33.500 is the
   # chapter every plan district stands on: its rules "control" where they
   # conflict with a base or overlay zone (33.500.040, and 33.700.070.E.2.a).

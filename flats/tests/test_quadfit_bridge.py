@@ -750,6 +750,15 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
         run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, log=log.append)
     for key in ("osm_land_use", "rlis_orca"):
         (curbs / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
+    # And which streets a fire truck can stand on is read off the taxlot
+    # fabric beside s4, and a run without it is refused: every mapped
+    # street would be a truck road (FOLLOWUPS 168).
+    with pytest.raises(FileNotFoundError, match="taxlot fabric"):
+        run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, institutional=curbs,
+            log=log.append)
+    pd.DataFrame({"TLID": pd.Series([], dtype=str), "wkb": pd.Series([], dtype=object)}).to_parquet(
+        s4.parent / "s1_lots.parquet"
+    )
     written = run(
         out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, institutional=curbs,
         log=log.append,
@@ -763,6 +772,8 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     meta = json.loads((out / "meta.json").read_text(encoding="utf-8"))
     assert meta["lots"] == 2 and meta["rows"] == len(frame) and meta["step_deg"] == 30.0
     assert meta["roads"] == str(s4.parent / "s1_streets.parquet")
+    assert meta["fabric"] == str(s4.parent / "s1_lots.parquet")
+    assert (out / "fire_roads.parquet").exists()
     assert "fire_route_ft" in frame.columns
     assert meta["dem"] == str(raw)
     assert meta["institutional"] == str(out / "institutional.parquet") and meta["institutional_skipped"] == 0

@@ -49,6 +49,7 @@ import shapely
 from shapely.geometry.base import BaseGeometry
 
 if TYPE_CHECKING:
+    from flats.fit.fire_roads import Walks
     from flats.geom.curbs import StreetEdges
 
 #: Half the narrowest fire apparatus road (OFC 503.2.1, 20 ft unobstructed).
@@ -135,6 +136,13 @@ def load_truck_roads(
     (:data:`TRUCK_TYPES`, and the paved :data:`PAVED_IF_WIDE_TYPES` where
     ``edges`` records the pavement), indexed: what :func:`street_offsets`
     reads."""
+    geoms, _ = truck_lines(path, edges)
+    return shapely.STRtree(geoms), geoms
+
+
+def truck_lines(path: Path, edges: "StreetEdges | None" = None) -> tuple[np.ndarray, np.ndarray]:
+    """The centrelines :func:`load_truck_roads` indexes, with each one's
+    RLIS TYPE."""
     import pandas as pd
 
     frame = pd.read_parquet(path, columns=["type", "alley", "wkb"])
@@ -142,14 +150,33 @@ def load_truck_roads(
     not_alley = ~frame["alley"].fillna(False).astype(bool)
     keep = kind.isin(TRUCK_TYPES) & not_alley
     geoms = shapely.from_wkb(frame.loc[keep, "wkb"].to_numpy())
+    kinds = kind[keep].to_numpy(dtype=float)
     if edges is not None and len(edges.width_geoms):
-        maybe = shapely.from_wkb(
-            frame.loc[kind.isin(PAVED_IF_WIDE_TYPES) & not_alley, "wkb"].to_numpy()
-        )
-        paved = [g for g in maybe if _paved(g, edges)]
-        if paved:
-            geoms = np.concatenate([geoms, np.asarray(paved, dtype=object)])
-    return shapely.STRtree(geoms), geoms
+        sel = kind.isin(PAVED_IF_WIDE_TYPES) & not_alley
+        maybe = shapely.from_wkb(frame.loc[sel, "wkb"].to_numpy())
+        ok = [i for i, g in enumerate(maybe) if _paved(g, edges)]
+        if ok:
+            geoms = np.concatenate([geoms, np.asarray([maybe[i] for i in ok], dtype=object)])
+            kinds = np.concatenate([kinds, kind[sel].to_numpy(dtype=float)[ok]])
+    return geoms, kinds
+
+
+#: RLIS TYPE codes of the freeways and their ramps: no place to stand
+#: (:data:`TRUCK_TYPES` leaves them out), but a road a truck drives, so a
+#: street that runs onto one is no dead end there
+#: (:func:`flats.fit.fire_roads.build`).
+LINK_TYPES: frozenset[int] = frozenset(
+    {1110, 1120, 1121, 1122, 1123, 1221, 1222, 1223, 1321, 1421, 1471, 1521}
+)
+
+
+def link_lines(path: Path) -> np.ndarray:
+    """The :data:`LINK_TYPES` centrelines of quadfit s1's street file."""
+    import pandas as pd
+
+    frame = pd.read_parquet(path, columns=["type", "wkb"])
+    kind = pd.to_numeric(frame["type"], errors="coerce")
+    return shapely.from_wkb(frame.loc[kind.isin(LINK_TYPES), "wkb"].to_numpy())
 
 
 def _paved(line: BaseGeometry, edges: "StreetEdges") -> bool:
@@ -303,6 +330,7 @@ def hose_offsets(
     centrelines: shapely.STRtree | None,
     geoms: Sequence[BaseGeometry],
     edges: StreetEdges | None = None,
+    walks: Walks | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """How far past each street lot line point the hose starts, read two
     ways: (strict, curb).
@@ -317,6 +345,13 @@ def hose_offsets(
     nearer the lot than that curb (:mod:`flats.geom.curbs`). Infinite past
     :data:`MAX_GAP_FT`, zero where no centreline is held, as
     :func:`street_offsets`.
+
+    ``walks`` (:func:`flats.fit.fire_roads.load`) says, for each of
+    ``geoms``, whether a truck can stand on it at all (FOLLOWUPS 168: a
+    street under 20 ft between its lots, a dead end past 150 ft with no room
+    to turn). Where the nearest is one it cannot, both readings are the walk
+    from the point to that centreline and along it to where a truck can
+    stand (:func:`_walked`); infinite where none can.
     """
     old = street_offsets(points, centrelines, geoms)
     if centrelines is None or not len(geoms) or not len(points):
@@ -324,7 +359,8 @@ def hose_offsets(
     from flats.geom.curbs import Source
 
     pts = shapely.points(points)
-    lines = np.asarray(geoms, dtype=object)[centrelines.nearest(pts)]
+    idx = centrelines.nearest(pts)
+    lines = np.asarray(geoms, dtype=object)[idx]
     feet = shapely.get_coordinates(shapely.shortest_line(pts, lines)).reshape(-1, 2, 2)[:, 1]
     gap = shapely.distance(pts, lines)
     if edges is None:
@@ -337,13 +373,31 @@ def hose_offsets(
     strict = np.where(src == Source.width, np.maximum(strict, old), strict)
     curb = np.minimum(near, gap)
     far = ~np.isfinite(old)
-    return np.where(far, math.inf, strict), np.where(far, math.inf, curb)
+    strict, curb = np.where(far, math.inf, strict), np.where(far, math.inf, curb)
+    if walks is not None:
+        off = ~walks.stand[idx]
+        if off.any():
+            walked = np.where(far[off], math.inf, _walked(pts[off], lines[off], gap[off], walks, idx[off]))
+            strict[off] = walked
+            curb[off] = walked
+    return strict, curb
+
+
+def _walked(
+    pts: np.ndarray, lines: np.ndarray, gap: np.ndarray, walks: Walks, idx: np.ndarray
+) -> np.ndarray:
+    """The hose from each point across to its centreline (``gap``) and
+    along it, whichever way is shorter, to where a truck stands."""
+    along = shapely.line_locate_point(lines, pts)
+    length = shapely.length(lines)
+    return gap + np.minimum(along + walks.walk0[idx], (length - along) + walks.walk1[idx])
 
 
 def point_offset(
     centrelines: shapely.STRtree | None,
     geoms: Sequence[BaseGeometry],
     edges: StreetEdges | None = None,
+    walks: Walks | None = None,
     *,
     reading: str = "strict",
 ) -> Callable[[np.ndarray], np.ndarray]:
@@ -352,19 +406,25 @@ def point_offset(
     if reading not in READINGS:
         raise ValueError(f"reading must be one of {READINGS}, not {reading!r}")
     pick = READINGS.index(reading)
-    return lambda pts: hose_offsets(pts, centrelines, geoms, edges)[pick]
+    return lambda pts: hose_offsets(pts, centrelines, geoms, edges, walks)[pick]
 
 
 def reachable(
     lines: Sequence[tuple[float, float, float, float]],
     offset: Callable[[np.ndarray], np.ndarray] | None = None,
+    within: float | None = None,
 ) -> tuple[tuple[float, float, float, float], ...]:
     """The street lines a truck can come in over: those with a point the
-    truck can stand off (a finite offset). Every line where no offset is
-    given."""
+    truck can stand off (a finite offset; no more than ``within`` where it
+    is given -- a hose that starts past the limit serves nothing). Every
+    line where no offset is given."""
     if offset is None:
         return tuple(lines)
-    return tuple(line for line in lines if np.isfinite(offset(_sources([line]))).any())
+    cap = math.inf if within is None else within
+    return tuple(
+        line for line in lines
+        if (lambda o: (np.isfinite(o) & (o <= cap)).any())(offset(_sources([line])))
+    )
 
 
 __all__ = [
@@ -374,10 +434,13 @@ __all__ = [
     "READINGS",
     "PAVED_IF_WIDE_TYPES",
     "TRUCK_TYPES",
+    "LINK_TYPES",
     "hose_offsets",
+    "link_lines",
     "load_truck_roads",
     "point_offset",
     "reachable",
     "route_ft",
     "street_offsets",
+    "truck_lines",
 ]

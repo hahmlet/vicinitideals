@@ -472,6 +472,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  FIRE-DEAD-END:
+    description: "Long dead-end street, no turnaround seen: the fire hose reaches only if the truck may drive the dead end past the length the fire code (or the city's amendment) allows without one; check with the fire marshal (Steph 2026-11-10)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "Ask the fire marshal whether a truck may use the dead end, or where a turnaround would go (FOLLOWUPS 168)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   FIRE-HOSE-START:
     description: "Red only because the fire hose is measured from 10 ft out from the curb; measured from the curb itself it reaches -- where no street width is measured, at the curb of the narrowest street a truck may use (Steph 2026-10-05)"
     kind: parametric

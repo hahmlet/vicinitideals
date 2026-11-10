@@ -755,6 +755,10 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/washington/_unincorporated/community-plan.west-tigard.txt",
         "or/washington/_unincorporated/community-plan.east-hillsboro.txt",
         "or/washington/_unincorporated/community-plan.sherwood.txt",
+        # Canby Fire District's Conditions of Construction, stored 2026-11-10
+        # for its dead-end length (FOLLOWUPS 168): a fire district's guide,
+        # numbered by the fire code it applies, not by any Canby section.
+        "or/clackamas/canby/cfd.conditions-of-construction.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

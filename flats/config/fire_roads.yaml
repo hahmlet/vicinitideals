@@ -1,0 +1,49 @@
+# Fire truck roads (FOLLOWUPS 168): read by flats/fit/fire_roads.py:rules().
+#
+# dead_end_ft: how far a fire truck may drive up a dead-end street that has no
+# turnaround. `default` is the state's Oregon Fire Code; a key naming a
+# jurisdiction layer is that city's adopted local amendment, and the stated
+# local number governs its lots (coordinator, 2026-11-10). Each entry holds
+# the printed figure and the stored line it is read from.
+#
+# Searched 2026-11-10 for other local amendments that state their own length:
+# - Gresham Fire: its Fire Code Applications Guide prints 150 ft (OFC 503.2.5);
+#   no local length found.
+# - Tualatin Valley Fire & Rescue (Beaverton, Tigard, Tualatin, Sherwood, West
+#   Linn, Wilsonville, unincorporated Washington County): its guide prints
+#   150 ft (OFC 503.2.5, D103.1); no local length found.
+# - Hillsboro Fire: HMC 11.28.010 amends the OFC; the city's access page says
+#   150 ft (page refused automated reads, 403). Same as the state's.
+# - Clackamas Fire: the guide stored as or/ofc.2022.applications-guide.txt,
+#   150 ft.
+# - Canby Fire District (below): its "Conditions of Construction" (rev 10.28)
+#   prints 300 ft (citing OFC 503.2.5, D103.4) as the district's "local
+#   interpretations and practices" -- not an adopted amendment, but Steph
+#   2026-11-10 (rulings.yaml 2026-11-10-canby-fire-dead-end-300): Canby gets
+#   300 ft. The city of Canby only; the district's rural area outside the
+#   city keeps the state's 150 ft (no layer of its own here).
+# - Portland (below): PCC 31.30.010.B, 300 ft. City code: it reaches the city,
+#   not the Portland-administered county pockets (or/multnomah/_unincorporated),
+#   which keep the state's 150 ft. Title 31 states no reach beyond the city.
+dead_end_ft:
+  default:
+    value: 150
+    cite: "OFC 2022 503.2.5 (Oregon Fire Code Applications Guide, Clackamas Fire, rev. 2023-06-21)"
+    quote: "or/ofc.2022.applications-guide.txt#L137-L139"
+  or/multnomah/portland:
+    value: 300
+    cite: "Portland City Code 31.30.010.B"
+    quote: "or/multnomah/portland/31.30.txt#L7"
+  or/clackamas/canby:
+    value: 300
+    cite: "Canby Fire District, Conditions of Construction rev 10.28 (OFC 503.2.5, D103.4)"
+    quote: "or/clackamas/canby/cfd.conditions-of-construction.txt#L120-L121"
+
+# What a lot gets when the truck could reach it only by driving an EXISTING
+# public dead end past its length with no turnaround seen:
+#   yellow -- held out of GREEN with the FIRE-DEAD-END flag (long dead end, no
+#             turnaround seen; check with the fire marshal);
+#   red    -- the code as written: the hose walks from the length's point.
+# Steph 2026-11-10 (rulings.yaml 2026-11-10-fire-long-dead-end-yellow): "Yellow."
+# A dead end whose room to turn is unclear is yellow under either setting.
+long_dead_end: yellow
