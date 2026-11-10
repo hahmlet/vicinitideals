@@ -1220,6 +1220,25 @@ zones:
       cite: Hillsboro CDC 12.21.600 (SCR-LD Station Community Residential - Low Density), Tables 12.21.620-1 and 12.21.650-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). Inside the Downtown Plan District
+      # (12.61.200 lists this zone among its five), 12.61.800 binds "new
+      # residential construction" within Figure 12.61.200-A's boundary: "Flat
+      # roofs are not permitted as the primary roof form", minimum pitch 4/12
+      # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
+      # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
+      # hip is one menu choice of nine). The boundary is only on the figure and
+      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
+      # holds every lot here off GREEN until it is.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
+      quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.21.620-1, Housing Types Permitted in the SCR-LD Zone (Quadplex P)
@@ -1324,6 +1343,18 @@ zones:
       cite: Hillsboro CDC 12.21.700 (SCR-OTC Station Community Residential - Orenco Townsite Conservation), Tables 12.21.720-1 and 12.21.750-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). 12.62.400 applies "to new
+      # construction in the SCR-OTC zone" (A.1): "Flat roofs are not permitted
+      # as the primary roof form" (B.7.a), "Roof pitch shall be a minimum of
+      # 4/12 for hipped roofs and 6/12 for gabled roofs" (B.7.b). The least
+      # pitch allowed is 4; the flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). Detached houses are bound too, so OAR
+      # 660-046-0225(1)(c) lets it stand. The A.3 adjustment is a variance.
+      value: 4
+      cite: "Hillsboro CDC 12.62.400.A.1 and B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+      retrieved: '2026-11-10'
+      quote: "or/washington/hillsboro/12.62/12.62.400.txt#L3,L7,L31-L36"
     quadplex_allowed:
       # "Alley frontage not permitted without street frontage on the same
       # lot; flag lots not permitted (see Subsection 12.62.400.I)", and
@@ -1477,6 +1508,21 @@ zones:
       cite: Hillsboro CDC 12.21.800 (SCR-DNC Station Community Residential - Downtown Neighborhood Conservation), Tables 12.21.820-1 and 12.21.850-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). 12.61.700.A: "All new development is
+      # subject to the Architectural Conservation Standards in Section
+      # 12.61.800", whose 7.a says "Flat roofs are not permitted as the primary
+      # roof form" and 7.b "Roof pitch shall be a minimum of 4/12 for hipped
+      # roofs and 6/12 for gabled roofs". The least pitch allowed is 4. The pod's
+      # roof is flat (rulings.yaml 2026-10-21-pod-roof-flat), so RED. It binds
+      # "new residential construction" (B), detached houses included, so OAR
+      # 660-046-0225(1)(c) lets a Large City apply it to middle housing. The
+      # adjustment it offers (A.3) is a variance (no variances, 2026-10-02).
+      value: 4
+      cite: "Hillsboro CDC 12.61.700.A and 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+      retrieved: '2026-11-10'
+      quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+      via: "or/washington/hillsboro/12.61/12.61.700.txt#L3"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.21.820-1, Housing Types Permitted in the SCR-DNC Zone (Quadplex P)
@@ -2236,6 +2282,25 @@ zones:
       cite: Hillsboro CDC 12.22.400 (SCR-MD Station Community Residential - Medium Density), Tables 12.22.420-1 and 12.22.460-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). Inside the Downtown Plan District
+      # (12.61.200 lists this zone among its five), 12.61.800 binds "new
+      # residential construction" within Figure 12.61.200-A's boundary: "Flat
+      # roofs are not permitted as the primary roof form", minimum pitch 4/12
+      # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
+      # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
+      # hip is one menu choice of nine). The boundary is only on the figure and
+      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
+      # holds every lot here off GREEN until it is.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
+      quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.420-1, Housing Types Permitted in the SCR-MD Zone (Quadplex P)
@@ -2373,6 +2438,25 @@ zones:
       cite: Hillsboro CDC 12.22.500 (SCR-HD Station Community Residential - High Density), Tables 12.22.520-1 and 12.22.560-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). Inside the Downtown Plan District
+      # (12.61.200 lists this zone among its five), 12.61.800 binds "new
+      # residential construction" within Figure 12.61.200-A's boundary: "Flat
+      # roofs are not permitted as the primary roof form", minimum pitch 4/12
+      # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
+      # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
+      # hip is one menu choice of nine). The boundary is only on the figure and
+      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
+      # holds every lot here off GREEN until it is.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
+      quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)
