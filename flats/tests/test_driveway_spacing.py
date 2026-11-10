@@ -52,10 +52,6 @@ def test_every_map_is_registered_and_every_class_is_on_it() -> None:
         assert spec is not None, rules.map
         assert set(rules.classes) <= set(spec.rank), layer
         named = {*rules.classes.values(), *([rules.unlisted] if rules.unlisted else [])}
-        if rules.map_ruling:
-            # A borrowed map that reads busy streets only never reads a local
-            # one: its local-street rules wait for a city map.
-            named |= {"local"}
         for word in rules.frontage:
             assert word in named, (layer, word)
         for r in rules.intersections:
@@ -203,28 +199,28 @@ def test_washington_county_reaches_only_a_lot_with_every_frontage_busy(monkeypat
 # --- Cornelius on the county map (Steph 2026-11-10) ----------------------
 
 
-def test_cornelius_reads_the_county_map_for_busy_streets_only() -> None:
+def test_cornelius_reads_the_county_map_as_the_county_does() -> None:
     cornelius = ds.rules_for("or/washington/cornelius")
     assert cornelius is not None
     assert cornelius.map == "street_class_washington"
     assert cornelius.map_ruling == "2026-11-10-cornelius-county-street-map"
-    assert cornelius.unlisted is None
     spec = ds.spec_of(cornelius.map)
     assert cornelius.class_of_rank(2, spec) == "collector"
     assert cornelius.class_of_rank(3, spec) == "arterial"
     assert cornelius.class_of_rank(4, spec) == "arterial"  # Principal Arterial
-    assert cornelius.class_of_rank(1, spec) is None  # Neighborhood Route
-    assert cornelius.class_of_rank(0, spec) is None  # undrawn: not local
+    assert cornelius.class_of_rank(1, spec) == "local"  # Neighborhood Route
+    assert cornelius.class_of_rank(0, spec) == "local"  # undrawn, Metro + OSM local
+    assert cornelius.class_of_rank(5, spec) is None  # Freeway: unread
     # The county map is not registered to serve Cornelius, so no other
     # reader (corner lots, dedication, local street) takes it up there.
     assert "or/washington/cornelius" not in load_pipeline().datasets[cornelius.map].serves
 
 
-def _county_map(front: LineString, rank: int | None):
+def _county_map(front: LineString, rank: int | None, osm: str = "residential"):
     if rank is None:
         return build(
             ["or/washington/_unincorporated"], [], [], [], [front], [""], [1500],
-            unlisted=0, osm=[front], osm_classes=["residential"],
+            unlisted=0, osm=[front], osm_classes=[osm],
             key="street_class_washington",
         )
     return build(
@@ -242,15 +238,26 @@ def test_a_cornelius_lot_on_a_county_arterial_is_blocked() -> None:
     assert answer == ds.BLOCKED, why
 
 
-def test_a_cornelius_street_the_county_map_does_not_draw_stays_unread() -> None:
+def test_a_cornelius_local_street_clears_away_from_corners() -> None:
     cornelius = ds.rules_for("or/washington/cornelius")
     edges, bearings = _midblock(400.0)
     front, cross = _roads(400.0)
     network = StreetNetwork.build([front, cross], ["MAIN ST", "OAK ST"])
-    # Metro and OpenStreetMap both call it residential: the county reader
-    # would rank it local, but Cornelius takes the map for busy streets only.
+    # Undrawn, and Metro and OpenStreetMap both call it residential: local,
+    # as on county lots. 400 ft of frontage clears 100 ft from any street's
+    # right-of-way (the cross street unread, so taken as the strictest).
     answer, why = ds.read_lot(edges, bearings, network, _county_map(front, None), cornelius)
-    assert answer == ds.UNREAD, why
+    assert answer == ds.CLEAR, why
+
+
+def test_a_cornelius_street_with_no_reading_stays_unread() -> None:
+    cornelius = ds.rules_for("or/washington/cornelius")
+    edges, bearings = _midblock(400.0)
+    front, cross = _roads(400.0)
+    network = StreetNetwork.build([front, cross], ["MAIN ST", "OAK ST"])
+    # OpenStreetMap disagrees with Metro: no reading, as on county lots.
+    got = ds.read_lot(edges, bearings, network, _county_map(front, None, "secondary"), cornelius)
+    assert got[0] == ds.UNREAD, got[1]
 
 
 # --- the screen ----------------------------------------------------------

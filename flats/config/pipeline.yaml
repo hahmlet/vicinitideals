@@ -742,9 +742,10 @@ datasets:
       (row_to_centerline_*, CDC 302-2.14 C(1)) on county-zoned land, and on
       county-zoned land for CDC 501-8.5 access spacing
       (flats/config/driveway_spacing.yaml, FOLLOWUPS 169). Cornelius also
-      reads it there, for busy streets only (Steph 2026-11-10,
-      2026-11-10-cornelius-county-street-map); it is deliberately not in
-      `serves`, so no other reader takes it up in Cornelius.
+      reads it there, for that check's busy-or-local question only (Steph
+      2026-11-10, 2026-11-10-cornelius-county-street-map); it is
+      deliberately not in `serves`, so no other reader takes it up in
+      Cornelius.
 
   street_class_sherwood:
     kind: arcgis

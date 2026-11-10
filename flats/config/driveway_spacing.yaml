@@ -189,21 +189,24 @@ jurisdictions:
 
   or/washington/cornelius:
     # No city TSP layer is published (scouted 2026-11-09). Washington
-    # County's map draws Cornelius roads and is read here ONLY to tell which
-    # streets are busy (Steph 2026-11-10, rulings.yaml
-    # 2026-11-10-cornelius-county-street-map: "Only for busy roads"); it is
-    # read for nothing else in Cornelius (its pipeline entry does not serve
-    # the city). FClass2 4 Collector, 3 Arterial, 2 Principal Arterial name
-    # the code's busy streets. No `unlisted` and no Neighborhood Route: a
-    # street the county map does not draw, or draws as a Neighborhood Route,
-    # is not read as local, so a frontage on it stays unread (YELLOW) and
-    # the local-street rules below are not reached until a city map is.
+    # County's map draws Cornelius roads and answers the busy-or-not
+    # question of this check there (Steph 2026-11-10, rulings.yaml
+    # 2026-11-10-cornelius-county-street-map: "Only for busy roads" -- used
+    # for this question only, never for corners, widening or anything else
+    # in Cornelius, so its pipeline entry does not serve the city). Read as
+    # for county lots: FClass2 4 Collector and 3 / 2 Arterial are the
+    # code's busy streets; 5 Neighborhood Route, and a street the map does
+    # not draw where Metro types it local and OpenStreetMap calls it
+    # residential, are local streets (the code's classes are arterial,
+    # collector, industrial and local). Anything else stays unread.
     map: street_class_washington
     map_ruling: 2026-11-10-cornelius-county-street-map
     classes:
+      '5': local
       '4': collector
       '3': arterial
       '2': arterial
+    unlisted: local
     frontage:
       arterial:
         figure_ft: 100
