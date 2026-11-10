@@ -80,12 +80,15 @@ def test_but_a_use_tables_repeated_permission_is_still_a_marker() -> None:
 
 def test_the_dimensional_table_stops_asking_for_a_note_three(chapter) -> None:
     assert chapter.unbodied == ()
-    assert [b.head for b in chapter.blocks] == [667, 736, 219]
+    # 2026-11-10 (a): heads re-pointed onto the 11/1/26 reprint (RICAP 11,
+    # FOLLOWUPS 165), [667, 736, 219] -> [636, 702, 210]; same three blocks.
+    assert [b.head for b in chapter.blocks] == [636, 702, 210]
 
 
 def test_the_note_the_table_really_does_carry_is_untouched(chapter) -> None:
     """Note [1] caps Household Living density on sites with no Retail Sales
     And Service or Office use. It is the chapter's one real footnote and it is
     still answered."""
-    first = next(b for b in chapter.bodies if b.line == 668)
+    # 2026-11-10 (a): L668 -> L637 on the 11/1/26 reprint, same words.
+    first = next(b for b in chapter.bodies if b.line == 637)
     assert "maximum density for Household Living" in first.text

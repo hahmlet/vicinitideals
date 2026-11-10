@@ -73,16 +73,22 @@ def test_the_layer_copy_of_title_33_is_the_portland_copy(store: ProvenanceStore)
 def test_the_pocket_parking_setback_is_title_33s_ten_feet(
     county: Layer, store: ProvenanceStore, corpus: RuleSet
 ) -> None:
-    """33.266.120.C.2.a prints ten feet, stated of spaces, for this building.
+    """33.266.120.C.2 prints ten feet, stated of spaces, for this building.
 
     The card used to cite 39.6580(A) and borrow the front yard (10 to 20 ft
     here). The sentence the pockets owe instead prints its own figure, so the
     value is held as printed and no longer follows the building setback.
     """
+    # 2026-11-10 (a): line pins re-pointed onto the 11/1/26 reprint (RICAP 11, FOLLOWUPS 165):
+    # L268/L272/L303 -> L272/L276/L309-L310. The reprint moved the rule from
+    # C.2.a ("Generally, parking spaces are not allowed ...") up into C.2 itself
+    # ("Except as follows, parking spaces are not allowed within the first 10 /
+    # feet from a front lot line"), so the phrase now wraps across two lines.
     lines = _lines(store, TITLE33_PARKING)
-    assert lines[267].strip().startswith("33.266.120 Development Standards for Houses")
-    assert "fourplexes" in lines[271]
-    assert "parking spaces are not allowed within the first 10 feet from a front lot" in lines[302]
+    assert lines[271].strip().startswith("33.266.120 Development Standards for Houses")
+    assert "fourplexes" in lines[275]
+    c2 = " ".join(ln.strip() for ln in lines[308:310])
+    assert "parking spaces are not allowed within the first 10 feet from a front lot" in c2
 
     for zone in TITLE33_ZONES:
         held = county.zones[zone].values["parking_street_setback_ft"]
@@ -138,14 +144,16 @@ def test_the_pockets_read_120_for_the_rectangle_and_the_drive(
     The aisle is NOT here: 120 states none, and since 2026-11-09 the pockets
     take Steph's 20 ft (below), as Portland does.
     """
+    # 2026-11-10 (a): line pins re-pointed onto the 11/1/26 reprint (RICAP 11, FOLLOWUPS 165):
+    # same words, new lines (33.266.120 now runs L272-L361).
     lines = _lines(store, TITLE33_PARKING)
-    assert "A parking space must be at least 9 feet by 18 feet." in lines[317]
-    assert "The minimum driveway width on private property is 9 feet." in lines[318]
-    assert "Vehicle area is prohibited between the primary structure and the street" in lines[281]
-    assert "No more than 40 percent of the land area between the front lot line and the" in lines[293]
-    assert "If the lot abuts an alley, all parking and vehicle access to the site" in lines[312]
-    assert "except for residential vehicle" in lines[385]
-    section_120 = " ".join(lines[267:348]).lower()
+    assert "A parking space must be at least 9 feet by 18 feet." in lines[330]
+    assert "The minimum driveway width on private property is 9 feet." in lines[331]
+    assert "Vehicle area is prohibited between the primary structure and the street" in lines[285]
+    assert "No more than 40 percent of the land area between the front lot line and the" in lines[300]
+    assert "If the lot abuts an alley, all parking and vehicle access to the site" in lines[325]
+    assert "except for residential vehicle" in lines[398]
+    section_120 = " ".join(lines[271:361]).lower()
     assert "aisle" not in section_120
 
     for zone in TITLE33_ZONES:
@@ -170,10 +178,12 @@ def test_the_pockets_owe_table_110_4s_outdoor_area_per_lot(
     county: Layer, store: ProvenanceStore, corpus: RuleSet
 ) -> None:
     """250 square feet and a 12-foot square, per lot, RF through R5."""
+    # 2026-11-10 (a): line pins re-pointed onto the 11/1/26 reprint (RICAP 11, FOLLOWUPS 165):
+    # L435/L471/L903 -> L426/L462/L859, same words.
     lines = _lines(store, f"{COUNTY}/33.110.txt")
-    assert lines[434].split()[:6] == ["Standard", "RF", "R20", "R10", "R7", "R5"]
-    assert lines[470].count("250 sq. ft.") == 5
-    assert "per lot" in lines[902]
+    assert lines[425].split()[:6] == ["Standard", "RF", "R20", "R10", "R7", "R5"]
+    assert lines[461].count("250 sq. ft.") == 5
+    assert "per lot" in lines[858]
     for zone in TITLE33_ZONES:
         got = corpus.resolve(COUNTY, zone)
         assert got.get("open_space_min_sqft") == 250
@@ -189,9 +199,11 @@ def test_a_pocket_inside_a_portland_plan_district_is_held(
     The Portland layer's lot-by-lot plan-district trace never included them,
     so the whole outline holds the lot until the districts are read for it.
     """
+    # 2026-11-10 (a): line pins re-pointed onto the 11/1/26 reprint (RICAP 11, FOLLOWUPS 165):
+    # L32/L34 -> L33/L35, same words.
     lines = _lines(store, f"{PORTLAND}/33.500.txt")
-    assert lines[31].strip().startswith("33.500.040 Relationship to Other Regulations")
-    assert "the plan district regulations control" in lines[33]
+    assert lines[32].strip().startswith("33.500.040 Relationship to Other Regulations")
+    assert "the plan district regulations control" in lines[34]
 
     area = county.drawn_areas["plan_district_unmeasured"]
     assert area.condition == "pdx_plan_district_unmeasured"
@@ -211,14 +223,19 @@ def test_the_pockets_take_stephs_portland_parking_rulings(
     The court is drawn on a 20 ft aisle (2026-09-30-portland-aisle-20ft, Table
     266-4 at 90 degrees) and an alley-fed plan backs out into the alley with
     20 ft of room (2026-09-13-portland-alley-is-aisle, 33.266.130.F.1.b(2)),
-    the same values the Portland layer holds. RF keeps the county's chapter.
+    the same values the Portland layer holds. RF is on Title 33 too since
+    2026-11-09-rf-is-farm-land, but outside this ruling's scope.
     """
+    # 2026-11-10 (a): line pins re-pointed onto the 11/1/26 reprint (RICAP 11, FOLLOWUPS 165):
+    # L516/L525/L485-L486 -> L530/L539/L499-L500, same words; the values'
+    # quotes (L398-L399,L508-L509,L530-L532,L539 and L499-L502) were checked
+    # against the reprint on the same day.
     lines = _lines(store, TITLE33_PARKING)
-    assert lines[515].strip() == "Table 266-4"
-    row = lines[524].split()
+    assert lines[529].strip() == "Table 266-4"
+    row = lines[538].split()
     assert row[0] == "90°" and row.count("20") == 2
-    assert "vehicles back out into an alley" in lines[484]
-    assert "maneuvering area of at least 20 feet" in lines[485]
+    assert "vehicles back out into an alley" in lines[498]
+    assert "maneuvering area of at least 20 feet" in lines[499]
 
     portland = load_rules()[PORTLAND].defaults
     for zone in POCKETS:
@@ -234,8 +251,20 @@ def test_the_pockets_take_stephs_portland_parking_rulings(
             assert "Steph" in values[field].prov.cite
             assert got.get(field) == 20
 
+    # 2026-11-10: RF no longer keeps the county's chapter (25 ft, MCC 39.6565).
+    # Since rulings.yaml 2026-11-09-rf-is-farm-land (FOLLOWUPS 173, merged in
+    # rel7 after this test was written) pocket RF is on Title 33's card like the
+    # others, but the "Extend both" ruling is scoped to R5-R20, so RF's aisle is
+    # Title 33's stated none (33.266.120 names no aisle; 130.B excludes it)
+    # rather than Steph's 20 ft. RF refuses the pod at the use gate, so no
+    # colour rests on it.
+    rf_values = county.zones["RF"].values
+    for field in ("parking_aisle_one_way_ft", "parking_aisle_two_way_ft"):
+        assert rf_values[field].exempt and rf_values[field].value is None, field
+        assert rf_values[field].prov.quote.startswith(TITLE33_PARKING), field
+        assert "Steph" not in rf_values[field].prov.cite, field
     rf = corpus.resolve(COUNTY, "RF")
-    assert rf.get("parking_aisle_two_way_ft") == 25
+    assert rf.get("parking_aisle_two_way_ft") is None
     assert rf.get("parking_alley_backout_ft") is None
 
 

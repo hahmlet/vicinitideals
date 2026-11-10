@@ -2253,19 +2253,21 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266/33.266.120.txt#L20-L23"
-  # 33.266.120.C.2.a: "Generally, parking spaces are not allowed within the
-  # first 10 feet from a front lot line, and on corner lots, parking spaces
-  # are not allowed within the side street setback." Stated of SPACES, where
-  # C.1 is stated of vehicle area, so a driveway may run through the first ten
-  # feet and a stall may not stand in it.
+  # 33.266.120.C.2 (C.2.a before the 11/1/26 reprint, RICAP 11): "Except as
+  # follows, parking spaces are not allowed within the first 10 feet from a
+  # front lot line, and on corner lots, parking spaces are not allowed within
+  # the side street setback". Stated of SPACES, where C.1 is stated of vehicle
+  # area, so a driveway may run through the first ten feet and a stall may not
+  # stand in it.
   #
-  # The two exceptions at C.2.b are not encoded and neither could help: a
+  # The three exceptions at C.2.a-c are not encoded and none could help: a
   # space in a driveway BEHIND a conforming space is tandem parking, which
-  # this design does not use, and the common-green case is a plat condition
-  # nothing measures.
+  # this design does not use, the common-green case is a plat condition
+  # nothing measures, and C.2.c (new in the reprint) is a space behind an
+  # existing garage being converted to living space; the pod builds new.
   parking_street_setback_ft:
     value: 10
-    cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line
+    cite: PCC 33.266.120.C.2, parking spaces not allowed within the first 10 feet from a front lot line
     url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266/33.266.120.txt#L25-L26"
@@ -7184,6 +7186,16 @@ zones:
       value: true
       cite: PCC Table 150-1, Household Living, CI1
       quote: "or/multnomah/portland/33.150.txt#L342,L344"
+      # 2026-11-10 (rel7-pdx-tests): the plan-district hold RM1's and CI2's use
+      # values carry. This local value replaces RM1's (`wins: local`), and
+      # RM1's qualified_by went with it, so a CI1 lot inside a traced plan
+      # district (CI1 is in drawn_areas plan_district_unmeasured's zone list)
+      # was certified on the base zone alone; 33.500.040 puts the plan
+      # district above the base zone. Same hold, same text, as CI2 below.
+      qualified_by:
+        fact: pdx_plan_district_unmeasured
+        cite: PCC 33.521.220.C, 33.521.290.C, 33.536.210.B, 33.536.240.C, 33.536.280.C.2, 33.536.300.C, 33.538.220.B, 33.545.100.C, 33.550.220, 33.561.270, 33.561.300, 33.563.220, 33.595.100.B.1, 33.595.210.C, 33.595.250.C, 33.595.270.B, 33.510.200.C.3, 33.510.210.B, 33.515.210, 33.515.230, 33.515.262, 33.526.220.B, 33.526.340.C, 33.532.220, 33.532.230.C, 33.532.245, 33.555.230, 33.562.100.B, 33.562.210, 33.562.220.B, 33.562.240.E and F, 33.567.040, 33.575.110, 33.580.110 and 33.580.130, and 33.530.050 (plan districts, which control over the base zone, 33.500.040) -- parking and driveways kept off named streets and light rail, required building lines, minimum floor area ratios printed only on a map or above the pod's on the lots they reach, residential use prohibited in Hollywood Subdistrict A and the West Portland Employment Focus Area, a rear setback of a quarter of the site depth, Macadam's wall-plane and light rail setbacks, the Linnton Hillside lot-of-record rule, and Glendoveer's flag-lot standards (15 ft on every lot line, 25 ft height); and residential use held to 20 percent of a building in part of Northwest, heights printed only on a map below the pod's, walls set parallel to Sandy Boulevard, Powell Boulevard's 8 ft sound wall, South Auditorium's landscaped street edge and tree rule, Hayden Island's commercial height step and floor area rules, and Columbia South Shore's Airport Way setback and archaeology rule. Nothing measures which street the court and drive face, the building line, the lot's history, or whether a lot is a flag lot; held only on the lots drawn_areas plan_district_unmeasured traces
+        quote: "or/multnomah/portland/33.595.txt#L89,L171-L174,L393-L397,L438-L449"
     notes: 'Campus Institutional 1 as RICAP 11 left it (in force 2026-11-01, reprinted in Title 33): homes allowed, on the RM1 zone''s standards. Imported whole through `like: RM1` -- minimum lot 4,000 sq ft and 33 ft wide, setbacks 10/5/5, height 35 ft, FAR 1 to 1, coverage 50 percent, landscaping 30 percent, minimum density, outdoor area per unit, the garage-entrance band and the 1.35-per-unit parking maximum -- with RM1''s variants and RM1''s citations. None of CI1''s own Table 150-2 figures (15 ft setbacks, 75 ft height, 0.5 FAR, 25 percent landscaping) applies to a home.
 
       One CI1 sentence survives beside the import and is NOT taken: 33.150.202 (renumbered from 33.150.200) still says there is no required minimum lot size for development in the campus zones, while RM1''s 4,000 sq ft / 33 ft minimum is one of the 33.120 development standards 33.150.200 imports. The two do not say which wins. RM1''s minimum is kept because it is the reading that cannot turn a lot GREEN (ruling 2026-08-06-portland-ricap11-ci1-housing); a lot under 4,000 sq ft in CI1 is refused on it. Most CI1 land is campus-sized, so this binds few lots.

@@ -56,7 +56,9 @@ def test_the_held_map_is_the_whole_transit_classification() -> None:
     # Transportation System Plan as: A Major Transit Priority Street, Transit
     # Access Street, or Community Transit Street; or A Regional Transitway ..."
     text = (DOCS / "or/multnomah/portland/33.910.definitions.txt").read_text(encoding="utf-8").splitlines()
-    assert "Major Transit Priority Street, Transit Access Street, or Community Transit Street" in text[1378]
+    # 2026-11-10 (a): L1379 -> L1394 on the 11/1/26 reprint (FOLLOWUPS 165),
+    # the line pdx_overlays already cites; same words.
+    assert "Major Transit Priority Street, Transit Access Street, or Community Transit Street" in text[1393]
     traced = json.loads((AREAS_ROOT / pt.TRACED).read_text(encoding="utf-8"))
     loose = json.loads((AREAS_ROOT / pt.UNCLASSIFIED).read_text(encoding="utf-8"))
     assert {f["properties"]["Transit"] for f in traced["features"]} <= set(pt.CLASS_WORDS)
