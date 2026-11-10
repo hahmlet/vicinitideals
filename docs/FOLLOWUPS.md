@@ -163,6 +163,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
+179. [Claude] [Steph] [scan: YES if adopted] **End-door variant: windows needed** -- typical 15% = 9 windows + door on the 30 ft end; ~10,500 lots back; state design-standard bar being researched; Steph to decide. [file](followups/179-end-door-variant.md)
 178. [Claude] [Steph] [scan: YES] **False-green round 4 findings** -- Wood Village roof ban ~108 false greens (lane roof-ban); fg4-fixes lane; Steph: Portland 9 ft drive? narrow 20 ft streets? no-sewer lots? Tigard cornice? [file](followups/178-fg-round4-questions.md)
 177. [Claude] [Steph] [scan: YES] **Front-door ruling halves the greens** -- RULED 11-10 soften to YELLOW (design-change flag); lane door-yellow; rel6 folds into rel7. [file](followups/177-door-rule-green-loss.md)
 176. [Claude] [Steph] [scan: YES if loose] **Questions the rel7 lanes raised** -- Hillsboro alley lots / SCR-DNC / corner lots; Sandy walkway entrance; Cornelius street map; Canby fire dead-end length; Sandy + Hillsboro ordinances blocked to automated fetch; built strict meanwhile. [file](followups/176-lane-questions-1110.md)
