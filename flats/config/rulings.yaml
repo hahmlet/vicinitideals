@@ -2824,3 +2824,18 @@
     out cannot make a false GREEN. An affordability filter is a later feature
     (check in with Steph first).
   source: Steph 2026-10-19 (chat, Gresham page check)
+- id: 2026-11-09-multco-pockets-portland-parking
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: _unincorporated, zones: [R5, R7, R10, R20]}
+  question: >-
+    The Portland-administered unincorporated pockets now take Portland Title
+    33. Should Steph's Portland parking rulings (20 ft aisle; the alley is the
+    aisle with 20 ft back-out) also cover the pockets?
+  ruling: '"Extend both"'
+  effect: >-
+    In the Portland-administered pockets the court is drawn with a 20 ft aisle
+    (as 2026-09-30-portland-aisle-20ft) and an alley-fed plan treats the alley
+    as the aisle with 20 ft back-out (as 2026-09-13-portland-alley-is-aisle).
+  source: Steph 2026-11-09 (chat), ../vicinitideals-worktrees/multco-pockets.handoff.md item 1
+  encoded_in: [flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]

@@ -38,7 +38,8 @@ notes: >-
 
 
   So R20, R10, R7 and R5 carry PCC 33.266.120 at zone level, overriding every parking field in
-  `defaults`: no minimum, a 9 by 18 space, no aisle (the design's assumed floor), a 9-foot driveway,
+  `defaults`: no minimum, a 9 by 18 space, a 20-foot aisle and the alley as the aisle with 20 feet of back-out (Steph's
+  Portland rulings, extended to the pockets 2026-11-09), a 9-foot driveway,
   no vehicle area between the building and the street, 40 percent paving in front, alley access
   where there is an alley, parking spaces ten feet off the front lot line, and no perimeter buffer;
   plus Table 110-4's outdoor area, and the plan-district hold the Portland layer uses. Title 33 is
@@ -3283,25 +3284,27 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
-    # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
+    # THE AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
     # whose Table 266-4 prints aisles, excludes "residential vehicle areas
-    # subject to the standards of 33.266.120" (130.B). An absence read, so the
-    # fit assumes the design's 24 ft floor (ruling
-    # 2026-08-31-unstated-aisle-can-be-green). Steph's 20 ft "Use 20 for
-    # Portland" is scoped to the city and is not carried here.
+    # subject to the standards of 33.266.120" (130.B), so no code number binds
+    # this building. ADOPTED BY STEPH for the pockets 2026-11-09 (rulings.yaml
+    # 2026-11-09-multco-pockets-portland-parking, "Extend both"), carrying
+    # 2026-09-30-portland-aisle-20ft ("Use 20 for Portland"): twenty feet, one
+    # way and two way, Table 266-4's 90-degree row, in place of the design's
+    # 24 ft floor -- the same value and quote as the Portland layer's, from
+    # this layer's own copy of the chapter (hash-identical to Portland's).
     parking_aisle_one_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 1-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     parking_aisle_two_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 2-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
-    # D.2: one figure for both directions.
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
@@ -3338,6 +3341,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
+    # THE ALLEY AS THE AISLE (Steph 2026-11-09, "Extend both", carrying
+    # 2026-09-13-portland-alley-is-aisle): on a lot C.3 sends to the alley the
+    # row of stalls backs straight out into it, with 33.266.130.F.1.b(2)'s 20 ft
+    # from the end of each space to the far side of the alley, against the
+    # alley's MEASURED width; the partial-alley ruling (2026-09-28) is global
+    # and applies as written. No pocket lot carries an alley edge today, so
+    # this binds on no lot until one does.
+    parking_alley_backout_ft:
+      value: 20
+      cite: PCC 33.266.130.F.1.b(2), 20 ft of maneuvering from the end of each space to the opposite side of the alley, applied to the fourplex in the Portland-administered pockets by Steph's ruling 2026-11-09
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L485-L488"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
@@ -3575,25 +3591,27 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
-    # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
+    # THE AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
     # whose Table 266-4 prints aisles, excludes "residential vehicle areas
-    # subject to the standards of 33.266.120" (130.B). An absence read, so the
-    # fit assumes the design's 24 ft floor (ruling
-    # 2026-08-31-unstated-aisle-can-be-green). Steph's 20 ft "Use 20 for
-    # Portland" is scoped to the city and is not carried here.
+    # subject to the standards of 33.266.120" (130.B), so no code number binds
+    # this building. ADOPTED BY STEPH for the pockets 2026-11-09 (rulings.yaml
+    # 2026-11-09-multco-pockets-portland-parking, "Extend both"), carrying
+    # 2026-09-30-portland-aisle-20ft ("Use 20 for Portland"): twenty feet, one
+    # way and two way, Table 266-4's 90-degree row, in place of the design's
+    # 24 ft floor -- the same value and quote as the Portland layer's, from
+    # this layer's own copy of the chapter (hash-identical to Portland's).
     parking_aisle_one_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 1-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     parking_aisle_two_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 2-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
-    # D.2: one figure for both directions.
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
@@ -3630,6 +3648,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
+    # THE ALLEY AS THE AISLE (Steph 2026-11-09, "Extend both", carrying
+    # 2026-09-13-portland-alley-is-aisle): on a lot C.3 sends to the alley the
+    # row of stalls backs straight out into it, with 33.266.130.F.1.b(2)'s 20 ft
+    # from the end of each space to the far side of the alley, against the
+    # alley's MEASURED width; the partial-alley ruling (2026-09-28) is global
+    # and applies as written. No pocket lot carries an alley edge today, so
+    # this binds on no lot until one does.
+    parking_alley_backout_ft:
+      value: 20
+      cite: PCC 33.266.130.F.1.b(2), 20 ft of maneuvering from the end of each space to the opposite side of the alley, applied to the fourplex in the Portland-administered pockets by Steph's ruling 2026-11-09
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L485-L488"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
@@ -3942,25 +3973,27 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
-    # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
+    # THE AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
     # whose Table 266-4 prints aisles, excludes "residential vehicle areas
-    # subject to the standards of 33.266.120" (130.B). An absence read, so the
-    # fit assumes the design's 24 ft floor (ruling
-    # 2026-08-31-unstated-aisle-can-be-green). Steph's 20 ft "Use 20 for
-    # Portland" is scoped to the city and is not carried here.
+    # subject to the standards of 33.266.120" (130.B), so no code number binds
+    # this building. ADOPTED BY STEPH for the pockets 2026-11-09 (rulings.yaml
+    # 2026-11-09-multco-pockets-portland-parking, "Extend both"), carrying
+    # 2026-09-30-portland-aisle-20ft ("Use 20 for Portland"): twenty feet, one
+    # way and two way, Table 266-4's 90-degree row, in place of the design's
+    # 24 ft floor -- the same value and quote as the Portland layer's, from
+    # this layer's own copy of the chapter (hash-identical to Portland's).
     parking_aisle_one_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 1-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     parking_aisle_two_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 2-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
-    # D.2: one figure for both directions.
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
@@ -3997,6 +4030,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
+    # THE ALLEY AS THE AISLE (Steph 2026-11-09, "Extend both", carrying
+    # 2026-09-13-portland-alley-is-aisle): on a lot C.3 sends to the alley the
+    # row of stalls backs straight out into it, with 33.266.130.F.1.b(2)'s 20 ft
+    # from the end of each space to the far side of the alley, against the
+    # alley's MEASURED width; the partial-alley ruling (2026-09-28) is global
+    # and applies as written. No pocket lot carries an alley edge today, so
+    # this binds on no lot until one does.
+    parking_alley_backout_ft:
+      value: 20
+      cite: PCC 33.266.130.F.1.b(2), 20 ft of maneuvering from the end of each space to the opposite side of the alley, applied to the fourplex in the Portland-administered pockets by Steph's ruling 2026-11-09
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L485-L488"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
@@ -4283,25 +4329,27 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L318"
-    # NO AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
+    # THE AISLE. 33.266.120 (L268-L348) never uses the word, and 33.266.130,
     # whose Table 266-4 prints aisles, excludes "residential vehicle areas
-    # subject to the standards of 33.266.120" (130.B). An absence read, so the
-    # fit assumes the design's 24 ft floor (ruling
-    # 2026-08-31-unstated-aisle-can-be-green). Steph's 20 ft "Use 20 for
-    # Portland" is scoped to the city and is not carried here.
+    # subject to the standards of 33.266.120" (130.B), so no code number binds
+    # this building. ADOPTED BY STEPH for the pockets 2026-11-09 (rulings.yaml
+    # 2026-11-09-multco-pockets-portland-parking, "Extend both"), carrying
+    # 2026-09-30-portland-aisle-20ft ("Use 20 for Portland"): twenty feet, one
+    # way and two way, Table 266-4's 90-degree row, in place of the design's
+    # 24 ft floor -- the same value and quote as the Portland layer's, from
+    # this layer's own copy of the chapter (hash-identical to Portland's).
     parking_aisle_one_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 1-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     parking_aisle_two_way_ft:
-      exempt: true
-      cite: PCC 33.266.120 states no aisle for this building; 33.266.130.B excludes it from Table 266-4
+      value: 20
+      cite: PCC Table 266-4 (33.266.130), 90 degrees, 2-way aisle; adopted for the fourplex in the Portland-administered pockets by Steph 2026-11-09 (33.266.120 states no aisle)
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
-      quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L317-L319,L385-L386"
-    # D.2: one figure for both directions.
+      quote: "or/multnomah/_unincorporated/33.266.txt#L385-L386,L489-L490,L516-L518,L525"
     driveway_min_width_one_way_ft:
       value: 9
       cite: PCC 33.266.120.D.2, minimum driveway width on private property
@@ -4338,6 +4386,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L268,L271-L273,L313-L314"
+    # THE ALLEY AS THE AISLE (Steph 2026-11-09, "Extend both", carrying
+    # 2026-09-13-portland-alley-is-aisle): on a lot C.3 sends to the alley the
+    # row of stalls backs straight out into it, with 33.266.130.F.1.b(2)'s 20 ft
+    # from the end of each space to the far side of the alley, against the
+    # alley's MEASURED width; the partial-alley ruling (2026-09-28) is global
+    # and applies as written. No pocket lot carries an alley edge today, so
+    # this binds on no lot until one does.
+    parking_alley_backout_ft:
+      value: 20
+      cite: PCC 33.266.130.F.1.b(2), 20 ft of maneuvering from the end of each space to the opposite side of the alley, applied to the fourplex in the Portland-administered pockets by Steph's ruling 2026-11-09
+      url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+      retrieved: '2026-09-01'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L485-L488"
     # C.1.a(1): behind the front and side-street building lines is allowed, so the interior side yard is open.
     parking_side_prohibited:
       exempt: true
