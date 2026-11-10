@@ -1,5 +1,5 @@
 {
-  "digest": "6a63904b4b7373310c8e447a193f37722d0b18f5f48dd75d005acfd63a1906cc",
+  "digest": "0c02fc1a287a997c83ac1e12a09859bbdc4e60acf6f1790b771dfde46fbe7516",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -1837,8 +1837,17 @@
       "gaps": []
     },
     "or/washington/cornelius": {
-      "section_unread": 4,
-      "misattributed": [],
+      "section_unread": 8,
+      "misattributed": [
+        {
+          "zone": "GMU",
+          "field": "quadplex_allowed [inside_mapped_use_area+unit_lots]",
+          "claimed": "18.75.020 18.75.045 18.75.045",
+          "found": "18.75.020 18.75.040",
+          "quote": "or/washington/cornelius/ord.2026-06.18.75.txt#L24,L47-L48,L99-L107",
+          "kind": "header_or_xref"
+        }
+      ],
       "label": "Cornelius",
       "counts": {},
       "gaps": []

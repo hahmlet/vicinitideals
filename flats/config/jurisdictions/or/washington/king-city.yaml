@@ -162,6 +162,16 @@ code:
   # Table 16.114-4 glues its note markers to the figures: "1,50016" is
   # 1,500 with note 16, "2017" is 20 with note 17 (L233-L234).
   glued_markers: true
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): stored 2026-11-05 with no
+# `code:` entry, so the corpus watch never re-fetched it. Stored from the
+# layout extraction; these markers reproduce it byte for byte from the
+# current PDF.
+- id: "kcc.16.124.landscaping"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.124 - Landscaping"
+  start: "Chapter 16.124                                  16.124.020    Administration."
+  end: "16.132.020"
+  extraction: layout
 - id: "kcc.16.132.parking"
   url: https://api.municode.com/PublicationPdfDownload/3913
   title: "KCMC Chapter 16.132 - Parking and Loading"

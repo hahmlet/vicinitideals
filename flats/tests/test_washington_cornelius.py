@@ -23,11 +23,12 @@ against the grain of a quick look, so a later edit has to argue with it.
 - **A corner lot is two streets meeting at 135 degrees or less**, alleys not
   counted, and a private drive is not a street.
 - **GMU opens only the townhouse path, and only behind the figure**
-  (Steph, 2026-10-01). The fourplex on one lot stays refused; townhouses
-  are "only permitted within subdistrict A" of Figure 18.75.065-1, an
-  image no layer places a lot in, so the path is held behind
+  (Steph, 2026-10-01). The fourplex on one lot stays refused. Since
+  Ordinance 2026-06 (in force 2026-09-08, read 2026-11-09) ground-floor
+  homes stand in subdistricts A and B of Figure 18.75.045-1, an image no
+  layer places a lot in, so the path is held behind
   ``inside_mapped_use_area`` and never comes back green. Its density floor
-  is 18 per net acre on 18.195's 43,560 sq ft acre: 9,680 sq ft for four.
+  is 14 an acre, on the lot as drawn: 12,446 sq ft for four.
 - **R-7 and R-10 carry a sun warning, not a sun hold** (Steph, 2026-10-01,
   "Green with a warning"): ``solar_shade_limit`` (18.160) puts
   ``solar_shade`` in the screening's warnings and never moves the colour,
@@ -119,26 +120,33 @@ def test_gmu_opens_only_the_townhouse_path_and_only_behind_the_figure(
     cornelius: Layer,
 ) -> None:
     """Steph, 2026-10-01: four homes on one lot stays no (the fourplex is not
-    multi-family), and the townhouse row opens -- but only "within subdistrict
-    A", drawn on Figure 18.75.065-1, which no map layer carries. Behind
+    multi-family), and the townhouse row opens -- but only on ground-floor
+    residential land, subdistricts A and B of Figure 18.75.045-1 since
+    Ordinance 2026-06, which no map layer carries. Behind
     `inside_mapped_use_area`, which nothing measures, so never GREEN."""
     held = cornelius.zones["GMU"].values
     use = held["quadplex_allowed"]
+    assert "ord.2026-06.18.75.txt" in use.prov.quote
     (townhouse,) = use.variants
     assert townhouse.value is True
     assert set(townhouse.when) == {"unit_lots", "inside_mapped_use_area"}
     assert condition("inside_mapped_use_area").assume is None
     text = _text(townhouse.prov.quote)
-    assert "Single-family attached dwelling units, subject to CMC" in text
-    assert "shall only be permitted within subdistrict A" in text
+    assert "Single-family attached dwelling units" in text
+    assert "In subdistrict A, up to 100 percent" in text
     assert "In subdistrict C, no ground floor residential uses are permitted" in text
-    # The per-child-lot standards are on the unit-lot path.
-    for name, value in (("min_lot_sqft", 2000), ("min_lot_width_ft", 20)):
-        assert held[name].exempt, name
-        (lots,) = held[name].variants
-        assert (lots.value, lots.when) == (value, ("unit_lots",)), name
-    assert held["max_height_ft"].value == 35
+    # No minimum lot size on any path; the 20 ft width is the townhouse lot's.
+    assert held["min_lot_sqft"].exempt
+    assert held["min_lot_sqft"].variants == ()
+    assert held["min_lot_width_ft"].exempt
+    (lots,) = held["min_lot_width_ft"].variants
+    assert (lots.value, lots.when) == (20, ("unit_lots",))
+    assert held["max_height_ft"].value == 45
+    assert held["max_height_stories"].value == 3
     assert held["setback_front_ft"].value == 5
+    assert held["setback_front_max_ft"].value == 10
+    assert held["min_landscaped_pct"].value == 10
+    assert held["parking_front_prohibited"].value is True
     assert held["setback_rear_ft"].value == 10
     assert held["setback_side_ft"].value == 5
     # Owed, with the reason in the layer: the street side yard, lot depth.
@@ -147,18 +155,16 @@ def test_gmu_opens_only_the_townhouse_path_and_only_behind_the_figure(
 
 
 def test_gmu_density_is_per_the_43560_acre(cornelius: Layer) -> None:
-    """GMU prints no net acre of its own, so it is 18.195's net acreage on the
-    43,560 sq ft "Acre, gross" -- not the 32,670 R-7 and A-2 print. Four
-    homes at 18 an acre may spread over no more than 9,680 net sq ft."""
+    """Ordinance 2026-06 (2026-11-09 read): townhouses "at a density of at
+    least 14 dwelling units per acre" -- per acre, not the struck "per net
+    acre", so the floor is taken on the lot as drawn, the harder area. Four
+    homes at 14 an acre may spread over no more than 12,446 sq ft."""
     floor = cornelius.zones["GMU"].values["min_density_du_per_acre"]
-    assert floor.value == 18
+    assert floor.value == 14
     assert floor.acre_sqft is None
-    assert floor.measured_on == "net_developable_area"
-    assert "Minimum density for ground-floor residential uses is 18 units per net acre" in (
-        _text(floor.prov.quote)
-    )
-    assert "means 43,560 square feet" in _text(floor.measured_on_quote)
-    assert 4 / floor.value * 43560 == pytest.approx(9680)
+    assert floor.measured_on is None
+    assert "at a density of at least 14 dwelling units" in _text(floor.prov.quote)
+    assert 4 / floor.value * 43560 == pytest.approx(12445.7, abs=0.1)
     assert cornelius.zones["GMU"].values["max_density_du_per_acre"].exempt
 
 
