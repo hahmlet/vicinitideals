@@ -638,7 +638,8 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
-    # "Minimum Lot width at front property line": the front line, never the\nstreets added together (FOLLOWUPS 175).
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
@@ -731,7 +732,8 @@ zones:
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
       via: "or/washington/sherwood/16.40/16.40.050.txt#L12"
-    # "Minimum Lot width at front property line": the front line, never the\nstreets added together (FOLLOWUPS 175).
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
@@ -818,7 +820,8 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
-    # "Minimum Lot width at front property line": the front line, never the\nstreets added together (FOLLOWUPS 175).
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
@@ -899,7 +902,8 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
-    # "Minimum Lot width at front property line": the front line, never the\nstreets added together (FOLLOWUPS 175).
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
@@ -980,7 +984,8 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
-    # "Minimum Lot width at front property line": the front line, never the\nstreets added together (FOLLOWUPS 175).
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
@@ -1060,7 +1065,8 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
-    # "Minimum Lot width at front property line": the front line, never the\nstreets added together (FOLLOWUPS 175).
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"

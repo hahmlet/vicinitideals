@@ -518,7 +518,8 @@ zones:
       value: 35
       cite: Durham Development Code 3.1.4, maximum building height 35 feet above average grade
       quote: "or/washington/durham/3/3.1.txt#L16-L17"
-    # 3.1.5 "The minimum lot frontage on a public or private street": owed on one\nstreet, any of them (FOLLOWUPS 175; the Portland 33.120.206 reading).
+    # 3.1.5 "The minimum lot frontage on a public or private street": owed on one
+    # street, any of them (FOLLOWUPS 175; the Portland 33.120.206 reading).
     min_frontage_one_street:
       value: true
       quote: "or/washington/durham/3/3.1.txt#L19"

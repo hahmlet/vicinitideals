@@ -2341,7 +2341,9 @@ zones:
       value: 30
       cite: MCC 39.4625(B)
       quote: "or/multnomah/_unincorporated/39/39.4625.txt#L9-L10"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4625.txt#L8,L13"
@@ -2528,7 +2530,9 @@ zones:
           cite: MCC 39.4990(H)
           quote: "or/multnomah/_unincorporated/39/39.4990.txt#L11"
           via: "or/multnomah/_unincorporated/39.mr-4.txt#L8-L11"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4990.txt#L10"
@@ -2748,7 +2752,9 @@ zones:
           cite: MCC 39.4830(F)
           quote: "or/multnomah/_unincorporated/39/39.4830.txt#L11"
           via: "or/multnomah/_unincorporated/39.lr-5.txt#L9-L12"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4830.txt#L10"
@@ -2915,7 +2921,9 @@ zones:
       cite: MCC 39.4878(D)
       quote: "or/multnomah/_unincorporated/39/39.4878.txt#L7"
       via: "or/multnomah/_unincorporated/39.lr-10.txt#L9-L12"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4878.txt#L6"
@@ -3101,7 +3109,9 @@ zones:
       cite: MCC 39.4245(C)
       quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7-L9"
       via: "or/multnomah/_unincorporated/39.efu.txt#L28-L31"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4245.txt#L7,L13"
@@ -4802,7 +4812,9 @@ zones:
       value: 60
       quote: "or/multnomah/_unincorporated/39/39.4862.txt#L10"
       via: "or/multnomah/_unincorporated/39.lr-7.txt#L9-L12"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4862.txt#L9"
@@ -4976,7 +4988,9 @@ zones:
       cite: MCC 39.4375(C)
       quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10-L12"
       via: "or/multnomah/_unincorporated/39.rural-residential.txt#L15-L18"
-    # "Minimum Front Lot Line Length": the front line, never the streets added\ntogether; a corner lot's front is its shortest street line (39.2000,\nfront_lot_line_corner) (FOLLOWUPS 175).
+    # "Minimum Front Lot Line Length": the front line, never the streets added
+    # together; a corner lot's front is its shortest street line (39.2000,
+    # front_lot_line_corner) (FOLLOWUPS 175).
     min_frontage_line:
       value: front
       quote: "or/multnomah/_unincorporated/39/39.4375.txt#L10,L15"
