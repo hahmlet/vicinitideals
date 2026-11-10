@@ -149,6 +149,9 @@ the full one.)
 162. [Claude] [scan: YES -- toward red, false-GREEN risk] **Tigard entrance rules outside TMU** -- other mixed-use zones + RES-A..E have no entrance rule encoded; two chapters print 45 deg, rowhouse chapter (18.280) requires doors to face the street; lane DONE d35ef11a: 0 moves (zones already held parallel to street; rule now encoded required), rides rel7. [file](followups/162-tigard-entrances.md)
 163. [Claude] [scan: YES -- toward green] **Fire retry at the drawing's angle** -- retry lists placements at the fit's angle even when the drawing stands at another; rescues fire REDs; lane DONE 7ae34393 (drawn angle first, then fit angle), rides rel7; every gain read. [file](followups/163-retry-drawing-angle.md)
 164. [Claude] [scan: YES -- toward red, possible false GREEN] **Turned pod not held back where no street direction was measured** -- in 'parallel to the street' zones; found by tigard-entrances; size it from the rel6 bound output (GREENs with no street bearing in parallel-required zones). [file](followups/164-no-bearing-parallel.md)
+165. [Claude] [scan: YES -- both ways] **Portland stored code is dated 1/1/25; RICAP 11 parking amendments in force** -- found by multco-pockets; lane pdx-drift BUILDING off rel6 (rides rel7). [file](followups/165-portland-drift.md)
+166. [Claude] [scan: YES -- both ways] **Code drift sweep: every stored city code vs its current online version** -- lanes drift-wash, drift-clack, drift-multco BUILDING off rel6 (ride rel7). [file](followups/166-drift-sweep.md)
+167. [Claude] [scan: YES] **Small fixes off rel6** -- Sandy entrance 'unclear' walkway alternative; Gresham duplicate allow_thin key; RX Map 120-2 broad lot-of-record relief; Portland 33.537 stored URL repoint; lane small-fixes-7 BUILDING. [file](followups/167-small-fixes-7.md)
 
 ## 2. Waiting on Steph
 
