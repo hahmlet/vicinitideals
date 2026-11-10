@@ -33,3 +33,10 @@ NEXT (after rel6 bound frees 137): measure Portland curb-to-lot-line offsets on 
 Explained all questions to Steph in plain English 2026-11-09; recommendations: build corners; Portland driveway = warning
 (yellow+note); curb = middle way; West Linn = single-family; Hillsboro/Gladstone via Steph's Chrome; Milwaukie email not buy;
 extend Portland aisle + alley rulings to Multnomah pockets.
+
+Prep readings 2026-11-09 (../vicinitideals-worktrees/sight-readings.md): Tigard 18.930 bars buildings (30/35 ft);
+King City unclear (conservative default when built: bars); Tualatin Table 75-1 200 ft literally reaches the pod drive
+(conservative default: applies; needs cross-street class); Troutdale 110x15 curb, Fairview 15x15 curb, both bar buildings;
+Clackamas County sight DISTANCE wedge (280/240/205 ft at 25 mph, 14.5 ft back) -> geometry check; Happy Valley 25 ft legs
++ 50 ft drive from corner; Cornelius 15 ft curb + drive 25/100 ft citywide; Beaverton 2025 EDM Ch.2 needs a browser save;
+Oregon City 10.32 + Wood Village blocked.
