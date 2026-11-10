@@ -1,0 +1,227 @@
+210.21 Driveways
+A. Design standards.  Driveways shall be designed and constructed to City standards per this manual and the
+appropriate Standard Drawings.
+B. Elevations of Driveways.  Driveways and private property access providing primary emergency vehicle access
+to habitable structures shall be designed with travel lanes at or above the 25-year flood elevation but not
+lower than six (6) inches below the 100-year flood elevation.
+C. Corner Clearance for Driveways.  Corner clearance shall be based on an intersection analysis and shall
+conform to the following minimum distances:
+FOR LOTS FRONTING ON:
+DESIGN
+SPEED
+(MILES PER HOUR)
+MINIMUM DISTANCE BETWEEN FACE OF CURB
+OF INTERSECTING STREET AND NEARSIDE EDGE
+OF DRIVEWAY (FEET)
+Arterials and Collectors 25 150
+30 180
+35 180
+40 200
+45 230
+50 350
+Neighborhood Routes 50
+Local Streets 25
+Note:  Street Functional Classifications are identified in the Comprehensive Plan Transportation Element Figure
+6.4.
+~ Beaverton
+0 R [ G O N
+City of Beaverton Engineering Design Manual
+Chapter 2 – Streets 22
+D.  If the minimum standards in this subsection would prohibit access to the site, a driveway with restricted turn
+movements acceptable to the City Traffic Engineer may be approved.
+E. Minimum driveway spacing between driveways on arterials and collectors shall also conform to the corner
+clearance standards of this section.
+F.   Driveway Approaches
+The City Traffic Engineer has the authority to limit access and access locations.  Access to streets and highways
+under Washington County or State of Oregon jurisdiction must be formally approved by those entities at the
+applicant's initiative and expense.  The following specifies the minimum requirements for driveways:
+1. Driveways shall be constructed to City standards per this manual and the appropriate standard
+drawing.
+2. Driveways shall not be permitted in conflict with existing or proposed non-access reserve strips.
+3. Concentrated surface runoff shall not be allowed to flow over commercial driveways or sidewalks
+into the street.
+4. Driveway approaches shall meet the minimum intersection sight distance requirements for street
+intersections.
+G.   Driveway Grades.
+1. The minimum and maximum longitudinal grades for driveways shall be as shown on the Standard
+Drawings for driveways.
+2. The maximum longitudinal grades shown on the Standard Drawings do not apply to driveways less
+than 20 feet in length and driveways behind curbtight sidewalks.  Such driveways, including their
+aprons, shall be designed individually by qualified designers to ensure that the slope of each
+driveway is not so steep as to prohibit adequate undercarriage clearance for any conventional
+unmodified passenger vehicle using the driveway.
+3. On common residential driveways (i.e., driveways serving two or more single family residential tax
+lots or condominium units), the maximum longitudinal slope of the shared driveway within its
+intersections with each individual driveway shall be no steeper than 5 percent.
+4. The finished grade elevations of common driveways in residential areas shall be designed at or above
+the 25-year flood elevation but not lower than 6 inches below the 100-year flood elevation.
+H.   Driveway Width.
+1. Residential Driveway Width.
+a. For a residential driveway serving 1 to 3 single family residential units, the required hard
+surface shall meet the unobstructed width as shown in the Standard Drawings. It shall be
+the applicant's responsibility to determine the correct width of the driveway consistent
+with these minimum and maximum widths and with the dimensions of the parking area
+or garage served by the driveway.
+~ Beaverton
+0 R [ G O N
+City of Beaverton Engineering Design Manual
+Chapter 2 – Streets 23
+b. For a residential driveway serving four or more single-family residential units, the required
+hard surface, not including the width of the driveway apron in the right-of-way, shall meet
+the unobstructed width as shown in the Standard Drawings.
+2.  Commercial Driveway Width.
+a. For a commercial driveway, the required hard surface shall have a minimum and maximum
+unobstructed width as shown in the Standard Drawings. See standard drawing 210 for
+reference.
+b. If the driveway will serve more than one tax lot, an easement or similar written agreement
+shall assure the following: (1) that safe access and egress is provided for each tax lot; (2)
+that maintenance of the driveway pavement to ensure safe access and egress is provided;
+and, (3) that control of storm drainage from the driveway and surrounding area is provided
+to protect property that is contiguous to the driveway.
+The easement or agreement shall be submitted to the City Engineer for approval.  Once
+approved, the maintenance easement or agreement shall be recorded with Washington
+County and a copy of the recorded agreement or easement shall be provided to the City
+Engineer.
+I. Parking Lot Driveways and Parking Stalls.
+1.  Parking Lot Driveway Width.  For a parking lot driveway, the required hard surface shall have a
+minimum and maximum unobstructed width as shown in the Standard Drawings.
+2. Driveway Location.  Parking lot driveways shall be located not closer than ten (10) feet to a side lot
+line, except that driveways serving two adjacent properties may be provided at the common lot line.
+3. Parking Stall Location.  On parking lot driveways that connect to a public or private street, there shall
+be no parking stalls within 20 feet of the street right-of-way or within 20 feet of the back of sidewalk
+on a private street.
+Figure 210.4 – Parking Stall Location
+111 lJ
+Parking Lot A isle
+Parking
+Stalls
+'
+20ft Parking 20n
+mill
+~ Beaverton
+0 R [ G O N
+- ______ _l
+--..-.:: Right of Way
+Lot
+Drivew ay min
+- - - _l R ight ofwayY-
+Public Street
+City of Beaverton Engineering Design Manual
+Chapter 2 – Streets 24
+J. Joint-use Agreement for Common Driveways.
+The applicant seeking a permit for a common driveway shall provide documents defining ownership, use rights,
+and allocation of space (“lanes”) for vehicles and pedestrians using the driveway.
+1. The documents shall provide perpetual joint-use rights for each of the tax lots served by the
+driveway in a joint-use agreement or similar document and shall include a drawing of the driveway,
+lot lines, and adjacent buildings drawn to scale.
+2. If a driveway serving more than one tax lot is within a development for which a plat is not required,
+the driveway may be allowed only when provision of perpetual joint-use rights for each tax lot served
+by the driveway is demonstrated in writing by the applicant in a joint-use agreement or similar
+document with the accompanying drawing, and the documents shall be submitted to the City
+Engineer at the time of application for a Site Development Permit or Right-of-Way Permit.   Once
+the agreement is approved, the applicant shall have the agreement recorded with Washington
+County and shall provide a copy of the recorded agreement to the City Engineer.
+3. If the driveway is within a development requiring a plat, the documents shall include the information
+and accompanying drawing and shall be submitted with the plat for review.
+K. Maintenance Agreement for Common Driveways
+1. The applicant seeking a permit for a common driveway shall provide documents defining ownership,
+use rights, and rights and allocation of liability for maintenance and for damages arising out of
+neglect.  The documents shall provide for perpetual maintenance of the driveway in a joint-use
+agreement or similar document and shall include a drawing of the driveway, lot lines, and adjacent
+buildings drawn to scale.
+2. If a driveway serving more than one tax lot is within a development for which a plat is not required,
+the driveway may be allowed only if the provision of perpetual maintenance of the driveway is
+demonstrated in writing by the applicant in a joint-use agreement or similar document with the
+accompanying drawing.  These documents shall be submitted to the City Engineer at the time of
+application for a Site Development Permit or Right-of-Way Permit.  Once the agreement is approved,
+the applicant shall have the agreement recorded with Washington County and shall provide a copy
+of the recorded agreement to the City Engineer.
+3. If the driveway is within a development requiring a plat, the documents shall include the information
+and accompanying drawing and shall be submitted with the plat for review.
+4. If a driveway serving two or more multi-family residential tax lots, three or more commercial or
+industrial tax lots, or four or more single family residential tax lots or condominiums units is within
+a development for which a plat is not required, the driveway may be allowed only when the provision
+by the property owners for perpetual driveway maintenance, safe access and egress, and safe and
+controlled conveyance of storm drainage from the common driveways connected to individual
+driveways and adjacent areas is demonstrated in writing in a maintenance agreement or other
+approved document provided by the applicant.  The document shall ensure perpetual maintenance
+of the entire driveway.  The document shall define ownership of the driveway, use rights, and
+allocation of liability among the owners of the property for maintenance, and shall include a drawing
+of the driveway(s), lot lines and adjacent buildings drawn to scale.  The agreement shall be submitted
+to the City Engineer at the time of application for a Site Development Permit or Right-of-Way Permit.
+Once the maintenance agreement is approved, the applicant shall have the maintenance agreement
+recorded with Washington County and shall provide a copy of the recorded agreement to the City
+Engineer prior to approval of the Site Development Permit.
+~ Beaverton
+0 R [ G O N
+City of Beaverton Engineering Design Manual
+Chapter 2 – Streets 25
+5. If the driveway is within a development requiring a plat, the maintenance documents, including the
+information prescribed above, and the accompanying drawings(s) shall be submitted with the plat
+for review.
+M. Documentation to be provided by the applicant.
+As a minimum, the applicant shall submit the following documentation to the City Engineer for approval of
+common driveways prior to approval of the Site Development Permit for the proposed development:
+1. A joint-use agreement or crossover easement as described above.
+2. A maintenance agreement or similar dedication as described above.
+3. A description of the applicant’s physical provisions for driveway maintenance, safe access and
+egress, and conveyance of storm drainage from the common driveways in the design of the
+development, including but not limited to the following:
+a. The type(s) of maintenance to be performed on the common driveways to ensure the safe
+conveyance of storm drainage, prevention of the transport of soil and other erodible
+materials adjacent to and deposited on the driveways to the storm drainage system,
+unobstructed access and egress for private utility and other service vehicles and emergency
+vehicles, unobstructed sight clearance at intersections, and free drainage of the driveways
+in the proposed development in conformance with all other storm drainage requirements
+of this Manual.
+b. The proposed finished grades of the common driveways and adjacent areas.
+c. Typical driveway cross-sections for the common driveways.
+d. The method(s) to be used for ensuring proper drainage of the common driveways,
+connected individual driveways, and adjacent unpaved areas, including but not limited to
+site grading, the layout of the public and private storm water collection system serving the
+common driveways and parking lots, related easements, and point(s) of connection of the
+private system to the public storm drainage system.
+e. Applicants are hereby advised that the information required herein is not for Plumbing
+Code approval, but for review of the coordination of on-site grading and drainage.
+f. The name or names of the entity or entities responsible for driveway maintenance, safe
+access and egress, and controlled conveyance of storm drainage from the driveway and
+surrounding area.
+N. Driveway and Parking Lot Pavement Design and Construction
+1. Applicability.  The requirements of this subsection apply to new driveways, new parking lots, and to
+reconstruction of existing driveways and parking lots in which the reconstruction involves
+installation of new curb.
+2. Pavement Standards.  Pavements for driveways, parking lots, and parking maneuvering areas shall
+be constructed to the following minimum standards:
+a. Pavement Strength.  The pavement structural section submitted by the Engineer shall be
+designed to support an 80,000-pound truck in all local weather conditions and ground
+conditions.
+~ Beaverton
+0 R [ G O N
+City of Beaverton Engineering Design Manual
+Chapter 2 – Streets 26
+b. Subgrade.  The parking surface shall be placed on a stable well-compacted subgrade.
+c. Pavement Thicknesses.
+i. Residential Areas.  On private property, in all residential areas, the minimum
+pavement section shall be 2-1/2 inches of asphalt over 4 inches of 1 ½ inch – 0 inch
+compacted crushed rock aggregate base course or shall be 4 inches of Portland
+cement concrete over 2 inches of 1 ½ inch – 0 inch crushed rock aggregate base
+course over subgrade compacted to 95 percent AASHTO T-99. 3/4 inch – 0 inch
+compacted crushed rock aggregate base course is an acceptable alternative if 1 ½
+inch – 0 inch is not available.
+ii. Commercial and Industrial Areas.  On private property, in commercial and industrial
+areas, the minimum pavement section shall be 3 inches of asphalt over 2 inches of
+compacted ¾ inch – 0 inch compacted crushed rock aggregate leveling course over 8
+inches of compacted 1 ½ inch – 0 inch crushed rock aggregate base course or shall be
+5 inches of Portland cement concrete over 2 inches of compacted 1 ½ inch – 0 inch
+crushed rock aggregate base course over subgrade compacted to 95 percent AASHTO
+T-99.  3/4 inch – 0 inch compacted crushed rock aggregate base course is an
+acceptable alternative if 1 ½ inch – 0 inch is not available.
+3. All required parking lot spaces shall be striped.  Compact spaces shall be identified by pavement
+markings using the word “Compact.”  Letter size for pavement marking shall be minimum 12-inch
+high letters.  A sign may be used to supplement the pavement marking.
+4. Parking spaces in parking lots along the outer boundaries of a parking area, except where specifically
+prohibited, shall be designed to include a continuous curb a minimum of four (4) inches high located
+not less than six (6) feet from the property line.  The purpose of the curb is to prevent a motor vehicle
+from extending over an adjacent property line or a street right-of-way.  The curb shall be a barrier-
+type curb per the standard drawing for “Type A Replacement Curb,” except that it may be four (4)
+to six (6) inches high rather than six (6) inches high as shown in that standard drawing.

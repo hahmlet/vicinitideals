@@ -30,7 +30,8 @@
 # driveway there. Every code here offers a way out to a lot that cannot meet
 # its spacing (Washington County's interim access, CDC 501-8.5; Clackamas
 # County's "to the extent feasible", Roadway Standards 220; Tualatin's
-# variation for limited frontage, 75.030(3); Tigard's "no practical
+# variation for limited frontage, 75.030(3); Beaverton's restricted-turn
+# driveway, EDM 210.21 D; Tigard's "no practical
 # alternative", 18.920.030, carried to middle housing by OAR 660-046-0220's
 # same-access-standards rule): an engineer's call, which the flag names.
 #
@@ -249,3 +250,66 @@ jurisdictions:
         basis: right_of_way_line
         cite: Cornelius Public Works Standards 2.c.1, and 25 feet back from the right-of-way of a local street
         quote: or/washington/cornelius/pws.2.streets.txt#L4-L5
+
+  or/washington/beaverton:
+    map: street_class_beaverton
+    # FUNC_CLASS verbatim (the 2010 TSP's coded domain: 9 Local, 7
+    # Neighborhood Route, 5 Collector, 3 Arterial, 2 Principal Arterial;
+    # 1 Freeway and the Proposed 4 / 6 / 8 and 10 NA are left unnamed:
+    # unread). The map draws every existing street, local ones included,
+    # so a street it leaves out is unread (no `unlisted`).
+    #
+    # BDC 60.55.35.3.C.1 sends driveway spacing to the Engineering Design
+    # Manual (bdc.60.55.transportation.txt#L444-L446). EDM 210.21 C's
+    # table is keyed by the street the lot FRONTS ON, whatever the
+    # intersecting street's class: on arterials and collectors 150 ft at a
+    # 25 mph design speed, rising to 350 ft at 50 mph; on Neighborhood
+    # Routes 50 ft; on Local Streets 25 ft; each from the face of curb of
+    # the intersecting street to the nearside edge of the driveway. Face
+    # of curb lies inside the right-of-way, so the pass bound measures from
+    # the cross street's right-of-way line (`right_of_way_line`: a shorter
+    # distance than from the curb) and the fail bound centreline to
+    # centreline (longer): both conservative. 210.21 E spaces driveways
+    # on arterials and collectors from each other by the same figures, and
+    # no map holds driveways: those frontages are barred. Design speed is
+    # not read, so the barred figure is the table's least, 150 ft (it is
+    # not measured: a barred frontage never clears).
+    #
+    # Stored from the Chapter 2 file the city's 2019 EDM page links
+    # (PDF created 2018-11, the 2025 EDM's Chapter 2 not separately found);
+    # the newest text in hand (the 2025 EDM as amended by Res. 4954,
+    # edm-2025-complete, gitignored books) prints the same table, figures
+    # unchanged. 210.21 D's restricted-turn driveway "acceptable to the
+    # City Traffic Engineer" is the engineer's call the flag names.
+    classes:
+      '9': local
+      '7': neighborhood_route
+      '5': collector
+      '3': arterial
+      '2': arterial
+    frontage:
+      collector:
+        figure_ft: 150
+        cite: EDM 210.21 C and E, for lots fronting on arterials and collectors the minimum distance between face of curb of intersecting street and nearside edge of driveway 150 feet at a 25 mph design speed (180 to 350 feet at 30 to 50 mph); minimum driveway spacing between driveways on arterials and collectors conforms to the same standards
+        quote: or/washington/beaverton/edm.210.21.driveways.txt#L16
+        quote_also: or/washington/beaverton/edm.210.21.driveways.txt#L32-L33
+      arterial:
+        figure_ft: 150
+        cite: EDM 210.21 C and E, as for collectors (Arterials and Collectors, 150 feet at 25 mph up to 350 feet at 50 mph)
+        quote: or/washington/beaverton/edm.210.21.driveways.txt#L16-L21
+        quote_also: or/washington/beaverton/edm.210.21.driveways.txt#L32-L33
+    from_intersections:
+      - driveway_on: [neighborhood_route]
+        cross: [local, neighborhood_route, collector, arterial]
+        figure_ft: 50
+        basis: right_of_way_line
+        cite: EDM 210.21 C, for lots fronting on Neighborhood Routes the minimum distance between face of curb of intersecting street and nearside edge of driveway 50 feet
+        quote: or/washington/beaverton/edm.210.21.driveways.txt#L22
+        quote_also: or/washington/beaverton/edm.210.21.driveways.txt#L13-L15
+      - driveway_on: [local]
+        cross: [local, neighborhood_route, collector, arterial]
+        figure_ft: 25
+        basis: right_of_way_line
+        cite: EDM 210.21 C, for lots fronting on Local Streets the minimum distance between face of curb of intersecting street and nearside edge of driveway 25 feet
+        quote: or/washington/beaverton/edm.210.21.driveways.txt#L23
+        quote_also: or/washington/beaverton/edm.210.21.driveways.txt#L13-L15
