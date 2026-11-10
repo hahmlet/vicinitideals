@@ -562,7 +562,11 @@ crossrefs:
       than half a minimum road (flats.fit.fire.HALF_ROAD_FT), and a street
       less than 20 feet between its private lots is no road the truck can
       stand on: the hose walks it from where the truck can (FOLLOWUPS 168,
-      flats.fit.fire_roads; L167-L171).
+      flats.fit.fire_roads; L167-L171). One under 22 feet (the 20 feet, a
+      0.5 ft curb and a 0.5 ft strip behind it each side; fire_roads.yaml
+      narrow_row) with no paved width recorded holds a lot it alone reaches
+      YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10, rulings.yaml
+      2026-11-10-narrow-street-fire-yellow).
   "503.2.4":
     outcome: other_path
     note: Turning radii on a fire road on the site -- the screen builds none.
