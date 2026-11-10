@@ -40,3 +40,8 @@ King City unclear (conservative default when built: bars); Tualatin Table 75-1 2
 Clackamas County sight DISTANCE wedge (280/240/205 ft at 25 mph, 14.5 ft back) -> geometry check; Happy Valley 25 ft legs
 + 50 ft drive from corner; Cornelius 15 ft curb + drive 25/100 ft citywide; Beaverton 2025 EDM Ch.2 needs a browser save;
 Oregon City 10.32 + Wood Village blocked.
+
+RULED 2026-11-09 (Steph, rulings.yaml): 1 build the corner check YES; 2 Portland TRN-10.40 driveway zone = GREEN with a note
+(colour unchanged, flag); 3 curb position = middle way (green if clear at lot-line curb, red if blocked at a generous offset,
+yellow+flag between); 4 West Linn pod = single-family apex; 6 Multnomah pockets take both Portland parking rulings.
+Still open: Q5 Milwaukie (buy AASHTO / email city; hold yellow meanwhile).

@@ -2580,6 +2580,97 @@
     is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
     FOLLOWUPS 68.
   source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
+- id: 2026-11-09-sight-triangle-corner-check
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    Cities keep a clear-vision triangle at street corners (and some beside
+    driveways) where no building may stand. The screen ignores them, so a
+    townhome drawn into a corner can show GREEN where the city would refuse it.
+    Build the corner check?
+  ruling: '"YES"'
+  effect: >-
+    The corner clear-vision area is carved out of the buildable envelope before
+    the fit, per city figures (FOLLOWUPS 161). A city whose corner rule is not
+    yet read takes the conservative default (the triangle bars buildings), so
+    its corner lots near the zone are YELLOW, never GREEN, until read.
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+- id: 2026-11-09-portland-driveway-clear-zone-note
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PBOT TRN-10.40 asks for a 15 ft x 15 ft clear zone each side of a
+    residential driveway, measured from the pavement edge. It sits outside the
+    zoning code and may not be enforced against buildings. Apply it fully, as
+    a warning, or ignore it?
+  ruling: '"Green with a note"'
+  effect: >-
+    The colour is not changed by the Portland driveway clear zone: a lot whose
+    drawn building reaches into it keeps its colour and carries a flag/note
+    (check PBOT TRN-10.40 before relying on the driveway). Portland corner
+    clear vision stays right-of-way only.
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+- id: 2026-11-09-curb-position-middle-way
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    Clear-vision areas are measured from the curb or pavement edge; the maps
+    hold only property lines. Assume the curb at the lot line (worst case), a
+    normal sidewalk width, or a middle way?
+  ruling: '"Middle way"'
+  effect: >-
+    GREEN only if the lot is clear with the curb at the property line; RED only
+    if it is blocked even with a generous curb offset; anything between is
+    YELLOW with a "check where the curb is" flag. A real curb layer (e.g.
+    Portland PBOT curbs) replaces the assumption where it exists.
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+- id: 2026-11-09-west-linn-pod-single-family
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: clackamas, city: west-linn}
+  question: >-
+    West Linn starts the driveway clear-vision area at the front setback line
+    for single-family and two-family homes, but 30 ft back from the property
+    line for everything else. Does the 4-unit townhome count as single-family?
+  ruling: '"Single-Family"'
+  effect: >-
+    The pod takes the single-family/two-family apex (front setback line) for
+    the West Linn driveway clear-vision area (state middle-housing siting
+    parity).
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+- id: 2026-11-09-multco-pockets-portland-parking
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: _unincorporated}
+  question: >-
+    The Portland-administered unincorporated pockets now take Portland Title
+    33. Should Steph's Portland parking rulings (20 ft aisle; the alley is the
+    aisle with 20 ft back-out) also cover the pockets?
+  ruling: '"Extend both"'
+  effect: >-
+    In the Portland-administered pockets the court is drawn with a 20 ft aisle
+    (as 2026-09-30-portland-aisle-20ft) and an alley-fed plan treats the alley
+    as the aisle with 20 ft back-out (as 2026-09-13-portland-alley-is-aisle).
+  source: Steph 2026-11-09 (chat), ../vicinitideals-worktrees/multco-pockets.handoff.md item 1
+- id: 2026-11-09-hillsboro-scr-side-max-both
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    The 5 ft maximum side setback in Hillsboro's station-area zones: one wall
+    or both? Both turns nearly every non-alley SCR green red (~300 lots).
+  ruling: >-
+    "I'd say it's both, but we should first check that parking can't
+    encroach. If they can't, I'm good with yellow and ask"
+  effect: >-
+    Read as BOTH side walls. First check whether the code lets a driveway or
+    parking sit in the side area (an exception to the maximum). If it does not,
+    these lots are YELLOW with an "ask the city" flag (not GREEN, not RED)
+    until Hillsboro answers. FOLLOWUPS 170.
+  source: Steph 2026-11-09 (chat), docs/followups/170-hillsboro-side-max.md
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19

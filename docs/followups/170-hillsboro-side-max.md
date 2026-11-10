@@ -11,3 +11,7 @@ hillsboro-oregon.gov blocks automated fetches. Next: written question to communi
 At stake (live run): ~300 GREEN (SCR-MD 258, SCR-HD 45). Alley lots survive either way.
 ASKED Steph 2026-11-09: keep one wall (GREEN) / yellow + 'ask the city' flag / both walls (RED); and whether to email the city.
 Also unencoded: SCR-LD 5 ft max along street/alley; SCR-DNC 15 ft max side (same question).
+
+RULED 2026-11-09 (Steph): "I'd say it's both, but we should first check that parking can't encroach. If they can't, I'm good
+with yellow and ask". Next: read whether Hillsboro lets a driveway or parking sit in the side area (exception to the 5 ft
+maximum); if not, SCR-MD/HD non-alley lots -> YELLOW + 'ask the city' flag. Draft the city email for Steph.
