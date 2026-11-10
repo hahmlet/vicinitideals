@@ -158,6 +158,8 @@ the full one.)
 171. [Claude] [scan: YES -- toward red, FALSE GREEN] **Portland commercial zones: 10 ft L3 landscaped strip beside residential lots** -- fg-rate-A 1S1E26AB -01200 (CM2, court through the strip, 33.130 Table 130-2); 923 live greens touch a residential lot; lane pdx-cm-buffer BUILDING off rel6. [file](followups/171-pdx-cm-buffer.md)
 172. [Claude] [scan: YES -- toward red, FALSE GREEN] **A lot line read as a street when only a few feet touch a street end** -- fg-rate-A 1N2E35DC -09200 (6.3 ft of a 30.7 ft line touches SE Ash St stub; drive drawn across the neighbour); lane street-touch BUILDING off rel6. [file](followups/172-street-touch.md)
 173. [Claude] [Steph] [scan: NO colour change] **RF (Residential Farm/Forest): state fourplex route or farm land?** -- researched 11-09: Portland Ord 192241 (adopted 2026-10-21, eff 2027-01-01) keeps RF out of HB 2138; all 859 RF lots red either way; ASKED Steph A farm land / B keep / C open. [file](followups/173-rf-middle-housing.md)
+174. [Claude] [Steph] [scan: YES -- toward yellow] **Corner frontage: split at mid-curve (today) vs stop at curve vs corner point** -- researched 11-09: up to 126 GREEN change if stop-at-curve (Beaverton 88); ASKED Steph, recommend keep + yellow where the choice matters. [file](followups/174-corner-frontage.md)
+175. [Claude] [scan: YES -- toward yellow, FALSE GREEN] **Corner min frontage checked on both streets added together** -- Gresham 40 ft (25/32 townhouse) is a one-street rule; ~16 GREEN corners (Gresham 11) whose shorter street alone is short; also RED rows at exactly 50% vs 50% cap (rounding?). Lane corner-min-frontage. [file](followups/175-corner-min-frontage.md)
 
 ## 2. Waiting on Steph
 
