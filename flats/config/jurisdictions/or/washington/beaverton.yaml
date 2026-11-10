@@ -505,6 +505,22 @@ code:
   title: "Washington County - City of Beaverton Urban Planning Area Agreement (as amended by Ordinance 839A, 2018)"
   extraction: plain
   allow_thin: true
+# EDM 210.21 Driveways (C's corner clearance table, D's relief, E's spacing
+# between driveways), which BDC 60.55.35.3.C.1 sends driveway spacing to;
+# read for flats/config/driveway_spacing.yaml (fg4-fixes, 2026-11-10). The
+# Chapter 2 file the city's EDM page links on its CivicPlus asset host,
+# stored 2026-11-09 from the downloaded PDF; the 2025 EDM as amended
+# (Res. 4954) prints the same table.
+- id: "edm.210.21.driveways"
+  url: https://content.civicplus.com/api/assets/d763c241-c3ec-4e64-aac9-54276565d027
+  title: "Beaverton Engineering Design Manual, Chapter 2 Streets, 210.21 Driveways"
+  start: "210.21 Driveways"
+  # The contents list the heading first.
+  nth: 2
+  end: "210.22 Curbs, Shoulders, and Grading"
+  extraction: plain
+  # One section of a manual.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from BDC Chapter 90, which is on disk whole.
   #

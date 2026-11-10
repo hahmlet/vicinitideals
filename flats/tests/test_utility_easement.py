@@ -151,6 +151,9 @@ def lot_row(w: float = 100.0, d: float = 200.0, **over: object) -> dict[str, obj
         "ovl_fema_floodway": False,
         "sewer_main_dist_ft": 12.0,
         "in_sewer_district": None,
+        # Beaverton holds a driveway-spacing rule (EDM 210.21, fg4-fixes): the
+        # fixture lot's frontage is read clear, as its sewer is read near.
+        "driveway_spacing": "clear",
         "wkb": shapely.to_wkb(box(X0 + 5, Y0 + 10, X0 + w - 5, Y0 + d - 15)),
         "lot_wkb": shapely.to_wkb(box(X0, Y0, X0 + w, Y0 + d)),
     }

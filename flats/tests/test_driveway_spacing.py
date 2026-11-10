@@ -398,7 +398,8 @@ def test_2s110db01500_is_not_green(corpus, policies) -> None:
 
 
 def test_a_tigard_lot_nothing_read_is_held(corpus, policies) -> None:
-    got = _screen(corpus, policies, lot_from_row(_lot_2s110db01500(), corpus.layers))
+    row = _lot_2s110db01500(driveway_spacing=None)
+    got = _screen(corpus, policies, lot_from_row(row, corpus.layers))
     assert got.signed.colour is not flag_plan.Colour.green
     assert DRIVEWAY_SPACING_UNREAD in got.signed.reasons
 
@@ -411,7 +412,67 @@ def test_a_clear_reading_adds_no_reason(corpus, policies) -> None:
 
 
 def test_the_bridge_without_a_snapshot_leaves_tigard_unread(tmp_path) -> None:
-    rows = [_lot_2s110db01500(), _row(100.0, 200.0)]
+    rows = [_lot_2s110db01500(driveway_spacing=None), _row(100.0, 200.0, jurisdiction="portland")]
     assert with_driveway_spacing(rows, None, tmp_path / "none.parquet") == 1
     assert rows[0]["driveway_spacing"] == ds.UNREAD
-    assert "driveway_spacing" not in rows[1]
+    assert rows[1]["driveway_spacing"] == ds.CLEAR  # Portland: no rule, untouched
+
+# --- Beaverton (fg4-fixes, round 4 batch D) ------------------------------
+
+BEAVERTON = "or/washington/beaverton"
+
+
+def test_beaverton_reads_its_own_map_and_the_edm_figures() -> None:
+    bv = ds.rules_for(BEAVERTON)
+    assert bv is not None and bv.map == "street_class_beaverton"
+    spec = ds.spec_of(bv.map)
+    # FUNC_CLASS ranks: 9 Local 0, 7 Neighborhood Route 1, 5 Collector 2,
+    # 3 Arterial 3, 2 Principal Arterial 4, 1 Freeway 5.
+    assert [bv.class_of_rank(r, spec) for r in range(6)] == [
+        "local", "neighborhood_route", "collector", "arterial", "arterial", None,
+    ]
+    assert set(bv.frontage) == {"collector", "arterial"}
+    by_on = {next(iter(r.on)): r for r in bv.intersections}
+    assert by_on["local"].figure_ft == 25 and by_on["neighborhood_route"].figure_ft == 50
+    assert all(r.basis == "right_of_way_line" for r in bv.intersections)
+
+
+def test_8165_sw_sorrento_rd_is_blocked() -> None:
+    # 1S128AA04601 (fg-rate-D): 78 ft on Sorrento Rd, a Collector on the
+    # city's map (FUNC_CLASS 5). EDM 210.21 C/E: barred whatever its length.
+    bv = ds.rules_for(BEAVERTON)
+    assert ds.chain_answer(78.0, [], "collector", bv) == ds.BLOCKED
+    assert ds.chain_answer(2000.0, [], "arterial", bv) == ds.BLOCKED
+
+
+def test_a_beaverton_local_frontage_by_a_corner() -> None:
+    bv = ds.rules_for(BEAVERTON)
+    # The cross street's centreline at station 0, half-width 30 ft: the apron
+    # (20 ft, 5 ft inset) clears 25 + 30 = 55 ft on a 100 ft frontage ...
+    assert ds.chain_answer(100.0, [(0.0, 30.0, "collector")], "local", bv) == ds.CLEAR
+    # ... not on 60 ft, where a centreline 25 ft out still fits: unread.
+    assert ds.chain_answer(60.0, [(0.0, 30.0, "local")], "local", bv) == ds.UNREAD
+    # 20 ft of frontage, every placement short centreline to centreline.
+    assert ds.chain_answer(20.0, [(0.0, 30.0, "local")], "local", bv) == ds.BLOCKED
+    # A Neighborhood Route frontage takes 50 ft.
+    assert ds.chain_answer(100.0, [(0.0, 30.0, "local")], "neighborhood_route", bv) == ds.UNREAD
+    assert ds.chain_answer(130.0, [(0.0, 30.0, "local")], "neighborhood_route", bv) == ds.CLEAR
+
+
+def _lot_1s128aa04601(**over: object) -> dict[str, object]:
+    """8165 SW Sorrento Rd's shape: a Beaverton RMC lot, 78 ft on Sorrento Rd."""
+    return _row(78.0, 200.0, TLID="1S128AA04601", jurisdiction="beaverton", zone="RMC", **over)
+
+
+def test_1s128aa04601_is_not_green(corpus, policies) -> None:
+    row = _lot_1s128aa04601(driveway_spacing=ds.BLOCKED, driveway_spacing_why="collector")
+    got = _screen(corpus, policies, lot_from_row(row, corpus.layers))
+    assert got.signed.colour is not flag_plan.Colour.green
+    assert DRIVEWAY_SPACING_BLOCKED in got.signed.reasons
+    assert "ACCESS-DRIVEWAY-SPACING" in {f.code for f in got.signed.flags}
+
+
+def test_a_beaverton_lot_nothing_read_is_held(corpus, policies) -> None:
+    row = _lot_1s128aa04601(driveway_spacing=None)
+    got = _screen(corpus, policies, lot_from_row(row, corpus.layers))
+    assert DRIVEWAY_SPACING_UNREAD in got.signed.reasons
