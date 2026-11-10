@@ -1812,7 +1812,6 @@ code:
     # for a document nobody was going to change their mind about. A flag
     # used at the keyboard and not written down is a flag that has to be
     # remembered forever by whoever runs the sweep next.
-    allow_thin: true
   - id: "9.0600.height-transition"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0600.pdf
     title: "Section 9.0600 - Height Transition"
