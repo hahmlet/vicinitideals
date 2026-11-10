@@ -34,3 +34,5 @@ More questions for Steph:
   (check service) or RED? Recommend YELLOW.
 - (d) Tigard rowhouse flat roof allowed only with a 12 in+ cornice: can the pod
   carry one? If not, Tigard townhouse greens go RED under the flat-roof ruling.
+
+RULED 2026-11-10: (a) "9ft in Portland" (2026-11-10-portland-driveway-9ft); (b) narrow street = fire YELLOW (2026-11-10-narrow-street-fire-yellow), "a common Fire and Safety shoot down point on a permit". Lanes pdx-9ft and narrow-row off rel7.
