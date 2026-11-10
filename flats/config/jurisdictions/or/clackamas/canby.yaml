@@ -1852,6 +1852,15 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# Canby Fire District's Conditions of Construction (rev 10.28), its guide to
+# the Oregon Fire Code as the district applies it. Read for one sentence: a
+# dead-end fire apparatus road may run 300 ft before it needs a turnaround,
+# where the state's OFC 503.2.5 says 150 ft. Steph 2026-11-10 (rulings.yaml
+# 2026-11-10-canby-fire-dead-end-300): Canby gets 300 ft
+# (flats/config/fire_roads.yaml, FOLLOWUPS 168).
+- id: "cfd.conditions-of-construction"
+  url: https://cfpd.specialdistrict.org/files/1b3c80534/CFD+Conditions+of+Construction+rev10.28.pdf
+  title: "Canby Fire District, Conditions of Construction (rev 10.28)"
 # READ AND NOT ENCODED (FOLLOWUPS 105, CMC 16.41.060 fetched 2026-11-08 with Steph's OK; was a
 # crossref ruling until it came into the store): 16.41.050 (A)(4)(a) keeps parking and maneuvering
 # from between a building and the street for "primary street facing facades and secondary street

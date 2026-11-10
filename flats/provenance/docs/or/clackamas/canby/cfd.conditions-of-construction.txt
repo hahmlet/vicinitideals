@@ -1,0 +1,436 @@
+211 Pine Street
+                                                                                                                         Canby, OR 97013
+                                                                                                                  Phone: (503) 263-4281
+                                                                                                                      www.canbyfire.org
+
+                                       Conditions of Construction
+                           Requirements for Firef ighter Safety ,
+                                           Fire Department Access
+                                   and                                                             Emergency Water Supply
+
+                                 This guide is intended                             to aid                             with the application                             of the
+                            Oregon Fire Code in all areas served by the Canby Fire District.
+
+ Canby Fire District is committed to creating safer communities through prevention, preparedness, and effective fire and
+ medical emergency response.
+                                                                                                NOTE TO                                                                                  USER
+
+                   AUTHORITY AND SCOPE
+
+                   The     Canby Fire District administers and enforces the current edition of Oregon Fire Code under the
+                   authority granted by ORS 476.030. The Oregon Fire Code is the International Fire Code, as published and
+                   copyrighted                       by the International Code Council, which                                           has been amended                       and                                                                         adopted                       by the Oregon State
+                   Fire Marshal.
+
+                   The Canby Fire District has prepared this guide to provide good faith guidance to building officials,
+                   contractors, architects, business owners, and the public on local interpretations and practices in
+                   compliance    with   the    Oregon    Fire    Code.         The         intent         is        to         clarify                                                         aspects         of         the         code         that         are        vague         or
+                   non-                        specific       by addressing selected issues under normal                                   conditions.  The  requirements  of  this  guide  shall
+                   not be construed as altering any existing code, law or regulation which may require fire protection
+                   features          not          covered          or          alluded                                   to          in          these          requirements,          nor          shall          they       waive any requirements of
+                   any code, law, or regulation.                                     The reader is cautioned                        that the guidance detailed                         in this guide may or may
+                   not apply to their specific situation, and that Canby Fire District retains final authority to determine
+                   compliance.
+
+  Canby Fire District is committed to creating safer communities through prevention, preparedness, and effective fire and
+  medical emergency response.
+                                   Table of Contents
+                                   NOTE TO USER ..............................................................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                a
+                                   AUTHORITY AND SCOPE ..............................................................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     a
+
+                                    FIRE APPARATUS ACCESS ..............................................................................................................................................1
+                                    FIRE APPARATUS                       ACCESS                      ROAD  Exception for Automatic Sprinkler Protection …………………………………………………………………………….1
+
+                                   FIRE APPARATUS ACCESS ROADS WITH FIRE HYDRANTS ................................................................................................. 1
+                                   FIRE APPARATUS                      ACCESS ROAD DISTANCE FROM BUILDINGS AND  TURNAROUNDS ..................................................................1
+
+                                    FIRE LANES (CURBING REQUIREMENTS) ..……………………………………………………………………………………………………………………….3
+                                    NO PARKING SIGNAGE…………………………………………………………………………………………………………………………….………………………3
+
+                                   PREMISES IDENTIFICATION………………………………………………………………………………………………………………………………………………4
+
+                                   AERIAL FIRE APPARATUS ACCESS ROADS .......................................................................................................................5
+
+                                   FIREFIGHTING                               WATER SUPPLIES  ....................................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     7
+                                   ACCESS AND FIREFIGHTING WATER SUPPLY DURING CONSTRUCTION:  ....................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             8
+
+                                   FIRE HYDRANTS ............................................................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   8
+                                   Fire Department Connections (FDC) ...............................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  8
+
+                                    PLACEMENT OF FIRE            HYDRANTS  ...................................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       9
+
+                                    ADDITIONAL RESOURCES  ............................................................................................................................................                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  10
+
+                                    KNOXBOXES……………………………………………………………………………………………………………………………………………………………………………….10
+
+         Canby Fire District is committed to creating safer communities through prevention, preparedness, and effective fire and
+         medical emergency response.
+    FIRE APPARATUS                                                                              ACCESS
+
+    Fire apparatus access roads shall                                              be in accordance with all                                              applicable requirements of the Oregon Fire Code and this
+    Guide. Access shall consist of roadways, public and private streets, fire lanes, parking lot lanes or a combination
+    thereof. (OFC Ch.2)
+
+    FIRE APPARATUS ACCESS ROAD EXCEPTION FOR AUTOMATIC SPRINKLER  PROTECTION:
+    When buildings are completely protected with an approved automatic fire sprinkler system installed in accordance with
+    OFC Section 903.3.1.1, 903.3.1.2 or 903.3.1.3. The                             requirements for fire apparatus access may be modified as approved
+    by the fire code official. (OFC 503.1.1)
+
+    ADDITIONAL ACCESS: The fire code                        official is authorized to require more than one fire apparatus access road based on
+    the potential for impairment of a single road by vehicle congestion, condition of terrain, climatic conditions or other
+    factors that could limit access. (OFC 503.1.2)
+
+    FIRE APPARATUS ACCESS ROAD WIDTH AND VERTICAL CLEARANCE: Fire apparatus access roads shall                                             have an unobstructed
+    driving surface width of not less than 26 feet, exclusive                         of shoulders, and an unobstructed                          vertical clearance of not less than
+    13 feet 6 inches. (OFC D103.1).
+
+    Note:  When serving two or  less dwelling units or Group U accessory buildings, the driving surface may be reduced to 12
+    feet, although the unobstructed width shall                                               be 20 feet. Turning radius for                  curves and turnarounds on 12 feet wide roads
+    shall                                              comply with the inside turning                       radius and outside turning                       radius of 25 feet                                                                 and 45 feet respectively. (OFC 503.2.4                          &
+    D103.3 exception)
+
+    FIRE APPARATUS ACCESS ROADS WITH FIRE HYDRANTS:
+    Where a fire hydrant is located on a fire apparatus access road, the minimum
+    road width shall                                              be 26 feet within 20                                                 feet of the hydrant, exclusive of shoulders,
+    to provide a staging area for apparatus on the access road. See Appendix D for
+    exceptions. (OFC D103.1)
+
+    SURFACE AND LOAD CAPACITIES: Fire apparatus access roads shall be of an all-
+    weather surface that is easily distinguishable from the surrounding area and is
+    capable of supporting not less than 12,500 pounds point load (wheel load or
+    gross wheel position weight) and 75,000                          pounds live load (gross vehicle weight).
+    Documentation from a registered engineer that the final construction is in
+    accordance with the requirements of the Fire Code and this Guide may be
+    requested. (OFC 503.2.3 & D102.1)
+
+    TURNING RADIUS: The required turning                     radius of a fire apparatus access road shall                                             be sufficient to accommodate the current
+    Canby Fire District apparatus. For more information, see our website at: www.canbyfire.org/construction.
+
+    FIRE APPARATUS ACCESS ROAD DISTANCE FROM BUILDINGS                       AND TURNAROUNDS:
+    Access roads shall                                              be within 150 feet of all                                              portions of the facility and all portions of the exterior walls of the first story of
+    the building as measured by an approved route around the exterior of the building or facility. When the building is
+    equipped throughout with an approved automatic sprinkler system, access roads shall be within 250 feet of all portions
+    of the facility and all portions of the exterior walls of the first story of the building as measured by an approved route
+    around the exterior of the building or facility. (OFC 503.1.1)
+
+    An approved turnaround is required if                         the remaining distance to an approved intersecting roadway, as measured along
+    the fire apparatus access road, is greater than 300 feet. (503.2.5 & D103.4)
+
+                                                                                                                                                                                 Page 1 of 13
+    DEAD END ROADS AND TURNAROUNDS: Dead end                          fire apparatus access roads in excess of 300                                                 feet in length shall be
+    provided with an approved turnaround. Diagrams of approved turnarounds are shown below: (OFC 503.2.5, D103.4 &
+    Figure D103.1)
+
+    TURNOUTS:                                               When a fire apparatus access road exceeds 400 feet in length, turnouts 12 feet wide and 45 feet long shall
+    be provided in addition to the required road width and shall be placed no more than 400 feet apart, unless otherwise
+    approved by the fire code official.                                                          These distances may be adjusted based on visibility and sight distances. (OFC 503.2.2)
+
+    BRIDGES AND ELEVATED SURFACES: Private bridges shall                                              be designed and constructed in accordance with the State of
+    Oregon Department of Transportation and the American Association of State Highway and Transportation Officials
+    (AASHTO) HB-17.         Bridges and elevated surfaces shall be designed for a live load sufficient to carry the imposed loads
+    of fire apparatus. A building permit shall be obtained for the construction of the bridge if required by the building
+    official of the jurisdiction where the bridge is to be built. The design engineer shall prepare a special inspection and
+    structural observation program for approval by the building official. The design engineer shall give, in writing, final
+    approval                                  of the bridge to Canby Fire District after construction is completed. Maintenance of the bridge shall be the
+    responsibility of the party or parties that use the bridge for access to their property. Canby Fire District may at any
+    time, for due cause, ask that a registered engineer inspect the bridge for structural stability and soundness at the
+    expense of the property owner(s) the bridge serves. Vehicle load limits shall be posted at both entrances to bridges
+    when required by the fire code official. (OFC 503.2.6)
+
+    GRADE: The grade of a fire apparatus access road shall not exceed 15% for non-sprinklered properties. When approved
+    fire sprinklers are installed and                                                topographical conditions will                              not allow a lesser grade, a maximum grade of 18% will                               be
+    allowed.                       (OFC 503.2.7 & D103.2)
+
+    ANGLES OF APPROACH AND DEPARTURE: Intersections and turnarounds shall be as level as possible with the
+    exception of crowning                       for                water run-                         off which can include slopes up                         to 5% maximum. Grades on stop-controlled
+    approaches to intersections shall not exceed 5% for an approach distance of not less than 50 feet. (OFC 503.2.8,
+    D103.2 and D103.3.2)
+
+    OBSTRUCTION OF FIRE APPARATUS ACCESS: Fire apparatus access roads shall                                             not be obstructed in any manner,
+    including the parking of vehicles. The minimum widths and clearances established in OFC Section
+    503.2.1     shall                                             be maintained at all                                            times. Traffic calming devices shall                                             be prohibited unless approved                         by the fire code
+    official. (OFC 503.4 & OFC 503.4.1).
+
+                                                                                                                                                                                  Page 2 of 13
+      NO PARKING SIGNS: Where                         fire apparatus roadways are not of sufficient width to accommodate parked vehicles and 20
+      feet of unobstructed driving surface, “No Parking” signs shall be installed on one or both sides of the roadway and in
+      turnarounds. Roads 26 feet                wide or less shall be posted on both sides as a fire lane. Roads more than 26 feet wide to 34
+      feet wide shall be posted on one side as a fire lane. Signs shall read “FIRE LANE NO PARKING TOW-AWAY ZONE" and
+      shall be posted every 50 feet and installed with a clear space above grade level of 7 feet. Signs shall be 12 inches wide
+      by 18 inches high and shall have red letters on a white reflective background. (OFC 503.3) See Example.
+
+      PAINTED CURBS: Where                         required, fire apparatus access roadway curbs shall                                              be painted red and marked “FIRE LANE NO
+      PARKING” at a maximum of 20-                                                 foot intervals. Lettering shall                                               have a stroke of not less than 1 inch wide by 6 inches high.
+      Lettering shall be of contrasting colors. (OFC 503.3)
+
+      GATES: Gates securing                     fire apparatus roads shall                                             comply with all                                            the following:
+              •                                                 Where a                        single gate is provided, the gate width shall                                             be not less than 26 feet unobstructed.
+              •                                                  Where                        no turning                      movement is required                         within 30 feet of either side of the gate, the minimum width may
+                      be reduced to 20 feet in width.
+              •                                                 Where a                        fire apparatus road consists of a divided roadway, the gate width shall                                             be not less than 20 ft wide.
+              •                                                 Gates serving one- or two- family dwellings shall                                             be a minimum of 13.6                        feet in width.
+              •                                                 Gates shall                                             be set back at least 30 feet from the intersecting roadway.
+              •                                                 Gates shall                                             be of the swinging                       or sliding type.
+              •                                                The construction of gates shall                                            be of materials that allow manual operation by one person.
+              •                                                  Manual opening gates shall not be locked with a padlock or chain and padlock unless they are capable of being
+                      opened by means of forcible entry tools or when a key box containing                       the key to the lock is installed at the gate
+                      location. Methods of locking shall be approved by the fire code official.
+              •                                                  Gate components shall                                             be maintained in an operative condition at all                                             times and replaced or repaired when
+                      defective.
+              •                                                  Electric gates shall                                             be equipped with a means for operation by fire department personnel that has been
+                      approved by the fire code official.
+              •                                                 Electric gate operators shall be listed in accordance with UL 325.
+              •                                                  Gates         intended        for         automatic        operation         shall        be        designed,         constructed,        and         installed         to         comply        with       the
+                      requirements of ASTM F2200.
+              •                                                 Bollards are an approved alternate if                          they                      can be readily removed by one person, and they shall                                              not be locked
+                      with a padlock or chain unless agreed to by Fire Code Official in writing, for extenuating circumstances.
+
+                                                                                                                                                                                                                                      Page 3 of 13
+    COMMERCIAL PREMISES IDENTIFICATION : New and existing commercial           buildings shall have approved address
+    numbers, building numbers, or approved building identification placed in a position that is plainly legible and visible
+    from the street or road fronting the property, including monument signs. These numbers shall contrast with their
+    background. Address numbers shall be Arabic numerals or alphabet letters.           The numbers shall                                             be a minimum of 12
+    inches high with a minimum stroke width of 2 inches. Where required, address identification shall be provided in
+    additional approved locations to facilitate emergency response. Where access is by means of a  private road and the
+    building cannot be viewed from the public way, a monument, pole or other sign or means shall be used to identify the
+    structure(s). OFC 505.1                        as required by Fire Code Official.
+
+    RESIDENTIAL PREMISES IDENTIFICATION : New and existing residential buildings shall have approved address
+    numbers, building numbers, or approved building identification placed in a position that is plainly legible and visible
+    from the street or road fronting the property, including monument signs. These numbers shall contrast with their
+    background. Address numbers shall be Arabic numerals or alphabet letters.            Numbers shall                                             be a minimum of 6 inches
+    high with a minimum stroke width of 1 inch. Where required by the fire code official, address identification shall be
+    provided in additional approved locations to facilitate emergency response. Where access is by means of a private
+    road and the building cannot be viewed from the public way, a monument, pole or other sign or means shall be used
+    to identify the structure(s). (OFC 505.1)
+
+    ADDITIONAL ACCESS ROADS – COMMERCIAL & INDUSTRIAL DEVELOPMENTS: Buildings exceeding 30-feet or three stories in height
+    shall                                        have at least two separate means of fire apparatus access.
+
+    Buildings having a gross                                              area of more than 62,000 square feet shall have at least two separate means of fire apparatus
+    access. Buildings having a                       gross building                       area                       of up                         to 124,000                                                  square feet may have a single fire apparatus access road
+    provided all buildings served by the single access road are equipped throughout with an approved automatic sprinkler
+    system.
+
+    ADDITIONAL ACCESS ROADS  – MULTIPLE-                                                                      FAMILY RESIDENTIAL DEVELOPMENTS:
+    Multiple-     family residential projects having more than 50 dwelling units shall be equipped throughout with two
+    separate means of fire apparatus access. Projects having no more than 99 dwelling units may have a single fire
+    apparatus    access    road    provided    all                                                 buildings,    including                           non-residential                                                 occupancies,    are   equipped    throughout    with
+    an approved automatic sprinkler system and appropriately sized fire department connection.
+    Note: For buildings exceeding                                                 three stories                  or 30-feet in height OFC Appendix D104 supersedes D106.
+    Multiple-family residential projects exceeding 100                                                                     dwelling units shall       be provided                  with two separate and                                               approved fire
+    apparatus access roads regardless of whether they are equipped                   with an approved                     automatic sprinkler            system.
+
+    ADDITIONAL ACCESS ROADS – ONE- OR TWO-FAMILY RESIDENTIAL: Development               of one- or two-family dwellings where the
+    number of dwelling units exceeds 30 shall be provided with two separate and approved fire apparatus access roads. Where
+    there are more than 30 dwelling units on a single public or private fire apparatus access road and all                                             dwelling units are
+    equipped throughout with an approved automatic sprinkler system, single access will be allowed. (OFC D107)
+
+    MULTIPLE ACCESS ROADS SEPARATION: Where two access roads are required, they shall be placed a distance apart
+    equal to not less than one half                                                  of the length of the maximum overall                                              diagonal                                   dimension of the property or area to be
+    served, measured in a straight line between accesses. (OFC D104.3, D106.3 & D107.2)
+
+                                                                                                                                                                                  Page 4 of 13
+     AERIAL FIRE APPARATUS ACCESS ROADS:                        Buildings or portions of buildings or facilities exceeding 30-feet (9144 mm) in
+     height above the lowest level of fire department vehicle access shall                                            be provided with approved                      fire apparatus access roads
+     capable of accommodating fire department aerial apparatus.
+     An aerial                                                               fire apparatus road is not required where the bottom of the eave of a sloped roof or the top of the parapet for a
+     flat roof is not more than 30 feet (9144 mm) above grade measured to the point a ground ladder would be placed during
+     emergency operations. (OFC D105.1)
+          Note: Aerial apparatus access roads are required where the fire department cannot reach the roof or upper stories
+          with ground                                                                           ladders. In order to use ground                                                                           ladders only, there must be a minimum of two (2)               separate   ladder access
+          points along the roof eave line or top of parapet which do not exceed 30 feet from the ground, regardless of the
+          measurement of grade plane.
+          If the measurement, 30 feet to the roof eave line or top of parapet, is very close or in question, applicants may be
+          asked to show the minimum two ladder points, and a ladder placement diagram, on their plan set.
+
+     AERIAL FIRE APPARATUS ACCESS ROADS – REQUIREMENTS:
+
+            •                                                Aerial fire apparatus access  roads shall                                               have  a minimum unobstructed width of 26 feet exclusive of shoulders
+                    or parking, in the immediate vicinity of any building                      or portion of building                      more than 30                                                  feet in height that will
+                    accommodate aerial operations. (D105.2)
+            •                                                  The side of the building                      on which the aerial                                                              apparatus access road is positioned shall                                             be approved by the fire
+                    code official.
+            •                                                       At least one of the required access routes meeting this condition shall be located within a minimum of 15 feet
+                    and a maximum of 30 feet                                                                 from the building                       and shall                                             be positioned                          parallel          to one entire side of the building, a
+                    dominant side, or no less than 60 feet on a dominant                                            side, required for operational purposes. (D105.3)
+                                            The Dominant side shall be defined                         as the side (or a side) of the building                                                where aerial equipment will
+                             have maximum access to the building.
+            •                                                  The    portions of aerial fire apparatus roads used for aerial operations shall be as flat as possible and shall not
+                    exceed 6% slopes in any direction for lengths up to 60 feet. (D105.5)
+            •                                Overhead utility and power lines shall not be located within the aerial fire apparatus access roadway or be
+                    located within 10 feet of an aerial                                                             ladder extended from the fire apparatus access road to the roof of the building
+                    or portion thereof. (D105.4 & D105.6)
+                                            If 60                                                 feet on a dominant side of the building                                                 is provided for Aerial Fire Apparatus Access, consideration m us t
+                             still be given that there will not be overhead utility or power lines within 10 feet of where an aerial fire
+                             apparatus ladder could                       be placed                       during                                                firefighting operations.        This could                       result in a need to provide greater
+                                                                                                                                                                                                                    Page 5 of 13
+                             than 60 feet to provide the 10-foot safety buffer.
+
+     Note: For one- and two-family dwellings, an aerial fire apparatus access road will not be required when the vertical
+     distance between the point a ground ladder would be placed during                       emergency operations and the highest roof surface
+     is less than 30 feet or if provided with an approved fire sprinkler system per 903.3.1.3.
+
+     ALTERNATE                      TO AERIAL FIRE APPARATUS ROADS: Buildings complying                      with the following conditions will                                  be exempt                 from
+     the requirements of aerial fire apparatus access roads (D105.7):
+              1.                                                                The building                      is equipped with an approved automatic sprinkler               system.
+              2.                                                                There                       are no combustible concealed attic spaces.
+                             Note: For NFPA                          13R sprinklers systems to meet this condition                        the sprinkler system shall comply with one of
+                             the four (4) options indicated                      in OFC 903.3.1.2.3 # 3 (items 3.1 through                                                                        3.4), regardless of the height of the
+                             roof assembly.                     The selected option must be indicated on the plan submittal   .
+              3.                                                                All stairway exit                enclosures shall                                             have a fire-resistance rating of not less than 2 hours.
+              4.                                                                The roof is essentially flat, having a                                          slope four units vertical in 12                                              units horizontal (33.3-                     percent) or less.
+              5.                                                                 Approved                     access is            provided to the roof from all                                         stairways. In buildings without an occupied                    roof, access to the roof
+                      from the top story shall                                            be permitted to be by an alternating tread device, a ship’s ladder or a permanent ladder
+                      that is constructed of noncombustible material                                                             and                                                  is a minimum of 30                                               inches between handrails; has a rise and
+                      run                                                of the stair or ladder of 12                                               inches maximum and 4                                                inches minimum, and                                                  has handrails provided                     on both                      sides
+                      through a roof hatch or trap door not less than 36 inches (762 mm) wide   and 8 feet (2438                      mm) long                     (1011.12 -
+                      Exception and 1011.12.2  - Exception)
+                             Notes: 1. A construction                       guide for ships ladders or permanent ladders meeting the requirements of OSSC
+                             1011.12  - Exception and where an alternate may be permitted can be found at:
+                             Construction                        Requirements meeting 1011.12  -                         Exception.
+                             2. Where guards are required in conjunction                        with meeting the Alternate to Aerial Fire Apparatus Roads, by
+                             OSSC 1011.13 and 1015.7, the Exception to 1015.7, regarding the use of fall arrest anchorage, shall NOT
+                             apply.          Firefighters will generally not be able to utilize such anchors during firefighting operations and
+                             therefore require the guards for roof access. Section 1015.7                        shall be met, and the guards shall be installed
+                             in accordance with section 1015.
+              6.                                                                 Building requiring standpipes are equipped with at least one standpipe that terminates on the roof. Note:
+                     The stairwell(s) with standpipes which                                             extend to the non-occupied                        roof must be equipped                        with a ship’s ladder
+                     or permanent ladder meeting the 1011.12 -          Exception
+
+     FIREFIGHTING WATER                                                                        SUPPLIES
+
+     COMMERCIAL BUILDINGS –                                   REQUIRED FIRE FLOW: The minimum available fire-flow and flow duration for buildings
+     other than one- and two-family dwellings, Group R-3 and R-4 buildings and townhouses, shall be as specified in OFC
+     Tables B105.1(2) and B105.2. A reduction in required fire-flow from the tabular value, table B105.1(2), of up to 75% is
+     allowed when providing                       an approved fire sprinkler system.         In no case shall                                              the resulting fire-flow be less than 1000 gpm
+     at 20 psi residual when providing an NFPA 13 sprinkler system, or 1500 gpm at 20 psi residual when providing an NFPA
+     13R sprinkler system. (OFC Appendix B)
+
+                                                                                                                                                                                                                         Page 6 of 13
+    Note: When a                    project is intending                                          on                                             using                                             existing, or proposed                  new, City                   of Canby public fire hydrants, information regarding the
+    fire flow of subject hydrants shall be obtained                    by the applicant and                     included in plan                                              submittals.
+
+     ONE - AND TWO - FAMILY RESIDENTIAL  - REQUIRED FIRE FLOW: The minimum available fire flow for one and two-
+     family dwellings, Group R-3                          and R-4 buildings and townhouses, not exceeding 3,600 square feet shall                                             be 1,000 gpm at
+     20 psi residual                                   for                 duration                         of 1-hour. For one and two-family dwellings exceeding 3,600 square feet, the required fire
+     flow shall be as specified in OFC Appendix B, Table B105.1(2) for the duration at the required flow rate.
+
+     The minimum available fire flow for one and two-family dwellings, Group R-3 and R-4 buildings and townhouses, not
+     exceeding 3,600 square feet and provided with an approved automatic sprinkler                system, NFPA 13D system or greater,
+     shall be 500 gpm at 20 psi residual for                 a duration of 30                                                 minutes.         Greater                 than 3600 square feet and provided with an
+     approved automatic sprinkler system, NFPA 13D system or greater, shall be ½ the value of table B105.1(2) at 20 psi
+     residual pressure for a minimum of 1 hour.
+
+     For areas designated as “Wildland Urban Interface Zones” the minimum available fire flow shall be 1,750 gpm at 20 psi
+     residual.
+
+                                                                                                                                                                                                      Page 7 of 13
+     RURAL BUILDINGS - REQUIRED FIRE FLOW: Required fire flow for rural and suburban areas in which adequate and
+     reliable water supply systems do not exist                shall                                              be calculated in accordance with National                                   Fire Protection Association
+     Standard 1142. (OFC B107.1)
+     Note:             Structures protected by an automatic fire sprinkler system are not required                        to have a water supply other than that
+     required to supply the fire sprinkler system.
+
+     ACCESS AND FIREFIGHTING  WATER SUPPLY                                                                                                     DURING CONSTRUCTION:                                Approved                        fire
+     apparatus access roadways and an approved water supply for fire protection, either temporary or permanent, shall                                              be
+     installed and operational prior to any combustible construction or storage of combustible materials on the site. (OFC
+     3312)
+
+     FOUR AND FIVE STORY WOOD FRAME STRUCTURES PRE-FIRE PLAN: Four and                                                 five story wood frame structures require a
+     pre-fire protection plan.         An approved pre-fire protection plan will be required prior to the permit being issued                     (see OFC
+     Chapter 33).
+
+     OCCUPANCY DURING CONSTRUCTION SAFETY                         PLAN (OSP):         Where a                      location will remain occupied during construction or
+     tenant improvement work,        this includes both                    residential and                                              non-                      residential occupancies, an Occupancy Safety Plan (OSP) will                  be
+     required.         This plan shall      take into account maintaining a                                         safe environment for             the building                 occupants, addressing impairments of
+     fire protection equipment, maintaining                 egress components, etc.        See OFC chapter 33 and                                              section 901.7.
+
+     FIRE HYDRANTS
+     Fire hydrants shall                                              be installed at the entry or entries of buildings and locations of the other hydrants will be outside the
+     collapse area of the structure, when possible.
+     Hydrants shall be installed 300 feet from center to center for emergency fire operations. A blue ground reflector will be
+     affixed to the center of the roadway for optimal visibility for                 all                                              hydrants as soon as they are put in service. Lastly, curb                          in
+     front of hydrant will be painted red and stenciled No Parking Fire Lane extending 10’ from both sides of hydrant.
+     Public hydrants need to be installed if the water lines are updated around the project, Hydrants need to be installed per
+     coordination with Canby Fire for distance and fire ground operations analysis.             Hydrants for                Public and private per the Canby
+     Utility specifications.
+     Underground fire line improvements shall                                             be flushed and hydrotested at 200psi for 2                 hours.
+     Fully fire sprinklered including                       all                                              overhangs with dust collection system duct work will                                  be protected with fire sprinkler
+     heads to ensure suppression per Oregon Fire Code Chapter 22.
+     Fire Department Connections (FDC)
+     A combination FDC head for Storz and screwed shall be used. Fire department connection (FDC) shall be within 50 feet of a
+     hydrant dedicated to the FDC. Exposed FDC piping                       shall be painted red, and either metal or brass caps shall                                             be used, instead
+     of plastic caps for better security for the FDC head. 12” X 18” FDC sign shall be affixed to street side of FDC depicting
+     address that the FDC serves. 5-inch Storz connection shall be incorporated into all new FDC’s, or on a separate riser, when
+     approved by fire code official.
+
+                                                  (Example of the FDC connection – pipe size to be determined by design)
+
+                                                                                                                                                                                                Page 8 of 13
+     3’ around hydrants and FDC’s shall                                              be clear and absent of vegetation, or vegetation shall                                              be low growing to not block
+     visibility from the street of the Hydrants, FDC`s, or addressing.
+     PDF of approved final                                   prints of the project for                our Pre-Fire Plan program.
+     The building                      will                                 be fully Fire Sprinklered including                      overhangs, dust collection.
+     NFPA 704 placards for hazards that need to be identified in the exterior of the building.
+     Fire sprinkler riser                 and fire alarm room doors will                                  be labeled with 8 inch labels.           “Fire Sprinkler                Riser                Room” “FACP”
+     Fire sprinkler dry systems will trip test showing water under 60 seconds for acceptance at the most remote area.
+     Fire Lanes painted red on curb with –           No Parking Fire Lane in white - and signage per Oregon Fire Code
+     Fire Extinguishers will have 3-d signage mounted for easy visibility determined by CFD during usually at the height of the
+     exit signage throughout. Extinguishers at 75 feet of travel, a extinguisher at the Entry way next to the alarm panel, and AED,
+     and safety committee info for the rapid response team.
+     NFPA references for the application and installation of all                                              systems.
+     Certificate of Occupancy will be approved by Canby Fire District after a                 complete walk through, inspection, and review for
+     compliance.
+     CONSIDERATIONS                    FOR PLACING FIRE HYDRANTS SHALL BE AS FOLLOWS:
+            •                                                                  Existing hydrants in the area                     may be used to meet the required                       number of hydrants as approved. Hydrants that
+                   are up to 600 feet away from the nearest point of a subject building                      that is protected with fire sprinklers may
+                   contribute to the required number of hydrants, if approved by the fire code official during construction
+                   review. Applicants may be required to obtain an access easement when requesting to use hydrants on
+                   adjacent properties.
+            •                                                                  Hydrants that are separated from the subject building                     by railroad tracks or roads shall                                             not contribute to
+                   the required number of hydrants, unless approved by the fire code official.
+            •                                                                  Hydrants that are separated from the subject building by divided highways or freeways shall not contribute to
+                   the required number of hydrants. Heavily traveled collector streets may be                         considered when approved by the
+                   fire code official. Hydrants that are accessible only by a bridge shall                                              be acceptable to contribute to the required
+                   number of hydrants only if approved by the fire code official.
+            •                                                                 When                      evaluating the placement of hydrants at apartment or industrial                                                          complexes, the first hydrant(s) to be
+                   placed shall                                          be at the primary access and                                                 any secondary access to the site. After these hydrants have been
+                   placed, other hydrants shall                                           be sited to meet the above requirements for              spacing                                              and                                                 minimum number of
+                   hydrants.
+
+     FIRE HYDRANT DISTANCE FROM A FIRE APPARATUS ACCESS ROAD: Fire hydrants shall                                             be provided along required                        fire
+     apparatus access roads and adjacent public streets.
+
+     CLEAR SPACE AROUND FIRE HYDRANTS: A 3-foot clear space shall                                             be provided around the circumference of fire hydrants.
+     (OFC 507.5.5)          Note, ORS 881.550(16) prohibits parking within 10 feet (3048 mm) of a fire hydrant.
+
+     PHYSICAL PROTECTION: Where fire hydrants are subject to impact by a motor vehicle, guard posts, bollards or other
+     approved means of protection shall be provided. (OFC 507.5.6 & OFC 312)
+
+                                                                                                                                                                                                      Page 9 of 13
+     FIRE DEPARTMENT CONNECTIONS: A fire hydrant shall be located within 300 feet of a fire department connection (FDC)
+     or as approved. Fire hydrants and FDC’s shall be located on the same side of the fire apparatus access roadway or drive
+     aisle. (OFC 507.5.1.1 Exception, OFC 912 & NFPA 13)
+
+     ADDITIONAL RESOURCES
+
+    KEY BOX: Where access to or within a structure or an area                      is restricted because of secured openings or where immediate
+    access is necessary for life-saving or fire-fighting purposes, the fire code official is authorized to require a key box to be
+    installed in an approved           location. (OFC 506.1)
+     KnoxBox: The fire code official has approved the use of a KnoxBox                   as the access key box for             use in the Canby Fire District.   A
+    KnoxBox, Knox padlock, or Knox key switch for gate access                may be required.                                 (OFC 506.1).                  For more information contact the
+     Canby Fire District at 503-263-4281.
+
+     When required, detail                                             the KnoxBox                     location on the plans near the front entry, mounted                         at about 6 ft. above ground
+    level. Also, indicate on the plans that a “Lock Box” permit will be obtained from the Canby Fire District.
+
+     REQUESTING A PRELIMINARY                       LIFE SAFETY                       MEETING: Request a Life Safety preliminary meeting. If your property has complex
+     building code or fire code issues, you may need a Life Safety preliminary meeting. Contact 503-263-4281.
+
+     EMERGENCY RESPONDER RADIO COVERAGE: Emergency responder radio coverage must be provided in buildings and
+     locations as listed. For NEW buildings see OFC510.1. For Existing buildings see510.2. For a helpful checklist see OA510.1.1
+     and a OSSC-FORM 918-ERRC shall                                              be submitted, with parts I and                                                                          II                                  completed,                         at the time                        of initial                                              permit application,
+     even if the intent is to test out of this requirement.
+
+                                                                                                                                                                                      Page 10 of 13

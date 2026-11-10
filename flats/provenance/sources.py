@@ -98,6 +98,11 @@ OFFICIAL: frozenset[str] = frozenset(
         # the issuing fire marshal's own statement of what OFC 2022 requires
         # of a site plan (FOLLOWUPS 28).
         "clackamasfire.com",
+        # Canby Fire District, the fire code official for Canby. Its own host
+        # on the shared special-district platform (the platform as a whole is
+        # many districts, so only this host is named). Its Conditions of
+        # Construction states the district's dead-end length (FOLLOWUPS 168).
+        "cfpd.specialdistrict.org",
         # State
         "oregonlegislature.gov",
         "sos.state.or.us",

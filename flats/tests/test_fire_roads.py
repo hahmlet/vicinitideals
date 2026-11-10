@@ -199,6 +199,23 @@ def test_portland_states_300_ft_and_its_pockets_keep_the_states_150() -> None:
     assert ruled.dead_end_ft("or/multnomah/_unincorporated") == 150.0
     assert ruled.dead_end_ft(None) == 150.0
     assert ruled.lengths == (150.0, 300.0)
+
+
+def test_canby_gets_its_fire_districts_300_ft() -> None:
+    # Steph 2026-11-10 (rulings.yaml 2026-11-10-canby-fire-dead-end-300):
+    # the Canby Fire District's Conditions of Construction states 300 ft.
+    ruled = fire_roads.rules()
+    assert ruled.dead_end_ft("or/clackamas/canby") == 300.0
+    # The county around it, and its neighbours, keep the state's 150 ft.
+    assert ruled.dead_end_ft("or/clackamas/_unincorporated") == 150.0
+    assert ruled.dead_end_ft("or/clackamas/oregon-city") == 150.0
+    from flats.provenance.sources import Authority, authority_for
+
+    data = __import__("yaml").safe_load(fire_roads.CONFIG.read_text(encoding="utf-8"))
+    assert data["dead_end_ft"]["or/clackamas/canby"]["quote"].startswith("or/clackamas/canby/")
+    assert authority_for(
+        "https://cfpd.specialdistrict.org/files/1b3c80534/CFD+Conditions+of+Construction+rev10.28.pdf"
+    ) is Authority.official
     # Steph 2026-11-10: "Yellow." -- every dead end is released.
     assert ruled.release == frozenset({fire_roads.DEAD_END, fire_roads.DEAD_END_UNSURE})
 

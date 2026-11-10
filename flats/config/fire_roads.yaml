@@ -16,11 +16,12 @@
 #   150 ft (page refused automated reads, 403). Same as the state's.
 # - Clackamas Fire: the guide stored as or/ofc.2022.applications-guide.txt,
 #   150 ft.
-# - Canby Fire District: its "Conditions of Construction" guide prints 300 ft
-#   (citing OFC 503.2.5, D103.4) as the district's "local interpretations and
-#   practices", NOT an adopted amendment. Not applied (Canby keeps 150 ft) until
-#   Steph rules on it; the long-dead-end switch below makes it a YELLOW, not a
-#   RED, either way.
+# - Canby Fire District (below): its "Conditions of Construction" (rev 10.28)
+#   prints 300 ft (citing OFC 503.2.5, D103.4) as the district's "local
+#   interpretations and practices" -- not an adopted amendment, but Steph
+#   2026-11-10 (rulings.yaml 2026-11-10-canby-fire-dead-end-300): Canby gets
+#   300 ft. The city of Canby only; the district's rural area outside the
+#   city keeps the state's 150 ft (no layer of its own here).
 # - Portland (below): PCC 31.30.010.B, 300 ft. City code: it reaches the city,
 #   not the Portland-administered county pockets (or/multnomah/_unincorporated),
 #   which keep the state's 150 ft. Title 31 states no reach beyond the city.
@@ -33,6 +34,10 @@ dead_end_ft:
     value: 300
     cite: "Portland City Code 31.30.010.B"
     quote: "or/multnomah/portland/31.30.txt#L7"
+  or/clackamas/canby:
+    value: 300
+    cite: "Canby Fire District, Conditions of Construction rev 10.28 (OFC 503.2.5, D103.4)"
+    quote: "or/clackamas/canby/cfd.conditions-of-construction.txt#L120-L121"
 
 # What a lot gets when the truck could reach it only by driving an EXISTING
 # public dead end past its length with no turnaround seen:
