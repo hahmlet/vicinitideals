@@ -43,6 +43,14 @@ The maps a rule reads that no other rule does (Clackamas County's road
 inventory, Tualatin's street classification) are :data:`SPACING_MAPS`, loaded
 apart from :data:`flats.geom.street_class.CLASS_MAPS` so that no corner-lot,
 dedication or ``local_street`` reading moves with them.
+
+**Industrial streets.** Cornelius's standards space driveways from an
+industrial street as from a busy one (pws.2.streets L3-L4, L7-L9), but no map
+classes a street industrial. Where an entry holds ``industrial_streets``, a
+street the map reads as neither collector nor arterial is held unread
+wherever it may be industrial: any of its lines (by name) within
+``reach_ft`` of an industrial district on the city's zoning map
+(:class:`IndustrialReach`; coordinator 2026-11-10, never a false GREEN).
 """
 
 from __future__ import annotations
@@ -56,14 +64,17 @@ from typing import Any, Mapping, Sequence
 
 import yaml
 
+from flats.geom.corridor import FRONT_REACH_FT
 from flats.geom.durham_apron import (
+    _PARALLEL_TOL_DEG,
     CURB_RETURN_ALLOWANCE_FT,
     StreetNetwork,
+    _bearing,
     _best_clearance_with_allowances,
     chain_junctions,
     frontage_chains,
 )
-from flats.geom.edges import Edge
+from flats.geom.edges import Edge, bearing_delta
 from flats.geom.street_class import (
     CLASS_MAPS,
     ClassMap,
@@ -133,6 +144,22 @@ class Applies:
 
 
 @dataclass(frozen=True)
+class IndustrialStreets:
+    """Where a code has industrial streets no map classes: the zoning map
+    (registry dataset ``zoning``, its polygons of ``city``) whose
+    ``zones`` districts make a street within ``reach_ft`` possibly one."""
+
+    zoning: str
+    city_field: str
+    city: str
+    zones: frozenset[str]
+    reach_ft: float
+    cite: str
+    quote: str
+    street_quote: str
+
+
+@dataclass(frozen=True)
 class SpacingRules:
     """One jurisdiction's spacing rules (one entry of the config file)."""
 
@@ -146,6 +173,8 @@ class SpacingRules:
     #: The ruling that lets a map serve a place its registry entry does not
     #: (Cornelius reads Washington County's for busy streets only).
     map_ruling: str | None = None
+    #: Industrial streets no map classes (Cornelius); None elsewhere.
+    industrial: IndustrialStreets | None = None
 
     def quotes(self) -> list[tuple[str, float | None, str]]:
         """Every ``(quote, printed figure or None, cite)`` the entry holds."""
@@ -162,6 +191,9 @@ class SpacingRules:
             out.append((self.applies.quote, None, self.applies.cite))
             if self.applies.quote_also:
                 out.append((self.applies.quote_also, None, self.applies.cite))
+        if self.industrial is not None:
+            out.append((self.industrial.quote, None, self.industrial.cite))
+            out.append((self.industrial.street_quote, None, self.industrial.cite))
         return out
 
     def class_of_rank(self, rank: int | None, spec: ClassSpec | None) -> str | None:
@@ -213,6 +245,13 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
             str(a["when"]), frozenset(a["busy"]), str(a["cite"]), str(a["quote"]),
             str(a.get("quote_also") or ""),
         )
+    industrial = None
+    if raw.get("industrial_streets"):
+        i = raw["industrial_streets"]
+        industrial = IndustrialStreets(
+            str(i["zoning"]), str(i["city_field"]), str(i["city"]), frozenset(i["zones"]),
+            float(i["reach_ft"]), str(i["cite"]), str(i["quote"]), str(i["street_quote"]),
+        )
     return SpacingRules(
         layer=layer,
         map=raw.get("map"),
@@ -222,6 +261,7 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
         intersections=tuple(rules),
         applies=applies,
         map_ruling=raw.get("map_ruling"),
+        industrial=industrial,
     )
 
 
@@ -303,7 +343,123 @@ def missing(sources: Path) -> tuple[str, ...]:
 
     manifest_path = sources / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
-    return tuple(k for k in wanted_maps() if not _dataset_path(sources, manifest, k).is_file())
+    wanted = set(wanted_maps()) | {r.industrial.zoning for r in load_rules().values() if r.industrial}
+    return tuple(k for k in sorted(wanted) if not _dataset_path(sources, manifest, k).is_file())
+
+
+@dataclass(frozen=True)
+class IndustrialReach:
+    """The street lines that may be industrial streets: every line within
+    reach of an industrial district, and every line named as one of them.
+    ``everywhere`` where no district could be read, so that every street the
+    map reads local is held unread."""
+
+    lines: frozenset[int]
+    names: frozenset[str]
+    everywhere: bool = False
+
+    def may_be(self, network: StreetNetwork | None, idxs: Sequence[int]) -> bool:
+        """Whether any of the lines ``idxs`` may be an industrial street;
+        True where there are none (the street is not known)."""
+        if self.everywhere or network is None or not idxs:
+            return True
+        return any(
+            i in self.lines or bool(network.names[i] and network.names[i] in self.names)
+            for i in idxs
+        )
+
+
+#: Held unread everywhere: no zoning read.
+NO_INDUSTRIAL_READ = IndustrialReach(frozenset(), frozenset(), everywhere=True)
+
+
+def industrial_reach(
+    network: StreetNetwork | None, polygons: Sequence[Any] | None, reach_ft: float
+) -> IndustrialReach:
+    """The lines of ``network`` that may be industrial streets, off the
+    industrial districts ``polygons``; :data:`NO_INDUSTRIAL_READ` where the
+    zoning was not read (``polygons`` None) or there are no lines."""
+    if polygons is None or network is None or network.tree is None:
+        return NO_INDUSTRIAL_READ
+    hit: set[int] = set()
+    for poly in polygons:
+        hit.update(int(i) for i in network.tree.query(poly, predicate="dwithin", distance=reach_ft))
+    return IndustrialReach(frozenset(hit), frozenset(network.names[i] for i in hit if network.names[i]))
+
+
+def industrial_polygons(sources: Path, layer_id: str, spec: IndustrialStreets) -> list[Any] | None:
+    """The polygons of ``spec.city`` on the zoning map that are an industrial
+    district, or carry a code the city's layer neither holds nor has ruled
+    on (it may be one). None where the map is missing or draws nothing of
+    the city: the zoning is unread."""
+    import shapely
+    from shapely.geometry import shape
+
+    from flats.geom.street_class import _dataset_path
+    from flats.ingest.delta import iter_features
+    from flats.ingest.normalize import zone_for
+    from flats.ingest.sources import load_pipeline
+    from flats.rules.loader import load_rules as load_layers
+
+    manifest_path = sources / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
+    path = _dataset_path(sources, manifest, spec.zoning)
+    ds = load_pipeline().datasets.get(spec.zoning)
+    layer = load_layers().get(layer_id)
+    if not path.is_file() or ds is None or not ds.zone_field or layer is None:
+        return None
+    city_key = spec.city_field.lower()
+    zone_key = ds.zone_field.lower()
+    seen = 0
+    out: list[Any] = []
+    for feature in iter_features(path):
+        props = {str(k).lower(): v for k, v in (feature.get("properties") or {}).items()}
+        if str(props.get(city_key) or "").strip().lower() != spec.city.lower():
+            continue
+        seen += 1
+        code, held = zone_for(layer, props.get(zone_key))
+        if code is None:
+            continue
+        if held is None and code in layer.zone_rulings:
+            continue  # ruled (a county sliver, a pocket): not the city's district
+        if held is not None and held not in spec.zones:
+            continue
+        raw = feature.get("geometry")
+        if not raw:
+            continue
+        geom = shape(raw)
+        if geom.is_empty:
+            continue
+        out.append(geom if geom.is_valid else shapely.make_valid(geom))
+    return out if seen else None
+
+
+def frontage_lines(chain: Sequence[Edge], network: StreetNetwork | None) -> tuple[int, ...]:
+    """The street lines one frontage chain is on: per edge, the nearest
+    centreline running alongside it within reach (as
+    :func:`~flats.geom.durham_apron.chain_junctions` finds them)."""
+    if network is None or network.tree is None:
+        return ()
+    from shapely.geometry import LineString
+
+    out: set[int] = set()
+    for e in chain:
+        if e.length_ft < MIN_READ_EDGE_FT:
+            continue
+        line = LineString(((e.x1, e.y1), (e.x2, e.y2)))
+        middle = line.interpolate(line.length / 2.0)
+        ranked: list[tuple[float, int]] = []
+        for raw in network.tree.query(middle, predicate="dwithin", distance=FRONT_REACH_FT):
+            idx = int(raw)
+            road = network.geoms[idx]
+            bearing = _bearing(road, middle)
+            if bearing is None or bearing_delta(e.bearing_deg, bearing) > _PARALLEL_TOL_DEG:
+                continue
+            ranked.append((float(road.distance(middle)), idx))
+        if ranked:
+            nearest = min(d for d, _ in ranked)
+            out.update(i for d, i in ranked if d <= nearest + 1e-6)
+    return tuple(sorted(out))
 
 
 def line_rank(edge: Sequence[float], cmap: ClassMap) -> int | None:
@@ -333,11 +489,12 @@ def chain_class(chain: Sequence[Edge], cmap: ClassMap | None, rules: SpacingRule
 
 def cross_class(
     network: StreetNetwork, others: Sequence[int], point: tuple[float, float],
-    cmap: ClassMap | None, rules: SpacingRules,
+    cmap: ClassMap | None, rules: SpacingRules, industrial: IndustrialReach | None = None,
 ) -> str | None:
     """The class of the street meeting the frontage street at ``point``: each
     crossing line read just past the intersection, both ways, the busiest
-    reading winning; None where any leg reads nothing."""
+    reading winning; None where any leg reads nothing, or where it reads
+    neither collector nor arterial and may be an industrial street."""
     if cmap is None:
         return None
     from shapely.geometry import Point
@@ -368,7 +525,15 @@ def cross_class(
             ranks.append(rank)
     if not ranks:
         return None
-    return rules.class_of_rank(max(ranks), spec)
+    got = rules.class_of_rank(max(ranks), spec)
+    if (
+        got is not None
+        and rules.industrial is not None
+        and got not in rules.frontage
+        and (industrial or NO_INDUSTRIAL_READ).may_be(network, others)
+    ):
+        return None
+    return got
 
 
 def _allowance(basis: str, half_width: float) -> float:
@@ -423,13 +588,25 @@ def read_lot(
     cmap: ClassMap | None,
     rules: SpacingRules,
     half_widths: Mapping[str, float] | None = None,
+    industrial: IndustrialReach | None = None,
 ) -> tuple[str, str]:
     """``(answer, why)`` for one lot: :data:`CLEAR`, :data:`BLOCKED` or
-    :data:`UNREAD`, and a short account per frontage."""
+    :data:`UNREAD`, and a short account per frontage. ``industrial`` says
+    where streets may be industrial, for an entry that has such streets
+    (every local reading unread where it is missing)."""
     chains = frontage_chains(edges_json, bearings)
     if not chains:
         return UNREAD, "no street frontage read"
     classes = [chain_class(c, cmap, rules) for c in chains]
+    maybe_industrial: set[int] = set()
+    if rules.industrial is not None:
+        reach = industrial or NO_INDUSTRIAL_READ
+        for i, (chain, cls) in enumerate(zip(chains, classes)):
+            if cls is not None and cls not in rules.frontage and reach.may_be(
+                network, frontage_lines(chain, network)
+            ):
+                classes[i] = None
+                maybe_industrial.add(i)
     if rules.applies is not None and rules.applies.when == "every_frontage_busy":
         if len(chains) < 2:
             return CLEAR, "one street frontage: the code's spacing does not reach the pod"
@@ -440,10 +617,10 @@ def read_lot(
         return BLOCKED, "every frontage is a collector or arterial: " + ", ".join(sorted(set(classes)))  # type: ignore[arg-type]
     answers: list[str] = []
     why: list[str] = []
-    for chain, cls in zip(chains, classes):
+    for i, (chain, cls) in enumerate(zip(chains, classes)):
         if cls is None:
             answers.append(UNREAD)
-            why.append("street class not read")
+            why.append("may be an industrial street" if i in maybe_industrial else "street class not read")
             continue
         if cls in rules.frontage:
             answers.append(BLOCKED)
@@ -470,7 +647,7 @@ def read_lot(
             why.append(f"{cls}: intersections not read")
             continue
         junctions = [
-            (j.station, j.half_width_ft, cross_class(network, j.others, j.point, cmap, rules))
+            (j.station, j.half_width_ft, cross_class(network, j.others, j.point, cmap, rules, industrial))
             for j in found
         ]
         got = chain_answer(length, junctions, cls, rules)
@@ -513,11 +690,15 @@ def half_widths_of(row: Mapping[str, Any]) -> dict[str, float]:
 __all__ = [
     "BLOCKED",
     "CLEAR",
+    "IndustrialReach",
+    "IndustrialStreets",
     "SPACING_MAPS",
     "UNREAD",
     "SpacingRules",
     "chain_answer",
     "load_maps",
+    "industrial_polygons",
+    "industrial_reach",
     "load_rules",
     "missing",
     "read_lot",

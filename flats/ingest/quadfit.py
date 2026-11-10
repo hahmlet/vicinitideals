@@ -2743,6 +2743,18 @@ def with_driveway_spacing(
         return 0
     maps = driveway_spacing.load_maps(sources) if sources is not None else {}
     network = load_street_network(streets)
+    # Where a street may be one of the code's industrial streets (Cornelius),
+    # per layer; unread (every local reading held) without the snapshot.
+    industrial: dict[str, driveway_spacing.IndustrialReach] = {}
+    for layer_id in sorted({_layer_id(r) for r in reached}):
+        spec = rules[layer_id].industrial
+        if spec is not None:
+            polygons = (
+                driveway_spacing.industrial_polygons(sources, layer_id, spec)
+                if sources is not None
+                else None
+            )
+            industrial[layer_id] = driveway_spacing.industrial_reach(network, polygons, spec.reach_ft)
     for row in reached:
         spacing = rules[_layer_id(row)]
         try:
@@ -2757,6 +2769,7 @@ def with_driveway_spacing(
             cmap,
             spacing,
             driveway_spacing.half_widths_of(row),
+            industrial.get(_layer_id(row)),
         )
         if cmap is None and spacing.map:
             why = f"no {spacing.map} map in the snapshot; " + why

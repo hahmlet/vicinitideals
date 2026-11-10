@@ -234,8 +234,13 @@ def test_a_cornelius_lot_on_a_county_arterial_is_blocked() -> None:
     edges, bearings = _midblock(400.0)
     front, cross = _roads(400.0)
     network = StreetNetwork.build([front, cross], ["ADAIR ST", "OAK ST"])
+    # Busy is busy whatever the zoning says (none read here).
     answer, why = ds.read_lot(edges, bearings, network, _county_map(front, 3), cornelius)
     assert answer == ds.BLOCKED, why
+
+
+def _no_industry(network: StreetNetwork) -> ds.IndustrialReach:
+    return ds.industrial_reach(network, [], 60.0)
 
 
 def test_a_cornelius_local_street_clears_away_from_corners() -> None:
@@ -246,8 +251,82 @@ def test_a_cornelius_local_street_clears_away_from_corners() -> None:
     # Undrawn, and Metro and OpenStreetMap both call it residential: local,
     # as on county lots. 400 ft of frontage clears 100 ft from any street's
     # right-of-way (the cross street unread, so taken as the strictest).
-    answer, why = ds.read_lot(edges, bearings, network, _county_map(front, None), cornelius)
+    # No industrial district near either street.
+    answer, why = ds.read_lot(
+        edges, bearings, network, _county_map(front, None), cornelius, None, _no_industry(network)
+    )
     assert answer == ds.CLEAR, why
+
+
+def test_a_cornelius_local_street_that_touches_an_industrial_district_is_unread() -> None:
+    from shapely.geometry import box
+
+    cornelius = ds.rules_for("or/washington/cornelius")
+    edges, bearings = _midblock(400.0)
+    front, cross = _roads(400.0)
+    # A far stretch of MAIN ST, past the block, runs beside an M-1 district.
+    far = LineString(((X0 + 1500, Y0 - 20), (X0 + 2500, Y0 - 20)))
+    network = StreetNetwork.build([front, cross, far], ["MAIN ST", "OAK ST", "MAIN ST"])
+    district = box(X0 + 1600, Y0, X0 + 2000, Y0 + 400)
+    reach = ds.industrial_reach(network, [district], cornelius.industrial.reach_ft)
+    assert reach.may_be(network, (0,)) and not reach.may_be(network, (1,))
+    answer, why = ds.read_lot(
+        edges, bearings, network, _county_map(front, None), cornelius, None, reach
+    )
+    assert answer == ds.UNREAD, why
+    assert "industrial" in why
+
+
+def test_a_cornelius_local_street_with_no_zoning_read_is_unread() -> None:
+    cornelius = ds.rules_for("or/washington/cornelius")
+    edges, bearings = _midblock(400.0)
+    front, cross = _roads(400.0)
+    network = StreetNetwork.build([front, cross], ["MAIN ST", "OAK ST"])
+    for reach in (None, ds.industrial_reach(network, None, 60.0)):
+        got = ds.read_lot(edges, bearings, network, _county_map(front, None), cornelius, None, reach)
+        assert got[0] == ds.UNREAD, got[1]
+
+
+def test_cornelius_industrial_districts_are_read_off_the_zoning_map(tmp_path) -> None:
+    def square(x: float) -> dict:
+        ring = [[x, 0.0], [x + 10, 0.0], [x + 10, 10.0], [x, 10.0], [x, 0.0]]
+        return {"type": "Polygon", "coordinates": [ring]}
+
+    def feature(city: str, zone: str, x: float) -> dict:
+        return {"type": "Feature", "properties": {"CITY": city, "ZONE": zone}, "geometry": square(x)}
+
+    spec = ds.rules_for("or/washington/cornelius").industrial
+    assert spec is not None
+    path = tmp_path / f"{spec.zoning}.geojson"
+    features = [
+        feature("Cornelius", "M1", 0),  # M-1 on the map
+        feature("Cornelius", "LI", 20),
+        feature("Cornelius", "R7", 40),  # residential
+        feature("Cornelius", "FD-20", 60),  # a county sliver, ruled
+        feature("Cornelius", "QQ", 80),  # a code the layer cannot spell: may be industrial
+        feature("Hillsboro", "M1", 100),  # another city's
+    ]
+    path.write_text(json.dumps({"type": "FeatureCollection", "features": features}), encoding="utf-8")
+    got = ds.industrial_polygons(tmp_path, "or/washington/cornelius", spec)
+    assert got is not None
+    assert sorted(round(g.bounds[0]) for g in got) == [0, 20, 80]
+    # A map that draws nothing of the city is unread, not "no industry".
+    path.write_text(
+        json.dumps({"type": "FeatureCollection", "features": features[-1:]}), encoding="utf-8"
+    )
+    assert ds.industrial_polygons(tmp_path, "or/washington/cornelius", spec) is None
+    assert ds.industrial_polygons(tmp_path / "none", "or/washington/cornelius", spec) is None
+
+
+def test_the_cornelius_zoning_map_is_registered_and_its_districts_held() -> None:
+    from flats.rules.loader import load_rules as load_layers
+
+    spec = ds.rules_for("or/washington/cornelius").industrial
+    assert spec is not None
+    dataset = load_pipeline().datasets[spec.zoning]
+    assert "or/washington/cornelius" in dataset.serves
+    layer = load_layers()["or/washington/cornelius"]
+    assert all(layer.holds(z) == z for z in spec.zones)
 
 
 def test_a_cornelius_street_with_no_reading_stays_unread() -> None:

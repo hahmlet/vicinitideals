@@ -207,6 +207,25 @@ jurisdictions:
       '3': arterial
       '2': arterial
     unlisted: local
+    # The code also spaces driveways from industrial streets (pws.2.streets
+    # L3-L4, L7-L9), a class the county map does not hold. Coordinator
+    # 2026-11-10, never a false GREEN: a street read local (or Neighborhood
+    # Route) is unread wherever it may be industrial -- any line of it, by
+    # name, within 60 ft of a Cornelius industrial district (M-1 General
+    # Industrial or LI Light Industrial, 18.05.030 L19-L21) on Metro's
+    # zoning map, or of a Cornelius polygon whose code the layer neither
+    # holds nor has ruled on. 60 ft reaches a district line drawn at the
+    # right-of-way edge of an 80 ft street from its centreline, with room;
+    # a frontage or cross street so held takes the strictest reading.
+    industrial_streets:
+      zoning: rlis_zoning_metro
+      city_field: CITY
+      city: Cornelius
+      zones: [M-1, LI]
+      reach_ft: 60
+      cite: Cornelius CMC 18.05.030, the industrial districts M-1 General Industrial and LI Light Industrial; Public Works Standards 2.c.1, driveways held back from the right-of-way of an industrial street
+      quote: or/washington/cornelius/18.05/18.05.030.txt#L19-L21
+      street_quote: or/washington/cornelius/pws.2.streets.txt#L3-L4
     frontage:
       arterial:
         figure_ft: 100
