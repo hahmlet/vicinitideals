@@ -223,7 +223,9 @@ from flats.score.paper import (
     court_across,
     court_depth,
     door_limit,
+    door_rule,
     door_turned,
+    doors_to_the_side,
     drive_width,
     entrance_unsettled,
     faces_the_street,
@@ -4720,15 +4722,95 @@ def screen_lot(
     on the one lot and as four townhouses on four unit lots, the better
     kept and both recorded (:func:`townhouse_checked`). Both forms go
     through :func:`_screen_plat`, which measures from the sidewalk
-    easement line where the lot has one."""
+    easement line where the lot has one.
+
+    A design the code's entrance standard makes face the street, and that
+    missed its fit facing one, is searched once more with its doors free to
+    face a side yard (:func:`side_door_checked`)."""
     got = _screen_plat(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
-    return townhouse_checked(
+    got = townhouse_checked(
         lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
+    return side_door_checked(
+        lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+def _street_fit_missed(s: Screened, design: Design) -> tuple[float, float] | None:
+    """The street-facing fit's (observed, threshold) feet, where ``s`` is RED,
+    the code makes ``design``'s doors face a street (:func:`flats.score.paper.
+    door_rule`), and the fit is what it missed (``fit_ft``, or the same miss
+    named :data:`flats.score.screen.STEEP_GROUND`); None otherwise."""
+    if s.signed.colour is not flag_plan.Colour.red:
+        return None
+    if door_rule(s.rules, design) is None:
+        return None
+    for c in s.screening.checks:
+        if c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails:
+            return (float(c.observed), float(c.threshold))
+    return None
+
+
+def side_doors(lot: QuadfitLot, missed: tuple[float, float]) -> QuadfitLot:
+    """``lot`` (and its second reading) marked as searched with the doors to
+    a side yard, the street-facing fit ``missed`` (:attr:`flats.score.screen.
+    LotFacts.entrance_side_fit`): every screen of it is held out of GREEN."""
+    facts = dataclasses.replace(lot.facts, entrance_side_fit=missed)
+    second = None if lot.second is None else side_doors(lot.second, missed)
+    return dataclasses.replace(lot, facts=facts, second=second)
+
+
+def side_door_checked(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` with each design that fits only turned sideways read YELLOW.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-side-door-fit-yellow``,
+    FOLLOWUPS 177): the 2026-11-08 ruling stands for the design -- no
+    street-facing door on the end home, so where the code makes the main
+    entrance face the street (``entrance_faces_street`` ``required`` or
+    ``required_named``) the pod is searched with its 80 ft door face toward
+    a street (:func:`flats.score.paper.door_limit`). Where that search
+    missed the fit and left the lot RED, the lot is screened again, the whole
+    way, with the doors free to face a side yard
+    (:func:`flats.score.paper.doors_to_the_side`) and marked so every screen
+    holds it out of GREEN (:func:`side_doors`, flag ENTRANCE-SIDE-DOOR,
+    whose bounds are the street-facing miss). That answer replaces the RED
+    only where it is not RED itself: a lot that misses both ways keeps its
+    street-facing answer, slack and binding unchanged. A lot that fits
+    facing the street, or that is RED on anything but the fit, is never
+    searched again. Nothing gains GREEN here.
+    """
+    out = list(got)
+    if lot.facts.entrance_side_fit is not None:
+        # Already the side-door search: it is never searched a third time.
+        return out
+    for i, (design, s) in enumerate(zip(designs, got)):
+        missed = _street_fit_missed(s, design)
+        if missed is None:
+            continue
+        with doors_to_the_side():
+            (side,) = screen_lot(
+                side_doors(lot, missed), [design], rules=rules, policy=policy,
+                relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
+            )
+        if side.signed.colour is flag_plan.Colour.yellow:
+            out[i] = side
+    return out
 
 
 #: The lot measure :func:`depth_checked` reads the lot at, where nothing

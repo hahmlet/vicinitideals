@@ -747,6 +747,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-SIDE-DOOR:
+    description: "Fits only with doors facing the side; needs a street-facing end door (design change). The code makes the front doors face the street, the pod does not fit with its door face toward a street, and it fits turned sideways with its doors to a side yard (Steph 2026-11-10, rulings.yaml 2026-11-10-side-door-fit-yellow: YELLOW, never GREEN, not RED on this alone; the bounds are the street-facing fit and the fit it needed, feet)"
+    kind: parametric
+    risk: likely
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A pod design with a street-facing door on the end home, or a plan that stands the doors toward the street (FOLLOWUPS 177)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ENTRANCE_SIDE]
   ENTRANCE-STREET:
     description: "The front doors must face the street the code names (the address street, the busiest street or a mapped access street), and this lot has more than one street"
     kind: categorical
