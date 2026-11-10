@@ -198,6 +198,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [STREET_UNCONFIRMED]
+  ACCESS-DRIVEWAY-SPACING:
+    description: "Every street the lot fronts spaces a new driveway from intersections or other driveways farther than the lot allows"
+    kind: categorical
+    risk: likely
+    severity: 6
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Call the city (or ODOT on a state highway) about access: every code here has a way out for a lot that cannot meet spacing (2026-11-09-busy-road-driveway-spacing-yellow, FOLLOWUPS 169)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DRIVEWAY_SPACING_BLOCKED, DRIVEWAY_NEAR_INTERSECTION_100FT]
+  ACCESS-DRIVEWAY-SPACING-UNREAD:
+    description: "The code spaces driveways by street class here, and no place on the frontage was shown to clear it"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Load the street-class map, or read the lot's intersections (FOLLOWUPS 169)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DRIVEWAY_SPACING_UNREAD]
   ACCESS-STREET-RANK-UNKNOWN:
     description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
     kind: categorical

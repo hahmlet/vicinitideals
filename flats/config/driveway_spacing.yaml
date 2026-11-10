@@ -1,0 +1,251 @@
+# Driveway spacing from intersections and along busy streets (FOLLOWUPS 169).
+#
+# Read by flats/geom/driveway_spacing.py. One entry per jurisdiction whose
+# code holds a new driveway back from street intersections, or spaces
+# driveways along a collector or arterial, by the street's class. Every
+# figure is the code's printed one, with the stored line it is printed on.
+#
+# How a lot is answered (per street frontage, then the lot):
+#   * the frontage street's class is read off the TSP map named in `map`
+#     (`classes` turns the map's printed class into the word the code uses;
+#     `unlisted` is the word for a street the map does not draw, taken only
+#     where Metro types the street a minor residential street);
+#   * a class under `frontage` is barred: its rule spaces a new driveway
+#     from existing driveways (or the code gives no direct access), and no
+#     map holds driveways, so the frontage can never be shown to clear;
+#   * each rule under `from_intersections` holds the driveway `figure_ft`
+#     from every intersecting street of a `cross` class, measured by `basis`
+#     (centreline to centreline; or from the cross street's right-of-way
+#     line, which takes off its measured half-width, 40 ft where unmeasured);
+#     a cross street whose class the map does not read is taken as the
+#     strictest class, for a clear answer only;
+#   * a class the entry does not name (a freeway, an unclassed line) and a
+#     line the map does not read leave the frontage unread.
+# The lot is clear where any frontage is clear; blocked where every frontage
+# is barred or measured short; otherwise unread. Blocked is YELLOW with a
+# flag (call the city or ODOT about access), never GREEN and never RED on
+# this ground alone, whether or not a driveway is there today; unread is
+# YELLOW (Steph 2026-11-09, rulings.yaml 2026-11-09-busy-road-driveway-spacing-yellow:
+# "Yellow with flag"). A lot with another frontage that clears takes its
+# driveway there. Every code here offers a way out to a lot that cannot meet
+# its spacing (Washington County's interim access, CDC 501-8.5; Clackamas
+# County's "to the extent feasible", Roadway Standards 220; Tualatin's
+# variation for limited frontage, 75.030(3); Tigard's "no practical
+# alternative", 18.920.030, carried to middle housing by OAR 660-046-0220's
+# same-access-standards rule): an engineer's call, which the flag names.
+#
+# NOT HELD: spacing between two driveways on a local street (Clackamas
+# County 25 ft, Tualatin 40 ft on one property, Washington County 10 ft from
+# Point B for separated approaches): the pod has one driveway, and the
+# neighbours' driveways are not mapped. Durham 3.7.1.7 stays its own check
+# (flats/geom/durham_apron.py).
+
+jurisdictions:
+  or/washington/tigard:
+    map: street_class_tigard
+    # CITY_TSP verbatim. NEIGHBORHOOD is its own TSP class, not a collector
+    # (the code's I.2 and I.3 name collector and arterial only): read as
+    # local here, a judgement. FREEWAY and "Other" are left unnamed: unread.
+    classes:
+      LOCAL: local
+      Local: local
+      PRIVATE: local
+      NEIGHBORHOOD: local
+      COLLECTOR: collector
+      MAJOR COLLECTOR: collector
+      MINOR COLLECTOR: collector
+      ARTERIAL: arterial
+      STA: arterial
+      PCPL Arterial: arterial
+    frontage:
+      collector:
+        figure_ft: 200
+        cite: TDC 18.920.030.I.3, minimum spacing of driveways and streets along a collector 200 feet
+        quote: or/washington/tigard/tdc.18.920.access.txt#L121
+      arterial:
+        figure_ft: 600
+        cite: TDC 18.920.030.I.3, minimum spacing of driveways and streets along an arterial 600 feet
+        quote: or/washington/tigard/tdc.18.920.access.txt#L121
+    from_intersections:
+      - driveway_on: [local, collector, arterial]
+        cross: [collector, arterial]
+        figure_ft: 150
+        basis: right_of_way_line
+        cite: TDC 18.920.030.I.2, minimum driveway setback from a collector or arterial street intersection 150 feet, from the right-of-way line of the intersecting street to the throat of the driveway
+        quote: or/washington/tigard/tdc.18.920.access.txt#L117
+
+  or/washington/_unincorporated:
+    map: street_class_washington
+    # FClass2 verbatim (5 Neighborhood Route, 4 Collector, 3 Arterial,
+    # 2 Principal Arterial). 1 Freeway and the Proposed codes are unnamed.
+    classes:
+      '5': neighborhood_route
+      '4': collector
+      '3': arterial
+      '2': principal_arterial
+    unlisted: local
+    # CDC 501-2.6 B(3): for middle housing 501-8.5 applies only as F (sight
+    # distance) and, for a quadplex, as access spacing "in specific
+    # circumstances, as described in 430-84.3 B (4)". The circumstance that
+    # reaches a one-driveway pod is B(4)(c)(ii): a lot with more than one
+    # street frontage, every one a collector or an arterial.
+    applies:
+      cite: CDC 501-8.5, for Middle Housing access spacing applies only to Triplexes, Quadplexes and Townhouses in the circumstances of 430-84.3 B(4); 430-84.3 B(4)(c)(ii), a Quadplex on a lot with more than one street frontage, frontages only on collector and/or arterial roads, meets the access spacing of 501-8.5 B
+      quote: or/washington/_unincorporated/cdc.501.public-facilities.txt#L876-L878
+      quote_also: or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L229-L237
+      when: every_frontage_busy
+      busy: [collector, arterial, principal_arterial]
+    frontage:
+      collector:
+        figure_ft: 100
+        cite: CDC 501-8.5 B(3), no direct access to a Collector within 100 feet of any Point A; minimum spacing between driveways (Point C to Point C) 100 feet
+        quote: or/washington/_unincorporated/cdc.501.public-facilities.txt#L949-L957
+      arterial:
+        figure_ft: 600
+        cite: CDC 501-8.5 B(4)(a), direct access to an arterial where Point A is more than 600 feet from any intersection Point A or other access
+        quote: or/washington/_unincorporated/cdc.501.public-facilities.txt#L976-L978
+      principal_arterial:
+        cite: CDC 501-8.5 B(4)(b), access to a Principal Arterial is subject to approval by ODOT through the State's Access Management Policy
+        quote: or/washington/_unincorporated/cdc.501.public-facilities.txt#L979-L982
+    from_intersections: []
+
+  or/clackamas/_unincorporated:
+    map: street_class_clackamas
+    # Class verbatim (the county's road inventory, county roads only). A
+    # state highway or city street is not drawn and reads unread unless
+    # Metro types it a minor residential street.
+    classes:
+      LOCAL: local
+      CONNECTOR: connector
+      COLLECTOR: collector
+      MINOR ARTERIAL: arterial
+      MAJOR ARTERIAL: arterial
+    unlisted: local
+    frontage:
+      collector:
+        figure_ft: 150
+        cite: Roadway Standards 220.3 Table 2-1, minimum access spacing inside the UGB, Collector 150 feet, from existing accesses on both sides of the road
+        quote: or/clackamas/_unincorporated/roadway.220.txt#L26-L37
+      arterial:
+        figure_ft: 250
+        cite: Roadway Standards 220.3 Table 2-1, minimum access spacing inside the UGB, Minor Arterial 250 feet, Major Arterial 500 feet
+        quote: or/clackamas/_unincorporated/roadway.220.txt#L35-L36
+    from_intersections:
+      - driveway_on: [local, connector]
+        cross: [arterial]
+        figure_ft: 100
+        basis: centreline
+        cite: Roadway Standards 220.3 Table 2-1 note **, access placed a minimum of 100 feet from any intersection with an arterial roadway, measured centerline to centerline
+        quote: or/clackamas/_unincorporated/roadway.220.txt#L52
+        quote_also: or/clackamas/_unincorporated/roadway.220.txt#L29
+
+  or/clackamas/tualatin:
+    map: street_class_tualatin
+    # TYPE verbatim. The layer (December 2024) predates the 2045 TSP
+    # (Ord. 1451-25), which adds Neighborhood Routes; an undrawn street may
+    # be one, so a local frontage is also held to the Neighborhood Route's
+    # 100 feet from other intersections.
+    #
+    # 75.020(4) (#L34-L38) exempts townhouses and quadplexes from ITS
+    # driveway-to-intersection distances (the same 200 / 100 feet). 75.030(2)
+    # (#L134-L135) holds every "new access point", private driveways
+    # included, to Table 75-1 and states no such exemption, so the table is
+    # read as reaching the pod (a judgement, 2026-11-09: reading the
+    # exemption into the table could certify a GREEN the table forbids).
+    # A miss is YELLOW, not RED: 75.030(3)'s variation for limited frontage
+    # (#L145-L147) and 75.020(5)'s existing driveways (#L50-L53) are relief
+    # the screen cannot weigh.
+    classes:
+      MAJOR ARTERIAL: arterial
+      MINOR ARTERIAL: arterial
+      MAJOR COLLECTOR: collector
+      MINOR COLLECTOR: collector
+      CONNECTOR COMMERCIAL INDUSTRIAL: connector
+      CONNECTOR DOWNTOWN CORE: connector
+    unlisted: local
+    frontage:
+      collector:
+        figure_ft: 200
+        cite: TDC 75.030 Table 75-1, Collector minimum access spacing 200 feet unrestricted; access points include private driveways
+        quote: or/clackamas/tualatin/75.access-management.txt#L134-L157
+      arterial:
+        figure_ft: 400
+        cite: TDC 75.030 Table 75-1, Arterial minimum access spacing 400 feet unrestricted (Primary Arterial 800 feet)
+        quote: or/clackamas/tualatin/75.access-management.txt#L155-L156
+    from_intersections:
+      - driveway_on: [local, connector]
+        cross: [arterial, collector]
+        figure_ft: 200
+        basis: centreline
+        cite: TDC 75.030 Table 75-1, Local, Connector and Neighborhood Route 200 feet from an intersection with an Arterial or Collector, centerline to centerline
+        quote: or/clackamas/tualatin/75.access-management.txt#L174-L175
+        quote_also: or/clackamas/tualatin/75.access-management.txt#L137-L138
+      - driveway_on: [local, connector]
+        cross: [connector, local]
+        figure_ft: 100
+        basis: centreline
+        cite: TDC 75.030 Table 75-1, Connector and Neighborhood Route 100 feet from other street intersections, centerline to centerline
+        quote: or/clackamas/tualatin/75.access-management.txt#L166-L168
+
+  or/washington/cornelius:
+    # No city TSP layer is published (scouted 2026-11-09). Washington
+    # County's map draws Cornelius roads and answers the busy-or-not
+    # question of this check there (Steph 2026-11-10, rulings.yaml
+    # 2026-11-10-cornelius-county-street-map: "Only for busy roads" -- used
+    # for this question only, never for corners, widening or anything else
+    # in Cornelius, so its pipeline entry does not serve the city). Read as
+    # for county lots: FClass2 4 Collector and 3 / 2 Arterial are the
+    # code's busy streets; 5 Neighborhood Route, and a street the map does
+    # not draw where Metro types it local and OpenStreetMap calls it
+    # residential, are local streets (the code's classes are arterial,
+    # collector, industrial and local). Anything else stays unread.
+    map: street_class_washington
+    map_ruling: 2026-11-10-cornelius-county-street-map
+    classes:
+      '5': local
+      '4': collector
+      '3': arterial
+      '2': arterial
+    unlisted: local
+    # The code also spaces driveways from industrial streets (pws.2.streets
+    # L3-L4, L7-L9), a class the county map does not hold. Coordinator
+    # 2026-11-10, never a false GREEN: a street read local (or Neighborhood
+    # Route) is unread wherever it may be industrial -- any line of it, by
+    # name, within 60 ft of a Cornelius industrial district (M-1 General
+    # Industrial or LI Light Industrial, 18.05.030 L19-L21) on Metro's
+    # zoning map, or of a Cornelius polygon whose code the layer neither
+    # holds nor has ruled on. 60 ft reaches a district line drawn at the
+    # right-of-way edge of an 80 ft street from its centreline, with room;
+    # a frontage or cross street so held takes the strictest reading.
+    industrial_streets:
+      zoning: rlis_zoning_metro
+      city_field: CITY
+      city: Cornelius
+      zones: [M-1, LI]
+      reach_ft: 60
+      cite: Cornelius CMC 18.05.030, the industrial districts M-1 General Industrial and LI Light Industrial; Public Works Standards 2.c.1, driveways held back from the right-of-way of an industrial street
+      quote: or/washington/cornelius/18.05/18.05.030.txt#L19-L21
+      street_quote: or/washington/cornelius/pws.2.streets.txt#L3-L4
+    frontage:
+      arterial:
+        figure_ft: 100
+        cite: Cornelius Public Works Standards 2.c.2, driveways on arterials, collectors and industrial streets keep a 100-foot separation between driveways and from the right-of-way of every street (CMC 18.143 access spacing to the public works standards)
+        quote: or/washington/cornelius/pws.2.streets.txt#L7-L9
+        quote_also: or/washington/cornelius/cmc.18.143.transportation.txt#L147
+      collector:
+        figure_ft: 100
+        cite: Cornelius Public Works Standards 2.c.2, as for arterials
+        quote: or/washington/cornelius/pws.2.streets.txt#L7-L9
+    from_intersections:
+      - driveway_on: [local]
+        cross: [arterial, collector]
+        figure_ft: 100
+        basis: right_of_way_line
+        cite: Cornelius Public Works Standards 2.c.1, driveways on local streets a minimum 100 feet back from the right-of-way of an arterial, collector or industrial street
+        quote: or/washington/cornelius/pws.2.streets.txt#L3-L4
+      - driveway_on: [local]
+        cross: [local]
+        figure_ft: 25
+        basis: right_of_way_line
+        cite: Cornelius Public Works Standards 2.c.1, and 25 feet back from the right-of-way of a local street
+        quote: or/washington/cornelius/pws.2.streets.txt#L4-L5

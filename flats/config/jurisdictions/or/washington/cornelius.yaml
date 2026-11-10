@@ -278,6 +278,17 @@ code:
 - id: "cmc.18.143.transportation"
   url: https://ecode360.com/print/CO4396?guid=47339321
   title: "CMC Chapter 18.143 Transportation Facilities"
+# The Public Works Standards' driveway locations and spacing (2.c), which
+# 18.143 sends access spacing to; read for flats/config/driveway_spacing.yaml
+# (FOLLOWUPS 169). Read 2026-11-09.
+- id: "pws.2.streets"
+  url: https://www.corneliusor.gov/DocumentCenter/View/429/Public-Works-Standards-PDF
+  title: "Cornelius Public Works Standards, Section 2 Streets: c. Driveway Locations and Spacing"
+  start: "Driveway Locations and Spacing"
+  # The contents list the heading first.
+  nth: 2
+  end: "Cornelius Public Works Standards"
+  allow_thin: true
 - id: "cmc.18.145.parking"
   url: https://ecode360.com/print/CO4396?guid=47339373
   title: "CMC Chapter 18.145 Off-Street Parking and Loading"

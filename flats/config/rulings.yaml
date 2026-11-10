@@ -2936,6 +2936,7 @@
     frontage that passes takes its driveway there. Steph first said RED, then
     replaced it the same evening with this ruling. FOLLOWUPS 169.
   source: Steph 2026-11-09 (chat), docs/followups/169-arterial-driveway-spacing.md, ../vicinitideals-worktrees/hwy-driveway.findings.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py, flats/score/screen.py]
 - id: 2026-11-09-rf-is-farm-land
   kind: ruling
   date: 2026-11-09

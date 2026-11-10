@@ -237,12 +237,31 @@ def test_a_103_foot_corner_frontage_fails_the_apron_rule(corpus, policies) -> No
     lot = lot_from_row(row, corpus.layers)
     assert lot.observed[FACT] is True
     failed = _screen(corpus, policies, lot)
-    assert failed.signed.colour is flag_plan.Colour.red
     assert DRIVEWAY_NEAR_INTERSECTION_100FT in failed.signed.reasons
+    assert "ACCESS-DRIVEWAY-SPACING" in {f.code for f in failed.signed.flags}
     apron_check = next(
         c for c in failed.signed.checks if c.check == DRIVEWAY_NEAR_INTERSECTION_100FT
     )
     assert apron_check.verdict.value == "fail"
+
+
+def test_an_apron_miss_alone_is_yellow_with_the_flag_not_red(corpus, policies) -> None:
+    """A lot whose only problem is the apron's 100 ft is YELLOW with the
+    call-the-city flag, never RED on this ground alone (Steph 2026-11-09,
+    rulings.yaml 2026-11-09-busy-road-driveway-spacing-yellow)."""
+    row = _durham_midblock(w=95.0, d=300.0)
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+        LineString(((X0 - 20, Y0 - 100), (X0 - 20, Y0 + 100))),
+    ]
+    row = _measured(row, roads)
+    assert row["durham_apron_clearance_ft"] < DURHAM_APRON_MIN_CLEARANCE_FT
+    lot = lot_from_row(row, corpus.layers)
+    got = _screen(corpus, policies, lot)
+    assert got.signed.colour is flag_plan.Colour.yellow
+    assert got.signed.reasons == (DRIVEWAY_NEAR_INTERSECTION_100FT,)
+    assert "ACCESS-DRIVEWAY-SPACING" in {f.code for f in got.signed.flags}
+    assert DRIVEWAY_NEAR_INTERSECTION_100FT not in {b.check for b in got.signed.binds}
 
 
 def test_centerline_only_clearance_between_bounds_keeps_the_flag(

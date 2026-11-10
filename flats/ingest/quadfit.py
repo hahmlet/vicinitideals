@@ -191,6 +191,7 @@ from flats.geom.durham_apron import (
     load_street_network,
     maximum_clearance_ft,
 )
+from flats.geom import driveway_spacing
 from flats.ingest.flatter import (
     _angles as _flatter_angles,
     _drive_clear,
@@ -2035,6 +2036,10 @@ def lot_from_row(
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
         durham_apron_clearance_ft=_finite(row.get("durham_apron_clearance_ft")),
+        # Driveway spacing from intersections and along busy streets
+        # (FOLLOWUPS 169): clear / blocked / unread, None where no rule.
+        driveway_spacing=row.get("driveway_spacing") or None,
+        driveway_spacing_why=str(row.get("driveway_spacing_why") or ""),
         private_drive_lines_ft=drive_lines_ft(row) or private_drive_lines_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
@@ -2741,6 +2746,56 @@ def _durham_apron_clearance_column(
             )
         )
     return out
+
+
+def with_driveway_spacing(
+    rows: list[dict[str, Any]], sources: Path | None, streets: Path
+) -> int:
+    """Answer driveway spacing (FOLLOWUPS 169) on every row whose layer
+    :mod:`flats.geom.driveway_spacing` holds rules for, in place
+    (``driveway_spacing``: clear / blocked / unread, and
+    ``driveway_spacing_why``), and say how many rows it reached. A row of
+    such a layer the reading cannot reach (no snapshot, no centrelines) is
+    left unread, the conservative answer."""
+    rules = driveway_spacing.load_rules()
+    reached = [r for r in rows if _layer_id(r) in rules]
+    if not reached:
+        return 0
+    maps = driveway_spacing.load_maps(sources) if sources is not None else {}
+    network = load_street_network(streets)
+    # Where a street may be one of the code's industrial streets (Cornelius),
+    # per layer; unread (every local reading held) without the snapshot.
+    industrial: dict[str, driveway_spacing.IndustrialReach] = {}
+    for layer_id in sorted({_layer_id(r) for r in reached}):
+        spec = rules[layer_id].industrial
+        if spec is not None:
+            polygons = (
+                driveway_spacing.industrial_polygons(sources, layer_id, spec)
+                if sources is not None
+                else None
+            )
+            industrial[layer_id] = driveway_spacing.industrial_reach(network, polygons, spec.reach_ft)
+    for row in reached:
+        spacing = rules[_layer_id(row)]
+        try:
+            bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
+        except (TypeError, ValueError):
+            bearings = ()
+        cmap = maps.get(spacing.map or "")
+        answer, why = driveway_spacing.read_lot(
+            row.get("edges_json") or "[]",
+            bearings,
+            network,
+            cmap,
+            spacing,
+            driveway_spacing.half_widths_of(row),
+            industrial.get(_layer_id(row)),
+        )
+        if cmap is None and spacing.map:
+            why = f"no {spacing.map} map in the snapshot; " + why
+        row["driveway_spacing"] = answer
+        row["driveway_spacing_why"] = why
+    return len(reached)
 
 
 @functools.lru_cache(maxsize=1)
@@ -7969,6 +8024,10 @@ def run(
             f"no {', '.join(lacking)} for Portland's main street overlay and historic resources in "
             f"{sources}: run acquire (FOLLOWUPS 78)"
         )
+    if sources is not None and (lacking := driveway_spacing.missing(sources)):
+        raise FileNotFoundError(
+            f"no {', '.join(lacking)} for driveway spacing in {sources}: run acquire (FOLLOWUPS 169)"
+        )
     institutional = _institutional_source(institutional, sources)
     if plats is None:
         from flats.ingest.plats import CURRENT
@@ -8009,6 +8068,9 @@ def run(
         clearances = _durham_apron_clearance_column(rows, roads)
         for row, clearance in zip(rows, clearances, strict=True):
             row["durham_apron_clearance_ft"] = clearance
+    spaced = with_driveway_spacing(rows, sources, roads)
+    if spaced:
+        log(f"bridge: driveway spacing read on {spaced:,} lots")
     named = with_street_names(rows, sources)
     if named:
         log(f"bridge: street names read on {named:,} lots")

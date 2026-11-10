@@ -776,6 +776,15 @@ code:
   # minimum access requirements in TDC 73C". Ordinance 1486-24 repealed the
   # old chapter and enacted this one whole on 10 June 2024, which is why every
   # subsection carries the same citation.
+  # Chapter 75 Access Management, read for Table 75-1's access spacing
+  # (flats/config/driveway_spacing.yaml, FOLLOWUPS 169). Stored 2026-11-09
+  # from the same Supp. No. 12 PDF, the download now behind a challenge page.
+  - id: "75.access-management"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 75 - Access Management"
+    start: "TDC 75.010.  Purpose and Applicability."
+    end: "CHAPTERS 76"
+    extraction: plain
   - id: "73C.parking"
     url: https://api.municode.com/PublicationPdfDownload/1818
     title: "TDC Chapter 73C - Parking Standards"

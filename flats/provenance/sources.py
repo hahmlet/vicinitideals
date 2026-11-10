@@ -86,6 +86,9 @@ OFFICIAL: frozenset[str] = frozenset(
         "westlinnoregon.gov",
         "wilsonvilleoregon.gov",
         "tualatinoregon.gov",
+        # Cornelius's own site: its Public Works Standards, which CMC 18.143
+        # sends access spacing to (FOLLOWUPS 169).
+        "corneliusor.gov",
         "ci.gladstone.or.us",
         # Not rivergroveoregon.gov, which was guessed here and resolves
         # nowhere. Thirty Rivergrove and Wood Village values were reading as
