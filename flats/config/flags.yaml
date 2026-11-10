@@ -212,7 +212,7 @@ types:
     status: pending
     approved_by: null
     approved_on: null
-    raised_from: [DRIVEWAY_SPACING_BLOCKED]
+    raised_from: [DRIVEWAY_SPACING_BLOCKED, DRIVEWAY_NEAR_INTERSECTION_100FT]
   ACCESS-DRIVEWAY-SPACING-UNREAD:
     description: "The code spaces driveways by street class here, and no place on the frontage was shown to clear it"
     kind: categorical

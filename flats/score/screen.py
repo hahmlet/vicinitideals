@@ -148,6 +148,9 @@ FACT_ASSUMED = "FACT_ASSUMED"
 #: standard turns on it, no layer answered, and guessing either way is
 #: wrong in a different direction.
 FACT_UNOBSERVED = "FACT_UNOBSERVED"
+#: Durham 3.7.1.7: no apron placement on the lot keeps 100 ft from a street
+#: intersection. YELLOW with the call-the-city flag, like every other
+#: driveway-spacing miss (Steph 2026-11-09, rulings.yaml 2026-11-09-busy-road-driveway-spacing-yellow).
 DRIVEWAY_NEAR_INTERSECTION_100FT = "DRIVEWAY_NEAR_INTERSECTION_100FT"
 
 #: The zone forbids the use outright and lists no conditional-use path.
@@ -3513,7 +3516,9 @@ def screen(
     if stated_fit_fails:
         closer = (*closer, SIDE_YARD_PARKING_SILENT)
 
-    if min_far_no_room or apron_failed:
+    # A Durham apron miss is no longer RED: it stays in ``reasons`` and holds
+    # the lot YELLOW with its flag (2026-11-09-busy-road-driveway-spacing-yellow).
+    if min_far_no_room:
         return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
 
     if any(not o.available for o in walls):
@@ -4134,10 +4139,8 @@ _MEASURED_FLAG: dict[str, str] = {
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
-#: the bind it qualifies; USE_PROHIBITED and the Durham apron rule have binds.
-UNFLAGGED_REASONS: frozenset[str] = frozenset(
-    {RELIEF_UNCONFIRMED, USE_PROHIBITED, DRIVEWAY_NEAR_INTERSECTION_100FT}
-)
+#: the bind it qualifies; USE_PROHIBITED has its bind.
+UNFLAGGED_REASONS: frozenset[str] = frozenset({RELIEF_UNCONFIRMED, USE_PROHIBITED})
 
 
 def _flagged(
@@ -4231,6 +4234,15 @@ def _account(
         flag("GEOM-UNREADABLE", GEOMETRY_UNREADABLE)
     if lot.street_unconfirmed:
         flag("ACCESS-STREET-UNCONFIRMED", STREET_UNCONFIRMED)
+    if any(
+        c.check == DRIVEWAY_NEAR_INTERSECTION_100FT and c.verdict is Verdict.fails
+        for c in checks
+    ):
+        flag(
+            "ACCESS-DRIVEWAY-SPACING",
+            DRIVEWAY_NEAR_INTERSECTION_100FT,
+            source="Durham 3.7.1.7: no apron placement keeps 100 ft from a street intersection",
+        )
     spacing = _driveway_spacing_reason(rules, lot)
     if spacing == DRIVEWAY_SPACING_BLOCKED:
         flag("ACCESS-DRIVEWAY-SPACING", spacing, source=lot.driveway_spacing_why)
@@ -4375,6 +4387,10 @@ def _account(
                 c.check in SOFT_FLOOR_CHECKS
                 and not (c.check == "min_far" and min_far_no_room)
             ):
+                continue
+            # A Durham apron miss is a flag, not a bind: YELLOW, never RED on
+            # this ground alone (2026-11-09-busy-road-driveway-spacing-yellow).
+            if c.check == DRIVEWAY_NEAR_INTERSECTION_100FT:
                 continue
             o = paths.get(c.check)
             binds.append(
