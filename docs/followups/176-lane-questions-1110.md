@@ -12,3 +12,8 @@ Asked of Steph 2026-11-10. Lanes are built the strict way meanwhile (never a fal
 **Code sites that refused automated checks (drift sweeps 166)**
 - (d) Sandy's code site blocks automated access; Hillsboro ordinances 6514 (childcare/group homes) and 6516 (procedures) are behind a bot challenge. Not bypassed. Download by hand, or wait until they reach the online code?
 - (e) Rivergrove's site was down: retry next sweep (default).
+
+**Sandy entrance (lane small-fixes-7, f4c44d0b)**
+- (f) Sandy 17.90.160 B.2: four homes = multi-family; the front-door rule can be met by a front door facing a paved walkway to the street (private allowed). Count a short paved path we could add as met (like an addable porch), or hold the lots for a closer look? Built: held (unclear), 0 moves.
+
+**Decided by Claude, no ask:** Portland Johnson Creek 33.537 repoint waits for a clean PDF / downloader repair; drift watch keeps reporting the dead link. HOA-road-as-street question (street-touch lane) asked only if the move read shows gains of that kind.
