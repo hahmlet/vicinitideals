@@ -6540,9 +6540,14 @@ def fire_checked(
     # dead ends driven -- a reading only the fire marshal can grant (Steph
     # 2026-11-10: "Yellow.").
     freed_offset = None
+    row_offset = None
     if roads is not None and hasattr(roads, "at"):
         net = roads.at(lot.layer_id)
         freed_offset = fire.point_offset(net.tree, net.geoms, roads.edges, net.freed)
+        # The same with the streets too narrow for the road and its curbs
+        # driven as well (rulings.yaml 2026-11-10-narrow-street-fire-yellow).
+        if net.row is not None and net.row is not net.freed:
+            row_offset = fire.point_offset(net.tree, net.geoms, roads.edges, net.row)
         roads = (net.tree, net.geoms, roads.edges, net.walks)
     offset = fire.point_offset(*roads) if roads is not None else None
     # The hose measured from the curb itself (FOLLOWUPS 29): only to flag a
@@ -6609,7 +6614,19 @@ def fire_checked(
             return out
         loose = measure(out.drawing, freed_offset)
         if loose is None or loose > limit:
-            return out
+            # Reached only with a street too narrow for the road and its
+            # curbs driven too, its pavement unmeasured: YELLOW with
+            # FIRE-NARROW-STREET (rulings.yaml
+            # 2026-11-10-narrow-street-fire-yellow), never GREEN.
+            wide = measure(out.drawing, row_offset) if row_offset is not None else None
+            if wide is None or wide > limit:
+                return out
+            facts = dataclasses.replace(out.facts, fire_route_row_ft=wide)
+            result = screen(out.rules, facts, out.design, out.fit, policy=policy, relief=relief, config=out.config)
+            shadow = _if_signed(
+                out.rules, facts, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
+            )
+            return dataclasses.replace(out, screening=result, signed=shadow, facts=facts)
         facts = dataclasses.replace(out.facts, fire_route_freed_ft=loose)
         result = screen(out.rules, facts, out.design, out.fit, policy=policy, relief=relief, config=out.config)
         shadow = _if_signed(
@@ -7974,8 +7991,12 @@ def build_fire_roads(
     # One cut of the network per dead-end length a place states (the
     # state's 150 ft, Portland's 300 ft: flats/config/fire_roads.yaml).
     ruled = fire_roads.rules()
+    # And the streets too narrow for the road and its curbs, where no
+    # pavement width is recorded (rulings.yaml
+    # 2026-11-10-narrow-street-fire-yellow; fire_roads.yaml narrow_row).
     by_ft = fire_roads.build_all(
-        lines, kinds, links, polys, private, lengths=ruled.lengths, release=ruled.release
+        lines, kinds, links, polys, private, lengths=ruled.lengths, release=ruled.release,
+        row_ft=ruled.row_ft, edges=edges,
     )
     for ft, pieces in by_ft.items():
         walked: dict[str, int] = {}

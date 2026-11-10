@@ -335,3 +335,149 @@ def test_the_screen_holds_a_lot_reached_only_up_a_long_dead_end_yellow() -> None
     # Reached on the code's reading: the freed reading is never read.
     result = run(facts(fire_route_ft=120.0, fire_route_tried=True, fire_route_freed_ft=100.0))
     assert result.triage is Triage.green
+
+
+# --- a right-of-way too narrow for the road and its curbs (2026-11-10) -----
+
+
+ROW_FT = fire_roads.rules().row_ft
+
+
+def _loop(gap: float):
+    """A loop off the main road: up x = 0, across y = 300, down x = 300,
+    the lots either side of each lane ``gap`` ft apart; no dead end."""
+    lane = [LineString([(0, 0), (0, 300)]), LineString([(0, 300), (300, 300)]), LineString([(300, 300), (300, 0)])]
+    main = [LineString([(-500, 0), (0, 0)]), LineString([(0, 0), (300, 0)]), LineString([(300, 0), (500, 0)])]
+    h = gap / 2.0
+    lots = [
+        box(-500, -125, 500, -25),
+        box(h, 25, 300 - h, 300 - h),
+        box(-100, 25, -h, 400),
+        box(300 + h, 25, 500, 400),
+        box(-h, 300 + h, 300 + h, 400),
+    ]
+    return [*main, *lane], [1400, 1400, 1400, 1500, 1500, 1500], lots
+
+
+def test_the_narrow_row_width_is_derived_from_its_printed_parts() -> None:
+    import yaml
+
+    # 20 ft clear (OFC 503.2.1) + a 0.5 ft curb and a 0.5 ft strip behind
+    # it each side (Oregon City 16.12's street table notes) = 22 ft.
+    assert ROW_FT == 22.0
+    data = yaml.safe_load(fire_roads.CONFIG.read_text(encoding="utf-8"))["narrow_row"]
+    docs = Path(__file__).resolve().parents[1] / "provenance" / "docs"
+    printed = {"clear_ft": "20 feet", "curb_ft": "0.5 foot curb", "edge_ft": "0.5 foot public access"}
+    for key, words in printed.items():
+        doc, span = data[key]["quote"].split("#L")
+        first, _, last = span.partition("-L")
+        lines = (docs / doc).read_text(encoding="utf-8").splitlines()
+        text = " ".join(" ".join(lines[int(first) - 1 : int(last or first)]).split())
+        assert words in text, (key, text)
+
+
+def test_a_part_with_no_quote_is_refused(tmp_path) -> None:
+    bad = tmp_path / "fire_roads.yaml"
+    text = fire_roads.CONFIG.read_text(encoding="utf-8")
+    bad.write_text(text.replace('quote: "or/clackamas/oregon-city/16.12.streets.txt#L416"', "quote: \"\""), encoding="utf-8")
+    with pytest.raises(ValueError, match="narrow_row.curb_ft"):
+        fire_roads.rules(bad)
+
+
+def test_a_street_too_narrow_for_its_curbs_is_held_where_its_pavement_is_unmeasured() -> None:
+    # SW 56th Ave (fg-rate-C, 1S1E19CA -07700): about 20.1 ft between its
+    # lots, its pavement unmeasured. Steph 2026-11-10: "Very narrow, yes."
+    lines, kinds, lots = _loop(21.0)
+    pieces = fire_roads.build(lines, kinds, [], lots, [True] * len(lots), row_ft=ROW_FT)
+    held = [p for p in pieces if not p.stand]
+    # (Corner bits between two held stretches are cut off beyond them.)
+    assert held and fire_roads.NARROW_ROW in {p.why for p in held}
+    assert {p.why for p in held} <= {fire_roads.NARROW_ROW, fire_roads.CUT_OFF_ROW}
+    # Not the fire marshal's dead-end reading either: only the row reading
+    # drives it.
+    assert not any(p.free for p in held)
+    assert all(p.row for p in held)
+    tree, geoms, walks = _index(pieces)
+    far = np.array([[-10.5, 290.0]])
+    strict = fire.hose_offsets(far, tree, geoms, None, walks)[0][0]
+    row = fire_roads.Walks(
+        np.asarray([p.stand if p.row is None else p.row for p in pieces]),
+        np.asarray([p.row0 for p in pieces], dtype=float),
+        np.asarray([p.row1 for p in pieces], dtype=float),
+    )
+    driven = fire.hose_offsets(far, tree, geoms, None, row)[0][0]
+    # On the code's reading the hose walks the lane from the main road; on
+    # the row reading the truck drives it, as before.
+    assert strict > 250.0
+    assert driven == pytest.approx(fire.hose_offsets(far, tree, geoms)[0][0])
+
+
+def test_a_recorded_pavement_20_ft_or_more_governs() -> None:
+    from flats.geom.curbs import StreetEdges
+
+    lines, kinds, lots = _loop(21.0)
+    paved = StreetEdges.build(widths=[(g, 20.0) for g in lines[3:]])
+    pieces = fire_roads.build(lines, kinds, [], lots, [True] * len(lots), row_ft=ROW_FT, edges=paved)
+    assert all(p.stand for p in pieces)
+    # A recorded width under 20 ft leaves it held.
+    thin = StreetEdges.build(widths=[(g, 18.0) for g in lines[3:]])
+    pieces = fire_roads.build(lines, kinds, [], lots, [True] * len(lots), row_ft=ROW_FT, edges=thin)
+    assert fire_roads.NARROW_ROW in {p.why for p in pieces if not p.stand}
+
+
+def test_a_street_wide_enough_for_its_curbs_reads_as_before() -> None:
+    lines, kinds, lots = _loop(24.0)
+    assert all(p.stand for p in fire_roads.build(lines, kinds, [], lots, [True] * len(lots), row_ft=ROW_FT))
+    # Under 20 ft it is narrow by the code as written, on every reading.
+    lines, kinds, lots = _loop(16.0)
+    pieces = fire_roads.build(lines, kinds, [], lots, [True] * len(lots), row_ft=ROW_FT)
+    walked = [p for p in pieces if not p.stand]
+    assert walked and fire_roads.NARROW_ROW not in {p.why for p in walked}
+    assert not any(p.row for p in walked if p.why == fire_roads.NARROW)
+
+
+def test_a_street_reached_only_along_a_narrow_row_is_held_with_it() -> None:
+    # A short street beyond a 21 ft stretch (the main road's lots either
+    # side of the lane, 25-125 ft in): the truck reaches it only along that
+    # stretch. 150 ft long, so no dead end is in play.
+    lane = [LineString([(0, 0), (0, 150)])]
+    lots = [*_main_road_lots((-10.5, 10.5)), box(25, 125, 100, 150), box(-100, 125, -25, 150), box(-100, 150, 100, 250)]
+    by_ft = fire_roads.build_all([*MAIN, *lane], [1400, 1400, 1500], [], lots, [True] * len(lots), row_ft=ROW_FT)
+    pieces = by_ft[fire_roads.DEAD_END_FT]
+    whys = {p.why for p in pieces if not p.stand}
+    assert fire_roads.NARROW_ROW in whys and fire_roads.CUT_OFF_ROW in whys
+    assert all(p.row for p in pieces if p.why in (fire_roads.NARROW_ROW, fire_roads.CUT_OFF_ROW))
+
+
+def test_the_row_reading_round_trips(tmp_path) -> None:
+    lines, kinds, lots = _loop(21.0)
+    by_ft = fire_roads.build_all(lines, kinds, [], lots, [True] * len(lots), row_ft=ROW_FT)
+    every = fire_roads.load_all(fire_roads.write(by_ft, tmp_path / "fire_roads.parquet"))
+    roads = every[fire_roads.DEAD_END_FT]
+    assert roads.row is not None and roads.row.stand.all()
+    assert not roads.freed.stand.all() and not roads.walks.stand.all()
+
+
+def test_the_screen_holds_a_lot_reached_only_along_a_narrow_row_yellow() -> None:
+    from flats.score.screen import FACT_UNOBSERVED, Triage
+    from flats.tests.test_fire import check, facts, run
+
+    result = run(facts(fire_route_ft=260.0, fire_route_tried=True, fire_route_row_ft=120.0))
+    assert check(result, "fire_access_ft") is None
+    assert FACT_UNOBSERVED in result.reasons
+    assert result.triage not in (Triage.green, Triage.red)
+    codes = {f.code for f in result.flags}
+    assert "FIRE-NARROW-STREET" in codes and "FIRE-DEAD-END" not in codes
+    # Missed on every reading: RED, as before.
+    result = run(facts(fire_route_ft=260.0, fire_route_tried=True, fire_route_row_ft=170.0))
+    assert result.triage is Triage.red
+    # Reached on the code's reading (a measured pavement, or a wide street):
+    # the row reading is never read.
+    result = run(facts(fire_route_ft=120.0, fire_route_tried=True, fire_route_row_ft=100.0))
+    assert result.triage is Triage.green
+    # Reached up a dead end as well: the dead end's question.
+    result = run(
+        facts(fire_route_ft=260.0, fire_route_tried=True, fire_route_freed_ft=120.0, fire_route_row_ft=110.0)
+    )
+    codes = {f.code for f in result.flags}
+    assert "FIRE-DEAD-END" in codes and "FIRE-NARROW-STREET" not in codes

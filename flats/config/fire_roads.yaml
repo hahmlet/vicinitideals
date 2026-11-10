@@ -47,3 +47,37 @@ dead_end_ft:
 # Steph 2026-11-10 (rulings.yaml 2026-11-10-fire-long-dead-end-yellow): "Yellow."
 # A dead end whose room to turn is unclear is yellow under either setting.
 long_dead_end: yellow
+
+# A street whose right-of-way is too narrow to hold a fire truck's road
+# (FOLLOWUPS 178(b)). Steph 2026-11-10 (rulings.yaml
+# 2026-11-10-narrow-street-fire-yellow): "Very narrow, yes. This is a common
+# Fire and Safety shoot down point on a permit." Where the gap between the
+# private lots either side of a street is under the width below, and no
+# recorded pavement width of 20 ft or more runs beside it, the truck is not
+# taken to stand there: a lot the hose reaches only by that street is YELLOW
+# with FIRE-NARROW-STREET, never GREEN. A recorded pavement width (PBOT,
+# Multnomah County roads, Wilsonville) of 20 ft or more governs where there
+# is one. A gap under clear_ft itself is narrow by the code as written and is
+# walked on every reading (flats/fit/fire_roads.py NARROW).
+#
+# The width is derived, never stored: clear_ft + 2 x (curb_ft + edge_ft) =
+# 20 + 2 x (0.5 + 0.5) = 22 ft. The 20 ft clear is the fire code's; the curb
+# and the strip behind it are the narrowest any street section we hold
+# prints: Oregon City's street table (CMC 16.12) puts a 0.5 ft curb and a
+# 0.5 ft public access strip on each side of the pavement. Oregon City's
+# alley (20 ft right-of-way for 16 ft of pavement, #L419) keeps 2 ft a side,
+# which would give 24 ft; the curb-and-strip reading is the smaller, so a
+# street the ruling holds is one that physically cannot fit the road.
+narrow_row:
+  clear_ft:
+    value: 20
+    cite: "OFC 2022 503.2.1 (Oregon Fire Code Applications Guide, Clackamas Fire, rev. 2023-06-21)"
+    quote: "or/ofc.2022.applications-guide.txt#L167-L169"
+  curb_ft:
+    value: 0.5
+    cite: "Oregon City Municipal Code 16.12, street design standards table notes"
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L416"
+  edge_ft:
+    value: 0.5
+    cite: "Oregon City Municipal Code 16.12, street design standards table notes"
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L418"
