@@ -15,3 +15,4 @@ Also unencoded: SCR-LD 5 ft max along street/alley; SCR-DNC 15 ft max side (same
 RULED 2026-11-09 (Steph): "I'd say it's both, but we should first check that parking can't encroach. If they can't, I'm good
 with yellow and ask". Next: read whether Hillsboro lets a driveway or parking sit in the side area (exception to the 5 ft
 maximum); if not, SCR-MD/HD non-alley lots -> YELLOW + 'ask the city' flag. Draft the city email for Steph.
+2026-11-09 Steph: city email -- 'leave it for follow up' (not sent; offer again when the lane reports).

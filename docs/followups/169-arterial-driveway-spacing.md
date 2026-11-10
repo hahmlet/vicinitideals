@@ -12,3 +12,4 @@ on 'no practical alternative' + OAR 660-046-0220 parity). No driveway layer exis
 ~1,680 GREEN front only busy roads in the 7 spacing places; ~50 on a state highway alone. 2S110DB01500 is an apartment site.
 Re-ASKED Steph with detail: yes=YELLOW / no=RED / YELLOW whether or not a driveway exists (recommended). Tualatin townhouse/4-unit
 exemption from one corner-distance rule -> passed to the arterial-spacing lane.
+RULED 2026-11-09 (Steph): RED -- "they don't want new driveways ... not push it". Every frontage fails spacing -> RED. Lane told.

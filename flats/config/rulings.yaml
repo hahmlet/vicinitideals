@@ -2671,6 +2671,25 @@
     these lots are YELLOW with an "ask the city" flag (not GREEN, not RED)
     until Hillsboro answers. FOLLOWUPS 170.
   source: Steph 2026-11-09 (chat), docs/followups/170-hillsboro-side-max.md
+- id: 2026-11-09-busy-road-driveway-spacing-red
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    A lot whose only frontage is a highway or busy road where the driveway
+    spacing rule blocks a NEW driveway, but the lot already has one: may the
+    four homes use the existing driveway (YELLOW, call the city) or not (RED)?
+    Research found every code has a no-other-access way out and ODOT would not
+    count one house to four as a change of use.
+  ruling: >-
+    "I'd say it's clear they don't want new driveways and to not push it.
+    red."
+  effect: >-
+    A lot whose every street frontage fails the driveway spacing rule (distance
+    from an intersection or between driveways, by street class) is RED,
+    whether or not a driveway exists today. A lot with another frontage that
+    passes takes its driveway there. FOLLOWUPS 169.
+  source: Steph 2026-11-09 (chat), docs/followups/169-arterial-driveway-spacing.md, ../vicinitideals-worktrees/hwy-driveway.findings.md
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19
