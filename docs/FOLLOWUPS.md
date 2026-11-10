@@ -163,7 +163,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
-176. [Claude] [Steph] [scan: YES if loose] **Questions the rel7 lanes raised** -- Hillsboro alley lots / SCR-DNC / corner lots; Sandy walkway entrance; Sandy + Hillsboro ordinances blocked to automated fetch; built strict meanwhile. [file](followups/176-lane-questions-1110.md)
+176. [Claude] [Steph] [scan: YES if loose] **Questions the rel7 lanes raised** -- Hillsboro alley lots / SCR-DNC / corner lots; Sandy walkway entrance; Cornelius street map; Sandy + Hillsboro ordinances blocked to automated fetch; built strict meanwhile. [file](followups/176-lane-questions-1110.md)
 149. [Claude] [Steph] **Pod unit width** -- 14 ft homes (pod56x36) too narrow for 2 bedrooms side by side; COUNTED: 20,032 of 44,641 greens need it; Steph: one-time sizing study 14-20 ft by 1 ft at 500 sq ft/floor ~Mon 11-09; prep built 958ebe29 (flats/sizing-study, pushed: 5 study pods, scope + report scripts; curve dropped, no stored frontier); trial DONE 11-05 (works; ~0.5 s/lot); Steph: run every lot with a chance -> FULL RUN 267,544 lots x 7 sizes queued on 137 (chain8, after held re-bounds), RESULTS IN 11-07 (14 ft 45.9k greens ... 20 ft 27.4k; new sizes add 3.5k lots); waits on Steph to pick the width [file](followups/149-pod-unit-width.md)
 128. [Claude] [Steph] [scan: NO] **CI takes an hour or more per push** -- BUILT 2026-10-30: pushes tested on LXC 138 ci-runner (~16 min), GitHub daily; open: quadfit 7 min, watch daily runs. [file](followups/128-ci-speed.md)
 127. [Claude] [Steph] [scan: NO] **Cut token spend** -- (a)(b)(e)(f) done (7 profiles d387fd7c, 2849fa9a; first real use next session); open: Copilot 11-01, reading pilot, local pre-sort. [file](followups/127-token-spend.md)

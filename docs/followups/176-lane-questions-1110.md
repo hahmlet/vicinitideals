@@ -17,3 +17,7 @@ Asked of Steph 2026-11-10. Lanes are built the strict way meanwhile (never a fal
 - (f) Sandy 17.90.160 B.2: four homes = multi-family; the front-door rule can be met by a front door facing a paved walkway to the street (private allowed). Count a short paved path we could add as met (like an addable porch), or hold the lots for a closer look? Built: held (unclear), 0 moves.
 
 **Decided by Claude, no ask:** Portland Johnson Creek 33.537 repoint waits for a clean PDF / downloader repair; drift watch keeps reporting the dead link. HOA-road-as-street question (street-touch lane) asked only if the move read shows gains of that kind.
+
+**Cornelius street types (lane arterial-spacing, 19193db1)**
+- (g) Cornelius publishes no street-type map, so all 308 of its GREENs go YELLOW under the spacing check. Washington County's map draws Cornelius roads. May we use the county's map for Cornelius? Built: all YELLOW until answered.
+- Decided by Claude: Tualatin keeps the strict pre-2045 map reading; Durham's spacing miss follows the global YELLOW ruling (not a new question).
