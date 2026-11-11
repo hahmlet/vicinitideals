@@ -69,3 +69,14 @@ layout generator (FOLLOWUPS 92) -- design them together if 92 is revived.
   geometry and checks the farthest lift of each load against the chart.
 - Assessment 11-11 (court proxy): a single-row court is ~36-54 x 42 ft, bigger than the pad;
   gaps: double-loaded courts, drive bends, far-end reach, overhead lines/trees, no-court lots.
+
+## 11-11 slice 1 BUILT: flats/set-access 6e6669fb (not wired to screen)
+Calculator only: pads around the placed pod, straight drive-out check, farthest radius per
+load (truck->landing->set), chart check at next-longer radius, 75% flag (OSHA). Prior art:
+nothing adoptable (4 unlicensed hobby repos). Turning paths + power lines (144) unmeasured.
+Hand-off ../vicinitideals-worktrees/set-access.handoff.md.
+Waiting on Steph (with the charts): loose-truss weight; stair kits ride with stack 3?;
+frame+beam on single picks too?; truck load offset past lot line; upper-wall stack size;
+straight-off-truck picks allowed?; pad max slope; street setup allowed; any cap below chart.
+Chart needs: model, outrigger setup, counterweight, hook-block weight, deductions, capacity by
+radius per boom length. Factory list to be redrawn for 20 x 25.
