@@ -233,6 +233,7 @@ from flats.score.paper import (
     front_lot_line_through_rule,
     front_min_depth_ft,
     kept_rear_yard_ft,
+    narrow_lane_rules,
     lot_line_buffer_doubt_ft,
     lot_line_buffer_ft,
     side_column,
@@ -4726,7 +4727,34 @@ def screen_lot(
 
     A design the code's entrance standard makes face the street, and that
     missed its fit facing one, is searched once more with its doors free to
-    face a side yard (:func:`side_door_checked`)."""
+    face a side yard (:func:`side_door_checked`).
+
+    Where a ruling lets the drive be narrower than the pod's lane and the
+    lane missed, the whole of that is done once more with the narrow drive
+    (:func:`narrow_lane_checked`)."""
+    got = _screen_lot_forms(
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    return narrow_lane_checked(
+        lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+def _screen_lot_forms(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """:func:`screen_lot` at the drive the zone's rules draw: both forms,
+    then the side-door search."""
     got = _screen_plat(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
@@ -4739,6 +4767,92 @@ def screen_lot(
         lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
+
+
+class _NarrowLane:
+    """``rules`` with the drive to the rear court drawn at the narrowest
+    lane a ruling opens to ``design`` (:func:`flats.score.paper.
+    narrow_lane_rules`), for one lot's second screen: every resolution the
+    screen asks for on the way -- and the drawing, the street-touch test and
+    the frontage share, which read the lane off the resolution -- comes back
+    with it. A resolution no narrower lane is open to is returned as is."""
+
+    def __init__(self, rules: RuleSet, design: Design) -> None:
+        self._rules = rules
+        self._design = design
+
+    def resolve(self, *args: Any, **kwargs: Any) -> ZoneResolution:
+        got = self._rules.resolve(*args, **kwargs)
+        return narrow_lane_rules(self._design, got) or got
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._rules, name)
+
+
+def _lane_missed(s: Screened) -> bool:
+    """Whether a narrower drive could change ``s``: not GREEN, and either
+    the fit is what failed (``fit_ft``, or the same miss on steep ground) or
+    the pod fits only with its doors turned to a side yard."""
+    if s.signed.colour is flag_plan.Colour.green:
+        return False
+    if s.lot.facts.entrance_side_fit is not None:
+        return True
+    return any(
+        c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails
+        for c in s.screening.checks
+    )
+
+
+def narrow_lane_checked(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` with each design the pod's own lane missed screened again with
+    the narrow drive a ruling allows, and the better answer kept.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-portland-driveway-9ft``,
+    "9ft in Portland"): in Portland -- and the Portland-administered pockets,
+    which take Portland's parking rulings -- the drive to the rear court may
+    be as narrow as 33.266.120.D.2's 9 ft (``driveway_lane_narrow_ft``). The
+    pod's 12 ft lane is screened first and stands wherever it does as well;
+    a design it leaves short of GREEN on the fit, or turned sideways for its
+    doors (:func:`side_door_checked`), is screened the whole way again with
+    the lane at the narrowest width the car can use the court from
+    (:func:`flats.score.paper.narrow_lane_rules`), and that answer replaces
+    the first only where its colour is better, or is the same colour with
+    the doors to the street where the first had them turned to a side yard
+    (the ENTRANCE-SIDE-DOOR design change gone). A narrower drive costs the
+    court a deeper aisle, so it is never the first reading: a lot the wide
+    lane fits keeps it."""
+    out = list(got)
+    for i, (design, s) in enumerate(zip(designs, got)):
+        if s.rules.get("driveway_lane_narrow_ft") is None or not _lane_missed(s):
+            continue
+        if narrow_lane_rules(design, s.rules) is None and "unit_lots" not in s.rules.conditions:
+            continue
+        (narrow,) = _screen_lot_forms(
+            lot, [design], rules=_NarrowLane(rules, design), policy=policy,  # type: ignore[arg-type]
+            relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
+        )
+        better = _COLOUR[narrow.signed.colour] < _COLOUR[s.signed.colour]
+        # A tie is kept narrow only where it faces the street the wide lane
+        # could not: the same colour without the side-door design change.
+        faced = (
+            _COLOUR[narrow.signed.colour] == _COLOUR[s.signed.colour]
+            and s.lot.facts.entrance_side_fit is not None
+            and narrow.lot.facts.entrance_side_fit is None
+        )
+        if better or faced:
+            out[i] = narrow
+    return out
 
 
 def _street_fit_missed(s: Screened, design: Design) -> tuple[float, float] | None:

@@ -16,6 +16,18 @@
  ],
  "shapes": [
   {
+   "shape": "2|9|18|20|9|5",
+   "aisle_ft": null,
+   "stall_ft": null,
+   "dead_end_ft": null
+  },
+  {
+   "shape": "2|9|18|20|10|5",
+   "stall_ft": null,
+   "aisle_ft": null,
+   "dead_end_ft": 24.0
+  },
+  {
    "shape": "2|9|18|20|12|5",
    "aisle_ft": null,
    "stall_ft": null,
@@ -23,8 +35,8 @@
   },
   {
    "shape": "4|7.5|18|24|10|5",
-   "stall_ft": null,
    "aisle_ft": 12.0,
+   "stall_ft": null,
    "dead_end_ft": 15.0,
    "mixed": {
     "1": 12.0,
@@ -42,9 +54,9 @@
   },
   {
    "shape": "4|8.5|18|20|12|5",
+   "aisle_ft": 11.0,
    "stall_ft": null,
    "dead_end_ft": 16.0,
-   "aisle_ft": 11.0,
    "mixed": {
     "1": 15.0,
     "2": 15.0,
@@ -88,8 +100,8 @@
   },
   {
    "shape": "4|8.5|18.5|22|12|5",
-   "stall_ft": null,
    "aisle_ft": 9.0,
+   "stall_ft": null,
    "dead_end_ft": 15.0,
    "mixed": {
     "1": 14.0,
@@ -104,8 +116,8 @@
   },
   {
    "shape": "4|8.5|18.5|24|12|5",
-   "stall_ft": 2.0,
    "aisle_ft": 7.0,
+   "stall_ft": 2.0,
    "dead_end_ft": 13.0,
    "mixed": {
     "1": 11.0,
@@ -115,6 +127,12 @@
     "5": 1.0,
     "6": 1.0
    }
+  },
+  {
+   "shape": "4|9|18|20|9|5",
+   "aisle_ft": 12.0,
+   "stall_ft": null,
+   "dead_end_ft": null
   },
   {
    "shape": "4|9|18|20|12|5",
@@ -213,8 +231,8 @@
   },
   {
    "shape": "6|8|18|24|12|5",
-   "stall_ft": 2.0,
    "aisle_ft": 5.0,
+   "stall_ft": 2.0,
    "dead_end_ft": 12.0,
    "mixed": {
     "1": 11.0,

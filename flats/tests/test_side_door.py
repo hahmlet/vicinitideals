@@ -42,6 +42,16 @@ def policies():
     return slack.load_policy(), relief.load_policy()
 
 
+@pytest.fixture(autouse=True)
+def _wide_lane_only(monkeypatch) -> None:
+    """These Portland lots are measured on the 12 ft lane alone: the 9 ft
+    retry (rulings.yaml 2026-11-10-portland-driveway-9ft) fits some of them
+    facing the street, which test_portland_narrow_drive.py covers."""
+    from flats.ingest import quadfit
+
+    monkeypatch.setattr(quadfit, "narrow_lane_checked", lambda lot, designs, got, **kw: got)
+
+
 def _street_only(monkeypatch) -> None:
     from flats.ingest import quadfit
 
