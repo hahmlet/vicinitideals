@@ -14,3 +14,8 @@ Also mismatched vs the factory lift list (FOLLOWUPS 145): wall panels 8'1" high
 => storeys ~9.5 ft with 15.5 in cassettes, overall ~20-21 ft, vs config
 height_ft 26 and ground_story_ft 12 (Steph 2026-10-01 "12 ft or more"). Confirm
 real heights with Steph and run them in the same comparison.
+RESOLVED 11-11 (Steph): "I really do want 25x20" -- FLATS pod80x25 stays; no 30 ft
+comparison run. Factory design goes back to 20 x 25 (lift list in 145 will change).
+Still open: real height "going to be lower than 26" and ground storey -- Steph to
+give figures; keep 26 / 12 until then (26 is the cautious side for height limits;
+a ground storey under 12 ft would fail Tigard TMU-type minimums).
