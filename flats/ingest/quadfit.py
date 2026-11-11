@@ -3575,10 +3575,16 @@ def sight_cut(
     return [(carved(areas.high), here), (low, doubt)]
 
 
-def _curb_ft(x: float, y: float, roads: Any) -> float | None:
+def _curb_ft(x: float, y: float, roads: Any, layer_id: str | None = None) -> float | None:
     """The drawn curb's distance from this street lot line point, where the
     curb layer holds one (``Source.curb``, :mod:`flats.geom.curbs`); None
-    where it does not -- a width-placed curb is not taken."""
+    where it does not -- a width-placed curb is not taken.
+
+    ``roads`` is the worker's tuple, or a :class:`flats.fit.fire_roads.Network`
+    (a run with per-place dead-end lengths), read at ``layer_id``'s length."""
+    if roads is not None and hasattr(roads, "at"):
+        net = roads.at(layer_id)
+        roads = (net.tree, net.geoms, roads.edges)
     if not roads or len(roads) < 3 or roads[2] is None or roads[0] is None:
         return None
     import numpy as np
@@ -3651,7 +3657,7 @@ def sight_driveway_checked(
             return s
     d = 0.0
     if rule.basis != "lot_line":
-        d = _curb_ft(mouth.cx, mouth.cy, roads) or 0.0
+        d = _curb_ft(mouth.cx, mouth.cy, roads, lot.layer_id) or 0.0
     front = None
     if s.envelope is not None and s.envelope.setbacks is not None:
         front = s.envelope.setbacks.front_ft
