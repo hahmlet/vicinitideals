@@ -254,6 +254,7 @@ pytestmark = pytest.mark.unit
 # Table 1001-1's row for middle housing in those districts leaves the 1009 column blank where
 # the all-other-districts row ticks it (zdo.1001.txt#L31-L32,L94,L99-L105, read by column
 # position). The quoted lines print section numbers, so numeric; a blank cell states nothing.
+# rel7 add-ons 2026-11-10: roof-ban (+4) and fg4-fixes 4a (+9) land together: 246 -> 259 numeric.
 EXPECTED = {"stated": 484, "numeric": 259, "marker": 0, "dash": 2, "silent": 7}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both

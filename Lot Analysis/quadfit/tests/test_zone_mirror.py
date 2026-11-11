@@ -1297,7 +1297,13 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: Sandy and others require (a flat-roofed pod is RED); and the outdoor
     #: square's newly read districts. Quadfit draws no building and no roof.
     "building_frontage_basis": 41,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
-    "min_roof_pitch_in_12": 11,
+    # rel7 add-ons 2026-11-10 (flats/roof-ban): Wood Village LR/MR 5:12, Hillsboro SCR 4/12 -- 11 -> 17;
+    # new flat_roof_cornice_min_in (Tigard 18.280.040.J) in 7 zones. Quadfit draws no roof.
+    "min_roof_pitch_in_12": 17,
+    "flat_roof_cornice_min_in": 7,
+    # rel7 add-ons 2026-11-10 (flats/pdx-9ft): the 9 ft drive lane (33.266.120.D.2) in Portland
+    # and the four county pocket zones R5, R7, R10, R20. Quadfit keeps the 12 ft reading.
+    "driveway_lane_narrow_ft": 4,
     #: Steph 2026-10-22: a Gresham corner lot owes the share on its main
     #: street only (GDC 3.0100 Primary Street), measured per street class.
     "building_frontage_corner": 2,
