@@ -1069,6 +1069,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1249,6 +1276,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1434,6 +1488,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1617,6 +1698,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
