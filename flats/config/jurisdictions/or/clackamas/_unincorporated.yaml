@@ -2821,7 +2821,7 @@ zones:
       cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, PMD minimum front setback 15 feet
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-11-10'
-      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     building_frontage_basis:
       value: site
       cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
@@ -3055,7 +3055,7 @@ zones:
       cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, MR1 minimum front setback 15 feet
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-11-10'
-      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     building_frontage_basis:
       value: site
       cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
@@ -3304,7 +3304,7 @@ zones:
       cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, MR2 minimum front setback 15 feet
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-11-10'
-      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     building_frontage_basis:
       value: site
       cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
@@ -3543,7 +3543,7 @@ zones:
       cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, VA minimum front setback 10 feet
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-11-10'
-      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
     building_frontage_basis:
       value: site
       cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
@@ -3722,7 +3722,7 @@ zones:
       cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, HDR minimum front setback 15 feet
       url: https://www.clackamas.us/planning/zdo1005
       retrieved: '2026-11-10'
-      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1596"
     building_frontage_basis:
       value: site
       cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
