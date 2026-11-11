@@ -2639,6 +2639,38 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592-L1599).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, PMD minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2679,6 +2711,7 @@ zones:
       # a frontage. That is the same hole Gresham's reading left open, and it
       # is a floor on what this encoding claims rather than a reason to
       # withhold it.
+      # (Encoded 2026-11-10, fg4-fixes: building_frontage_min_pct, below.)
       #
       # Also not encoded, deliberately: 1005.02(E)(1) lets a front setback
       # under 20 feet be increased to 20 where pedestrian amenities are
@@ -2840,6 +2873,38 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592-L1599).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, MR1 minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -3057,6 +3122,38 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592-L1599).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, MR2 minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -3262,6 +3359,40 @@ zones:
       # one in this table stated as a number rather than a cross-reference.
       value: 18
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1600-L1607"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      # The 18 ft maximum (setback_front_max_ft) bounds the band too; the
+      # nearer, 10 ft, governs (share_band).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 10 ft (315/315.04.txt#L1592-L1599).
+      value: 10
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, VA minimum front setback 10 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     setback_rear_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Rear Setback row, VA column ("None")
@@ -3406,6 +3537,41 @@ zones:
       # "15 feet[5]"; note 5 is about nonconforming detached houses.
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1596"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      # Carried by like: HDR to SHD, RCHDR, RTL, CC, C3 and OC, and through
+      # RCHDR to RCC and RCO, every one of which holds a 15 ft minimum front
+      # setback (SHD its own 15, RCHDR note 8's 15, the rest HDR's).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592,L1596).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, HDR minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # The Maximum Front Setback cell reads "See Subsections 1005.02(E) and
       # (H)", as PMD's does; encoded as PMD's is (see the note there).
