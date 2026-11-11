@@ -45,3 +45,5 @@ for townhouses + caps at half frontage; move reader must check the gains).
 4a Clackamas 1009 strip on R-zone fourplexes: stored copy drops blank cells;
 scout fetching the ZDO Table 1001-1 PDF. Spacing table gaps: Gresham, Oregon
 City, West Linn next (hand-off ../vicinitideals-worktrees/fg4-fixes.handoff.md).
+4a LIFTED a02a17c0 + d95ab627 (head d95ab627): ZDO Table 1001-1 stored; 1009 strip off
+R/VR quadplexes (toward GREEN, tens of lots; move reader checks). e3afe56e scope OK.
