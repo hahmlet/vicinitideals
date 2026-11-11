@@ -1316,6 +1316,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 1 -> 2 on 2026-11-08 (FOLLOWUPS 147, 8adfedd5): Hillsboro MU-VTC's minimum
     # FAR, 0.5 inside the traced Center Cores and 0.4 outside (Table 12.24.360-1).
     "min_far": 2,
+    #: fg4-fixes 2026-11-10: Beaverton RMA, RMB, RMC and CM-RM let a plex's court
+    #: stand in front behind the 10 ft yard within S11's half (60.05.60.2).
+    #: Quadfit draws no court against the building.
+    "parking_front_share_allowed": 4,
 }
 
 
