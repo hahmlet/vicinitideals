@@ -163,6 +163,7 @@ the full one.)
 
 ## 2. Waiting on Steph
 
+185. [Claude] [Steph] [scan: YES -- every lot] **Pod is really 80 x 30, not 80 x 25** -- compare run after rel7; heights also differ (8'1" walls vs 12 ft ground storey / 26 ft). [file](followups/185-pod-depth-30.md)
 183. [Claude] [scan: MAYBE -- false greens only] **Windows near a side lot line** -- Oregon limit only within 3 ft; check greens whose long wall sits < 3 ft from a side line (zero-side zones). [file](followups/183-side-wall-openings.md)
 182. [Claude] [Steph] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- BUILT flats/no-sewer 2a52ec1b (rel8, ~398 greens red); Steph: red / note / yellow? [file](followups/182-no-sewer-street-pipe.md)
 181. [Claude] [Steph] [scan: YES -- false greens only] **Roof sweep: Clackamas unincorporated pitched-roof rule** -- BUILT flats/roof-ban (2e675fee, f4072a52); Steph: Clackamas red / yellow+flag / exempt? [file](followups/181-roof-sweep-clackamas.md)
