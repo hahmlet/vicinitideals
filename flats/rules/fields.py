@@ -91,6 +91,7 @@ _LABELS: dict[str, str] = {
     "driveway_min_width_one_way_ft": "min. driveway width (one-way)",
     "driveway_min_width_two_way_ft": "min. driveway width (two-way)",
     "driveway_one_lane_ft": "one-lane drive to the court, cars taking turns",
+    "driveway_lane_narrow_ft": "narrowest drive lane to the court the screen may try",
     "driveway_max_frontage_pct": "max. driveway share of frontage",
     "driveway_units_per_approach": "dwellings served by one driveway approach",
     "driveway_walkway_ft": "walkway beside the driveway",
@@ -1121,6 +1122,21 @@ _F: tuple[FieldDef, ...] = (
         "governs the lane beside the building outright, narrower than the "
         "design's or not, and the two-way minimum is not read. Encode it "
         "only on such a ruling; never infer it from a cap.",
+        False,
+    ),
+    FieldDef(
+        "driveway_lane_narrow_ft",
+        "length_ft",
+        "The narrowest the drive to the rear court may be drawn, where the "
+        "code prints a driveway minimum below the pod's lane and a ruling "
+        "lets the pod use it. Not the lane: the pod's own lane (raised to "
+        "any two-way minimum) is screened first, and only a lot it misses "
+        "is screened again with the lane at this width, or at the narrowest "
+        "whole foot above it the screen's car can drive into every stall "
+        "from (flats.ingest.quadfit.narrow_lane_checked). Never on the "
+        "unit-lot form. Portland (and the pockets it administers): "
+        "33.266.120.D.2, \"The minimum driveway width on private property "
+        "is 9 feet\", ruled 2026-11-10 (\"9ft in Portland\").",
         False,
     ),
     FieldDef(
@@ -2242,6 +2258,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "driveway_min_width_two_way_ft",
         # A ruling, not a row of a table: stated only where one was given.
         "driveway_one_lane_ft",
+        "driveway_lane_narrow_ft",
         "driveway_walkway_ft",
         "driveway_max_frontage_pct",
         # A requirement one city states (Oregon City 16.12.035.F); a zone or

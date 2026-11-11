@@ -2832,6 +2832,22 @@
     check; it is used for nothing else in Cornelius. FOLLOWUPS 176(g).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
   encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py]
+- id: 2026-11-10-portland-driveway-9ft
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: multnomah, city: portland}
+  question: >-
+    The pod's site plan uses a 12 ft driveway everywhere, but Portland's code
+    allows 9 ft (33.266). 9 ft keeps more narrow lots green with doors facing
+    the street. Keep 12 ft, or allow 9 ft in Portland?
+  ruling: >-
+    "9ft in Portland"
+  effect: >-
+    In Portland the drive lane may be as narrow as Portland's printed minimum
+    (9 ft, 33.266) wherever the code allows it for this building; elsewhere the
+    plan's 12 ft stands. FOLLOWUPS 178(a).
+  source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml, flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
 - id: 2026-11-09-clackamas-front-parking-follow-zdo
   kind: ruling
   date: 2026-11-09

@@ -2200,6 +2200,31 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L6,L37-L39"
+  # THE NARROW DRIVE, ruled 2026-11-10 (rulings.yaml
+  # 2026-11-10-portland-driveway-9ft, "9ft in Portland"). D.2's 9 feet is
+  # the only driveway figure 33.266.120 prints for this building: one number,
+  # no direction (one-way or two-way), no count of spaces, nothing tied to
+  # the number of units -- D.1-D.3 (L37-L44 of the section file) are the
+  # whole of it, and D.3's shared driveway asks the same 9. It reaches every
+  # zone because 33.266.120.B is a test on the structure (see above).
+  #
+  # The pod draws a 12 ft two-way lane to its rear court, wider than the
+  # code asks, and Steph ruled the lane may be drawn as narrow as 9 wherever
+  # the code allows it for this building. Held as the narrowest lane the
+  # screen may TRY, not the lane: a lot the 12 ft lane misses is screened
+  # again with the lane at 9 -- or the narrowest whole foot above 9 the
+  # screen's car can drive into every stall from (flats/score/turns.py) --
+  # and the better answer kept (flats.ingest.quadfit.narrow_lane_checked).
+  # It narrows only the drive: the court's own aisle (20 ft, above) and the
+  # aisle of a court beside the building, entered straight off the street,
+  # are not the drive. Not on the unit-lot form: parking in a TRACT goes to
+  # 33.266.130 (120.B.1), which prints no driveway width, so 12 stands there.
+  driveway_lane_narrow_ft:
+    value: 9
+    cite: PCC 33.266.120.D.2, "The minimum driveway width on private property is 9 feet"; Steph's ruling 2026-11-10 that the drive lane may be drawn as narrow as Portland's 9 ft (rulings.yaml 2026-11-10-portland-driveway-9ft)
+    url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
+    retrieved: '2026-11-10'
+    quote: "or/multnomah/portland/33.266/33.266.120.txt#L1,L3-L6,L37-L39"
   # 33.266.120.C.1.a: "Vehicle area is prohibited between the primary
   # structure and the street except as follows. This standard does not apply
   # to houses on lots that are at least 32 feet wide: (1) Parking spaces

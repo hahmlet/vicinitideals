@@ -3331,6 +3331,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L332"
+    # THE NARROW DRIVE (rulings.yaml 2026-11-10-portland-driveway-9ft,
+    # "9ft in Portland", carried to the pockets as 2026-11-09-multco-
+    # pockets-portland-parking carried the aisle): D.2's 9 ft is the only
+    # driveway figure 33.266.120 prints for this building -- no direction,
+    # no space count, nothing tied to units. The narrowest lane the screen
+    # may try where the pod's 12 ft lane misses (see the Portland layer's
+    # note); the aisle stays 20, and the unit-lot form keeps 12.
+    driveway_lane_narrow_ft:
+      value: 9
+      cite: PCC 33.266.120.D.2, "The minimum driveway width on private property is 9 feet"; Steph's ruling 2026-11-10 that the drive lane may be drawn as narrow as Portland's 9 ft, in the Portland-administered pockets as for the aisle (rulings.yaml 2026-11-10-portland-driveway-9ft)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L330,L332"
     # C.1.a: vehicle area barred between the primary structure and the street;
     # the 32-foot escape is for houses, and a fourplex never gets it. What
     # survives is the court behind the front and side-street building lines,
@@ -3638,6 +3651,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L332"
+    # THE NARROW DRIVE (rulings.yaml 2026-11-10-portland-driveway-9ft,
+    # "9ft in Portland", carried to the pockets as 2026-11-09-multco-
+    # pockets-portland-parking carried the aisle): D.2's 9 ft is the only
+    # driveway figure 33.266.120 prints for this building -- no direction,
+    # no space count, nothing tied to units. The narrowest lane the screen
+    # may try where the pod's 12 ft lane misses (see the Portland layer's
+    # note); the aisle stays 20, and the unit-lot form keeps 12.
+    driveway_lane_narrow_ft:
+      value: 9
+      cite: PCC 33.266.120.D.2, "The minimum driveway width on private property is 9 feet"; Steph's ruling 2026-11-10 that the drive lane may be drawn as narrow as Portland's 9 ft, in the Portland-administered pockets as for the aisle (rulings.yaml 2026-11-10-portland-driveway-9ft)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L330,L332"
     # C.1.a: vehicle area barred between the primary structure and the street;
     # the 32-foot escape is for houses, and a fourplex never gets it. What
     # survives is the court behind the front and side-street building lines,
@@ -4179,6 +4205,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L332"
+    # THE NARROW DRIVE (rulings.yaml 2026-11-10-portland-driveway-9ft,
+    # "9ft in Portland", carried to the pockets as 2026-11-09-multco-
+    # pockets-portland-parking carried the aisle): D.2's 9 ft is the only
+    # driveway figure 33.266.120 prints for this building -- no direction,
+    # no space count, nothing tied to units. The narrowest lane the screen
+    # may try where the pod's 12 ft lane misses (see the Portland layer's
+    # note); the aisle stays 20, and the unit-lot form keeps 12.
+    driveway_lane_narrow_ft:
+      value: 9
+      cite: PCC 33.266.120.D.2, "The minimum driveway width on private property is 9 feet"; Steph's ruling 2026-11-10 that the drive lane may be drawn as narrow as Portland's 9 ft, in the Portland-administered pockets as for the aisle (rulings.yaml 2026-11-10-portland-driveway-9ft)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L330,L332"
     # C.1.a: vehicle area barred between the primary structure and the street;
     # the 32-foot escape is for houses, and a fourplex never gets it. What
     # survives is the court behind the front and side-street building lines,
@@ -4535,6 +4574,19 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L332"
+    # THE NARROW DRIVE (rulings.yaml 2026-11-10-portland-driveway-9ft,
+    # "9ft in Portland", carried to the pockets as 2026-11-09-multco-
+    # pockets-portland-parking carried the aisle): D.2's 9 ft is the only
+    # driveway figure 33.266.120 prints for this building -- no direction,
+    # no space count, nothing tied to units. The narrowest lane the screen
+    # may try where the pod's 12 ft lane misses (see the Portland layer's
+    # note); the aisle stays 20, and the unit-lot form keeps 12.
+    driveway_lane_narrow_ft:
+      value: 9
+      cite: PCC 33.266.120.D.2, "The minimum driveway width on private property is 9 feet"; Steph's ruling 2026-11-10 that the drive lane may be drawn as narrow as Portland's 9 ft, in the Portland-administered pockets as for the aisle (rulings.yaml 2026-11-10-portland-driveway-9ft)
+      url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/_unincorporated/33.266.txt#L272,L275-L277,L330,L332"
     # C.1.a: vehicle area barred between the primary structure and the street;
     # the 32-foot escape is for houses, and a fourplex never gets it. What
     # survives is the court behind the front and side-street building lines,
