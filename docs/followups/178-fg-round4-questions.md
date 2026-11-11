@@ -37,3 +37,11 @@ More questions for Steph:
 
 RULED 2026-11-10: (a) "9ft in Portland" (2026-11-10-portland-driveway-9ft); (b) narrow street = fire YELLOW (2026-11-10-narrow-street-fire-yellow), "a common Fire and Safety shoot down point on a permit". Lanes pdx-9ft and narrow-row off rel7.
 RULED 2026-11-10: (c) no public sewer = RED (2026-11-10-no-public-sewer-red), lane no-sewer; (d) Tigard cornice = YELLOW + flag (2026-11-10-tigard-cornice-yellow), folded into lane roof-ban.
+fg4-fixes DONE 11-10: flats/fg4-fixes head 2d5c40c7 (cherry-pick onto rel7):
+69a6726a Beaverton EDM spacing (~350 G->Y), e3afe56e+168e2590 Clackamas half-
+frontage build line (13 zones), 60d846ad+2d5c40c7 Beaverton fourplex front
+court (toward GREEN; Claude kept the reading: code bans front parking only
+for townhouses + caps at half frontage; move reader must check the gains).
+4a Clackamas 1009 strip on R-zone fourplexes: stored copy drops blank cells;
+scout fetching the ZDO Table 1001-1 PDF. Spacing table gaps: Gresham, Oregon
+City, West Linn next (hand-off ../vicinitideals-worktrees/fg4-fixes.handoff.md).
