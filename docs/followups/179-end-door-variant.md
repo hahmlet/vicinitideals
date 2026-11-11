@@ -19,3 +19,11 @@ finishes, not orientation or glass share. Door + window rules stand; Wood
 Village roof ban stands. Only relevant if 5+ pods filed as one project.
 Steph to decide whether to adopt the end-door variant (a design choice); if yes,
 a lane encodes per-place window counts as a design check (flag-level).
+Steph 2026-11-11 layout sketch for the street end unit: 2 windows per upstairs
+bedroom + 1 hall (5 up), 3 kitchen + 1 at the stair base (4 down) = 9 + door.
+Meets A (15%); short 1 in Gresham (10) and 1 downstairs in Hillsboro (5 ground,
+glass-panel door). Asked: can glazing on the unit's other walls be cut? Zoning
+counts street walls only, EXCEPT Gresham (5% clear glass on every other wall),
+corner lots (two street walls), Milwaukie (walls within 50 ft of the street).
+Building code (egress window per bedroom, light/air, openings near lot lines)
+not checked.
