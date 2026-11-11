@@ -313,7 +313,9 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     table started governing values. Table 510-3's two stay unread.
     """
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 314
+    # 314 -> 318 on 2026-11-10 (flats/fg4-fixes): ZDO 1001's Table 1001-1, stored for the
+    # R/VR 1009 exemption, brings four notes, all ruled (dismissed).
+    assert len(ruled) == 318
     unread = sorted((n.doc.rsplit("/", 1)[-1], n.line) for n in ruled if n.state == "unread")
     # Every unread note in this layer is in a dimensional table of a district
     # that refuses the building -- Tables 510-2 and 510-3 of ZDO 510, 513-2

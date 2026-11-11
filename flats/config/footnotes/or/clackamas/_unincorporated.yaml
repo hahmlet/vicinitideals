@@ -2515,3 +2515,31 @@ notes:
     state: dismissed
     reason: >-
       bonus density raises a maximum density; no maximum density is encoded for SCMU or PMU
+
+  # --- Table 1001-1, Applicability of Section 1000 (fg4-fixes, 2026-11-10) ---
+  # The table is cited for one thing: its R/VR middle-housing row leaves the 1009
+  # column blank. Its four notes, read whole; none reaches that cell.
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L126"
+    digest: "c7a11d5d0161"
+    state: dismissed
+    reason: >-
+      says how a ticked section is read (review it for which subsections apply); the 1009 exemption rests on a blank cell in the R/VR middle-housing row, which this note does not reach, and every ticked section's encoded values were read from that section itself
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L129"
+    digest: "626487842e4d"
+    state: dismissed
+    reason: >-
+      governs stormwater facilities, utility cabinets, utility facilities in rights-of-way and utility lines, none of which the pod is
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L132"
+    digest: "63ec16f53bf0"
+    state: dismissed
+    reason: >-
+      governs level one to three mobile vending units, not a use the pod is
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L134"
+    digest: "b5bf3777f9cd"
+    state: dismissed
+    reason: >-
+      extends Subsection 1002.09 to accessory structures; the pod is the primary dwelling and 1002 is not what the 1009 exemption rests on
