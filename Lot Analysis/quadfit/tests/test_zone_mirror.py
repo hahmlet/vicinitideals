@@ -1283,7 +1283,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
     #: blocks, Washington County NMU and CCMU; quadfit draws no building.
-    "building_frontage_min_pct": 30,
+    # fg4-fixes 2026-11-10: Clackamas ZDO 1005.02(E)'s share joins PMD, MR1, MR2,
+    # VA, HDR and the eight zones that take HDR's standards: +13 on the three keys.
+    "building_frontage_min_pct": 43,
     "building_frontage_min_pct_least": 5,
     "building_frontage_other_pct": 19,
     "building_frontage_through_one": 2,
@@ -1294,7 +1296,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the whole site as the code bases it (Steph 2026-10-21); the pitched roof
     #: Sandy and others require (a flat-roofed pod is RED); and the outdoor
     #: square's newly read districts. Quadfit draws no building and no roof.
-    "building_frontage_basis": 28,
+    "building_frontage_basis": 41,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
     "min_roof_pitch_in_12": 11,
     #: Steph 2026-10-22: a Gresham corner lot owes the share on its main
     #: street only (GDC 3.0100 Primary Street), measured per street class.
@@ -1310,7 +1312,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: and the share counted at the minimum setback; with Estacada's Downtown rows they
     #: add landscaping, maximum fronts, impervious, frontage shares, review tiers,
     #: a parking frontage cap and a height floor -- counted on the keys above.
-    "building_frontage_band_ft": 1,
+    "building_frontage_band_ft": 14,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
     # 1 -> 2 on 2026-11-08 (FOLLOWUPS 147, 8adfedd5): Hillsboro MU-VTC's minimum
     # FAR, 0.5 inside the traced Center Cores and 0.4 outside (Table 12.24.360-1).
     "min_far": 2,
