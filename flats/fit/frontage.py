@@ -105,7 +105,11 @@ def side_street_takes_drive(edges: LotEdges | None, width_ft: float) -> bool:
     stretch or not at all: 1N2E35DC -09200 (13214 SE Ankeny Ct) touches the
     end of SE Ash St along 6.3 ft, and Portland asks 9 ft of the narrowest
     driveway on private property ("The minimum driveway width on private
-    property is 9 feet", ``portland/33.266.txt#L319``); the pod's lane is 12.
+    property is 9 feet", ``portland/33.266/33.266.120.txt#L39``); the pod's
+    lane is 12, and since Steph's 2026-11-10 ruling a lot it misses there is
+    screened again with the drive as narrow as that 9
+    (:func:`flats.ingest.quadfit.narrow_lane_checked`). The width asked is
+    :func:`flats.score.paper.drive_width`'s for the reading screened.
 
     With a front named, the side streets are the ``street_side`` runs and
     one of them must be ``width_ft`` long. With none named (a code that

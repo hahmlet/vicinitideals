@@ -33,6 +33,7 @@ import contextlib
 import contextvars
 import math
 from collections.abc import Iterator
+import dataclasses
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
@@ -1070,6 +1071,66 @@ def drive_width(rules: "ZoneResolution", base: float, used: list[str] | None = N
             used.append("driveway_min_width_two_way_ft")
         return max(base, stated)
     return base
+
+
+def narrow_lane_rules(design: Design, rules: "ZoneResolution") -> "ZoneResolution | None":
+    """``rules`` with the drive drawn at the narrowest lane a ruling lets
+    the pod use (``driveway_lane_narrow_ft``), held as the one lane that
+    governs (``driveway_one_lane_ft``, :func:`drive_width`); None where no
+    narrower lane is open to this design here.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-portland-driveway-9ft``,
+    "9ft in Portland"): the lane may be as narrow as Portland's printed
+    minimum, 33.266.120.D.2's 9 ft, wherever the code allows it for this
+    building. The car decides how narrow is drivable: at the stated width,
+    or failing that the narrowest whole foot above it short of the pod's own
+    lane, from which the turning ledger (:mod:`flats.score.turns`) finds
+    some fix that lets a car use every stall. A width the ledger never
+    searched is taken as it stands -- the court is then undriven and the lot
+    cannot be green on it. None where every width short of the pod's lane
+    leaves the court unusable, on the unit-lot form (a parking tract goes to
+    33.266.130, which prints no driveway width), and where a one-lane ruling
+    already sets the lane."""
+    for trial in narrow_lane_rungs(design, rules):
+        shape = court_shape(design, trial)
+        found = None if shape is None else fixes(shape)
+        if shape is None or isinstance(found, Unsearched) or found:
+            return trial
+    return None
+
+
+def narrow_lane_rungs(design: Design, rules: "ZoneResolution") -> list["ZoneResolution"]:
+    """Every reading :func:`narrow_lane_rules` may try, narrowest first: the
+    drive at ``driveway_lane_narrow_ft`` and at each whole foot above it
+    short of the pod's own lane. Empty where no narrower lane is open --
+    the unit-lot form, a one-lane ruling, no narrow drive stated. The
+    turning ledger holds the court of every one (``flats.score.turns.
+    corpus_shapes``)."""
+    if design.plat is Plat.unit_lots or "unit_lots" in rules.conditions:
+        return []
+    if _number(rules, "driveway_one_lane_ft") is not None:
+        return []
+    narrow = _number(rules, "driveway_lane_narrow_ft")
+    held = rules.values.get("driveway_lane_narrow_ft")
+    if narrow is None or held is None:
+        return []
+    wide = drive_width(rules, design.parking.lane_width_ft)
+    out: list[ZoneResolution] = []
+    width = narrow
+    while width < wide:
+        out.append(
+            dataclasses.replace(
+                rules,
+                values={
+                    **rules.values,
+                    "driveway_one_lane_ft": dataclasses.replace(
+                        held, name="driveway_one_lane_ft", value=width
+                    ),
+                },
+            )
+        )
+        width += 1.0
+    return out
 
 
 @dataclass(frozen=True, slots=True)
