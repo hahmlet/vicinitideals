@@ -445,8 +445,10 @@ ROUND_4 = [
      "lane_and_court", "none"),
     ("or/clackamas/west-linn", "R-10", ("unit_lots",), "lane_and_court", "none", None,
      "lane_and_court", "none"),
-    # Clackamas ZDO 1009.03(B)(1): five feet on both paths, ten in VA.
-    ("or/clackamas/_unincorporated", "R10", (), "lane_and_court", "none", 5,
+    # Clackamas ZDO 1009.03(B)(1): five feet on both paths, ten in VA -- but not
+    # in R-5 to R-30 or the VR districts, whose Table 1001-1 middle-housing row
+    # leaves 1009 blank (fg4-fixes, 2026-11-10).
+    ("or/clackamas/_unincorporated", "R10", (), "lane_and_court", "none", None,
      "lane_and_court", "none"),
     ("or/clackamas/_unincorporated", "R2.5", ("unit_lots",), "lane_and_court", "none", 5,
      "lane_and_court", "none"),

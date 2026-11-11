@@ -1,0 +1,138 @@
+1001.01      PURPOSE
+
+             Section 1000, Development Standards, is adopted to implement policies in the
+             Comprehensive Plan that are applicable to new development and thereby ensure that
+             land is:
+
+             A.   Used efficiently to support broad-based economic development and the adequacy
+                  of housing and public services;
+
+             B.   Developed in an environmentally sustainable and aesthetically appealing manner;
+
+             C.   Supplied with public facilities sufficient to meet demand; and
+
+             D.   Served by a safe, convenient, multimodal, and interconnected transportation
+                  system.
+
+1001.02      GENERAL STANDARDS
+
+             A.   Redevelopment of a manufactured dwelling park with a different use is subject to
+                  Subsection 825.02.
+
+             B.   A building consisting of only a basement shall not be used as a dwelling.
+
+             C.   A manufactured dwelling shall not be attached to another dwelling.
+
+             D.   A manufactured dwelling shall not be allowed as an accessory structure, except
+                  where such accessory structure is a dwelling unit permitted by this Ordinance.
+
+1001.03      APPLICABILITY
+
+             Section 1000 applies to all development, as identified in Table 1001-1, Applicability of
+             Section 1000. If a section is identified as applicable with a “✓” in Table 1001-1, it does
+             not necessarily mean that every subsection within that section will apply; rather, each
+             applicable section must be reviewed to determine which, if any, provisions in that
+             section are applicable to the proposed development.
+
+[Amended by Ord. ZDO-224, 5/31/2011; Amended by Ord. ZDO-231, 1/31/2012; Amended by Ord. ZDO-
+245, 7/1/2013; Amended by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-266, 5/23/2018;
+Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO                 -282, 7/1/2022; Amended by Ord. ZDO-
+285, 9/3/2024; Amended by Ord. ZDO-288, 9/9/2024]
+
+                                                       1001-1
+
+Last Amended 9/9/2024
+                                                                     CLACKAMAS COUNTY ZONING AND DEVELOPMENT ORDINANCE
+
+                                                                            Table 1001-1: Applicability of Section 10001
+
+                                                                                                                                      1011       1012         1013                                          1021
+                           1002           1003          1004          1005         1006            1007           1009                Open        Lot       Planned            1015           1017          Solid
+     Type of            Protection      Hazards       Historic      Site and     Utilities,      Roads &         Land-      1010      Space       Size         Unit        Parking and        Solar       Waste &
+ Development            of Natural         to        Protection     Building         etc      Connectivity      scaping     Signs      and        and       Develop-         Loading         Access     Recyclable
+                         Features        Safety                      Design                                                           Parks     Density       ments                                       Material
+                                                                                                                                                                                                         Collection
+Partitions
+Subdivisions                ✓              ✓              ✓                          ✓              ✓                         ✓         ✓          ✓            ✓                ✓              ✓
+Replats
+Institutional2
+Commercial3                 ✓              ✓              ✓             ✓            ✓              ✓              ✓          ✓         ✓                                        ✓                            ✓
+
+Industrial
+Manufactured                ✓              ✓              ✓                          ✓              ✓              ✓          ✓         ✓          ✓                             ✓
+dwelling parks
+Multifamily                 ✓              ✓              ✓             ✓            ✓              ✓              ✓          ✓         ✓          ✓                             ✓                            ✓
+dwellings
+Single room
+occupancies in
+the PMD, MR-1,
+MR-2, HDR,                  ✓              ✓              ✓             ✓            ✓              ✓              ✓          ✓         ✓          ✓                             ✓                            ✓
+VA, SHD,
+RCHDR
+Districts
+Detached single-         1002.01
+family dwellings,        1002.04                                                                                                                                           1015.01(A)
+manufactured             1002.05                                                                 1007.04                                                                  1015.02(A)(2)
+dwellings, and           1002.06           ✓              ✓                          ✓           1007.08                      ✓                                                & (4)
+prefabricated            1002.07                                                                                                                                          1015.02(B-D)
+structures              1002.094                                                                                                                                          Table 1015-2
+
+Single room              1002.01                                                                                                                                           1015.01(A)
+occupancies in           1002.04                                                                                                                                          1015.02(A)(2)
+all other Districts      1002.05           ✓              ✓                          ✓           1007.04                      ✓                                                & (4)
+                         1002.06                                                                 1007.08                                                                  1015.02(B-D)
+                         1002.07                                                                                                                                          Table 1015-2
+                        1002.094
+
+                                                                                                     1001-2
+
+             Last Amended 9/9/2024
+                                                                        CLACKAMAS COUNTY ZONING AND DEVELOPMENT ORDINANCE
+
+                                                                                                                                                                                                                     1021
+                                                                                                                                            1011        1012         1013                                            Solid
+                            1002            1003           1004          1005          1006            1007            1009                 Open         Lot       Planned             1015            1017        Waste &
+Type of                  Protection       Hazards        Historic       Site and     Utilities,      Roads &          Land-       1010      Space        Size         Unit         Parking and         Solar      Recyclable
+Development              of Natural          to        Protection      Building         etc        Connectivity      scaping      Signs      and         and       Develop-          Loading          Access       Material
+                          Features         Safety                       Design                                                              Parks     Density        ments                                        Collection
+
+Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, and VR-5/7 Districts
+Duplexes,                                                                                            1007.04
+Triplexes, and            1002.01            ✓              ✓                            ✓                                          ✓
+Townhouses                1002.094                                                                   1007.08                                                                       1015.01(A)
+Quadplexes and                                                                                                                                                                   1015.02(A)(2)
+                          1002.01            ✓              ✓                            ✓           1007.04                        ✓                                                  & (4)
+Cottage Clusters          1002.094                                                                                                                                                1015.02(B-D)
+Middle housing                                                                                                                                                                    Table 1015-2
+land divisions                ✓              ✓              ✓                            ✓               ✓                          ✓                     ✓
+
+Middle housing in all other zoning districts
+Townhouses               1002.01
+with two                 1002.04
+dwelling units           1002.05             ✓              ✓                            ✓           1007.04                        ✓                     ✓                              ✓                             ✓
+                         1002.06                                                                     1007.08
+                         1002.07
+                         1002.094
+
+Duplexes,
+Triplexes,
+Quadplexes,
+and                          ✓               ✓              ✓              ✓             ✓               ✓               ✓          ✓         ✓           ✓                              ✓                             ✓
+Townhouses
+with three or
+more dwelling
+units
+
+       1   Where specific subsections are not identified in this table, an applicable section must be reviewed to determine which provisions in that section apply to the
+           proposed development.
+
+       2   Stormwater management facilities permitted as an accessory or primary use; utility cabinets that comply with Section 830,                          Utility Cabinets; utility facilities in road
+           rights-of-way; and utility lines are not subject to Section 1000.
+
+       3   Level one through three mobile vending units are not subject to Section 1000, except as set forth in Section 837, Mobile Vending Units.
+
+       4   Subsection 1002.09 also applies to accessory structures.
+
+                                                                                                          1001-3
+
+              Last Amended 9/9/2024

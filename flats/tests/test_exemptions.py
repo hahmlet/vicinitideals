@@ -249,7 +249,12 @@ pytestmark = pytest.mark.unit
 # exempt: true in Wood Village TC (235.440.E allows a flat roof with a cornice; stops the
 # `like: MR 2` 5:12) and Hillsboro SCR-LD, SCR-MD, SCR-HD (no roof form outside the Downtown
 # Plan District; the 4/12 sits in a variant under hillsboro_downtown_plan_district).
-EXPECTED = {"stated": 484, "numeric": 250, "marker": 0, "dash": 2, "silent": 7}
+# 246 -> 255 numeric on 2026-11-10 (flats/fg4-fixes, rel7 reader D note 4a): Clackamas R5, R7,
+# R8.5, R10, R15, R20, R30, VR45 and VR57 hold the ZDO 1009.03(B)(1) parking strip exempt.
+# Table 1001-1's row for middle housing in those districts leaves the 1009 column blank where
+# the all-other-districts row ticks it (zdo.1001.txt#L31-L32,L94,L99-L105, read by column
+# position). The quoted lines print section numbers, so numeric; a blank cell states nothing.
+EXPECTED = {"stated": 484, "numeric": 259, "marker": 0, "dash": 2, "silent": 7}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.
