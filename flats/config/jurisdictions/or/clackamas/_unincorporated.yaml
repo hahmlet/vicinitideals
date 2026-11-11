@@ -965,6 +965,16 @@ code:
   end: "Return to the Zoning and Development Ordinance main page"
   # Table 510-1 runs eleven hundred lines of use names against eleven columns.
   allow_thin: true
+# Table 1001-1 says which Section 1000 chapters reach which development. Its
+# row for middle housing in the R-5 to R-30 and VR districts leaves 1005 and
+# 1009 blank (page 1001-3 of the county PDF, "Last Amended 9/9/2024"; stored
+# with layout extraction so the columns line up; the tick marks are the only
+# content of most cells, hence allow_thin).
+- id: zdo.1001
+  url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+  title: Clackamas County ZDO Section 1001 - General Provisions (Table 1001-1, Applicability of Section 1000), Last Amended 9/9/2024
+  start: "1001.01"
+  allow_thin: true
 # Where eight of those eleven districts' standards actually live. Table 510-1
 # notes 12 and 14 send a FREESTANDING quadplex -- which is the only kind this
 # building is -- to "the development and dimensional standards applicable to
@@ -1302,6 +1312,9 @@ defaults:
   # (202), so the strip's reach to a lone lane is unsure; held on the lane too,
   # the conservative answer (coordinator, 2026-11-05). VA, OA and VCS print 10
   # below; VO has no key in this layer.
+  # NOT IN R-5 TO R-30 OR THE VR DISTRICTS (2026-11-10, fg4-fixes): Table 1001-1
+  # leaves the 1009 column blank for middle housing there (zdo.1001.txt#L94,L99-L105),
+  # so those nine districts hold the strip exempt; every other district keeps it.
   # NOT ENCODED: the strip's street half and 1009.06's five feet at a front lot
   # line (FOLLOWUPS 146 round 4 hand-off).
   parking_side_yard_allowed:
@@ -1605,6 +1618,22 @@ zones:
         20, side 5, rear 20, coverage 50%)
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1682,6 +1711,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1758,6 +1803,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1834,6 +1895,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1910,6 +1987,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1986,6 +2079,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -2062,6 +2171,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -2144,6 +2269,22 @@ zones:
     # VA, VCS and VO districts (1005.11.txt L6-L121) and name no VR
     # district, so nothing in it reaches this zone; Table 315-3's roof
     # pitch already holds the flat-roofed pod here.
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
       # P7,8, the same as the low-density zones. One table, one row, both
@@ -2263,6 +2404,22 @@ zones:
     # VA, VCS and VO districts (1005.11.txt L6-L121) and name no VR
     # district, so nothing in it reaches this zone; Table 315-3's roof
     # pitch already holds the flat-roofed pod here.
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
       # P7,8, the same as the low-density zones. One table, one row, both
