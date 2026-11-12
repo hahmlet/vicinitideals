@@ -27,3 +27,5 @@ counts street walls only, EXCEPT Gresham (5% clear glass on every other wall),
 corner lots (two street walls), Milwaukie (walls within 50 ft of the street).
 Building code (egress window per bedroom, light/air, openings near lot lines)
 not checked.
+
+Note from item 183 (closed 2026-11-12, ../vicinitideals-worktrees/side-wall-openings.findings.md): Oregon allows no windows in a wall under 3 ft from a side/rear lot line (unlimited at 3 ft+). In rel7, 0 greens put a long wall under 3 ft; 160 greens put an END wall under 3 ft (Portland CM2 55, CE 25, Gresham SC 20, CMU 17). If the end-door variant is adopted, those lots cannot carry its end windows -- hold the end wall >= 3 ft from side/rear lines for that variant.
