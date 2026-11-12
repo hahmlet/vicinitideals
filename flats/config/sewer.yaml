@@ -8,7 +8,8 @@
 # system is mapped here, so that "no main and no district" is a finding, not
 # a gap. Anywhere else a lot that is neither is UNMEASURED: not RED on this
 # ground, and it carries the SEWER-UNMEASURED flag (below the yellow line, so
-# its colour does not move).
+# its colour does not move). A lot with another provider's main in its street
+# is YELLOW instead (STREET_MAIN, below).
 #
 # Polygons are pooled across places: a district that reaches the lot serves
 # it. Another provider's main is not: a city serves inside its limits, so its
@@ -17,7 +18,10 @@
 # or/oar.340-071-0160.txt#L60: the owner must be "willing or obligated to
 # provide sewer service"). Steph's own example was the Lake Oswego edge. Only
 # another provider's main in the lot's own street (`front_ft`) holds the lot
-# back from RED, as UNMEASURED.
+# back from RED: in a measured place it is YELLOW with SEWER-STREET-MAIN
+# (Steph 2026-11-11, rulings.yaml 2026-11-11-sewer-pipe-in-street-yellow:
+# hook-up needs the provider's agreement or annexation); in an unmapped place
+# it stays UNMEASURED.
 #
 # Every key named here must be in the bridge's --sources snapshot, or the
 # bridge refuses to run (flats.geom.sewer.missing).
@@ -39,9 +43,10 @@ reach_quote: "or/oar.340-071-0160.txt#L56"
 #: How close another provider's main must come for the lot to be taken as
 #: possibly served by contract: one in the lot's own street. quadfit's figure
 #: (s7_report.SEWER_REVIEW_FT, flats.ingest.quadfit.SEWER_MAIN_REACH_FT): "a
-#: 4-plex ties into a main at the street". Such a lot is UNMEASURED, not RED:
-#: a city may serve a lot outside its limits (Lake Oswego's edge, Portland's
-#: unincorporated pockets), and no layer says which it does.
+#: 4-plex ties into a main at the street". Such a lot is not RED: a city may
+#: serve a lot outside its limits (Lake Oswego's edge, Portland's
+#: unincorporated pockets), and no layer says which it does. Steph 2026-11-11
+#: (2026-11-11-sewer-pipe-in-street-yellow): YELLOW + SEWER-STREET-MAIN.
 front_ft: 50
 
 #: Public sanitary mains. A main serves, within the reach, only the places

@@ -143,9 +143,17 @@ def test_another_citys_main_off_the_street_does_not_serve(snap: Path) -> None:
     assert got.state == sewer.OUTSIDE and got.main_ft is None
 
 
-def test_another_citys_main_in_the_street_leaves_the_lot_unmeasured(snap: Path) -> None:
+def test_another_citys_main_in_the_street_is_the_street_main_state(snap: Path) -> None:
+    """Steph 2026-11-11 (2026-11-11-sewer-pipe-in-street-yellow): outside
+    every district with a city main in the street -- not outside, not
+    unmeasured."""
     got = _read(snap, shapely.box(10100, 30, 10200, 130), "or/clackamas/_unincorporated")
-    assert got.state == sewer.UNMEASURED and "another provider" in got.why
+    assert got.state == sewer.STREET_MAIN and "another provider" in got.why and "annexation" in got.why
+
+
+def test_a_street_main_in_an_unmapped_place_stays_unmeasured(snap: Path) -> None:
+    got = _read(snap, shapely.box(10100, 30, 10200, 130), "or/clackamas/canby")
+    assert got.state == sewer.UNMEASURED and "not mapped" in got.why
 
 
 def test_a_place_with_no_data_is_unmeasured_never_outside(snap: Path) -> None:
@@ -169,7 +177,7 @@ def test_with_sewer_writes_the_reading_onto_rows(snap: Path, monkeypatch: pytest
         {"TLID": "C"},
     ]
     counts = sewer.with_sewer(rows, snap, lambda r: r["j"])
-    assert counts == {sewer.SERVED: 1, sewer.OUTSIDE: 1, sewer.UNMEASURED: 0}
+    assert counts == {sewer.SERVED: 1, sewer.OUTSIDE: 1, sewer.STREET_MAIN: 0, sewer.UNMEASURED: 0}
     assert sewer.reading_of(rows[1]).state == sewer.OUTSIDE
     assert sewer.reading_of(rows[2]) is None
 
@@ -215,6 +223,31 @@ def test_a_place_with_no_data_flags_the_lot_and_keeps_its_colour() -> None:
     assert s.signed.colour is Colour.green
     assert [f.code for f in s.signed.flags] == [sewer.UNMEASURED_FLAG]
     assert sewer.NO_PUBLIC_SEWER not in s.signed.reasons
+
+
+def test_a_city_main_in_the_street_makes_a_green_lot_yellow_with_its_flag() -> None:
+    """Steph 2026-11-11: YELLOW + SEWER-STREET-MAIN, never GREEN, never RED
+    on this ground; the flag is at or over the yellow line."""
+    import dataclasses
+
+    from flats.score import flags as flag_plan
+    from flats.score.flags import Colour
+    from flats.score.screen import Triage
+
+    why = "outside every sewer district, but another provider's main is 26 ft off, in its street"
+    s = _screened(sewer.Reading(sewer.STREET_MAIN, None, why))
+    assert s.signed.triage is Triage.yellow and s.signed.colour is Colour.yellow
+    assert [f.code for f in s.signed.flags] == [sewer.STREET_MAIN_FLAG]
+    assert sewer.STREET_MAIN_REASON in s.signed.reasons and sewer.NO_PUBLIC_SEWER not in s.signed.reasons
+    assert not any(b.check == sewer.CHECK for b in s.signed.binds)
+    assert "2026-11-11" in s.signed.flags[0].source
+    line = flag_plan.colour_rules().yellow_at_severity
+    assert flag_plan.severity_of(s.signed.flags[0], flag_plan.registry()) >= line
+    again = sewer.checked(s, sewer.Reading(sewer.STREET_MAIN, None, why))
+    assert again.signed.flags == s.signed.flags and again.signed.reasons == s.signed.reasons
+    red = dataclasses.replace(s.signed, triage=Triage.red)
+    kept = sewer.checked(dataclasses.replace(s, signed=red, screening=red), sewer.Reading(sewer.STREET_MAIN, None, why))
+    assert kept.signed.triage is Triage.red
 
 
 def test_the_bridge_lot_carries_the_reading() -> None:

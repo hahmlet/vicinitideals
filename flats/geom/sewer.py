@@ -20,10 +20,16 @@ nearest mapped main 7,546 ft off) and lots on the Lake Oswego edge.
   farther off does not serve: a city is not obliged to serve outside its
   limits (OAR 340-071-0160(4)(f)(B)), and Steph's own example was the Lake
   Oswego edge.
-* ``unmeasured`` -- neither, anywhere else, or another provider's main in
-  the lot's street (a city may serve outside its limits by contract, and no
-  layer says where it does). The :data:`UNMEASURED_FLAG` rides along below
-  the yellow line, so the colour does not move.
+* ``street_main`` -- neither, in a measured place, but another provider's
+  main lies in the lot's own street (``front_ft``). A city may serve outside
+  its limits by contract or after annexation, and no layer says where it
+  does. Steph 2026-11-11 (rulings.yaml ``2026-11-11-sewer-pipe-in-street-yellow``,
+  FOLLOWUPS 182): YELLOW with :data:`STREET_MAIN_FLAG` ("sewer hook-up needs
+  the provider's agreement or annexation"), reason :data:`STREET_MAIN_REASON`;
+  never RED on this ground and never GREEN.
+* ``unmeasured`` -- neither, in a place whose sewer is not mapped here. The
+  :data:`UNMEASURED_FLAG` rides along below the yellow line, so the colour
+  does not move.
 
 This is not the ``public_sewer`` condition fact (:mod:`flats.ingest.quadfit`),
 which some standards turn on and which keeps quadfit's 50 ft meaning. A lot
@@ -52,7 +58,8 @@ CONFIG = Path(__file__).resolve().parents[1] / "config" / "sewer.yaml"
 SERVED = "served"
 OUTSIDE = "outside"
 UNMEASURED = "unmeasured"
-STATES: tuple[str, ...] = (SERVED, OUTSIDE, UNMEASURED)
+STREET_MAIN = "street_main"
+STATES: tuple[str, ...] = (SERVED, OUTSIDE, STREET_MAIN, UNMEASURED)
 
 #: Row keys the bridge writes (:func:`with_sewer`) and the lot reads back.
 ROW_STATE = "sewer_service"
@@ -66,9 +73,17 @@ NO_PUBLIC_SEWER = "NO_PUBLIC_SEWER"
 #: never added to a lot's reasons, but the flag registry names it.
 UNMEASURED_REASON = "SEWER_UNMEASURED"
 UNMEASURED_FLAG = "SEWER-UNMEASURED"
-REASONS: tuple[str, ...] = (NO_PUBLIC_SEWER, UNMEASURED_REASON)
+#: Outside every district, another provider's main in the street: YELLOW
+#: (Steph 2026-11-11). The flag sits at or above the yellow line.
+STREET_MAIN_REASON = "SEWER_STREET_MAIN"
+STREET_MAIN_FLAG = "SEWER-STREET-MAIN"
+REASONS: tuple[str, ...] = (NO_PUBLIC_SEWER, STREET_MAIN_REASON, UNMEASURED_REASON)
 
 RULING = "Steph 2026-11-10, rulings.yaml 2026-11-10-no-public-sewer-red: red with no public sewer"
+STREET_RULING = (
+    "Steph 2026-11-11, rulings.yaml 2026-11-11-sewer-pipe-in-street-yellow: yellow + flag, "
+    "hook-up needs the provider's agreement or annexation"
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -238,14 +253,21 @@ def judge(
         if own_ft is not None
         else "no public main of its provider is mapped"
     )
+    measured = spec.measures(layer_id)
     if other_ft is not None and other_ft <= spec.front_ft:
-        return Reading(
-            UNMEASURED,
-            own_ft,
+        street = (
             f"outside every sewer service area and district, but another provider's main is "
-            f"{other_ft:,.0f} ft off, in its street: whether that provider serves it is not mapped",
+            f"{other_ft:,.0f} ft off, in its street"
         )
-    if spec.measures(layer_id):
+        if measured:
+            # Steph 2026-11-11: YELLOW + flag, not RED and not colour kept.
+            return Reading(
+                STREET_MAIN,
+                own_ft,
+                f"{street}: hooking up needs that provider's agreement or annexation",
+            )
+        return Reading(UNMEASURED, own_ft, f"{street}, and this place's own sewer is not mapped")
+    if measured:
         cite = f" ({spec.reach_quote})" if spec.reach_quote else ""
         return Reading(
             OUTSIDE,
@@ -332,9 +354,10 @@ def reading_of(row: Mapping[str, Any]) -> Reading | None:
 
 def checked(s: Any, reading: Reading | None) -> Any:
     """``s`` RED with :data:`NO_PUBLIC_SEWER` where the lot is outside public
-    sewer, or with the :data:`UNMEASURED_FLAG` beside its colour where its
-    place has no data. Adds nothing twice; a served lot, or one nobody read,
-    is unchanged."""
+    sewer; a GREEN lot YELLOW with :data:`STREET_MAIN_FLAG` where only another
+    provider's main in its street could serve it (a worse colour stays); or
+    the :data:`UNMEASURED_FLAG` beside its colour where its place has no data.
+    Adds nothing twice; a served lot, or one nobody read, is unchanged."""
     if reading is None or reading.state == SERVED:
         return s
     from flats.score.screen import Triage
@@ -357,6 +380,20 @@ def checked(s: Any, reading: Reading | None) -> Any:
 
         return dataclasses.replace(s, screening=red(s.screening), signed=red(s.signed))
 
+    if reading.state == STREET_MAIN:
+        held = flag_plan.Flag(
+            STREET_MAIN_FLAG, flag_plan.LOT, STREET_MAIN_REASON, source=f"{reading.why} -- {STREET_RULING}"
+        )
+
+        def yellow(x: Any) -> Any:
+            if any(f.code == STREET_MAIN_FLAG for f in x.flags):
+                return x
+            reasons = x.reasons if STREET_MAIN_REASON in x.reasons else (*x.reasons, STREET_MAIN_REASON)
+            triage = Triage.yellow if x.triage is Triage.green else x.triage
+            return dataclasses.replace(x, triage=triage, flags=(*x.flags, held), reasons=tuple(reasons))
+
+        return dataclasses.replace(s, screening=yellow(s.screening), signed=yellow(s.signed))
+
     flag = flag_plan.Flag(UNMEASURED_FLAG, flag_plan.LOT, UNMEASURED_REASON, source=reading.why)
 
     def add(x: Any) -> Any:
@@ -373,6 +410,8 @@ __all__ = [
     "OUTSIDE",
     "REASONS",
     "SERVED",
+    "STREET_MAIN",
+    "STREET_MAIN_FLAG",
     "UNMEASURED",
     "UNMEASURED_FLAG",
     "Reading",

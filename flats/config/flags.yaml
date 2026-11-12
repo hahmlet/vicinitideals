@@ -975,6 +975,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SEWER_UNMEASURED]
+  SEWER-STREET-MAIN:
+    description: "The lot is outside every sewer district and service area, in a place whose sewer is mapped, and its own provider has no main within 800 ft, but another provider's (usually a city's) public main runs in its street. A city may serve outside its limits by agreement or after annexation, and no layer says whether it will. Steph 2026-11-11 (rulings.yaml 2026-11-11-sewer-pipe-in-street-yellow, FOLLOWUPS 182): yellow + flag, hook-up needs the provider's agreement or annexation; not red under 2026-11-10-no-public-sewer-red and never green on this ground."
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Ask the provider whose main is in the street (often Lake Oswego) whether it will serve the lot by agreement or needs annexation first; a provider that refuses makes the lot red"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SEWER_STREET_MAIN]
   HISTORIC-LISTING-UNSETTLED:
     description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
     kind: categorical

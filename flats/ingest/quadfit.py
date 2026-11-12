@@ -8297,6 +8297,7 @@ def run(
     sewered = sewer.with_sewer(rows, sources, _layer_id)
     log(
         f"bridge: public sewer: {sewered[sewer.OUTSIDE]:,} lots outside it (red), "
+        f"{sewered[sewer.STREET_MAIN]:,} with another provider's main in the street (yellow), "
         f"{sewered[sewer.UNMEASURED]:,} unmeasured (flag), {sewered[sewer.SERVED]:,} served"
     )
     placed = historic_lists.write_report(rows, out)
