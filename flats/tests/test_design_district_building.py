@@ -323,7 +323,30 @@ def test_hillsboro_downtown_roof_holds_an_unmeasured_lot_off_green() -> None:
 
     fact = CONDITIONS["hillsboro_downtown_plan_district"]
     assert fact.kind == "site_fact" and fact.assume is None
-    assert "hillsboro_downtown_plan_district" not in DRAWN_CONDITIONS
+    assert "hillsboro_downtown_plan_district" in DRAWN_CONDITIONS
+
+
+def test_hillsboro_downtown_plan_district_is_traced_for_the_three_zones(corpus) -> None:
+    """Figure 12.61.200-A traced (roof-rereads, 2026-11-11): the area answers
+    SCR-LD/MD/HD, holds the plan district line, and is drawn provenance."""
+    import json
+
+    from flats.geom.drawn import AREAS_ROOT
+
+    layer = corpus["or/washington/hillsboro"]
+    area = layer.drawn_areas["downtown_plan_district"]
+    assert area.condition == "hillsboro_downtown_plan_district"
+    assert set(area.zones) == {"SCR-LD", "SCR-MD", "SCR-HD"}
+    data = json.loads((AREAS_ROOT / area.file).read_text(encoding="utf-8"))
+    src = data["source"]
+    assert src["drawn"] is True and src["traced_by"] and src["traced_on"]
+    assert "12.61.200-A" in src["map"]
+    assert 450 < data["features"][0]["properties"]["acres"] < 600
+    # The plan district is downtown, some 4 miles west of Orenco Station's MAX stop
+    # (EPSG:2913, about 7,591,000 E / 688,900 N), where SCR zones also lie.
+    area_geom = load_area(area.file)
+    assert area_geom.area / 43560 == pytest.approx(515, abs=5)
+    assert not area_geom.intersects(shapely.Point(7_591_000, 688_900).buffer(2000))
 
 
 @pytest.mark.parametrize("zone", ["LDR-5", "LDR-7", "TLDR", "TR", "LDR-PV"])

@@ -111,7 +111,9 @@ District offers a clear and objective alternative, the Community Design
 Standards (33.445.500, 33.218), except in the Central City plan district
 (33.445.510.A, RED there). Those standards place the building and its
 parking -- the front setback matched to the neighbours' and never more than
-25 ft back, the car in off an alley where there is one -- and the screen
+25 ft back, the car in off an alley where there is one -- and the roof
+(pitched at least 6/12, or flat only with a small roof deck or a cornice,
+33.218.100.D, 110.F, 140.O: a flat roof allowed with an add-on), and the screen
 measures none of it, so the lot is YELLOW with
 :data:`COMMUNITY_DESIGN_FLAG`. A National Register District needs no review
 for new development (33.445.220.D). ORS 197A.400's clear and objective rule
@@ -441,6 +443,16 @@ CITES: Mapping[str, tuple[str, str, str]] = {
         "PCC 33.218.100.F.1",
         "or/multnomah/portland/33.218.txt#L155",
         "If the site is served by an alley, access for motor vehicles must be from the",
+    ),
+    # Roof re-read 2026-11-11 (FOLLOWUPS 181(b)): pitched 6/12 to 12/12 or the
+    # neighbours' pitch, flat only with a roof deck of 150 sq ft at most; in
+    # RM1, RM2 and RMP also a two-part cornice (110.F), in RM3 and up a
+    # cornice (140.O). A flat roof allowed with an add-on: the lot's YELLOW
+    # stands, and the flag names the roof.
+    "community_design_roof": (
+        "PCC 33.218.100.D",
+        "or/multnomah/portland/33.218.txt#L112-L118",
+        "Flat roofs are allowed when the space on top of the roof is no more than 150 square",
     ),
     "nr_district_no_review": (
         "PCC 33.445.220.D",
@@ -1215,6 +1227,8 @@ def flags_for(
                 f"({CITES['community_design_standards'][0]}); they set the front setback by the "
                 f"neighbours', never over 25 ft ({CITES['community_design_setback'][0]}), and "
                 f"the car in off an alley where there is one ({CITES['community_design_alley'][0]}), "
+                f"and a roof pitched at least 6/12 or flat only with a roof deck of 150 sq ft or "
+                f"less or a cornice ({CITES['community_design_roof'][0]}, 110.F, 140.O), "
                 f"none of it measured",
             )
     design = _design_track(reading, zone, height_ft)

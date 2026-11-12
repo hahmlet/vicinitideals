@@ -1228,9 +1228,10 @@ zones:
       # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
       # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
       # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
-      # hip is one menu choice of nine). The boundary is only on the figure and
-      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
-      # holds every lot here off GREEN until it is.
+      # hip is one menu choice of nine). The boundary is only on the figure,
+      # traced 2026-11-11 as this layer's drawn_areas `downtown_plan_district`:
+      # a lot inside is held to 4/12 (RED), one outside owes nothing, and one
+      # the line cuts stays unanswered, off GREEN.
       exempt: true
       cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
       quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
@@ -2290,9 +2291,10 @@ zones:
       # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
       # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
       # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
-      # hip is one menu choice of nine). The boundary is only on the figure and
-      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
-      # holds every lot here off GREEN until it is.
+      # hip is one menu choice of nine). The boundary is only on the figure,
+      # traced 2026-11-11 as this layer's drawn_areas `downtown_plan_district`:
+      # a lot inside is held to 4/12 (RED), one outside owes nothing, and one
+      # the line cuts stays unanswered, off GREEN.
       exempt: true
       cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
       quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
@@ -2446,9 +2448,10 @@ zones:
       # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
       # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
       # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
-      # hip is one menu choice of nine). The boundary is only on the figure and
-      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
-      # holds every lot here off GREEN until it is.
+      # hip is one menu choice of nine). The boundary is only on the figure,
+      # traced 2026-11-11 as this layer's drawn_areas `downtown_plan_district`:
+      # a lot inside is held to 4/12 (RED), one outside owes nothing, and one
+      # the line cuts stays unanswered, off GREEN.
       exempt: true
       cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
       quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
@@ -4791,6 +4794,32 @@ drawn_areas:
       unanswered: held out of GREEN on hillsboro_center_core. The figure is
       illustrative and the final boundary is set at the PUD, so every
       MU-VTC lot, inside or out, carries HILLSBORO-CENTER-CORE-ILLUSTRATIVE.
+  downtown_plan_district:
+    condition: hillsboro_downtown_plan_district
+    zones: [SCR-LD, SCR-MD, SCR-HD]
+    file: or/washington/hillsboro/downtown-plan-district.geojson
+    source: >-
+      Traced 2026-11-11 (roof-rereads, FOLLOWUPS 181(b)) from Figure
+      12.61.200-A, Downtown Plan District Boundaries (PDF page 703, printed
+      CDC12.61:5), the only statement of where the plan district lies: the
+      figure's street map registered to the Metro RLIS street centrelines and
+      the red "Downtown Plan District" line outlined at its full drawn width.
+      The city publishes no plan-district layer (Community_Development
+      FeatureServer: zoning, natural resources and the comprehensive plan
+      only, checked 2026-11-10). Drawn provenance in the file's source block.
+    quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2"
+    cite: Hillsboro CDC 12.61.200 and Figure 12.61.200-A; 12.61.800.A.1 (the roof standard applies in the plan district)
+    note: >-
+      Asked of SCR-LD, SCR-MD and SCR-HD lots only: 12.61.200 lists them
+      among the plan district's five zones, and they also lie outside it
+      (Orenco, Quatama, AmberGlen and the edges of downtown). SCC-DT and
+      SCR-DNC hold the roof rule without the condition. A lot at least 90
+      percent inside the traced line owes 12.61.800's 4/12 pitched roof and
+      the flat-roofed pod fails it; at most 10 percent inside owes no roof
+      form; one the line cuts is unanswered and held off GREEN. The figure
+      also shades a smaller "Architectural Standards Applicability Area,
+      Refer to Section 12.61.800"; 12.61.800.A.1's text binds the whole plan
+      district, and the stricter reading is kept (a question for Steph).
 
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:

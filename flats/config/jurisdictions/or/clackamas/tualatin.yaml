@@ -186,6 +186,12 @@ readings:
     queue: chapter
     outcome: nothing_here
     note: >-
+      CORRECTED 2026-11-11 (roof-rereads, FOLLOWUPS 181(b)): the three roof design elements are
+      not only facade. Half of 73A.040's menu needs a pitched roof, and the flat-roofed pod
+      (rulings.yaml 2026-10-21-pod-roof-flat) reaches three only with eaves, an overhang and
+      stepped roof planes its catalog does not show -- a flat roof allowed with a design add-on,
+      now encoded as roof_design_elements_min 3 in defaults (YELLOW with ROOF-ELEMENTS). The
+      window and wall-element counts stay unmodelled. The original reading follows.
       "Windows that occupy at least 12 percent of the wall plane" -- the front-face transparency
       standard from Tualatin's clear and objective residential design standards, landing on a card
       headed 73A.010 because of where the section break falls. THESE STANDARDS DO REACH THIS
@@ -860,6 +866,32 @@ code:
     nth: 2
     extraction: plain
 defaults:
+  roof_design_elements_min:
+    # Roof re-read (roof-rereads, 2026-11-11, FOLLOWUPS 181(b)). 73A.020(1)
+    # brings the Residential Design Standards to every "Duplex; Triplex, or
+    # Quadplex" and to "Townhouses" by name, in every zone, and 73A.030(1)(b)
+    # asks the front face for "At least three Residential Roof Design
+    # Elements" from 73A.040's six (two on the rear, (2)(b); two on a
+    # street-side wall, (3)(b)). Three of the six need a pitched roof: a
+    # dormer "built out from a sloping roof" (1), the "Pitched or sloping
+    # roof" itself (2), decoration "in gable ends" (5). A flat roof can reach
+    # three only with eaves of 12 in (3), an overhang of 6 in (4, worded as a
+    # barge- or verge-board, which is a gable-end trim: whether a flat roof's
+    # overhang counts is the city's call) and roof planes at different heights
+    # (6). The pod's catalog shows none, and the Type II path (73A.060(1))
+    # requires every roof pitched. A flat roof allowed with a design add-on is
+    # YELLOW with a flag (rulings.yaml 2026-11-10-tigard-cornice-yellow; the
+    # Clackamas roof-garden ruling, 2026-11-11): ROOF-ELEMENTS, not RED. This
+    # corrects the 2026-08-20 reading (73A.030 card, nothing_here) on the
+    # roof only; the window and wall-element counts stay unmodelled design
+    # detail (Steph 2026-10-14). NOT ENCODED, loosening only: 73A.020(2)(b)
+    # exempts a facade separated from the street by another dwelling.
+    value: 3
+    cite: "Tualatin TDC 73A.030(1)(b), at least three Residential Roof Design Elements on the front face, from the six of 73A.040; applies to quadplexes and townhouses, 73A.020(1)(b)-(c)"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/tualatin/73A/73A.030.txt#L3,L8"
+    via: "or/clackamas/tualatin/73A/73A.020.txt#L2,L4-L5"
   entrance_faces_street:
     value: not_required
     cite: "Tualatin TDC 73A.030 asks only for a walkway from a main entrance to the sidewalk, no orientation (whole-document grep) (FOLLOWUPS 153)"

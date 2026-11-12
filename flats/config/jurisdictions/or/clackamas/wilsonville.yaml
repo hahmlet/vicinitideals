@@ -3044,6 +3044,26 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1951
       retrieved: '2026-08-27'
       quote: "or/clackamas/wilsonville/4/4.113.txt#L239-L242"
+    roof_style_book_unread:
+      # Roof re-read (roof-rereads, FOLLOWUPS 181(b), 2026-11-11). Middle
+      # housing on a built Villebois lot goes through 4.125(.23); its (C)
+      # binds the Architectural Pattern Book, and a factory-built pod matches
+      # none of the book's unit types, so "only the Architectural Styles,
+      # Architectural Patterns ... and Fencing must be complied with" (L1027).
+      # The Pattern Book "shall apply to all development outside of the
+      # Village Center Boundary" (L743); inside it the Village Center
+      # Architectural Standards bind (L958). Neither book is stored (looked
+      # for online 2026-11-10 and 11-11, not published), so whether a style
+      # allows a flat roof is unread. The earlier note on (.23)(C) below
+      # ("None of it is an envelope") predates the 2026-10-21 flat-roof
+      # ruling, under which a style that refuses a flat roof is RED. Unread
+      # is held YELLOW.
+      value: true
+      cite: "Wilsonville WC 4.125(.23)(C): where the structure matches no Pattern Book unit type, the Architectural Styles must be complied with; the Pattern Book applies outside the Village Center"
+      url: https://api.municode.com/PublicationPdfDownload/1951
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L1026-L1027,L743"
+      via: "or/clackamas/wilsonville/4/4.125.txt#L1018"
     section: ["4.125", "4.001"]
     cite_default:
       cite: Wilsonville Development Code 4.125 (V—Village Zone) Table V-1, as applied to a quadplex
