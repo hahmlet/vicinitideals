@@ -69,7 +69,7 @@ the full one.)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
-- Weekly re-screen state -- run 87 PROMOTED 2026-10-28; NEXT full re-screen ~2026-11-10, splices in between. [file](followups/weekly-rescreen.md)
+- Weekly re-screen state -- run 124 PROMOTED 2026-11-12 (rel7, pod80x30); NEXT rel8 full bound (pod80x25@3). [file](followups/weekly-rescreen.md)
 67. [Claude] **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1) ...)** -- (b) BUILT e67b7193 (flats/road-land-leftovers), rides flats/rel4; remove after the bound. [file](followups/67-wash-co-road-dedication.md)
 77. [Claude] **Road land to the centre line in the cities, not just unincorporated Washington County** -- segment qualifiers BUILT e67b7193 (Milwaukie 18 rows, King City 3), rides flats/rel4; left: no-centre-line case (needs 137). [file](followups/77-city-road-dedication.md)
 78. [Claude] **Portland false GREENs: main street minimum floor area and protected historic buildings are RED** -- last item BUILT 8d1597ef (flats/pdx-gresham-leftovers): "m" ground-floor active use from 2029 = notice now, YELLOW from 2029-01-01 (0 moves); later: wire the transit-street map. [file](followups/78-portland-false-greens.md)
