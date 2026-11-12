@@ -60,7 +60,7 @@ the full one.)
 
 186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- RULED 11-12 each wall, exclude (RED if no placement keeps 3 ft); lane gresham-end-glass building -> rel8. [file](followups/186-gresham-end-wall-glass.md)
 
-187. [Claude] [Steph: go] [scan: YES if a rule binds] **Window (glazing) rules not read yet: Portland plan districts, design districts/overlays, building-code light/egress** -- offered 11-12. [file](followups/187-glazing-gaps.md)
+187. [Claude] [scan: YES if a rule binds] **Window (glazing) rules not read yet: Portland plan districts, design districts/overlays, building-code light/egress** -- Steph GO 11-12; two readers running (glazing-pdx, glazing-rest -> ../vicinitideals-worktrees/glazing-*.findings.md). [file](followups/187-glazing-gaps.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
