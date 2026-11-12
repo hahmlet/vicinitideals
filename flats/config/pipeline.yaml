@@ -1311,8 +1311,11 @@ datasets:
     provides: utility
     geometry: polyline
     url: https://maps.troutdaleoregon.gov/server/rest/services/Public_Web/City_GIS/MapServer/11
-    fields: [owner, date_built]
+    fields: [owner, material]
     serves: [or/multnomah/troutdale]
+    notes: >-
+      Was [owner, date_built]; the city dropped date_built and the 2026-11-10
+      acquire refused the layer. material stands in as the second field.
 
   util_sewer_fairview:
     kind: arcgis
@@ -1395,6 +1398,63 @@ datasets:
       Services, neither of which publishes public main linework — a lot inside
       a district is connectable even with no mapped main, which is the
       difference between a review flag and a hard exclusion.
+
+  # Public sewer service (Steph 2026-11-10, rulings.yaml
+  # 2026-11-10-no-public-sewer-red): flats/geom/sewer.py reads these and the
+  # mains above, and the bridge refuses a snapshot missing any of them. No
+  # licence is stated on any of these layers (checked 2026-11-10).
+  util_sewer_cws_boundary:
+    kind: arcgis
+    label: Clean Water Services service boundary
+    provides: utility
+    url: https://services1.arcgis.com/mGbDfjleLhk48K7A/arcgis/rest/services/Clean_Water_Services_General_Boundaries/FeatureServer/1
+    fields: [OBJECTID]
+    serves: [or/washington, or/clackamas/tualatin]
+    notes: >-
+      CWS's own "District Border": "the Service boundary for Clean Water
+      Services. Clean Water Services provides Sanitary Sewer and Storm water
+      Sewer service for parcels within the service boundary" (layer
+      description, read 2026-11-10; 2 polygons, edited 2026-10-11). Published
+      in Oregon North feet already.
+
+  util_sewer_cws:
+    kind: arcgis
+    label: Clean Water Services gravity sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://services1.arcgis.com/mGbDfjleLhk48K7A/arcgis/rest/services/Sanitary_Public_Data_View/FeatureServer/11
+    fields: [Maintainer, Owner]
+    where: Maintainer NOT IN ('Private', 'Abandoned')
+    serves: [or/washington, or/clackamas/tualatin]
+    notes: >-
+      57,977 gravity mains (2026-11-10) maintained by CWS and the member cities
+      (Beaverton, Hillsboro, Tigard, Tualatin, Sherwood, Forest Grove,
+      Cornelius); private and abandoned pipes are left out at the server.
+
+  util_sewer_sandy:
+    kind: arcgis
+    label: Sandy sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://services7.arcgis.com/6sTVURYt6FS9kmhe/arcgis/rest/services/Composite_Utility_Map_WFL1/FeatureServer/6
+    fields: [Status, FlowType]
+    serves: [or/clackamas/sandy]
+    notes: >-
+      The city's composite utility map, linked from its Base Maps page (1,520
+      mains, edited 2026-05-08). No owner field; Abandoned and Dry mains are
+      dropped by flats/geom/sewer.py.
+
+  util_sewer_lake_oswego:
+    kind: arcgis
+    label: Lake Oswego sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://maps.ci.oswego.or.us/server/rest/services/Utilities_Public/MapServer/6
+    fields: [FACILITY, MATERIAL, DIAMETER]
+    serves: [or/clackamas/lake-oswego]
+    notes: >-
+      Lake Oswego is switched off, but its mains are what the unincorporated
+      lots on its edge would connect to (7,262 mains, 2026-11-10).
 
   # --- terrain -------------------------------------------------------------
 

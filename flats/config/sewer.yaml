@@ -1,0 +1,134 @@
+# Public sewer service (Steph 2026-11-10, rulings.yaml
+# 2026-11-10-no-public-sewer-red: "red with no public sewer.").
+#
+# A lot is SERVED when a public sanitary main of its own place's provider
+# lies within the reach of it, or when it touches a sewer service area or
+# district polygon below. It is OUTSIDE (RED, NO_PUBLIC_SEWER) when it is
+# neither and its place is in `measured`: a place whose provider's whole
+# system is mapped here, so that "no main and no district" is a finding, not
+# a gap. Anywhere else a lot that is neither is UNMEASURED: not RED on this
+# ground, and it carries the SEWER-UNMEASURED flag (below the yellow line, so
+# its colour does not move). A lot with another provider's main in its street
+# is YELLOW instead (STREET_MAIN, below).
+#
+# Polygons are pooled across places: a district that reaches the lot serves
+# it. Another provider's main is not: a city serves inside its limits, so its
+# main 300 ft from an unincorporated lot outside every district does not make
+# sewer legally available (OAR 340-071-0160(4)(f)(B),
+# or/oar.340-071-0160.txt#L60: the owner must be "willing or obligated to
+# provide sewer service"). Steph's own example was the Lake Oswego edge. Only
+# another provider's main in the lot's own street (`front_ft`) holds the lot
+# back from RED: in a measured place it is YELLOW with SEWER-STREET-MAIN
+# (Steph 2026-11-11, rulings.yaml 2026-11-11-sewer-pipe-in-street-yellow:
+# hook-up needs the provider's agreement or annexation); in an unmapped place
+# it stays UNMEASURED.
+#
+# Every key named here must be in the bridge's --sources snapshot, or the
+# bridge refuses to run (flats.geom.sewer.missing).
+
+#: OAR 340-071-0160(4)(f)(A): a sewerage system is available, and an onsite
+#: (septic) permit is denied, where for "a group of two to five single family
+#: dwellings" the nearest connection point is "not further than 200 feet
+#: multiplied by the number of dwellings". The pod is four dwellings: 800 ft.
+#: Stored as printed (200 ft per dwelling); the loader multiplies.
+reach_ft_per_dwelling: 200
+dwellings: 4
+reach_quote: "or/oar.340-071-0160.txt#L56"
+# No city, district or county code read for this lane prints a connection
+# distance of its own (Portland PCC 17.33.030(A) requires connection and
+# states none; CWS, WES and Gresham rules were not read). The state's figure
+# is the one that decides when a lot may NOT have its own septic system, so it
+# is the line between "public sewer is available" and "it is not".
+
+#: How close another provider's main must come for the lot to be taken as
+#: possibly served by contract: one in the lot's own street. quadfit's figure
+#: (s7_report.SEWER_REVIEW_FT, flats.ingest.quadfit.SEWER_MAIN_REACH_FT): "a
+#: 4-plex ties into a main at the street". Such a lot is not RED: a city may
+#: serve a lot outside its limits (Lake Oswego's edge, Portland's
+#: unincorporated pockets), and no layer says which it does. Steph 2026-11-11
+#: (2026-11-11-sewer-pipe-in-street-yellow): YELLOW + SEWER-STREET-MAIN.
+front_ft: 50
+
+#: Public sanitary mains. A main serves, within the reach, only the places
+#: in its `serves` (its own provider's); anywhere else it counts only within
+#: `front_ft`, and then only to hold a lot back from RED. `exclude` drops a
+#: feature whose field holds one of the values (case-insensitive): abandoned,
+#: removed, future or private pipe is not public sewer a lot can connect to.
+#: Values read off each service's distinct values on 2026-11-10.
+mains:
+  util_sewer_portland:
+    serves: [or/multnomah/portland]
+    exclude: {SERVSTAT: [ABAN, TBAB], OWNRSHIP: [PRIV]}
+  util_sewer_gresham:
+    serves: [or/multnomah/gresham]
+    exclude: {gnownedby: [Private]}
+  util_sewer_troutdale:
+    serves: [or/multnomah/troutdale]
+    exclude: {owner: [Private]}
+  util_sewer_fairview:
+    serves: [or/multnomah/fairview]
+  util_sewer_wood_village:
+    serves: [or/multnomah/wood-village]
+  util_sewer_oregon_city:
+    serves: [or/clackamas/oregon-city]
+  util_sewer_wilsonville:
+    serves: [or/clackamas/wilsonville]
+    exclude: {OWNER: [Private], STATUS: [ABANDON]}
+  util_sewer_west_linn:
+    serves: [or/clackamas/west-linn]
+    exclude: {OWNER: [PRIVATE], STATUS: [FUTURE]}
+  util_sewer_milwaukie:
+    serves: [or/clackamas/milwaukie]
+    exclude: {STATUS: [Removed, UnderConstruction]}
+  util_sewer_gladstone:
+    serves: [or/clackamas/gladstone]
+  # Private and abandoned pipes are left out at the server (pipeline.yaml).
+  util_sewer_cws:
+    serves: [or/washington, or/clackamas/tualatin]
+  util_sewer_sandy:
+    serves: [or/clackamas/sandy]
+    exclude: {Status: [Abandoned, Dry]}
+  util_sewer_lake_oswego:
+    serves: [or/clackamas/lake-oswego]
+    exclude: {FACILITY: [ABANDONED]}
+
+#: Service-area and district polygons. A lot touching one is served.
+areas:
+  # Clean Water Services' own service boundary: "Clean Water Services
+  # provides Sanitary Sewer and Storm water Sewer service for parcels within
+  # the service boundary" (layer description, 2026-11-10).
+  util_sewer_cws_boundary: {}
+  # Clackamas County's district boundaries: CCSD#1, Tri-City, Oak Lodge,
+  # Dunthorpe-Riverdale, Clean Water Services (drawn whole) and Government
+  # Camp. Political boundaries, not service areas (Metro says the same of its
+  # copy), so a lot inside one is served even with no main mapped (WES and
+  # Oak Lodge publish no main linework).
+  util_sewer_district_clackamas: {}
+
+#: Places where a lot that is neither near a main nor in an area is OUTSIDE.
+#: A county path covers its cities. Each line says what maps the place.
+measured:
+  or/multnomah/portland: "BES mains (Utilities_Sewer/3), citywide"
+  or/multnomah/gresham: "the city's wastewater mains"
+  or/multnomah/troutdale: "the city's sewer pipes"
+  or/multnomah/fairview: "the city's public mains"
+  or/multnomah/wood-village: "the city's sewer mains"
+  or/clackamas/_unincorporated: "the county's sanitary district boundaries"
+  or/clackamas/happy-valley: "CCSD#1 (the county's district boundaries)"
+  or/clackamas/oregon-city: "Tri-City district and the city's mains"
+  or/clackamas/west-linn: "Tri-City district and the city's mains"
+  or/clackamas/gladstone: "Tri-City district and the city's mains"
+  or/clackamas/milwaukie: "the city's sewer mains"
+  or/clackamas/wilsonville: "the city's sanitary mainlines"
+  or/clackamas/sandy: "the city's sewer mainlines"
+  or/clackamas/tualatin: "Clean Water Services' service boundary and mains"
+  or/washington: "Clean Water Services' service boundary and mains"
+
+#: Places with no sewer service data, so every lot not otherwise served there
+#: is UNMEASURED. Listed so the gap is visible; nothing reads this list.
+unmeasured:
+  or/clackamas/canby: "the city's sewer layer needs a token (Canby CSS/FeatureServer/3); not used"
+  or/clackamas/estacada: "no public sewer layer found (2026-11-10)"
+  or/multnomah/_unincorporated: >-
+    only Dunthorpe-Riverdale is a district; the rest is served, where it is,
+    by a city's contract, which no layer maps

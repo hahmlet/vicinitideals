@@ -3231,6 +3231,17 @@ async def test_historic_list_reasons_are_said_in_words() -> None:
     assert "historic" in _CHECK_WORDS[historic_lists.LISTED_CHECK]
 
 
+async def test_sewer_reasons_are_said_in_words() -> None:
+    """No public sewer (Steph 2026-11-10) and an unmapped place read as
+    sentences, never as their codes."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS
+    from flats.geom import sewer
+
+    for code in sewer.REASONS:
+        assert code in _REASON_WORDS, code
+    assert "sewer" in _CHECK_WORDS[sewer.CHECK]
+
+
 async def test_institutional_land_is_said_in_words() -> None:
     """A school, park or rail lot answered RED by assign reads as
     institutional land, and says churches are still screened (FOLLOWUPS 47)."""
