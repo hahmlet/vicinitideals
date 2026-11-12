@@ -838,12 +838,16 @@ def test_a_zero_alley_setback_runs_the_envelope_to_the_alley_line():
     rules = load_rules()
     pdx = lot_setbacks(rules.jurisdictions["portland"].rule_for("R5"), 5000.0, "A")
     assert pdx["A"] == 0.0 and pdx["R"] > 0
-    # Gresham LDR-5: Table 4.0131 reads rear 15 / with alley 8, and the 26 ft
-    # pod owes five more feet of roof plane off either line -- 20 and 13.
+    # Gresham LDR-5: Table 4.0131 reads rear 15 / with alley 8, and the pod
+    # owes the roof plane above 21 ft off either line: five feet for the old
+    # 26 ft pod (20 and 13), none for the 20 ft pod screened since 2026-11-12.
+    from common import DESIGN_HEIGHT_FT
+
+    owed = max(0.0, DESIGN_HEIGHT_FT - 21)
     gre_rule = rules.jurisdictions["gresham"].rule_for("LDR-5")
     gre = lot_setbacks(gre_rule, 5000.0, "A")
     assert gre_rule.setback_rear_ft == 15 and gre_rule.setback_alley_ft == 8
-    assert gre["R"] == pytest.approx(20.0) and gre["A"] == pytest.approx(13.0)
+    assert gre["R"] == pytest.approx(15.0 + owed) and gre["A"] == pytest.approx(8.0 + owed)
     assert gre_rule.effective_setback_alley_ft(height_ft=21.0) == pytest.approx(8.0)
     # HDR-PV states no roof plane, so its alley five is five; CMF states no
     # alley column on the quadplex row, so its alley line is its rear line.
@@ -852,9 +856,10 @@ def test_a_zero_alley_setback_runs_the_envelope_to_the_alley_line():
     cmf = rules.jurisdictions["gresham"].rule_for("CMF")
     cmf_sb = lot_setbacks(cmf, 12000.0, "A")
     assert cmf.setback_alley_ft is None and cmf_sb["A"] == cmf_sb["R"] == pytest.approx(15.0)
-    # and the envelope on a Gresham alley lot runs to 13 ft of the alley, not 20
+    # and the envelope on a Gresham alley lot runs to the alley column (13 ft
+    # for the 26 ft pod, 8 for the 20 ft one), not the rear's 20 / 15
     env_g = build_envelope(lot, edges, {**base, "R": gre["R"], "A": gre["A"]}, "A")
-    assert env_g.bounds[3] == pytest.approx(100.0 - 13.0)
+    assert env_g.bounds[3] == pytest.approx(100.0 - (8.0 + owed))
     # Tier C is one uniform inset by the LARGEST of the four; the alley's zero
     # never shrinks it, and the strict side is said so in s5's docstring.
     assert max(lot_setbacks(rules.jurisdictions["portland"].rule_for("R5"), 5000.0, "C").values()) == pdx["F"]

@@ -1135,7 +1135,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     "max_height_stories": 26,
     "setback_side_total_ft": 3,
     #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
-    "min_building_height_ft": 18,
+    # 18 -> 16 on 2026-11-12 (pod80x25@3, FOLLOWUPS 185): Oregon City MUC-2/MUD hold
+    # the "or two stories" limb instead of 25 ft.
+    "min_building_height_ft": 16,
     # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
     # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
     # Portland-administered pockets): stall, driveway, side-yard reach, corner street,
@@ -1186,7 +1188,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     # and so carries RM1's 33.120.206 one-street frontage.
     # 6 -> 16 on 2026-11-10 (rel7 assembly): flats/corner-min-frontage (FOLLOWUPS 175): Durham SDR and the WashCo "on a public or private street" zones read one street.
     "min_frontage_one_street": 16,
-    "min_building_height_stories": 6,
+    # 6 -> 8 on 2026-11-12 (pod80x25@3, FOLLOWUPS 185): Oregon City MUC-2/MUD.
+    "min_building_height_stories": 8,
     "parking_area_max_frontage_pct": 6,
     # 17 -> 21 on 2026-11-10 (rel7 assembly): flats/pockets-parking: Steph's 20 ft aisle in the pockets' R5, R7, R10, R20 (was exempt).
     "parking_aisle_two_way_ft": 21,

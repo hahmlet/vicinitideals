@@ -332,3 +332,30 @@ def test_the_flags_read_in_plain_english() -> None:
     assert "Linnton Hillside" in types[fact_code(HOLD)].description
     for fact in FACTS:
         assert types[fact_code(fact)].severity >= flag_plan.colour_rules().yellow_at_severity
+
+
+# --- Kenton 33.538.230, the 25 ft walls (FOLLOWUPS 185, 2026-11-12) ---------------
+
+#: One point inside each Kenton CM2/CM3 zoning polygon (Portland Maps Public/Zoning
+#: layer 0, PLDIST='KN', fetched 2026-11-12; no CE there), and inside each
+#: multi-dwelling one, which 33.538.230.B exempts.
+KENTON_COMMERCIAL = (
+    (7641925.2, 706474.3), (7642440.9, 706657.9), (7641930.9, 706684.2),
+    (7642609.0, 706520.8), (7642406.4, 706411.7), (7642450.3, 705809.6),
+    (7642434.2, 706144.2), (7642285.6, 706004.6), (7642009.3, 706949.3),
+)
+
+
+def test_kentons_wall_rule_asks_more_height_than_the_pod_has() -> None:
+    text = ProvenanceStore().quote("or/multnomah/portland/33.538.txt#L110-L114")
+    assert "Map 538-4" in text and "must be at least 25 feet high" in text
+    assert "Multi-dwelling zoned sites are exempt" in text
+    assert all(d.height_ft < 25 for d in load_catalog().active())
+
+
+@pytest.mark.parametrize("xy", KENTON_COMMERCIAL)
+def test_every_kenton_commercial_lot_is_held_until_map_538_4_is_traced(xy) -> None:
+    # Map 538-4 is not traced, so all Kenton commercial ground is held whole:
+    # the hold costs a GREEN, never buys one.
+    assert load_area(FILES[HOLD]).contains(shapely.Point(*xy).buffer(5))
+    assert _facts("CM2", shapely.Point(*xy).buffer(5))[HOLD] is True
