@@ -342,6 +342,13 @@ CLOSER_LOOK_SECOND_APPROACH = "CLOSER_LOOK_SECOND_APPROACH"
 #: ``2026-11-10-tigard-cornice-yellow``): YELLOW with flag ROOF-CORNICE, a
 #: design detail to confirm -- never GREEN, not RED on this alone.
 CLOSER_LOOK_ROOF_CORNICE = "CLOSER_LOOK_ROOF_CORNICE"
+#: A pitched roof is the rule for a low building and a flat one is allowed only
+#: as a roof garden or other outdoor space (or under mechanical equipment):
+#: Clackamas ZDO 1005.03(F)(4), one or two stories. The pod's roof is flat and
+#: its catalog shows no roof garden. Steph 2026-11-11 (rulings.yaml
+#: ``2026-11-11-clackamas-pitched-roof-yellow``): YELLOW with flag ROOF-GARDEN,
+#: a design change to confirm -- never GREEN, not RED on this alone.
+CLOSER_LOOK_ROOF_GARDEN = "CLOSER_LOOK_ROOF_GARDEN"
 SIDE_YARD_PARKING_SILENT = (
     "The code neither allows nor forbids parking in the side yard; "
     "see rulings.yaml 2026-11-05-side-yard-parking-silent-codes."
@@ -2328,6 +2335,23 @@ def cornice_owed(rules: ZoneResolution, design: Design) -> float | None:
     return float(need)
 
 
+def roof_garden_owed(rules: ZoneResolution, design: Design) -> int | None:
+    """The storey limit (``flat_roof_outdoor_use_max_stories``) under which a
+    flat roof here must be a roof garden or outdoor space, where the pod is
+    that low and its roof is flat; None where the code asks none, the pod is
+    taller, or its roof is pitched. A design that states no roof owes it too:
+    nothing shows the roof is not flat."""
+    most = rules.get("flat_roof_outdoor_use_max_stories")
+    if most is None or isinstance(most, bool):
+        return None
+    if design.stories > int(most):
+        return None
+    pitch = design.roof_pitch_in_12
+    if pitch is not None and pitch > 0:
+        return None
+    return int(most)
+
+
 def approaches_missing(rules: ZoneResolution, design: Design) -> int:
     """How many driveway approaches the code asks beyond the one the plan
     draws: ``ceil(units / driveway_units_per_approach) - PLAN_APPROACHES``,
@@ -3741,6 +3765,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
     if cornice_owed(rules, design) is not None:
         closer = (*closer, CLOSER_LOOK_ROOF_CORNICE)
+    if roof_garden_owed(rules, design) is not None:
+        closer = (*closer, CLOSER_LOOK_ROOF_GARDEN)
     if parking_setback_doubt:
         closer = (*closer, PARKING_SETBACK_DOUBT)
     if stated_fit_fails:
@@ -4663,6 +4689,12 @@ def _account(
             bounds=(0.0, cornice),
             source=_cite(rules, "flat_roof_cornice_min_in"),
         )
+    if roof_garden_owed(rules, design) is not None:
+        flag(
+            "ROOF-GARDEN",
+            CLOSER_LOOK_ROOF_GARDEN,
+            source=_cite(rules, "flat_roof_outdoor_use_max_stories"),
+        )
     missing = approaches_missing(rules, design)
     if missing:
         flag(
@@ -4794,6 +4826,7 @@ __all__ = [
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_ROOF_CORNICE",
+    "CLOSER_LOOK_ROOF_GARDEN",
     "CLOSER_LOOK_STEEP_COARSE",
     "CLOSER_LOOK_ENTRANCE_SIDE",
     "CLOSER_LOOK_REVIEW_CONDITIONS",

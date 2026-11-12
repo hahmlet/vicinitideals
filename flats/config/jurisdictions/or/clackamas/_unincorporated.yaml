@@ -2715,6 +2715,25 @@ zones:
   # roughly 200 square feet of court, which is the difference between a pod
   # that fits and one that does not on a small lot.
   PMD:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 315-1, 315.04.txt#L263-L274: P with no [9]), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -2962,6 +2981,25 @@ zones:
       footnote file as another application path, the same treatment the R
       zones give the identical sentence in Table 315-2.
   MR1:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 315-1, 315.04.txt#L263-L274: P with no [9]), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -3214,6 +3252,25 @@ zones:
       side setback until 2026-09-22; it is now the variant at that field,
       answered per lot by the zone s4 read across each lot line.
   MR2:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 315-1, 315.04.txt#L263-L274: P with no [9]), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -3624,6 +3681,25 @@ zones:
       retrieved: '2026-11-05'
       quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   HDR:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 315-1, 315.04.txt#L263-L274: P with no [9]), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -3823,6 +3899,25 @@ zones:
       to Section 904" (L170). Density (1,742 sq ft of district land area a
       unit) is not applied, OAR 660-046-0220(2)(b).
   SHD:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 315-1, 315.04.txt#L263-L274: P with no [9]), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -3902,6 +3997,25 @@ zones:
       Density (726 sq ft of district land area a unit) is not applied,
       OAR 660-046-0220(2)(b).
   RCHDR:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 315-1, 315.04.txt#L263-L274: P with no [9]), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4576,6 +4690,25 @@ zones:
       resources". A caretaker's dwelling is the one residence the district
       admits and it is accessory to a park.
   SCMU:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
@@ -4878,6 +5011,25 @@ zones:
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
       differs.
   RTL:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
@@ -4954,6 +5106,25 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   CC:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
@@ -5030,6 +5201,25 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   C3:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
@@ -5106,6 +5296,25 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   OC:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
@@ -5182,6 +5391,25 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   RCC:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
@@ -5261,6 +5489,25 @@ zones:
       standards (like: RCHDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (510.05.txt#L1511-L1512).
   RCO:
+    flat_roof_outdoor_use_max_stories:
+      # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
+      # 181(a)). ZDO 1005.03(F) lists "Additional building design requirements
+      # for multifamily dwellings and middle housing, except middle housing
+      # developed pursuant to Section 845", and (F)(4): "For buildings that
+      # are one or two stories in height, roofs shall be hipped, gambrel, or
+      # gabled ... Flat roofs shall be allowed in areas of these buildings
+      # where mechanical equipment is mounted or where they are used for roof
+      # gardens or other outdoor activities." The pod is two stories with a
+      # flat roof. Section 1005 reaches it here: Table 1001-1 checks 1005 for
+      # "Middle housing in all other zoning districts" (zdo.1001.txt#L109,L119-L127)
+      # and not for R-5..R-30 / VR (#L99-L106), and the quadplex row of this
+      # district's use table carries no note sending it to Section 845
+      # (Table 510-1, 510.05.txt#L249-L264, notes [13], [15], [16] at #L1243-L1249: none names Section 845), so the 845 exception does not take it out. Steph
+      # 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow):
+      # "Yellow + flag" -- YELLOW with ROOF-GARDEN, not RED, not exempt.
+      value: 2
+      cite: "Clackamas ZDO 1005.03(F)(4), roofs of one- and two-story multifamily dwellings and middle housing not developed under Section 845"
+      quote: "or/clackamas/_unincorporated/1005/1005.03.txt#L1,L54,L62-L63"
     entrance_faces_street:
       value: unclear
       cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
