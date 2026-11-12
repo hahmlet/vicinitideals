@@ -65,6 +65,7 @@ the full one.)
 185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); BUILT flats/pod-80x25 c6f46146 (quadfit 375 pass; Kenton CM held yellow); ~49 Tigard TMU + 25 ft-minimum zones close; RULED 11-12 height per city (slab-on-grade, ~19'2" no parapet); 20 ft-minimum ties held yellow da99d426; parapet would grow 5 setbacks; Steph Q: slab rise, roofing, parapet? -> rel8 full bound. [file](followups/185-pod-depth-30.md)
 
 188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
+189. [Claude] [scan: YES -- toward green only] **rel7 move-read fix-forwards: pdx-9ft cases not moved, Thorville bulb unmeasured, Clackamas R10 51.2% share red** -- none a false GREEN. [file](followups/189-rel7-fix-forwards.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
