@@ -2825,6 +2825,27 @@
     size in 2026-11-08-single-design-80x30 (parking, roof and door rules of
     that ruling stand). Every lot is re-screened. FOLLOWUPS 185.
   source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
+- id: 2026-11-12-height-measured-per-city
+  kind: ruling
+  date: 2026-11-12
+  scope: {}
+  question: >-
+    Is the pod's "20 ft" the height as the codes measure it? Four zones set a
+    20 ft MINIMUM height (Clackamas SCMU, Tualatin MUC, Tigard MU-CBD,
+    Washington County TO:BUS) and the screen passed them at exactly 20 ft.
+  ruling: >-
+    "Different cities measure height differently. Our 8' walls will be
+    secured to the slab and flooring will start on the slab"
+  effect: >-
+    The pod is slab-on-grade: 18 ft 4 in of structure (two 8 ft walls, two
+    14 in trusses) above the top of the slab, plus the slab's rise above the
+    ground, plus roofing, plus any parapet. Its height is measured by each
+    city's own definition (where grade is taken, roof vs parapet), not as one
+    fixed 20 ft. Until each definition is read and the slab rise, roofing and
+    parapet are known, a 20 ft MINIMUM is not shown as met (structure alone is
+    under 20 ft without a parapet), and a limit, plane or step-back starting
+    near 20 ft is tested at the tallest the pod could measure. FOLLOWUPS 185.
+  source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
 - id: 2026-11-12-gresham-glass-each-facade
   kind: ruling
   date: 2026-11-12
