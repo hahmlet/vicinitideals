@@ -315,6 +315,13 @@ FLOORS_ABOVE_THE_POD = {
     ("or/washington/hillsboro", "UC-OR", "min_building_height_ft"),
     ("or/washington/hillsboro", "UC-RM", "min_building_height_ft"),
     ("or/washington/hillsboro", "UC-RP", "min_building_height_ft"),
+    # 2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet):
+    # the pod measures 19 ft 1 in (8 in slab, 18 ft 4 in structure, 1 in
+    # roofing, no parapet), and every 20 ft floor on file now binds.
+    ("or/clackamas/tualatin", "MUC", "min_building_height_ft"),
+    ("or/washington/tigard", "MU-CBD", "min_building_height_ft"),
+    ("or/washington/_unincorporated", "TO:BUS", "min_building_height_ft"),
+    ("or/clackamas/_unincorporated", "SCMU", "min_building_height_ft"),
 }
 
 
@@ -330,7 +337,9 @@ def test_both_catalogued_pods_clear_every_floor_on_file() -> None:
         missed = set()
         for name, code, field, value, _quote in encoded():
             observed = (
-                design.height_ft if field.endswith("_ft") else float(design.stories)
+                design.min_height_measure_ft
+                if field.endswith("_ft")
+                else float(design.stories)
             )
             if observed < value:
                 missed.add((name, code, field))
@@ -380,11 +389,14 @@ def test_the_screened_pod_misses_tigard_tmus_twelve_foot_first_storey() -> None:
     assert _height_ok(screened, None, None, None, 12.0) is False
 
 
-def test_the_screened_pod_misses_a_twenty_five_foot_floor_and_meets_twenty() -> None:
+def test_the_screened_pod_misses_a_twenty_foot_floor_and_meets_nineteen() -> None:
+    # 2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet):
+    # tested on the 19 ft 1 in the pod measures, not its overall 20 ft.
     (screened,) = load_catalog().active()
 
     assert check(run(rules(min_building_height_ft=25), design=screened), "min_height_ft").verdict is not Verdict.passes
-    assert check(run(rules(min_building_height_ft=20), design=screened), "min_height_ft").verdict is Verdict.passes
+    assert check(run(rules(min_building_height_ft=20), design=screened), "min_height_ft").verdict is not Verdict.passes
+    assert check(run(rules(min_building_height_ft=19), design=screened), "min_height_ft").verdict is Verdict.passes
 
 
 def test_the_pod_meets_a_twelve_foot_first_storey() -> None:
@@ -427,17 +439,23 @@ def test_the_ground_storey_floor_is_optional_and_screened() -> None:
 # 2026-11-12 (rulings.yaml 2026-11-12-height-measured-per-city): "Different
 # cities measure height differently. Our 8' walls will be secured to the slab
 # and flooring will start on the slab." The pod is 18 ft 4 in of structure
-# above the slab; slab rise, roofing and parapet are unstated, and each city
-# measures from its own grade to its own top. A floor above the structure is
-# not shown met by the overall 20 ft: YELLOW with HEIGHT-AS-MEASURED.
+# above the slab. The same day (2026-11-12-pod-height-19ft-1in-no-parapet):
+# "Slab 8" above ground level", roofing "~1" thick", "no parapet for now" --
+# 19 ft 1 in on flat ground. A code MINIMUM above 19 ft 1 in is missed the
+# same way a 25 ft minimum is; the HEIGHT-AS-MEASURED hold remains only for a
+# design that states no measured height. Maxima and everything else that
+# grows with height stay on the overall 20 ft.
 
-#: The four 20 ft floors the pod passed with zero slack before the ruling.
-TIES = [
+#: The four 20 ft floors on file, each now missed (they were YELLOW holds
+#: under HEIGHT-AS-MEASURED before the slab, roofing and parapet were stated).
+TWENTY_FOOT_FLOORS = [
     ("or/clackamas/tualatin", "MUC"),  # 57.300.txt#L19-L20; no stated method
     ("or/washington/tigard", "MU-CBD"),  # 18.650.070.txt#L20-L21; 18.40.040
     ("or/washington/_unincorporated", "TO:BUS"),  # 375-10.txt#L316-L319; 106-101.1
-    ("or/clackamas/_unincorporated", "SCMU"),  # 1005.09.txt#L35 (yellow anyway)
+    ("or/clackamas/_unincorporated", "SCMU"),  # 1005.09.txt#L35
 ]
+
+MEASURED = 19 + 1 / 12
 
 
 def test_the_screened_pod_states_eighteen_foot_four_of_structure() -> None:
@@ -451,40 +469,87 @@ def test_the_screened_pod_states_eighteen_foot_four_of_structure() -> None:
         ), design.id
 
 
-def test_a_twenty_foot_floor_is_held_yellow_with_its_flag() -> None:
-    """The zero-slack pass the ruling took away: the check still passes on
-    the overall 20 ft, and the lot is a closer look, never GREEN."""
+def test_the_screened_pod_measures_nineteen_foot_one() -> None:
+    for design in load_catalog().active():
+        assert design.slab_rise_in == 8, design.id
+        assert design.roofing_in == 1, design.id
+        assert design.parapet_in == 0, design.id
+        assert design.measured_height_ft == pytest.approx(MEASURED, abs=1e-3), design.id
+        # Tested against floors, so never rounded up.
+        assert design.measured_height_ft <= MEASURED, design.id
+        assert design.min_height_measure_ft == design.measured_height_ft, design.id
+        # The ceiling side stays on the overall 20 ft.
+        assert design.height_ft == 20, design.id
+        assert any(
+            "2026-11-12" in a and "measured_height_ft" in a for a in design.assumptions
+        ), design.id
+
+
+def test_a_measured_height_that_is_not_its_parts_is_refused() -> None:
     (screened,) = load_catalog().active()
-    result = run(rules(min_building_height_ft=20), design=screened)
-
-    assert check(result, "min_height_ft").verdict is Verdict.passes
-    assert result.triage is Triage.yellow
-    assert CLOSER_LOOK_HEIGHT_AS_MEASURED in result.reasons
-    (flag,) = [f for f in result.flags if f.code == "HEIGHT-AS-MEASURED"]
-    assert flag.bounds == (pytest.approx(18.3333), 20.0)
+    with pytest.raises(ValueError):
+        type(screened).model_validate(
+            {**screened.model_dump(), "measured_height_ft": 19.5}
+        )
 
 
-def test_a_floor_the_structure_clears_stays_green() -> None:
-    """Estacada D's 17 ft is under the structure alone."""
+def test_a_twenty_foot_floor_is_missed_like_a_twenty_five_foot_one() -> None:
+    """Same check, same verdict, same colour, same reasons as the 25 ft
+    minimums (Milwaukie DMU, Oregon City WFDD, Troutdale MU-3, Hillsboro
+    UC-*); no HEIGHT-AS-MEASURED hold."""
     (screened,) = load_catalog().active()
-    result = run(rules(min_building_height_ft=17), design=screened)
+    twenty = run(rules(min_building_height_ft=20), design=screened)
+    twenty_five = run(rules(min_building_height_ft=25), design=screened)
 
-    assert result.triage is Triage.green
-    assert CLOSER_LOOK_HEIGHT_AS_MEASURED not in result.reasons
-    assert height_floor_unshown(rules(min_building_height_ft=17), screened) is None
+    assert check(twenty, "min_height_ft").verdict is not Verdict.passes
+    assert check(twenty, "min_height_ft").verdict is check(twenty_five, "min_height_ft").verdict
+    assert twenty.triage is twenty_five.triage
+    assert twenty.triage is not Triage.green
+    assert set(twenty.reasons) == set(twenty_five.reasons)
+    assert CLOSER_LOOK_HEIGHT_AS_MEASURED not in twenty.reasons
+    assert not [f for f in twenty.flags if f.code == "HEIGHT-AS-MEASURED"]
+    assert height_floor_unshown(rules(min_building_height_ft=20), screened) is None
+    assert _height_ok(screened, None, 20.0, None) is False
 
 
-def test_a_floor_over_the_overall_height_is_a_miss_not_this_hold() -> None:
+def test_a_floor_at_or_under_the_measured_height_stays_green() -> None:
+    """A hypothetical 19 ft floor, and Estacada D's 17 ft."""
     (screened,) = load_catalog().active()
-    result = run(rules(min_building_height_ft=25), design=screened)
+    for floor in (19, 17, 19.0833):
+        result = run(rules(min_building_height_ft=floor), design=screened)
 
-    assert result.triage is not Triage.green
-    assert height_floor_unshown(rules(min_building_height_ft=25), screened) is None
+        assert check(result, "min_height_ft").verdict is Verdict.passes, floor
+        assert result.triage is Triage.green, floor
+        assert CLOSER_LOOK_HEIGHT_AS_MEASURED not in result.reasons, floor
+        assert _height_ok(screened, None, float(floor), None) is True, floor
+
+
+def test_the_ceiling_stays_on_the_overall_height() -> None:
+    """A 19.5 ft maximum is missed: the pod is tested at 20 ft against a
+    limit, the cautious side, though it measures 19 ft 1 in."""
+    (screened,) = load_catalog().active()
+    result = run(rules(max_height_ft=19.5), design=screened)
+
+    assert check(result, "height_ft").verdict is not Verdict.passes
+    assert _height_ok(screened, 19.5, None, None) is False
 
 
 def test_no_floor_no_hold() -> None:
     (screened,) = load_catalog().active()
     assert height_floor_unshown(rules(), screened) is None
+
+
+def test_a_design_that_states_no_measured_height_is_still_held() -> None:
+    """The hold survives for a design that states a structure but no
+    measured height: a floor above the structure and at or under the overall
+    figure is not shown met."""
+    structure_only = DESIGN.model_copy(update={"structure_height_ft": 24.0})
+    assert height_floor_unshown(rules(min_building_height_ft=25), structure_only) == 25.0
+    result = run(rules(min_building_height_ft=25), design=structure_only)
+    assert result.triage is Triage.yellow
+    assert CLOSER_LOOK_HEIGHT_AS_MEASURED in result.reasons
+    (flag,) = [f for f in result.flags if f.code == "HEIGHT-AS-MEASURED"]
+    assert flag.bounds == (pytest.approx(24.0), 25.0)
 
 
 def test_a_design_that_states_no_structure_shows_no_floor_met() -> None:
@@ -495,23 +560,26 @@ def test_a_design_that_states_no_structure_shows_no_floor_met() -> None:
     assert run(rules(min_building_height_ft=25), design=silent).triage is Triage.yellow
 
 
-@pytest.mark.parametrize(("where", "zone"), TIES)
-def test_each_twenty_foot_tie_on_file_is_held(where, zone) -> None:
+@pytest.mark.parametrize(("where", "zone"), TWENTY_FOOT_FLOORS)
+def test_each_twenty_foot_floor_on_file_is_missed(where, zone) -> None:
     (screened,) = load_catalog().active()
     got = RuleSet(load_rules()).resolve(where, zone)
 
     assert got.get("min_building_height_ft") == 20
-    assert height_floor_unshown(got, screened) == 20.0
+    assert height_floor_unshown(got, screened) is None
+    assert screened.min_height_measure_ft < 20
 
 
-def test_the_held_floors_on_file_are_exactly_the_ties() -> None:
-    """Pinned both ways: a new floor in the band joins TIES on purpose, and
-    a tie that leaves (a parapet stated, a definition read) leaves it."""
+def test_the_floors_between_the_measured_and_overall_heights_are_the_four() -> None:
+    """Pinned: the floors in the band the old hold covered are exactly the
+    four 20 ft floors, and each is now a miss."""
     (screened,) = load_catalog().active()
-    held = {
+    band = {
         (name, code)
         for name, code, field, value, _quote in encoded()
         if field == "min_building_height_ft"
         and screened.structure_height_ft < value <= screened.height_ft
     }
-    assert held == set(TIES)
+    assert band == set(TWENTY_FOOT_FLOORS)
+    for name, code in band:
+        assert (name, code, "min_building_height_ft") in FLOORS_ABOVE_THE_POD

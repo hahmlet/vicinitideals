@@ -353,6 +353,10 @@ CLOSER_LOOK_ROOF_CORNICE = "CLOSER_LOOK_ROOF_CORNICE"
 #: met by a building about 19 ft tall without a parapet: YELLOW with flag
 #: HEIGHT-AS-MEASURED, a design fact to confirm -- never GREEN, never RED on
 #: this alone (the same route as ROOF-CORNICE).
+#: Since the same day's 2026-11-12-pod-height-19ft-1in-no-parapet, a design
+#: that states its measured height (pod80x25@3: 19 ft 1 in) is tested on it
+#: directly and those 20 ft floors are misses; this hold reaches only a
+#: design that states no measured height.
 CLOSER_LOOK_HEIGHT_AS_MEASURED = "CLOSER_LOOK_HEIGHT_AS_MEASURED"
 SIDE_YARD_PARKING_SILENT = (
     "The code neither allows nor forbids parking in the side yard; "
@@ -1983,9 +1987,15 @@ def _checks(
     # single-storey box off a main street, so it is a standard about this
     # building and not about its neighbours. Both catalogued pods clear every
     # instance in the corpus; a one-storey design would not.
+    # 2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet):
+    # the floor is tested against the height the building measures (19 ft
+    # 1 in for pod80x25@3: 8 in slab, 18 ft 4 in structure, 1 in roofing, no
+    # parapet) where the design states it, so a 20 ft minimum is missed as a
+    # 25 ft one is. The ceiling above stays on the overall ``height_ft``
+    # (DESIGN_HEIGHT_FT), the cautious side.
     check(
         "min_height_ft",
-        design.height_ft,
+        design.min_height_measure_ft,
         rules.get("min_building_height_ft"),
         is_maximum=False,
     )
@@ -2347,7 +2357,14 @@ def height_floor_unshown(rules: ZoneResolution, design: Design) -> float | None:
     code states no floor, where the design misses it outright (the
     ``min_height_ft`` check says so), or where the structure alone clears it.
     A design that states no structure has shown no floor met but by its
-    overall figure, so every floor that figure clears is unshown."""
+    overall figure, so every floor that figure clears is unshown.
+
+    2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet): a
+    design that states its ``measured_height_ft`` is tested on it by the
+    ``min_height_ft`` check itself, met or missed, and is never held here.
+    The hold remains for a design that states no measured height."""
+    if design.measured_height_ft is not None:
+        return None
     need = rules.get("min_building_height_ft")
     if need is None or isinstance(need, bool):
         return None

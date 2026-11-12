@@ -2064,6 +2064,14 @@ PARKING_TOTAL_FIELDS: frozenset[str] = frozenset(
 #: 20 since 2026-11-12 (rulings.yaml 2026-11-12-single-design-80x25-20ft:
 #: pod80x25@3, "20 ft tall"); 26 before. Archived designs are never screened,
 #: so they do not hold it up.
+#:
+#: Left at 20 on 2026-11-12 (rulings.yaml
+#: 2026-11-12-pod-height-19ft-1in-no-parapet) although the pod measures
+#: 19 ft 1 in on flat ground (8 in slab, 18 ft 4 in structure, 1 in roofing,
+#: no parapet): everything that grows with height reads this constant, and
+#: 20 is the cautious side, covering a city that measures from the low side
+#: of a sloped lot. Only a code MINIMUM height is tested on the measured
+#: figure (``Design.measured_height_ft``).
 DESIGN_HEIGHT_FT = 20
 
 #: The number of stories of the building this screen answers for, read the

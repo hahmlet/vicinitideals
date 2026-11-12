@@ -36,12 +36,26 @@ ground_story_ft: 9.1666
 # "Different cities measure height differently. Our 8' walls will be
 # secured to the slab and flooring will start on the slab." Two 8 ft walls
 # and two 14 in trusses are 18 ft 4 in of structure above the top of a
-# slab on grade; the slab's rise, the roofing and any parapet are not yet
-# stated, so the 20 ft above is the overall intent, not the height every
-# city's definition finds. 18 ft 4 in is 18.3333 ft, held a hair under
-# because it is a floor under what the building measures. A code MINIMUM
-# above it and at or below 20 ft is not shown as met (HEIGHT-AS-MEASURED).
+# slab on grade; the 20 ft above is the overall intent, not the height
+# every city's definition finds. 18 ft 4 in is 18.3333 ft, held a hair
+# under because it is a floor under what the building measures. The slab
+# rise, roofing and parapet, stated the same day, follow.
 structure_height_ft: 18.3333
+# Steph, 2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet):
+# "Slab 8" above ground level"; "Roof is ~1" thick after the decking which
+# is already accounted for in the roof truss cassette"; "no parapet for
+# now". On flat ground the pod measures 8 in + 18 ft 4 in + 1 in = 19 ft
+# 1 in, ground to the top of the roof. 19 ft 1 in is 19.08333 ft, held a
+# hair under (19.0833) so a code minimum of exactly 19 ft 1 in is not
+# claimed met by rounding. A code MINIMUM height is tested against this
+# figure: above it is a miss, as a 25 ft minimum is. Maxima, planes and
+# height-scaled setbacks keep testing the 20 ft above (DESIGN_HEIGHT_FT),
+# the cautious side, which also covers a city measuring from the low side
+# of a sloped lot. Revisit if a parapet is added.
+slab_rise_in: 8
+roofing_in: 1
+parapet_in: 0
+measured_height_ft: 19.0833
 # Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
 # this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
 # that sets a minimum pitch or prohibits flat roofs misses on it.
@@ -75,7 +89,12 @@ assumptions:
   - "structure_height_ft 18.3333: two 8 ft walls on the slab and two 14 in
      trusses, 18 ft 4 in above the top of the slab (Steph, 2026-11-12,
      rulings.yaml 2026-11-12-height-measured-per-city). Slab rise, roofing
-     and parapet unstated. Product intent, not a drawing set."
+     and parapet stated the same day (next line). Product intent, not a
+     drawing set."
+  - "measured_height_ft 19.0833 (slab_rise_in 8, roofing_in 1, parapet_in 0):
+     19 ft 1 in from the ground to the top of the roof on flat ground (Steph,
+     2026-11-12, rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet).
+     Product intent, not a drawing set."
   - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
      intent, not a drawing set."
   - "footprint 80 x 25 and the door on each home's 20 ft wall: Steph,
