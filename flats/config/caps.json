@@ -1,6 +1,9 @@
 {
   "or/clackamas/_unincorporated": {
     "VA": {
+      "building_frontage_band_ft": [
+        "site_specific_limitation"
+      ],
       "max_height_ft": [
         "site_specific_limitation"
       ],
