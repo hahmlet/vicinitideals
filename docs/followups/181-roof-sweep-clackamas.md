@@ -1,6 +1,6 @@
 # 181. Roof sweep: Clackamas unincorporated pitched-roof rule (lane roof-ban, 2026-11-10)
 
-[Claude] [Steph] [scan: YES -- false greens only]
+[Claude] [scan: YES -- false greens only]
 
 Lane roof-ban (flats/roof-ban, 2e675fee + f4072a52 Tigard cornice, off rel7)
 closed Wood Village (~108 G + 59 Y -> RED), Hillsboro downtown/Orenco (RED;
@@ -17,3 +17,4 @@ Open for Steph:
 (b) Uncertain readings to re-read: Tualatin, Happy Valley VTH (maybe false RED
     today), Wilsonville Villebois, Portland Conservation Districts.
 Follow-on: trace Hillsboro Downtown Plan District figure (removes wrong yellows).
+RULED 2026-11-11 (a): YELLOW + flag, roof garden / outdoor-space way out like Tigard (rulings 2026-11-11-clackamas-pitched-roof-yellow). Build: encode ZDO 1005.03 pitched-roof rule for unincorporated Clackamas 1-2 storey buildings as a YELLOW hold with its own flag; rides rel8. (b) still open (re-reads, Claude).

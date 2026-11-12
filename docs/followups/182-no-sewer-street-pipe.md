@@ -1,6 +1,6 @@
 # 182. No-sewer rule: outside every district but a city pipe in the street (lane no-sewer, 2026-11-10)
 
-[Claude] [Steph] [scan: YES -- false greens only] [release: rel8, not a rel7 cherry-pick]
+[Claude] [scan: YES -- false greens only] [release: rel8, not a rel7 cherry-pick]
 
 Lane no-sewer (flats/no-sewer 2a52ec1b) built the 11-10 "no public sewer = RED"
 ruling: outside every sewer district/service area AND own provider has no main
@@ -16,3 +16,4 @@ Should lots outside every district but with a city pipe in their street go
 RED (~148 more), stay as-is with the note, or YELLOW + flag (hook-up needs the
 city's agreement / annexation)? Recommended: YELLOW + flag.
 Not read: CWS / WES / Gresham sewer rules (800 ft is state rule only).
+RULED 2026-11-11: lots outside every district with a city main in their street -> YELLOW + flag (hook-up needs the provider's agreement / annexation), ruling 2026-11-11-sewer-pipe-in-street-yellow. Change flats/no-sewer (today: keeps colour + note) before rel8.

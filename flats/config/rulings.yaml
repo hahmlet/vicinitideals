@@ -2781,6 +2781,70 @@
     (9 ft, 33.266) wherever the code allows it for this building; elsewhere the
     plan's 12 ft stands. FOLLOWUPS 178(a).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+- id: 2026-11-11-narrow-street-recorded-paving-trusted
+  kind: ruling
+  date: 2026-11-11
+  scope: {}
+  question: >-
+    A city pavement record says 20 ft of paving, but the whole public strip is
+    barely wider (SW 56th Ave, about 20.2 ft). Trust the record, or treat a
+    recorded width that fills the whole strip as doubtful (YELLOW)?
+  ruling: >-
+    "Trust the record"
+  effect: >-
+    A recorded paving width of 20 ft or more counts as measured paving for the
+    narrow-street fire check even where it fills the whole right-of-way; such
+    lots are not held YELLOW on that ground. FOLLOWUPS 180(a).
+  source: Steph 2026-11-11 (chat), docs/followups/180-narrow-row-questions.md
+- id: 2026-11-11-narrow-street-line-22ft
+  kind: ruling
+  date: 2026-11-11
+  scope: {}
+  question: >-
+    Below what right-of-way width is a street too narrow for a fire truck when
+    its paving is unmeasured: 22 ft (20 ft road plus the thinnest printed curb)
+    or 24 ft (Oregon City alley standard)?
+  ruling: >-
+    "Under 22 ft"
+  effect: >-
+    A right-of-way under 22 ft with no measured paving of 20 ft or more is a
+    narrow street (fire YELLOW + flag, ruling
+    2026-11-10-narrow-street-fire-yellow). FOLLOWUPS 180(b).
+  source: Steph 2026-11-11 (chat), docs/followups/180-narrow-row-questions.md
+- id: 2026-11-11-clackamas-pitched-roof-yellow
+  kind: ruling
+  date: 2026-11-11
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    Unincorporated Clackamas County requires pitched roofs on one- and
+    two-storey buildings; a flat roof is allowed only as a roof garden or
+    outdoor space (ZDO 1005.03). The pod has a flat roof. RED, YELLOW with a
+    flag, or exempt as middle housing?
+  ruling: >-
+    "Yellow + flag"
+  effect: >-
+    Unincorporated Clackamas lots held only by the pitched-roof requirement are
+    YELLOW with a flag that the flat roof must be built as a roof garden or
+    outdoor space (a design change to confirm), like Tigard's cornice ruling;
+    not RED, not exempt. FOLLOWUPS 181(a).
+  source: Steph 2026-11-11 (chat), docs/followups/181-roof-sweep-clackamas.md
+- id: 2026-11-11-sewer-pipe-in-street-yellow
+  kind: ruling
+  date: 2026-11-11
+  scope: {}
+  question: >-
+    A lot outside every sewer district or service area, but with a city sewer
+    main in its own street (about 148 lots, mostly the Lake Oswego edge):
+    RED, keep its colour with a note, or YELLOW with a flag (hook-up needs the
+    city's agreement or annexation)?
+  ruling: >-
+    "Yellow + flag"
+  effect: >-
+    Such a lot is YELLOW with a flag that sewer hook-up needs the provider's
+    agreement or annexation; it is not RED under
+    2026-11-10-no-public-sewer-red and never GREEN on that ground.
+    FOLLOWUPS 182.
+  source: Steph 2026-11-11 (chat), docs/followups/182-no-sewer-street-pipe.md
 - id: 2026-11-10-narrow-street-fire-yellow
   kind: ruling
   date: 2026-11-10
