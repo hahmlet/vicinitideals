@@ -2846,6 +2846,27 @@
     under 20 ft without a parapet), and a limit, plane or step-back starting
     near 20 ft is tested at the tallest the pod could measure. FOLLOWUPS 185.
   source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
+- id: 2026-11-12-pod-height-19ft-1in-no-parapet
+  kind: ruling
+  date: 2026-11-12
+  scope: {}
+  question: >-
+    For the code-measured height of the pod: how high does the slab sit above
+    the ground, how thick is the roofing above the truss cassette, and is
+    there a parapet?
+  ruling: >-
+    "Slab 8" above ground level"; "Roof is ~1" thick after the decking which
+    is already accounted for in the roof truss cassette"; "no parapet for now"
+  effect: >-
+    The pod measures 19 ft 1 in from the ground to the top of the roof on
+    flat ground (8 in slab + 18 ft 4 in structure + 1 in roofing), no
+    parapet. A code MINIMUM height above 19 ft 1 in is missed, the same as
+    the 25 ft minimums (the four 20 ft minimums: Clackamas SCMU, Tualatin
+    MUC, Tigard MU-CBD, Washington County TO:BUS). Limits, planes and
+    height-scaled setbacks stay tested at 20 ft, which is stricter and covers
+    a city measuring from the low side of a sloped lot. Revisit if a parapet
+    is added. FOLLOWUPS 185.
+  source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
 - id: 2026-11-12-gresham-glass-each-facade
   kind: ruling
   date: 2026-11-12
