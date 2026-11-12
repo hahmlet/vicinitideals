@@ -328,6 +328,22 @@ class Design(BaseModel):
     #: field may hold such a minimum only where the figure misses anyway
     #: (pod80x25@3: 9 ft 2 in floor to floor, about 8 ft clear).
     ground_story_ft: float | None = Field(default=None, gt=0)
+    #: The building's structure alone, top of slab to top of the top
+    #: storey's framing, where the product states it: the least the building
+    #: can measure above adjoining grade under any city's definition of
+    #: height, flat ground and no parapet. ``height_ft`` is the overall
+    #: figure; between the two sit the slab's rise above the ground, the
+    #: roofing and any parapet, which each city's definition counts or does
+    #: not (Steph 2026-11-12, rulings.yaml 2026-11-12-height-measured-per-
+    #: city: "Different cities measure height differently. Our 8' walls will
+    #: be secured to the slab and flooring will start on the slab"). Read
+    #: only by a code that sets a MINIMUM building height: a floor above this
+    #: figure is not shown as met by the overall one
+    #: (:func:`flats.score.screen.height_floor_unshown`). ``None`` is "not
+    #: stated", and every floor the overall figure clears is then unshown.
+    #: Adding it stated a fact about an unchanged building, so no version
+    #: moved.
+    structure_height_ft: float | None = Field(default=None, gt=0)
     #: The primary roof's pitch as rise in twelve of run; 0 is a flat roof.
     #: Read only by a code that sets a floor under it (Fairview 19.145.040
     #: "no less than 4:12", Clackamas ZDO Table 315-3 "Flat roofs are
@@ -368,6 +384,11 @@ class Design(BaseModel):
         if self.ground_story_ft is not None and self.ground_story_ft > self.height_ft:
             raise ValueError(
                 f"ground_story_ft {self.ground_story_ft} is taller than the "
+                f"building ({self.height_ft} ft)"
+            )
+        if self.structure_height_ft is not None and self.structure_height_ft > self.height_ft:
+            raise ValueError(
+                f"structure_height_ft {self.structure_height_ft} is taller than the "
                 f"building ({self.height_ft} ft)"
             )
         return self

@@ -32,6 +32,16 @@ height_ft: 20
 # stated 2026-10-01: a code minimum first-storey height above 9 ft 2 in
 # (Tigard TMU's 12 ft) now misses.
 ground_story_ft: 9.1666
+# Steph, 2026-11-12 (rulings.yaml 2026-11-12-height-measured-per-city):
+# "Different cities measure height differently. Our 8' walls will be
+# secured to the slab and flooring will start on the slab." Two 8 ft walls
+# and two 14 in trusses are 18 ft 4 in of structure above the top of a
+# slab on grade; the slab's rise, the roofing and any parapet are not yet
+# stated, so the 20 ft above is the overall intent, not the height every
+# city's definition finds. 18 ft 4 in is 18.3333 ft, held a hair under
+# because it is a floor under what the building measures. A code MINIMUM
+# above it and at or below 20 ft is not shown as met (HEIGHT-AS-MEASURED).
+structure_height_ft: 18.3333
 # Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
 # this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
 # that sets a minimum pitch or prohibits flat roofs misses on it.
@@ -62,6 +72,10 @@ assumptions:
   - "ground_story_ft 9.1666: each storey, ground and upper, is 9 ft 2 in
      floor to floor -- an 8 ft wall plus a 14 in truss (Steph, 2026-11-12).
      Product intent, not a drawing set."
+  - "structure_height_ft 18.3333: two 8 ft walls on the slab and two 14 in
+     trusses, 18 ft 4 in above the top of the slab (Steph, 2026-11-12,
+     rulings.yaml 2026-11-12-height-measured-per-city). Slab rise, roofing
+     and parapet unstated. Product intent, not a drawing set."
   - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
      intent, not a drawing set."
   - "footprint 80 x 25 and the door on each home's 20 ft wall: Steph,

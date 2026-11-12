@@ -1065,6 +1065,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_ROOF_CORNICE]
+  HEIGHT-AS-MEASURED:
+    description: "The code sets a MINIMUM building height the pod meets only on its overall 20 ft: its structure is 18 ft 4 in above the slab (two 8 ft walls, two 14 in trusses), and the slab's rise above grade, the roofing and any parapet are unstated, while each city measures from its own grade to its own top (Tigard 18.40.040 to the top of the parapet from the highest adjoining ground; Washington County 106-101.1 to the roof surface from the curb or the average grade; Tualatin states no method). Steph 2026-11-12 (rulings.yaml 2026-11-12-height-measured-per-city): not shown met until each definition is read and the slab, roofing and parapet are known. YELLOW with this flag, not RED (the bounds are the structure the pod shows and the floor asked, feet)"
+    kind: parametric
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, design]
+    path: "State the slab's rise above grade, the roofing and any parapet, read the city's definition of building height (which grade, roof or parapet), and confirm the pod measures at least the floor; or add a parapet that the definition counts"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_HEIGHT_AS_MEASURED]
   DRIVEWAY-STATE-OVERRIDE:
     description: "The city's code asks one driveway approach for every N dwelling units (Oregon City 16.12.035.F: every two, which is two for the four-unit pod), and state law overrides it: a Large City may not scale a design standard, driveways included, by the number of dwelling units (OAR 660-046-0225(1)(c), 660-046-0020(4)), so the plan's one shared drive stands. A record of the city's rule, below the yellow line; it returns as DRIVEWAY-SECOND-APPROACH if the override is ever removed"
     kind: parametric

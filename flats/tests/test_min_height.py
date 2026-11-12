@@ -47,7 +47,15 @@ from flats.rules.loader import load_rules  # noqa: E402
 from flats.rules.model import Provenance, Status  # noqa: E402
 from flats.rules.resolver import Resolved, Verdict as RuleVerdict, ZoneResolution  # noqa: E402
 from flats.score.paper import _height_ok  # noqa: E402
-from flats.score.screen import CHECK_FIELD, LotFacts, Triage, screen  # noqa: E402
+from flats.rules.resolver import RuleSet  # noqa: E402
+from flats.score.screen import (  # noqa: E402
+    CHECK_FIELD,
+    CLOSER_LOOK_HEIGHT_AS_MEASURED,
+    LotFacts,
+    Triage,
+    height_floor_unshown,
+    screen,
+)
 from flats.score.slack import SlackPolicy, Verdict  # noqa: E402
 
 pytestmark = pytest.mark.unit
@@ -102,27 +110,28 @@ def rules(**overrides) -> ZoneResolution:
     )
 
 
-def fit() -> Fit:
+def fit(design=DESIGN) -> Fit:
     """Room to spare on everything geometric, so height is the only question.
 
     Searched as wide as the pod's parking asks across (the building with its
     lane beside it, since 2026-09-17), or the screen would rightly refuse to
     take the depth found as evidence.
     """
-    depth_ft = 36.0
-    best = depth_ft + DESIGN.parking.court_depth_ft + 4.0
+    width_ft = float(design.footprint.width_ft)
+    depth_ft = float(design.footprint.depth_ft)
+    best = depth_ft + design.parking.court_depth_ft + 4.0
     return Fit(
         fits=True,
-        width_ft=56.0,
+        width_ft=width_ft,
         depth_ft=depth_ft,
         best_depth_ft=best,
         slack_ft=best - depth_ft,
-        across_ft=max(56.0 + DESIGN.parking.lane_width_ft, DESIGN.court_width_ft),
+        across_ft=max(width_ft + design.parking.lane_width_ft, design.court_width_ft),
     )
 
 
 def run(rule_set=None, design=DESIGN):
-    return screen(rule_set or rules(), LOT, design, fit(), policy=POLICY)
+    return screen(rule_set or rules(), LOT, design, fit(design), policy=POLICY)
 
 
 def check(result, name: str):
@@ -134,7 +143,11 @@ def check(result, name: str):
 
 
 def test_a_design_that_clears_the_floor_passes_it() -> None:
-    result = run(rules(min_building_height_ft=25))
+    # 2026-11-12: on its structure, not only its overall figure (rulings.yaml
+    # 2026-11-12-height-measured-per-city); pod56x36 states no structure, so
+    # it is given one here.
+    built = DESIGN.model_copy(update={"structure_height_ft": 24.0})
+    result = run(rules(min_building_height_ft=24), design=built)
 
     assert check(result, "min_height_ft").verdict is Verdict.passes
     assert result.triage is Triage.green
@@ -407,3 +420,98 @@ def test_the_paper_answer_reads_the_ground_storey() -> None:
 def test_the_ground_storey_floor_is_optional_and_screened() -> None:
     assert "min_ground_story_ft" in OPTIONAL_FIELDS
     assert "min_ground_story_ft" in CHECK_FIELD.values()
+
+
+# --- the floor as the city measures it --------------------------------
+#
+# 2026-11-12 (rulings.yaml 2026-11-12-height-measured-per-city): "Different
+# cities measure height differently. Our 8' walls will be secured to the slab
+# and flooring will start on the slab." The pod is 18 ft 4 in of structure
+# above the slab; slab rise, roofing and parapet are unstated, and each city
+# measures from its own grade to its own top. A floor above the structure is
+# not shown met by the overall 20 ft: YELLOW with HEIGHT-AS-MEASURED.
+
+#: The four 20 ft floors the pod passed with zero slack before the ruling.
+TIES = [
+    ("or/clackamas/tualatin", "MUC"),  # 57.300.txt#L19-L20; no stated method
+    ("or/washington/tigard", "MU-CBD"),  # 18.650.070.txt#L20-L21; 18.40.040
+    ("or/washington/_unincorporated", "TO:BUS"),  # 375-10.txt#L316-L319; 106-101.1
+    ("or/clackamas/_unincorporated", "SCMU"),  # 1005.09.txt#L35 (yellow anyway)
+]
+
+
+def test_the_screened_pod_states_eighteen_foot_four_of_structure() -> None:
+    for design in load_catalog().active():
+        assert design.structure_height_ft == pytest.approx(18 + 4 / 12, abs=1e-3), design.id
+        # A floor under what the building measures, so never rounded up.
+        assert design.structure_height_ft <= 18 + 4 / 12, design.id
+        assert design.structure_height_ft < design.height_ft, design.id
+        assert any(
+            "2026-11-12" in a and "structure_height_ft" in a for a in design.assumptions
+        ), design.id
+
+
+def test_a_twenty_foot_floor_is_held_yellow_with_its_flag() -> None:
+    """The zero-slack pass the ruling took away: the check still passes on
+    the overall 20 ft, and the lot is a closer look, never GREEN."""
+    (screened,) = load_catalog().active()
+    result = run(rules(min_building_height_ft=20), design=screened)
+
+    assert check(result, "min_height_ft").verdict is Verdict.passes
+    assert result.triage is Triage.yellow
+    assert CLOSER_LOOK_HEIGHT_AS_MEASURED in result.reasons
+    (flag,) = [f for f in result.flags if f.code == "HEIGHT-AS-MEASURED"]
+    assert flag.bounds == (pytest.approx(18.3333), 20.0)
+
+
+def test_a_floor_the_structure_clears_stays_green() -> None:
+    """Estacada D's 17 ft is under the structure alone."""
+    (screened,) = load_catalog().active()
+    result = run(rules(min_building_height_ft=17), design=screened)
+
+    assert result.triage is Triage.green
+    assert CLOSER_LOOK_HEIGHT_AS_MEASURED not in result.reasons
+    assert height_floor_unshown(rules(min_building_height_ft=17), screened) is None
+
+
+def test_a_floor_over_the_overall_height_is_a_miss_not_this_hold() -> None:
+    (screened,) = load_catalog().active()
+    result = run(rules(min_building_height_ft=25), design=screened)
+
+    assert result.triage is not Triage.green
+    assert height_floor_unshown(rules(min_building_height_ft=25), screened) is None
+
+
+def test_no_floor_no_hold() -> None:
+    (screened,) = load_catalog().active()
+    assert height_floor_unshown(rules(), screened) is None
+
+
+def test_a_design_that_states_no_structure_shows_no_floor_met() -> None:
+    """Unstated is the conservative answer: the overall figure alone shows
+    nothing about how a city measures it."""
+    silent = DESIGN.model_copy(update={"structure_height_ft": None})
+    assert height_floor_unshown(rules(min_building_height_ft=25), silent) == 25.0
+    assert run(rules(min_building_height_ft=25), design=silent).triage is Triage.yellow
+
+
+@pytest.mark.parametrize(("where", "zone"), TIES)
+def test_each_twenty_foot_tie_on_file_is_held(where, zone) -> None:
+    (screened,) = load_catalog().active()
+    got = RuleSet(load_rules()).resolve(where, zone)
+
+    assert got.get("min_building_height_ft") == 20
+    assert height_floor_unshown(got, screened) == 20.0
+
+
+def test_the_held_floors_on_file_are_exactly_the_ties() -> None:
+    """Pinned both ways: a new floor in the band joins TIES on purpose, and
+    a tie that leaves (a parapet stated, a definition read) leaves it."""
+    (screened,) = load_catalog().active()
+    held = {
+        (name, code)
+        for name, code, field, value, _quote in encoded()
+        if field == "min_building_height_ft"
+        and screened.structure_height_ft < value <= screened.height_ft
+    }
+    assert held == set(TIES)
