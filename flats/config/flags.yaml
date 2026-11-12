@@ -1110,6 +1110,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_HEIGHT_AS_MEASURED]
+  ROOF-GARDEN:
+    description: "The code wants a hipped, gambrel or gabled roof on a building of one or two stories and allows a flat one only where mechanical equipment is mounted or where it is used as a roof garden or other outdoor space (Clackamas ZDO 1005.03(F)(4), for multifamily dwellings and middle housing not developed under Section 845); the pod's roof is flat and its catalog shows no roof garden. Steph 2026-11-11 (rulings.yaml 2026-11-11-clackamas-pitched-roof-yellow): YELLOW with this flag, a design change to confirm, not RED and not exempt"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, design]
+    path: "Confirm the pod's flat roof can be built and used as a roof garden or outdoor space (access, guards, loading), or design a pitched roof, and add it to the design catalog; 1005.06 also lets design review modify the standard"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ROOF_GARDEN]
   DRIVEWAY-STATE-OVERRIDE:
     description: "The city's code asks one driveway approach for every N dwelling units (Oregon City 16.12.035.F: every two, which is two for the four-unit pod), and state law overrides it: a Large City may not scale a design standard, driveways included, by the number of dwelling units (OAR 660-046-0225(1)(c), 660-046-0020(4)), so the plan's one shared drive stands. A record of the city's rule, below the yellow line; it returns as DRIVEWAY-SECOND-APPROACH if the override is ever removed"
     kind: parametric

@@ -100,6 +100,7 @@ _LABELS: dict[str, str] = {
     "max_mass_footprint_sqft": "max. footprint under one roof",
     "min_roof_pitch_in_12": "min. roof pitch (rise in 12)",
     "flat_roof_cornice_min_in": "flat roof allowed with a cornice at least (inches)",
+    "flat_roof_outdoor_use_max_stories": "flat roof only as roof garden / outdoor space, buildings up to (stories)",
     "max_coverage_pct": "max. lot coverage %",
     "max_impervious_pct": "max. coverage of buildings and paving %",
     "max_density_du_per_acre": "max. density (units/acre)",
@@ -771,6 +772,25 @@ _F: tuple[FieldDef, ...] = (
         "\"tigard, yellow with flag\"), never RED on it and never GREEN. Not "
         "a pitch floor: a zone holding one is RED on `min_roof_pitch_in_12` "
         "first. Optional: absent means no such rule was read.",
+        False,
+    ),
+    FieldDef(
+        "flat_roof_outdoor_use_max_stories",
+        "count",
+        "A pitched roof is the rule for a building of up to this many STORIES, "
+        "and a FLAT roof is allowed only where it carries mechanical equipment "
+        "or is used as a roof garden or other outdoor space, as printed: "
+        "Clackamas ZDO 1005.03(F)(4) \"For buildings that are one or two "
+        "stories in height, roofs shall be hipped, gambrel, or gabled ... Flat "
+        "roofs shall be allowed in areas of these buildings where mechanical "
+        "equipment is mounted or where they are used for roof gardens or other "
+        "outdoor activities\" (2). The pod's roof is flat and its catalog shows "
+        "no roof garden, so a lot this reaches with a pod of no more stories is "
+        "YELLOW with ROOF-GARDEN (Steph 2026-11-11, rulings.yaml "
+        "`2026-11-11-clackamas-pitched-roof-yellow`: \"Yellow + flag\"), never "
+        "RED on it and never GREEN. Not a pitch floor: a zone holding one is "
+        "RED on `min_roof_pitch_in_12` first. Optional: absent means no such "
+        "rule was read.",
         False,
     ),
     FieldDef(
@@ -2245,6 +2265,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_mass_footprint_sqft",
         "min_roof_pitch_in_12",
         "flat_roof_cornice_min_in",
+        "flat_roof_outdoor_use_max_stories",
         "land_division_parent_standards",
         "max_far",
         # A floor on the amount of building: Canby's Downtown Overlay alone.

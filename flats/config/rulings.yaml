@@ -3022,6 +3022,35 @@
     YELLOWs may go GREEN. FOLLOWUPS 176(h).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
   encoded_in: [flats/config/fire_roads.yaml, flats/provenance/sources.py]
+- id: 2026-11-11-clackamas-pitched-roof-yellow
+  kind: ruling
+  date: 2026-11-11
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    Unincorporated Clackamas County requires pitched roofs on one- and
+    two-storey buildings; a flat roof is allowed only as a roof garden or
+    outdoor space (ZDO 1005.03). The pod has a flat roof. RED, YELLOW with a
+    flag, or exempt as middle housing?
+  ruling: >-
+    "Yellow + flag"
+  effect: >-
+    Unincorporated Clackamas lots held only by the pitched-roof requirement are
+    YELLOW with a flag that the flat roof must be built as a roof garden or
+    outdoor space (a design change to confirm), like Tigard's cornice ruling;
+    not RED, not exempt. FOLLOWUPS 181(a).
+    Encoded (clackamas-roof lane): 1005.03(F)(4) reaches multifamily dwellings
+    and middle housing "except middle housing developed pursuant to Section
+    845", and Table 1001-1 does not apply Section 1005 to middle housing in
+    R-5..R-30 and VR; so it is set in the other districts that permit a
+    quadplex (PMD, MR-1, MR-2, HDR, SHD, RCHDR and the commercial and
+    mixed-use SCMU, RTL, CC, C3, OC, RCC, RCO). VA is RED on its own flat-roof
+    ban (1005.11(F)).
+  source: Steph 2026-11-11 (chat), docs/followups/181-roof-sweep-clackamas.md
+  encoded_in:
+    - flats/score/screen.py
+    - flats/rules/fields.py
+    - flats/config/flags.yaml
+    - flats/config/jurisdictions/or/clackamas/_unincorporated.yaml
 - id: 2026-11-10-tigard-cornice-yellow
   kind: ruling
   date: 2026-11-10
