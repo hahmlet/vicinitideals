@@ -492,6 +492,21 @@ def entrance_street_named(rules: "ZoneResolution", design: Design) -> bool:
     )
 
 
+def turns_on_the_street(rules: "ZoneResolution", design: Design) -> bool:
+    """Whether a fit of ``design`` here is right or wrong by the way it stands
+    to the street: the building must keep its long side to it
+    (:func:`faces_the_street`), its doors must face one (:func:`door_rule`,
+    the standard as stated, whether or not the side-door search is under
+    way), or a turned fit waits on an entrance standard nobody has settled
+    (:func:`entrance_unsettled`). On a lot whose street direction nobody
+    measured, no such fit can be shown right (FOLLOWUPS 164)."""
+    return (
+        faces_the_street(rules, design)
+        or door_rule(rules, design) is not None
+        or entrance_unsettled(rules, design)
+    )
+
+
 def door_turn_deg(fit: "Fit", bearings: "tuple[float, ...]") -> float | None:
     """How far the face carrying the doors stands from the nearest street
     direction, 0 to 90 degrees, for a design whose doors are on its

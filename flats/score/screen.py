@@ -98,6 +98,7 @@ from flats.score.paper import (
     paper_fit,
     side_column,
     side_court,
+    turns_on_the_street,
     yards_kept_clear,
     side_yard_court_overlap_ft,
     side_yard_lane_overlap_ft,
@@ -564,6 +565,18 @@ ENTRANCE_STREET = "entrance_named_street"
 #: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``: no
 #: drawing shows the doors facing the street, and none is read as a pass.
 ENTRANCE_DRAWN = "entrance_drawn_facing"
+
+#: The street's direction, where the code makes the fit right or wrong by the
+#: way the building stands to the street (long side parallel, doors facing
+#: it, or an entrance standard nobody has settled;
+#: :func:`flats.score.paper.turns_on_the_street`), the lot has a street line,
+#: and nothing measured which way it runs (no ``street_bearings``). The fit
+#: was searched at every angle, so its orientation cannot be checked. Joins
+#: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``: held
+#: out of GREEN, never failed on this ground alone (FOLLOWUPS 164). Not
+#: raised on a lot with no street line at all (``landlocked``), which keeps
+#: its NO_FRONTAGE answer.
+STREET_DIRECTION = "street_direction"
 
 #: The shape a code asks the open space to take (a square that fits inside
 #: it, a patio off each home) where the fit's window does not prove it and
@@ -2368,6 +2381,20 @@ def _checks(
         and (lot.corner or lot.through_lot or not lot.street_bearings)
     ):
         unmeasured.add(ENTRANCE_STREET)
+    # Which way the street runs (FOLLOWUPS 164): where the code turns on how
+    # the building stands to the street, a fit placed at some angle on a lot
+    # that has a street line whose direction nobody measured cannot be shown
+    # to stand that way. Unread is never a pass. A lot with no street line at
+    # all is not this case: it keeps its own answer (NO_FRONTAGE, RED on
+    # access or fit; coordinator 2026-11-10, no ruling opens landlocked lots).
+    if (
+        fit.fits
+        and not lot.street_bearings
+        and not lot.landlocked
+        and fit.angle_deg is not None
+        and turns_on_the_street(rules, design)
+    ):
+        unmeasured.add(STREET_DIRECTION)
 
     return out, unchecked, unmeasured
 
@@ -4605,6 +4632,7 @@ _MEASURED_FLAG: dict[str, str] = {
     ENTRANCE_TURNED: "ENTRANCE-TURNED",
     ENTRANCE_STREET: "ENTRANCE-STREET",
     ENTRANCE_DRAWN: "ENTRANCE-DRAWN",
+    STREET_DIRECTION: "MEASURE-STREET-DIRECTION",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
