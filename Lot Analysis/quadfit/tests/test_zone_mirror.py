@@ -1133,6 +1133,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_side_total_ft": 3,
     #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
     "min_building_height_ft": 18,
+    #: FOLLOWUPS 186 (2026-11-12, flats/gresham-end-glass): Gresham 7.0420(I)(2)
+    #: 5% clear glass on each non-street facade, read by the FLATS wall-openings
+    #: check alone; quadfit has no facade or lot-line-distance column.
+    "facade_glass_other_pct": 22,
     # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
     # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
     # Portland-administered pockets): stall, driveway, side-yard reach, corner street,
