@@ -47,3 +47,36 @@ layout generator (FOLLOWUPS 92) -- design them together if 92 is revived.
 - The parameters above (or a first guess Steph signs off).
 - Colour policy: a failed set-access check -> YELLOW flag first (likely), or RED?
 - Street setup allowed by default (permit assumed obtainable) or on-site only?
+
+## Steph 2026-11-11: parameters given, BUILD STARTED (absorbs former item 184)
+- Crane: 100 in (8.33 ft) wide, 40 ft long, 28 x 40 ft setup pad (raw dirt OK) near the home;
+  may enter/leave temporarily from any side with room, setbacks ignored; must be able to leave
+  once the pod is up. Load charts (capacity vs radius) to come from Steph -- solver reports
+  "unmeasured" until a chart is loaded.
+- Pod as built: 30 x 80 ft, 4 homes 20 x 30; long walls front/back, short walls between homes.
+  (pod80x25.yaml says depth 25 -- Steph to confirm 30.)
+- Whole-stack lifts (6): ground walls 40 x 8'1" x 6'1" 12,074 lb; floor cassettes homes 1-2
+  30 x 4'4" x 7'9" 4,414 lb (+ site container ~4,100 lb lifted separately); floor cassettes
+  homes 3-4 4,414 lb (+ 4 stair kits 508 lb each + loose trusses); upper walls 11,625 lb; roof
+  cassettes x2 30 x 6'4" x 7'9" 5,895 lb. +6 in blocking. Rigging per lift: lifting frame
+  1,000-1,500 lb, long beam 800-1,100 lb, plus hook. Totals ~14,500-15,000 (walls), 7,000-8,500
+  (cassettes).
+- Single picks (50-65 + 6 stack lifts): front/back ground wall x8 20 ft x 8'1" 774 lb; upper x8
+  711-724 lb; wall between homes x16 29'1" x 8'1" 725 lb; floor cassettes x12 30 x 4'-4'3.5" x
+  15.5" 648-786 lb; roof cassettes x12 30 x 4-6' 864-1,194 lb (stair-side 6'3.5" wide); site
+  container 10 x 8 x 8.5 ft ~4,100 lb. Heaviest single piece 1,194 lb.
+- Lift governed by weight x radius: the solver finds every reachable radius from the site
+  geometry and checks the farthest lift of each load against the chart.
+- Assessment 11-11 (court proxy): a single-row court is ~36-54 x 42 ft, bigger than the pad;
+  gaps: double-loaded courts, drive bends, far-end reach, overhead lines/trees, no-court lots.
+
+## 11-11 slice 1 BUILT: flats/set-access 6e6669fb (not wired to screen)
+Calculator only: pads around the placed pod, straight drive-out check, farthest radius per
+load (truck->landing->set), chart check at next-longer radius, 75% flag (OSHA). Prior art:
+nothing adoptable (4 unlicensed hobby repos). Turning paths + power lines (144) unmeasured.
+Hand-off ../vicinitideals-worktrees/set-access.handoff.md.
+Waiting on Steph (with the charts): loose-truss weight; stair kits ride with stack 3?;
+frame+beam on single picks too?; truck load offset past lot line; upper-wall stack size;
+straight-off-truck picks allowed?; pad max slope; street setup allowed; any cap below chart.
+Chart needs: model, outrigger setup, counterweight, hook-block weight, deductions, capacity by
+radius per boom length. Factory list to be redrawn for 20 x 25.
