@@ -62,7 +62,7 @@ the full one.)
 
 187. [Claude] [scan: YES -- end-wall glass places] **Glazing rules: read, report published** -- report https://claude.ai/artifact/PvTVXncwqnjMT4br3Krhdj (base + end door, by green impact); build follow-ons: end-wall 3 ft hold for Beaverton CS/GC/SC, OC South End, S Hillsboro, Gladstone DCO, Gresham DEM/DCL/CN (in gresham-end-glass lane); Tigard TMU 12 ft storey (pod-80x25 lane); Portland CM fourplex window exemption RULED exempt 11-12 [file](followups/187-glazing-gaps.md) Steph wants the result as a report by likely green impact, with exceptions and gotchas, for another agent to size the glazing conservatively.
 
-185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); BUILT flats/pod-80x25 91f29656 (quadfit fixes + Kenton hold in progress); ~49 Tigard TMU + 25 ft-minimum zones close; Steph Q: is 20 ft measured as codes measure (grade to roof top/parapet)? -> rel8 full bound. [file](followups/185-pod-depth-30.md)
+185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); BUILT flats/pod-80x25 c6f46146 (quadfit 375 pass; Kenton CM held yellow); ~49 Tigard TMU + 25 ft-minimum zones close; Steph Q: is 20 ft measured as codes measure (grade to roof top/parapet)? -> rel8 full bound. [file](followups/185-pod-depth-30.md)
 
 188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
 
