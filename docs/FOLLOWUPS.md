@@ -55,8 +55,8 @@ the full one.)
 
 148. [Claude] [scan: YES -- both ways] **Minimum floor area: red only when more pods clearly cannot fit** -- RULED Steph 11-04; replaces always-yellow min_far and always-red Portland main street (~1,600 red); BUILT 27934967; bound min_far READ 11-05: 746 red->yellow all right -> LIVE run 118 2026-11-06 (with 118, rel1, f71cf172); fix-forward: 3 part-overlay lots stay RED that should be YELLOW (moveread F1). [file](followups/148-min-floor-area-more-pods.md)
 
-182. [Claude] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- BUILT flats/no-sewer 2a52ec1b (rel8, ~398 greens red); RULED 11-11 pipe-in-street = YELLOW + flag (2026-11-11-sewer-pipe-in-street-yellow): change the lane, then rel8. [file](followups/182-no-sewer-street-pipe.md)
-181. [Claude] [scan: YES -- false greens only] **Roof sweep: Clackamas unincorporated pitched-roof rule** -- RULED 11-11 YELLOW + roof-garden flag (2026-11-11-clackamas-pitched-roof-yellow); build for rel8; (b) re-reads open. [file](followups/181-roof-sweep-clackamas.md)
+182. [Claude] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- RULED 11-11 YELLOW (SEWER-STREET-MAIN); BUILT flats/no-sewer 4592039a (rel8: ~148 G->Y, ~398 G->R); bound must re-acquire 15 sewer layers. [file](followups/182-no-sewer-street-pipe.md)
+181. [Claude] [scan: YES -- false greens only] **Roof sweep: Clackamas unincorporated pitched-roof rule** -- RULED 11-11 YELLOW; BUILT flats/clackamas-roof 4245abd9 (ZDO 1005.03(F)(4), 13 zones, ~385 G->Y; at rel8 merge add quadfit mirror flat_roof_outdoor_use_max_stories: 13 + regen gaps); (b) re-reads open. [file](followups/181-roof-sweep-clackamas.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
