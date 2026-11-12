@@ -2848,6 +2848,27 @@
     plan's 12 ft stands. FOLLOWUPS 178(a).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
   encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml, flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
+- id: 2026-11-12-gresham-glass-each-facade
+  kind: ruling
+  date: 2026-11-12
+  scope: {county: multnomah, city: gresham}
+  question: >-
+    Gresham 7.0420(I)(2) requires clear glass on "5 percent of all other
+    facades". Each non-street wall, or the total of them? Each reading puts
+    the pod's end wall under the 5% rule, and Oregon's residential code bans
+    openings in a wall under 3 ft from a side or rear lot line, so an end wall
+    that close cannot comply.
+  ruling: >-
+    "I agree each wall. Assuming there are no exceptions for the 3' back from
+    the lot line, that's fine to exclude."
+  effect: >-
+    In Gresham's 7.0420 zones every exposed non-street wall of the pod (the
+    end walls and the back wall; party walls are not facades) needs 5% clear
+    glass. A placement whose exposed end wall sits under 3 ft from a side or
+    rear lot line fails; if no placement keeps it 3 ft or more away, the lot
+    is RED. FOLLOWUPS 186.
+  source: Steph 2026-11-12 (chat), docs/followups/186-gresham-end-wall-glass.md
+  encoded_in: [flats/ingest/wall_openings.py, flats/score/screen.py, flats/config/jurisdictions/or/multnomah/gresham.yaml, flats/config/jurisdictions/or/_state.yaml]
 - id: 2026-11-09-clackamas-front-parking-follow-zdo
   kind: ruling
   date: 2026-11-09

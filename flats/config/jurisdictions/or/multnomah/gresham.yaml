@@ -2422,6 +2422,18 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0120.txt#L17"
@@ -2676,6 +2688,18 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0120.txt#L17"
@@ -2913,6 +2937,18 @@ zones:
         7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0120.txt#L17"
@@ -3136,6 +3172,18 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0120.txt#L17"
@@ -3381,6 +3429,18 @@ zones:
       cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       # Table 4.1413, Quadplex row: P under LDR-PV. Three district columns,
       # three values.
@@ -3538,6 +3598,18 @@ zones:
       cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       # Table 4.1413, Quadplex row: P in all three residential columns. The
       # district is medium density and the use is outright.
@@ -3673,6 +3745,18 @@ zones:
       cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.1413.txt#L8-L9,L14"
@@ -3846,6 +3930,18 @@ zones:
       cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       # Table 4.1507, Quadplex row: P P NP under VLDR-SW, LDR-SW, THR-SW.
       value: true
@@ -4001,6 +4097,18 @@ zones:
       cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       # Table 4.1507, Quadplex row: P P NP under VLDR-SW, LDR-SW, THR-SW. The
       # very low density district permits the use outright; the high density
@@ -4226,6 +4334,18 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0120.txt#L17"
@@ -4499,6 +4619,18 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0120.txt#L17"
@@ -4796,6 +4928,18 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       # Table 4.0120, Quadplex row: P in every column including this one. The
       # office/residential district permits a single detached dwelling only
@@ -5502,6 +5646,18 @@ zones:
       No parking minimum (defaults, 9.0802(A)). The density window is 17 to 30 units per net acre: four units on 5,808 to 10,249 sq ft.
   DRL-1:
     section: ["4.11", "7.042"]
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     min_density_du_per_acre:
       # The Minimum Residential Net Density row of Table 4.1130, which
       # neither DRL block read when the rest of the table was encoded. A
@@ -5753,6 +5909,18 @@ zones:
       placement band not modeled (blind spot).'
   DRL-2:
     section: ["4.11", "7.042"]
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     min_density_du_per_acre:
       # The Minimum Residential Net Density row of Table 4.1130. Same
       # number as DRL-1 and the same shape: it binds on the large lot, not
@@ -5991,6 +6159,18 @@ zones:
     # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
     # its S11 says the same thing in the same words, so the value does not move;
     # the citation does. The parent-lot base is the city default's, unchanged.
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     parking_alley_access_required:
       value: true
       cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
@@ -6403,6 +6583,18 @@ zones:
     # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
     # its S11 says the same thing in the same words, so the value does not move;
     # the citation does. The parent-lot base is the city default's, unchanged.
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     parking_alley_access_required:
       value: true
       cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
@@ -6811,6 +7003,18 @@ zones:
     # The Townhouse heading of 4.1152 (L7) is what reaches a townhouse here, and
     # its S11 says the same thing in the same words, so the value does not move;
     # the citation does. The parent-lot base is the city default's, unchanged.
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     parking_alley_access_required:
       value: true
       cite: GDC 7.0420(B)(1) and 7.0431(B)(1), access from the alley where the lot abuts one
@@ -7705,6 +7909,18 @@ zones:
       middle housing. DCL is the one Downtown column here with a ceiling, 60 units per net acre, which four units clear on any lot over 2,904 sq ft; the floor of 17 holds them to 10,249 sq ft.
   CMF:
     section: ["4.04", "7.042"]
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     min_density_du_per_acre:
       # Row E of Table 4.0430, which the August encoding of this district
       # skipped along with row F. A bare 12 units per acre, so it reaches
@@ -8082,6 +8298,18 @@ zones:
       cite: Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0420.txt#L10,L15"
@@ -8308,6 +8536,18 @@ zones:
       cite: Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0420.txt#L10,L15"
@@ -8539,6 +8779,18 @@ zones:
       cite: Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # RULED 2026-11-12 (Steph, rulings.yaml 2026-11-12-gresham-glass-each-
+      # facade; FOLLOWUPS 186): "all other facades" is EACH non-street facade,
+      # not their total (I(1) says "total" for the street side; I(2) does not).
+      # The pod's end walls and back wall each need glass, so each must stand
+      # where the building code lets a wall have windows (wall_opening_min_ft,
+      # the state layer); a lot where no placement does is RED.
+      value: 5
+      cite: "Gresham GDC 7.0420(I)(2) Transparency: clear glass on a minimum of 5 percent of all other facades (each facade)"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/gresham/7/7.0420.txt#L1-L4,L162"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4/4.0420.txt#L10,L15"

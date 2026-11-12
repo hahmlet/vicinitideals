@@ -557,6 +557,7 @@ CHECK_FIELD: dict[str, str] = {
     "building_frontage_other_share": "building_frontage_other_pct",
     "front_setback_max_ft": "setback_front_max_ft",
     "side_setback_max_ft": "setback_side_max_ft",
+    "wall_opening_gap_ft": "facade_glass_other_pct",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "side_street_yard_vehicle_share": "parking_side_street_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
@@ -687,6 +688,21 @@ SIDE_MAX_BOTH = "side_max_both"
 #: cell further again. Two cells; the same allowance keeps a building within
 #: it from being failed.
 FRONT_MAX_DRAWN_TOL_FT = 1.0
+
+#: Every non-street wall carries glass where the zone says so (Gresham
+#: 7.0420(I)(2), ``facade_glass_other_pct``, read as EACH facade: Steph
+#: 2026-11-12, rulings.yaml ``2026-11-12-gresham-glass-each-facade``), and the
+#: building code allows no opening in a wall under ``wall_opening_min_ft``
+#: (ORSC Table R302.1, 3 ft) from a side or rear lot line. The check's name:
+#: the drawn building's nearest wall-to-line distance, measured at right
+#: angles (:func:`flats.ingest.quadfit.wall_opening_gap`), against that
+#: floor. Short of it FAILS -- a wall that must have windows and may have none
+#: -- and no zoning relief reaches a building-code line
+#: (:data:`flats.score.relief.NO_ZONING_RELIEF`). ``WALL_OPENINGS_DRAWN``:
+#: looked, and nothing fitting was drawn to measure -- held out of GREEN.
+#: FOLLOWUPS 186.
+WALL_OPENINGS = "wall_opening_gap_ft"
+WALL_OPENINGS_DRAWN = "wall_openings_drawn"
 
 #: A lot that missed a lot standard and is let off it under a relief that also
 #: asks something the data does not hold (``lot_of_record_condition``): when
@@ -942,6 +958,16 @@ class LotFacts:
     #: measured, and the check goes unrun, as for the front maximum.
     side_max_gaps: tuple[float, ...] | None = None
     side_max_tried: bool = False
+    #: The drawn building's nearest distance, at right angles from any of its
+    #: outside walls, to a side or rear lot line (:func:`flats.ingest.quadfit.
+    #: wall_opening_gap`, FOLLOWUPS 186): street and alley lines are measured
+    #: to their centre line by the building code and never count. Measured by
+    #: the bridge, on the plan's final drawing, where the zone asks for glass
+    #: on every non-street facade; ``wall_opening_tried`` with nothing here
+    #: means it looked and had no fitting building -- held out of GREEN;
+    #: neither set means nobody measured, and the check goes unrun.
+    wall_opening_gap_ft: float | None = None
+    wall_opening_tried: bool = False
     #: The lot's named streets are two, and one unbroken run of lot line turns
     #: from one onto the other (:func:`flats.ingest.quadfit.front_max_corner`).
     #: A corner whatever the angle between them, where ``corner`` -- the
@@ -2259,6 +2285,9 @@ def _checks(
     _front_max(rules, lot, check, unchecked, unmeasured)
     # Each side wall against a stated maximum side setback (FOLLOWUPS 170).
     _side_max(rules, lot, check, unchecked, unmeasured)
+    # Glass on every non-street wall, and no wall that close to a side or
+    # rear lot line (FOLLOWUPS 186).
+    _wall_openings(rules, lot, check, unchecked, unmeasured)
 
     # The fall across the ground the plan stands on (Steph 2026-10-04). Over
     # the red line on the fine model is a miss; on the coarse model alone it
@@ -3956,6 +3985,31 @@ def _side_max(
     unmeasured.add(SIDE_MAX_BOTH)
 
 
+def _wall_openings(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    check: Callable[..., None],
+    unchecked: list[str],
+    unmeasured: set[str],
+) -> None:
+    """Every outside wall that must carry glass stands where a wall may have
+    windows (:data:`WALL_OPENINGS`; Gresham 7.0420(I)(2), ORSC Table R302.1;
+    Steph 2026-11-12, "fine to exclude"). Read only where the zone asks for
+    glass on every non-street facade; nothing drawn to measure is held out of
+    GREEN, never passed."""
+    glass = _pct(rules, "facade_glass_other_pct")
+    floor = _pct(rules, "wall_opening_min_ft")
+    if not glass or floor is None:
+        return
+    gap = lot.wall_opening_gap_ft
+    if gap is None:
+        unchecked.append(WALL_OPENINGS)
+        if lot.wall_opening_tried:
+            unmeasured.add(WALL_OPENINGS_DRAWN)
+        return
+    check(WALL_OPENINGS, gap, floor, is_maximum=False)
+
+
 def _pct(rules: ZoneResolution, name: str) -> float | None:
     got = rules.get(name)
     if isinstance(got, bool) or not isinstance(got, (int, float)):
@@ -4413,6 +4467,7 @@ _MEASURED_FLAG: dict[str, str] = {
     FRONT_MAX_DRAWN: "MEASURE-FRONT-MAX-DRAWN",
     FRONT_MAX_STREET: "MEASURE-FRONT-MAX-STREET",
     SIDE_MAX_BOTH: "MEASURE-SIDE-MAX-BOTH",
+    WALL_OPENINGS_DRAWN: "MEASURE-WALL-OPENINGS",
     ENTRANCE_TURNED: "ENTRANCE-TURNED",
     ENTRANCE_STREET: "ENTRANCE-STREET",
     ENTRANCE_DRAWN: "ENTRANCE-DRAWN",

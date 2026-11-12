@@ -147,6 +147,8 @@ _LABELS: dict[str, str] = {
     "parking_side_yard_stated": "parking side-yard reach stated by the code",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
+    "facade_glass_other_pct": "min. clear glass on every non-street facade",
+    "wall_opening_min_ft": "min. distance from a side or rear lot line for a wall with windows",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_front_share_allowed": "parking allowed in front of building within the frontage share",
     "parking_alley_access_required": "vehicle access must be from the alley",
@@ -1618,6 +1620,34 @@ _F: tuple[FieldDef, ...] = (
         ":func:`flats.fit.fire.route_ft` (FOLLOWUPS 28).",
         True,
     ),
+    FieldDef(
+        "facade_glass_other_pct",
+        "percent",
+        "Clear glass every facade that does not face a street must carry, as "
+        "a share of that facade: Gresham 7.0420(I)(2), \"Clear glass in "
+        "windows and/or doors shall occupy a minimum of 5 percent of all other "
+        "facades\", read as EACH facade (Steph 2026-11-12, rulings.yaml "
+        "2026-11-12-gresham-glass-each-facade). The pod's end walls and back "
+        "wall are such facades; the walls between its homes are not. The "
+        "screen does not size the glass, which any wall can carry: it holds "
+        "that every such wall can have windows at all, i.e. stands at least "
+        "`wall_opening_min_ft` from every side and rear lot line "
+        "(:func:`flats.ingest.quadfit.wall_opening_gap`, FOLLOWUPS 186).",
+        False,
+    ),
+    FieldDef(
+        "wall_opening_min_ft",
+        "length_ft",
+        "Fire separation distance under which an exterior wall may have no "
+        "openings: Oregon ORSC Table R302.1, \"Openings in walls  Not "
+        "allowed ... < 3 feet\". Measured from the wall at right angles to "
+        "a side or rear lot line; a wall facing a street or alley is measured "
+        "to its centre line (ORSC R302.2) and so is never this close. A "
+        "building code number, stated once in the state layer for every "
+        "zone, and read only where a zone asks for glass on every non-street "
+        "facade (`facade_glass_other_pct`).",
+        False,
+    ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
     FieldDef(
         "open_space_min_sqft",
@@ -2132,6 +2162,11 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # never a city's to state or omit, so never a city's gap. A guard
         # test holds that every zone resolves it (test_fire.py).
         "fire_access_max_ft",
+        # The building code's no-openings distance (ORSC Table R302.1), stated
+        # once in the state layer like the fire route; and the one city that
+        # asks for glass on every non-street facade (Gresham 7.0420(I)(2)).
+        "wall_opening_min_ft",
+        "facade_glass_other_pct",
         # Answers the height question in the other unit. Required-ness is
         # handled by ALTERNATIVES in the resolver, which reads one as
         # standing in for the other; listed as required here it would be

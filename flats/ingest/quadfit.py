@@ -200,6 +200,7 @@ from flats.ingest.flatter import (
     flatter_checked,
 )
 from flats.ingest.normalize import zone_for
+from flats.ingest.wall_openings import wall_openings_checked
 from flats.rules.conditions import (
     ACROSS_STREET_CONDITIONS,
     CONDITIONS,
@@ -5497,6 +5498,13 @@ def _screen_lot_once(
         )
         won = flatter_checked(
             won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads,
+        )
+        # Glass on every non-street wall (Gresham 7.0420(I)(2)) and no window
+        # within 3 ft of a side or rear line (ORSC R302.1): stood elsewhere if
+        # the drawn spot is that near and another is not (FOLLOWUPS 186).
+        won = wall_openings_checked(
+            won, lot, fitter, terrain, rules=rules, policy=policy, relief=relief,
             step_deg=step_deg, roads=roads,
         )
         # The fire route or a flatter spot stood the building elsewhere: its

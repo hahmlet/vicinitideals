@@ -176,6 +176,19 @@ code:
 - id: ofc.2022.applications-guide
   url: https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf
   title: Oregon Fire Code Applications Guide, based on the 2022 OFC (Clackamas Fire, revised 2023-06-21)
+# The Oregon Residential Specialty Code is ICC text behind a reader (403 to the
+# agent, 2026-11-11). BCD's own summary of the 2021 ORSC prints Oregon's
+# R302.1, its one-table Table R302.1 (no 3-5 ft band) and the opening of the
+# Oregon townhouse section R302.2 in full; that slice is what
+# `wall_opening_min_ft` cites (FOLLOWUPS 183, 186). EDITION NOTE: BCD's 2026
+# ORSC review matrix (26orsc-matrix.pdf) retains both Oregon amendments; the
+# 2026 integrated book is not out, so the 2021 text is cited until it is.
+- id: orsc.2021.significant-changes
+  url: https://www.oregon.gov/bcd/codes-stand/Documents/2021orsc-significant-changes.pdf
+  title: 2021 Oregon Residential Specialty Code, significant changes summary (BCD, April 2021), R302.1-R302.2
+  start: "Fire separation distance."
+  end: "Sections R302.2.1 through R302.2.11."
+  allow_thin: true
 defaults:
   # Steph 2026-10-15 (FOLLOWUPS 85): inside an urban growth boundary a city
   # or county "may adopt and apply only clear and objective standards,
@@ -342,6 +355,23 @@ defaults:
     retrieved: 2026-10-01
     status: draft
     quote: "or/ofc.2022.applications-guide.txt#L132-L134"
+  # The building code's no-openings line (FOLLOWUPS 183, 186): R302.1 sends
+  # every exterior wall to Table R302.1, whose "Openings in walls" row is "Not
+  # allowed" under 3 feet of fire separation distance and "Unlimited" at 3
+  # feet. Oregon's table has no 3-5 ft band. Exception 1 (walls perpendicular
+  # to the line) is why the distance is measured at right angles from the
+  # wall; R302.2 makes a public way's centre line the property line, so only
+  # side and rear lines can come this close. Not zoning, so no zoning relief
+  # reaches it; `preempts: always`. Read only where a zone asks for glass on
+  # every non-street facade (facade_glass_other_pct; Gresham 7.0420(I)(2)).
+  wall_opening_min_ft:
+    value: 3
+    preempts: always
+    cite: "ORSC 2021 R302.1 and Table R302.1, Openings in walls (BCD 2021 ORSC significant changes summary)"
+    url: "https://www.oregon.gov/bcd/codes-stand/Documents/2021orsc-significant-changes.pdf"
+    retrieved: 2026-11-11
+    status: draft
+    quote: "or/orsc.2021.significant-changes.txt#L3-L5,L40-L41"
   max_density_du_per_acre:
     exempt: true
     preempts: always
