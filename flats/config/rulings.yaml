@@ -2781,6 +2781,27 @@
     (9 ft, 33.266) wherever the code allows it for this building; elsewhere the
     plan's 12 ft stands. FOLLOWUPS 178(a).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+- id: 2026-11-12-portland-commercial-windows-fourplex-exempt
+  kind: ruling
+  date: 2026-11-12
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PCC 33.130.230 "Windows" (CM1, CM2, CM3, CE, CR, CX) holds both the 15%
+    street-facade window share (A) and the ground-floor window band (B).
+    B.2.b(1) says "Houses, attached houses, manufactured homes, duplexes,
+    attached duplexes, triplexes, and fourplexes are exempt from this
+    Section". Does that lift the 15% share too, or only the band it sits in?
+  ruling: >-
+    "If the 15% is in the 'window section' then I would say its exempt. It
+    depends on what the exemption is." The exemption is from "this Section",
+    and the section is 33.130.230 Windows, which contains the 15% (A.3).
+  effect: >-
+    In Portland's commercial/mixed-use zones (33.130) the pod, a fourplex or
+    attached houses, owes neither the 15% street-facade window share nor the
+    ground-floor window band. Design guidance only: the screen does not grade
+    window shares, so no lot moves. Building-code windows (escape, light) and
+    plan-district rules outside 33.130.230 still apply. FOLLOWUPS 187.
+  source: Steph 2026-11-12 (chat), ../vicinitideals-worktrees/glazing-pdx.findings.md
 - id: 2026-11-12-single-design-80x25-20ft
   kind: ruling
   date: 2026-11-12
