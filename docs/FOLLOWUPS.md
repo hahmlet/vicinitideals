@@ -58,11 +58,13 @@ the full one.)
 182. [Claude] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- RULED 11-11 YELLOW (SEWER-STREET-MAIN); BUILT flats/no-sewer 4592039a (rel8: ~148 G->Y, ~398 G->R); bound must re-acquire 15 sewer layers. [file](followups/182-no-sewer-street-pipe.md)
 181. [Claude] [Steph: 3 questions] [scan: YES -- false greens only] **Roof sweep: Clackamas pitched roof + four re-reads** -- (a) BUILT flats/clackamas-roof 4245abd9; (b) BUILT flats/roof-rereads 0151a6c5 (Tualatin G->Y, Villebois built lots G->Y, Hillsboro downtown traced); Steph: Hillsboro text vs pink map area, ask Tualatin planner?, request Villebois Pattern Book? [file](followups/181-roof-sweep-clackamas.md)
 
-186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- RULED 11-12 each wall, exclude (RED if no placement keeps 3 ft); BUILT flats/gresham-end-glass 18e321b5 (slides pod 3 ft off, else RED; est. 5-20 RED of 40) -> rel8 bound. [file](followups/186-gresham-end-wall-glass.md)
+186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- RULED 11-12 each wall, exclude (RED if no placement keeps 3 ft); BUILT flats/gresham-end-glass 1b0d6299 (+187 places: Beaverton commercial ~5-25 RED, OC South End, S Hillsboro, Gladstone, Gresham DEM/DCL/CN) (slides pod 3 ft off, else RED; est. 5-20 RED of 40) -> rel8 bound. [file](followups/186-gresham-end-wall-glass.md)
 
 187. [Claude] [scan: YES -- end-wall glass places] **Glazing rules: read, report published** -- report https://claude.ai/artifact/PvTVXncwqnjMT4br3Krhdj (base + end door, by green impact); build follow-ons: end-wall 3 ft hold for Beaverton CS/GC/SC, OC South End, S Hillsboro, Gladstone DCO, Gresham DEM/DCL/CN (in gresham-end-glass lane); Tigard TMU 12 ft storey (pod-80x25 lane); Portland CM fourplex window exemption RULED exempt 11-12 [file](followups/187-glazing-gaps.md) Steph wants the result as a report by likely green impact, with exceptions and gotchas, for another agent to size the glazing conservatively.
 
 185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); lane pod-80x25 -> rel8 full bound. [file](followups/185-pod-depth-30.md)
+
+188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
