@@ -1455,6 +1455,22 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "south_hillsboro_plan_district",
+        "site_fact",
+        "The Hillsboro lot lies inside the South Hillsboro Plan District, "
+        "whose standards 'apply only within the South Hillsboro Plan "
+        "District boundary as shown on Figure 12.65.930-A' (12.65.020.A). "
+        "12.65.710 reaches quadplexes and townhouses there and asks windows "
+        "on each side and rear elevation (D.2.b-c), so the pod's end walls "
+        "must stand where a wall may have openings (FOLLOWUPS 187). A lot "
+        "the boundary cuts is unanswered.",
+        evidence=(
+            "the City of Hillsboro's Community Plan Areas layer, its South "
+            "Hillsboro Plan Area polygon -- held as Hillsboro's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_johnson_creek_impervious",
         "site_fact",
         "The site is one PCC 33.537 caps at 50 percent impervious surface: "
@@ -2058,6 +2074,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "raleigh_hills_asc_u",
     "rockwood_design_district",
     "sandy_bornstedt_village",
+    "south_hillsboro_plan_district",
     "tigard_bridgeport_village",
     "troutdale_cfec_parking_area",
     "troutdale_town_center",

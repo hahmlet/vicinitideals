@@ -150,6 +150,9 @@ _LABELS: dict[str, str] = {
     "parking_side_yard_stated": "parking side-yard reach stated by the code",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
+    "facade_glass_other_pct": "min. glass on a facade other than the street facade",
+    "window_spacing_ft": "one window at least every so many feet of each floor of each elevation",
+    "wall_opening_min_ft": "min. distance from a side or rear lot line for a wall with windows",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_front_share_allowed": "parking allowed in front of building within the frontage share",
     "parking_alley_access_required": "vehicle access must be from the alley",
@@ -1672,6 +1675,50 @@ _F: tuple[FieldDef, ...] = (
         ":func:`flats.fit.fire.route_ft` (FOLLOWUPS 28).",
         True,
     ),
+    FieldDef(
+        "facade_glass_other_pct",
+        "percent",
+        "Glass a facade that does not face a street must carry, as a share of "
+        "that facade, held as each code prints it: Gresham 7.0420(I)(2), "
+        "4.1152 S9(b) and 4.1252 S13(b), 5 percent of each non-street facade "
+        "(Steph 2026-11-12, rulings.yaml 2026-11-12-gresham-glass-each-facade); "
+        "Beaverton 60.05.15.8.A, 30 percent of the ground floor of every "
+        "elevation visible within 200 ft of a street; South Hillsboro "
+        "12.65.710.D.2.b, 8 percent of each side elevation; Gladstone "
+        "17.21.070(3)(a), 40 percent of the ground floor of facades facing "
+        "parking. The pod's end walls and back wall are such facades; the walls "
+        "between its homes are not. The screen does not size the glass, which "
+        "any wall can carry: it holds that every such wall can have windows at "
+        "all, i.e. stands at least `wall_opening_min_ft` from every side and "
+        "rear lot line (:func:`flats.ingest.wall_openings.wall_opening_gap`, "
+        "FOLLOWUPS 186/187).",
+        False,
+    ),
+    FieldDef(
+        "window_spacing_ft",
+        "length_ft",
+        "Windows counted along a wall rather than measured as a share: Oregon "
+        "City South End 17.22.080.A, \"an average of one window every fifteen "
+        "feet of linear elevation on each floor of each elevation\". Every "
+        "elevation, the pod's end walls and back wall with it, must then carry "
+        "windows, so the screen holds what it holds for "
+        "`facade_glass_other_pct`: each such wall stands at least "
+        "`wall_opening_min_ft` from every side and rear lot line (FOLLOWUPS 187).",
+        False,
+    ),
+    FieldDef(
+        "wall_opening_min_ft",
+        "length_ft",
+        "Fire separation distance under which an exterior wall may have no "
+        "openings: Oregon ORSC Table R302.1, \"Openings in walls  Not "
+        "allowed ... < 3 feet\". Measured from the wall at right angles to "
+        "a side or rear lot line; a wall facing a street or alley is measured "
+        "to its centre line (ORSC R302.2) and so is never this close. A "
+        "building code number, stated once in the state layer for every "
+        "zone, and read only where a zone asks for glass on every non-street "
+        "facade (`facade_glass_other_pct`).",
+        False,
+    ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
     FieldDef(
         "open_space_min_sqft",
@@ -2199,6 +2246,12 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # never a city's to state or omit, so never a city's gap. A guard
         # test holds that every zone resolves it (test_fire.py).
         "fire_access_max_ft",
+        # The building code's no-openings distance (ORSC Table R302.1), stated
+        # once in the state layer like the fire route; and the one city that
+        # asks for glass on every non-street facade (Gresham 7.0420(I)(2)).
+        "wall_opening_min_ft",
+        "facade_glass_other_pct",
+        "window_spacing_ft",
         # Answers the height question in the other unit. Required-ness is
         # handled by ALTERNATIVES in the resolver, which reads one as
         # standing in for the other; listed as required here it would be

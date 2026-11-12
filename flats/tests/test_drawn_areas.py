@@ -93,6 +93,9 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "rockwood_design_district",
         # Sandy's Bornstedt Village Overlay, the 2026 zoning map (FOLLOWUPS 109 chunk 9).
         "sandy_bornstedt_village",
+        # The South Hillsboro Plan District, 12.65.020.A, for 12.65.710's side and
+        # rear windows (FOLLOWUPS 187, 2026-11-11).
+        "south_hillsboro_plan_district",
         "tigard_bridgeport_village",
         "troutdale_cfec_parking_area",
         "troutdale_town_center",

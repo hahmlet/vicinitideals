@@ -717,6 +717,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-WALL-OPENINGS:
+    description: "Gresham asks for clear glass on every wall that does not face a street, and the building code bans windows within 3 ft of a side or rear lot line; no fitting building was drawn to measure how far its walls stand from those lines"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the drawn building's walls against the side and rear lot lines (Gresham 7.0420(I)(2), ORSC Table R302.1; Steph 2026-11-12, rulings.yaml 2026-11-12-gresham-glass-each-facade; FOLLOWUPS 186)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   FRONTAGE-MORE-BUILDINGS:
     description: "One pod cannot fill the building share of a street this long, but enough pods to fill it could stand side by side along it: the lot needs more than one building"
     kind: categorical

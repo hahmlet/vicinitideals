@@ -1138,6 +1138,12 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 18 -> 16 on 2026-11-12 (pod80x25@3, FOLLOWUPS 185): Oregon City MUC-2/MUD hold
     # the "or two stories" limb instead of 25 ft.
     "min_building_height_ft": 16,
+    #: FOLLOWUPS 186 (2026-11-12, flats/gresham-end-glass): Gresham 7.0420(I)(2)
+    #: 5% clear glass on each non-street facade, read by the FLATS wall-openings
+    #: check alone; quadfit has no facade or lot-line-distance column.
+    # 22 -> 34 on 2026-11-12 (FOLLOWUPS 187): Gresham DEM/DCL/CN, Beaverton
+    # commercial/MU, Oregon City South End, South Hillsboro, Gladstone C-2.
+    "facade_glass_other_pct": 34,
     # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
     # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
     # Portland-administered pockets): stall, driveway, side-yard reach, corner street,

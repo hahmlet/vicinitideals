@@ -2888,6 +2888,7 @@ _CHECK_WORDS = {
     "open_space_shape": "open space too narrow",
     "landscaped_pct": "less landscaping than required",
     "fire_access_ft": "the fire hose cannot reach the far wall within 150 ft",
+    "wall_opening_gap_ft": "a wall the city wants windows in stands under 3 ft from a side or rear lot line, where the building code allows none",
     "steep_ground": "too steep: the building and its parking do not fit on the ground under 15% slope",
     "site_grade_pct": "too steep: the ground under the building and its parking falls more than 15%",
     "driveway_frontage_share": "driveway takes more of the frontage than allowed",

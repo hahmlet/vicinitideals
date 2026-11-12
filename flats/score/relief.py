@@ -117,7 +117,13 @@ class ReliefOutcome:
 #: and a pad that falls too far (``site_grade_pct``) are Steph's build-cost
 #: lines of 2026-10-04, not a code's (``flats/config/slope.yaml``).
 NO_ZONING_RELIEF: frozenset[str] = frozenset(
-    {"fire_access_ft", "court_turns", "steep_ground", "site_grade_pct"}
+    {
+        "fire_access_ft", "court_turns", "steep_ground", "site_grade_pct",
+        # A wall that must have windows under the building code's 3 ft
+        # no-openings line (ORSC Table R302.1; FOLLOWUPS 186): no zoning
+        # adjustment opens a window there (Steph 2026-11-12, exclude).
+        "wall_opening_gap_ft",
+    }
 )
 
 

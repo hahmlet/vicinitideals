@@ -1,0 +1,60 @@
+Fire separation distance.
+
+R302.1 Exterior walls.               Construction, projections, openings
+and penetrations of        exterior walls       of  dwellings     and   accessory
+structures    shall  comply  with  Table  R302.1.              Where  multiple
+detached     dwellings     are located on a single          lot, each detached
+dwelling shall comply independently with Table R302.1.
+  Exceptions:
+     1.    Walls, projections, openings or penetrations in walls
+           perpendicular  to  the  line  used  to  determine  the               fire
+           separation distance.
+     2.    Walls of individual dwelling units and their accessory
+           structures located on the same lot.
+     3.    Detached      nonhabitable      accessory structures         exempted
+           from permits are not required to provide wall protection
+           based on location on the             lot. Projections beyond the
+           exterior wall shall not extend over the lot line.
+     4.    Detached garages accessory to a dwelling located within
+           2 feet (610 mm) of a lot line are permitted to have roof
+           eave projections not exceeding 4 inches (102 mm).
+     5.    Foundation vents installed in compliance with this code
+           are permitted.
+     6.    Attached  decks        that  are  exempt  from  permitting  by
+           Section  R105.2.         All  other     attached  decks       shall  be
+           considered   projections   for   compliance   with   Table
+           R302.1.
+
+                                                                               TABLE R302.1
+                                                                            EXTERIOR WALLS
+
+                       EXTERIOR WALL ELEMENT                                                        MINIMUM                                  FIRE SEPARATION
+                                                                                         FIRE-RESISTANCE RATING                            DISTANCE PROVIDED
+                                             Fire-resistance rated           1 hour—tested in accordance with ASTM E119 or UL                        < 3 feet
+                Walls                                                                   263 with exposure from both sides
+                                           Not fire-resistance rated                                  0 hours                                         3 feet
+                                                 Not allowed                                            N/A                                          < 2 feet
+             Projectionsc                    Fire-resistance rated                          1 hour on the undersidea, b                          2 feet to < 3 feet
+
+                                           Not fire-resistance rated                                  0 hours                                         3 feet
+          Openings in walls                      Not allowed                                            N/A                                          < 3 feet
+                                                  Unlimited                                           0 hours                                         3 feet
+             Penetrations                             All                                  Comply with Section R302.4                                < 3 feet
+                                                                                                  None required                                       3 feet
+
+    For SI: 1 foot = 304.8 mm. NA = Not Applicable.
+       a.  The fire-resistance rating shall be permitted to be reduced to 0 hours on the underside of the eave overhang if fireblocking is provided
+           from the wall top plate to the underside of the roof sheathing. Fireblocking shall consist of not less than two layers of two-inch (51 mm)
+           nominal lumber.
+       b.  The fire-resistance rating shall be permitted to be reduced to 0 hours on the underside of the rake overhang where gable vent openings
+           are not installed.
+       c.  For the purposes of this table, attached decks that are not exempted by Section R105.2 shall be considered projections.
+
+Townhouses.                                                                             R302.2.4  Fire-resistance-rated  wall  continuity.                The  fire-
+                                                                                        resistance-rated wall or assembly separating townhouses shall
+                                                                                        be continuous from the foundation to the underside of the roof
+R302.2  Townhouses.          Each    townhouse      shall  be  considered  a            sheathing, deck or slab. The fire-resistance rating shall extend
+separate building and shall adjoin or have access to a yard, street,                    the  full  length  of  the  wall  or  assembly,  including  wall
+alley or public way on not less than two sides. The centerline of                       extensions through and separating attached enclosed accessory
+an adjoining public way shall be considered an adjacent property                        structures.   The   fire-resistance-rated   walls   shall   be   in
+line. Each    townhouse     shall be constructed in accordance with                     accordance with the following:

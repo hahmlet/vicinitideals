@@ -1848,6 +1848,21 @@ zones:
       cite: "Beaverton BDC 20.22 (CM-HDR Cooper Mountain High Density Residential), Tables 20.22.15 and 20.22.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # P7: note 7, "All units of a duplex, triplex, or quadplex must be
       # attached."
@@ -2010,6 +2025,21 @@ zones:
       cite: "Beaverton BDC 20.22 (CM-CS Cooper Mountain Community Service), Tables 20.22.15 and 20.22.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # P7: note 7, "All units of a duplex, triplex, or quadplex must be
       # attached."
@@ -2169,6 +2199,21 @@ zones:
       cite: "Beaverton BDC 20.10 (NS Neighborhood Service), Tables 20.10.15 and 20.10.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # P1: note 1, only 50 percent of the contiguous area of any NS zone may
       # be developed residentially (residential above non-residential uses
@@ -2357,6 +2402,21 @@ zones:
       cite: "Beaverton BDC 20.10 (CS Community Service), Tables 20.10.15 and 20.10.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # Note 11: all units of a quadplex attached.
       value: true
@@ -2517,6 +2577,21 @@ zones:
       cite: "Beaverton BDC 20.10 (CC Corridor Commercial), Tables 20.10.15 and 20.10.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # Note 11: all units of a quadplex attached.
       value: true
@@ -2674,6 +2749,21 @@ zones:
       cite: "Beaverton BDC 20.10 (GC General Commercial), Tables 20.10.15 and 20.10.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # Note 11: all units of a quadplex attached.
       value: true
@@ -2848,6 +2938,21 @@ zones:
       cite: "Beaverton BDC 20.20 (RC-E Regional Center - East), Tables 20.20.15 and 20.20.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       value: true
       cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-E P)"
@@ -3009,6 +3114,21 @@ zones:
       cite: "Beaverton BDC 20.20 (TC-MU Town Center - Multiple Use), Tables 20.20.15 and 20.20.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       value: true
       cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (TC-MU P)"
@@ -3170,6 +3290,21 @@ zones:
       cite: "Beaverton BDC 20.20 (TC-HDR Town Center - High Density Residential), Tables 20.20.15 and 20.20.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       value: true
       cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (TC-HDR P)"
@@ -3331,6 +3466,21 @@ zones:
       cite: "Beaverton BDC 20.20 (SC-MU Station Community - Multiple Use), Tables 20.20.15 and 20.20.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       value: true
       cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-MU P)"
@@ -3502,6 +3652,21 @@ zones:
       cite: "Beaverton BDC 20.20 (SC-HDR Station Community - High Density Residential), Tables 20.20.15 and 20.20.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       value: true
       cite: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-HDR P)"
@@ -3673,6 +3838,21 @@ zones:
       cite: "Beaverton BDC 20.20 (SC-S Station Community - Sunset), Tables 20.20.15 and 20.20.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 60.05.15.8.A: ground-floor elevations "entirely or
+      # partially visible from and within 200 feet of a public street" carry
+      # windows or glass doorways on 30 percent (Multi-Dwelling, A.2; 25 for
+      # Townhouse, A.3) between 2 and 10 ft. That is not only the street wall:
+      # an end wall or back wall seen from the street owes glass too, and every
+      # wall is read as seen (the conservative reading). This is a Commercial or
+      # Multiple Use zone (BDC 10.25), reached through 60.05.11.3. Any share means
+      # windows, so those walls must stand where the building code allows them
+      # (wall_opening_min_ft). The guidelines track (60.05.35-50) is a
+      # discretionary review and not credited (rulings.yaml 2026-10-14-review-tiers).
+      value: 30
+      cite: "Beaverton BDC 60.05.15.8.A.2, ground-floor elevations visible from and within 200 feet of a public street in Commercial and Multiple Use zones: Multi-Dwelling residential uses 30 percent windows or glass doorways"
+      quote: "or/washington/beaverton/60.05/60.05.15.txt#L135-L137,L141"
+      via: "or/washington/beaverton/60.05/60.05.11.txt#L11"
     quadplex_allowed:
       # P66; note 66 is repealed and reserved.
       value: true
