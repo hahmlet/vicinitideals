@@ -557,7 +557,7 @@ CHECK_FIELD: dict[str, str] = {
     "building_frontage_other_share": "building_frontage_other_pct",
     "front_setback_max_ft": "setback_front_max_ft",
     "side_setback_max_ft": "setback_side_max_ft",
-    "wall_opening_gap_ft": "facade_glass_other_pct",
+    "wall_opening_gap_ft": "wall_opening_min_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "side_street_yard_vehicle_share": "parking_side_street_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
@@ -3995,11 +3995,10 @@ def _wall_openings(
     """Every outside wall that must carry glass stands where a wall may have
     windows (:data:`WALL_OPENINGS`; Gresham 7.0420(I)(2), ORSC Table R302.1;
     Steph 2026-11-12, "fine to exclude"). Read only where the zone asks for
-    glass on every non-street facade; nothing drawn to measure is held out of
-    GREEN, never passed."""
-    glass = _pct(rules, "facade_glass_other_pct")
-    floor = _pct(rules, "wall_opening_min_ft")
-    if not glass or floor is None:
+    glass on the pod's non-street walls (:data:`WALL_GLASS_FIELDS`, FOLLOWUPS
+    187); nothing drawn to measure is held out of GREEN, never passed."""
+    floor = wall_glass_floor(rules)
+    if floor is None:
         return
     gap = lot.wall_opening_gap_ft
     if gap is None:
@@ -4008,6 +4007,21 @@ def _wall_openings(
             unmeasured.add(WALL_OPENINGS_DRAWN)
         return
     check(WALL_OPENINGS, gap, floor, is_maximum=False)
+
+
+#: The fields by which a zone puts glass on a wall other than the street wall
+#: (FOLLOWUPS 186/187): a share of the facade, or a window every so many feet
+#: of each elevation. Either one means the pod's end and back walls carry
+#: windows.
+WALL_GLASS_FIELDS: tuple[str, ...] = ("facade_glass_other_pct", "window_spacing_ft")
+
+
+def wall_glass_floor(rules: Any) -> float | None:
+    """The no-openings distance (`wall_opening_min_ft`) where this zone asks
+    for glass on the pod's non-street walls, else None."""
+    if not any(_pct(rules, name) for name in WALL_GLASS_FIELDS):
+        return None
+    return _pct(rules, "wall_opening_min_ft")
 
 
 def _pct(rules: ZoneResolution, name: str) -> float | None:

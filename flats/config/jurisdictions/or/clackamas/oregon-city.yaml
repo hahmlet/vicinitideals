@@ -1017,6 +1017,32 @@ zones:
         17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
+    window_spacing_ft:
+      # FOLLOWUPS 187. The concept plan areas only: 17.21 and 17.22 reach every
+      # new quadplex and townhouse in Park Place and the South End (17.21.020,
+      # 17.22.020), and 17.21.080.A and 17.22.080.A each ask "an average of one
+      # window every fifteen feet of linear elevation on each floor of each
+      # elevation" -- the end walls and back wall too, which must then stand
+      # where a wall may have windows (wall_opening_min_ft). The Type II
+      # exemption (B) is a discretionary review and not credited. Elsewhere a
+      # quadplex meets 17.14.030 (17.16.060.B), a menu of design options with no
+      # window count, so the base is exempt; held as variants so a lot the
+      # traced boundary cuts is unanswered rather than read as outside.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only); 17.16.060.B, a quadplex elsewhere meets the 17.14.030 design options
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L5391,L5395-L5397"
+      variants:
+        - value: 15
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.080.A, Park Place windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6253-L6258"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
+        - value: 15
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.080.A, South End windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6468-L6471,L6474-L6475"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
@@ -1184,6 +1210,32 @@ zones:
         17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
+    window_spacing_ft:
+      # FOLLOWUPS 187. The concept plan areas only: 17.21 and 17.22 reach every
+      # new quadplex and townhouse in Park Place and the South End (17.21.020,
+      # 17.22.020), and 17.21.080.A and 17.22.080.A each ask "an average of one
+      # window every fifteen feet of linear elevation on each floor of each
+      # elevation" -- the end walls and back wall too, which must then stand
+      # where a wall may have windows (wall_opening_min_ft). The Type II
+      # exemption (B) is a discretionary review and not credited. Elsewhere a
+      # quadplex meets 17.14.030 (17.16.060.B), a menu of design options with no
+      # window count, so the base is exempt; held as variants so a lot the
+      # traced boundary cuts is unanswered rather than read as outside.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only); 17.16.060.B, a quadplex elsewhere meets the 17.14.030 design options
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L5391,L5395-L5397"
+      variants:
+        - value: 15
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.080.A, Park Place windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6253-L6258"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
+        - value: 15
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.080.A, South End windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6468-L6471,L6474-L6475"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
@@ -1344,6 +1396,32 @@ zones:
         17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
+    window_spacing_ft:
+      # FOLLOWUPS 187. The concept plan areas only: 17.21 and 17.22 reach every
+      # new quadplex and townhouse in Park Place and the South End (17.21.020,
+      # 17.22.020), and 17.21.080.A and 17.22.080.A each ask "an average of one
+      # window every fifteen feet of linear elevation on each floor of each
+      # elevation" -- the end walls and back wall too, which must then stand
+      # where a wall may have windows (wall_opening_min_ft). The Type II
+      # exemption (B) is a discretionary review and not credited. Elsewhere a
+      # quadplex meets 17.14.030 (17.16.060.B), a menu of design options with no
+      # window count, so the base is exempt; held as variants so a lot the
+      # traced boundary cuts is unanswered rather than read as outside.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only); 17.16.060.B, a quadplex elsewhere meets the 17.14.030 design options
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L5391,L5395-L5397"
+      variants:
+        - value: 15
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.080.A, Park Place windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6253-L6258"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
+        - value: 15
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.080.A, South End windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6468-L6471,L6474-L6475"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
@@ -1504,6 +1582,32 @@ zones:
         17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
       retrieved: '2026-08-14'
+    window_spacing_ft:
+      # FOLLOWUPS 187. The concept plan areas only: 17.21 and 17.22 reach every
+      # new quadplex and townhouse in Park Place and the South End (17.21.020,
+      # 17.22.020), and 17.21.080.A and 17.22.080.A each ask "an average of one
+      # window every fifteen feet of linear elevation on each floor of each
+      # elevation" -- the end walls and back wall too, which must then stand
+      # where a wall may have windows (wall_opening_min_ft). The Type II
+      # exemption (B) is a discretionary review and not credited. Elsewhere a
+      # quadplex meets 17.14.030 (17.16.060.B), a menu of design options with no
+      # window count, so the base is exempt; held as variants so a lot the
+      # traced boundary cuts is unanswered rather than read as outside.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only); 17.16.060.B, a quadplex elsewhere meets the 17.14.030 design options
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L5391,L5395-L5397"
+      variants:
+        - value: 15
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.080.A, Park Place windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6253-L6258"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
+        - value: 15
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.080.A, South End windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6468-L6471,L6474-L6475"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"
@@ -1639,6 +1743,32 @@ zones:
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4347"
   R-2:
+    window_spacing_ft:
+      # FOLLOWUPS 187. The concept plan areas only: 17.21 and 17.22 reach every
+      # new quadplex and townhouse in Park Place and the South End (17.21.020,
+      # 17.22.020), and 17.21.080.A and 17.22.080.A each ask "an average of one
+      # window every fifteen feet of linear elevation on each floor of each
+      # elevation" -- the end walls and back wall too, which must then stand
+      # where a wall may have windows (wall_opening_min_ft). The Type II
+      # exemption (B) is a discretionary review and not credited. Elsewhere a
+      # quadplex meets 17.14.030 (17.16.060.B), a menu of design options with no
+      # window count, so the base is exempt; held as variants so a lot the
+      # traced boundary cuts is unanswered rather than read as outside.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only); 17.16.060.B, a quadplex elsewhere meets the 17.14.030 design options
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L5391,L5395-L5397"
+      variants:
+        - value: 15
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.080.A, Park Place windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6253-L6258"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
+        - value: 15
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.080.A, South End windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6468-L6471,L6474-L6475"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     # WHY THIS DISTRICT WAS MISSING, AND WHY IT IS BACK, 2026-09-08.
     #
     # R-2 was left out of this file with a one-word reason, recorded in a note
@@ -1977,6 +2107,32 @@ zones:
         17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
       retrieved: '2026-08-14'
+    window_spacing_ft:
+      # FOLLOWUPS 187. The concept plan areas only: 17.21 and 17.22 reach every
+      # new quadplex and townhouse in Park Place and the South End (17.21.020,
+      # 17.22.020), and 17.21.080.A and 17.22.080.A each ask "an average of one
+      # window every fifteen feet of linear elevation on each floor of each
+      # elevation" -- the end walls and back wall too, which must then stand
+      # where a wall may have windows (wall_opening_min_ft). The Type II
+      # exemption (B) is a discretionary review and not credited. Elsewhere a
+      # quadplex meets 17.14.030 (17.16.060.B), a menu of design options with no
+      # window count, so the base is exempt; held as variants so a lot the
+      # traced boundary cuts is unanswered rather than read as outside.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only); 17.16.060.B, a quadplex elsewhere meets the 17.14.030 design options
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L5391,L5395-L5397"
+      variants:
+        - value: 15
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.080.A, Park Place windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6253-L6258"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6130-L6133"
+        - value: 15
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.080.A, South End windows, an average of one window every fifteen feet of linear elevation on each floor of each elevation
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6468-L6471,L6474-L6475"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L6341-L6345"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"

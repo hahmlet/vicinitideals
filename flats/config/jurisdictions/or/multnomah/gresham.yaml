@@ -5248,6 +5248,20 @@ zones:
       cite: Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
       retrieved: '2026-08-19'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 4.1252 reaches Townhouses (4.1202(B)), and the pod is one
+      # on its four unit lots here (the unit_lots variant of quadplex_allowed).
+      # Its Townhouse heading (L7) carries S13(b), "a minimum of 5 percent of
+      # each non-street facing facades" -- EACH facade, as 7.0420(I)(2)
+      # (rulings.yaml 2026-11-12-gresham-glass-each-facade). The end walls and
+      # back wall must then stand where a wall may have windows
+      # (wall_opening_min_ft). The one-lot quadplex is NP: unit_lots only.
+      only_when: [unit_lots]
+      value: 5
+      cite: "Gresham GDC 4.1252(B)(5)(S13)(b), Additional Standards for Townhouse: clear glass on a minimum of 5 percent of each non-street facing facade"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+      retrieved: '2026-08-19'
+      quote: "or/multnomah/gresham/4/4.1252.txt#L7,L2661,L2664,L2674"
     quadplex_allowed:
       # Table 4.1220(A): NP for a quadplex in all three Civic Neighborhood
       # columns (L200) and P for a townhouse in all three (L201).
@@ -5382,6 +5396,20 @@ zones:
       cite: Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
       retrieved: '2026-08-19'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 4.1252 reaches Townhouses (4.1202(B)), and the pod is one
+      # on its four unit lots here (the unit_lots variant of quadplex_allowed).
+      # Its Townhouse heading (L7) carries S13(b), "a minimum of 5 percent of
+      # each non-street facing facades" -- EACH facade, as 7.0420(I)(2)
+      # (rulings.yaml 2026-11-12-gresham-glass-each-facade). The end walls and
+      # back wall must then stand where a wall may have windows
+      # (wall_opening_min_ft). The one-lot quadplex is NP: unit_lots only.
+      only_when: [unit_lots]
+      value: 5
+      cite: "Gresham GDC 4.1252(B)(5)(S13)(b), Additional Standards for Townhouse: clear glass on a minimum of 5 percent of each non-street facing facade"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+      retrieved: '2026-08-19'
+      quote: "or/multnomah/gresham/4/4.1252.txt#L7,L2661,L2664,L2674"
     quadplex_allowed:
       # Table 4.1220(A): NP for a quadplex in all three Civic Neighborhood
       # columns (L200) and P for a townhouse in all three (L201).
@@ -5516,6 +5544,20 @@ zones:
       cite: Gresham Development Code Tables 4.1220(A), 4.1230(A) and 4.1230(B) (Civic Neighborhood)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
       retrieved: '2026-08-19'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. 4.1252 reaches Townhouses (4.1202(B)), and the pod is one
+      # on its four unit lots here (the unit_lots variant of quadplex_allowed).
+      # Its Townhouse heading (L7) carries S13(b), "a minimum of 5 percent of
+      # each non-street facing facades" -- EACH facade, as 7.0420(I)(2)
+      # (rulings.yaml 2026-11-12-gresham-glass-each-facade). The end walls and
+      # back wall must then stand where a wall may have windows
+      # (wall_opening_min_ft). The one-lot quadplex is NP: unit_lots only.
+      only_when: [unit_lots]
+      value: 5
+      cite: "Gresham GDC 4.1252(B)(5)(S13)(b), Additional Standards for Townhouse: clear glass on a minimum of 5 percent of each non-street facing facade"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+      retrieved: '2026-08-19'
+      quote: "or/multnomah/gresham/4/4.1252.txt#L7,L2661,L2664,L2674"
     quadplex_allowed:
       # Table 4.1220(A): NP for a quadplex in all three Civic Neighborhood
       # columns (L200) and P for a townhouse in all three (L201).
@@ -7310,6 +7352,20 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. The Townhouse heading of 4.1152 (L7) reaches the pod on
+      # its four unit lots here (4.1102(C) exempts townhouses only in DRL-1 and
+      # DRL-2), and S9(b) asks "a minimum of 5 percent of each non-street
+      # facing facades" -- the 7.0420(I)(2) figure, EACH facade (rulings.yaml
+      # 2026-11-12-gresham-glass-each-facade). The pod's end walls and back wall
+      # must then stand where a wall may have windows (wall_opening_min_ft). The
+      # one-lot quadplex is not reached (4.1102(C)): the unit_lots path only.
+      only_when: [unit_lots]
+      value: 5
+      cite: "Gresham GDC 4.1152(B)(5)(S9)(b), Additional Standards for Townhouse: clear glass on a minimum of 5 percent of each non-street facing facade"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+      quote: "or/multnomah/gresham/4/4.1152.txt#L7,L2399,L2401,L2411"
     # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
     # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
     # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.
@@ -7611,6 +7667,20 @@ zones:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. The Townhouse heading of 4.1152 (L7) reaches the pod on
+      # its four unit lots here (4.1102(C) exempts townhouses only in DRL-1 and
+      # DRL-2), and S9(b) asks "a minimum of 5 percent of each non-street
+      # facing facades" -- the 7.0420(I)(2) figure, EACH facade (rulings.yaml
+      # 2026-11-12-gresham-glass-each-facade). The pod's end walls and back wall
+      # must then stand where a wall may have windows (wall_opening_min_ft). The
+      # one-lot quadplex is not reached (4.1102(C)): the unit_lots path only.
+      only_when: [unit_lots]
+      value: 5
+      cite: "Gresham GDC 4.1152(B)(5)(S9)(b), Additional Standards for Townhouse: clear glass on a minimum of 5 percent of each non-street facing facade"
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+      quote: "or/multnomah/gresham/4/4.1152.txt#L7,L2399,L2401,L2411"
     # THE TOWNHOUSE ROW'S ALLEY ACCESS, read 2026-11-09 (pagecheck-findings).
     # The city default cites 7.0431(B)(1) for townhouse lots, and 7.0431's own
     # district list (7.0431.txt L3-L5) names DRL-1 and DRL-2 but not this zone.

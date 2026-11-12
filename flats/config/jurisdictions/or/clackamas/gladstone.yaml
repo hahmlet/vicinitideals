@@ -1591,6 +1591,27 @@ zones:
         standards), Community Commercial District
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1718.html
       retrieved: '2026-10-08'
+    facade_glass_other_pct:
+      # FOLLOWUPS 187. Downtown Core Overlay, C-2 inside the Town Center
+      # (17.21.010): 17.21.070(3)(a) asks windows on "40 percent on facades
+      # facing parking areas", ground floor. The pod's own court lies behind its
+      # back wall, but an end wall can face parking too -- the drive to the
+      # court, or a neighbour's lot nothing here measures -- so every non-street
+      # wall is read as one that may (the conservative reading), and must stand
+      # where a wall may have windows (wall_opening_min_ft). Outside the Town
+      # Center the C-2 chapter asks glass only of the Portland Avenue street
+      # facade (17.18), so the base is exempt, as building_frontage_other_pct
+      # below; a variant, so a lot the traced line cuts is unanswered.
+      exempt: true
+      cite: GMC 17.21.010, the Downtown Core Overlay applies to C-2 properties within the Gladstone Town Center only
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1721.html
+      retrieved: '2026-10-29'
+      quote: "or/clackamas/gladstone/17.21.dco.txt#L25"
+      variants:
+        - value: 40
+          when: [gladstone_town_center]
+          cite: GMC 17.21.070(3)(a), Downtown Core Overlay windows, 40 percent of the ground-floor facade on facades facing parking areas
+          quote: "or/clackamas/gladstone/17.21.dco.txt#L25,L123,L125"
     quadplex_allowed:
       # 17.18.020, "Uses allowed outright": "(11) Attached residential
       # dwellings (duplex, triplex, quadplex). (12) Townhouses." The conditional

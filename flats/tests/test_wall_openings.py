@@ -44,7 +44,9 @@ def codes(result) -> set[str]:
 
 
 def test_the_check_reads_the_glass_field_and_no_relief_reaches_it() -> None:
-    assert CHECK_FIELD[WALL_OPENINGS] == "facade_glass_other_pct"
+    # The threshold is the building code's distance, stated for every zone, so
+    # a bind cites R302.1 and an unmeasured check is never "not encoded".
+    assert CHECK_FIELD[WALL_OPENINGS] == "wall_opening_min_ft"
     assert _MEASURED_FLAG[WALL_OPENINGS_DRAWN] == "MEASURE-WALL-OPENINGS"
     assert WALL_OPENINGS in NO_ZONING_RELIEF
 
@@ -171,9 +173,92 @@ def test_every_7_0420_zone_asks_glass_on_each_other_facade(corpus, zone) -> None
     assert got.get("wall_opening_min_ft") == 3
 
 
-@pytest.mark.parametrize("zone", ["RTC", "CC", "DEM"])
+@pytest.mark.parametrize("zone", ["RTC", "CC"])
 def test_a_zone_off_the_7_0420_list_asks_none(corpus, zone) -> None:
     assert corpus.resolve(GRESHAM, zone).get("facade_glass_other_pct") is None
+
+
+# --- FOLLOWUPS 187: the other places that put glass on a non-street wall ----------
+
+
+def test_a_window_count_on_every_elevation_reads_the_same_as_a_share() -> None:
+    lot = facts(wall_opening_gap_ft=1.18, wall_opening_tried=True)
+    got = run(lot, rules(window_spacing_ft=15, wall_opening_min_ft=3))
+    assert check(got, WALL_OPENINGS).verdict is Verdict.fails
+    assert got.colour is Colour.red
+
+
+@pytest.mark.parametrize("zone", ["DEM", "DCL", "CNTH", "CNTM", "CNRM"])
+def test_gresham_downtown_and_civic_ask_it_of_the_townhouse_path_only(corpus, zone) -> None:
+    # 4.1152 S9(b) and 4.1252 S13(b) sit under the Townhouse heading; the
+    # one-lot quadplex is excepted (4.1102(C)) or NP (Table 4.1220(A)).
+    assert corpus.resolve(GRESHAM, zone, ("unit_lots",)).get("facade_glass_other_pct") == 5
+    assert corpus.resolve(GRESHAM, zone).get("facade_glass_other_pct") is None
+
+
+BEAVERTON = "or/washington/beaverton"
+#: BDC 10.25's Commercial and Multiple Use districts outside Downtown (70.05.15.7
+#: exempts Downtown from 60.05) that allow the pod: OI-WS, C-WS and SC-E refuse
+#: it and carry the use row alone.
+BEAVERTON_C_MU = (
+    "NS", "CS", "CC", "GC", "CM-CS", "CM-HDR", "RC-E", "TC-MU", "TC-HDR", "SC-MU", "SC-HDR",
+    "SC-S",
+)
+
+
+@pytest.mark.parametrize("zone", BEAVERTON_C_MU)
+def test_beaverton_commercial_and_multiple_use_zones_ask_30(corpus, zone) -> None:
+    assert corpus.resolve(BEAVERTON, zone).get("facade_glass_other_pct") == 30
+
+
+@pytest.mark.parametrize("zone", ["RC-BC", "RC-OT", "RC-MU", "RC-DT", "MR", "RMA"])
+def test_beaverton_downtown_and_residential_zones_do_not(corpus, zone) -> None:
+    assert corpus.resolve(BEAVERTON, zone).get("facade_glass_other_pct") is None
+
+
+OREGON_CITY = "or/clackamas/oregon-city"
+
+
+@pytest.mark.parametrize("zone", ["R-10", "R-8", "R-6", "R-5", "R-3.5", "R-2"])
+def test_oregon_city_counts_windows_in_the_concept_plan_areas_only(corpus, zone) -> None:
+    for area in ("oregon_city_south_end", "oregon_city_park_place"):
+        assert corpus.resolve(OREGON_CITY, zone, (area,)).get("window_spacing_ft") == 15
+    outside = corpus.resolve(OREGON_CITY, zone)
+    assert outside.get("window_spacing_ft") is None
+    # A variant, so a lot the boundary cuts is an open question, not outside.
+    assert "oregon_city_south_end" in outside.levers
+
+
+HILLSBORO = "or/washington/hillsboro"
+SOUTH_HILLSBORO_ZONES = ("R-10", "R-8.5", "R-7", "R-6", "R-4.5", "MR-1", "MR-2", "MR-3", "MU-VTC")
+
+
+@pytest.mark.parametrize("zone", SOUTH_HILLSBORO_ZONES)
+def test_south_hillsboro_asks_8_of_each_side_inside_the_plan_district(corpus, zone) -> None:
+    inside = corpus.resolve(HILLSBORO, zone, ("south_hillsboro_plan_district",))
+    assert inside.get("facade_glass_other_pct") == 8
+    assert corpus.resolve(HILLSBORO, zone).get("facade_glass_other_pct") is None
+
+
+def test_the_south_hillsboro_area_is_the_city_plan_area_for_its_base_zones(corpus) -> None:
+    from flats.geom.drawn import load_area
+    from flats.rules.conditions import DRAWN_CONDITIONS
+
+    assert "south_hillsboro_plan_district" in DRAWN_CONDITIONS
+    (area,) = [
+        a for a in corpus.layers[HILLSBORO].drawn_areas.values()
+        if a.condition == "south_hillsboro_plan_district"
+    ]
+    assert set(area.zones) == set(SOUTH_HILLSBORO_ZONES)
+    assert load_area(area.file).area > 0
+
+
+def test_gladstone_asks_it_of_c2_in_the_town_center(corpus) -> None:
+    inside = corpus.resolve("or/clackamas/gladstone", "C2", ("gladstone_town_center",))
+    assert inside.get("facade_glass_other_pct") == 40
+    outside = corpus.resolve("or/clackamas/gladstone", "C2")
+    assert outside.get("facade_glass_other_pct") is None
+    assert "gladstone_town_center" in outside.levers
 
 
 def test_the_building_code_line_is_stated_for_every_zone(corpus) -> None:

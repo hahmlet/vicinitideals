@@ -147,7 +147,8 @@ _LABELS: dict[str, str] = {
     "parking_side_yard_stated": "parking side-yard reach stated by the code",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
-    "facade_glass_other_pct": "min. clear glass on every non-street facade",
+    "facade_glass_other_pct": "min. glass on a facade other than the street facade",
+    "window_spacing_ft": "one window at least every so many feet of each floor of each elevation",
     "wall_opening_min_ft": "min. distance from a side or rear lot line for a wall with windows",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_front_share_allowed": "parking allowed in front of building within the frontage share",
@@ -1623,16 +1624,32 @@ _F: tuple[FieldDef, ...] = (
     FieldDef(
         "facade_glass_other_pct",
         "percent",
-        "Clear glass every facade that does not face a street must carry, as "
-        "a share of that facade: Gresham 7.0420(I)(2), \"Clear glass in "
-        "windows and/or doors shall occupy a minimum of 5 percent of all other "
-        "facades\", read as EACH facade (Steph 2026-11-12, rulings.yaml "
-        "2026-11-12-gresham-glass-each-facade). The pod's end walls and back "
-        "wall are such facades; the walls between its homes are not. The "
-        "screen does not size the glass, which any wall can carry: it holds "
-        "that every such wall can have windows at all, i.e. stands at least "
-        "`wall_opening_min_ft` from every side and rear lot line "
-        "(:func:`flats.ingest.quadfit.wall_opening_gap`, FOLLOWUPS 186).",
+        "Glass a facade that does not face a street must carry, as a share of "
+        "that facade, held as each code prints it: Gresham 7.0420(I)(2), "
+        "4.1152 S9(b) and 4.1252 S13(b), 5 percent of each non-street facade "
+        "(Steph 2026-11-12, rulings.yaml 2026-11-12-gresham-glass-each-facade); "
+        "Beaverton 60.05.15.8.A, 30 percent of the ground floor of every "
+        "elevation visible within 200 ft of a street; South Hillsboro "
+        "12.65.710.D.2.b, 8 percent of each side elevation; Gladstone "
+        "17.21.070(3)(a), 40 percent of the ground floor of facades facing "
+        "parking. The pod's end walls and back wall are such facades; the walls "
+        "between its homes are not. The screen does not size the glass, which "
+        "any wall can carry: it holds that every such wall can have windows at "
+        "all, i.e. stands at least `wall_opening_min_ft` from every side and "
+        "rear lot line (:func:`flats.ingest.wall_openings.wall_opening_gap`, "
+        "FOLLOWUPS 186/187).",
+        False,
+    ),
+    FieldDef(
+        "window_spacing_ft",
+        "length_ft",
+        "Windows counted along a wall rather than measured as a share: Oregon "
+        "City South End 17.22.080.A, \"an average of one window every fifteen "
+        "feet of linear elevation on each floor of each elevation\". Every "
+        "elevation, the pod's end walls and back wall with it, must then carry "
+        "windows, so the screen holds what it holds for "
+        "`facade_glass_other_pct`: each such wall stands at least "
+        "`wall_opening_min_ft` from every side and rear lot line (FOLLOWUPS 187).",
         False,
     ),
     FieldDef(
@@ -2167,6 +2184,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # asks for glass on every non-street facade (Gresham 7.0420(I)(2)).
         "wall_opening_min_ft",
         "facade_glass_other_pct",
+        "window_spacing_ft",
         # Answers the height question in the other unit. Required-ness is
         # handled by ALTERNATIVES in the resolver, which reads one as
         # standing in for the other; listed as required here it would be

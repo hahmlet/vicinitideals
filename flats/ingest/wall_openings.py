@@ -156,15 +156,12 @@ def wall_opening_gap(s: Any) -> float | None:
 
 
 def _applies(s: Any) -> float | None:
-    """The no-openings floor where this plan's zone asks for glass on every
-    non-street facade, else None."""
-    from flats.score.screen import _pct
+    """The no-openings floor where this plan's zone asks for glass on the
+    pod's non-street walls (:data:`flats.score.screen.WALL_GLASS_FIELDS`),
+    else None."""
+    from flats.score.screen import wall_glass_floor
 
-    glass = _pct(s.rules, "facade_glass_other_pct")
-    floor = _pct(s.rules, "wall_opening_min_ft")
-    if not glass or floor is None:
-        return None
-    return floor
+    return wall_glass_floor(s.rules)
 
 
 def _screened(s: Any, gap: float | None, *, policy: Any, relief: Any) -> Any:
