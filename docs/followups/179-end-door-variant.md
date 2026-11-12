@@ -29,3 +29,5 @@ Building code (egress window per bedroom, light/air, openings near lot lines)
 not checked.
 
 Note from item 183 (closed 2026-11-12, ../vicinitideals-worktrees/side-wall-openings.findings.md): Oregon allows no windows in a wall under 3 ft from a side/rear lot line (unlimited at 3 ft+). In rel7, 0 greens put a long wall under 3 ft; 160 greens put an END wall under 3 ft (Portland CM2 55, CE 25, Gresham SC 20, CMU 17). If the end-door variant is adopted, those lots cannot carry its end windows -- hold the end wall >= 3 ft from side/rear lines for that variant.
+
+Recount 2026-11-12 for the 25 ft end wall (pod stays 80x25), door ~20 sq ft counted, 36x48 = 12 sq ft: 15% rule -> 7 windows + door at 26 ft tall (650 sf), 5 + door at ~20 ft (500 sf, realistic per lift list); Gresham 17% -> 8 / 6; Wood Village 20% -> 10 / 7; Hillsboro 20% of ground floor -> 4 (12 ft storey) / 3 (~9.75 ft). Fewer windows: 48x60 (20 sf) -> 4 / 3 for the 15% rule; a 6 ft glass slider (~40 sf) counts as ~3 windows. Real height still open (185).
