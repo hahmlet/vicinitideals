@@ -25,6 +25,7 @@ import pytest
 from flats.encode.readiness import readiness_for
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
 
@@ -37,6 +38,11 @@ RESIDENTIAL = ("VLDR-SW", "LDR-SW", "THR-SW")
 BARRED = ("RTI-SW", "IND-SW")
 UNITS = 4
 ACRE = 43560
+
+# 7.0420(G)(1)'s roof plane starts 21 ft up: the 26 ft pod owed 5 ft, the
+# 20 ft pod screened since 2026-11-12 owes none. Computed, not pinned.
+OWED = max(0, DESIGN_HEIGHT_FT - 21)
+
 
 
 @pytest.fixture(scope="module")
@@ -174,7 +180,7 @@ def test_the_deepest_garage_setback_in_the_corpus(gresham: Layer) -> None:
     # 20 in the table, 25 on the ground -- 7.0420(G)(1)'s roof plane. It is the
     # deepest rear yard in the corpus for that reason and not this table's.
     assert held["setback_rear_ft"].before_step_back == 20
-    assert held["setback_rear_ft"].value == 25
+    assert held["setback_rear_ft"].value == 20 + OWED
     moved = {
         f: [(v.value, v.when) for v in held[f].variants if "unit_lots" in v.when]
         for f in (
@@ -228,9 +234,9 @@ def test_the_alley_column_of_the_rear_is_read_in_both_districts(
         assert held.before_step_back == base, zone
         assert held.variants[0].before_step_back == 8, zone
 
-        assert rules.resolve(GRESHAM, zone).values["setback_rear_ft"].value == base + 5
+        assert rules.resolve(GRESHAM, zone).values["setback_rear_ft"].value == base + OWED
         with_alley = rules.resolve(GRESHAM, zone, ("alley_at_rear",))
-        assert with_alley.values["setback_rear_ft"].value == 13, zone
+        assert with_alley.values["setback_rear_ft"].value == 8 + OWED, zone
 
 
 def test_the_tightest_floor_area_ratio_in_the_corpus(gresham: Layer) -> None:

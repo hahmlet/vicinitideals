@@ -30,7 +30,8 @@ height.** :class:`flats.rules.model.Value` says so in as many words -- *"the
 constant it uses is the tallest design rather than a typical one"* -- and
 that is sound encoding, because a lot is checked against one distance and the
 file should not make the screen do arithmetic. It also means those eleven
-numbers are only true of a 26 ft pod. Change the design and they are wrong, and
+numbers are only true of the catalogue's height (26 ft until 2026-11-12, 20 ft
+since). Change the design and they are wrong, and
 nothing in the suite would have noticed until this module existed:
 :func:`derived_at` is the arithmetic, and ``test_height.py`` runs it against
 every one of them at the catalogue's own height so the two can never drift
@@ -420,8 +421,9 @@ class Demand:
 
 
 def screened_design() -> Design:
-    """The tallest design new runs screen -- since 2026-11-08 the only one,
-    pod80x30. Tallest because a taller building owes more."""
+    """The tallest design new runs screen -- since 2026-11-12 the only one,
+    pod80x25@3 (pod80x30 from 2026-11-08). Tallest because a taller building
+    owes more."""
     return max(load_catalog().active(), key=lambda d: (d.height_ft, d.key))
 
 

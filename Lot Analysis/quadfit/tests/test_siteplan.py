@@ -904,7 +904,8 @@ def test_a_gresham_lot_with_an_alley_parks_off_it_across_the_alley_column():
     """GDC Table 4.0131 reads rear 15 ft / with alley 8 ft on the quadplex
     row, 7.0420(G)(1) adds five feet of roof plane off either line for a 26
     ft pod, and 7.0420(B)(1) sends the driveway to the alley. A 100 x 100
-    LDR-5 lot is too shallow for a court with its own aisle behind the pod
+    LDR-5 lot (95 deep for the 20 ft pod, which owes no plane) is too
+    shallow for a court with its own aisle behind the pod
     when the alley line is charged the rear's twenty (28 ft behind the pod;
     the aisle wants 42), and holds that aisle when it is charged the alley
     column's thirteen -- with the thirteen-foot strip, not a lane from the
@@ -921,13 +922,21 @@ def test_a_gresham_lot_with_an_alley_parks_off_it_across_the_alley_column():
     from common import load_rules
     from s5_envelope import build_envelope, lot_setbacks
 
-    W, D = 100.0, 100.0
+    # 20 and 13 for the old 26 ft pod; 15 and 8 for the 20 ft pod screened
+    # since 2026-11-12 (the roof plane starts at 21 ft, so it owes nothing).
+    # The lot is 95 + the plane deep, so the ground between the front line and
+    # each setback line -- 80 ft to the rear's, 87 to the alley column's --
+    # is the ground this test was written on, whatever the pod's height.
+    from common import DESIGN_HEIGHT_FT
+
+    owed = max(0.0, DESIGN_HEIGHT_FT - 21)
+    W, D = 100.0, 95.0 + owed
     lot = box(0.0, 0.0, W, D)
     edges = [[0, 0, W, 0, "F"], [W, 0, W, D, "S"], [W, D, 0, D, "A"], [0, D, 0, 0, "S"]]
     fe, ae = [[0.0, 0.0, W, 0.0]], [[0.0, D, W, D]]
     zr = load_rules().jurisdictions["gresham"].rule_for("LDR-5")
     sb = lot_setbacks(zr, W * D, "A")
-    assert sb["R"] == pytest.approx(20.0) and sb["A"] == pytest.approx(13.0)
+    assert sb["R"] == pytest.approx(15.0 + owed) and sb["A"] == pytest.approx(8.0 + owed)
 
     def plan(alley_setback):
         env = build_envelope(lot, edges, {**sb, "A": alley_setback}, "A")
@@ -944,14 +953,14 @@ def test_a_gresham_lot_with_an_alley_parks_off_it_across_the_alley_column():
     # cover, paved along the row on the lot.
     assert r_rear["parking_area_sqft"] == pytest.approx(8 * 8.5 * 18.5 + 3.0 * 8 * 8.5)
     env_a, r = plan(sb["A"])               # the alley column, roof plane included
-    assert env_a.bounds[3] == pytest.approx(D - 13.0)
+    assert env_a.bounds[3] == pytest.approx(D - sb["A"])
     assert env_a.area > env_r.area
     assert r["site_plan_ok"] is True and r["layout_method"] == "townhome_rear_court_alley"
     assert r["stalls_provided"] == 8
     assert "driveway" not in r["geoms"]
-    assert r["driveway_len_ft"] == pytest.approx(13.0)      # the strip, nothing else
+    assert r["driveway_len_ft"] == pytest.approx(sb["A"])   # the strip, nothing else
     court = r["geoms"]["parking_court"]
-    assert court.bounds[3] == pytest.approx(D - 13.0, abs=0.6)
+    assert court.bounds[3] == pytest.approx(D - sb["A"], abs=0.6)
     assert lot.buffer(0.01).contains(court)
 
 
@@ -1117,7 +1126,11 @@ def test_a_tier_c_lot_is_told_the_setback_its_envelope_was_cut_to():
     gz = rules.jurisdictions["gresham"].rule_for("LDR-5")
     g_rear = float(gz.effective_setback_rear_ft(lot_area_sqft=5000.0))
     plane = g_rear - float(gz.setback_rear_ft)
-    assert plane > 0                                # the roof plane adds to the printed 15
+    # The roof plane adds to the printed 15 what the pod rises above 21 ft:
+    # five for the old 26 ft pod, none for the 20 ft one (2026-11-12).
+    from common import DESIGN_HEIGHT_FT
+
+    assert plane == pytest.approx(max(0.0, DESIGN_HEIGHT_FT - 21))
     g_alley = float(gz.setback_alley_ft) + plane
     assert g_alley < g_rear
     assert s6s_siteplan._alley_setback_for(rules, "gresham", "LDR-5", 5000.0, "A") == g_alley

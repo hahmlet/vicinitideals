@@ -544,7 +544,7 @@
       "max_height_ft": [
         "protected_water_feature"
       ],
-      "min_building_height_ft": [
+      "min_building_height_stories": [
         "protected_water_feature"
       ],
       "min_density_du_per_acre": [
@@ -593,7 +593,7 @@
       "max_height_ft": [
         "protected_water_feature"
       ],
-      "min_building_height_ft": [
+      "min_building_height_stories": [
         "protected_water_feature"
       ],
       "min_density_du_per_acre": [

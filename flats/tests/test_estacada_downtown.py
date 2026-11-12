@@ -151,10 +151,20 @@ def _row(x0: float, y0: float, width: float, depth: float) -> dict:
     )
 
 
+def _built():
+    """The archived pod with its structure stated. D's 17 ft floor
+    (``min_building_height_ft``) is met only as each city measures it
+    (rulings.yaml 2026-11-12-height-measured-per-city), and pod56x36 states
+    no structure, so unstated it would hold every lot here YELLOW with
+    HEIGHT-AS-MEASURED. 24 ft (two 12 ft storeys) is a fixture, not a
+    catalog fact; these tests are about the back-street area, not height."""
+    return pod().model_copy(update={"structure_height_ft": 24.0})
+
+
 def _screen(rules, policies, x0: float, y0: float, width: float, depth: float):
     lot = lot_from_row(_row(x0, y0, width, depth), rules.layers)
     (got,) = screen_lot(
-        lot, [pod()], rules=rules, policy=policies[0], relief=policies[1], step_deg=30.0
+        lot, [_built()], rules=rules, policy=policies[0], relief=policies[1], step_deg=30.0
     )
     return got
 

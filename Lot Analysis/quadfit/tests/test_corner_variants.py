@@ -213,11 +213,15 @@ def test_only_fourteen_reachable_corner_rules_can_move_a_building(corner_variant
     # 17 -> 16 on 2026-11-01: Wilsonville OTR takes the Old Town Design
     # Book's flat 10 ft street side (4.138(.04)A), so its 20%-of-width corner
     # share is gone; R and PDR1-6 keep theirs.
-    assert len(setbacky) == 16, [str(v) for v in setbacky]
+    # 16 -> 14 on 2026-11-12: the screened pod is 20 ft (ruling
+    # 2026-11-12-single-design-80x25-20ft). Canby R-2 and C-1's corner-and-
+    # beside-R-1 rear is held at the building's height, which was 26 against
+    # the printed 20 and is now 20 against 20: the same yard, so no longer a
+    # corner rule that tightens. Canby leaves the set below.
+    assert len(setbacky) == 14, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
         "or/washington/hillsboro", "or/clackamas/tualatin",
-        "or/clackamas/canby",
     }, sorted({v.layer for v in setbacky})
     shares = [v for v in setbacky if getattr(v.alt, "pct", None) is not None]
     assert len(shares) == 7 and {v.field for v in shares} == {"setback_street_side_ft"}

@@ -21,6 +21,7 @@ import pytest
 from flats.encode.readiness import readiness_for
 from flats.provenance.store import ProvenanceStore
 from flats.rules.conditions import condition
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
@@ -312,7 +313,8 @@ def test_the_one_setback_measured_off_the_building_states_its_ratio(
         held = portland.zones["IR"].values[field]
         assert held.per_height_ft == 2, field
         assert held.floor_ft == 10, field
-        assert held.value == 13, field
+        # 13 for the old 26 ft pod; 10 (the floor) for the 20 ft one since 2026-11-12.
+        assert held.value == max(10, DESIGN_HEIGHT_FT / 2), field
 
 
 def test_ci1_is_no_longer_decided_at_the_use_gate(

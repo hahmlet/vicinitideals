@@ -1,6 +1,6 @@
 # Wide pod -- 4 x 20 x 30 ft units, 600 sqft ground each.
 #
-# The one design FLATS screens (Steph, 2026-11-08, rulings.yaml
+# The one design FLATS screened from 2026-11-08 to 2026-11-12 (Steph, 2026-11-08, rulings.yaml
 # 2026-11-08-single-design-80x30): four attached townhomes in a row, each
 # 20 ft wide and 30 ft deep, two storeys, each front door on the home's
 # 20 ft wall, so the building is 80 x 30 with every door along the 80 ft
@@ -9,6 +9,10 @@
 # It replaced pod56x36 and pod80x25, which stay in the catalog as archived so
 # results that name them still read.
 version: 1
+# Archived 2026-11-12 (rulings.yaml 2026-11-12-single-design-80x25-20ft):
+# FLATS screens pod80x25@3 only. Kept loadable because run results name this
+# key (pod80x30@1, every run from 2026-11-08 to rel7).
+status: archived
 label: "Pod 80 x 30 — 4 x 20 ft units"
 typology: townhome_rear_court
 footprint: {width_ft: 80, depth_ft: 30}
@@ -36,7 +40,8 @@ parking:
 delivery:
   method: panelized
 notes: >-
-  The single screened design since 2026-11-08. 20 ft homes put two bedrooms
+  The single screened design from 2026-11-08 until 2026-11-12, when
+  pod80x25@3 replaced it. 20 ft homes put two bedrooms
   side by side; 600 sqft a floor, 1,200 a home. Its 80 ft frontage is the
   binding constraint on most narrow city lots, and its 30 ft depth plus the
   rear court asks 5 ft more of the lot than pod80x25 did.

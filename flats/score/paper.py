@@ -178,9 +178,14 @@ def _height_ok(
     ground storey; one that states none has not met it.
     """
     stated = getattr(design, "ground_story_ft", None)
+    # The floor on the height the building measures where the design states
+    # it (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet); the
+    # ceiling on the overall height, the cautious side.
+    measured = getattr(design, "measured_height_ft", None)
+    floor_on = measured if measured is not None else design.height_ft
     bounds = [
         ceiling is None or design.height_ft <= ceiling,
-        floor is None or design.height_ft >= floor,
+        floor is None or floor_on >= floor,
         storeys is None or float(design.stories) >= storeys,
         ground is None or (stated is not None and stated >= ground),
     ]

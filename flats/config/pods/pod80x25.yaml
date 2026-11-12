@@ -1,45 +1,104 @@
-# Wide/shallow pod — 4 x 20 x 25 ft units, 500 sqft ground each.
+# Wide/shallow pod -- 4 x 20 x 25 ft units, 500 sqft ground each.
 #
-# The other quadfit candidate. Same 2,000 sqft pod area as pod56x36 with the
-# aspect ratio inverted: it needs 24 more feet of frontage but only 25 feet of
-# depth, which is what unlocks shallow lots.
-# Version 2, 2026-09-18: the parking count became three bands and the screen
-# charges the floor -- see pod56x36.yaml.
-version: 2
-# Archived 2026-11-08 (rulings.yaml 2026-11-08-single-design-80x30): FLATS
-# screens pod80x30 only. Kept loadable because run results name this key.
-status: archived
+# The one design FLATS screens (Steph, 2026-11-12, rulings.yaml
+# 2026-11-12-single-design-80x25-20ft): four attached townhomes in a row,
+# each 20 ft wide and 25 ft deep, two storeys, flat roof, each front door on
+# the home's 20 ft wall, so the building is 80 x 25 with every door along
+# the 80 ft face. width_ft is that face, parallel to the front lot line
+# before any rotation. Parking, roof and doors are the 2026-11-08 single-
+# design ruling's, unchanged; only the size and the heights moved.
+#
+# Version 3, 2026-11-12: the same footprint as pod80x25@2 at a new height
+# (20 ft overall, 9 ft 2 in storeys, where @2 was 26 ft with a 12 ft ground
+# storey). A height change is dimensional, so the version moved; @2 stays
+# loadable as pod80x25_v2.yaml because run results name it. It replaced
+# pod80x30@1, archived the same day.
+version: 3
 label: "Pod 80 x 25 — 4 x 20 ft units"
 typology: townhome_rear_court
 footprint: {width_ft: 80, depth_ft: 25}
 units: 4
 stories: 2
-height_ft: 26
-# Steph, 2026-10-01, asked whether the ground floor is at least 12 ft
-# (Tigard TMU's first-storey minimum): "Yes, 12 ft or more." The least
-# stated, not a drawn figure.
-ground_story_ft: 12
+# Steph, 2026-11-12: "Yes: 20x25, 20 ft tall" ("We're gunna be 20ft tall
+# unless we go to a pitched roof"). The overall height to the top of the
+# flat roof.
+height_ft: 20
+# Steph, 2026-11-12: "Each floor is 8' wall with 14" truss for either the
+# ceiling of the ground floor or for the roof of the top floor" -- 8 ft +
+# 14 in = 9 ft 2 in floor to floor, the ground storey and the upper alike,
+# 18 ft 4 in of structure inside the 20 ft. 9 ft 2 in is 9.1667 ft; it is
+# held a hair under (9.1666) so a code minimum of exactly 9 ft 2 in is not
+# claimed met by rounding. This replaces the 12 ft ground storey Steph
+# stated 2026-10-01: a code minimum first-storey height above 9 ft 2 in
+# (Tigard TMU's 12 ft) now misses.
+ground_story_ft: 9.1666
+# Steph, 2026-11-12 (rulings.yaml 2026-11-12-height-measured-per-city):
+# "Different cities measure height differently. Our 8' walls will be
+# secured to the slab and flooring will start on the slab." Two 8 ft walls
+# and two 14 in trusses are 18 ft 4 in of structure above the top of a
+# slab on grade; the 20 ft above is the overall intent, not the height
+# every city's definition finds. 18 ft 4 in is 18.3333 ft, held a hair
+# under because it is a floor under what the building measures. The slab
+# rise, roofing and parapet, stated the same day, follow.
+structure_height_ft: 18.3333
+# Steph, 2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet):
+# "Slab 8" above ground level"; "Roof is ~1" thick after the decking which
+# is already accounted for in the roof truss cassette"; "no parapet for
+# now". On flat ground the pod measures 8 in + 18 ft 4 in + 1 in = 19 ft
+# 1 in, ground to the top of the roof. 19 ft 1 in is 19.08333 ft, held a
+# hair under (19.0833) so a code minimum of exactly 19 ft 1 in is not
+# claimed met by rounding. A code MINIMUM height is tested against this
+# figure: above it is a miss, as a 25 ft minimum is. Maxima, planes and
+# height-scaled setbacks keep testing the 20 ft above (DESIGN_HEIGHT_FT),
+# the cautious side, which also covers a city measuring from the low side
+# of a sloped lot. Revisit if a parapet is added.
+slab_rise_in: 8
+roofing_in: 1
+parapet_in: 0
+measured_height_ft: 19.0833
 # Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
 # this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
 # that sets a minimum pitch or prohibits flat roofs misses on it.
 roof_pitch_in_12: 0
+# Every front door is on the 80 ft face (Steph 2026-11-08, rulings.yaml
+# 2026-11-08-single-design-80x30, standing under 2026-11-12). A code that
+# makes the main entrance face the street then decides whether the
+# building may stand turned, its 25 ft end to the street
+# (entrance_faces_street, FOLLOWUPS 153).
+door_face: width
 parking:
   # The county map's bands: floor charged, target sells, preferred is where
-  # the seat count stops. See pod56x36.yaml.
+  # the seat count stops. Unchanged (see pod56x36.yaml).
   stalls_per_unit: {floor: 1.0, target: 1.5, preferred: 2.0}
   config: rear_court
 delivery:
   method: panelized
 notes: >-
-  Shallow depth leaves more rear yard for the parking court, so it tends to lay
-  out where pod56x36 fits the envelope but cannot seat its stalls. Its 80 ft
-  frontage is the binding constraint on most narrow city lots.
+  The single screened design since 2026-11-12. 20 ft homes put two bedrooms
+  side by side; 500 sqft a floor, 1,000 a home. Its 80 ft frontage is the
+  binding constraint on most narrow city lots; its 25 ft depth leaves more
+  rear yard for the parking court than pod80x30 did, and its 20 ft height
+  clears more ceilings and height planes but misses more height floors.
 assumptions:
-  - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
-     drawing set — confirm before any height-binding result is trusted."
+  - "height_ft 20: the overall height, flat roof (Steph, 2026-11-12,
+     rulings.yaml 2026-11-12-single-design-80x25-20ft). Product intent, not
+     a drawing set."
+  - "ground_story_ft 9.1666: each storey, ground and upper, is 9 ft 2 in
+     floor to floor -- an 8 ft wall plus a 14 in truss (Steph, 2026-11-12).
+     Product intent, not a drawing set."
+  - "structure_height_ft 18.3333: two 8 ft walls on the slab and two 14 in
+     trusses, 18 ft 4 in above the top of the slab (Steph, 2026-11-12,
+     rulings.yaml 2026-11-12-height-measured-per-city). Slab rise, roofing
+     and parapet stated the same day (next line). Product intent, not a
+     drawing set."
+  - "measured_height_ft 19.0833 (slab_rise_in 8, roofing_in 1, parapet_in 0):
+     19 ft 1 in from the ground to the top of the roof on flat ground (Steph,
+     2026-11-12, rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet).
+     Product intent, not a drawing set."
   - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
      intent, not a drawing set."
-  - "ground_story_ft 12: the ground storey, floor to the floor above, is 12 ft
-     or more (Steph, 2026-10-01). The least stated, not from a drawing set."
+  - "footprint 80 x 25 and the door on each home's 20 ft wall: Steph,
+     2026-11-08 (doors) and 2026-11-12 (size). Product intent, not a drawing
+     set."
   - "Delivery method is the product intent (factory-built); module dimensions
      and crane needs are unspecified until the set-access stage (Phase 4)."

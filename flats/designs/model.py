@@ -323,7 +323,54 @@ class Design(BaseModel):
     #: alone (Tigard TMU, "First story 12 feet (min.)"). ``None`` is "not
     #: stated", and a screen asking it leaves the check unrun. Adding it
     #: stated a fact about an unchanged building, so no version moved.
+    #: Floor to floor: a code that states its ground floor floor to CEILING
+    #: (clear height) asks more of the building than this figure, so this
+    #: field may hold such a minimum only where the figure misses anyway
+    #: (pod80x25@3: 9 ft 2 in floor to floor, about 8 ft clear).
     ground_story_ft: float | None = Field(default=None, gt=0)
+    #: The building's structure alone, top of slab to top of the top
+    #: storey's framing, where the product states it: the least the building
+    #: can measure above adjoining grade under any city's definition of
+    #: height, flat ground and no parapet. ``height_ft`` is the overall
+    #: figure; between the two sit the slab's rise above the ground, the
+    #: roofing and any parapet, which each city's definition counts or does
+    #: not (Steph 2026-11-12, rulings.yaml 2026-11-12-height-measured-per-
+    #: city: "Different cities measure height differently. Our 8' walls will
+    #: be secured to the slab and flooring will start on the slab"). Read
+    #: only by a code that sets a MINIMUM building height: a floor above this
+    #: figure is not shown as met by the overall one
+    #: (:func:`flats.score.screen.height_floor_unshown`). ``None`` is "not
+    #: stated", and every floor the overall figure clears is then unshown.
+    #: Adding it stated a fact about an unchanged building, so no version
+    #: moved.
+    structure_height_ft: float | None = Field(default=None, gt=0)
+    #: What lies between the structure and the ground and above it, as the
+    #: product states them, in inches (stored as printed): the top of the
+    #: slab's rise above the adjoining ground, the roofing above the truss
+    #: cassette, and any parapet. Steph 2026-11-12 (rulings.yaml
+    #: 2026-11-12-pod-height-19ft-1in-no-parapet): "Slab 8" above ground
+    #: level"; "Roof is ~1" thick after the decking which is already
+    #: accounted for in the roof truss cassette"; "no parapet for now".
+    #: Recorded so :attr:`measured_height_ft` can be checked against its
+    #: parts; ``None`` is "not stated".
+    slab_rise_in: float | None = Field(default=None, ge=0)
+    roofing_in: float | None = Field(default=None, ge=0)
+    parapet_in: float | None = Field(default=None, ge=0)
+    #: The building as a city measures it on flat ground, adjoining grade to
+    #: the top of the roof or parapet: slab rise + structure + roofing +
+    #: parapet (pod80x25@3: 8 in + 18 ft 4 in + 1 in + 0 = 19 ft 1 in, Steph
+    #: 2026-11-12, rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet).
+    #: Read only by a code that sets a MINIMUM building height: the floor is
+    #: tested against this figure where it is stated, so a minimum above it
+    #: is a miss (the same as a 25 ft minimum) and one at or below it is met.
+    #: Everything that grows with height -- maxima, planes, step-backs,
+    #: height-scaled setbacks -- keeps testing ``height_ft`` (the taller, so
+    #: the cautious side, which also covers a city measuring from the low
+    #: side of a sloped lot). ``None`` is "not stated", and a floor is then
+    #: tested on ``height_ft`` and held by ``structure_height_ft``
+    #: (:func:`flats.score.screen.height_floor_unshown`). Adding it stated a
+    #: fact about an unchanged building, so no version moved.
+    measured_height_ft: float | None = Field(default=None, gt=0)
     #: The primary roof's pitch as rise in twelve of run; 0 is a flat roof.
     #: Read only by a code that sets a floor under it (Fairview 19.145.040
     #: "no less than 4:12", Clackamas ZDO Table 315-3 "Flat roofs are
@@ -332,8 +379,9 @@ class Design(BaseModel):
     #: moved.
     roof_pitch_in_12: float | None = Field(default=None, ge=0)
     #: Which face carries every front door: ``width`` is the face parallel
-    #: to the front lot line before any rotation (pod80x30: each home's door
-    #: on its 20 ft wall, all four along the 80 ft face; Steph 2026-11-08).
+    #: to the front lot line before any rotation (pod80x25@3, as pod80x30
+    #: before it: each home's door on its 20 ft wall, all four along the 80 ft
+    #: face; Steph 2026-11-08).
     #: Read only by a code's main-entrance standard
     #: (``entrance_faces_street``, FOLLOWUPS 153), which may bar the
     #: building turned with its doors to a side yard. ``None`` is "not
@@ -365,7 +413,36 @@ class Design(BaseModel):
                 f"ground_story_ft {self.ground_story_ft} is taller than the "
                 f"building ({self.height_ft} ft)"
             )
+        if self.structure_height_ft is not None and self.structure_height_ft > self.height_ft:
+            raise ValueError(
+                f"structure_height_ft {self.structure_height_ft} is taller than the "
+                f"building ({self.height_ft} ft)"
+            )
+        if self.measured_height_ft is not None:
+            if self.measured_height_ft > self.height_ft:
+                raise ValueError(
+                    f"measured_height_ft {self.measured_height_ft} is taller than the "
+                    f"building ({self.height_ft} ft)"
+                )
+            parts = (self.structure_height_ft, self.slab_rise_in, self.roofing_in, self.parapet_in)
+            if all(p is not None for p in parts):
+                total = self.structure_height_ft + (
+                    self.slab_rise_in + self.roofing_in + self.parapet_in
+                ) / 12
+                if abs(total - self.measured_height_ft) > 1e-3:
+                    raise ValueError(
+                        f"measured_height_ft {self.measured_height_ft} is not its parts "
+                        f"({total:.4f} ft: structure + slab rise + roofing + parapet)"
+                    )
         return self
+
+    @property
+    def min_height_measure_ft(self) -> float:
+        """The height a code MINIMUM building height is tested against: the
+        measured height where stated, else the overall ``height_ft``."""
+        if self.measured_height_ft is not None:
+            return self.measured_height_ft
+        return self.height_ft
 
     @property
     def key(self) -> str:

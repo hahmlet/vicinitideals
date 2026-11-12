@@ -342,6 +342,22 @@ CLOSER_LOOK_SECOND_APPROACH = "CLOSER_LOOK_SECOND_APPROACH"
 #: ``2026-11-10-tigard-cornice-yellow``): YELLOW with flag ROOF-CORNICE, a
 #: design detail to confirm -- never GREEN, not RED on this alone.
 CLOSER_LOOK_ROOF_CORNICE = "CLOSER_LOOK_ROOF_CORNICE"
+#: A MINIMUM building height the pod meets on its overall figure but not on
+#: its structure alone. Steph 2026-11-12 (rulings.yaml
+#: ``2026-11-12-height-measured-per-city``): "Different cities measure height
+#: differently. Our 8' walls will be secured to the slab and flooring will
+#: start on the slab" -- 18 ft 4 in of structure, then a slab rise, roofing
+#: and any parapet nobody has stated, measured from whichever grade to
+#: whichever top the city's own definition names. A 20 ft floor (Tualatin
+#: MUC, Tigard MU-CBD, Washington County TO:BUS, Clackamas SCMU) is not shown
+#: met by a building about 19 ft tall without a parapet: YELLOW with flag
+#: HEIGHT-AS-MEASURED, a design fact to confirm -- never GREEN, never RED on
+#: this alone (the same route as ROOF-CORNICE).
+#: Since the same day's 2026-11-12-pod-height-19ft-1in-no-parapet, a design
+#: that states its measured height (pod80x25@3: 19 ft 1 in) is tested on it
+#: directly and those 20 ft floors are misses; this hold reaches only a
+#: design that states no measured height.
+CLOSER_LOOK_HEIGHT_AS_MEASURED = "CLOSER_LOOK_HEIGHT_AS_MEASURED"
 SIDE_YARD_PARKING_SILENT = (
     "The code neither allows nor forbids parking in the side yard; "
     "see rulings.yaml 2026-11-05-side-yard-parking-silent-codes."
@@ -1971,9 +1987,15 @@ def _checks(
     # single-storey box off a main street, so it is a standard about this
     # building and not about its neighbours. Both catalogued pods clear every
     # instance in the corpus; a one-storey design would not.
+    # 2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet):
+    # the floor is tested against the height the building measures (19 ft
+    # 1 in for pod80x25@3: 8 in slab, 18 ft 4 in structure, 1 in roofing, no
+    # parapet) where the design states it, so a 20 ft minimum is missed as a
+    # 25 ft one is. The ceiling above stays on the overall ``height_ft``
+    # (DESIGN_HEIGHT_FT), the cautious side.
     check(
         "min_height_ft",
-        design.height_ft,
+        design.min_height_measure_ft,
         rules.get("min_building_height_ft"),
         is_maximum=False,
     )
@@ -2326,6 +2348,33 @@ def cornice_owed(rules: ZoneResolution, design: Design) -> float | None:
     if pitch is not None and pitch > 0:
         return None
     return float(need)
+
+
+def height_floor_unshown(rules: ZoneResolution, design: Design) -> float | None:
+    """The minimum building height, feet, the design clears on its overall
+    ``height_ft`` but not on its ``structure_height_ft`` -- the floor a city's
+    own way of measuring could still find the building under. None where the
+    code states no floor, where the design misses it outright (the
+    ``min_height_ft`` check says so), or where the structure alone clears it.
+    A design that states no structure has shown no floor met but by its
+    overall figure, so every floor that figure clears is unshown.
+
+    2026-11-12 (rulings.yaml 2026-11-12-pod-height-19ft-1in-no-parapet): a
+    design that states its ``measured_height_ft`` is tested on it by the
+    ``min_height_ft`` check itself, met or missed, and is never held here.
+    The hold remains for a design that states no measured height."""
+    if design.measured_height_ft is not None:
+        return None
+    need = rules.get("min_building_height_ft")
+    if need is None or isinstance(need, bool):
+        return None
+    need = float(need)
+    if design.height_ft < need:
+        return None
+    shown = design.structure_height_ft
+    if shown is not None and shown >= need:
+        return None
+    return need
 
 
 def approaches_missing(rules: ZoneResolution, design: Design) -> int:
@@ -3741,6 +3790,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
     if cornice_owed(rules, design) is not None:
         closer = (*closer, CLOSER_LOOK_ROOF_CORNICE)
+    if height_floor_unshown(rules, design) is not None:
+        closer = (*closer, CLOSER_LOOK_HEIGHT_AS_MEASURED)
     if parking_setback_doubt:
         closer = (*closer, PARKING_SETBACK_DOUBT)
     if stated_fit_fails:
@@ -4663,6 +4714,14 @@ def _account(
             bounds=(0.0, cornice),
             source=_cite(rules, "flat_roof_cornice_min_in"),
         )
+    floor_unshown = height_floor_unshown(rules, design)
+    if floor_unshown is not None:
+        flag(
+            "HEIGHT-AS-MEASURED",
+            CLOSER_LOOK_HEIGHT_AS_MEASURED,
+            bounds=(float(design.structure_height_ft or 0.0), floor_unshown),
+            source=_cite(rules, "min_building_height_ft"),
+        )
     missing = approaches_missing(rules, design)
     if missing:
         flag(
@@ -4794,6 +4853,7 @@ __all__ = [
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_ROOF_CORNICE",
+    "CLOSER_LOOK_HEIGHT_AS_MEASURED",
     "CLOSER_LOOK_STEEP_COARSE",
     "CLOSER_LOOK_ENTRANCE_SIDE",
     "CLOSER_LOOK_REVIEW_CONDITIONS",
