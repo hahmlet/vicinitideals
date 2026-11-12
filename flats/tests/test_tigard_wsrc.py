@@ -219,7 +219,10 @@ def test_mur_is_red_in_the_apartment_subdistrict_and_open_outside_it(
         .representative_point()
     )
     outside = _at(rules, policies, "MUR", wsrc_only)
-    assert outside.signed.colour is Colour.green
+    # 2026-11-12 (rel7 release): ruling 2026-11-10-tigard-cornice-yellow makes a
+    # Tigard flat-roof GREEN YELLOW (cornice flag), so "open" now reads yellow.
+    assert outside.signed.colour is Colour.yellow
+    assert "CLOSER_LOOK_ROOF_CORNICE" in repr(outside.signed)
 
 
 def test_muc_is_red_in_wsrc_and_open_outside_it(rules, policies) -> None:
@@ -228,7 +231,10 @@ def test_muc_is_red_in_wsrc_and_open_outside_it(rules, policies) -> None:
     assert "use" in {b.check for b in inside.signed.binds}
 
     outside = _screen(rules, policies, _row("MUC", *FAR))
-    assert outside.signed.colour is Colour.green
+    # 2026-11-12 (rel7 release): ruling 2026-11-10-tigard-cornice-yellow makes a
+    # Tigard flat-roof GREEN YELLOW (cornice flag), so "open" now reads yellow.
+    assert outside.signed.colour is Colour.yellow
+    assert "CLOSER_LOOK_ROOF_CORNICE" in repr(outside.signed)
 
 
 def test_a_large_bridgeport_lot_is_not_green(rules, policies) -> None:
@@ -245,4 +251,6 @@ def test_a_large_bridgeport_lot_is_not_green(rules, policies) -> None:
     assert got.signed.triage.value != "green"
     elsewhere = _screen(rules, policies, _row("MUC", FAR[0], FAR[1], width=w, depth=d))
     assert "min_density_du_per_acre" not in {c.check for c in elsewhere.signed.checks}
-    assert elsewhere.signed.triage.value == "green"
+    # 2026-11-12 (rel7 release): yellow for the cornice ruling, nothing else.
+    assert elsewhere.signed.triage.value == "yellow"
+    assert "CLOSER_LOOK_ROOF_CORNICE" in repr(elsewhere.signed)

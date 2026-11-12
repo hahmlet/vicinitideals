@@ -80,6 +80,10 @@ def test_the_quotes_say_planted_and_name_the_zones(corpus) -> None:
 # --- through the bridge -------------------------------------------------------
 
 X0, Y0 = 7_650_000.0, 670_000.0
+# 2026-11-12 (rel7 release): 56 x 130, was 60 x 130. After the Portland 9 ft
+# driveway ruling the pod fits the 60 ft lot even with the strip, so the strip
+# stopped biting there; at 56 ft it still turns GREEN (strip lifted) into RED.
+W, D = 56.0, 130.0
 QUIET = {
     "constrained_sites_overlay": False,
     "pdx_johnson_creek_impervious": False,
@@ -99,7 +103,7 @@ def _corner(rear_zone: str | None, layers):
     30-degree step when the strip is lifted (the control below)."""
     from flats.ingest.quadfit import lot_from_row
 
-    w, d = 60.0, 130.0
+    w, d = W, D
     edges = [
         [X0, Y0, X0 + w, Y0, "F"],
         [X0 + w, Y0, X0 + w, Y0 + d, "F"],

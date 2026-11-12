@@ -515,6 +515,11 @@ OPEN = {
     "or/multnomah/_unincorporated 39.4862 -> 39.3140",
     "or/multnomah/_unincorporated 39.4878 -> 39.3140",
     "or/multnomah/_unincorporated 39.4990 -> 39.3140",
+    # 2026-11-12 (rel7 release): Hillsboro 12.61.800 and 12.62.400 each say the
+    # standard "does not apply to accessory dwelling units created pursuant to
+    # 12.40.100.C.1". The pod is not an ADU, so the pointer is set aside, unread.
+    "or/washington/hillsboro 12.61.800 -> 12.40.100",
+    "or/washington/hillsboro 12.62.400 -> 12.40.100",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
