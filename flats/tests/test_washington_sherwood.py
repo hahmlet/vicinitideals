@@ -35,6 +35,7 @@ from __future__ import annotations
 import pytest
 
 from flats.provenance.store import ProvenanceStore
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer, Status
 
@@ -158,8 +159,9 @@ def test_the_side_yard_plane_moves_the_five_foot_side_to_six(
     assert side.before_step_back == 5
     assert side.step_back_at_ft == 24
     assert side.step_back_rise == 2
-    # 26 ft of pod, two feet over 24, a half foot further in for each.
-    assert side.value == 6
+    # The 26 ft pod was two feet over 24, a half foot further in for each (6).
+    # The 20 ft pod screened since 2026-11-12 is under 24, so the side stays 5.
+    assert side.value == 5 + max(0, DESIGN_HEIGHT_FT - 24) / 2
     assert "16.68.030 B.1" in side.step_back_cite
     assert "one-half ( 1/2) foot for every one (1) foot" in _text(
         side.step_back_quote

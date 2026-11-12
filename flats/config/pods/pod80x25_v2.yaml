@@ -1,0 +1,50 @@
+# Wide/shallow pod — 4 x 20 x 25 ft units, 500 sqft ground each.
+#
+# The other quadfit candidate. Same 2,000 sqft pod area as pod56x36 with the
+# aspect ratio inverted: it needs 24 more feet of frontage but only 25 feet of
+# depth, which is what unlocks shallow lots.
+# Version 2, 2026-09-18: the parking count became three bands and the screen
+# charges the floor -- see pod56x36.yaml.
+# The id is stated because the file is no longer named for it: version 3
+# (pod80x25.yaml, 2026-11-12) took the file name when the height changed.
+id: pod80x25
+version: 2
+# Archived 2026-11-08 (rulings.yaml 2026-11-08-single-design-80x30): FLATS
+# screens pod80x30 only. Kept loadable because run results name this key
+# (pod80x25@2). Superseded 2026-11-12 by pod80x25@3, the same footprint at
+# 20 ft (rulings.yaml 2026-11-12-single-design-80x25-20ft).
+status: archived
+label: "Pod 80 x 25 — 4 x 20 ft units"
+typology: townhome_rear_court
+footprint: {width_ft: 80, depth_ft: 25}
+units: 4
+stories: 2
+height_ft: 26
+# Steph, 2026-10-01, asked whether the ground floor is at least 12 ft
+# (Tigard TMU's first-storey minimum): "Yes, 12 ft or more." The least
+# stated, not a drawn figure.
+ground_story_ft: 12
+# Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
+# this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
+# that sets a minimum pitch or prohibits flat roofs misses on it.
+roof_pitch_in_12: 0
+parking:
+  # The county map's bands: floor charged, target sells, preferred is where
+  # the seat count stops. See pod56x36.yaml.
+  stalls_per_unit: {floor: 1.0, target: 1.5, preferred: 2.0}
+  config: rear_court
+delivery:
+  method: panelized
+notes: >-
+  Shallow depth leaves more rear yard for the parking court, so it tends to lay
+  out where pod56x36 fits the envelope but cannot seat its stalls. Its 80 ft
+  frontage is the binding constraint on most narrow city lots.
+assumptions:
+  - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
+     drawing set — confirm before any height-binding result is trusted."
+  - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
+     intent, not a drawing set."
+  - "ground_story_ft 12: the ground storey, floor to the floor above, is 12 ft
+     or more (Steph, 2026-10-01). The least stated, not from a drawing set."
+  - "Delivery method is the product intent (factory-built); module dimensions
+     and crane needs are unspecified until the set-access stage (Phase 4)."

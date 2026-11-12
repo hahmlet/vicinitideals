@@ -323,6 +323,10 @@ class Design(BaseModel):
     #: alone (Tigard TMU, "First story 12 feet (min.)"). ``None`` is "not
     #: stated", and a screen asking it leaves the check unrun. Adding it
     #: stated a fact about an unchanged building, so no version moved.
+    #: Floor to floor: a code that states its ground floor floor to CEILING
+    #: (clear height) asks more of the building than this figure, so this
+    #: field may hold such a minimum only where the figure misses anyway
+    #: (pod80x25@3: 9 ft 2 in floor to floor, about 8 ft clear).
     ground_story_ft: float | None = Field(default=None, gt=0)
     #: The primary roof's pitch as rise in twelve of run; 0 is a flat roof.
     #: Read only by a code that sets a floor under it (Fairview 19.145.040
@@ -332,8 +336,9 @@ class Design(BaseModel):
     #: moved.
     roof_pitch_in_12: float | None = Field(default=None, ge=0)
     #: Which face carries every front door: ``width`` is the face parallel
-    #: to the front lot line before any rotation (pod80x30: each home's door
-    #: on its 20 ft wall, all four along the 80 ft face; Steph 2026-11-08).
+    #: to the front lot line before any rotation (pod80x25@3, as pod80x30
+    #: before it: each home's door on its 20 ft wall, all four along the 80 ft
+    #: face; Steph 2026-11-08).
     #: Read only by a code's main-entrance standard
     #: (``entrance_faces_street``, FOLLOWUPS 153), which may bar the
     #: building turned with its doors to a side yard. ``None`` is "not

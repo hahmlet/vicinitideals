@@ -6,9 +6,10 @@ single-dwelling zones and the three county pockets that borrow the same
 chapter. Both ends of Table 110-4's height row were encoded -- RF at 30 and
 R2.5 at 35 -- and the four columns between them were not.
 
-Every pod in the catalog is 26 feet, so 30 clears with four feet of slack and
-25 does not clear at all. That is the whole reason these numbers are worth
-asserting rather than assuming: one of them is a real failure.
+Every pod in the catalog was 26 feet, so 30 cleared with four feet of slack and
+25 did not clear at all. Since 2026-11-12 (ruling
+2026-11-12-single-design-80x25-20ft) the one screened pod is 20 feet: 25 now
+clears by five and 30 by ten. The archived designs stay 26 and stay loadable.
 """
 
 from __future__ import annotations
@@ -31,10 +32,11 @@ def rules() -> RuleSet:
 
 
 def test_the_pod_is_shorter_than_every_ceiling_but_one() -> None:
-    """Which is what makes the exception worth encoding and the rest worth
-    getting right: at 26 feet the margin against 30 is four feet, and a zone
-    read one column across would have been read as 35."""
-    assert {design.height_ft for design in load_catalog()} == {26.0}
+    """The archived designs are 26 feet; the screened one is 20 (ruling
+    2026-11-12-single-design-80x25-20ft). Updated 2026-11-12: the catalog
+    used to hold one height, 26."""
+    assert {design.height_ft for design in load_catalog()} == {20.0, 26.0}
+    assert {design.height_ft for design in load_catalog().active()} == {20.0}
 
 
 def test_table_110_4_states_one_height_for_five_of_its_six_columns(
@@ -89,13 +91,14 @@ def test_the_countys_own_zones_are_five_feet_looser(rules: RuleSet) -> None:
     assert rules.resolve(COUNTY, "RR").get("max_height_ft") == 35
 
 
-def test_a_flag_lot_in_lr_7_is_the_one_lot_the_pod_is_too_tall_for(
+def test_a_flag_lot_in_lr_7_holds_the_pod_to_twenty_five_feet(
     rules: RuleSet,
 ) -> None:
     """MCC 39.4862 exception (4): the ceiling is 25 feet for "a single family,
     duplex or multiplex dwelling on a flag lot or a lot having sole access
-    from an accessway, private drive or easement". The pod is a multiplex and
-    it is 26 feet, so this is not a margin -- it is a miss.
+    from an accessway, private drive or easement". The pod is a multiplex. At
+    26 feet this was a miss; the screened pod is 20 feet since 2026-11-12,
+    so it now clears by five, and the archived 26 ft designs still miss.
 
     Encoded as a variant rather than as the base, because the exception
     reaches flag lots and not the district. The other half of its trigger --
@@ -109,7 +112,12 @@ def test_a_flag_lot_in_lr_7_is_the_one_lot_the_pod_is_too_tall_for(
 
     assert ordinary.get("max_height_ft") == 35
     assert flag.get("max_height_ft") == 25
-    assert all(design.height_ft > 25 for design in load_catalog())
+    assert all(design.height_ft <= 20 for design in load_catalog().active())
+    assert all(
+        design.height_ft > 25
+        for design in load_catalog()
+        if design.status.value == "archived"
+    )
 
 
 GRESHAM = "or/multnomah/gresham"
@@ -239,8 +247,8 @@ LAKE_OSWEGO = "or/clackamas/lake-oswego"
 def test_lake_oswego_leaves_the_pod_two_feet(rules: RuleSet) -> None:
     """This city splits its districts across three dimensional tables and
     this layer holds one zone from each band. All three print the same base
-    height on a flat lot -- 28 feet -- so the pod's 26 clears by two, the
-    tightest margin any standard in this corpus leaves it.
+    height on a flat lot -- 28 feet -- so the screened pod's 20 clears by
+    eight (the archived 26 ft designs cleared by two; updated 2026-11-12).
 
     The two rows under Flat Lot are not looser numbers for the same measure.
     "Lot with Sloping Topography" sets a plane 28 ft above the highest natural
@@ -253,7 +261,7 @@ def test_lake_oswego_leaves_the_pod_two_feet(rules: RuleSet) -> None:
         for zone in ("R-0", "R-3", "R-5", "R-7.5")
     } == {"R-0": 28, "R-3": 28, "R-5": 28, "R-7.5": 28}
 
-    assert all(28 - design.height_ft == 2 for design in load_catalog())
+    assert all(28 - design.height_ft == 8 for design in load_catalog().active())
 
 
 def test_each_lake_oswego_height_cites_the_table_that_governs_its_band(

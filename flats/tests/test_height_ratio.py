@@ -71,12 +71,13 @@ def _somewhere(root: Path, body: str) -> Path:
     return root
 
 
-def test_one_foot_for_every_two_of_a_twenty_six_foot_pod_is_thirteen() -> None:
+def test_one_foot_for_every_two_of_a_twenty_foot_pod_is_ten() -> None:
+    # 2026-11-12: the pod is 20 ft (was 26, which owed 13).
     held = load_rules()[PORTLAND].zones["IR"].values["setback_side_ft"]
 
     assert held.per_height_ft == 2
     assert held.floor_ft == 10
-    assert held.value == DESIGN_HEIGHT_FT / 2 == 13
+    assert held.value == max(DESIGN_HEIGHT_FT / 2, held.floor_ft) == 10
 
 
 def test_the_floor_is_a_maximum_against_the_ratio_not_a_substitute() -> None:
@@ -88,9 +89,13 @@ def test_the_floor_is_a_maximum_against_the_ratio_not_a_substitute() -> None:
     encoding the answer rather than the rule would be right until it was not.
     """
     held = load_rules()[PORTLAND].zones["IR"].values["setback_side_ft"]
-    assert held.value == 13
-    assert held.value > held.floor_ft
-    assert DESIGN_HEIGHT_FT / held.per_height_ft > held.floor_ft
+    # 2026-11-12: at 20 ft the ratio and the floor meet (10 and 10); a 26 ft
+    # pod owed 13 by the ratio. A taller pod moves it, a shorter one cannot.
+    assert held.value == 10
+    assert held.value == held.floor_ft
+    assert DESIGN_HEIGHT_FT / held.per_height_ft == held.floor_ft
+    taller = DESIGN_HEIGHT_FT + 6
+    assert max(taller / held.per_height_ft, held.floor_ft) == 13
 
 
 def test_the_merged_cell_makes_all_three_yards_one_standard() -> None:
@@ -103,7 +108,7 @@ def test_the_merged_cell_makes_all_three_yards_one_standard() -> None:
     rules = RuleSet(load_rules())
     res = rules.resolve(PORTLAND, "IR", POD)
 
-    assert {res.values[f].value for f in YARDS} == {13}
+    assert {res.values[f].value for f in YARDS} == {10}  # 13 at 26 ft
     assert res.missing_required == ()
 
     ci2 = rules.resolve(PORTLAND, "CI2", POD)
@@ -140,7 +145,7 @@ def test_the_frontage_that_must_be_built_up_to_the_street_owes_no_setback() -> N
     assert CONDITIONS["on_transit_street"].assume is None
 
     rules = RuleSet(load_rules())
-    assert rules.resolve(PORTLAND, "IR", POD).values["setback_front_ft"].value == 13
+    assert rules.resolve(PORTLAND, "IR", POD).values["setback_front_ft"].value == 10  # 13 at 26 ft (2026-11-12: the pod is 20)
 
     on_a_transit_street = rules.resolve(PORTLAND, "IR", (*POD, "on_transit_street"))
     assert "setback_front_ft" not in on_a_transit_street.values
@@ -167,7 +172,7 @@ def test_the_note_governs_the_maximum_too_or_the_zone_is_unbuildable() -> None:
     rules = RuleSet(load_rules())
 
     ordinary = rules.resolve(PORTLAND, "IR", POD)
-    assert ordinary.values["setback_front_ft"].value == 13
+    assert ordinary.values["setback_front_ft"].value == 10  # 13 at 26 ft
     assert "setback_front_max_ft" not in ordinary.values
 
     on_a_transit_street = rules.resolve(PORTLAND, "IR", (*POD, "on_transit_street"))
@@ -260,7 +265,10 @@ def test_the_constant_is_the_tallest_thing_in_the_catalog() -> None:
     design is taller, every height-proportional setback in the corpus is
     understated and nothing else would say so.
     """
-    tallest = max(d.height_ft for d in load_catalog())
+    # 2026-11-12: the active designs, the ones a run screens. Archived
+    # entries (pod80x30@1 and pod80x25@2 at 26 ft) stay loadable so old
+    # results read, and are never screened, so they owe no setback.
+    tallest = max(d.height_ft for d in load_catalog().active())
     assert tallest == DESIGN_HEIGHT_FT, (
         f"catalog now holds a {tallest} ft design; DESIGN_HEIGHT_FT is "
         f"{DESIGN_HEIGHT_FT} and every per_height_ft setback is understated"

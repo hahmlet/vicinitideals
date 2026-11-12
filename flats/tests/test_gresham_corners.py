@@ -15,12 +15,18 @@ from __future__ import annotations
 import pytest
 
 from flats.rules.loader import load_rules
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.rules.resolver import RuleSet
 
 pytestmark = pytest.mark.unit
 
 GRESHAM = "or/multnomah/gresham"
 ZONES = ("LDR-5", "LDR-7", "TR", "TLDR", "MDR-12", "MDR-24")
+
+# 7.0420(G)(1)'s roof plane starts 21 ft up: the 26 ft pod owed 5 ft, the
+# 20 ft pod screened since 2026-11-12 owes none. Computed, not pinned.
+OWED = max(0, DESIGN_HEIGHT_FT - 21)
+
 
 
 @pytest.fixture(scope="module")
@@ -243,7 +249,7 @@ def test_pleasant_valley_reads_its_last_three_columns(rules: RuleSet) -> None:
     # ft box five feet off whichever rear setback applies. See test_step_back.
     held = rules.layers[GRESHAM].zones["LDR-PV"].values["setback_rear_ft"]
     assert held.variants[0].before_step_back == 8
-    assert alley.values["setback_rear_ft"].value == 13
+    assert alley.values["setback_rear_ft"].value == 8 + OWED
 
 
 def test_no_plan_district_configuration_is_ambiguous(rules: RuleSet) -> None:

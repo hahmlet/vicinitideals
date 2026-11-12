@@ -338,14 +338,17 @@ def test_the_declared_planes_derive_the_corpus_figure() -> None:
         zr = rule("gresham", zone)
         assert zr.setback_rear_ft == printed, "the printed figure must not move"
         assert zr.step_back_rear is not None and zr.step_back_rear.height_ft == 21
-        assert zr.effective_setback_rear_ft() == printed + (DESIGN_HEIGHT_FT - 21)
+        assert zr.effective_setback_rear_ft() == printed + max(0, DESIGN_HEIGHT_FT - 21)  # 2026-11-12: 20 ft pod, under the plane
         # A building short enough to fit under the plane owes nothing.
         assert zr.effective_setback_rear_ft(21) == printed
         assert zr.effective_setback_rear_ft(12) == printed
 
     # Milwaukie: the same 1:1 plane written as 45 degrees, starting at the
     # required yard rather than the lot line (MMC 19.200).
-    for zone, at_ft, effective in (("R-MD", 20, 11), ("R-HD", 25, 6)):
+    # 2026-11-12: a 20 ft pod is at or under both planes (a 26 ft one stood
+    # at 11 and 6).
+    for zone, at_ft, effective in (("R-MD", 20, 5 + max(0, DESIGN_HEIGHT_FT - 20)),
+                                   ("R-HD", 25, 5 + max(0, DESIGN_HEIGHT_FT - 25))):
         zr = rule("milwaukie", zone)
         assert zr.setback_side_ft == 5, "the printed figure must not move"
         sb = zr.step_back_side

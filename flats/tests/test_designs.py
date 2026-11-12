@@ -274,35 +274,52 @@ def test_duplicate_key_in_the_catalog_constructor_is_refused() -> None:
 def test_shipped_catalog_loads() -> None:
     cat = load_catalog()
 
-    assert {d.key for d in cat} == {"pod56x36@2", "pod80x25@2", "pod80x30@1"}
+    assert {d.key for d in cat} == {"pod56x36@2", "pod80x25@2", "pod80x25@3", "pod80x30@1"}
     assert all(d.typology is Typology.townhome_rear_court for d in cat)
-    # Steph, 2026-11-08 (rulings.yaml 2026-11-08-single-design-80x30): one
-    # design is screened; the two it replaced stay loadable, archived.
-    assert {d.key for d in cat if d.status is DesignStatus.archived} == {"pod56x36@2", "pod80x25@2"}
+    # Steph, 2026-11-12 (rulings.yaml 2026-11-12-single-design-80x25-20ft):
+    # one design is screened, pod80x25@3; everything it replaced stays
+    # loadable, archived, because run results name it.
+    assert {d.key for d in cat if d.status is DesignStatus.archived} == {
+        "pod56x36@2", "pod80x25@2", "pod80x30@1"
+    }
 
 
-def test_the_screen_runs_exactly_one_design_80_by_30() -> None:
-    # 4 homes x 20 ft wide x 30 ft deep, two storeys, doors on the 80 ft face
-    # (width_ft is the face parallel to the front lot line).
+def test_the_screen_runs_exactly_one_design_80_by_25() -> None:
+    # 4 homes x 20 ft wide x 25 ft deep, two storeys, doors on the 80 ft face
+    # (width_ft is the face parallel to the front lot line). Steph 2026-11-12.
     (only,) = load_catalog().active()
 
-    assert only.key == "pod80x30@1"
-    assert (only.footprint.width_ft, only.footprint.depth_ft) == (80, 30)
-    assert only.units == 4 and only.unit_width_ft == 20 and only.unit_ground_sqft == 600
+    assert only.key == "pod80x25@3"
+    assert (only.footprint.width_ft, only.footprint.depth_ft) == (80, 25)
+    assert only.units == 4 and only.unit_width_ft == 20 and only.unit_ground_sqft == 500
     assert only.stories == 2
-    assert only.oriented()[0] == (Orientation.width_facing, 80, 30)
+    assert only.oriented()[0] == (Orientation.width_facing, 80, 25)
 
 
-def test_pod80x30_keeps_pod80x25s_building_and_parking() -> None:
-    # Only the depth changed: height, storeys, roof and the parking rule are
-    # the existing pod's exactly.
+def test_the_screened_pod_is_twenty_feet_with_nine_foot_two_storeys() -> None:
+    # Steph 2026-11-12: "20 ft tall"; each storey an 8 ft wall plus a 14 in
+    # truss, 9 ft 2 in, held a hair under so a minimum of exactly 9'2" is
+    # not met by rounding.
+    (only,) = load_catalog().active()
+
+    assert only.height_ft == 20
+    assert 9 + 2 / 12 - 0.001 < only.ground_story_ft <= 9 + 2 / 12
+    assert only.stories * only.ground_story_ft <= only.height_ft
+    assert any("2026-11-12" in a for a in only.assumptions)
+
+
+def test_pod80x25_v3_keeps_the_80x30_rulings_building_and_parking() -> None:
+    # Size and heights changed; storeys, roof, doors and the parking rule are
+    # the 2026-11-08 ruling's exactly.
     cat = load_catalog()
-    new, old = cat.get("pod80x30@1"), cat.get("pod80x25@2")
+    new, old = cat.get("pod80x25@3"), cat.get("pod80x30@1")
 
-    for field in ("typology", "units", "stories", "height_ft", "ground_story_ft",
-                  "roof_pitch_in_12", "parking", "delivery", "plat"):
+    for field in ("typology", "units", "stories", "roof_pitch_in_12", "door_face",
+                  "parking", "delivery", "plat"):
         assert getattr(new, field) == getattr(old, field), field
     assert new.footprint.width_ft == old.footprint.width_ft
+    # pod80x25@2 is the same footprint at the old height.
+    assert new.footprint == cat.get("pod80x25@2").footprint
 
 
 def test_the_bridge_screens_active_designs_only(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -322,7 +339,7 @@ def test_the_bridge_screens_active_designs_only(monkeypatch: pytest.MonkeyPatch)
     monkeypatch.setattr(quadfit, "_WORKER", {})
     quadfit._init_worker(5.0, law_on="2026-11-08")
 
-    assert [d.key for d in quadfit._WORKER["designs"]] == ["pod80x30@1"]
+    assert [d.key for d in quadfit._WORKER["designs"]] == ["pod80x25@3"]
 
 
 def test_the_shipped_pods_carry_the_county_maps_three_bands() -> None:
@@ -344,6 +361,7 @@ def test_shipped_pods_match_the_quadfit_footprints() -> None:
     assert (cat.get("pod56x36@2").footprint.width_ft, cat.get("pod56x36@2").footprint.depth_ft) == (56, 36)
     assert (cat.get("pod80x25@2").footprint.width_ft, cat.get("pod80x25@2").footprint.depth_ft) == (80, 25)
     assert (cat.get("pod80x30@1").footprint.width_ft, cat.get("pod80x30@1").footprint.depth_ft) == (80, 30)
+    assert (cat.get("pod80x25@3").footprint.width_ft, cat.get("pod80x25@3").footprint.depth_ft) == (80, 25)
 
 
 def test_unconfirmed_values_are_declared_not_hidden() -> None:
@@ -355,7 +373,9 @@ def test_unconfirmed_values_are_declared_not_hidden() -> None:
 
 def test_catalog_root_points_at_the_shipped_pods() -> None:
     assert CATALOG_ROOT.is_dir()
-    assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == ["pod56x36", "pod80x25", "pod80x30"]
+    assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == [
+        "pod56x36", "pod80x25", "pod80x25_v2", "pod80x30"
+    ]
 
 
 def test_a_two_storey_pod_carries_the_storey_condition() -> None:

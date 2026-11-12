@@ -2379,20 +2379,26 @@ zones:
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7144-L7145"
-    min_building_height_ft:
+    min_building_height_stories:
       # 17.29.060.C, and the FLOOR is the standard MUC-1 does not have: the
       # neighbouring section states no minimum height at all. The sentence
       # reads "Twenty-five feet OR two stories", a disjunction the value model
-      # has no form for, so the feet are encoded and the storey limb is
-      # recorded in the notes as the relaxation this does not take -- which is
-      # the stricter of the two readings and can therefore only ever cost a
-      # REVIEW, never buy a GREEN. Its own carve-out does not reach us: both
+      # has no form for, so ONE limb is encoded and the other is recorded in
+      # the notes as the relaxation this does not take. Either limb alone is
+      # a sufficient condition, so holding one can only ever cost a REVIEW,
+      # never buy a GREEN. 2026-11-12 (rulings.yaml
+      # 2026-11-12-single-design-80x25-20ft): the held limb moved from the
+      # feet (25) to the storeys (2), because the screened pod is now two
+      # storeys and 20 ft -- it meets the code on its storeys and would have
+      # been refused on the feet it does not need. A storey is "that part of
+      # a building between the surface of any floor and the surface of the
+      # floor next above it" (17.04, L3255-L3258); the pod has two. Its own carve-out does not reach us: both
       # catalogued pods put 2,000-odd square feet on the ground and neither is
       # an accessory structure. And the under-five-unit exemption that runs
       # through this chapter is not an escape either -- 17.29.050.I frees such
       # a building from maximum setbacks and minimum density, names no height,
       # and sits in the MUC-1 section anyway.
-      value: 25
+      value: 2
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7147-L7149"
     max_height_ft:
       value: 60
@@ -2482,12 +2488,12 @@ zones:
       building development" -- and a standalone quadplex is neither.
       (L7175-L7182.) ENCODED SINCE 2026-09-10, WITH ONE LIMB LEFT OFF: the
       minimum building height at 17.29.060.C reads "twenty-five feet OR two
-      stories", and the value model has no either/or form. The feet are held
-      in `min_building_height_ft` and the storey limb is not, which is the
-      stricter of the two readings -- a two-storey building shorter than
-      twenty-five feet complies with the code and would be sent to REVIEW
-      here. That is the safe direction and it is inert today: the pod is two
-      storeys and twenty-six feet and clears both limbs. Recorded because the
+      stories", and the value model has no either/or form. Since 2026-11-12
+      the storeys are held in `min_building_height_stories` and the feet are
+      not (until then the reverse): either limb alone is a stricter reading
+      than the code -- a one-storey building of twenty-five feet complies and
+      would be sent to REVIEW here -- and the storey limb is the one the
+      20 ft, two-storey pod meets. That is the safe direction. Recorded because the
       next building might not, and because the relaxation is real code that
       this file does not carry. Also not encoded: 17.29.060.G.3 caps the CORNER SIDE setback at twenty
       feet, a maximum, and there is no field for a maximum street-side
@@ -2544,16 +2550,19 @@ zones:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7853"
       via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
-    min_building_height_ft:
+    min_building_height_stories:
       # 17.34.060.C and 17.34.070.C, word for word the same sentence: "Minimum
       # building height: Twenty-five feet or two stories except for accessory
       # structures or buildings under one thousand square feet." The composite
       # above is silent for once -- the two sections do not disagree, so this
       # is the only bulk number in MUD that owes nothing to a boundary FLATS
-      # cannot draw. The "or" is unencodable, so the feet stand and the storey
-      # limb is a relaxation recorded in the notes; the pod's ground floor is
-      # twice the thousand square feet that would exempt it.
-      value: 25
+      # cannot draw. The "or" is unencodable, so one limb stands and the other
+      # is a relaxation recorded in the notes; the pod's floor area is four
+      # times the thousand square feet that would exempt it. 2026-11-12
+      # (rulings.yaml 2026-11-12-single-design-80x25-20ft): the held limb
+      # moved from the feet (25) to the storeys (2), as in MUC-2 -- the pod is
+      # two storeys and 20 ft, so it meets the code on its storeys.
+      value: 2
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7855-L7857"
       via: "or/clackamas/oregon-city/17.zoning.txt#L7850-L7852"
     max_height_ft:
@@ -2647,8 +2656,9 @@ zones:
       development" -- and a standalone quadplex is neither (L7949-L7955).
       ENCODED SINCE 2026-09-10, WITH ONE LIMB LEFT OFF: the minimum building
       height of twenty-five feet or two storeys, on the same reading as MUC-2
-      -- feet held, storeys not, which is the stricter half of an "or" the
-      value model cannot express. Worth noting that 17.34.060.C and
+      -- storeys held, feet not, since 2026-11-12 (feet before): either half
+      of an "or" the value model cannot express is stricter than the code,
+      and the storeys are the half the 20 ft two-storey pod meets. Worth noting that 17.34.060.C and
       17.34.070.C state it identically, so it is the one bulk number in this
       composite district that does not depend on the design-district boundary.
       The under-five-unit exemption in paragraph K does not touch it: K frees
@@ -2881,7 +2891,9 @@ zones:
       both limbs are here -- `min_building_height_stories` 2 and
       `min_building_height_ft` 25 -- and this is the only district in the
       corpus that needs the storey field at all. Every other minimum height in
-      Oregon City writes "or", and there the storey limb is dropped. REFUSED:
+      Oregon City writes "or", and there one limb is dropped (the feet since
+      2026-11-12, the storeys before). The pod (20 ft since 2026-11-12) misses
+      the 25 here. REFUSED:
       the `unit_lots` path, on 17.35.040.E, exactly as in MUD.
   MUE:
     section: ["17.31."]

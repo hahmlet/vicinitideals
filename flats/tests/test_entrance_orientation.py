@@ -42,7 +42,7 @@ from flats.tests.test_round2_rulings import facts, rules
 
 pytestmark = pytest.mark.unit
 
-POD = load_catalog().latest("pod80x30")
+POD = load_catalog().latest("pod80x25")  # the screened pod since 2026-11-12 (was pod80x30)
 OLD = load_catalog().latest("pod56x36")
 
 

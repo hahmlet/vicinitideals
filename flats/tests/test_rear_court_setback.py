@@ -30,6 +30,7 @@ from shapely import Polygon, box
 
 from flats.designs.model import Design
 from flats.encode.load import load_trusted
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.fit.draw import Drawing
 from flats.fit.rectangle import Fit
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
@@ -81,6 +82,11 @@ height_ft: 26
 parking: {stalls_per_unit: 1.5, config: rear_court}
 delivery: {method: modular, crane_required: true, crane_reach_ft: 60}
 """
+
+# 7.0420(G)(1)'s roof plane starts 21 ft up: the 26 ft pod owed 5 ft, the
+# 20 ft pod screened since 2026-11-12 owes none. Computed, not pinned.
+OWED = max(0, DESIGN_HEIGHT_FT - 21)
+
 
 
 def pod() -> Design:
@@ -277,7 +283,7 @@ def test_a_gresham_quadplex_court_no_longer_parks_in_the_rear_setback(corpus) ->
     # prints 15; the court stays out of the 15, so that is what it adds.
     rear = float(rules.values["setback_rear_ft"].before_step_back)
     assert rear == 15
-    assert float(rules.get("setback_rear_ft")) == 20
+    assert float(rules.get("setback_rear_ft")) == 15 + OWED
     assert rear > 0
     assert deeper(rules) == pytest.approx(rear)
     assert _court_beyond_rear(pod(), rules) > _court_beyond_rear(pod(), Sharing(rules))
@@ -921,12 +927,12 @@ def test_a_strip_set_on_the_earlier_drawing_lifts_where_the_court_clears(corpus)
 @pytest.mark.parametrize(
     ("zone", "wall", "printed"),
     [
-        ("LDR-5", 20, 15),
-        ("LDR-7", 20, 15),
-        ("TR", 20, 15),
-        ("LDR-SW", 20, 15),
-        ("LDR-PV", 15, 10),
-        ("VLDR-SW", 25, 20),
+        ("LDR-5", 15 + OWED, 15),
+        ("LDR-7", 15 + OWED, 15),
+        ("TR", 15 + OWED, 15),
+        ("LDR-SW", 15 + OWED, 15),
+        ("LDR-PV", 10 + OWED, 10),
+        ("VLDR-SW", 20 + OWED, 20),
     ],
 )
 def test_gresham_court_stays_out_of_the_printed_yard(corpus, zone, wall, printed) -> None:

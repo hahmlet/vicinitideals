@@ -29,6 +29,7 @@ import pytest
 from flats.encode.readiness import readiness_for
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
 
@@ -44,6 +45,11 @@ BARRED = ("NC-PV", "PUB-PV")
 UNITS = 4
 #: Square feet in an acre, which is what turns a rate into a lot size.
 ACRE = 43560
+
+# 7.0420(G)(1)'s roof plane starts 21 ft up: the 26 ft pod owed 5 ft, the
+# 20 ft pod screened since 2026-11-12 owes none. Computed, not pinned.
+OWED = max(0, DESIGN_HEIGHT_FT - 21)
+
 
 
 @pytest.fixture(scope="module")
@@ -209,7 +215,7 @@ def test_two_districts_share_one_setback_row_and_one_of_them_leaves_it(
 
     rear = gresham.zones["LDR-PV"].values["setback_rear_ft"]
     assert rear.before_step_back == gresham.zones["MDR-PV"].values["setback_rear_ft"].value
-    assert rear.value == rear.before_step_back + 5
+    assert rear.value == rear.before_step_back + OWED
     assert gresham.zones["LDR-PV"].values["setback_street_side_ft"].value == 10
     assert gresham.zones["MDR-PV"].values["setback_street_side_ft"].value == 10
     split = {
@@ -252,7 +258,7 @@ def test_the_alley_is_the_looser_column_by_ten_feet_in_one_district(
             held.variants[0].before_step_back or held.variants[0].value,
         )
         assert printed == (10, 8), zone
-    assert gresham.zones["LDR-PV"].values["setback_rear_ft"].value == 15
+    assert gresham.zones["LDR-PV"].values["setback_rear_ft"].value == 10 + OWED
     assert gresham.zones["MDR-PV"].values["setback_rear_ft"].value == 10
 
 

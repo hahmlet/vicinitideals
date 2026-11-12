@@ -42,8 +42,12 @@ pytestmark = pytest.mark.unit
 
 MILWAUKIE = "or/clackamas/milwaukie"
 POD = ("multi_story", "attached_wall")
-#: The plane each zone prints, and the side yard a 26 ft wall ends up with.
-PLANED = {"R-MD": (20, 11), "R-HD": (25, 6)}
+#: The plane each zone prints, and the side yard the screened pod's wall ends
+#: up with. 2026-11-12: the pod is 20 ft, at or under both planes, so both
+#: keep the printed 5 (a 26 ft wall stood at 11 and 6).
+PLANED = {
+    zone: (at, 5 + max(0.0, DESIGN_HEIGHT_FT - at)) for zone, at in {"R-MD": 20, "R-HD": 25}.items()
+}
 
 
 @pytest.fixture(scope="module")
@@ -105,7 +109,7 @@ def test_the_arithmetic_is_the_two_cells_and_nothing_else(
 ) -> None:
     for zone, (allowed, stood_back) in PLANED.items():
         held = milwaukie.zones[zone].values["setback_side_ft"]
-        owed = (DESIGN_HEIGHT_FT - held.step_back_at_ft) / held.step_back_rise
+        owed = max(0.0, (DESIGN_HEIGHT_FT - held.step_back_at_ft) / held.step_back_rise)
         assert held.step_back_at_ft == allowed, zone
         assert held.before_step_back + owed == stood_back, zone
 
@@ -240,7 +244,10 @@ def test_an_angle_has_to_be_one_a_plane_could_rise_at(
 
 def test_a_shallower_plane_costs_more_distance(tmp_path: Path) -> None:
     """The angle is not decoration. At 45 degrees six feet of height costs six
-    feet of yard; at 26.57 degrees -- a 1:2 plane -- it costs twelve."""
+    feet of yard; at 26.57 degrees -- a 1:2 plane -- it costs twelve. The
+    plane sits six feet under the screened pod (2026-11-12: 14 ft against a
+    20 ft pod; it was 20 against 26)."""
+    plane_at = DESIGN_HEIGHT_FT - 6
     layers = load_rules(
         _somewhere(
             tmp_path,
@@ -248,7 +255,7 @@ def test_a_shallower_plane_costs_more_distance(tmp_path: Path) -> None:
             "      value: 5\n"
             "      quote: 'or/clackamas/somewhere/19.txt#L1'\n"
             "      step_back:\n"
-            "        height_ft: 20\n"
+            f"        height_ft: {plane_at}\n"
             "        slope_degrees: 26.565\n"
             "        cite: MMC Table 19.301.4 row C.3\n"
             "        quote: 'or/clackamas/somewhere/19.txt#L2'\n",

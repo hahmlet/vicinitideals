@@ -59,6 +59,11 @@ CLEAR = {
     "max_height_ft": 35,
     "max_units": 4,
     "parking_min_per_unit": 1.0,
+    # Since 2026-11-12 the screened 80x25 states its doors (the 80 ft face),
+    # so a turned fit is held out of GREEN wherever the entrance rule is
+    # unread (FOLLOWUPS 153). These tests are about the outdoor square, not
+    # the doors: the synthetic zone says it asks nothing of them.
+    "entrance_faces_street": "not_required",
 }
 #: Portland R5's outdoor area, amount and shape.
 PORTLAND = {"open_space_min_sqft": 250, "open_space_min_dimension_ft": 12}

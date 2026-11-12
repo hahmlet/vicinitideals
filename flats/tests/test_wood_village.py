@@ -35,6 +35,7 @@ import pytest
 from flats.encode.readiness import readiness_for
 from flats.provenance.store import ProvenanceStore
 from flats.rules import conditions
+from flats.rules.fields import DESIGN_HEIGHT_FT
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
@@ -355,7 +356,12 @@ def test_the_step_down_the_pod_is_one_foot_from_failing_is_charged_per_lot(
     }
     side = wv.zones["TC"].values["setback_side_ft"]
     light = ("abuts_residential_zone", "abuts_lower_density_zone")
-    assert (side.under(()).value, side.under(light[:1]).value, side.under(light).value) == (5, 15, 27)
+    # 25 + 2 ft per foot of pod over 25: 27 for the old 26 ft pod, 25 for the
+    # 20 ft pod screened since 2026-11-12. At 20 the note asks nothing (the pod
+    # is under its 25 ft), so 25 over-holds by ten feet: conservative, flagged.
+    assert (side.under(()).value, side.under(light[:1]).value, side.under(light).value) == (
+        5, 15, 25 + 2 * max(0, DESIGN_HEIGHT_FT - 25)
+    )
     assert conditions.condition("abuts_lower_density_zone").assume is None
 
 

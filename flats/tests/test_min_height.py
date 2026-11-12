@@ -15,6 +15,10 @@ the argument against. The design the accessible-stall reading points at is a
 SINGLE-STOREY flat, and a single-storey flat is exactly what these four
 mixed-use districts were written to keep off a main street.
 
+2026-11-12: no longer machinery only. The screened pod is 20 ft with 9 ft 2 in
+storeys (rulings.yaml 2026-11-12-single-design-80x25-20ft), and every 25 ft
+floor and the 12 ft first storey on file now bind.
+
 Two conventions from ``test_stale.py`` are kept, for the same reasons:
 
 * the mechanism is tested on rules written in this file, never on the corpus,
@@ -286,6 +290,18 @@ FLOORS_ABOVE_THE_POD = {
     ("or/washington/hillsboro", "SCC-SC", "min_building_height_ft"),
     ("or/washington/hillsboro", "UC-AC", "min_building_height_ft"),
     ("or/washington/hillsboro", "UC-MU", "min_building_height_ft"),
+    # 2026-11-12 (rulings.yaml 2026-11-12-single-design-80x25-20ft): the pod
+    # is 20 ft, no longer 26, and every 25 ft floor on file now binds.
+    # Oregon City MUC-2 and MUD write "twenty-five feet OR two stories"; their
+    # held limb moved to the storeys the same day, which the pod meets, so
+    # they are not here. WFDD writes "AND", and misses on the feet.
+    ("or/clackamas/milwaukie", "DMU", "min_building_height_ft"),
+    ("or/clackamas/oregon-city", "WFDD", "min_building_height_ft"),
+    ("or/multnomah/troutdale", "MU-3", "min_building_height_ft"),
+    ("or/washington/hillsboro", "UC-NC", "min_building_height_ft"),
+    ("or/washington/hillsboro", "UC-OR", "min_building_height_ft"),
+    ("or/washington/hillsboro", "UC-RM", "min_building_height_ft"),
+    ("or/washington/hillsboro", "UC-RP", "min_building_height_ft"),
 }
 
 
@@ -325,13 +341,37 @@ def test_a_zone_holding_a_floor_has_it_screened_rather_than_skipped() -> None:
 # 2026-10-01: Tigard TMU's Table 18.660.7, "First story 12 feet (min.)".
 # A floor under one storey, not under the building, so it is compared with
 # what the design states its ground storey to be. Steph, the same day, on
-# the pod: "Yes, 12 ft or more." Both catalog pods state 12.
+# the pod: "Yes, 12 ft or more." The archived pods state 12; the screened
+# pod80x25@3 states 9 ft 2 in (Steph 2026-11-12).
 
 
-def test_the_catalog_pods_state_a_twelve_foot_ground_storey() -> None:
+def test_the_screened_pod_states_a_nine_foot_two_ground_storey() -> None:
+    # 2026-11-12 (rulings.yaml 2026-11-12-single-design-80x25-20ft): each
+    # storey is an 8 ft wall and a 14 in truss, 9 ft 2 in; the 12 ft Steph
+    # stated 2026-10-01 belongs to the archived pods.
     for design in load_catalog().active():
-        assert design.ground_story_ft == 12, design.id
-        assert any("Steph, 2026-10-01" in a for a in design.assumptions), design.id
+        assert design.ground_story_ft == pytest.approx(9 + 2 / 12, abs=1e-3), design.id
+        assert design.ground_story_ft <= 9 + 2 / 12, design.id
+        assert any("2026-11-12" in a and "ground_story_ft" in a for a in design.assumptions), design.id
+
+
+def test_the_screened_pod_misses_tigard_tmus_twelve_foot_first_storey() -> None:
+    """The false GREEN the 2026-11-12 height change could have bought:
+    Tigard TMU's "First story 12 feet (min.)" passed the 12 ft ground storey
+    and must now miss the 9 ft 2 in one."""
+    (screened,) = load_catalog().active()
+    result = run(rules(min_ground_story_ft=12), design=screened)
+
+    assert check(result, "min_ground_story_ft").verdict is not Verdict.passes
+    assert result.triage is not Triage.green
+    assert _height_ok(screened, None, None, None, 12.0) is False
+
+
+def test_the_screened_pod_misses_a_twenty_five_foot_floor_and_meets_twenty() -> None:
+    (screened,) = load_catalog().active()
+
+    assert check(run(rules(min_building_height_ft=25), design=screened), "min_height_ft").verdict is not Verdict.passes
+    assert check(run(rules(min_building_height_ft=20), design=screened), "min_height_ft").verdict is Verdict.passes
 
 
 def test_the_pod_meets_a_twelve_foot_first_storey() -> None:

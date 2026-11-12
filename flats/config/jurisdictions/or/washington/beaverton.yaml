@@ -186,7 +186,9 @@ crossrefs:
       Ground Floor Design regulations" (S1: a ground floor at least 16 feet floor to floor,
       70.20.10.txt#L377-L378, against the pod's stated 12), and Type B frontages may instead take
       the residential design (S2: ground floor no more than 4 feet above the sidewalk, at least 12
-      feet floor to floor, and a stoop, porch, patio, terrace or frontage court). Facades not on a
+      feet floor to floor, and a stoop, porch, patio, terrace or frontage court). Since 2026-11-12
+      the screened pod's ground floor is 9 ft 2 in, so it misses S2 as well: a Type B frontage
+      must be held at 12 when the figure is traced, never exempt. Facades not on a
       mapped street are exempt. Encoded 2026-11-08: min_ground_story_ft 16 under
       beaverton_type_a_frontage in RC-BC, RC-OT, RC-MU and RC-DT. The figure itself is not held
       (the stored map PDF carries Figure 70.15.25.1, the use map), so the fact is unobserved and
@@ -4009,7 +4011,11 @@ zones:
       # so `beaverton_type_a_frontage` is unobserved and every lot here is
       # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
       # 2026-11-08). Type B may take the Residential design instead, which
-      # the pod's 12 ft ground floor meets.
+      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
+      # ground floor of the pods before 2026-11-12 met it, the screened
+      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
+      # does not. So a facade on ANY mapped street (Type A or B) misses, and
+      # tracing the figure must hold Type B frontages at 12, not exempt them.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
@@ -4169,7 +4175,11 @@ zones:
       # so `beaverton_type_a_frontage` is unobserved and every lot here is
       # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
       # 2026-11-08). Type B may take the Residential design instead, which
-      # the pod's 12 ft ground floor meets.
+      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
+      # ground floor of the pods before 2026-11-12 met it, the screened
+      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
+      # does not. So a facade on ANY mapped street (Type A or B) misses, and
+      # tracing the figure must hold Type B frontages at 12, not exempt them.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
@@ -4328,7 +4338,11 @@ zones:
       # so `beaverton_type_a_frontage` is unobserved and every lot here is
       # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
       # 2026-11-08). Type B may take the Residential design instead, which
-      # the pod's 12 ft ground floor meets.
+      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
+      # ground floor of the pods before 2026-11-12 met it, the screened
+      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
+      # does not. So a facade on ANY mapped street (Type A or B) misses, and
+      # tracing the figure must hold Type B frontages at 12, not exempt them.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
@@ -4499,7 +4513,11 @@ zones:
       # so `beaverton_type_a_frontage` is unobserved and every lot here is
       # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
       # 2026-11-08). Type B may take the Residential design instead, which
-      # the pod's 12 ft ground floor meets.
+      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
+      # ground floor of the pods before 2026-11-12 met it, the screened
+      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
+      # does not. So a facade on ANY mapped street (Type A or B) misses, and
+      # tracing the figure must hold Type B frontages at 12, not exempt them.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"

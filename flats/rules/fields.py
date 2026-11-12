@@ -2051,15 +2051,20 @@ PARKING_TOTAL_FIELDS: frozenset[str] = frozenset(
 #:
 #: Portland's Table 150-2 is the case that forced it. The IR column of all
 #: three minimum-setback rows is one merged cell: "1 ft. for every 2 ft. of
-#: building height but not less than 10 ft." For a 26 ft pod that is 13 ft, and
+#: building height but not less than 10 ft." For a 26 ft pod that was 13 ft, and
 #: 13 is printed nowhere.
 #:
-#: It is the TALLEST design in the catalog, not an average, because a taller
-#: building owes a larger setback and the conservative answer is the strict
-#: one. `flats/tests/test_height_ratio.py` fails the moment a catalog entry
-#: exceeds it, which is the revisit this constant is owed rather than a number
-#: that silently goes stale.
-DESIGN_HEIGHT_FT = 26
+#: It is the TALLEST design new runs screen (the active catalog entries), not
+#: an average, because a taller building owes a larger setback and the
+#: conservative answer is the strict one. `flats/tests/test_height_ratio.py`
+#: fails the moment an active entry and this constant part company, which is
+#: the revisit this constant is owed rather than a number that silently goes
+#: stale.
+#:
+#: 20 since 2026-11-12 (rulings.yaml 2026-11-12-single-design-80x25-20ft:
+#: pod80x25@3, "20 ft tall"); 26 before. Archived designs are never screened,
+#: so they do not hold it up.
+DESIGN_HEIGHT_FT = 20
 
 #: The number of stories of the building this screen answers for, read the
 #: same way as :data:`DESIGN_HEIGHT_FT` and for the same reason. Cornelius

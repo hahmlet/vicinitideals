@@ -41,8 +41,13 @@ pytestmark = pytest.mark.unit
 GRESHAM = "or/multnomah/gresham"
 POD = ("multi_story", "attached_wall")
 DESIGN = f"{GRESHAM}/7.0400.middle-housing-design.txt"
-#: The six districts 7.0420(G)(1) names, and what each rear yard becomes.
-STEPPED = {"LDR-5": 20, "LDR-7": 20, "TR": 20, "LDR-PV": 15, "LDR-SW": 20, "VLDR-SW": 25}
+#: The six districts 7.0420(G)(1) names, the rear yard each prints, and what
+#: it becomes for the screened pod: the 21 ft roof allowance at the line, a
+#: foot further back per foot over it. 2026-11-12: the pod is 20 ft, under
+#: the allowance, so every printed figure stands (a 26 ft pod owed 5 more).
+PRINTED = {"LDR-5": 15, "LDR-7": 15, "TR": 15, "LDR-PV": 10, "LDR-SW": 15, "VLDR-SW": 20}
+OWED = max(0.0, DESIGN_HEIGHT_FT - 21)
+STEPPED = {zone: printed + OWED for zone, printed in PRINTED.items()}
 PROV = Provenance(
     cite="Gresham Development Code Table 4.0130 row G",
     url="https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf",
@@ -99,7 +104,7 @@ def test_the_district_keeps_its_own_printed_figure(gresham: Layer) -> None:
     check compares the second against the district table's own quote."""
     held = gresham.zones["LDR-5"].values["setback_rear_ft"]
 
-    assert held.value == 20
+    assert held.value == 15 + OWED == 15
     assert held.before_step_back == 15
     assert held.step_back_at_ft == 21
     assert held.step_back_rise == 1
@@ -110,9 +115,9 @@ def test_the_district_keeps_its_own_printed_figure(gresham: Layer) -> None:
 
 def test_the_arithmetic_is_the_sentence_and_not_a_constant(gresham: Layer) -> None:
     held = gresham.zones["LDR-5"].values["setback_rear_ft"]
-    owed = (DESIGN_HEIGHT_FT - held.step_back_at_ft) / held.step_back_rise
+    owed = max(0.0, (DESIGN_HEIGHT_FT - held.step_back_at_ft) / held.step_back_rise)
 
-    assert owed == 5
+    assert owed == OWED == 0  # 5 for a 26 ft pod; a 20 ft roof is under the plane
     assert held.value == held.before_step_back + owed
 
 
@@ -128,7 +133,7 @@ def test_the_step_back_reaches_the_exceptions_too(gresham: Layer) -> None:
     held = gresham.zones["LDR-PV"].values["setback_rear_ft"]
     alley = next(v for v in held.variants if v.when == ("alley_at_rear",))
 
-    assert alley.value == 13
+    assert alley.value == 8 + OWED == 8  # 13 for a 26 ft pod
     assert alley.before_step_back == 8
 
 
@@ -322,10 +327,12 @@ def test_a_plane_that_belongs_to_one_exception_moves_only_that_exception() -> No
     assert side.under(()).value == 5
     assert side.under(("abuts_residential_zone",)).value == 15
     light = ("abuts_residential_zone", "abuts_lower_density_zone")
-    assert side.under(light).value == 25 + (DESIGN_HEIGHT_FT - 25) / 0.5 == 27
+    # 2026-11-12: a 20 ft pod is under the 25 ft allowance and owes nothing
+    # beyond the 25 printed (a 26 ft pod owed 27).
+    assert side.under(light).value == 25 + max(0.0, (DESIGN_HEIGHT_FT - 25) / 0.5) == 25
     stepped = [v for v in side.variants if v.step_back_at_ft is not None]
     assert [v.before_step_back for v in stepped] == [25]
-    assert tc.values["setback_rear_ft"].under(light).value == 27
+    assert tc.values["setback_rear_ft"].under(light).value == 25
     assert tc.values["setback_rear_ft"].under(("abuts_residential_zone",)).value == 15
 
 
